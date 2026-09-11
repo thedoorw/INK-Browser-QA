@@ -1,0 +1,187 @@
+{
+  "format": "INK-VIDEO-OBSERVED-BEHAVIOR-CANDIDATES",
+  "version": "1.6.3",
+  "status": "CANDIDATE",
+  "counts": {
+    "Atomic": 7,
+    "Composite": 6,
+    "Strategy": 6
+  },
+  "Atomic": [
+    {
+      "behaviorId": "CREATE_EDITABLE_BRUSH_PATH",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "APPLY_GENERIC_VECTOR_PATH_BRUSH",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "SET_OBJECT_OPACITY",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "SET_DARKEN_OR_MULTIPLY",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "DUPLICATE_TRANSFORM_PATH",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "REORDER_OBJECT",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "RECOLOR_BRUSH_STROKE",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    }
+  ],
+  "Composite": [
+    {
+      "behaviorId": "CREATE_WATERCOLOR_PETAL_FROM_PATH",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-028"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "LAYER_TRANSLUCENT_STROKES",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-028"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "ASSEMBLE_WATERCOLOR_COROLLA",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-028"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "CREATE_WATERCOLOR_STEM_LEAF",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-028"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "ADD_WASH_AND_SPLATTER",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-028"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "BUILD_LAYERED_WATERCOLOR_PLANT",
+      "sourceSegments": [
+        "SEG-003",
+        "SEG-028"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    }
+  ],
+  "Strategy": [
+    {
+      "behaviorId": "BUILD_REUSABLE_BRUSH_MATERIAL_FIRST",
+      "sourceSegments": [
+        "SEG-009",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "BUILD_PIGMENT_DENSITY_BY_OVERLAP",
+      "sourceSegments": [
+        "SEG-009",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "ASSEMBLE_PETALS_BEFORE_COROLLA",
+      "sourceSegments": [
+        "SEG-009",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "DERIVE_FLOWER_STATES_FROM_EDITABLE_STRUCTURE",
+      "sourceSegments": [
+        "SEG-009",
+        "SEG-030"
+      ],
+      "confidence": "INFERRED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "PRESERVE_PATH_EDITABILITY",
+      "sourceSegments": [
+        "SEG-009",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    },
+    {
+      "behaviorId": "STOP_EQUIVALENCE_CLAIM_WHEN_BRUSH_ASSET_IS_UNKNOWN",
+      "sourceSegments": [
+        "SEG-009",
+        "SEG-030"
+      ],
+      "confidence": "OBSERVED",
+      "validationState": "VALIDATION REQUIRED"
+    }
+  ]
+}

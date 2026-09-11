@@ -1,0 +1,15 @@
+{
+ "format":"INK-WATERCOLOR-MATERIAL-CANDIDATES","version":"1.0","validationState":"VALIDATION REQUIRED",
+ "materials":[
+  {"id":"SOFT_EDGE_PETAL_BRUSH_V2","type":"VECTOR_BRUSH","source":"INK original","evidence":"WC-01","state":"VALIDATION REQUIRED"},
+  {"id":"BROKEN_EDGE_PETAL_BRUSH_V2","type":"VECTOR_BRUSH","source":"INK original","evidence":"WC-01","state":"VALIDATION REQUIRED"},
+  {"id":"DENSE_PIGMENT_BRUSH_V2","type":"VECTOR_BRUSH","source":"INK original","evidence":"WC-01/WC-03","state":"VALIDATION REQUIRED"},
+  {"id":"LEAF_WASH_BRUSH_V2","type":"VECTOR_BRUSH","source":"INK original","evidence":"WC-04/WC-05","state":"VALIDATION REQUIRED"},
+  {"id":"TAPERED_STEM_BRUSH_V2","type":"VECTOR_BRUSH","source":"INK original","evidence":"WC-04/WC-05","state":"VALIDATION REQUIRED"},
+  {"id":"IRREGULAR_WASH_MATERIAL_V2","type":"VECTOR_MATERIAL","source":"INK original","evidence":"WC-01..05","state":"VALIDATION REQUIRED"},
+  {"id":"NATURAL_SPLATTER_MATERIAL_V2","type":"VECTOR_MATERIAL","source":"INK original","evidence":"WC-03/WC-05","state":"VALIDATION REQUIRED"},
+  {"id":"PROCEDURAL_PAPER_OVERLAY_V1","type":"VECTOR_OVERLAY","source":"INK original","claim":"OVERLAY_ONLY","evidence":"WC-01..05","state":"VALIDATION REQUIRED"},
+  {"id":"WATERCOLOR_COROLLA_STRUCTURE_V2","type":"STRUCTURE","evidence":"WC-03","state":"VALIDATION REQUIRED"},
+  {"id":"WATERCOLOR_BOTANICAL_COMPOSITION_V2","type":"STRUCTURE","evidence":"WC-05","state":"VALIDATION REQUIRED"}
+ ]
+}

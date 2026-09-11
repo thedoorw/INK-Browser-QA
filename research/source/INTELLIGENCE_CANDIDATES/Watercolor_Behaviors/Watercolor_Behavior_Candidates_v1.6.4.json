@@ -1,0 +1,30 @@
+{
+  "format":"INK-AI-BEHAVIOR-CANDIDATES","version":"1.0","appVersion":"1.6.4-RC","validationState":"VALIDATION REQUIRED",
+  "atomic":[
+    {"id":"APPLY_IRREGULAR_BRUSH","inputs":["editable path","Brush Material v2"],"parameters":["seed","edgeProfile","widthVariation"],"preconditions":["licensed or original brush profile"],"procedure":["resolve brush","create deterministic stroke layers","attach brush instance"],"failureConditions":["missing brushId","unsupported render mode"],"evidence":"WC-01","validationState":"VALIDATION REQUIRED","reusableScope":"petal, leaf, stem"},
+    {"id":"APPLY_OPACITY_PROFILE","inputs":["stroke layers"],"parameters":["opacityProfile"],"preconditions":["profile values 0..1"],"procedure":["map profile to layer opacity"],"failureConditions":["invalid profile"],"evidence":"WC-01/WC-02","validationState":"VALIDATION REQUIRED","reusableScope":"all vector brush strokes"},
+    {"id":"APPLY_WIDTH_PROFILE","inputs":["path brush"],"parameters":["widthVariation","seed"],"preconditions":["positive base width"],"procedure":["derive deterministic widths per layer"],"failureConditions":["zero width"],"evidence":"WC-01/WC-04","validationState":"VALIDATION REQUIRED","reusableScope":"petal edges, stems"},
+    {"id":"SEED_STROKE_VARIATION","inputs":["brush instance"],"parameters":["seed","enabledVariation"],"preconditions":["serialized seed"],"procedure":["initialize deterministic random","record seed"],"failureConditions":["unserialized randomness"],"evidence":"WC-01..05","validationState":"VERIFIED","reusableScope":"all procedural brushes"},
+    {"id":"ADD_PIGMENT_CONCENTRATION","inputs":["closed botanical path"],"parameters":["density profile","center strokes"],"preconditions":["path has anchors"],"procedure":["derive internal direction","add dark local strokes"],"failureConditions":["empty path"],"evidence":"WC-01/WC-03","validationState":"VALIDATION REQUIRED","reusableScope":"petal and leaf interiors"},
+    {"id":"ADD_EDGE_BREAKUP","inputs":["path edge"],"parameters":["dash","jitter","edgeProfile"],"preconditions":["editable path"],"procedure":["layer displaced dashed outlines"],"failureConditions":["edge profile unavailable"],"evidence":"WC-01","validationState":"VALIDATION REQUIRED","reusableScope":"soft and broken edges"},
+    {"id":"ADD_SPLATTER_DISTRIBUTION","inputs":["center","radius"],"parameters":["count","seed","density"],"preconditions":["bounded artboard"],"procedure":["sample radial distribution","create irregular blobs"],"failureConditions":["unbounded count"],"evidence":"WC-03/WC-05","validationState":"VERIFIED","reusableScope":"watercolor decoration"},
+    {"id":"APPLY_PAPER_OVERLAY","inputs":["artboard"],"parameters":["intensity","seed","enabled"],"preconditions":["legal asset metadata"],"procedure":["create separable fibers and grain layer"],"failureConditions":["unknown texture source"],"evidence":"WC-01..05","validationState":"VALIDATION REQUIRED","reusableScope":"hybrid/vector surface overlay"}
+  ],
+  "composite":[
+    {"id":"CREATE_WATERCOLOR_PETAL_V2","evidence":"WC-01/WC-02/WC-03","validationState":"VALIDATION REQUIRED"},
+    {"id":"CREATE_WATERCOLOR_LEAF_V2","evidence":"WC-04/WC-05","validationState":"VALIDATION REQUIRED"},
+    {"id":"BUILD_IRREGULAR_WATERCOLOR_COROLLA","evidence":"WC-03/WC-05","validationState":"VALIDATION REQUIRED"},
+    {"id":"CREATE_NON_RECTANGULAR_WASH","evidence":"WC-01..05","validationState":"VERIFIED"},
+    {"id":"CREATE_NATURAL_SPLATTER_FIELD","evidence":"WC-03/WC-05","validationState":"VERIFIED"},
+    {"id":"BUILD_HYBRID_WATERCOLOR_COMPOSITION","evidence":"WC-05","validationState":"VALIDATION REQUIRED"}
+  ],
+  "strategy":[
+    {"id":"SELECT_BRUSH_BEFORE_PETAL_CONSTRUCTION","evidence":"WC-01","validationState":"VALIDATION REQUIRED"},
+    {"id":"LAYER_STROKES_INSTEAD_OF_UNIFORM_FILL","evidence":"WC-01/WC-02","validationState":"VALIDATION REQUIRED"},
+    {"id":"USE_LOCAL_CONCENTRATION_AS_VISUAL_CENTER","evidence":"WC-03","validationState":"VALIDATION REQUIRED"},
+    {"id":"CONTROLLED_IRREGULARITY_PREVENTS_MECHANICAL_REPEAT","evidence":"WC-03/WC-05","validationState":"VALIDATION REQUIRED"},
+    {"id":"PRESERVE_STRUCTURE_REPLACE_SURFACE_MATERIAL","evidence":"WC-01/WC-02","validationState":"VERIFIED"},
+    {"id":"CHOOSE_MINIMUM_VECTOR_OR_HYBRID_SOLUTION","evidence":"WC-05","validationState":"VALIDATION REQUIRED"},
+    {"id":"STOP_MATERIAL_ADMISSION_WHEN_LICENSE_UNRESOLVED","evidence":"Material source manifest","validationState":"VERIFIED"}
+  ]
+}
