@@ -1,4 +1,4 @@
-const RELEASE_VERSION = '1.5.1';
+const RELEASE_VERSION = '1.6.5-RC';
 const SHELL_CACHE = `ink-v${RELEASE_VERSION}-shell`;
 const RUNTIME_CACHE = `ink-v${RELEASE_VERSION}-runtime`;
 const APP_SHELL = [
@@ -20,7 +20,7 @@ const APP_SHELL = [
   './src/render/webgl/natural-media-webgl.js', './src/render/webgl/multi-channel-ink-webgl.js',
   './src/export/index.js', './src/export/pdf.js',
   './src/release/index.js', './src/release/runtime-health.js', './src/release/external-diagnostics.js', './src/pwa/index.js', './src/pwa/update-manager.js',
-  './dist/ink.compat.js', './manifest.webmanifest', './icons/ink-192.png', './icons/ink-512.png'
+  './dist/ink.compat.js', './manifest.webmanifest'
 ];
 
 self.addEventListener('install', event => {
