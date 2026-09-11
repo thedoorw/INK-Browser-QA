@@ -1,0 +1,253 @@
+{
+  "caseId": "case-06-watercolor-vector-approximation",
+  "decision": "RESEARCH",
+  "status": "PASS",
+  "nativeRasterImplemented": false,
+  "retainedGaps": [
+    "Raster Layer",
+    "Selection/Mask",
+    "Adjustment",
+    "Blur/Displacement",
+    "Paper Texture",
+    "Watercolor Simulation",
+    "Photoshop ATN Parser"
+  ],
+  "deterministic": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 0,
+    "totalPixels": 630436,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/after-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/after-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/after-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "difference": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 20527,
+    "totalPixels": 630436,
+    "changedRatio": 0.03256000609102272,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/flat-vs-approximation.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/flat-vs-approximation.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/flat-vs-approximation.overlay.png"
+    },
+    "allZero": false
+  },
+  "rollbackDifference": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 0,
+    "totalPixels": 630436,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/before-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/before-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/before-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "baselineComparison": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 24687,
+    "totalPixels": 630436,
+    "changedRatio": 0.03915861403853841,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/batch01-vs-v162.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/batch01-vs-v162.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/comparisons/batch01-vs-v162.overlay.png"
+    },
+    "allZero": false
+  },
+  "outputs": {
+    "before": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/before-flat/before-flat.svg",
+          "bytes": 17477,
+          "sha256": "b543c4320a326d9e259ef3cb9cdf65a061b488e7bf3a0bad33aac376ea6b1e75",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/before-flat/before-flat.png",
+          "bytes": 14951,
+          "sha256": "58315f3d05c9d1a80aa24f3184c18c1e38d2c91bfa935b0318b6a4f767913cd2",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 571,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/before-flat/before-flat.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 18860
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-vector-approximation/after-vector-approximation.svg",
+          "bytes": 51440,
+          "sha256": "40ddc23d368dc17ad77b4fc07d3191776d0adede0dd95caf00e2619786f5e7f1",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-vector-approximation/after-vector-approximation.png",
+          "bytes": 24707,
+          "sha256": "1f3916997a2eb5eb94e88b18a43b9cb081324678cb13ae5e76d269a9f2a0dc0a",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 673,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-vector-approximation/after-vector-approximation.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 20769
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-rerun/after-rerun.svg",
+          "bytes": 51440,
+          "sha256": "40ddc23d368dc17ad77b4fc07d3191776d0adede0dd95caf00e2619786f5e7f1",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-rerun/after-rerun.png",
+          "bytes": 24707,
+          "sha256": "1f3916997a2eb5eb94e88b18a43b9cb081324678cb13ae5e76d269a9f2a0dc0a",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 562,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-rerun/after-rerun.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 20769
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/rollback/rollback.svg",
+          "bytes": 17477,
+          "sha256": "b543c4320a326d9e259ef3cb9cdf65a061b488e7bf3a0bad33aac376ea6b1e75",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/rollback/rollback.png",
+          "bytes": 14951,
+          "sha256": "58315f3d05c9d1a80aa24f3184c18c1e38d2c91bfa935b0318b6a4f767913cd2",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 556,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 18860
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  }
+}

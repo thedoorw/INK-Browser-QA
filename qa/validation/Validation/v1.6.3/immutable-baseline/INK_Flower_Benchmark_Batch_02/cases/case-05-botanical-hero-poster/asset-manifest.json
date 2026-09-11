@@ -1,0 +1,28 @@
+{
+  "assetId": "B02-CASE-005",
+  "name": "Botanical HERO Poster",
+  "type": "INK procedural artwork",
+  "host": "INK v1.6.2 RC",
+  "author": "MIND / INK benchmark",
+  "source": "Batch 01 material templates plus Batch 02 artwork acceptance specification",
+  "license": "Project-internal benchmark evidence",
+  "groundTruth": "Structural and composition acceptance criteria; external design Ground Truth unavailable",
+  "role": "complete artwork-level composition",
+  "originalFilename": null,
+  "sha256": null,
+  "dependencies": [
+    "INK v1.6.2 RC MAIN"
+  ],
+  "inputConditions": {
+    "fullArtwork": true,
+    "mainFlowerPetals": 36,
+    "secondaryBuds": 2,
+    "layers": 6,
+    "foregroundMidgroundBackground": true,
+    "semanticRoles": true,
+    "asymmetricComposition": true
+  },
+  "previewGroundTruth": "Structural and composition acceptance criteria; external design Ground Truth unavailable",
+  "caseRole": "complete artwork-level composition",
+  "finalDecision": "VALIDATION REQUIRED"
+}

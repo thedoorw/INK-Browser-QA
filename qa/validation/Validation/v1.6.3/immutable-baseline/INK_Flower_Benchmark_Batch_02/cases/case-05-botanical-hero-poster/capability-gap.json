@@ -1,0 +1,22 @@
+[
+  {
+    "gapId": "B02-GAP-COMPOSITION-001",
+    "type": "Composition",
+    "visibleFailure": "Composition is encoded in a reviewed Recipe; INK does not yet infer focal hierarchy, margins, negative space or title placement from a target.",
+    "severity": "MEDIUM",
+    "blocksArtwork": false,
+    "frequency": "3/6 cases",
+    "minimalFix": "Add explicit composition constraints and semantic layout metrics before automated selection.",
+    "mergeCandidate": "AI structural reasoning"
+  },
+  {
+    "gapId": "B02-GAP-PDF-001",
+    "type": "Export",
+    "visibleFailure": "No verified PDF export path was available in this benchmark Runtime.",
+    "severity": "LOW",
+    "blocksArtwork": false,
+    "frequency": "1/1 poster",
+    "minimalFix": "Validate existing PDF exporter or keep SVG/PNG as canonical outputs.",
+    "mergeCandidate": "Artwork export"
+  }
+]

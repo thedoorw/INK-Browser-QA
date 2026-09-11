@@ -1,0 +1,54 @@
+{
+  "format": "INK-BENCHMARK-RECIPE",
+  "version": "1.0",
+  "id": "b02.recipe.case5",
+  "name": "Botanical HERO Poster",
+  "inkVersion": "1.6.2-RC",
+  "deterministic": true,
+  "parameters": {},
+  "steps": [
+    {
+      "op": "create-a4-artboard"
+    },
+    {
+      "op": "create-semantic-layers",
+      "count": 6
+    },
+    {
+      "op": "assemble-main-flower",
+      "petals": 36
+    },
+    {
+      "op": "assemble-secondary-buds",
+      "count": 2
+    },
+    {
+      "op": "compose-foliage-and-stems"
+    },
+    {
+      "op": "add-frame-and-title-rule"
+    },
+    {
+      "op": "preview"
+    },
+    {
+      "op": "approval"
+    },
+    {
+      "op": "execute"
+    },
+    {
+      "op": "export-svg-png"
+    },
+    {
+      "op": "main-flower-local-edit"
+    },
+    {
+      "op": "background-style-only-edit"
+    },
+    {
+      "op": "rollback"
+    }
+  ],
+  "approvalRequired": true
+}

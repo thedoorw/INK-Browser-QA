@@ -1,0 +1,43 @@
+{
+  "format": "INK-BENCHMARK-RECIPE",
+  "version": "1.0",
+  "id": "b02.recipe.case2",
+  "name": "Three-quarter Tulip",
+  "inkVersion": "1.6.2-RC",
+  "deterministic": true,
+  "parameters": {
+    "foldDirection": 14,
+    "perspectiveScaleRange": [
+      0.52,
+      1.08
+    ]
+  },
+  "steps": [
+    {
+      "op": "create-back-petals",
+      "count": 3
+    },
+    {
+      "op": "create-side-petals",
+      "count": 2
+    },
+    {
+      "op": "create-front-petals",
+      "count": 3
+    },
+    {
+      "op": "create-calyx-and-stem"
+    },
+    {
+      "op": "set-parent-child"
+    },
+    {
+      "op": "modify-folded-petal",
+      "target": "b02:c2:petal:folded"
+    },
+    {
+      "op": "rollback"
+    }
+  ],
+  "approvalRequired": true
+}

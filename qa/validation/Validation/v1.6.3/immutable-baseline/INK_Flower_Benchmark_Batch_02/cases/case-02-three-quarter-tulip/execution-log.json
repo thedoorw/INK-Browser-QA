@@ -1,0 +1,297 @@
+{
+  "caseId": "case-02-three-quarter-tulip",
+  "status": "PASS",
+  "decision": "VALIDATION REQUIRED",
+  "workflow": [
+    "source verification",
+    "asset manifest",
+    "structural analysis",
+    "material selection",
+    "behavior plan",
+    "Recipe",
+    "Preview",
+    "Approval",
+    "Execute",
+    "SVG/PNG",
+    "Rerun",
+    "Parameter modification",
+    "Local recompute",
+    "Difference",
+    "Rollback",
+    "Decision",
+    "Fourfold update",
+    "Learning Delta"
+  ],
+  "deterministic": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/after-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/after-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/after-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "differences": {
+    "rollbackDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 0,
+      "totalPixels": 891662,
+      "changedRatio": 0,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.overlay.png"
+      },
+      "allZero": true
+    }
+  },
+  "rollback": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "outputs": {
+    "before": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/before-fold-direction/before-fold-direction.svg",
+          "bytes": 13137,
+          "sha256": "4391f1058ce9823a72359b2dc3b0830754d45a68d3e95cded99588dc82004f2f",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/before-fold-direction/before-fold-direction.png",
+          "bytes": 24270,
+          "sha256": "a35f466f5f0177d1257225d20b45f12c0237879a3511363224c2b432b81503d8",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 794,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/before-fold-direction/before-fold-direction.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.svg",
+          "bytes": 13137,
+          "sha256": "3528e4c2073c89ba94406e621dbde7117cc426f23257eff5c400fb69c56c5d77",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.png",
+          "bytes": 24729,
+          "sha256": "a33b625e50818491acbbbcccf7bba0d2ef73c1fdf35b847db8963c41c2a4e330",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 743,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction-rerun/after-fold-direction-rerun.svg",
+          "bytes": 13137,
+          "sha256": "3528e4c2073c89ba94406e621dbde7117cc426f23257eff5c400fb69c56c5d77",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction-rerun/after-fold-direction-rerun.png",
+          "bytes": 24729,
+          "sha256": "a33b625e50818491acbbbcccf7bba0d2ef73c1fdf35b847db8963c41c2a4e330",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 789,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction-rerun/after-fold-direction-rerun.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/rollback/rollback.svg",
+          "bytes": 13137,
+          "sha256": "4391f1058ce9823a72359b2dc3b0830754d45a68d3e95cded99588dc82004f2f",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/rollback/rollback.png",
+          "bytes": 24270,
+          "sha256": "a35f466f5f0177d1257225d20b45f12c0237879a3511363224c2b432b81503d8",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 769,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "structure": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/structure-view/structure-view.svg",
+          "bytes": 13091,
+          "sha256": "a985c77ed4d1f907cb3e3d9c9bfc73aacc184f174502c904cc3f9a43dc95b65d",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/structure-view/structure-view.png",
+          "bytes": 28084,
+          "sha256": "003c12dff72eba07cd9a76d711f399ac3e446879adfc56998bfb79d91d1c800e",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 761,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/structure-view/structure-view.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 11486
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  },
+  "externalGroundTruth": "Structural acceptance criteria; external botanical Ground Truth unavailable"
+}

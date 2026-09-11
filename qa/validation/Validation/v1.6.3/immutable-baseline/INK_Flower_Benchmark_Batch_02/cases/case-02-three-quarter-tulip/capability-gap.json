@@ -1,0 +1,10 @@
+[
+  {
+    "gapId": "B02-GAP-PERSPECTIVE-001",
+    "type": "Perspective/Fold/Warp",
+    "visibleFailure": "Perspective is expressed by scale/rotation/bend approximations; no native envelope or projective warp.",
+    "severity": "HIGH",
+    "blocksArtwork": false,
+    "mergeCandidate": "Perspective/Composition reasoning"
+  }
+]

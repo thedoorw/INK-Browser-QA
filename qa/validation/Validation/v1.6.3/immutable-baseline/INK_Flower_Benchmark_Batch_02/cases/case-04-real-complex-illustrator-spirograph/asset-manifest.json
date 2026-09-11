@@ -1,0 +1,32 @@
+{
+  "assetId": "B02-ASSET-ILLUSTRATOR-SPIROGRAPH-001",
+  "name": "Spirograph.js",
+  "type": "Illustrator ExtendScript",
+  "host": "Adobe Illustrator CS6+",
+  "author": "sky-chaser-high",
+  "source": "https://github.com/sky-chaser-high/generative-art-with-illustrator/blob/main/Spirograph.js",
+  "license": "MIT",
+  "groundTruth": "Repository source and preview; Illustrator execution EXTERNAL VALIDATION PENDING",
+  "role": "real complex Illustrator procedure",
+  "retrievedAt": "2026-08-05",
+  "originalFilename": "Spirograph.js",
+  "sha256": "ec1b0483074a6901e749d6f58f8f1442d7c5d0471bf3ba2a4875864a093ac166",
+  "dependencies": [
+    "Adobe Illustrator CS6+"
+  ],
+  "inputConditions": [
+    "new document",
+    "ExtendScript host"
+  ],
+  "previewGroundTruth": "Repository README examples; Illustrator execution unavailable in this environment",
+  "caseRole": "real complex Illustrator procedural flower",
+  "extractableBehaviors": [
+    "deterministic looped object generation",
+    "ellipse-family assembly",
+    "seeded procedural replay"
+  ],
+  "extractableMaterials": [
+    "spirograph ellipse cluster"
+  ],
+  "finalDecision": "VALIDATION REQUIRED"
+}

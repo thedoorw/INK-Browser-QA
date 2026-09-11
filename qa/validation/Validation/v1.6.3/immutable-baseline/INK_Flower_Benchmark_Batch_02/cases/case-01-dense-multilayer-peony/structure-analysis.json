@@ -1,0 +1,83 @@
+{
+  "caseId": "case-01-dense-multilayer-peony",
+  "role": "high-density multi-layer corolla",
+  "complexity": {
+    "petalInstances": 36,
+    "rings": 3,
+    "templateFamilies": 4,
+    "nonuniform": true,
+    "crossRingOcclusion": true,
+    "manualStrategyCorrection": 1
+  },
+  "directness": {
+    "templateInstance": "DIRECT",
+    "repeatIdentity": "DIRECT",
+    "ringRecompute": "APPROXIMATED",
+    "occlusionStrategy": "EQUIVALENT"
+  },
+  "hierarchyDepth": null,
+  "symmetry": "non-uniform / asymmetric",
+  "materials": [
+    "B02-MAT-PEONY-OUTER-BROAD",
+    "B02-MAT-PEONY-MIDDLE-TRANSITION",
+    "B02-MAT-PEONY-INNER-TIGHT",
+    "B02-STRUCT-THREE-RING-PEONY"
+  ],
+  "behaviorPlan": {
+    "atomic": [
+      "B02-A-SET-PETAL-OVERRIDE"
+    ],
+    "composite": [
+      "B02-C-BUILD-DENSE-THREE-RING-COROLLA",
+      "B02-C-CROSS-RING-OCCLUSION"
+    ],
+    "strategy": [
+      "B02-S-BREAK-RADIAL-UNIFORMITY-WITH-LOCAL-CORRECTION"
+    ]
+  },
+  "outputStructureView": {
+    "format": "INK-EXPORT-REPORT",
+    "version": "1.0",
+    "status": "PASS",
+    "files": {
+      "svg": {
+        "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/structure-view/structure-view.svg",
+        "bytes": 35637,
+        "sha256": "c696c06c759657f69be9d5bb8a499f91863b5b3b62a95f573885c2d3aea7d83e",
+        "backend": "INK_VECTOR_SVG"
+      },
+      "png": {
+        "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/structure-view/structure-view.png",
+        "bytes": 69302,
+        "sha256": "72fbdeb5c93bc2935794b46ec77e59145bce1d19197027a22be5821d05742fab",
+        "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+        "rendererVersion": "Chrome/144.0.7559.96",
+        "durationMs": 785,
+        "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/structure-view/structure-view.headless.json",
+        "metrics": {
+          "width": 794,
+          "height": 1123,
+          "colorFormat": "RGBA8",
+          "alpha": true,
+          "transparentPixels": 0,
+          "nonTransparentPixels": 891662,
+          "partialAlphaPixels": 0,
+          "nonWhitePixels": 21318
+        }
+      }
+    },
+    "options": {
+      "formats": [
+        "svg",
+        "png"
+      ],
+      "background": "paper",
+      "range": "artboard",
+      "width": 794,
+      "height": 1123,
+      "ppi": 96,
+      "deterministic": true
+    },
+    "limitations": []
+  }
+}

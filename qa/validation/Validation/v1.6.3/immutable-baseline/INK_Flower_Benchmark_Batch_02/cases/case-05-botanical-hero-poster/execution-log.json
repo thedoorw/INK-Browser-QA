@@ -1,0 +1,370 @@
+{
+  "caseId": "case-05-botanical-hero-poster",
+  "status": "PASS",
+  "decision": "VALIDATION REQUIRED",
+  "workflow": [
+    "source verification",
+    "asset manifest",
+    "structural analysis",
+    "material selection",
+    "behavior plan",
+    "Recipe",
+    "Preview",
+    "Approval",
+    "Execute",
+    "SVG/PNG",
+    "Rerun",
+    "Parameter modification",
+    "Local recompute",
+    "Difference",
+    "Rollback",
+    "Decision",
+    "Fourfold update",
+    "Learning Delta"
+  ],
+  "deterministic": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "differences": {
+    "mainDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 74027,
+      "totalPixels": 891662,
+      "changedRatio": 0.08302136908380081,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-main-flower-edit.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-main-flower-edit.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-main-flower-edit.overlay.png"
+      },
+      "allZero": false
+    },
+    "backgroundDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 740890,
+      "totalPixels": 891662,
+      "changedRatio": 0.8309090215799261,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-background-edit.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-background-edit.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-background-edit.overlay.png"
+      },
+      "allZero": false
+    },
+    "rollbackDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 0,
+      "totalPixels": 891662,
+      "changedRatio": 0,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rollback.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rollback.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rollback.overlay.png"
+      },
+      "allZero": true
+    }
+  },
+  "rollback": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/comparisons/before-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "outputs": {
+    "before": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/before-poster/before-poster.svg",
+          "bytes": 50943,
+          "sha256": "657113854eeaea378d10d03bbf545bc65490108c595b0f0ed21d2a217f3696af",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/before-poster/before-poster.png",
+          "bytes": 83981,
+          "sha256": "3f2f7862f5ba96a39b0eed83672e2aafd4fdf4b8ba586d245a35a85a0b651e5f",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 862,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/before-poster/before-poster.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-main-flower-edit/after-main-flower-edit.svg",
+          "bytes": 53572,
+          "sha256": "37ee28a60c1a2753919a17ebb122b50eefec2430fb8c88a4fb5c83c64914473a",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-main-flower-edit/after-main-flower-edit.png",
+          "bytes": 88835,
+          "sha256": "25152dce1075e197b851035330ca3e3a7ab13511e564d2eb6f393a7eba6c0c2a",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 865,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-main-flower-edit/after-main-flower-edit.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "backgroundEdit": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-background-color-edit/after-background-color-edit.svg",
+          "bytes": 50943,
+          "sha256": "51e14828fa21257634e7f43edcf26013b0fe920c5b68ef8a45a7ab3331ac182c",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-background-color-edit/after-background-color-edit.png",
+          "bytes": 83856,
+          "sha256": "771e83d5a32738b27a02787ca21f96afa375d638b539e260cbc18d72e2461f0e",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 942,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-background-color-edit/after-background-color-edit.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/rerun-poster/rerun-poster.svg",
+          "bytes": 50943,
+          "sha256": "657113854eeaea378d10d03bbf545bc65490108c595b0f0ed21d2a217f3696af",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/rerun-poster/rerun-poster.png",
+          "bytes": 83981,
+          "sha256": "3f2f7862f5ba96a39b0eed83672e2aafd4fdf4b8ba586d245a35a85a0b651e5f",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 879,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/rerun-poster/rerun-poster.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/rollback/rollback.svg",
+          "bytes": 50943,
+          "sha256": "657113854eeaea378d10d03bbf545bc65490108c595b0f0ed21d2a217f3696af",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/rollback/rollback.png",
+          "bytes": 83981,
+          "sha256": "3f2f7862f5ba96a39b0eed83672e2aafd4fdf4b8ba586d245a35a85a0b651e5f",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 856,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "structure": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/structure-view/structure-view.svg",
+          "bytes": 50800,
+          "sha256": "a0b7dfc79ccc0c86cbb483c1ebcaffe94322184bd929774add4c94033a630077",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/structure-view/structure-view.png",
+          "bytes": 115823,
+          "sha256": "3b5896f4304fb8ac44d3bbd4842d5944cd7faf9ed9fab1387b9f1799f12535cf",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 847,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/structure-view/structure-view.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 56590
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  },
+  "externalGroundTruth": "Structural and composition acceptance criteria; external design Ground Truth unavailable"
+}

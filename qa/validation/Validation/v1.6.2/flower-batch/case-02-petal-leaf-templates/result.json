@@ -1,0 +1,501 @@
+{
+  "caseId": "case-02-petal-leaf-templates",
+  "decision": "VALIDATION REQUIRED",
+  "status": "PASS",
+  "materialLibrary": {
+    "format": "INK-MATERIAL-LIBRARY-REPORT",
+    "version": "1.0",
+    "templateCount": 10,
+    "instanceCount": 3,
+    "templates": [
+      {
+        "templateId": "material:flower:bud",
+        "templateVersion": "1.0.0",
+        "materialType": "flower-bud",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:calyx",
+        "templateVersion": "1.0.0",
+        "materialType": "calyx",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:center-disk",
+        "templateVersion": "1.0.0",
+        "materialType": "flower-center",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:leaf-broad",
+        "templateVersion": "1.0.0",
+        "materialType": "broad-leaf",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:leaf-lanceolate",
+        "templateVersion": "1.0.0",
+        "materialType": "lanceolate-leaf",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:petal-inner-tight",
+        "templateVersion": "1.0.0",
+        "materialType": "inner-tight-petal",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:petal-outer-broad",
+        "templateVersion": "1.0.0",
+        "materialType": "outer-broad-petal",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:petal-pointed",
+        "templateVersion": "1.1.0",
+        "materialType": "pointed-petal",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:petal-rounded",
+        "templateVersion": "1.0.0",
+        "materialType": "rounded-petal",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      },
+      {
+        "templateId": "material:flower:stem-curved",
+        "templateVersion": "1.0.0",
+        "materialType": "curved-stem",
+        "validationState": {
+          "status": "VALIDATED_BY_BATCH_01_AND_V1.6.2_REGRESSION",
+          "evidence": "Validation/flower-batch-v1.6.2"
+        }
+      }
+    ],
+    "instances": [
+      {
+        "format": "INK-MATERIAL-INSTANCE",
+        "version": "1.0",
+        "instanceId": "case2-petal-linked",
+        "templateId": "material:flower:petal-pointed",
+        "templateVersion": "1.1.0",
+        "parameterOverrides": {
+          "length": 215,
+          "bend": 24
+        },
+        "effectiveParameters": {
+          "length": 215,
+          "width": 58,
+          "bend": 24,
+          "tipHandle": 0,
+          "tipMode": "corner",
+          "fill": "#c65e82",
+          "stroke": "#6b3648",
+          "strokeWidth": 1.5
+        },
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          210,
+          520
+        ],
+        "parentId": null,
+        "semanticRole": "petal",
+        "detached": false,
+        "localOverrideState": {
+          "parameters": [
+            "bend",
+            "length"
+          ],
+          "geometryDetached": false,
+          "styleDetached": false
+        },
+        "realizedChildIds": [
+          "case2-petal-linked:shape"
+        ],
+        "geometryHash": "fnv1a32:1218678f",
+        "templateSource": {
+          "batchId": "INK_Flower_Benchmark_Batch_01",
+          "cases": [
+            "CASE-02",
+            "CASE-03",
+            "CASE-04",
+            "CASE-05"
+          ]
+        }
+      },
+      {
+        "format": "INK-MATERIAL-INSTANCE",
+        "version": "1.0",
+        "instanceId": "case2-leaf-lanceolate",
+        "templateId": "material:flower:leaf-lanceolate",
+        "templateVersion": "1.0.0",
+        "parameterOverrides": {
+          "bend": 45,
+          "length": 190
+        },
+        "effectiveParameters": {
+          "length": 190,
+          "width": 48,
+          "bend": 45,
+          "fill": "#629966",
+          "stroke": "#315d3b",
+          "strokeWidth": 1.5
+        },
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          180,
+          760
+        ],
+        "parentId": null,
+        "semanticRole": "leaf",
+        "detached": false,
+        "localOverrideState": {
+          "parameters": [
+            "bend",
+            "length"
+          ],
+          "geometryDetached": false,
+          "styleDetached": false
+        },
+        "realizedChildIds": [
+          "case2-leaf-lanceolate:shape"
+        ],
+        "geometryHash": "fnv1a32:e9c306c8",
+        "templateSource": {
+          "batchId": "INK_Flower_Benchmark_Batch_01",
+          "cases": [
+            "CASE-02",
+            "CASE-03",
+            "CASE-04",
+            "CASE-05"
+          ]
+        }
+      },
+      {
+        "format": "INK-MATERIAL-INSTANCE",
+        "version": "1.0",
+        "instanceId": "case2-leaf-broad",
+        "templateId": "material:flower:leaf-broad",
+        "templateVersion": "1.0.0",
+        "parameterOverrides": {
+          "bend": -18
+        },
+        "effectiveParameters": {
+          "length": 125,
+          "width": 62,
+          "bend": -18,
+          "fill": "#6d9f65",
+          "stroke": "#315d3b",
+          "strokeWidth": 1.5
+        },
+        "transform": [
+          1,
+          0,
+          0,
+          1,
+          430,
+          760
+        ],
+        "parentId": null,
+        "semanticRole": "leaf",
+        "detached": false,
+        "localOverrideState": {
+          "parameters": [
+            "bend"
+          ],
+          "geometryDetached": false,
+          "styleDetached": false
+        },
+        "realizedChildIds": [
+          "case2-leaf-broad:shape"
+        ],
+        "geometryHash": "fnv1a32:8fded93d",
+        "templateSource": {
+          "batchId": "INK_Flower_Benchmark_Batch_01",
+          "cases": [
+            "CASE-02",
+            "CASE-03",
+            "CASE-04",
+            "CASE-05"
+          ]
+        }
+      }
+    ]
+  },
+  "templateNative": true,
+  "multipleInstances": true,
+  "override": true,
+  "detach": true,
+  "templateUpdate": true,
+  "deterministic": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 0,
+    "totalPixels": 630436,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/after-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/after-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/after-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "difference": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 5631,
+    "totalPixels": 630436,
+    "changedRatio": 0.00893191378664924,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/before-vs-after.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/before-vs-after.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/before-vs-after.overlay.png"
+    },
+    "allZero": false
+  },
+  "rollbackDifference": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 0,
+    "totalPixels": 630436,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/before-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/before-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/before-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "baselineComparison": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 21138,
+    "totalPixels": 630436,
+    "changedRatio": 0.03352917663331409,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/batch01-vs-v162.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/batch01-vs-v162.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/comparisons/batch01-vs-v162.overlay.png"
+    },
+    "allZero": false
+  },
+  "outputs": {
+    "before": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/before/before.svg",
+          "bytes": 2781,
+          "sha256": "11c8d8ce722119f0922c4e7b6ed92cce428cff9c8ee8f26225509f2b5de7f9be",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/before/before.png",
+          "bytes": 12521,
+          "sha256": "00e13f944e41bda440a1a34d8d03eae4443123dbdce375e31ced7a773fd95677",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 573,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/before/before.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 12135
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after/after.svg",
+          "bytes": 2800,
+          "sha256": "44e89e18ddc9351e162767d2696e70fddb7fa10eb9638776e9df6cf8f23bc37b",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after/after.png",
+          "bytes": 13645,
+          "sha256": "e5ee04e661104461239c652b057e9d598a4dc37ba17a03396414701765df4984",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 583,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after/after.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 13392
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after-rerun/after-rerun.svg",
+          "bytes": 2800,
+          "sha256": "44e89e18ddc9351e162767d2696e70fddb7fa10eb9638776e9df6cf8f23bc37b",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after-rerun/after-rerun.png",
+          "bytes": 13645,
+          "sha256": "e5ee04e661104461239c652b057e9d598a4dc37ba17a03396414701765df4984",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 593,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after-rerun/after-rerun.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 13392
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/rollback/rollback.svg",
+          "bytes": 2781,
+          "sha256": "11c8d8ce722119f0922c4e7b6ed92cce428cff9c8ee8f26225509f2b5de7f9be",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/rollback/rollback.png",
+          "bytes": 12521,
+          "sha256": "00e13f944e41bda440a1a34d8d03eae4443123dbdce375e31ced7a773fd95677",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 613,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 12135
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  }
+}

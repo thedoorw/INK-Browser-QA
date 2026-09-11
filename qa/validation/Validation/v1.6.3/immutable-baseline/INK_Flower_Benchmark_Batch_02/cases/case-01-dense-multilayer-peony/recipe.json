@@ -1,0 +1,62 @@
+{
+  "format": "INK-BENCHMARK-RECIPE",
+  "version": "1.0",
+  "id": "b02.recipe.case1",
+  "name": "Dense Multi-layer Peony",
+  "inkVersion": "1.6.2-RC",
+  "deterministic": true,
+  "parameters": {
+    "outerCount": 14,
+    "middleCount": 12,
+    "innerCount": 10,
+    "localOuterLengthDelta": 18
+  },
+  "steps": [
+    {
+      "op": "install-material-templates",
+      "templates": [
+        "outer-broad-petal",
+        "rounded-petal",
+        "inner-tight-petal"
+      ]
+    },
+    {
+      "op": "create-repeat-ring",
+      "id": "outer",
+      "count": 14,
+      "nonuniform": true
+    },
+    {
+      "op": "create-repeat-ring",
+      "id": "middle",
+      "count": 12,
+      "nonuniform": true
+    },
+    {
+      "op": "create-repeat-ring",
+      "id": "inner",
+      "count": 10,
+      "nonuniform": true
+    },
+    {
+      "op": "cross-ring-occlusion",
+      "petals": 2
+    },
+    {
+      "op": "manual-strategy-correction",
+      "id": "b02:c1:manual-correction"
+    },
+    {
+      "op": "local-recompute",
+      "targets": [
+        "repeat:b02-c1-ring-outer:0:0:petals.outer:1.6.2:b02-c1-source-outer",
+        "repeat:b02-c1-ring-outer:0:3:petals.outer:1.6.2:b02-c1-source-outer",
+        "repeat:b02-c1-ring-outer:0:4:petals.outer:1.6.2:b02-c1-source-outer"
+      ]
+    },
+    {
+      "op": "rollback"
+    }
+  ],
+  "approvalRequired": true
+}

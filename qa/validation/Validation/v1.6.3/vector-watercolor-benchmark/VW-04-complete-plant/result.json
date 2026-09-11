@@ -1,0 +1,19 @@
+{
+  "id": "VW-04-complete-plant",
+  "status": "PASS",
+  "deterministic": true,
+  "modifiedChangedPixels": 603934,
+  "report": {
+    "format": "INK-VECTOR-WATERCOLOR-REPORT",
+    "version": "1.0",
+    "brushMaterials": 1,
+    "instances": 16,
+    "deterministic": true,
+    "hybridDependencies": 1
+  },
+  "hashes": {
+    "result": "fa384a3df42e76f46e619fb8f4157bb5513bf3391ce74814353cdadfd12bcec0",
+    "rerun": "fa384a3df42e76f46e619fb8f4157bb5513bf3391ce74814353cdadfd12bcec0",
+    "modified": "772291a8ea197b617a5e4344cfb38206c5cb3880eeed83fa5b291b5fd02f50ce"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "format": "INK-EXPORT-REPORT",
+  "version": "1.0",
+  "status": "PASS",
+  "files": {
+    "svg": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.5/HERO-Dependency-Scope/HERO-WC-01/outputs/Round-3/Round-3.svg",
+      "bytes": 916541,
+      "sha256": "5f6b1280f9edc1499c5834c36e2831c040e586f7e6a278a17ac90a6ec5f879f9",
+      "backend": "INK_VECTOR_SVG"
+    },
+    "png": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.5/HERO-Dependency-Scope/HERO-WC-01/outputs/Round-3/Round-3.png",
+      "bytes": 466846,
+      "sha256": "a6a4be7514b9b08425873ef6783c27a68bd79a44b626efdf72e87d530b206b75",
+      "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+      "rendererVersion": "Chrome/144.0.7559.96",
+      "durationMs": 4520,
+      "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.5/HERO-Dependency-Scope/HERO-WC-01/outputs/Round-3/Round-3.headless.json",
+      "metrics": {
+        "width": 1123,
+        "height": 794,
+        "colorFormat": "RGBA8",
+        "alpha": true,
+        "transparentPixels": 0,
+        "nonTransparentPixels": 891662,
+        "partialAlphaPixels": 0,
+        "nonWhitePixels": 556752
+      }
+    }
+  },
+  "options": {
+    "formats": [
+      "svg",
+      "png"
+    ],
+    "background": "#fffaf5",
+    "range": "artboard",
+    "width": 1123,
+    "height": 794,
+    "ppi": 96,
+    "deterministic": true
+  },
+  "limitations": []
+}

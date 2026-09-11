@@ -1,0 +1,79 @@
+{
+  "format": "INK-BENCHMARK-RECIPE",
+  "version": "1.0",
+  "id": "b02.recipe.case6.research",
+  "name": "Watercolor Artist Action Research Draft",
+  "inkVersion": "1.6.2-RC",
+  "deterministic": true,
+  "parameters": {
+    "inputMinPx": 2000,
+    "inputMaxPx": 5000
+  },
+  "steps": [
+    {
+      "op": "load-action-assets",
+      "status": "EXTERNAL EXECUTION REQUIRED"
+    },
+    {
+      "op": "prepare-original-layer",
+      "status": "DIRECT"
+    },
+    {
+      "op": "create-focus-layer",
+      "status": "EQUIVALENT"
+    },
+    {
+      "op": "define-focus-region",
+      "status": "EQUIVALENT"
+    },
+    {
+      "op": "Raster Layer",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Action binary parsing",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Selection mask execution",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Blend Mode stack",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Adjustment stack",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Blur",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Texture",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Edge diffusion",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Displacement",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Paper grain",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "Verified final layer structure",
+      "status": "UNSUPPORTED"
+    },
+    {
+      "op": "run-watercolor-artist-action",
+      "status": "EXTERNAL EXECUTION REQUIRED"
+    }
+  ],
+  "approvalRequired": true
+}

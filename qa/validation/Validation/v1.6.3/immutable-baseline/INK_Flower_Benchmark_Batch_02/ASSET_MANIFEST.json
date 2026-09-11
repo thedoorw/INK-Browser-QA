@@ -1,0 +1,43 @@
+[
+  {
+    "caseId": "case-01-dense-multilayer-peony",
+    "decision": "VALIDATION REQUIRED",
+    "source": null,
+    "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit/after-local-outer-edit.png"
+  },
+  {
+    "caseId": "case-02-three-quarter-tulip",
+    "decision": "VALIDATION REQUIRED",
+    "source": null,
+    "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.png"
+  },
+  {
+    "caseId": "case-03-branched-botanical-unit",
+    "decision": "VALIDATION REQUIRED",
+    "source": null,
+    "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform/after-parent-transform.png"
+  },
+  {
+    "caseId": "case-04-real-complex-illustrator-spirograph",
+    "decision": "VALIDATION REQUIRED",
+    "source": {
+      "sha256": "ec1b0483074a6901e749d6f58f8f1442d7c5d0471bf3ba2a4875864a093ac166",
+      "lineCount": 213,
+      "byteLength": 6359,
+      "license": "MIT"
+    },
+    "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-04-real-complex-illustrator-spirograph/outputs/after-24-loops-radius-285/after-24-loops-radius-285.png"
+  },
+  {
+    "caseId": "case-05-botanical-hero-poster",
+    "decision": "VALIDATION REQUIRED",
+    "source": null,
+    "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-main-flower-edit/after-main-flower-edit.png"
+  },
+  {
+    "caseId": "case-06-real-watercolor-procedure-research",
+    "decision": "RESEARCH",
+    "source": null,
+    "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/setup-focus-layer/setup-focus-layer.png"
+  }
+]

@@ -1,0 +1,310 @@
+
+> ink-core-main-program@1.6.4-rc.1 test:v1.6.4
+> npm run test:v160 && npm run test:v161 && npm run test:v162 && npm run test:v163 && npm run test:v163:id && npm run test:v164
+
+
+> ink-core-main-program@1.6.4-rc.1 test:v160
+> node --test --test-concurrency=1 tests/v160/*.test.mjs
+
+TAP version 13
+# Subtest: Preview Compare emits the standardized twelve-file evidence set and undeclared-change classification
+ok 1 - Preview Compare emits the standardized twelve-file evidence set and undeclared-change classification
+  ---
+  duration_ms: 3488.217782
+  type: 'test'
+  ...
+# Subtest: Asset Manifest handles complete, optional, fallback, linked, portable, hash mismatch and structured missing errors without ENOENT leakage
+ok 2 - Asset Manifest handles complete, optional, fallback, linked, portable, hash mismatch and structured missing errors without ENOENT leakage
+  ---
+  duration_ms: 4.562333
+  type: 'test'
+  ...
+# Subtest: Web, CLI and JavaScript API share the AI core; old document and Session migrate without format breakage
+ok 3 - Web, CLI and JavaScript API share the AI core; old document and Session migrate without format breakage
+  ---
+  duration_ms: 3971.160913
+  type: 'test'
+  ...
+# Subtest: Recipe asset supports validation, migration, save/open, apply, compare, package, and dependency refusal
+ok 4 - Recipe asset supports validation, migration, save/open, apply, compare, package, and dependency refusal
+  ---
+  duration_ms: 20.549194
+  type: 'test'
+  ...
+# Subtest: Semantic Relationship Model resolves outer petals, center, left/right leaves, parent scope and exclusions
+ok 5 - Semantic Relationship Model resolves outer petals, center, left/right leaves, parent scope and exclusions
+  ---
+  duration_ms: 4.821659
+  type: 'test'
+  ...
+# Subtest: Local Recompute preserves unaffected IDs and hashes, detects over-recompute, missing dependencies, and full regeneration
+ok 6 - Local Recompute preserves unaffected IDs and hashes, detects over-recompute, missing dependencies, and full regeneration
+  ---
+  duration_ms: 6.935752
+  type: 'test'
+  ...
+# Subtest: ink-recipe CLI validates, inspects, migrates, compares and packages through the formal asset layer
+ok 7 - ink-recipe CLI validates, inspects, migrates, compares and packages through the formal asset layer
+  ---
+  duration_ms: 247.350835
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7904.1608
+
+> ink-core-main-program@1.6.4-rc.1 test:v161
+> node --test --test-concurrency=1 tests/v161/*.test.mjs
+
+TAP version 13
+# Subtest: original .js is detected, scanned and automatically compiled
+ok 1 - original .js is detected, scanned and automatically compiled
+  ---
+  duration_ms: 12.291926
+  type: 'test'
+  ...
+# Subtest: 100 and 70 modify handles, preserve anchors, replay and invalid input rollback
+ok 2 - 100 and 70 modify handles, preserve anchors, replay and invalid input rollback
+  ---
+  duration_ms: 13.429899
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 96.490247
+
+> ink-core-main-program@1.6.4-rc.1 test:v162
+> node --test --test-concurrency=1 tests/v162/*.test.mjs
+
+TAP version 13
+# Subtest: Material Template and Instance are native, parameterized, versioned, replayable and detachable
+ok 1 - Material Template and Instance are native, parameterized, versioned, replayable and detachable
+  ---
+  duration_ms: 19.394076
+  type: 'test'
+  ...
+# Subtest: Material operations use the existing Recipe runtime and rollback restores the original document
+ok 2 - Material operations use the existing Recipe runtime and rollback restores the original document
+  ---
+  duration_ms: 21.028847
+  type: 'test'
+  ...
+# Subtest: Repeat Instance Stable IDs survive replay, count increase/decrease and ring-specific updates
+ok 3 - Repeat Instance Stable IDs survive replay, count increase/decrease and ring-specific updates
+  ---
+  duration_ms: 8.443093
+  type: 'test'
+  ...
+# Subtest: Template modification updates linked repeat source without replacing generator or instance identities
+ok 4 - Template modification updates linked repeat source without replacing generator or instance identities
+  ---
+  duration_ms: 3.121231
+  type: 'test'
+  ...
+# Subtest: Hierarchy and Dependency Graph persist supported relations, produce topological order and reject cycles
+ok 5 - Hierarchy and Dependency Graph persist supported relations, produce topological order and reject cycles
+  ---
+  duration_ms: 5.263917
+  type: 'test'
+  ...
+# Subtest: Dependency-driven Partial Recompute preserves unrelated ring, center, right leaf and flower crown
+ok 6 - Dependency-driven Partial Recompute preserves unrelated ring, center, right leaf and flower crown
+  ---
+  duration_ms: 16.559041
+  type: 'test'
+  ...
+# Subtest: Dependency graph incomplete state refuses silent full-document fallback
+ok 7 - Dependency graph incomplete state refuses silent full-document fallback
+  ---
+  duration_ms: 1.878293
+  type: 'test'
+  ...
+# Subtest: Repeat, hierarchy and dependency state survive save/load; rollback restores IDs and unique SVG identities
+ok 8 - Repeat, hierarchy and dependency state survive save/load; rollback restores IDs and unique SVG identities
+  ---
+  duration_ms: 16.485191
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 159.276681
+
+> ink-core-main-program@1.6.4-rc.1 test:v163
+> node --test --test-concurrency=1 tests/v163/*.test.mjs
+
+TAP version 13
+# Subtest: Deterministic Math/Random IR is whitelisted, serializable and replayable
+ok 1 - Deterministic Math/Random IR is whitelisted, serializable and replayable
+  ---
+  duration_ms: 2.526817
+  type: 'test'
+  ...
+# Subtest: Illustrator ellipse/rectangle operations compile to executable Recipe geometry
+ok 2 - Illustrator ellipse/rectangle operations compile to executable Recipe geometry
+  ---
+  duration_ms: 19.960188
+  type: 'test'
+  ...
+# Subtest: Perspective/Fold deformation is non-destructive, reversible and preserves Stable ID
+ok 3 - Perspective/Fold deformation is non-destructive, reversible and preserves Stable ID
+  ---
+  duration_ms: 1.376066
+  type: 'test'
+  ...
+# Subtest: Composition constraints measure safe margins, clipping and preserve unaffected layout
+ok 4 - Composition constraints measure safe margins, clipping and preserve unaffected layout
+  ---
+  duration_ms: 1.577596
+  type: 'test'
+  ...
+# Subtest: Vector Brush Material saves, loads, instances, overrides and survives migration
+ok 5 - Vector Brush Material saves, loads, instances, overrides and survives migration
+  ---
+  duration_ms: 2.6635
+  type: 'test'
+  ...
+# Subtest: Path Watercolor Stroke produces deterministic editable SVG and different seed changes brush texture
+ok 6 - Path Watercolor Stroke produces deterministic editable SVG and different seed changes brush texture
+  ---
+  duration_ms: 1.779796
+  type: 'test'
+  ...
+# Subtest: Watercolor composites keep independent layers and explicitly mark hybrid paper dependency
+ok 7 - Watercolor composites keep independent layers and explicitly mark hybrid paper dependency
+  ---
+  duration_ms: 2.265709
+  type: 'test'
+  ...
+# Subtest: Recipe executes vector brush, deformation, expression and composition without changing schema
+ok 8 - Recipe executes vector brush, deformation, expression and composition without changing schema
+  ---
+  duration_ms: 7.423137
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 143.485431
+
+> ink-core-main-program@1.6.4-rc.1 test:v163:id
+> node --test --test-concurrency=1 tests/v163-id/*.test.mjs
+
+TAP version 13
+# Subtest: duplicate SVG IDs normalize deterministically at import, not export
+ok 1 - duplicate SVG IDs normalize deterministically at import, not export
+  ---
+  duration_ms: 9.822004
+  type: 'test'
+  ...
+# Subtest: normalized IDs survive replay, local edit and rollback preservation
+ok 2 - normalized IDs survive replay, local edit and rollback preservation
+  ---
+  duration_ms: 6.737497
+  type: 'test'
+  ...
+# Subtest: unique SVG IDs remain unchanged for backward compatibility
+ok 3 - unique SVG IDs remain unchanged for backward compatibility
+  ---
+  duration_ms: 0.239366
+  type: 'test'
+  ...
+# Subtest: watercolor stroke preserves source transform while adding deterministic jitter
+ok 4 - watercolor stroke preserves source transform while adding deterministic jitter
+  ---
+  duration_ms: 2.371075
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 76.143634
+
+> ink-core-main-program@1.6.4-rc.1 test:v164
+> node --test --test-concurrency=1 tests/v164/*.test.mjs
+
+TAP version 13
+# Subtest: Brush Material v2 is versioned, licensed, hashed and deterministic
+ok 1 - Brush Material v2 is versioned, licensed, hashed and deterministic
+  ---
+  duration_ms: 1.308606
+  type: 'test'
+  ...
+# Subtest: same seed replays the same irregular path brush and changed seed changes it
+ok 2 - same seed replays the same irregular path brush and changed seed changes it
+  ---
+  duration_ms: 5.845972
+  type: 'test'
+  ...
+# Subtest: watercolor petal v2 contains pigment, concentration and broken edge layers
+ok 3 - watercolor petal v2 contains pigment, concentration and broken edge layers
+  ---
+  duration_ms: 1.97747
+  type: 'test'
+  ...
+# Subtest: leaf and stem preserve directional editable structures
+ok 4 - leaf and stem preserve directional editable structures
+  ---
+  duration_ms: 2.146812
+  type: 'test'
+  ...
+# Subtest: wash is non-rectangular and splatter distribution is seeded and irregular
+ok 5 - wash is non-rectangular and splatter distribution is seeded and irregular
+  ---
+  duration_ms: 7.063542
+  type: 'test'
+  ...
+# Subtest: paper overlay is separable, traceable and can be disabled
+ok 6 - paper overlay is separable, traceable and can be disabled
+  ---
+  duration_ms: 5.536192
+  type: 'test'
+  ...
+# Subtest: document save/load replay retains brush instances, stable IDs and reports
+ok 7 - document save/load replay retains brush instances, stable IDs and reports
+  ---
+  duration_ms: 10.304051
+  type: 'test'
+  ...
+# Subtest: local replacement preserves unaffected object hash and rollback restores document
+ok 8 - local replacement preserves unaffected object hash and rollback restores document
+  ---
+  duration_ms: 12.28468
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 105.98863

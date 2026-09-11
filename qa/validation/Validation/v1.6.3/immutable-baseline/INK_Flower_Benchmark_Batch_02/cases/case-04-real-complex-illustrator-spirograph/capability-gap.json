@@ -1,0 +1,22 @@
+[
+  {
+    "gapId": "B02-GAP-JSX-001",
+    "type": "JSX / Script Translation",
+    "visibleFailure": "Only a minority of source operations compile directly; object construction, random color assignment and host-specific geometry require reviewed equivalents.",
+    "severity": "HIGH",
+    "blocksArtwork": false,
+    "frequency": "1/1 complex script",
+    "minimalFix": "Add deterministic math/random IR and native ellipse/rectangle construction mapping.",
+    "mergeCandidate": "Complex JSX translation"
+  },
+  {
+    "gapId": "B02-GAP-GT-004",
+    "type": "Validation / Ground Truth",
+    "visibleFailure": "Adobe Illustrator execution and pixel ground truth are unavailable.",
+    "severity": "MEDIUM",
+    "blocksArtwork": false,
+    "frequency": "1/1 complex script",
+    "minimalFix": "External Illustrator reference run using the archived script and matching parameters.",
+    "mergeCandidate": "External host validation"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "gapId": "B02-GAP-RASTER-001",
+    "type": "Raster Layer",
+    "visibleFailure": "No native raster-layer document object can execute the action input and output workflow.",
+    "severity": "CRITICAL",
+    "blocksArtwork": true,
+    "frequency": "1/1 watercolor procedure",
+    "minimalFix": "Introduce a minimal deterministic raster layer with pixel buffer, transform, visibility and save/load.",
+    "mergeCandidate": "Minimal raster foundation"
+  },
+  {
+    "gapId": "B02-GAP-ATN-001",
+    "type": "Photoshop ATN",
+    "visibleFailure": "The original ATN is opaque and cannot be imported, parsed or replayed.",
+    "severity": "HIGH",
+    "blocksArtwork": true,
+    "frequency": "1/1 ATN procedure",
+    "minimalFix": "Begin with an action-step manifest or audited subset parser; do not claim general ATN compatibility.",
+    "mergeCandidate": "Photoshop procedure translation"
+  },
+  {
+    "gapId": "B02-GAP-WATERCOLOR-001",
+    "type": "Selection / Mask / Adjustment / Blend / Blur / Texture / Watercolor Simulation",
+    "visibleFailure": "The confirmed setup can be represented, but the watercolor transformation and final layer stack cannot execute.",
+    "severity": "CRITICAL",
+    "blocksArtwork": true,
+    "frequency": "1/1 watercolor procedure",
+    "minimalFix": "Validate the smallest cross-case stack: selection mask, blend/opacity, one blur, one texture/displacement source, deterministic compositing.",
+    "mergeCandidate": "Minimal raster watercolor stack"
+  }
+]

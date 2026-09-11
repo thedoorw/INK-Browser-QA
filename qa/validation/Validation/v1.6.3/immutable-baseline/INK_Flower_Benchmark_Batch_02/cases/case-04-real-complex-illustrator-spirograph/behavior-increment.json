@@ -1,0 +1,11 @@
+{
+  "atomic": [
+    "B02-A-CREATE-ELLIPSE-SEQUENCE"
+  ],
+  "composite": [
+    "B02-C-TRANSLATE-SPIROGRAPH-SEQUENCE"
+  ],
+  "strategy": [
+    "B02-S-FIX-RANDOM-SEED-FOR-REPLAY"
+  ]
+}

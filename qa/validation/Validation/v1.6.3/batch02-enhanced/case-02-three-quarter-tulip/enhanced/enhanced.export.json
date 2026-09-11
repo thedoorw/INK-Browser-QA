@@ -1,0 +1,20 @@
+{
+  "format": "INK-EXPORT-REPORT",
+  "version": "1.0",
+  "status": "PASS",
+  "files": {
+    "png": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/batch02-enhanced/case-02-three-quarter-tulip/enhanced/enhanced.png",
+      "bytes": 24297,
+      "sha256": "dd21be7edca1a65ba8d6e38e5772d62fe5317faf51536b318c4dff09c51280d4",
+      "backend": "CHROMIUM_CDP_CANONICAL_PNG"
+    },
+    "svg": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/batch02-enhanced/case-02-three-quarter-tulip/enhanced/enhanced.svg",
+      "bytes": 17975,
+      "sha256": "e79de6a59e3b6dad06f5450cd66cd45196eb29ebd561771076d5dd2865458db1",
+      "backend": "INK_VECTOR_SVG"
+    }
+  },
+  "reusedExistingEvidence": true
+}

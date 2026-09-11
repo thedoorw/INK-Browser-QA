@@ -1,0 +1,66 @@
+START case6
+DONE case6 PASS
+{
+  "format": "INK-FLOWER-BATCH-V1.6.2-REGRESSION",
+  "version": "1.0",
+  "inkVersion": "1.6.2-RC",
+  "status": "PASS",
+  "cases": [
+    {
+      "caseId": "case-01-outline-fleurify",
+      "decision": "VALIDATION REQUIRED",
+      "status": "PASS",
+      "mainPng": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100/fleurify-100.png",
+      "mainSvg": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100/fleurify-100.svg"
+    },
+    {
+      "caseId": "case-02-petal-leaf-templates",
+      "decision": "VALIDATION REQUIRED",
+      "status": "PASS",
+      "mainPng": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after/after.png",
+      "mainSvg": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-02-petal-leaf-templates/outputs/after/after.svg"
+    },
+    {
+      "caseId": "case-03-radial-petal-assembly",
+      "decision": "VALIDATION REQUIRED",
+      "status": "PASS",
+      "mainPng": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-03-radial-petal-assembly/outputs/count-16-long/count-16-long.png",
+      "mainSvg": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-03-radial-petal-assembly/outputs/count-16-long/count-16-long.svg"
+    },
+    {
+      "caseId": "case-04-multilayer-corolla",
+      "decision": "VALIDATION REQUIRED",
+      "status": "PASS",
+      "mainPng": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-04-multilayer-corolla/outputs/after-ring-specific/after-ring-specific.png",
+      "mainSvg": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-04-multilayer-corolla/outputs/after-ring-specific/after-ring-specific.svg"
+    },
+    {
+      "caseId": "case-05-stem-leaf-bud-assembly",
+      "decision": "VALIDATION REQUIRED",
+      "status": "PASS",
+      "mainPng": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-05-stem-leaf-bud-assembly/outputs/after-parent-and-leaf-update/after-parent-and-leaf-update.png",
+      "mainSvg": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-05-stem-leaf-bud-assembly/outputs/after-parent-and-leaf-update/after-parent-and-leaf-update.svg"
+    },
+    {
+      "caseId": "case-06-watercolor-vector-approximation",
+      "decision": "RESEARCH",
+      "status": "PASS",
+      "mainPng": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-vector-approximation/after-vector-approximation.png",
+      "mainSvg": "/mnt/data/flowerbatch02/INK_Core_Main_Program_v1.6.2_RC/Runtime/Validation/v1.6.2/flower-batch/case-06-watercolor-vector-approximation/outputs/after-vector-approximation/after-vector-approximation.svg"
+    }
+  ],
+  "materialTemplates": 10,
+  "vectorStructureCapabilities": [
+    "Material Template",
+    "Material Instance",
+    "Override",
+    "Detach",
+    "Template Update",
+    "Repeat Stable Instance ID",
+    "Hierarchy",
+    "Dependency Graph",
+    "Partial Recompute",
+    "Rollback"
+  ],
+  "rasterWatercolorStatus": "RESEARCH"
+}

@@ -1,0 +1,218 @@
+{
+  "caseId": "case-01-outline-fleurify",
+  "decision": "VALIDATION REQUIRED",
+  "status": "PASS",
+  "import": {
+    "detection": {
+      "format": "ILLUSTRATOR_JSX",
+      "sourceSoftware": "Adobe Illustrator",
+      "confidence": 0.8,
+      "extension": "js",
+      "binary": false,
+      "candidates": [
+        {
+          "id": "ILLUSTRATOR_JSX",
+          "score": 0.8,
+          "sourceSoftware": "Adobe Illustrator"
+        },
+        {
+          "id": "JAVASCRIPT_PROGRAM",
+          "score": 0.8,
+          "sourceSoftware": "Generic JavaScript"
+        },
+        {
+          "id": "CORELDRAW_MACRO",
+          "score": 0.25,
+          "sourceSoftware": "CorelDRAW"
+        }
+      ],
+      "evidence": [
+        "app\\.activeDocument|\\bactiveDocument\\b|\\bselection\\b|pathItems|pathPoints|anchor|leftDirection|rightDirection|pointType|PathPointSelection|groupItems|artboards|ElementPlacement"
+      ],
+      "status": "DETECTED"
+    },
+    "security": "PASS",
+    "compileStatus": "COMPLETE"
+  },
+  "anchorInvariance": true,
+  "deterministic": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 0,
+    "totalPixels": 630436,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/100-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/100-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/100-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "parameterDifference": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 13433,
+    "totalPixels": 630436,
+    "changedRatio": 0.021307476095908228,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/100-vs-70.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/100-vs-70.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/100-vs-70.overlay.png"
+    },
+    "allZero": false
+  },
+  "baselineComparison": {
+    "width": 794,
+    "height": 794,
+    "changedPixels": 0,
+    "totalPixels": 630436,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/batch01-vs-v162.difference.png",
+      "sideBySide": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/batch01-vs-v162.side-by-side.png",
+      "overlay": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/comparisons/batch01-vs-v162.overlay.png"
+    },
+    "allZero": true
+  },
+  "outputs": {
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100/fleurify-100.svg",
+          "bytes": 830,
+          "sha256": "644d1de11e5ab2ab8fe70f0bdac4258f4ea86ddefea0b060431c4c2e347282d9",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100/fleurify-100.png",
+          "bytes": 17655,
+          "sha256": "e0acadcb79fc5bb23797c8a458c835c3eb1a0f4d66d16d18d58c32f8e33d1023",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 743,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100/fleurify-100.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 24371
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100-rerun/fleurify-100-rerun.svg",
+          "bytes": 830,
+          "sha256": "644d1de11e5ab2ab8fe70f0bdac4258f4ea86ddefea0b060431c4c2e347282d9",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100-rerun/fleurify-100-rerun.png",
+          "bytes": 17655,
+          "sha256": "e0acadcb79fc5bb23797c8a458c835c3eb1a0f4d66d16d18d58c32f8e33d1023",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 637,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-100-rerun/fleurify-100-rerun.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 24371
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "parameter70": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-70/fleurify-70.svg",
+          "bytes": 878,
+          "sha256": "3dd358a7704ef3dedd9a20f110b27b20cb93500a2a9e6cd0b93c95c973d26b34",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-70/fleurify-70.png",
+          "bytes": 15072,
+          "sha256": "d16d19d80438932b6dd908731dce9ff2cb9bafcf0bee20005f355d02869149dc",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 591,
+          "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.2/flower-batch/case-01-outline-fleurify/outputs/fleurify-70/fleurify-70.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 794,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 630436,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 24128
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "white",
+        "range": "artboard",
+        "width": 794,
+        "height": 794,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  },
+  "retainedGap": "Adobe Illustrator Ground Truth remains external validation pending."
+}

@@ -1,0 +1,311 @@
+{
+  "caseId": "case-06-real-watercolor-procedure-research",
+  "status": "PASS",
+  "decision": "RESEARCH",
+  "workflow": [
+    "source verification",
+    "asset manifest",
+    "structural analysis",
+    "material selection",
+    "behavior plan",
+    "Recipe",
+    "Preview",
+    "Approval",
+    "Execute",
+    "SVG/PNG",
+    "Rerun",
+    "Parameter modification",
+    "Local recompute",
+    "Difference",
+    "Rollback",
+    "Decision",
+    "Fourfold update",
+    "Learning Delta"
+  ],
+  "deterministic": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "differences": {
+    "modification": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 54628,
+      "totalPixels": 891662,
+      "changedRatio": 0.061265367370146984,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/focus-region-change.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/focus-region-change.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/focus-region-change.overlay.png"
+      },
+      "allZero": false
+    },
+    "rollbackDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 0,
+      "totalPixels": 891662,
+      "changedRatio": 0,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rollback.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rollback.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rollback.overlay.png"
+      },
+      "allZero": true
+    }
+  },
+  "rollback": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/comparisons/setup-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "outputs": {
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/setup-focus-layer/setup-focus-layer.svg",
+          "bytes": 24374,
+          "sha256": "c4ba992b7d3d0fac9e5c93e4e19a13164aa95a918052a36647b84e0a47217da4",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/setup-focus-layer/setup-focus-layer.png",
+          "bytes": 53161,
+          "sha256": "7e04974599987e9bfd97208242bbc33cb9dd1c30ce3a45839b7b32a831783da3",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 965,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/setup-focus-layer/setup-focus-layer.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "focusEdit": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/modified-focus-region/modified-focus-region.svg",
+          "bytes": 24382,
+          "sha256": "d67d8b6c7d11be913abbd02979082c4a85714e5dd3b00651d16ce37eb43d2606",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/modified-focus-region/modified-focus-region.png",
+          "bytes": 51075,
+          "sha256": "d8c2a9d63ec96e9e7b62a4545e19acf8ac9933b21942ed1204bb1ad24cd16a70",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 842,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/modified-focus-region/modified-focus-region.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/rerun-setup/rerun-setup.svg",
+          "bytes": 24374,
+          "sha256": "c4ba992b7d3d0fac9e5c93e4e19a13164aa95a918052a36647b84e0a47217da4",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/rerun-setup/rerun-setup.png",
+          "bytes": 53161,
+          "sha256": "7e04974599987e9bfd97208242bbc33cb9dd1c30ce3a45839b7b32a831783da3",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 777,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/rerun-setup/rerun-setup.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/rollback/rollback.svg",
+          "bytes": 24374,
+          "sha256": "c4ba992b7d3d0fac9e5c93e4e19a13164aa95a918052a36647b84e0a47217da4",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/rollback/rollback.png",
+          "bytes": 53161,
+          "sha256": "7e04974599987e9bfd97208242bbc33cb9dd1c30ce3a45839b7b32a831783da3",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 738,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "structure": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/structure-view/structure-view.svg",
+          "bytes": 24310,
+          "sha256": "b1f965058c9a21d7f183915207601091beb218ad15a364a3e61858f9ab4bf035",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/structure-view/structure-view.png",
+          "bytes": 72982,
+          "sha256": "e04b40b213de1b71e9b42566652b3d03ac6286f73cf7512e7c86ee1509c3df4f",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 741,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/structure-view/structure-view.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 23577
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  },
+  "externalGroundTruth": "Adobe tutorial Before/After and process evidence; action not bundled or executed"
+}

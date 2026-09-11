@@ -1,0 +1,26 @@
+
+> ink-core-main-program@1.6.3-rc.1 test:v161
+> node --test --test-concurrency=1 tests/v161/*.test.mjs
+
+TAP version 13
+# Subtest: original .js is detected, scanned and automatically compiled
+ok 1 - original .js is detected, scanned and automatically compiled
+  ---
+  duration_ms: 13.674735
+  type: 'test'
+  ...
+# Subtest: 100 and 70 modify handles, preserve anchors, replay and invalid input rollback
+ok 2 - 100 and 70 modify handles, preserve anchors, replay and invalid input rollback
+  ---
+  duration_ms: 13.294438
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98.590419

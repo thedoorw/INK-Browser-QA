@@ -1,0 +1,51 @@
+INK v1.6.4 RC FINAL TEST SUMMARY
+
+Decision: VALIDATION REQUIRED
+
+Baseline
+- v1.6.3 ZIP SHA-256: 1ac5fc2fb0b30ec90c180bb9239231c9a02a5a7ddbfd2ed46c3d374981755ab0
+- npm ci: PASS
+- Build: PASS
+- INK Doctor: PASS
+
+Regression
+- v1.6.0: 7/7 PASS
+- Fleurify: 2/2 PASS
+- v1.6.2: 8/8 PASS
+- v1.6.3: 12/12 PASS
+- v1.6.4: 8/8 PASS
+- Flower Batch 01: 6/6 PASS
+- Flower Batch 02: 6/6 PASS
+- VW-01 through VW-04: 4/4 PASS
+- VW-VIDEO-01: 1/1 PASS
+- Case 5 Duplicate ID Regression: PASS
+- WC-01 through WC-05: 5/5 PASS
+
+Watercolor Visual Core
+- Brush Material v2: PASS
+- Irregular edge profile: PASS
+- Opacity and pigment density profiles: PASS
+- Width/color/rotation/spacing variation: PASS
+- Seeded deterministic variation: PASS
+- Watercolor Petal v2: PASS
+- Watercolor Leaf v2: PASS
+- Watercolor Stem v2: PASS
+- Non-rectangular Wash: PASS
+- Natural Splatter: PASS
+- Separable traceable Paper Overlay: PASS
+- Stable ID / Local replacement / Replay / Rollback: PASS
+- Deterministic SVG/PNG: PASS
+
+Visual Assessment
+- Improvement over v1.6.3: PASS
+- Professional Illustrator watercolor reference quality: VALIDATION REQUIRED
+- Overall procedural similarity score: 5/10
+- Paper integration score: 4/10
+- Result remains visibly vector-structured.
+
+Claim Boundaries
+- Vector Watercolor Framework: APPROVED
+- Watercolor Visual Core v2 execution: APPROVED
+- Professional Watercolor Rendering: VALIDATION REQUIRED
+- Illustrator Pixel Equivalence: EXTERNAL VALIDATION PENDING
+- Paper/Pigment Physical Simulation: RESEARCH

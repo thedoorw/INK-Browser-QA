@@ -1,0 +1,12 @@
+{
+  "atomic": [
+    "B02-A-CREATE-FOCUS-LAYER"
+  ],
+  "composite": [
+    "B02-C-PREPARE-WATERCOLOR-ACTION-INPUT"
+  ],
+  "strategy": [
+    "B02-S-SEPARATE-STYLE-RESEARCH-FROM-VECTOR-VALIDATION",
+    "B02-S-CHOOSE-RASTER-RESEARCH-BOUNDARY"
+  ]
+}

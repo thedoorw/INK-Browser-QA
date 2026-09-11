@@ -1,0 +1,47 @@
+{
+  "layers": [
+    {
+      "id": "layer:wash",
+      "name": "Wash",
+      "blendMode": "multiply",
+      "objectCount": 2
+    },
+    {
+      "id": "layer:stems",
+      "name": "Stems and Leaves",
+      "blendMode": "multiply",
+      "objectCount": 9
+    },
+    {
+      "id": "layer:flower:left",
+      "name": "flower:left",
+      "blendMode": "darken",
+      "objectCount": 8
+    },
+    {
+      "id": "layer:flower:right",
+      "name": "flower:right",
+      "blendMode": "darken",
+      "objectCount": 8
+    },
+    {
+      "id": "layer:bud",
+      "name": "Bud",
+      "blendMode": "darken",
+      "objectCount": 2
+    },
+    {
+      "id": "layer:splatter",
+      "name": "Wash and Splatter",
+      "blendMode": "multiply",
+      "objectCount": 1
+    },
+    {
+      "id": "layer:paper-reference",
+      "name": "Paper Reference",
+      "blendMode": "source-over",
+      "objectCount": 1
+    }
+  ],
+  "objectCount": 279
+}

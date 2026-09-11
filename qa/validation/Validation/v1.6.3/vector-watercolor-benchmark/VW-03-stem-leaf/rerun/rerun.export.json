@@ -1,0 +1,20 @@
+{
+  "format": "INK-EXPORT-REPORT",
+  "version": "1.0",
+  "status": "PASS",
+  "files": {
+    "png": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/vector-watercolor-benchmark/VW-03-stem-leaf/rerun/rerun.png",
+      "bytes": 44775,
+      "sha256": "c3495ca932bb028ca9e99ef03cd81856c0ecf3a1e6d7921d4e7e0fe7243ee66a",
+      "backend": "CHROMIUM_CDP_CANONICAL_PNG"
+    },
+    "svg": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/vector-watercolor-benchmark/VW-03-stem-leaf/rerun/rerun.svg",
+      "bytes": 35335,
+      "sha256": "1b523c3e6fa2a904e6751793b7d4f9e6f6388976cc692e51b39674fe3d7798b8",
+      "backend": "INK_VECTOR_SVG"
+    }
+  },
+  "reusedExistingEvidence": true
+}

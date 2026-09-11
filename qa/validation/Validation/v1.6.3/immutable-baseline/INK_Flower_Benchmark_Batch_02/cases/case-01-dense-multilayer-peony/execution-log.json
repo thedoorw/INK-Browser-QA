@@ -1,0 +1,370 @@
+{
+  "caseId": "case-01-dense-multilayer-peony",
+  "status": "PASS",
+  "decision": "VALIDATION REQUIRED",
+  "workflow": [
+    "source verification",
+    "asset manifest",
+    "structural analysis",
+    "material selection",
+    "behavior plan",
+    "Recipe",
+    "Preview",
+    "Approval",
+    "Execute",
+    "SVG/PNG",
+    "Rerun",
+    "Parameter modification",
+    "Local recompute",
+    "Difference",
+    "Rollback",
+    "Decision",
+    "Fourfold update",
+    "Learning Delta"
+  ],
+  "deterministic": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/after-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/after-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/after-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "differences": {
+    "modificationDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 4340,
+      "totalPixels": 891662,
+      "changedRatio": 0.004867315193425311,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-local-edit.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-local-edit.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-local-edit.overlay.png"
+      },
+      "allZero": false
+    },
+    "countDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 33767,
+      "totalPixels": 891662,
+      "changedRatio": 0.03786973090700288,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/36-vs-39.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/36-vs-39.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/36-vs-39.overlay.png"
+      },
+      "allZero": false
+    },
+    "rollbackDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 0,
+      "totalPixels": 891662,
+      "changedRatio": 0,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-rollback.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-rollback.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-rollback.overlay.png"
+      },
+      "allZero": true
+    }
+  },
+  "rollback": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/comparisons/before-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "outputs": {
+    "before": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/before-36-petals/before-36-petals.svg",
+          "bytes": 35961,
+          "sha256": "4bf0016231131767cc1771c17d97cc490b2d51e349cd68be3859bfbd46b1e1b2",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/before-36-petals/before-36-petals.png",
+          "bytes": 42731,
+          "sha256": "9413e890c3bae17811ac4123a8ddea3548618181151733dc8fb4d68ae7bf7160",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 841,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/before-36-petals/before-36-petals.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit/after-local-outer-edit.svg",
+          "bytes": 35730,
+          "sha256": "bfea305ab11fa3a1aa9568b6609e7bdd43cf8d02fc5f6a2fb1b8a58512f40c18",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit/after-local-outer-edit.png",
+          "bytes": 43507,
+          "sha256": "d593ed8bf0ffb5088a2313a858b73d15303685da9539a943666e3dd0ff15ddd4",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 758,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit/after-local-outer-edit.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit-rerun/after-local-outer-edit-rerun.svg",
+          "bytes": 35730,
+          "sha256": "bfea305ab11fa3a1aa9568b6609e7bdd43cf8d02fc5f6a2fb1b8a58512f40c18",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit-rerun/after-local-outer-edit-rerun.png",
+          "bytes": 43507,
+          "sha256": "d593ed8bf0ffb5088a2313a858b73d15303685da9539a943666e3dd0ff15ddd4",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 863,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit-rerun/after-local-outer-edit-rerun.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "countChanged": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/count-change-39-petals/count-change-39-petals.svg",
+          "bytes": 38780,
+          "sha256": "b00390efe449842961aaa1920485cd48add03c14299de82016539d4d4d868cea",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/count-change-39-petals/count-change-39-petals.png",
+          "bytes": 44620,
+          "sha256": "ae12df020a4fdfda16f3e45d196ebe4973c4739e95ddca185a11babec9580ec7",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 752,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/count-change-39-petals/count-change-39-petals.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/rollback/rollback.svg",
+          "bytes": 35961,
+          "sha256": "4bf0016231131767cc1771c17d97cc490b2d51e349cd68be3859bfbd46b1e1b2",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/rollback/rollback.png",
+          "bytes": 42731,
+          "sha256": "9413e890c3bae17811ac4123a8ddea3548618181151733dc8fb4d68ae7bf7160",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 725,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "structure": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/structure-view/structure-view.svg",
+          "bytes": 35637,
+          "sha256": "c696c06c759657f69be9d5bb8a499f91863b5b3b62a95f573885c2d3aea7d83e",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/structure-view/structure-view.png",
+          "bytes": 69302,
+          "sha256": "72fbdeb5c93bc2935794b46ec77e59145bce1d19197027a22be5821d05742fab",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 785,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/structure-view/structure-view.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 21318
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  },
+  "externalGroundTruth": "Structural acceptance criteria; external visual Ground Truth unavailable"
+}

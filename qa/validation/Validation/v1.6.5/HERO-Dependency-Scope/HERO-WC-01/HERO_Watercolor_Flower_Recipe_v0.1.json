@@ -1,0 +1,203 @@
+{
+  "format": "INK-RECIPE",
+  "version": "1.0",
+  "id": "HERO_Watercolor_Flower_Recipe_v0.1",
+  "name": "HERO Watercolor Flower Recipe v0.1",
+  "producer": {
+    "name": "INK",
+    "version": "1.6.5-RC"
+  },
+  "deterministic": true,
+  "seed": 164100,
+  "executionBinding": "run-v165-hero-dependency-validation.mjs",
+  "parameters": {
+    "artboard": {
+      "default": {
+        "x": 0,
+        "y": 0,
+        "w": 1123,
+        "h": 794
+      }
+    },
+    "center": {
+      "default": {
+        "x": 785,
+        "y": 397
+      }
+    },
+    "paperOverlay": {
+      "default": true
+    },
+    "round": {
+      "default": 1,
+      "min": 1,
+      "max": 3
+    }
+  },
+  "steps": [
+    {
+      "id": "01-artboard",
+      "op": "document",
+      "params": {
+        "action": "create-artboard",
+        "preset": "A4 Landscape"
+      }
+    },
+    {
+      "id": "02-composition",
+      "op": "composition",
+      "params": {
+        "safeMargin": 38,
+        "intentionalCrop": true
+      }
+    },
+    {
+      "id": "03-center-axis",
+      "op": "path",
+      "params": {
+        "role": "focal-center"
+      }
+    },
+    {
+      "id": "04-family-A",
+      "op": "material",
+      "params": {
+        "action": "define-petal-family",
+        "family": "A"
+      }
+    },
+    {
+      "id": "05-family-B",
+      "op": "material",
+      "params": {
+        "action": "define-petal-family",
+        "family": "B"
+      }
+    },
+    {
+      "id": "06-family-C",
+      "op": "material",
+      "params": {
+        "action": "define-petal-family",
+        "family": "C"
+      }
+    },
+    {
+      "id": "07-family-D",
+      "op": "material",
+      "params": {
+        "action": "define-petal-family",
+        "family": "D"
+      }
+    },
+    {
+      "id": "08-outer",
+      "op": "repeat",
+      "params": {
+        "family": "B",
+        "count": 9
+      }
+    },
+    {
+      "id": "09-middle",
+      "op": "repeat",
+      "params": {
+        "family": "C",
+        "count": 8
+      }
+    },
+    {
+      "id": "10-inner",
+      "op": "repeat",
+      "params": {
+        "family": "D",
+        "count": 7
+      }
+    },
+    {
+      "id": "11-foreground",
+      "op": "repeat",
+      "params": {
+        "family": "A",
+        "count": 5
+      }
+    },
+    {
+      "id": "12-fold",
+      "op": "deformation",
+      "params": {
+        "reversible": true
+      }
+    },
+    {
+      "id": "13-brush",
+      "op": "brush",
+      "params": {
+        "materialLinks": [
+          "brush:hero:soft",
+          "brush:hero:broken",
+          "brush:hero:dense"
+        ]
+      }
+    },
+    {
+      "id": "14-pigment",
+      "op": "style",
+      "params": {
+        "pigmentDensity": true
+      }
+    },
+    {
+      "id": "15-occlusion",
+      "op": "hierarchy",
+      "params": {
+        "depthOrder": true
+      }
+    },
+    {
+      "id": "16-wash",
+      "op": "brush",
+      "params": {
+        "action": "irregular-wash"
+      }
+    },
+    {
+      "id": "17-splatter",
+      "op": "brush",
+      "params": {
+        "action": "natural-splatter"
+      }
+    },
+    {
+      "id": "18-paper",
+      "op": "brush",
+      "params": {
+        "action": "paper-overlay",
+        "optional": true,
+        "claim": "OVERLAY_ONLY"
+      }
+    },
+    {
+      "id": "19-recompute",
+      "op": "dependency",
+      "params": {
+        "action": "recompute-scope"
+      }
+    },
+    {
+      "id": "20-export",
+      "op": "export",
+      "params": {
+        "formats": [
+          "svg",
+          "png"
+        ]
+      }
+    }
+  ],
+  "compatibility": {
+    "documentFormat": 4,
+    "recipeSchema": "1.0",
+    "migrationRequired": false
+  }
+}

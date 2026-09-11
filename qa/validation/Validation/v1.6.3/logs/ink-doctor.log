@@ -1,0 +1,274 @@
+
+> ink-core-main-program@1.6.3-rc.1 ink:doctor
+> node scripts/ink-doctor.mjs --output /mnt/data/INK_v1.6.3_logs/ink-doctor.json
+
+{
+  "format": "INK-DOCTOR-REPORT",
+  "version": "1.6.3",
+  "status": "PASS",
+  "code": null,
+  "node": {
+    "version": "v22.16.0",
+    "supported": true
+  },
+  "sections": {
+    "CORE": {
+      "status": "PASS",
+      "checks": {
+        "node": {
+          "status": "PASS",
+          "version": "v22.16.0",
+          "supportedRange": ">=22.0.0 <25"
+        },
+        "writePermission": "PASS",
+        "temporaryDirectory": {
+          "status": "PASS",
+          "path": "/tmp"
+        },
+        "runtimeModules": {
+          "status": "PASS",
+          "path": "src/ink.js"
+        },
+        "recipeEngine": {
+          "status": "PASS",
+          "path": "src/recipe/recipe-engine.js"
+        },
+        "recipeSchema": {
+          "status": "PASS",
+          "path": "schemas/ink-recipe-v1.schema.json"
+        },
+        "semanticModel": {
+          "status": "PASS",
+          "path": "src/semantic/semantic-model.js"
+        },
+        "dependencyGraph": {
+          "status": "PASS",
+          "path": "src/recompute/dependency-graph.js"
+        },
+        "materialLibrary": {
+          "status": "PASS",
+          "path": "src/material/material-library.js"
+        },
+        "repeatIdentity": {
+          "status": "PASS",
+          "path": "src/repeat/repeat-identity.js"
+        },
+        "pngCodec": {
+          "status": "PASS",
+          "path": "src/compare/png-codec.js"
+        },
+        "expressionIR": {
+          "status": "PASS",
+          "path": "src/program-import/expression-ir.js"
+        },
+        "deformation": {
+          "status": "PASS",
+          "path": "src/vector/deformation.js"
+        },
+        "compositionConstraints": {
+          "status": "PASS",
+          "path": "src/composition/composition-constraints.js"
+        },
+        "vectorWatercolor": {
+          "status": "PASS",
+          "path": "src/paint/vector-watercolor.js"
+        },
+        "svgIdNormalizer": {
+          "status": "PASS",
+          "path": "src/vector/svg-id-normalizer.js"
+        },
+        "vendoredPolygonClipping": {
+          "status": "PASS",
+          "path": "src/vendor/polygon-clipping.umd.min.js"
+        },
+        "rollback": {
+          "status": "PASS",
+          "path": "src/history/history.js"
+        },
+        "semanticValidation": "PASS",
+        "dependencyGraphValidation": {
+          "status": "PASS",
+          "missingDependencies": []
+        }
+      }
+    },
+    "WEB": {
+      "status": "PASS",
+      "checks": {
+        "webEntry": {
+          "status": "PASS",
+          "path": "index.html"
+        },
+        "standaloneEntry": {
+          "status": "PASS",
+          "path": "index-standalone.html"
+        },
+        "compatBundle": {
+          "status": "PASS",
+          "path": "dist/ink.compat.js"
+        }
+      }
+    },
+    "HEADLESS": {
+      "status": "PASS",
+      "checks": {
+        "headlessRuntime": {
+          "status": "PASS",
+          "path": "src/headless/headless-runtime.js"
+        },
+        "canonicalRenderer": {
+          "status": "PASS",
+          "path": "src/headless/chromium-cdp-renderer.js"
+        },
+        "cliEntry": {
+          "status": "PASS",
+          "path": "scripts/ink-cli.mjs"
+        },
+        "session": {
+          "status": "PASS",
+          "path": "src/headless/session-manager.js"
+        },
+        "structuralQA": {
+          "status": "PASS",
+          "path": "src/headless/structural-qa.js"
+        },
+        "visualQA": {
+          "status": "PASS",
+          "path": "src/headless/visual-qa.js"
+        },
+        "chromiumExecutable": {
+          "status": "PASS",
+          "path": "/usr/bin/chromium"
+        },
+        "sessionPersistence": "PASS"
+      }
+    },
+    "EXPORT": {
+      "status": "PASS",
+      "checks": {
+        "exportBackend": {
+          "status": "PASS",
+          "path": "src/headless/export-runner.js"
+        },
+        "svg": "PASS",
+        "png": "PASS",
+        "canonicalRenderer": {
+          "status": "PASS",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG"
+        },
+        "deterministicSvg": "PASS",
+        "deterministicPng": "PASS"
+      }
+    },
+    "TEST": {
+      "status": "PASS",
+      "checks": {
+        "unitRegression": {
+          "status": "PASS",
+          "path": "tests/unit"
+        },
+        "headlessRegression": {
+          "status": "PASS",
+          "path": "tests/headless"
+        },
+        "v160Regression": {
+          "status": "PASS",
+          "path": "tests/v160"
+        },
+        "v161Regression": {
+          "status": "PASS",
+          "path": "tests/v161"
+        },
+        "v162Regression": {
+          "status": "PASS",
+          "path": "tests/v162"
+        },
+        "v163Regression": {
+          "status": "PASS",
+          "path": "tests/v163"
+        },
+        "v163IdRegression": {
+          "status": "PASS",
+          "path": "tests/v163-id"
+        }
+      }
+    },
+    "ASSETS": {
+      "status": "PASS",
+      "checks": {
+        "assetManifest": {
+          "status": "PASS",
+          "path": "ASSET_MANIFEST.json"
+        },
+        "materialTemplates": {
+          "status": "PASS",
+          "path": "assets/material/flower-batch-01-templates-v1.6.2.json"
+        },
+        "behaviorMapping": {
+          "status": "PASS",
+          "path": "assets/behavior/flower-vector-structure-v1.6.2.json"
+        },
+        "vectorWatercolorBehaviorCandidates": {
+          "status": "PASS",
+          "path": "assets/behavior/vector-watercolor-candidates-v1.6.3.json"
+        },
+        "vectorWatercolorMaterialCandidates": {
+          "status": "PASS",
+          "path": "assets/material/vector-watercolor-candidates-v1.6.3.json"
+        },
+        "jsxModuleCandidates": {
+          "status": "PASS",
+          "path": "assets/program-modules/illustrator-jsx-module-candidates-v1.6.3.json"
+        },
+        "videoTimeline": {
+          "status": "PASS",
+          "path": "INTELLIGENCE_CANDIDATES/Video_Observed_Behaviors/Illustrator_Vector_Watercolor_Video_Timeline.json"
+        },
+        "videoDerivedRecipe": {
+          "status": "PASS",
+          "path": "INTELLIGENCE_CANDIDATES/Video_Derived_Recipes/Illustrator_Vector_Watercolor_Flower_Video_Derived_Recipe_v0.2.json"
+        },
+        "videoBenchmarkSummary": {
+          "status": "PASS",
+          "path": "Validation/v1.6.3/VW-VIDEO-01/VW-VIDEO-01-summary.json"
+        },
+        "case5NormalizationSummary": {
+          "status": "PASS",
+          "path": "Validation/v1.6.3/case-05-id-normalization/Case_5_ID_Normalization_Summary.json"
+        },
+        "manifestAudit": {
+          "status": "PASS",
+          "summary": null
+        }
+      }
+    },
+    "DEPENDENCIES": {
+      "status": "PASS",
+      "checks": {
+        "packageLock": {
+          "status": "PASS",
+          "lockfileVersion": 3,
+          "packageEntries": 0,
+          "packageVersion": "1.6.3-rc.1"
+        },
+        "requiredNpmDependencies": {
+          "status": "PASS",
+          "dependencies": []
+        },
+        "requiredDevDependencies": {
+          "status": "PASS",
+          "devDependencies": []
+        }
+      }
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "installCommand": "npm ci",
+  "runtimeDependencyMode": "BUNDLED_MODULES_AND_SYSTEM_CHROMIUM",
+  "limitations": [
+    "Vector Watercolor is a deterministic editable procedural-equivalence implementation; the exact external Illustrator brush asset and pixel-equivalent Illustrator ground truth remain pending.",
+    "The package PNG codec supports non-interlaced 8-bit RGB/RGBA PNG.",
+    "Canonical PNG export requires a compatible system Chromium executable."
+  ]
+}

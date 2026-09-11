@@ -1,0 +1,13 @@
+{
+  "format": "INK-HERO-DEP-001-ROOT-CAUSE-SUMMARY",
+  "version": "1.0",
+  "status": "RESOLVED",
+  "gapId": "HERO-DEP-001",
+  "primaryCause": "Coarse dependency edges did not distinguish change domains and did not traverse nested Brush Composite descendants deterministically.",
+  "leakedScopeCause": "Ancestor/descendant traversal treated geometry, material, style and semantic consequences through a common coarse scope.",
+  "persistenceStatus": "Save/load and replay retain domain and edge metadata after remediation.",
+  "schemaChanged": false,
+  "documentFormat": 4,
+  "recipeSchema": "1.0",
+  "migrationRequired": false
+}

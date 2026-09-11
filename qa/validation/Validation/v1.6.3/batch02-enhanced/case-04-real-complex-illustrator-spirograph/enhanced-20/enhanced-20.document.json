@@ -1,0 +1,2054 @@
+{
+  "format": "INK",
+  "formatVersion": 4,
+  "appVersion": "1.6.3-RC",
+  "id": "doc:spirograph-20",
+  "title": "Spirograph 20",
+  "createdAt": "2026-08-05T13:30:00.000Z",
+  "modifiedAt": "2026-08-05T13:30:00.000Z",
+  "activePageId": "page:main",
+  "pages": [
+    {
+      "id": "page:main",
+      "name": "頁面 1",
+      "artboard": {
+        "mode": "fixed",
+        "preset": "A4",
+        "orientation": "portrait",
+        "widthMm": 210,
+        "heightMm": 297,
+        "ppi": 300,
+        "bleedMm": 0,
+        "safeMarginMm": 10,
+        "unit": "mm",
+        "showBleed": true,
+        "showSafeArea": true,
+        "showCenter": true,
+        "clipContent": true
+      },
+      "workspace": {
+        "activeSpace": "creation",
+        "showLayoutFrameInCreation": false,
+        "layoutViewport": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameras": {
+          "creation": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "scale": 0.65,
+            "rotation": 0
+          }
+        },
+        "visited": {
+          "creation": true,
+          "layout": false
+        }
+      },
+      "paper": {
+        "type": "blank",
+        "color": "#fffef9",
+        "gridSize": 32,
+        "absorbency": 0.58,
+        "roughness": 0.42,
+        "fiberStrength": 0.36,
+        "fiberAngle": 0,
+        "sizing": 0.28,
+        "granulation": 0.32,
+        "seed": 1337,
+        "textureVisible": true
+      },
+      "camera": {
+        "x": 0,
+        "y": 0,
+        "scale": 1,
+        "rotation": 0
+      },
+      "layers": [
+        {
+          "id": "layer:main",
+          "name": "Main",
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "blendMode": "source-over",
+          "objects": [
+            {
+              "id": "spiro:0",
+              "type": "path",
+              "name": "spiro:0",
+              "matrix": [
+                0.9980970395297927,
+                0.06166279009146004,
+                -0.06166279009146004,
+                0.9980970395297927,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:0_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_84comuq",
+                      "x": 632,
+                      "y": 470,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_ejm5gty",
+                      "x": 517,
+                      "y": 500,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_yx2z8rq",
+                      "x": 402,
+                      "y": 470,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_icgjmvi",
+                      "x": 517,
+                      "y": 440,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:1",
+              "type": "path",
+              "name": "spiro:1",
+              "matrix": [
+                0.9375283542465278,
+                0.3479088745401547,
+                -0.3479088745401547,
+                0.9375283542465278,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:1_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_7gbc9k4",
+                      "x": 626.1267819554184,
+                      "y": 507.0820393249937,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_22r20ey",
+                      "x": 511.12678195541844,
+                      "y": 537.0820393249937,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_j3y450v",
+                      "x": 396.12678195541844,
+                      "y": 507.0820393249937,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_3c8q336",
+                      "x": 511.12678195541844,
+                      "y": 477.0820393249937,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:2",
+              "type": "path",
+              "name": "spiro:2",
+              "matrix": [
+                0.8381143827561273,
+                0.5454945292276686,
+                -0.5454945292276686,
+                0.8381143827561273,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:2_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_zu40a1m",
+                      "x": 609.0820393249937,
+                      "y": 540.5342302750968,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_uph9r1k",
+                      "x": 494.08203932499373,
+                      "y": 570.5342302750968,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_89ev5s1",
+                      "x": 379.08203932499373,
+                      "y": 540.5342302750968,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_hept7lr",
+                      "x": 494.08203932499373,
+                      "y": 510.5342302750968,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:3",
+              "type": "path",
+              "name": "spiro:3",
+              "matrix": [
+                0.6391237663630188,
+                0.7691039014788245,
+                -0.7691039014788245,
+                0.6391237663630188,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:3_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_ja68ul6",
+                      "x": 582.5342302750968,
+                      "y": 567.0820393249937,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_12m7n0k",
+                      "x": 467.5342302750968,
+                      "y": 597.0820393249937,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_w0gbnq9",
+                      "x": 352.5342302750968,
+                      "y": 567.0820393249937,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_oipnqsq",
+                      "x": 467.5342302750968,
+                      "y": 537.0820393249937,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:4",
+              "type": "path",
+              "name": "spiro:4",
+              "matrix": [
+                0.36634452560900965,
+                0.9304792789505362,
+                -0.9304792789505362,
+                0.36634452560900965,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:4_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_w533oet",
+                      "x": 549.0820393249937,
+                      "y": 584.1267819554184,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_amarm9j",
+                      "x": 434.0820393249937,
+                      "y": 614.1267819554184,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_ish3geq",
+                      "x": 319.0820393249937,
+                      "y": 584.1267819554184,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_orpty3y",
+                      "x": 434.0820393249937,
+                      "y": 554.1267819554184,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:5",
+              "type": "path",
+              "name": "spiro:5",
+              "matrix": [
+                0.04023344939738202,
+                0.9991903069733955,
+                -0.9991903069733955,
+                0.04023344939738202,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:5_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_1to217v",
+                      "x": 512,
+                      "y": 590,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_6ibcmba",
+                      "x": 397,
+                      "y": 620,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_0kzdwgd",
+                      "x": 282,
+                      "y": 590,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_8ac93sp",
+                      "x": 397,
+                      "y": 560,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:6",
+              "type": "path",
+              "name": "spiro:6",
+              "matrix": [
+                -0.326565488545508,
+                0.9451745773617876,
+                -0.9451745773617876,
+                -0.326565488545508,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:6_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_dqq3874",
+                      "x": 474.9179606750063,
+                      "y": 584.1267819554184,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_mucpunx",
+                      "x": 359.9179606750063,
+                      "y": 614.1267819554184,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_yntm7ww",
+                      "x": 244.91796067500633,
+                      "y": 584.1267819554184,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_upk0xmt",
+                      "x": 359.9179606750063,
+                      "y": 554.1267819554184,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:7",
+              "type": "path",
+              "name": "spiro:7",
+              "matrix": [
+                -0.6419318556594735,
+                0.7667616922418495,
+                -0.7667616922418495,
+                -0.6419318556594735,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:7_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_p2idcju",
+                      "x": 441.4657697249032,
+                      "y": 567.0820393249937,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_7cy95qj",
+                      "x": 326.4657697249032,
+                      "y": 597.0820393249937,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_624ssbr",
+                      "x": 211.46576972490323,
+                      "y": 567.0820393249937,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_8kzjokg",
+                      "x": 326.4657697249032,
+                      "y": 537.0820393249937,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:8",
+              "type": "path",
+              "name": "spiro:8",
+              "matrix": [
+                -0.8263619543249763,
+                0.5631393437189465,
+                -0.5631393437189465,
+                -0.8263619543249763,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:8_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_np1x2x6",
+                      "x": 414.9179606750063,
+                      "y": 540.5342302750968,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_ys5w77v",
+                      "x": 299.9179606750063,
+                      "y": 570.5342302750968,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_6yg2dco",
+                      "x": 184.91796067500633,
+                      "y": 540.5342302750968,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_ca4msaa",
+                      "x": 299.9179606750063,
+                      "y": 510.5342302750968,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:9",
+              "type": "path",
+              "name": "spiro:9",
+              "matrix": [
+                -0.9556782066849845,
+                0.29441325593011597,
+                -0.29441325593011597,
+                -0.9556782066849845,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:9_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rne_mf834yu",
+                      "x": 397.87321804458156,
+                      "y": 507.08203932499373,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_rmbq1kk",
+                      "x": 282.87321804458156,
+                      "y": 537.0820393249937,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_7xg7btd",
+                      "x": 167.87321804458156,
+                      "y": 507.08203932499373,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rne_rhkmqip",
+                      "x": 282.87321804458156,
+                      "y": 477.08203932499373,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:10",
+              "type": "path",
+              "name": "spiro:10",
+              "matrix": [
+                -0.9985082010040066,
+                0.054601946190061125,
+                -0.054601946190061125,
+                -0.9985082010040066,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:10_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_zu4k7wb",
+                      "x": 392,
+                      "y": 470,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_0jqcow7",
+                      "x": 277,
+                      "y": 500,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_b7lgor1",
+                      "x": 162,
+                      "y": 470,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_v8cf01i",
+                      "x": 277,
+                      "y": 440,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:11",
+              "type": "path",
+              "name": "spiro:11",
+              "matrix": [
+                -0.9631294328043626,
+                -0.2690384650304615,
+                0.2690384650304615,
+                -0.9631294328043626,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:11_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_4byc9vg",
+                      "x": 397.87321804458156,
+                      "y": 432.9179606750063,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_55vq33w",
+                      "x": 282.87321804458156,
+                      "y": 462.9179606750063,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_d8ytvid",
+                      "x": 167.87321804458156,
+                      "y": 432.9179606750063,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_2xhh9zj",
+                      "x": 282.87321804458156,
+                      "y": 402.9179606750063,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:12",
+              "type": "path",
+              "name": "spiro:12",
+              "matrix": [
+                -0.785980428719516,
+                -0.6182513774104235,
+                0.6182513774104235,
+                -0.785980428719516,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:12_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_ybwli9a",
+                      "x": 414.91796067500627,
+                      "y": 399.4657697249032,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_zhqqj9h",
+                      "x": 299.91796067500627,
+                      "y": 429.4657697249032,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_6pltldl",
+                      "x": 184.91796067500627,
+                      "y": 399.4657697249032,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_b0lpnd9",
+                      "x": 299.91796067500627,
+                      "y": 369.4657697249032,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:13",
+              "type": "path",
+              "name": "spiro:13",
+              "matrix": [
+                -0.5376978716467617,
+                -0.8431375918713045,
+                0.8431375918713045,
+                -0.5376978716467617,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:13_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_a006nrk",
+                      "x": 441.4657697249032,
+                      "y": 372.9179606750063,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_awjxgkq",
+                      "x": 326.4657697249032,
+                      "y": 402.9179606750063,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_mtqwllc",
+                      "x": 211.46576972490323,
+                      "y": 372.9179606750063,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_p4z8zj1",
+                      "x": 326.4657697249032,
+                      "y": 342.9179606750063,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:14",
+              "type": "path",
+              "name": "spiro:14",
+              "matrix": [
+                -0.2489600005741975,
+                -0.9685137676430292,
+                0.9685137676430292,
+                -0.2489600005741975,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:14_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_5atnrve",
+                      "x": 474.91796067500627,
+                      "y": 355.87321804458156,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_foe4s62",
+                      "x": 359.91796067500627,
+                      "y": 385.87321804458156,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_q21ajl0",
+                      "x": 244.91796067500627,
+                      "y": 355.87321804458156,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_arnws3l",
+                      "x": 359.91796067500627,
+                      "y": 325.87321804458156,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:15",
+              "type": "path",
+              "name": "spiro:15",
+              "matrix": [
+                0.04229220929989727,
+                -0.9991052842581375,
+                0.9991052842581375,
+                0.04229220929989727,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:15_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_1wud82y",
+                      "x": 512,
+                      "y": 350,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_obb8gcw",
+                      "x": 397,
+                      "y": 380,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_7ulele5",
+                      "x": 282,
+                      "y": 350,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_hrbihom",
+                      "x": 397,
+                      "y": 320,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:16",
+              "type": "path",
+              "name": "spiro:16",
+              "matrix": [
+                0.25887760224953116,
+                -0.9659101340463996,
+                0.9659101340463996,
+                0.25887760224953116,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:16_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_ip2ztpm",
+                      "x": 549.0820393249937,
+                      "y": 355.87321804458156,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_e63rrax",
+                      "x": 434.0820393249937,
+                      "y": 385.87321804458156,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_72t1tmj",
+                      "x": 319.0820393249937,
+                      "y": 355.87321804458156,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_0hxegzv",
+                      "x": 434.0820393249937,
+                      "y": 325.87321804458156,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:17",
+              "type": "path",
+              "name": "spiro:17",
+              "matrix": [
+                0.5328269709246647,
+                -0.846224213229122,
+                0.846224213229122,
+                0.5328269709246647,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:17_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_x1oek22",
+                      "x": 582.5342302750968,
+                      "y": 372.91796067500627,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_0inguib",
+                      "x": 467.5342302750968,
+                      "y": 402.91796067500627,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_2dz89t2",
+                      "x": 352.5342302750968,
+                      "y": 372.91796067500627,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_e8ejacr",
+                      "x": 467.5342302750968,
+                      "y": 342.91796067500627,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:18",
+              "type": "path",
+              "name": "spiro:18",
+              "matrix": [
+                0.7795249226846492,
+                -0.6263712117534551,
+                0.6263712117534551,
+                0.7795249226846492,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#72569c",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:18_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_brmov1p",
+                      "x": 609.0820393249937,
+                      "y": 399.4657697249032,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_5a0u6dt",
+                      "x": 494.0820393249937,
+                      "y": 429.4657697249032,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_ppss7uu",
+                      "x": 379.0820393249937,
+                      "y": 399.4657697249032,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_xkud3k7",
+                      "x": 494.0820393249937,
+                      "y": 369.4657697249032,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            },
+            {
+              "id": "spiro:19",
+              "type": "path",
+              "name": "spiro:19",
+              "matrix": [
+                0.9302929369980146,
+                -0.36681746328604375,
+                0.36681746328604375,
+                0.9302929369980146,
+                0,
+                0
+              ],
+              "opacity": 0.36,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#b94d70",
+              "strokeWidth": 1.6,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "spiro:19_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu6rnf_hb5nba8",
+                      "x": 626.1267819554184,
+                      "y": 432.91796067500627,
+                      "in": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_3562ivs",
+                      "x": 511.12678195541844,
+                      "y": 462.91796067500627,
+                      "in": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_t8qx5pf",
+                      "x": 396.12678195541844,
+                      "y": 432.91796067500627,
+                      "in": {
+                        "x": 0,
+                        "y": 16.568542494
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -16.568542494
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu6rnf_5djbwbz",
+                      "x": 511.12678195541844,
+                      "y": 402.91796067500627,
+                      "in": {
+                        "x": -63.512746226999994,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 63.512746226999994,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "primitive": "ellipse"
+              }
+            }
+          ]
+        }
+      ],
+      "activeLayerId": "layer:main"
+    }
+  ],
+  "programAssets": [],
+  "referencePackages": [],
+  "strokeSessions": [],
+  "brushPackages": [],
+  "vectorBrushLibrary": {
+    "format": "INK-VECTOR-BRUSH-LIBRARY",
+    "version": "1.0",
+    "materials": []
+  },
+  "handDrawingReports": [],
+  "deviceCalibrationProfiles": [],
+  "deviceValidationReports": [],
+  "interactivePerformanceReports": [],
+  "ai": {
+    "permission": "PROPOSE",
+    "selection": [],
+    "semanticTargets": [],
+    "unresolvedTargets": [],
+    "checkpoints": [],
+    "recipes": [],
+    "audit": [],
+    "variants": [],
+    "missingDependencies": []
+  },
+  "semanticModel": {
+    "format": "INK-SEMANTIC-MODEL",
+    "version": "1.0",
+    "migrationStrategy": "NATIVE",
+    "relationshipGraph": {
+      "format": "INK-SEMANTIC-RELATIONSHIP-GRAPH",
+      "version": "1.0",
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "materialLibrary": {
+    "format": "INK-MATERIAL-LIBRARY",
+    "version": "1.0",
+    "templates": []
+  },
+  "dependencyModel": {
+    "format": "INK-DOCUMENT-DEPENDENCY-MODEL",
+    "version": "1.0",
+    "edges": []
+  },
+  "assetManifest": {
+    "format": "INK-DOCUMENT-ASSET-MANIFEST",
+    "version": "1.0",
+    "mode": "Linked Document",
+    "assets": []
+  },
+  "deviceReplayProfileSelection": "ORIGINAL_OR_CURRENT_SELECTABLE",
+  "drawingGapRanking": null,
+  "recentColors": [
+    "#202020",
+    "#ffffff",
+    "#b63c36",
+    "#d18b2f",
+    "#d7c64b",
+    "#3d875d",
+    "#2f718f",
+    "#594f9a"
+  ]
+}

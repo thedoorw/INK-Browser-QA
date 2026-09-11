@@ -1,0 +1,20 @@
+{
+  "format": "INK-EXPORT-REPORT",
+  "version": "1.0",
+  "status": "PASS",
+  "files": {
+    "png": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/vector-watercolor-benchmark/VW-02-multilayer-corolla/rerun/rerun.png",
+      "bytes": 81241,
+      "sha256": "83865c3b9a5126f6dea290ba6f9b3aa7e946ef4c86e401242ddfdfc637fc1a55",
+      "backend": "CHROMIUM_CDP_CANONICAL_PNG"
+    },
+    "svg": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/vector-watercolor-benchmark/VW-02-multilayer-corolla/rerun/rerun.svg",
+      "bytes": 74967,
+      "sha256": "fad5c50aca93af96d05eec0154758f0d8a96b4d6ec96ddc6e005014820b64847",
+      "backend": "INK_VECTOR_SVG"
+    }
+  },
+  "reusedExistingEvidence": true
+}

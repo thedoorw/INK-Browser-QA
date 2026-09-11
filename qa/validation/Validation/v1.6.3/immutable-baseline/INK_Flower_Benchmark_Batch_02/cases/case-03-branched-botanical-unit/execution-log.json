@@ -1,0 +1,370 @@
+{
+  "caseId": "case-03-branched-botanical-unit",
+  "status": "PASS",
+  "decision": "VALIDATION REQUIRED",
+  "workflow": [
+    "source verification",
+    "asset manifest",
+    "structural analysis",
+    "material selection",
+    "behavior plan",
+    "Recipe",
+    "Preview",
+    "Approval",
+    "Execute",
+    "SVG/PNG",
+    "Rerun",
+    "Parameter modification",
+    "Local recompute",
+    "Difference",
+    "Rollback",
+    "Decision",
+    "Fourfold update",
+    "Learning Delta"
+  ],
+  "deterministic": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/parent-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/parent-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/parent-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "differences": {
+    "parentDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 67439,
+      "totalPixels": 891662,
+      "changedRatio": 0.07563291920032479,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-parent-transform.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-parent-transform.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-parent-transform.overlay.png"
+      },
+      "allZero": false
+    },
+    "leafDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 1379,
+      "totalPixels": 891662,
+      "changedRatio": 0.0015465501501690103,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-single-leaf.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-single-leaf.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-single-leaf.overlay.png"
+      },
+      "allZero": false
+    },
+    "rollbackDifference": {
+      "width": 794,
+      "height": 1123,
+      "changedPixels": 0,
+      "totalPixels": 891662,
+      "changedRatio": 0,
+      "threshold": 0,
+      "files": {
+        "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-rollback.difference.png",
+        "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-rollback.side-by-side.png",
+        "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-rollback.overlay.png"
+      },
+      "allZero": true
+    }
+  },
+  "rollback": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/comparisons/before-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "outputs": {
+    "before": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/before/before.svg",
+          "bytes": 35020,
+          "sha256": "0836ad00ef7353ea3fb2be37ebf3c5b8e19dff3b2c50c4fef483fe1d561e92b0",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/before/before.png",
+          "bytes": 54172,
+          "sha256": "7f9527b048b438a5a6777819d878a868d4c74743b8d65ba25c297d4f33f96ae5",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 748,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/before/before.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform/after-parent-transform.svg",
+          "bytes": 35066,
+          "sha256": "d38daccfd3d0fb34e66eb559b1d09b224c711e6bcfb6ca006c7d154237214082",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform/after-parent-transform.png",
+          "bytes": 77608,
+          "sha256": "bb67f380b3183ccdb0d4f3a2afda98bd243c7a5c2c977c09f64c7c1747c35681",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 711,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform/after-parent-transform.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "leafEdit": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-single-detached-leaf-edit/after-single-detached-leaf-edit.svg",
+          "bytes": 35020,
+          "sha256": "1123596e0d9be01980b4c22acdfd01b67b9711eb6b5242bb44e7cbf7e84213dc",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-single-detached-leaf-edit/after-single-detached-leaf-edit.png",
+          "bytes": 54586,
+          "sha256": "2188b887ce8476155955b5fff2f6193f395fe74ce5e84269f676335e4018fe73",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 790,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-single-detached-leaf-edit/after-single-detached-leaf-edit.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform-rerun/after-parent-transform-rerun.svg",
+          "bytes": 35066,
+          "sha256": "d38daccfd3d0fb34e66eb559b1d09b224c711e6bcfb6ca006c7d154237214082",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform-rerun/after-parent-transform-rerun.png",
+          "bytes": 77608,
+          "sha256": "bb67f380b3183ccdb0d4f3a2afda98bd243c7a5c2c977c09f64c7c1747c35681",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 764,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform-rerun/after-parent-transform-rerun.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/rollback/rollback.svg",
+          "bytes": 35020,
+          "sha256": "0836ad00ef7353ea3fb2be37ebf3c5b8e19dff3b2c50c4fef483fe1d561e92b0",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/rollback/rollback.png",
+          "bytes": 54172,
+          "sha256": "7f9527b048b438a5a6777819d878a868d4c74743b8d65ba25c297d4f33f96ae5",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 876,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "structure": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/structure-view/structure-view.svg",
+          "bytes": 34929,
+          "sha256": "715907f43303300e230c89e2a7ff926305070e871f1ced6529a56c1cc3f08022",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/structure-view/structure-view.png",
+          "bytes": 60768,
+          "sha256": "54cfc67f209f584f2bdb55211281791390b8de59a1b6ffe78648be5d540b76aa",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 769,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/structure-view/structure-view.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 25128
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  },
+  "externalGroundTruth": "Structural acceptance criteria; external botanical Ground Truth unavailable"
+}

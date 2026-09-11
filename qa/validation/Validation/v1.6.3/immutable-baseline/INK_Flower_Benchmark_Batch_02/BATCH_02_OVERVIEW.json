@@ -1,0 +1,122 @@
+{
+  "batchId": "INK-FLOWER-BENCHMARK-BATCH-02",
+  "inkBaseline": "INK v1.6.2 RC MAIN",
+  "executedAt": "2026-08-05T12:00:00.000Z",
+  "runtimeModified": false,
+  "excelModified": false,
+  "caseCount": 6,
+  "passCount": 6,
+  "decision": "VALIDATION REQUIRED",
+  "caseSummaries": [
+    {
+      "caseId": "case-01-dense-multilayer-peony",
+      "status": "PASS",
+      "decision": "VALIDATION REQUIRED",
+      "complexity": {
+        "petalInstances": 36,
+        "rings": 3,
+        "templateFamilies": 4,
+        "nonuniform": true,
+        "crossRingOcclusion": true,
+        "manualStrategyCorrection": 1
+      },
+      "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit/after-local-outer-edit.png"
+    },
+    {
+      "caseId": "case-02-three-quarter-tulip",
+      "status": "PASS",
+      "decision": "VALIDATION REQUIRED",
+      "complexity": {
+        "viewpoint": "3/4",
+        "petals": 8,
+        "perspectiveShortening": true,
+        "centerOffset": {
+          "x": 33,
+          "y": -61
+        },
+        "foldedPetals": 2,
+        "hiddenPetal": true,
+        "calyx": true
+      },
+      "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.png"
+    },
+    {
+      "caseId": "case-03-branched-botanical-unit",
+      "status": "PASS",
+      "decision": "VALIDATION REQUIRED",
+      "complexity": {
+        "hierarchyDepth": 5,
+        "leaves": 6,
+        "branches": 2,
+        "mainFlower": 1,
+        "halfOpenFlower": 1,
+        "bud": 1,
+        "asymmetricLeaves": true,
+        "branchOcclusion": true
+      },
+      "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-03-branched-botanical-unit/outputs/after-parent-transform/after-parent-transform.png"
+    },
+    {
+      "caseId": "case-04-real-complex-illustrator-spirograph",
+      "status": "PASS",
+      "decision": "VALIDATION REQUIRED",
+      "complexity": {
+        "loopCount": 20,
+        "generatedObjectCount": 80,
+        "modifiedObjectCount": 96,
+        "nontrivialControlFlow": true,
+        "randomColorAndMath": true
+      },
+      "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-04-real-complex-illustrator-spirograph/outputs/after-24-loops-radius-285/after-24-loops-radius-285.png"
+    },
+    {
+      "caseId": "case-05-botanical-hero-poster",
+      "status": "PASS",
+      "decision": "VALIDATION REQUIRED",
+      "complexity": {
+        "fullArtwork": true,
+        "mainFlowerPetals": 36,
+        "secondaryBuds": 2,
+        "layers": 6,
+        "foregroundMidgroundBackground": true,
+        "semanticRoles": true,
+        "asymmetricComposition": true
+      },
+      "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-05-botanical-hero-poster/outputs/after-main-flower-edit/after-main-flower-edit.png"
+    },
+    {
+      "caseId": "case-06-real-watercolor-procedure-research",
+      "status": "PASS",
+      "decision": "RESEARCH",
+      "complexity": {},
+      "mainOutput": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-06-real-watercolor-procedure-research/outputs/setup-focus-layer/setup-focus-layer.png"
+    }
+  ],
+  "complexity": {
+    "maximumPetalInstances": 36,
+    "maximumHierarchyDepth": 5,
+    "realJSX": true,
+    "completeArtwork": true,
+    "realWatercolorProcedureResearch": true,
+    "asymmetricCaseCount": 4
+  },
+  "fourfoldCounts": {
+    "capabilityStatements": 24,
+    "gaps": 10,
+    "atomicBehaviors": 6,
+    "compositeBehaviors": 10,
+    "strategyBehaviors": 7,
+    "materialsAndStructures": 21
+  },
+  "mainProgramRecommendation": "集中補強",
+  "recommendation": "First estimate a compact vector-intelligence increment for Perspective/Fold, composition constraints and deterministic complex-JSX mappings. Keep Raster/Watercolor as a separate minimal evidence-led research scope; do not merge it into the same Runtime change without additional real procedures.",
+  "regression": {
+    "npmCi": "PASS",
+    "v160": "7/7 PASS",
+    "Fleurify": "2/2 PASS",
+    "v162": "8/8 PASS",
+    "Batch01": "6/6 PASS",
+    "Batch02": "6/6 PASS",
+    "inkDoctor": "PASS"
+  }
+}

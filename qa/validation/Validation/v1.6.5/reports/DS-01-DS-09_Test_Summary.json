@@ -1,0 +1,55 @@
+{
+  "format": "INK-V1.6.5-DEPENDENCY-SCOPE-TEST-SUMMARY",
+  "version": "1.0",
+  "status": "PASS",
+  "tests": [
+    {
+      "id": "DS-01",
+      "status": "PASS",
+      "evidence": "parent geometry reaches all nested brush descendants; unrelated petals/wash/splatter/paper excluded"
+    },
+    {
+      "id": "DS-02",
+      "status": "PASS",
+      "evidence": "material-only update leaves source geometry and unrelated brush unchanged"
+    },
+    {
+      "id": "DS-03",
+      "status": "PASS",
+      "evidence": "attached child follows transform; detached child excluded; material definition preserved"
+    },
+    {
+      "id": "DS-04",
+      "status": "PASS",
+      "evidence": "three-level Flower\u2192Family\u2192Petal\u2192Brush propagation complete with trace"
+    },
+    {
+      "id": "DS-05",
+      "status": "PASS",
+      "evidence": "wash, splatter and paper siblings isolated from petal geometry change"
+    },
+    {
+      "id": "DS-06",
+      "status": "PASS",
+      "evidence": "linked material instance updates while detached instance remains stable"
+    },
+    {
+      "id": "DS-07",
+      "status": "PASS",
+      "evidence": "cycle and unresolved dependency rejected; full-document fallback requires approval"
+    },
+    {
+      "id": "DS-08",
+      "status": "PASS",
+      "evidence": "save/load/replay retains graph, deterministic recompute set and hashes"
+    },
+    {
+      "id": "DS-09",
+      "status": "PASS",
+      "evidence": "rollback restores document, graph, recompute set, IDs and hashes"
+    }
+  ],
+  "testCommand": "node --test --test-concurrency=1 tests/v165/*.test.mjs",
+  "passCount": 9,
+  "failCount": 0
+}

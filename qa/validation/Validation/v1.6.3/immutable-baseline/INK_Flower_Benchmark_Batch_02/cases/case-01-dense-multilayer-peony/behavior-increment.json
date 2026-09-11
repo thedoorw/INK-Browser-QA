@@ -1,0 +1,12 @@
+{
+  "atomic": [
+    "B02-A-SET-PETAL-OVERRIDE"
+  ],
+  "composite": [
+    "B02-C-BUILD-DENSE-THREE-RING-COROLLA",
+    "B02-C-CROSS-RING-OCCLUSION"
+  ],
+  "strategy": [
+    "B02-S-BREAK-RADIAL-UNIFORMITY-WITH-LOCAL-CORRECTION"
+  ]
+}

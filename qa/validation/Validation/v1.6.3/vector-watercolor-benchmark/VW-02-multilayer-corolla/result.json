@@ -1,0 +1,19 @@
+{
+  "id": "VW-02-multilayer-corolla",
+  "status": "PASS",
+  "deterministic": true,
+  "modifiedChangedPixels": 8990,
+  "report": {
+    "format": "INK-VECTOR-WATERCOLOR-REPORT",
+    "version": "1.0",
+    "brushMaterials": 1,
+    "instances": 14,
+    "deterministic": true,
+    "hybridDependencies": 0
+  },
+  "hashes": {
+    "result": "83865c3b9a5126f6dea290ba6f9b3aa7e946ef4c86e401242ddfdfc637fc1a55",
+    "rerun": "83865c3b9a5126f6dea290ba6f9b3aa7e946ef4c86e401242ddfdfc637fc1a55",
+    "modified": "32348034598203b48e93cf10b2f4e0b4cc0d3c24f228eda542ad7363ee214d85"
+  }
+}

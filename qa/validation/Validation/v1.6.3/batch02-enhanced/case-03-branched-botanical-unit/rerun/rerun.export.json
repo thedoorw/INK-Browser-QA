@@ -1,0 +1,20 @@
+{
+  "format": "INK-EXPORT-REPORT",
+  "version": "1.0",
+  "status": "PASS",
+  "files": {
+    "png": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/batch02-enhanced/case-03-branched-botanical-unit/rerun/rerun.png",
+      "bytes": 47925,
+      "sha256": "c0e7e3d1e1a271a8e1999d9198b5a7eddaabf3de33c6e1bfdc219885ca017bc3",
+      "backend": "CHROMIUM_CDP_CANONICAL_PNG"
+    },
+    "svg": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.3/batch02-enhanced/case-03-branched-botanical-unit/rerun/rerun.svg",
+      "bytes": 41404,
+      "sha256": "72ca043bfd818b13e7c5349c6050b88d1d2440fadcd54dbbe9f004bcc13b9d70",
+      "backend": "INK_VECTOR_SVG"
+    }
+  },
+  "reusedExistingEvidence": true
+}

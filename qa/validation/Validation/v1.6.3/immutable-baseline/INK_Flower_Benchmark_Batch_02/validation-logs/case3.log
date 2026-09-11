@@ -1,0 +1,8 @@
+{
+  "packageRoot": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02",
+  "case": {
+    "caseId": "case-03-branched-botanical-unit",
+    "status": "PASS",
+    "decision": "VALIDATION REQUIRED"
+  }
+}

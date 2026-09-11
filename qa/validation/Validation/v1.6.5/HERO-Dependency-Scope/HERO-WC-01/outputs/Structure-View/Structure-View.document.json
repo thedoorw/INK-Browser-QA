@@ -1,0 +1,4747 @@
+{
+  "format": "INK",
+  "formatVersion": 4,
+  "appVersion": "1.6.5-RC",
+  "id": "doc:hero-wc-01",
+  "title": "HERO-WC-01 Structure View",
+  "createdAt": "2026-08-06T00:00:00.000Z",
+  "modifiedAt": "2026-08-06T00:00:00.000Z",
+  "activePageId": "page:hero",
+  "pages": [
+    {
+      "id": "page:hero",
+      "name": "HERO A4 Landscape",
+      "artboard": {
+        "id": "artboard:hero",
+        "name": "A4 Landscape",
+        "x": 0,
+        "y": 0,
+        "width": 1123,
+        "height": 794,
+        "background": "#fffaf5",
+        "visible": true,
+        "locked": false,
+        "printable": true,
+        "clipContent": true,
+        "safeMarginMm": 10
+      },
+      "workspace": {
+        "activeSpace": "creation",
+        "showLayoutFrameInCreation": false,
+        "layoutViewport": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameras": {
+          "creation": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "scale": 0.65,
+            "rotation": 0
+          }
+        },
+        "visited": {
+          "creation": true,
+          "layout": false
+        }
+      },
+      "paper": {
+        "type": "blank",
+        "color": "#fffef9",
+        "gridSize": 32,
+        "absorbency": 0.58,
+        "roughness": 0.42,
+        "fiberStrength": 0.36,
+        "fiberAngle": 0,
+        "sizing": 0.28,
+        "granulation": 0.32,
+        "seed": 1337,
+        "textureVisible": true
+      },
+      "camera": {
+        "x": 0,
+        "y": 0,
+        "scale": 1,
+        "rotation": 0
+      },
+      "layers": [
+        {
+          "id": "layer:guides",
+          "name": "Composition guides",
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "blendMode": "source-over",
+          "objects": [
+            {
+              "id": "structure:artboard",
+              "type": "path",
+              "name": "structure:artboard",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "opacity": 1,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#555",
+              "strokeWidth": 2,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "structure:artboard_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu374o_l64jie2",
+                      "x": 1,
+                      "y": 1,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374o_c2lhnx1",
+                      "x": 1122,
+                      "y": 1,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374o_jq15jad",
+                      "x": 1122,
+                      "y": 793,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374o_0wyo5ny",
+                      "x": 1,
+                      "y": 793,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "composition-guide"
+              }
+            },
+            {
+              "id": "structure:safe",
+              "type": "path",
+              "name": "structure:safe",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "opacity": 1,
+              "blendMode": "source-over",
+              "fill": "none",
+              "stroke": "#6f9abb",
+              "strokeWidth": 2,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [
+                12,
+                7
+              ],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "structure:safe_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu374o_a1ac9iq",
+                      "x": 38,
+                      "y": 38,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374o_tg7nger",
+                      "x": 1085,
+                      "y": 38,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374o_16seo3w",
+                      "x": 1085,
+                      "y": 756,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374o_54o0xj9",
+                      "x": 38,
+                      "y": 756,
+                      "in": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "composition-guide"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:0",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.8824374472187766,
+                0.09098478004062575,
+                -0.09651381201656609,
+                0.9360620738899762,
+                790.7814103730285,
+                340.374971200787
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-0:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#cb7a8a",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#dd8499",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ef8ea8",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:0_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:0:a0",
+                      "x": 0.0644826837604977,
+                      "y": 0,
+                      "in": {
+                        "x": -24.06331954324076,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 23.977317630514225,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:0:a1",
+                      "x": -43.45949452420342,
+                      "y": -75.383,
+                      "in": {
+                        "x": 20.324600804158038,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -30.328355501835347,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:0:a2",
+                      "x": -80.19901665327785,
+                      "y": -198.73699999999997,
+                      "in": {
+                        "x": 25.762180479677212,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -17.97863541716754,
+                        "y": -50.76214103334374
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:0:a3",
+                      "x": -38.29245818441289,
+                      "y": -337.627139324284,
+                      "in": {
+                        "x": -32.39469328127591,
+                        "y": 32.59987098551858
+                      },
+                      "out": {
+                        "x": 37.024790579603554,
+                        "y": -26.846952576309377
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:0:a4",
+                      "x": 68.76700229767872,
+                      "y": -209.01649999999998,
+                      "in": {
+                        "x": -23.366933752726695,
+                        "y": -46.503549558448526
+                      },
+                      "out": {
+                        "x": 30.905119348481833,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:0:a5",
+                      "x": 39.89475683400286,
+                      "y": -78.8095,
+                      "in": {
+                        "x": -32.91176200451399,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 18.394815859447625,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:1",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.7006662805383747,
+                0.6511096696646804,
+                -0.6515473912198563,
+                0.7011373175207228,
+                825.3209876623347,
+                354.7824277074537
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-1:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#ca7989",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#dc8398",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ee8da7",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:1_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:1:a0",
+                      "x": -0.1444543278222939,
+                      "y": 0,
+                      "in": {
+                        "x": -26.905763710706623,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 26.736900536590685,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:1:a1",
+                      "x": -57.88377137504729,
+                      "y": -80.04150000000001,
+                      "in": {
+                        "x": 20.879717136154582,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -31.711332785404096,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:1:a2",
+                      "x": -87.35362150595029,
+                      "y": -211.01371421837047,
+                      "in": {
+                        "x": 28.005424328304862,
+                        "y": 43.99521421837045
+                      },
+                      "out": {
+                        "x": -16.27815565022837,
+                        "y": -51.76060231509331
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:1:a3",
+                      "x": -18.30025897553972,
+                      "y": -363.1167234041648,
+                      "in": {
+                        "x": -40.630313665006085,
+                        "y": 33.84347074448408
+                      },
+                      "out": {
+                        "x": 44.64057198015723,
+                        "y": -27.871093554281003
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:1:a4",
+                      "x": 73.82329718430285,
+                      "y": -221.87821487449864,
+                      "in": {
+                        "x": -19.752625459855004,
+                        "y": -47.77901752162464
+                      },
+                      "out": {
+                        "x": 34.713790405059555,
+                        "y": 39.94496487449862
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:1:a5",
+                      "x": 32.21818984598691,
+                      "y": -83.67975000000001,
+                      "in": {
+                        "x": -34.54420146123866,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 18.95036731910426,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:2",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.036257509734018374,
+                1.019544875244791,
+                -0.991359812302481,
+                -0.03525517995060461,
+                842.3426360124225,
+                398.6980407686106
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-2:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#cb7989",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#dd8398",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ef8da7",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:2_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:2:a0",
+                      "x": -0.3683152540664105,
+                      "y": 0,
+                      "in": {
+                        "x": -29.663411337243875,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 29.421487497886964,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:2:a1",
+                      "x": -45.23757521442813,
+                      "y": -84.7,
+                      "in": {
+                        "x": 21.689577364319792,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -33.368185930173446,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:2:a2",
+                      "x": -92.41222386185642,
+                      "y": -223.17707853595232,
+                      "in": {
+                        "x": 27.512239352236847,
+                        "y": 43.877078535952336
+                      },
+                      "out": {
+                        "x": -8.027426489419,
+                        "y": -51.76060231509325
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:2:a3",
+                      "x": 13.601477815380964,
+                      "y": -384.13264381192516,
+                      "in": {
+                        "x": -49.12342500981467,
+                        "y": 33.84347074448408
+                      },
+                      "out": {
+                        "x": 52.47561215083566,
+                        "y": -27.871093554281003
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:2:a4",
+                      "x": 84.40160857118704,
+                      "y": -234.67390462709324,
+                      "in": {
+                        "x": -12.521540488965528,
+                        "y": -47.77901752162461
+                      },
+                      "out": {
+                        "x": 32.56261914842136,
+                        "y": 39.82390462709324
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:2:a5",
+                      "x": 51.592442417342376,
+                      "y": -88.55,
+                      "in": {
+                        "x": -36.43252559675031,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 19.720297132576967,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:3",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.5601311784675582,
+                0.7050926888673109,
+                -0.8003708035151577,
+                -0.6358208622247368,
+                830.2278899655327,
+                434.1718456182963
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-3:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#cb7989",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#dd8398",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ef8da7",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:3_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:3:a0",
+                      "x": 0.44677114943688534,
+                      "y": 0,
+                      "in": {
+                        "x": -26.28499113988171,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 26.021510958428145,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:3:a1",
+                      "x": -48.194936904120944,
+                      "y": -89.35849999999999,
+                      "in": {
+                        "x": 17.912319653718175,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -27.952671983144562,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:3:a2",
+                      "x": -52.912461849256644,
+                      "y": -233.31427068119825,
+                      "in": {
+                        "x": 13.589846383644307,
+                        "y": 42.188068334200494
+                      },
+                      "out": {
+                        "x": 2.803112344904548,
+                        "y": -49.85862621314601
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:3:a3",
+                      "x": 81.15601775055946,
+                      "y": -396.8826851214353,
+                      "in": {
+                        "x": -48.10093844850534,
+                        "y": 32.59987098551852
+                      },
+                      "out": {
+                        "x": 49.998798543715864,
+                        "y": -26.846952576309434
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:3:a4",
+                      "x": 99.18755044626451,
+                      "y": -244.99772885550092,
+                      "in": {
+                        "x": -1.821697954848645,
+                        "y": -46.023347273673295
+                      },
+                      "out": {
+                        "x": 20.067923924272748,
+                        "y": 38.35278939472772
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:3:a5",
+                      "x": 35.45547503944432,
+                      "y": -93.42025,
+                      "in": {
+                        "x": -30.632934399924725,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 16.327252095750637,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:4",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.9368158389152877,
+                0.2924386377854982,
+                -0.2785111274624229,
+                -0.8921995995355811,
+                801.184727039013,
+                452.798918681239
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-4:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#c97988",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#db8397",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ed8da6",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:4_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:4:a0",
+                      "x": 0.28156956393654936,
+                      "y": 0,
+                      "in": {
+                        "x": -29.223251006882283,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 28.819164411066822,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:4:a1",
+                      "x": -36.50922554439776,
+                      "y": -75.383,
+                      "in": {
+                        "x": 18.496682421387483,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -29.333491283590426,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:4:a2",
+                      "x": -75.57966814923009,
+                      "y": -198.73699999999997,
+                      "in": {
+                        "x": 28.105069791797128,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -22.234533908843346,
+                        "y": -50.76256706390686
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:4:a3",
+                      "x": -44.4698831565794,
+                      "y": -337.6275653548471,
+                      "in": {
+                        "x": -30.805296444659206,
+                        "y": 32.59987098551858
+                      },
+                      "out": {
+                        "x": 36.47350416583702,
+                        "y": -26.846952576309377
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:4:a4",
+                      "x": 86.33329640652892,
+                      "y": -209.01649999999998,
+                      "in": {
+                        "x": -28.119040765757887,
+                        "y": -46.503975589011645
+                      },
+                      "out": {
+                        "x": 34.29261728295293,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:4:a5",
+                      "x": 53.854682665463486,
+                      "y": -78.8095,
+                      "in": {
+                        "x": -32.39477569421744,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 17.00252933124932,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:5",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.8984518187823008,
+                -0.5107481344675906,
+                0.4732686608841098,
+                -0.8325220601877186,
+                757.602088117142,
+                448.79172545739164
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-5:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#c97888",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#db8297",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ed8ca6",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:5_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:5:a0",
+                      "x": -0.6701564023199338,
+                      "y": 0,
+                      "in": {
+                        "x": -28.182125926355123,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 28.067878025699187,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:5:a1",
+                      "x": -65.02790136032827,
+                      "y": -80.04150000000001,
+                      "in": {
+                        "x": 23.170145371264816,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -34.81245589663129,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:5:a2",
+                      "x": -102.90820835657944,
+                      "y": -211.01372860772776,
+                      "in": {
+                        "x": 29.973142051110955,
+                        "y": 43.99522860772774
+                      },
+                      "out": {
+                        "x": -16.377392578087594,
+                        "y": -51.76060231509334
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:5:a3",
+                      "x": -26.333997443082247,
+                      "y": -363.11673779352213,
+                      "in": {
+                        "x": -44.931356949189954,
+                        "y": 33.84347074448408
+                      },
+                      "out": {
+                        "x": 49.01822982332831,
+                        "y": -27.871093554281003
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:5:a4",
+                      "x": 71.9665792615909,
+                      "y": -221.87822926385593,
+                      "in": {
+                        "x": -20.110229090193513,
+                        "y": -47.77901752162461
+                      },
+                      "out": {
+                        "x": 36.9857736439193,
+                        "y": 39.94497926385591
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:5:a5",
+                      "x": 31.62458708368718,
+                      "y": -83.67975000000001,
+                      "in": {
+                        "x": -37.79377229495204,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 20.971013328154534,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:6",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.3114585766817507,
+                -0.8703915071653101,
+                0.952949632779384,
+                -0.34100095627253524,
+                731.008228657401,
+                416.8475504302781
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-6:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#ca7989",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#dc8398",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ee8da7",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:6_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:6:a0",
+                      "x": 0.25400038981631046,
+                      "y": 0,
+                      "in": {
+                        "x": -24.92128982296237,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 24.776024596495606,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:6:a1",
+                      "x": -40.81774812211565,
+                      "y": -84.7,
+                      "in": {
+                        "x": 19.41354604725299,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -29.4941565265323,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:6:a2",
+                      "x": -73.7181371784368,
+                      "y": -223.17709137007301,
+                      "in": {
+                        "x": 23.30216146060576,
+                        "y": 43.87709137007303
+                      },
+                      "out": {
+                        "x": -5.533926956524866,
+                        "y": -51.76060231509325
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:6:a3",
+                      "x": 28.16620610360092,
+                      "y": -384.13265664604586,
+                      "in": {
+                        "x": -43.85484804954246,
+                        "y": 33.84347074448408
+                      },
+                      "out": {
+                        "x": 46.49734665087431,
+                        "y": -27.871093554281003
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:6:a4",
+                      "x": 76.24423808211773,
+                      "y": -234.67391746121393,
+                      "in": {
+                        "x": -9.386529657444001,
+                        "y": -47.77901752162461
+                      },
+                      "out": {
+                        "x": 27.354250928733393,
+                        "y": 39.82391746121394
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:6:a5",
+                      "x": 42.63483565440013,
+                      "y": -88.55,
+                      "in": {
+                        "x": -32.080124720701306,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 17.593942674661193,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:7",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.2329996137882956,
+                -0.9447585266155443,
+                0.9961858139420618,
+                0.24568278916876446,
+                729.0790759549474,
+                383.3694807241912
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-7:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#cc7a8a",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#de8499",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#f08ea8",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:7_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:7:a0",
+                      "x": 0.0015869158165062354,
+                      "y": 0,
+                      "in": {
+                        "x": -27.63942911487635,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 27.424086068653576,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:7:a1",
+                      "x": -55.262815300615586,
+                      "y": -89.35849999999999,
+                      "in": {
+                        "x": 20.115795421507656,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -30.987530142657604,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:7:a2",
+                      "x": -67.70278701547065,
+                      "y": -233.31417023018128,
+                      "in": {
+                        "x": 15.545153916601492,
+                        "y": 42.188068334200494
+                      },
+                      "out": {
+                        "x": 2.5871616709147816,
+                        "y": -49.85862621314607
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:7:a3",
+                      "x": 74.23671290161285,
+                      "y": -396.8825846704184,
+                      "in": {
+                        "x": -52.284454993224685,
+                        "y": 32.59987098551858
+                      },
+                      "out": {
+                        "x": 54.27956641496972,
+                        "y": -26.846952576309377
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:7:a4",
+                      "x": 97.86941436700457,
+                      "y": -244.99762840448395,
+                      "in": {
+                        "x": -2.277995560465996,
+                        "y": -46.023347273673295
+                      },
+                      "out": {
+                        "x": 22.331170403532212,
+                        "y": 38.35278939472772
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:7:a5",
+                      "x": 34.93835621684403,
+                      "y": -93.42025,
+                      "in": {
+                        "x": -33.81664614576395,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 18.27262428804009,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:B:8",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.855742203365098,
+                -0.5561926479411907,
+                0.5112120137846087,
+                0.7865362778204246,
+                752.9553284239871,
+                347.94181360683115
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#ef9a7e",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-B-8:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#cc7a8a",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#de8499",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#f08ea8",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:B:8_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:B:8:a0",
+                      "x": -0.2549254157234825,
+                      "y": 0,
+                      "in": {
+                        "x": -30.455195041328388,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 30.10953067154076,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:8:a1",
+                      "x": -42.65779289605102,
+                      "y": -75.383,
+                      "in": {
+                        "x": 20.842802077404755,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -32.47725953693188,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:8:a2",
+                      "x": -91.13163854099139,
+                      "y": -198.73699999999997,
+                      "in": {
+                        "x": 30.083965664601216,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -22.26405833232201,
+                        "y": -50.76244494063701
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:8:a3",
+                      "x": -52.51724848906338,
+                      "y": -337.6274432315772,
+                      "in": {
+                        "x": -35.17315654714223,
+                        "y": 32.59987098551858
+                      },
+                      "out": {
+                        "x": 40.90690108618868,
+                        "y": -26.846952576309377
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:8:a4",
+                      "x": 84.47871323219941,
+                      "y": -209.01649999999998,
+                      "in": {
+                        "x": -28.41663439701476,
+                        "y": -46.5038534657418
+                      },
+                      "out": {
+                        "x": 36.571995983347676,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:B:8:a5",
+                      "x": 54.25564391996693,
+                      "y": -78.8095,
+                      "in": {
+                        "x": -35.6865602944098,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 19.071291733735308,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-B"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:0",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.8594167744559349,
+                -0.16325112258537655,
+                0.17652404669244084,
+                0.9292905581276276,
+                778.6897552970956,
+                361.93864398459027
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-0:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b5516b",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c75b7a",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#d96589",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:0_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:0:a0",
+                      "x": 0.16669576233011707,
+                      "y": 0,
+                      "in": {
+                        "x": -13.569598059894144,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 13.59306865971675,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:0:a1",
+                      "x": -28.229092505287934,
+                      "y": -54.4324,
+                      "in": {
+                        "x": 13.679829658271899,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -19.44828794670497,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:0:a2",
+                      "x": -51.64435162888255,
+                      "y": -143.5036,
+                      "in": {
+                        "x": 15.875164614906275,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -14.83686504062036,
+                        "y": -50.279964545824924
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:0:a3",
+                      "x": -31.41747849497114,
+                      "y": -243.15899506841063,
+                      "in": {
+                        "x": -17.037939489427483,
+                        "y": 32.335921554035224
+                      },
+                      "out": {
+                        "x": 20.32421327092593,
+                        "y": -26.629582456264274
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:0:a4",
+                      "x": 39.5514433621518,
+                      "y": -150.9262,
+                      "in": {
+                        "x": -18.46890339210752,
+                        "y": -46.11245057849669
+                      },
+                      "out": {
+                        "x": 19.068462312495058,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:0:a5",
+                      "x": 22.66561766661859,
+                      "y": -56.906600000000005,
+                      "in": {
+                        "x": -21.09111067543346,
+                        "y": -33.99999999999999
+                      },
+                      "out": {
+                        "x": 12.37826661982228,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:1",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.7758337504481172,
+                0.6249419483171608,
+                -0.5948575708363185,
+                0.7384855207866107,
+                806.7293797865451,
+                369.02086623559853
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-1:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b6526c",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c85c7b",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#da668a",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:1_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:1:a0",
+                      "x": -0.26368452099987705,
+                      "y": 0,
+                      "in": {
+                        "x": -15.91884792465985,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 15.821903645969659,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:1:a1",
+                      "x": -36.46650881062294,
+                      "y": -57.796200000000006,
+                      "in": {
+                        "x": 13.327192045186397,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -19.745698422079286,
+                        "y": -35.99999999999999
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:1:a2",
+                      "x": -54.91548588382161,
+                      "y": -152.3718,
+                      "in": {
+                        "x": 17.03974816788549,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -5.944143932485588,
+                        "y": -52
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:1:a3",
+                      "x": -3.1568688937124487,
+                      "y": -262.71000000000004,
+                      "in": {
+                        "x": -27.758401645508123,
+                        "y": 34
+                      },
+                      "out": {
+                        "x": 29.612238832727513,
+                        "y": -28
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:1:a4",
+                      "x": 44.352359320683526,
+                      "y": -160.25310000000002,
+                      "in": {
+                        "x": -8.684156802121713,
+                        "y": -48
+                      },
+                      "out": {
+                        "x": 20.707301627218946,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:1:a5",
+                      "x": 18.58726725171312,
+                      "y": -60.42330000000001,
+                      "in": {
+                        "x": -21.586018414158698,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 12.147605354121215,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:2",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.020703635071369738,
+                1.076156074149822,
+                -0.992773906793136,
+                -0.0190994867457874,
+                821.3418162320069,
+                397.68383487088647
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-2:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b7526d",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c95c7c",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#db668b",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:2_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:2:a0",
+                      "x": -0.7212423715719583,
+                      "y": 0,
+                      "in": {
+                        "x": -18.156048749480124,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 17.954427365823715,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:2:a1",
+                      "x": -28.15338707723573,
+                      "y": -61.160000000000004,
+                      "in": {
+                        "x": 13.237156174884825,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -20.281845602944234,
+                        "y": -35.99999999999999
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:2:a2",
+                      "x": -52.714970306641135,
+                      "y": -160.31028106727854,
+                      "in": {
+                        "x": 12.403460424348559,
+                        "y": 43.07028106727856
+                      },
+                      "out": {
+                        "x": 8.358181552564218,
+                        "y": -49.45493884734799
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:2:a3",
+                      "x": 39.50821880825198,
+                      "y": -271.3556399099007,
+                      "in": {
+                        "x": -38.641772525583946,
+                        "y": 32.335921554035195
+                      },
+                      "out": {
+                        "x": 39.053896302630136,
+                        "y": -26.629582456264302
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:2:a4",
+                      "x": 57.33928265769334,
+                      "y": -168.24209241318013,
+                      "in": {
+                        "x": 4.209347381838477,
+                        "y": -45.650712782167375
+                      },
+                      "out": {
+                        "x": 13.932922911595888,
+                        "y": 38.66209241318015
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:2:a5",
+                      "x": 31.04876749282353,
+                      "y": -63.940000000000005,
+                      "in": {
+                        "x": -22.304472513760512,
+                        "y": -33.99999999999999
+                      },
+                      "out": {
+                        "x": 12.137057563455684,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:3",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.5537703261638698,
+                0.7568875752352113,
+                -0.8492195222857232,
+                -0.6213242061672741,
+                816.651560096172,
+                417.08042740377743
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-3:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b5516c",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c75b7b",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#d9658a",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:3_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:3:a0",
+                      "x": 0.8691914603956219,
+                      "y": 0,
+                      "in": {
+                        "x": -16.59518705442256,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 16.337885141150178,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:3:a1",
+                      "x": -27.953048390789384,
+                      "y": -64.5238,
+                      "in": {
+                        "x": 10.363403285643699,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -16.48593432546494,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:3:a2",
+                      "x": -52.237313506817756,
+                      "y": -168.16078508743175,
+                      "in": {
+                        "x": 28.113055009691195,
+                        "y": 42.052585087431794
+                      },
+                      "out": {
+                        "x": -23.815414288758802,
+                        "y": -49.45493884734799
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:3:a3",
+                      "x": -36.971476827197414,
+                      "y": -285.3136386663981,
+                      "in": {
+                        "x": -12.294873748220475,
+                        "y": 32.335921554035224
+                      },
+                      "out": {
+                        "x": 16.35571624102993,
+                        "y": -26.629582456264302
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:3:a4",
+                      "x": 35.92431914820683,
+                      "y": -176.52884605735795,
+                      "in": {
+                        "x": -25.046374807015646,
+                        "y": -45.650712782167375
+                      },
+                      "out": {
+                        "x": 31.82978570914755,
+                        "y": 38.042260651806146
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:3:a5",
+                      "x": 23.22591383267049,
+                      "y": -67.4567,
+                      "in": {
+                        "x": -18.286454045877797,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 9.577127259185527,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:4",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.9622668518815265,
+                0.14390599355475672,
+                -0.14006098148437632,
+                -0.9365561252535657,
+                791.597660309885,
+                432.6713584798404
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-4:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b6526d",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c85c7c",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#da668b",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:4_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:4:a0",
+                      "x": 0.48011236799984613,
+                      "y": 0,
+                      "in": {
+                        "x": -19.05664381796316,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 18.62629725501015,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:4:a1",
+                      "x": -20.228912746867646,
+                      "y": -54.4324,
+                      "in": {
+                        "x": 9.99401014922036,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -16.773972190566088,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:4:a2",
+                      "x": -43.21917461715102,
+                      "y": -143.5036,
+                      "in": {
+                        "x": 16.84610226385823,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -9.698035369569943,
+                        "y": -52
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:4:a3",
+                      "x": -7.975594476773472,
+                      "y": -247.42000000000002,
+                      "in": {
+                        "x": -23.187618930980744,
+                        "y": 34
+                      },
+                      "out": {
+                        "x": 25.684852821828578,
+                        "y": -28
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:4:a4",
+                      "x": 55.75420336589511,
+                      "y": -150.9262,
+                      "in": {
+                        "x": -12.613861180426518,
+                        "y": -48
+                      },
+                      "out": {
+                        "x": 21.24737171581414,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:4:a5",
+                      "x": 35.0823689338441,
+                      "y": -56.906600000000005,
+                      "in": {
+                        "x": -18.878050774666203,
+                        "y": -33.99999999999999
+                      },
+                      "out": {
+                        "x": 9.409768110699233,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:5",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.728153563700455,
+                -0.746807638281869,
+                0.7003375645789814,
+                -0.6828442389993475,
+                759.8623885978914,
+                423.9465443973166
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-5:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b04e67",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c25876",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#d46285",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:5_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:5:a0",
+                      "x": -1.2753810046143532,
+                      "y": 0,
+                      "in": {
+                        "x": -16.143200972763104,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 16.135180826073604,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:5:a1",
+                      "x": -42.42605356395223,
+                      "y": -57.796200000000006,
+                      "in": {
+                        "x": 15.336639876304897,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -22.14096003233046,
+                        "y": -35.99999999999999
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:5:a2",
+                      "x": -66.45000991441921,
+                      "y": -152.36595959483338,
+                      "in": {
+                        "x": 18.281369835392695,
+                        "y": 43.99415959483338
+                      },
+                      "out": {
+                        "x": 10.809264393812725,
+                        "y": -49.45493884734796
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:5:a3",
+                      "x": 25.34291005699267,
+                      "y": -257.3038237011113,
+                      "in": {
+                        "x": -41.71936793790217,
+                        "y": 32.335921554035195
+                      },
+                      "out": {
+                        "x": 41.644065893098976,
+                        "y": -26.629582456264302
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:5:a4",
+                      "x": 43.668612156389635,
+                      "y": -159.86152131671037,
+                      "in": {
+                        "x": 6.6478976225952735,
+                        "y": -45.650712782167375
+                      },
+                      "out": {
+                        "x": 19.60191779316846,
+                        "y": 39.60842131671035
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:5:a5",
+                      "x": 16.599492300472185,
+                      "y": -60.42330000000001,
+                      "in": {
+                        "x": -24.043632619692758,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 13.894375106546224,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:6",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.09473175582655517,
+                -0.8719199431239313,
+                1.0110236476623633,
+                -0.10984499905126142,
+                745.1134263061291,
+                400.01736349581694
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-6:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b04e67",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c25876",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#d46285",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:6_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:6:a0",
+                      "x": 0.5227265528154432,
+                      "y": 0,
+                      "in": {
+                        "x": -14.734939482970809,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 14.65409594961393,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:6:a1",
+                      "x": -25.49927974160106,
+                      "y": -61.160000000000004,
+                      "in": {
+                        "x": 12.414491680279005,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -18.407578351084833,
+                        "y": -35.99999999999999
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:6:a2",
+                      "x": -53.54493746519288,
+                      "y": -160.3095144702099,
+                      "in": {
+                        "x": 21.653902627422326,
+                        "y": 43.069514470209924
+                      },
+                      "out": {
+                        "x": -21.61776741648665,
+                        "y": -49.45493884734799
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:6:a3",
+                      "x": -34.65138544468177,
+                      "y": -271.35487331283207,
+                      "in": {
+                        "x": -15.160797747813106,
+                        "y": 32.33592155403525
+                      },
+                      "out": {
+                        "x": 18.75682779878555,
+                        "y": -26.629582456264302
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:6:a4",
+                      "x": 34.966904758784736,
+                      "y": -168.2413258161115,
+                      "in": {
+                        "x": -22.832575002615116,
+                        "y": -45.650712782167346
+                      },
+                      "out": {
+                        "x": 27.558452454112306,
+                        "y": 38.661325816111514
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:6:a5",
+                      "x": 25.490015816237303,
+                      "y": -63.940000000000005,
+                      "in": {
+                        "x": -20.07980398223839,
+                        "y": -33.99999999999999
+                      },
+                      "out": {
+                        "x": 11.293909569721471,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:C:7",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.5467390548603309,
+                -0.7768883624359655,
+                0.860804586335794,
+                0.6057955154289777,
+                753.987835043499,
+                375.2352223887525
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#b073b6",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-C-7:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#b14f68",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#c35977",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#d56386",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:C:7_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:C:7:a0",
+                      "x": 0.01053792700487171,
+                      "y": 0,
+                      "in": {
+                        "x": -16.920329435316805,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 16.740581262166412,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:7:a1",
+                      "x": -33.77821059730856,
+                      "y": -64.5238,
+                      "in": {
+                        "x": 12.257387245588905,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -18.81360557716235,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:7:a2",
+                      "x": -50.96509215308357,
+                      "y": -170.10819999999995,
+                      "in": {
+                        "x": 17.04688916396372,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -7.232640970390811,
+                        "y": -52
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:7:a3",
+                      "x": 8.549836434624062,
+                      "y": -293.28999999999996,
+                      "in": {
+                        "x": -26.114553317690085,
+                        "y": 34
+                      },
+                      "out": {
+                        "x": 28.261565183030918,
+                        "y": -28
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:7:a4",
+                      "x": 48.193312870937,
+                      "y": -178.90689999999998,
+                      "in": {
+                        "x": -9.86453352086889,
+                        "y": -48
+                      },
+                      "out": {
+                        "x": 20.802615820435143,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:C:7:a5",
+                      "x": 21.371846333581015,
+                      "y": -67.4567,
+                      "in": {
+                        "x": -20.67741183406851,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 11.225794297644715,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-C"
+              }
+            },
+            {
+              "id": "structure:hero:petal:D:0",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.8932484964205295,
+                0.13379200679439957,
+                -0.13810425990263386,
+                0.9220388083188654,
+                788.0823350672844,
+                373.3016275061253
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#6c4d9b",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-D-0:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#973454",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#a93e63",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#bb4872",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:D:0_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:D:0:a0",
+                      "x": -0.5304375099840655,
+                      "y": 0,
+                      "in": {
+                        "x": -7.093037781265653,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 7.021502878431629,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:0:a1",
+                      "x": -19.69943777359756,
+                      "y": -34.460800000000006,
+                      "in": {
+                        "x": 10.418225335671114,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -12.407600658822311,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:0:a2",
+                      "x": -33.89760679092659,
+                      "y": -90.8512,
+                      "in": {
+                        "x": 9.815540154035418,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -10.501476430558768,
+                        "y": -49.85776503477334
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:0:a3",
+                      "x": -22.869383068461996,
+                      "y": -153.7465315699972,
+                      "in": {
+                        "x": -7.818606498607998,
+                        "y": 32.14763157037676
+                      },
+                      "out": {
+                        "x": 9.520541986250903,
+                        "y": -26.474520116780894
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:0:a4",
+                      "x": 20.644068207845898,
+                      "y": -95.55040000000001,
+                      "in": {
+                        "x": -15.020989199800885,
+                        "y": -45.81967162283239
+                      },
+                      "out": {
+                        "x": 13.43584462648333,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:0:a5",
+                      "x": 12.033552785858976,
+                      "y": -36.02720000000001,
+                      "in": {
+                        "x": -14.349084582572036,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 9.940120140439316,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-D"
+              }
+            },
+            {
+              "id": "structure:hero:petal:D:1",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.3476065356764769,
+                0.9164778493894472,
+                -0.8946222334240304,
+                0.3393170227811295,
+                807.1048514878421,
+                389.2157776922611
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#6c4d9b",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-D-1:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#973454",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#a93e63",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#bb4872",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:D:1_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:D:1:a0",
+                      "x": -0.5075191412924425,
+                      "y": 0,
+                      "in": {
+                        "x": -9.52674237843422,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 9.21916326446889,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:1:a1",
+                      "x": -23.887924096220353,
+                      "y": -36.5904,
+                      "in": {
+                        "x": 9.008101103232773,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -11.899619371190141,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:1:a2",
+                      "x": -34.46943636275192,
+                      "y": -96.46560000000001,
+                      "in": {
+                        "x": 9.848953711271182,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": 21.82068681929223,
+                        "y": -46.86408362717488
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:1:a3",
+                      "x": 27.04168304915968,
+                      "y": -159.37711204741876,
+                      "in": {
+                        "x": -32.45290634363583,
+                        "y": 30.558997574171684
+                      },
+                      "out": {
+                        "x": 29.808953019119784,
+                        "y": -25.166233296376674
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:1:a4",
+                      "x": 26.492176623627763,
+                      "y": -101.07701599303253,
+                      "in": {
+                        "x": 16.1913023528544,
+                        "y": -43.14211422236001
+                      },
+                      "out": {
+                        "x": 12.472239207952057,
+                        "y": 39.62181599303253
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:1:a5",
+                      "x": 10.482065817919533,
+                      "y": -38.253600000000006,
+                      "in": {
+                        "x": -14.033391341372774,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 8.828092795296055,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-D"
+              }
+            },
+            {
+              "id": "structure:hero:petal:D:2",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.5223614345307174,
+                0.8807016596483483,
+                -0.8687531723049564,
+                -0.515274552246814,
+                805.5448823005468,
+                409.73892539731565
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#6c4d9b",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-D-2:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#993555",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#ab3f64",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#bd4973",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:D:2_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:D:2:a0",
+                      "x": -0.5690184750840694,
+                      "y": 0,
+                      "in": {
+                        "x": -11.809267774371651,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 11.303721068347983,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:2:a1",
+                      "x": -17.756623680562523,
+                      "y": -38.72,
+                      "in": {
+                        "x": 8.107614161124893,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -11.83651448533169,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:2:a2",
+                      "x": -38.98411930185597,
+                      "y": -101.46158433328694,
+                      "in": {
+                        "x": 13.764995329728894,
+                        "y": 43.38158433328694
+                      },
+                      "out": {
+                        "x": -19.763213927305515,
+                        "y": -49.16696593116447
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:2:a3",
+                      "x": -28.715411766399438,
+                      "y": -171.35431744158845,
+                      "in": {
+                        "x": -5.310851017340173,
+                        "y": 32.147631570376774
+                      },
+                      "out": {
+                        "x": 7.539165630371105,
+                        "y": -26.474520116780866
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:2:a4",
+                      "x": 23.478843004668192,
+                      "y": -106.45392241245133,
+                      "in": {
+                        "x": -23.035960353288797,
+                        "y": -45.38489162876721
+                      },
+                      "out": {
+                        "x": 20.327438022958937,
+                        "y": 39.093922412451334
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:2:a5",
+                      "x": 19.23164283015865,
+                      "y": -40.480000000000004,
+                      "in": {
+                        "x": -14.136464402096479,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 8.144445119002388,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-D"
+              }
+            },
+            {
+              "id": "structure:hero:petal:D:3",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.8545672059639572,
+                0.2722306444400676,
+                -0.3108818163271348,
+                -0.9758982340511912,
+                793.1507545696319,
+                419.49201858948857
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#6c4d9b",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-D-3:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#993556",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#ab3f65",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#bd4974",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:D:3_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:D:3:a0",
+                      "x": 0.953739306616894,
+                      "y": 0,
+                      "in": {
+                        "x": -11.619422159591204,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 11.036147845066331,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:3:a1",
+                      "x": -16.252824884007424,
+                      "y": -40.849599999999995,
+                      "in": {
+                        "x": 5.27278044584277,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -8.817973037881064,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:3:a2",
+                      "x": -11.066214831362744,
+                      "y": -105.15511256640632,
+                      "in": {
+                        "x": -2.5749476529480333,
+                        "y": 41.46071256640634
+                      },
+                      "out": {
+                        "x": 18.349358766400712,
+                        "y": -46.7372904075567
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:3:a3",
+                      "x": 55.76421797962008,
+                      "y": -175.24810554347465,
+                      "in": {
+                        "x": -26.750611160610003,
+                        "y": 30.558997574171684
+                      },
+                      "out": {
+                        "x": 24.674614878335966,
+                        "y": -25.166233296376674
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:3:a4",
+                      "x": 45.604057996678854,
+                      "y": -110.16175492191121,
+                      "in": {
+                        "x": 12.860739852374167,
+                        "y": -43.14211422236002
+                      },
+                      "out": {
+                        "x": -0.6903487822341674,
+                        "y": 36.89695492191123
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:3:a5",
+                      "x": 15.76649905543491,
+                      "y": -42.706399999999995,
+                      "in": {
+                        "x": -10.850366590574167,
+                        "y": -34.00000000000001
+                      },
+                      "out": {
+                        "x": 5.558457308102273,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-D"
+              }
+            },
+            {
+              "id": "structure:hero:petal:D:4",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.7415048246052753,
+                -0.6492361837680962,
+                0.6086531542803231,
+                -0.6951541853238535,
+                768.5266100513566,
+                414.5794703542275
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#6c4d9b",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-D-4:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#953353",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#a73d62",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#b94771",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:D:4_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:D:4:a0",
+                      "x": 0.9851154926599891,
+                      "y": 0,
+                      "in": {
+                        "x": -14.20939716818791,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 13.270804528997425,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:4:a1",
+                      "x": -10.504685310460141,
+                      "y": -34.460800000000006,
+                      "in": {
+                        "x": 3.9497073473046775,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -8.441699991882897,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:4:a2",
+                      "x": -22.749945296209326,
+                      "y": -90.8512,
+                      "in": {
+                        "x": 8.126441329692568,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -19.844785958378196,
+                        "y": -49.85764821824466
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:4:a3",
+                      "x": -23.177334174840556,
+                      "y": -153.7464147534685,
+                      "in": {
+                        "x": -0.3445846346677506,
+                        "y": 32.14763157037676
+                      },
+                      "out": {
+                        "x": 2.6795402089758475,
+                        "y": -26.474520116780894
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:4:a4",
+                      "x": 36.33642069423593,
+                      "y": -95.55040000000001,
+                      "in": {
+                        "x": -24.581616996471567,
+                        "y": -45.819554806303714
+                      },
+                      "out": {
+                        "x": 13.705339066909282,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:4:a5",
+                      "x": 24.08975279556397,
+                      "y": -36.02720000000001,
+                      "in": {
+                        "x": -10.89576411550588,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 4.695051718747212,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-D"
+              }
+            },
+            {
+              "id": "structure:hero:petal:D:5",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.12364644896914266,
+                -1.011357621325435,
+                0.9484262821418401,
+                0.1159525962163187,
+                762.0123315636503,
+                393.30680609431295
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#6c4d9b",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-D-5:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#963453",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#a83e62",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#ba4871",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:D:5_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:D:5:a0",
+                      "x": -1.6104546293534105,
+                      "y": 0,
+                      "in": {
+                        "x": -8.791407504004965,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 8.640770753781018,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:5:a1",
+                      "x": -28.870747664769134,
+                      "y": -36.5904,
+                      "in": {
+                        "x": 11.274118655730703,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -13.948886580896243,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:5:a2",
+                      "x": -43.246965599560625,
+                      "y": -96.46560000000001,
+                      "in": {
+                        "x": 11.012470986190195,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": 23.79225164488674,
+                        "y": -46.86370734991361
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:5:a3",
+                      "x": 23.024753958527555,
+                      "y": -159.3767357701575,
+                      "in": {
+                        "x": -35.72696474695996,
+                        "y": 30.558997574171656
+                      },
+                      "out": {
+                        "x": 32.90424833659663,
+                        "y": -25.166233296376674
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:5:a4",
+                      "x": 22.770089681206315,
+                      "y": -101.07663971577128,
+                      "in": {
+                        "x": 17.77460422697736,
+                        "y": -43.14211422235999
+                      },
+                      "out": {
+                        "x": 13.63781343267776,
+                        "y": 39.621439715771274
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:5:a5",
+                      "x": 7.951228315398318,
+                      "y": -38.253600000000006,
+                      "in": {
+                        "x": -16.15475921075268,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 10.80557658510848,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-D"
+              }
+            },
+            {
+              "id": "structure:hero:petal:D:6",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.668420932095704,
+                -0.6106144141332736,
+                0.6704552619158575,
+                0.7339268787723929,
+                768.7376295427432,
+                379.6787349216573
+              ],
+              "opacity": 0.62,
+              "blendMode": "darken",
+              "fill": "#6c4d9b",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-D-6:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#983455",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#aa3e64",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#bc4873",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:D:6_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:D:6:a0",
+                      "x": 0.1544005725063568,
+                      "y": 0,
+                      "in": {
+                        "x": -8.817117905442068,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 8.54906903378258,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:6:a1",
+                      "x": -16.84193432119075,
+                      "y": -38.72,
+                      "in": {
+                        "x": 8.502641524511914,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -11.283877159041833,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:6:a2",
+                      "x": -33.53611445935053,
+                      "y": -101.462788708773,
+                      "in": {
+                        "x": 12.812673132077183,
+                        "y": 43.382788708773006
+                      },
+                      "out": {
+                        "x": -17.40755732437261,
+                        "y": -49.166965931164455
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:6:a3",
+                      "x": -22.90951388121926,
+                      "y": -171.3555218170745,
+                      "in": {
+                        "x": -4.98729743161871,
+                        "y": 32.147631570376774
+                      },
+                      "out": {
+                        "x": 6.992317170804899,
+                        "y": -26.474520116780866
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:6:a4",
+                      "x": 19.170884932000995,
+                      "y": -106.45512678793739,
+                      "in": {
+                        "x": -20.00684482458262,
+                        "y": -45.384891628767235
+                      },
+                      "out": {
+                        "x": 18.31449979737168,
+                        "y": 39.09512678793739
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:D:6:a5",
+                      "x": 14.991648192909128,
+                      "y": -40.480000000000004,
+                      "in": {
+                        "x": -13.186529999825758,
+                        "y": -34
+                      },
+                      "out": {
+                        "x": 8.271834108122196,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-D"
+              }
+            },
+            {
+              "id": "structure:hero:petal:A:0",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.7015073391842122,
+                -0.5753010652075712,
+                0.5764664352677682,
+                -0.7029283614967622,
+                764.6873919333588,
+                425.24261863857816
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#e05b70",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-A-0:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#c46c81",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#d67690",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#e8809f",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:A:0_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:A:0:a0",
+                      "x": 0.40938867870112167,
+                      "y": 0,
+                      "in": {
+                        "x": -27.725013886619017,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 27.708818118496293,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:0:a1",
+                      "x": -53.53656754636427,
+                      "y": -91.04700000000001,
+                      "in": {
+                        "x": 24.304479676074166,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -36.225082635933646,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:0:a2",
+                      "x": -98.09696095731026,
+                      "y": -240.033,
+                      "in": {
+                        "x": 30.080888575076386,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -1.191560305689677,
+                        "y": -50.10335689971512
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:0:a3",
+                      "x": 53.896185677411225,
+                      "y": -403.08311251147745,
+                      "in": {
+                        "x": -62.621259903726155,
+                        "y": 31.52425105527078
+                      },
+                      "out": {
+                        "x": 63.789242863393355,
+                        "y": -25.96114792787006
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:0:a4",
+                      "x": 76.58075787093489,
+                      "y": -252.4485,
+                      "in": {
+                        "x": -1.871116992533004,
+                        "y": -45.49057262782188
+                      },
+                      "out": {
+                        "x": 35.76402504596416,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:0:a5",
+                      "x": 44.04334630046971,
+                      "y": -95.1855,
+                      "in": {
+                        "x": -39.07958428266723,
+                        "y": -33.999999999999986
+                      },
+                      "out": {
+                        "x": 21.87725377166383,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-A"
+              }
+            },
+            {
+              "id": "structure:hero:petal:A:1",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                -0.17305271862483887,
+                -0.963725226941624,
+                0.9502357981713541,
+                -0.17063046977617122,
+                752.0255174998499,
+                405.4735577707359
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#e05b70",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-A-1:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#c16a7f",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#d3748e",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#e57e9d",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:A:1_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:A:1:a0",
+                      "x": -0.19301180223723408,
+                      "y": 0,
+                      "in": {
+                        "x": -31.298802319798078,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 31.165997226536657,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:1:a1",
+                      "x": -69.33111224613255,
+                      "y": -96.6735,
+                      "in": {
+                        "x": 24.72443632292657,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -37.56087668978297,
+                        "y": -35.999999999999986
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:1:a2",
+                      "x": -105.30799239461278,
+                      "y": -254.64119162259698,
+                      "in": {
+                        "x": 33.51615095028119,
+                        "y": 43.774691622596976
+                      },
+                      "out": {
+                        "x": -40.08010339158325,
+                        "y": -44.57269963650981
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:1:a3",
+                      "x": -99.23953551145112,
+                      "y": -412.83870288922776,
+                      "in": {
+                        "x": -34.16634814172002,
+                        "y": 29.143688223871777
+                      },
+                      "out": {
+                        "x": 41.340243246525496,
+                        "y": -24.000684419659194
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:1:a4",
+                      "x": 78.05177518785742,
+                      "y": -265.9410138559278,
+                      "in": {
+                        "x": -42.169661461440135,
+                        "y": -41.1440304337014
+                      },
+                      "out": {
+                        "x": 46.62055858705605,
+                        "y": 37.89176385592776
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:1:a5",
+                      "x": 36.21071436229053,
+                      "y": -101.06775,
+                      "in": {
+                        "x": -40.72862234819252,
+                        "y": -33.999999999999986
+                      },
+                      "out": {
+                        "x": 22.33471888235131,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-A"
+              }
+            },
+            {
+              "id": "structure:hero:petal:A:2",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.7577516271100723,
+                -0.6777377725730864,
+                0.6693934221747071,
+                0.7484221410648384,
+                759.9916217549749,
+                369.9519072072528
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#e05b70",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-A-2:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#c46c82",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#d67691",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#e880a0",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:A:2_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:A:2:a0",
+                      "x": -0.8033909369330612,
+                      "y": 0,
+                      "in": {
+                        "x": -34.74590168304318,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 34.50981987862281,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:2:a1",
+                      "x": -53.389132231209985,
+                      "y": -102.3,
+                      "in": {
+                        "x": 25.440362091250403,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -39.21167181303508,
+                        "y": -36.000000000000014
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:2:a2",
+                      "x": -101.65559879715046,
+                      "y": -268.115722311453,
+                      "in": {
+                        "x": 25.340244178560567,
+                        "y": 42.41572231145301
+                      },
+                      "out": {
+                        "x": 0.6033804329792218,
+                        "y": -49.45493884734799
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:2:a3",
+                      "x": 63.94667285222904,
+                      "y": -453.8570599438965,
+                      "in": {
+                        "x": -64.178900628428,
+                        "y": 32.335921554035224
+                      },
+                      "out": {
+                        "x": 67.04740756740738,
+                        "y": -26.629582456264302
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:2:a4",
+                      "x": 108.5417765138626,
+                      "y": -281.3829607137704,
+                      "in": {
+                        "x": -5.09762494245345,
+                        "y": -45.650712782167375
+                      },
+                      "out": {
+                        "x": 29.896785189572626,
+                        "y": 38.042260651806174
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:2:a5",
+                      "x": 60.091532675435445,
+                      "y": -106.95,
+                      "in": {
+                        "x": -42.67130684880748,
+                        "y": -33.999999999999986
+                      },
+                      "out": {
+                        "x": 23.040677437239466,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-A"
+              }
+            },
+            {
+              "id": "structure:hero:petal:A:3",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.7398106100972192,
+                0.48461293340907974,
+                -0.5680743419390796,
+                0.8672228834961023,
+                802.9561470740235,
+                366.66847324275113
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#e05b70",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-A-3:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#c46c82",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#d67691",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#e880a0",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:A:3_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:A:3:a0",
+                      "x": 0.8711138293948442,
+                      "y": 0,
+                      "in": {
+                        "x": -30.974196033282784,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 30.688288565706245,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:3:a1",
+                      "x": -54.6637104497668,
+                      "y": -107.9265,
+                      "in": {
+                        "x": 20.83929909372838,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -32.63242423323637,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:3:a2",
+                      "x": -38.687792714358125,
+                      "y": -271.84376049302426,
+                      "in": {
+                        "x": 4.877247683167113,
+                        "y": 35.59674775249766
+                      },
+                      "out": {
+                        "x": 16.23846454283354,
+                        "y": -42.068883707497264
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:3:a3",
+                      "x": 178.0706734183973,
+                      "y": -438.53483553953004,
+                      "in": {
+                        "x": -64.70506482846426,
+                        "y": 27.506577808748204
+                      },
+                      "out": {
+                        "x": 65.54835055373655,
+                        "y": -22.652475842498575
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:3:a4",
+                      "x": 144.06949059616807,
+                      "y": -283.750265853489,
+                      "in": {
+                        "x": 10.056341860374346,
+                        "y": -38.83281572999749
+                      },
+                      "out": {
+                        "x": 13.270476438568437,
+                        "y": 32.36067977499789
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:3:a5",
+                      "x": 43.42516941848138,
+                      "y": -112.83225,
+                      "in": {
+                        "x": -35.68344478108829,
+                        "y": -33.999999999999986
+                      },
+                      "out": {
+                        "x": 18.93526175282952,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-A"
+              }
+            },
+            {
+              "id": "structure:hero:petal:A:4",
+              "type": "path",
+              "name": "Watercolor pigment layer 1",
+              "matrix": [
+                0.17672778640858988,
+                0.957112164856247,
+                -0.9281759653349523,
+                0.17138480710454584,
+                818.5799382876498,
+                391.4873708198646
+              ],
+              "opacity": 0.62,
+              "blendMode": "multiply",
+              "fill": "#e05b70",
+              "stroke": "#4c3d55",
+              "strokeWidth": 1.4,
+              "fillRule": "evenodd",
+              "gradient": {
+                "id": "hero-petal-A-4:gradient:0",
+                "type": "linear",
+                "x1": 0,
+                "y1": 0,
+                "x2": 0,
+                "y2": 1,
+                "units": "objectBoundingBox",
+                "stops": [
+                  {
+                    "offset": 0,
+                    "color": "#c06a7e",
+                    "opacity": 0.7
+                  },
+                  {
+                    "offset": 0.42,
+                    "color": "#d2748d",
+                    "opacity": 0.48
+                  },
+                  {
+                    "offset": 1,
+                    "color": "#e47e9c",
+                    "opacity": 0.12
+                  }
+                ]
+              },
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "hero:source:A:4_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "hero:source:A:4:a0",
+                      "x": 0.36207763860061304,
+                      "y": 0,
+                      "in": {
+                        "x": -34.68043294295236,
+                        "y": 22
+                      },
+                      "out": {
+                        "x": 34.217625693021176,
+                        "y": -20
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:4:a1",
+                      "x": -39.81774112212692,
+                      "y": -91.04700000000001,
+                      "in": {
+                        "x": 21.247775305080296,
+                        "y": 28
+                      },
+                      "out": {
+                        "x": -33.92389098602112,
+                        "y": -36
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:4:a2",
+                      "x": -84.0664355214564,
+                      "y": -240.033,
+                      "in": {
+                        "x": 33.24370298118083,
+                        "y": 44
+                      },
+                      "out": {
+                        "x": -27.192345461882212,
+                        "y": -49.74771930158843
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:4:a3",
+                      "x": -69.19798207386003,
+                      "y": -401.06608631523716,
+                      "in": {
+                        "x": -32.75925023299412,
+                        "y": 31.060545559848435
+                      },
+                      "out": {
+                        "x": 40.110127219826744,
+                        "y": -25.579272813992816
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:4:a4",
+                      "x": 105.5253623239673,
+                      "y": -252.4485,
+                      "in": {
+                        "x": -35.121290713106134,
+                        "y": -45.02016110037974
+                      },
+                      "out": {
+                        "x": 40.24646807185647,
+                        "y": 40
+                      },
+                      "mode": "smooth"
+                    },
+                    {
+                      "id": "hero:source:A:4:a5",
+                      "x": 66.19688747879069,
+                      "y": -95.1855,
+                      "in": {
+                        "x": -37.42160359658013,
+                        "y": -33.999999999999986
+                      },
+                      "out": {
+                        "x": 19.47754572750334,
+                        "y": 24
+                      },
+                      "mode": "smooth"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "structure-A"
+              }
+            },
+            {
+              "id": "structure:center",
+              "type": "path",
+              "name": "structure:center",
+              "matrix": [
+                0.9800665778412416,
+                0.19866933079506122,
+                -0.19866933079506122,
+                0.9800665778412416,
+                785,
+                397
+              ],
+              "opacity": 0.72,
+              "blendMode": "multiply",
+              "fill": "#6e3249",
+              "stroke": "none",
+              "strokeWidth": 1.5,
+              "fillRule": "evenodd",
+              "gradient": null,
+              "dash": [],
+              "dashOffset": 0,
+              "lineCap": "round",
+              "lineJoin": "round",
+              "miterLimit": 4,
+              "clipPath": null,
+              "mask": null,
+              "subpaths": [
+                {
+                  "id": "structure:center_s0",
+                  "closed": true,
+                  "role": "outer",
+                  "anchors": [
+                    {
+                      "id": "v_msgu374p_0dj5ter",
+                      "x": 82,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": -32.0325154884
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": 32.0325154884
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374p_ywza4xz",
+                      "x": 0,
+                      "y": 58,
+                      "in": {
+                        "x": 45.287349483599996,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": -45.287349483599996,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374p_iv293ov",
+                      "x": -82,
+                      "y": 0,
+                      "in": {
+                        "x": 0,
+                        "y": 32.0325154884
+                      },
+                      "out": {
+                        "x": 0,
+                        "y": -32.0325154884
+                      },
+                      "mode": "corner"
+                    },
+                    {
+                      "id": "v_msgu374p_oienegv",
+                      "x": 0,
+                      "y": -58,
+                      "in": {
+                        "x": -45.287349483599996,
+                        "y": 0
+                      },
+                      "out": {
+                        "x": 45.287349483599996,
+                        "y": 0
+                      },
+                      "mode": "corner"
+                    }
+                  ]
+                }
+              ],
+              "metadata": {
+                "semanticRole": "focal-pigment-center"
+              }
+            }
+          ],
+          "metadata": {
+            "semanticRole": "guides"
+          }
+        }
+      ],
+      "activeLayerId": "layer:guides"
+    }
+  ],
+  "programAssets": [],
+  "referencePackages": [],
+  "strokeSessions": [],
+  "brushPackages": [],
+  "vectorBrushLibrary": {
+    "format": "INK-VECTOR-BRUSH-LIBRARY",
+    "version": "1.0",
+    "materials": []
+  },
+  "handDrawingReports": [],
+  "deviceCalibrationProfiles": [],
+  "deviceValidationReports": [],
+  "interactivePerformanceReports": [],
+  "ai": {
+    "permission": "PROPOSE",
+    "selection": [],
+    "semanticTargets": [],
+    "unresolvedTargets": [],
+    "checkpoints": [],
+    "recipes": [],
+    "audit": [],
+    "variants": [],
+    "missingDependencies": []
+  },
+  "semanticModel": {
+    "format": "INK-SEMANTIC-MODEL",
+    "version": "1.0",
+    "migrationStrategy": "NATIVE",
+    "relationshipGraph": {
+      "format": "INK-SEMANTIC-RELATIONSHIP-GRAPH",
+      "version": "1.0",
+      "nodes": [],
+      "edges": []
+    }
+  },
+  "materialLibrary": {
+    "format": "INK-MATERIAL-LIBRARY",
+    "version": "1.0",
+    "templates": []
+  },
+  "dependencyModel": {
+    "format": "INK-DOCUMENT-DEPENDENCY-MODEL",
+    "version": "1.0",
+    "edges": []
+  },
+  "assetManifest": {
+    "format": "INK-DOCUMENT-ASSET-MANIFEST",
+    "version": "1.0",
+    "mode": "Linked Document",
+    "assets": []
+  },
+  "deviceReplayProfileSelection": "ORIGINAL_OR_CURRENT_SELECTABLE",
+  "drawingGapRanking": null,
+  "recentColors": [
+    "#202020",
+    "#ffffff",
+    "#b63c36",
+    "#d18b2f",
+    "#d7c64b",
+    "#3d875d",
+    "#2f718f",
+    "#594f9a"
+  ],
+  "metadata": {
+    "benchmarkId": "HERO-WC-01",
+    "benchmarkName": "Large-Scale Watercolor Flower Corolla Stress Test",
+    "claim": "HERO_CAPABILITY_STRESS_TEST_NOT_ARTIST_IMITATION",
+    "structureLegend": {
+      "A": "#e05b70",
+      "B": "#ef9a7e",
+      "C": "#b073b6",
+      "D": "#6c4d9b"
+    }
+  }
+}

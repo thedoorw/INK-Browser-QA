@@ -1,0 +1,38 @@
+
+> ink-core-main-program@1.6.3-rc.1 test:v163:id
+> node --test --test-concurrency=1 tests/v163-id/*.test.mjs
+
+TAP version 13
+# Subtest: duplicate SVG IDs normalize deterministically at import, not export
+ok 1 - duplicate SVG IDs normalize deterministically at import, not export
+  ---
+  duration_ms: 7.408609
+  type: 'test'
+  ...
+# Subtest: normalized IDs survive replay, local edit and rollback preservation
+ok 2 - normalized IDs survive replay, local edit and rollback preservation
+  ---
+  duration_ms: 5.249772
+  type: 'test'
+  ...
+# Subtest: unique SVG IDs remain unchanged for backward compatibility
+ok 3 - unique SVG IDs remain unchanged for backward compatibility
+  ---
+  duration_ms: 0.271935
+  type: 'test'
+  ...
+# Subtest: watercolor stroke preserves source transform while adding deterministic jitter
+ok 4 - watercolor stroke preserves source transform while adding deterministic jitter
+  ---
+  duration_ms: 3.043946
+  type: 'test'
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 75.04356

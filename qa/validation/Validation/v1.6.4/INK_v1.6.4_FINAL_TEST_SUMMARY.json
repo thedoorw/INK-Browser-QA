@@ -1,0 +1,8 @@
+{
+  "format":"INK-V1.6.4-FINAL-TEST-SUMMARY","version":"1.0","decision":"VALIDATION REQUIRED",
+  "baseline":{"v163Sha256":"1ac5fc2fb0b30ec90c180bb9239231c9a02a5a7ddbfd2ed46c3d374981755ab0","npmCi":"PASS","build":"PASS","inkDoctor":"PASS"},
+  "regression":{"v160":"7/7 PASS","fleurify":"2/2 PASS","v162":"8/8 PASS","v163":"12/12 PASS","v164":"8/8 PASS","batch01":"6/6 PASS","batch02":"6/6 PASS","vw":"4/4 PASS","vwVideo01":"1/1 PASS","case5Id":"PASS","wc":"5/5 PASS"},
+  "watercolorVisualCore":{"brushMaterialV2":"PASS","irregularEdges":"PASS","pigmentProfiles":"PASS","seededVariation":"PASS","petalV2":"PASS","leafV2":"PASS","stemV2":"PASS","nonRectangularWash":"PASS","naturalSplatter":"PASS","paperOverlay":"PASS","stableId":"PASS","localRecompute":"PASS","replayRollback":"PASS","deterministicExport":"PASS"},
+  "visualAssessment":{"improvementOverV163":"PASS","professionalWatercolorRendering":"VALIDATION REQUIRED","overallProceduralSimilarity":5,"paperIntegration":4},
+  "status":{"vectorWatercolorFramework":"APPROVED","watercolorVisualCoreV2Execution":"APPROVED","professionalWatercolorRendering":"VALIDATION REQUIRED","illustratorPixelEquivalence":"EXTERNAL VALIDATION PENDING","paperPigmentPhysicalSimulation":"RESEARCH"}
+}

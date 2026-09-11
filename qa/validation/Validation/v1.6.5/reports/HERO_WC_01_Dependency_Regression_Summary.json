@@ -1,0 +1,45 @@
+{
+  "format": "INK-V1.6.5-HERO-DEPENDENCY-REGRESSION-SUMMARY",
+  "version": "1.0",
+  "status": "PASS",
+  "round1": {
+    "status": "PASS",
+    "deterministic": "PASS"
+  },
+  "round2": {
+    "status": "PASS",
+    "localRecompute": "LOCAL_RECOMPUTE_COMPLETED",
+    "overRecomputed": 0,
+    "underRecomputed": 0,
+    "unaffectedChanged": 0
+  },
+  "round3": {
+    "status": "PASS",
+    "localRecompute": "LOCAL_RECOMPUTE_COMPLETED",
+    "overRecomputed": 0,
+    "underRecomputed": 0,
+    "unaffectedChanged": 0,
+    "petalSourceGeometryUnchanged": true
+  },
+  "rollback": {
+    "status": "PASS",
+    "changedPixels": 0
+  },
+  "stableIds": {
+    "round1": {
+      "count": 862,
+      "unique": 862,
+      "duplicates": []
+    },
+    "round2": {
+      "count": 900,
+      "unique": 900,
+      "duplicates": []
+    },
+    "round3": {
+      "count": 910,
+      "unique": 910,
+      "duplicates": []
+    }
+  }
+}

@@ -1,0 +1,3688 @@
+{
+  "caseId": "case-02-three-quarter-tulip",
+  "decision": "VALIDATION REQUIRED",
+  "status": "PASS",
+  "complexity": {
+    "viewpoint": "3/4",
+    "petals": 8,
+    "perspectiveShortening": true,
+    "centerOffset": {
+      "x": 33,
+      "y": -61
+    },
+    "foldedPetals": 2,
+    "hiddenPetal": true,
+    "calyx": true
+  },
+  "directness": {
+    "templateInstance": "DIRECT",
+    "perspectiveLikeScale": "EQUIVALENT",
+    "fold": "APPROXIMATED",
+    "hiddenSurface": "EQUIVALENT"
+  },
+  "localRecompute": {
+    "format": "INK-LOCAL-RECOMPUTE-REPORT",
+    "version": "1.1",
+    "status": "LOCAL_RECOMPUTE_COMPLETED",
+    "recomputeScope": {
+      "status": "LOCAL_RECOMPUTE_READY",
+      "operation": "bend",
+      "targetIds": [
+        "b02:c2:petal:folded"
+      ],
+      "startNodes": [
+        "parameter:b02:c2:petal:folded"
+      ],
+      "affectedNodes": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded",
+        "object:b02:c2:petal:folded:geometry",
+        "object:b02:c2:petal:folded:constraint",
+        "object:b02-c2-petal-folded:shape:constraint",
+        "object:b02:c2:petal:folded:render",
+        "object:b02-c2-petal-folded:shape:render",
+        "export:document"
+      ],
+      "affectedObjectIds": [
+        "b02:c2:petal:folded",
+        "b02-c2-petal-folded:shape"
+      ],
+      "dependencyPaths": {
+        "parameter:b02:c2:petal:folded": [
+          "parameter:b02:c2:petal:folded"
+        ],
+        "semantic:b02:c2:petal:folded": [
+          "parameter:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:folded"
+        ],
+        "object:b02:c2:petal:folded:geometry": [
+          "parameter:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:folded",
+          "object:b02:c2:petal:folded:geometry"
+        ],
+        "object:b02:c2:petal:folded:constraint": [
+          "parameter:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:folded",
+          "object:b02:c2:petal:folded:geometry",
+          "object:b02:c2:petal:folded:constraint"
+        ],
+        "object:b02-c2-petal-folded:shape:constraint": [
+          "parameter:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:folded",
+          "object:b02:c2:petal:folded:geometry",
+          "object:b02-c2-petal-folded:shape:constraint"
+        ],
+        "object:b02:c2:petal:folded:render": [
+          "parameter:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:folded",
+          "object:b02:c2:petal:folded:geometry",
+          "object:b02:c2:petal:folded:constraint",
+          "object:b02:c2:petal:folded:render"
+        ],
+        "object:b02-c2-petal-folded:shape:render": [
+          "parameter:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:folded",
+          "object:b02:c2:petal:folded:geometry",
+          "object:b02-c2-petal-folded:shape:constraint",
+          "object:b02-c2-petal-folded:shape:render"
+        ],
+        "export:document": [
+          "parameter:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:folded",
+          "object:b02:c2:petal:folded:geometry",
+          "object:b02:c2:petal:folded:constraint",
+          "object:b02:c2:petal:folded:render",
+          "export:document"
+        ]
+      },
+      "exportAffected": true
+    },
+    "recomputeReasons": {
+      "parameter:b02:c2:petal:folded": [
+        "parameter:b02:c2:petal:folded"
+      ],
+      "semantic:b02:c2:petal:folded": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded"
+      ],
+      "object:b02:c2:petal:folded:geometry": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded",
+        "object:b02:c2:petal:folded:geometry"
+      ],
+      "object:b02:c2:petal:folded:constraint": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded",
+        "object:b02:c2:petal:folded:geometry",
+        "object:b02:c2:petal:folded:constraint"
+      ],
+      "object:b02-c2-petal-folded:shape:constraint": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded",
+        "object:b02:c2:petal:folded:geometry",
+        "object:b02-c2-petal-folded:shape:constraint"
+      ],
+      "object:b02:c2:petal:folded:render": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded",
+        "object:b02:c2:petal:folded:geometry",
+        "object:b02:c2:petal:folded:constraint",
+        "object:b02:c2:petal:folded:render"
+      ],
+      "object:b02-c2-petal-folded:shape:render": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded",
+        "object:b02:c2:petal:folded:geometry",
+        "object:b02-c2-petal-folded:shape:constraint",
+        "object:b02-c2-petal-folded:shape:render"
+      ],
+      "export:document": [
+        "parameter:b02:c2:petal:folded",
+        "semantic:b02:c2:petal:folded",
+        "object:b02:c2:petal:folded:geometry",
+        "object:b02:c2:petal:folded:constraint",
+        "object:b02:c2:petal:folded:render",
+        "export:document"
+      ]
+    },
+    "changedObjectIds": [
+      "b02:c2:petal:folded",
+      "b02-c2-petal-folded:shape"
+    ],
+    "changedGeometryIds": [
+      "b02:c2:petal:folded",
+      "b02-c2-petal-folded:shape"
+    ],
+    "changedStyleIds": [],
+    "preservedObjectIds": [
+      "b02:c2:petal:back-left",
+      "b02-c2-petal-back-left:shape",
+      "b02:c2:petal:back-right",
+      "b02-c2-petal-back-right:shape",
+      "b02:c2:petal:rear-fold",
+      "b02-c2-petal-rear-fold:shape",
+      "b02:c2:petal:side-left",
+      "b02-c2-petal-side-left:shape",
+      "b02:c2:petal:side-right",
+      "b02-c2-petal-side-right:shape",
+      "b02:c2:petal:front-left",
+      "b02-c2-petal-front-left:shape",
+      "b02:c2:petal:front-right",
+      "b02-c2-petal-front-right:shape",
+      "b02:c2:calyx",
+      "b02-c2-calyx:shape",
+      "b02:c2:stem",
+      "b02-c2-stem:shape",
+      "b02:c2:flower-head"
+    ],
+    "preservedHashes": {
+      "b02:c2:petal:back-left": "fnv1a32:023c4f88",
+      "b02-c2-petal-back-left:shape": "fnv1a32:96b9f88d",
+      "b02:c2:petal:back-right": "fnv1a32:fb594095",
+      "b02-c2-petal-back-right:shape": "fnv1a32:a8cbb850",
+      "b02:c2:petal:rear-fold": "fnv1a32:f696b258",
+      "b02-c2-petal-rear-fold:shape": "fnv1a32:449f1cbe",
+      "b02:c2:petal:side-left": "fnv1a32:bf2077da",
+      "b02-c2-petal-side-left:shape": "fnv1a32:c08f84e1",
+      "b02:c2:petal:side-right": "fnv1a32:61cd9de7",
+      "b02-c2-petal-side-right:shape": "fnv1a32:b5f1f328",
+      "b02:c2:petal:front-left": "fnv1a32:e2eae853",
+      "b02-c2-petal-front-left:shape": "fnv1a32:d0e6d79c",
+      "b02:c2:petal:front-right": "fnv1a32:1f1dd76e",
+      "b02-c2-petal-front-right:shape": "fnv1a32:d3f81560",
+      "b02:c2:calyx": "fnv1a32:9054e656",
+      "b02-c2-calyx:shape": "fnv1a32:0cbec945",
+      "b02:c2:stem": "fnv1a32:83a34217",
+      "b02-c2-stem:shape": "fnv1a32:bbafef05",
+      "b02:c2:flower-head": "fnv1a32:3a20d2bb"
+    },
+    "preservedGeometryHashes": {
+      "b02:c2:petal:back-left": "fnv1a32:653ce48e",
+      "b02-c2-petal-back-left:shape": "fnv1a32:a86443ad",
+      "b02:c2:petal:back-right": "fnv1a32:5f2f547c",
+      "b02-c2-petal-back-right:shape": "fnv1a32:f2d97811",
+      "b02:c2:petal:rear-fold": "fnv1a32:38d9a211",
+      "b02-c2-petal-rear-fold:shape": "fnv1a32:0fab9f0a",
+      "b02:c2:petal:side-left": "fnv1a32:ae05589f",
+      "b02-c2-petal-side-left:shape": "fnv1a32:7987a249",
+      "b02:c2:petal:side-right": "fnv1a32:5847c14f",
+      "b02-c2-petal-side-right:shape": "fnv1a32:d4ac6996",
+      "b02:c2:petal:front-left": "fnv1a32:d94e593a",
+      "b02-c2-petal-front-left:shape": "fnv1a32:8c74bd3d",
+      "b02:c2:petal:front-right": "fnv1a32:befd0889",
+      "b02-c2-petal-front-right:shape": "fnv1a32:731e0408",
+      "b02:c2:calyx": "fnv1a32:c1ad6c7b",
+      "b02-c2-calyx:shape": "fnv1a32:7314ebb8",
+      "b02:c2:stem": "fnv1a32:7b026cbc",
+      "b02-c2-stem:shape": "fnv1a32:5a035e0b",
+      "b02:c2:flower-head": "fnv1a32:1044b154"
+    },
+    "preservedStyleHashes": {
+      "b02:c2:petal:back-left": "fnv1a32:cf4049fa",
+      "b02-c2-petal-back-left:shape": "fnv1a32:1b3d0e9e",
+      "b02:c2:petal:back-right": "fnv1a32:cf4049fa",
+      "b02-c2-petal-back-right:shape": "fnv1a32:998ce01d",
+      "b02:c2:petal:rear-fold": "fnv1a32:9c985f9f",
+      "b02-c2-petal-rear-fold:shape": "fnv1a32:a66540ec",
+      "b02:c2:petal:side-left": "fnv1a32:9a585cd1",
+      "b02-c2-petal-side-left:shape": "fnv1a32:8c9dee84",
+      "b02:c2:petal:side-right": "fnv1a32:9a585cd1",
+      "b02-c2-petal-side-right:shape": "fnv1a32:0f14487a",
+      "b02:c2:petal:front-left": "fnv1a32:0d1ea332",
+      "b02-c2-petal-front-left:shape": "fnv1a32:21553d05",
+      "b02:c2:petal:front-right": "fnv1a32:0d1ea332",
+      "b02-c2-petal-front-right:shape": "fnv1a32:4a110f0e",
+      "b02:c2:calyx": "fnv1a32:7c978e33",
+      "b02-c2-calyx:shape": "fnv1a32:01526385",
+      "b02:c2:stem": "fnv1a32:7be190ab",
+      "b02-c2-stem:shape": "fnv1a32:3afbe0d6",
+      "b02:c2:flower-head": "fnv1a32:39ec1dcc"
+    },
+    "beforeHashes": {
+      "b02:c2:petal:back-left": {
+        "full": "fnv1a32:023c4f88",
+        "geometry": "fnv1a32:653ce48e",
+        "style": "fnv1a32:cf4049fa"
+      },
+      "b02-c2-petal-back-left:shape": {
+        "full": "fnv1a32:96b9f88d",
+        "geometry": "fnv1a32:a86443ad",
+        "style": "fnv1a32:1b3d0e9e"
+      },
+      "b02:c2:petal:back-right": {
+        "full": "fnv1a32:fb594095",
+        "geometry": "fnv1a32:5f2f547c",
+        "style": "fnv1a32:cf4049fa"
+      },
+      "b02-c2-petal-back-right:shape": {
+        "full": "fnv1a32:a8cbb850",
+        "geometry": "fnv1a32:f2d97811",
+        "style": "fnv1a32:998ce01d"
+      },
+      "b02:c2:petal:rear-fold": {
+        "full": "fnv1a32:f696b258",
+        "geometry": "fnv1a32:38d9a211",
+        "style": "fnv1a32:9c985f9f"
+      },
+      "b02-c2-petal-rear-fold:shape": {
+        "full": "fnv1a32:449f1cbe",
+        "geometry": "fnv1a32:0fab9f0a",
+        "style": "fnv1a32:a66540ec"
+      },
+      "b02:c2:petal:side-left": {
+        "full": "fnv1a32:bf2077da",
+        "geometry": "fnv1a32:ae05589f",
+        "style": "fnv1a32:9a585cd1"
+      },
+      "b02-c2-petal-side-left:shape": {
+        "full": "fnv1a32:c08f84e1",
+        "geometry": "fnv1a32:7987a249",
+        "style": "fnv1a32:8c9dee84"
+      },
+      "b02:c2:petal:side-right": {
+        "full": "fnv1a32:61cd9de7",
+        "geometry": "fnv1a32:5847c14f",
+        "style": "fnv1a32:9a585cd1"
+      },
+      "b02-c2-petal-side-right:shape": {
+        "full": "fnv1a32:b5f1f328",
+        "geometry": "fnv1a32:d4ac6996",
+        "style": "fnv1a32:0f14487a"
+      },
+      "b02:c2:petal:front-left": {
+        "full": "fnv1a32:e2eae853",
+        "geometry": "fnv1a32:d94e593a",
+        "style": "fnv1a32:0d1ea332"
+      },
+      "b02-c2-petal-front-left:shape": {
+        "full": "fnv1a32:d0e6d79c",
+        "geometry": "fnv1a32:8c74bd3d",
+        "style": "fnv1a32:21553d05"
+      },
+      "b02:c2:petal:front-right": {
+        "full": "fnv1a32:1f1dd76e",
+        "geometry": "fnv1a32:befd0889",
+        "style": "fnv1a32:0d1ea332"
+      },
+      "b02-c2-petal-front-right:shape": {
+        "full": "fnv1a32:d3f81560",
+        "geometry": "fnv1a32:731e0408",
+        "style": "fnv1a32:4a110f0e"
+      },
+      "b02:c2:petal:folded": {
+        "full": "fnv1a32:dc34b4ea",
+        "geometry": "fnv1a32:3543c8e9",
+        "style": "fnv1a32:68999072"
+      },
+      "b02-c2-petal-folded:shape": {
+        "full": "fnv1a32:03eb0f40",
+        "geometry": "fnv1a32:4a1ab017",
+        "style": "fnv1a32:b3e226eb"
+      },
+      "b02:c2:calyx": {
+        "full": "fnv1a32:9054e656",
+        "geometry": "fnv1a32:c1ad6c7b",
+        "style": "fnv1a32:7c978e33"
+      },
+      "b02-c2-calyx:shape": {
+        "full": "fnv1a32:0cbec945",
+        "geometry": "fnv1a32:7314ebb8",
+        "style": "fnv1a32:01526385"
+      },
+      "b02:c2:stem": {
+        "full": "fnv1a32:83a34217",
+        "geometry": "fnv1a32:7b026cbc",
+        "style": "fnv1a32:7be190ab"
+      },
+      "b02-c2-stem:shape": {
+        "full": "fnv1a32:bbafef05",
+        "geometry": "fnv1a32:5a035e0b",
+        "style": "fnv1a32:3afbe0d6"
+      },
+      "b02:c2:flower-head": {
+        "full": "fnv1a32:3a20d2bb",
+        "geometry": "fnv1a32:1044b154",
+        "style": "fnv1a32:39ec1dcc"
+      }
+    },
+    "afterHashes": {
+      "b02:c2:petal:back-left": {
+        "full": "fnv1a32:023c4f88",
+        "geometry": "fnv1a32:653ce48e",
+        "style": "fnv1a32:cf4049fa"
+      },
+      "b02-c2-petal-back-left:shape": {
+        "full": "fnv1a32:96b9f88d",
+        "geometry": "fnv1a32:a86443ad",
+        "style": "fnv1a32:1b3d0e9e"
+      },
+      "b02:c2:petal:back-right": {
+        "full": "fnv1a32:fb594095",
+        "geometry": "fnv1a32:5f2f547c",
+        "style": "fnv1a32:cf4049fa"
+      },
+      "b02-c2-petal-back-right:shape": {
+        "full": "fnv1a32:a8cbb850",
+        "geometry": "fnv1a32:f2d97811",
+        "style": "fnv1a32:998ce01d"
+      },
+      "b02:c2:petal:rear-fold": {
+        "full": "fnv1a32:f696b258",
+        "geometry": "fnv1a32:38d9a211",
+        "style": "fnv1a32:9c985f9f"
+      },
+      "b02-c2-petal-rear-fold:shape": {
+        "full": "fnv1a32:449f1cbe",
+        "geometry": "fnv1a32:0fab9f0a",
+        "style": "fnv1a32:a66540ec"
+      },
+      "b02:c2:petal:side-left": {
+        "full": "fnv1a32:bf2077da",
+        "geometry": "fnv1a32:ae05589f",
+        "style": "fnv1a32:9a585cd1"
+      },
+      "b02-c2-petal-side-left:shape": {
+        "full": "fnv1a32:c08f84e1",
+        "geometry": "fnv1a32:7987a249",
+        "style": "fnv1a32:8c9dee84"
+      },
+      "b02:c2:petal:side-right": {
+        "full": "fnv1a32:61cd9de7",
+        "geometry": "fnv1a32:5847c14f",
+        "style": "fnv1a32:9a585cd1"
+      },
+      "b02-c2-petal-side-right:shape": {
+        "full": "fnv1a32:b5f1f328",
+        "geometry": "fnv1a32:d4ac6996",
+        "style": "fnv1a32:0f14487a"
+      },
+      "b02:c2:petal:front-left": {
+        "full": "fnv1a32:e2eae853",
+        "geometry": "fnv1a32:d94e593a",
+        "style": "fnv1a32:0d1ea332"
+      },
+      "b02-c2-petal-front-left:shape": {
+        "full": "fnv1a32:d0e6d79c",
+        "geometry": "fnv1a32:8c74bd3d",
+        "style": "fnv1a32:21553d05"
+      },
+      "b02:c2:petal:front-right": {
+        "full": "fnv1a32:1f1dd76e",
+        "geometry": "fnv1a32:befd0889",
+        "style": "fnv1a32:0d1ea332"
+      },
+      "b02-c2-petal-front-right:shape": {
+        "full": "fnv1a32:d3f81560",
+        "geometry": "fnv1a32:731e0408",
+        "style": "fnv1a32:4a110f0e"
+      },
+      "b02:c2:petal:folded": {
+        "full": "fnv1a32:8f22fda8",
+        "geometry": "fnv1a32:9a3173c1",
+        "style": "fnv1a32:68999072"
+      },
+      "b02-c2-petal-folded:shape": {
+        "full": "fnv1a32:96a74cd0",
+        "geometry": "fnv1a32:5d00e7d3",
+        "style": "fnv1a32:b3e226eb"
+      },
+      "b02:c2:calyx": {
+        "full": "fnv1a32:9054e656",
+        "geometry": "fnv1a32:c1ad6c7b",
+        "style": "fnv1a32:7c978e33"
+      },
+      "b02-c2-calyx:shape": {
+        "full": "fnv1a32:0cbec945",
+        "geometry": "fnv1a32:7314ebb8",
+        "style": "fnv1a32:01526385"
+      },
+      "b02:c2:stem": {
+        "full": "fnv1a32:83a34217",
+        "geometry": "fnv1a32:7b026cbc",
+        "style": "fnv1a32:7be190ab"
+      },
+      "b02-c2-stem:shape": {
+        "full": "fnv1a32:bbafef05",
+        "geometry": "fnv1a32:5a035e0b",
+        "style": "fnv1a32:3afbe0d6"
+      },
+      "b02:c2:flower-head": {
+        "full": "fnv1a32:3a20d2bb",
+        "geometry": "fnv1a32:1044b154",
+        "style": "fnv1a32:39ec1dcc"
+      }
+    },
+    "overRecomputed": [],
+    "overRecomputeDetected": false,
+    "missingDependencies": [],
+    "cycles": [],
+    "dependencyGraph": {
+      "format": "INK-DEPENDENCY-GRAPH",
+      "version": "1.1",
+      "nodes": [
+        {
+          "id": "export:document",
+          "kind": "export"
+        },
+        {
+          "id": "template:material:flower:bud",
+          "kind": "material-template",
+          "templateId": "material:flower:bud",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:bud:height",
+          "kind": "template-parameter",
+          "templateId": "material:flower:bud",
+          "parameter": "height"
+        },
+        {
+          "id": "template-parameter:material:flower:bud:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:bud",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:bud:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:bud",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:bud:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:bud",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:bud:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:bud",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template:material:flower:calyx",
+          "kind": "material-template",
+          "templateId": "material:flower:calyx",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:calyx:height",
+          "kind": "template-parameter",
+          "templateId": "material:flower:calyx",
+          "parameter": "height"
+        },
+        {
+          "id": "template-parameter:material:flower:calyx:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:calyx",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:calyx:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:calyx",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:calyx:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:calyx",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:calyx:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:calyx",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template:material:flower:center-disk",
+          "kind": "material-template",
+          "templateId": "material:flower:center-disk",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:center-disk:radius",
+          "kind": "template-parameter",
+          "templateId": "material:flower:center-disk",
+          "parameter": "radius"
+        },
+        {
+          "id": "template-parameter:material:flower:center-disk:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:center-disk",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:center-disk:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:center-disk",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:center-disk:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:center-disk",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template:material:flower:leaf-broad",
+          "kind": "material-template",
+          "templateId": "material:flower:leaf-broad",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-broad:length",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-broad",
+          "parameter": "length"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-broad:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-broad",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-broad:bend",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-broad",
+          "parameter": "bend"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-broad:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-broad",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-broad:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-broad",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-broad:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-broad",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template:material:flower:leaf-lanceolate",
+          "kind": "material-template",
+          "templateId": "material:flower:leaf-lanceolate",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-lanceolate:length",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-lanceolate",
+          "parameter": "length"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-lanceolate:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-lanceolate",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-lanceolate:bend",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-lanceolate",
+          "parameter": "bend"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-lanceolate:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-lanceolate",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-lanceolate:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-lanceolate",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:leaf-lanceolate:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:leaf-lanceolate",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template:material:flower:petal-inner-tight",
+          "kind": "material-template",
+          "templateId": "material:flower:petal-inner-tight",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:length",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "length"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:bend",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "bend"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:tipHandle",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "tipHandle"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-inner-tight:tipMode",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-inner-tight",
+          "parameter": "tipMode"
+        },
+        {
+          "id": "template:material:flower:petal-outer-broad",
+          "kind": "material-template",
+          "templateId": "material:flower:petal-outer-broad",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:length",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "length"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:bend",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "bend"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:tipHandle",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "tipHandle"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-outer-broad:tipMode",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-outer-broad",
+          "parameter": "tipMode"
+        },
+        {
+          "id": "template:material:flower:petal-pointed",
+          "kind": "material-template",
+          "templateId": "material:flower:petal-pointed",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:length",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "length"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:bend",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "bend"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:tipHandle",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "tipHandle"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-pointed:tipMode",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-pointed",
+          "parameter": "tipMode"
+        },
+        {
+          "id": "template:material:flower:petal-rounded",
+          "kind": "material-template",
+          "templateId": "material:flower:petal-rounded",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:length",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "length"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:width",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "width"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:bend",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "bend"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:fill",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "fill"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:tipHandle",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "tipHandle"
+        },
+        {
+          "id": "template-parameter:material:flower:petal-rounded:tipMode",
+          "kind": "template-parameter",
+          "templateId": "material:flower:petal-rounded",
+          "parameter": "tipMode"
+        },
+        {
+          "id": "template:material:flower:stem-curved",
+          "kind": "material-template",
+          "templateId": "material:flower:stem-curved",
+          "templateVersion": "1.0.0"
+        },
+        {
+          "id": "template-parameter:material:flower:stem-curved:length",
+          "kind": "template-parameter",
+          "templateId": "material:flower:stem-curved",
+          "parameter": "length"
+        },
+        {
+          "id": "template-parameter:material:flower:stem-curved:bend",
+          "kind": "template-parameter",
+          "templateId": "material:flower:stem-curved",
+          "parameter": "bend"
+        },
+        {
+          "id": "template-parameter:material:flower:stem-curved:stroke",
+          "kind": "template-parameter",
+          "templateId": "material:flower:stem-curved",
+          "parameter": "stroke"
+        },
+        {
+          "id": "template-parameter:material:flower:stem-curved:strokeWidth",
+          "kind": "template-parameter",
+          "templateId": "material:flower:stem-curved",
+          "parameter": "strokeWidth"
+        },
+        {
+          "id": "parameter:b02:c2:petal:back-left",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:back-left",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:back-left",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:back-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:back-left:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:back-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:back-left:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:back-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:back-left:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:back-left",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-back-left:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-back-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-back-left:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-back-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-back-left:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-back-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-back-left:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-back-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-back-left:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-back-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:petal:back-right",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:back-right",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:back-right",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:back-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:back-right:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:back-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:back-right:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:back-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:back-right:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:back-right",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-back-right:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-back-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-back-right:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-back-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-back-right:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-back-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-back-right:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-back-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-back-right:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-back-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:petal:rear-fold",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:rear-fold",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:rear-fold",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:rear-fold",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:rear-fold:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:rear-fold",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:rear-fold:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:rear-fold",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:rear-fold:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:rear-fold",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-rear-fold:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-rear-fold:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-rear-fold:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-rear-fold:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-rear-fold:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-rear-fold:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-rear-fold:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-rear-fold:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-rear-fold:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-rear-fold:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:petal:side-left",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:side-left",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:side-left",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:side-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:side-left:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:side-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:side-left:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:side-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:side-left:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:side-left",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-side-left:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-side-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-side-left:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-side-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-side-left:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-side-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-side-left:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-side-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-side-left:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-side-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:petal:side-right",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:side-right",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:side-right",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:side-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:side-right:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:side-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:side-right:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:side-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:side-right:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:side-right",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-side-right:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-side-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-side-right:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-side-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-side-right:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-side-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-side-right:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-side-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-side-right:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-side-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:petal:front-left",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:front-left",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:front-left",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:front-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:front-left:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:front-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:front-left:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:front-left",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:front-left:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:front-left",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-front-left:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-front-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-front-left:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-front-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-front-left:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-front-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-front-left:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-front-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-front-left:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-front-left:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:petal:front-right",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:front-right",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:front-right",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:front-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:front-right:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:front-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:front-right:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:front-right",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:front-right:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:front-right",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-front-right:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-front-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-front-right:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-front-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-front-right:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-front-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-front-right:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-front-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-front-right:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-front-right:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:petal:folded",
+          "kind": "parameter",
+          "objectId": "b02:c2:petal:folded",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:petal:folded",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:petal:folded",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:folded:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:petal:folded",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:folded:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:petal:folded",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:petal:folded:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:petal:folded",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-petal-folded:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-petal-folded:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-petal-folded:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-petal-folded:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-folded:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-petal-folded:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-folded:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-petal-folded:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-petal-folded:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-petal-folded:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:calyx",
+          "kind": "parameter",
+          "objectId": "b02:c2:calyx",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:calyx",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:calyx",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:calyx:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:calyx",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:calyx:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:calyx",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:calyx:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:calyx",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-calyx:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-calyx:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-calyx:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-calyx:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-calyx:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-calyx:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-calyx:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-calyx:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-calyx:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-calyx:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:stem",
+          "kind": "parameter",
+          "objectId": "b02:c2:stem",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:stem",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:stem",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:stem:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:stem",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:stem:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:stem",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:stem:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:stem",
+          "objectType": "group"
+        },
+        {
+          "id": "parameter:b02-c2-stem:shape",
+          "kind": "parameter",
+          "objectId": "b02-c2-stem:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "semantic:b02-c2-stem:shape",
+          "kind": "semantic-target",
+          "objectId": "b02-c2-stem:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-stem:shape:geometry",
+          "kind": "geometry",
+          "objectId": "b02-c2-stem:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-stem:shape:constraint",
+          "kind": "constraint",
+          "objectId": "b02-c2-stem:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "object:b02-c2-stem:shape:render",
+          "kind": "rendering",
+          "objectId": "b02-c2-stem:shape",
+          "objectType": "path"
+        },
+        {
+          "id": "parameter:b02:c2:flower-head",
+          "kind": "parameter",
+          "objectId": "b02:c2:flower-head",
+          "objectType": "group"
+        },
+        {
+          "id": "semantic:b02:c2:flower-head",
+          "kind": "semantic-target",
+          "objectId": "b02:c2:flower-head",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:flower-head:geometry",
+          "kind": "geometry",
+          "objectId": "b02:c2:flower-head",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:flower-head:constraint",
+          "kind": "constraint",
+          "objectId": "b02:c2:flower-head",
+          "objectType": "group"
+        },
+        {
+          "id": "object:b02:c2:flower-head:render",
+          "kind": "rendering",
+          "objectId": "b02:c2:flower-head",
+          "objectType": "group"
+        }
+      ],
+      "edges": [
+        {
+          "from": "template-parameter:material:flower:bud:height",
+          "to": "template:material:flower:bud",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:bud:width",
+          "to": "template:material:flower:bud",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:bud:fill",
+          "to": "template:material:flower:bud",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:bud:stroke",
+          "to": "template:material:flower:bud",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:bud:strokeWidth",
+          "to": "template:material:flower:bud",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:height",
+          "to": "template:material:flower:calyx",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:width",
+          "to": "template:material:flower:calyx",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:fill",
+          "to": "template:material:flower:calyx",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:stroke",
+          "to": "template:material:flower:calyx",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:strokeWidth",
+          "to": "template:material:flower:calyx",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:center-disk:radius",
+          "to": "template:material:flower:center-disk",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:center-disk:fill",
+          "to": "template:material:flower:center-disk",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:center-disk:stroke",
+          "to": "template:material:flower:center-disk",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:center-disk:strokeWidth",
+          "to": "template:material:flower:center-disk",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-broad:length",
+          "to": "template:material:flower:leaf-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-broad:width",
+          "to": "template:material:flower:leaf-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-broad:bend",
+          "to": "template:material:flower:leaf-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-broad:fill",
+          "to": "template:material:flower:leaf-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-broad:stroke",
+          "to": "template:material:flower:leaf-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-broad:strokeWidth",
+          "to": "template:material:flower:leaf-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-lanceolate:length",
+          "to": "template:material:flower:leaf-lanceolate",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-lanceolate:width",
+          "to": "template:material:flower:leaf-lanceolate",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-lanceolate:bend",
+          "to": "template:material:flower:leaf-lanceolate",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-lanceolate:fill",
+          "to": "template:material:flower:leaf-lanceolate",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-lanceolate:stroke",
+          "to": "template:material:flower:leaf-lanceolate",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:leaf-lanceolate:strokeWidth",
+          "to": "template:material:flower:leaf-lanceolate",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:length",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:width",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:bend",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:fill",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:stroke",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:strokeWidth",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:tipHandle",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-inner-tight:tipMode",
+          "to": "template:material:flower:petal-inner-tight",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:length",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:width",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:bend",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:fill",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:stroke",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:strokeWidth",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:tipHandle",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:tipMode",
+          "to": "template:material:flower:petal-outer-broad",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:length",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:width",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:bend",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:fill",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:stroke",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:strokeWidth",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:tipHandle",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:tipMode",
+          "to": "template:material:flower:petal-pointed",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:length",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:width",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:bend",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:fill",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:stroke",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:strokeWidth",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:tipHandle",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:tipMode",
+          "to": "template:material:flower:petal-rounded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:length",
+          "to": "template:material:flower:stem-curved",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:bend",
+          "to": "template:material:flower:stem-curved",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:stroke",
+          "to": "template:material:flower:stem-curved",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:strokeWidth",
+          "to": "template:material:flower:stem-curved",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:back-left",
+          "to": "semantic:b02:c2:petal:back-left",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:back-left",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-left:geometry",
+          "to": "object:b02:c2:petal:back-left:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-left:constraint",
+          "to": "object:b02:c2:petal:back-left:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-left:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-back-left:shape",
+          "to": "semantic:b02-c2-petal-back-left:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-back-left:shape",
+          "to": "object:b02-c2-petal-back-left:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-back-left:shape:geometry",
+          "to": "object:b02-c2-petal-back-left:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-back-left:shape:constraint",
+          "to": "object:b02-c2-petal-back-left:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-back-left:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:back-right",
+          "to": "semantic:b02:c2:petal:back-right",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:back-right",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-right:geometry",
+          "to": "object:b02:c2:petal:back-right:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-right:constraint",
+          "to": "object:b02:c2:petal:back-right:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-right:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-back-right:shape",
+          "to": "semantic:b02-c2-petal-back-right:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-back-right:shape",
+          "to": "object:b02-c2-petal-back-right:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-back-right:shape:geometry",
+          "to": "object:b02-c2-petal-back-right:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-back-right:shape:constraint",
+          "to": "object:b02-c2-petal-back-right:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-back-right:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:rear-fold",
+          "to": "semantic:b02:c2:petal:rear-fold",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:rear-fold",
+          "to": "object:b02:c2:petal:rear-fold:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:rear-fold:geometry",
+          "to": "object:b02:c2:petal:rear-fold:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:rear-fold:constraint",
+          "to": "object:b02:c2:petal:rear-fold:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:rear-fold:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-rear-fold:shape",
+          "to": "semantic:b02-c2-petal-rear-fold:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-rear-fold:shape",
+          "to": "object:b02-c2-petal-rear-fold:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-rear-fold:shape:geometry",
+          "to": "object:b02-c2-petal-rear-fold:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-rear-fold:shape:constraint",
+          "to": "object:b02-c2-petal-rear-fold:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-rear-fold:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:side-left",
+          "to": "semantic:b02:c2:petal:side-left",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:side-left",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-left:geometry",
+          "to": "object:b02:c2:petal:side-left:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-left:constraint",
+          "to": "object:b02:c2:petal:side-left:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-left:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-side-left:shape",
+          "to": "semantic:b02-c2-petal-side-left:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-side-left:shape",
+          "to": "object:b02-c2-petal-side-left:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-side-left:shape:geometry",
+          "to": "object:b02-c2-petal-side-left:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-side-left:shape:constraint",
+          "to": "object:b02-c2-petal-side-left:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-side-left:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:side-right",
+          "to": "semantic:b02:c2:petal:side-right",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:side-right",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-right:geometry",
+          "to": "object:b02:c2:petal:side-right:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-right:constraint",
+          "to": "object:b02:c2:petal:side-right:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-right:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-side-right:shape",
+          "to": "semantic:b02-c2-petal-side-right:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-side-right:shape",
+          "to": "object:b02-c2-petal-side-right:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-side-right:shape:geometry",
+          "to": "object:b02-c2-petal-side-right:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-side-right:shape:constraint",
+          "to": "object:b02-c2-petal-side-right:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-side-right:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:front-left",
+          "to": "semantic:b02:c2:petal:front-left",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:front-left",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-left:geometry",
+          "to": "object:b02:c2:petal:front-left:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-left:constraint",
+          "to": "object:b02:c2:petal:front-left:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-left:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-front-left:shape",
+          "to": "semantic:b02-c2-petal-front-left:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-front-left:shape",
+          "to": "object:b02-c2-petal-front-left:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-front-left:shape:geometry",
+          "to": "object:b02-c2-petal-front-left:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-front-left:shape:constraint",
+          "to": "object:b02-c2-petal-front-left:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-front-left:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:front-right",
+          "to": "semantic:b02:c2:petal:front-right",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:front-right",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-right:geometry",
+          "to": "object:b02:c2:petal:front-right:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-right:constraint",
+          "to": "object:b02:c2:petal:front-right:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-right:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-front-right:shape",
+          "to": "semantic:b02-c2-petal-front-right:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-front-right:shape",
+          "to": "object:b02-c2-petal-front-right:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-front-right:shape:geometry",
+          "to": "object:b02-c2-petal-front-right:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-front-right:shape:constraint",
+          "to": "object:b02-c2-petal-front-right:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-front-right:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:petal:folded",
+          "to": "semantic:b02:c2:petal:folded",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:petal:folded",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:folded:geometry",
+          "to": "object:b02:c2:petal:folded:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:folded:constraint",
+          "to": "object:b02:c2:petal:folded:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:folded:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-petal-folded:shape",
+          "to": "semantic:b02-c2-petal-folded:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-petal-folded:shape",
+          "to": "object:b02-c2-petal-folded:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-folded:shape:geometry",
+          "to": "object:b02-c2-petal-folded:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-folded:shape:constraint",
+          "to": "object:b02-c2-petal-folded:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-petal-folded:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:calyx",
+          "to": "semantic:b02:c2:calyx",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:calyx",
+          "to": "object:b02:c2:calyx:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:calyx:geometry",
+          "to": "object:b02:c2:calyx:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:calyx:constraint",
+          "to": "object:b02:c2:calyx:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:calyx:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-calyx:shape",
+          "to": "semantic:b02-c2-calyx:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-calyx:shape",
+          "to": "object:b02-c2-calyx:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-calyx:shape:geometry",
+          "to": "object:b02-c2-calyx:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-calyx:shape:constraint",
+          "to": "object:b02-c2-calyx:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-calyx:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:stem",
+          "to": "semantic:b02:c2:stem",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:stem",
+          "to": "object:b02:c2:stem:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:stem:geometry",
+          "to": "object:b02:c2:stem:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:stem:constraint",
+          "to": "object:b02:c2:stem:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:stem:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02-c2-stem:shape",
+          "to": "semantic:b02-c2-stem:shape",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02-c2-stem:shape",
+          "to": "object:b02-c2-stem:shape:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-stem:shape:geometry",
+          "to": "object:b02-c2-stem:shape:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-stem:shape:constraint",
+          "to": "object:b02-c2-stem:shape:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02-c2-stem:shape:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "semantic:b02:c2:flower-head",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "semantic:b02:c2:flower-head",
+          "to": "object:b02:c2:flower-head:geometry",
+          "type": "SEMANTIC_RESOLUTION",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:flower-head:constraint",
+          "type": "GEOMETRY_CONSTRAINT",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:flower-head:constraint",
+          "to": "object:b02:c2:flower-head:render",
+          "type": "RENDER_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:flower-head:render",
+          "to": "export:document",
+          "type": "EXPORT_DEPENDENCY",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:back-left:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:petal-pointed",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:petal-pointed",
+          "to": "object:b02:c2:petal:back-left:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:length",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:width",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:bend",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:fill",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:stroke",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:strokeWidth",
+          "to": "object:b02:c2:petal:back-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-left:geometry",
+          "to": "object:b02-c2-petal-back-left:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:back-right:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:petal-pointed",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:petal-pointed",
+          "to": "object:b02:c2:petal:back-right:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:length",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:width",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:bend",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:fill",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:stroke",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:strokeWidth",
+          "to": "object:b02:c2:petal:back-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:back-right:geometry",
+          "to": "object:b02-c2-petal-back-right:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:rear-fold:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "object:b02:c2:petal:rear-fold:geometry",
+          "to": "object:b02-c2-petal-rear-fold:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:side-left:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:petal-outer-broad",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:petal-outer-broad",
+          "to": "object:b02:c2:petal:side-left:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:length",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:width",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:bend",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:fill",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:stroke",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:strokeWidth",
+          "to": "object:b02:c2:petal:side-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-left:geometry",
+          "to": "object:b02-c2-petal-side-left:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:side-right:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:petal-outer-broad",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:petal-outer-broad",
+          "to": "object:b02:c2:petal:side-right:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:length",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:width",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:bend",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:fill",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:stroke",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-outer-broad:strokeWidth",
+          "to": "object:b02:c2:petal:side-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:side-right:geometry",
+          "to": "object:b02-c2-petal-side-right:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:front-left:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:petal-rounded",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:petal-rounded",
+          "to": "object:b02:c2:petal:front-left:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:length",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:width",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:bend",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:fill",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:stroke",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:strokeWidth",
+          "to": "object:b02:c2:petal:front-left:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-left:geometry",
+          "to": "object:b02-c2-petal-front-left:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:front-right:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:petal-rounded",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:petal-rounded",
+          "to": "object:b02:c2:petal:front-right:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:length",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:width",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:bend",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:fill",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:stroke",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-rounded:strokeWidth",
+          "to": "object:b02:c2:petal:front-right:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:front-right:geometry",
+          "to": "object:b02-c2-petal-front-right:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:petal:folded:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:petal-pointed",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:petal-pointed",
+          "to": "object:b02:c2:petal:folded:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:length",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:width",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:bend",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:fill",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:stroke",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:petal-pointed:strokeWidth",
+          "to": "object:b02:c2:petal:folded:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:petal:folded:geometry",
+          "to": "object:b02-c2-petal-folded:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:flower-head:geometry",
+          "to": "object:b02:c2:calyx:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "template:material:flower:calyx",
+          "to": "object:b02:c2:calyx:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:calyx",
+          "to": "object:b02:c2:calyx:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:height",
+          "to": "object:b02:c2:calyx:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:width",
+          "to": "object:b02:c2:calyx:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:fill",
+          "to": "object:b02:c2:calyx:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:stroke",
+          "to": "object:b02:c2:calyx:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:calyx:strokeWidth",
+          "to": "object:b02:c2:calyx:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:calyx:geometry",
+          "to": "object:b02-c2-calyx:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "template:material:flower:stem-curved",
+          "to": "object:b02:c2:stem:geometry",
+          "type": "INSTANCE_OF",
+          "metadata": {}
+        },
+        {
+          "from": "template:material:flower:stem-curved",
+          "to": "object:b02:c2:stem:constraint",
+          "type": "USES_MATERIAL",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:length",
+          "to": "object:b02:c2:stem:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:bend",
+          "to": "object:b02:c2:stem:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:stroke",
+          "to": "object:b02:c2:stem:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "template-parameter:material:flower:stem-curved:strokeWidth",
+          "to": "object:b02:c2:stem:geometry",
+          "type": "DEPENDS_ON_PARAMETER",
+          "metadata": {}
+        },
+        {
+          "from": "object:b02:c2:stem:geometry",
+          "to": "object:b02-c2-stem:shape:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "nested-group"
+          }
+        },
+        {
+          "from": "object:b02:c2:stem:geometry",
+          "to": "object:b02:c2:flower-head:constraint",
+          "type": "PARENT_OF",
+          "metadata": {
+            "persistedBy": "parentId"
+          }
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:calyx",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:back-left",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:back-right",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:folded",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:folded",
+          "type": "POSITIONED_RELATIVE_TO",
+          "metadata": {
+            "perspective": "front-fold"
+          }
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:front-left",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:front-right",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:rear-fold",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:side-left",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:flower-head",
+          "to": "parameter:b02:c2:petal:side-right",
+          "type": "PARENT_OF",
+          "metadata": {}
+        },
+        {
+          "from": "parameter:b02:c2:stem",
+          "to": "parameter:b02:c2:flower-head",
+          "type": "PARENT_OF",
+          "metadata": {
+            "relation": "flower-head-attached-to-stem"
+          }
+        }
+      ],
+      "topology": {
+        "status": "ORDERED",
+        "order": [
+          "parameter:b02-c2-calyx:shape",
+          "parameter:b02-c2-petal-back-left:shape",
+          "parameter:b02-c2-petal-back-right:shape",
+          "parameter:b02-c2-petal-folded:shape",
+          "parameter:b02-c2-petal-front-left:shape",
+          "parameter:b02-c2-petal-front-right:shape",
+          "parameter:b02-c2-petal-rear-fold:shape",
+          "parameter:b02-c2-petal-side-left:shape",
+          "parameter:b02-c2-petal-side-right:shape",
+          "parameter:b02-c2-stem:shape",
+          "parameter:b02:c2:stem",
+          "parameter:b02:c2:flower-head",
+          "parameter:b02:c2:calyx",
+          "parameter:b02:c2:petal:back-left",
+          "parameter:b02:c2:petal:back-right",
+          "parameter:b02:c2:petal:folded",
+          "parameter:b02:c2:petal:front-left",
+          "parameter:b02:c2:petal:front-right",
+          "parameter:b02:c2:petal:rear-fold",
+          "parameter:b02:c2:petal:side-left",
+          "parameter:b02:c2:petal:side-right",
+          "semantic:b02-c2-calyx:shape",
+          "object:b02-c2-calyx:shape:geometry",
+          "semantic:b02-c2-petal-back-left:shape",
+          "object:b02-c2-petal-back-left:shape:geometry",
+          "semantic:b02-c2-petal-back-right:shape",
+          "object:b02-c2-petal-back-right:shape:geometry",
+          "semantic:b02-c2-petal-folded:shape",
+          "object:b02-c2-petal-folded:shape:geometry",
+          "semantic:b02-c2-petal-front-left:shape",
+          "object:b02-c2-petal-front-left:shape:geometry",
+          "semantic:b02-c2-petal-front-right:shape",
+          "object:b02-c2-petal-front-right:shape:geometry",
+          "semantic:b02-c2-petal-rear-fold:shape",
+          "object:b02-c2-petal-rear-fold:shape:geometry",
+          "semantic:b02-c2-petal-side-left:shape",
+          "object:b02-c2-petal-side-left:shape:geometry",
+          "semantic:b02-c2-petal-side-right:shape",
+          "object:b02-c2-petal-side-right:shape:geometry",
+          "semantic:b02-c2-stem:shape",
+          "object:b02-c2-stem:shape:geometry",
+          "semantic:b02:c2:calyx",
+          "semantic:b02:c2:flower-head",
+          "object:b02:c2:flower-head:geometry",
+          "semantic:b02:c2:petal:back-left",
+          "semantic:b02:c2:petal:back-right",
+          "semantic:b02:c2:petal:folded",
+          "semantic:b02:c2:petal:front-left",
+          "semantic:b02:c2:petal:front-right",
+          "semantic:b02:c2:petal:rear-fold",
+          "object:b02:c2:petal:rear-fold:geometry",
+          "object:b02-c2-petal-rear-fold:shape:constraint",
+          "object:b02-c2-petal-rear-fold:shape:render",
+          "object:b02:c2:petal:rear-fold:constraint",
+          "object:b02:c2:petal:rear-fold:render",
+          "semantic:b02:c2:petal:side-left",
+          "semantic:b02:c2:petal:side-right",
+          "semantic:b02:c2:stem",
+          "template-parameter:material:flower:bud:fill",
+          "template-parameter:material:flower:bud:height",
+          "template-parameter:material:flower:bud:stroke",
+          "template-parameter:material:flower:bud:strokeWidth",
+          "template-parameter:material:flower:bud:width",
+          "template-parameter:material:flower:calyx:fill",
+          "template-parameter:material:flower:calyx:height",
+          "template-parameter:material:flower:calyx:stroke",
+          "template-parameter:material:flower:calyx:strokeWidth",
+          "template-parameter:material:flower:calyx:width",
+          "template-parameter:material:flower:center-disk:fill",
+          "template-parameter:material:flower:center-disk:radius",
+          "template-parameter:material:flower:center-disk:stroke",
+          "template-parameter:material:flower:center-disk:strokeWidth",
+          "template-parameter:material:flower:leaf-broad:bend",
+          "template-parameter:material:flower:leaf-broad:fill",
+          "template-parameter:material:flower:leaf-broad:length",
+          "template-parameter:material:flower:leaf-broad:stroke",
+          "template-parameter:material:flower:leaf-broad:strokeWidth",
+          "template-parameter:material:flower:leaf-broad:width",
+          "template-parameter:material:flower:leaf-lanceolate:bend",
+          "template-parameter:material:flower:leaf-lanceolate:fill",
+          "template-parameter:material:flower:leaf-lanceolate:length",
+          "template-parameter:material:flower:leaf-lanceolate:stroke",
+          "template-parameter:material:flower:leaf-lanceolate:strokeWidth",
+          "template-parameter:material:flower:leaf-lanceolate:width",
+          "template-parameter:material:flower:petal-inner-tight:bend",
+          "template-parameter:material:flower:petal-inner-tight:fill",
+          "template-parameter:material:flower:petal-inner-tight:length",
+          "template-parameter:material:flower:petal-inner-tight:stroke",
+          "template-parameter:material:flower:petal-inner-tight:strokeWidth",
+          "template-parameter:material:flower:petal-inner-tight:tipHandle",
+          "template-parameter:material:flower:petal-inner-tight:tipMode",
+          "template-parameter:material:flower:petal-inner-tight:width",
+          "template-parameter:material:flower:petal-outer-broad:bend",
+          "template-parameter:material:flower:petal-outer-broad:fill",
+          "template-parameter:material:flower:petal-outer-broad:length",
+          "template-parameter:material:flower:petal-outer-broad:stroke",
+          "template-parameter:material:flower:petal-outer-broad:strokeWidth",
+          "template-parameter:material:flower:petal-outer-broad:tipHandle",
+          "template-parameter:material:flower:petal-outer-broad:tipMode",
+          "template-parameter:material:flower:petal-outer-broad:width",
+          "template-parameter:material:flower:petal-pointed:bend",
+          "template-parameter:material:flower:petal-pointed:fill",
+          "template-parameter:material:flower:petal-pointed:length",
+          "template-parameter:material:flower:petal-pointed:stroke",
+          "template-parameter:material:flower:petal-pointed:strokeWidth",
+          "template-parameter:material:flower:petal-pointed:tipHandle",
+          "template-parameter:material:flower:petal-pointed:tipMode",
+          "template-parameter:material:flower:petal-pointed:width",
+          "template-parameter:material:flower:petal-rounded:bend",
+          "template-parameter:material:flower:petal-rounded:fill",
+          "template-parameter:material:flower:petal-rounded:length",
+          "template-parameter:material:flower:petal-rounded:stroke",
+          "template-parameter:material:flower:petal-rounded:strokeWidth",
+          "template-parameter:material:flower:petal-rounded:tipHandle",
+          "template-parameter:material:flower:petal-rounded:tipMode",
+          "template-parameter:material:flower:petal-rounded:width",
+          "template-parameter:material:flower:stem-curved:bend",
+          "template-parameter:material:flower:stem-curved:length",
+          "template-parameter:material:flower:stem-curved:stroke",
+          "template-parameter:material:flower:stem-curved:strokeWidth",
+          "template:material:flower:bud",
+          "template:material:flower:calyx",
+          "object:b02:c2:calyx:geometry",
+          "object:b02-c2-calyx:shape:constraint",
+          "object:b02-c2-calyx:shape:render",
+          "object:b02:c2:calyx:constraint",
+          "object:b02:c2:calyx:render",
+          "template:material:flower:center-disk",
+          "template:material:flower:leaf-broad",
+          "template:material:flower:leaf-lanceolate",
+          "template:material:flower:petal-inner-tight",
+          "template:material:flower:petal-outer-broad",
+          "object:b02:c2:petal:side-left:geometry",
+          "object:b02-c2-petal-side-left:shape:constraint",
+          "object:b02-c2-petal-side-left:shape:render",
+          "object:b02:c2:petal:side-left:constraint",
+          "object:b02:c2:petal:side-left:render",
+          "object:b02:c2:petal:side-right:geometry",
+          "object:b02-c2-petal-side-right:shape:constraint",
+          "object:b02-c2-petal-side-right:shape:render",
+          "object:b02:c2:petal:side-right:constraint",
+          "object:b02:c2:petal:side-right:render",
+          "template:material:flower:petal-pointed",
+          "object:b02:c2:petal:back-left:geometry",
+          "object:b02-c2-petal-back-left:shape:constraint",
+          "object:b02-c2-petal-back-left:shape:render",
+          "object:b02:c2:petal:back-left:constraint",
+          "object:b02:c2:petal:back-left:render",
+          "object:b02:c2:petal:back-right:geometry",
+          "object:b02-c2-petal-back-right:shape:constraint",
+          "object:b02-c2-petal-back-right:shape:render",
+          "object:b02:c2:petal:back-right:constraint",
+          "object:b02:c2:petal:back-right:render",
+          "object:b02:c2:petal:folded:geometry",
+          "object:b02-c2-petal-folded:shape:constraint",
+          "object:b02-c2-petal-folded:shape:render",
+          "object:b02:c2:petal:folded:constraint",
+          "object:b02:c2:petal:folded:render",
+          "template:material:flower:petal-rounded",
+          "object:b02:c2:petal:front-left:geometry",
+          "object:b02-c2-petal-front-left:shape:constraint",
+          "object:b02-c2-petal-front-left:shape:render",
+          "object:b02:c2:petal:front-left:constraint",
+          "object:b02:c2:petal:front-left:render",
+          "object:b02:c2:petal:front-right:geometry",
+          "object:b02-c2-petal-front-right:shape:constraint",
+          "object:b02-c2-petal-front-right:shape:render",
+          "object:b02:c2:petal:front-right:constraint",
+          "object:b02:c2:petal:front-right:render",
+          "template:material:flower:stem-curved",
+          "object:b02:c2:stem:geometry",
+          "object:b02-c2-stem:shape:constraint",
+          "object:b02-c2-stem:shape:render",
+          "object:b02:c2:flower-head:constraint",
+          "object:b02:c2:flower-head:render",
+          "object:b02:c2:stem:constraint",
+          "object:b02:c2:stem:render",
+          "export:document"
+        ],
+        "cycles": [],
+        "unresolvedNodes": []
+      }
+    }
+  },
+  "stablePreservation": {
+    "b02:c2:petal:back-left": true,
+    "b02:c2:petal:back-right": true,
+    "b02:c2:petal:side-left": true,
+    "b02:c2:petal:side-right": true,
+    "b02:c2:petal:front-left": true,
+    "b02:c2:petal:front-right": true,
+    "b02:c2:calyx": true
+  },
+  "deterministic": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/after-vs-rerun.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/after-vs-rerun.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/after-vs-rerun.overlay.png"
+    },
+    "allZero": true
+  },
+  "difference": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 2487,
+    "totalPixels": 891662,
+    "changedRatio": 0.0027891734760480988,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/fold-before-vs-after.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/fold-before-vs-after.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/fold-before-vs-after.overlay.png"
+    },
+    "allZero": false
+  },
+  "rollbackDifference": {
+    "width": 794,
+    "height": 1123,
+    "changedPixels": 0,
+    "totalPixels": 891662,
+    "changedRatio": 0,
+    "threshold": 0,
+    "files": {
+      "difference": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.difference.png",
+      "sideBySide": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.side-by-side.png",
+      "overlay": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/comparisons/before-vs-rollback.overlay.png"
+    },
+    "allZero": true
+  },
+  "outputs": {
+    "before": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/before-fold-direction/before-fold-direction.svg",
+          "bytes": 13137,
+          "sha256": "4391f1058ce9823a72359b2dc3b0830754d45a68d3e95cded99588dc82004f2f",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/before-fold-direction/before-fold-direction.png",
+          "bytes": 24270,
+          "sha256": "a35f466f5f0177d1257225d20b45f12c0237879a3511363224c2b432b81503d8",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 794,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/before-fold-direction/before-fold-direction.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "main": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.svg",
+          "bytes": 13137,
+          "sha256": "3528e4c2073c89ba94406e621dbde7117cc426f23257eff5c400fb69c56c5d77",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.png",
+          "bytes": 24729,
+          "sha256": "a33b625e50818491acbbbcccf7bba0d2ef73c1fdf35b847db8963c41c2a4e330",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 743,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rerun": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction-rerun/after-fold-direction-rerun.svg",
+          "bytes": 13137,
+          "sha256": "3528e4c2073c89ba94406e621dbde7117cc426f23257eff5c400fb69c56c5d77",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction-rerun/after-fold-direction-rerun.png",
+          "bytes": 24729,
+          "sha256": "a33b625e50818491acbbbcccf7bba0d2ef73c1fdf35b847db8963c41c2a4e330",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 789,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/after-fold-direction-rerun/after-fold-direction-rerun.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "rollback": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/rollback/rollback.svg",
+          "bytes": 13137,
+          "sha256": "4391f1058ce9823a72359b2dc3b0830754d45a68d3e95cded99588dc82004f2f",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/rollback/rollback.png",
+          "bytes": 24270,
+          "sha256": "a35f466f5f0177d1257225d20b45f12c0237879a3511363224c2b432b81503d8",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 769,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/rollback/rollback.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 891662
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    },
+    "structure": {
+      "format": "INK-EXPORT-REPORT",
+      "version": "1.0",
+      "status": "PASS",
+      "files": {
+        "svg": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/structure-view/structure-view.svg",
+          "bytes": 13091,
+          "sha256": "a985c77ed4d1f907cb3e3d9c9bfc73aacc184f174502c904cc3f9a43dc95b65d",
+          "backend": "INK_VECTOR_SVG"
+        },
+        "png": {
+          "path": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/structure-view/structure-view.png",
+          "bytes": 28084,
+          "sha256": "003c12dff72eba07cd9a76d711f399ac3e446879adfc56998bfb79d91d1c800e",
+          "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+          "rendererVersion": "Chrome/144.0.7559.96",
+          "durationMs": 761,
+          "diagnosticsPath": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02/cases/case-02-three-quarter-tulip/outputs/structure-view/structure-view.headless.json",
+          "metrics": {
+            "width": 794,
+            "height": 1123,
+            "colorFormat": "RGBA8",
+            "alpha": true,
+            "transparentPixels": 0,
+            "nonTransparentPixels": 891662,
+            "partialAlphaPixels": 0,
+            "nonWhitePixels": 11486
+          }
+        }
+      },
+      "options": {
+        "formats": [
+          "svg",
+          "png"
+        ],
+        "background": "paper",
+        "range": "artboard",
+        "width": 794,
+        "height": 1123,
+        "ppi": 96,
+        "deterministic": true
+      },
+      "limitations": []
+    }
+  },
+  "fourfold": {
+    "capability": [
+      "Non-front flower assembled from independent template instances",
+      "front/back layer ordering",
+      "perspective-like scale and bend",
+      "single folded petal update preserves other petals"
+    ],
+    "gaps": [
+      {
+        "gapId": "B02-GAP-PERSPECTIVE-001",
+        "type": "Perspective/Fold/Warp",
+        "visibleFailure": "Perspective is expressed by scale/rotation/bend approximations; no native envelope or projective warp.",
+        "severity": "HIGH",
+        "blocksArtwork": false,
+        "mergeCandidate": "Perspective/Composition reasoning"
+      }
+    ],
+    "behaviors": {
+      "atomic": [
+        "B02-A-SCALE-PETAL-FOR-FORESHORTENING"
+      ],
+      "composite": [
+        "B02-C-ASSEMBLE-THREE-QUARTER-FLOWER",
+        "B02-C-FOLD-PETAL-FRONT-BACK"
+      ],
+      "strategy": [
+        "B02-S-ORDER-PETALS-BY-VIEW-DEPTH"
+      ]
+    },
+    "materials": [
+      "B02-MAT-TULIP-FRONT-PETAL",
+      "B02-MAT-TULIP-BACK-PETAL",
+      "B02-MAT-TULIP-FOLDED-PETAL",
+      "B02-STRUCT-THREE-QUARTER-TULIP"
+    ]
+  },
+  "learningDelta": {
+    "before": "AI behavior records were centered on front-facing radial flowers.",
+    "after": "AI can distinguish back, side, front and folded petals, choose different scale/bend families, and edit one fold without replacing the flower head.",
+    "evidence": [
+      "outputs/after-fold-direction",
+      "outputs/structure-view",
+      "comparisons/fold-before-vs-after.difference.png"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "format": "INK-EXPORT-REPORT",
+  "version": "1.0",
+  "status": "PASS",
+  "files": {
+    "svg": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.4/watercolor-benchmark/WC-05/rerun/WC-05-rerun.svg",
+      "bytes": 776288,
+      "sha256": "8b01a98007bacdbe5758647b8c24c9c329b0ae06c2f675803a7a18ddf11eacd5",
+      "backend": "INK_VECTOR_SVG"
+    },
+    "png": {
+      "path": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.4/watercolor-benchmark/WC-05/rerun/WC-05-rerun.png",
+      "bytes": 457902,
+      "sha256": "ef7409c6d557056affa1389759aa451fa04e373fa69e4cbec392de80b75c9375",
+      "backend": "CHROMIUM_CDP_CANONICAL_PNG",
+      "rendererVersion": "Chrome/144.0.7559.96",
+      "durationMs": 901,
+      "diagnosticsPath": "/mnt/data/work165/base/INK_Core_Main_Program_v1.6.4_RC/Validation/v1.6.4/watercolor-benchmark/WC-05/rerun/WC-05-rerun.headless.json",
+      "metrics": {
+        "width": 794,
+        "height": 1123,
+        "colorFormat": "RGBA8",
+        "alpha": true,
+        "transparentPixels": 0,
+        "nonTransparentPixels": 891662,
+        "partialAlphaPixels": 0,
+        "nonWhitePixels": 891662
+      }
+    }
+  },
+  "options": {
+    "formats": [
+      "svg",
+      "png"
+    ],
+    "background": "#fffdf8",
+    "range": "artboard",
+    "width": 794,
+    "height": 1123,
+    "ppi": 96,
+    "deterministic": true
+  },
+  "limitations": []
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "caseId": "case-01-dense-multilayer-peony",
+    "decision": "VALIDATION REQUIRED",
+    "mainPng": "cases/case-01-dense-multilayer-peony/outputs/after-local-outer-edit/after-local-outer-edit.png",
+    "result": "cases/case-01-dense-multilayer-peony/result.json"
+  },
+  {
+    "caseId": "case-02-three-quarter-tulip",
+    "decision": "VALIDATION REQUIRED",
+    "mainPng": "cases/case-02-three-quarter-tulip/outputs/after-fold-direction/after-fold-direction.png",
+    "result": "cases/case-02-three-quarter-tulip/result.json"
+  },
+  {
+    "caseId": "case-03-branched-botanical-unit",
+    "decision": "VALIDATION REQUIRED",
+    "mainPng": "cases/case-03-branched-botanical-unit/outputs/after-parent-transform/after-parent-transform.png",
+    "result": "cases/case-03-branched-botanical-unit/result.json"
+  },
+  {
+    "caseId": "case-04-real-complex-illustrator-spirograph",
+    "decision": "VALIDATION REQUIRED",
+    "mainPng": "cases/case-04-real-complex-illustrator-spirograph/outputs/after-24-loops-radius-285/after-24-loops-radius-285.png",
+    "result": "cases/case-04-real-complex-illustrator-spirograph/result.json"
+  },
+  {
+    "caseId": "case-05-botanical-hero-poster",
+    "decision": "VALIDATION REQUIRED",
+    "mainPng": "cases/case-05-botanical-hero-poster/outputs/after-main-flower-edit/after-main-flower-edit.png",
+    "result": "cases/case-05-botanical-hero-poster/result.json"
+  },
+  {
+    "caseId": "case-06-real-watercolor-procedure-research",
+    "decision": "RESEARCH",
+    "mainPng": "cases/case-06-real-watercolor-procedure-research/outputs/setup-focus-layer/setup-focus-layer.png",
+    "result": "cases/case-06-real-watercolor-procedure-research/result.json"
+  }
+]
