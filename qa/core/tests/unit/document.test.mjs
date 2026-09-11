@@ -6,7 +6,7 @@ test('default document uses current format version', () => {
   const document = defaultDocument();
   assert.equal(document.format, 'INK');
   assert.equal(document.formatVersion, 4);
-  assert.equal(document.appVersion, '1.6.0-RC');
+  assert.equal(document.appVersion, '1.6.5-RC');
   assert.equal(document.pages[0].artboard.mode, 'fixed');
   assert.equal(document.pages[0].workspace.activeSpace, 'creation');
   assert.equal(document.pages[0].workspace.showLayoutFrameInCreation, false);
@@ -26,7 +26,7 @@ test('migration normalizes legacy format 3 content without changing format 4 sch
   delete legacy.pages[0].workspace;
   const migrated = migrateDocument(legacy);
   assert.equal(migrated.formatVersion, 4);
-  assert.equal(migrated.appVersion, '1.6.0-RC');
+  assert.equal(migrated.appVersion, '1.6.5-RC');
   assert.equal(migrated.pages[0].artboard.mode, 'fixed');
   assert.equal(migrated.pages[0].workspace.activeSpace, 'creation');
   assert.equal(migrated.pages[0].paper.gridSize, 32);
