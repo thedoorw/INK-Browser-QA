@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ink-structural-qa-v1.schema.json",
+  "type": "object",
+  "required": ["format", "version", "passed", "errors", "warnings", "metrics"],
+  "properties": {
+    "format": { "const": "INK-STRUCTURAL-QA" }, "version": { "const": "1.0" }, "passed": { "type": "boolean" },
+    "errors": { "type": "array" }, "warnings": { "type": "array" }, "metrics": { "type": "object" }, "preservation": { "type": ["object", "null"] }
+  },
+  "additionalProperties": false
+}

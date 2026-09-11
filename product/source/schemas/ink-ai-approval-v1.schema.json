@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"ink-ai-approval-v1","type":"object","required":["format","approvalId","previewId","planId","recipeId","decision","selectedSteps","actor","baseDocumentHash","timestamp"],"properties":{"format":{"const":"INK-AI-APPROVAL"},"decision":{"enum":["APPROVE","REJECT"]}}}

@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"ink-ai-result-v1","type":"object","required":["format","version","requestId","status"],"properties":{"format":{"const":"INK-CHAT-RESULT"},"status":{"enum":["COMPLETED","PROPOSED","PREVIEWED","CANCELLED","FAILED"]},"partial":{"type":"boolean"}}}

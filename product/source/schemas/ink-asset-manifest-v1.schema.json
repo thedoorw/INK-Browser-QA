@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schemas/ink-asset-manifest-v1.schema.json",
+  "title": "INK Asset Manifest 1.0",
+  "type": "object",
+  "required": ["format", "version", "assets"],
+  "properties": {
+    "format": { "const": "INK-ASSET-MANIFEST" },
+    "version": { "const": "1.0" },
+    "assets": { "type": "array", "items": { "type": "object", "required": ["assetId", "type", "path", "embedded", "optional", "hash", "size", "source", "license", "usedBy"] } }
+  },
+  "additionalProperties": true
+}

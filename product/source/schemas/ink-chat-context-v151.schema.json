@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schemas/ink-chat-context-v151.schema.json",
+  "title": "INK CHAT Context 1.5.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "version", "level", "sourceVersion", "hash", "tokenBudget", "estimatedTokens", "retained", "omitted", "omissionReasons", "confidenceImpact", "payload"],
+  "properties": {
+    "format": { "const": "INK-CHAT-CONTEXT" },
+    "version": { "const": "1.5.1" },
+    "level": { "enum": ["CAPABILITY_ONLY", "DOCUMENT_SUMMARY", "TARGET_CONTEXT", "DETAILED_CONTEXT"] },
+    "sourceVersion": { "type": "string" },
+    "hash": { "type": "string", "minLength": 16 },
+    "tokenBudget": { "type": "integer", "minimum": 1 },
+    "estimatedTokens": { "type": "integer", "minimum": 0 },
+    "retained": { "type": "array", "items": { "type": "string" } },
+    "omitted": { "type": "array", "items": { "type": "string" } },
+    "omissionReasons": { "type": "array", "items": { "type": "string" } },
+    "confidenceImpact": { "enum": ["NONE", "MODEL_CONFIDENCE_MAY_DECREASE"] },
+    "payload": { "type": "object", "required": ["constraints", "capabilities"] }
+  }
+}

@@ -1,0 +1,124 @@
+import { FORMAT_VERSION, INK_VERSION } from '../config.js';
+import { Matrix, nowISO, uid } from '../core/index.js';
+import { createArtboard } from './artboard.js';
+import { createWorkspace } from './workspace.js';
+import { normalizeSemantic } from '../semantic/semantic-model.js';
+
+export const DEFAULT_RECENT = [
+  '#202020', '#ffffff', '#b63c36', '#d18b2f',
+  '#d7c64b', '#3d875d', '#2f718f', '#594f9a'
+];
+
+export function defaultLayer(name = '圖層 1') {
+  return { id: uid(), name, visible: true, locked: false, opacity: 1, objects: [] };
+}
+
+export function defaultPage(index = 1) {
+  const layer = defaultLayer();
+  const workspace = createWorkspace({ activeSpace: 'creation' });
+  return {
+    id: uid(),
+    name: `頁面 ${index}`,
+    artboard: createArtboard(),
+    workspace,
+    paper: { type: 'blank', color: '#fffef9', gridSize: 32, absorbency: .58, roughness: .42, fiberStrength: .36, fiberAngle: 0, sizing: .28, granulation: .32, seed: 1337, textureVisible: true },
+    camera: workspace.cameras.creation,
+    layers: [layer],
+    activeLayerId: layer.id
+  };
+}
+
+export function defaultDocument() {
+  const page = defaultPage(1);
+  return {
+    format: 'INK',
+    formatVersion: FORMAT_VERSION,
+    appVersion: INK_VERSION,
+    id: uid(),
+    title: '未命名作品',
+    createdAt: nowISO(),
+    modifiedAt: nowISO(),
+    activePageId: page.id,
+    pages: [page],
+    programAssets: [],
+    referencePackages: [],
+    strokeSessions: [],
+    brushPackages: [],
+    vectorBrushLibrary: { format: 'INK-VECTOR-BRUSH-LIBRARY', version: '1.0', materials: [] },
+    handDrawingReports: [],
+    deviceCalibrationProfiles: [],
+    deviceValidationReports: [],
+    interactivePerformanceReports: [],
+    ai: {
+      permission: 'PROPOSE', selection: [], semanticTargets: [], unresolvedTargets: [],
+      checkpoints: [], recipes: [], audit: [], variants: [], missingDependencies: []
+    },
+    semanticModel: { format: 'INK-SEMANTIC-MODEL', version: '1.0', migrationStrategy: 'NATIVE', relationshipGraph: { format: 'INK-SEMANTIC-RELATIONSHIP-GRAPH', version: '1.0', nodes: [], edges: [] } },
+    materialLibrary: { format: 'INK-MATERIAL-LIBRARY', version: '1.0', templates: [] },
+    dependencyModel: { format: 'INK-DOCUMENT-DEPENDENCY-MODEL', version: '1.0', edges: [] },
+    assetManifest: { format: 'INK-DOCUMENT-ASSET-MANIFEST', version: '1.0', mode: 'Linked Document', assets: [] },
+    deviceReplayProfileSelection: 'ORIGINAL_OR_CURRENT_SELECTABLE',
+    drawingGapRanking: null,
+    recentColors: [...DEFAULT_RECENT]
+  };
+}
+
+export function activePage(document) {
+  return document.pages.find(page => page.id === document.activePageId) || document.pages[0];
+}
+
+export function activeLayer(document) {
+  const page = activePage(document);
+  return page.layers.find(layer => layer.id === page.activeLayerId) || page.layers[0];
+}
+
+export function allObjects(page) {
+  return page.layers.flatMap(layer => layer.objects.map(object => ({ layer, object })));
+}
+
+export function normalizeObject(object) {
+  object.id = object.id || uid();
+  object.matrix = Array.isArray(object.matrix) && object.matrix.length === 6
+    ? object.matrix
+    : Matrix.identity();
+  if (!Number.isFinite(+object.opacity)) object.opacity = 1;
+  object.opacity = Math.max(0, Math.min(1, +object.opacity));
+  if (object.type === 'stroke') {
+    object.points = Array.isArray(object.points) ? object.points.map(point => ({
+      x: Number.isFinite(+point.x) ? +point.x : 0,
+      y: Number.isFinite(+point.y) ? +point.y : 0,
+      p: Number.isFinite(+point.p) ? +point.p : .5,
+      tiltX: Number.isFinite(+point.tiltX) ? +point.tiltX : 0,
+      tiltY: Number.isFinite(+point.tiltY) ? +point.tiltY : 0,
+      t: Number.isFinite(+point.t) ? +point.t : 0,
+      mode: ['corner', 'smooth', 'symmetric'].includes(point.mode) ? point.mode : 'corner',
+      ...(point.in && Number.isFinite(+point.in.x) && Number.isFinite(+point.in.y) ? { in: { x: +point.in.x, y: +point.in.y } } : {}),
+      ...(point.out && Number.isFinite(+point.out.x) && Number.isFinite(+point.out.y) ? { out: { x: +point.out.x, y: +point.out.y } } : {})
+    })) : [];
+    const segmentCount = Math.max(0, object.points.length - 1);
+    if (Array.isArray(object.segmentStyles)) {
+      object.segmentStyles = Array.from({ length: segmentCount }, (_, index) => {
+        const style = object.segmentStyles[index] || {};
+        const normalized = {};
+        if (typeof style.color === 'string') normalized.color = style.color;
+        if (Number.isFinite(+style.size)) normalized.size = Math.max(.5, +style.size);
+        if (Number.isFinite(+style.opacity)) normalized.opacity = Math.max(0, Math.min(1, +style.opacity));
+        return normalized;
+      });
+      if (!object.segmentStyles.some(style => Object.keys(style).length)) delete object.segmentStyles;
+    }
+  }
+  if (object.type === 'group' && Array.isArray(object.children)) object.children.forEach(child => { if (!child.parentId) child.parentId = object.id; normalizeObject(child); });
+  if (object.type === 'repeat') {
+    if (object.source && typeof object.source === 'object') normalizeObject(object.source);
+    object.instances = Array.isArray(object.instances) ? object.instances.filter(instance => instance && instance.instanceId).map(instance => ({ ...instance, generatorId: object.id })) : [];
+  }
+  if (object.materialInstance && typeof object.materialInstance === 'object') {
+    object.materialInstance.instanceId = object.id;
+    object.materialInstance.detached = false;
+    object.materialInstance.parameterOverrides = object.materialInstance.parameterOverrides && typeof object.materialInstance.parameterOverrides === 'object' ? object.materialInstance.parameterOverrides : {};
+    object.materialInstance.localOverrideState = object.materialInstance.localOverrideState && typeof object.materialInstance.localOverrideState === 'object' ? object.materialInstance.localOverrideState : { parameters: [], geometryDetached: false, styleDetached: false };
+  }
+  normalizeSemantic(object);
+  return object;
+}

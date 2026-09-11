@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schemas/ink-chat-tool-call-v151.schema.json",
+  "title": "INK Published Tool Call 1.5.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "arguments"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[A-Za-z0-9._:-]{1,160}$" },
+    "name": { "enum": ["get_capabilities", "get_document_summary", "get_layer_tree", "get_editable_targets", "get_target_details", "get_palette", "get_history_summary", "create_plan", "validate_plan", "request_preview", "get_preview_difference", "request_approval", "execute_approved_plan", "rollback_execution", "save_variant", "export_document"] },
+    "arguments": { "type": "object", "additionalProperties": false, "properties": { "id": { "type": "string" }, "plan": { "type": "object" }, "recipeId": { "type": "string" }, "previewId": { "type": "string" }, "approvalId": { "type": "string" }, "executionId": { "type": "string" }, "targets": { "type": "array", "items": { "type": "string" } }, "options": { "type": "object" } } }
+  }
+}

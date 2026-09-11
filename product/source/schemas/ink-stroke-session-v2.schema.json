@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schema/ink-stroke-session-v2.json",
+  "title": "INK Stroke Session v2",
+  "type": "object",
+  "required": ["format", "schemaVersion", "id", "name", "seed", "status", "documentState", "layerState", "brushState", "colorState", "strokes", "events", "masks", "blendState", "dependencies", "intermediateStates", "breakpoints", "timing", "history"],
+  "properties": {
+    "format": { "const": "INK-STROKE-SESSION" }, "schemaVersion": { "const": 2 }, "id": { "type": "string" }, "name": { "type": "string" }, "seed": { "type": "integer" },
+    "status": { "enum": ["idle", "recording", "paused", "complete"] }, "documentState": { "type": "object" }, "layerState": { "type": "array" }, "brushState": { "type": "object" }, "colorState": { "type": "object" },
+    "strokes": { "type": "array" }, "events": { "type": "array" }, "masks": { "type": "array" }, "blendState": { "type": "object" }, "dependencies": { "type": "array" }, "intermediateStates": { "type": "array" }, "breakpoints": { "type": "array" }, "timing": { "type": "object" }, "history": { "type": "object" }
+  }
+}

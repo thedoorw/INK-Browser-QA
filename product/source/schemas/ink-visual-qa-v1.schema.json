@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ink-visual-qa-v1.schema.json",
+  "type": "object",
+  "required": ["format", "version", "passed", "errors", "warnings", "metrics"],
+  "properties": {
+    "format": { "const": "INK-VISUAL-QA" }, "version": { "const": "1.0" }, "passed": { "type": "boolean" },
+    "errors": { "type": "array" }, "warnings": { "type": "array" }, "metrics": { "type": "object" }, "conditions": { "type": "array" }
+  },
+  "additionalProperties": false
+}

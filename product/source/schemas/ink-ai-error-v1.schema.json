@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"ink-ai-error-v1","type":"object","required":["format","version","requestId","code","message","details","reproducible"],"properties":{"format":{"const":"INK-AI-ERROR"},"reproducible":{"const":true}}}

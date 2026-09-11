@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schemas/ink-chat-connection-v151.schema.json",
+  "title": "INK CHAT Connection Settings 1.5.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["provider", "endpoint", "model", "authenticationMethod", "credentialAlias", "timeout", "retryCount", "streaming", "maximumContext", "dataTransmissionPolicy", "imageTransmissionPolicy", "loggingPolicy", "localOnlyMode"],
+  "properties": {
+    "provider": { "type": "string", "minLength": 1 },
+    "endpoint": { "type": "string", "pattern": "^(|https://)" },
+    "model": { "type": "string" },
+    "apiVersion": { "type": "string" },
+    "authenticationMethod": { "enum": ["BEARER", "API_KEY_HEADER", "NONE"] },
+    "credentialAlias": { "type": "string", "pattern": "^[A-Za-z0-9._:-]{1,128}$" },
+    "timeout": { "type": "integer", "minimum": 1000, "maximum": 300000 },
+    "retryCount": { "type": "integer", "minimum": 0, "maximum": 5 },
+    "streaming": { "type": "boolean" },
+    "maximumContext": { "type": "integer", "minimum": 512, "maximum": 1000000 },
+    "dataTransmissionPolicy": { "enum": ["TEXT_SUMMARY", "SELECTED_LAYERS", "SELECTED_REGION", "LOCAL_ONLY"] },
+    "imageTransmissionPolicy": { "enum": ["NO_IMAGE", "SELECTED_REGION", "LOW_RES_PREVIEW", "FULL_IMAGE"] },
+    "loggingPolicy": { "enum": ["METADATA_ONLY", "NO_PROVIDER_LOGGING_REQUESTED", "PROVIDER_POLICY_APPLIES", "LOCAL_ONLY"] },
+    "localOnlyMode": { "type": "boolean" },
+    "urlAllowlist": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+  }
+}
