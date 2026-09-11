@@ -1,115 +1,152 @@
 # INK Application Health Review v0.1
 
-STATUS: `IN_PROGRESS`
+STATUS: `MAJOR_CLEANUP_COMPLETE / RUNTIME_GATE_BLOCKED_BY_ENVIRONMENT`
 
 Branch: `work/application-health-v0.1`
 
 ## Purpose
 
-Perform bounded application-health cleanup before any FLORA decoupling, single-file bundling, certification, or release packaging. This phase does not delete preserved research/QA/history and does not modify `main`.
+Perform bounded application-health cleanup before FLORA decoupling, single-file bundling, certification, or release packaging. Preserved research/QA/history remain intact and `main` is not modified by this health branch.
 
-## Confirmed health findings
+## Completed health cleanup
 
-### H1 — Version identity split — `HIGH`
+### H1 — Candidate-facing version identity
 
-Observed product/runtime identities were inconsistent:
+Authoritative runtime identity is `INK_VERSION = 1.6.5-RC` in `src/config.js`.
 
-- `src/config.js`: `INK_VERSION = 1.6.5-RC`
-- `package.json`: `1.6.5-rc.1`
-- `manifest.webmanifest`: previously `INK v1.5.1 RC`
-- `service-worker.js`: previously `RELEASE_VERSION = 1.5.1`
-- historical/master-spec identities also include `v0.8.3` and `v3.3.0-rc.2`
+Completed on this branch:
+- `manifest.webmanifest` moved from stale `1.5.1 RC` identity to the `1.6.5 RC` release family;
+- `service-worker.js` moved from `RELEASE_VERSION = 1.5.1` to `1.6.5-RC`;
+- stale document unit expectations `1.6.0-RC` were aligned to `1.6.5-RC`.
 
-Health action: Candidate-facing PWA identity has now been normalized to the runtime release family `1.6.5-RC`. Historical identities remain preserved as evidence and are not rewritten globally. HTML title normalization is still pending.
+Still recorded as architecture debt:
+- `src/studio-core.js` contains hard-coded `1.6.0` Studio identity instead of deriving it from the runtime version source of truth;
+- legacy browser QA scripts also contain `1.6.0` / `v1.5.1` evidence identities;
+- historical/master-spec versions remain untouched as preservation evidence.
 
-### H2 — PWA install path had broken icon dependencies — `HIGH`
+### H2 — Broken PWA icon dependencies
 
-The authoritative source had references to:
-
+The source referenced nonexistent:
 - `icons/ink-192.png`
 - `icons/ink-512.png`
 
-Those files are absent from the authoritative package, and the service worker previously included them in `cache.addAll(APP_SHELL)`, which could fail installation when those resources returned 404.
+They were present in both manifest declarations and service-worker `cache.addAll(APP_SHELL)`, creating a real install failure path.
 
-Health action completed on this work branch:
-
+Completed:
 - removed nonexistent icon declarations from `manifest.webmanifest`;
-- removed nonexistent icon entries from service-worker `APP_SHELL`;
-- no replacement artwork was invented during health cleanup.
+- removed nonexistent icon entries from service-worker precache;
+- no replacement artwork was invented.
 
-PWA remains outside the first single-file Candidate until browser installation/offline behavior is tested.
+PWA is still outside the first single-file Candidate until real install/offline browser verification passes.
 
-### H3 — PWA shell manifest is stale relative to current runtime — `HIGH`
+### H3 — Stale browser QA dependency chain
 
-The service-worker release identity was `1.5.1` while browser runtime config is `1.6.5-RC`. Its manually enumerated `APP_SHELL` also remains a manually maintained dependency list.
+The active historical script `browser-smoke-v151.mjs` imports `playwright-core` and `@sparticuz/chromium`, while `package.json` declares no dependencies or devDependencies. A clean source environment therefore fails before browser launch with `ERR_MODULE_NOT_FOUND`.
 
-Health action completed in part:
+Completed:
+- preserved the legacy script unchanged as historical QA;
+- added `engineering/health-overlay/scripts/browser-health-v165.mjs`, a dependency-free Chromium/CDP health smoke using system Chromium;
+- added health-overlay `package.json` that routes `test:browser` to the new v1.6.5 health smoke and keeps the old command as `test:browser:legacy`.
 
-- `service-worker.js` release identity normalized to `1.6.5-RC`;
-- cache namespaces now follow the current runtime release family;
-- missing icon dependencies removed.
+### H4 — Stale Ready gate
 
-Still pending:
+Historical `test-ready-check-v151.mjs` requires `tests/browser-evidence-v1.5.1/browser-smoke-report-v1.5.1.json`; the current source package does not contain that required evidence file.
 
-- verify every `APP_SHELL` entry actually exists;
-- compare service-worker shell against the live browser dependency graph;
-- perform real browser install/offline smoke before PWA can be considered healthy.
+Completed:
+- added `engineering/health-overlay/scripts/test-ready-check-v165.mjs`;
+- new Ready gate requires `tests/browser-evidence-v1.6.5/browser-health-report-v1.6.5.json`;
+- `BLOCKED_BY_ENVIRONMENT`, missing evidence, page exceptions, console errors, or failed browser checks cannot be relabeled PASS.
 
-### H4 — `index-standalone.html` is not truly standalone — `MEDIUM`
+### H5 — Classified repository is preservation-safe but not directly runnable
 
-Current product-boundary evidence shows `index-standalone.html` loads `dist/ink.compat.js`, which then imports modular runtime code. It is a compatibility launcher, not a self-contained deliverable.
+The full import intentionally separated original paths into `product/`, `qa/`, `research/`, `engineering/`, `governance/`, and `ARCHIVE/`. Historical scripts/tests use original relative paths, so the classified tree itself is not a drop-in runtime workspace.
 
-Health action: reserve the term `single-file` for the future generated `INK.html` only.
+Completed:
+- added `engineering/reconstruct_original_workspace.py`;
+- it reconstructs the original 1,471-file relative layout from `INK_FILE_INVENTORY_v0.1.csv`;
+- every authoritative file is size/SHA256 verified before copy;
+- active health overlays can then be applied into the disposable workspace;
+- preserved repository categories remain unchanged.
 
-### H5 — FLORA is hard-wired into general runtime entry — `HIGH`
+This separates `preservation layout` from `runnable working layout` without duplicating an uncontrolled second source tree.
 
-`src/ink.js` directly imports:
+### H6 — Standalone naming
 
-- `./flora/index.js`
-- `./flora/mask/vector-mask.js`
+`index-standalone.html` remains a compatibility launcher: `dist/ink.compat.js` imports modular runtime source. It is not a self-contained product.
 
-This means a nominal general INK runtime cannot currently start without FLORA source being available.
+Decision:
+- only the future generated `INK.html` may be described as `single-file`.
 
-Health action: record as architecture debt. Do not remove FLORA during health review. Decouple only after the baseline runtime health checks are recorded.
+### H7 — Product boundary debt
 
-### H6 — Studio layer couples Core UI to Recipe and AI — `MEDIUM/HIGH`
+Still intentionally not changed during health cleanup:
+- FLORA is hard-wired into `src/ink.js`;
+- Recipe and AI are hard-wired through `src/studio-core.js`;
+- FLORA / AI / Recipe boundary work starts only after a compatibility Runtime baseline exists.
 
-`src/studio-core.js` directly imports Recipe and AI installation modules alongside Vector/Image/Paint/Program Import. This makes optional-capability removal non-trivial.
+## Static and engineering health evidence
 
-Health action: keep Recipe and AI intact for the first compatibility baseline; separate optional capability boundaries only after behavior-preserving smoke coverage exists.
+A local reconstruction of the authoritative source was exercised against Node `22.16.0` / npm `10.9.2`.
 
-### H7 — Capability maturity is incomplete — `MEDIUM`
+| Check | Result |
+|---|---|
+| JavaScript syntax scan | PASS — 304 `.js/.mjs`, 0 syntax failures |
+| JSON parse scan | PASS — 442 JSON files, 0 parse failures |
+| `npm run build` | PASS |
+| `npm run typecheck` | PASS |
+| `ink-doctor` | PASS, no reported errors/warnings |
+| unit suite before cleanup | 2 confirmed stale-version failures (`1.6.0-RC` expected vs `1.6.5-RC` actual) |
+| stale document unit expectations | REPAIRED on this branch |
+| extended unit run after local repair | progressed through reported test 222 with no observed assertion failure in that span; full suite did not close within the execution window, therefore NOT certified PASS |
+| legacy `npm run test:browser` | FAIL before launch — undeclared `playwright-core` dependency |
+| legacy `npm run test:ready` | FAIL — stale v1.5.1 evidence path missing |
+| replacement v1.6.5 browser health smoke | CREATED |
+| replacement v1.6.5 Ready gate | CREATED |
 
-Existing project documentation explicitly states that several professional drawing capabilities have not completed acceptance, including complete stylus-device acceptance, full watercolor/oil simulation, complete nondestructive image processing, and mature AI painting workflows.
+## Local browser environment result
 
-Health action: do not label the next Candidate as a functionally complete professional drawing product. Certification must describe exactly what was tested.
+System Chromium is present, but this execution environment blocks Chromium navigation to local `127.0.0.1` with an organization policy page.
 
-## Health cleanup order
+Therefore:
 
-1. Freeze preserved `main` baseline. — DONE
-2. Record startup/runtime dependency health. — IN PROGRESS
-3. Normalize Candidate-facing version identity without rewriting historical evidence. — PARTIAL
-4. Isolate PWA from first Candidate path. — POLICY SET; runtime verification pending
-5. Establish browser smoke baseline for current compatibility runtime. — PENDING
-6. Only then perform bounded FLORA decoupling. — PENDING
-7. Re-run startup, drawing, history, layer, import/export, persistence and console-error checks. — PENDING
-8. Build self-contained `INK.html` only after the modular compatibility baseline passes. — PENDING
-9. Run Application Health Gate before packaging. — PENDING
+`LOCAL_RUNTIME = BLOCKED_BY_ENVIRONMENT`
 
-## No-change protections
+This is not recorded as an INK Runtime failure and is not recorded as Runtime PASS. Candidate closure still requires a real allowed-browser run.
 
-During this review:
+## Formal Health Gate
 
-- no deletion of QA, Validation, research, governance, or historical evidence;
-- no source-wide version replacement;
-- no FLORA deletion;
-- no AI/Recipe deletion;
-- no `main` modification;
-- no release/certified label;
-- no three-piece package yet.
+Created:
 
-## Current gate
+`governance/INK_Application_Health_Gate_v0.1.md`
 
-`PWA_BROKEN_DEPENDENCY_REPAIRED / RUNTIME_BASELINE_PENDING`
+Order:
 
-The missing-icon installation blocker and stale PWA release identity have been repaired on the health branch. The next gate is to verify startup/runtime dependency health and establish a browser smoke baseline before any architecture decoupling.
+`BASELINE → PACKAGE → SYNTAX → CORE → RUNTIME → INTERACTION → PERSISTENCE → REGRESSION → RELEASE`
+
+## Current health state
+
+- BASELINE: `PASS`
+- PACKAGE / preservation accounting: `PASS`
+- SYNTAX / JSON / typecheck / build: `PASS`
+- PWA missing-resource blocker: `REPAIRED`
+- stale browser QA dependency chain: `REPLACED BY HEALTH OVERLAY`
+- stale Ready evidence path: `REPLACED BY HEALTH OVERLAY`
+- runnable-workspace reconstruction: `IMPLEMENTED`
+- CORE behavioral closure: `PARTIAL`
+- RUNTIME real-browser gate: `BLOCKED_BY_ENVIRONMENT`
+- INTERACTION: `PENDING RUNTIME`
+- PERSISTENCE: `PENDING RUNTIME`
+- REGRESSION: `PENDING RUNTIME`
+- RELEASE: `NOT AUTHORIZED`
+
+## Next bounded work
+
+The health phase has now removed the obvious packaging/identity/PWA/QA-infrastructure blockers. The next source task is no longer general cleanup. It is:
+
+1. finish Runtime baseline in an allowed browser environment;
+2. normalize remaining live hard-coded Studio/AI runtime version surfaces;
+3. perform bounded FLORA optional-capability decoupling;
+4. re-run Core / Interaction / Persistence regression;
+5. only then build self-contained `INK.html` and the three-piece Candidate package.
+
+No certified/release label is authorized at the current gate.
