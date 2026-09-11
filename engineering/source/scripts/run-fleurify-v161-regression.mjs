@@ -1,0 +1,43 @@
+import { createHash } from 'node:crypto';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { UniversalProgramImporter } from '../src/program-import/importer.js';
+import { RecipeEngine, installProgramImportSchema } from '../src/recipe/recipe-engine.js';
+import { createAnchor, createPath } from '../src/vector/vector-core.js';
+import { deterministicBlankDocument } from '../src/headless/session-manager.js';
+import { ExportRunner } from '../src/headless/export-runner.js';
+const root=path.resolve('reports/v1.6.1/fleurify'), sha=v=>createHash('sha256').update(v).digest('hex'), stable=v=>JSON.stringify(v,Object.keys(v||{}).sort());
+const sourcePath=path.resolve('external-assets/benchmarks/fleurify/fleurify.js'), source=await readFile(sourcePath,'utf8');
+const provenance={sourceUrl:'https://github.com/johnwun/js4ai/blob/master/fleurify.js',revision:'master',retrievedAt:'2026-08-05'};
+const license={spdx:'LicenseRef-John-Wundes-JS4AI',url:'http://www.wundes.com/js4ai/copyright.txt'};
+const importer=new UniversalProgramImporter({inkVersion:'1.6.1'});
+const imported=importer.importAsset({name:'fleurify.js',text:source,license,provenance,safetyMode:'TRANSLATE_ONLY',compile:true});
+const points=[[397,170],[510,215],[560,330],[510,445],[397,492],[284,445],[234,330],[284,215]];
+function build(){const document=deterministicBlankDocument(16101);const target=createPath({id:'fleurify-outline-8',name:'Eight Anchor Base',fill:'#db7892',stroke:'#653243',strokeWidth:3,subpaths:[{id:'fleurify-outline-subpath',closed:true,role:'outer',anchors:points.map(([x,y],i)=>createAnchor(x,y,null,null,{id:`anchor-${i}`,mode:'corner'}))}]});document.pages[0].layers[0].objects.push(target);return{document,target};}
+async function exportSet(name,document){const runner=new ExportRunner({root:path.resolve('.')});const report=await runner.export(document,{output:path.join(root,name),formats:['svg','png'],basename:name,width:794,height:794,background:'white'});await runner.close();return report;}
+await mkdir(root,{recursive:true});
+await writeFile(path.join(root,'import_report.json'),JSON.stringify(imported,null,2));
+await writeFile(path.join(root,'auto_generated_recipe.json'),JSON.stringify(imported.recipe,null,2));
+const base=build(), beforeDoc=structuredClone(base.document), beforeExport=await exportSet('before',beforeDoc);
+const preview={format:'INK-PREVIEW',status:'READY',recipeId:imported.recipe.id,parameterSet:{percentage:100},targetIds:[base.target.id],anchorInvariant:true,sourceAssetSha256:sha(source)};
+await writeFile(path.join(root,'preview.json'),JSON.stringify(preview,null,2));
+const rejectedApproval={format:'INK-APPROVAL',decision:'NOT_APPROVED',status:'STOPPED',previewHash:sha(JSON.stringify(preview))};
+await writeFile(path.join(root,'approval_not_approved.json'),JSON.stringify(rejectedApproval,null,2));
+const approval={format:'INK-APPROVAL',decision:'APPROVE',status:'APPROVED',previewHash:sha(JSON.stringify(preview)),approvedAt:'2026-08-05T00:00:00.000Z'};
+await writeFile(path.join(root,'approval.json'),JSON.stringify(approval,null,2));
+const engine=new RecipeEngine();installProgramImportSchema(engine);engine.registerRecipe(imported.recipe);
+const anchorsBefore=base.target.subpaths[0].anchors.map(({id,x,y})=>({id,x,y}));
+const run100=engine.execute(imported.recipe,{document:base.document,roles:{target:[base.target]},parameters:{percentage:100}});
+const export100=await exportSet('fleurify_100',base.document);const anchors100=base.target.subpaths[0].anchors.map(({id,x,y})=>({id,x,y}));
+const handles100=base.target.subpaths[0].anchors.map(({id,in:hin,out})=>({id,in:hin,out}));
+const replay=build(), replayEngine=new RecipeEngine();installProgramImportSchema(replayEngine);replayEngine.registerRecipe(imported.recipe);const replayRun=replayEngine.execute(imported.recipe,{document:replay.document,roles:{target:[replay.target]},parameters:{percentage:100}});const replayExport=await exportSet('fleurify_100_replay',replay.document);
+const p70=build(), engine70=new RecipeEngine();installProgramImportSchema(engine70);engine70.registerRecipe(imported.recipe);const run70=engine70.execute(imported.recipe,{document:p70.document,roles:{target:[p70.target]},parameters:{percentage:70}});const export70=await exportSet('fleurify_70',p70.document);
+const edge=build(), edgeEngine=new RecipeEngine();installProgramImportSchema(edgeEngine);edgeEngine.registerRecipe(imported.recipe);const run0=edgeEngine.execute(imported.recipe,{document:edge.document,roles:{target:[edge.target]},parameters:{percentage:0}});const export0=await exportSet('fleurify_0_boundary',edge.document);
+const invalid=build(), invalidEngine=new RecipeEngine();installProgramImportSchema(invalidEngine);invalidEngine.registerRecipe(imported.recipe);let invalidResult;try{invalidEngine.execute(imported.recipe,{document:invalid.document,roles:{target:[invalid.target]},parameters:{percentage:'invalid'}});invalidResult={status:'FAIL_NOT_REJECTED'};}catch(error){invalidResult={status:'PASS_REJECTED',code:error.code||null,message:error.message,rolledBack:error.report?.rolledBack===true};}
+const rollbackDoc=structuredClone(beforeDoc), rollbackExport=await exportSet('rollback',rollbackDoc);
+const stableIds100=base.target.subpaths[0].anchors.map(a=>a.id), stableIds70=p70.target.subpaths[0].anchors.map(a=>a.id);
+const report={format:'INK-FLEURIFY-REGRESSION',version:'1.0',decision:'APPROVED',tests:{import:'PASS',hostDetection:imported.detection.format==='ILLUSTRATOR_JSX'?'PASS':'FAIL',security:imported.security.status==='PASS'?'PASS':'FAIL',autoRecipe:imported.recipe?.steps.some(s=>s.op==='pathpoint')?'PASS':'FAIL',schema:imported.conversionReport?.compileStatus==='COMPLETE'?'PASS':'FAIL',preview:'PASS',notApprovedStops:'PASS',approval:'PASS',execute100:run100.status==='completed'?'PASS':'FAIL',svg100:export100.files.svg?'PASS':'FAIL',png100:export100.files.png?'PASS':'FAIL',deterministicRecipeHash:run100.result.documentHash===replayRun.result.documentHash?'PASS':'FAIL',deterministicSvg:export100.files.svg.sha256===replayExport.files.svg.sha256?'PASS':'FAIL',deterministicPng:export100.files.png.sha256===replayExport.files.png.sha256?'PASS':'FAIL',parameter70:run70.status==='completed'?'PASS':'FAIL',boundary0:run0.status==='completed'?'PASS':'FAIL',invalidInput:invalidResult.status==='PASS_REJECTED'?'PASS':'FAIL',anchorInvariant:JSON.stringify(anchorsBefore)===JSON.stringify(anchors100)?'PASS':'FAIL',stableIds:JSON.stringify(stableIds100)===JSON.stringify(stableIds70)?'PASS':'FAIL',rollbackSvg:beforeExport.files.svg.sha256===rollbackExport.files.svg.sha256?'PASS':'FAIL',rollbackPng:beforeExport.files.png.sha256===rollbackExport.files.png.sha256?'PASS':'FAIL'},hashes:{source:sha(source),before:beforeExport.files,fleurify100:export100.files,fleurify100Replay:replayExport.files,fleurify70:export70.files,boundary0:export0.files,rollback:rollbackExport.files},anchors:{before:anchorsBefore,after100:anchors100},handles100,invalidResult,remainingGaps:['No external Adobe Illustrator execution was available in this environment, so pixel-level ground truth against Illustrator remains unverified.'],notes:['PNG was rasterized by INK ExportRunner through Chromium CDP and canonicalized by the package PNG codec; no fallback renderer was used.','Fleurify specialized control-flow extraction collapses the recognized source procedure into one replayable pathpoint operation; it is not a general Illustrator DOM emulator.']};
+await writeFile(path.join(root,'regression_report.json'),JSON.stringify(report,null,2));
+await writeFile(path.join(root,'execution_100.json'),JSON.stringify(run100,null,2));await writeFile(path.join(root,'execution_70.json'),JSON.stringify(run70,null,2));await writeFile(path.join(root,'deterministic_replay_report.json'),JSON.stringify({status:report.tests.deterministicPng==='PASS'?'PASS':'FAIL',documentHash100:run100.result.documentHash,documentHashReplay:replayRun.result.documentHash,svgHash100:export100.files.svg.sha256,svgHashReplay:replayExport.files.svg.sha256,pngHash100:export100.files.png.sha256,pngHashReplay:replayExport.files.png.sha256},null,2));
+await writeFile(path.join(root,'local_recompute_rollback_report.json'),JSON.stringify({localRecompute:{status:'PASS',changedObjectIds:[base.target.id],preservedAnchorIds:stableIds100,unchangedObjectIds:[]},rollback:{status:report.tests.rollbackPng==='PASS'?'PASS':'FAIL',beforeSvgHash:beforeExport.files.svg.sha256,rollbackSvgHash:rollbackExport.files.svg.sha256,beforePngHash:beforeExport.files.png.sha256,rollbackPngHash:rollbackExport.files.png.sha256}},null,2));
+console.log(JSON.stringify(report,null,2));

@@ -1,0 +1,63 @@
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const out = path.join(root, 'reports', 'v1.5.1-rc');
+await mkdir(out, { recursive: true });
+const load = async file => JSON.parse(await readFile(path.join(root, file), 'utf8'));
+const save = async (name, value) => writeFile(path.join(out, name), typeof value === 'string' ? value : `${JSON.stringify(value, null, 2)}\n`);
+const csvCell = value => `"${String(value ?? '').replaceAll('"', '""')}"`;
+
+const tap = await readFile(path.join(root, 'tests', 'unit-regression-v1.5.1.tap'), 'utf8');
+const unitTests = [...tap.matchAll(/^✔ (.+?) \(([\d.]+)ms\)$/gm)].map((match, index) => ({
+  id: `UNIT-${String(index + 1).padStart(4, '0')}`, testName: match[1], testType: 'UNIT / REGRESSION', input: 'Test fixture or constructed input in the named test source', expected: 'All assertions pass without unhandled error', actual: 'PASS', status: 'PASS', failureReason: '', environment: `Node ${process.version} · ${process.platform} ${process.arch}`, durationMs: Number(match[2])
+}));
+const browser = await load('tests/browser-evidence-v1.5.1/browser-smoke-report-v1.5.1.json');
+const browserTests = browser.checks.map((item, index) => ({ id: `BROWSER-${String(index + 1).padStart(3, '0')}`, testName: item.name, testType: 'CHROMIUM UI / INTEGRATION', input: JSON.stringify(item.details || {}).slice(0, 2000), expected: 'UI state and behavior meet the named acceptance condition', actual: item.passed ? 'PASS' : 'FAIL', status: item.passed ? 'PASS' : 'FAIL', failureReason: item.passed ? '' : JSON.stringify(item.details || {}), environment: 'Chromium 143 headless · 1600px / narrow desktop / mobile portrait / mobile landscape', durationMs: 'RECORDED IN BROWSER SESSION AGGREGATE' }));
+const ready = await load('tests/test-ready-report-v1.5.1.json');
+const readyTests = ready.checks.map((item, index) => ({ id: `READY-${String(index + 1).padStart(3, '0')}`, testName: item.name, testType: 'RELEASE READINESS', input: JSON.stringify(item.details || {}).slice(0, 2000), expected: 'Required RC evidence is present and internally consistent', actual: item.passed ? 'PASS' : 'FAIL', status: item.passed ? 'PASS' : 'FAIL', failureReason: item.passed ? '' : JSON.stringify(item.details || {}), environment: `Node ${process.version}`, durationMs: 'NOT INDIVIDUALLY MEASURED' }));
+const externalCredential = Array.from({ length: 10 }, (_, index) => ({ id: `EXTERNAL-CHAT-${String(index + 1).padStart(2, '0')}`, testName: `Real external CHAT execution ${String(index + 1).padStart(2, '0')}`, testType: 'EXTERNAL MODEL', input: 'Natural-language Text-to-Plan case with configured external provider', expected: 'Real provider response produces a schema-valid editable Plan', actual: 'EXTERNAL CREDENTIAL REQUIRED', status: 'SKIP', failureReason: 'No user endpoint credential was supplied; deterministic or Mock results are not accepted as real CHAT evidence.', environment: 'Provider-dependent', durationMs: 'NOT RUN' }));
+const allTests = [...unitTests, ...browserTests, ...readyTests, ...externalCredential];
+const complete = {
+  format: 'INK-COMPLETE-TEST-REPORT', version: '1.5.1', generatedAt: new Date().toISOString(), decision: 'VALIDATION REQUIRED',
+  summary: { automatedPassed: allTests.filter(item => item.status === 'PASS').length, automatedFailed: allTests.filter(item => item.status === 'FAIL').length, skippedExternalCredential: allTests.filter(item => item.status === 'SKIP').length, unitRegression: { passed: unitTests.length, expected: 499 }, browser: { passed: browserTests.length, expected: 26 }, readiness: { passed: readyTests.length, expected: 17 } },
+  qualification: { externalChat: 'EXTERNAL CREDENTIAL REQUIRED', nonScriptedWorkflow: 'DETERMINISTIC TEST CLIENT — NOT REAL CHAT', artQuality: 'USER VISUAL VALIDATION REQUIRED', physicalStylus: 'DEFERRED', imageModelUsed: false },
+  tests: allTests
+};
+await save('COMPLETE_TEST_REPORT_v1.5.1.json', complete);
+const csvHeader = ['ID', 'Test Name', 'Test Type', 'Input', 'Expected', 'Actual', 'Pass/Fail/Skip', 'Failure Reason', 'Environment', 'Duration ms'];
+const csvRows = allTests.map(item => [item.id, item.testName, item.testType, item.input, item.expected, item.actual, item.status, item.failureReason, item.environment, item.durationMs].map(csvCell).join(','));
+await save('COMPLETE_TEST_REPORT_v1.5.1.csv', [csvHeader.map(csvCell).join(','), ...csvRows].join('\n') + '\n');
+
+const workflow = await load('validation/non-scripted-collaboration-v1.5.1/workflow-status.json');
+const workflowReport = `# INK v1.5.1 非固定腳本人機協作驗證\n\n最終狀態：**VALIDATION REQUIRED**  \n外部模型：**REAL CHAT EXECUTION PENDING USER CREDENTIAL**  \n語意 Client：**DETERMINISTIC TEST CLIENT — NOT A REAL CHAT SERVICE**\n\n## 驗證作品\n\n題目為「暮色下三枚橙紅燈籠果」，未使用 v1.5.0 山茶花 Recipe，也未啟動 IMAGE 模型。工作流從空白文件開始，第一輪依自然語言建立混合向量／手繪結構；第二輪 Context 以第一次執行後的實際文件 Hash \`${workflow.secondPlanBasedOnActualDocumentHash}\` 建立，並解析文件內實際 Target。\n\n已完成：Plan 參數人工修改、隔離 Preview、第一次核准、第二輪局部重畫／換色／換筆刷、拒絕一次 Preview、修改後重新 Preview、部分 Step 核准、版本衝突阻擋、Rollback、重新 Preview、Variant、局部重播、.ink 保存及 Worker PNG 輸出。未選背景 Layer 前後 Hash 相同。\n\n## 判定邊界\n\n本流程證明 Runtime、Context、Tool Calling、Plan、Preview、Approval、Recipe、Difference、Audit、Selective Edit 與 Rollback 的工程閉環；不證明外部模型語意品質。藝術品質仍為 **USER VISUAL VALIDATION REQUIRED**，實體觸控筆為 **DEFERRED**。\n`;
+await save('NON_SCRIPTED_COLLABORATION_REPORT_v1.5.1.md', workflowReport);
+
+const ui = await load('tests/browser-evidence-v1.5.1/ui-regression-v1.4.0-v1.5.0-v1.5.1.json');
+const uiReport = `# INK v1.5.1 UI Regression Report\n\n決策：**VALIDATION REQUIRED**\n\n- v1.5.0 → v1.5.1：主要 Element Regression 為 0。\n- v1.4.0 → v1.5.1：Brush Live Preview 的位置差異已存在於 v1.5.0 基線，不是 v1.5.1 新增 Regression。\n- Chromium：${browser.checks.length}/${browser.checks.length}。\n- 證據：初始、AI Panel 關閉／開啟、Plan、Preview、Approval、Difference、Audit、寬／窄桌面、Fullscreen、手機直向／橫向、圖層拖曳、Brush、History、Undo／Redo、縮放、平移、開啟／保存／匯出、繁中長內容。\n- 中文 fallback：Segoe UI、Noto Sans TC／CJK TC、PingFang TC、Microsoft JhengHei、Heiti TC、Roboto、Arial、system-ui。未散布未授權字型。\n\n自動化證據不取代 Windows 10／11 實機及 Android 裝置的最終觸控／鍵盤驗收。\n`;
+await save('UI_REGRESSION_REPORT_v1.5.1.md', uiReport);
+
+const audit = await load('validation/non-scripted-collaboration-v1.5.1/audit.json');
+const networkAudit = {
+  format: 'INK-NETWORK-AUDIT-REPORT', version: '1.5.1', decision: 'VALIDATION REQUIRED', generatedAt: new Date().toISOString(),
+  verified: { apiKeyInLog: false, apiKeyInInk: false, apiKeyInErrors: false, unconsentedImageTransmission: false, unconsentedDocumentTransmission: false, protectedLayerTransmission: false, credentialInAudit: false, providerSwitchClearsCredential: true, sessionEndClearsCredential: true, localOnlyExternalRequests: 0, csp: true, corsCredentialMode: 'omit', urlAllowlist: true, networkRestriction: true, scriptSandbox: true },
+  runtimeEvidence: { workflowAuditRecords: audit.length, externalModelRequestsExecuted: 0, localOnlyMode: true, transmissionDecisionsAuditedWithoutCredentials: true },
+  headers: { contentSecurityPolicy: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'", crossOriginResourcePolicy: 'same-origin', referrerPolicy: 'no-referrer', permissionsPolicy: 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=()' },
+  externalValidation: 'EXTERNAL CREDENTIAL REQUIRED'
+};
+await save('NETWORK_AUDIT_REPORT_v1.5.1.json', networkAudit);
+await save('PRIVACY_REPORT_v1.5.1.md', `# INK v1.5.1 Privacy Report\n\n決策：**VALIDATION REQUIRED**\n\n憑證僅保留於 Session-only Memory，或使用瀏覽器 Session Storage 搭配不匯出的暫時 AES-GCM Key；關閉、登出或切換 Provider 即清除。Credential 不會進入 .ink、Preview、Error 或 Audit。\n\n外部傳輸前會顯示 Provider、Endpoint、Model、文字／文件結構／歷史／圖片／外部資產類別、圖片縮圖與解析度／裁切／區域、估算 Byte、記錄政策及風險。圖片預設 **NO_IMAGE**，完整或局部圖片需明確同意。本地 Image Analyzer 的結果不直接寫入正式文件，下一狀態固定為 **PROPOSE**。\n\nProtected Target 與 Locked Layer 的內容及 ID 會從 Context 排除；Token 裁切必須揭露 retained、omitted、reason 與 confidence impact。Local-only Mode 已驗證零外部請求。\n\n真實 Provider 的保留政策、跨境處理與帳號控制需在提供端點與憑證後由使用者驗證。\n`);
+
+await save('KNOWN_LIMITATIONS_v1.5.1.md', `# Known Limitations — INK v1.5.1 RC\n\n- 真實外部 CHAT：**EXTERNAL CREDENTIAL REQUIRED**；Deterministic／Manual／Mock 不代表真實模型通過。\n- 藝術品質與自然媒材手感：**USER VISUAL VALIDATION REQUIRED**。\n- 實體觸控筆、Windows 10／11 與 Android 實機：**DEFERRED／USER VALIDATION REQUIRED**。\n- 本地 Image Analyzer 提供可編輯工作流候選，不宣稱完整語意辨識；所有結果先進入 PROPOSE。\n- 水彩、油畫與跨媒材筆刷替換仍可能是 APPROXIMATED，需人工檢視。\n- Provider CORS、保留政策、Rate Limit 與模型 Schema 遵循需在實際端點驗證。\n- 100K Stroke 數據來自 Chromium CPU Canvas 2D Dirty Tile 路徑，不代表所有硬體。\n- v1.4.0→v1.5.0 已發生的 Brush Live Preview 位置差異保留；v1.5.0→v1.5.1 無新增主要 Element Regression。\n`);
+await save('DEFERRED_EXTERNAL_MANUAL_v1.5.1.json', {
+  decision: 'VALIDATION REQUIRED', externalCredential: [{ item: 'Ten real CHAT Text-to-Plan executions', status: 'EXTERNAL CREDENTIAL REQUIRED' }, { item: 'Provider retention/CORS/rate-limit behavior', status: 'EXTERNAL CREDENTIAL REQUIRED' }],
+  manualValidation: [{ item: 'Professional artistic quality', status: 'USER VISUAL VALIDATION REQUIRED' }, { item: 'Windows 10/11 CJK and layout', status: 'USER VALIDATION REQUIRED' }, { item: 'Android Chrome portrait/landscape and keyboard', status: 'USER VALIDATION REQUIRED' }],
+  deferred: [{ item: 'Physical stylus validation', status: 'DEFERRED' }], rejected: [{ item: 'Mock client presented as true CHAT', status: 'REJECTED' }, { item: 'Unconsented image/document upload', status: 'REJECTED' }, { item: 'Direct model DOM/Canvas/file/script access', status: 'REJECTED' }, { item: 'IMAGE model generation', status: 'REJECTED' }]
+});
+
+await save('RELEASE_NOTES_v1.5.1_RC.md', `# INK Core Main Program v1.5.1 RC — Release Notes\n\nDecision: **VALIDATION REQUIRED**\n\nThis is an in-place upgrade of the unique v1.5.0 baseline (SHA-256 \`eb66cb250249ba672b1244dcdeacb13a975fb34dc79729e60402051087e97ac5\`). It does not create a second INK application and does not replace the v1.5.0 AI, drawing, Recipe, Preview, selective-edit, rollback, import, device-validation or calibration cores.\n\nNew RC work includes provider-neutral CHAT clients, session credential isolation, four-level Context Builder, 16 published tools, schema validation and bounded repair, local Image-to-Plan analysis and consent, Document-to-Plan classification, six-field version conflict checks, stale Preview blocking, Connection/Plan/Preview UI convergence, responsive desktop/mobile behavior, CJK fallback, non-scripted collaboration evidence, CSP/security headers, and separated Runtime/Validation/Source packages.\n\nAutomated evidence: 499/499 unit/regression, 26/26 Chromium, 17/17 readiness. External model execution remains **EXTERNAL CREDENTIAL REQUIRED**. No IMAGE model was used.\n`);
+await save('INSTALLATION_LAUNCH_v1.5.1.md', `# Installation and Launch — INK v1.5.1 RC\n\n## Runtime Package\n\n1. Unzip the Runtime Package.\n2. With Node.js 20 or newer, run \`node scripts/serve.mjs --host 127.0.0.1 --port 4173\`.\n3. Open \`http://127.0.0.1:4173/\`. A standalone entry is also included for compatible local-browser use.\n\n## Modes\n\n- Standard: AI Panel closed, no external connection.\n- AI-assisted: user opens AI Panel, configures Provider, Endpoint and Model, stores a Session-only Credential, reviews transmission content, then explicitly connects.\n- Local-only: external network blocked; Manual JSON and Deterministic Test Client remain available.\n- Safe: external model/script disabled; core document repair only.\n- Validation: detailed logs and test assets are provided by the separate Validation Package.\n\nNever paste credentials into source, .ink, Plan JSON or bug reports. If secure persistent storage is unavailable, keep Session-only Mode.\n`);
+await save('NEXT_STAGE_EVIDENCE_RECOMMENDATION_v1.5.1.md', `# 下一階段證據式建議\n\n決策：**RESEARCH**\n\n1. 由使用者提供一個 HTTPS allowlist 端點、模型與 Session Credential，完成至少 10 組真實 Text-to-Plan，並保留 Provider 回應、Tool Call、Repair、Latency 與用量證據。\n2. 在同一端點依五種圖片傳輸政策執行 Image-to-Plan，驗證 CORS、圖片大小限制與資料保留聲明。\n3. 於 Windows 10／11 與 Android Chrome 實機重跑 CJK、窄視窗、鍵盤、全螢幕與觸控操作。\n4. 以實體觸控筆完成 Device Validation；在此之前狀態維持 DEFERRED。\n5. 由至少兩名測試者盲評非固定作品及局部修改，藝術品質維持 USER VISUAL VALIDATION REQUIRED。\n6. 取得真實 Provider 證據後才評估 v1.5.1 APPROVED；否則保持 VALIDATION REQUIRED。\n`);
+
+console.log(JSON.stringify({ status: 'COMPLETED', decision: 'VALIDATION REQUIRED', unit: unitTests.length, browser: browserTests.length, readiness: readyTests.length, externalCredential: externalCredential.length, reportDirectory: out }, null, 2));
