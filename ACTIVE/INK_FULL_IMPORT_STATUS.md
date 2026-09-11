@@ -1,6 +1,6 @@
 # INK Full Import Status
 
-STATUS: `PASS`
+STATUS: `BLOCKED`
 
 | Field | Value |
 |---|---|
@@ -8,12 +8,13 @@ STATUS: `PASS`
 | TOTAL_FILES | `1471` |
 | TOTAL_BYTES | `215908955` |
 | WORK_BRANCH | `work/full-original-import-v0.1` |
-| LATEST_COMMIT | `SELF` — the branch-tip commit containing this report |
+| LATEST_COMMIT | `SELF` — local branch-tip commit containing this report |
 | MISSING_FILES | `0` |
 | MUTATED_FILES | `0` |
 | UNACCOUNTED_FILES | `0` |
 | BOUNDARY_PENDING_COUNT | `94` |
 | LARGE_EVIDENCE_STORAGE_METHOD | Dedicated import branch; `qa/validation/` isolated in a separate commit; no Git LFS |
+| GITHUB_PUSH | `BLOCKED` — local Git has no authenticated HTTPS credential |
 
 ## Category counts and bytes
 
@@ -39,9 +40,10 @@ STATUS: `PASS`
 - Silent deletions: 0
 - Unexpected imported source files: 0
 - `main` mutation: 0 commits
+- GitHub work branch pushed: NO
 
 ## Disposition
 
-`READY_FOR_REVIEW`
+`BLOCKED`
 
-No promotion to `main` is authorized or performed.
+Local classification and integrity verification passed. Remote completion is blocked only at authenticated `git push`; substituting hundreds of GitHub Contents / blob API writes is explicitly disallowed for this import. No promotion to `main` is authorized or performed.
