@@ -33,26 +33,52 @@ jobs:
     runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 45
 
+    defaults:
+      run:
+        shell: powershell -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
+
     steps:
+      - name: Prepare Windows runner toolchain
+        shell: cmd
+        run: |
+          @echo off
+          where git >nul 2>nul
+          if %ERRORLEVEL% EQU 0 (
+            git --version
+            exit /b 0
+          )
+          if exist "%ProgramFiles%\Git\cmd\git.exe" (
+            echo %ProgramFiles%\Git\cmd>>"%GITHUB_PATH%"
+            "%ProgramFiles%\Git\cmd\git.exe" --version
+            exit /b 0
+          )
+          if exist "%LOCALAPPDATA%\Programs\Git\cmd\git.exe" (
+            echo %LOCALAPPDATA%\Programs\Git\cmd>>"%GITHUB_PATH%"
+            "%LOCALAPPDATA%\Programs\Git\cmd\git.exe" --version
+            exit /b 0
+          )
+          echo Git 2.18 or newer was not found on this Windows runner.
+          echo Install Git for Windows, then keep this runner open and rerun the workflow.
+          exit /b 1
+
       - name: Checkout requested revision
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
       - name: Record runner environment
-        shell: powershell
         run: |
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
           Write-Host "Ref:        $env:GITHUB_REF"
           Write-Host "SHA:        $env:GITHUB_SHA"
           Write-Host "Runner:     $env:RUNNER_NAME"
           Write-Host "OS:         $env:RUNNER_OS"
+          git --version
           node --version
           npm --version
 
       - name: Locate Python
         id: python
-        shell: powershell
         run: |
           $python = $null
           if (Get-Command py -ErrorAction SilentlyContinue) {
@@ -70,7 +96,6 @@ jobs:
           Write-Host "Using $python"
 
       - name: Reconstruct runnable INK workspace
-        shell: powershell
         run: |
           $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\original-runtime'
           if ($env:INK_PYTHON -eq 'py -3') {
@@ -87,7 +112,6 @@ jobs:
           }
 
       - name: Apply INK v0.1 Health overlay
-        shell: powershell
         run: |
           $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\original-runtime'
           Copy-Item 'engineering\health-overlay\package.json' (Join-Path $runtime 'package.json') -Force
@@ -96,7 +120,6 @@ jobs:
           Write-Host 'Health overlay applied.'
 
       - name: Locate Chrome, Chromium, or Edge
-        shell: powershell
         run: |
           $candidates = @(
             $env:INK_CHROMIUM_PATH,
@@ -117,34 +140,28 @@ jobs:
 
       - name: Compatibility build
         working-directory: .working/original-runtime
-        shell: powershell
         run: npm run build
 
       - name: INK doctor
         working-directory: .working/original-runtime
-        shell: powershell
         run: npm run ink:doctor
 
       - name: Browser Runtime baseline
         working-directory: .working/original-runtime
-        shell: powershell
         run: npm run test:browser
 
       - name: Runtime Ready gate
         if: always()
         working-directory: .working/original-runtime
-        shell: powershell
         run: npm run test:ready
 
       - name: Extended unit suite
         if: github.event_name == 'workflow_dispatch' && inputs.run_extended_tests
         working-directory: .working/original-runtime
-        shell: powershell
         run: npm test
 
       - name: Publish Runtime report to job summary
         if: always()
-        shell: powershell
         run: |
           $report = Join-Path $env:GITHUB_WORKSPACE '.working\original-runtime\tests\browser-evidence-v0.1\browser-health-report-v0.1.json'
           Add-Content $env:GITHUB_STEP_SUMMARY '## INK v0.1 — Runtime Baseline'
