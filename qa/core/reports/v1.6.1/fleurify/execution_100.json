@@ -1,0 +1,365 @@
+{
+  "format": "INK-REPLAY-REPORT",
+  "version": 2,
+  "id": "run_msfxryx5_bz9sq4",
+  "recipeId": "ink.import.program_5159ed7b",
+  "recipeVersion": 1,
+  "status": "completed",
+  "startedAt": "2026-08-05T10:20:40.457Z",
+  "input": {
+    "ids": [],
+    "types": []
+  },
+  "documentStateBefore": "bd42403c",
+  "dependencies": [
+    "Adobe Illustrator DOM"
+  ],
+  "versionRequirements": {
+    "inkMin": "1.5.0"
+  },
+  "license": {
+    "spdx": "LicenseRef-John-Wundes-JS4AI",
+    "url": "http://www.wundes.com/js4ai/copyright.txt"
+  },
+  "warnings": [],
+  "errors": [],
+  "states": [
+    {
+      "step": 0,
+      "id": "import-001-illustrator-pathpoint-fleurify",
+      "op": "pathpoint",
+      "targetId": "fleurify-outline-8",
+      "status": "ok",
+      "result": null
+    },
+    {
+      "step": 1,
+      "id": "import-checkpoint",
+      "op": "checkpoint",
+      "targetId": null,
+      "status": "ok",
+      "result": {
+        "hash": "cbdf077b"
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "step": 1,
+      "hash": "cbdf077b",
+      "snapshot": {
+        "format": "INK",
+        "formatVersion": 4,
+        "appVersion": "1.6.0-RC",
+        "id": "document-16101",
+        "title": "INK Headless Document",
+        "createdAt": "2000-01-01T00:00:00.000Z",
+        "modifiedAt": "2000-01-01T00:00:00.000Z",
+        "activePageId": "page-16101",
+        "pages": [
+          {
+            "id": "page-16101",
+            "name": "頁面 1",
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            },
+            "workspace": {
+              "activeSpace": "creation",
+              "showLayoutFrameInCreation": false,
+              "layoutViewport": {
+                "x": 0,
+                "y": 0,
+                "scale": 1,
+                "rotation": 0
+              },
+              "cameras": {
+                "creation": {
+                  "x": 0,
+                  "y": 0,
+                  "scale": 1,
+                  "rotation": 0
+                },
+                "layout": {
+                  "x": 0,
+                  "y": 0,
+                  "scale": 0.65,
+                  "rotation": 0
+                }
+              },
+              "visited": {
+                "creation": true,
+                "layout": false
+              }
+            },
+            "paper": {
+              "type": "blank",
+              "color": "#ffffff",
+              "gridSize": 32,
+              "absorbency": 0.58,
+              "roughness": 0.42,
+              "fiberStrength": 0.36,
+              "fiberAngle": 0,
+              "sizing": 0.28,
+              "granulation": 0.32,
+              "seed": 1337,
+              "textureVisible": false
+            },
+            "camera": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layers": [
+              {
+                "id": "layer-base-16101",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": [
+                  {
+                    "id": "fleurify-outline-8",
+                    "type": "path",
+                    "name": "Eight Anchor Base",
+                    "matrix": [
+                      1,
+                      0,
+                      0,
+                      1,
+                      0,
+                      0
+                    ],
+                    "opacity": 1,
+                    "fill": "#db7892",
+                    "stroke": "#653243",
+                    "strokeWidth": 3,
+                    "fillRule": "evenodd",
+                    "gradient": null,
+                    "dash": [],
+                    "dashOffset": 0,
+                    "lineCap": "round",
+                    "lineJoin": "round",
+                    "miterLimit": 4,
+                    "clipPath": null,
+                    "mask": null,
+                    "subpaths": [
+                      {
+                        "id": "fleurify-outline-subpath",
+                        "closed": true,
+                        "role": "outer",
+                        "anchors": [
+                          {
+                            "id": "anchor-0",
+                            "x": 397,
+                            "y": 170,
+                            "in": {
+                              "x": 113,
+                              "y": 45
+                            },
+                            "out": {
+                              "x": -113,
+                              "y": 45
+                            },
+                            "mode": "corner"
+                          },
+                          {
+                            "id": "anchor-1",
+                            "x": 510,
+                            "y": 215,
+                            "in": {
+                              "x": 50,
+                              "y": 115
+                            },
+                            "out": {
+                              "x": -113,
+                              "y": -45
+                            },
+                            "mode": "corner"
+                          },
+                          {
+                            "id": "anchor-2",
+                            "x": 560,
+                            "y": 330,
+                            "in": {
+                              "x": -50,
+                              "y": 115
+                            },
+                            "out": {
+                              "x": -50,
+                              "y": -115
+                            },
+                            "mode": "corner"
+                          },
+                          {
+                            "id": "anchor-3",
+                            "x": 510,
+                            "y": 445,
+                            "in": {
+                              "x": -113,
+                              "y": 47
+                            },
+                            "out": {
+                              "x": 50,
+                              "y": -115
+                            },
+                            "mode": "corner"
+                          },
+                          {
+                            "id": "anchor-4",
+                            "x": 397,
+                            "y": 492,
+                            "in": {
+                              "x": -113,
+                              "y": -47
+                            },
+                            "out": {
+                              "x": 113,
+                              "y": -47
+                            },
+                            "mode": "corner"
+                          },
+                          {
+                            "id": "anchor-5",
+                            "x": 284,
+                            "y": 445,
+                            "in": {
+                              "x": -50,
+                              "y": -115
+                            },
+                            "out": {
+                              "x": 113,
+                              "y": 47
+                            },
+                            "mode": "corner"
+                          },
+                          {
+                            "id": "anchor-6",
+                            "x": 234,
+                            "y": 330,
+                            "in": {
+                              "x": 50,
+                              "y": -115
+                            },
+                            "out": {
+                              "x": 50,
+                              "y": 115
+                            },
+                            "mode": "corner"
+                          },
+                          {
+                            "id": "anchor-7",
+                            "x": 284,
+                            "y": 215,
+                            "in": {
+                              "x": 113,
+                              "y": -45
+                            },
+                            "out": {
+                              "x": -50,
+                              "y": 115
+                            },
+                            "mode": "corner"
+                          }
+                        ]
+                      }
+                    ],
+                    "metadata": {
+                      "behaviorId": "FLEURIFY_OUTLINE_FROM_CLOSED_PATH",
+                      "percentage": 100,
+                      "sourceHost": "Adobe Illustrator"
+                    }
+                  }
+                ]
+              }
+            ],
+            "activeLayerId": "layer-base-16101",
+            "recipeCurrentGroup": null
+          }
+        ],
+        "programAssets": [],
+        "referencePackages": [],
+        "strokeSessions": [],
+        "brushPackages": [],
+        "handDrawingReports": [],
+        "deviceCalibrationProfiles": [],
+        "deviceValidationReports": [],
+        "interactivePerformanceReports": [],
+        "ai": {
+          "permission": "PROPOSE",
+          "selection": [],
+          "semanticTargets": [],
+          "unresolvedTargets": [],
+          "checkpoints": [],
+          "recipes": [],
+          "audit": [],
+          "variants": [],
+          "missingDependencies": []
+        },
+        "semanticModel": {
+          "format": "INK-SEMANTIC-MODEL",
+          "version": "1.0",
+          "migrationStrategy": "NATIVE",
+          "relationshipGraph": {
+            "format": "INK-SEMANTIC-RELATIONSHIP-GRAPH",
+            "version": "1.0",
+            "nodes": [],
+            "edges": []
+          }
+        },
+        "assetManifest": {
+          "format": "INK-DOCUMENT-ASSET-MANIFEST",
+          "version": "1.0",
+          "mode": "Linked Document",
+          "assets": []
+        },
+        "deviceReplayProfileSelection": "ORIGINAL_OR_CURRENT_SELECTABLE",
+        "drawingGapRanking": null,
+        "recentColors": [
+          "#202020",
+          "#ffffff",
+          "#b63c36",
+          "#d18b2f",
+          "#d7c64b",
+          "#3d875d",
+          "#2f718f",
+          "#594f9a"
+        ]
+      }
+    }
+  ],
+  "replayDiff": {
+    "beforeHash": "bd42403c",
+    "afterHash": "cbdf077b",
+    "changed": true
+  },
+  "result": {
+    "outputs": [
+      "fleurify-outline-8",
+      "checkpoint_msfxryx6_xpz623"
+    ],
+    "documentHash": "cbdf077b",
+    "roleMap": {
+      "target": [
+        "fleurify-outline-8"
+      ]
+    },
+    "parameters": {
+      "percentage": 100
+    },
+    "deterministicKey": "1a6c3d6c"
+  },
+  "finishedAt": "2026-08-05T10:20:40.459Z"
+}

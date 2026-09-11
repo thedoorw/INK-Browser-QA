@@ -1,0 +1,26 @@
+{
+  "localRecompute": {
+    "status": "PASS",
+    "changedObjectIds": [
+      "fleurify-outline-8"
+    ],
+    "preservedAnchorIds": [
+      "anchor-0",
+      "anchor-1",
+      "anchor-2",
+      "anchor-3",
+      "anchor-4",
+      "anchor-5",
+      "anchor-6",
+      "anchor-7"
+    ],
+    "unchangedObjectIds": []
+  },
+  "rollback": {
+    "status": "PASS",
+    "beforeSvgHash": "5a0b3b170927a3aabc2096878a46c0bf41e977a9f369cd0eb883862cc986f2e6",
+    "rollbackSvgHash": "5a0b3b170927a3aabc2096878a46c0bf41e977a9f369cd0eb883862cc986f2e6",
+    "beforePngHash": "75c6d1dad7b99e2bdbe18e72e2f7bbd03549154f11bc09312fcd8f0062767ece",
+    "rollbackPngHash": "75c6d1dad7b99e2bdbe18e72e2f7bbd03549154f11bc09312fcd8f0062767ece"
+  }
+}

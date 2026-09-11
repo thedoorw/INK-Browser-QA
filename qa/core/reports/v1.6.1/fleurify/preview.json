@@ -1,0 +1,13 @@
+{
+  "format": "INK-PREVIEW",
+  "status": "READY",
+  "recipeId": "ink.import.program_5159ed7b",
+  "parameterSet": {
+    "percentage": 100
+  },
+  "targetIds": [
+    "fleurify-outline-8"
+  ],
+  "anchorInvariant": true,
+  "sourceAssetSha256": "160b3b38f86837f274f166d0999d717e51466a56ade8ff58d92afa50ffcaf05d"
+}

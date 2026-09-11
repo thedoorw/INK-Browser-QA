@@ -1,0 +1,288 @@
+{
+  "format": "INK",
+  "formatVersion": 4,
+  "appVersion": "0.8.3",
+  "id": "fixture-poster",
+  "title": "03 多圖層海報範例",
+  "createdAt": "2026-07-24T00:00:00.000Z",
+  "modifiedAt": "2026-07-24T00:00:00.000Z",
+  "activePageId": "fixture-poster-page-1",
+  "pages": [
+    {
+      "id": "fixture-poster-page-1",
+      "name": "頁面 1",
+      "artboard": {
+        "mode": "fixed",
+        "preset": "A4",
+        "orientation": "portrait",
+        "widthMm": 210,
+        "heightMm": 297,
+        "ppi": 300,
+        "bleedMm": 3,
+        "safeMarginMm": 10,
+        "unit": "mm",
+        "showBleed": true,
+        "showSafeArea": true,
+        "showCenter": true,
+        "clipContent": true
+      },
+      "workspace": {
+        "activeSpace": "layout",
+        "showLayoutFrameInCreation": false,
+        "layoutViewport": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameras": {
+          "creation": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "layout": {
+            "x": 0,
+            "y": 0,
+            "scale": 0.65,
+            "rotation": 0
+          }
+        },
+        "visited": {
+          "creation": false,
+          "layout": true
+        }
+      },
+      "paper": {
+        "type": "blank",
+        "color": "#fffef9",
+        "gridSize": 32,
+        "absorbency": 0.58,
+        "roughness": 0.42,
+        "fiberStrength": 0.36,
+        "fiberAngle": 0,
+        "sizing": 0.28,
+        "granulation": 0.32,
+        "seed": 1337,
+        "textureVisible": true
+      },
+      "camera": {
+        "x": 0,
+        "y": 0,
+        "scale": 0.65,
+        "rotation": 0
+      },
+      "layers": [
+        {
+          "id": "poster-guides",
+          "name": "背景",
+          "visible": true,
+          "locked": true,
+          "opacity": 1,
+          "objects": [
+            {
+              "id": "poster-bg",
+              "type": "shape",
+              "shape": "rect",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                -396.85,
+                -561.26
+              ],
+              "opacity": 1,
+              "color": "#e9e4d7",
+              "fillColor": "#e9e4d7",
+              "fill": true,
+              "size": 2,
+              "x2": 793.7,
+              "y2": 1122.52,
+              "w": 793.7,
+              "h": 1122.52
+            },
+            {
+              "id": "poster-band",
+              "type": "shape",
+              "shape": "rect",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                -396.85,
+                280
+              ],
+              "opacity": 1,
+              "color": "#202020",
+              "fillColor": "#202020",
+              "fill": true,
+              "size": 2,
+              "x2": 793.7,
+              "y2": 281,
+              "w": 793.7,
+              "h": 281
+            }
+          ]
+        },
+        {
+          "id": "poster-image",
+          "name": "主視覺",
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "objects": [
+            {
+              "id": "poster-circle",
+              "type": "shape",
+              "shape": "ellipse",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                -220,
+                -260
+              ],
+              "opacity": 1,
+              "color": "#2f8179",
+              "fillColor": "#2f8179",
+              "fill": true,
+              "size": 2,
+              "x2": 440,
+              "y2": 440,
+              "w": 440,
+              "h": 440
+            },
+            {
+              "id": "poster-ink",
+              "type": "stroke",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "opacity": 1,
+              "color": "#202020",
+              "size": 34,
+              "kind": "brush",
+              "smoothing": 0.48,
+              "pressure": 0.95,
+              "flow": 0.78,
+              "wetness": 0.62,
+              "bristle": 0.32,
+              "grain": 0.22,
+              "softness": 0.35,
+              "mediaModel": "natural-v2",
+              "points": [
+                {
+                  "x": -210,
+                  "y": 40,
+                  "p": 0.2,
+                  "t": 0
+                },
+                {
+                  "x": -80,
+                  "y": -120,
+                  "p": 0.9,
+                  "t": 16
+                },
+                {
+                  "x": 80,
+                  "y": -170,
+                  "p": 0.7,
+                  "t": 32
+                },
+                {
+                  "x": 210,
+                  "y": 20,
+                  "p": 0.25,
+                  "t": 48
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "poster-text",
+          "name": "文字",
+          "visible": true,
+          "locked": false,
+          "opacity": 1,
+          "objects": [
+            {
+              "id": "poster-title",
+              "type": "text",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                -245,
+                340
+              ],
+              "opacity": 1,
+              "text": "INK POSTER",
+              "color": "#fffef9",
+              "fontFamily": "Noto Sans TC",
+              "fontSize": 56,
+              "lineHeight": 1.3
+            },
+            {
+              "id": "poster-subtitle",
+              "type": "text",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                -230,
+                420
+              ],
+              "opacity": 1,
+              "text": "創作空間 × 版面空間",
+              "color": "#fffef9",
+              "fontFamily": "Noto Sans TC",
+              "fontSize": 26,
+              "lineHeight": 1.3
+            },
+            {
+              "id": "poster-footer",
+              "type": "text",
+              "matrix": [
+                1,
+                0,
+                0,
+                1,
+                -210,
+                515
+              ],
+              "opacity": 1,
+              "text": "A4 / 300 PPI / 3 mm Bleed",
+              "color": "#202020",
+              "fontFamily": "Noto Sans TC",
+              "fontSize": 18,
+              "lineHeight": 1.3
+            }
+          ]
+        }
+      ],
+      "activeLayerId": "poster-text"
+    }
+  ],
+  "recentColors": [
+    "#202020",
+    "#ffffff",
+    "#b63c36",
+    "#d18b2f",
+    "#d7c64b",
+    "#3d875d",
+    "#2f718f",
+    "#594f9a"
+  ]
+}

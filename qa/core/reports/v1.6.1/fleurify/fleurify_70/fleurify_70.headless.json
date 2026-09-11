@@ -1,0 +1,107 @@
+{
+  "format": "INK-HEADLESS-PNG-REPORT",
+  "version": "1.0",
+  "status": "PASS",
+  "renderer": "CHROMIUM_CDP_CANONICAL_PNG",
+  "rendererVersion": "Chrome/144.0.7559.96",
+  "outputFile": "/mnt/data/headless161/INK_Core_Main_Program_v1.6.1_RC/Runtime/reports/v1.6.1/fleurify/fleurify_70/fleurify_70.png",
+  "width": 794,
+  "height": 794,
+  "background": "white",
+  "durationMs": 627,
+  "stages": [
+    {
+      "stage": "process_start",
+      "status": "PASS",
+      "elapsedMs": 3,
+      "executable": "/usr/bin/chromium",
+      "args": [
+        "--headless=new",
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-gpu",
+        "--disable-background-networking",
+        "--disable-default-apps",
+        "--disable-extensions",
+        "--disable-sync",
+        "--hide-scrollbars",
+        "--metrics-recording-only",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--password-store=basic",
+        "--use-mock-keychain",
+        "--remote-debugging-port=37849",
+        "--user-data-dir=/tmp/ink-chromium-2XqHS2",
+        "about:blank"
+      ],
+      "pid": 8927
+    },
+    {
+      "stage": "browser_connection",
+      "status": "PASS",
+      "elapsedMs": 211,
+      "rendererVersion": "Chrome/144.0.7559.96",
+      "endpoint": "ws://127.0.0.1:37849/devtools/browser/20cd7648-0c71-4ad6-95cf-a44ebf8e3244"
+    },
+    {
+      "stage": "page_target",
+      "status": "PASS",
+      "elapsedMs": 218,
+      "targetId": "E6BAD39000540EF56DC155E3FB2F73A5",
+      "initialUrl": "about:blank"
+    },
+    {
+      "stage": "page_connection",
+      "status": "PASS",
+      "elapsedMs": 261
+    },
+    {
+      "stage": "document_injection",
+      "status": "PASS",
+      "elapsedMs": 264,
+      "htmlBytes": 1386
+    },
+    {
+      "stage": "render_ready",
+      "status": "PASS",
+      "elapsedMs": 293,
+      "readyState": "complete",
+      "ready": "true",
+      "error": null,
+      "svgCount": 1
+    },
+    {
+      "stage": "screenshot_start",
+      "status": "PASS",
+      "elapsedMs": 293
+    },
+    {
+      "stage": "png_write",
+      "status": "PASS",
+      "elapsedMs": 583,
+      "bytes": 15072,
+      "rawPngSha256": "353f41190ee1f450e065d0c91d1ec1849222e48a4e97c6458d8b216850af2012",
+      "sha256": "d16d19d80438932b6dd908731dce9ff2cb9bafcf0bee20005f355d02869149dc",
+      "width": 794,
+      "height": 794
+    },
+    {
+      "stage": "browser_exit",
+      "status": "PASS",
+      "elapsedMs": 627,
+      "code": 0,
+      "signal": null,
+      "timedOut": false,
+      "process": {
+        "pid": 8927,
+        "exitCode": 0,
+        "signalCode": null,
+        "killed": false
+      }
+    }
+  ],
+  "consoleMessages": [],
+  "pageErrors": [],
+  "stderr": "[8927:8955:0805/102041.798770:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[8927:8955:0805/102041.803127:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[8927:8955:0805/102041.803668:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[8927:8955:0805/102041.803756:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[8927:8955:0805/102041.828088:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[8927:8927:0805/102041.842146:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[8927:8955:0805/102041.842294:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n\nDevTools listening on ws://127.0.0.1:37849/devtools/browser/20cd7648-0c71-4ad6-95cf-a44ebf8e3244\n[8927:8927:0805/102041.859763:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[8927:8955:0805/102041.860624:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[8927:8955:0805/102041.860694:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory\n[8927:8927:0805/102041.860934:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[8927:8955:0805/102041.876575:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[8927:8927:0805/102041.935531:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: unknown error type: \n[8927:8927:0805/102041.937176:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[8927:8955:0805/102041.937278:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[8927:8927:0805/102041.943942:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[8927:8955:0805/102041.944189:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[8927:8927:0805/102041.946335:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[8927:8955:0805/102041.946423:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[8927:8927:0805/102041.946705:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[8927:8955:0805/102041.946757:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[8927:8927:0805/102041.951057:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n",
+  "stdout": ""
+}
