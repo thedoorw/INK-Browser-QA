@@ -1,0 +1,83 @@
+name: Unpack staging ZIP
+
+on:
+  workflow_dispatch:
+    inputs:
+      archive_path:
+        description: ZIP path in repository
+        required: true
+        default: INK_PRODUCT_v0.1.zip
+      destination_path:
+        description: Destination directory
+        required: true
+        default: product/source
+      expected_file_count:
+        description: Expected extracted file count (0 disables check)
+        required: true
+        default: '169'
+      target_branch:
+        description: Branch to receive extracted files
+        required: true
+        default: work/unpack-product-v0.1
+      delete_archive:
+        description: Delete ZIP from target branch after successful extraction
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: [self-hosted, Windows]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Prepare target branch
+        shell: powershell
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin
+          $branch = '${{ inputs.target_branch }}'
+          if (git ls-remote --exit-code --heads origin $branch) {
+            git checkout -B $branch origin/$branch
+          } else {
+            git checkout -b $branch
+          }
+
+      - name: Unpack ZIP
+        shell: powershell
+        run: |
+          $params = @{
+            ArchivePath = '${{ inputs.archive_path }}'
+            DestinationPath = '${{ inputs.destination_path }}'
+            ExpectedFileCount = [int]'${{ inputs.expected_file_count }}'
+          }
+          if ('${{ inputs.delete_archive }}' -eq 'true') {
+            & ./engineering/tools/unpack-staging-zip.ps1 @params -DeleteArchive
+          } else {
+            & ./engineering/tools/unpack-staging-zip.ps1 @params
+          }
+
+      - name: Commit extracted files
+        shell: powershell
+        run: |
+          git add -A
+          if (git diff --cached --quiet) {
+            Write-Host 'No changes to commit.'
+            exit 0
+          }
+          git commit -m "Unpack ${{ inputs.archive_path }} into ${{ inputs.destination_path }}"
+          git push -u origin '${{ inputs.target_branch }}'
+
+      - name: Summary
+        shell: powershell
+        run: |
+          Write-Host "Completed unpack to branch: ${{ inputs.target_branch }}"
+          Write-Host "Archive: ${{ inputs.archive_path }}"
+          Write-Host "Destination: ${{ inputs.destination_path }}"
