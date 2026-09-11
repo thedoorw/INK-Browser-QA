@@ -11,7 +11,7 @@ WORK_BRANCH: `work/import-product-v0.1`
 ## Current progress
 
 - PRODUCT classified files: 169
-- PRODUCT files written to this branch so far: 30
+- PRODUCT files written to this branch so far: 40
 - Imported bytes are copied from the original ZIP without product refactoring.
 - No file is promoted to certified product status by this import.
 - FLORA / AI / Recipe remain product-boundary pending even when their original source is preserved under `product/source/`.
