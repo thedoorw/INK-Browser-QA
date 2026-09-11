@@ -1,6 +1,6 @@
 # INK Active
 
-目前階段：**Original Import Baseline + Product Boundary v0.1**。
+目前階段：**Original Import Baseline + Product Boundary v0.1 + Full File Classification v0.1**。
 
 ## 現在已確認
 
@@ -10,6 +10,24 @@
 - 檔案 entries（不含目錄）：`1471`
 - 解壓總 bytes：`215908955`
 - 真正 browser Runtime 為 MB 級，原始包的大多數容量來自 Validation / research / fixtures / development evidence。
+
+## Full File Classification v0.1
+
+完整 1,471 檔已完成第一輪分類：
+
+| 分類 | 檔案數 | bytes |
+|---|---:|---:|
+| PRODUCT | 169 | 1,903,762 |
+| QA | 1,076 | 201,599,510 |
+| RESEARCH | 89 | 11,148,870 |
+| ENGINEERING | 75 | 734,461 |
+| GOVERNANCE | 32 | 101,227 |
+| BOUNDARY_PENDING | 25 | 24,609 |
+| ARCHIVE_CANDIDATE | 5 | 396,516 |
+
+分類規則與判定：`governance/INK_File_Classification_v0.1.md`
+
+目前沒有任何檔案被直接判定為可安全刪除。研究、deterministic rerun、rollback、benchmark、版本追溯證據一律先保留。
 
 ## 目前產品邊界
 
@@ -28,6 +46,18 @@
 3. FLORA / AI / Recipe
 
 目前不刪除上述 pending 區塊；先以依賴與功能驗證決定是否納入正式 `INK.html`。
+
+## 分批匯入順序
+
+原始 ZIP 已在本地分析環境拆成下列批次，GitHub 依序接收：
+
+1. `PRODUCT` — runtime source / shell / required assets
+2. `ENGINEERING` — scripts / headless / compare / build utilities
+3. `QA Core` — tests / fixtures / reports
+4. `RESEARCH` — Intelligence / external references
+5. `QA Validation` — 約 186 MB 解壓 evidence，另定大型證據長期儲存策略
+6. `BOUNDARY_PENDING` — 在產品邊界 review 後決定去向
+7. `ARCHIVE_CANDIDATE` — 保留追溯，不進 active product surface
 
 ## 下一個工程目標
 
