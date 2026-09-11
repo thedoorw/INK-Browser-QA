@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Reconstruct the authoritative INK source layout from the classified repository.
 
-The import deliberately stores PRODUCT / QA / RESEARCH / ENGINEERING / GOVERNANCE
-in separate repository areas. This script recreates the original relative layout in
-a disposable workspace so historical tests and build scripts can run without
-rewriting their relative imports.
+The import stores PRODUCT / QA / RESEARCH / ENGINEERING / GOVERNANCE separately.
+This script recreates the original relative layout in a disposable workspace, first
+verifying every preserved source against the import inventory, then applying optional
+health-overlay files for the active work branch.
 """
 from __future__ import annotations
 
@@ -27,12 +27,14 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo", default=".", help="repository root")
     parser.add_argument("--out", default=".working/original-runtime", help="disposable workspace")
-    parser.add_argument("--no-verify", action="store_true", help="skip size/SHA verification")
+    parser.add_argument("--no-verify", action="store_true", help="skip authoritative size/SHA verification")
+    parser.add_argument("--no-overlay", action="store_true", help="do not apply engineering/health-overlay")
     args = parser.parse_args()
 
     repo = Path(args.repo).resolve()
     inventory = repo / "governance" / "INK_FILE_INVENTORY_v0.1.csv"
     out = (repo / args.out).resolve()
+    overlay = repo / "engineering" / "health-overlay"
     if not inventory.is_file():
         raise SystemExit(f"inventory missing: {inventory}")
 
@@ -62,7 +64,21 @@ def main() -> int:
             copied += 1
             total_bytes += src.stat().st_size
 
-    print(f"RECONSTRUCT_PASS files={copied} bytes={total_bytes} workspace={out}")
+    overlay_files = 0
+    if not args.no_overlay and overlay.is_dir():
+        for src in overlay.rglob("*"):
+            if not src.is_file():
+                continue
+            rel = src.relative_to(overlay)
+            dst = out / rel
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+            overlay_files += 1
+
+    print(
+        f"RECONSTRUCT_PASS authoritative_files={copied} authoritative_bytes={total_bytes} "
+        f"overlay_files={overlay_files} workspace={out}"
+    )
     return 0
 
 
