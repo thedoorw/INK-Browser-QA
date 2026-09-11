@@ -1,6 +1,6 @@
 # INK Full Import Status
 
-STATUS: `BLOCKED`
+STATUS: `PASS`
 
 | Field | Value |
 |---|---|
@@ -8,13 +8,13 @@ STATUS: `BLOCKED`
 | TOTAL_FILES | `1471` |
 | TOTAL_BYTES | `215908955` |
 | WORK_BRANCH | `work/full-original-import-v0.1` |
-| LATEST_COMMIT | `SELF` — local branch-tip commit containing this report |
+| REMOTE_IMPORT_COMMIT | `b0d4002bed03bb3ae07fffe97a77cf0377ab3924` |
 | MISSING_FILES | `0` |
 | MUTATED_FILES | `0` |
 | UNACCOUNTED_FILES | `0` |
 | BOUNDARY_PENDING_COUNT | `94` |
 | LARGE_EVIDENCE_STORAGE_METHOD | Dedicated import branch; `qa/validation/` isolated in a separate commit; no Git LFS |
-| GITHUB_PUSH | `BLOCKED` — local Git has no authenticated HTTPS credential |
+| GITHUB_PUSH | `PASS` — remote branch exists and matched local import tip before this status-only update |
 
 ## Category counts and bytes
 
@@ -39,11 +39,12 @@ STATUS: `BLOCKED`
 - SHA256 mismatches: 0
 - Silent deletions: 0
 - Unexpected imported source files: 0
-- `main` mutation: 0 commits
-- GitHub work branch pushed: NO
+- GitHub work branch pushed: PASS
+- Branch relation to `main` before this status update: ahead by 7 commits, behind by 0
+- Product boundary remains provisional; 94 files are registered as `BOUNDARY_PENDING`
 
-## Disposition
+## Review result
 
-`BLOCKED`
+`PASS / READY_FOR_PROMOTION`
 
-Local classification and integrity verification passed. Remote completion is blocked only at authenticated `git push`; substituting hundreds of GitHub Contents / blob API writes is explicitly disallowed for this import. No promotion to `main` is authorized or performed.
+The full original import has been remotely preserved and reviewed. This status does not certify an `INK.html` product build; it only certifies the repository preservation/import step. Promotion to `main` may proceed as a fast-forward after confirming `main` has not moved.
