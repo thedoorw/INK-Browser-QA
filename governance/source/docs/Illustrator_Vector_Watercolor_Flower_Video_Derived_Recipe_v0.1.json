@@ -1,0 +1,127 @@
+{
+  "format": "INK-VIDEO-DERIVED-RECIPE-DRAFT",
+  "version": "0.1",
+  "id": "Illustrator_Vector_Watercolor_Flower_Video_Derived_Recipe_v0.1",
+  "status": "SOURCE_LIMITED_DRAFT",
+  "steps": [
+    {
+      "id": "VWV-001",
+      "operation": "Create document and artboard",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-002",
+      "operation": "Create Layer and Group structure",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-003",
+      "operation": "Load exact Illustrator watercolor brush asset",
+      "classification": "UNSUPPORTED",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-004",
+      "operation": "Create first editable petal Path",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-005",
+      "operation": "Apply watercolor brush along Path",
+      "classification": "APPROXIMATED",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-006",
+      "operation": "Set opacity and Multiply blend",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-007",
+      "operation": "Duplicate petal",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-008",
+      "operation": "Rotate, scale, and mirror petal",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-009",
+      "operation": "Assemble watercolor corolla",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-010",
+      "operation": "Create center and calyx",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-011",
+      "operation": "Create stem Path and brush stroke",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-012",
+      "operation": "Create leaf and vein structure",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-013",
+      "operation": "Add background wash",
+      "classification": "APPROXIMATED",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-014",
+      "operation": "Add vector splatter",
+      "classification": "APPROXIMATED",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-015",
+      "operation": "Attach paper texture dependency",
+      "classification": "UNSUPPORTED",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    },
+    {
+      "id": "VWV-016",
+      "operation": "Group, organize layers, and export",
+      "classification": "EQUIVALENT",
+      "videoEvidence": "UNRESOLVED",
+      "validation": "INK_CAPABILITY_MAPPING_ONLY"
+    }
+  ],
+  "counts": {
+    "DIRECT": 0,
+    "EQUIVALENT": 11,
+    "APPROXIMATED": 3,
+    "UNSUPPORTED": 2
+  },
+  "totalSteps": 16
+}

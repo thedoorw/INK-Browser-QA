@@ -1,0 +1,138 @@
+{
+  "format": "INK-CAPABILITY-MAPPING",
+  "version": "1.0",
+  "headers": [
+    "Video Step",
+    "Illustrator Capability",
+    "INK Existing/New Capability",
+    "Execution Classification",
+    "Missing Module",
+    "Required Material",
+    "Required Dependency",
+    "Deterministic Risk",
+    "Stable ID Risk",
+    "Proposed Minimum Remediation"
+  ],
+  "rows": [
+    {
+      "Video Step": "Perspective/Fold",
+      "Illustrator Capability": "Non-destructive petal deformation",
+      "INK Existing/New Capability": "New deformation parameter record",
+      "Execution Classification": "EQUIVALENT",
+      "Missing Module": "Exact video fold operation",
+      "Required Material": "Editable path",
+      "Required Dependency": "None",
+      "Deterministic Risk": "Low",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Keep minimal reversible model"
+    },
+    {
+      "Video Step": "Ellipse",
+      "Illustrator Capability": "Illustrator pathItems.ellipse",
+      "INK Existing/New Capability": "Parser → canonical path → Recipe",
+      "Execution Classification": "DIRECT",
+      "Missing Module": "General JSX expression scope",
+      "Required Material": "None",
+      "Required Dependency": "None",
+      "Deterministic Risk": "Low",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Whitelist numeric expressions"
+    },
+    {
+      "Video Step": "Rectangle",
+      "Illustrator Capability": "Illustrator pathItems.rectangle",
+      "INK Existing/New Capability": "Parser → canonical path → Recipe",
+      "Execution Classification": "DIRECT",
+      "Missing Module": "General JSX expression scope",
+      "Required Material": "None",
+      "Required Dependency": "None",
+      "Deterministic Risk": "Low",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Whitelist numeric expressions"
+    },
+    {
+      "Video Step": "Math.sin/cos/PI",
+      "Illustrator Capability": "Illustrator JavaScript math",
+      "INK Existing/New Capability": "Deterministic expression IR",
+      "Execution Classification": "DIRECT",
+      "Missing Module": "Broad JS language",
+      "Required Material": "None",
+      "Required Dependency": "None",
+      "Deterministic Risk": "Low",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Keep whitelist"
+    },
+    {
+      "Video Step": "Math.random",
+      "Illustrator Capability": "Illustrator JavaScript random",
+      "INK Existing/New Capability": "Seeded bounded/indexed random",
+      "Execution Classification": "EQUIVALENT",
+      "Missing Module": "Native unseeded randomness intentionally rejected",
+      "Required Material": "None",
+      "Required Dependency": "Seed",
+      "Deterministic Risk": "Low",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Require explicit seed"
+    },
+    {
+      "Video Step": "Composition",
+      "Illustrator Capability": "Artboard and object placement",
+      "INK Existing/New Capability": "Safe margin, clipping, dominance proxy",
+      "Execution Classification": "EQUIVALENT",
+      "Missing Module": "Professional auto-layout reasoning",
+      "Required Material": "Semantic roles",
+      "Required Dependency": "None",
+      "Deterministic Risk": "Low",
+      "Stable ID Risk": "Medium",
+      "Proposed Minimum Remediation": "Report violations; do not claim automatic design"
+    },
+    {
+      "Video Step": "Brush Material",
+      "Illustrator Capability": "Illustrator watercolor Brush",
+      "INK Existing/New Capability": "Versioned vector Brush Material",
+      "Execution Classification": "APPROXIMATED",
+      "Missing Module": "Exact brush asset and internals",
+      "Required Material": "Brush record",
+      "Required Dependency": "Original licensed brush",
+      "Deterministic Risk": "Medium",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Track source and validation state"
+    },
+    {
+      "Video Step": "Brush along Path",
+      "Illustrator Capability": "Art Brush on editable Path",
+      "INK Existing/New Capability": "Deterministic layered vector strokes",
+      "Execution Classification": "APPROXIMATED",
+      "Missing Module": "Exact edge texture",
+      "Required Material": "Vector Brush Material",
+      "Required Dependency": "Brush asset",
+      "Deterministic Risk": "Low",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Preserve source path"
+    },
+    {
+      "Video Step": "Transparency/Blend",
+      "Illustrator Capability": "Opacity and blend mode",
+      "INK Existing/New Capability": "Object/group/layer opacity and mix-blend-mode",
+      "Execution Classification": "EQUIVALENT",
+      "Missing Module": "Illustrator pixel equivalence",
+      "Required Material": "None",
+      "Required Dependency": "Renderer",
+      "Deterministic Risk": "Medium",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "SVG/PNG regression"
+    },
+    {
+      "Video Step": "Paper texture",
+      "Illustrator Capability": "Paper grain or texture",
+      "INK Existing/New Capability": "Hybrid reference only",
+      "Execution Classification": "UNSUPPORTED",
+      "Missing Module": "Raster texture engine",
+      "Required Material": "Paper reference",
+      "Required Dependency": "Raster asset",
+      "Deterministic Risk": "High",
+      "Stable ID Risk": "Low",
+      "Proposed Minimum Remediation": "Do not render without asset"
+    }
+  ]
+}

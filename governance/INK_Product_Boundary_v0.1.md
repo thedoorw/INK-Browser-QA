@@ -37,6 +37,38 @@ STATUS: `PROVISIONAL / ANALYSIS BASELINE`
    - AI
    - Recipe
 
+## Full original import register
+
+The full import preserves the following candidate boundary without deciding it:
+
+### CORE CANDIDATE
+
+- Drawing / Stylus
+- Vector
+- Raster / Image
+- Natural Media
+- Document / History
+- Render / Export
+- Material
+- Recompute
+- basic Program Import
+
+### BOUNDARY_PENDING
+
+| Group | Inventory rule | Files |
+|---|---|---:|
+| PWA shell | `manifest.webmanifest`, `service-worker.js`, `src/pwa/**` | 4 |
+| Runtime assets | `ASSET_MANIFEST.json`, `assets/**`, `src/assets/**` | 15 |
+| Schemas | `schemas/**` | 23 |
+| FLORA | `src/flora/**` | 37 |
+| AI | `src/ai/**` | 10 |
+| Recipe | `src/recipe/**` | 5 |
+| **Total** | status `BOUNDARY_PENDING` in inventory | **94** |
+
+No icon files are present in the authoritative ZIP, although `manifest.webmanifest` and `service-worker.js` reference `icons/ink-192.png` and `icons/ink-512.png`. This is recorded as a source-package dependency gap, not repaired during preservation.
+
+The exhaustive file-level register is `INK_FILE_INVENTORY_v0.1.csv`; filter its `status` column for `BOUNDARY_PENDING`. Files remain in dependency-preserving source positions and are not accepted into or removed from a certified product baseline by this document.
+
 ## 初步依賴結論
 
 - FLORA 目前由主 Runtime 直接接入，但邊界相對集中，適合優先評估 optional capability 化。
