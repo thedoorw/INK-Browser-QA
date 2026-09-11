@@ -1,6 +1,6 @@
 {
   "name": "ink-core-main-program",
-  "version": "1.6.5-rc.1",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "engines": {
