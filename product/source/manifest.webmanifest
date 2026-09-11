@@ -1,6 +1,6 @@
 {
-  "name": "INK v1.6.5 RC — AI-assisted Editable Art",
-  "short_name": "INK v1.6.5 RC",
+  "name": "INK v0.1 — AI-assisted Editable Art",
+  "short_name": "INK v0.1",
   "description": "INK 統一向量、手繪與影像創作平台，具可編輯 AI Plan、隔離 Preview、核准執行、重播與回滾。",
   "start_url": "./index.html",
   "scope": "./",
