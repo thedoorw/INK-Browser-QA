@@ -53,7 +53,7 @@ The meaningful payload reduction is the removal of FLORA from the mandatory depe
 | Metric | Before | Final candidate | Delta |
 |---|---:|---:|---:|
 | reachable eager JS modules | 133 | 97 | -36 (-27.1%) |
-| reachable eager JS bytes | 1,458,009 | 1,044,783 | -413,226 (-28.3%) |
+| reachable eager JS bytes | 1,458,009 | 1,044,724 | -413,285 (-28.3%) |
 | static ESM edges | 296 | 217 | -79 (-26.7%) |
 | FLORA modules in mandatory graph | 37 | 0 | -37 |
 | FLORA bytes in mandatory graph | 420,473 | 0 | -420,473 |

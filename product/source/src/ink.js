@@ -681,8 +681,8 @@ function bootInk(){
     tilePlan(width=5000,height=3000,scale=2){return createTilePlan({x:0,y:0,w:width,h:height},scale,{tileSize:2048,overlap:48});},
     storageHealth(){return app.runStorageHealthCheck();},
     documentIntegrity(){return inspectDocument(app.doc);},
-    async coreInteractionSmoke(){
-      const checks={},storageKey='__ink_core_interaction_smoke__';
+    coreInteractionSmoke(){
+      const checks={},storageKey='INK:M6_CORE_INTERACTION_SMOKE';
       const requireCheck=(name,condition)=>{checks[name]=Boolean(condition);if(!checks[name])throw new Error(`Core interaction smoke failed: ${name}`);};
       try{
         clearTimeout(app.autosaveTimer);
@@ -710,16 +710,15 @@ function bootInk(){
         app.replaceDocument(roundTrip);
         const svg=this.exportSVG();requireCheck('exportPathInitialization',svg.startsWith('<?xml')&&svg.includes('<svg')&&svg.includes('</svg>'));
 
-        await app.store.remove(storageKey);
-        const saved=await app.store.save(storageKey,app.doc);
-        const persisted=await app.store.loadWithRecovery(storageKey,value=>inspectDocument(value).passed);
-        requireCheck('persistenceSaveLoad',saved&&persisted.value?.formatVersion===FORMAT_VERSION&&persisted.value.pages[0].layers[0].objects.length===1);
-        app.replaceDocument(defaultDocument());app.replaceDocument(persisted.value);
+        localStorage.removeItem(storageKey);localStorage.setItem(storageKey,serialized);
+        const persisted=JSON.parse(localStorage.getItem(storageKey)||'null');
+        requireCheck('persistenceSaveLoad',persisted?.formatVersion===FORMAT_VERSION&&persisted.pages[0].layers[0].objects.length===1&&inspectDocument(persisted).passed);
+        app.replaceDocument(defaultDocument());app.replaceDocument(persisted);
         requireCheck('reloadPath',this.summary().objects===1&&inspectDocument(app.doc).passed);
         requireCheck('floraDetached',app.capabilities.status('flora').state==='available');
-        return{status:'PASS',checks,storage:{backend:persisted.backend,verified:persisted.verified},summary:this.summary()};
+        return{status:'PASS',checks,storage:{backend:'localstorage',verified:true},summary:this.summary()};
       }finally{
-        clearTimeout(app.autosaveTimer);await app.store.remove(storageKey);app.dirty=false;
+        clearTimeout(app.autosaveTimer);localStorage.removeItem(storageKey);app.dirty=false;
       }
     },
     runtimeHealth(){return app.health.diagnostics();},

@@ -125,7 +125,7 @@ Measured after live identity normalization and the query-gated interaction smoke
 | PWA_SHELL | 2 | 3,077 |
 | RUNTIME_ASSET | 1 | 563 |
 | FLORA_CAPABILITY | 0 | 0 |
-| **Total mandatory eager graph** | **97** | **1,044,783** |
+| **Total mandatory eager graph** | **97** | **1,044,724** |
 
 Final candidate metrics:
 
@@ -133,6 +133,6 @@ Final candidate metrics:
 - 217 static ESM edges;
 - one excluded literal optional edge: `src/ink.js -> src/flora/index.js`;
 - optional FLORA source preserved outside the mandatory graph: 37 modules / 423,935 bytes;
-- informative total `product/source`: 199 files / 1,999,742 bytes.
+- informative total `product/source`: 199 files / 1,999,683 bytes.
 
-Against the authoritative before graph, the mandatory eager graph is reduced by 36 modules (27.1%), 413,226 bytes (28.3%), 79 static edges (26.7%), and all 37 eager FLORA modules. The small byte increase from M4 is the explicit identity observability and bounded regression-smoke surface, not a restored product dependency.
+Against the authoritative before graph, the mandatory eager graph is reduced by 36 modules (27.1%), 413,285 bytes (28.3%), 79 static edges (26.7%), and all 37 eager FLORA modules. The small byte increase from M4 is the explicit identity observability and bounded regression-smoke surface, not a restored product dependency.

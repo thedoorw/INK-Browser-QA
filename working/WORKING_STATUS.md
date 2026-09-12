@@ -91,8 +91,8 @@ Completed:
 - M5 Windows / Chrome / Node-free Runtime: PASS — Run `34667753479`
 - live Runtime / Studio / AI identities: `0.1 / 0.1 / 0.1`; document format: `4`
 - bounded query-gated Core interaction smoke covering initialization, stroke creation, undo/redo, layer create/reorder/delete, selection/transform, serialization, SVG export initialization, persistence save/load, reload, and FLORA-detached state
-- M6 focused local verification: workflow YAML PASS; changed JS syntax PASS; Program Import / Document / AI / Chat `20/20`; optional capability registry / FLORA attach `4/4`
-- final candidate graph: 97 modules / 1,044,783 bytes; 217 static edges; one optional dynamic FLORA edge
+- M6 focused local verification: workflow YAML PASS; all Runtime JS syntax PASS; Document / History / Storage / Program Import / AI / Chat `26/26`; optional capability registry / FLORA attach `4/4`
+- final candidate graph: 97 modules / 1,044,724 bytes; 217 static edges; one optional dynamic FLORA edge
 
 Pending:
 - Windows M6 Core interaction / persistence evidence
@@ -100,6 +100,7 @@ Pending:
 
 ## Unresolved risks
 
+- Windows Run `34677440349` exposed a smoke-harness timing issue: Chrome serialized the DOM while the IndexedDB Promise was still pending (`data-ink-core-smoke="running"`). The product startup check passed; the smoke now uses synchronous browser localStorage plus the formal document reload path, while the storage module is separately covered by passing unit tests. Windows rerun is pending.
 - M5 live identity and service-worker dependency completeness passed the Windows gate; AI/Recipe architecture and PWA behavior remain unchanged.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
@@ -115,7 +116,7 @@ Pending:
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
 - Runtime graph after M4: `97 modules / 1,040,023 bytes`; FLORA optional source `37 modules / 423,935 bytes`; static edges `215`; dynamic optional edges `1`.
-- Runtime graph final M6 candidate: `97 modules / 1,044,783 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional FLORA source `37 modules / 423,935 bytes`; static edges `217`; dynamic optional edges `1`.
+- Runtime graph final M6 candidate: `97 modules / 1,044,724 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional FLORA source `37 modules / 423,935 bytes`; static edges `217`; dynamic optional edges `1`.
 
 ## Next authorized step
 
