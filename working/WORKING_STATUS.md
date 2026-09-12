@@ -10,7 +10,7 @@ Authoritative work order: `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
 Baseline commit: `b1f65193b63fa3e2403752a197e19c998fd88ce6`
 
-Latest commit: `HEAD` (latest verified Runtime-bearing commit: `7da3b154e6b9295cd35fd53acf350582a58c8f8d`)
+Latest commit: `HEAD` (latest verified Runtime-bearing commit: `54409705c30846e4a7ee214aab9662f3c940cb10`)
 
 Latest verified Runtime baseline:
 - Workflow: `INK v0.1 Runtime Baseline`
@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M3 — FLORA re-attach: IMPLEMENTED / WINDOWS RUNTIME PENDING`
+`M3 — FLORA re-attach: COMPLETE`
 
 ## Files changed
 
@@ -70,6 +70,7 @@ Completed:
 - explicit browser-enabled mode: `?ink-capability=flora`
 - representative FLORA Hero initialization unit check: PASS
 - capability state and failure isolation unit checks: PASS (4/4 total)
+- M3 detached Core + FLORA-enabled Windows / Chrome / Node-free Runtime: PASS — Run `34666438827`
 
 Pending:
 - `working/SLIMMING_REGISTER.md`
@@ -81,21 +82,21 @@ Pending:
 
 ## Unresolved risks
 
-- FLORA hooks preserve the previous render semantics, but the Windows FLORA-enabled browser gate is still pending.
+- No unresolved M3 Runtime regression. M4 must avoid widening AI/Recipe/PWA scope.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
 - Browser startup PASS does not by itself prove interaction or persistence behavior.
 
 ## Latest results
 
-- Runtime startup: `PASS` — Run `34665925650`, commit `7da3b154e6b9295cd35fd53acf350582a58c8f8d`.
+- Runtime startup: `PASS` — Run `34666438827`, commit `54409705c30846e4a7ee214aab9662f3c940cb10`.
 - Core interaction: `PENDING`
 - Persistence: `PENDING`
 - FLORA detached: `PASS` — no eager FLORA module and Windows Node-free startup passed.
-- FLORA enabled: local attach/action unit `PASS`; Windows browser gate `PENDING`.
+- FLORA enabled: `PASS` — installed state, representative Hero action, failure absent, and Chrome error absent all verified by Run `34666438827`.
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
 
 ## Next authorized step
 
-Commit and push M3, then require both detached Core and FLORA-enabled Windows browser checks to PASS before M4.
+Create M4 slimming register, remove only proven dead import bindings, finalize before/after graph evidence, and re-run the Windows gate.
