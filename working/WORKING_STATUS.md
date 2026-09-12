@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M5 — Live identity cleanup: VERIFIED / PASS`
+`M6 — Regression closure: IMPLEMENTED / WINDOWS INTERACTION GATE PENDING`
 
 ## Files changed
 
@@ -90,11 +90,13 @@ Completed:
 - M5 focused local verification: Program Import / Document / AI / Chat `20/20`; optional capability registry / FLORA attach `4/4`
 - M5 Windows / Chrome / Node-free Runtime: PASS — Run `34667753479`
 - live Runtime / Studio / AI identities: `0.1 / 0.1 / 0.1`; document format: `4`
+- bounded query-gated Core interaction smoke covering initialization, stroke creation, undo/redo, layer create/reorder/delete, selection/transform, serialization, SVG export initialization, persistence save/load, reload, and FLORA-detached state
+- M6 focused local verification: workflow YAML PASS; changed JS syntax PASS; Program Import / Document / AI / Chat `20/20`; optional capability registry / FLORA attach `4/4`
+- final candidate graph: 97 modules / 1,044,783 bytes; 217 static edges; one optional dynamic FLORA edge
 
 Pending:
-- core interaction smoke evidence
-- FLORA detached evidence
-- FLORA enabled evidence
+- Windows M6 Core interaction / persistence evidence
+- Windows M6 detached and enabled evidence on the same Runtime-bearing commit
 
 ## Unresolved risks
 
@@ -106,14 +108,15 @@ Pending:
 ## Latest results
 
 - Runtime startup: `PASS` — Run `34667753479`, commit `ddfb400e5f4e78e714125b1e56b09643629686ad`.
-- Core interaction: `PENDING`
-- Persistence: `PENDING`
+- Core interaction: `LOCAL STRUCTURE READY / WINDOWS PENDING`
+- Persistence: `LOCAL STRUCTURE READY / WINDOWS PENDING`
 - FLORA detached: `PASS` — no eager FLORA module and Windows Node-free startup passed.
 - FLORA enabled: `PASS` — installed state, representative Hero action, failure absent, and Chrome error absent all verified by Run `34666438827`.
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
 - Runtime graph after M4: `97 modules / 1,040,023 bytes`; FLORA optional source `37 modules / 423,935 bytes`; static edges `215`; dynamic optional edges `1`.
+- Runtime graph final M6 candidate: `97 modules / 1,044,783 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional FLORA source `37 modules / 423,935 bytes`; static edges `217`; dynamic optional edges `1`.
 
 ## Next authorized step
 
-Proceed to M6 bounded interaction and persistence evidence; do not widen scope into AI/Recipe optionalization or packaging.
+Commit and push the M6 Runtime-bearing verification surface, then require the Windows Node-free Runtime, Core interaction/persistence, FLORA detached, and FLORA enabled checks to PASS before marking `READY_FOR_REVIEW`.

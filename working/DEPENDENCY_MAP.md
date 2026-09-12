@@ -111,3 +111,28 @@ The same helper reports:
 | **Total mandatory eager graph** | **97** | **1,040,023** |
 
 There are 215 static ESM edges and one excluded literal dynamic edge: `src/ink.js -> src/flora/index.js`. The complete cut and preservation decisions are recorded in `working/SLIMMING_REGISTER.md`.
+
+## Final graph — M6 regression closure candidate
+
+Measured after live identity normalization and the query-gated interaction smoke were added:
+
+| Classification | Reachable JS modules | Reachable JS bytes |
+|---|---:|---:|
+| CORE_RUNTIME | 66 | 571,993 |
+| CORE_UI | 23 | 277,980 |
+| AI_CAPABILITY | 4 | 149,514 |
+| RECIPE_AUTOMATION | 1 | 41,656 |
+| PWA_SHELL | 2 | 3,077 |
+| RUNTIME_ASSET | 1 | 563 |
+| FLORA_CAPABILITY | 0 | 0 |
+| **Total mandatory eager graph** | **97** | **1,044,783** |
+
+Final candidate metrics:
+
+- mandatory startup entry: `index.html -> src/ink.js`;
+- 217 static ESM edges;
+- one excluded literal optional edge: `src/ink.js -> src/flora/index.js`;
+- optional FLORA source preserved outside the mandatory graph: 37 modules / 423,935 bytes;
+- informative total `product/source`: 199 files / 1,999,742 bytes.
+
+Against the authoritative before graph, the mandatory eager graph is reduced by 36 modules (27.1%), 413,226 bytes (28.3%), 79 static edges (26.7%), and all 37 eager FLORA modules. The small byte increase from M4 is the explicit identity observability and bounded regression-smoke surface, not a restored product dependency.

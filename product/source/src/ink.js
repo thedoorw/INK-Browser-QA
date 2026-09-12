@@ -681,6 +681,47 @@ function bootInk(){
     tilePlan(width=5000,height=3000,scale=2){return createTilePlan({x:0,y:0,w:width,h:height},scale,{tileSize:2048,overlap:48});},
     storageHealth(){return app.runStorageHealthCheck();},
     documentIntegrity(){return inspectDocument(app.doc);},
+    async coreInteractionSmoke(){
+      const checks={},storageKey='__ink_core_interaction_smoke__';
+      const requireCheck=(name,condition)=>{checks[name]=Boolean(condition);if(!checks[name])throw new Error(`Core interaction smoke failed: ${name}`);};
+      try{
+        clearTimeout(app.autosaveTimer);
+        app.replaceDocument(defaultDocument());app.history.clear();
+        requireCheck('documentInitialization',app.doc?.format==='INK'&&app.doc?.formatVersion===FORMAT_VERSION&&app.doc.pages.length===1&&app.page().layers.length===1);
+
+        const stroke=this.addEditableStroke();
+        requireCheck('strokeCreation',stroke.points===5&&this.summary().objects===1);
+        this.undo();requireCheck('undo',this.summary().objects===0&&this.summary().redo===1);
+        this.redo();requireCheck('redo',this.summary().objects===1&&this.summary().undo===1);
+
+        const baseLayerId=app.layer().id;app.addLayer();const addedLayerId=app.layer().id;
+        requireCheck('layerCreate',app.page().layers.length===2&&addedLayerId!==baseLayerId);
+        const orderBefore=app.page().layers.map(layer=>layer.id).join('|');
+        const reordered=app.reorderLayer(addedLayerId,baseLayerId,'after');
+        requireCheck('layerReorder',reordered&&app.page().layers.map(layer=>layer.id).join('|')!==orderBefore);
+        app.deleteLayer();requireCheck('layerDelete',app.page().layers.length===1&&app.page().layers[0].id===baseLayerId);
+
+        requireCheck('selection',this.selectAll()===1);
+        const matrixBefore=app.selectedObjects()[0].object.matrix.join(',');this.nudge(12,-7);
+        requireCheck('transform',app.selectedObjects()[0].object.matrix.join(',')!==matrixBefore);
+
+        const serialized=JSON.stringify(app.doc),roundTrip=JSON.parse(serialized),integrity=inspectDocument(roundTrip);
+        requireCheck('serializationRoundTrip',integrity.passed&&roundTrip.formatVersion===FORMAT_VERSION&&roundTrip.pages[0].layers[0].objects.length===1);
+        app.replaceDocument(roundTrip);
+        const svg=this.exportSVG();requireCheck('exportPathInitialization',svg.startsWith('<?xml')&&svg.includes('<svg')&&svg.includes('</svg>'));
+
+        await app.store.remove(storageKey);
+        const saved=await app.store.save(storageKey,app.doc);
+        const persisted=await app.store.loadWithRecovery(storageKey,value=>inspectDocument(value).passed);
+        requireCheck('persistenceSaveLoad',saved&&persisted.value?.formatVersion===FORMAT_VERSION&&persisted.value.pages[0].layers[0].objects.length===1);
+        app.replaceDocument(defaultDocument());app.replaceDocument(persisted.value);
+        requireCheck('reloadPath',this.summary().objects===1&&inspectDocument(app.doc).passed);
+        requireCheck('floraDetached',app.capabilities.status('flora').state==='available');
+        return{status:'PASS',checks,storage:{backend:persisted.backend,verified:persisted.verified},summary:this.summary()};
+      }finally{
+        clearTimeout(app.autosaveTimer);await app.store.remove(storageKey);app.dirty=false;
+      }
+    },
     runtimeHealth(){return app.health.diagnostics();},
     releaseHealth(){return app.runReleaseHealthCheck();},
     updateStatus(){return app.updates.diagnostics();},
@@ -696,6 +737,14 @@ function bootInk(){
   window.INK_CAPABILITY_READY=requestedCapabilities.includes('flora')
     ? app.capabilities.install('flora').then(()=>{app.renderer.invalidateTiles();app.renderer.render();return reflectCapabilityState();}).catch(()=>reflectCapabilityState())
     : Promise.resolve(reflectCapabilityState());
+  if(new URLSearchParams(location.search).get('ink-smoke')==='core'){
+    const root=document.documentElement,attributeChecks={inkCoreDocument:'documentInitialization',inkCoreStroke:'strokeCreation',inkCoreHistory:'redo',inkCoreLayers:'layerDelete',inkCoreSelectionTransform:'transform',inkCoreSerialization:'serializationRoundTrip',inkCoreExport:'exportPathInitialization',inkCorePersistence:'reloadPath',inkCoreFlora:'floraDetached'};
+    root.dataset.inkCoreSmoke='running';
+    window.INK_CORE_SMOKE_READY=window.INK_CAPABILITY_READY.then(()=>window.INK_TEST.coreInteractionSmoke()).then(report=>{
+      root.dataset.inkCoreSmoke='pass';for(const[attribute,check]of Object.entries(attributeChecks))root.dataset[attribute]=report.checks[check]?'pass':'fail';
+      const evidence=document.createElement('pre');evidence.id='inkCoreSmokeReport';evidence.hidden=true;evidence.textContent=JSON.stringify(report);document.body.append(evidence);return report;
+    }).catch(error=>{root.dataset.inkCoreSmoke='fail';root.dataset.inkCoreSmokeError=String(error?.message||error);console.error(error);return{status:'FAIL',error:String(error)};});
+  }
   return app;
 }
 

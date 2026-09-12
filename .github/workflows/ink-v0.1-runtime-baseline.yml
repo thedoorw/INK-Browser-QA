@@ -209,6 +209,41 @@ jobs:
             $report | ConvertTo-Json -Depth 6 | Write-Host
             if ($status -ne 'PASS') { throw 'INK v0.1 browser startup baseline failed.' }
 
+            $coreUrl = "$url`?fresh=1&ink-smoke=core"
+            $coreStderr = Join-Path $evidence 'browser-core-interaction-stderr.txt'
+            $coreDomFile = Join-Path $evidence 'runtime-core-interaction-dom.html'
+            $coreArgs = @('--headless=new','--disable-gpu','--no-first-run','--disable-extensions','--disable-background-networking','--virtual-time-budget=15000','--dump-dom',$coreUrl)
+            $coreDom = & $env:INK_CHROMIUM_PATH @coreArgs 2>$coreStderr | Out-String
+            $coreExitCode = $LASTEXITCODE
+            $coreDom | Set-Content -Path $coreDomFile -Encoding UTF8
+            $coreChecks = [ordered]@{
+              browserExitCodeZero = ($coreExitCode -eq 0)
+              coreInteractionPass = ($coreDom -match 'data-ink-core-smoke="pass"')
+              documentInitializationPass = ($coreDom -match 'data-ink-core-document="pass"')
+              strokeCreationPass = ($coreDom -match 'data-ink-core-stroke="pass"')
+              undoRedoPass = ($coreDom -match 'data-ink-core-history="pass"')
+              layerOperationsPass = ($coreDom -match 'data-ink-core-layers="pass"')
+              selectionTransformPass = ($coreDom -match 'data-ink-core-selection-transform="pass"')
+              serializationRoundTripPass = ($coreDom -match 'data-ink-core-serialization="pass"')
+              exportPathInitializationPass = ($coreDom -match 'data-ink-core-export="pass"')
+              persistenceReloadPass = ($coreDom -match 'data-ink-core-persistence="pass"')
+              floraDetached = ($coreDom -match 'data-ink-core-flora="pass"')
+              chromeErrorAbsent = ($coreDom -notmatch 'chrome-error://')
+            }
+            $coreStatus = if (($coreChecks.Values | Where-Object { -not $_ }).Count -eq 0) { 'PASS' } else { 'FAIL' }
+            $coreReport = [ordered]@{
+              product = 'INK v0.1'
+              mode = 'Core interaction and persistence'
+              status = $coreStatus
+              commit = $env:GITHUB_SHA
+              nodeRequired = $false
+              checks = $coreChecks
+              generatedAt = (Get-Date).ToUniversalTime().ToString('o')
+            }
+            $coreReport | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $evidence 'runtime-core-interaction-report.json') -Encoding UTF8
+            $coreReport | ConvertTo-Json -Depth 6 | Write-Host
+            if ($coreStatus -ne 'PASS') { throw 'INK v0.1 core interaction smoke failed.' }
+
             $floraUrl = "$url`?ink-capability=flora&ink-flora-smoke=1"
             $floraStderr = Join-Path $evidence 'browser-flora-stderr.txt'
             $floraDomFile = Join-Path $evidence 'runtime-flora-dom.html'
@@ -258,6 +293,16 @@ jobs:
             }
           } else {
             Add-Content $env:GITHUB_STEP_SUMMARY '- Runtime report: **MISSING**'
+          }
+          $coreReport = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence\runtime-core-interaction-report.json'
+          if (Test-Path $coreReport) {
+            $coreJson = Get-Content $coreReport -Raw | ConvertFrom-Json
+            Add-Content $env:GITHUB_STEP_SUMMARY "- Core interaction / persistence: **$($coreJson.status)**"
+          }
+          $floraReport = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence\runtime-flora-report.json'
+          if (Test-Path $floraReport) {
+            $floraJson = Get-Content $floraReport -Raw | ConvertFrom-Json
+            Add-Content $env:GITHUB_STEP_SUMMARY "- FLORA enabled status: **$($floraJson.status)**"
           }
 
       - name: Upload Runtime evidence
