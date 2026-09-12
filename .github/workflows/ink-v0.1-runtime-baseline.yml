@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - work/application-health-v0.1
+      - working/INK-v0.1-structure-optionalization
     paths:
       - '.github/workflows/ink-v0.1-runtime-baseline.yml'
       - 'product/**'

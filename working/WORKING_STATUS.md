@@ -21,12 +21,16 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M1 — Analysis freeze: COMPLETE`
+`M2 — Capability seam: IMPLEMENTED / WINDOWS RUNTIME PENDING`
 
 ## Files changed
 
 - `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 - `engineering/runtime-dependency-graph.mjs`
+- `.github/workflows/ink-v0.1-runtime-baseline.yml`
+- `product/source/src/capabilities/optional-capability-registry.js`
+- `product/source/src/ink.js`
+- `qa/core/tests/unit/optional-capability-registry-v01.test.mjs`
 - `working/DEPENDENCY_MAP.md`
 - `working/WORKING_STATUS.md`
 
@@ -51,6 +55,12 @@ Completed:
 - `working/DEPENDENCY_MAP.md`
 - baseline mandatory graph: 133 modules / 1,458,009 bytes
 - exact FLORA coupling list and frozen planned change list
+- one domain-neutral optional capability registry
+- all static Core-to-FLORA import edges removed
+- FLORA detached from `InkApp` construction and general renderer evaluation
+- lifecycle/render hooks replace Core FLORA call sites
+- capability state unit checks: PASS (3/3)
+- full `product/source/src/**/*.js` syntax scan: PASS
 
 Pending:
 - `working/SLIMMING_REGISTER.md`
@@ -69,14 +79,14 @@ Pending:
 
 ## Latest results
 
-- Runtime startup: `PASS` at baseline commit.
+- Runtime startup: baseline `PASS` at commit `b1f6519`; M2 Windows run `PENDING PUSH`.
 - Core interaction: `PENDING`
 - Persistence: `PENDING`
-- FLORA detached: `PENDING`
+- FLORA detached: `LOCAL STATIC PASS` — 0 eager FLORA modules; Windows Runtime pending.
 - FLORA enabled: `PENDING`
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
-- Runtime graph after: `PENDING`
+- Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
 
 ## Next authorized step
 
-Commit M1 analysis freeze. Then implement the minimal capability seam and detached Core without widening AI/Recipe scope.
+Commit and push M2, then wait for the authoritative Windows Node-free Runtime result before implementing FLORA re-attach hooks.
