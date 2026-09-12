@@ -7,8 +7,7 @@ on:
     paths:
       - '.github/workflows/ink-v0.1-runtime-baseline.yml'
       - 'product/**'
-      - 'engineering/health-overlay/**'
-      - 'engineering/reconstruct_original_workspace.py'
+      - 'engineering/**'
       - 'qa/core/**'
       - 'governance/INK_Application_Health_Gate_v0.1.md'
       - 'governance/INK_Product_Identity_v0.1.md'
@@ -38,27 +37,56 @@ jobs:
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
 
     steps:
-      - name: Download requested revision without Git
-        shell: powershell -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
+      - name: Download runtime-relevant files without Git
         run: |
           $ErrorActionPreference = 'Stop'
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           $zip = Join-Path $env:RUNNER_TEMP "ink-$env:GITHUB_SHA.zip"
-          $extract = Join-Path $env:RUNNER_TEMP "ink-$env:GITHUB_SHA"
-          if (Test-Path $extract) { Remove-Item $extract -Recurse -Force }
-          New-Item -ItemType Directory -Force -Path $extract | Out-Null
           $url = "https://github.com/$env:GITHUB_REPOSITORY/archive/$env:GITHUB_SHA.zip"
           Write-Host "Downloading $url"
           Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
-          [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $extract)
-          $root = Get-ChildItem $extract -Directory | Select-Object -First 1
-          if (-not $root) { throw 'Downloaded repository archive did not contain a root directory.' }
-          Get-ChildItem $env:GITHUB_WORKSPACE -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
-          Copy-Item (Join-Path $root.FullName '*') $env:GITHUB_WORKSPACE -Recurse -Force
-          if (-not (Test-Path (Join-Path $env:GITHUB_WORKSPACE 'engineering\reconstruct_original_workspace.py'))) {
-            throw 'Repository archive extraction failed: reconstruction script missing.'
+
+          Get-ChildItem $env:GITHUB_WORKSPACE -Force -ErrorAction SilentlyContinue |
+            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+
+          $archive = [System.IO.Compression.ZipFile]::OpenRead($zip)
+          try {
+            $prefixes = @(
+              'product/source/',
+              'engineering/source/',
+              'engineering/health-overlay/',
+              'qa/core/'
+            )
+            $written = 0
+            foreach ($entry in $archive.Entries) {
+              $name = $entry.FullName -replace '\\','/'
+              $slash = $name.IndexOf('/')
+              if ($slash -lt 0) { continue }
+              $relative = $name.Substring($slash + 1)
+              if (-not ($prefixes | Where-Object { $relative.StartsWith($_, [System.StringComparison]::OrdinalIgnoreCase) })) { continue }
+              if ([string]::IsNullOrWhiteSpace($entry.Name)) { continue }
+
+              $destination = Join-Path $env:GITHUB_WORKSPACE ($relative -replace '/', '\\')
+              $parent = Split-Path $destination -Parent
+              New-Item -ItemType Directory -Force -Path $parent | Out-Null
+              $input = $entry.Open()
+              try {
+                $output = [System.IO.File]::Create($destination)
+                try { $input.CopyTo($output) } finally { $output.Dispose() }
+              } finally { $input.Dispose() }
+              $written++
+            }
+            Write-Host "Materialized $written runtime-relevant files."
+          } finally {
+            $archive.Dispose()
           }
-          Write-Host "Repository materialized at $env:GITHUB_WORKSPACE"
+
+          if (-not (Test-Path (Join-Path $env:GITHUB_WORKSPACE 'product\source\index.html'))) {
+            throw 'Runtime source extraction failed: product/source/index.html missing.'
+          }
+          if (-not (Test-Path (Join-Path $env:GITHUB_WORKSPACE 'engineering\source\scripts'))) {
+            throw 'Runtime source extraction failed: engineering/source/scripts missing.'
+          }
 
       - name: Record runner environment
         run: |
@@ -70,39 +98,32 @@ jobs:
           node --version
           npm --version
 
-      - name: Locate Python
-        id: python
-        run: |
-          $python = $null
-          if (Get-Command py -ErrorAction SilentlyContinue) {
-            $python = 'py -3'
-          } elseif (Get-Command python -ErrorAction SilentlyContinue) {
-            $python = 'python'
-          } elseif (Get-Command python3 -ErrorAction SilentlyContinue) {
-            $python = 'python3'
-          }
-          if (-not $python) {
-            Write-Error 'Python 3 is required to reconstruct the classified INK source workspace.'
-            exit 1
-          }
-          "INK_PYTHON=$python" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Host "Using $python"
-
-      - name: Reconstruct runnable INK workspace
+      - name: Assemble runnable INK workspace
         run: |
           $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\original-runtime'
-          if ($env:INK_PYTHON -eq 'py -3') {
-            & py -3 engineering/reconstruct_original_workspace.py --repo . --out .working/original-runtime --no-verify
-          } elseif ($env:INK_PYTHON -eq 'python3') {
-            & python3 engineering/reconstruct_original_workspace.py --repo . --out .working/original-runtime --no-verify
-          } else {
-            & python engineering/reconstruct_original_workspace.py --repo . --out .working/original-runtime --no-verify
+          if (Test-Path $runtime) { Remove-Item $runtime -Recurse -Force }
+          New-Item -ItemType Directory -Force -Path $runtime | Out-Null
+
+          Copy-Item 'product\source\*' $runtime -Recurse -Force
+          Copy-Item 'engineering\source\*' $runtime -Recurse -Force
+
+          if (Test-Path 'qa\core\tests') {
+            Copy-Item 'qa\core\tests' (Join-Path $runtime 'tests') -Recurse -Force
           }
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (Test-Path 'qa\core\fixtures') {
+            Copy-Item 'qa\core\fixtures' (Join-Path $runtime 'fixtures') -Recurse -Force
+          }
+          if (Test-Path 'qa\core\test-fixtures') {
+            Copy-Item 'qa\core\test-fixtures' (Join-Path $runtime 'test-fixtures') -Recurse -Force
+          }
+
           if (-not (Test-Path (Join-Path $runtime 'index.html'))) {
-            Write-Error 'Reconstructed runtime is missing index.html.'
-            exit 1
+            throw 'Assembled runtime is missing index.html.'
           }
+          if (-not (Test-Path (Join-Path $runtime 'src\ink.js'))) {
+            throw 'Assembled runtime is missing src/ink.js.'
+          }
+          Write-Host "Runtime assembled at $runtime"
 
       - name: Apply INK v0.1 Health overlay
         run: |
