@@ -10,7 +10,7 @@ Authoritative work order: `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
 Baseline commit: `b1f65193b63fa3e2403752a197e19c998fd88ce6`
 
-Latest commit: `HEAD` (latest verified Runtime-bearing commit: `54409705c30846e4a7ee214aab9662f3c940cb10`)
+Latest commit: `HEAD` (latest verified Runtime-bearing commit: `dc34b49bc6358c256e39cd7056aeb669278d09c4`)
 
 Latest verified Runtime baseline:
 - Workflow: `INK v0.1 Runtime Baseline`
@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M4 — Structural slimming: IMPLEMENTED / WINDOWS RUNTIME PENDING`
+`M4 — Structural slimming: COMPLETE`
 
 ## Files changed
 
@@ -75,6 +75,7 @@ Completed:
 - dependency-driven removal of six proven dead import bindings
 - `working/SLIMMING_REGISTER.md` with cut, retain, risk, preservation, and verification decisions
 - final M4 eager graph: 97 modules / 1,040,023 bytes; 0 FLORA modules
+- M4 detached Core + FLORA-enabled Windows / Chrome / Node-free Runtime: PASS — Run `34666929560`
 
 Pending:
 - `working/IDENTITY_REGISTER.md`
@@ -84,14 +85,14 @@ Pending:
 
 ## Unresolved risks
 
-- No unresolved M3 Runtime regression. M4 must avoid widening AI/Recipe/PWA scope.
+- No unresolved M4 Runtime regression. AI/Recipe/PWA scope remains unchanged.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
 - Browser startup PASS does not by itself prove interaction or persistence behavior.
 
 ## Latest results
 
-- Runtime startup: `PASS` — Run `34666438827`, commit `54409705c30846e4a7ee214aab9662f3c940cb10`.
+- Runtime startup: `PASS` — Run `34666929560`, commit `dc34b49bc6358c256e39cd7056aeb669278d09c4`.
 - Core interaction: `PENDING`
 - Persistence: `PENDING`
 - FLORA detached: `PASS` — no eager FLORA module and Windows Node-free startup passed.
@@ -102,4 +103,4 @@ Pending:
 
 ## Next authorized step
 
-Commit and push M4, then require the detached Core and FLORA-enabled Windows gate to PASS before live identity cleanup.
+Classify live Runtime version literals, create `working/IDENTITY_REGISTER.md`, normalize only current-product surfaces, and re-run the Windows gate.
