@@ -38,33 +38,27 @@ jobs:
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
 
     steps:
-      - name: Prepare Windows runner toolchain
-        shell: cmd
+      - name: Download requested revision without Git
+        shell: powershell -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         run: |
-          @echo off
-          where git >nul 2>nul
-          if %ERRORLEVEL% EQU 0 (
-            git --version
-            exit /b 0
-          )
-          if exist "%ProgramFiles%\Git\cmd\git.exe" (
-            echo %ProgramFiles%\Git\cmd>>"%GITHUB_PATH%"
-            "%ProgramFiles%\Git\cmd\git.exe" --version
-            exit /b 0
-          )
-          if exist "%LOCALAPPDATA%\Programs\Git\cmd\git.exe" (
-            echo %LOCALAPPDATA%\Programs\Git\cmd>>"%GITHUB_PATH%"
-            "%LOCALAPPDATA%\Programs\Git\cmd\git.exe" --version
-            exit /b 0
-          )
-          echo Git 2.18 or newer was not found on this Windows runner.
-          echo Install Git for Windows, then keep this runner open and rerun the workflow.
-          exit /b 1
-
-      - name: Checkout requested revision
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
+          $ErrorActionPreference = 'Stop'
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip = Join-Path $env:RUNNER_TEMP "ink-$env:GITHUB_SHA.zip"
+          $extract = Join-Path $env:RUNNER_TEMP "ink-$env:GITHUB_SHA"
+          if (Test-Path $extract) { Remove-Item $extract -Recurse -Force }
+          New-Item -ItemType Directory -Force -Path $extract | Out-Null
+          $url = "https://github.com/$env:GITHUB_REPOSITORY/archive/$env:GITHUB_SHA.zip"
+          Write-Host "Downloading $url"
+          Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $extract)
+          $root = Get-ChildItem $extract -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Downloaded repository archive did not contain a root directory.' }
+          Get-ChildItem $env:GITHUB_WORKSPACE -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+          Copy-Item (Join-Path $root.FullName '*') $env:GITHUB_WORKSPACE -Recurse -Force
+          if (-not (Test-Path (Join-Path $env:GITHUB_WORKSPACE 'engineering\reconstruct_original_workspace.py'))) {
+            throw 'Repository archive extraction failed: reconstruction script missing.'
+          }
+          Write-Host "Repository materialized at $env:GITHUB_WORKSPACE"
 
       - name: Record runner environment
         run: |
@@ -73,7 +67,6 @@ jobs:
           Write-Host "SHA:        $env:GITHUB_SHA"
           Write-Host "Runner:     $env:RUNNER_NAME"
           Write-Host "OS:         $env:RUNNER_OS"
-          git --version
           node --version
           npm --version
 
@@ -151,7 +144,7 @@ jobs:
         run: npm run test:browser
 
       - name: Runtime Ready gate
-        if: always()
+        if: always() && hashFiles('.working/original-runtime/package.json') != ''
         working-directory: .working/original-runtime
         run: npm run test:ready
 
