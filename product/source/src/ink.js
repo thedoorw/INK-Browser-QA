@@ -617,11 +617,15 @@ window.INK_ARCHITECTURE={version:INK_VERSION,formatVersion:FORMAT_VERSION,module
 function bootInk(){
   if(window.INK_APP)return window.INK_APP;
   const app=new InkApp();window.INK_APP=app;window.INK_CAPABILITIES=app.capabilities;
+  document.documentElement.dataset.inkRuntimeVersion=INK_VERSION;
+  document.documentElement.dataset.inkFormatVersion=String(FORMAT_VERSION);
+  document.documentElement.dataset.inkStudioVersion=window.INK_STUDIO?.version||'unavailable';
+  document.documentElement.dataset.inkAiVersion=window.INK_AI?.version||'unavailable';
   window.INK_TEST={
     version:INK_VERSION,
     app,
     fresh(){app.replaceDocument(defaultDocument());app.history.clear();return true;},
-    addDemo(){const p=app.page(),l=app.layer();app.history.pushScoped('測試內容',[app.layerObjectsPath(l)],()=>{l.objects.push({id:uid(),type:'stroke',matrix:M.translate(-130,-35),opacity:1,color:'#202020',size:12,kind:'brush',smoothing:.5,pressure:.9,taper:.5,points:[{x:0,y:0,p:.2},{x:35,y:-35,p:.8},{x:90,y:15,p:1},{x:145,y:-25,p:.65},{x:220,y:10,p:.25}]},{id:uid(),type:'shape',shape:'ellipse',matrix:M.translate(-80,45),opacity:1,color:'#2f718f',fillColor:'#2f718f',fill:true,size:3,w:160,h:90},{id:uid(),type:'text',matrix:M.translate(-62,95),opacity:1,text:'INK v0.8',color:'#fffef9',fontFamily:'system-ui',fontSize:26,lineHeight:1.2});});app.refreshAll();return l.objects.length;},
+    addDemo(){const p=app.page(),l=app.layer();app.history.pushScoped('測試內容',[app.layerObjectsPath(l)],()=>{l.objects.push({id:uid(),type:'stroke',matrix:M.translate(-130,-35),opacity:1,color:'#202020',size:12,kind:'brush',smoothing:.5,pressure:.9,taper:.5,points:[{x:0,y:0,p:.2},{x:35,y:-35,p:.8},{x:90,y:15,p:1},{x:145,y:-25,p:.65},{x:220,y:10,p:.25}]},{id:uid(),type:'shape',shape:'ellipse',matrix:M.translate(-80,45),opacity:1,color:'#2f718f',fillColor:'#2f718f',fill:true,size:3,w:160,h:90},{id:uid(),type:'text',matrix:M.translate(-62,95),opacity:1,text:`INK v${INK_VERSION}`,color:'#fffef9',fontFamily:'system-ui',fontSize:26,lineHeight:1.2});});app.refreshAll();return l.objects.length;},
     summary(){const p=app.page();return{title:app.doc.title,pages:app.doc.pages.length,layers:p.layers.length,objects:p.layers.reduce((n,l)=>n+l.objects.length,0),tool:app.tool,selection:app.selection.length,undo:app.history.undoStack.length,redo:app.history.redoStack.length,historyLimit:app.history.limit,historyMode:app.history.stats().mode,inputPointers:app.input.size};},
     workspace(){return workspaceDiagnostics(app.page());},
     fullscreen(){return{supported:Boolean((app.el.app.requestFullscreen||app.el.app.webkitRequestFullscreen)&&(document.exitFullscreen||document.webkitExitFullscreen)),active:Boolean(app.fullscreenElement())};},

@@ -184,6 +184,10 @@ jobs:
               htmlReturned = ($dom.Length -gt 1000)
               stagePresent = ($dom -match 'id="stage"')
               runtimeIdentityVisible = ($dom -match 'INK v0\.1')
+              liveRuntimeIdentity = ($dom -match 'data-ink-runtime-version="0\.1"')
+              liveStudioIdentity = ($dom -match 'data-ink-studio-version="0\.1"')
+              liveAIIdentity = ($dom -match 'data-ink-ai-version="0\.1"')
+              formatVersionPreserved = ($dom -match 'data-ink-format-version="4"')
               floraDetached = ($dom -match 'data-ink-capability-flora="available"')
               chromeErrorAbsent = ($dom -notmatch 'chrome-error://')
             }

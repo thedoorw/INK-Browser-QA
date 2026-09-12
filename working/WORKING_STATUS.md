@@ -14,7 +14,7 @@ Latest commit: `HEAD` (latest verified Runtime-bearing commit: `dc34b49bc6358c25
 
 Latest verified Runtime baseline:
 - Workflow: `INK v0.1 Runtime Baseline`
-- Run ID: `34661788686`
+- Run ID: `34666929560`
 - Result: `PASS`
 - Runner: `DESKTOP-NSOQH69`
 - OS: Windows
@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M4 — Structural slimming: COMPLETE`
+`M5 — Live identity cleanup: IMPLEMENTED / WINDOWS RUNTIME PENDING`
 
 ## Files changed
 
@@ -32,9 +32,15 @@ Latest verified Runtime baseline:
 - `.github/workflows/ink-v0.1-runtime-baseline.yml`
 - `product/source/src/capabilities/optional-capability-registry.js`
 - `product/source/src/flora/index.js`
+- `product/source/src/ai/install-ai.js`
 - `product/source/src/ink.js`
+- `product/source/src/studio-core.js`
+- `product/source/index.html`
+- `product/source/index-standalone.html`
+- `product/source/service-worker.js`
 - `qa/core/tests/unit/optional-capability-registry-v01.test.mjs`
 - `working/DEPENDENCY_MAP.md`
+- `working/IDENTITY_REGISTER.md`
 - `working/SLIMMING_REGISTER.md`
 - `working/WORKING_STATUS.md`
 
@@ -43,6 +49,8 @@ Latest verified Runtime baseline:
 - `engineering/runtime-dependency-graph.mjs` will be added as a focused, read-only graph measurement helper required by Current Work Order Gate F. It lives outside Runtime, introduces no product dependency, and makes before/after module and byte counts reproducible.
 - `.github/workflows/ink-v0.1-runtime-baseline.yml` will later be adjusted within the explicitly authorized workflow surface so this DEV branch actually runs the authoritative Windows gate and can report detached/enabled evidence.
 - `product/source/src/capabilities/optional-capability-registry.js` will be added as the one small, domain-neutral install/lifecycle/render boundary required by P1/P4. Keeping it separate from the 170 KB entry avoids new scattered conditionals and does not create a generalized plugin ecosystem.
+- `product/source/index-standalone.html` requires identity-only normalization because it remains a user-loadable compatibility launcher and is still precached by the live service worker. Its compatibility behavior and historical role will not change.
+- `product/source/service-worker.js` requires one dependency-list update because `src/capabilities/optional-capability-registry.js` is now a mandatory Core import. This keeps the existing offline shell internally complete without changing PWA architecture.
 
 ## Decisions already fixed
 
@@ -76,16 +84,19 @@ Completed:
 - `working/SLIMMING_REGISTER.md` with cut, retain, risk, preservation, and verification decisions
 - final M4 eager graph: 97 modules / 1,040,023 bytes; 0 FLORA modules
 - M4 detached Core + FLORA-enabled Windows / Chrome / Node-free Runtime: PASS — Run `34666929560`
+- current-product HTML, Studio facade, AI facade, importer construction, and demo surfaces normalized to `0.1`
+- component protocol, schema, `FORMAT_VERSION = 4`, and historical evidence identities preserved
+- mandatory capability registry added to the existing PWA shell dependency list
+- M5 focused local verification: Program Import / Document / AI / Chat `20/20`; optional capability registry / FLORA attach `4/4`
 
 Pending:
-- `working/IDENTITY_REGISTER.md`
 - core interaction smoke evidence
 - FLORA detached evidence
 - FLORA enabled evidence
 
 ## Unresolved risks
 
-- No unresolved M4 Runtime regression. AI/Recipe/PWA scope remains unchanged.
+- M5 live identity and service-worker dependency completeness await the Windows gate; AI/Recipe architecture and PWA behavior remain unchanged.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
 - Browser startup PASS does not by itself prove interaction or persistence behavior.
@@ -103,4 +114,4 @@ Pending:
 
 ## Next authorized step
 
-Classify live Runtime version literals, create `working/IDENTITY_REGISTER.md`, normalize only current-product surfaces, and re-run the Windows gate.
+Commit and push M5, then require live Runtime/Studio/AI identity, `FORMAT_VERSION = 4`, detached Core, and FLORA-enabled checks to PASS before M6 closure.
