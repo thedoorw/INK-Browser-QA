@@ -1,5 +1,5 @@
 import { booleanPaths, createAnchor, createPath, createRepeat, dividePaths, drawVectorObject, expandRepeat, flattenSubpath, importSVGPaths, pathBounds, pointInRing, repeatTransforms, tracePath, vectorObjectToSVG } from './vector/vector-core.js';
-import { IMAGE_CAPABILITIES, createAdjustment, createFilter, createImageSnapshot, createLayerManifest, createVectorMask, renderImageStack, reorderStack } from './image/image-core.js';
+import { IMAGE_CAPABILITIES, createAdjustment, createFilter, createLayerManifest, createVectorMask, renderImageStack, reorderStack } from './image/image-core.js';
 import { ActionDispatcher, COMMON_FLOWER_RECIPE, ExternalAssetAdapterRegistry, RECIPE_CAPABILITIES, RecipeEditor, RecipeEngine, installDefaultFlowerSchema, installProgramImportSchema } from './recipe/recipe-engine.js';
 import { BrushPresetRegistry, DrawingGapFrequencyRanking, PAINT_CAPABILITIES, StrokeSessionRecorder, drawStrokeReplay, evaluateStrokeQuality, exportBrushPackage, importDrawingWorkflow, replayStrokeSession } from './paint/paint-core.js';
 import { StylusTestRecorder } from './input/stylus-test.js';

@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M3 — FLORA re-attach: COMPLETE`
+`M4 — Structural slimming: IMPLEMENTED / WINDOWS RUNTIME PENDING`
 
 ## Files changed
 
@@ -35,6 +35,7 @@ Latest verified Runtime baseline:
 - `product/source/src/ink.js`
 - `qa/core/tests/unit/optional-capability-registry-v01.test.mjs`
 - `working/DEPENDENCY_MAP.md`
+- `working/SLIMMING_REGISTER.md`
 - `working/WORKING_STATUS.md`
 
 ## Authorized-surface justification
@@ -71,11 +72,12 @@ Completed:
 - representative FLORA Hero initialization unit check: PASS
 - capability state and failure isolation unit checks: PASS (4/4 total)
 - M3 detached Core + FLORA-enabled Windows / Chrome / Node-free Runtime: PASS — Run `34666438827`
+- dependency-driven removal of six proven dead import bindings
+- `working/SLIMMING_REGISTER.md` with cut, retain, risk, preservation, and verification decisions
+- final M4 eager graph: 97 modules / 1,040,023 bytes; 0 FLORA modules
 
 Pending:
-- `working/SLIMMING_REGISTER.md`
 - `working/IDENTITY_REGISTER.md`
-- after Runtime graph measurements
 - core interaction smoke evidence
 - FLORA detached evidence
 - FLORA enabled evidence
@@ -96,7 +98,8 @@ Pending:
 - FLORA enabled: `PASS` — installed state, representative Hero action, failure absent, and Chrome error absent all verified by Run `34666438827`.
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
+- Runtime graph after M4: `97 modules / 1,040,023 bytes`; FLORA optional source `37 modules / 423,935 bytes`; static edges `215`; dynamic optional edges `1`.
 
 ## Next authorized step
 
-Create M4 slimming register, remove only proven dead import bindings, finalize before/after graph evidence, and re-run the Windows gate.
+Commit and push M4, then require the detached Core and FLORA-enabled Windows gate to PASS before live identity cleanup.

@@ -1,12 +1,12 @@
 import { INK_VERSION, FORMAT_VERSION } from './config.js';
 import { OptionalCapabilityRegistry } from './capabilities/optional-capability-registry.js';
 import {
-  Matrix as M, boundsContains, boundsIntersect, clamp, deepClone, deg, distance,
-  lerp, nowISO, pointSegmentDistance, polygonContains, rad, transformBounds,
+  Matrix as M, clamp, deepClone, deg, distance,
+  lerp, nowISO, pointSegmentDistance, rad, transformBounds,
   uid, unionBounds
 } from './core/index.js';
 import {
-  InkStore, activeLayer, activePage, allObjects, defaultDocument, defaultLayer, sanitizeDocument, inspectDocument,
+  InkStore, activeLayer, activePage, defaultDocument, defaultLayer, sanitizeDocument, inspectDocument,
   artboardTrimBounds, artboardBleedBounds, artboardSafeBounds, artboardExportGeometry, artboardPixelSize,
   describeArtboard, mmToWorld, normalizeArtboard, normalizeLayoutViewport, activateWorkspace, ensureWorkspace, workspaceDiagnostics, workspaceSpace
 } from './document/index.js';
@@ -16,7 +16,7 @@ import { PenInputCalibrator, normalizePenProfile } from './input/pen-calibration
 import { clearStrokeSegmentStyle, deleteStrokeNodes, eraseStrokeWithCircle, insertStrokeNode, moveStrokeHandle, nearestStrokeCurveSegment, nearestStrokeNode, sampleStrokePath, sampleStrokeSegment, segmentStyleAt, setStrokeNodeMode, setStrokeSegmentStyle, simplifyStrokePoints, splitStrokeAtSegment } from './stroke/index.js';
 import { PageSpatialIndex } from './spatial/index.js';
 import { applyObjectMatrices, cloneInitialMatrices, lassoCandidates, marqueeCandidates, polygonBounds } from './editor/index.js';
-import { LiveCanvasTileRenderer, NaturalMediaController, PersistentTileAtlas, TiledExportCancelledError, TiledExportJob, createTilePlan, paperProfileFingerprint, paperSampleAt, renderTiledCanvas } from './render/index.js';
+import { LiveCanvasTileRenderer, NaturalMediaController, PersistentTileAtlas, TiledExportCancelledError, TiledExportJob, createTilePlan, paperProfileFingerprint, paperSampleAt } from './render/index.js';
 import { canvasToPdfBlob } from './export/index.js';
 import { ExternalValidationRecorder, RuntimeHealthMonitor, buildExternalDiagnosticBundle } from './release/index.js';
 import { ServiceWorkerUpdateManager } from './pwa/index.js';

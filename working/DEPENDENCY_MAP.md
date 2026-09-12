@@ -95,3 +95,19 @@ The document model may retain FLORA extension fields as inert preserved data. Th
 
 The new `src/capabilities/optional-capability-registry.js` is necessary because placing registry state in `ink.js` would couple the loader, lifecycle hooks, and public state reporting to the already large app entry. It is a small Core mechanism, has no FLORA-specific knowledge, creates one import edge, and prevents scattered conditionals. This is the explicit capability boundary required by P1/P4 and does not create a generalized plugin ecosystem.
 
+## After graph — M4
+
+The same helper reports:
+
+| Classification | Reachable JS modules | Reachable JS bytes |
+|---|---:|---:|
+| CORE_RUNTIME | 66 | 567,471 |
+| CORE_UI | 23 | 277,843 |
+| AI_CAPABILITY | 4 | 149,413 |
+| RECIPE_AUTOMATION | 1 | 41,656 |
+| PWA_SHELL | 2 | 3,077 |
+| RUNTIME_ASSET | 1 | 563 |
+| FLORA_CAPABILITY | 0 | 0 |
+| **Total mandatory eager graph** | **97** | **1,040,023** |
+
+There are 215 static ESM edges and one excluded literal dynamic edge: `src/ink.js -> src/flora/index.js`. The complete cut and preservation decisions are recorded in `working/SLIMMING_REGISTER.md`.
