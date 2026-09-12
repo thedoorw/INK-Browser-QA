@@ -1,8 +1,28 @@
 # INK Active
 
-目前階段：**Original Import Baseline + Product Boundary v0.1 + Full File Classification v0.1**。
+## Current authorized work
 
-## 現在已確認
+Current product identity: **INK v0.1**
+
+Current DEV branch: `working/INK-v0.1-structure-optionalization`
+
+Highest-priority task file for this branch:
+
+`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+
+Current phase: **Structure Slimming / FLORA Optionalization**.
+
+Verified starting Runtime baseline:
+- commit `b1f65193b63fa3e2403752a197e19c998fd88ce6`
+- GitHub Actions Run `34661788686`
+- Windows + Chrome
+- Node-free Runtime baseline: `PASS`
+
+DEV must update `working/WORKING_STATUS.md` at each milestone and STOP at `READY_FOR_REVIEW`. No final package/certification/promotion is authorized by this work order.
+
+---
+
+## Preserved import baseline
 
 - 原始來源：`INK_v1.6.5_RC_MAIN.zip`
 - SHA256：`59d43a9650f4de20863e21723344b0fbf4307d5cbdb4a1a402929008d2f9e97d`
@@ -29,7 +49,7 @@
 
 目前沒有任何檔案被直接判定為可安全刪除。研究、deterministic rerun、rollback、benchmark、版本追溯證據一律先保留。
 
-## 目前產品邊界
+## Product boundary inherited into current work
 
 ### Core candidate
 - Drawing / Stylus
@@ -40,28 +60,16 @@
 - Render / Export
 - Material / Recompute / 基礎 Program Import
 
-### BOUNDARY_PENDING
+### Boundary items
 1. `manifest.webmanifest` / `service-worker.js`
 2. 圖示、素材、schemas
 3. FLORA / AI / Recipe
 
-目前不刪除上述 pending 區塊；先以依賴與功能驗證決定是否納入正式 `INK.html`。
+Current work specifically authorizes **FLORA optionalization** and dependency-driven structural slimming. AI / Recipe are not authorized for broad optionalization in this round unless a narrowly necessary boundary adjustment is required for FLORA separation.
 
-## 分批匯入順序
+## Long-term delivery target
 
-原始 ZIP 已在本地分析環境拆成下列批次，GitHub 依序接收：
-
-1. `PRODUCT` — runtime source / shell / required assets
-2. `ENGINEERING` — scripts / headless / compare / build utilities
-3. `QA Core` — tests / fixtures / reports
-4. `RESEARCH` — Intelligence / external references
-5. `QA Validation` — 約 186 MB 解壓 evidence，另定大型證據長期儲存策略
-6. `BOUNDARY_PENDING` — 在產品邊界 review 後決定去向
-7. `ARCHIVE_CANDIDATE` — 保留追溯，不進 active product surface
-
-## 下一個工程目標
-
-建立乾淨 source / QA / research / engineering 分線，保留 original evidence，之後做第一個三件式 Candidate：
+After later authorization and validation, the eventual delivery target remains:
 
 ```text
 INK.html
@@ -69,4 +77,4 @@ WORKING_STATUS.md
 SHA256SUMS.txt
 ```
 
-在功能驗證完成前，Candidate 不等於 certified baseline。
+Current work does not authorize creating or certifying that final package.
