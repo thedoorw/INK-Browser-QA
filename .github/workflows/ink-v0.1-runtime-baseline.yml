@@ -7,17 +7,9 @@ on:
     paths:
       - '.github/workflows/ink-v0.1-runtime-baseline.yml'
       - 'product/**'
-      - 'engineering/**'
-      - 'qa/core/**'
       - 'governance/INK_Application_Health_Gate_v0.1.md'
       - 'governance/INK_Product_Identity_v0.1.md'
   workflow_dispatch:
-    inputs:
-      run_extended_tests:
-        description: 'Run the extended Node unit suite after the Runtime baseline'
-        required: false
-        default: false
-        type: boolean
 
 permissions:
   contents: read
@@ -30,14 +22,14 @@ jobs:
   runtime-baseline:
     name: Windows Runtime Baseline
     runs-on: [self-hosted, Windows, X64]
-    timeout-minutes: 45
+    timeout-minutes: 30
 
     defaults:
       run:
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
 
     steps:
-      - name: Download runtime-relevant files without Git
+      - name: Download runtime files without Git or Node
         run: |
           $ErrorActionPreference = 'Stop'
           Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -51,22 +43,18 @@ jobs:
 
           $archive = [System.IO.Compression.ZipFile]::OpenRead($zip)
           try {
-            $prefixes = @(
-              'product/source/',
-              'engineering/source/',
-              'engineering/health-overlay/',
-              'qa/core/'
-            )
+            $prefix = 'product/source/'
             $written = 0
             foreach ($entry in $archive.Entries) {
               $name = $entry.FullName -replace '\\','/'
               $slash = $name.IndexOf('/')
               if ($slash -lt 0) { continue }
               $relative = $name.Substring($slash + 1)
-              if (-not ($prefixes | Where-Object { $relative.StartsWith($_, [System.StringComparison]::OrdinalIgnoreCase) })) { continue }
+              if (-not $relative.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)) { continue }
               if ([string]::IsNullOrWhiteSpace($entry.Name)) { continue }
 
-              $destination = Join-Path $env:GITHUB_WORKSPACE ($relative -replace '/', '\\')
+              $runtimeRelative = $relative.Substring($prefix.Length)
+              $destination = Join-Path $env:GITHUB_WORKSPACE ('.working\runtime\' + ($runtimeRelative -replace '/', '\\'))
               $parent = Split-Path $destination -Parent
               New-Item -ItemType Directory -Force -Path $parent | Out-Null
               $input = $entry.Open()
@@ -76,17 +64,14 @@ jobs:
               } finally { $input.Dispose() }
               $written++
             }
-            Write-Host "Materialized $written runtime-relevant files."
+            Write-Host "Materialized $written product Runtime files."
           } finally {
             $archive.Dispose()
           }
 
-          if (-not (Test-Path (Join-Path $env:GITHUB_WORKSPACE 'product\source\index.html'))) {
-            throw 'Runtime source extraction failed: product/source/index.html missing.'
-          }
-          if (-not (Test-Path (Join-Path $env:GITHUB_WORKSPACE 'engineering\source\scripts'))) {
-            throw 'Runtime source extraction failed: engineering/source/scripts missing.'
-          }
+          $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\runtime'
+          if (-not (Test-Path (Join-Path $runtime 'index.html'))) { throw 'Runtime extraction failed: index.html missing.' }
+          if (-not (Test-Path (Join-Path $runtime 'src\ink.js'))) { throw 'Runtime extraction failed: src/ink.js missing.' }
 
       - name: Record runner environment
         run: |
@@ -95,45 +80,9 @@ jobs:
           Write-Host "SHA:        $env:GITHUB_SHA"
           Write-Host "Runner:     $env:RUNNER_NAME"
           Write-Host "OS:         $env:RUNNER_OS"
-          node --version
-          npm --version
+          Write-Host 'Node/npm are intentionally not required by this Runtime baseline.'
 
-      - name: Assemble runnable INK workspace
-        run: |
-          $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\original-runtime'
-          if (Test-Path $runtime) { Remove-Item $runtime -Recurse -Force }
-          New-Item -ItemType Directory -Force -Path $runtime | Out-Null
-
-          Copy-Item 'product\source\*' $runtime -Recurse -Force
-          Copy-Item 'engineering\source\*' $runtime -Recurse -Force
-
-          if (Test-Path 'qa\core\tests') {
-            Copy-Item 'qa\core\tests' (Join-Path $runtime 'tests') -Recurse -Force
-          }
-          if (Test-Path 'qa\core\fixtures') {
-            Copy-Item 'qa\core\fixtures' (Join-Path $runtime 'fixtures') -Recurse -Force
-          }
-          if (Test-Path 'qa\core\test-fixtures') {
-            Copy-Item 'qa\core\test-fixtures' (Join-Path $runtime 'test-fixtures') -Recurse -Force
-          }
-
-          if (-not (Test-Path (Join-Path $runtime 'index.html'))) {
-            throw 'Assembled runtime is missing index.html.'
-          }
-          if (-not (Test-Path (Join-Path $runtime 'src\ink.js'))) {
-            throw 'Assembled runtime is missing src/ink.js.'
-          }
-          Write-Host "Runtime assembled at $runtime"
-
-      - name: Apply INK v0.1 Health overlay
-        run: |
-          $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\original-runtime'
-          Copy-Item 'engineering\health-overlay\package.json' (Join-Path $runtime 'package.json') -Force
-          New-Item -ItemType Directory -Force -Path (Join-Path $runtime 'scripts') | Out-Null
-          Copy-Item 'engineering\health-overlay\scripts\*' (Join-Path $runtime 'scripts') -Recurse -Force
-          Write-Host 'Health overlay applied.'
-
-      - name: Locate Chrome, Chromium, or Edge
+      - name: Locate Chrome or Edge
         run: |
           $candidates = @(
             $env:INK_CHROMIUM_PATH,
@@ -145,49 +94,133 @@ jobs:
             (Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe')
           ) | Where-Object { $_ -and (Test-Path $_) }
           $browser = $candidates | Select-Object -First 1
-          if (-not $browser) {
-            Write-Error 'No supported Chromium browser was found. Install Chrome/Edge or set INK_CHROMIUM_PATH.'
-            exit 1
-          }
+          if (-not $browser) { throw 'No supported Chrome/Edge browser was found.' }
           "INK_CHROMIUM_PATH=$browser" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Host "Browser: $browser"
 
-      - name: Compatibility build
-        working-directory: .working/original-runtime
-        run: npm run build
+      - name: Browser startup baseline without Node
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\runtime'
+          $evidence = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence'
+          New-Item -ItemType Directory -Force -Path $evidence | Out-Null
 
-      - name: INK doctor
-        working-directory: .working/original-runtime
-        run: npm run ink:doctor
+          $probe = New-Object System.Net.Sockets.TcpListener([System.Net.IPAddress]::Loopback, 0)
+          $probe.Start()
+          $port = ([System.Net.IPEndPoint]$probe.LocalEndpoint).Port
+          $probe.Stop()
 
-      - name: Browser Runtime baseline
-        working-directory: .working/original-runtime
-        run: npm run test:browser
+          $serverScript = Join-Path $env:RUNNER_TEMP 'ink-static-server.ps1'
+          @'
+          param([string]$Root,[int]$Port)
+          $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, $Port)
+          $listener.Start()
+          try {
+            while ($true) {
+              $client = $listener.AcceptTcpClient()
+              try {
+                $stream = $client.GetStream()
+                $reader = New-Object System.IO.StreamReader($stream, [System.Text.Encoding]::ASCII, $false, 4096, $true)
+                $request = $reader.ReadLine()
+                if (-not $request) { $client.Close(); continue }
+                while (($line = $reader.ReadLine()) -ne '') { if ($null -eq $line) { break } }
+                $parts = $request.Split(' ')
+                $rawPath = if ($parts.Length -ge 2) { $parts[1] } else { '/' }
+                $uri = [System.Uri]::new('http://127.0.0.1' + $rawPath)
+                $rel = [System.Uri]::UnescapeDataString($uri.AbsolutePath.TrimStart('/'))
+                if ([string]::IsNullOrWhiteSpace($rel)) { $rel = 'index.html' }
+                $candidate = [System.IO.Path]::GetFullPath((Join-Path $Root ($rel -replace '/', '\')))
+                $rootFull = [System.IO.Path]::GetFullPath($Root)
+                if (-not $candidate.StartsWith($rootFull, [System.StringComparison]::OrdinalIgnoreCase) -or -not (Test-Path $candidate -PathType Leaf)) {
+                  $body = [System.Text.Encoding]::UTF8.GetBytes('404')
+                  $header = "HTTP/1.1 404 Not Found`r`nContent-Length: $($body.Length)`r`nConnection: close`r`n`r`n"
+                } else {
+                  $body = [System.IO.File]::ReadAllBytes($candidate)
+                  $ext = [System.IO.Path]::GetExtension($candidate).ToLowerInvariant()
+                  $mime = switch ($ext) {
+                    '.html' { 'text/html; charset=utf-8' }
+                    '.js' { 'text/javascript; charset=utf-8' }
+                    '.css' { 'text/css; charset=utf-8' }
+                    '.json' { 'application/json; charset=utf-8' }
+                    '.webmanifest' { 'application/manifest+json; charset=utf-8' }
+                    '.svg' { 'image/svg+xml' }
+                    '.png' { 'image/png' }
+                    default { 'application/octet-stream' }
+                  }
+                  $header = "HTTP/1.1 200 OK`r`nContent-Type: $mime`r`nContent-Length: $($body.Length)`r`nConnection: close`r`n`r`n"
+                }
+                $headerBytes = [System.Text.Encoding]::ASCII.GetBytes($header)
+                $stream.Write($headerBytes,0,$headerBytes.Length)
+                $stream.Write($body,0,$body.Length)
+                $stream.Flush()
+              } catch {} finally { try { $client.Close() } catch {} }
+            }
+          } finally { $listener.Stop() }
+          '@ | Set-Content -Path $serverScript -Encoding UTF8
 
-      - name: Runtime Ready gate
-        if: always() && hashFiles('.working/original-runtime/package.json') != ''
-        working-directory: .working/original-runtime
-        run: npm run test:ready
+          $server = Start-Process powershell.exe -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',$serverScript,'-Root',$runtime,'-Port',$port) -PassThru -WindowStyle Hidden
+          try {
+            $ready = $false
+            for ($i=0; $i -lt 50; $i++) {
+              try {
+                $r = Invoke-WebRequest -Uri "http://127.0.0.1:$port/index.html" -UseBasicParsing -TimeoutSec 2
+                if ($r.StatusCode -eq 200) { $ready = $true; break }
+              } catch {}
+              Start-Sleep -Milliseconds 200
+            }
+            if (-not $ready) { throw 'Local static server did not become ready.' }
 
-      - name: Extended unit suite
-        if: github.event_name == 'workflow_dispatch' && inputs.run_extended_tests
-        working-directory: .working/original-runtime
-        run: npm test
+            $url = "http://127.0.0.1:$port/index.html"
+            $stderr = Join-Path $evidence 'browser-stderr.txt'
+            $domFile = Join-Path $evidence 'runtime-dom.html'
+            $args = @('--headless=new','--disable-gpu','--no-first-run','--disable-extensions','--disable-background-networking','--virtual-time-budget=10000','--dump-dom',$url)
+            $dom = & $env:INK_CHROMIUM_PATH @args 2>$stderr | Out-String
+            $exitCode = $LASTEXITCODE
+            $dom | Set-Content -Path $domFile -Encoding UTF8
+
+            $checks = [ordered]@{
+              browserExitCodeZero = ($exitCode -eq 0)
+              htmlReturned = ($dom.Length -gt 1000)
+              stagePresent = ($dom -match 'id="stage"')
+              runtimeIdentityVisible = ($dom -match 'INK v0\.1')
+              chromeErrorAbsent = ($dom -notmatch 'chrome-error://')
+            }
+            $status = if (($checks.Values | Where-Object { -not $_ }).Count -eq 0) { 'PASS' } else { 'FAIL' }
+            $report = [ordered]@{
+              product = 'INK v0.1'
+              stage = 'Runtime Baseline'
+              status = $status
+              commit = $env:GITHUB_SHA
+              runner = $env:RUNNER_NAME
+              os = $env:RUNNER_OS
+              browser = $env:INK_CHROMIUM_PATH
+              url = $url
+              nodeRequired = $false
+              checks = $checks
+              generatedAt = (Get-Date).ToUniversalTime().ToString('o')
+            }
+            $report | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $evidence 'runtime-baseline-report.json') -Encoding UTF8
+            $report | ConvertTo-Json -Depth 6 | Write-Host
+            if ($status -ne 'PASS') { throw 'INK v0.1 browser startup baseline failed.' }
+          } finally {
+            if ($server -and -not $server.HasExited) { Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue }
+          }
 
       - name: Publish Runtime report to job summary
         if: always()
         run: |
-          $report = Join-Path $env:GITHUB_WORKSPACE '.working\original-runtime\tests\browser-evidence-v0.1\browser-health-report-v0.1.json'
-          Add-Content $env:GITHUB_STEP_SUMMARY '## INK v0.1 — Runtime Baseline'
+          $report = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence\runtime-baseline-report.json'
+          Add-Content $env:GITHUB_STEP_SUMMARY '## INK v0.1 — Node-free Runtime Baseline'
           Add-Content $env:GITHUB_STEP_SUMMARY "- Runner: $env:RUNNER_NAME"
           Add-Content $env:GITHUB_STEP_SUMMARY "- Commit: $env:GITHUB_SHA"
+          Add-Content $env:GITHUB_STEP_SUMMARY '- Local Node/npm required: **No**'
           if (Test-Path $report) {
             $json = Get-Content $report -Raw | ConvertFrom-Json
             Add-Content $env:GITHUB_STEP_SUMMARY "- Runtime status: **$($json.status)**"
-            Add-Content $env:GITHUB_STEP_SUMMARY "- Product version: $($json.version)"
-            Add-Content $env:GITHUB_STEP_SUMMARY "- Browser: $($json.environment.chromium)"
-            Add-Content $env:GITHUB_STEP_SUMMARY "- Page exceptions: $($json.pageExceptions.Count)"
-            Add-Content $env:GITHUB_STEP_SUMMARY "- Critical console errors: $($json.criticalConsoleErrors.Count)"
+            Add-Content $env:GITHUB_STEP_SUMMARY "- Browser: $($json.browser)"
+            foreach ($p in $json.checks.PSObject.Properties) {
+              Add-Content $env:GITHUB_STEP_SUMMARY "- $($p.Name): $($p.Value)"
+            }
           } else {
             Add-Content $env:GITHUB_STEP_SUMMARY '- Runtime report: **MISSING**'
           }
@@ -196,7 +229,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ink-v0.1-runtime-baseline-${{ github.run_id }}
-          path: .working/original-runtime/tests/browser-evidence-v0.1/
+          name: ink-v0.1-node-free-runtime-${{ github.run_id }}
+          path: .working/runtime-evidence/
           if-no-files-found: warn
           retention-days: 30
