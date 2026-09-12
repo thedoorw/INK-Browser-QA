@@ -10,6 +10,8 @@ Authoritative work order: `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
 Baseline commit: `b1f65193b63fa3e2403752a197e19c998fd88ce6`
 
+Latest commit: `HEAD` (latest Runtime-bearing commit: `7da3b154e6b9295cd35fd53acf350582a58c8f8d`)
+
 Latest verified Runtime baseline:
 - Workflow: `INK v0.1 Runtime Baseline`
 - Run ID: `34661788686`
@@ -21,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M2 — Capability seam: IMPLEMENTED / WINDOWS RUNTIME PENDING`
+`M2 — Capability seam: COMPLETE`
 
 ## Files changed
 
@@ -61,6 +63,7 @@ Completed:
 - lifecycle/render hooks replace Core FLORA call sites
 - capability state unit checks: PASS (3/3)
 - full `product/source/src/**/*.js` syntax scan: PASS
+- M2 Windows / Chrome / Node-free Runtime: PASS — Run `34665925650`
 
 Pending:
 - `working/SLIMMING_REGISTER.md`
@@ -72,21 +75,21 @@ Pending:
 
 ## Unresolved risks
 
-- FLORA currently participates in general Runtime startup and may have hidden side effects beyond direct imports.
+- FLORA is detached from startup; its re-attach render/lifecycle behavior remains to be implemented and verified.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
 - Browser startup PASS does not by itself prove interaction or persistence behavior.
 
 ## Latest results
 
-- Runtime startup: baseline `PASS` at commit `b1f6519`; M2 Windows run `PENDING PUSH`.
+- Runtime startup: `PASS` — Run `34665925650`, commit `7da3b154e6b9295cd35fd53acf350582a58c8f8d`.
 - Core interaction: `PENDING`
 - Persistence: `PENDING`
-- FLORA detached: `LOCAL STATIC PASS` — 0 eager FLORA modules; Windows Runtime pending.
+- FLORA detached: `PASS` — no eager FLORA module and Windows Node-free startup passed.
 - FLORA enabled: `PENDING`
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
 
 ## Next authorized step
 
-Commit and push M2, then wait for the authoritative Windows Node-free Runtime result before implementing FLORA re-attach hooks.
+Implement M3 FLORA install/render/lifecycle hooks, explicit enabled mode, failure isolation evidence, and re-run the Windows Node-free Runtime gate.
