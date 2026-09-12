@@ -184,6 +184,7 @@ jobs:
               htmlReturned = ($dom.Length -gt 1000)
               stagePresent = ($dom -match 'id="stage"')
               runtimeIdentityVisible = ($dom -match 'INK v0\.1')
+              floraDetached = ($dom -match 'data-ink-capability-flora="available"')
               chromeErrorAbsent = ($dom -notmatch 'chrome-error://')
             }
             $status = if (($checks.Values | Where-Object { -not $_ }).Count -eq 0) { 'PASS' } else { 'FAIL' }
@@ -203,6 +204,35 @@ jobs:
             $report | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $evidence 'runtime-baseline-report.json') -Encoding UTF8
             $report | ConvertTo-Json -Depth 6 | Write-Host
             if ($status -ne 'PASS') { throw 'INK v0.1 browser startup baseline failed.' }
+
+            $floraUrl = "$url`?ink-capability=flora&ink-flora-smoke=1"
+            $floraStderr = Join-Path $evidence 'browser-flora-stderr.txt'
+            $floraDomFile = Join-Path $evidence 'runtime-flora-dom.html'
+            $floraArgs = @('--headless=new','--disable-gpu','--no-first-run','--disable-extensions','--disable-background-networking','--virtual-time-budget=15000','--dump-dom',$floraUrl)
+            $floraDom = & $env:INK_CHROMIUM_PATH @floraArgs 2>$floraStderr | Out-String
+            $floraExitCode = $LASTEXITCODE
+            $floraDom | Set-Content -Path $floraDomFile -Encoding UTF8
+            $floraChecks = [ordered]@{
+              browserExitCodeZero = ($floraExitCode -eq 0)
+              coreStagePresent = ($floraDom -match 'id="stage"')
+              capabilityInstalled = ($floraDom -match 'data-ink-capability-flora="installed"')
+              representativeActionPass = ($floraDom -match 'data-ink-flora-smoke="pass"')
+              capabilityFailureAbsent = ($floraDom -notmatch 'data-ink-capability-flora="failed"')
+              chromeErrorAbsent = ($floraDom -notmatch 'chrome-error://')
+            }
+            $floraStatus = if (($floraChecks.Values | Where-Object { -not $_ }).Count -eq 0) { 'PASS' } else { 'FAIL' }
+            $floraReport = [ordered]@{
+              product = 'INK v0.1'
+              mode = 'FLORA enabled'
+              status = $floraStatus
+              commit = $env:GITHUB_SHA
+              nodeRequired = $false
+              checks = $floraChecks
+              generatedAt = (Get-Date).ToUniversalTime().ToString('o')
+            }
+            $floraReport | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $evidence 'runtime-flora-report.json') -Encoding UTF8
+            $floraReport | ConvertTo-Json -Depth 6 | Write-Host
+            if ($floraStatus -ne 'PASS') { throw 'INK v0.1 FLORA enabled baseline failed.' }
           } finally {
             if ($server -and -not $server.HasExited) { Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue }
           }

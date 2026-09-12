@@ -686,6 +686,12 @@ function bootInk(){
     capabilities(){return app.capabilities.list();},
     architecture(){return{version:INK_VERSION,formatVersion:FORMAT_VERSION,modules:architectureModules(app),optionalCapabilities:app.capabilities.list(),render:app.renderer.naturalMedia.diagnostics(),liveTiles:app.renderer.liveTileDiagnostics(),workspace:workspaceDiagnostics(app.page()),artboard:{...app.page().artboard},history:app.history.stats(),inputArbiter:app.input.constructor.name,spatial:app.ensureSpatialIndex().stats()};}
   };
+  const reflectCapabilityState=()=>{const status=app.capabilities.status('flora');document.documentElement.dataset.inkCapabilityFlora=status.state;window.INK_ARCHITECTURE={...window.INK_ARCHITECTURE,modules:architectureModules(app),capabilityStates:app.capabilities.list()};return status;};
+  reflectCapabilityState();
+  const requestedCapabilities=new URLSearchParams(location.search).getAll('ink-capability');
+  window.INK_CAPABILITY_READY=requestedCapabilities.includes('flora')
+    ? app.capabilities.install('flora').then(()=>{app.renderer.invalidateTiles();app.renderer.render();return reflectCapabilityState();}).catch(()=>reflectCapabilityState())
+    : Promise.resolve(reflectCapabilityState());
   return app;
 }
 

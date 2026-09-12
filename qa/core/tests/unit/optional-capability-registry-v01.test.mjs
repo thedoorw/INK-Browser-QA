@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { OptionalCapabilityRegistry } from '../../../../product/source/src/capabilities/optional-capability-registry.js';
+import { defaultDocument } from '../../../../product/source/src/document/model.js';
+import { installInkCapability as installFloraCapability } from '../../../../product/source/src/flora/index.js';
 
 test('optional capability has deterministic available to installed state', async () => {
   const app = {};
@@ -45,4 +47,28 @@ test('installed hook failure is surfaced and isolated', async () => {
   await registry.install('fragile');
   assert.doesNotThrow(() => registry.notify('renderOverlay', {}));
   assert.deepEqual(registry.status('fragile'), { id: 'fragile', state: 'failed', error: 'renderOverlay: overlay rejected' });
+});
+
+test('FLORA capability re-attaches and initializes a representative Hero action', async () => {
+  const app = {
+    doc: defaultDocument(),
+    page() { return this.doc.pages[0]; },
+    pagePath() { return ['pages', 0]; },
+    refreshAll() {},
+    renderer: { invalidateTiles() {}, render() {} }
+  };
+  const registry = new OptionalCapabilityRegistry(app);
+  registry.register({
+    id: 'flora',
+    load: async () => ({ installInkCapability: installFloraCapability }),
+    install: (module, context) => module.installInkCapability(context)
+  });
+
+  const flora = await registry.install('flora');
+  const result = flora.hero.createBenchmarkPetal({ seed: 101 }, { history: false });
+  assert.equal(result.ok, true);
+  assert.equal(app.page().floraHero.profile.seed, 101);
+  assert.equal(app.flora, flora);
+  assert.equal(registry.some('requiresIndividualRender', { object: { floraPaint: { regionId: 'petal-1' } } }), true);
+  assert.deepEqual(registry.status('flora'), { id: 'flora', state: 'installed', error: null });
 });

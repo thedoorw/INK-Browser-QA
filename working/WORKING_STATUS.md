@@ -10,7 +10,7 @@ Authoritative work order: `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
 Baseline commit: `b1f65193b63fa3e2403752a197e19c998fd88ce6`
 
-Latest commit: `HEAD` (latest Runtime-bearing commit: `7da3b154e6b9295cd35fd53acf350582a58c8f8d`)
+Latest commit: `HEAD` (latest verified Runtime-bearing commit: `7da3b154e6b9295cd35fd53acf350582a58c8f8d`)
 
 Latest verified Runtime baseline:
 - Workflow: `INK v0.1 Runtime Baseline`
@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M2 — Capability seam: COMPLETE`
+`M3 — FLORA re-attach: IMPLEMENTED / WINDOWS RUNTIME PENDING`
 
 ## Files changed
 
@@ -31,6 +31,7 @@ Latest verified Runtime baseline:
 - `engineering/runtime-dependency-graph.mjs`
 - `.github/workflows/ink-v0.1-runtime-baseline.yml`
 - `product/source/src/capabilities/optional-capability-registry.js`
+- `product/source/src/flora/index.js`
 - `product/source/src/ink.js`
 - `qa/core/tests/unit/optional-capability-registry-v01.test.mjs`
 - `working/DEPENDENCY_MAP.md`
@@ -64,6 +65,11 @@ Completed:
 - capability state unit checks: PASS (3/3)
 - full `product/source/src/**/*.js` syntax scan: PASS
 - M2 Windows / Chrome / Node-free Runtime: PASS — Run `34665925650`
+- FLORA-owned masking, individual-render, inspection overlay, and document-replaced hooks
+- explicit attach path: `window.INK_CAPABILITIES.install('flora')`
+- explicit browser-enabled mode: `?ink-capability=flora`
+- representative FLORA Hero initialization unit check: PASS
+- capability state and failure isolation unit checks: PASS (4/4 total)
 
 Pending:
 - `working/SLIMMING_REGISTER.md`
@@ -75,7 +81,7 @@ Pending:
 
 ## Unresolved risks
 
-- FLORA is detached from startup; its re-attach render/lifecycle behavior remains to be implemented and verified.
+- FLORA hooks preserve the previous render semantics, but the Windows FLORA-enabled browser gate is still pending.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
 - Browser startup PASS does not by itself prove interaction or persistence behavior.
@@ -86,10 +92,10 @@ Pending:
 - Core interaction: `PENDING`
 - Persistence: `PENDING`
 - FLORA detached: `PASS` — no eager FLORA module and Windows Node-free startup passed.
-- FLORA enabled: `PENDING`
+- FLORA enabled: local attach/action unit `PASS`; Windows browser gate `PENDING`.
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
 
 ## Next authorized step
 
-Implement M3 FLORA install/render/lifecycle hooks, explicit enabled mode, failure isolation evidence, and re-run the Windows Node-free Runtime gate.
+Commit and push M3, then require both detached Core and FLORA-enabled Windows browser checks to PASS before M4.
