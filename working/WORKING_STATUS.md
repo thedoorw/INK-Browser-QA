@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `IN_PROGRESS`
+STATUS: `READY_FOR_REVIEW`
 
 Product: `INK v0.1`
 
@@ -10,11 +10,11 @@ Authoritative work order: `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
 Baseline commit: `b1f65193b63fa3e2403752a197e19c998fd88ce6`
 
-Latest commit: `ddfb400e5f4e78e714125b1e56b09643629686ad` (latest verified Runtime-bearing commit)
+Latest commit: `24911ec117211a930d04e8b51cdcd85764651fef` (latest verified Runtime-bearing commit)
 
 Latest verified Runtime baseline:
 - Workflow: `INK v0.1 Runtime Baseline`
-- Run ID: `34667753479`
+- Run ID: `34677879593`
 - Result: `PASS`
 - Runner: `DESKTOP-NSOQH69`
 - OS: Windows
@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M6 — Regression closure: IMPLEMENTED / WINDOWS INTERACTION GATE PENDING`
+`M6 — Regression closure: VERIFIED / PASS`
 
 ## Files changed
 
@@ -93,26 +93,29 @@ Completed:
 - bounded query-gated Core interaction smoke covering initialization, stroke creation, undo/redo, layer create/reorder/delete, selection/transform, serialization, SVG export initialization, persistence save/load, reload, and FLORA-detached state
 - M6 focused local verification: workflow YAML PASS; all Runtime JS syntax PASS; Document / History / Storage / Program Import / AI / Chat `26/26`; optional capability registry / FLORA attach `4/4`
 - final candidate graph: 97 modules / 1,044,724 bytes; 217 static edges; one optional dynamic FLORA edge
+- M6 Windows / Chrome / Node-free Runtime: PASS — Run `34677879593`
+- M6 Core interaction / persistence: PASS — initialization, stroke, undo/redo, layer create/reorder/delete, selection/transform, serialization, SVG export initialization, local persistence save/load and formal reload path
+- M6 FLORA detached + FLORA enabled representative Hero action: PASS on the same Runtime-bearing commit
+- Runtime evidence artifact: `ink-v0.1-node-free-runtime-34677879593` (Artifact ID `10292189840`)
 
 Pending:
-- Windows M6 Core interaction / persistence evidence
-- Windows M6 detached and enabled evidence on the same Runtime-bearing commit
+- None within the authorized Current Work Order.
 
 ## Unresolved risks
 
-- Windows Run `34677440349` exposed a smoke-harness timing issue: Chrome serialized the DOM while the IndexedDB Promise was still pending (`data-ink-core-smoke="running"`). The product startup check passed; the smoke now uses synchronous browser localStorage plus the formal document reload path, while the storage module is separately covered by passing unit tests. Windows rerun is pending.
+- Windows Run `34677440349` exposed a smoke-harness timing issue: Chrome serialized the DOM while the IndexedDB Promise was still pending (`data-ink-core-smoke="running"`). The product startup check passed; the query-gated smoke was repaired to use synchronous browser localStorage plus the formal document reload path, while the storage module remains separately covered by passing unit tests. Run `34677879593` verified the repair.
 - M5 live identity and service-worker dependency completeness passed the Windows gate; AI/Recipe architecture and PWA behavior remain unchanged.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
-- Browser startup PASS does not by itself prove interaction or persistence behavior.
+- Historical external-asset Program Import fixtures are not present in this repository checkout; the focused non-asset Program Import checks passed and this work did not change Program Import behavior.
 
 ## Latest results
 
-- Runtime startup: `PASS` — Run `34667753479`, commit `ddfb400e5f4e78e714125b1e56b09643629686ad`.
-- Core interaction: `LOCAL STRUCTURE READY / WINDOWS PENDING`
-- Persistence: `LOCAL STRUCTURE READY / WINDOWS PENDING`
-- FLORA detached: `PASS` — no eager FLORA module and Windows Node-free startup passed.
-- FLORA enabled: `PASS` — installed state, representative Hero action, failure absent, and Chrome error absent all verified by Run `34666438827`.
+- Runtime startup: `PASS` — Run `34677879593`, commit `24911ec117211a930d04e8b51cdcd85764651fef`.
+- Core interaction: `PASS` — Run `34677879593`.
+- Persistence: `PASS` — Run `34677879593`; Storage unit checks also PASS.
+- FLORA detached: `PASS` — no eager FLORA module and Windows Node-free Core startup passed on `24911ec`.
+- FLORA enabled: `PASS` — installed state, representative Hero action, failure absent, and Chrome error absent verified on `24911ec`.
 - Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after M2: `97 modules / 1,039,420 bytes`; FLORA eager graph `0 modules / 0 bytes`; optional dynamic edge `src/ink.js -> src/flora/index.js`.
 - Runtime graph after M4: `97 modules / 1,040,023 bytes`; FLORA optional source `37 modules / 423,935 bytes`; static edges `215`; dynamic optional edges `1`.
@@ -120,4 +123,4 @@ Pending:
 
 ## Next authorized step
 
-Commit and push the M6 Runtime-bearing verification surface, then require the Windows Node-free Runtime, Core interaction/persistence, FLORA detached, and FLORA enabled checks to PASS before marking `READY_FOR_REVIEW`.
+STOP. Request REVIEW. No merge, main promotion, certification, package, single-file `INK.html`, AI optionalization, Recipe optionalization, or next milestone is authorized.
