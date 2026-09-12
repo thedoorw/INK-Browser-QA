@@ -25,6 +25,8 @@
 ## 第一眼入口
 
 - `ACTIVE/README.md` — 現階段工作與產品邊界。
+- `governance/INK_EVOLUTION_AND_HEALTH_GOVERNANCE_v0.1.md` — INK 長期進化、健康、Review、promotion 與 release preparation 的永久治理方法。
+- `ACTIVE/INK_NEXT_STAGE_RECOMMENDATION.md` — 目前建議的產品演進順序；屬建議，不等於授權。現在建議路線為 Review closure → validated baseline → AI optionalization → Recipe optionalization → Core consolidation → self-contained `INK.html` Candidate → UI/product maturity → Certified。
 - `governance/INK_Original_Import_Baseline.md` — 原始匯入基線。
 - `governance/INK_Product_Boundary_v0.1.md` — 初版產品邊界。
 - `AGENTS.md` — AI / agent 執行契約。
