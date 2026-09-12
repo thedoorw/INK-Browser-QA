@@ -18,20 +18,24 @@ Latest authoritative Windows Runtime evidence: Run `34677879593` — PASS.
 
 ## Review role
 
-You are INK REVIEW. This is an independent review of the completed DEV work. Do not continue development unless a review finding requires a bounded correction and the user separately authorizes it.
+You are INK REVIEW. This is an independent review of the completed DEV work. Long-term REVIEW behavior is governed by `governance/INK_EVOLUTION_AND_HEALTH_GOVERNANCE_v0.1.md`. This work order defines only this round's exact review scope. Do not continue development unless a review finding requires a bounded correction and the user separately authorizes it.
+
+Fast start: `ACTIVE/INK_REVIEW_QUICKSTART.md`.
 
 Read in order:
 1. `README.md`
-2. `我說.md`
-3. `ACTIVE/README.md`
-4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
-5. `ACTIVE/INK_REVIEW_WORK_ORDER.md`
-6. `AGENTS.md`
-7. `working/WORKING_STATUS.md`
-8. `working/DEPENDENCY_MAP.md`
-9. `working/SLIMMING_REGISTER.md`
-10. `working/IDENTITY_REGISTER.md`
-11. relevant governance files
+2. `AGENTS.md`
+3. `governance/INK_EVOLUTION_AND_HEALTH_GOVERNANCE_v0.1.md`
+4. `ACTIVE/INK_REVIEW_WORK_ORDER.md`
+5. `working/WORKING_STATUS.md`
+
+Then read only the additional evidence/registers required below:
+- `ACTIVE/INK_CURRENT_WORK_ORDER.md`
+- `working/DEPENDENCY_MAP.md`
+- `working/SLIMMING_REGISTER.md`
+- `working/IDENTITY_REGISTER.md`
+- relevant governance files explicitly needed to verify a claim
+- `我說.md` only when long-term user intent needs clarification; it is not automatic implementation authority
 
 ## Review objective
 
@@ -40,7 +44,7 @@ Determine whether the completed DEV branch is safe to promote as the next valida
 ## Required checks
 
 ### R1 — Scope and commit integrity
-- Confirm review branch begins exactly from DEV completion commit `ceedcb44...`.
+- Confirm review branch originates from DEV completion commit `ceedcb44...`; later review-only governance/status commits are allowed but must not be confused with reviewed product bytes.
 - Compare `b1f65193...` to `ceedcb44...` and inventory all changed files.
 - Confirm no unauthorized product areas were modified.
 - Confirm DEV remains ahead of baseline without divergent history.
