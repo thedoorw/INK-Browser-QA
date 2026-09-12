@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `AUTHORIZED / NOT STARTED`
+STATUS: `IN_PROGRESS`
 
 Product: `INK v0.1`
 
@@ -21,12 +21,20 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M1 — Analysis freeze`
+`M1 — Analysis freeze: COMPLETE`
 
 ## Files changed
 
 - `ACTIVE/INK_CURRENT_WORK_ORDER.md`
+- `engineering/runtime-dependency-graph.mjs`
+- `working/DEPENDENCY_MAP.md`
 - `working/WORKING_STATUS.md`
+
+## Authorized-surface justification
+
+- `engineering/runtime-dependency-graph.mjs` will be added as a focused, read-only graph measurement helper required by Current Work Order Gate F. It lives outside Runtime, introduces no product dependency, and makes before/after module and byte counts reproducible.
+- `.github/workflows/ink-v0.1-runtime-baseline.yml` will later be adjusted within the explicitly authorized workflow surface so this DEV branch actually runs the authoritative Windows gate and can report detached/enabled evidence.
+- `product/source/src/capabilities/optional-capability-registry.js` will be added as the one small, domain-neutral install/lifecycle/render boundary required by P1/P4. Keeping it separate from the 170 KB entry avoids new scattered conditionals and does not create a generalized plugin ecosystem.
 
 ## Decisions already fixed
 
@@ -39,11 +47,15 @@ Latest verified Runtime baseline:
 
 ## Required DEV outputs
 
-Pending:
+Completed:
 - `working/DEPENDENCY_MAP.md`
+- baseline mandatory graph: 133 modules / 1,458,009 bytes
+- exact FLORA coupling list and frozen planned change list
+
+Pending:
 - `working/SLIMMING_REGISTER.md`
 - `working/IDENTITY_REGISTER.md`
-- before/after Runtime graph measurements
+- after Runtime graph measurements
 - core interaction smoke evidence
 - FLORA detached evidence
 - FLORA enabled evidence
@@ -62,9 +74,9 @@ Pending:
 - Persistence: `PENDING`
 - FLORA detached: `PENDING`
 - FLORA enabled: `PENDING`
-- Runtime graph before: `PENDING DEV MEASUREMENT`
+- Runtime graph before: `133 modules / 1,458,009 bytes` (FLORA: 37 modules / 420,473 bytes)
 - Runtime graph after: `PENDING`
 
 ## Next authorized step
 
-Read required sources, create `working/DEPENDENCY_MAP.md`, measure current mandatory browser Runtime graph, identify exact FLORA import/call sites, and commit M1 before code surgery.
+Commit M1 analysis freeze. Then implement the minimal capability seam and detached Core without widening AI/Recipe scope.
