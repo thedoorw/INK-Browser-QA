@@ -10,11 +10,11 @@ Authoritative work order: `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
 Baseline commit: `b1f65193b63fa3e2403752a197e19c998fd88ce6`
 
-Latest commit: `HEAD` (latest verified Runtime-bearing commit: `dc34b49bc6358c256e39cd7056aeb669278d09c4`)
+Latest commit: `ddfb400e5f4e78e714125b1e56b09643629686ad` (latest verified Runtime-bearing commit)
 
 Latest verified Runtime baseline:
 - Workflow: `INK v0.1 Runtime Baseline`
-- Run ID: `34666929560`
+- Run ID: `34667753479`
 - Result: `PASS`
 - Runner: `DESKTOP-NSOQH69`
 - OS: Windows
@@ -23,7 +23,7 @@ Latest verified Runtime baseline:
 
 ## Current milestone
 
-`M5 — Live identity cleanup: IMPLEMENTED / WINDOWS RUNTIME PENDING`
+`M5 — Live identity cleanup: VERIFIED / PASS`
 
 ## Files changed
 
@@ -88,6 +88,8 @@ Completed:
 - component protocol, schema, `FORMAT_VERSION = 4`, and historical evidence identities preserved
 - mandatory capability registry added to the existing PWA shell dependency list
 - M5 focused local verification: Program Import / Document / AI / Chat `20/20`; optional capability registry / FLORA attach `4/4`
+- M5 Windows / Chrome / Node-free Runtime: PASS — Run `34667753479`
+- live Runtime / Studio / AI identities: `0.1 / 0.1 / 0.1`; document format: `4`
 
 Pending:
 - core interaction smoke evidence
@@ -96,14 +98,14 @@ Pending:
 
 ## Unresolved risks
 
-- M5 live identity and service-worker dependency completeness await the Windows gate; AI/Recipe architecture and PWA behavior remain unchanged.
+- M5 live identity and service-worker dependency completeness passed the Windows gate; AI/Recipe architecture and PWA behavior remain unchanged.
 - Studio Core also couples Recipe / AI; do not widen scope unless required for a clean FLORA seam.
 - Historical version literals may represent protocol/schema/component identity rather than current product identity; classify before changing.
 - Browser startup PASS does not by itself prove interaction or persistence behavior.
 
 ## Latest results
 
-- Runtime startup: `PASS` — Run `34666929560`, commit `dc34b49bc6358c256e39cd7056aeb669278d09c4`.
+- Runtime startup: `PASS` — Run `34667753479`, commit `ddfb400e5f4e78e714125b1e56b09643629686ad`.
 - Core interaction: `PENDING`
 - Persistence: `PENDING`
 - FLORA detached: `PASS` — no eager FLORA module and Windows Node-free startup passed.
@@ -114,4 +116,4 @@ Pending:
 
 ## Next authorized step
 
-Commit and push M5, then require live Runtime/Studio/AI identity, `FORMAT_VERSION = 4`, detached Core, and FLORA-enabled checks to PASS before M6 closure.
+Proceed to M6 bounded interaction and persistence evidence; do not widen scope into AI/Recipe optionalization or packaging.
