@@ -76,6 +76,40 @@ The exhaustive file-level register is `INK_FILE_INVENTORY_v0.1.csv`; filter its 
 - Recipe 已帶入 material / recompute / program-import 等能力，不能只用「刪除 Recipe 模組」方式處理；需先辨識哪些能力其實應屬 Core。
 - 現有 `index-standalone.html` 仍透過 `dist/ink.compat.js` 再 import `src/ink.js`，不是最終真正單檔產品。
 
+## 主程式打包規範
+
+正式打包規範：`governance/INK_GitHub_Fast_Packaging_Standard.md`
+
+INK 採與 iCAD 同一類 Git-object fast packaging 原則：
+
+```text
+accepted source tree
+→ exact Git blob/tree reuse
+→ package tree
+→ package commit
+→ package branch
+→ GitHub branch ZIP
+→ STOP
+```
+
+現階段尚未完成真正單檔 `INK.html`，因此可以直接把 `product/source/` 的完整 modular product tree 作為可下載 package；不為了符合未來三件式目標而提前把模組硬塞進 HTML。
+
+固定最新下載 branch：
+
+```text
+package/ink-current
+```
+
+固定下載入口：
+
+```text
+https://github.com/thedoorw/INK-Browser-QA/archive/refs/heads/package/ink-current.zip
+```
+
+Packaging 本身不要求 PR merge、GitHub Actions、runner、Artifact 或重新跑 Runtime。若 source bytes 沒有改變，只是建立／更新 package 入口，不應重新驗證產品。
+
+目前 modular package 尚不等於 certified baseline；validation status 必須在交付回報中清楚標示。
+
 ## 三件式目標
 
 ```text
