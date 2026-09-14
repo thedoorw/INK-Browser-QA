@@ -1,7 +1,16 @@
 name: Package INK Main Program
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'product/source/**'
+      - '.github/workflows/package-main-program.yml'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   package:
@@ -29,14 +38,48 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p package
+          rm -rf package package-check
+          mkdir -p package package-check
           cd product/source
           zip -r ../../package/INK-main-package.zip .
+          cd ../..
+          sha256sum package/INK-main-package.zip > package/INK-main-package.zip.sha256
+
+      - name: Verify clean extraction and package identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -q package/INK-main-package.zip -d package-check
+          test -f package-check/index.html
+          test -f package-check/service-worker.js
+          test -f package-check/manifest.webmanifest
+          test -f package-check/styles.css
+          test -f package-check/ASSET_MANIFEST.json
+          test -d package-check/src
+          test -d package-check/assets
+          test -d package-check/schemas
+          test -d package-check/vendor
+          diff -qr product/source package-check
+          sha256sum -c package/INK-main-package.zip.sha256
+
+      - name: Record package summary
+        shell: bash
+        run: |
+          {
+            echo '## INK Main Package'
+            echo "- Source commit: $GITHUB_SHA"
+            echo '- Source directory: `product/source/`'
+            echo '- Package: `INK-main-package.zip`'
+            echo "- SHA256: $(cut -d' ' -f1 package/INK-main-package.zip.sha256)"
+            echo '- Clean extraction comparison: PASS'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
           name: INK-main-package
-          path: package/INK-main-package.zip
+          path: |
+            package/INK-main-package.zip
+            package/INK-main-package.zip.sha256
           if-no-files-found: error
           retention-days: 30
