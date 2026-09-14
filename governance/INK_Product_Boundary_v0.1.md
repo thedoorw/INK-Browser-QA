@@ -76,6 +76,15 @@ The exhaustive file-level register is `INK_FILE_INVENTORY_v0.1.csv`; filter its 
 - Recipe 已帶入 material / recompute / program-import 等能力，不能只用「刪除 Recipe 模組」方式處理；需先辨識哪些能力其實應屬 Core。
 - 現有 `index-standalone.html` 仍透過 `dist/ink.compat.js` 再 import `src/ink.js`，不是最終真正單檔產品。
 
+## 主程式包封裝規則
+
+- 正式 `INK-main-package.zip` 必須由 GitHub Actions workflow 直接從 `product/source/` 產生。
+- 不以人工在檔案總管中逐一挑選檔案、複製資料夾或手動壓縮，作為正式主程式包的建立方式。
+- 人工操作最多只負責觸發、核准或重新執行 workflow；封裝內容、必要檔案檢查與 ZIP 建立均由 workflow 執行。
+- `workflow_dispatch` 可保留作為備用／重建入口，但「按 Run workflow」不等於人工打包；實際封裝仍由 GitHub 執行。
+- 正常交付流程的目標是：指定分支／Gate 通過後，由 workflow 自動產生可下載 Artifact，避免把打包責任轉交給使用者。
+- 封裝 workflow 不得藉機修改 Runtime、版本號、AI、Recipe、FLORA 或其他產品功能；它只負責驗證封裝邊界與產生 ZIP。
+
 ## 三件式目標
 
 ```text
