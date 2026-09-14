@@ -1,0 +1,42 @@
+name: Package INK Main Program
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Validate main package structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f product/source/index.html
+          test -f product/source/service-worker.js
+          test -f product/source/manifest.webmanifest
+          test -f product/source/styles.css
+          test -f product/source/ASSET_MANIFEST.json
+          test -d product/source/src
+          test -d product/source/assets
+          test -d product/source/schemas
+          test -d product/source/vendor
+
+      - name: Create INK main package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p package
+          cd product/source
+          zip -r ../../package/INK-main-package.zip .
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: INK-main-package
+          path: package/INK-main-package.zip
+          if-no-files-found: error
+          retention-days: 30
