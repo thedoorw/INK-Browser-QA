@@ -27,7 +27,30 @@
 - `ACTIVE/README.md` — 現階段工作與產品邊界。
 - `governance/INK_Original_Import_Baseline.md` — 原始匯入基線。
 - `governance/INK_Product_Boundary_v0.1.md` — 初版產品邊界。
+- `governance/INK_GitHub_Fast_Packaging_Standard.md` — 主程式快速打包與直接下載規範。
 - `AGENTS.md` — AI / agent 執行契約。
 - `我說.md` — 使用者原文；未經另外交代不改寫。
 
-目前不建立新的 certified product baseline；現階段只建立可追溯的工程基線與整理規則。
+## 目前可直接下載的 Modular Package
+
+目前 INK 尚未整合成真正單檔 `INK.html`，所以可下載主程式包先直接使用 `product/source/` 的完整 modular product tree。
+
+固定 package branch：
+
+`package/ink-current`
+
+固定 ZIP：
+
+`https://github.com/thedoorw/INK-Browser-QA/archive/refs/heads/package/ink-current.zip`
+
+此 package 以 Git object exact reuse 建立，不需要 PR merge、GitHub Actions、runner 或 Artifact。它目前是方便下載的 modular package，**不是 certified baseline**。
+
+等未來完成單檔 `INK.html` 與功能驗證後，同一下載模式會切換成正式三件式：
+
+```text
+INK.html
+WORKING_STATUS.md
+SHA256SUMS.txt
+```
+
+目前不建立新的 certified product baseline；現階段只建立可追溯的工程基線、產品邊界與固定下載方式。
