@@ -80,9 +80,11 @@ The exhaustive file-level register is `INK_FILE_INVENTORY_v0.1.csv`; filter its 
 
 - 正式 `INK-main-package.zip` 必須由 GitHub Actions workflow 直接從 `product/source/` 產生。
 - 不以人工在檔案總管中逐一挑選檔案、複製資料夾或手動壓縮，作為正式主程式包的建立方式。
-- 人工操作最多只負責觸發、核准或重新執行 workflow；封裝內容、必要檔案檢查與 ZIP 建立均由 workflow 執行。
-- `workflow_dispatch` 可保留作為備用／重建入口，但「按 Run workflow」不等於人工打包；實際封裝仍由 GitHub 執行。
-- 正常交付流程的目標是：指定分支／Gate 通過後，由 workflow 自動產生可下載 Artifact，避免把打包責任轉交給使用者。
+- 正常流程不要求使用者手動打包，也不要求每次手動按 Run workflow。
+- `product/source/**` 的正式變更進入 `main` 時，Package workflow 應自動執行並產生新的 Artifact。
+- `workflow_dispatch` 僅保留作為備用／重建入口；即使由人工觸發，實際封裝、完整性檢查與 ZIP 建立仍由 GitHub 執行。
+- workflow 必須在上傳 Artifact 前檢查必要檔案與目錄、建立 `INK-main-package.zip`、計算 SHA256、重新解壓 ZIP，並確認解壓內容與 `product/source/` 一致。
+- GitHub Actions 暫時不可用時，可以使用固定、可重現的備援打包腳本；不得以人工隨意挑檔壓縮取代正式封裝規則。
 - 封裝 workflow 不得藉機修改 Runtime、版本號、AI、Recipe、FLORA 或其他產品功能；它只負責驗證封裝邊界與產生 ZIP。
 
 ## 三件式目標
