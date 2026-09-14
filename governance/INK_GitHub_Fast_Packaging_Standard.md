@@ -1,41 +1,68 @@
 # INK GitHub Fast Packaging Standard
 
-STATUS: DURABLE_GOVERNANCE
-PURPOSE: 以 Git object reuse 將已存在於 GitHub 的 INK 產品樹快速封裝成可直接下載的 branch ZIP；不把打包工作擴張成 build、Runtime、PR merge、Actions 或 Artifact 工作。
+STATUS: `DURABLE_GOVERNANCE / AUTHORITATIVE_PACKAGING_STANDARD`
 
-## 1. 核心原則
+## 目的
 
-對已存在 GitHub、產品邊界已明確的 INK source/package，正式封裝優先採：
+INK 正式主程式打包統一採用 iCAD 已驗證的 Git-object fast packaging 模式。
+
+正常的「幫我打包 INK／給我最新主程式 ZIP」應解讀為 Git-object assembly task，不是 build task。
+
+## 1. Core Flow
 
 ```text
-source commit / source tree
-→ resolve exact Git blobs / trees
-→ create package tree by exact SHA reuse
+accepted / validated product source
+→ reuse exact Git blobs / trees
+→ create package tree
 → create package commit
-→ create/update package branch
+→ create / update package branch
 → GitHub branch ZIP
 → STOP
 ```
 
-打包只改變「交付樹與下載入口」，不得因此修改產品內容、Runtime、版本、AI、Recipe、FLORA、QA、schema 或其他產品行為。
+Packaging 只建立交付入口，不修改產品內容。
 
-## 2. 現階段：Modular Package
+## 2. Current Modular Product Package
 
-在 INK 尚未完成真正單檔 `INK.html` 前，正式可下載主程式包可以直接由 `product/source/` 的完整產品樹組成。
-
-目前 canonical source root：
+現階段 INK 尚未整合成單一 `INK.html`，因此 package source 為：
 
 ```text
 product/source/
 ```
 
-封裝時將此目錄下已納入目前產品 source tree 的檔案與子樹，以 exact blob/tree SHA 原樣放到 package branch 根目錄。
+必須直接重用該完整產品樹的 exact Git tree / blob objects，原樣成為 package branch 根目錄。
 
-這表示目前 ZIP 可以是多檔／多資料夾產品包；不為了符合三件式目標而提前把模組硬塞進 HTML。
+不得為打包而：
 
-## 3. 未來：Three-piece Package
+- rebuild
+- 重新複製檔案內容
+- 重新上傳相同內容
+- newline normalization
+- 重新產生資產
+- 人工挑檔重組
+- 重新產生 Runtime 檔案
 
-當真正單檔產品完成且通過功能驗證後，package 形式切換為：
+目前 ZIP 是 **modular product package**，不得宣稱為最終 certified 三件式。
+
+## 3. Fixed Package Branch and Download
+
+固定 current package branch：
+
+```text
+package/ink-current
+```
+
+固定下載入口：
+
+```text
+https://github.com/thedoorw/INK-Browser-QA/archive/refs/heads/package/ink-current.zip
+```
+
+`package/ink-current` 只代表目前接受的可下載產品 package，不代表自動取得 certified 狀態。
+
+## 4. Future Certified Three-piece Package
+
+當 INK 完成真正單一 HTML 並通過正式驗證後，`package/ink-current` 的內容再收斂為：
 
 ```text
 INK.html
@@ -43,182 +70,116 @@ WORKING_STATUS.md
 SHA256SUMS.txt
 ```
 
-此時仍沿用同一 Git-object fast path：exact blobs → package tree → package commit → package branch → GitHub ZIP。
-
-因此從 modular package 過渡到 three-piece package，不改變使用者下載模式，只改變 package branch 內部內容。
-
-## 4. Package Branch
-
-### 固定最新下載入口
-
-```text
-package/ink-current
-```
-
-使用者正常只需使用：
-
-```text
-https://github.com/thedoorw/INK-Browser-QA/archive/refs/heads/package/ink-current.zip
-```
-
-`package/ink-current` 永遠指向目前被接受為可下載的 INK package commit。
-
-### 歷史／里程碑 package
-
-需要永久追溯時另建不可變 package branch，例如：
-
-```text
-package/ink-<version-or-milestone>
-```
-
-固定歷史 branch 不應被後續版本覆寫；`package/ink-current` 則可在新 package 通過封裝條件後移到新的 package commit。
+切換到三件式後仍使用同一 fast path：exact Git objects → package tree → package commit → package branch → GitHub ZIP。
 
 ## 5. Preconditions
 
-建立／更新 package 前至少確認：
+打包前只確認：
 
-```text
-A. source commit/tree identity 已知
-B. package source path 已知
-C. source tree 是本次要交付的產品邊界
-D. 本次只做 packaging，不修改 source bytes
-E. 若是 certified / validated 宣稱，必須已有對應驗證證據
-```
+1. source identity 明確。
+2. `product/source/` 為目前接受的產品來源樹。
+3. package branch 重用 exact blobs / trees。
+4. package branch 內容與 source tree 一致。
 
-若尚未 certified，可以建立「current modular package」，但文件與回報不得把它誤稱為 certified baseline。
+若 source identity、產品邊界或接受狀態不明，STOP 並先處理來源身分；不得以 build 或 Runtime 重跑代替身分確認。
 
-## 6. Mandatory Fast Path
+## 6. Mandatory Git-object Fast Path
 
-### Step 1 — Resolve exact source identity
+### Step 1 — Resolve source identity
 
 記錄：
 
 ```text
-SOURCE_COMMIT=<source commit>
-SOURCE_TREE=<product tree SHA>
+SOURCE_COMMIT=<accepted source commit>
+SOURCE_TREE_SHA=<product/source tree SHA>
 SOURCE_PATH=product/source
 ```
 
-### Step 2 — Reuse exact Git objects
+### Step 2 — Reuse exact source tree
 
-直接取得 source tree 內所有 top-level blobs/trees 的 SHA。
+若 package 根目錄應與 `product/source/` 完全相同，package commit 應直接使用該 source tree SHA 作為 commit tree。
 
-不得為打包而：
+這是優先方式；不需要重新逐檔建立相同 blob。
 
-- 下載後重新上傳
-- 重新 build
-- newline normalization
-- 重新產生資產
-- 人工挑檔複製
-- 用 ZIP 解壓／重壓來重建產品內容
+### Step 3 — Create package commit
 
-### Step 3 — Create package tree
+建立 package-only commit，tree 必須是上述 exact source tree。
 
-Package tree 只引用上述 exact Git objects。
+Package commit 不修改 main、不修改 source branch、不修改產品 bytes。
 
-現階段 modular package 的 package tree 應與接受的 `product/source/` tree 在內容上等價。
+### Step 4 — Create / update package branch
 
-### Step 4 — Create package commit
-
-建立 package-only commit；建議訊息：
-
-```text
-Package: <scope> INK product
-```
-
-Package commit 不修改 main 或 source branch。
-
-### Step 5 — Create or update package branch
-
-一般最新入口：
+將：
 
 ```text
 package/ink-current
 ```
 
-需要永久記錄時另外建立 versioned branch。
+指向新的 package commit。
 
-### Step 6 — Verify package identity
+若 branch 已存在，正常採可追溯的 fast-forward package commit；不得為打包改寫產品來源歷史。
+
+### Step 5 — Verify exact tree reuse
 
 至少確認：
 
 ```text
-PACKAGE_TREE_CONTENT == ACCEPTED_SOURCE_TREE_CONTENT
-EXACT_BLOB_TREE_REUSE = PASS
+PACKAGE_COMMIT.tree == SOURCE_TREE_SHA
+EXACT_TREE_REUSE = PASS
 PRODUCT_SOURCE_MUTATION = 0
 ```
 
-三件式階段另確認：
+### Step 6 — Deliver GitHub branch ZIP
+
+提供固定下載 URL，然後 STOP。
+
+## 7. Prohibited Packaging Expansion
+
+單純 packaging 本身不得觸發：
+
+- GitHub Actions packaging workflow
+- GitHub-hosted runner
+- self-hosted runner
+- Runtime 重跑
+- Artifact upload
+- PR merge
+- 產品內容修改
+
+除非 active Work Order 明確另有要求。
+
+Runtime／QA 驗證產品；Packaging 只把已接受的產品 Git objects 組成固定下載入口。兩者不得自動綁在一起。
+
+## 8. PR #2 / Workflow Packaging Status
+
+原先 `Add INK main-package workflow` 的 Actions-based packaging 方案已被本標準取代。
+
+該 PR 不應 merge；若仍 open，應標記 `superseded` 並關閉。
+
+未來不得因單純 packaging 重新引入 Actions ZIP workflow，除非 active Work Order 明確授權。
+
+## 9. Required Completion Report
+
+完成後只回報：
 
 ```text
-TREE_FILE_COUNT=3
-SHA256SUMS matches INK.html
-```
-
-### Step 7 — Deliver ZIP
-
-直接提供 GitHub branch ZIP URL，然後 STOP。
-
-## 7. 不需要 PR Merge
-
-Packaging 本身不需要：
-
-```text
-Pull Request
-→ Merge pull request
-→ GitHub Actions
-→ Artifact upload
-```
-
-PR 可用於治理／source change review，但不是取得 package ZIP 的必要步驟。
-
-## 8. 不需要 Actions / Runner
-
-若 source bytes 已存在 GitHub，packaging 預設不得為了「做 ZIP」而啟動：
-
-- GitHub-hosted Actions
-- Windows self-hosted Runtime
-- packaging workflow
-- Artifact upload/download
-- full Runtime rerun
-
-GitHub branch ZIP 已足以提供確定的下載入口。
-
-## 9. Runtime 與 Packaging 分離
-
-Runtime 驗證的是產品；Packaging 只是把已接受的產品樹形成交付入口。
-
-所以：
-
-```text
-新產品 bytes → 依規範驗證 Runtime / QA
-相同已驗證 bytes 再打包 → 不重跑 Runtime
-```
-
-目前 modular source 尚未宣稱 certified 時，也可以建立可下載 package，但必須清楚標示其 validation status。
-
-## 10. Required Completion Report
-
-```text
-PACKAGE_STATUS: PASS
-SOURCE_COMMIT: <sha>
-SOURCE_TREE: <sha>
-PACKAGE_BRANCH: <branch>
-PACKAGE_COMMIT: <sha>
-EXACT_OBJECT_REUSE: PASS
-ACTIONS_RUNS: 0
-RUNNERS_USED: 0
-DOWNLOAD: <GitHub branch ZIP URL>
-VALIDATION_STATUS: <CURRENT_MODULAR / VALIDATED / CERTIFIED>
+PACKAGE_STATUS
+SOURCE_COMMIT
+SOURCE_TREE_SHA
+PACKAGE_BRANCH
+PACKAGE_COMMIT
+EXACT_TREE_REUSE
+DOWNLOAD
 STOP
 ```
 
-## 11. Agent Decision Rule
+不得把單純打包擴張成 Runtime、CI、release、certification 或產品修改工作。
 
-未來 Agent 遇到「把目前 INK 主程式包起來給我下載」時，預設理解為：
+## 10. Agent Decision Rule
+
+未來遇到「幫我打包 INK／給我最新主程式 ZIP」時，正常情況優先解讀為：
 
 ```text
-THIS IS A GIT OBJECT ASSEMBLY TASK, NOT A BUILD TASK.
+THIS IS A GIT-OBJECT ASSEMBLY TASK, NOT A BUILD TASK.
 ```
 
-只有 source 尚未進 GitHub、產品樹不完整、身份不明或使用者明確要求新 build 時，才另行處理 build／Runtime 問題。
+只有 active Work Order 或使用者明確要求 build、Runtime、CI、release 或產品變更時，才進入那些工作。
