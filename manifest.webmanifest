@@ -1,6 +1,6 @@
 {
-  "name": "INK v1.5.1 RC — AI-assisted Editable Art",
-  "short_name": "INK v1.5.1 RC",
+  "name": "INK v0.1 — Health",
+  "short_name": "INK v0.1",
   "description": "INK 統一向量、手繪與影像創作平台，具可編輯 AI Plan、隔離 Preview、核准執行、重播與回滾。",
   "start_url": "./index.html",
   "scope": "./",
@@ -8,19 +8,5 @@
   "orientation": "any",
   "background_color": "#232426",
   "theme_color": "#2d2e30",
-  "lang": "zh-Hant",
-  "icons": [
-    {
-      "src": "icons/ink-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icons/ink-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "lang": "zh-Hant"
 }

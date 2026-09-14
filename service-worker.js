@@ -1,9 +1,9 @@
-const RELEASE_VERSION = '1.5.1';
+const RELEASE_VERSION = '0.1';
 const SHELL_CACHE = `ink-v${RELEASE_VERSION}-shell`;
 const RUNTIME_CACHE = `ink-v${RELEASE_VERSION}-runtime`;
 const APP_SHELL = [
-  './', './index.html', './index-standalone.html', './styles.css',
-  './src/config.js', './src/ink.js', './src/ai/ai-core.js', './src/ai/install-ai.js', './src/export/png-worker-encoder.js',
+  './', './index.html', './styles.css',
+  './src/config.js', './src/ink.js', './src/capabilities/optional-capability-registry.js', './src/ai/ai-core.js', './src/ai/install-ai.js', './src/export/png-worker-encoder.js',
   './src/studio-core.js', './src/vector/vector-core.js', './src/image/image-core.js', './src/paint/paint-core.js', './src/paint/stroke-model.js', './src/paint/brush-engine.js', './src/paint/stroke-session.js', './src/paint/drawing-workflow-import.js', './src/paint/drawing-quality.js', './src/recipe/recipe-engine.js', './src/vendor/polygon-clipping.umd.min.js',
   './src/program-import/index.js', './src/program-import/importer.js', './src/program-import/format-detector.js', './src/program-import/parsers.js', './src/program-import/security.js', './src/program-import/canonical-operation.js', './src/program-import/compiler.js', './src/program-import/coverage-engine.js', './src/program-import/comparison-engine.js',
   './src/core/index.js', './src/core/math.js', './src/core/geometry.js', './src/core/utils.js',
@@ -20,7 +20,7 @@ const APP_SHELL = [
   './src/render/webgl/natural-media-webgl.js', './src/render/webgl/multi-channel-ink-webgl.js',
   './src/export/index.js', './src/export/pdf.js',
   './src/release/index.js', './src/release/runtime-health.js', './src/release/external-diagnostics.js', './src/pwa/index.js', './src/pwa/update-manager.js',
-  './dist/ink.compat.js', './manifest.webmanifest', './icons/ink-192.png', './icons/ink-512.png'
+  './manifest.webmanifest'
 ];
 
 self.addEventListener('install', event => {
