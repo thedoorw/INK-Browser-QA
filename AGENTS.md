@@ -16,4 +16,6 @@ AI / Agent 進入本 repository 時，依下列順序讀取：
 - Product、QA、R&D、Engineering、Governance 必須分線，不把大型 Validation / research evidence 當成正式產品 payload。
 - `manifest.webmanifest` / `service-worker.js`、圖示/素材/schema、FLORA/AI/Recipe 目前是 `BOUNDARY_PENDING`；不得未經判定就硬塞入或移出正式主程式。
 - 正式三件式 package 目標為 `INK.html` + `WORKING_STATUS.md` + `SHA256SUMS.txt`，但在單檔 build 與功能驗證完成前不得宣稱 certified。
+- 主程式 packaging 必須讀 `governance/INK_GitHub_Fast_Packaging_Standard.md`；預設採 exact Git blob/tree reuse → package branch → GitHub ZIP，不把 packaging 擴張成 PR merge、Actions、runner、Artifact 或 Runtime 工作。
+- 現階段 modular package 可直接重用 `product/source/` 產品樹；其 validation status 必須清楚標示，不得冒充 certified baseline。
 - 任何刪除必須有明確依據：無 Runtime 依賴、無 QA 證據價值、無研究價值、無治理/追溯價值。
