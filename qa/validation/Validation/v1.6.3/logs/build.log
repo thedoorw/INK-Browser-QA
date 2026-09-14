@@ -1,5 +1,0 @@
-
-> ink-core-main-program@1.6.3-rc.1 build
-> node scripts/build-compat.mjs
-
-Built dependency-free dist/ink.compat.js bootstrap and index-standalone.html
