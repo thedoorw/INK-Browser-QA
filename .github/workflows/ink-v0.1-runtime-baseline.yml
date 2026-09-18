@@ -5,6 +5,7 @@ on:
     branches:
       - work/application-health-v0.1
       - working/INK-v0.1-structure-optionalization
+      - working/INK-v0.1-file-launch
     paths:
       - '.github/workflows/ink-v0.1-runtime-baseline.yml'
       - 'product/**'
@@ -276,6 +277,61 @@ jobs:
             if ($server -and -not $server.HasExited) { Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue }
           }
 
+      - name: Direct file launch baseline without Node
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $runtime = Join-Path $env:GITHUB_WORKSPACE '.working\runtime'
+          $evidence = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence'
+          New-Item -ItemType Directory -Force -Path $evidence | Out-Null
+
+          $indexPath = Join-Path $runtime 'index.html'
+          if (-not (Test-Path $indexPath)) { throw 'Direct-file baseline: index.html missing.' }
+          foreach ($required in @('ink.entry.js','ink.file-runtime.js','ink.file-modules-01.js','ink.file-modules-02.js','ink.file-modules-03.js','ink.file-modules-04.js','ink.file-modules-06.js','ink.file-modules-07.js','ink.file-modules-08.js','ink.file-modules-09.js','ink.file-modules-10.js','ink.file-modules-11.js','ink.file-modules-12.js')) {
+            if (-not (Test-Path (Join-Path $runtime $required))) { throw "Direct-file baseline: $required missing." }
+          }
+
+          $fileUrl = ([System.Uri]::new($indexPath)).AbsoluteUri + '?fresh=1&ink-smoke=core&ink-file-smoke=1'
+          $stderr = Join-Path $evidence 'browser-file-launch-stderr.txt'
+          $domFile = Join-Path $evidence 'runtime-file-launch-dom.html'
+          $args = @('--headless=new','--disable-gpu','--no-first-run','--disable-extensions','--disable-background-networking','--virtual-time-budget=20000','--dump-dom',$fileUrl)
+          $dom = & $env:INK_CHROMIUM_PATH @args 2>$stderr | Out-String
+          $exitCode = $LASTEXITCODE
+          $dom | Set-Content -Path $domFile -Encoding UTF8
+
+          $checks = [ordered]@{
+            browserExitCodeZero = ($exitCode -eq 0)
+            htmlReturned = ($dom.Length -gt 1000)
+            stagePresent = ($dom -match 'id="stage"')
+            runtimeIdentityVisible = ($dom -match 'INK v0\.1')
+            fileRuntimeLoaded = ($dom -match 'data-ink-file-runtime="loaded"')
+            coreInteractionPass = ($dom -match 'data-ink-core-smoke="pass"')
+            drawingPass = ($dom -match 'data-ink-core-stroke="pass"')
+            undoRedoPass = ($dom -match 'data-ink-core-history="pass"')
+            layersPass = ($dom -match 'data-ink-core-layers="pass"')
+            selectionTransformPass = ($dom -match 'data-ink-core-selection-transform="pass"')
+            serializationPass = ($dom -match 'data-ink-core-serialization="pass"')
+            exportInitPass = ($dom -match 'data-ink-core-export="pass"')
+            persistencePass = ($dom -match 'data-ink-core-persistence="pass"')
+            workspaceSwitchPass = ($dom -match 'data-ink-file-workspace="pass"')
+            inspectorTogglePass = ($dom -match 'data-ink-file-inspector="pass"')
+            uiSmokePass = ($dom -match 'data-ink-file-ui-smoke="pass"')
+            chromeErrorAbsent = ($dom -notmatch 'chrome-error://')
+          }
+          $status = if (($checks.Values | Where-Object { -not $_ }).Count -eq 0) { 'PASS' } else { 'FAIL' }
+          $report = [ordered]@{
+            product = 'INK v0.1'
+            mode = 'Direct file launch'
+            status = $status
+            commit = $env:GITHUB_SHA
+            nodeRequired = $false
+            url = $fileUrl
+            checks = $checks
+            generatedAt = (Get-Date).ToUniversalTime().ToString('o')
+          }
+          $report | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $evidence 'runtime-file-launch-report.json') -Encoding UTF8
+          $report | ConvertTo-Json -Depth 6 | Write-Host
+          if ($status -ne 'PASS') { throw 'INK v0.1 direct file launch baseline failed.' }
+
       - name: Publish Runtime report to job summary
         if: always()
         run: |
@@ -298,6 +354,11 @@ jobs:
           if (Test-Path $coreReport) {
             $coreJson = Get-Content $coreReport -Raw | ConvertFrom-Json
             Add-Content $env:GITHUB_STEP_SUMMARY "- Core interaction / persistence: **$($coreJson.status)**"
+          }
+          $fileReport = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence\runtime-file-launch-report.json'
+          if (Test-Path $fileReport) {
+            $fileJson = Get-Content $fileReport -Raw | ConvertFrom-Json
+            Add-Content $env:GITHUB_STEP_SUMMARY "- Direct file launch: **$($fileJson.status)**"
           }
           $floraReport = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence\runtime-flora-report.json'
           if (Test-Path $floraReport) {
