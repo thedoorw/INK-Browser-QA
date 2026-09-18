@@ -1,8 +1,0 @@
-{
-  "packageRoot": "/mnt/data/flowerbatch02/package/INK_Flower_Benchmark_Batch_02",
-  "case": {
-    "caseId": "case-04-real-complex-illustrator-spirograph",
-    "status": "PASS",
-    "decision": "VALIDATION REQUIRED"
-  }
-}
