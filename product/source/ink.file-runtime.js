@@ -17,6 +17,52 @@
     console.error('INK_FILE_RUNTIME_FAILED', error);
   };
 
+  const waitFor = async (predicate, timeoutMs = 12000) => {
+    const started = performance.now();
+    while (performance.now() - started < timeoutMs) {
+      if (predicate()) return true;
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    return false;
+  };
+
+  const runFileSmoke = async () => {
+    if (new URLSearchParams(location.search).get('ink-file-smoke') !== '1') return;
+    const root = document.documentElement;
+    root.dataset.inkFileUiSmoke = 'running';
+    try {
+      if (!(await waitFor(() => Boolean(window.INK_TEST)))) throw new Error('INK_TEST did not initialize in file mode.');
+
+      const app = document.querySelector('#app');
+      const layout = document.querySelector('[data-space="layout"]');
+      const inspectorToggle = document.querySelector('#inspectorToggle');
+      const inspector = document.querySelector('#inspector');
+      if (!app || !layout || !inspectorToggle || !inspector) throw new Error('Required UI controls are missing.');
+
+      layout.click();
+      await new Promise(resolve => setTimeout(resolve, 80));
+      const workspacePass = app.dataset.space === 'layout';
+
+      const wasOpen = app.classList.contains('inspector-open');
+      if (wasOpen) inspectorToggle.click();
+      inspectorToggle.click();
+      await new Promise(resolve => setTimeout(resolve, 50));
+      const inspectorPass = app.classList.contains('inspector-open') &&
+        inspector.getAttribute('aria-hidden') === 'false' &&
+        inspectorToggle.getAttribute('aria-expanded') === 'true';
+
+      if (app.classList.contains('inspector-open')) inspectorToggle.click();
+
+      root.dataset.inkFileWorkspace = workspacePass ? 'pass' : 'fail';
+      root.dataset.inkFileInspector = inspectorPass ? 'pass' : 'fail';
+      root.dataset.inkFileUiSmoke = workspacePass && inspectorPass ? 'pass' : 'fail';
+    } catch (error) {
+      root.dataset.inkFileUiSmoke = 'fail';
+      root.dataset.inkFileUiSmokeError = String(error?.message || error);
+      console.error('INK_FILE_UI_SMOKE_FAILED', error);
+    }
+  };
+
   try {
     if (!modules[entry]) throw new Error('INK direct-file entry module is missing.');
     const imports = {};
@@ -45,6 +91,7 @@
     const bootstrap = document.createElement('script');
     bootstrap.type = 'module';
     bootstrap.src = bootstrapUrl;
+    bootstrap.onload = () => { runFileSmoke(); };
     bootstrap.onerror = () => fail(new Error('Direct-file module bootstrap failed.'));
     document.body.append(bootstrap);
 
