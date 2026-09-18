@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -11,42 +11,64 @@ const output = path.join(sourceRoot, 'ink.file-runtime.js');
 const moduleId = relativePath => '@ink/' + relativePath.replace(/\\/g, '/');
 const normalize = value => value.replace(/\\/g, '/').replace(/^\.\//, '');
 
-const staticPattern = /\b(?:import|export)\s+(?:[^'"\n]*?\s+from\s+)?(['"])([^'"]+)\1/g;
-const dynamicPattern = /\bimport\s*\(\s*(['"])([^'"]+)\1\s*\)/g;
+const STATIC_PATTERNS = [
+  /\bimport\s+(?:[^'";]*?\s+from\s+)?(['"])([^'"]+)\1/g,
+  /\bexport\s+[^'";]*?\s+from\s+(['"])([^'"]+)\1/g
+];
+const DYNAMIC_PATTERN = /\bimport\s*\(\s*(['"])([^'"]+)\1\s*\)/g;
 
 function localSpecifier(specifier) {
   return specifier.startsWith('./') || specifier.startsWith('../');
 }
 
-function resolveSpecifier(fromPath, specifier) {
-  const base = path.posix.dirname(fromPath);
-  return path.posix.normalize(path.posix.join(base, specifier));
+function posixJoin(fromPath, specifier) {
+  return path.posix.normalize(path.posix.join(path.posix.dirname(fromPath), specifier));
+}
+
+async function resolveSpecifier(fromPath, specifier) {
+  const candidate = posixJoin(fromPath, specifier);
+  const candidates = path.posix.extname(candidate)
+    ? [candidate]
+    : [candidate, candidate + '.js', candidate + '.mjs', path.posix.join(candidate, 'index.js')];
+  for (const relativePath of candidates) {
+    try {
+      if ((await stat(path.join(sourceRoot, ...relativePath.split('/')))).isFile()) return relativePath;
+    } catch {}
+  }
+  throw new Error('Unresolved local module: ' + fromPath + ' -> ' + specifier);
 }
 
 function collectSpecifiers(source) {
   const found = [];
-  for (const pattern of [staticPattern, dynamicPattern]) {
+  for (const pattern of STATIC_PATTERNS) {
     pattern.lastIndex = 0;
     let match;
     while ((match = pattern.exec(source))) found.push(match[2]);
   }
+  DYNAMIC_PATTERN.lastIndex = 0;
+  let match;
+  while ((match = DYNAMIC_PATTERN.exec(source))) found.push(match[2]);
   return [...new Set(found)];
 }
 
-function rewriteSpecifiers(source, fromPath) {
-  const replace = (full, quote, specifier) => {
+function rewriteWithResolution(source, fromPath, resolutionMap) {
+  const rewrite = (full, quote, specifier) => {
     if (!localSpecifier(specifier)) return full;
-    const resolved = resolveSpecifier(fromPath, specifier);
+    const resolved = resolutionMap.get(specifier);
+    if (!resolved) throw new Error('Missing resolved module: ' + fromPath + ' -> ' + specifier);
     return full.replace(quote + specifier + quote, quote + moduleId(resolved) + quote);
   };
-  staticPattern.lastIndex = 0;
-  source = source.replace(staticPattern, replace);
-  dynamicPattern.lastIndex = 0;
-  source = source.replace(dynamicPattern, replace);
+  for (const pattern of STATIC_PATTERNS) {
+    pattern.lastIndex = 0;
+    source = source.replace(pattern, rewrite);
+  }
+  DYNAMIC_PATTERN.lastIndex = 0;
+  source = source.replace(DYNAMIC_PATTERN, rewrite);
   return source;
 }
 
 const modules = new Map();
+const resolutions = new Map();
 const queue = [entry];
 
 while (queue.length) {
@@ -55,16 +77,20 @@ while (queue.length) {
   const absolutePath = path.join(sourceRoot, ...relativePath.split('/'));
   const source = await readFile(absolutePath, 'utf8');
   modules.set(relativePath, source);
+
+  const moduleResolutions = new Map();
   for (const specifier of collectSpecifiers(source)) {
     if (!localSpecifier(specifier)) continue;
-    const resolved = resolveSpecifier(relativePath, specifier);
+    const resolved = await resolveSpecifier(relativePath, specifier);
+    moduleResolutions.set(specifier, resolved);
     if (!modules.has(resolved)) queue.push(resolved);
   }
+  resolutions.set(relativePath, moduleResolutions);
 }
 
 const transformed = {};
 for (const [relativePath, source] of modules) {
-  transformed[moduleId(relativePath)] = rewriteSpecifiers(source, relativePath);
+  transformed[moduleId(relativePath)] = rewriteWithResolution(source, relativePath, resolutions.get(relativePath));
 }
 
 const payload = JSON.stringify(transformed);
