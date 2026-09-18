@@ -18,7 +18,7 @@ permissions:
 
 concurrency:
   group: ink-v0.1-runtime-baseline-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.ref == 'refs/heads/working/INK-v0.1-file-launch' }}
 
 jobs:
   runtime-baseline:
@@ -286,7 +286,7 @@ jobs:
 
           $indexPath = Join-Path $runtime 'index.html'
           if (-not (Test-Path $indexPath)) { throw 'Direct-file baseline: index.html missing.' }
-          foreach ($required in @('ink.entry.js','ink.file-runtime.js','ink.file-modules-01.js','ink.file-modules-02.js','ink.file-modules-03.js','ink.file-modules-04.js','ink.file-modules-06.js','ink.file-modules-07.js','ink.file-modules-08.js','ink.file-modules-09.js','ink.file-modules-10.js','ink.file-modules-11.js','ink.file-modules-12.js')) {
+          foreach ($required in @('ink.entry.js','ink.file-runtime.js','ink.file-modules-01.js','ink.file-modules-02.js','ink.file-modules-03.js','ink.file-modules-04.js','ink.file-modules-05a.js','ink.file-modules-05b.js','ink.file-modules-05c.js','ink.file-modules-05d.js','ink.file-modules-05e.js','ink.file-modules-05f.js','ink.file-modules-05g.js','ink.file-modules-06.js','ink.file-modules-07.js','ink.file-modules-08.js','ink.file-modules-09.js','ink.file-modules-10.js','ink.file-modules-11.js','ink.file-modules-12.js')) {
             if (-not (Test-Path (Join-Path $runtime $required))) { throw "Direct-file baseline: $required missing." }
           }
 
@@ -332,6 +332,38 @@ jobs:
           $report | ConvertTo-Json -Depth 6 | Write-Host
           if ($status -ne 'PASS') { throw 'INK v0.1 direct file launch baseline failed.' }
 
+          $fileFloraUrl = ([System.Uri]::new($indexPath)).AbsoluteUri + '?fresh=1&ink-capability=flora&ink-flora-smoke=1'
+          $fileFloraStderr = Join-Path $evidence 'browser-file-flora-stderr.txt'
+          $fileFloraDomFile = Join-Path $evidence 'runtime-file-flora-dom.html'
+          $fileFloraArgs = @('--headless=new','--disable-gpu','--no-first-run','--disable-extensions','--disable-background-networking','--virtual-time-budget=20000','--dump-dom',$fileFloraUrl)
+          $fileFloraDom = & $env:INK_CHROMIUM_PATH @fileFloraArgs 2>$fileFloraStderr | Out-String
+          $fileFloraExitCode = $LASTEXITCODE
+          $fileFloraDom | Set-Content -Path $fileFloraDomFile -Encoding UTF8
+
+          $fileFloraChecks = [ordered]@{
+            browserExitCodeZero = ($fileFloraExitCode -eq 0)
+            fileRuntimeLoaded = ($fileFloraDom -match 'data-ink-file-runtime="loaded"')
+            coreStagePresent = ($fileFloraDom -match 'id="stage"')
+            capabilityInstalled = ($fileFloraDom -match 'data-ink-capability-flora="installed"')
+            representativeActionPass = ($fileFloraDom -match 'data-ink-flora-smoke="pass"')
+            capabilityFailureAbsent = ($fileFloraDom -notmatch 'data-ink-capability-flora="failed"')
+            chromeErrorAbsent = ($fileFloraDom -notmatch 'chrome-error://')
+          }
+          $fileFloraStatus = if (($fileFloraChecks.Values | Where-Object { -not $_ }).Count -eq 0) { 'PASS' } else { 'FAIL' }
+          $fileFloraReport = [ordered]@{
+            product = 'INK v0.1'
+            mode = 'Direct file FLORA enabled'
+            status = $fileFloraStatus
+            commit = $env:GITHUB_SHA
+            nodeRequired = $false
+            url = $fileFloraUrl
+            checks = $fileFloraChecks
+            generatedAt = (Get-Date).ToUniversalTime().ToString('o')
+          }
+          $fileFloraReport | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $evidence 'runtime-file-flora-report.json') -Encoding UTF8
+          $fileFloraReport | ConvertTo-Json -Depth 6 | Write-Host
+          if ($fileFloraStatus -ne 'PASS') { throw 'INK v0.1 direct file FLORA baseline failed.' }
+
       - name: Publish Runtime report to job summary
         if: always()
         run: |
@@ -359,6 +391,11 @@ jobs:
           if (Test-Path $fileReport) {
             $fileJson = Get-Content $fileReport -Raw | ConvertFrom-Json
             Add-Content $env:GITHUB_STEP_SUMMARY "- Direct file launch: **$($fileJson.status)**"
+          }
+          $fileFloraReport = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence\runtime-file-flora-report.json'
+          if (Test-Path $fileFloraReport) {
+            $fileFloraJson = Get-Content $fileFloraReport -Raw | ConvertFrom-Json
+            Add-Content $env:GITHUB_STEP_SUMMARY "- Direct file FLORA: **$($fileFloraJson.status)**"
           }
           $floraReport = Join-Path $env:GITHUB_WORKSPACE '.working\runtime-evidence\runtime-flora-report.json'
           if (Test-Path $floraReport) {
