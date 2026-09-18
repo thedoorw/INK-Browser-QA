@@ -1,0 +1,149 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(here, '..');
+const sourceRoot = path.join(repoRoot, 'product', 'source');
+const entry = 'src/ink.js';
+const output = path.join(sourceRoot, 'ink.file-runtime.js');
+
+const moduleId = relativePath => '@ink/' + relativePath.replace(/\\/g, '/');
+const normalize = value => value.replace(/\\/g, '/').replace(/^\.\//, '');
+
+const staticPattern = /\b(?:import|export)\s+(?:[^'"\n]*?\s+from\s+)?(['"])([^'"]+)\1/g;
+const dynamicPattern = /\bimport\s*\(\s*(['"])([^'"]+)\1\s*\)/g;
+
+function localSpecifier(specifier) {
+  return specifier.startsWith('./') || specifier.startsWith('../');
+}
+
+function resolveSpecifier(fromPath, specifier) {
+  const base = path.posix.dirname(fromPath);
+  return path.posix.normalize(path.posix.join(base, specifier));
+}
+
+function collectSpecifiers(source) {
+  const found = [];
+  for (const pattern of [staticPattern, dynamicPattern]) {
+    pattern.lastIndex = 0;
+    let match;
+    while ((match = pattern.exec(source))) found.push(match[2]);
+  }
+  return [...new Set(found)];
+}
+
+function rewriteSpecifiers(source, fromPath) {
+  const replace = (full, quote, specifier) => {
+    if (!localSpecifier(specifier)) return full;
+    const resolved = resolveSpecifier(fromPath, specifier);
+    return full.replace(quote + specifier + quote, quote + moduleId(resolved) + quote);
+  };
+  staticPattern.lastIndex = 0;
+  source = source.replace(staticPattern, replace);
+  dynamicPattern.lastIndex = 0;
+  source = source.replace(dynamicPattern, replace);
+  return source;
+}
+
+const modules = new Map();
+const queue = [entry];
+
+while (queue.length) {
+  const relativePath = normalize(queue.shift());
+  if (modules.has(relativePath)) continue;
+  const absolutePath = path.join(sourceRoot, ...relativePath.split('/'));
+  const source = await readFile(absolutePath, 'utf8');
+  modules.set(relativePath, source);
+  for (const specifier of collectSpecifiers(source)) {
+    if (!localSpecifier(specifier)) continue;
+    const resolved = resolveSpecifier(relativePath, specifier);
+    if (!modules.has(resolved)) queue.push(resolved);
+  }
+}
+
+const transformed = {};
+for (const [relativePath, source] of modules) {
+  transformed[moduleId(relativePath)] = rewriteSpecifiers(source, relativePath);
+}
+
+const payload = JSON.stringify(transformed);
+const generated = `/* INK v0.1 direct-file Runtime payload.
+ * GENERATED from product/source/src via engineering/build-file-runtime.mjs.
+ * Modular source remains authoritative.
+ */
+(() => {
+  const MODULES = ${payload};
+  const state = window.__INK_FILE_RUNTIME__ = {
+    mode: 'file-compatible',
+    state: 'loading',
+    entry: '${moduleId(entry)}',
+    moduleCount: Object.keys(MODULES).length,
+    error: null
+  };
+
+  try {
+    const imports = {};
+    const objectUrls = [];
+    for (const [id, source] of Object.entries(MODULES)) {
+      const url = URL.createObjectURL(new Blob([source], { type: 'text/javascript' }));
+      imports[id] = url;
+      objectUrls.push(url);
+    }
+
+    const importMap = document.createElement('script');
+    importMap.type = 'importmap';
+    importMap.textContent = JSON.stringify({ imports });
+    (document.head || document.documentElement).append(importMap);
+
+    const bootstrapUrl = URL.createObjectURL(new Blob([
+      'import "${moduleId(entry)}";\\n' +
+      'window.__INK_FILE_RUNTIME__.state = "loaded";\\n' +
+      'document.documentElement.dataset.inkFileRuntime = "loaded";'
+    ], { type: 'text/javascript' }));
+    objectUrls.push(bootstrapUrl);
+
+    const bootstrap = document.createElement('script');
+    bootstrap.type = 'module';
+    bootstrap.src = bootstrapUrl;
+    bootstrap.onerror = event => {
+      state.state = 'failed';
+      state.error = 'BOOTSTRAP_MODULE_FAILED';
+      document.documentElement.dataset.inkFileRuntime = 'failed';
+      console.error('INK_FILE_RUNTIME_BOOTSTRAP_FAILED', event);
+    };
+    document.body.append(bootstrap);
+
+    window.addEventListener('error', event => {
+      if (state.state === 'loaded') return;
+      state.state = 'failed';
+      state.error = String(event.error?.message || event.message || 'Runtime error');
+      document.documentElement.dataset.inkFileRuntime = 'failed';
+    });
+    window.addEventListener('unhandledrejection', event => {
+      if (state.state === 'loaded') return;
+      state.state = 'failed';
+      state.error = String(event.reason?.message || event.reason || 'Unhandled rejection');
+      document.documentElement.dataset.inkFileRuntime = 'failed';
+    });
+
+    window.addEventListener('beforeunload', () => {
+      for (const url of objectUrls) URL.revokeObjectURL(url);
+    }, { once: true });
+  } catch (error) {
+    state.state = 'failed';
+    state.error = String(error?.message || error);
+    document.documentElement.dataset.inkFileRuntime = 'failed';
+    console.error('INK_FILE_RUNTIME_SETUP_FAILED', error);
+  }
+})();
+`;
+
+await writeFile(output, generated);
+console.log(JSON.stringify({
+  status: 'PASS',
+  entry,
+  modules: modules.size,
+  bytes: Buffer.byteLength(generated),
+  output: path.relative(repoRoot, output).replace(/\\/g, '/')
+}, null, 2));
