@@ -1,124 +1,66 @@
 # INK WORKING STATUS
 
-STATUS: `SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / STOP`
+STATUS: `DEV_AUTHORIZED`
 
 ## Active control
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-002` |
-| DEV_BRANCH | `work/ink-cloud-002` |
+| CURRENT_TASK_ID | `INK-CLOUD-003` |
+| DEV_BRANCH | `work/ink-cloud-003` |
 | DEV_BRANCH_HEAD | `NOT_STARTED` |
-| DEV_HANDOFF | `ACCEPTED_SOURCE_LEVEL` |
-| MR_REVIEW | `SOURCE_REVIEW_PASS` |
+| DEV_HANDOFF | `PENDING` |
+| MR_REVIEW | `NOT_STARTED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `WAIT_FOR_NEXT_WORK_ORDER` |
-| CLOUD_START_GATE | `BLOCKED_UNTIL_USER_REMINDER_AND_APPROVAL` |
+| NEXT_STAGE | `CONTAINER_OWNERSHIP_STRUCTURAL_SEMANTICS` |
+| CLOUD_START_GATE | `BLOCKED_UNTIL_PRE_CLOUD_CORE_READY_AND_USER_APPROVAL` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 | SOURCE_STATIC_QA | `REQUIRED` |
 
-## Previous accepted checkpoint
+## Accepted baseline
 
-`INK-CLOUD-001` passed MR review.
+`INK-CLOUD-002`:
 
-Accepted audit is now promoted to main:
+```text
+SOURCE_REVIEW_PASS
+RUNTIME_QA_DEFERRED
+PROMOTED_TO_MAIN
+PROMOTION_COMMIT = 7c03793ce7d289d0a1ecf1fafe3602aa9eedff13
+```
 
-`research/INK_CLOUD_EDITOR_PENPOT_GAP_AUDIT_v0.1.md`
+Accepted capability:
 
-## Product model
+`Frame + Nested Hierarchy Foundation v0.1`
 
-Authoritative direction:
+## Current objective
 
-`governance/INK_Product_Delivery_Model_v0.1.md`
+Stabilize:
 
-One shared INK core, with:
-- portable single-`INK.html` delivery;
-- INK Cloud Editor delivery.
+- Frame / Group structural roles;
+- ownership invariants;
+- inherited visibility / lock / opacity;
+- nested structural order;
+- Group/Frame transform consistency;
+- serialization / migration / integrity behavior.
+
+No Cloud implementation is authorized.
 
 ## Resume rule
 
-New windows recover from GitHub SSOT:
+Recover from GitHub SSOT:
 
 1. `README.md`
 2. `AGENTS.md`
 3. `ACTIVE/README.md`
 4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 5. this file
-6. role-specific status/handoff files
+6. role-specific progress/review files
 
-## Fingerprint rule
+## Runtime constraint
 
-During DEV:
+Hosted GitHub Actions remain unavailable due quota.
 
-```text
-TASK_ID
-+ DEV_WORK_BRANCH
-+ latest checkpoint commit
-```
-
-At DEV handoff, MR pins the exact final branch HEAD before review.
-
-
-## Temporary validation constraint
-
-GitHub Actions quota is exhausted. Current development proceeds without hosted Runtime QA.
-
-DEV must maximize source/static/structural evidence and explicitly record any checks that remain `RUNTIME_QA_DEFERRED`.
-
-No package certification or Runtime-verified claim may be made while this debt remains open.
-
-
-## Cloud start checkpoint
-
-The project must first stabilize the document-format / structural core.
-
-When MR determines that this pre-Cloud stage is complete:
-
-```text
-PRE_CLOUD_CORE_READY
-→ USER_REMINDER_REQUIRED
-→ USER_APPROVAL_REQUIRED
-→ FIRST_CLOUD_WORK_ORDER
-```
-
-No DEV/WORK role may begin Cloud implementation before this gate is explicitly cleared.
-
-
-## MR revision checkpoint
-
-Reviewed DEV branch head:
-
-`3ff5c61393fe6603e072fa587d954a159d239444`
-
-MR decision:
-
-`MR_REVISE`
-
-Only authorized revision:
-
-- prohibit cross-Layer Frame creation/reparent for v0.1;
-- add regression evidence;
-- update handoff/report.
-
-Core Frame/Hierarchy implementation is otherwise retained.
-
-Runtime QA remains `DEFERRED`.
-
-
-## INK-CLOUD-002 accepted checkpoint
-
-```text
-TASK_ID      INK-CLOUD-002
-DEV_BRANCH   work/ink-cloud-002
-REVIEW_HEAD  6a2ac7fbfa8c27fa394f5630b788878407af060c
-MR_DECISION  SOURCE_REVIEW_PASS
-RUNTIME_QA   DEFERRED
-DEV_STATE    STOP
-```
-
-The Frame + Nested Hierarchy source foundation is accepted.
-
-This does not clear the Cloud Start Gate.
+Use source/static/unit evidence where possible and record browser/runtime debt as `RUNTIME_QA_DEFERRED`.
