@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_REVIEW_REQUIRED`
+STATUS: `MR_PASS / STOP`
 
 ## Control
 
@@ -13,10 +13,10 @@ STATUS: `MR_REVIEW_REQUIRED`
 | WORK_ORDER_BASE_MAIN | `09e86ac461b64d4d1346185dd5053807d75d4ec4` |
 | DEV_BRANCH_HEAD | `becd65ba14fcb1a30419aa2b422e9e95dc59bce4` |
 | DEV_STATE | `DEV_HANDOFF` |
-| CURRENT_GATE | `MR_REVIEW_REQUIRED` |
+| CURRENT_GATE | `MR_PASS / STOP` |
 | PRODUCT_SOURCE_MUTATION | `0` |
 | PACKAGE_MUTATION | `0` |
-| NEXT_AUTHORIZED_ACTION | `MR_REVIEW_ONLY` |
+| NEXT_AUTHORIZED_ACTION | `NONE — WAIT_FOR_NEXT_WORK_ORDER` |
 
 ## Current task
 
@@ -45,7 +45,7 @@ No Runtime/product/package mutation was authorized.
 
 ## Gate
 
-No further DEV work is authorized.
+MR review is complete and passed. No further DEV work is authorized until a new Current Work Order is issued.
 
 Required sequence:
 
@@ -57,4 +57,4 @@ DEV_HANDOFF
 → DEV may resume
 ```
 
-Until MR writes the next work order, DEV must STOP.
+MR result: `MR_PASS`. Until MR writes the next work order, DEV must STOP.
