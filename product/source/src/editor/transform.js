@@ -42,13 +42,22 @@ export function applyWorldTransform(found, transform) {
   return applyWorldTransformBatch([{ found, transform }]) > 0;
 }
 
-export function applyObjectMatrices(initial, findObject, transform) {
-  const updates = [];
+export function preflightObjectMatrices(initial, findObject) {
+  const targets = [];
   for (const entry of initial) {
     const found = findObject(entry.ref);
     if (!found) continue;
     const parentWorld = entry.parentWorldMatrix || found.parentWorldMatrix || Matrix.identity();
     const initialWorld = entry.worldMatrix || Matrix.toWorld(parentWorld, entry.matrix);
+    localMatrixFromWorld(parentWorld, initialWorld, { objectId: found.object.id });
+    targets.push({ entry, found, parentWorld, initialWorld });
+  }
+  return targets;
+}
+
+export function applyObjectMatrices(initial, findObject, transform) {
+  const updates = [];
+  for (const { entry, found, parentWorld, initialWorld } of preflightObjectMatrices(initial, findObject)) {
     const nextWorld = transform(initialWorld, entry);
     const nextLocal = localMatrixFromWorld(parentWorld, nextWorld, { objectId: found.object.id });
     updates.push({ object: found.object, matrix: nextLocal });
