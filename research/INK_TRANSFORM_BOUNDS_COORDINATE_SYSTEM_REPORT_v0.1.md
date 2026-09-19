@@ -1,6 +1,6 @@
 # INK Transform / Bounds / Coordinate System Report v0.1
 
-STATUS: `DEV_IMPLEMENTATION_COMPLETE / DEV_HANDOFF_PREPARATION / RUNTIME_QA_DEFERRED`
+STATUS: `DEV_REVISION_COMPLETE / DEV_HANDOFF_PREPARATION / RUNTIME_QA_DEFERRED`
 
 TASK: `INK-CLOUD-004`
 
@@ -13,6 +13,12 @@ BASE_BRANCH_HEAD_AT_START: `2d68ae4aa5dfdd29f1c1a864ccd3ddff5e96eb43`
 PRODUCT_IMPLEMENTATION_HEAD: `f49210b45878377bccdc18991e9300f66ab7a5ac`
 
 DEV_VERIFICATION_CHECKPOINT: `15d46e733a8989b4ebd71efcc38a78e06f3dfeee`
+
+MR_REVIEWED_HEAD: `479bcca83e0c375592bff6542115b971e88002c7`
+
+REVISION_PRODUCT_HEAD: `d772551947c7454265e2c5e4e74d34826e8a1c9b`
+
+REVISION_QA_HEAD: `97ad196f00c06de704e561dbe9470020a8ce7e34`
 
 > The final handoff commit cannot contain its own resulting SHA. The exact final branch HEAD is recorded in the DEV handoff response after the branch-local handoff checkpoint is created.
 
@@ -554,3 +560,186 @@ RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## 20. MR revision — Singular Interaction / History Guard
+
+MR reviewed:
+
+`479bcca83e0c375592bff6542115b971e88002c7`
+
+Decision:
+
+`MR_REVISE / BOUNDED_FIX_ONLY`
+
+The previously accepted transform/bounds architecture was retained. This revision changes only singular editor-interaction History safety.
+
+### 20.1 Stroke node / handle preflight
+
+Before opening a stroke node/handle History transaction:
+
+1. the active stroke is resolved;
+2. its world matrix is checked with `Matrix.tryInvert()`;
+3. if inversion fails:
+   - no History transaction is opened;
+   - `interaction` remains/returns `null`;
+   - `draft` remains/returns `null`;
+   - document geometry and hierarchy are unchanged;
+   - a user-facing rejection message is emitted.
+
+Both handle and node History begin calls now occur after this preflight.
+
+### 20.2 Selection move / scale / rotate preflight
+
+New shared helper:
+
+`preflightObjectMatrices(initial, findObject)`
+
+validates every selected transform root's world→local conversion before interactive History begins.
+
+`startSelectionTransform()` now:
+
+1. captures transform roots;
+2. runs `preflightObjectMatrices()`;
+3. rejects singular/non-finite parent conversion before `history.begin()`;
+4. starts History and installs the interaction only after successful preflight.
+
+Thus a singular transform root cannot create a pending History transaction or active move/scale/rotate interaction at pointer-down.
+
+### 20.3 Mid-interaction rejection cleanup
+
+A bounded cleanup path was added:
+
+`rejectSingularInteraction(it, message)`
+
+If inversion/preflight becomes invalid after an interaction has already begun, it:
+
+- restores selected matrices from the interaction's initial snapshot, or restores stroke points from `initialPoints`;
+- calls `history.cancel()`;
+- clears `interaction`;
+- clears `draft`;
+- clears an active stroke handle marker;
+- refreshes editor state and reports rejection.
+
+Stroke node movement, stroke handle movement, and interactive selection transform update paths route singular/non-finite rejection through this cleanup.
+
+No History architecture redesign was introduced.
+
+### 20.4 Geometry / hierarchy safety
+
+Regression evidence verifies rejected singular starts leave:
+
+- object matrix unchanged;
+- structural `parentId` unchanged;
+- `history.pending === null`.
+
+For an already-open interaction rejection, the initial matrix is restored before `history.cancel()`, and the resulting History pending state is `null`.
+
+These interaction paths do not perform hierarchy reparenting.
+
+### 20.5 Revision files
+
+Product:
+
+- `product/source/src/editor/transform.js`
+- `product/source/src/ink.js`
+
+QA:
+
+- `qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs` — new
+
+Control/report:
+
+- `ACTIVE/INK_DEV_PROGRESS.md`
+- this report
+
+### 20.6 Revision commits
+
+- `8c836b65be15571f8dd4d5ca3036a716fe23ee51` — open bounded MR revision checkpoint
+- `564af5b8cbfb232fe57686b01c618f14da493131` — add transform-root preflight helper
+- `2522bfb7a0395e777956d9dbf69c57b9c726eebc` — initial singular interaction History guard
+- `ca405f5049792573520fc200299851105865dcef` — clean guard flow
+- `0dd69b8e9069436ec6c335bf40e47bbf9c6d4b59` — add singular interaction History regression
+- `97ad196f00c06de704e561dbe9470020a8ce7e34` — add active-rejection pending-History coverage
+- `d772551947c7454265e2c5e4e74d34826e8a1c9b` — correct guarded transform syntax
+
+### 20.7 Checks actually executed
+
+#### Exact current-source singular/history guard checks
+
+Current branch source was fetched from GitHub and checked directly.
+
+Result:
+
+`11 / 11 PASS`
+
+Covered:
+
+1. `ink.js` syntax parse;
+2. `editor/transform.js` syntax parse;
+3. singular transform-root preflight rejects before History begins;
+4. rejected preflight leaves `history.pending === null`;
+5. rejected preflight leaves matrix unchanged;
+6. rejected preflight leaves `parentId` unchanged;
+7. stroke inversion preflight precedes both handle/node History begin;
+8. selection-root preflight precedes History begin;
+9. rejection helper cancels History and clears interaction/draft;
+10. stroke node/handle pointer-move rejection routes through deterministic cleanup;
+11. selection move/scale/rotate rejection routes through deterministic cleanup.
+
+The executed check also verified an already-started History transaction becomes `pending === null` after start-geometry restoration + cancel.
+
+#### Transform/bounds current-source regression
+
+After the bounded revision, the existing transform/bounds contract was rechecked.
+
+Result:
+
+`10 / 10 PASS`
+
+Covered:
+
+- singular inversion;
+- negative reflection round-trip;
+- single-transform rejection atomicity;
+- batch-transform rejection atomicity;
+- preflight no-mutation behavior;
+- Frame bounds;
+- Group empty fallback;
+- selection-root collapse;
+- Frame geometry resize preserving local transforms;
+- near-zero scale clamp.
+
+### 20.8 Authored regression execution note
+
+New authored regression:
+
+`qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs`
+
+contains source/order and History-state assertions, including explicit `history.pending === null` checks.
+
+The repository-wide Node suite was not executed through a checkout because the active connected environment does not provide a repository checkout and hosted GitHub Actions remain quota-exhausted.
+
+Equivalent exact-current-source checks listed above were executed directly and passed.
+
+No unexecuted repository Node test is reported as Node PASS.
+
+### 20.9 Schema / scope / Runtime conclusion
+
+`FORMAT_VERSION_CHANGE = 0`
+
+`RUNTIME_QA = DEFERRED`
+
+No change to:
+
+- document schema;
+- matrix representation;
+- bounds taxonomy;
+- Frame/Group ownership;
+- package;
+- main;
+- Cloud;
+- components/layout;
+- version/certification.
+
+The MR-requested bounded singular interaction / History guard is complete.
