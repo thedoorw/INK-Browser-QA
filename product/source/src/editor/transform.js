@@ -22,14 +22,24 @@ export function localMatrixFromWorld(parentWorldMatrix, worldMatrix, details = {
   return local;
 }
 
+export function applyWorldTransformBatch(entries = []) {
+  const updates = [];
+  for (const entry of entries) {
+    const found = entry?.found || entry;
+    if (!found?.object) continue;
+    const transform = entry?.found ? entry.transform : Matrix.identity();
+    const parentWorld = found.parentWorldMatrix || Matrix.identity();
+    const world = worldMatrixForFound(found);
+    const nextWorld = Matrix.multiply(transform || Matrix.identity(), world);
+    const nextLocal = localMatrixFromWorld(parentWorld, nextWorld, { objectId: found.object.id });
+    updates.push({ object: found.object, matrix: nextLocal });
+  }
+  for (const update of updates) update.object.matrix = update.matrix;
+  return updates.length;
+}
+
 export function applyWorldTransform(found, transform) {
-  if (!found?.object) return false;
-  const parentWorld = found.parentWorldMatrix || Matrix.identity();
-  const world = worldMatrixForFound(found);
-  const nextWorld = Matrix.multiply(transform || Matrix.identity(), world);
-  const nextLocal = localMatrixFromWorld(parentWorld, nextWorld, { objectId: found.object.id });
-  found.object.matrix = nextLocal;
-  return true;
+  return applyWorldTransformBatch([{ found, transform }]) > 0;
 }
 
 export function applyObjectMatrices(initial, findObject, transform) {
