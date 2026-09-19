@@ -15,7 +15,13 @@ DEV new-window instruction:
 
 Current state:
 
-`INK-CLOUD-001 → DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP`
+`INK-CLOUD-002 → DEV_AUTHORIZED → work/ink-cloud-002`
+
+Product direction:
+`governance/INK_Product_Delivery_Model_v0.1.md`
+
+Accepted architecture audit:
+`research/INK_CLOUD_EDITOR_PENPOT_GAP_AUDIT_v0.1.md`
 
 Legacy/detail files are retained:
 - `ACTIVE/INK_MAIN_REVIEW_BOARD.md`
