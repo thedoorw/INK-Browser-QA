@@ -267,3 +267,27 @@ STOP
 ```
 
 DEV must STOP after handoff.
+
+
+## Cloud Start Gate
+
+The project sequence is fixed as:
+
+```text
+document-format / structural core stabilization
+→ MR confirms PRE_CLOUD_CORE_READY
+→ USER_REMINDER_REQUIRED
+→ USER_APPROVAL
+→ Cloud implementation may begin
+```
+
+Cloud implementation must NOT begin automatically when the structural-core work appears complete.
+
+Before any first Cloud work order is issued, MR must:
+1. verify the pre-Cloud structural/core acceptance criteria;
+2. update `working/WORKING_STATUS.md` to `PRE_CLOUD_CORE_READY`;
+3. remind the user that the pre-Cloud core stage is complete;
+4. wait for explicit user approval;
+5. only then issue the first Cloud Work Order.
+
+Current `INK-CLOUD-002` remains a shared-core/editor-structure task, not Cloud implementation.
