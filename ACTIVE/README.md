@@ -1,5 +1,15 @@
 # INK Active
 
+## MR / DEV Current Control
+
+Current authoritative development control:
+
+1. `ACTIVE/INK_MAIN_REVIEW_BOARD.md` — current MR bulletin / work order.
+2. `ACTIVE/INK_DEV_PROGRESS.md` — DEV progress and handoff.
+3. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md` — durable MR→DEV→MR gate rules.
+
+Current authorized task: `INK-CLOUD-001` — architecture audit only. Runtime/product mutation is not authorized until MR review.
+
 目前階段：**Original Import Baseline + Product Boundary v0.1 + Full File Classification v0.1**。
 
 ## 現在已確認
