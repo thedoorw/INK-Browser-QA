@@ -79,8 +79,30 @@ export function allObjects(page) {
 
 export { createFrame };
 
-export function normalizeObject(object, { parentId = null } = {}) {
+export function createStructuralNormalizationState() {
+  return { seenObjects: new WeakSet(), activeObjects: new WeakSet(), objectIds: new Set() };
+}
+
+export function normalizeObject(object, { parentId = null, structuralState = null, structural = true } = {}) {
+  if (!object || typeof object !== 'object') return object;
+  const state = structuralState || createStructuralNormalizationState();
+  if (structural) {
+    if (state.activeObjects.has(object)) {
+      throw Object.assign(new Error('INK_HIERARCHY_CYCLE'), { code: 'HIERARCHY_CYCLE', objectId: object.id || null });
+    }
+    if (state.seenObjects.has(object)) {
+      throw Object.assign(new Error('INK_HIERARCHY_DUPLICATE_OWNERSHIP'), { code: 'HIERARCHY_DUPLICATE_OWNERSHIP', objectId: object.id || null });
+    }
+    state.seenObjects.add(object);
+    state.activeObjects.add(object);
+  }
   object.id = object.id || uid();
+  if (structural) {
+    if (state.objectIds.has(object.id)) {
+      throw Object.assign(new Error(`INK_HIERARCHY_DUPLICATE_ID:${object.id}`), { code: 'HIERARCHY_DUPLICATE_ID', objectId: object.id });
+    }
+    state.objectIds.add(object.id);
+  }
   if (parentId) object.parentId = parentId;
   else delete object.parentId;
   object.matrix = Array.isArray(object.matrix) && object.matrix.length === 6
@@ -117,7 +139,7 @@ export function normalizeObject(object, { parentId = null } = {}) {
     object.visible = object.visible !== false;
     object.locked = Boolean(object.locked);
     object.children = Array.isArray(object.children) ? object.children : [];
-    object.children.forEach(child => normalizeObject(child, { parentId: object.id }));
+    object.children.forEach(child => normalizeObject(child, { parentId: object.id, structuralState: state }));
   }
   if (object.type === 'frame') {
     object.name = String(object.name || 'Frame');
@@ -126,10 +148,10 @@ export function normalizeObject(object, { parentId = null } = {}) {
     object.visible = object.visible !== false;
     object.locked = Boolean(object.locked);
     object.children = Array.isArray(object.children) ? object.children : [];
-    object.children.forEach(child => normalizeObject(child, { parentId: object.id }));
+    object.children.forEach(child => normalizeObject(child, { parentId: object.id, structuralState: state }));
   }
   if (object.type === 'repeat') {
-    if (object.source && typeof object.source === 'object') normalizeObject(object.source);
+    if (object.source && typeof object.source === 'object') normalizeObject(object.source, { structuralState: createStructuralNormalizationState() });
     object.instances = Array.isArray(object.instances) ? object.instances.filter(instance => instance && instance.instanceId).map(instance => ({ ...instance, generatorId: object.id })) : [];
   }
   if (object.materialInstance && typeof object.materialInstance === 'object') {
@@ -139,5 +161,6 @@ export function normalizeObject(object, { parentId = null } = {}) {
     object.materialInstance.localOverrideState = object.materialInstance.localOverrideState && typeof object.materialInstance.localOverrideState === 'object' ? object.materialInstance.localOverrideState : { parameters: [], geometryDetached: false, styleDetached: false };
   }
   normalizeSemantic(object);
+  if (structural) state.activeObjects.delete(object);
   return object;
 }

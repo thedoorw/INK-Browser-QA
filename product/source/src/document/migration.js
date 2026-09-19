@@ -1,6 +1,6 @@
 import { FORMAT_VERSION, INK_VERSION } from '../config.js';
 import { clamp, deepClone, uid } from '../core/index.js';
-import { DEFAULT_RECENT, defaultLayer, normalizeObject } from './model.js';
+import { DEFAULT_RECENT, createStructuralNormalizationState, defaultLayer, normalizeObject } from './model.js';
 import { normalizeArtboard } from './artboard.js';
 import { normalizeWorkspace } from './workspace.js';
 import { migrateStrokeSession } from '../paint/stroke-session.js';
@@ -17,6 +17,7 @@ export function migrateDocument(raw) {
     throw new Error(`此專案格式版本 ${sourceVersion} 高於目前支援的 ${FORMAT_VERSION}`);
   }
   const document = deepClone(raw);
+  const structuralState = createStructuralNormalizationState();
   document.formatVersion = FORMAT_VERSION;
   document.appVersion = INK_VERSION;
   document.programAssets = Array.isArray(document.programAssets)
@@ -110,7 +111,7 @@ export function migrateDocument(raw) {
       layer.locked = !!layer.locked;
       layer.opacity = clamp(Number.isFinite(+layer.opacity) ? +layer.opacity : 1, 0, 1);
       layer.objects = Array.isArray(layer.objects) ? layer.objects : [];
-      layer.objects.forEach(normalizeObject);
+      layer.objects.forEach(object => normalizeObject(object, { structuralState }));
     });
     page.activeLayerId = page.layers.some(layer => layer.id === page.activeLayerId)
       ? page.activeLayerId

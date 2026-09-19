@@ -38,41 +38,89 @@ export function inspectDocument(document, {
   maxBytes = 128 * 1024 * 1024
 } = {}) {
   const errors = [], warnings = [];
-  const stats = { pages: 0, layers: 0, objects: 0, groups: 0, frames: 0, strokes: 0, points: 0, duplicateIds: 0, byteLength: 0 };
+  const stats = {
+    pages: 0, layers: 0, objects: 0, groups: 0, frames: 0, strokes: 0, points: 0,
+    duplicateIds: 0, duplicateOwnership: 0, structuralCycles: 0, staleParentIds: 0, byteLength: 0
+  };
   const ids = new Set();
+  const ownedObjects = new WeakSet();
+  const activeObjects = new WeakSet();
   const encoder = new TextEncoder();
+
   const registerId = (id, path) => {
     if (typeof id !== 'string' || !id.trim()) return issue(errors, 'missing-id', path, '缺少有效 ID');
-    if (ids.has(id)) { stats.duplicateIds++; issue(errors, 'duplicate-id', path, `重複 ID：${id}`); }
+    if (ids.has(id)) {
+      stats.duplicateIds++;
+      issue(errors, 'duplicate-id', path, `重複 ID：${id}`);
+    }
     ids.add(id);
   };
-  const scanObject = (object, path) => {
+
+  const scanObject = (object, path, { expectedParentId = null, topLevel = false } = {}) => {
     stats.objects++;
-    if (!object || typeof object !== 'object') { issue(errors, 'invalid-object', path, '物件不是有效資料'); return; }
+    if (!object || typeof object !== 'object') {
+      issue(errors, 'invalid-object', path, '物件不是有效資料');
+      return;
+    }
+    if (activeObjects.has(object)) {
+      stats.structuralCycles++;
+      issue(errors, 'structural-cycle', path, '結構容器形成循環 ownership');
+      return;
+    }
+    if (ownedObjects.has(object)) {
+      stats.duplicateOwnership++;
+      issue(errors, 'duplicate-ownership', path, '同一物件出現在多個結構 ownership 位置');
+      return;
+    }
+    ownedObjects.add(object);
+    activeObjects.add(object);
+
     registerId(object.id, `${path}.id`);
-    if (!Array.isArray(object.matrix) || object.matrix.length !== 6 || object.matrix.some(value => !Number.isFinite(+value))) issue(errors, 'invalid-matrix', `${path}.matrix`, '物件矩陣必須包含六個有限數值');
+    if (topLevel && object.parentId != null) {
+      stats.staleParentIds++;
+      issue(errors, 'stale-top-level-parent-id', `${path}.parentId`, '頂層物件不得保留 parentId');
+    } else if (!topLevel && expectedParentId && object.parentId !== expectedParentId) {
+      issue(errors, 'invalid-parent-id', `${path}.parentId`, '子物件 parentId 必須指向實際父容器');
+    }
+
+    if (!Array.isArray(object.matrix) || object.matrix.length !== 6 || object.matrix.some(value => !Number.isFinite(+value))) {
+      issue(errors, 'invalid-matrix', `${path}.matrix`, '物件矩陣必須包含六個有限數值');
+    }
+    if (!Number.isFinite(+object.opacity) || +object.opacity < 0 || +object.opacity > 1) {
+      issue(errors, 'invalid-opacity', `${path}.opacity`, '物件透明度必須介於 0 與 1');
+    }
+
     if (object.type === 'stroke') {
       stats.strokes++;
       if (!Array.isArray(object.points)) issue(errors, 'invalid-points', `${path}.points`, '筆畫缺少點陣列');
       else {
         stats.points += object.points.length;
         object.points.forEach((point, pointIndex) => {
-          if (!Number.isFinite(+point?.x) || !Number.isFinite(+point?.y)) issue(errors, 'invalid-point', `${path}.points[${pointIndex}]`, '筆畫座標不是有限數值');
+          if (!Number.isFinite(+point?.x) || !Number.isFinite(+point?.y)) {
+            issue(errors, 'invalid-point', `${path}.points[${pointIndex}]`, '筆畫座標不是有限數值');
+          }
         });
       }
     }
+
     if (object.type === 'group' || object.type === 'frame') {
       if (object.type === 'group') stats.groups++;
       else {
         stats.frames++;
-        if (!Number.isFinite(+object.width) || +object.width <= 0 || !Number.isFinite(+object.height) || +object.height <= 0) issue(errors, 'invalid-frame-size', path, 'Frame 尺寸必須為正的有限數值');
+        if (!Number.isFinite(+object.width) || +object.width <= 0 || !Number.isFinite(+object.height) || +object.height <= 0) {
+          issue(errors, 'invalid-frame-size', path, 'Frame 尺寸必須為正的有限數值');
+        }
       }
-      if (!Array.isArray(object.children)) issue(errors, object.type === 'frame' ? 'invalid-frame' : 'invalid-group', `${path}.children`, `${object.type === 'frame' ? 'Frame' : '群組'} 缺少 children 陣列`);
-      else object.children.forEach((child, index) => {
-        if (child?.parentId !== object.id) issue(errors, 'invalid-parent-id', `${path}.children[${index}].parentId`, '子物件 parentId 必須指向實際父容器');
-        scanObject(child, `${path}.children[${index}]`);
-      });
+      if (!Array.isArray(object.children)) {
+        issue(errors, object.type === 'frame' ? 'invalid-frame' : 'invalid-group', `${path}.children`, `${object.type === 'frame' ? 'Frame' : '群組'} 缺少 children 陣列`);
+      } else {
+        object.children.forEach((child, index) => {
+          scanObject(child, `${path}.children[${index}]`, { expectedParentId: object.id, topLevel: false });
+        });
+      }
     }
+
+    activeObjects.delete(object);
   };
 
   if (!document || typeof document !== 'object') issue(errors, 'invalid-document', '$', '文件不是有效物件');
@@ -108,16 +156,20 @@ export function inspectDocument(document, {
           page.layers.forEach((layer, layerIndex) => {
             const layerPath = `${path}.layers[${layerIndex}]`;
             registerId(layer?.id, `${layerPath}.id`);
+            if (!Number.isFinite(+layer?.opacity) || +layer.opacity < 0 || +layer.opacity > 1) issue(errors, 'invalid-layer-opacity', `${layerPath}.opacity`, '圖層透明度必須介於 0 與 1');
             if (!Array.isArray(layer?.objects)) issue(errors, 'invalid-objects', `${layerPath}.objects`, '圖層物件必須為陣列');
-            else layer.objects.forEach((object, objectIndex) => scanObject(object, `${layerPath}.objects[${objectIndex}]`));
+            else layer.objects.forEach((object, objectIndex) => scanObject(object, `${layerPath}.objects[${objectIndex}]`, { topLevel: true }));
           });
           if (!page.layers.some(layer => layer.id === page.activeLayerId)) issue(warnings, 'active-layer-fallback', `${path}.activeLayerId`, '作用中圖層不存在，載入時將回復至第一圖層');
         }
       });
       if (!document.pages.some(page => page.id === document.activePageId)) issue(warnings, 'active-page-fallback', '$.activePageId', '作用中頁面不存在，載入時將回復至第一頁');
     }
-    try { stats.byteLength = encoder.encode(stableStringify(document)).byteLength; }
-    catch (error) { issue(errors, 'serialization-failed', '$', '文件無法序列化', { error: String(error) }); }
+    try {
+      stats.byteLength = encoder.encode(stableStringify(document)).byteLength;
+    } catch (error) {
+      issue(errors, 'serialization-failed', '$', '文件無法序列化', { error: String(error) });
+    }
   }
 
   if (stats.objects > maxObjects) issue(warnings, 'object-budget', '$', `物件數 ${stats.objects} 超過建議上限 ${maxObjects}`);
