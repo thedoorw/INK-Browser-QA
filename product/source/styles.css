@@ -1211,3 +1211,16 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   #app[data-panel="ai"] .ai-panel{padding-bottom:max(78px,env(safe-area-inset-bottom))}
   #app[data-panel="ai"].inspector-open .ai-sticky-actions{position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));z-index:90;width:auto;padding:8px;background:var(--surface-solid);border:1px solid var(--line-strong);border-radius:5px;box-shadow:var(--shadow)}
 }
+
+/* INK-CLOUD-002 — bounded Frame hierarchy rows inside the existing Layers panel. */
+.object-tree-row{--tree-depth:0;display:grid;grid-template-columns:24px minmax(0,1fr) 24px;align-items:center;min-height:28px;margin-left:calc((var(--tree-depth) + 1)*12px);border-left:1px solid #4a4b4e;background:#343537;color:#d2d3d5}
+.object-tree-row:hover{background:#414245}
+.object-tree-row.active{background:#293534;border-left-color:#51aaa1;box-shadow:inset 2px 0 0 #51aaa1}
+.object-tree-row .tree-state-button{height:24px;border:0;background:transparent;color:#aeb0b3;font-size:9px}
+.object-tree-row .tree-state-button:hover{background:#505154;color:#fff}
+.object-tree-row .tree-object-name{min-width:0;height:26px;padding:2px 5px;text-align:left;overflow:hidden;background:transparent;color:#d7d8da;border:0}
+.object-tree-row .tree-object-name strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px;font-weight:600}
+.object-tree-row .tree-object-name span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:7px;color:#929498}
+.object-tree-row .tree-object-marker,.object-tree-row .tree-object-tail{display:grid;place-items:center;color:#777a7d;font-size:12px}
+.child-tree-row{background:#303133}
+.frame-tree-row{border-top:1px solid #404144}
