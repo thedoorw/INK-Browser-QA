@@ -50,16 +50,24 @@ Read in this order:
 
 1. `README.md`
 2. `AGENTS.md`
-3. `ACTIVE/INK_MAIN_REVIEW_BOARD.md`
-4. `ACTIVE/INK_DEV_PROGRESS.md`
-5. governance files explicitly named by the current work order
-6. only the product / research / QA files needed for that work order
+3. `ACTIVE/README.md`
+4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
+5. `working/WORKING_STATUS.md`
+6. role-specific active files:
+   - DEV: `ACTIVE/INK_DEV_PROGRESS.md`
+   - MR: `ACTIVE/INK_REVIEW_STATUS.md`
+7. governance files explicitly named by the Current Work Order
+8. only the product / research / QA files needed for that work order
 
-The active bulletin is:
+The single authoritative task definition is:
 
-`ACTIVE/INK_MAIN_REVIEW_BOARD.md`
+`ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-If another document conflicts with the current bulletin on task scope, DEV must STOP and report the conflict.
+Cross-window recovery is governed by:
+
+`governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
+
+Legacy/detail bulletin files may preserve history, but cannot authorize work that is not present in the Current Work Order.
 
 ## Gate rule
 
@@ -94,6 +102,8 @@ Rules:
 - Final DEV handoff must leave the branch intact and STOP for MR review.
 
 This makes the Git branch itself the durable implementation/progress record.
+
+MR must pin the exact DEV branch HEAD in `working/WORKING_STATUS.md` before review. If the HEAD changes, the review fingerprint changes and the prior review is stale.
 
 ## Change discipline
 
