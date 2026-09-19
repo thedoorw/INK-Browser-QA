@@ -1,15 +1,15 @@
 # INK DEV PROGRESS
 
-STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+STATUS: `DEV_IN_PROGRESS / MR_REVISE_BOUNDED_FIX`
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-002` |
 | AUTHORIZED_SCOPE | `FRAME + NESTED HIERARCHY FOUNDATION` |
-| DEV_STATE | `DEV_HANDOFF` |
-| MR_GATE | `MR_REVIEW_REQUIRED` |
+| DEV_STATE | `MR_REVISE_BOUNDED_FIX_APPLIED` |
+| MR_GATE | `MR_REVISE` |
 | DEV_WORK_BRANCH | `work/ink-cloud-002` |
-| LATEST_IMPLEMENTATION_COMMIT | `f64d93bd1bb2ce6371508603e69f1406078054b7` |
+| LATEST_IMPLEMENTATION_COMMIT | `96852539d4e4aa6b9b87283357dfeac405d920e0` |
 | IMPLEMENTATION_REPORT_COMMIT | `34eeeff89c9ed47def8ff76bf63221a0163f62ab` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -49,6 +49,15 @@ STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 - `34eeeff89c9ed47def8ff76bf63221a0163f62ab`
 - Created `research/INK_FRAME_NESTED_HIERARCHY_IMPLEMENTATION_REPORT_v0.1.md`.
 - Runtime/browser-only acceptance evidence remains `RUNTIME_QA_DEFERRED` per Current Work Order.
+
+### Checkpoint 6 — MR revise cross-Layer guard
+
+- `6cfc6f4dfeeae48efc50a6991132526c43e0d724` — `frameSelection()` now rejects selections spanning multiple Layers; `reparentObjectToFrame()` rejects source → Frame moves across Layers.
+- Both guards execute before Frame creation, `HistoryManager` mutation, or `reparentPageObject()`, so rejection does not mutate hierarchy or transforms.
+- `96852539d4e4aa6b9b87283357dfeac405d920e0` — added dedicated regression tests for both rejection paths.
+- Source/static guard-order verification: `PASS`.
+- Revision diff from reviewed HEAD `3ff5c61393fe6603e072fa587d954a159d239444`: only `product/source/src/ink.js` and `qa/core/tests/unit/frame-editor-source-v0.1.test.mjs`.
+- Runtime QA remains `RUNTIME_QA_DEFERRED`.
 
 ## DEV handoff
 
