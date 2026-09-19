@@ -1,0 +1,30 @@
+# INK DEV PROGRESS
+
+STATUS: `WAITING_FOR_DEV`
+
+| Field | Value |
+|---|---|
+| CURRENT_TASK_ID | `INK-CLOUD-001` |
+| AUTHORIZED_SCOPE | `ARCHITECTURE_AUDIT_ONLY` |
+| DEV_STATE | `NOT_STARTED` |
+| MR_GATE | `REQUIRED` |
+
+## Progress log
+
+No DEV handoff has been recorded yet.
+
+DEV must update this file during the task and finish with:
+
+```text
+TASK_STATUS
+BRANCH
+COMMITS
+FILES_READ
+FILES_CHANGED
+CHECKS
+KNOWN_GAPS
+PRODUCT_SOURCE_MUTATION
+PACKAGE_MUTATION
+NEXT_ACTION
+STOP
+```
