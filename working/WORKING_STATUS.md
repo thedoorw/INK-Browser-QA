@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `MR_REVISE / DEV_BOUNDED_FIX_AUTHORIZED`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 ## Active control
 
@@ -9,12 +9,12 @@ STATUS: `MR_REVISE / DEV_BOUNDED_FIX_AUTHORIZED`
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
 | CURRENT_TASK_ID | `INK-CLOUD-004` |
 | DEV_BRANCH | `work/ink-cloud-004` |
-| DEV_BRANCH_HEAD | `479bcca83e0c375592bff6542115b971e88002c7` |
-| DEV_HANDOFF | `REVISION_REQUIRED` |
-| MR_REVIEW | `MR_REVISE` |
+| DEV_BRANCH_HEAD | `436c7bded529f481f22a7657f7a2cc62d43f4053` |
+| DEV_HANDOFF | `ACCEPTED` |
+| MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `SINGULAR_INTERACTION_HISTORY_GUARD` |
+| NEXT_STAGE | `USER_PROMOTION_DECISION_REQUIRED` |
 | CLOUD_START_GATE | `BLOCKED_UNTIL_PRE_CLOUD_CORE_READY_AND_USER_APPROVAL` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -87,3 +87,20 @@ Only authorized revision:
 Transform/Bounds core architecture is otherwise retained.
 
 Runtime QA remains `DEFERRED`.
+
+
+## MR pass checkpoint
+
+Reviewed branch head:
+
+`436c7bded529f481f22a7657f7a2cc62d43f4053`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+The Singular Interaction / History Guard revision closes the prior blocking finding.
+
+Main promotion is not automatic and remains pending user approval.
+
+Cloud Start Gate remains blocked.
