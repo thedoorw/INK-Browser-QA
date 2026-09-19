@@ -1,38 +1,57 @@
 # INK REVIEW EVIDENCE — INK-CLOUD-002
 
-STATUS: `MR_REVISE_EVIDENCE`
+STATUS: `MR_PASS_SOURCE_EVIDENCE / RUNTIME_QA_DEFERRED`
 
 ## Fingerprint
 
 | Field | Value |
 |---|---|
 | DEV_BRANCH | `work/ink-cloud-002` |
-| REVIEW_HEAD | `3ff5c61393fe6603e072fa587d954a159d239444` |
+| REVIEW_HEAD | `6a2ac7fbfa8c27fa394f5630b788878407af060c` |
+| PREVIOUS_REVIEW_HEAD | `3ff5c61393fe6603e072fa587d954a159d239444` |
 | DEV_HANDOFF | `RECEIVED` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Source review summary
+## Revision diff
 
-MR directly inspected:
+Relative to the previous MR-reviewed HEAD, revision changes are limited to:
 
-- `product/source/src/document/hierarchy.js`
-- `product/source/src/document/model.js`
-- `product/source/src/editor/transform.js`
-- `product/source/src/spatial/page-spatial-index.js`
 - `product/source/src/ink.js`
-- Frame hierarchy/unit/regression tests
-- implementation report
+- `qa/core/tests/unit/frame-editor-source-v0.1.test.mjs`
+- `research/INK_FRAME_NESTED_HIERARCHY_IMPLEMENTATION_REPORT_v0.1.md`
+- `ACTIVE/INK_DEV_PROGRESS.md`
 
-The core hierarchy implementation is structurally credible.
+## Cross-Layer guard verification
 
-Blocking issue is limited to cross-Layer reparent semantics:
+MR directly verified:
 
-```text
-geometry world matrix preserved
-!=
-full visual/interaction semantics preserved
-```
+### frameSelection()
 
-because Layer opacity/visibility/lock may differ.
+Cross-Layer selection check occurs before:
 
-Required resolution for v0.1: same-Layer restriction plus regression evidence.
+- `createFrame()`
+- `HistoryManager.pushScoped()`
+- `reparentPageObject()`
+
+Rejected operation returns without mutation.
+
+### reparentObjectToFrame()
+
+Source Layer / target Frame Layer mismatch check occurs before:
+
+- `HistoryManager.pushScoped()`
+- `reparentPageObject()`
+
+Rejected operation returns without mutation.
+
+## Test evidence
+
+Dedicated source regression tests verify:
+
+- cross-Layer Frame creation rejection;
+- cross-Layer reparent rejection;
+- guard ordering before mutation paths.
+
+## Decision
+
+`SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
