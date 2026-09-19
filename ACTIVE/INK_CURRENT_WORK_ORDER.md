@@ -220,9 +220,25 @@ The report must include:
 - known limitations;
 - exact DEV branch HEAD.
 
+## Temporary Runtime QA constraint
+
+GitHub Actions quota is currently exhausted.
+
+For this Work Order:
+
+- do not depend on GitHub Actions or hosted Runtime QA;
+- do not spend work trying to restore or bypass Actions capacity;
+- perform source-level, structural, serialization, deterministic/unit-style, and other locally/repository-executable checks that do not require GitHub Actions;
+- record every acceptance item that cannot be proven without Runtime/browser execution as `RUNTIME_QA_DEFERRED`;
+- deferred Runtime evidence is a known validation debt, not permission to omit implementation evidence;
+- MR may pass the bounded implementation as `SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED` if source evidence is sufficient;
+- certification, package promotion, or claims of Runtime-verified behavior remain prohibited until deferred Runtime checks are later completed.
+
+This is a temporary resource constraint, not a change to the intended product behavior.
+
 ## Acceptance requirements
 
-MR expects evidence that:
+MR expects source/static evidence for the following; Runtime-only portions may be explicitly marked `RUNTIME_QA_DEFERRED`:
 
 1. existing documents still open;
 2. a frame can contain existing object types;
