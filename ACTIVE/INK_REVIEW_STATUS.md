@@ -1,13 +1,22 @@
 # INK REVIEW STATUS
 
-STATUS: `NO_REVIEW_PENDING / DEV_ACTIVE`
+STATUS: `MR_REVISE`
 
 | Field | Value |
 |---|---|
 | TASK_ID | `INK-CLOUD-002` |
 | DEV_BRANCH | `work/ink-cloud-002` |
-| REVIEW_STATE | `WAITING_FOR_DEV_HANDOFF` |
-| DECISION | `NONE` |
-| PREVIOUS_TASK | `INK-CLOUD-001 = MR_PASS` |
+| REVIEW_HEAD | `3ff5c61393fe6603e072fa587d954a159d239444` |
+| REVIEW_STATE | `COMPLETE / REVISION_REQUIRED` |
+| DECISION | `MR_REVISE` |
+| REVISION_SCOPE | `CROSS_LAYER_FRAME_REPARENT_GUARD_ONLY` |
+| RUNTIME_QA | `DEFERRED` |
+| MAIN_MERGE | `PROHIBITED` |
+| PACKAGE_UPDATE | `PROHIBITED` |
 
-MR review begins only after DEV handoff and final branch HEAD fingerprint are recorded.
+Review details:
+
+- `ACTIVE/INK_REVIEW_FINDINGS.md`
+- `ACTIVE/INK_REVIEW_EVIDENCE.md`
+
+DEV may resume only for the bounded revision recorded in those findings.
