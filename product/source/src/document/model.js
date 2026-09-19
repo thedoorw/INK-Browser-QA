@@ -3,6 +3,7 @@ import { Matrix, nowISO, uid } from '../core/index.js';
 import { createArtboard } from './artboard.js';
 import { createWorkspace } from './workspace.js';
 import { normalizeSemantic } from '../semantic/semantic-model.js';
+import { createFrame } from './hierarchy.js';
 
 export const DEFAULT_RECENT = [
   '#202020', '#ffffff', '#b63c36', '#d18b2f',
@@ -76,8 +77,12 @@ export function allObjects(page) {
   return page.layers.flatMap(layer => layer.objects.map(object => ({ layer, object })));
 }
 
-export function normalizeObject(object) {
+export { createFrame };
+
+export function normalizeObject(object, { parentId = null } = {}) {
   object.id = object.id || uid();
+  if (parentId) object.parentId = parentId;
+  else delete object.parentId;
   object.matrix = Array.isArray(object.matrix) && object.matrix.length === 6
     ? object.matrix
     : Matrix.identity();
@@ -108,7 +113,19 @@ export function normalizeObject(object) {
       if (!object.segmentStyles.some(style => Object.keys(style).length)) delete object.segmentStyles;
     }
   }
-  if (object.type === 'group' && Array.isArray(object.children)) object.children.forEach(child => { if (!child.parentId) child.parentId = object.id; normalizeObject(child); });
+  if (object.type === 'group') {
+    object.children = Array.isArray(object.children) ? object.children : [];
+    object.children.forEach(child => normalizeObject(child, { parentId: object.id }));
+  }
+  if (object.type === 'frame') {
+    object.name = String(object.name || 'Frame');
+    object.width = Number.isFinite(+object.width) && +object.width > 0 ? +object.width : 320;
+    object.height = Number.isFinite(+object.height) && +object.height > 0 ? +object.height : 240;
+    object.visible = object.visible !== false;
+    object.locked = Boolean(object.locked);
+    object.children = Array.isArray(object.children) ? object.children : [];
+    object.children.forEach(child => normalizeObject(child, { parentId: object.id }));
+  }
   if (object.type === 'repeat') {
     if (object.source && typeof object.source === 'object') normalizeObject(object.source);
     object.instances = Array.isArray(object.instances) ? object.instances.filter(instance => instance && instance.instanceId).map(instance => ({ ...instance, generatorId: object.id })) : [];
