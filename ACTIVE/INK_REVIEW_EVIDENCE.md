@@ -1,57 +1,52 @@
-# INK REVIEW EVIDENCE — INK-CLOUD-002
+# INK REVIEW EVIDENCE — INK-CLOUD-003
 
-STATUS: `MR_PASS_SOURCE_EVIDENCE / RUNTIME_QA_DEFERRED`
+STATUS: `SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 ## Fingerprint
 
 | Field | Value |
 |---|---|
-| DEV_BRANCH | `work/ink-cloud-002` |
-| REVIEW_HEAD | `6a2ac7fbfa8c27fa394f5630b788878407af060c` |
-| PREVIOUS_REVIEW_HEAD | `3ff5c61393fe6603e072fa587d954a159d239444` |
-| DEV_HANDOFF | `RECEIVED` |
+| TASK_ID | `INK-CLOUD-003` |
+| DEV_BRANCH | `work/ink-cloud-003` |
+| REVIEW_HEAD | `ede48bf1f3f6d1e4149941af23cfa743539d283f` |
+| DECISION | `MR_PASS` |
+| FORMAT_VERSION_CHANGE | `0` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Revision diff
+## Reviewed source surfaces
 
-Relative to the previous MR-reviewed HEAD, revision changes are limited to:
+MR directly reviewed:
 
-- `product/source/src/ink.js`
-- `qa/core/tests/unit/frame-editor-source-v0.1.test.mjs`
-- `research/INK_FRAME_NESTED_HIERARCHY_IMPLEMENTATION_REPORT_v0.1.md`
-- `ACTIVE/INK_DEV_PROGRESS.md`
+- `product/source/src/document/hierarchy.js`
+- `product/source/src/document/model.js`
+- `product/source/src/document/migration.js`
+- `product/source/src/document/integrity.js`
+- `product/source/src/spatial/page-spatial-index.js`
+- `product/source/src/vector/vector-core.js`
+- relevant `product/source/src/ink.js` interaction/render paths
+- `qa/core/tests/unit/container-structural-semantics-v0.1.test.mjs`
+- `qa/core/tests/unit/container-structural-source-v0.1.test.mjs`
+- `research/INK_CONTAINER_OWNERSHIP_STRUCTURAL_SEMANTICS_REPORT_v0.1.md`
 
-## Cross-Layer guard verification
+## Review observations
 
-MR directly verified:
+The implementation is internally consistent with the Work Order:
 
-### frameSelection()
+- hierarchy traversal covers Frame + Group;
+- inherited state composition is deterministic;
+- Group atomic interaction is preserved;
+- hit ordering follows structural/render order for covered cases;
+- ownership/migration/integrity rules are explicit;
+- Repeat stays outside ordinary container-child traversal;
+- no format-version promotion occurred.
 
-Cross-Layer selection check occurs before:
+## Execution evidence limitation
 
-- `createFrame()`
-- `HistoryManager.pushScoped()`
-- `reparentPageObject()`
+Hosted Actions unavailable: quota exhausted.
 
-Rejected operation returns without mutation.
+MR local test attempt could not obtain a GitHub checkout because the execution environment had no GitHub DNS/network access.
 
-### reparentObjectToFrame()
-
-Source Layer / target Frame Layer mismatch check occurs before:
-
-- `HistoryManager.pushScoped()`
-- `reparentPageObject()`
-
-Rejected operation returns without mutation.
-
-## Test evidence
-
-Dedicated source regression tests verify:
-
-- cross-Layer Frame creation rejection;
-- cross-Layer reparent rejection;
-- guard ordering before mutation paths.
-
-## Decision
-
-`SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+Therefore:
+- source/static review = PASS;
+- authored test suites = PRESENT / NOT EXECUTED BY MR;
+- browser/runtime = `RUNTIME_QA_DEFERRED`.
