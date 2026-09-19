@@ -6,14 +6,14 @@ STATUS: `DEV_IN_PROGRESS`
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-005` |
 | AUTHORIZED_SCOPE | `COMPONENT / INSTANCE DATA MODEL FOUNDATION` |
-| DEV_STATE | `IMPLEMENTATION_CHECKPOINT` |
+| DEV_STATE | `VERIFICATION_COMPLETE` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
 | DEV_WORK_BRANCH | `work/ink-cloud-005` |
 | BASE_BRANCH_HEAD_AT_START | `2ed1e9cbb4b77ac38b0c6798b8d75691f5325f46` |
-| LATEST_DEV_COMMIT | `c0ed73c3382ab4d9f9acd0710125c81ee8cdc198` |
+| LATEST_DEV_COMMIT | `67833ed5e00dcdd839f51a0cb072bd955785d063` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
-| FORMAT_VERSION_CHANGE | `UNDECIDED / MR_GATE_IF_REQUIRED` |
+| FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSION` |
 
 ## Baseline
 
@@ -92,3 +92,13 @@ Added optional `INK-COMPONENTS-1` registry, source-ID opacity overrides, resolut
 Files: `document/components.js`, `document/{hierarchy,index,integrity}.js`, `ink.js`, `studio-core.js`, new `qa/core/tests/unit/component-instance-v0.1.test.mjs`.
 
 Actually executed: syntax checks (components, ink, studio); existing Frame/Group/Transform Node tests **24/24 PASS**; new component model + actual editor method tests **15/15 PASS**. Test harness initially needed DOM boot isolation and the correct InkStore key/value signature; corrected and rerun. No browser runtime run. Remaining: bounded edge-case hardening, compatibility suite and report.
+
+## Checkpoint 3 — compatibility and bounded hardening
+
+Published implementation: `67833ed5e00dcdd839f51a0cb072bd955785d063`.
+
+Added ambiguous source-node rejection, reserved override-key rejection, and Instance blend-mode preservation in resolved/detached geometry. Extended tests for source deletion/undo, ordinary linked duplication, invalid placement/rejected detach and the pre-task format-4 migration retaining Component data. Corrected the stale Frame static import-order assertion without changing its required import set or behavior checks.
+
+Executed on Node v24.19.0: `node qa/core/run-component-foundation-checks.mjs`: **62/62 current tests + 29/29 retained tests PASS**, 6 source syntax checks PASS, FORMAT_VERSION=4 check PASS. Retained test copies adapt only old ../../src import paths in a temporary directory; assertions unchanged. `git diff --check` PASS. Full output retained in `qa/core/evidence/INK_CLOUD_005_NODE_CHECKS.txt`.
+
+Initial expanded tests failed on a missing test-harness toast stub and an assertion that omitted existing semantic migration defaults; harness/expectation corrected and rerun. The final 91 tests passed. No browser/Canvas/WebGL visual, pointer, IndexedDB or hosted Actions run. Remaining: required report and exact final handoff fingerprint.

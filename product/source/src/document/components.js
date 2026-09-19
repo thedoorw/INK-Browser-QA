@@ -6,6 +6,7 @@ import { isStructuralContainer, walkPageObjects } from './hierarchy.js';
 export const COMPONENT_SCHEMA = 'INK-COMPONENTS-1';
 export const isComponentInstance = object => object?.type === 'component-instance';
 const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const reservedKey = value => ['__proto__', 'constructor', 'prototype'].includes(value);
 const validId = value => typeof value === 'string' && value.trim().length > 0;
 const fail = code => { throw Object.assign(new Error(code), { code }); };
 const diagnostic = (code, details = {}) => ({ code, ...details });
@@ -49,7 +50,10 @@ function definitionSource(document, definitionId) {
   const source = roots[0];
   // No recursive component evaluation in v0.1, even for acyclic nesting.
   if (embeddedInstances(source.object).length) fail('component-nested-instance-unsupported');
-  return { definition, source, nodes: sourceEntries(source.object) };
+  const nodes = sourceEntries(source.object);
+  const ids = nodes.map(entry => entry.object.id);
+  if (ids.some(id => !validId(id)) || new Set(ids).size !== ids.length) fail('component-ambiguous-source-node-id');
+  return { definition, source, nodes };
 }
 
 function overrideIssues(instance, nodeIds = null) {
@@ -57,7 +61,7 @@ function overrideIssues(instance, nodeIds = null) {
   if (!record(instance.overrides)) return [diagnostic('component-invalid-overrides')];
   for (const [sourceNodeId, properties] of Object.entries(instance.overrides)) {
     if (nodeIds && !nodeIds.has(sourceNodeId)) issues.push(diagnostic('component-stale-override-target', { sourceNodeId }));
-    if (!record(properties) || Object.keys(properties).some(key => key !== 'opacity') ||
+    if (reservedKey(sourceNodeId) || !record(properties) || Object.keys(properties).some(key => key !== 'opacity') ||
         (Object.hasOwn(properties || {}, 'opacity') && (typeof properties.opacity !== 'number' || !Number.isFinite(properties.opacity) || properties.opacity < 0 || properties.opacity > 1))) {
       issues.push(diagnostic('component-invalid-override-property', { sourceNodeId }));
     }
@@ -84,7 +88,8 @@ export function resolveComponentInstance(document, instance) {
     const view = {
       id: instance.id, type: 'group', name: instance.name || definition.name,
       matrix: [...instance.matrix], opacity: instance.opacity ?? 1,
-      visible: instance.visible !== false, locked: Boolean(instance.locked), children: [geometry]
+      visible: instance.visible !== false, locked: Boolean(instance.locked),
+      ...(instance.blendMode ? { blendMode: instance.blendMode } : {}), children: [geometry]
     };
     // Namespace all derived IDs, including Repeat/gradient payloads, deterministically.
     remapGeometryIds(geometry, id => `component-view:${encodeURIComponent(instance.id)}:${encodeURIComponent(id)}`);
@@ -205,6 +210,7 @@ export function setComponentOverride(app, instanceId, sourceNodeId, opacity) {
   if (!isComponentInstance(instance) || !validId(sourceNodeId)) fail('component-invalid-instance');
   // Reset is permitted even for a broken reference or malformed legacy envelope.
   if (opacity !== null) {
+    if (reservedKey(sourceNodeId)) fail('component-invalid-override-target');
     const { nodes } = definitionSource(app.doc, instance.definitionId);
     if (!nodes.some(entry => entry.object.id === sourceNodeId)) fail('component-stale-override-target');
     if (typeof opacity !== 'number' || !Number.isFinite(opacity) || opacity < 0 || opacity > 1) fail('component-invalid-override-property');

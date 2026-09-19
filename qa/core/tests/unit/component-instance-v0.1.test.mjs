@@ -41,7 +41,7 @@ const {installRenderer} = await import(`data:text/javascript;base64,${Buffer.fro
 function editor(f) {
   const app = Object.assign(Object.create(InkApp.prototype), f.app);
   app.page = () => app.doc.pages[0];
-  app.selection=[];app.spatialPending=new Set();app.spatialDirty=true;app.spatialIndex=new PageSpatialIndex();
+  app.toast=()=>{};app.selection=[];app.spatialPending=new Set();app.spatialDirty=true;app.spatialIndex=new PageSpatialIndex();
   app.renderer = Object.assign(Object.create(Renderer.prototype),{app,measureCtx:{measureText:()=>({width:10})}});
   installRenderer(app);
   return app;
@@ -235,4 +235,55 @@ test('renderer resolves using existing recursive draw methods, composes transfor
   assert.equal(calls.length,1);assert.equal(calls[0].opacity,.5*.8*.25);
   assert.deepEqual(calls[0].matrix,Matrix.translate(107,205));assert.equal(f.instance.children,undefined);
   f.instance.visible=false;app.renderer.drawObject(ctx,f.instance);assert.equal(calls.length,1);
+});
+
+test('duplicate source-node IDs fail closed and schema-unsafe override keys are never applied',()=>{
+  const f=fixture(),root=findPageObject(f.page,'source').object;
+  root.children.push(shape('leaf'));
+  assert.equal(view(f).status,'broken');assert.ok(codes(f.app.doc).includes('component-ambiguous-source-node-id'));
+  root.children.pop();root.children.push(shape('__proto__'));
+  f.instance.overrides=JSON.parse('{"__proto__":{"opacity":0.2}}');
+  const result=view(f);assert.equal(result.status,'linked-with-diagnostics');
+  assert.equal(result.geometry.children[0].children.at(-1).opacity,1);
+  assert.throws(()=>setComponentOverride(f.app,f.instance.id,'__proto__',.1),{code:'component-invalid-override-target'});
+  assert.equal({}.opacity,undefined);
+});
+
+test('ordinary source deletion and undo restore linkage; duplicate instances retain definition reference',()=>{
+  const f=fixture(),app=editor(f);
+  app.history=new HistoryManager(app);
+  app.selection=[{layerId:f.layer.id,objectId:'source'}];
+  app.deleteSelection();assert.equal(resolveComponentInstance(app.doc,f.instance).status,'broken');
+  app.history.undo();assert.equal(resolveComponentInstance(app.doc,findPageObject(app.doc.pages[0],f.instance.id).object).status,'linked');
+  app.selection=[{layerId:f.layer.id,objectId:f.instance.id}];app.duplicateSelection();
+  const copy=findPageObject(app.doc.pages[0],app.selection[0].objectId).object;
+  assert.notEqual(copy.id,f.instance.id);assert.equal(copy.definitionId,f.definition.id);assert.equal(copy.children,undefined);
+});
+
+test('Group source bounds remain child-derived and broken detach/invalid placement never create History',()=>{
+  const f=fixture(),root=findPageObject(f.page,'source').object;root.type='group';delete root.width;delete root.height;
+  const app=editor(f),expected=transformBounds({x:0,y:0,w:20,h:10},Matrix.translate(107,205));
+  assert.deepEqual(app.renderer.objectWorldBounds(f.instance),expected);
+  const before=JSON.stringify(f.app.doc),count=f.app.history.undoStack.length;
+  assert.throws(()=>createComponentInstance(f.app,f.definition.id,{...f.placement,layerId:'missing'}));
+  assert.throws(()=>createComponentInstance(f.app,f.definition.id,{...f.placement,matrix:[1,0,0,1,NaN,0]}));
+  assert.equal(JSON.stringify(f.app.doc),before);assert.equal(f.app.history.undoStack.length,count);
+  f.instance.definitionId='missing';const broken=JSON.stringify(f.app.doc);
+  assert.throws(()=>detachComponentInstance(f.app,f.instance.id),{code:'component-broken-detach-rejected'});
+  assert.equal(JSON.stringify(f.app.doc),broken);assert.equal(f.app.history.pending,null);
+});
+
+test('new envelope and Instance fields are retained through baseline format-4 migration',async()=>{
+  // Test the actual pre-task migration module, substituting only its relative import URLs.
+  // It must retain the optional registry and Instance payload even though it cannot render it.
+  const {execFileSync}=await import('node:child_process');
+  const migrationURL=new URL('../../../../product/source/src/document/migration.js',import.meta.url);
+  const baseline=execFileSync('git',['show','c0a0e441c1b699398167a8559b72af750ba496a8:product/source/src/document/migration.js'],{cwd:new URL('../../../../',import.meta.url),encoding:'utf8'})
+    .replace(/from '(\.[^']+)'/g,(_,path)=>`from '${new URL(path,migrationURL).href}'`);
+  const oldMigration=await import(`data:text/javascript;base64,${Buffer.from(baseline).toString('base64')}`);
+  const f=fixture();setComponentOverride(f.app,f.instance.id,'leaf',.2);
+  const old=oldMigration.migrateDocument(f.app.doc);
+  assert.deepEqual(old.components,f.app.doc.components);
+  const retained=findPageObject(old.pages[0],f.instance.id).object;
+  for(const [key,value] of Object.entries(f.instance))assert.deepEqual(retained[key],value);
 });

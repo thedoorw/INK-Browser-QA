@@ -6,7 +6,10 @@ const ink = readFileSync(new URL('../../../../product/source/src/ink.js', import
 const styles = readFileSync(new URL('../../../../product/source/styles.css', import.meta.url), 'utf8');
 
 test('frame editor integration is wired through existing INK editor surfaces', () => {
-  assert.match(ink, /createFrame, findPageObject, reparentPageObject, walkPageObjects/);
+  const imports = ink.match(/import \{[\s\S]*?\} from '\.\/document\/index\.js'/)?.[0] || '';
+  for (const name of ['createFrame', 'findPageObject', 'reparentPageObject', 'walkPageObjects']) {
+    assert.ok(new RegExp(`\\b${name}\\b`).test(imports), `missing document import: ${name}`);
+  }
   assert.match(ink, /hitTest\(d\.world,\{deep:e\.altKey\}\)/);
   assert.match(ink, /o\.type==='group'\|\|o\.type==='frame'/);
   assert.match(ink, /data-ink-type="frame"/);
