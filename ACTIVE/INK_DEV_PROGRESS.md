@@ -1,16 +1,16 @@
 # INK DEV PROGRESS
 
-STATUS: `DEV_IN_PROGRESS`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-005` |
 | AUTHORIZED_SCOPE | `COMPONENT / INSTANCE DATA MODEL FOUNDATION` |
-| DEV_STATE | `VERIFICATION_COMPLETE` |
+| DEV_STATE | `DEV_HANDOFF` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
 | DEV_WORK_BRANCH | `work/ink-cloud-005` |
 | BASE_BRANCH_HEAD_AT_START | `2ed1e9cbb4b77ac38b0c6798b8d75691f5325f46` |
-| LATEST_DEV_COMMIT | `67833ed5e00dcdd839f51a0cb072bd955785d063` |
+| LATEST_DEV_COMMIT | `a40885903c2e17e910b6a57672a2be1576e5f29a` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 | FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSION` |
@@ -65,7 +65,8 @@ If a format-version bump appears necessary:
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-CLOUD-005
 BRANCH = work/ink-cloud-005
-FINAL_HEAD = <exact SHA>
+IMPLEMENTATION_AND_QA_HEAD = a40885903c2e17e910b6a57672a2be1576e5f29a
+FINAL_HANDOFF_HEAD = resulting documentation-only commit; exact SHA in DEV handoff response / branch ref
 PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
 FORMAT_VERSION_CHANGE = 0 OR MR_DECISION_REQUIRED
 PACKAGE_MUTATION = 0
@@ -102,3 +103,11 @@ Added ambiguous source-node rejection, reserved override-key rejection, and Inst
 Executed on Node v24.19.0: `node qa/core/run-component-foundation-checks.mjs`: **62/62 current tests + 29/29 retained tests PASS**, 6 source syntax checks PASS, FORMAT_VERSION=4 check PASS. Retained test copies adapt only old ../../src import paths in a temporary directory; assertions unchanged. `git diff --check` PASS. Full output retained in `qa/core/evidence/INK_CLOUD_005_NODE_CHECKS.txt`.
 
 Initial expanded tests failed on a missing test-harness toast stub and an assertion that omitted existing semantic migration defaults; harness/expectation corrected and rerun. The final 91 tests passed. No browser/Canvas/WebGL visual, pointer, IndexedDB or hosted Actions run. Remaining: required report and exact final handoff fingerprint.
+
+## Final handoff
+
+All authorized phases complete. Required report: `research/INK_COMPONENT_INSTANCE_DATA_MODEL_REPORT_v0.1.md`. Final implementation and executed-evidence checkpoint: `a40885903c2e17e910b6a57672a2be1576e5f29a`. The subsequent handoff commit changes only progress/status/report; its exact SHA is returned in the DEV response and available from the branch ref. A commit cannot embed its own resulting SHA. MR must pin that final branch HEAD.
+
+`91/91 Node tests PASS`; `6/6 syntax checks PASS`; `FORMAT_VERSION_CHANGE=0`; `RUNTIME_QA=DEFERRED`. No new unexecuted test suite. No main/package mutation, Cloud or next Work Order.
+
+`DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP`.
