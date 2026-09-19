@@ -1,4 +1,4 @@
-# INK DEV PROGRESS
+> MAIN COPY NOTICE: The authoritative completed DEV progress for `INK-CLOUD-001` is on branch `work/ink-cloud-001`. Cross-window project state is tracked in `working/WORKING_STATUS.md`.\n\n# INK DEV PROGRESS
 
 STATUS: `WAITING_FOR_DEV`
 
