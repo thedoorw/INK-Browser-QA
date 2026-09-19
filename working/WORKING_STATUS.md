@@ -15,6 +15,7 @@ STATUS: `DEV_AUTHORIZED`
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
 | NEXT_STAGE | `DEV_IMPLEMENTATION` |
+| CLOUD_START_GATE | `BLOCKED_UNTIL_USER_REMINDER_AND_APPROVAL` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 | SOURCE_STATIC_QA | `REQUIRED` |
@@ -68,3 +69,19 @@ GitHub Actions quota is exhausted. Current development proceeds without hosted R
 DEV must maximize source/static/structural evidence and explicitly record any checks that remain `RUNTIME_QA_DEFERRED`.
 
 No package certification or Runtime-verified claim may be made while this debt remains open.
+
+
+## Cloud start checkpoint
+
+The project must first stabilize the document-format / structural core.
+
+When MR determines that this pre-Cloud stage is complete:
+
+```text
+PRE_CLOUD_CORE_READY
+→ USER_REMINDER_REQUIRED
+→ USER_APPROVAL_REQUIRED
+→ FIRST_CLOUD_WORK_ORDER
+```
+
+No DEV/WORK role may begin Cloud implementation before this gate is explicitly cleared.
