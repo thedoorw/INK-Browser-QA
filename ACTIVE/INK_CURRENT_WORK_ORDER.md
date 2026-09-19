@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `AUTHORIZED / DEV_READY`
+STATUS: `MR_REVISE / BOUNDED_FIX_AUTHORIZED`
 
 ## Control
 
@@ -14,8 +14,8 @@ STATUS: `AUTHORIZED / DEV_READY`
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `DEV_AUTHORIZED` |
-| NEXT_AUTHORIZED_ACTION | `DEV_IMPLEMENTATION` |
+| CURRENT_GATE | `MR_REVISE` |
+| NEXT_AUTHORIZED_ACTION | `DEV_BOUNDED_FIX_ONLY` |
 
 ## Product direction
 
@@ -291,3 +291,29 @@ Before any first Cloud work order is issued, MR must:
 5. only then issue the first Cloud Work Order.
 
 Current `INK-CLOUD-002` remains a shared-core/editor-structure task, not Cloud implementation.
+
+
+## MR Revision — Cross-Layer Guard
+
+MR reviewed handoff HEAD:
+
+`3ff5c61393fe6603e072fa587d954a159d239444`
+
+The Frame/Hierarchy foundation is retained, but DEV must make one bounded correction before PASS.
+
+Required:
+
+1. `frameSelection()` must reject selections spanning multiple Layers.
+2. `reparentObjectToFrame()` must reject source → Frame moves across Layers.
+3. Rejection must not mutate hierarchy or transforms.
+4. Add regression tests for both cases.
+5. Update:
+   - `research/INK_FRAME_NESTED_HIERARCHY_IMPLEMENTATION_REPORT_v0.1.md`
+   - `ACTIVE/INK_DEV_PROGRESS.md`
+6. Hand off again and STOP.
+
+Reason: geometric world-matrix preservation does not preserve Layer opacity/visibility/lock semantics across Layers.
+
+No other redesign is authorized.
+
+Runtime QA remains `RUNTIME_QA_DEFERRED`.
