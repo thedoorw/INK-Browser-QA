@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `DEV_AUTHORIZED`
+STATUS: `MR_REVISE / DEV_BOUNDED_FIX_AUTHORIZED`
 
 ## Active control
 
@@ -10,11 +10,11 @@ STATUS: `DEV_AUTHORIZED`
 | CURRENT_TASK_ID | `INK-CLOUD-002` |
 | DEV_BRANCH | `work/ink-cloud-002` |
 | DEV_BRANCH_HEAD | `NOT_STARTED` |
-| DEV_HANDOFF | `PENDING` |
-| MR_REVIEW | `NOT_STARTED` |
+| DEV_HANDOFF | `REVISION_REQUIRED` |
+| MR_REVIEW | `MR_REVISE` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_IMPLEMENTATION` |
+| NEXT_STAGE | `BOUNDED_FIX_CROSS_LAYER_GUARD` |
 | CLOUD_START_GATE | `BLOCKED_UNTIL_USER_REMINDER_AND_APPROVAL` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -85,3 +85,24 @@ PRE_CLOUD_CORE_READY
 ```
 
 No DEV/WORK role may begin Cloud implementation before this gate is explicitly cleared.
+
+
+## MR revision checkpoint
+
+Reviewed DEV branch head:
+
+`3ff5c61393fe6603e072fa587d954a159d239444`
+
+MR decision:
+
+`MR_REVISE`
+
+Only authorized revision:
+
+- prohibit cross-Layer Frame creation/reparent for v0.1;
+- add regression evidence;
+- update handoff/report.
+
+Core Frame/Hierarchy implementation is otherwise retained.
+
+Runtime QA remains `DEFERRED`.
