@@ -1,14 +1,27 @@
 # INK Active
 
-## MR / DEV Current Control
+## Authoritative Current Control
 
-Current authoritative development control:
+Read in order:
 
-1. `ACTIVE/INK_MAIN_REVIEW_BOARD.md` — current MR bulletin / work order.
-2. `ACTIVE/INK_DEV_PROGRESS.md` — DEV progress and handoff.
-3. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md` — durable MR→DEV→MR gate rules.
+1. `ACTIVE/INK_CURRENT_WORK_ORDER.md` — single current task / gate.
+2. `working/WORKING_STATUS.md` — cross-window status + DEV branch fingerprint.
+3. `ACTIVE/INK_REVIEW_STATUS.md` — MR review state.
+4. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md` — durable MR/DEV gate rules.
+5. `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md` — cross-window recovery protocol.
 
-Current authorized task: `INK-CLOUD-001` — architecture audit only. Runtime/product mutation is not authorized until MR review.
+DEV new-window instruction:
+`ACTIVE/INK_DEV_NEW_WINDOW_START.md`
+
+Current state:
+
+`INK-CLOUD-001 → DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP`
+
+Legacy/detail files are retained:
+- `ACTIVE/INK_MAIN_REVIEW_BOARD.md`
+- `ACTIVE/INK_DEV_PROGRESS.md`
+
+They preserve task detail and DEV evidence but do not override `ACTIVE/INK_CURRENT_WORK_ORDER.md`.
 
 目前階段：**Original Import Baseline + Product Boundary v0.1 + Full File Classification v0.1**。
 
