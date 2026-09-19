@@ -31,7 +31,7 @@ Legacy/detail files are retained:
 
 They preserve task detail and DEV evidence but do not override `ACTIVE/INK_CURRENT_WORK_ORDER.md`.
 
-目前階段：**Original Import Baseline + Product Boundary v0.1 + Full File Classification v0.1**。
+以下為早期匯入／分類的**歷史基線**，用於追溯，不代表目前 active engineering stage。\n\n目前 active engineering stage 以本文件最上方的 `Authoritative Current Control`、`ACTIVE/INK_CURRENT_WORK_ORDER.md` 與 `working/WORKING_STATUS.md` 為準。
 
 ## 現在已確認
 
