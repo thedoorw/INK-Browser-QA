@@ -1,4 +1,5 @@
 import { boundsContains, unionBounds } from '../core/index.js';
+import { findPageObject, walkPageObjects } from '../document/hierarchy.js';
 import { Quadtree } from './quadtree.js';
 
 export class PageSpatialIndex {
@@ -26,18 +27,14 @@ export class PageSpatialIndex {
     this.items = [];
     this.itemById.clear();
     let world = null;
-    for (let layerIndex = 0; layerIndex < (page?.layers?.length || 0); layerIndex += 1) {
-      const layer = page.layers[layerIndex];
-      if (!layer.visible) continue;
-      for (let objectIndex = 0; objectIndex < layer.objects.length; objectIndex += 1) {
-        const object = layer.objects[objectIndex];
-        const bounds = boundsForObject(object);
-        if (!bounds) continue;
-        world = unionBounds(world, bounds);
-        const item = { layer, layerIndex, object, objectIndex, bounds };
-        this.items.push(item);
-        this.itemById.set(object.id, item);
-      }
+    for (const entry of walkPageObjects(page)) {
+      if (!entry.effectiveVisible) continue;
+      const bounds = boundsForObject(entry.object, entry);
+      if (!bounds) continue;
+      world = unionBounds(world, bounds);
+      const item = { ...entry, bounds };
+      this.items.push(item);
+      this.itemById.set(entry.object.id, item);
     }
     this.tree = new Quadtree(this.makeRootBounds(world), { capacity: this.capacity, maxDepth: this.maxDepth });
     for (const item of this.items) this.tree.insert(item);
@@ -57,14 +54,14 @@ export class PageSpatialIndex {
     return true;
   }
 
-  upsertObject({ layer, layerIndex, object, objectIndex, bounds }) {
-    if (!object?.id || !bounds) return false;
-    const nextItem = { layer, layerIndex, object, objectIndex, bounds };
+  upsertObject(entry, bounds) {
+    if (!entry?.object?.id || !bounds) return false;
+    const nextItem = { ...entry, bounds };
     const outside = this.tree && !boundsContains(this.tree.bounds, bounds);
     if (outside) return false;
-    this.tree?.remove(candidate => candidate.object.id === object.id);
-    this.items = this.items.filter(candidate => candidate.object.id !== object.id);
-    this.itemById.set(object.id, nextItem);
+    this.tree?.remove(candidate => candidate.object.id === entry.object.id);
+    this.items = this.items.filter(candidate => candidate.object.id !== entry.object.id);
+    this.itemById.set(entry.object.id, nextItem);
     this.items.push(nextItem);
     this.tree?.insert(nextItem);
     this.revision += 1;
@@ -74,15 +71,10 @@ export class PageSpatialIndex {
 
   syncObject(page, objectId, boundsForObject) {
     if (!this.tree || page?.id !== this.pageId) return false;
-    let found = null;
-    for (let layerIndex = 0; layerIndex < page.layers.length && !found; layerIndex += 1) {
-      const layer = page.layers[layerIndex];
-      const objectIndex = layer.objects.findIndex(object => object.id === objectId);
-      if (objectIndex >= 0 && layer.visible) found = { layer, layerIndex, object: layer.objects[objectIndex], objectIndex };
-    }
-    if (!found) return this.removeObject(objectId);
-    const bounds = boundsForObject(found.object);
-    return this.upsertObject({ ...found, bounds });
+    const found = findPageObject(page, objectId);
+    if (!found || !found.effectiveVisible) return this.removeObject(objectId);
+    const bounds = boundsForObject(found.object, found);
+    return this.upsertObject(found, bounds);
   }
 
   syncObjects(page, objectIds, boundsForObject) {
@@ -95,12 +87,10 @@ export class PageSpatialIndex {
 
   refreshMetadata(page) {
     if (!this.tree || page?.id !== this.pageId) return false;
-    for (let layerIndex = 0; layerIndex < page.layers.length; layerIndex += 1) {
-      const layer = page.layers[layerIndex];
-      for (let objectIndex = 0; objectIndex < layer.objects.length; objectIndex += 1) {
-        const item = this.itemById.get(layer.objects[objectIndex].id);
-        if (item) Object.assign(item, { layer, layerIndex, object: layer.objects[objectIndex], objectIndex });
-      }
+    const entries = new Map(walkPageObjects(page).map(entry => [entry.object.id, entry]));
+    for (const item of this.items) {
+      const current = entries.get(item.object.id);
+      if (current) Object.assign(item, current);
     }
     return true;
   }
@@ -114,11 +104,12 @@ export class PageSpatialIndex {
     return {
       pageId: this.pageId,
       objects: this.items.length,
+      nestedObjects: this.items.filter(item => item.depth > 0).length,
       nodes: this.tree?.countNodes() || 0,
       revision: this.revision,
       fullRebuilds: this.fullRebuilds,
       incrementalUpdates: this.incrementalUpdates,
-      mode: 'incremental-quadtree'
+      mode: 'incremental-quadtree-hierarchy-aware'
     };
   }
 }

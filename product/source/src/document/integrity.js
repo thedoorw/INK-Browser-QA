@@ -38,7 +38,7 @@ export function inspectDocument(document, {
   maxBytes = 128 * 1024 * 1024
 } = {}) {
   const errors = [], warnings = [];
-  const stats = { pages: 0, layers: 0, objects: 0, groups: 0, strokes: 0, points: 0, duplicateIds: 0, byteLength: 0 };
+  const stats = { pages: 0, layers: 0, objects: 0, groups: 0, frames: 0, strokes: 0, points: 0, duplicateIds: 0, byteLength: 0 };
   const ids = new Set();
   const encoder = new TextEncoder();
   const registerId = (id, path) => {
@@ -61,10 +61,17 @@ export function inspectDocument(document, {
         });
       }
     }
-    if (object.type === 'group') {
-      stats.groups++;
-      if (!Array.isArray(object.children)) issue(errors, 'invalid-group', `${path}.children`, '群組缺少 children 陣列');
-      else object.children.forEach((child, index) => scanObject(child, `${path}.children[${index}]`));
+    if (object.type === 'group' || object.type === 'frame') {
+      if (object.type === 'group') stats.groups++;
+      else {
+        stats.frames++;
+        if (!Number.isFinite(+object.width) || +object.width <= 0 || !Number.isFinite(+object.height) || +object.height <= 0) issue(errors, 'invalid-frame-size', path, 'Frame 尺寸必須為正的有限數值');
+      }
+      if (!Array.isArray(object.children)) issue(errors, object.type === 'frame' ? 'invalid-frame' : 'invalid-group', `${path}.children`, `${object.type === 'frame' ? 'Frame' : '群組'} 缺少 children 陣列`);
+      else object.children.forEach((child, index) => {
+        if (child?.parentId !== object.id) issue(errors, 'invalid-parent-id', `${path}.children[${index}].parentId`, '子物件 parentId 必須指向實際父容器');
+        scanObject(child, `${path}.children[${index}]`);
+      });
     }
   };
 

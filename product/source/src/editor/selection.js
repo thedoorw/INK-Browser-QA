@@ -3,14 +3,14 @@ import { boundsContains, boundsIntersect, polygonContains } from '../core/index.
 export function marqueeCandidates(index, worldBounds, screenBox, mode, screenBoundsForObject) {
   const candidates = index.query(worldBounds);
   return candidates.filter(item => {
-    const bounds = screenBoundsForObject(item.object);
+    const bounds = screenBoundsForObject(item.object, item);
     return mode === 'contain' ? boundsContains(screenBox, bounds) : boundsIntersect(screenBox, bounds);
   });
 }
 
 export function lassoCandidates(index, polygon, worldBounds, worldBoundsForObject) {
   return index.query(worldBounds).filter(item => {
-    const bounds = worldBoundsForObject(item.object);
+    const bounds = worldBoundsForObject(item.object, item);
     const points = [
       { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h / 2 },
       { x: bounds.x, y: bounds.y },

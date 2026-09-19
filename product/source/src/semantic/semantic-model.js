@@ -65,7 +65,7 @@ export function walkSemanticObjects(document) {
       normalizeSemantic(object);
       if (parentObject && !object.semantic.parent) object.semantic.parent = parentObject.id;
       output.push({ object, layer, parentObject });
-      if (object.type === 'group') walk(object.children, layer, object);
+      if (object.type === 'group' || object.type === 'frame') walk(object.children, layer, object);
     }
   };
   for (const page of document.pages || []) for (const layer of page.layers || []) walk(layer.objects, layer);
