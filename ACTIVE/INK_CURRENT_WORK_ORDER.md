@@ -1,43 +1,47 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `AUTHORIZED / DEV_READY`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-004` |
-| TITLE | `INK Transform / Bounds / Coordinate System Foundation v0.1` |
+| CURRENT_TASK_ID | `INK-CLOUD-005` |
+| TITLE | `INK Component / Instance Data Model Foundation v0.1` |
 | AUTHORITY | `MAIN REVIEW + USER_APPROVED` |
-| DEV_WORK_BRANCH | `work/ink-cloud-004` |
+| DEV_WORK_BRANCH | `work/ink-cloud-005` |
 | DEV_AUTHORIZATION | `BOUNDED_SHARED_CORE_IMPLEMENTATION` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `MR_PASS` |
-| NEXT_AUTHORIZED_ACTION | `USER_PROMOTION_DECISION_REQUIRED` |
+| CURRENT_GATE | `DEV_AUTHORIZED` |
+| NEXT_AUTHORIZED_ACTION | `DEV_IMPLEMENTATION` |
 | CLOUD_START_GATE | `BLOCKED` |
 | RUNTIME_QA | `DEFERRED` |
 
 ## Accepted baseline
 
-INK-CLOUD-003 was accepted as:
+`INK-CLOUD-004` was accepted as:
 
 `SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 and promoted to main at:
 
-`d340664cf554755abfa146f607c05c03200e8799`
+`37418ab7f6b994425126e73c60810401d5e6e826`
 
-This task builds on the accepted Frame / Group ownership and structural-semantics foundation.
+This task builds on the accepted:
+
+- Frame + nested hierarchy foundation;
+- container / ownership / structural semantics;
+- transform / bounds / coordinate system contract.
 
 ## Objective
 
-Stabilize the coordinate, transform, and bounds contracts that all future Component, Layout, snapping, guide, persistence, and Cloud work will depend on.
+Stabilize the minimum Component / Instance data model that future reusable design systems, variants, layout, document persistence, and Cloud revisioning can safely depend on.
 
-This is a pre-Cloud shared-core task.
+This is a **pre-Cloud shared-core task**.
 
-The goal is not to redesign the transform UI. The goal is to make geometric meaning deterministic across nested containers and serialized documents.
+The goal is not to build a complete Component UI. The goal is to establish deterministic identity, reference, override, detach, history, and serialization semantics without creating a second geometry or hierarchy engine.
 
 ## Required baseline read order
 
@@ -49,135 +53,163 @@ The goal is not to redesign the transform UI. The goal is to make geometric mean
 6. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
 7. `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
 8. `governance/INK_Product_Delivery_Model_v0.1.md`
-9. accepted reports for INK-CLOUD-001 / 002 / 003
+9. accepted reports for INK-CLOUD-001 / 002 / 003 / 004
 10. only source / QA files required for this bounded task
 
 ## Required structural contract
 
-### 1. Coordinate-space definitions
+### 1. One geometry / hierarchy engine
 
-Define and use explicit meanings for:
+Component capability must reuse the accepted INK object, Frame/Group, transform, bounds, History, spatial, serialization, and renderer contracts.
 
-- object-local space;
-- parent/container space;
-- page/world space;
-- viewport/screen space.
+Do not create a parallel scene graph, transform engine, selection engine, or renderer.
 
-Preserve the accepted hierarchy rule:
+A Component definition may introduce metadata/reference structure, but its editable visual structure must remain ordinary INK structural geometry.
 
-```text
-world = ancestorWorld × local
-```
+### 2. Definition identity
 
-Screen/view conversion must remain a derived editor concern and must not silently rewrite serialized object geometry.
+Establish an explicit Component-definition identity contract.
 
-### 2. Matrix invariants
+Requirements:
 
-Establish one deterministic affine-transform contract for editable objects:
+- stable definition ID independent from instance object ID;
+- human-readable name;
+- deterministic reference to the definition's editable source structure;
+- definition identity survives ordinary save/load;
+- duplicated definitions must receive new definition identity;
+- deleting/renaming/moving the editable source must not silently retarget unrelated instances.
 
-- six-number affine matrix representation remains authoritative;
-- matrices must contain finite values;
-- local/world conversion must use shared helpers rather than ad-hoc multiplication order;
-- structural operations that require inversion must fail safely on non-invertible transforms rather than corrupt hierarchy;
-- negative scale / reflection behavior, if currently supported, must remain deterministic;
-- near-zero / singular transform behavior must be explicitly documented.
+DEV must document where Component definition authority lives and why.
 
-Do not replace the existing matrix engine.
+### 3. Source-node identity
 
-### 3. Bounds taxonomy
+Overrides require deterministic source-node targeting.
 
-Define explicit bounds concepts rather than using one ambiguous “bounds” meaning.
+Define how an instance refers to nodes inside its Component definition.
 
-At minimum distinguish:
+Requirements:
 
-- local geometry bounds;
-- world geometry bounds;
-- container bounds;
-- selection bounds.
+- source-node identity must be stable while the definition remains structurally the same;
+- instance-local object IDs must not be confused with source-definition node IDs;
+- source-node identity must work through Frame / Group nesting;
+- stale or missing override targets must fail safely and remain diagnosable;
+- no positional-array-index-only identity contract.
 
-Required semantics:
+### 4. Instance contract
 
-- Frame bounds come from its explicit width/height transformed to world space;
-- Group bounds derive from child content and do not gain persistent width/height;
-- nested child world bounds use complete ancestry;
-- selection bounds are the union of selected transform roots after ancestor/descendant collapse;
-- derived world/selection bounds must not be serialized as authoritative geometry.
+Add the minimum explicit Instance model.
 
-If a visual/effect bounds concept is needed for current code, keep it explicitly separate from geometry bounds. Do not add a new effects system.
+An Instance must have at least:
 
-### 4. Transform semantics
+- stable instance object ID;
+- reference to one Component-definition ID;
+- normal INK local matrix / parent ownership semantics;
+- deterministic resolved geometry/bounds from the referenced definition;
+- serialization-safe override state;
+- explicit broken/missing-definition state;
+- normal visibility / lock / opacity behavior through existing container semantics.
 
-Make the following deterministic for Frame / Group / ordinary objects:
+Instance placement inside Layer / Frame / Group must use the existing ownership model.
 
-- move;
-- rotate;
-- scale;
-- nested transform;
-- ancestor + descendant multi-selection;
-- world-space transform converted back to local space;
-- same-Layer reparent appearance preservation.
+### 5. Linked vs detached state
 
-Ancestor + descendant selected together must not double-transform the descendant.
+A linked Instance must not silently become an independent duplicate tree.
 
-Do not change the accepted same-Layer reparent restriction.
+Define deterministic detach behavior.
 
-### 5. Frame resize vs Frame transform
+Detach must:
 
-Explicitly separate these meanings:
+- preserve current world appearance;
+- materialize ordinary editable INK structure;
+- generate appropriate new ordinary object IDs;
+- remove Component linkage from the detached result;
+- preserve valid parent ownership;
+- remain undoable through existing History.
 
-- **Frame transform**: modifies the Frame affine matrix; children follow through ancestry.
-- **Frame geometry resize**: modifies Frame width/height.
+Do not build a full detach UI; a bounded core/editor command or test entry point is sufficient.
 
-For this v0.1 foundation:
+### 6. Override envelope
 
-- resizing Frame geometry must not silently rewrite child local transforms;
-- no constraints/auto-layout behavior is implied;
-- child response to future constraints/layout remains a later task;
-- any existing UI path that currently conflates frame geometry resize with matrix scaling must be identified and boundedly normalized if necessary.
+Establish the minimum deterministic override data contract.
 
-No full transform-UX redesign.
+Requirements:
 
-### 6. Group bounds contract
+- overrides are serialized data, not hidden runtime state;
+- keyed by stable source-node identity;
+- property names/values must be explicit and schema-safe;
+- unknown/stale targets do not corrupt the document;
+- reset/remove override is deterministic;
+- source updates and overrides have a defined precedence rule.
 
-Group remains content-derived:
+For v0.1, implement only the smallest property surface necessary to prove the model. Do not build a broad Figma-style override UI.
 
-- no persistent width/height;
-- bounds come from descendants;
-- nested Group/Frame combinations must produce deterministic bounds;
-- empty Group fallback behavior must be explicit and stable;
-- Group transform must not bake child geometry unless an existing explicit operation already requires it.
+### 7. Definition resolution and cycle safety
 
-### 7. Spatial / hit-test / selection consistency
+Component resolution must fail safely.
 
-Where the same geometry is being interpreted, these systems must not disagree:
+Required handling:
 
-- renderer bounds;
-- PageSpatialIndex bounds;
-- hit-test;
-- marquee/lasso candidate bounds;
-- selection overlay bounds;
-- snapping feature bounds.
+- missing definition;
+- missing source root;
+- stale override target;
+- self-reference;
+- indirect cyclic component reference if nested instances are structurally possible.
 
-Fix only bounded inconsistencies required to establish one coordinate/bounds contract.
+No infinite traversal/render/serialization recursion.
 
-Do not implement the future full snapping/guide system here.
+If nested Component instances are not supported in v0.1, reject them explicitly rather than leaving behavior ambiguous.
 
-### 8. Serialization / migration
+### 8. Bounds / transform / selection semantics
 
-Verify that:
+Reuse INK-CLOUD-004 contracts.
 
-- local matrices remain serialized source-of-truth geometry;
-- Frame width/height remain serialized Frame geometry;
-- derived world/selection/container cache data is not treated as authoritative serialized state;
-- existing Frame and Group documents migrate safely;
-- no accidental screen-space values are written into document objects;
-- structured SVG mapping remains coherent where touched.
+Required:
 
-### 9. Format-version decision
+- Instance placement transform is ordinary INK local matrix;
+- resolved Instance bounds are deterministic in world space;
+- parent transform ancestry works normally;
+- selecting/moving/scaling/rotating an Instance does not mutate the Component definition;
+- definition edits do not rewrite Instance placement matrices;
+- ancestor/descendant transform-root rules remain valid;
+- no serialized derived world bounds.
 
-DEV must explicitly report whether the stabilized contract requires a format-version change.
+For v0.1, canvas interaction may remain Instance-atomic.
 
-If DEV believes a format-version bump is necessary:
+### 9. History semantics
+
+Use existing HistoryManager.
+
+At minimum, bounded operations for:
+
+- create/register Component definition;
+- create Instance;
+- apply/reset one supported override;
+- detach Instance;
+- repair/reject broken reference where applicable
+
+must not leave partial state and must support undo/redo where they mutate document state.
+
+No replacement History engine.
+
+### 10. Serialization / migration / integrity
+
+Verify:
+
+- Component-definition identity survives native save/load;
+- Instance references survive save/load;
+- overrides survive save/load;
+- broken references are retained diagnostically rather than silently retargeted;
+- integrity inspection can report duplicate definition IDs, missing definitions, invalid source roots, stale override targets, and cycles where applicable;
+- existing non-Component documents remain valid;
+- accepted Frame/Group documents remain compatible.
+
+Structured SVG export must remain coherent. If linked Component semantics cannot be represented directly in SVG, export resolved structural geometry without raster flattening while keeping native INK data authoritative.
+
+### 11. Format-version decision
+
+DEV must explicitly report whether this data model requires a document `FORMAT_VERSION` change.
+
+If a format-version bump appears necessary:
 
 `STOP and request MR decision before changing FORMAT_VERSION.`
 
@@ -185,10 +217,11 @@ Do not independently change product or document version.
 
 ## Required compatibility protection
 
-At minimum protect:
+Protect at minimum:
 
-- accepted INK-CLOUD-002 Frame documents;
-- accepted INK-CLOUD-003 Group/ownership documents;
+- INK-CLOUD-002 Frame documents;
+- INK-CLOUD-003 Group/ownership documents;
+- INK-CLOUD-004 transform/bounds contracts;
 - legacy Group documents;
 - stroke/stylus;
 - editable vector path;
@@ -196,11 +229,10 @@ At minimum protect:
 - image/raster;
 - Repeat stable identity;
 - History undo/redo;
-- selection transform;
 - same-Layer reparent;
 - spatial indexing;
 - local save/load;
-- SVG structured export/import where touched;
+- structured SVG;
 - creation/layout workspace camera behavior.
 
 ## Explicit exclusions
@@ -210,13 +242,15 @@ Do NOT implement:
 - Cloud backend / remote file storage;
 - authentication;
 - collaboration / presence;
-- components / instances / variants;
+- remote/shared Component libraries;
+- variants / component sets;
 - constraints;
 - flex/grid/auto-layout;
 - persistent ruler/guide system;
-- full snapping-engine redesign;
+- snapping-engine redesign;
 - cross-Layer Frame reparent;
-- full transform UI redesign;
+- full Component panel/UI;
+- full deep-edit Instance UX;
 - renderer replacement;
 - Penpot source copying;
 - FLORA/AI/Recipe boundary promotion;
@@ -231,7 +265,7 @@ GitHub Actions quota remains exhausted.
 Therefore:
 
 - do not depend on hosted Actions;
-- perform source/static/unit/serialization checks available in the active environment;
+- execute source/static/unit/serialization checks available in the active environment;
 - never report an unexecuted test as PASS;
 - record browser/runtime-only checks as `RUNTIME_QA_DEFERRED`;
 - no Runtime-verified or certified claim may be made.
@@ -240,23 +274,25 @@ Therefore:
 
 Create:
 
-`research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`
+`research/INK_COMPONENT_INSTANCE_DATA_MODEL_REPORT_v0.1.md`
 
-Update:
+Update on the DEV branch:
 
 `ACTIVE/INK_DEV_PROGRESS.md`
 
 The report must include:
 
-- final coordinate-space contract;
-- matrix/inversion rules;
-- bounds taxonomy;
-- Frame transform vs resize contract;
-- Group bounds contract;
-- selection/multi-select transform rules;
-- spatial/hit-test/bounds alignment;
+- chosen definition-authority model;
+- definition/source-node/instance identity rules;
+- linked resolution model;
+- override schema and precedence;
+- detach semantics;
+- cycle / missing-reference behavior;
+- transform/bounds/selection behavior;
+- History behavior;
+- integrity / migration / serialization behavior;
+- structured SVG behavior;
 - files changed;
-- migration/serialization behavior;
 - tests/checks actually executed;
 - tests authored but not executed, if any;
 - schema/version conclusion;
@@ -268,28 +304,36 @@ The report must include:
 
 MR expects evidence that:
 
-1. local / parent / world / screen meanings are explicit and consistent.
-2. nested world/local transform math is deterministic.
-3. singular/non-invertible transform cases fail safely.
-4. Frame bounds use explicit Frame geometry.
-5. Group bounds remain child-derived.
-6. nested Frame/Group bounds remain correct under transforms.
-7. ancestor + descendant selection does not double-transform.
-8. Frame matrix transform and Frame width/height resize are not conflated.
-9. spatial / hit-test / marquee / selection bounds agree for covered cases.
-10. reparent still preserves world appearance within the same Layer.
-11. no derived world bounds become authoritative serialized document state.
-12. accepted Frame/Group documents remain structurally compatible.
-13. no excluded capability is introduced.
-14. no format-version bump occurs without MR approval.
+1. Component definition identity is stable and unambiguous.
+2. source-node identity is stable and not based only on array position.
+3. Instance reference resolution is deterministic.
+4. missing/broken references fail safely.
+5. cyclic resolution cannot recurse indefinitely.
+6. Instance placement uses existing local/world transform contract.
+7. Instance transforms do not mutate the definition.
+8. one bounded override type applies/resets deterministically.
+9. stale override targets remain diagnosable and non-corrupting.
+10. detach preserves appearance and produces ordinary editable structure.
+11. create/override/detach mutations integrate with History.
+12. native save/load preserves definition/instance/override identity.
+13. integrity can diagnose invalid Component references.
+14. existing Frame/Group/Repeat documents remain structurally compatible.
+15. no excluded capability is introduced.
+16. no format-version bump occurs without MR approval.
 
 ## Branch / commit rules
 
 Use only:
 
-`work/ink-cloud-004`
+`work/ink-cloud-005`
 
-DEV must continuously commit meaningful checkpoints and keep `ACTIVE/INK_DEV_PROGRESS.md` current on that branch.
+DEV must:
+
+- commit meaningful checkpoints;
+- keep `ACTIVE/INK_DEV_PROGRESS.md` current on this branch;
+- report exact checkpoint SHAs;
+- preserve bounded tests/evidence;
+- stop at handoff.
 
 DEV must not:
 
@@ -304,10 +348,10 @@ When complete:
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-004
-BRANCH = work/ink-cloud-004
+TASK_ID = INK-CLOUD-005
+BRANCH = work/ink-cloud-005
 PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
-FORMAT_VERSION_CHANGE = 0
+FORMAT_VERSION_CHANGE = 0 OR MR_DECISION_REQUIRED
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
@@ -330,57 +374,3 @@ structural-core stabilization
 → explicit user approval
 → first Cloud Work Order
 ```
-
-
-## MR Revision — Singular Interaction / History Guard
-
-MR reviewed DEV handoff HEAD:
-
-`479bcca83e0c375592bff6542115b971e88002c7`
-
-Decision:
-
-`MR_REVISE / BOUNDED_FIX_ONLY`
-
-The Transform / Bounds / Coordinate System architecture is retained.
-
-Required correction:
-
-1. Stroke node/handle edit paths that require world→local inversion must validate invertibility before opening a History transaction, or deterministically cancel/restore it on rejection.
-2. Interactive selection move/scale/rotate must not leave a pending History transaction or active interaction if a transform root cannot be converted back to local space.
-3. Rejected singular operations must leave document geometry and hierarchy unchanged.
-4. Add bounded regression coverage including explicit verification that History has no pending transaction after rejection.
-5. Update:
-   - `ACTIVE/INK_DEV_PROGRESS.md`
-   - `research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`
-6. Hand off again and STOP.
-
-No other redesign is authorized.
-
-`RUNTIME_QA = DEFERRED` remains in force.
-
-
-## MR Pass — Singular Interaction / History Guard
-
-MR reviewed final revision HEAD:
-
-`436c7bded529f481f22a7657f7a2cc62d43f4053`
-
-Decision:
-
-`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
-
-The bounded revision satisfies the prior MR finding:
-
-- inversion/preflight occurs before History begin where required;
-- rejected active singular operations restore geometry;
-- History pending state is cleared;
-- interaction/draft state is cleared;
-- no hierarchy mutation is introduced;
-- no format-version change occurred.
-
-DEV remains stopped.
-
-Main promotion requires user approval.
-
-No package update, next task, Cloud implementation, or certification is authorized by this PASS.
