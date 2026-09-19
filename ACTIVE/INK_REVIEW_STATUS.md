@@ -1,25 +1,13 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS`
+STATUS: `NO_REVIEW_PENDING / DEV_ACTIVE`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-001` |
-| DEV_BRANCH | `work/ink-cloud-001` |
-| BASE_COMMIT | `09e86ac461b64d4d1346185dd5053807d75d4ec4` |
-| REVIEW_HEAD | `becd65ba14fcb1a30419aa2b422e9e95dc59bce4` |
-| REVIEW_STATE | `COMPLETE` |
-| DECISION | `MR_PASS` |
-| PRODUCT_SOURCE_MUTATION | `0` |
-| PACKAGE_MUTATION | `0` |
-| MAIN_MERGE | `NOT_AUTHORIZED` |
-| NEXT_WORK_ORDER | `NOT_ISSUED` |
+| TASK_ID | `INK-CLOUD-002` |
+| DEV_BRANCH | `work/ink-cloud-002` |
+| REVIEW_STATE | `WAITING_FOR_DEV_HANDOFF` |
+| DECISION | `NONE` |
+| PREVIOUS_TASK | `INK-CLOUD-001 = MR_PASS` |
 
-Review details:
-
-- `ACTIVE/INK_REVIEW_FINDINGS.md`
-- `ACTIVE/INK_REVIEW_EVIDENCE.md`
-
-Current gate:
-
-`MR_PASS → STOP → WAIT_FOR_NEXT_WORK_ORDER`
+MR review begins only after DEV handoff and final branch HEAD fingerprint are recorded.
