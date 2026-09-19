@@ -11,6 +11,7 @@ STATUS: `ACTIVE`
 | PRODUCT_MUTATION | `PROHIBITED` |
 | PACKAGE_UPDATE | `PROHIBITED` |
 | GATE | `MR_REVIEW_REQUIRED_AFTER_HANDOFF` |
+| DEV_WORK_BRANCH | `work/ink-cloud-001` |
 
 ## Direction fixed by MR
 
@@ -105,6 +106,20 @@ The audit must answer:
 4. Which Penpot implementation details should not be imported because of stack, complexity, licensing, or maintenance cost?
 5. What is the smallest safe first implementation slice after this audit?
 6. What existing INK capabilities are regression-protected for all future work?
+
+### Mandatory DEV branch
+
+DEV must use:
+
+`work/ink-cloud-001`
+
+Requirements:
+- create/use this branch from current `main`;
+- commit architecture-audit progress at meaningful checkpoints;
+- keep `ACTIVE/INK_DEV_PROGRESS.md` updated on this branch;
+- include latest commit SHA in each progress entry;
+- do not merge to `main`;
+- MR will inspect branch history and diff before authorizing any next step.
 
 ### Deliverables
 
