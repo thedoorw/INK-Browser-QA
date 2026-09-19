@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Matrix } from '../../../../product/source/src/core/index.js';
 import {
-  applyObjectMatrices, applyWorldTransform, nonSingularScaleComponent
+  applyObjectMatrices, applyWorldTransform, applyWorldTransformBatch, nonSingularScaleComponent
 } from '../../../../product/source/src/editor/transform.js';
 import {
   collapseTransformRoots, frameWorldGeometryBounds, groupWorldGeometryBounds,
@@ -109,4 +109,20 @@ test('Frame geometry resize preserves matrix and child local geometry', () => {
   assert.equal(frame.height, 100);
   assert.deepEqual(frame.matrix, matrix);
   assert.deepEqual(child.matrix, childMatrix);
+});
+
+
+test('batch world transforms preflight all objects before mutation', () => {
+  const a = { id: 'a', matrix: Matrix.translate(1, 2) };
+  const b = { id: 'b', matrix: Matrix.translate(3, 4) };
+  const entries = [
+    { found: { object: a, parentWorldMatrix: Matrix.identity() }, transform: Matrix.translate(5, 0) },
+    { found: { object: b, parentWorldMatrix: Matrix.scale(0, 1) }, transform: Matrix.translate(5, 0) }
+  ];
+  assert.throws(
+    () => applyWorldTransformBatch(entries),
+    error => error?.code === 'NON_INVERTIBLE_PARENT'
+  );
+  assert.deepEqual(a.matrix, Matrix.translate(1, 2));
+  assert.deepEqual(b.matrix, Matrix.translate(3, 4));
 });
