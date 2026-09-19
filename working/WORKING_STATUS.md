@@ -15,6 +15,9 @@ STATUS: `DEV_AUTHORIZED`
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
 | NEXT_STAGE | `DEV_IMPLEMENTATION` |
+| GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
+| RUNTIME_QA | `DEFERRED` |
+| SOURCE_STATIC_QA | `REQUIRED` |
 
 ## Previous accepted checkpoint
 
@@ -56,3 +59,12 @@ TASK_ID
 ```
 
 At DEV handoff, MR pins the exact final branch HEAD before review.
+
+
+## Temporary validation constraint
+
+GitHub Actions quota is exhausted. Current development proceeds without hosted Runtime QA.
+
+DEV must maximize source/static/structural evidence and explicitly record any checks that remain `RUNTIME_QA_DEFERRED`.
+
+No package certification or Runtime-verified claim may be made while this debt remains open.
