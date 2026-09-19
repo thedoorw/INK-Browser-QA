@@ -34,8 +34,21 @@ export function isFrame(object) {
   return object?.type === 'frame';
 }
 
+export function isGroup(object) {
+  return object?.type === 'group';
+}
+
+export function isStructuralContainer(object) {
+  return isFrame(object) || isGroup(object);
+}
+
+export function structuralContainerRole(object) {
+  return isFrame(object) ? 'frame' : isGroup(object) ? 'group' : null;
+}
+
 export function walkPageObjects(page) {
   const output = [];
+  let renderOrder = 0;
   const walk = ({
     objects,
     layer,
@@ -44,10 +57,13 @@ export function walkPageObjects(page) {
     parentWorldMatrix = Matrix.identity(),
     pathPrefix,
     ancestorIds = [],
+    ancestorTypes = [],
+    groupAncestorIds = [],
     depth = 0,
     rootObjectIndex = null,
     inheritedVisible = true,
-    inheritedLocked = false
+    inheritedLocked = false,
+    inheritedOpacity = 1
   }) => {
     for (let objectIndex = 0; objectIndex < (objects?.length || 0); objectIndex += 1) {
       const object = objects[objectIndex];
@@ -56,6 +72,7 @@ export function walkPageObjects(page) {
       const path = [...pathPrefix, objectIndex];
       const effectiveVisible = inheritedVisible && object.visible !== false;
       const effectiveLocked = inheritedLocked || Boolean(object.locked);
+      const effectiveOpacity = finiteOpacity(inheritedOpacity) * finiteOpacity(object.opacity);
       const entry = {
         layer,
         layerIndex,
@@ -69,12 +86,18 @@ export function walkPageObjects(page) {
         worldMatrix,
         path,
         ancestorIds: [...ancestorIds],
+        ancestorTypes: [...ancestorTypes],
+        groupAncestorIds: [...groupAncestorIds],
         depth,
+        renderOrder: renderOrder++,
+        structuralRole: structuralContainerRole(object),
+        interactionExposed: groupAncestorIds.length === 0,
         effectiveVisible,
-        effectiveLocked
+        effectiveLocked,
+        effectiveOpacity
       };
       output.push(entry);
-      if (isFrame(object) && Array.isArray(object.children)) {
+      if (isStructuralContainer(object) && Array.isArray(object.children)) {
         walk({
           objects: object.children,
           layer,
@@ -83,10 +106,13 @@ export function walkPageObjects(page) {
           parentWorldMatrix: worldMatrix,
           pathPrefix: [...path, 'children'],
           ancestorIds: [...ancestorIds, object.id],
+          ancestorTypes: [...ancestorTypes, object.type],
+          groupAncestorIds: isGroup(object) ? [...groupAncestorIds, object.id] : [...groupAncestorIds],
           depth: depth + 1,
           rootObjectIndex: rootObjectIndex ?? objectIndex,
           inheritedVisible: effectiveVisible,
-          inheritedLocked: effectiveLocked
+          inheritedLocked: effectiveLocked,
+          inheritedOpacity: effectiveOpacity
         });
       }
     }
@@ -100,10 +126,27 @@ export function walkPageObjects(page) {
       layerIndex,
       pathPrefix: ['layers', layerIndex, 'objects'],
       inheritedVisible: layer.visible !== false,
-      inheritedLocked: Boolean(layer.locked)
+      inheritedLocked: Boolean(layer.locked),
+      inheritedOpacity: finiteOpacity(layer.opacity)
     });
   }
   return output;
+}
+
+export function comparePageObjectHitOrder(a, b, { deep = false } = {}) {
+  const layerDelta = (b?.layerIndex ?? 0) - (a?.layerIndex ?? 0);
+  if (layerDelta) return layerDelta;
+  const rootDelta = (b?.rootObjectIndex ?? 0) - (a?.rootObjectIndex ?? 0);
+  if (rootDelta) return rootDelta;
+  if (!deep) {
+    if (b?.ancestorIds?.includes(a?.object?.id)) return -1;
+    if (a?.ancestorIds?.includes(b?.object?.id)) return 1;
+  }
+  const renderDelta = (b?.renderOrder ?? 0) - (a?.renderOrder ?? 0);
+  if (renderDelta) return renderDelta;
+  const depthDelta = (b?.depth ?? 0) - (a?.depth ?? 0);
+  if (depthDelta) return depthDelta;
+  return (b?.objectIndex ?? 0) - (a?.objectIndex ?? 0);
 }
 
 export function findPageObject(page, refOrId) {
@@ -133,6 +176,28 @@ export function reparentPageObject(page, objectId, parentFrameId = null, { targe
   if (target?.ancestorIds?.includes(objectId)) {
     throw Object.assign(new Error('INK_HIERARCHY_CYCLE'), { code: 'HIERARCHY_CYCLE', objectId, parentFrameId });
   }
+  if (target && target.layer.id !== source.layer.id) {
+    throw Object.assign(new Error('INK_HIERARCHY_CROSS_LAYER_REPARENT'), {
+      code: 'HIERARCHY_CROSS_LAYER_REPARENT',
+      objectId,
+      parentFrameId,
+      sourceLayerId: source.layer.id,
+      targetLayerId: target.layer.id
+    });
+  }
+
+  const requestedLayer = targetLayerId ? page.layers.find(layer => layer.id === targetLayerId) : null;
+  if (!target && targetLayerId && !requestedLayer) {
+    throw Object.assign(new Error('INK_HIERARCHY_LAYER_NOT_FOUND'), { code: 'HIERARCHY_LAYER_NOT_FOUND', targetLayerId });
+  }
+  if (!target && requestedLayer && requestedLayer.id !== source.layer.id) {
+    throw Object.assign(new Error('INK_HIERARCHY_CROSS_LAYER_REPARENT'), {
+      code: 'HIERARCHY_CROSS_LAYER_REPARENT',
+      objectId,
+      sourceLayerId: source.layer.id,
+      targetLayerId: requestedLayer.id
+    });
+  }
 
   const sourceWorld = [...source.worldMatrix];
   let targetArray;
@@ -146,7 +211,7 @@ export function reparentPageObject(page, objectId, parentFrameId = null, { targe
     targetParentId = target.object.id;
     targetLayer = target.layer;
   } else {
-    targetLayer = page.layers.find(layer => layer.id === targetLayerId) || source.layer || page.layers[0];
+    targetLayer = requestedLayer || source.layer;
     if (!targetLayer) throw Object.assign(new Error('INK_HIERARCHY_LAYER_NOT_FOUND'), { code: 'HIERARCHY_LAYER_NOT_FOUND' });
     targetArray = targetLayer.objects;
   }

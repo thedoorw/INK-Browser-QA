@@ -114,6 +114,8 @@ export function normalizeObject(object, { parentId = null } = {}) {
     }
   }
   if (object.type === 'group') {
+    object.visible = object.visible !== false;
+    object.locked = Boolean(object.locked);
     object.children = Array.isArray(object.children) ? object.children : [];
     object.children.forEach(child => normalizeObject(child, { parentId: object.id }));
   }
