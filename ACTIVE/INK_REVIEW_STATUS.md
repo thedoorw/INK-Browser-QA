@@ -1,23 +1,26 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_REVISE`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 | Field | Value |
 |---|---|
 | TASK_ID | `INK-CLOUD-004` |
 | DEV_BRANCH | `work/ink-cloud-004` |
-| REVIEW_HEAD | `479bcca83e0c375592bff6542115b971e88002c7` |
-| REVIEW_STATE | `COMPLETE / BOUNDED_REVISION_REQUIRED` |
-| DECISION | `MR_REVISE` |
-| REVISION_SCOPE | `SINGULAR_INTERACTION_HISTORY_GUARD` |
+| REVIEW_HEAD | `436c7bded529f481f22a7657f7a2cc62d43f4053` |
+| REVIEW_STATE | `COMPLETE` |
+| DECISION | `MR_PASS` |
+| SOURCE_REVIEW | `PASS` |
 | FORMAT_VERSION_CHANGE | `0` |
 | RUNTIME_QA | `DEFERRED` |
-| MAIN_MERGE | `PROHIBITED` |
+| MAIN_PROMOTION | `AWAITING_USER_APPROVAL` |
 | PACKAGE_UPDATE | `PROHIBITED` |
+| CLOUD_START_GATE | `BLOCKED` |
 
 Review details:
 
 - `ACTIVE/INK_REVIEW_FINDINGS.md`
 - `ACTIVE/INK_REVIEW_EVIDENCE.md`
 
-DEV may resume only for the bounded revision recorded in the Current Work Order.
+Fingerprint rule:
+
+If `work/ink-cloud-004` moves beyond the reviewed HEAD above before promotion, this review becomes stale and MR must re-check the delta.
