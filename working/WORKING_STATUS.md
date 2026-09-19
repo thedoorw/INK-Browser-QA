@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `DEV_AUTHORIZED`
+STATUS: `MR_REVISE / DEV_BOUNDED_FIX_AUTHORIZED`
 
 ## Active control
 
@@ -9,12 +9,12 @@ STATUS: `DEV_AUTHORIZED`
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
 | CURRENT_TASK_ID | `INK-CLOUD-004` |
 | DEV_BRANCH | `work/ink-cloud-004` |
-| DEV_BRANCH_HEAD | `NOT_STARTED` |
-| DEV_HANDOFF | `PENDING` |
-| MR_REVIEW | `NOT_STARTED` |
+| DEV_BRANCH_HEAD | `479bcca83e0c375592bff6542115b971e88002c7` |
+| DEV_HANDOFF | `REVISION_REQUIRED` |
+| MR_REVIEW | `MR_REVISE` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `TRANSFORM_BOUNDS_COORDINATE_SYSTEM` |
+| NEXT_STAGE | `SINGULAR_INTERACTION_HISTORY_GUARD` |
 | CLOUD_START_GATE | `BLOCKED_UNTIL_PRE_CLOUD_CORE_READY_AND_USER_APPROVAL` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -66,3 +66,24 @@ Recover from GitHub SSOT:
 Hosted GitHub Actions remain unavailable due quota.
 
 Use source/static/unit evidence where possible and record browser/runtime debt as `RUNTIME_QA_DEFERRED`.
+
+
+## MR revision checkpoint
+
+Reviewed branch head:
+
+`479bcca83e0c375592bff6542115b971e88002c7`
+
+Decision:
+
+`MR_REVISE`
+
+Only authorized revision:
+
+- singular node/handle/interactive transform History preflight/cleanup;
+- regression evidence for no pending History and no mutation;
+- progress/report update.
+
+Transform/Bounds core architecture is otherwise retained.
+
+Runtime QA remains `DEFERRED`.
