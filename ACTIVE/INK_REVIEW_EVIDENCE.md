@@ -1,52 +1,57 @@
-# INK REVIEW EVIDENCE — INK-CLOUD-003
+# INK REVIEW EVIDENCE — INK-CLOUD-004
 
-STATUS: `SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `MR_REVISE_EVIDENCE`
 
 ## Fingerprint
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-003` |
-| DEV_BRANCH | `work/ink-cloud-003` |
-| REVIEW_HEAD | `ede48bf1f3f6d1e4149941af23cfa743539d283f` |
-| DECISION | `MR_PASS` |
+| TASK_ID | `INK-CLOUD-004` |
+| DEV_BRANCH | `work/ink-cloud-004` |
+| REVIEW_HEAD | `479bcca83e0c375592bff6542115b971e88002c7` |
 | FORMAT_VERSION_CHANGE | `0` |
 | RUNTIME_QA | `DEFERRED` |
 
 ## Reviewed source surfaces
 
-MR directly reviewed:
+MR directly inspected:
 
+- `product/source/src/core/math.js`
 - `product/source/src/document/hierarchy.js`
-- `product/source/src/document/model.js`
-- `product/source/src/document/migration.js`
-- `product/source/src/document/integrity.js`
-- `product/source/src/spatial/page-spatial-index.js`
-- `product/source/src/vector/vector-core.js`
-- relevant `product/source/src/ink.js` interaction/render paths
-- `qa/core/tests/unit/container-structural-semantics-v0.1.test.mjs`
-- `qa/core/tests/unit/container-structural-source-v0.1.test.mjs`
-- `research/INK_CONTAINER_OWNERSHIP_STRUCTURAL_SEMANTICS_REPORT_v0.1.md`
+- `product/source/src/editor/bounds.js`
+- `product/source/src/editor/transform.js`
+- relevant `product/source/src/ink.js` interaction paths
+- `product/source/src/history/history.js`
+- `qa/core/tests/unit/transform-bounds-coordinate-v0.1.test.mjs`
+- `research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`
 
-## Review observations
+## Accepted evidence
 
-The implementation is internally consistent with the Work Order:
+The core transform/bounds model is internally coherent for the reviewed paths:
 
-- hierarchy traversal covers Frame + Group;
-- inherited state composition is deterministic;
-- Group atomic interaction is preserved;
-- hit ordering follows structural/render order for covered cases;
-- ownership/migration/integrity rules are explicit;
-- Repeat stays outside ordinary container-child traversal;
-- no format-version promotion occurred.
+- safe affine inversion helpers;
+- deterministic world/local conversion;
+- atomic batch transform preflight;
+- Frame explicit geometry bounds;
+- Group child-derived bounds;
+- transform-root selection collapse;
+- same-Layer reparent preflight before detach;
+- no format-version change.
 
-## Execution evidence limitation
+## Blocking evidence
 
-Hosted Actions unavailable: quota exhausted.
+Current stroke-node interaction starts History before testing whether the object's world matrix is invertible.
 
-MR local test attempt could not obtain a GitHub checkout because the execution environment had no GitHub DNS/network access.
+When inversion fails, the path returns before creating an interaction and without cancelling History. Since pointer-up sees no interaction, the pending History transaction can remain open.
+
+This is source-visible and does not require browser Runtime reproduction to establish the defect.
+
+## Execution limitation
+
+MR attempted independent repository checkout for local Node execution, but the execution environment could not resolve `github.com`.
 
 Therefore:
-- source/static review = PASS;
-- authored test suites = PRESENT / NOT EXECUTED BY MR;
-- browser/runtime = `RUNTIME_QA_DEFERRED`.
+- source/static review findings are authoritative for this MR decision;
+- DEV-reported executed tests remain DEV evidence;
+- MR does not claim independent Node execution;
+- browser/runtime remains `RUNTIME_QA_DEFERRED`.
