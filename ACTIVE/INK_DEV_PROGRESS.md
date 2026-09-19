@@ -1,16 +1,16 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: `DEV_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-005` |
 | AUTHORIZED_SCOPE | `COMPONENT / INSTANCE DATA MODEL FOUNDATION` |
-| DEV_STATE | `NOT_STARTED` |
+| DEV_STATE | `MODEL_DESIGN` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
 | DEV_WORK_BRANCH | `work/ink-cloud-005` |
 | BASE_BRANCH_HEAD_AT_START | `2ed1e9cbb4b77ac38b0c6798b8d75691f5325f46` |
-| LATEST_DEV_COMMIT | `NONE` |
+| LATEST_DEV_COMMIT | `c0a0e441c1b699398167a8559b72af750ba496a8` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 | FORMAT_VERSION_CHANGE | `UNDECIDED / MR_GATE_IF_REQUIRED` |
@@ -74,3 +74,11 @@ RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+## Checkpoint 1 — design
+
+GitHub work branch checked out at `c0a0e441c1b699398167a8559b72af750ba496a8`. Required README/AGENTS/current order/status/progress, named governance and accepted 001–004 reports read; source model, migration, integrity, hierarchy, History, renderer/studio/SVG/spatial paths inspected.
+
+Proposed additive optional document registry referencing ordinary Frame/Group roots; atomic instance objects contain definition ID and serialized source-ID opacity overrides, never persistent resolved children. Resolution feeds the existing renderer/bounds/SVG paths. Nested instances explicitly rejected. No FORMAT_VERSION modification planned; compatibility to be verified.
+
+Executed: remote branch lookup, clean checkout and source inspection. No implementation tests yet. Browser Runtime QA remains DEFERRED.
