@@ -73,6 +73,7 @@ export class PageSpatialIndex {
     if (!this.tree || page?.id !== this.pageId) return false;
     const found = findPageObject(page, objectId);
     if (!found || !found.effectiveVisible) return this.removeObject(objectId);
+    if (found.object.type === 'frame' || found.object.type === 'group' || found.ancestorTypes?.includes('group')) return false;
     const bounds = boundsForObject(found.object, found);
     return this.upsertObject(found, bounds);
   }

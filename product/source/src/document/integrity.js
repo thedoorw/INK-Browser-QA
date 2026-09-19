@@ -86,10 +86,6 @@ export function inspectDocument(document, {
     if (!Array.isArray(object.matrix) || object.matrix.length !== 6 || object.matrix.some(value => !Number.isFinite(+value))) {
       issue(errors, 'invalid-matrix', `${path}.matrix`, '物件矩陣必須包含六個有限數值');
     }
-    if (!Number.isFinite(+object.opacity) || +object.opacity < 0 || +object.opacity > 1) {
-      issue(errors, 'invalid-opacity', `${path}.opacity`, '物件透明度必須介於 0 與 1');
-    }
-
     if (object.type === 'stroke') {
       stats.strokes++;
       if (!Array.isArray(object.points)) issue(errors, 'invalid-points', `${path}.points`, '筆畫缺少點陣列');
@@ -156,7 +152,6 @@ export function inspectDocument(document, {
           page.layers.forEach((layer, layerIndex) => {
             const layerPath = `${path}.layers[${layerIndex}]`;
             registerId(layer?.id, `${layerPath}.id`);
-            if (!Number.isFinite(+layer?.opacity) || +layer.opacity < 0 || +layer.opacity > 1) issue(errors, 'invalid-layer-opacity', `${layerPath}.opacity`, '圖層透明度必須介於 0 與 1');
             if (!Array.isArray(layer?.objects)) issue(errors, 'invalid-objects', `${layerPath}.objects`, '圖層物件必須為陣列');
             else layer.objects.forEach((object, objectIndex) => scanObject(object, `${layerPath}.objects[${objectIndex}]`, { topLevel: true }));
           });

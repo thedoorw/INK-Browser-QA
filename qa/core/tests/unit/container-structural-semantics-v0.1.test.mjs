@@ -193,6 +193,10 @@ test('spatial metadata includes Group descendants structurally but marks them no
   assert.equal(childItem.depth, 1);
   assert.equal(childItem.interactionExposed, false);
   assert.equal(index.stats().nestedObjects, 1);
+  assert.equal(index.syncObject(migrated.pages[0], 'child', (object, entry) => {
+    const local = object.type === 'group' ? { x: 0, y: 0, w: 40, h: 30 } : { x: 0, y: 0, w: object.w || 20, h: object.h || 10 };
+    return transformBounds(local, entry.worldMatrix);
+  }), false);
 });
 
 test('History undo/redo preserves nested Group transform semantics', () => {

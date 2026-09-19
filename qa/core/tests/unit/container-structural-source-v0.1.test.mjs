@@ -37,6 +37,7 @@ test('selection, eraser and spatial refresh respect Group atomic interaction whi
   assert.match(ink, /item\.interactionExposed!==false&&!item\.effectiveLocked/);
   assert.match(ink, /found\.object\.type==='frame'\|\|found\.object\.type==='group'/);
   assert.match(ink, /found\?\.object\.type==='stroke'&&found\.interactionExposed!==false/);
+  assert.match(readFileSync(new URL('../../../../product/source/src/spatial/page-spatial-index.js', import.meta.url), 'utf8'), /found\.ancestorTypes\?\.includes\('group'\)/);
 });
 
 test('renderer and structured SVG retain recursive visibility/opacity semantics', () => {
