@@ -10,6 +10,7 @@ import { applyWorldTransform } from '../../../../product/source/src/editor/index
 import { PageSpatialIndex } from '../../../../product/source/src/spatial/index.js';
 import { HistoryManager } from '../../../../product/source/src/history/index.js';
 import { buildDependencyGraph } from '../../../../product/source/src/recompute/dependency-graph.js';
+import { createAnchor, createPath, vectorObjectToSVG } from '../../../../product/source/src/vector/vector-core.js';
 
 const roundMatrix = matrix => matrix.map(value => Number(value.toFixed(8)));
 
@@ -28,7 +29,7 @@ test('frame migration preserves IDs and establishes ordered parent ownership', (
   const doc = defaultDocument();
   const group = { id: 'group-1', type: 'group', name: 'Group', matrix: Matrix.identity(), opacity: 1, children: [makeShape('group-child', 2, 3)] };
   const frame = createFrame({ id: 'frame-1', width: 300, height: 200, children: [
-    makeShape('stroke-like', 10, 20),
+    { id: 'stroke-1', type: 'stroke', name: 'Stroke', matrix: Matrix.translate(10,20), opacity: 1, color: '#202020', size: 4, kind: 'pen', points: [{x:0,y:0,p:.5,t:0},{x:20,y:10,p:.7,t:10}] },
     { id: 'text-1', type: 'text', text: 'T', matrix: Matrix.translate(30, 20), opacity: 1 },
     { id: 'image-1', type: 'image', src: 'data:image/png;base64,AA==', w: 10, h: 10, matrix: Matrix.identity(), opacity: 1 },
     group,
@@ -38,7 +39,7 @@ test('frame migration preserves IDs and establishes ordered parent ownership', (
   const migrated = migrateDocument(JSON.parse(JSON.stringify(doc)));
   const saved = migrated.pages[0].layers[0].objects[0];
   assert.equal(saved.id, 'frame-1');
-  assert.deepEqual(saved.children.map(child => child.id), ['stroke-like','text-1','image-1','group-1','path-1']);
+  assert.deepEqual(saved.children.map(child => child.id), ['stroke-1','text-1','image-1','group-1','path-1']);
   assert.ok(saved.children.every(child => child.parentId === 'frame-1'));
   assert.equal(saved.children[3].children[0].parentId, 'group-1');
   assert.equal(inspectDocument(migrated).passed, true);
@@ -126,4 +127,14 @@ test('dependency graph sees frame-child hierarchy without changing repeat/materi
   assert.ok(graph.nodes.has('object:repeat-1:hierarchy'));
   assert.ok(graph.edges.some(edge => edge.from === 'object:frame:hierarchy' && edge.to === 'object:repeat-1:hierarchy'));
   assert.ok(graph.nodes.has('generator:repeat-1'));
+});
+
+test('vector SVG export keeps frame and editable path structure', () => {
+  const path = createPath({ id: 'vector-path', subpaths: [{ closed: true, anchors: [createAnchor(0,0),createAnchor(20,0),createAnchor(20,20)] }] });
+  const frame = createFrame({ id: 'frame-vector', width: 200, height: 100, children: [path] });
+  const svg = vectorObjectToSVG(frame, []);
+  assert.match(svg, /data-ink-type="frame"/);
+  assert.match(svg, /data-frame-width="200"/);
+  assert.match(svg, /<path/);
+  assert.doesNotMatch(svg, /<image/);
 });

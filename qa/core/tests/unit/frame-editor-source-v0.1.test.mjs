@@ -8,11 +8,12 @@ const styles = readFileSync(new URL('../../../../product/source/styles.css', imp
 test('frame editor integration is wired through existing INK editor surfaces', () => {
   assert.match(ink, /createFrame, findPageObject, reparentPageObject, walkPageObjects/);
   assert.match(ink, /hitTest\(d\.world,\{deep:e\.altKey\}\)/);
-  assert.match(ink, /object\.type==='group'\|\|object\.type==='frame'/);
+  assert.match(ink, /o\.type==='group'\|\|o\.type==='frame'/);
   assert.match(ink, /data-ink-type="frame"/);
   assert.match(ink, /frame-tree-row/);
   assert.match(ink, /selectedTransformObjects\(\)/);
   assert.match(ink, /reparentObjectToFrame/);
+  assert.match(ink, /found\.worldMatrix\|\|found\.object\.matrix/);
   assert.match(ink, /frameSelection/);
 });
 

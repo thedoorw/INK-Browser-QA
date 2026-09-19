@@ -61,6 +61,7 @@ export function walkPageObjects(page) {
         layerIndex,
         object,
         objectIndex,
+        index: objectIndex,
         rootObjectIndex: rootObjectIndex ?? objectIndex,
         parentObject,
         parentArray: objects,

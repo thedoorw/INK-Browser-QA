@@ -1213,7 +1213,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 /* INK-CLOUD-002 — bounded Frame hierarchy rows inside the existing Layers panel. */
-.object-tree-row{--tree-depth:0;display:grid;grid-template-columns:24px minmax(0,1fr) 24px;align-items:center;min-height:28px;margin-left:calc((var(--tree-depth) + 1)*12px);border-left:1px solid #4a4b4e;background:#343537;color:#d2d3d5}
+.object-tree-row{--tree-depth:0;display:grid;grid-template-columns:24px minmax(0,1fr) 24px;align-items:center;min-height:28px;margin-left:0;border-left:1px solid #4a4b4e;background:#343537;color:#d2d3d5}
 .object-tree-row:hover{background:#414245}
 .object-tree-row.active{background:#293534;border-left-color:#51aaa1;box-shadow:inset 2px 0 0 #51aaa1}
 .object-tree-row .tree-state-button{height:24px;border:0;background:transparent;color:#aeb0b3;font-size:9px}
