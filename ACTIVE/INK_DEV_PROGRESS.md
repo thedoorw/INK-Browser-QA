@@ -1,16 +1,19 @@
 # INK DEV PROGRESS
 
-STATUS: `DEV_IN_PROGRESS`
+STATUS: `DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-003` |
 | AUTHORIZED_SCOPE | `CONTAINER / OWNERSHIP / STRUCTURAL SEMANTICS FOUNDATION` |
-| DEV_STATE | `DEV_IN_PROGRESS` |
-| MR_GATE | `REQUIRED_AFTER_HANDOFF` |
+| DEV_STATE | `DEV_HANDOFF` |
+| MR_GATE | `MR_REVIEW_REQUIRED` |
 | DEV_WORK_BRANCH | `work/ink-cloud-003` |
 | BASE_BRANCH_HEAD_AT_START | `e9634788fb333f2b1c366cffd06a3b91fd7398a9` |
 | LATEST_IMPLEMENTATION_COMMIT | `753ebb32647304ebe15db35bb3b17b680674baab` |
+| DEV_VERIFICATION_CHECKPOINT | `2cfac99e2984e5c1bb4d973e76bd602429aa7086` |
+| REPORT_COMMIT | `de40285b373fd2a84b559707b78a8aaa446fdf79` |
+| FINAL_HANDOFF_HEAD | `PENDING_THIS_COMMIT_SHA` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 | FORMAT_VERSION_CHANGE | `0` |
@@ -111,6 +114,29 @@ Browser-only checks remain:
 
 `RUNTIME_QA_DEFERRED`
 
-## Current next action
+## Handoff
 
-Create the required implementation report, record the handoff fingerprint, then STOP for MR review.
+Required report:
+
+`research/INK_CONTAINER_OWNERSHIP_STRUCTURAL_SEMANTICS_REPORT_v0.1.md`
+
+Report commit:
+
+`de40285b373fd2a84b559707b78a8aaa446fdf79`
+
+Handoff state:
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-003
+BRANCH = work/ink-cloud-003
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+This handoff-status commit cannot contain its own resulting Git SHA. The exact final branch HEAD is reported in the DEV handoff response and must be pinned by MR before review.
