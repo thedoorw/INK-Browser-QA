@@ -1,13 +1,13 @@
 # INK DEV PROGRESS
 
-STATUS: `DEV_IN_PROGRESS / MR_REVISION`
+STATUS: `DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-004` |
 | AUTHORIZED_SCOPE | `TRANSFORM / BOUNDS / COORDINATE SYSTEM FOUNDATION` |
-| DEV_STATE | `DEV_IN_PROGRESS / BOUNDED_FIX` |
-| MR_GATE | `MR_REVISE / BOUNDED_FIX_ONLY` |
+| DEV_STATE | `DEV_HANDOFF` |
+| MR_GATE | `MR_REVIEW_REQUIRED` |
 | DEV_WORK_BRANCH | `work/ink-cloud-004` |
 | BASE_BRANCH_HEAD_AT_START | `2d68ae4aa5dfdd29f1c1a864ccd3ddff5e96eb43` |
 | LATEST_IMPLEMENTATION_COMMIT | `f49210b45878377bccdc18991e9300f66ab7a5ac` |
@@ -227,3 +227,92 @@ Authorized revision only:
 - update this progress file and the existing implementation report.
 
 No other product redesign is authorized.
+
+
+## MR revision completion — Singular Interaction / History Guard
+
+Revision product head:
+
+`d772551947c7454265e2c5e4e74d34826e8a1c9b`
+
+Revision QA head:
+
+`97ad196f00c06de704e561dbe9470020a8ce7e34`
+
+Updated implementation report commit:
+
+`5e9daddeb48d8eb4e8c577707370cd4d93be7f15`
+
+### Bounded fix completed
+
+- stroke node/handle world→local inversion is preflighted before `history.begin()`;
+- interactive selection transform roots are preflighted before `history.begin()`;
+- singular/non-finite rejection after an interaction begins restores initial geometry, cancels History, and clears `interaction/draft`;
+- rejected singular starts leave matrix and `parentId` unchanged;
+- rejected singular starts leave `history.pending === null`;
+- active rejection cancel leaves `history.pending === null`;
+- no hierarchy redesign or transform UI redesign was introduced.
+
+### Revision QA
+
+Exact-current-source singular/history guard checks:
+
+`11 / 11 PASS`
+
+Included:
+
+- current `ink.js` and `editor/transform.js` syntax parse;
+- History pending-state rejection checks;
+- geometry/hierarchy unchanged checks;
+- stroke node/handle preflight ordering;
+- selection transform-root preflight ordering;
+- deterministic active-interaction cleanup routing.
+
+Post-revision transform/bounds regression:
+
+`10 / 10 PASS`
+
+New authored regression:
+
+`qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs`
+
+The repository-wide Node test file was not executed through a checkout. Equivalent exact-current-source logic was executed directly. No unexecuted test is reported as Node PASS.
+
+### Revision scope
+
+Relative to MR-reviewed HEAD:
+
+`479bcca83e0c375592bff6542115b971e88002c7`
+
+the bounded revision is limited to:
+
+- `ACTIVE/INK_DEV_PROGRESS.md`;
+- `product/source/src/editor/transform.js`;
+- `product/source/src/ink.js`;
+- `qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs`;
+- `research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`.
+
+`FORMAT_VERSION_CHANGE = 0`
+
+`PACKAGE_MUTATION = 0`
+
+`MAIN_MERGE = 0`
+
+`RUNTIME_QA = DEFERRED`
+
+## Revision handoff
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-004
+BRANCH = work/ink-cloud-004
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+The exact final branch HEAD is reported after this handoff-status commit is created.
