@@ -68,7 +68,7 @@ export function walkPageObjects(page) {
     for (let objectIndex = 0; objectIndex < (objects?.length || 0); objectIndex += 1) {
       const object = objects[objectIndex];
       if (!object || typeof object !== 'object') continue;
-      const worldMatrix = Matrix.multiply(parentWorldMatrix, object.matrix || Matrix.identity());
+      const worldMatrix = Matrix.toWorld(parentWorldMatrix, object.matrix || Matrix.identity());
       const path = [...pathPrefix, objectIndex];
       const effectiveVisible = inheritedVisible && object.visible !== false;
       const effectiveLocked = inheritedLocked || Boolean(object.locked);
@@ -161,7 +161,13 @@ export function hierarchyWorldMatrix(page, refOrId) {
 }
 
 export function hierarchyLocalMatrix(parentWorldMatrix, worldMatrix) {
-  return Matrix.multiply(Matrix.invert(parentWorldMatrix || Matrix.identity()), worldMatrix || Matrix.identity());
+  const local = Matrix.toLocal(parentWorldMatrix || Matrix.identity(), worldMatrix || Matrix.identity());
+  if (!local) {
+    throw Object.assign(new Error('INK_HIERARCHY_NON_INVERTIBLE_PARENT'), {
+      code: 'HIERARCHY_NON_INVERTIBLE_PARENT'
+    });
+  }
+  return local;
 }
 
 export function reparentPageObject(page, objectId, parentFrameId = null, { targetLayerId = null, index = null } = {}) {
@@ -218,9 +224,11 @@ export function reparentPageObject(page, objectId, parentFrameId = null, { targe
 
   const oldIndex = source.parentArray.indexOf(source.object);
   if (oldIndex < 0) throw Object.assign(new Error('INK_HIERARCHY_SOURCE_DETACHED'), { code: 'HIERARCHY_SOURCE_DETACHED', objectId });
-  source.parentArray.splice(oldIndex, 1);
 
-  source.object.matrix = hierarchyLocalMatrix(targetParentWorld, sourceWorld);
+  const nextLocalMatrix = hierarchyLocalMatrix(targetParentWorld, sourceWorld);
+
+  source.parentArray.splice(oldIndex, 1);
+  source.object.matrix = nextLocalMatrix;
   if (targetParentId) source.object.parentId = targetParentId;
   else delete source.object.parentId;
 

@@ -4,132 +4,198 @@ STATUS: `DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-003` |
-| AUTHORIZED_SCOPE | `CONTAINER / OWNERSHIP / STRUCTURAL SEMANTICS FOUNDATION` |
+| CURRENT_TASK_ID | `INK-CLOUD-004` |
+| AUTHORIZED_SCOPE | `TRANSFORM / BOUNDS / COORDINATE SYSTEM FOUNDATION` |
 | DEV_STATE | `DEV_HANDOFF` |
 | MR_GATE | `MR_REVIEW_REQUIRED` |
-| DEV_WORK_BRANCH | `work/ink-cloud-003` |
-| BASE_BRANCH_HEAD_AT_START | `e9634788fb333f2b1c366cffd06a3b91fd7398a9` |
-| LATEST_IMPLEMENTATION_COMMIT | `753ebb32647304ebe15db35bb3b17b680674baab` |
-| DEV_VERIFICATION_CHECKPOINT | `2cfac99e2984e5c1bb4d973e76bd602429aa7086` |
-| REPORT_COMMIT | `de40285b373fd2a84b559707b78a8aaa446fdf79` |
+| DEV_WORK_BRANCH | `work/ink-cloud-004` |
+| BASE_BRANCH_HEAD_AT_START | `2d68ae4aa5dfdd29f1c1a864ccd3ddff5e96eb43` |
+| LATEST_IMPLEMENTATION_COMMIT | `d772551947c7454265e2c5e4e74d34826e8a1c9b` |
+| DEV_VERIFICATION_CHECKPOINT | `15d46e733a8989b4ebd71efcc38a78e06f3dfeee` |
+| REPORT_COMMIT | `5e9daddeb48d8eb4e8c577707370cd4d93be7f15` |
 | FINAL_HANDOFF_HEAD | `PENDING_THIS_COMMIT_SHA` |
+| MR_REVIEWED_HEAD | `479bcca83e0c375592bff6542115b971e88002c7` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 | FORMAT_VERSION_CHANGE | `0` |
 
 ## Baseline
 
-Accepted INK-CLOUD-002 source foundation is on main at:
+Accepted INK-CLOUD-003 was promoted to main at:
 
-`7c03793ce7d289d0a1ecf1fafe3602aa9eedff13`
+`d340664cf554755abfa146f607c05c03200e8799`
 
-Current DEV branch started identical to current main at:
-
-`e9634788fb333f2b1c366cffd06a3b91fd7398a9`
+The authorized work branch was initialized with control/status commits above that promotion baseline and no product-source mutation.
 
 ## Progress log
 
-### Checkpoint 1 — SSOT / source audit started
+### Checkpoint 1 — SSOT / transform-bounds source audit
 
-- Read the required Current Work Order SSOT sequence.
-- Read accepted INK-CLOUD-001 / INK-CLOUD-002 reports.
-- Identified the bounded shared-core gaps:
-  - Group structural traversal;
-  - inherited `effectiveOpacity`;
-  - Group atomic interaction boundary;
-  - deterministic hit/render order;
-  - duplicate/cycle/stale ownership integrity.
+Required SSOT and accepted INK-CLOUD-001 / 002 / 003 reports read.
 
-### Checkpoint 2 — bounded implementation present and source-reviewed
+Audit identified:
 
-Implementation commits:
+- silent identity fallback on singular affine inversion in editable transform paths;
+- reparent local-matrix derivation occurring after detach;
+- selection bounds not sharing transform-root collapse semantics;
+- Frame/Group bounds definitions embedded only in renderer code;
+- single Frame W/H fields conflating geometry resize with affine scale;
+- inverse-dependent hit/stroke-edit paths needing singular-safe behavior;
+- interactive scale needing a deterministic near-zero rule.
 
-1. `fc4c79b3c855681ac176baee07e9680e36643df9` — start structural semantics checkpoint
-2. `899700354ec5f369e05bddf2c540be1fe6aecb79` — unify Frame and Group structural traversal
-3. `3a5272c912fe776a55ee0b65e4982e340092d637` — enforce ownership normalization and integrity
-4. `86943d115ae4729596b4d1aad76654ce044a8eb5` — align interaction order with structural semantics
-5. `753ebb32647304ebe15db35bb3b17b680674baab` — harden Group spatial invalidation
+### Checkpoint 2 — bounded coordinate / transform / bounds implementation
 
-Implemented / verified at source level:
+Implemented on this branch only:
 
-- Frame and Group are distinct structural containers.
-- `walkPageObjects()` traverses Frame + Group ancestry and computes:
-  - `effectiveVisible`
-  - `effectiveLocked`
-  - `effectiveOpacity`
-  - local/world transform metadata
-  - deterministic structural/render order metadata.
-- Group descendants remain structurally traversable while existing canvas interaction remains Group-atomic.
-- Frame-in-Group, Group-in-Frame, nested Frame and nested Group structure are represented without changing the accepted world/local transform contract.
-- Same-Layer Frame reparent remains world-preserving; cross-Layer reparent remains rejected.
-- Migration normalizes stale `parentId`, enforces parent agreement, and rejects duplicate structural IDs / duplicate ownership / cycles.
-- Repeat source/instances remain procedural and outside ordinary structural ownership traversal.
-- Spatial indexing carries hierarchy metadata and falls back to rebuild where Group/container subtree mutation would make incremental bounds unsafe.
-- Renderer and structured SVG paths preserve recursive container visibility/opacity behavior.
-- `FORMAT_VERSION` remains `4`; no format-version bump is required.
-- No Cloud backend, Component/Layout system, package mutation, main merge, certification or version promotion was introduced.
+- explicit affine helpers:
+  - `Matrix.isFinite`
+  - `Matrix.determinant`
+  - `Matrix.isInvertible`
+  - `Matrix.tryInvert`
+  - `Matrix.toWorld`
+  - `Matrix.toLocal`
+- existing six-number affine representation and multiplication order retained;
+- negative scale / reflection retained;
+- interactive near-zero scale is clamped away from singular zero while preserving sign;
+- world→local editable transforms reject non-invertible parent ancestry before mutation;
+- multi-object transforms preflight every target and apply atomically;
+- same-Layer reparent computes the target local matrix before detaching the source;
+- shared bounds taxonomy added:
+  - Frame local/world geometry bounds;
+  - Group child-derived world geometry bounds;
+  - explicit empty Group 1×1 world-origin fallback;
+  - transform-root collapse;
+  - selection world geometry bounds;
+- selection bounds and transform roots now share the same ancestor/descendant collapse rule;
+- Frame matrix transform remains distinct from Frame geometry resize;
+- single selected Frame W/H fields resize `width/height` without rewriting Frame matrix or child local matrices;
+- renderer/spatial/marquee/lasso/selection paths use the same renderer world-geometry bounds source;
+- singular ordinary-object hit-test, stroke node editing and eraser inverse paths fail/skip safely;
+- derived world/selection/container bounds remain runtime-derived and are not added to document model/migration;
+- existing cross-Layer reparent rejection remains unchanged;
+- `FORMAT_VERSION = 4` remains unchanged.
 
-## Files changed
+## Product files changed
 
-Product source:
-
+- `product/source/src/core/math.js`
 - `product/source/src/document/hierarchy.js`
-- `product/source/src/document/integrity.js`
-- `product/source/src/document/migration.js`
-- `product/source/src/document/model.js`
+- `product/source/src/editor/bounds.js` — new
+- `product/source/src/editor/index.js`
+- `product/source/src/editor/transform.js`
 - `product/source/src/ink.js`
-- `product/source/src/spatial/page-spatial-index.js`
-- `product/source/src/vector/vector-core.js`
 
-QA:
+## QA files changed
 
-- `qa/core/tests/unit/container-structural-semantics-v0.1.test.mjs`
-- `qa/core/tests/unit/container-structural-source-v0.1.test.mjs`
+- `qa/core/tests/unit/transform-bounds-coordinate-v0.1.test.mjs` — new
 
-Control:
+## Implementation commits
 
-- `ACTIVE/INK_DEV_PROGRESS.md`
+- `d152905825fdfedf1bd60a64696152d944b8fc03` — safe affine inversion contract
+- `6bef593e34bedf8c5c510b1ded1c6af3aa7ba3a4` — singular-safe world/local transforms
+- `84679843dd1cad383dab30386c550a475f738001` — shared geometry bounds taxonomy
+- `f7f2423305f78e36a8308f4e2e61eeea7f259286` — export bounds contract
+- `d50cfef75abba94247ee5f5cdaf9b4aace7d92cf` — reject singular reparent before mutation
+- `19064e9b275c57e2c90dc5bba6457c30543dbcd2` — near-zero interactive scale rule
+- `b46a9aefb0bb1c09f92e65c723a94d7e704c1afd` — editor bounds / Frame resize integration
+- `14e6d2ec2df989454b0718b66b713a37899c8406` — initial transform-bounds QA
+- `6574b2315c5ab29aa2624bbd08087f147c4f085c` — atomic batch world transforms
+- `462001dd64ac817aa76aaeec4a1129efc1e7eedc` — multi-selection preflight integration
+- `f49210b45878377bccdc18991e9300f66ab7a5ac` — batch transform QA coverage
 
-## Checks / evidence
+## Checks actually executed
 
-Source/static review completed against exact implementation HEAD:
+### Node pure-core/editor subset
 
-`753ebb32647304ebe15db35bb3b17b680674baab`
+Executed against the transform/bounds implementation before the final batch-preflight hardening:
 
-Reviewed:
+- existing core tests: 3
+- existing editor selection tests: 2
+- new transform/bounds tests at that checkpoint: 6
 
-- ownership normalization / integrity behavior;
-- Group + Frame traversal and transforms;
-- inherited visible / locked / opacity state;
-- z-order / hit-test ordering;
-- renderer and SVG structural behavior;
-- spatial invalidation;
-- existing Frame regression suite coverage;
-- `FORMAT_VERSION = 4`.
+Result:
 
-New branch unit suites are present for structural semantics and source contract. Hosted execution is unavailable because GitHub Actions quota is exhausted. This DEV environment does not have a branch checkout capable of executing the repository Node suites, so no unexecuted unit suite is reported as PASS.
+`11 / 11 PASS`
 
-Browser-only checks remain:
+Covered matrix inversion, bounds helpers, marquee/lasso behavior, singular rejection, reflection, atomic object-matrix transform, Frame/Group bounds, selection-root collapse, and Frame geometry resize.
+
+### Current branch exact-source direct execution
+
+After the final batch-preflight hardening, current GitHub source text for:
+
+- `core/math.js`
+- `core/geometry.js`
+- `editor/transform.js`
+- `editor/bounds.js`
+
+was loaded from `work/ink-cloud-004` and executed directly.
+
+Result:
+
+`9 / 9 PASS`
+
+Checks:
+
+1. singular inversion rejection;
+2. reflection round-trip;
+3. single world transform fails before mutation;
+4. batch world transform is atomic;
+5. Frame explicit world bounds;
+6. Group child-derived bounds + empty fallback;
+7. selection transform-root collapse;
+8. Frame geometry resize preserves matrix / child local matrix;
+9. near-zero reflection-preserving scale clamp.
+
+### Source/static checks
+
+PASS:
+
+- no unsafe `M.invert()` / `Matrix.invert()` remains in the touched editable hierarchy/transform/INK paths;
+- `reparentPageObject()` derives `nextLocalMatrix` before source detach;
+- cross-Layer reparent guard remains present;
+- document model/migration do not contain authoritative `worldBounds`, `selectionBounds`, or `containerBounds` fields;
+- `FORMAT_VERSION = 4`;
+- History `pushScoped()` catches transform exceptions, restores pending scoped changes, clears pending state, and rethrows.
+
+## Authored test note
+
+Current `transform-bounds-coordinate-v0.1.test.mjs` contains seven Node tests.
+
+The first six were executed through the Node subset run above. The seventh batch-preflight test was added afterward; its exact current-source logic was executed and passed in the 9/9 direct-source check, but the final seven-test file was not rerun as a full repository Node suite.
+
+No unexecuted test is reported as Node PASS.
+
+## Runtime QA debt
 
 `RUNTIME_QA_DEFERRED`
+
+Not claimed Runtime-verified:
+
+- pointer move/scale/rotate;
+- reflected transform visual behavior;
+- singular transform live interaction;
+- Frame W/H inspector live behavior;
+- nested Frame/Group overlay geometry;
+- marquee/lasso/hit-test visual agreement;
+- browser save/open;
+- creation/layout workspace camera interaction;
+- structured SVG browser inspection.
 
 ## Handoff
 
 Required report:
 
-`research/INK_CONTAINER_OWNERSHIP_STRUCTURAL_SEMANTICS_REPORT_v0.1.md`
+`research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`
 
 Report commit:
 
-`de40285b373fd2a84b559707b78a8aaa446fdf79`
+`391decde5f353540443b97a5a3230ce35602badd`
 
 Handoff state:
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-003
-BRANCH = work/ink-cloud-003
+TASK_ID = INK-CLOUD-004
+BRANCH = work/ink-cloud-004
 PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
 FORMAT_VERSION_CHANGE = 0
 PACKAGE_MUTATION = 0
@@ -139,4 +205,115 @@ NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
 
-This handoff-status commit cannot contain its own resulting Git SHA. The exact final branch HEAD is reported in the DEV handoff response and must be pinned by MR before review.
+This handoff-status commit cannot contain its own resulting SHA. The exact final branch HEAD is reported in the DEV handoff response and must be pinned by MR before review.
+
+
+## MR revision — Singular Interaction / History Guard
+
+MR reviewed handoff HEAD:
+
+`479bcca83e0c375592bff6542115b971e88002c7`
+
+Decision:
+
+`MR_REVISE / BOUNDED_FIX_ONLY`
+
+Authorized revision only:
+
+- preflight stroke node/handle inversion before `history.begin()`;
+- preflight interactive selection transform roots before `history.begin()`;
+- deterministically restore/cancel and clear interaction state if inversion/preflight is rejected after an interaction has started;
+- verify rejected cases leave geometry/hierarchy unchanged and `history.pending === null`;
+- add bounded regression evidence;
+- update this progress file and the existing implementation report.
+
+No other product redesign is authorized.
+
+
+## MR revision completion — Singular Interaction / History Guard
+
+Revision product head:
+
+`d772551947c7454265e2c5e4e74d34826e8a1c9b`
+
+Revision QA head:
+
+`97ad196f00c06de704e561dbe9470020a8ce7e34`
+
+Updated implementation report commit:
+
+`5e9daddeb48d8eb4e8c577707370cd4d93be7f15`
+
+### Bounded fix completed
+
+- stroke node/handle world→local inversion is preflighted before `history.begin()`;
+- interactive selection transform roots are preflighted before `history.begin()`;
+- singular/non-finite rejection after an interaction begins restores initial geometry, cancels History, and clears `interaction/draft`;
+- rejected singular starts leave matrix and `parentId` unchanged;
+- rejected singular starts leave `history.pending === null`;
+- active rejection cancel leaves `history.pending === null`;
+- no hierarchy redesign or transform UI redesign was introduced.
+
+### Revision QA
+
+Exact-current-source singular/history guard checks:
+
+`11 / 11 PASS`
+
+Included:
+
+- current `ink.js` and `editor/transform.js` syntax parse;
+- History pending-state rejection checks;
+- geometry/hierarchy unchanged checks;
+- stroke node/handle preflight ordering;
+- selection transform-root preflight ordering;
+- deterministic active-interaction cleanup routing.
+
+Post-revision transform/bounds regression:
+
+`10 / 10 PASS`
+
+New authored regression:
+
+`qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs`
+
+The repository-wide Node test file was not executed through a checkout. Equivalent exact-current-source logic was executed directly. No unexecuted test is reported as Node PASS.
+
+### Revision scope
+
+Relative to MR-reviewed HEAD:
+
+`479bcca83e0c375592bff6542115b971e88002c7`
+
+the bounded revision is limited to:
+
+- `ACTIVE/INK_DEV_PROGRESS.md`;
+- `product/source/src/editor/transform.js`;
+- `product/source/src/ink.js`;
+- `qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs`;
+- `research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`.
+
+`FORMAT_VERSION_CHANGE = 0`
+
+`PACKAGE_MUTATION = 0`
+
+`MAIN_MERGE = 0`
+
+`RUNTIME_QA = DEFERRED`
+
+## Revision handoff
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-004
+BRANCH = work/ink-cloud-004
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+The exact final branch HEAD is reported after this handoff-status commit is created.
