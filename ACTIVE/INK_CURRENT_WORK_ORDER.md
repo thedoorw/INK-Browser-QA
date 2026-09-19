@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `AUTHORIZED / DEV_READY`
+STATUS: `MR_REVISE / BOUNDED_FIX_AUTHORIZED`
 
 ## Control
 
@@ -14,8 +14,8 @@ STATUS: `AUTHORIZED / DEV_READY`
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `DEV_AUTHORIZED` |
-| NEXT_AUTHORIZED_ACTION | `DEV_IMPLEMENTATION` |
+| CURRENT_GATE | `MR_REVISE` |
+| NEXT_AUTHORIZED_ACTION | `DEV_BOUNDED_FIX_ONLY` |
 | CLOUD_START_GATE | `BLOCKED` |
 | RUNTIME_QA | `DEFERRED` |
 
@@ -330,3 +330,31 @@ structural-core stabilization
 → explicit user approval
 → first Cloud Work Order
 ```
+
+
+## MR Revision — Singular Interaction / History Guard
+
+MR reviewed DEV handoff HEAD:
+
+`479bcca83e0c375592bff6542115b971e88002c7`
+
+Decision:
+
+`MR_REVISE / BOUNDED_FIX_ONLY`
+
+The Transform / Bounds / Coordinate System architecture is retained.
+
+Required correction:
+
+1. Stroke node/handle edit paths that require world→local inversion must validate invertibility before opening a History transaction, or deterministically cancel/restore it on rejection.
+2. Interactive selection move/scale/rotate must not leave a pending History transaction or active interaction if a transform root cannot be converted back to local space.
+3. Rejected singular operations must leave document geometry and hierarchy unchanged.
+4. Add bounded regression coverage including explicit verification that History has no pending transaction after rejection.
+5. Update:
+   - `ACTIVE/INK_DEV_PROGRESS.md`
+   - `research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`
+6. Hand off again and STOP.
+
+No other redesign is authorized.
+
+`RUNTIME_QA = DEFERRED` remains in force.
