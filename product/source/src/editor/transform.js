@@ -4,6 +4,13 @@ function transformError(code, details = {}) {
   return Object.assign(new Error(`INK_TRANSFORM_${code}`), { code, ...details });
 }
 
+export function nonSingularScaleComponent(value, epsilon = 1e-6) {
+  if (!Number.isFinite(value)) return 1;
+  const minimum = Math.max(Number.EPSILON, Math.abs(epsilon));
+  if (Math.abs(value) >= minimum) return value;
+  return value < 0 ? -minimum : minimum;
+}
+
 export function worldMatrixForFound(found) {
   return found?.worldMatrix || Matrix.toWorld(found?.parentWorldMatrix || Matrix.identity(), found?.object?.matrix || Matrix.identity());
 }
