@@ -1,4 +1,4 @@
-# INK MAIN REVIEW BOARD
+> COMPATIBILITY NOTICE: This file preserves the detailed original work order. The authoritative current task/gate is now `ACTIVE/INK_CURRENT_WORK_ORDER.md`. Do not use this file to bypass a newer Current Work Order.\n\n# INK MAIN REVIEW BOARD
 
 STATUS: `ACTIVE`
 
