@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `PENDING_MR_REVIEW`
+STATUS: `MR_PASS`
 
 | Field | Value |
 |---|---|
@@ -8,26 +8,18 @@ STATUS: `PENDING_MR_REVIEW`
 | DEV_BRANCH | `work/ink-cloud-001` |
 | BASE_COMMIT | `09e86ac461b64d4d1346185dd5053807d75d4ec4` |
 | REVIEW_HEAD | `becd65ba14fcb1a30419aa2b422e9e95dc59bce4` |
-| REVIEW_STATE | `NOT_STARTED` |
-| DECISION | `PENDING` |
+| REVIEW_STATE | `COMPLETE` |
+| DECISION | `MR_PASS` |
+| PRODUCT_SOURCE_MUTATION | `0` |
+| PACKAGE_MUTATION | `0` |
+| MAIN_MERGE | `NOT_AUTHORIZED` |
+| NEXT_WORK_ORDER | `NOT_ISSUED` |
 
-## Expected review evidence
+Review details:
 
-MR must inspect:
+- `ACTIVE/INK_REVIEW_FINDINGS.md`
+- `ACTIVE/INK_REVIEW_EVIDENCE.md`
 
-- branch commit history;
-- branch diff against the work-order base;
-- `research/INK_CLOUD_EDITOR_PENPOT_GAP_AUDIT_v0.1.md`;
-- `ACTIVE/INK_DEV_PROGRESS.md` from the DEV branch;
-- compliance with product/package mutation restrictions;
-- whether the recommended next slice is sufficiently bounded.
+Current gate:
 
-## Decision outputs
-
-MR will record one of:
-
-- `MR_PASS`
-- `MR_REVISE`
-- `MR_HOLD`
-
-If `MR_PASS`, any promotion/merge and the next development task remain separate MR decisions.
+`MR_PASS → STOP → WAIT_FOR_NEXT_WORK_ORDER`
