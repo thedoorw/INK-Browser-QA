@@ -109,3 +109,18 @@ Cloud development must not silently degrade the portable single-HTML target.
 Portable packaging work must not block modular source development needed to keep the core maintainable.
 
 Both delivery forms are validated separately, but share the same accepted core behavior.
+
+
+## Cloud delivery start gate
+
+INK Cloud Editor implementation is gated behind structural-core readiness.
+
+The first Cloud work order requires all of the following:
+
+- MR marks the relevant document-format / hierarchy / serialization core as sufficiently stable;
+- unresolved structural migration risks are documented;
+- deferred Runtime QA debt is recorded and does not hide unknown format corruption risk;
+- the user is explicitly reminded that the pre-Cloud stage is complete;
+- the user explicitly authorizes beginning Cloud implementation.
+
+This gate prevents Cloud transport/storage work from freezing an unstable document structure.
