@@ -4,22 +4,26 @@ STATUS: `AUTHORIZED / NOT_STARTED`
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-002` |
-| AUTHORIZED_SCOPE | `FRAME + NESTED HIERARCHY FOUNDATION` |
+| CURRENT_TASK_ID | `INK-CLOUD-003` |
+| AUTHORIZED_SCOPE | `CONTAINER / OWNERSHIP / STRUCTURAL SEMANTICS FOUNDATION` |
 | DEV_STATE | `NOT_STARTED` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
-| DEV_WORK_BRANCH | `work/ink-cloud-002` |
+| DEV_WORK_BRANCH | `work/ink-cloud-003` |
 | LATEST_DEV_COMMIT | `NONE` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
+
+## Baseline
+
+Accepted INK-CLOUD-002 source foundation is on main at:
+
+`7c03793ce7d289d0a1ecf1fafe3602aa9eedff13`
 
 ## Progress log
 
 DEV has not started this Work Order.
 
-All meaningful work must be committed to `work/ink-cloud-002`.
-
-Hosted Runtime QA is temporarily unavailable because GitHub Actions quota is exhausted. DEV must record source/static checks performed and list unexecuted browser/Runtime checks as `RUNTIME_QA_DEFERRED`.
+All meaningful work must be committed to `work/ink-cloud-003`.
 
 Finish with:
 
@@ -32,6 +36,7 @@ COMMITS
 FILES_READ
 FILES_CHANGED
 CHECKS
+FORMAT_VERSION_CHANGE
 RUNTIME_QA_DEFERRED
 KNOWN_GAPS
 PRODUCT_SOURCE_MUTATION
