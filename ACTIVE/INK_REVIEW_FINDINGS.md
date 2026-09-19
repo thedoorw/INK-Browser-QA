@@ -1,81 +1,85 @@
 # INK REVIEW FINDINGS
 
-STATUS: `MR_PASS`
+STATUS: `MR_REVISE`
 
-TASK: `INK-CLOUD-001`
+TASK: `INK-CLOUD-002`
 
-Reviewed DEV fingerprint:
+Reviewed fingerprint:
 
 ```text
-BASE  09e86ac461b64d4d1346185dd5053807d75d4ec4
-HEAD  becd65ba14fcb1a30419aa2b422e9e95dc59bce4
-BRANCH work/ink-cloud-001
+BRANCH work/ink-cloud-002
+HEAD   3ff5c61393fe6603e072fa587d954a159d239444
 ```
 
-## MR decision
+## MR result
 
-`MR_PASS`
+`MR_REVISE / BOUNDED_FIX_ONLY`
 
-The architecture audit satisfies the authorized work order.
+The Frame + Nested Hierarchy foundation is substantially accepted at source level, but one structural semantic issue must be corrected before MR PASS.
 
-## Findings
+## Passed findings
 
-1. **Scope compliance — PASS**
-   - Branch is 3 commits ahead of the work-order base.
-   - Changed paths are limited to:
-     - `research/INK_CLOUD_EDITOR_PENPOT_GAP_AUDIT_v0.1.md`
-     - `ACTIVE/INK_DEV_PROGRESS.md`
-   - No `product/source/**` mutation.
-   - No `package/ink-current` mutation.
-   - No merge to `main`.
+- Explicit Frame/container model exists.
+- Stable child IDs and ordered child ownership are implemented.
+- world/local transform conversion exists.
+- reparent preserves geometric world transform.
+- cyclic parenting is rejected.
+- Frame descendants participate in spatial indexing.
+- History/undo/redo, serialization and migration have bounded unit evidence.
+- nested selection/transform integration is present.
+- structural SVG output is preserved.
+- existing Group/Stroke/Vector/Repeat compatibility received bounded regression coverage.
+- no Cloud backend, collaboration, component, flex/grid, package promotion or Penpot source copy was introduced.
+- Runtime/browser evidence remains correctly marked `RUNTIME_QA_DEFERRED`.
 
-2. **Required audit coverage — PASS**
-   - All 19 required dimensions are addressed.
-   - Required classification vocabulary is used.
-   - All six required conclusion questions are answered.
+## Required revision
 
-3. **INK technical grounding — PASS**
-   - MR spot-check confirmed the report's material claims against the current INK source:
-     - Document/Page/Layer/Object structure and nested group children.
-     - Patch/transaction HistoryManager.
-     - `INK_STORAGE_V3`, IndexedDB and checkpoint recovery.
-     - Incremental quadtree spatial index.
-     - Editable Bézier anchors/handles/modes and structured vector paths.
-     - Current smart snapping / align / distribute behavior.
-     - Recipe deterministic/replay/checkpoint/rollback capability contract.
-     - AI propose/preview/approval/rollback/audit control contract.
+### Cross-Layer Frame / reparent semantic leak
 
-4. **Penpot reference use — PASS**
-   - Penpot is treated as an architecture/interaction reference, not as the product platform.
-   - The audit correctly separates reusable concepts from wholesale stack/source import.
-   - Direct Penpot source reuse remains unauthorized.
+Current editor helpers allow:
 
-5. **Architectural conclusion — ACCEPTED**
-   - INK should remain the architectural core.
-   - The main gap is the mature editor-domain/object/interaction layer plus later cloud persistence, not replacement of the existing drawing/render/history core.
+- `frameSelection()` to combine selected objects from different Layers into one Frame on the first selected Layer;
+- `reparentObjectToFrame()` to move an object into a Frame located on another Layer.
 
-6. **Proposed first implementation slice — ACCEPTED AS CANDIDATE**
-   - `Frame + Nested Hierarchy Foundation` is sufficiently bounded to become the next implementation work order.
-   - This review does **not** authorize implementation yet.
+The object's geometric world matrix is preserved, but Layer-level semantics may change:
 
-## Non-blocking bookkeeping note
+- layer opacity;
+- layer visibility;
+- layer lock / interaction state;
+- future layer-scoped behavior.
 
-The branch-local `ACTIVE/INK_DEV_PROGRESS.md` records `LATEST_DEV_COMMIT = 717460...`, while the final handoff commit is `becd65...`. DEV correctly explains the self-referential SHA limitation.
+Therefore the current implementation cannot guarantee appearance/behavior preservation for cross-Layer reparenting.
 
-The authoritative MR fingerprint is therefore the externally pinned branch HEAD:
+### Required v0.1 fix
 
-`becd65ba14fcb1a30419aa2b422e9e95dc59bce4`
+For this bounded foundation:
 
-No revision is required for this task.
+1. Frame creation from selection must require all selected objects to belong to the same Layer.
+2. Reparent into a Frame must require source and target Frame to belong to the same Layer.
+3. A rejected cross-Layer operation must leave hierarchy/transforms unchanged and return a clear failure/toast/result.
+4. Add unit/source regression coverage proving the restriction.
+5. Update implementation report and DEV progress.
 
-## Gate result
+Do not design cross-Layer semantic migration in this task.
+
+Cross-Layer reparenting may be designed later as a separate feature if INK defines how effective layer opacity/visibility/lock semantics are preserved.
+
+## Runtime QA
+
+No change:
+
+`RUNTIME_QA_DEFERRED`
+
+GitHub Actions quota remains exhausted. No hosted Runtime test is required for this bounded revision.
+
+## Gate
 
 ```text
-INK-CLOUD-001
+INK-CLOUD-002
+→ MR_REVISE
+→ DEV bounded fix on work/ink-cloud-002
 → DEV_HANDOFF
 → MR_REVIEW
-→ MR_PASS
-→ STOP
 ```
 
-No merge, package update, certification, version change or next implementation task is authorized by this review.
+No merge, package update, version promotion or Cloud work is authorized.
