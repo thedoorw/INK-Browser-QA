@@ -1,3 +1,4 @@
+import { inspectComponents } from './components.js';
 import { deepClone, nowISO } from '../core/index.js';
 
 function canonicalize(value) {
@@ -165,6 +166,10 @@ export function inspectDocument(document, {
     } catch (error) {
       issue(errors, 'serialization-failed', '$', '文件無法序列化', { error: String(error) });
     }
+  }
+
+  if (document && !stats.structuralCycles && !stats.duplicateOwnership) {
+    for (const item of inspectComponents(document)) issue(warnings, item.code, '$.components', 'Component reference diagnostic', item);
   }
 
   if (stats.objects > maxObjects) issue(warnings, 'object-budget', '$', `物件數 ${stats.objects} 超過建議上限 ${maxObjects}`);

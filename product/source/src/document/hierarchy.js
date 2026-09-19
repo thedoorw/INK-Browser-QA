@@ -49,6 +49,7 @@ export function structuralContainerRole(object) {
 export function walkPageObjects(page) {
   const output = [];
   let renderOrder = 0;
+  const visited = new WeakSet();
   const walk = ({
     objects,
     layer,
@@ -68,6 +69,8 @@ export function walkPageObjects(page) {
     for (let objectIndex = 0; objectIndex < (objects?.length || 0); objectIndex += 1) {
       const object = objects[objectIndex];
       if (!object || typeof object !== 'object') continue;
+      if (visited.has(object)) throw Object.assign(new Error('INK_HIERARCHY_DUPLICATE_OWNERSHIP_OR_CYCLE'), { code: 'HIERARCHY_DUPLICATE_OWNERSHIP_OR_CYCLE' });
+      visited.add(object);
       const worldMatrix = Matrix.toWorld(parentWorldMatrix, object.matrix || Matrix.identity());
       const path = [...pathPrefix, objectIndex];
       const effectiveVisible = inheritedVisible && object.visible !== false;

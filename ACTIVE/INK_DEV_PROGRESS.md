@@ -6,11 +6,11 @@ STATUS: `DEV_IN_PROGRESS`
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-005` |
 | AUTHORIZED_SCOPE | `COMPONENT / INSTANCE DATA MODEL FOUNDATION` |
-| DEV_STATE | `MODEL_DESIGN` |
+| DEV_STATE | `IMPLEMENTATION_CHECKPOINT` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
 | DEV_WORK_BRANCH | `work/ink-cloud-005` |
 | BASE_BRANCH_HEAD_AT_START | `2ed1e9cbb4b77ac38b0c6798b8d75691f5325f46` |
-| LATEST_DEV_COMMIT | `c0a0e441c1b699398167a8559b72af750ba496a8` |
+| LATEST_DEV_COMMIT | `c0ed73c3382ab4d9f9acd0710125c81ee8cdc198` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 | FORMAT_VERSION_CHANGE | `UNDECIDED / MR_GATE_IF_REQUIRED` |
@@ -82,3 +82,13 @@ GitHub work branch checked out at `c0a0e441c1b699398167a8559b72af750ba496a8`. Re
 Proposed additive optional document registry referencing ordinary Frame/Group roots; atomic instance objects contain definition ID and serialized source-ID opacity overrides, never persistent resolved children. Resolution feeds the existing renderer/bounds/SVG paths. Nested instances explicitly rejected. No FORMAT_VERSION modification planned; compatibility to be verified.
 
 Executed: remote branch lookup, clean checkout and source inspection. No implementation tests yet. Browser Runtime QA remains DEFERRED.
+
+## Checkpoint 2 — model and editor integration
+
+Previous published checkpoint: `c0ed73c3382ab4d9f9acd0710125c81ee8cdc198`.
+
+Added optional `INK-COMPONENTS-1` registry, source-ID opacity overrides, resolution diagnostics, atomic History commands (register/create/override/reset/detach/duplicate/repair). Existing renderer, bounds, hit/SVG and spatial paths consume disposable ordinary geometry. Integrity warnings preserve broken data for repair. Guarded existing hierarchy traversal against repeated object references.
+
+Files: `document/components.js`, `document/{hierarchy,index,integrity}.js`, `ink.js`, `studio-core.js`, new `qa/core/tests/unit/component-instance-v0.1.test.mjs`.
+
+Actually executed: syntax checks (components, ink, studio); existing Frame/Group/Transform Node tests **24/24 PASS**; new component model + actual editor method tests **15/15 PASS**. Test harness initially needed DOM boot isolation and the correct InkStore key/value signature; corrected and rerun. No browser runtime run. Remaining: bounded edge-case hardening, compatibility suite and report.
