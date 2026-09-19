@@ -2,59 +2,58 @@
 
 STATUS: `SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-002`
+TASK: `INK-CLOUD-003`
 
 Reviewed fingerprint:
 
 ```text
-BRANCH work/ink-cloud-002
-HEAD   6a2ac7fbfa8c27fa394f5630b788878407af060c
+BRANCH work/ink-cloud-003
+HEAD   ede48bf1f3f6d1e4149941af23cfa743539d283f
 ```
 
-## MR result
+## MR decision
 
-`MR_PASS_SOURCE / RUNTIME_QA_DEFERRED`
+`MR_PASS` at source/static review level.
 
-The Frame + Nested Hierarchy foundation is accepted at source/static level.
+The Container / Ownership / Structural Semantics Foundation v0.1 is accepted as a bounded pre-Cloud core change.
 
 ## Accepted findings
 
-- Explicit Frame/container model implemented.
-- Stable child IDs and ordered ownership implemented.
-- world/local transform conversion implemented.
-- geometric world-preserving reparent implemented.
-- cyclic parenting rejected.
-- nested Frame descendants participate in spatial indexing.
-- History/undo/redo, serialization and migration have bounded unit evidence.
-- nested selection/transform integration present.
-- structural SVG output preserved.
-- Group/Stroke/Vector/Repeat compatibility received bounded regression coverage.
-- cross-Layer Frame creation is now rejected.
-- cross-Layer reparent into Frame is now rejected.
-- both cross-Layer guards execute before history/hierarchy mutation.
-- revision scope stayed within the authorized bounded fix.
-- no Cloud backend, collaboration, component, flex/grid, package promotion or Penpot source copy was introduced.
+- Frame and Group remain distinct structural container roles.
+- Repeat remains procedural and is not converted into ordinary structural ownership.
+- Frame + Group nested traversal is explicit and deterministic.
+- Parent/child ownership invariants are enforced through migration/integrity logic.
+- stale top-level `parentId` is normalized away.
+- duplicate structural IDs / duplicate ownership / structural cycles are detected.
+- `effectiveVisible`, `effectiveLocked`, and `effectiveOpacity` are defined across Layer → container ancestry → object.
+- world/local transform contract remains unchanged.
+- accepted same-Layer Frame reparent rule remains in force.
+- cross-Layer Frame reparent remains rejected.
+- structural/render/hit ordering is explicitly defined.
+- Group descendants are structurally traversable while the existing Group-atomic canvas interaction boundary is preserved.
+- spatial invalidation is hardened for Group/container subtrees.
+- structured SVG behavior remains recursive and non-rasterizing.
+- no document format-version bump was made; `FORMAT_VERSION = 4`.
+- no Cloud/backend/component/layout/package/version-promotion scope was introduced.
 
-## Runtime QA debt
+## Validation limitation
 
-Still deferred:
+New Node suites are present but were not executed by DEV because hosted GitHub Actions quota is exhausted.
 
-- browser normal/Alt deep selection;
-- browser move/scale/rotate interaction;
-- Layers-panel visual interaction;
-- Canvas/WebGL visual equivalence for nested Frame contents;
-- browser project open/save interaction.
+MR attempted an independent local execution, but the MR execution environment could not resolve GitHub to obtain a branch checkout. Therefore no unexecuted test is represented as PASS.
 
-Therefore this task is not certified as Runtime-verified.
+Accepted evidence is source/static review plus existing repository test definitions.
+
+`RUNTIME_QA_DEFERRED` remains active.
 
 ## Gate
 
 ```text
-INK-CLOUD-002
+INK-CLOUD-003
 → SOURCE_REVIEW_PASS
 → RUNTIME_QA_DEFERRED
 → STOP
-→ WAIT_FOR_NEXT_WORK_ORDER
+→ no Cloud start authorization
 ```
 
-No merge, package update, version promotion or Cloud implementation is authorized by this review.
+Promotion/next Work Order remains a separate MR action.
