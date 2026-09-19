@@ -1,13 +1,13 @@
 # INK DEV PROGRESS
 
-STATUS: `DEV_HANDOFF`
+STATUS: `DEV_IN_PROGRESS / MR_REVISION`
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-004` |
 | AUTHORIZED_SCOPE | `TRANSFORM / BOUNDS / COORDINATE SYSTEM FOUNDATION` |
-| DEV_STATE | `DEV_HANDOFF` |
-| MR_GATE | `MR_REVIEW_REQUIRED` |
+| DEV_STATE | `DEV_IN_PROGRESS / BOUNDED_FIX` |
+| MR_GATE | `MR_REVISE / BOUNDED_FIX_ONLY` |
 | DEV_WORK_BRANCH | `work/ink-cloud-004` |
 | BASE_BRANCH_HEAD_AT_START | `2d68ae4aa5dfdd29f1c1a864ccd3ddff5e96eb43` |
 | LATEST_IMPLEMENTATION_COMMIT | `f49210b45878377bccdc18991e9300f66ab7a5ac` |
@@ -205,3 +205,25 @@ STOP
 ```
 
 This handoff-status commit cannot contain its own resulting SHA. The exact final branch HEAD is reported in the DEV handoff response and must be pinned by MR before review.
+
+
+## MR revision — Singular Interaction / History Guard
+
+MR reviewed handoff HEAD:
+
+`479bcca83e0c375592bff6542115b971e88002c7`
+
+Decision:
+
+`MR_REVISE / BOUNDED_FIX_ONLY`
+
+Authorized revision only:
+
+- preflight stroke node/handle inversion before `history.begin()`;
+- preflight interactive selection transform roots before `history.begin()`;
+- deterministically restore/cancel and clear interaction state if inversion/preflight is rejected after an interaction has started;
+- verify rejected cases leave geometry/hierarchy unchanged and `history.pending === null`;
+- add bounded regression evidence;
+- update this progress file and the existing implementation report.
+
+No other product redesign is authorized.
