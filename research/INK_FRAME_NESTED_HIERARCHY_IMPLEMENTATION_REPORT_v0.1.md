@@ -1,6 +1,6 @@
 # INK Frame + Nested Hierarchy Implementation Report v0.1
 
-STATUS: `DEV_IMPLEMENTATION_COMPLETE / MR_REVIEW_REQUIRED / RUNTIME_QA_DEFERRED`
+STATUS: `MR_REVISE_FIX_COMPLETE / MR_REVIEW_REQUIRED / RUNTIME_QA_DEFERRED`
 
 TASK: `INK-CLOUD-002`
 
@@ -297,3 +297,81 @@ No product version/certification change was made.
 The bounded Frame + Nested Hierarchy foundation is implemented at source level and is ready for MR source review.
 
 Browser Runtime evidence remains explicitly deferred under the temporary quota constraint.
+
+
+## 16. MR revision — cross-Layer Frame guard
+
+MR reviewed branch HEAD:
+
+`3ff5c61393fe6603e072fa587d954a159d239444`
+
+and retained the Frame/Hierarchy foundation while requesting one bounded correction.
+
+### 16.1 `frameSelection()` cross-Layer rejection
+
+`product/source/src/ink.js` now verifies that every selected transform object belongs to the same Layer as the first selected object before:
+
+- calculating/creating the new Frame;
+- entering `HistoryManager.pushScoped()`;
+- calling `reparentPageObject()`.
+
+If any selected object belongs to another Layer, `frameSelection()` returns `null` after a user-facing notice.
+
+Therefore the rejection path does not create a Frame and does not mutate hierarchy or transforms.
+
+### 16.2 `reparentObjectToFrame()` cross-Layer rejection
+
+When a target Frame is supplied, `reparentObjectToFrame()` now compares:
+
+```text
+source.layer.id
+target.layer.id
+```
+
+A mismatch returns `null` before:
+
+- `HistoryManager.pushScoped()`;
+- `reparentPageObject()`;
+- selection/spatial refresh mutation associated with a successful move.
+
+Same-Layer reparent behavior is unchanged.
+
+The `frameId = null` path for moving an object out of a Frame remains unchanged by this revision.
+
+### 16.3 Regression tests
+
+Updated:
+
+`qa/core/tests/unit/frame-editor-source-v0.1.test.mjs`
+
+Added two dedicated regression tests:
+
+1. `frameSelection rejects cross-layer selections before Frame/history mutation`
+2. `reparentObjectToFrame rejects cross-layer moves before hierarchy/history mutation`
+
+The tests assert both the Layer guards and guard ordering relative to Frame creation / history / hierarchy mutation calls.
+
+Source/static execution of the same guard-order assertions against the branch files: `PASS`.
+
+Repository Runtime/browser execution remains `RUNTIME_QA_DEFERRED` under the active GitHub Actions quota constraint.
+
+### 16.4 Revision scope
+
+Revision implementation commits:
+
+- `6cfc6f4dfeeae48efc50a6991132526c43e0d724` — cross-Layer guards
+- `96852539d4e4aa6b9b87283357dfeac405d920e0` — two regression tests
+- `ec9b2a220cd135f71a8409657772d4307907ddf6` — DEV progress checkpoint
+
+Relative to reviewed HEAD `3ff5c61393fe6603e072fa587d954a159d239444`, product/QA revision changes are limited to:
+
+- `product/source/src/ink.js`
+- `qa/core/tests/unit/frame-editor-source-v0.1.test.mjs`
+
+No hierarchy-model redesign, renderer change, cloud capability, package update, main merge, or excluded feature was introduced.
+
+REVISION_IMPLEMENTATION_HEAD: `96852539d4e4aa6b9b87283357dfeac405d920e0`
+
+REVISION_PROGRESS_CHECKPOINT_HEAD: `ec9b2a220cd135f71a8409657772d4307907ddf6`
+
+The final handoff commit SHA cannot be embedded in the commit that creates it; the exact final branch HEAD is reported in `ACTIVE/INK_DEV_PROGRESS.md` handoff context and in the DEV handoff response.
