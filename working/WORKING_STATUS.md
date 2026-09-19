@@ -1,20 +1,20 @@
 # INK WORKING STATUS
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `DEV_AUTHORIZED`
 
 ## Active control
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-004` |
-| DEV_BRANCH | `work/ink-cloud-004` |
-| DEV_BRANCH_HEAD | `436c7bded529f481f22a7657f7a2cc62d43f4053` |
-| DEV_HANDOFF | `ACCEPTED` |
-| MR_REVIEW | `MR_PASS` |
+| CURRENT_TASK_ID | `INK-CLOUD-005` |
+| DEV_BRANCH | `work/ink-cloud-005` |
+| DEV_BRANCH_HEAD | `NOT_STARTED` |
+| DEV_HANDOFF | `PENDING` |
+| MR_REVIEW | `NOT_STARTED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `USER_PROMOTION_DECISION_REQUIRED` |
+| NEXT_STAGE | `DEV_IMPLEMENTATION` |
 | CLOUD_START_GATE | `BLOCKED_UNTIL_PRE_CLOUD_CORE_READY_AND_USER_APPROVAL` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -22,31 +22,31 @@ STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 ## Accepted baseline
 
-`INK-CLOUD-003`:
+`INK-CLOUD-004`:
 
 ```text
 SOURCE_REVIEW_PASS
 RUNTIME_QA_DEFERRED
 PROMOTED_TO_MAIN
-PROMOTION_COMMIT = d340664cf554755abfa146f607c05c03200e8799
+PROMOTION_COMMIT = 37418ab7f6b994425126e73c60810401d5e6e826
 ```
 
 Accepted capability:
 
-`Container / Ownership / Structural Semantics Foundation v0.1`
+`Transform / Bounds / Coordinate System Foundation v0.1`
 
 ## Current objective
 
-Stabilize:
+Stabilize the minimum Component / Instance data model:
 
-- local / parent / world / screen coordinate definitions;
-- affine transform rules;
-- bounds taxonomy;
-- Frame transform vs geometry resize;
-- Group child-derived bounds;
-- nested selection transform semantics;
-- spatial / hit-test / selection bounds consistency;
-- serialization of authoritative geometry only.
+- definition identity;
+- source-node identity;
+- linked Instance reference;
+- bounded override envelope;
+- detach semantics;
+- broken-reference/cycle safety;
+- History integration;
+- serialization/migration/integrity.
 
 No Cloud implementation is authorized.
 
@@ -66,41 +66,3 @@ Recover from GitHub SSOT:
 Hosted GitHub Actions remain unavailable due quota.
 
 Use source/static/unit evidence where possible and record browser/runtime debt as `RUNTIME_QA_DEFERRED`.
-
-
-## MR revision checkpoint
-
-Reviewed branch head:
-
-`479bcca83e0c375592bff6542115b971e88002c7`
-
-Decision:
-
-`MR_REVISE`
-
-Only authorized revision:
-
-- singular node/handle/interactive transform History preflight/cleanup;
-- regression evidence for no pending History and no mutation;
-- progress/report update.
-
-Transform/Bounds core architecture is otherwise retained.
-
-Runtime QA remains `DEFERRED`.
-
-
-## MR pass checkpoint
-
-Reviewed branch head:
-
-`436c7bded529f481f22a7657f7a2cc62d43f4053`
-
-Decision:
-
-`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
-
-The Singular Interaction / History Guard revision closes the prior blocking finding.
-
-Main promotion is not automatic and remains pending user approval.
-
-Cloud Start Gate remains blocked.
