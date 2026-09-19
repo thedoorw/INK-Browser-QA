@@ -19,7 +19,7 @@ function sourceBlock(start, end) {
 }
 
 test('singular selection preflight rejects before History begins and leaves geometry unchanged', () => {
-  const object = { id: 'child', matrix: Matrix.translate(3, 4) };
+  const object = { id: 'child', parentId: 'frame', matrix: Matrix.translate(3, 4) };
   const before = [...object.matrix];
   const found = {
     object,
@@ -51,6 +51,7 @@ test('singular selection preflight rejects before History begins and leaves geom
   assert.equal(history.pending, null);
   assert.deepEqual(object.matrix, before);
   assert.deepEqual(app.doc.object.matrix, before);
+  assert.equal(app.doc.object.parentId, 'frame');
 });
 
 test('stroke node and handle inversion preflight occurs before History begin', () => {
@@ -102,4 +103,28 @@ test('singular interaction rejection cancels History and clears active interacti
   );
   assert.match(transformBlock, /catch\(error\)/);
   assert.match(transformBlock, /rejectSingularInteraction/);
+});
+
+
+test('active singular rejection cancel clears pending History after restoring interaction start geometry', () => {
+  const object = { id: 'child', parentId: 'frame', matrix: Matrix.translate(3, 4) };
+  const before = [...object.matrix];
+  const app = {
+    doc: { object },
+    updateHistoryUI() {},
+    markDirty() {},
+    replaceDocument(next) { this.doc = next; }
+  };
+  const history = new HistoryManager(app);
+
+  assert.equal(history.begin('move', { targets: [['object']] }), true);
+  object.matrix = Matrix.translate(30, 40);
+
+  // Mirrors rejectSingularInteraction for a transform interaction:
+  object.matrix = [...before];
+  history.cancel();
+
+  assert.equal(history.pending, null);
+  assert.deepEqual(object.matrix, before);
+  assert.equal(object.parentId, 'frame');
 });
