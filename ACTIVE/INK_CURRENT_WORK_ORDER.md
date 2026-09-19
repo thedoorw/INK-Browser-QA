@@ -1,45 +1,43 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_PASS / STOP`
+STATUS: `AUTHORIZED / DEV_READY`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-003` |
-| TITLE | `INK Container / Ownership / Structural Semantics Foundation v0.1` |
+| CURRENT_TASK_ID | `INK-CLOUD-004` |
+| TITLE | `INK Transform / Bounds / Coordinate System Foundation v0.1` |
 | AUTHORITY | `MAIN REVIEW + USER_APPROVED` |
-| DEV_WORK_BRANCH | `work/ink-cloud-003` |
+| DEV_WORK_BRANCH | `work/ink-cloud-004` |
 | DEV_AUTHORIZATION | `BOUNDED_SHARED_CORE_IMPLEMENTATION` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `MR_PASS` |
-| NEXT_AUTHORIZED_ACTION | `NONE / STOP` |
+| CURRENT_GATE | `DEV_AUTHORIZED` |
+| NEXT_AUTHORIZED_ACTION | `DEV_IMPLEMENTATION` |
 | CLOUD_START_GATE | `BLOCKED` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Baseline
+## Accepted baseline
 
-Accepted Frame + Nested Hierarchy foundation is promoted to main at:
+INK-CLOUD-003 was accepted as:
 
-`7c03793ce7d289d0a1ecf1fafe3602aa9eedff13`
+`SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-This task builds on that accepted source baseline.
+and promoted to main at:
 
-Read:
+`d340664cf554755abfa146f607c05c03200e8799`
 
-- `governance/INK_Product_Delivery_Model_v0.1.md`
-- `research/INK_CLOUD_EDITOR_PENPOT_GAP_AUDIT_v0.1.md`
-- `research/INK_FRAME_NESTED_HIERARCHY_IMPLEMENTATION_REPORT_v0.1.md`
+This task builds on the accepted Frame / Group ownership and structural-semantics foundation.
 
 ## Objective
 
-Stabilize the structural semantics that determine how INK objects belong to containers and how inherited container state affects them.
+Stabilize the coordinate, transform, and bounds contracts that all future Component, Layout, snapping, guide, persistence, and Cloud work will depend on.
 
 This is a pre-Cloud shared-core task.
 
-It must make the document model safer for future Component / Layout / Cloud persistence work without implementing those capabilities yet.
+The goal is not to redesign the transform UI. The goal is to make geometric meaning deterministic across nested containers and serialized documents.
 
 ## Required baseline read order
 
@@ -51,97 +49,19 @@ It must make the document model safer for future Component / Layout / Cloud pers
 6. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
 7. `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
 8. `governance/INK_Product_Delivery_Model_v0.1.md`
-9. accepted INK-CLOUD-001 / 002 research reports
+9. accepted reports for INK-CLOUD-001 / 002 / 003
 10. only source / QA files required for this bounded task
 
-## Structural model to establish
+## Required structural contract
 
-### 1. Container role definitions
+### 1. Coordinate-space definitions
 
-Define and enforce clear structural roles for existing object families.
+Define and use explicit meanings for:
 
-Minimum intended semantics:
-
-- `Frame`
-  - explicit rectangular container;
-  - owns ordered children;
-  - may be nested;
-  - future target for constraints/layout/component placement.
-
-- `Group`
-  - structural grouping container;
-  - owns ordered children;
-  - extent derives from child content;
-  - remains behaviorally distinct from Frame.
-
-- `Repeat`
-  - procedural generator;
-  - its source/instances are not to be silently reclassified as ordinary container ownership children.
-
-Do not merge these types into one user-visible object type.
-
-Implementation may use shared internal helpers/capabilities where appropriate.
-
-### 2. Ownership invariants
-
-Establish deterministic rules that can be checked by integrity/migration logic:
-
-- every serialized ordinary object has one structural owner location;
-- top-level objects belong to exactly one Layer object array;
-- nested structural children belong to exactly one structural parent;
-- `parentId`, where used, must agree with the actual structural parent;
-- stale top-level `parentId` is removed;
-- duplicate ownership / duplicate structural IDs must be detected or normalized safely;
-- cycles must be rejected or repaired deterministically;
-- child array order is authoritative.
-
-Do not introduce cross-Layer Frame reparenting. The INK-CLOUD-002 same-Layer restriction remains active.
-
-### 3. Group / Frame nested combinations
-
-At source/model level, define deterministic behavior for at least:
-
-- Group inside Frame;
-- Frame inside Group;
-- nested Frame;
-- nested Group where already supported by existing documents.
-
-The task must explicitly distinguish:
-
-- structural traversal;
-- rendering traversal;
-- selection/hit-test behavior.
-
-Existing Group interaction behavior must not be silently redesigned. If deep Group selection would require a UX redesign, preserve current interaction and document the boundary.
-
-### 4. Inherited state semantics
-
-Define and make consistent:
-
-```text
-effectiveVisible
-effectiveLocked
-effectiveOpacity
-```
-
-across:
-
-```text
-Layer
-→ Frame / Group ancestry
-→ object
-```
-
-Expected principles:
-
-- hidden ancestor makes descendants effectively hidden;
-- locked ancestor makes descendants effectively locked;
-- opacity composes deterministically through Layer/container/object ancestry;
-- source/model traversal, renderer expectations, selection filtering and serialization must not disagree about these semantics.
-
-Do not add new blend/effect systems.
-
-### 5. Transform / coordinate ownership consistency
+- object-local space;
+- parent/container space;
+- page/world space;
+- viewport/screen space.
 
 Preserve the accepted hierarchy rule:
 
@@ -149,63 +69,139 @@ Preserve the accepted hierarchy rule:
 world = ancestorWorld × local
 ```
 
-Ensure Group/Frame combinations use deterministic local/world transform semantics.
+Screen/view conversion must remain a derived editor concern and must not silently rewrite serialized object geometry.
 
-Do not change the accepted same-Layer world-preserving Frame reparent rule.
+### 2. Matrix invariants
 
-### 6. Z-order / structural order contract
+Establish one deterministic affine-transform contract for editable objects:
 
-Define the source-of-truth ordering rules:
+- six-number affine matrix representation remains authoritative;
+- matrices must contain finite values;
+- local/world conversion must use shared helpers rather than ad-hoc multiplication order;
+- structural operations that require inversion must fail safely on non-invertible transforms rather than corrupt hierarchy;
+- negative scale / reflection behavior, if currently supported, must remain deterministic;
+- near-zero / singular transform behavior must be explicitly documented.
 
-- Layer order;
-- top-level object array order;
-- container child array order;
-- nested draw order;
-- hit-test ordering relative to rendered order.
+Do not replace the existing matrix engine.
 
-Fix only bounded inconsistencies required for deterministic structural order.
+### 3. Bounds taxonomy
 
-Do not redesign the full Layers-panel drag/drop UX.
+Define explicit bounds concepts rather than using one ambiguous “bounds” meaning.
 
-### 7. Serialization / migration / integrity
+At minimum distinguish:
 
-Extend current model/integrity/migration behavior so the new semantics survive:
+- local geometry bounds;
+- world geometry bounds;
+- container bounds;
+- selection bounds.
 
-- save/load;
-- structured JSON serialization;
-- existing Group documents;
-- accepted Frame documents;
-- nested Group/Frame combinations;
-- SVG structure where applicable.
+Required semantics:
 
-No raster flattening as a shortcut.
+- Frame bounds come from its explicit width/height transformed to world space;
+- Group bounds derive from child content and do not gain persistent width/height;
+- nested child world bounds use complete ancestry;
+- selection bounds are the union of selected transform roots after ancestor/descendant collapse;
+- derived world/selection bounds must not be serialized as authoritative geometry.
 
-### 8. Schema/version decision
+If a visual/effect bounds concept is needed for current code, keep it explicitly separate from geometry bounds. Do not add a new effects system.
 
-DEV must report whether this task requires a document format-version change.
+### 4. Transform semantics
 
-If a format-version bump is believed necessary:
+Make the following deterministic for Frame / Group / ordinary objects:
+
+- move;
+- rotate;
+- scale;
+- nested transform;
+- ancestor + descendant multi-selection;
+- world-space transform converted back to local space;
+- same-Layer reparent appearance preservation.
+
+Ancestor + descendant selected together must not double-transform the descendant.
+
+Do not change the accepted same-Layer reparent restriction.
+
+### 5. Frame resize vs Frame transform
+
+Explicitly separate these meanings:
+
+- **Frame transform**: modifies the Frame affine matrix; children follow through ancestry.
+- **Frame geometry resize**: modifies Frame width/height.
+
+For this v0.1 foundation:
+
+- resizing Frame geometry must not silently rewrite child local transforms;
+- no constraints/auto-layout behavior is implied;
+- child response to future constraints/layout remains a later task;
+- any existing UI path that currently conflates frame geometry resize with matrix scaling must be identified and boundedly normalized if necessary.
+
+No full transform-UX redesign.
+
+### 6. Group bounds contract
+
+Group remains content-derived:
+
+- no persistent width/height;
+- bounds come from descendants;
+- nested Group/Frame combinations must produce deterministic bounds;
+- empty Group fallback behavior must be explicit and stable;
+- Group transform must not bake child geometry unless an existing explicit operation already requires it.
+
+### 7. Spatial / hit-test / selection consistency
+
+Where the same geometry is being interpreted, these systems must not disagree:
+
+- renderer bounds;
+- PageSpatialIndex bounds;
+- hit-test;
+- marquee/lasso candidate bounds;
+- selection overlay bounds;
+- snapping feature bounds.
+
+Fix only bounded inconsistencies required to establish one coordinate/bounds contract.
+
+Do not implement the future full snapping/guide system here.
+
+### 8. Serialization / migration
+
+Verify that:
+
+- local matrices remain serialized source-of-truth geometry;
+- Frame width/height remain serialized Frame geometry;
+- derived world/selection/container cache data is not treated as authoritative serialized state;
+- existing Frame and Group documents migrate safely;
+- no accidental screen-space values are written into document objects;
+- structured SVG mapping remains coherent where touched.
+
+### 9. Format-version decision
+
+DEV must explicitly report whether the stabilized contract requires a format-version change.
+
+If DEV believes a format-version bump is necessary:
 
 `STOP and request MR decision before changing FORMAT_VERSION.`
 
-Do not independently bump product/document version.
+Do not independently change product or document version.
 
-## Required compatibility checks
+## Required compatibility protection
 
 At minimum protect:
 
+- accepted INK-CLOUD-002 Frame documents;
+- accepted INK-CLOUD-003 Group/ownership documents;
 - legacy Group documents;
-- accepted Frame documents from INK-CLOUD-002;
 - stroke/stylus;
-- vector path;
+- editable vector path;
 - text;
 - image/raster;
 - Repeat stable identity;
 - History undo/redo;
-- spatial selection/indexing;
+- selection transform;
+- same-Layer reparent;
+- spatial indexing;
 - local save/load;
 - SVG structured export/import where touched;
-- semantic/dependency traversal where touched.
+- creation/layout workspace camera behavior.
 
 ## Explicit exclusions
 
@@ -213,13 +209,14 @@ Do NOT implement:
 
 - Cloud backend / remote file storage;
 - authentication;
-- collaboration;
+- collaboration / presence;
 - components / instances / variants;
 - constraints;
 - flex/grid/auto-layout;
 - persistent ruler/guide system;
+- full snapping-engine redesign;
 - cross-Layer Frame reparent;
-- full Group-selection UX redesign;
+- full transform UI redesign;
 - renderer replacement;
 - Penpot source copying;
 - FLORA/AI/Recipe boundary promotion;
@@ -233,8 +230,9 @@ GitHub Actions quota remains exhausted.
 
 Therefore:
 
-- do not depend on hosted GitHub Actions;
-- perform source/static/unit/serialization checks available without hosted Actions;
+- do not depend on hosted Actions;
+- perform source/static/unit/serialization checks available in the active environment;
+- never report an unexecuted test as PASS;
 - record browser/runtime-only checks as `RUNTIME_QA_DEFERRED`;
 - no Runtime-verified or certified claim may be made.
 
@@ -242,7 +240,7 @@ Therefore:
 
 Create:
 
-`research/INK_CONTAINER_OWNERSHIP_STRUCTURAL_SEMANTICS_REPORT_v0.1.md`
+`research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`
 
 Update:
 
@@ -250,14 +248,17 @@ Update:
 
 The report must include:
 
-- final container-role contract;
-- ownership invariants;
-- Group/Frame nesting rules;
-- effective visibility/lock/opacity rules;
-- z-order contract;
+- final coordinate-space contract;
+- matrix/inversion rules;
+- bounds taxonomy;
+- Frame transform vs resize contract;
+- Group bounds contract;
+- selection/multi-select transform rules;
+- spatial/hit-test/bounds alignment;
 - files changed;
-- migration/integrity behavior;
-- tests/checks;
+- migration/serialization behavior;
+- tests/checks actually executed;
+- tests authored but not executed, if any;
 - schema/version conclusion;
 - known limitations;
 - Runtime QA debt;
@@ -267,23 +268,26 @@ The report must include:
 
 MR expects evidence that:
 
-1. Group and Frame roles are explicitly defined and not conflated.
-2. structural ownership is deterministic.
-3. duplicate/cyclic/stale ownership states are handled safely.
-4. Group-in-Frame and Frame-in-Group do not corrupt transforms or ownership.
-5. effective visibility/lock/opacity semantics are deterministic.
-6. z-order and hit-test ordering do not contradict structural/render order for the covered cases.
-7. legacy Group documents remain structurally compatible.
-8. accepted Frame documents remain structurally compatible.
-9. Repeat procedural identity is not converted into ordinary container ownership.
-10. no excluded capability is introduced.
-11. no format-version bump occurs without MR approval.
+1. local / parent / world / screen meanings are explicit and consistent.
+2. nested world/local transform math is deterministic.
+3. singular/non-invertible transform cases fail safely.
+4. Frame bounds use explicit Frame geometry.
+5. Group bounds remain child-derived.
+6. nested Frame/Group bounds remain correct under transforms.
+7. ancestor + descendant selection does not double-transform.
+8. Frame matrix transform and Frame width/height resize are not conflated.
+9. spatial / hit-test / marquee / selection bounds agree for covered cases.
+10. reparent still preserves world appearance within the same Layer.
+11. no derived world bounds become authoritative serialized document state.
+12. accepted Frame/Group documents remain structurally compatible.
+13. no excluded capability is introduced.
+14. no format-version bump occurs without MR approval.
 
 ## Branch / commit rules
 
 Use only:
 
-`work/ink-cloud-003`
+`work/ink-cloud-004`
 
 DEV must continuously commit meaningful checkpoints and keep `ACTIVE/INK_DEV_PROGRESS.md` current on that branch.
 
@@ -300,8 +304,8 @@ When complete:
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-003
-BRANCH = work/ink-cloud-003
+TASK_ID = INK-CLOUD-004
+BRANCH = work/ink-cloud-004
 PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
 FORMAT_VERSION_CHANGE = 0
 PACKAGE_MUTATION = 0
@@ -317,7 +321,7 @@ Still blocked.
 
 Completion of this task alone does not authorize Cloud implementation.
 
-The project remains:
+The sequence remains:
 
 ```text
 structural-core stabilization
@@ -326,20 +330,3 @@ structural-core stabilization
 → explicit user approval
 → first Cloud Work Order
 ```
-
-
-## MR Review Result — INK-CLOUD-003
-
-Reviewed exact DEV branch HEAD:
-
-`ede48bf1f3f6d1e4149941af23cfa743539d283f`
-
-Decision:
-
-`SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
-
-No format-version bump occurred.
-
-DEV must remain STOPPED. No next task, main promotion, package update, certification, or Cloud implementation is authorized by this review result alone.
-
-Cloud Start Gate remains blocked.
