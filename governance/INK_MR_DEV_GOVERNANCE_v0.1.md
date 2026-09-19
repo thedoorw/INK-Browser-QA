@@ -79,6 +79,22 @@ DEV must not start the next task merely because the previous implementation appe
 
 Only MR may change the current task to the next authorized work order.
 
+## Mandatory DEV work branch
+
+Every authorized DEV task must use a dedicated Git branch.
+
+Rules:
+- MR names the branch in the current work order.
+- DEV must work only on that branch until MR review.
+- DEV must commit meaningful progress checkpoints to the branch, not keep all work only inside chat.
+- `ACTIVE/INK_DEV_PROGRESS.md` must be updated on the same branch.
+- Each progress update must record the latest commit SHA and a short milestone note.
+- MR reviews the branch commits / diff before PASS.
+- DEV must not merge to `main`, update the package branch, or start another branch unless MR explicitly authorizes it.
+- Final DEV handoff must leave the branch intact and STOP for MR review.
+
+This makes the Git branch itself the durable implementation/progress record.
+
 ## Change discipline
 
 Unless the current work order explicitly permits it, DEV must not:
@@ -94,7 +110,8 @@ Unless the current work order explicitly permits it, DEV must not:
 
 DEV must update `ACTIVE/INK_DEV_PROGRESS.md` with:
 - task ID;
-- branch / commit when applicable;
+- mandatory DEV work branch;
+- latest commit SHA at each meaningful checkpoint;
 - files read;
 - files changed;
 - tests or checks performed;
