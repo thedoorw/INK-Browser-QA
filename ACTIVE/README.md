@@ -15,13 +15,15 @@ DEV new-window instruction:
 
 Current state:
 
-`INK-CLOUD-002 → DEV_AUTHORIZED → work/ink-cloud-002`
+`INK-CLOUD-003 → DEV_AUTHORIZED → work/ink-cloud-003`
 
-Product direction:
-`governance/INK_Product_Delivery_Model_v0.1.md`
+Accepted previous baseline:
+`INK-CLOUD-002 → SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED → promoted to main at 7c03793ce7d289d0a1ecf1fafe3602aa9eedff13`
 
-Accepted architecture audit:
-`research/INK_CLOUD_EDITOR_PENPOT_GAP_AUDIT_v0.1.md`
+Current structural-core target:
+`Container / Ownership / Structural Semantics Foundation v0.1`
+
+Cloud Start Gate remains blocked.
 
 Legacy/detail files are retained:
 - `ACTIVE/INK_MAIN_REVIEW_BOARD.md`
