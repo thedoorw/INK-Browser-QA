@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `MR_REVIEW_REQUIRED`
+STATUS: `MR_PASS / STOP`
 
 ## Active control
 
@@ -11,10 +11,10 @@ STATUS: `MR_REVIEW_REQUIRED`
 | DEV_BRANCH | `work/ink-cloud-001` |
 | DEV_BRANCH_HEAD | `becd65ba14fcb1a30419aa2b422e9e95dc59bce4` |
 | DEV_HANDOFF | `RECEIVED` |
-| MR_REVIEW | `PENDING` |
+| MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `NOT_AUTHORIZED_YET` |
 | PACKAGE_UPDATE | `NOT_AUTHORIZED` |
-| NEXT_STAGE | `BLOCKED_BY_MR_GATE` |
+| NEXT_STAGE | `WAITING_FOR_NEXT_WORK_ORDER` |
 
 ## Resume rule
 
@@ -44,10 +44,10 @@ MR reviews the exact branch head recorded here. If branch HEAD changes after rev
 
 ## Current checkpoint
 
-`INK-CLOUD-001` has reached DEV_HANDOFF and STOP.
+`INK-CLOUD-001` has passed MR review and is stopped pending a new Current Work Order.
 
 The current branch head is:
 
 `becd65ba14fcb1a30419aa2b422e9e95dc59bce4`
 
-No next task is active.
+No next task is active. No merge or package update is authorized.
