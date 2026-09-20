@@ -1,15 +1,15 @@
 # INK DEV PROGRESS
 
-STATUS: `DEV_IN_PROGRESS`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-006` |
 | DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
 | DEV_WORK_BRANCH | `work/ink-cloud-006` |
-| BASE_BRANCH_HEAD_AT_START | `d1f90889ed3f50a372692a7b41bd5a7323d2f6fd` |
-| LATEST_DEV_COMMIT | `04fab9e69a90ef5e90fd34a9030f6f2e389fb49a` |
-| DEV_STATE | `VERIFICATION_COMPLETE` |
+| BASE_BRANCH_HEAD_AT_START | `d1f908825f8419f053753b93d13a1a4ee901de91` |
+| LATEST_DEV_COMMIT | `184c74195e976526713ad549b236e13c9dac9ad7` |
+| DEV_STATE | `DEV_HANDOFF` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
 | FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSIONS` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -64,7 +64,7 @@ STOP
 
 ## Checkpoint 1 — Layout and persistence schema
 
-Branch checkout started from GitHub `d1f90889ed3f50a372692a7b41bd5a7323d2f6fd`. Read required control files, readiness assessment, accepted Component report, and required document/storage/assets/source tests.
+Branch checkout started from GitHub `d1f908825f8419f053753b93d13a1a4ee901de91`. Read required control files, readiness assessment, accepted Component report, and required document/storage/assets/source tests.
 
 Implemented initial optional schemas:
 
@@ -106,3 +106,23 @@ Closed malformed-input and verification edges:
 - captured the exact command output in `qa/core/evidence/INK_CLOUD_006_NODE_CHECKS.txt`.
 
 Actually executed: combined runner **112/112 Node tests PASS** (62 accepted structural/Component + 29 retained shared-core + 21 Layout/persistence), **8/8 source syntax checks PASS**, `FORMAT_VERSION = 4` PASS, bounded new modules contain no network transport primitive, and `git diff --check` PASS. Runtime browser/Canvas/WebGL/pointer/IndexedDB and hosted Actions QA remain DEFERRED.
+
+Published implementation and executed-QA checkpoint: `184c74195e976526713ad549b236e13c9dac9ad7`.
+
+## Handoff
+
+The required closure report is `research/INK_LAYOUT_PERSISTENCE_CONTRACT_CLOSURE_REPORT_v0.1.md`. The final documentation-only handoff commit follows the exact implementation/QA checkpoint above. Because a Git commit cannot contain its own resulting SHA, its exact SHA is recorded in the DEV handoff response and is resolvable from the `work/ink-cloud-006` branch ref pinned for MR review.
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-006
+BRANCH = work/ink-cloud-006
+IMPLEMENTATION_AND_QA_HEAD = 184c74195e976526713ad549b236e13c9dac9ad7
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
