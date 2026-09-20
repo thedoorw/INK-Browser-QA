@@ -14,7 +14,7 @@ STATUS: `INK-CLOUD-013 / DEV_IN_PROGRESS / PHASE_A`
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
-| LATEST_CHECKPOINT | `PHASE_B_CROSS_STAGE_INVARIANTS_COMPLETE` |
+| LATEST_CHECKPOINT | `PHASE_C_SAVE_LOAD_CLOSURE_COMPLETE` |
 
 ## Authorized sequence
 
@@ -145,6 +145,30 @@ The integrated fixture now proves:
 - cross-Revision CHAT bindings reject with `CHAT_EDIT_STALE_REVISION`;
 - Revision restore clears existing undo/redo as `RESET_TO_REVISION` and the
   restored structured Path immediately supports new undo/redo edits.
+
+Executed:
+
+```text
+node --test qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs
+```
+
+Result: `3 PASS / 0 FAIL`.
+
+## Phase C — save/load integrated closure
+
+Checkpoint base: `e42a8ae16e0be1f95b4820b15588926ff43dd94b`
+
+Validated three integrated persistence points:
+
+1. immediately after Extract → Path;
+2. after nested composition, Repaint / Material and CHAT mutation;
+3. after Revision restore.
+
+Each point exercises native file-envelope integrity, JSON serialization,
+unwrap/migration and structural inspection. The after-CHAT point also exercises
+the existing `InkStore` verified browser-local storage envelope and recovery
+validation. IDs, extraction provenance, editable subpaths, nested composition,
+appearance extensions and `FORMAT_VERSION = 4` remain intact.
 
 Executed:
 
