@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-012 / PHASE_E_COMPLETE / PHASE_F_NEXT`
+STATUS: `INK-CLOUD-012 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,8 +8,8 @@ STATUS: `INK-CLOUD-012 / PHASE_E_COMPLETE / PHASE_F_NEXT`
 | TITLE | `Revision Closure v0.1` |
 | BRANCH | `work/ink-cloud-012` |
 | BASE_MAIN | `8215489b7c52c741bccd927c38bd72749ea605cb` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING` |
+| DEV_HANDOFF | `READY` |
+| MR_REVIEW | `REQUIRED` |
 | GATE | `CREATIVE_LOOP_V1_COMPLETE` |
 | FORMAT_VERSION_CHANGE | `0` |
 | PACKAGE_MUTATION | `0` |
@@ -17,24 +17,51 @@ STATUS: `INK-CLOUD-012 / PHASE_E_COMPLETE / PHASE_F_NEXT`
 
 ## Phase checkpoints
 
-- Phase A — COMPLETE @ `f99c72e64cd328725857509f1ad75387cc3680e8`: versioned revision identity + structured file-envelope snapshot contract.
-- Phase B — COMPLETE @ `b7424675d8cc3baa62d29a71226a8637c6e86bd9`, syntax correction @ `aa4c9bed77a30afb890d29c3d429cca0b6e77a85`: deterministic comparison metadata, mutation-neutral capture, equivalent no-op and browser-local persistence.
-- Phase C — COMPLETE @ `ebca644021739b854351939f78ad3ba179d364ac`: validated structured restore/reopen, exact fingerprint postcondition, atomic rollback and explicit History reset boundary.
-- Phase D — COMPLETE @ `625ab0f240f405b38c3228553bd9f6ff7c3eb96e`: CHAT Revision binding and stale-revision rejection; shared runtime install and service-worker cache registration.
-- Phase E — COMPLETE: regression tests added; exact committed-source parse/static/isolated unit/serialization/forced-rollback checks passed. Full browser runtime remains DEFERRED per Work Order.
-- Phase F — NEXT: implementation report + DEV handoff.
+- Phase A — COMPLETE @ `f99c72e64cd328725857509f1ad75387cc3680e8`
+- Phase B — COMPLETE @ `b7424675d8cc3baa62d29a71226a8637c6e86bd9`; exact-blob syntax correction @ `aa4c9bed77a30afb890d29c3d429cca0b6e77a85`
+- Phase C — COMPLETE @ `ebca644021739b854351939f78ad3ba179d364ac`
+- Phase D — COMPLETE @ `625ab0f240f405b38c3228553bd9f6ff7c3eb96e`
+- Phase E tests — COMPLETE @ `60bcf7dac42f2b5a674f80dc7e64b87ebba42f35`
+- Phase E evidence — COMPLETE @ `6fb15fd0fc83004bf71a1e505198307d65e9a059`
+- Phase F — COMPLETE: `research/INK_REVISION_CLOSURE_REPORT_v0.1.md` + DEV handoff.
 
 ## Evidence
 
+- `research/INK_REVISION_CLOSURE_REPORT_v0.1.md`
 - `qa/core/evidence/INK_CLOUD_012_STATIC_CHECKS.txt`
+- `qa/core/tests/unit/revision-closure-core-v0.1.test.mjs`
+- `qa/core/tests/unit/revision-chat-binding-v0.1.test.mjs`
+- `qa/core/tests/unit/revision-closure-source-v0.1.test.mjs`
 
-## Guard state
+## Acceptance gate
 
 ```text
+REVISION_IDENTITY = IMPLEMENTED
+REVISION_SNAPSHOT = IMPLEMENTED
+BEFORE_AFTER_METADATA = IMPLEMENTED
+RESTORE_REOPEN = IMPLEMENTED
+ATOMIC_RESTORE_FAILURE = PRESERVED
+CHAT_REVISION_BINDING = IMPLEMENTED
+STRUCTURED_DOCUMENT = PRESERVED
+HISTORY = REUSED_OR_EXPLICIT_BOUNDARY
+STATIC_BROWSER_LOCAL_CORE = PRESERVED
+REMOTE_SERVICE_REQUIRED = 0
 FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
-REMOTE_SERVICE_REQUIRED = 0
 RUNTIME_QA = DEFERRED
-HARD_STOP = NOT_TRIGGERED
+```
+
+## Completion
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-012
+BRANCH = work/ink-cloud-012
+GATE = CREATIVE_LOOP_V1_COMPLETE
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
 ```
