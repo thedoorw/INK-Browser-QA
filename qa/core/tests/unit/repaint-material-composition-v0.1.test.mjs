@@ -84,6 +84,7 @@ test('three composed Paths repaint/materialize independently without geometry, t
 
   const app = makeApp(doc);
   const controller = new PathRepaintMaterialController(app);
+  const orderBefore = layer.objects.map(object => object.id);
   const before = new Map([a, b, c].map(path => [path.id, {
     d: pathData(path),
     geometry: pathGeometryFingerprint(path),
@@ -124,6 +125,8 @@ test('three composed Paths repaint/materialize independently without geometry, t
     assert.deepEqual(path.expressiveStroke, prior.expressive);
     assert.equal(path.parentId || null, prior.parentId);
   }
+
+  assert.deepEqual(layer.objects.map(object => object.id), orderBefore);
 
   const renderedB = resolvePathPaintAppearance(currentB, app.doc);
   assert.equal(renderedB.fill, '#d8d1bd');
