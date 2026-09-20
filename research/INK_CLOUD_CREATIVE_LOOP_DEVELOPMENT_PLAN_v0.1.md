@@ -533,3 +533,18 @@ Required answer:
 `YES`
 
 A `NO` result is a Hard STOP / architecture failure.
+
+
+## Current continuous stage — INK-CLOUD-010
+
+INK-CLOUD-009 completed and promoted with gate:
+
+`MULTI_CONTOUR_COMPOSITION_WORKS`
+
+The next bounded creative-loop stage is:
+
+`INK-CLOUD-010 — Repaint + Material v0.1`
+
+Target gate:
+
+`REPAINT_MATERIAL_WORKS`
