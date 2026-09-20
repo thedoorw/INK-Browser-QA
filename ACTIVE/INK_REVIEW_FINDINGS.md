@@ -2,67 +2,68 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-004`
+TASK: `INK-CLOUD-005`
 
 Reviewed fingerprint:
 
 ```text
-BRANCH work/ink-cloud-004
-HEAD   436c7bded529f481f22a7657f7a2cc62d43f4053
+BRANCH work/ink-cloud-005
+HEAD   315d4ac2b33894630c0d1a67333fc40acbc145e9
 ```
 
 ## MR decision
 
 `MR_PASS`
 
-The bounded Singular Interaction / History Guard revision resolves the blocking defect identified at reviewed HEAD:
+The Component / Instance Data Model Foundation satisfies the bounded source-level requirements of the Current Work Order.
 
-`479bcca83e0c375592bff6542115b971e88002c7`
+## Accepted findings
 
-## Accepted revision findings
+- Component definition authority is a single optional native registry referencing ordinary INK structural roots.
+- Definition IDs, source-node IDs, and Instance object IDs remain distinct identities.
+- Source-node targeting uses stable object IDs rather than array positions.
+- Linked Instances remain ordinary INK-owned objects using existing matrix/parent semantics.
+- Instance resolution produces disposable ordinary geometry rather than a second scene graph.
+- Instance transforms do not mutate Component definitions.
+- Missing definitions, invalid source roots, duplicate definition IDs, ambiguous source-node IDs, malformed override envelopes, unsupported nested Instances, and cycles fail safely.
+- v0.1 override scope is explicitly bounded to opacity and is serialized by stable source-node ID.
+- stale override targets remain diagnostic and non-destructive.
+- detach materializes ordinary editable INK structure, removes linkage, generates fresh IDs, preserves placement/appearance, and is undoable.
+- register/create/override/reset/detach/duplicate/repair operations use the existing HistoryManager.
+- renderer, bounds, hit-test, spatial and SVG paths resolve through the same ordinary geometry semantics.
+- native save/load retains definition / Instance / override data, including broken references.
+- integrity exposes Component reference problems as diagnostics without silently retargeting data.
+- structured SVG exports resolved structural geometry without raster flattening.
+- existing Frame / Group / Transform / Repeat compatibility suites remain passing in DEV evidence.
+- no parallel renderer, hierarchy, transform, selection or History engine was introduced.
+- no Cloud backend, variants, constraints, auto-layout, full Component UI, package update or product-version promotion was introduced.
+- `FORMAT_VERSION = 4` remains unchanged.
 
-- stroke node/handle editing validates world-matrix invertibility before opening History;
-- selection move/scale/rotate preflights transform roots before opening History;
-- singular/non-finite transform rejection before interaction start leaves History unopened;
-- active singular rejection restores initial object matrices or stroke points before cancellation;
-- active singular rejection clears History pending state;
-- active singular rejection clears `interaction` and `draft`;
-- rejected operations do not mutate hierarchy;
-- pointer-up cannot later commit the rejected interaction because the active interaction is cleared;
-- new regression coverage explicitly checks pending History and unchanged geometry/ownership;
-- bounded revision is limited to the authorized source/QA/report files;
-- no format-version change occurred;
-- no Cloud/component/layout/package/version work was introduced.
+## Format-version conclusion
 
-## Retained architecture
+MR accepts the v0.1 decision:
 
-The Transform / Bounds / Coordinate System foundation accepted in the first review remains intact:
+`FORMAT_VERSION_CHANGE = 0`
 
-- explicit local / parent / world / screen coordinate meanings;
-- safe affine inversion and deterministic world/local conversion;
-- Frame explicit geometry bounds;
-- Group child-derived bounds;
-- transform-root selection collapse;
-- Frame geometry resize separate from matrix transform;
-- same-Layer reparent appearance preservation;
-- cross-Layer reparent rejection;
-- derived bounds remain runtime-only, not serialized authority.
+The Component model is implemented as an optional identified extension within the existing format-4 envelope, and DEV evidence verifies that the pre-task format-4 migration retains the new registry and Instance payload.
+
+This does not claim that older INK builds understand or render Components; it establishes current-format data retention and forward capability within the accepted extensible document model.
 
 ## Runtime QA
 
 `RUNTIME_QA_DEFERRED`
 
-Browser/runtime verification remains debt under the current GitHub Actions quota constraint.
+Browser/runtime evidence remains validation debt, including Canvas/WebGL visual equivalence, pointer transforms, browser IndexedDB/open-save behavior, and browser SVG inspection.
 
-MR does not claim Runtime certification.
+No Runtime certification claim is made.
 
 ## Gate
 
 ```text
-INK-CLOUD-004
+INK-CLOUD-005
 → MR_PASS
 → SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED
 → USER_PROMOTION_DECISION_REQUIRED
 ```
 
-No package update, version promotion, next task, or Cloud implementation is authorized by this review alone.
+Cloud implementation remains blocked.
