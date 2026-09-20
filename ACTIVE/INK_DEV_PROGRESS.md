@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-007 / READY_TO_START / ENGINE_FIRST`
+STATUS: `INK-CLOUD-007 / DEV_IN_PROGRESS / ENGINE_FIRST`
 
 | Field | Value |
 |---|---|
@@ -54,3 +54,11 @@ but is consumed only after the generic extraction engine and Reference→Path sl
 ## Start state
 
 `READY_FOR_DEV_WORK / BEGIN_PHASE_A_ENGINE_CORE`
+
+## Phase A — extraction core
+
+Parent: `cddb59d541bbe2e2872cda570101727d0322a11d`.
+Implemented request/result, RGBA/mask identity boundaries, contour hierarchy conversion, deterministic native Path IDs/provenance and cancellation/failure handling.
+Engineering checks: `node --test qa/core/tests/unit/extraction-core-v0.1.test.mjs` (3 tests).
+No benchmark-specific data in core. Canonical reference available locally for Phase E.
+Runtime QA DEFERRED. Next: executable direct adapters.
