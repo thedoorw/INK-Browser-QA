@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `COMPLETE / PROMOTED / PRE_CLOUD_CORE_READY`
+STATUS: `COMPLETE / PROMOTED / PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
 
 ## Control
 
@@ -15,8 +15,8 @@ STATUS: `COMPLETE / PROMOTED / PRE_CLOUD_CORE_READY`
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | CURRENT_GATE | `PRE_CLOUD_CORE_READY` |
-| NEXT_AUTHORIZED_ACTION | `USER_CLOUD_START_APPROVAL_REQUIRED` |
-| CLOUD_START_GATE | `WAITING_USER_APPROVAL` |
+| NEXT_AUTHORIZED_ACTION | `DESIGN_DISCUSSION / NO_IMPLEMENTATION` |
+| CLOUD_START_GATE | `DISCUSSION_HOLD` |
 | RUNTIME_QA | `DEFERRED` |
 
 ## Baseline
@@ -347,3 +347,25 @@ Final readiness assessment:
 The pre-Cloud structural stage is complete.
 
 Cloud implementation is still not authorized automatically. The next action is explicit user approval to begin the first Cloud Work Order.
+
+
+## Discussion Hold
+
+The user has requested a discussion period before authorizing the first Cloud implementation Work Order.
+
+Current control state:
+
+```text
+PRE_CLOUD_CORE_READY = YES
+CLOUD_IMPLEMENTATION = NOT_AUTHORIZED
+NEXT_WORK_ORDER = NOT_ISSUED
+DISCUSSION_HOLD = ACTIVE
+```
+
+During this hold:
+
+- no DEV / DEV WORK implementation is authorized;
+- no Cloud branch is to be started;
+- no package/version/certification work is authorized;
+- architecture, product direction, Cloud scope, workflow and sequencing may be discussed;
+- after discussion, a new explicit user decision is required before issuing the first Cloud implementation Work Order.
