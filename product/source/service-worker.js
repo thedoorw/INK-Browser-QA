@@ -4,7 +4,7 @@ const RUNTIME_CACHE = `ink-v${RELEASE_VERSION}-runtime`;
 const APP_SHELL = [
   './', './index.html', './index-standalone.html', './styles.css',
   './src/config.js', './src/ink.js', './src/ai/ai-core.js', './src/ai/install-ai.js', './src/export/png-worker-encoder.js',
-  './src/studio-core.js', './src/vector/vector-core.js', './src/image/image-core.js', './src/paint/paint-core.js', './src/paint/stroke-model.js', './src/paint/brush-engine.js', './src/paint/stroke-session.js', './src/paint/drawing-workflow-import.js', './src/paint/drawing-quality.js', './src/recipe/recipe-engine.js', './src/vendor/polygon-clipping.umd.min.js',
+  './src/studio-core.js', './src/vector/vector-core.js', './src/vector/stroke-appearance.js', './src/image/image-core.js', './src/paint/paint-core.js', './src/paint/stroke-model.js', './src/paint/brush-engine.js', './src/paint/stroke-session.js', './src/paint/drawing-workflow-import.js', './src/paint/drawing-quality.js', './src/recipe/recipe-engine.js', './src/vendor/polygon-clipping.umd.min.js',
   './src/program-import/index.js', './src/program-import/importer.js', './src/program-import/format-detector.js', './src/program-import/parsers.js', './src/program-import/security.js', './src/program-import/canonical-operation.js', './src/program-import/compiler.js', './src/program-import/coverage-engine.js', './src/program-import/comparison-engine.js',
   './src/core/index.js', './src/core/math.js', './src/core/geometry.js', './src/core/utils.js',
   './src/document/index.js', './src/document/artboard.js', './src/document/workspace.js', './src/document/model.js', './src/document/migration.js', './src/document/storage.js', './src/document/integrity.js',
@@ -12,7 +12,7 @@ const APP_SHELL = [
   './src/input/input-arbiter.js', './src/input/pen-calibration.js', './src/input/stylus-test.js',
   './src/stroke/index.js', './src/stroke/edit.js',
   './src/spatial/index.js', './src/spatial/quadtree.js', './src/spatial/page-spatial-index.js',
-  './src/editor/index.js', './src/editor/selection.js', './src/editor/transform.js', './src/editor/path-edit.js',
+  './src/editor/index.js', './src/editor/selection.js', './src/editor/transform.js', './src/editor/path-edit.js', './src/editor/expressive-stroke.js',
   './src/render/index.js', './src/render/natural-media-utils.js', './src/render/natural-media-run-utils.js',
   './src/render/paper-profile.js', './src/render/multi-channel-ink.js', './src/render/gpu-resource-budget.js',
   './src/render/tile-atlas.js', './src/render/live-canvas-tile-renderer.js', './src/render/pixel-compare.js', './src/render/tiled-export.js', './src/render/natural-media-controller.js', './src/render/interactive-benchmark.js',
