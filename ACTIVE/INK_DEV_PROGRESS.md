@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008B / PHASE_A_COMPLETE / PHASE_B_NEXT`
+STATUS: `INK-CLOUD-008B / PHASE_B_COMPLETE / PHASE_C_NEXT`
 
 | Field | Value |
 |---|---|
@@ -64,3 +64,15 @@ Style changes must not rewrite Path geometry, identity, topology or extraction p
 - Runtime QA: `DEFERRED`.
 
 NEXT: `BEGIN_PHASE_B / STYLE_MUTATION_HISTORY`
+
+
+## Checkpoint — Phase B
+
+- Added `PathStrokeAppearanceController` on top of the existing Path object and existing scoped `HistoryManager`.
+- Assign / replace / patch / remove all reject busy History, hidden/locked targets and singular transforms.
+- Style-only mutation asserts stable Path ID, exact geometry fingerprint and metadata/extraction provenance.
+- No-op style mutations return without creating a History entry.
+- Brush assignment entrypoint is present but renderer/media bridge activation remains Phase D.
+- No second History or geometry model introduced.
+
+NEXT: `BEGIN_PHASE_C / RENDERER_INTEGRATION`
