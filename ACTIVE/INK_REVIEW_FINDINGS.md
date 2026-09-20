@@ -2,40 +2,42 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-012`
+TASK: `INK-CLOUD-013`
 
-REVIEWED_HEAD: `474f4e037b5eb351337258e77ce01fceeefccf0b`
+REVIEWED_HEAD: `0b610a5e68cde3951190088d9e5130dde8948564`
 
 ## Decision
 
 `MR_PASS`
 
-No blocking source/contract finding remains for Revision Closure v0.1.
+No blocking source/contract finding remains for Integrated Creative Loop Validation v0.1.
 
 ## Findings
 
-- Stable versioned Revision identity and structured snapshot record are implemented.
-- Revision snapshots reuse the accepted INK file-envelope/document integrity path.
-- Capture is document-mutation-neutral and equivalent capture is deterministic no-op.
-- Before/after comparison metadata records bounded changed-object and structure/geometry/appearance fingerprints.
-- Restore/reopen validates integrity and preserves structured editable INK state.
-- Failed/corrupt restore is atomic and restores document, History and editor state.
-- Successful restore establishes an explicit `RESET_TO_REVISION` History boundary instead of a second History engine.
-- CHAT state/proposal/result can bind to Revision identity and stale Revision execution is rejected.
-- Static-hosted + browser-local semantics remain intact; no mandatory remote service is introduced.
+- The accepted creative chain is exercised as one deterministic structured workflow.
+- Object/subpath/anchor identity and extraction provenance remain stable across stages.
+- Path remains editable after expressive stroke, composition, repaint/material, CHAT mutation and Revision restore.
+- Appearance-only changes preserve geometry fingerprints.
+- CHAT stale-target and stale-Revision protections remain deterministic.
+- Revision restore establishes the accepted History boundary and editing resumes through the existing History authority.
+- File-envelope/save-load integrity is exercised at extraction, post-CHAT and post-Revision checkpoints.
+- Rose-window hard benchmark was executed against the canonical fixture.
+- Direct Extraction is the current baseline; Structure-Aware Reconstruction remains a candidate requiring overlay/completeness improvement.
+- Two bounded defects were fixed: expressive-style re-synthesis on SVG export and degenerate ImageTracer contour intake.
+- No second Path/document/History/Revision/renderer authority was introduced.
 - `FORMAT_VERSION = 4`.
 - Package mutation = 0.
 
 ## Non-blocking debt
 
-- Full repository Node runner was not executed in the connector-only DEV environment.
-- Browser/runtime USER-path QA remains deferred.
-- Integrated end-to-end creative-loop validation remains the next stage.
+- Browser/runtime external USER-path QA remains deferred.
+- Structure-Aware Reconstruction currently sacrifices too much completeness and is not selected as the baseline.
+- Broader workspace UX is not yet implemented.
 
 ## Promotion
 
-Clean promotion completed through PR `#14`.
+Clean promotion completed through PR `#15`.
 
 Main promotion:
 
-`036a6bfb666627ddc52c9a611d4c84b45c504550`
+`1780118ec1c92241851af68649626b7c0a095dd1`
