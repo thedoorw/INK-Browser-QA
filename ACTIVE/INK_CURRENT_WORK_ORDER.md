@@ -327,3 +327,42 @@ The branch is diverged from current main; do not merge it directly. Any promotio
 Next action:
 
 `USER_PROMOTION_DECISION`
+
+
+## Main Promotion — INK-CLOUD-007
+
+User authorized clean promotion.
+
+Promotion branch:
+
+`promote/ink-cloud-007`
+
+Reviewed DEV HEAD:
+
+`b006a3a7dadc5d261e3dda5b377f61ec13221ddb`
+
+Promotion payload commit:
+
+`1823a5b523cb6da8182b5356361ea526ec3ccc35`
+
+PR:
+
+`#8`
+
+Main merge commit:
+
+`59d8cbfe374e172293a2b2ba1a5dd367d72e20ee`
+
+Promotion verification:
+
+- 12/12 promoted blob SHAs matched reviewed DEV HEAD;
+- promotion branch was based on current main;
+- stale branch-local governance/progress state was excluded;
+- no package update;
+- `FORMAT_VERSION = 4`;
+- `RUNTIME_QA = DEFERRED`;
+- `HARD_BENCHMARK = DEFERRED_BY_USER_DECISION`.
+
+INK-CLOUD-007 is now closed on main.
+
+No next Work Order is authorized by this promotion itself.
