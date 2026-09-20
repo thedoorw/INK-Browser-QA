@@ -22,3 +22,17 @@ test('abort and failing adapters yield no successful result',async()=>{
  const during=new AbortController();await assert.rejects(executeExtraction({raster,source},{...adapter,extract:()=>{during.abort();return{contours};}},{signal:during.signal}),/CANCELLED/);
  await assert.rejects(executeExtraction({raster,source},{...adapter,extract:()=>{throw Error('unavailable');}}),/unavailable/);
 });
+import '../../../../product/source/src/vendor/imagetracer-1.2.6.js';
+import { imageTracerAdapter, binaryRaster } from '../../../../product/source/src/extraction/adapters.js';
+test('actual ImageTracerJS converts a raster with hole into deterministic native paths',async()=>{
+ const image={width:48,height:48,data:new Uint8ClampedArray(48*48*4).fill(255)};
+ for(let y=5;y<43;y++)for(let x=5;x<43;x++)if(x<16||x>=32||y<16||y>=32)image.data.fill(0,(y*48+x)*4,(y*48+x)*4+3);
+ const request={raster:image,source},adapter=imageTracerAdapter(globalThis.ImageTracer);
+ const a=await executeExtraction(request,adapter),b=await executeExtraction(request,adapter);
+ assert.deepEqual(a.paths,b.paths);assert.ok(a.diagnostics.holes>=1);assert.ok(a.diagnostics.nodes>4);
+});
+test('transparent pixels are background and threshold must be finite',()=>{
+ const r={width:1,height:1,data:new Uint8ClampedArray([0,0,0,0])};
+ assert.equal(binaryRaster({raster:r}).data[0],255);
+ assert.throws(()=>binaryRaster({raster:r,parameters:{threshold:NaN}}),/THRESHOLD/);
+});

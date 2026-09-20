@@ -62,3 +62,11 @@ Implemented request/result, RGBA/mask identity boundaries, contour hierarchy con
 Engineering checks: `node --test qa/core/tests/unit/extraction-core-v0.1.test.mjs` (3 tests).
 No benchmark-specific data in core. Canonical reference available locally for Phase E.
 Runtime QA DEFERRED. Next: executable direct adapters.
+
+## Phase B — executable direct adapter
+
+Previous checkpoint: `533d8e4a86d1e4d440e6bdcec91652240837be1c`.
+ImageTracerJS 1.2.6 licensed baseline converts deterministic raster/hole fixture into native Path.
+OpenCV.js injected contour/hierarchy adapter and VTracer injected converter boundary added.
+Actual engineering suite: 5 tests passed. OpenCV.js and VTracer execution pending dependency probe/benchmark.
+No new rendering, transform or History engine.
