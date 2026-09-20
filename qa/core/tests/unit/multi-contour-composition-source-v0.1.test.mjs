@@ -46,6 +46,8 @@ test('Multi-Contour Composition reuses accepted transform/hierarchy/History and 
   assert.match(ink, /reparentPageObject/);
   assert.match(ink, /frameSelection/);
   assert.match(ink, /multi-contour-composition/);
+  assert.match(ink, /vectorObjectToSVG/);
+  assert.match(ink, /o\.type==='path'\)return vectorObjectToSVG\(o,defs\)/);
 
   assert.match(extraction, /batchId=uid\(\)/);
   assert.match(extraction, /referenceObjectId:referenceId,batchId/);
