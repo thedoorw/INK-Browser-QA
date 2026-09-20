@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-011 / PHASE_B_COMPLETE / PHASE_C_IN_PROGRESS`
+STATUS: `INK-CLOUD-011 / PHASE_C_COMPLETE / PHASE_D_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -98,3 +98,24 @@ Committed contracts:
 Initial operation vocabulary is bounded to repaint/material, translate, and Path simplify/refine families.
 
 Next: Phase C validation + explicit local approval boundary.
+
+
+### Phase C — complete
+
+`APPROVAL_BOUNDARY = IMPLEMENTED`
+
+Committed behavior:
+
+- target existence/type/page validation;
+- locked / hidden / unexposed / singular rejection;
+- proposal-time expected document/page/target fingerprints;
+- stale target rejection before approval/execution;
+- browser-local proposal registry;
+- explicit `PROPOSED → APPROVED` transition;
+- explicit local approval token;
+- token/state validation before execution eligibility;
+- rejection remains document/History-neutral.
+
+No product mutation occurs in inspect/propose/approve/reject.
+
+Next: Phase D structured execution through accepted controllers/History.
