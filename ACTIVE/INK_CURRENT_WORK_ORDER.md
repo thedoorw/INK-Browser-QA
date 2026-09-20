@@ -7,7 +7,7 @@ STATUS: `ACTIVE / INK-CLOUD-007 / ENGINE_FIRST DEVELOPMENT`
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-007` |
-| TITLE | `Extraction Engine + Reference-to-Path Technical Prototype + Rose Window Benchmark v0.1` |
+| TITLE | `Extraction Engine + Reference-to-Path Technical Prototype v0.1` |
 | AUTHORITY | `USER_EXPLICIT_DEVELOPMENT_AUTHORIZATION` |
 | DEV_WORK_BRANCH | `work/ink-cloud-007` |
 | DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
@@ -159,9 +159,9 @@ A SAM-class runtime may be benchmarked if practical, but large model/runtime acq
 
 Checkpoint commit required.
 
-### Phase E — Hard benchmark
+### Phase E — Hard benchmark — DEFERRED
 
-Only after Phases A–D are functional, run the formal rose-window benchmark.
+The formal rose-window benchmark is explicitly deferred by user decision. Do not execute it in INK-CLOUD-007.
 
 Canonical benchmark:
 
@@ -173,9 +173,9 @@ User image identity:
 
 If binary intake is unavailable, mark:
 
-`HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE`
+`HARD_BENCHMARK = DEFERRED_BY_USER_DECISION`
 
-and still hand off the completed engine with all available engineering evidence.
+and hand off the completed engine with available engineering evidence.
 
 Compare:
 
@@ -225,7 +225,7 @@ MR must be able to verify at minimum:
 5. failures do not leave partial History or corrupted document state;
 6. no second core engine was created;
 7. rose-window-specific logic is not baked into generic extraction core;
-8. hard benchmark status is explicit: executed or blocked, never implied;
+8. hard benchmark status is explicit: `DEFERRED_BY_USER_DECISION`;
 9. FORMAT_VERSION remains 4 unless MR explicitly approves otherwise;
 10. package/main remain untouched by DEV.
 
@@ -274,10 +274,25 @@ TASK_ID = INK-CLOUD-007
 BRANCH = work/ink-cloud-007
 EXTRACTION_ENGINE = IMPLEMENTED
 REFERENCE_TO_PATH = TECHNICAL_VERTICAL_SLICE_COMPLETE
-HARD_BENCHMARK = EXECUTED_OR_EXPLICITLY_BLOCKED
+HARD_BENCHMARK = DEFERRED_BY_USER_DECISION
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## User benchmark deferral decision
+
+The user explicitly chose to postpone the rose-window hard benchmark so development can continue toward the full creative loop.
+
+Current rule:
+
+```text
+HARD_BENCHMARK = DEFERRED_BY_USER_DECISION
+INK-CLOUD-007 = ENGINE_COMPLETION + REPORT + HANDOFF
+NEXT_PRODUCT_STAGE_AFTER_MR = PATH_EDITING + EXPRESSIVE_STROKE
+```
+
+DEV must not spend time on the rose-window benchmark in this Work Order.
