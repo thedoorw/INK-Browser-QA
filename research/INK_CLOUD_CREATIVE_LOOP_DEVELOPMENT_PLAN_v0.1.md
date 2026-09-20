@@ -150,6 +150,26 @@ Required direction:
 
 Purpose: determine the best extraction pipeline before building the Cloud workflow around the wrong tracing method.
 
+Primary benchmark:
+
+`research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+
+Technology survey:
+
+`research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
+
+Current benchmark hypothesis:
+
+```text
+SAM-class segmentation
+→ OpenCV.js geometry/contour preprocessing
+→ VTracer primary vectorization
+→ INK Path / Repeat / Transform reconstruction
+→ overlay QA + bounded correction
+```
+
+ImageTracerJS is retained as a lightweight browser fallback/baseline. Potrace is retained as an external quality reference unless a separate GPL licensing decision is made.
+
 Deliverables:
 
 - representative reference-image benchmark set;
@@ -166,6 +186,8 @@ No broad Cloud platform work.
 Gate:
 
 `EXTRACTION_PIPELINE_SELECTED`
+
+Before this gate, the Rose Window benchmark must compare direct tracing against AI + INK structural reconstruction.
 
 ### Phase 1 — Reference / Extract / Path Minimum Vertical Slice
 
@@ -352,3 +374,21 @@ NEXT_WORK_ORDER = NOT_ISSUED
 ```
 
 The next step is to discuss/refine this plan, especially Phase 0 extraction benchmark scope and acceptance criteria, before issuing the first implementation Work Order.
+
+
+## Phase 0 research checkpoint
+
+Completed planning artifacts:
+
+- `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+- `research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
+
+Research conclusion so far:
+
+- use mature reusable technologies first;
+- do not rely on CHAT-only pixel tracing;
+- benchmark direct trace and structure-aware reconstruction separately;
+- keep final geometry authoritative as editable INK Path;
+- prefer hybrid extraction rather than a monolithic tracer.
+
+No extraction implementation has started.
