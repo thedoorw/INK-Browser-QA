@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / PROMOTED / PRE_CLOUD_CORE_READY`
+STATUS: `MR_PASS / PROMOTED / PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
 
 | Field | Value |
 |---|---|
@@ -15,10 +15,15 @@ STATUS: `MR_PASS / PROMOTED / PRE_CLOUD_CORE_READY`
 | RUNTIME_QA | `DEFERRED` |
 | MAIN_PROMOTION | `PROMOTED / c0800bbc2345772b44aa310161aa446fc87fbe60` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| CLOUD_START_GATE | `WAITING_USER_APPROVAL` |
+| CLOUD_START_GATE | `DISCUSSION_HOLD` |
 
 If `work/ink-cloud-006` moves beyond REVIEW_HEAD before promotion, this review becomes stale.
 
 PRE_CLOUD_CORE_READY: `YES`
 
-Next action: `USER_CLOUD_START_APPROVAL_REQUIRED`.
+Next action: `DESIGN_DISCUSSION / NO_IMPLEMENTATION`.
+
+
+DISCUSSION_HOLD: `ACTIVE`
+
+No new DEV / DEV WORK task is authorized until the user explicitly ends the discussion hold and approves the next implementation stage.
