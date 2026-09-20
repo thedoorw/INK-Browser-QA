@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-009 / PHASE_E_COMPLETE`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `INK-CLOUD-009 / PHASE_E_COMPLETE`
 | TITLE | `Multi-Contour Composition v0.1` |
 | BRANCH | `work/ink-cloud-009` |
 | BASE_MAIN | `8295d5a1f7edef51b0fb55587cbd31410bf151c0` |
-| DEV_HANDOFF | `NOT_YET` |
+| DEV_HANDOFF | `READY` |
 | MR_REVIEW | `PENDING` |
 | GATE | `MULTI_CONTOUR_COMPOSITION_WORKS` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
@@ -49,7 +49,7 @@ Reuse existing hierarchy, transform, History, Path Editing and Expressive Stroke
 
 ## Start state
 
-`PHASE_E_COMPLETE / BEGIN_PHASE_F`
+`PHASE_F_COMPLETE / DEV_HANDOFF`
 
 ## Checkpoint A — multi-source identity contract
 
@@ -115,4 +115,40 @@ Not executed / not claimed PASS:
 - rose-window benchmark: prohibited and not run.
 
 Evidence file: `qa/core/evidence/INK_CLOUD_009_STATIC_CHECKS.txt`.
+
+## Checkpoint F — report + DEV handoff
+
+Closure report checkpoint: `18e1ebe1839ed6ca9c65b3fa600250ef4025d5b7`.
+
+Report:
+`research/INK_MULTI_CONTOUR_COMPOSITION_REPORT_v0.1.md`
+
+Acceptance:
+- `MULTI_SOURCE_PATHS = IMPLEMENTED`
+- `MULTI_OBJECT_COMPOSITION = IMPLEMENTED`
+- `TRANSFORM = REUSED`
+- `HIERARCHY = REUSED`
+- `Z_ORDER = IMPLEMENTED`
+- `DUPLICATION_WITH_FRESH_IDENTITIES = IMPLEMENTED`
+- `PATH_EDITABILITY = PRESERVED`
+- `EXPRESSIVE_STROKE = PRESERVED`
+- `PROVENANCE = PRESERVED`
+- `HISTORY = REUSED`
+- `SERIALIZATION = PRESERVED`
+- `FORMAT_VERSION = 4`
+- `PACKAGE_MUTATION = 0`
+- `MAIN_MERGE = 0`
+- `RUNTIME_QA = DEFERRED`
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-009
+BRANCH = work/ink-cloud-009
+GATE = MULTI_CONTOUR_COMPOSITION_WORKS
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
 
