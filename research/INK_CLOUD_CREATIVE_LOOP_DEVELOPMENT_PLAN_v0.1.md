@@ -442,3 +442,21 @@ Extraction
 ```
 
 Engineering fixtures and bounded regression tests remain required at each stage. The deferred rose-window benchmark remains registered as a future integrated acceptance case and is not removed from the program.
+
+
+## Phase 2 split execution
+
+To keep implementation bounded and reviewable, Phase 2 is split:
+
+```text
+INK-CLOUD-008A = Path Editing Core
+INK-CLOUD-008B = Expressive Stroke
+```
+
+INK-CLOUD-008A must complete anchor/handle/topology editing, simplify/refine, History and serialization without beginning expressive stroke work.
+
+Only after 008A is reviewed/promoted should 008B implement geometry-independent expressive stroke behavior.
+
+Current authorized task:
+
+`INK-CLOUD-008A — Path Editing Core v0.1`
