@@ -105,3 +105,31 @@ First planned technical stage:
 `Phase 0 — Extraction Benchmark + Workflow Contract`
 
 Implementation remains blocked while discussion hold is active.
+
+
+## Phase 0 research progress
+
+Rose-window benchmark defined:
+
+`research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+
+Initial technology survey completed:
+
+`research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
+
+Current candidate stack:
+
+```text
+SAM-class segmentation
++ OpenCV.js
++ VTracer
++ INK Path / Repeat / Transform
+```
+
+Fallback/baseline: `ImageTracerJS`.
+
+Potrace: benchmark reference only unless license policy is separately approved.
+
+`EXTRACTION_PIPELINE_SELECTED = NO`
+
+Implementation remains blocked during discussion hold.
