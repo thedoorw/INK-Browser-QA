@@ -637,6 +637,8 @@ class InkApp{
     if(it.type==='shape'){this.updateShape(d,e);return;}
     if(it.type==='stroke-node-move'){const found=this.strokeEdit?this.findObject(this.strokeEdit.ref):null,inverse=found?.object?.type==='stroke'?M.tryInvert(found.worldMatrix||found.object.matrix):null;if(!found||found.interactionExposed===false||!inverse){this.rejectSingularInteraction(it,'物件轉換不可逆，節點移動已取消');return;}const local=M.point(inverse,d.world),dx=local.x-it.startLocal.x,dy=local.y-it.startLocal.y;found.object.points=it.initialPoints.map((point,index)=>it.indices.has(index)?{...point,x:point.x+dx,y:point.y+dy}:{...point});this.queueSpatialObject(this.strokeEdit.ref);this.refreshSelectionUI();this.renderer.render();return;}
     if(it.type==='stroke-handle-move'){const found=this.strokeEdit?this.findObject(this.strokeEdit.ref):null,inverse=found?.object?.type==='stroke'?M.tryInvert(found.worldMatrix||found.object.matrix):null;if(!found||found.interactionExposed===false||!inverse){this.rejectSingularInteraction(it,'物件轉換不可逆，切線調整已取消');return;}const local=M.point(inverse,d.world);found.object.points=deepClone(it.initialPoints);moveStrokeHandle(found.object,it.index,it.kind,local);this.strokeEdit.handle={index:it.index,kind:it.kind};this.queueSpatialObject(this.strokeEdit.ref);this.renderer.render();return;}
+    if(it.type==='path-anchor-move'){const found=this.editablePath(),inverse=found?M.tryInvert(found.worldMatrix||found.object.matrix):null;if(!found||!inverse){this.rejectSingularInteraction(it,'物件轉換不可逆，Path 節點移動已取消');return;}const local=M.point(inverse,d.world),dx=local.x-it.startLocal.x,dy=local.y-it.startLocal.y;found.object.subpaths=deepClone(it.initialSubpaths);for(const ref of it.refs){const anchor=found.object.subpaths[ref.subpathIndex]?.anchors?.[ref.anchorIndex];if(anchor)movePathAnchor(found.object,ref.subpathIndex,ref.anchorIndex,anchor.x+dx,anchor.y+dy);}assertFinitePathGeometry(found.object);this.queueSpatialObject(this.pathEditing.state.ref);this.refreshSelectionUI();this.renderer.render();return;}
+    if(it.type==='path-handle-move'){const found=this.editablePath(),inverse=found?M.tryInvert(found.worldMatrix||found.object.matrix):null;if(!found||!inverse){this.rejectSingularInteraction(it,'物件轉換不可逆，Path 切線調整已取消');return;}const local=M.point(inverse,d.world);found.object.subpaths=deepClone(it.initialSubpaths);const anchor=found.object.subpaths[it.subpathIndex]?.anchors?.[it.anchorIndex];if(anchor)movePathBezierHandle(found.object,it.subpathIndex,it.anchorIndex,it.side,local.x-anchor.x,local.y-anchor.y);assertFinitePathGeometry(found.object);this.pathEditing.state.handle={subpathIndex:it.subpathIndex,anchorIndex:it.anchorIndex,side:it.side};this.queueSpatialObject(this.pathEditing.state.ref);this.renderer.render();return;}
     if(it.type==='eraser'){it.changed=this.eraseAt(d.world,it.radius)||it.changed;this.renderer.render();return;}
     if(it.type==='lasso'){if(distance(this.draft.lasso.at(-1),d.world)>2/this.page().camera.scale)this.draft.lasso.push(d.world);this.renderer.render();return;}
     if(it.type==='marquee'){this.draft.marquee.current={x:d.sx,y:d.sy};this.selectionMode=d.sx>=it.startScreen.x?'contain':'intersect';this.refreshSelectionUI();this.renderer.render();return;}
@@ -652,6 +654,7 @@ class InkApp{
     else if(it.type==='lasso'){if(!cancelled)this.finishLasso();this.draft=null;}
     else if(it.type==='marquee'){if(!cancelled)this.finishMarquee(it);this.draft=null;}
     else if(it.type==='stroke-node-move'||it.type==='stroke-handle-move'){const found=this.editableStroke();if(cancelled&&found){found.object.points=it.initialPoints;this.history.cancel();}else this.history.commit();if(this.strokeEdit)this.queueSpatialObject(this.strokeEdit.ref);}
+    else if(it.type==='path-anchor-move'||it.type==='path-handle-move'){const found=this.editablePath();if(cancelled&&found){found.object.subpaths=deepClone(it.initialSubpaths);this.history.cancel();}else if(found){assertFinitePathGeometry(found.object);this.history.commit();}else this.history.cancel();if(this.pathEditing?.active)this.queueSpatialObject(this.pathEditing.state.ref);}
     else if(['move','scale','rotate'].includes(it.type)){cancelled?this.restoreMatrices(it.initial):this.history.commit();if(!cancelled)this.queueSpatialSelection();this.draft=null;}
     this.interaction=null;this.updateCursor();this.refreshLayers();this.refreshSelectionUI();this.renderer.render();
   }
@@ -671,6 +674,21 @@ class InkApp{
   eraseAt(world,radius){let changed=false;const index=this.ensureSpatialIndex(),area={x:world.x-radius,y:world.y-radius,w:radius*2,h:radius*2},candidates=index.query(area).filter(item=>item.object.type==='stroke'&&item.interactionExposed!==false&&item.effectiveVisible&&!item.effectiveLocked).sort((a,b)=>comparePageObjectHitOrder(a,b,{deep:true}));for(const item of candidates){const found=this.findObject({layerId:item.layer.id,objectId:item.object.id});if(!found)continue;const object=found.object,worldMatrix=found.worldMatrix||object.matrix,inv=M.tryInvert(worldMatrix);if(!inv)continue;const localCenter=M.point(inv,world),scale=Math.hypot(worldMatrix[0],worldMatrix[1])||1,localRadius=radius/scale,result=eraseStrokeWithCircle(object,localCenter,localRadius,uid);if(!result.changed)continue;for(const fragment of result.fragments){if(found.parentObject)fragment.parentId=found.parentObject.id;else delete fragment.parentId;}found.parentArray.splice(found.objectIndex,1,...result.fragments);this.selection=this.selection.filter(ref=>ref.objectId!==object.id);changed=true;}if(changed)this.spatialDirty=true;return changed;}
 
   beginSelection(d,pointerId,e){
+    if(this.pathEditing?.active){
+      const rawFound=this.findObject(this.pathEditing.state.ref),pathWorld=rawFound?.worldMatrix||rawFound?.object?.matrix,pathInverse=rawFound?.object?.type==='path'&&rawFound.interactionExposed!==false?M.tryInvert(pathWorld):null;
+      if(rawFound?.object?.type==='path'&&!pathInverse){this.interaction=null;this.draft=null;this.toast('物件轉換不可逆，無法編輯 Path');return;}
+      const editHit=this.pathEditHit(d.sx,d.sy),found=this.editablePath();
+      if(editHit?.type==='handle'&&found){this.pathEditing.selectHandle(editHit.subpathIndex,editHit.anchorIndex,editHit.side);this.history.begin('調整 Path 切線',{targets:[this.objectPath(found)]});this.interaction={type:'path-handle-move',pointerId,subpathIndex:editHit.subpathIndex,anchorIndex:editHit.anchorIndex,side:editHit.side,initialSubpaths:deepClone(found.object.subpaths)};this.refreshSelectionUI();this.renderer.render();return;}
+      if(editHit?.type==='anchor'&&found){
+        const key=editHit.subpathIndex+':'+editHit.anchorIndex;
+        if(e.shiftKey)this.pathEditing.selectAnchor(editHit.subpathIndex,editHit.anchorIndex,{toggle:true});
+        else if(!this.pathEditing.state.anchorKeys.has(key))this.pathEditing.selectAnchor(editHit.subpathIndex,editHit.anchorIndex);
+        const refs=this.pathEditing.selectedAnchors();if(!refs.length){this.refreshSelectionUI();this.renderer.render();return;}
+        const startLocal=M.point(pathInverse,d.world);this.history.begin('移動 Path 節點',{targets:[this.objectPath(found)]});this.interaction={type:'path-anchor-move',pointerId,startLocal,refs,initialSubpaths:deepClone(found.object.subpaths)};this.refreshSelectionUI();this.renderer.render();return;
+      }
+      if(editHit?.type==='segment'){this.pathEditing.selectSegment(editHit.subpathIndex,editHit.segmentIndex,editHit.t);this.refreshSelectionUI();this.renderer.render();return;}
+      this.exitPathEdit();
+    }
     if(this.strokeEdit){
       const rawFound=this.findObject(this.strokeEdit.ref);
       const strokeWorld=rawFound?.worldMatrix||rawFound?.object?.matrix;
@@ -727,6 +745,7 @@ class InkApp{
   rejectSingularInteraction(it,message){
     if(Array.isArray(it?.initial))for(const x of it.initial){const f=this.findObject(x.ref);if(f)f.object.matrix=[...x.matrix];}
     if(Array.isArray(it?.initialPoints)&&this.strokeEdit){const found=this.findObject(this.strokeEdit.ref);if(found?.object?.type==='stroke')found.object.points=deepClone(it.initialPoints);}
+    if(Array.isArray(it?.initialSubpaths)&&this.pathEditing?.active){const found=this.findObject(this.pathEditing.state.ref);if(found?.object?.type==='path')found.object.subpaths=deepClone(it.initialSubpaths);}
     this.history.cancel();
     this.interaction=null;this.draft=null;
     if(this.strokeEdit)this.strokeEdit.handle=null;
