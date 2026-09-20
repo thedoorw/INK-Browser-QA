@@ -1,0 +1,108 @@
+INK-CLOUD-013 — Integrated Creative Loop Validation v0.1
+Evidence date: 2026-09-20
+Branch: work/ink-cloud-013
+Checked source checkpoint: 0b610a5e68cde3951190088d9e5130dde8948564
+
+INTEGRATED / ACCEPTED-STAGE UNIT REGRESSION
+Command scope:
+- extraction-core-v0.1
+- extraction-structure-v0.1
+- path-editing-core-v0.1
+- expressive-stroke-core-v0.1
+- multi-contour-composition-core-v0.1
+- repaint-material-core-v0.1
+- repaint-material-composition-v0.1
+- chat-bounded-edit-core-v0.1
+- revision-closure-core-v0.1
+- revision-chat-binding-v0.1
+- integrated-creative-loop-v0.1
+
+Result:
+tests 48
+pass 48
+fail 0
+cancelled 0
+skipped 0
+todo 0
+
+SOURCE / STATIC / PERSISTENCE CONTRACT REGRESSION
+Command scope:
+- extraction-workspace-v0.1
+- path-editing-source-v0.1
+- expressive-stroke-source-v0.1
+- multi-contour-composition-source-v0.1
+- repaint-material-source-v0.1
+- chat-bounded-edit-source-v0.1
+- revision-closure-source-v0.1
+- layout-persistence-contract-v0.1
+
+Result:
+tests 31
+pass 31
+fail 0
+cancelled 0
+skipped 0
+todo 0
+
+ADDITIONAL STATIC CHECKS
+- node --check product/source/src/vector/vector-core.js: PASS
+- node --check product/source/src/extraction/adapters.js: PASS
+- node --check qa/core/tests/rose-window-hard-benchmark-v0.1.mjs: PASS
+- node --check qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs: PASS
+- git diff --check: PASS
+- FORMAT_VERSION = 4: PASS
+- package diff: 0
+- main merge: 0
+
+INTEGRATED CONTRACT RESULTS
+- deterministic full-loop document fingerprint: PASS
+- deterministic Revision identity/fingerprint: PASS
+- object/subpath/anchor identity retention: PASS
+- extraction provenance retention: PASS
+- post-compose/repaint/CHAT/restore Path editability: PASS
+- appearance/geometry separation: PASS
+- nested composition hierarchy retention: PASS
+- structural CHAT stale-target rejection: PASS
+- cross-Revision CHAT stale-revision rejection: PASS
+- History/Revision reset boundary and resumed undo/redo: PASS
+- file-envelope at extraction checkpoint: PASS
+- file-envelope + InkStore after CHAT: PASS
+- file-envelope after Revision restore: PASS
+
+BOUNDED FIX
+- vectorObjectToSVG no longer synthesizes a default expressive stroke when the
+  Path expressiveStroke field is null/absent.
+- ImageTracer adapter omits contours with fewer than three distinct vertices
+  and remaps holechildren before emitting SVG for core normalization.
+
+HARD BENCHMARK
+Command:
+- node qa/core/tests/rose-window-hard-benchmark-v0.1.mjs
+
+Result:
+- HARD_BENCHMARK = EXECUTED
+- fixture SHA-256: e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807
+- Direct Extraction raster-proxy IoU: 0.849098
+- Structure-Aware raster-proxy IoU: 0.031339
+- Direct deterministic rerun: PASS
+- Structure prototype deterministic rerun: PASS
+- provenance exact: PASS / PASS
+- EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
+- structured evidence: qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json
+
+PHASE D MATERIALLY AFFECTED REGRESSION
+Command scope:
+- extraction-core-v0.1
+- extraction-structure-v0.1
+- extraction-workspace-v0.1
+- integrated-creative-loop-v0.1
+
+Result:
+- tests 13
+- pass 13
+- fail 0
+
+DEFERRED
+- browser runtime / external USER-path QA: DEFERRED by Work Order
+- package rebuild/update: PROHIBITED / NOT RUN
+- main merge: PROHIBITED / NOT RUN

@@ -1,6 +1,6 @@
 # INK Rose Window Extraction Benchmark v0.1
 
-STATUS: `DEFERRED HARD BENCHMARK / RETAINED FOR FUTURE ACCEPTANCE`
+STATUS: `EXECUTED / DIRECT EXTRACTION CURRENT BASELINE`
 
 ## Purpose
 
@@ -124,7 +124,7 @@ User-selected reference image:
 Observed file metadata in current conversation:
 
 - 1086 × 1448 px;
-- RGBA;
+- canonical fixture is RGB;
 - near-frontal Gothic rose-window/tracery composition;
 - dense nested closed contours;
 - strong central radial organization;
@@ -145,10 +145,14 @@ This image is specifically intended to test whether INK can outperform blind tra
 - contour/path capture;
 - local exception correction.
 
-The binary asset itself must be added to the repository benchmark fixtures by the implementation task using an authorized binary-safe path. This planning document records the canonical benchmark identity and purpose.
+Canonical binary fixture is now present on the active DEV branch at:
+
+`qa/fixtures/rose-window/rose-window-primary.png`
+
+This path is the authoritative Phase D benchmark input for INK-CLOUD-013.
 
 
-## Deferral checkpoint
+## Historical deferral checkpoint
 
 User decision: defer execution of this benchmark while the creative-loop implementation continues.
 
@@ -159,4 +163,87 @@ BENCHMARK_SPEC = RETAINED
 CURRENT_IMPLEMENTATION_BLOCKER = NO
 ```
 
-This benchmark is not cancelled. It remains the first designated high-complexity acceptance case for a later validation checkpoint.
+This state was superseded when the canonical fixture was committed to the
+active branch.
+
+
+## Fixture intake resolved — INK-CLOUD-013
+
+The canonical hard benchmark fixture is now available at:
+
+`qa/fixtures/rose-window/rose-window-primary.png`
+
+Blob SHA:
+
+`0977531b94011300300bd69602c566fb58452522`
+
+Phase D blocker is cleared.
+
+```text
+HARD_BENCHMARK = READY_TO_EXECUTE
+REFERENCE = qa/fixtures/rose-window/rose-window-primary.png
+```
+
+## Phase D execution — INK-CLOUD-013
+
+Execution fixture:
+
+```text
+path: qa/fixtures/rose-window/rose-window-primary.png
+sha256: e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807
+dimensions: 1086 × 1448 RGB
+```
+
+The deterministic runner is
+`qa/core/tests/rose-window-hard-benchmark-v0.1.mjs`; machine-readable evidence
+is `qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`.
+
+Both pipelines use the fixed main-window ROI centered at `(543, 638)` with
+radius `466`, luminance threshold `128`, and a 4 px raster-evaluation grid.
+Because no semantic vector ground truth exists for the reference, completeness,
+missing and additional geometry are measured as sampled-raster proxies. They
+must not be read as manually labelled contour counts.
+
+| Measure | Direct Extraction | Structure-Aware Reconstruction |
+|---|---:|---:|
+| raster-proxy recall | `0.904256` | `0.031866` |
+| raster-proxy precision | `0.932975` | `0.654303` |
+| raster-proxy IoU | `0.849098` | `0.031339` |
+| false-negative samples | `1325` | `13398` |
+| false-positive samples | `899` | `233` |
+| paths retained | `1386` | `1` linked prototype |
+| subpaths / holes retained | `1426 / 40` | `3 / 2` |
+| unique editable nodes | `9339` | `67` |
+| effective expanded nodes | `9339` | `402` |
+| exact source provenance | PASS | PASS |
+| deterministic rerun | PASS | PASS |
+
+The structural evidence ranked sixfold rotation first with mask IoU
+`0.317206`. The resulting native linked Repeat has zero generated-instance
+rotation drift, exact motif consistency and far lower unique-node cost. It does
+not, however, recover the full rose-window topology: sector extraction produced
+265 Paths, while the accepted `reconstructRadial()` boundary can consume only
+one Path. Retaining the largest prototype therefore omits most visible
+geometry and would require substantially more local correction than the direct
+result.
+
+Evaluation conclusion across the thirteen dimensions:
+
+- Direct Extraction wins current contour completeness, topology coverage and
+  total correction-cost proxy, but carries substantial cleanup density at
+  9339 nodes and 1386 Paths.
+- Structure-Aware Reconstruction wins radial regularity, linked motif
+  consistency and editability density, but fails current completeness and
+  hole/nesting coverage on this hard fixture.
+- Both outputs preserve exact source/mask provenance and rerun
+  deterministically.
+- Semantic topology correctness remains unscored where no labelled vector
+  ground truth exists; sampled-raster evidence is reported instead.
+
+Decision:
+
+```text
+HARD_BENCHMARK = EXECUTED
+EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
+STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
+```

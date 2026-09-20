@@ -31,6 +31,11 @@ test('actual ImageTracerJS converts a raster with hole into deterministic native
  const a=await executeExtraction(request,adapter),b=await executeExtraction(request,adapter);
  assert.deepEqual(a.paths,b.paths);assert.ok(a.diagnostics.holes>=1);assert.ok(a.diagnostics.nodes>4);
 });
+test('ImageTracerJS adapter omits degenerate contours before core normalization',async()=>{
+ const localTracer={imagedataToTracedata:()=>({palette:[{r:0}],layers:[[{segments:[{x1:0,y1:0,x2:1,y2:0},{x1:1,y1:0,x2:0,y2:0}]}]]}),getsvgstring:trace=>`<svg>${trace.layers[0].map(()=>'<path d="M0 0L1 0L0 0Z"/>').join('')}<path d="M0 0L4 0L4 4L0 4Z"/></svg>`};
+ const result=await executeExtraction({raster,source},imageTracerAdapter(localTracer));
+ assert.equal(result.diagnostics.nodes,4);assert.match(result.diagnostics.warnings.join(' '),/degenerate traced contour/);
+});
 test('transparent pixels are background and threshold must be finite',()=>{
  const r={width:1,height:1,data:new Uint8ClampedArray([0,0,0,0])};
  assert.equal(binaryRaster({raster:r}).data[0],255);

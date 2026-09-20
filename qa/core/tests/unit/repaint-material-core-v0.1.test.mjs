@@ -138,7 +138,9 @@ test('repaint/material survives native file roundtrip with provenance, expressiv
   const loadedPath = findPageObject(loaded.pages[0], path.id).object;
   assert.equal(pathData(loadedPath), dataBefore);
   assert.equal(pathGeometryFingerprint(loadedPath), geometryBefore);
-  assert.deepEqual(loadedPath.metadata, metadataBefore);
+  const { semanticLabel, ...loadedMetadata } = loadedPath.metadata;
+  assert.equal(semanticLabel, loadedPath.semantic.role);
+  assert.deepEqual(loadedMetadata, metadataBefore);
   assert.deepEqual(loadedPath.expressiveStroke, expressiveBefore);
   assert.equal(loadedPath.fill, '#d7c64b');
   assert.equal(loadedPath.stroke, '#2f718f');

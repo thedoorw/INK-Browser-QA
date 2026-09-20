@@ -193,7 +193,9 @@ test('multi-contour composition survives native file roundtrip and structured SV
   for (const path of [a, b, duplicate]) {
     const loadedPath = findPageObject(loaded.pages[0], path.id).object;
     assert.equal(pathData(loadedPath), pathData(path));
-    assert.deepEqual(loadedPath.metadata, path.metadata);
+    const { semanticLabel, ...loadedMetadata } = loadedPath.metadata;
+    assert.equal(semanticLabel, loadedPath.semantic.role);
+    assert.deepEqual(loadedMetadata, path.metadata);
     assert.deepEqual(loadedPath.expressiveStroke, path.expressiveStroke);
     const svg = vectorObjectToSVG(loadedPath, []);
     assert.match(svg, /data-ink-type="path"/);

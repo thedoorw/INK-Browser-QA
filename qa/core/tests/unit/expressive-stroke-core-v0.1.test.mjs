@@ -153,7 +153,7 @@ test('style-only assignment/replacement/removal keeps authoritative Path geometr
   assert.deepEqual(currentPath(app).metadata, originalMetadata);
 
   controller.remove();
-  assert.equal(currentPath(app).expressiveStroke, undefined);
+  assert.equal(currentPath(app).expressiveStroke ?? null, null);
   assert.equal(pathGeometryFingerprint(currentPath(app)), originalGeometry);
   assert.equal(pathData(currentPath(app)), originalPathData);
   assert.deepEqual({ stroke: currentPath(app).stroke, strokeWidth: currentPath(app).strokeWidth }, ordinary);
@@ -185,7 +185,7 @@ test('geometry edit after expressive style assignment remains independent in exi
 
   assert.equal(app.history.undo(), true);
   assert.equal(pathGeometryFingerprint(currentPath(app)), geometryBefore);
-  assert.equal(currentPath(app).expressiveStroke, undefined);
+  assert.equal(currentPath(app).expressiveStroke ?? null, null);
 
   assert.equal(app.history.redo(), true);
   assert.equal(pathGeometryFingerprint(currentPath(app)), geometryBefore);
@@ -230,7 +230,9 @@ test('expressive style survives file roundtrip and structured SVG keeps Path d w
   assert.equal(inspectDocument(loaded).passed, true);
   assert.equal(pathGeometryFingerprint(loadedPath), geometryBefore);
   assert.equal(pathData(loadedPath), dBefore);
-  assert.deepEqual(loadedPath.metadata, metadataBefore);
+  const { semanticLabel, ...loadedMetadata } = loadedPath.metadata;
+  assert.equal(semanticLabel, loadedPath.semantic.role);
+  assert.deepEqual(loadedMetadata, metadataBefore);
   assert.equal(loadedPath.id, path.id);
   assert.deepEqual(loadedPath.expressiveStroke, currentPath(app, path.id).expressiveStroke);
 
@@ -275,7 +277,7 @@ test('busy History, hidden and locked Paths reject style mutation without corrup
   path.locked = false;
 
   assert.equal(app.history.undoStack.length, 0);
-  assert.equal(path.expressiveStroke, undefined);
+  assert.equal(path.expressiveStroke ?? null, null);
 });
 
 test('profile bounds and existing brush bridge stay bounded, deterministic and geometry-free', () => {
