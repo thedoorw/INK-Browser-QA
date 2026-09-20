@@ -14,11 +14,17 @@ export function imageTracerAdapter(tracer) {
   return { id:'imagetracerjs',version:'1.2.6',async extract(input) {
     requireValue(typeof tracer?.imagedataToTracedata === 'function','EXTRACTION_IMAGETRACER_UNAVAILABLE');
     checkAbort(input.signal);
-    const options={ltres:1,qtres:1,pathomit:8,colorsampling:0,colorquantcycles:1,numberofcolors:2,
+    const options={ltres:1,qtres:1,pathomit:8,linefilter:true,colorsampling:0,colorquantcycles:1,numberofcolors:2,
       pal:[{r:0,g:0,b:0,a:255},{r:255,g:255,b:255,a:255}],scale:1,roundcoords:3,layering:0};
     const trace=tracer.imagedataToTracedata(binaryRaster(input),options);
-    trace.layers=trace.layers.map((layer,i)=>trace.palette[i].r<128?layer:[]);
-    return { svg:tracer.getsvgstring(trace,options),warnings:['Binary luminance/explicit mask boundary; not semantic segmentation.'] };
+    let omitted=0;
+    const usable=path=>{const segments=path?.segments||[],points=segments.length?[[segments[0].x1,segments[0].y1],...segments.map(s=>s.hasOwnProperty('x3')?[s.x3,s.y3]:[s.x2,s.y2])]:[];
+      if(points.length>1&&points[0][0]===points.at(-1)[0]&&points[0][1]===points.at(-1)[1])points.pop();
+      return new Set(points.map(p=>`${p[0]},${p[1]}`)).size>=3;};
+    trace.layers=trace.layers.map((layer,i)=>{if(trace.palette[i].r>=128)return[];
+      const kept=layer.map((path,index)=>({path,index})).filter(({path})=>usable(path)||(omitted++,false)),remap=new Map(kept.map((entry,index)=>[entry.index,index]));
+      return kept.map(({path})=>({...path,holechildren:(path.holechildren||[]).filter(index=>remap.has(index)).map(index=>remap.get(index))}));});
+    return { svg:tracer.getsvgstring(trace,options),warnings:['Binary luminance/explicit mask boundary; not semantic segmentation.',...(omitted?[`${omitted} degenerate traced contour(s) omitted.`]:[])] };
   }};
 }
 export function openCVAdapter(cv, version) {

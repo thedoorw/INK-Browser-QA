@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-013 / REOPENED_PHASE_D / HARD_BENCHMARK_READY`
+STATUS: `INK-CLOUD-013 / REOPENED_PHASE_D / HARD_BENCHMARK_EXECUTED`
 
 | Field | Value |
 |---|---|
@@ -8,13 +8,13 @@ STATUS: `INK-CLOUD-013 / REOPENED_PHASE_D / HARD_BENCHMARK_READY`
 | TITLE | `Integrated Creative Loop Validation v0.1` |
 | BRANCH | `work/ink-cloud-013` |
 | BASE_MAIN | `4de2a4324c318abebab6a3fb1dcd096b7d0ac78a` |
-| DEV_HANDOFF | `REOPENED_FOR_PHASE_D` |
-| MR_REVIEW | `PENDING_AFTER_PHASE_D` |
+| DEV_HANDOFF | `PHASE_D_REPORT_PENDING` |
+| MR_REVIEW | `PENDING_AFTER_PHASE_D_REPORT` |
 | GATE | `INTEGRATED_CREATIVE_LOOP_VALIDATED` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
-| LATEST_CHECKPOINT | `PHASE_D_REOPENED / FIXTURE_READY` |
+| LATEST_CHECKPOINT | `PHASE_D_HARD_BENCHMARK_EXECUTED` |
 
 ## Authorized sequence
 
@@ -322,3 +322,64 @@ DEV must now:
 
 Do not redo Phases A-C unless Phase D reveals a concrete cross-stage defect.
 Do not start new feature work.
+
+## Phase D hard benchmark executed
+
+Canonical fixture validation:
+
+```text
+path: qa/fixtures/rose-window/rose-window-primary.png
+sha256: e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807
+dimensions: 1086 × 1448 RGB
+```
+
+Added the deterministic hard-benchmark runner and structured evidence:
+
+- `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs`
+- `qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`
+
+The benchmark uses the fixed main rose-window ROI `(543, 638), radius 466`,
+binary luminance threshold `128`, and a 4 px evaluation grid. Counts that
+would require semantic ground truth are explicitly reported as sampled-raster
+proxies.
+
+Pipeline comparison:
+
+| Measure | Direct Extraction | Structure-Aware Reconstruction |
+|---|---:|---:|
+| raster-proxy recall | `0.904256` | `0.031866` |
+| raster-proxy precision | `0.932975` | `0.654303` |
+| raster-proxy IoU | `0.849098` | `0.031339` |
+| unique editable nodes | `9339` | `67` |
+| effective expanded nodes | `9339` | `402` |
+| deterministic rerun | PASS | PASS |
+| exact source provenance | PASS | PASS |
+
+Structure evidence selected a sixfold candidate (`maskIoU = 0.317206`). The
+native linked Repeat has exact generated symmetry and much lower unique-node
+cost, but the accepted `reconstructRadial()` boundary retains only one Path
+from a 265-Path prototype extraction. Its resulting completeness is therefore
+insufficient for this fixture.
+
+Decision:
+
+`EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE`
+
+`HARD_BENCHMARK = EXECUTED`
+
+Validation-first execution exposed a bounded ImageTracer adapter defect:
+degenerate real-image contours reached core normalization and failed the
+closed editable-Path contract. The adapter now filters contours with fewer
+than three distinct vertices and remaps `holechildren` before SVG generation.
+No Path/document/History/Revision/CHAT authority or format changed.
+
+Materially affected regression:
+
+```text
+extraction core + structure + workspace + integrated loop: 13 PASS / 0 FAIL
+hard benchmark: PASS
+node --check: PASS
+git diff --check: PASS
+package mutation: 0
+FORMAT_VERSION: 4
+```

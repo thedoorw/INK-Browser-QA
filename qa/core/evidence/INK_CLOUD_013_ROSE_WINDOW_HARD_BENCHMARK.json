@@ -1,0 +1,84 @@
+{
+  "schema": "INK-ROSE-WINDOW-HARD-BENCHMARK/1",
+  "fixture": {
+    "path": "qa/fixtures/rose-window/rose-window-primary.png",
+    "sha256": "e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807",
+    "width": 1086,
+    "height": 1448,
+    "colorType": "RGB"
+  },
+  "setup": {
+    "threshold": 128,
+    "roi": { "center": { "x": 543, "y": 638 }, "radius": 466 },
+    "gridStep": 4,
+    "candidateCounts": [6, 8, 10, 12, 14, 16, 18, 20, 24]
+  },
+  "directExtraction": {
+    "paths": 1386,
+    "subpaths": 1426,
+    "holes": 40,
+    "nodes": 9339,
+    "geometrySha256": "625616af8a40811dc048d97341b5714e640a78015982901d2998fd9c502cea69",
+    "warnings": [
+      "Binary luminance/explicit mask boundary; not semantic segmentation.",
+      "500 degenerate traced contour(s) omitted."
+    ],
+    "rasterProxy": {
+      "samples": 42584,
+      "truePositive": 12514,
+      "falsePositive": 899,
+      "falseNegative": 1325,
+      "trueNegative": 27846,
+      "recall": 0.904256,
+      "precision": 0.932975,
+      "iou": 0.849098
+    },
+    "provenanceExact": true
+  },
+  "structureAware": {
+    "selectedCount": 6,
+    "selectedMaskIoU": 0.317206,
+    "candidates": [
+      { "count": 6, "maskIoU": 0.317206 },
+      { "count": 12, "maskIoU": 0.259456 },
+      { "count": 14, "maskIoU": 0.257667 },
+      { "count": 10, "maskIoU": 0.256417 },
+      { "count": 16, "maskIoU": 0.254013 },
+      { "count": 18, "maskIoU": 0.237382 },
+      { "count": 20, "maskIoU": 0.224357 },
+      { "count": 24, "maskIoU": 0.206283 },
+      { "count": 8, "maskIoU": 0.198411 }
+    ],
+    "prototype": { "paths": 265, "subpaths": 269, "holes": 4, "nodes": 1631 },
+    "prototypeWarnings": [
+      "Binary luminance/explicit mask boundary; not semantic segmentation.",
+      "73 degenerate traced contour(s) omitted."
+    ],
+    "retainedPrototype": { "paths": 1, "subpaths": 3, "holes": 2, "nodes": 67 },
+    "effectiveExpandedNodes": 402,
+    "linkedRepeatInstances": 6,
+    "rasterProxy": {
+      "samples": 42584,
+      "truePositive": 441,
+      "falsePositive": 233,
+      "falseNegative": 13398,
+      "trueNegative": 28512,
+      "recall": 0.031866,
+      "precision": 0.654303,
+      "iou": 0.031339
+    },
+    "provenanceExact": true
+  },
+  "deterministic": {
+    "direct": true,
+    "prototype": true,
+    "resultSha256": "1cd4c22f27d01f410fa337ec1799ec0fab8e18a59d58531ea8874426f5077244"
+  },
+  "interpretation": {
+    "contourCountsAreThresholdDerived": true,
+    "missingAndAdditionalCountsUseSampledPixelProxy": true,
+    "semanticGroundTruthAvailable": false,
+    "decision": "DIRECT_EXTRACTION_CURRENT_BASELINE",
+    "structureStatus": "CANDIDATE_REQUIRES_OVERLAY_QA"
+  }
+}
