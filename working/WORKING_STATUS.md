@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-012 / DEVELOPMENT_AUTHORIZED / ACTIVE`
+STATUS: `INK-CLOUD-013 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-012` |
-| DEV_BRANCH | `work/ink-cloud-012` |
+| CURRENT_TASK_ID | `INK-CLOUD-013` |
+| DEV_BRANCH | `work/ink-cloud-013` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / REVISION_CLOSURE` |
+| NEXT_STAGE | `DEV_WORK / INTEGRATED_CREATIVE_LOOP_VALIDATION` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -537,3 +537,43 @@ Target gate:
 `CREATIVE_LOOP_V1_COMPLETE`
 
 Revision semantics must remain static-hosted + browser-local and reuse existing document/file-envelope/History architecture.
+
+
+## INK-CLOUD-012 MR review and promotion
+
+Reviewed exact DEV HEAD:
+
+`474f4e037b5eb351337258e77ce01fceeefccf0b`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate accepted:
+
+`CREATIVE_LOOP_V1_COMPLETE`
+
+Clean promotion:
+
+- branch: `promote/ink-cloud-012`
+- PR: `#14 / MERGED`
+- main promotion: `036a6bfb666627ddc52c9a611d4c84b45c504550`
+
+## INK-CLOUD-013 authorization
+
+Current objective:
+
+```text
+accepted creative-loop stages
+→ one integrated deterministic workflow
+→ cross-stage invariant validation
+→ deferred rose-window hard benchmark
+```
+
+Branch:
+
+`work/ink-cloud-013`
+
+Target gate:
+
+`INTEGRATED_CREATIVE_LOOP_VALIDATED`
