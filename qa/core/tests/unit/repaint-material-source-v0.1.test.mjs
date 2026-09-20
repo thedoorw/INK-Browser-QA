@@ -10,6 +10,7 @@ test('Repaint + Material reuses accepted Path/History/renderer architecture with
   const repaint = read('product/source/src/editor/repaint-material.js');
   const editorIndex = read('product/source/src/editor/index.js');
   const model = read('product/source/src/document/model.js');
+  const fileEnvelope = read('product/source/src/document/file-envelope.js');
   const vector = read('product/source/src/vector/vector-core.js');
   const ink = read('product/source/src/ink.js');
   const history = read('product/source/src/history/history.js');
@@ -39,6 +40,7 @@ test('Repaint + Material reuses accepted Path/History/renderer architecture with
 
   assert.match(editorIndex, /repaint-material\.js/);
   assert.match(model, /normalizePathMaterialAppearance/);
+  assert.match(fileEnvelope, /PATH_MATERIAL_APPEARANCE_EXTENSION/);
   assert.match(vector, /resolvePathPaintAppearance/);
   assert.match(vector, /data-ink-material-ref=/);
   assert.match(vector, /data-ink-material-fallback="ordinary-vector"/);
