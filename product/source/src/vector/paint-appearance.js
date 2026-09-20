@@ -112,7 +112,7 @@ export function resolvePathPaintAppearance(path, document = null) {
       templateFound: Boolean(template),
       templateVersion: template?.templateVersion || material.templateVersion || null,
       materialType: template?.materialType || null,
-      unsupportedMaterialEffect: !appearance,
+      unsupportedMaterialEffect: !appearance || unsupportedAppearanceKeys.length > 0 || ignoredParameterOverrides.length > 0,
       ignoredParameterOverrides,
       unsupportedAppearanceKeys
     }
