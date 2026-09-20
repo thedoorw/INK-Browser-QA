@@ -1,0 +1,354 @@
+# INK Cloud Creative Loop Development Plan v0.1
+
+STATUS: `PLANNING_BASELINE / DISCUSSION_HOLD / NO_IMPLEMENTATION_AUTHORIZATION`
+
+## Primary Product Goal
+
+The current highest-priority goal for INK Cloud is to complete one concrete human-AI creative loop:
+
+```text
+Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
+```
+
+INK Cloud is not being defined as a feature-complete generic Cloud platform.
+
+The immediate objective is to make this loop usable, editable, inspectable and repeatable before expanding into broader Cloud capabilities.
+
+## Product intent
+
+INK Cloud should become a shared human-AI creative workspace built around the same INK core.
+
+The first closed loop must prove that:
+
+1. a user can bring a reference image into the workspace;
+2. the target subject can be extracted with high contour completeness and accuracy;
+3. extraction becomes editable path geometry rather than a flattened image;
+4. path geometry can be reshaped independently from stroke appearance;
+5. multiple extracted paths from different references can coexist and be composed;
+6. closed regions can be repainted with color and material;
+7. CHAT can inspect the current structured document, discuss it with the user, and express bounded modification tasks;
+8. revisions preserve the before/after state and remain recoverable.
+
+## Four core creative capabilities
+
+### 1. Precise Capture
+
+Goal: extract complete, verifiable, editable contours from reference imagery.
+
+Target workflow:
+
+```text
+Reference image
+→ target identification
+→ segmentation / mask
+→ contour extraction
+→ vector fitting
+→ original/path overlay
+→ completeness review
+→ bounded local correction
+→ accepted editable Path
+```
+
+Architecture direction:
+
+- formal extraction should occur in the INK workspace, not only inside a CHAT message;
+- CHAT provides semantic target selection, reasoning, review and correction instructions;
+- extraction should be deterministic enough to compare against the original reference;
+- original image and extracted path must remain visually overlayable for QA;
+- automated extraction must allow manual/local correction instead of requiring full retrace.
+
+Before implementation, benchmark candidate extraction methods on representative reference images.
+
+Candidate classes to compare:
+
+- edge/contour extraction;
+- bitmap-to-vector tracing;
+- segmentation-assisted tracing;
+- hybrid segmentation + contour + Bézier fitting;
+- manual bounded correction after automatic trace.
+
+Acceptance should prioritize contour completeness, topology, editability and correction cost rather than only visual similarity.
+
+### 2. Editable Path + Expressive Stroke
+
+Geometry and visual stroke must remain separate.
+
+```text
+Path Geometry
++
+Stroke Style
+```
+
+Required direction:
+
+- node/handle editing;
+- local reshape;
+- simplify/refine;
+- open/closed path integrity;
+- stroke width and profile;
+- expressive brush/stroke appearance;
+- changing stroke appearance must not destroy editable path geometry.
+
+### 3. Multi-Contour Composition
+
+Multiple extracted subjects must be usable together in one INK document.
+
+Required direction:
+
+- import/extract multiple references;
+- keep stable source/path identity;
+- Layer / Group / Frame organization;
+- move / scale / rotate;
+- z-order;
+- duplicate;
+- crop/mask boundary where appropriate;
+- composition without flattening source paths.
+
+### 4. Repaint + Material
+
+Closed path regions must support new visual treatment independent of the original image.
+
+Required direction:
+
+- solid fill;
+- gradient/pattern-ready structure;
+- material/effect attachment;
+- INK natural-media/material compatibility where structurally appropriate;
+- fill/material changes remain non-destructive to contour geometry.
+
+## Human-AI collaboration model
+
+### Human
+
+- selects references and desired subject;
+- judges visual completeness;
+- performs or approves local corrections;
+- composes and directs artistic intent;
+- accepts/rejects CHAT proposals.
+
+### CHAT
+
+- understands the reference and creative intent;
+- identifies extraction targets;
+- inspects path/document structure;
+- detects likely omissions or unwanted regions;
+- proposes bounded modifications;
+- translates natural-language requests into structured edit tasks;
+- compares revisions and discusses alternatives.
+
+### INK Cloud
+
+- owns the authoritative editable document;
+- displays reference and extracted geometry together;
+- executes supported structured edits;
+- preserves History and Revision;
+- exposes document state to CHAT through a bounded collaboration contract.
+
+## Development sequence
+
+### Phase 0 — Extraction Benchmark + Workflow Contract
+
+Purpose: determine the best extraction pipeline before building the Cloud workflow around the wrong tracing method.
+
+Deliverables:
+
+- representative reference-image benchmark set;
+- extraction quality criteria;
+- comparison of candidate tracing pipelines;
+- contour completeness/topology/editability measurements;
+- correction-cost observations;
+- recommended extraction architecture;
+- Reference → Extract → Path data contract;
+- decision on which operations are shared-core and which are workspace adapters.
+
+No broad Cloud platform work.
+
+Gate:
+
+`EXTRACTION_PIPELINE_SELECTED`
+
+### Phase 1 — Reference / Extract / Path Minimum Vertical Slice
+
+Build the smallest usable slice:
+
+```text
+Reference
+→ Extract
+→ editable Path
+```
+
+Required:
+
+- reference image import;
+- target/mask boundary;
+- trace execution;
+- overlay comparison;
+- editable vector path output;
+- History;
+- save/load;
+- deterministic diagnostics.
+
+Gate:
+
+`REFERENCE_TO_EDITABLE_PATH_WORKS`
+
+### Phase 2 — Path Editing + Expressive Stroke
+
+Build:
+
+```text
+Path
+→ Edit
+→ Stroke
+```
+
+Required:
+
+- node/handle editing;
+- local correction;
+- simplify/refine;
+- expressive stroke assignment;
+- stroke/geometry separation;
+- undo/redo and serialization.
+
+Gate:
+
+`EDITABLE_PATH_AND_STROKE_WORKS`
+
+### Phase 3 — Multi-Contour Composition
+
+Build:
+
+```text
+Path A + Path B + Path C
+→ Compose
+```
+
+Required:
+
+- multiple source references;
+- multiple extracted paths;
+- Layer/Group/Frame organization;
+- transform/z-order/duplicate;
+- source identity retention;
+- composition save/load.
+
+Gate:
+
+`MULTI_CONTOUR_COMPOSITION_WORKS`
+
+### Phase 4 — Repaint + Material
+
+Build:
+
+```text
+Compose
+→ Repaint
+```
+
+Required:
+
+- closed-region fill;
+- color replacement;
+- material/effect attachment boundary;
+- non-destructive geometry retention;
+- compatibility with existing INK material/render capabilities where possible.
+
+Gate:
+
+`REPAINT_MATERIAL_WORKS`
+
+### Phase 5 — CHAT Review + Structured Edit Tasks
+
+Build:
+
+```text
+INK document
+→ CHAT inspection/discussion
+→ bounded edit proposal
+→ user approval
+→ structured mutation
+```
+
+Required:
+
+- document-state summary for CHAT;
+- stable object/path references;
+- bounded edit-command schema;
+- preview/proposal boundary;
+- approval before destructive/high-impact changes;
+- History integration;
+- failure diagnostics.
+
+Gate:
+
+`CHAT_BOUNDED_EDIT_LOOP_WORKS`
+
+### Phase 6 — Revision Closure
+
+Complete:
+
+```text
+Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
+```
+
+Required:
+
+- revision snapshots/envelopes;
+- before/after comparison metadata;
+- restore/reopen;
+- CHAT discussion tied to stable revision identity;
+- no document flattening.
+
+Gate:
+
+`CREATIVE_LOOP_V1_COMPLETE`
+
+## What is deliberately deferred
+
+The first creative loop does not require:
+
+- general-purpose team administration;
+- broad account system;
+- multiplayer cursors/presence;
+- comments platform;
+- generic dashboard;
+- large plugin marketplace;
+- complete Figma-equivalent UI;
+- full component/variant ecosystem;
+- full Auto Layout UI;
+- broad project-management features.
+
+These are added only when a real creative workflow needs them.
+
+## Shared-core rule
+
+Whenever a capability is fundamentally part of editing or the document model, implement it in the shared INK core/editor domain so both:
+
+- portable `INK.html`;
+- INK Cloud
+
+can eventually consume it.
+
+Cloud-only transport/session/service concerns remain adapters.
+
+The creative-loop plan must not create a second vector engine, History engine, hierarchy, transform system or renderer.
+
+## Portable INK checkpoint
+
+After the first Cloud adapter/workspace boundary is proven, perform a controlled Portable Baseline Integration to verify that the evolved shared core can still be packaged toward a single `INK.html`.
+
+This checkpoint is validation of shared-core integrity, not a requirement to freeze Cloud development.
+
+## Current authorization state
+
+```text
+PRE_CLOUD_CORE_READY = YES
+PRIMARY_CREATIVE_GOAL = REFERENCE_TO_REVISION_CLOSED_LOOP
+DEVELOPMENT_PLAN = CREATED
+DISCUSSION_HOLD = ACTIVE
+CLOUD_IMPLEMENTATION = NOT_AUTHORIZED
+NEXT_WORK_ORDER = NOT_ISSUED
+```
+
+The next step is to discuss/refine this plan, especially Phase 0 extraction benchmark scope and acceptance criteria, before issuing the first implementation Work Order.
