@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-009 / READY_TO_START`
+STATUS: `INK-CLOUD-009 / PHASE_A_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -49,4 +49,16 @@ Reuse existing hierarchy, transform, History, Path Editing and Expressive Stroke
 
 ## Start state
 
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+`PHASE_A_COMPLETE / BEGIN_PHASE_B`
+
+## Checkpoint A — multi-source identity contract
+
+Implementation checkpoint: `74e02f8c824700cd11f703b0b0bdabcdeab27b62`.
+
+- Added shared `editor/composition.js` identity/provenance helpers and bounded diagnostics.
+- Extraction source identity is read from existing `metadata.extraction`; native/source metadata remains non-destructive.
+- Explicit composition clones receive fresh object/subpath/anchor identities while preserving original source provenance and recording duplicate lineage in metadata.
+- Added module export and service-worker shell inclusion.
+- No FORMAT_VERSION, package, main, Repaint/Material or CHAT mutation change.
+- Executed checks: implementation source review against current GitHub branch. Node/static regression execution is scheduled for Phase E; not yet claimed PASS.
+
