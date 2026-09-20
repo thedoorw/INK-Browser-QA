@@ -118,3 +118,23 @@ NEXT_WORK_ORDER = NOT_ISSUED
 ```
 
 The discussion may revise Cloud scope, architecture, workflow, sequencing, or product direction without reopening already accepted structural-core work unless a new structural conflict is identified.
+
+
+## Post-Cloud-start core evolution rule
+
+`PRE_CLOUD_CORE_READY = YES` means the structural foundation is stable enough to begin Cloud work. It does **not** mean the INK editor/core is feature-complete or frozen.
+
+After Cloud start, shared-core work remains expected. Examples include:
+
+- full Auto Layout / flex-grid behavior;
+- Component variants and richer Instance behavior;
+- rulers, guides and scalable snapping;
+- transform overlays and richer selection interaction;
+- text/effects;
+- vector/editor refinements;
+- rendering/performance work;
+- serialization/migration extensions required by new shared capabilities.
+
+These should normally be implemented as shared INK core/editor capabilities so both Portable/Web INK and INK Cloud benefit.
+
+Cloud-only transport/service concerns remain outside the shared core where possible.
