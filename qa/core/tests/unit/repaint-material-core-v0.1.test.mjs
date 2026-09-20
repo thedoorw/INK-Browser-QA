@@ -129,6 +129,7 @@ test('repaint/material survives native file roundtrip with provenance, expressiv
   }, { refs: [ref] });
 
   const envelope = wrapInkFile(app.doc);
+  assert.ok(envelope.extensions.includes('ink.path-material-appearance.v1'));
   const loaded = migrateDocument(unwrapInkFile(JSON.parse(JSON.stringify(envelope))));
   assert.equal(FORMAT_VERSION, 4);
   assert.equal(loaded.formatVersion, 4);
