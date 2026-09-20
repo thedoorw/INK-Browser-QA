@@ -6,6 +6,7 @@ import { normalizeSemantic } from '../semantic/semantic-model.js';
 import { stableCompositeId } from '../core/stable-id.js';
 import { normalizeSvgIds } from './svg-id-normalizer.js';
 import { expressiveStrokeMaxWidth, expressiveStrokeOpacityAt, expressiveStrokeWidthAt, normalizeExpressiveStroke } from './stroke-appearance.js';
+import { normalizePathMaterialAppearance } from './paint-appearance.js';
 
 const pc = globalThis.polygonClipping;
 const ID = () => `v_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 9)}`;
@@ -46,8 +47,8 @@ export function createAnchor(x, y, incoming=null, outgoing=null, options={}) {
   return { id:options.id||ID(), x:finite(x), y:finite(y), in:incoming ? {x:finite(incoming.x),y:finite(incoming.y)} : {x:0,y:0}, out:outgoing ? {x:finite(outgoing.x),y:finite(outgoing.y)} : {x:0,y:0}, mode:options.mode||'corner' };
 }
 
-export function createPath({id=ID(),name='Path',subpaths=[],fill='#d9828b',stroke='#5d3138',strokeWidth=1.5,fillRule='evenodd',gradient=null,matrix=identity(),opacity=1,blendMode='source-over',dash=[],dashOffset=0,lineCap='round',lineJoin='round',miterLimit=4,clipPath=null,mask=null,expressiveStroke=null,metadata={}}={}) {
-  return { id, type:'path', name, matrix:[...matrix], opacity, blendMode, fill, stroke, strokeWidth, fillRule, gradient:gradient?clone(gradient):null, dash:[...dash], dashOffset:finite(dashOffset), lineCap, lineJoin, miterLimit:Math.max(1,finite(miterLimit)||4), clipPath:clipPath?clone(clipPath):null, mask:mask?clone(mask):null, expressiveStroke:normalizeExpressiveStroke(expressiveStroke,{color:stroke,width:strokeWidth}), subpaths:subpaths.map((s,index)=>({id:s.id||`${id}_s${index}`,closed:s.closed!==false,role:s.role||'outer',anchors:(s.anchors||[]).map(a=>createAnchor(a.x,a.y,a.in,a.out,{id:a.id,mode:a.mode}))})), metadata:clone(metadata) };
+export function createPath({id=ID(),name='Path',subpaths=[],fill='#d9828b',stroke='#5d3138',strokeWidth=1.5,fillRule='evenodd',gradient=null,matrix=identity(),opacity=1,blendMode='source-over',dash=[],dashOffset=0,lineCap='round',lineJoin='round',miterLimit=4,clipPath=null,mask=null,expressiveStroke=null,materialAppearance=null,metadata={}}={}) {
+  return { id, type:'path', name, matrix:[...matrix], opacity, blendMode, fill, stroke, strokeWidth, fillRule, gradient:gradient?clone(gradient):null, dash:[...dash], dashOffset:finite(dashOffset), lineCap, lineJoin, miterLimit:Math.max(1,finite(miterLimit)||4), clipPath:clipPath?clone(clipPath):null, mask:mask?clone(mask):null, expressiveStroke:normalizeExpressiveStroke(expressiveStroke,{color:stroke,width:strokeWidth}), materialAppearance:normalizePathMaterialAppearance(materialAppearance,{fill,stroke}), subpaths:subpaths.map((s,index)=>({id:s.id||`${id}_s${index}`,closed:s.closed!==false,role:s.role||'outer',anchors:(s.anchors||[]).map(a=>createAnchor(a.x,a.y,a.in,a.out,{id:a.id,mode:a.mode}))})), metadata:clone(metadata) };
 }
 
 export function addAnchor(path,subpathIndex,index,anchor){const sub=path?.subpaths?.[subpathIndex];if(!sub)throw new Error('INK_VECTOR_SUBPATH_NOT_FOUND');const next=createAnchor(anchor.x,anchor.y,anchor.in,anchor.out,{id:anchor.id,mode:anchor.mode});sub.anchors.splice(Math.max(0,Math.min(sub.anchors.length,index)),0,next);return next;}
