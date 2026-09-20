@@ -14,7 +14,7 @@ STATUS: `INK-CLOUD-013 / DEV_IN_PROGRESS / PHASE_A`
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
-| LATEST_CHECKPOINT | `PHASE_D_HARD_BENCHMARK_INTAKE_BLOCKED` |
+| LATEST_CHECKPOINT | `PHASE_E_BOUNDED_FIX_AND_REGRESSION_COMPLETE` |
 
 ## Authorized sequence
 
@@ -205,3 +205,41 @@ fixture.
 
 Per Work Order this does not block Phase E/F or invalidate the deterministic
 integrated harness.
+
+## Phase E — bounded fixes + regression
+
+Checkpoint base: `d0a13660c51d9527542b37c3b2e3b6d2a93cc2fd`
+
+One integrated defect was confirmed and bounded-fixed:
+
+- after expressive-stroke removal, `vectorObjectToSVG()` passed an absent
+  `expressiveStroke` through a normalizer whose default parameter created a
+  new default style; exported SVG therefore incorrectly retained expressive
+  attributes. The existing exporter now normalizes only a present style.
+
+No Path, document, History, Revision, CHAT, renderer or format authority was
+replaced or redesigned.
+
+Regression assertions were narrowed to the actual accepted contracts:
+
+- migration-owned additive `semanticLabel` is checked separately while all
+  pre-existing metadata/provenance remains exact;
+- `null` and absent expressive style are treated as the same canonical
+  no-style state;
+- static source tests inspect the relevant normalization/controller boundary
+  rather than unrelated helper identifiers elsewhere in the same module.
+
+Executed relevant accepted-stage + integrated tests:
+
+`48 PASS / 0 FAIL`
+
+Executed source/static/persistence contract tests:
+
+`31 PASS / 0 FAIL`
+
+Additional checks:
+
+- `node --check` changed product source and integrated harness: PASS;
+- `FORMAT_VERSION = 4`: PASS;
+- working diff under `package/`: `0`;
+- browser runtime / external USER-path QA: `DEFERRED` by Work Order.

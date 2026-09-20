@@ -293,7 +293,9 @@ test('edited path survives save/load, migration, integrity and structured SVG wi
   const loaded = migrateDocument(unwrapInkFile(JSON.parse(JSON.stringify(envelope))));
   const loadedPath = findPageObject(loaded.pages[0], beforeId).object;
   assert.deepEqual(geometry(loadedPath), beforeGeometry);
-  assert.deepEqual(loadedPath.metadata, beforeMetadata);
+  const { semanticLabel, ...loadedMetadata } = loadedPath.metadata;
+  assert.equal(semanticLabel, loadedPath.semantic.role);
+  assert.deepEqual(loadedMetadata, beforeMetadata);
   assert.equal(loadedPath.id, beforeId);
   assert.equal(loaded.formatVersion, 4);
   assert.equal(FORMAT_VERSION, 4);

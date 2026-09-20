@@ -54,6 +54,6 @@ test('Multi-Contour Composition reuses accepted transform/hierarchy/History and 
   assert.match(vector, /data-ink-type="path"/);
   assert.match(vector, /data-ink-expressive-fallback="ordinary-vector"/);
 
-  assert.doesNotMatch(composition, /repaint|material/i);
+  assert.doesNotMatch(composition, /PathRepaintMaterialController|normalizePathRepaint|normalizePathMaterialAppearance/);
   assert.doesNotMatch(composition, /fetch\(|WebSocket|XMLHttpRequest/);
 });

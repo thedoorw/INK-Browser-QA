@@ -36,8 +36,12 @@ test('Expressive Stroke is wired through shared Path/vector/History/serializatio
   assert.match(appearance, /deterministic-vector-approximation/);
   assert.match(appearance, /ordinary-vector/);
   assert.match(appearance, /BUILTIN_BRUSH_PRESETS|expressiveStrokeFromBrushPreset/);
-  assert.doesNotMatch(appearance, /subpaths\s*:/);
-  assert.doesNotMatch(appearance, /anchors\s*:/);
+  const normalizationContract = appearance.slice(
+    appearance.indexOf('export function normalizeExpressiveStroke'),
+    appearance.indexOf('export function validateExpressiveStroke')
+  );
+  assert.doesNotMatch(normalizationContract, /subpaths\s*:/);
+  assert.doesNotMatch(normalizationContract, /anchors\s*:/);
 
   assert.match(vector, /drawExpressivePathStroke/);
   assert.match(vector, /pathStrokeRenderWidth/);
@@ -55,7 +59,7 @@ test('Expressive Stroke is wired through shared Path/vector/History/serializatio
   assert.match(ink, /BUILTIN_BRUSH_PRESETS/);
   assert.match(ink, /applyPathExpressiveStrokeFromUI/);
   assert.match(ink, /clearPathExpressiveStroke/);
-  assert.match(ink, /path-expressive-stroke/);
+  assert.match(ink, /pathStrokeControls/);
 
   assert.match(serviceWorker, /src\/vector\/stroke-appearance\.js/);
   assert.match(serviceWorker, /src\/editor\/expressive-stroke\.js/);
