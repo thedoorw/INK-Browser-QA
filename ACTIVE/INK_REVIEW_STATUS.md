@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / AUTO_PROMOTION`
+STATUS: `MR_PASS / PROMOTED / RUNTIME_QA_DEFERRED`
 
 | Field | Value |
 |---|---|
@@ -8,19 +8,17 @@ STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / AUTO_PROMOTION`
 | DEV_BRANCH | `work/ink-cloud-009` |
 | REVIEW_HEAD | `044703931886269945b9092019844795e78ddf5a` |
 | DECISION | `MR_PASS` |
-| SOURCE_REVIEW | `PASS` |
 | GATE | `MULTI_CONTOUR_COMPOSITION_WORKS` |
+| PROMOTION_BRANCH | `promote/ink-cloud-009` |
+| PROMOTION_COMMIT | `6fc10bd70b687e888c678041fb276f77973fd2a1` |
+| PR | `#11 / MERGED` |
+| MAIN_PROMOTION | `d80b0c1589bb962702f857cb11a3111502509c83` |
 | FORMAT_VERSION_CHANGE | `0` |
 | PACKAGE_UPDATE | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
-| PROMOTION_POLICY | `AUTO / CONTINUOUS_ADVANCE` |
 
-Branch topology at review:
+009 is closed on main.
 
-`17 ahead / 3 behind / diverged`
+Next planned stage:
 
-Main-side divergence is governance/research only; no reviewed product-source overlap blocks clean promotion.
-
-Next action:
-
-`CLEAN_PROMOTION_FROM_CURRENT_MAIN`
+`INK-CLOUD-010 — Repaint / Material`
