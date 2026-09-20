@@ -2,6 +2,7 @@ import { deepClone, nowISO } from '../core/index.js';
 import { documentFingerprint, stableStringify } from './integrity.js';
 import { walkPageObjects } from './hierarchy.js';
 import { EXPRESSIVE_STROKE_EXTENSION } from '../vector/stroke-appearance.js';
+import { PATH_MATERIAL_APPEARANCE_EXTENSION } from '../vector/paint-appearance.js';
 
 export const FILE_ENVELOPE_SCHEMA = 'INK-FILE-ENVELOPE';
 export const FILE_ENVELOPE_VERSION = '1.0';
@@ -18,6 +19,7 @@ export function declaredDocumentExtensions(document) {
     const objects = walkPageObjects(page);
     if (objects.some(({ object }) => object.layout !== undefined || object.layoutItem !== undefined)) found.add('ink.layout.v1');
     if (objects.some(({ object }) => object.type === 'path' && object.expressiveStroke != null)) found.add(EXPRESSIVE_STROKE_EXTENSION);
+    if (objects.some(({ object }) => object.type === 'path' && object.materialAppearance != null)) found.add(PATH_MATERIAL_APPEARANCE_EXTENSION);
   }
   return [...found].sort();
 }
