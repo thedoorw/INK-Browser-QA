@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-011 / DEVELOPMENT_AUTHORIZED / ACTIVE`
+STATUS: `INK-CLOUD-012 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-011` |
-| DEV_BRANCH | `work/ink-cloud-011` |
+| CURRENT_TASK_ID | `INK-CLOUD-012` |
+| DEV_BRANCH | `work/ink-cloud-012` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / CHAT_REVIEW_STRUCTURED_EDIT` |
+| NEXT_STAGE | `DEV_WORK / REVISION_CLOSURE` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -494,3 +494,46 @@ Target gate:
 `CHAT_BOUNDED_EDIT_LOOP_WORKS`
 
 Core collaboration semantics must remain viable with static hosting + browser-local execution. Remote AI/services may be optional adapters only.
+
+
+## INK-CLOUD-011 MR review and promotion
+
+Reviewed exact DEV HEAD:
+
+`1ea7cf0c4fb0fb892b96cdedfa25a77e4517a3f2`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate accepted:
+
+`CHAT_BOUNDED_EDIT_LOOP_WORKS`
+
+Clean promotion:
+
+- branch: `promote/ink-cloud-011`
+- PR: `#13 / MERGED`
+- main promotion: `680d465ffcc05a47da8fc39f0ad68b2647807864`
+
+## INK-CLOUD-012 authorization
+
+Current objective:
+
+```text
+accepted structured document
+→ stable Revision identity
+→ snapshot / before-after metadata
+→ restore / reopen
+→ CHAT revision binding
+```
+
+Branch:
+
+`work/ink-cloud-012`
+
+Target gate:
+
+`CREATIVE_LOOP_V1_COMPLETE`
+
+Revision semantics must remain static-hosted + browser-local and reuse existing document/file-envelope/History architecture.
