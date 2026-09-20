@@ -70,3 +70,14 @@ ImageTracerJS 1.2.6 licensed baseline converts deterministic raster/hole fixture
 OpenCV.js injected contour/hierarchy adapter and VTracer injected converter boundary added.
 Actual engineering suite: 5 tests passed. OpenCV.js and VTracer execution pending dependency probe/benchmark.
 No new rendering, transform or History engine.
+
+## Phase C — Reference → editable Path vertical slice
+
+Previous checkpoint: `b97cdd436eaa33a5aa3078e3384ea6dfbfc96ea0`.
+Minimal controls installed through shared INK startup. Native image + Path objects
+commit in one existing scoped History operation; no schema/renderer change.
+Async stale-document / locked target / pending History / singular transform guards.
+Bounded anchor correction delegates to native moveAnchor; overlay adjusts image opacity.
+8 extraction engineering tests passed, including undo/redo, save/load migration,
+InkStore memory fallback, SVG export and repeated import identity uniqueness.
+Browser decode/Canvas/pointer/IndexedDB remain RUNTIME_QA_DEFERRED.
