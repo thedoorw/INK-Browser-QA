@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-010 / DEVELOPMENT_AUTHORIZED / ACTIVE`
+STATUS: `INK-CLOUD-011 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-010` |
-| DEV_BRANCH | `work/ink-cloud-010` |
+| CURRENT_TASK_ID | `INK-CLOUD-011` |
+| DEV_BRANCH | `work/ink-cloud-011` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / REPAINT_MATERIAL` |
+| NEXT_STAGE | `DEV_WORK / CHAT_REVIEW_STRUCTURED_EDIT` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -450,3 +450,47 @@ Branch:
 Target gate:
 
 `REPAINT_MATERIAL_WORKS`
+
+
+## INK-CLOUD-010 MR review and promotion
+
+Reviewed DEV HEAD:
+
+`4fabf00e78ae46450a36eb8cf7bedb8ef80b2748`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate accepted:
+
+`REPAINT_MATERIAL_WORKS`
+
+Clean promotion:
+
+- branch: `promote/ink-cloud-010`
+- PR: `#12 / MERGED`
+- main merge: `cd989478637d11f79e60d101a43066042036da6c`
+
+## INK-CLOUD-011 authorization
+
+Current objective:
+
+```text
+INK document
+→ CHAT-readable structured summary
+→ bounded edit proposal
+→ explicit approval boundary
+→ structured mutation
+→ History
+```
+
+Branch:
+
+`work/ink-cloud-011`
+
+Target gate:
+
+`CHAT_BOUNDED_EDIT_LOOP_WORKS`
+
+Core collaboration semantics must remain viable with static hosting + browser-local execution. Remote AI/services may be optional adapters only.
