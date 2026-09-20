@@ -3,6 +3,7 @@
 
 export const PATH_MATERIAL_APPEARANCE_FORMAT = 'INK-PATH-MATERIAL-APPEARANCE';
 export const PATH_MATERIAL_APPEARANCE_VERSION = 1;
+export const PATH_MATERIAL_APPEARANCE_EXTENSION = 'ink.path-material-appearance.v1';
 
 const clone = value => value == null ? value : JSON.parse(JSON.stringify(value));
 const own = (value, key) => Object.prototype.hasOwnProperty.call(value || {}, key);
