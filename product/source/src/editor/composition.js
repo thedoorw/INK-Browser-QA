@@ -45,7 +45,7 @@ function freshId(factory) {
   return value;
 }
 
-function regenerateObjectIdentities(object, { idFactory, parentId = null, lineageRootId = null, duplicatedFromObjectId = null } = {}) {
+export function regenerateCompositionIds(object, { idFactory = uid, parentId = null, lineageRootId = null, duplicatedFromObjectId = null } = {}) {
   if (!object || typeof object !== 'object') fail('OBJECT_REQUIRED');
   const previousId = object.id || null;
   object.id = freshId(idFactory);
@@ -78,7 +78,7 @@ function regenerateObjectIdentities(object, { idFactory, parentId = null, lineag
       const childRoot = child?.type === 'path'
         ? (text(child?.metadata?.composition?.sourceObjectId) || child?.id || null)
         : null;
-      regenerateObjectIdentities(child, {
+      regenerateCompositionIds(child, {
         idFactory,
         parentId: object.id,
         lineageRootId: childRoot,
@@ -93,7 +93,7 @@ export function cloneCompositionObject(object, { idFactory = uid, parentId = nul
   if (!object || typeof object !== 'object') fail('OBJECT_REQUIRED');
   const originalId = object.id || null;
   const copy = deepClone(object);
-  return regenerateObjectIdentities(copy, {
+  return regenerateCompositionIds(copy, {
     idFactory,
     parentId,
     lineageRootId: text(object?.metadata?.composition?.sourceObjectId) || originalId,
