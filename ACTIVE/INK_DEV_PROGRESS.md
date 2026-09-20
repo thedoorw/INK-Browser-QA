@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_D_COMPLETE`
+STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_E_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -131,3 +131,42 @@ Evidence source:
 - `qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs`
 
 Next: `BEGIN_PHASE_E / REGRESSION_EVIDENCE`
+
+
+## Checkpoint — Phase E
+
+Status: `COMPLETE / SOURCE_STATIC_EVIDENCE_RECORDED`
+
+Evidence checkpoint: `82a9cb813ae749188ebfd6d00ff78f8e2880c447`.
+
+Follow-up consistency fixes:
+- `1e320087455272cded60cbc588e75c52fdf1cc56` — omit absent `materialAppearance` on newly created Paths;
+- `d3e0d3dce9e5ddd22dfc7a0675213685a6476a9e` — assert composition z-order invariance.
+
+Executed and PASS:
+- exact committed source/test syntax parsing for new/touched repaint/material modules and regression files;
+- exact committed appearance normalization/fallback V8 harness;
+- exact committed repaint/material controller V8 harness for multi-Path mutation, deterministic no-op, expressive-stroke retention, material assignment, locked and busy-History guards;
+- exact committed file-envelope wrap/inspect/unwrap harness with `ink.path-material-appearance.v1`;
+- source architecture checks for FORMAT_VERSION=4, existing History reuse, no raster/network controller path, model normalization, renderer reuse, explicit structured-SVG fallback and service-worker wiring;
+- post-fix `createPath()` harness proving absent material is omitted and supplied material is retained.
+
+Committed regression suites cover:
+- three-Path independent repaint/material;
+- geometry/transform/hierarchy/z-order/provenance invariance;
+- independent geometry vs appearance History undo/redo;
+- save/load and extension declaration;
+- expressive-stroke retention;
+- structured SVG ordinary-vector fallback;
+- locked/hidden/stale/singular/busy-History guards.
+
+Not executed / not claimed PASS:
+- full Node test runner: exact-branch clone failed because execution environment could not resolve `github.com`;
+- Browser Runtime QA: `DEFERRED`;
+- hosted Actions: not used;
+- rose-window benchmark: prohibited and not run.
+
+Evidence:
+`qa/core/evidence/INK_CLOUD_010_STATIC_CHECKS.txt`
+
+Next: `BEGIN_PHASE_F / REPORT_HANDOFF`
