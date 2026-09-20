@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-007 / DEV_IN_PROGRESS / ENGINE_FIRST`
+STATUS: `INK-CLOUD-007 / ENGINE_IMPLEMENTED / FINISH_REPORT_AND_HANDOFF`
 
 | Field | Value |
 |---|---|
@@ -20,7 +20,7 @@ STATUS: `INK-CLOUD-007 / DEV_IN_PROGRESS / ENGINE_FIRST`
 2. Phase B — Direct extraction implementations
 3. Phase C — Reference → editable INK Path vertical slice
 4. Phase D — Reusable structure-aware extraction layer
-5. Phase E — Hard rose-window benchmark
+5. Phase E — Hard rose-window benchmark — DEFERRED BY USER
 6. Phase F — Selection report + DEV handoff
 
 ## Critical correction
@@ -91,3 +91,22 @@ Fourfold engineering raster test passed through actual tracing → Repeat →
 serialization/integrity. SAM remains optional mask input, inference NOT TESTED.
 Accepted regression attempt exposed absent historical Git object needed by one
 pre-task migration test; resolving source acquisition, not claiming that check PASS.
+
+
+## User benchmark deferral
+
+`HARD_BENCHMARK = DEFERRED_BY_USER_DECISION`
+
+Do not execute Phase E in this task.
+
+Remaining authorized work:
+
+1. resolve or accurately record feasible regression evidence;
+2. create `research/INK_EXTRACTION_PIPELINE_SELECTION_REPORT_v0.1.md`;
+3. explicitly mark SAM/OpenCV/VTracer/rose-window items tested vs not tested;
+4. record Runtime QA debt;
+5. record exact final branch HEAD;
+6. set `DEV_HANDOFF / MR_REVIEW_REQUIRED`;
+7. STOP.
+
+Do not begin Path Editing / Expressive Stroke inside INK-CLOUD-007.
