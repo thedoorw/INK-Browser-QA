@@ -1,4 +1,5 @@
 import { inspectComponents } from './components.js';
+import { inspectLayouts } from './layout.js';
 import { deepClone, nowISO } from '../core/index.js';
 
 function canonicalize(value) {
@@ -170,6 +171,7 @@ export function inspectDocument(document, {
 
   if (document && !stats.structuralCycles && !stats.duplicateOwnership) {
     for (const item of inspectComponents(document)) issue(warnings, item.code, '$.components', 'Component reference diagnostic', item);
+    for (const item of inspectLayouts(document)) issue(warnings, item.code, '$.layout', 'Layout / constraint diagnostic', item);
   }
 
   if (stats.objects > maxObjects) issue(warnings, 'object-budget', '$', `物件數 ${stats.objects} 超過建議上限 ${maxObjects}`);
