@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-008A / MR_PASS / PROMOTION_AWAITING_USER`
+STATUS: `INK-CLOUD-008B / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-008A` |
-| DEV_BRANCH | `work/ink-cloud-008a` |
-| DEV_BRANCH_HEAD | `1cbc69b56e060edc8523fdbfdcdd34417379b3db` |
-| DEV_HANDOFF | `ACCEPTED` |
-| MR_REVIEW | `MR_PASS` |
+| CURRENT_TASK_ID | `INK-CLOUD-008B` |
+| DEV_BRANCH | `work/ink-cloud-008b` |
+| DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
+| DEV_HANDOFF | `NOT_YET` |
+| MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `USER_PROMOTION_DECISION` |
+| NEXT_STAGE | `DEV_WORK / EXPRESSIVE_STROKE` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -288,3 +288,48 @@ Branch topology at review:
 `28 ahead / 0 behind`
 
 Promotion requires explicit user approval.
+
+
+## Continuous advance authorization
+
+User direction:
+
+`MR_PASS → promote → continue`
+
+Do not pause for a separate promotion decision after an MR_PASS on bounded creative-loop work.
+
+Hard STOP / MR_REVISE / MR_HOLD conditions still require review before progression.
+
+## INK-CLOUD-008A promotion
+
+PR `#9` merged.
+
+Promotion commit:
+
+`70d515b19d2463614caa7f8d7e4c8207c343b34f`
+
+Main merge commit:
+
+`a99c3afb20b6f483ef28a84d32b993fb5e276e95`
+
+Gate accepted:
+
+`EDITABLE_PATH_CORE_WORKS`
+
+## INK-CLOUD-008B authorization
+
+Current objective:
+
+```text
+editable Path Geometry
++
+independent Expressive Stroke Appearance
+```
+
+Branch:
+
+`work/ink-cloud-008b`
+
+Full Phase-2 target gate:
+
+`EDITABLE_PATH_AND_STROKE_WORKS`
