@@ -14,7 +14,7 @@ STATUS: `INK-CLOUD-013 / DEV_IN_PROGRESS / PHASE_A`
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
-| LATEST_CHECKPOINT | `PHASE_A_VALIDATION_BASELINE` |
+| LATEST_CHECKPOINT | `PHASE_A_INTEGRATED_FIXTURE_COMPLETE` |
 
 ## Authorized sequence
 
@@ -99,3 +99,31 @@ window reference. Repository search found the benchmark specification but no
 canonical rose-window binary. Phase D must therefore record:
 
 `HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE`
+
+## Phase A — integrated deterministic fixture
+
+Checkpoint base: `e9130bfdc643a7854fd67fef006709f40312a8f0`
+
+Added:
+
+- `qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs`
+
+The deterministic non-image contour fixture now traverses:
+
+```text
+Extract → editable Path → anchor Edit → Expressive Stroke
+→ Multi-Contour Compose → Repaint / Material
+→ CHAT proposal / approval / mutation → Revision
+```
+
+The fixture runs twice and proves equal final document and Revision
+fingerprints. It does not require browser image decoding, a remote service, a
+second document engine, or a second History/Revision authority.
+
+Executed:
+
+```text
+node --test qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs
+```
+
+Result: `3 PASS / 0 FAIL`.
