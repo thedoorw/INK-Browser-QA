@@ -1,0 +1,82 @@
+INK-CLOUD-013 — Integrated Creative Loop Validation v0.1
+Evidence date: 2026-09-20
+Branch: work/ink-cloud-013
+Checked source checkpoint: 3786ee99b69c94eee37eb1e2f970d98ee9a70266
+
+INTEGRATED / ACCEPTED-STAGE UNIT REGRESSION
+Command scope:
+- extraction-core-v0.1
+- extraction-structure-v0.1
+- path-editing-core-v0.1
+- expressive-stroke-core-v0.1
+- multi-contour-composition-core-v0.1
+- repaint-material-core-v0.1
+- repaint-material-composition-v0.1
+- chat-bounded-edit-core-v0.1
+- revision-closure-core-v0.1
+- revision-chat-binding-v0.1
+- integrated-creative-loop-v0.1
+
+Result:
+tests 48
+pass 48
+fail 0
+cancelled 0
+skipped 0
+todo 0
+
+SOURCE / STATIC / PERSISTENCE CONTRACT REGRESSION
+Command scope:
+- extraction-workspace-v0.1
+- path-editing-source-v0.1
+- expressive-stroke-source-v0.1
+- multi-contour-composition-source-v0.1
+- repaint-material-source-v0.1
+- chat-bounded-edit-source-v0.1
+- revision-closure-source-v0.1
+- layout-persistence-contract-v0.1
+
+Result:
+tests 31
+pass 31
+fail 0
+cancelled 0
+skipped 0
+todo 0
+
+ADDITIONAL STATIC CHECKS
+- node --check product/source/src/vector/vector-core.js: PASS
+- node --check qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs: PASS
+- git diff --check: PASS
+- FORMAT_VERSION = 4: PASS
+- package diff: 0
+- main merge: 0
+
+INTEGRATED CONTRACT RESULTS
+- deterministic full-loop document fingerprint: PASS
+- deterministic Revision identity/fingerprint: PASS
+- object/subpath/anchor identity retention: PASS
+- extraction provenance retention: PASS
+- post-compose/repaint/CHAT/restore Path editability: PASS
+- appearance/geometry separation: PASS
+- nested composition hierarchy retention: PASS
+- structural CHAT stale-target rejection: PASS
+- cross-Revision CHAT stale-revision rejection: PASS
+- History/Revision reset boundary and resumed undo/redo: PASS
+- file-envelope at extraction checkpoint: PASS
+- file-envelope + InkStore after CHAT: PASS
+- file-envelope after Revision restore: PASS
+
+BOUNDED FIX
+- vectorObjectToSVG no longer synthesizes a default expressive stroke when the
+  Path expressiveStroke field is null/absent.
+
+HARD BENCHMARK
+HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE
+The registered rose-window binary is absent. The available external JPEG is a
+horse ink painting and was not substituted or added to the repository.
+
+DEFERRED
+- browser runtime / external USER-path QA: DEFERRED by Work Order
+- package rebuild/update: PROHIBITED / NOT RUN
+- main merge: PROHIBITED / NOT RUN
