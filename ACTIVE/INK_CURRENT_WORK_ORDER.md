@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `AUTHORIZED / DEV_READY`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 ## Control
 
@@ -14,8 +14,8 @@ STATUS: `AUTHORIZED / DEV_READY`
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `DEV_AUTHORIZED` |
-| NEXT_AUTHORIZED_ACTION | `DEV_IMPLEMENTATION` |
+| CURRENT_GATE | `MR_PASS` |
+| NEXT_AUTHORIZED_ACTION | `USER_PROMOTION_DECISION_REQUIRED` |
 | CLOUD_START_GATE | `BLOCKED` |
 | RUNTIME_QA | `DEFERRED` |
 
@@ -374,3 +374,33 @@ structural-core stabilization
 → explicit user approval
 → first Cloud Work Order
 ```
+
+
+## MR Pass — Component / Instance Data Model
+
+MR reviewed final handoff HEAD:
+
+`315d4ac2b33894630c0d1a67333fc40acbc145e9`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Accepted source-level foundation:
+
+- stable Component definition identity;
+- stable source-node identity;
+- linked atomic Instance model;
+- bounded serialized opacity override;
+- deterministic detach;
+- broken-reference / cycle diagnostics;
+- existing History integration;
+- native serialization / integrity;
+- resolved structural SVG;
+- no format-version change.
+
+DEV remains stopped.
+
+Main promotion requires user approval.
+
+Cloud implementation remains blocked; this PASS does not mark `PRE_CLOUD_CORE_READY`.
