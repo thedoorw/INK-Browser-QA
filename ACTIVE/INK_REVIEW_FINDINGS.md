@@ -2,46 +2,40 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-011`
+TASK: `INK-CLOUD-012`
 
-REVIEWED_HEAD: `1ea7cf0c4fb0fb892b96cdedfa25a77e4517a3f2`
+REVIEWED_HEAD: `474f4e037b5eb351337258e77ce01fceeefccf0b`
 
 ## Decision
 
 `MR_PASS`
 
-No blocking source/contract finding remains for the bounded CHAT Review + Structured Edit Tasks scope.
+No blocking source/contract finding remains for Revision Closure v0.1.
 
 ## Findings
 
-- CHAT-facing state summary is deterministic and bounded and uses stable page/layer/object references.
-- Proposal, approval and rejection remain document/History-neutral.
-- Execution requires explicit browser-local approval state plus matching approval token.
-- Targets are revalidated for missing/stale/locked/hidden/unexposed/singular state before execution.
-- Supported operations are allowlisted; no arbitrary eval/script surface was introduced.
-- Repaint/material routes reuse `PathRepaintMaterialController`.
-- Translation reuses the existing composition/transform route.
-- Simplify/refine reuse `PathEditController`.
-- Existing target-scoped History remains authoritative for committed mutation and rollback.
-- Static-hosting + browser-local core remains viable; no mandatory backend, WebSocket, XHR or remote AI dependency was added.
+- Stable versioned Revision identity and structured snapshot record are implemented.
+- Revision snapshots reuse the accepted INK file-envelope/document integrity path.
+- Capture is document-mutation-neutral and equivalent capture is deterministic no-op.
+- Before/after comparison metadata records bounded changed-object and structure/geometry/appearance fingerprints.
+- Restore/reopen validates integrity and preserves structured editable INK state.
+- Failed/corrupt restore is atomic and restores document, History and editor state.
+- Successful restore establishes an explicit `RESET_TO_REVISION` History boundary instead of a second History engine.
+- CHAT state/proposal/result can bind to Revision identity and stale Revision execution is rejected.
+- Static-hosted + browser-local semantics remain intact; no mandatory remote service is introduced.
 - `FORMAT_VERSION = 4`.
-- Package, migration, file-format and Revision-closure scope were not expanded.
+- Package mutation = 0.
 
 ## Non-blocking debt
 
-- Full repository Node runner was not executed in the DEV environment because exact checkout/network resolution failed.
-- Browser/runtime interaction and service-worker lifecycle QA remain deferred.
-- Initial CHAT operation vocabulary is intentionally bounded.
-- Revision snapshot/restore closure remains the next planned stage.
+- Full repository Node runner was not executed in the connector-only DEV environment.
+- Browser/runtime USER-path QA remains deferred.
+- Integrated end-to-end creative-loop validation remains the next stage.
 
 ## Promotion
 
-Branch topology at review:
-
-`20 ahead / 0 behind`
-
-Clean promotion completed through PR `#13`, excluding branch-local `ACTIVE/INK_DEV_PROGRESS.md`.
+Clean promotion completed through PR `#14`.
 
 Main promotion:
 
-`680d465ffcc05a47da8fc39f0ad68b2647807864`
+`036a6bfb666627ddc52c9a611d4c84b45c504550`
