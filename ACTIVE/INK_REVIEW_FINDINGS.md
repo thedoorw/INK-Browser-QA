@@ -2,47 +2,50 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-007`
+TASK: `INK-CLOUD-008A`
 
-REVIEWED_HEAD: `b006a3a7dadc5d261e3dda5b377f61ec13221ddb`
+REVIEWED_HEAD: `1cbc69b56e060edc8523fdbfdcdd34417379b3db`
+
+CANDIDATE_CODE_QA_HEAD: `aa0d37a52753a2b3ea1a5a00b914a4753db0c37a`
 
 ## Decision
 
 `MR_PASS`
 
-No blocking source/contract finding remains for the bounded engine-first scope.
+No blocking source/contract finding remains for the bounded Path Editing Core scope.
 
 ## Findings
 
-- Extraction is implemented as an adapter/input domain; authoritative geometry remains the existing INK Path model.
-- The extraction core defines bounded raster/mask/vector contracts, deterministic provenance, geometry diagnostics, limits and cancellation/failure guards.
-- ImageTracerJS 1.2.6 is the only direct vectorization runtime actually exercised in this task; OpenCV.js, VTracer and SAM remain explicitly unverified runtime candidates.
-- Reference → editable Path uses the existing History engine and commits reference image + paths atomically.
-- Undo/redo, save/load, migration, InkStore contract and structured SVG were exercised by recorded branch tests.
-- Stale document, locked target, busy History and singular transform guards are present before mutation.
-- Repeated extraction uses fresh object/node identities.
-- Structure-aware support is reusable radial evidence + sector/prototype + native Repeat/Transform; no rose-window-specific constants were found in product source.
-- The structure score is correctly treated as evidence only, not semantic recognition or benchmark proof.
-- Existing vector, hierarchy, transform, History and renderer engines are reused; no parallel core engine was introduced.
+- `PathEditController` adds a bounded editor domain without introducing a second vector, transform, hierarchy, History or renderer engine.
+- Path editing targets existing authoritative `type: 'path'` objects by stable object identity.
+- Selection-only edit state is non-mutating and does not create History entries.
+- Busy-History, stale document/page, hidden/locked target and singular-transform guards are present.
+- Anchor movement, Bézier handle movement and corner/smooth/symmetric modes reuse existing vector primitives.
+- Multi-anchor mutation is committed through existing scoped History.
+- Mutation failures are rolled back by the existing History manager's scoped cancel/restore behavior.
+- Path object ID and metadata/provenance are explicitly guarded against accidental mutation.
+- Segment insertion uses exact De Casteljau subdivision and preserves the original curve geometry.
+- Anchor deletion protects minimum viable open/closed topology.
+- Open/close transitions preserve subpath roles and existing Path identity.
+- Simplify/refine are bounded and deterministic; they do not rasterize or replace the Path object.
+- Existing extraction provenance survives ordinary path editing.
+- Existing renderer integration is extended to authoritative Path display and direct edit overlays; no parallel renderer was introduced.
+- Both web and standalone source shells receive the same bounded Path-edit controls.
 - `FORMAT_VERSION = 4`; no format bump was introduced.
-- No package mutation, main merge, generic Cloud backend, auth, collaboration, Compose/Repaint or Path Editing/Expressive Stroke implementation occurred.
-- Hard rose-window benchmark is explicitly `DEFERRED_BY_USER_DECISION`; no quality winner is claimed.
+- No package mutation, main merge, Expressive Stroke, Composition, Repaint, CHAT mutation or rose-window benchmark work occurred.
 
 ## Non-blocking limitations / debt
 
-- Browser file decode, Canvas/pointer behavior, visual overlay QA and IndexedDB runtime remain unverified.
-- OpenCV.js executable contour route is NOT TESTED.
-- VTracer browser/WASM bridge is NOT TESTED.
-- SAM-class inference is NOT TESTED.
-- ImageTracer baseline is luminance/binary-mask based and may be noisy on complex photographs.
-- Structure-aware heuristics currently address radial repetition, not general semantic motif understanding.
-- Historical migration/endurance regression closure is recorded BLOCKED / NOT TESTED in the active closeout environment.
-- Formal rose-window direct-vs-structure-aware benchmark remains future work.
+- Full repository Node product regression suite was authored but not executed in the DEV environment.
+- Real file-envelope/migration execution was not rerun end-to-end in the DEV environment.
+- Browser pointer interaction and visual/runtime behavior remain unverified.
+- Service-worker browser lifecycle remains unverified.
+- Simplify is intentionally conservative and not a general curve refitter.
+- Refine performs bounded exact subdivision, not artistic smoothing.
+- Direct segment hit-testing is interaction sampling only; authoritative geometry remains the existing Bézier model.
 
 ## Promotion condition
 
-The DEV branch is diverged from current main. Do not directly merge `work/ink-cloud-007`.
+The branch is currently `28 ahead / 0 behind` main, so there is no branch divergence at review time.
 
-If user authorizes promotion, create a bounded promotion branch from current main and copy only the reviewed product source, QA dependency/test files, and selection report corresponding to reviewed HEAD. Exclude stale branch-local Current Work Order / DEV progress state.
-
-Main promotion is not automatic and requires user approval.
+Promotion is still not automatic. Main promotion requires explicit user approval and must preserve the reviewed HEAD identity.
