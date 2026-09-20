@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_C_COMPLETE`
+STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_D_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -112,3 +112,22 @@ Files:
 - `product/source/service-worker.js`
 
 Next: `BEGIN_PHASE_D / COMPOSITION_INTEGRATION`
+
+
+## Checkpoint — Phase D
+
+Status: `COMPLETE / REGRESSION_EXECUTION_PENDING_PHASE_E`
+
+Checkpoint HEAD: `8c3d6a8cdec86e4f04ca41008bc81eebbd0ccacf`
+
+Composition coverage added for:
+- three independently sourced/composed Paths;
+- independent fill repaint, stroke repaint and material assignment;
+- unchanged geometry fingerprints, transforms, hierarchy/provenance and expressive stroke;
+- bounded existing material-template appearance reuse with explicit unsupported-effect diagnostics;
+- multi-selection repaint and deterministic no-op behavior.
+
+Evidence source:
+- `qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs`
+
+Next: `BEGIN_PHASE_E / REGRESSION_EVIDENCE`
