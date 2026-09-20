@@ -1,4 +1,4 @@
-# INK REVIEW EVIDENCE — INK-CLOUD-004
+# INK REVIEW EVIDENCE — INK-CLOUD-005
 
 STATUS: `MR_PASS_EVIDENCE / RUNTIME_QA_DEFERRED`
 
@@ -6,86 +6,77 @@ STATUS: `MR_PASS_EVIDENCE / RUNTIME_QA_DEFERRED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-004` |
-| DEV_BRANCH | `work/ink-cloud-004` |
-| PRIOR_REVIEW_HEAD | `479bcca83e0c375592bff6542115b971e88002c7` |
-| PASS_REVIEW_HEAD | `436c7bded529f481f22a7657f7a2cc62d43f4053` |
-| REVISION_COMMITS | `10` |
+| TASK_ID | `INK-CLOUD-005` |
+| DEV_BRANCH | `work/ink-cloud-005` |
+| REVIEW_HEAD | `315d4ac2b33894630c0d1a67333fc40acbc145e9` |
+| IMPLEMENTATION_QA_HEAD | `a40885903c2e17e910b6a57672a2be1576e5f29a` |
 | FORMAT_VERSION_CHANGE | `0` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Bounded revision diff
+## Scope reviewed
 
-Relative to the prior reviewed HEAD, the revision is limited to:
+Relative to the DEV initialization checkpoint, MR reviewed the Component/Instance implementation and bounded integration across:
 
-- `ACTIVE/INK_DEV_PROGRESS.md`
-- `product/source/src/editor/transform.js`
+- `product/source/src/document/components.js`
+- `product/source/src/document/hierarchy.js`
+- `product/source/src/document/index.js`
+- `product/source/src/document/integrity.js`
 - `product/source/src/ink.js`
-- `qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs`
-- `research/INK_TRANSFORM_BOUNDS_COORDINATE_SYSTEM_REPORT_v0.1.md`
+- `product/source/src/studio-core.js`
+- `qa/core/tests/unit/component-instance-v0.1.test.mjs`
+- retained Frame / Group / Transform regression evidence
+- `research/INK_COMPONENT_INSTANCE_DATA_MODEL_REPORT_v0.1.md`
 
-No excluded subsystem was introduced.
+## Source evidence
 
-## Source evidence reviewed
+MR directly verified:
 
-MR directly inspected:
+1. Definition authority is registry metadata referencing ordinary Frame/Group roots.
+2. Resolution clones source geometry into a disposable view and does not persist resolved children.
+3. Source root canvas placement is explicitly excluded; instance placement remains the ordinary INK local matrix.
+4. source-node identity is ordinary stable object ID and survives reorder / rename / reparent.
+5. duplicate source-node IDs fail closed.
+6. Instance-owned children are rejected.
+7. nested Instances are explicitly unsupported and rejected rather than recursively resolved.
+8. missing / duplicate / invalid definitions produce broken diagnostic results rather than silent retargeting.
+9. override application is restricted to validated opacity data.
+10. detach remaps all ordinary geometry IDs and removes Component linkage.
+11. mutation commands reject when History is already pending and otherwise use existing scoped History.
+12. broken detach / invalid placement reject before mutation.
+13. renderer, world bounds, atomic hit-test and SVG all resolve the same linked geometry path.
+14. Component documents conservatively rebuild the existing spatial index to avoid stale linked bounds.
+15. integrity reports Component diagnostics without converting broken links into structural corruption.
+16. `FORMAT_VERSION` and app version remain unchanged.
 
-- `preflightObjectMatrices()`;
-- stroke node/handle `beginSelection()` path;
-- `startSelectionTransform()`;
-- `rejectSingularInteraction()`;
-- `updateSelectionTransform()`;
-- stroke node/handle pointer-move rejection;
-- `onPointerUp()`;
-- History `begin/cancel/pending` behavior;
-- bounded regression test source;
-- updated implementation report and DEV progress.
+## DEV execution evidence
 
-## Blocking defect resolution
+Recorded branch evidence reports:
 
-Previous defect:
+- Component/current contract tests: `62/62 PASS`
+- retained compatibility tests: `29/29 PASS`
+- total Node tests: `91/91 PASS`
+- source syntax checks: `6/6 PASS`
+- `FORMAT_VERSION = 4`: PASS
+- `git diff --check`: PASS
 
-```text
-History begin
-→ inversion fails
-→ return
-→ pending History remains
-```
+The evidence log is:
 
-Current guarded sequence:
+`qa/core/evidence/INK_CLOUD_005_NODE_CHECKS.txt`
 
-```text
-preflight inversion
-→ only then History begin
-→ interaction starts
-```
+MR did not independently execute the complete Node suite; these results are treated as DEV execution evidence. MR independently reviewed the relevant source paths and test definitions.
 
-For rejection after interaction start:
+## Deferred evidence
 
-```text
-restore initial geometry
-→ History cancel
-→ interaction/draft clear
-→ no later pointer-up commit
-```
+Still deferred:
 
-This satisfies the bounded MR revision requirement at source level.
+- live browser Canvas/WebGL rendering;
+- pointer move/scale/rotate;
+- browser nested visibility/lock/opacity interaction;
+- real browser IndexedDB recovery;
+- browser project open/save;
+- browser SVG inspection;
+- GPU/tile/natural-media fidelity.
 
-## Test evidence
+Therefore:
 
-DEV reports:
-
-- exact-current-source singular/history checks: `11/11 PASS`;
-- post-revision transform/bounds regression: `10/10 PASS`.
-
-MR did not independently execute the repository Node suite and therefore treats these as DEV execution evidence, not independent MR execution.
-
-Source/static review independently confirms the control flow required by the revision.
-
-## Runtime limitation
-
-Browser-only behavior remains:
-
-`RUNTIME_QA_DEFERRED`
-
-No Runtime-verified or certified claim is made.
+`SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
