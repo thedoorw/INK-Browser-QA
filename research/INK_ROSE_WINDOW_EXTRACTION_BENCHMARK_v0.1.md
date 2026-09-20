@@ -1,6 +1,6 @@
 # INK Rose Window Extraction Benchmark v0.1
 
-STATUS: `PHASE_0_BENCHMARK_BASELINE / PLANNING_ONLY`
+STATUS: `DEFERRED HARD BENCHMARK / RETAINED FOR FUTURE ACCEPTANCE`
 
 ## Purpose
 
@@ -146,3 +146,17 @@ This image is specifically intended to test whether INK can outperform blind tra
 - local exception correction.
 
 The binary asset itself must be added to the repository benchmark fixtures by the implementation task using an authorized binary-safe path. This planning document records the canonical benchmark identity and purpose.
+
+
+## Deferral checkpoint
+
+User decision: defer execution of this benchmark while the creative-loop implementation continues.
+
+```text
+HARD_BENCHMARK = DEFERRED_BY_USER_DECISION
+REFERENCE = RETAINED
+BENCHMARK_SPEC = RETAINED
+CURRENT_IMPLEMENTATION_BLOCKER = NO
+```
+
+This benchmark is not cancelled. It remains the first designated high-complexity acceptance case for a later validation checkpoint.
