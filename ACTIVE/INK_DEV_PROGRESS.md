@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-010 / READY_TO_START`
+STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_A_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -48,3 +48,23 @@ Geometry / Composition != Paint / Material Appearance
 ## Start state
 
 `READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+
+
+## Checkpoint — Phase A
+
+Status: `COMPLETE`
+
+Checkpoint HEAD: `c8c92af47772c0a3b1f0febdb4bc5826d6a321f6`
+
+Implemented:
+- bounded `INK-PATH-MATERIAL-APPEARANCE` reference/fallback contract;
+- geometry-independent fill/stroke/opacity repaint normalization;
+- deterministic material fallback and unsupported-effect diagnostics;
+- Path create/load normalization without FORMAT_VERSION change.
+
+Files:
+- `product/source/src/vector/paint-appearance.js`
+- `product/source/src/vector/vector-core.js`
+- `product/source/src/document/model.js`
+
+Next: `BEGIN_PHASE_B / MUTATION_HISTORY`
