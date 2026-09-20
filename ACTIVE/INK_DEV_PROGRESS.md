@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008A / IN_PROGRESS / PHASE_A_COMPLETE`
+STATUS: `INK-CLOUD-008A / IN_PROGRESS / PHASE_B_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `INK-CLOUD-008A / IN_PROGRESS / PHASE_A_COMPLETE`
 | TITLE | `Path Editing Core v0.1` |
 | BRANCH | `work/ink-cloud-008a` |
 | BASE_MAIN | `1c29d4e1eee2158678b5cc351b673717fdd5c15e` |
-| LAST_CODE_CHECKPOINT | `d31cabeae2bdb3363776afdd2cb6acf2162c94f2` |
+| LAST_CODE_CHECKPOINT | `bf9c61c1b7f0606fec95e98213485527fd65eb69` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | GATE | `EDITABLE_PATH_CORE_WORKS` |
@@ -58,6 +58,26 @@ Code commits:
 
 No schema/FORMAT_VERSION change. No package/main mutation. Expressive Stroke not started.
 
+## Phase B checkpoint
+
+Status: `COMPLETE`
+
+Implemented through existing vector primitives and scoped History:
+
+- move one or multiple selected anchors;
+- direct local anchor reshape;
+- select and move incoming/outgoing Bézier handles;
+- corner / smooth / symmetric anchor modes;
+- all geometry mutations validate finite input/output;
+- Path object ID and metadata/provenance are invariant across edits;
+- no-op geometry writes rely on existing History diffing and do not create corrupt entries.
+
+Code checkpoint:
+
+- `bf9c61c1b7f0606fec95e98213485527fd65eb69` — anchor / handle / mode editing.
+
+No second vector or History engine introduced.
+
 ## QA state
 
 Phase-A source implementation reviewed against existing hierarchy/History/vector contracts.
@@ -81,4 +101,4 @@ Executable branch unit/static evidence will be added in Phase E. Browser/runtime
 
 ## Next
 
-`BEGIN_PHASE_B / ANCHOR_HANDLE_EDITING`
+`BEGIN_PHASE_C / TOPOLOGY_EDITING`
