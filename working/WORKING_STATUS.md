@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `INK-CLOUD-005 PROMOTED / NEXT_STAGE_ASSESSMENT_REQUIRED`
 
 ## Active control
 
@@ -14,7 +14,7 @@ STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 | MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `USER_PROMOTION_DECISION_REQUIRED` |
+| NEXT_STAGE | `PRE_CLOUD_CORE_ASSESSMENT_REQUIRED` |
 | CLOUD_START_GATE | `BLOCKED_UNTIL_PRE_CLOUD_CORE_READY_AND_USER_APPROVAL` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -85,3 +85,17 @@ Accepted capability:
 Main promotion is not automatic and remains pending user approval.
 
 Cloud Start Gate remains blocked.
+
+
+## INK-CLOUD-005 promotion
+
+```text
+SOURCE_REVIEW_PASS
+RUNTIME_QA_DEFERRED
+PROMOTED_TO_MAIN
+PROMOTION_COMMIT = 58b584051afe6fab8cfcd387e65f62d4e78bd4f0
+```
+
+Next action is MR assessment of the remaining pre-Cloud structural core.
+
+Cloud implementation is not yet authorized.
