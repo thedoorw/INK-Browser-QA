@@ -4,69 +4,55 @@ STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-005` |
-| AUTHORIZED_SCOPE | `COMPONENT / INSTANCE DATA MODEL FOUNDATION` |
+| CURRENT_TASK_ID | `INK-CLOUD-006` |
+| DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
+| DEV_WORK_BRANCH | `work/ink-cloud-006` |
+| BASE_BRANCH_HEAD_AT_START | `d1f908825f8419f053753b93d13a1a4ee901de91` |
+| LATEST_DEV_COMMIT | `184c74195e976526713ad549b236e13c9dac9ad7` |
 | DEV_STATE | `DEV_HANDOFF` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
-| DEV_WORK_BRANCH | `work/ink-cloud-005` |
-| BASE_BRANCH_HEAD_AT_START | `2ed1e9cbb4b77ac38b0c6798b8d75691f5325f46` |
-| LATEST_DEV_COMMIT | `a40885903c2e17e910b6a57672a2be1576e5f29a` |
+| FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSIONS` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
-| FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSION` |
+| CLOUD_START_GATE | `BLOCKED` |
 
-## Baseline
+## Objective
 
-Accepted INK-CLOUD-004 was promoted to main at:
-
-`37418ab7f6b994425126e73c60810401d5e6e826`
-
-This branch starts from the new INK-CLOUD-005 control baseline:
-
-`2ed1e9cbb4b77ac38b0c6798b8d75691f5325f46`
-
-## Authorized objective
-
-Implement only the bounded Component / Instance data-model foundation defined in:
+Complete the final pre-Cloud structural workpack defined in:
 
 `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-Primary structural goals:
+Focus:
 
-- stable Component-definition identity;
-- stable source-node identity;
-- linked Instance reference model;
-- minimum override envelope;
-- deterministic detach;
-- broken-reference / cycle safety;
-- existing History integration;
-- native serialization/migration/integrity;
-- preserve accepted Frame / Group / Transform contracts.
+- Layout / Constraints versioned structural schema;
+- transport-neutral file/revision persistence contract;
+- migration / integrity / save-load closure;
+- compatibility with accepted INK-CLOUD-002 through 005.
 
-## Required progress rule
+## Progress rule
 
-Commit meaningful checkpoints and update this file continuously with:
+At each meaningful checkpoint record:
 
-- checkpoint SHA;
+- exact SHA;
 - files changed;
-- model/schema decisions;
+- schema decisions;
 - checks actually executed;
 - checks not executed;
-- known gaps;
-- any FORMAT_VERSION concern.
+- known gaps.
 
-If a format-version bump appears necessary:
+If FORMAT_VERSION change is required:
 
-`STOP and request MR decision before changing FORMAT_VERSION.`
+`STOP / MR_DECISION_REQUIRED`
 
-## Completion gate
+Do not independently change FORMAT_VERSION.
+
+## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-005
-BRANCH = work/ink-cloud-005
-IMPLEMENTATION_AND_QA_HEAD = a40885903c2e17e910b6a57672a2be1576e5f29a
-FINAL_HANDOFF_HEAD = resulting documentation-only commit; exact SHA in DEV handoff response / branch ref
+TASK_ID = INK-CLOUD-006
+BRANCH = work/ink-cloud-006
+FINAL_HEAD = <exact SHA>
 PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
 FORMAT_VERSION_CHANGE = 0 OR MR_DECISION_REQUIRED
 PACKAGE_MUTATION = 0
@@ -76,38 +62,67 @@ NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
 
-## Checkpoint 1 — design
+## Checkpoint 1 — Layout and persistence schema
 
-GitHub work branch checked out at `c0a0e441c1b699398167a8559b72af750ba496a8`. Required README/AGENTS/current order/status/progress, named governance and accepted 001–004 reports read; source model, migration, integrity, hierarchy, History, renderer/studio/SVG/spatial paths inspected.
+Branch checkout started from GitHub `d1f908825f8419f053753b93d13a1a4ee901de91`. Read required control files, readiness assessment, accepted Component report, and required document/storage/assets/source tests.
 
-Proposed additive optional document registry referencing ordinary Frame/Group roots; atomic instance objects contain definition ID and serialized source-ID opacity overrides, never persistent resolved children. Resolution feeds the existing renderer/bounds/SVG paths. Nested instances explicitly rejected. No FORMAT_VERSION modification planned; compatibility to be verified.
+Implemented initial optional schemas:
 
-Executed: remote branch lookup, clean checkout and source inspection. No implementation tests yet. Browser Runtime QA remains DEFERRED.
+- `INK-LAYOUT-1` on Frame and `INK-LAYOUT-ITEM-1` on Frame children;
+- pure horizontal/vertical flow and resize-constraint evaluation plans;
+- existing-History commands for set/remove Frame and child metadata;
+- deterministic known-field normalization with unknown extension preservation;
+- `INK-FILE-ENVELOPE` v1.0 with stable file/revision identity, format/extension/migration declarations, document payload, asset reference mirror, timestamps and canonical fingerprint;
+- migration/integrity exports and diagnostics.
 
-## Checkpoint 2 — model and editor integration
+Actually executed: source syntax checks for new modules and touched document modules PASS; `git diff --check` PASS. New layout/persistence suite initially 17/18 because one expected hug-height arithmetic value was incorrect (51 vs actual 46); expectation corrected from padding + intrinsic sizes + gap. Final rerun pending at this checkpoint. Browser Runtime QA remains DEFERRED.
 
-Previous published checkpoint: `c0ed73c3382ab4d9f9acd0710125c81ee8cdc198`.
+## Checkpoint 2 — semantic edge hardening
 
-Added optional `INK-COMPONENTS-1` registry, source-ID opacity overrides, resolution diagnostics, atomic History commands (register/create/override/reset/detach/duplicate/repair). Existing renderer, bounds, hit/SVG and spatial paths consume disposable ordinary geometry. Integrity warnings preserve broken data for repair. Guarded existing hierarchy traversal against repeated object references.
+Published schema checkpoint: `dc6c20ca71543773b791c571c51a423372b20d28`.
 
-Files: `document/components.js`, `document/{hierarchy,index,integrity}.js`, `ink.js`, `studio-core.js`, new `qa/core/tests/unit/component-instance-v0.1.test.mjs`.
+Hardened deterministic evaluation and envelope behavior:
 
-Actually executed: syntax checks (components, ink, studio); existing Frame/Group/Transform Node tests **24/24 PASS**; new component model + actual editor method tests **15/15 PASS**. Test harness initially needed DOM boot isolation and the correct InkStore key/value signature; corrected and rerun. No browser runtime run. Remaining: bounded edge-case hardening, compatibility suite and report.
+- unknown future Frame layout schemas are preserved and reported as unsupported, never interpreted as v1;
+- unknown child schemas reject evaluation safely;
+- `fill` inside a `hug` axis uses intrinsic size with an explicit diagnostic, avoiding cyclic size authority;
+- cross-axis stretch is suppressed when that container axis is hug;
+- envelope input validates arrays/IDs/timestamps/format version;
+- revision creation retains existing future extension declarations while adding newly required native extensions;
+- feature detection now scans structural objects only, so workspace `cameras.layout` cannot falsely declare `ink.layout.v1`.
 
-## Checkpoint 3 — compatibility and bounded hardening
+Actually executed: new suite **20/20 PASS**; accepted Component/Frame/Group/Transform plus retained core suites via `run-component-foundation-checks.mjs`: **62/62 + 29/29 PASS**, 6 syntax checks and FORMAT_VERSION=4 PASS. Initial edge test exposed false `ink.layout.v1` detection from workspace camera naming; fixed by using `walkPageObjects()` and rerun. Runtime QA remains DEFERRED.
 
-Published implementation: `67833ed5e00dcdd839f51a0cb072bd955785d063`.
+## Checkpoint 3 — fail-closed persistence validation and combined evidence
 
-Added ambiguous source-node rejection, reserved override-key rejection, and Instance blend-mode preservation in resolved/detached geometry. Extended tests for source deletion/undo, ordinary linked duplication, invalid placement/rejected detach and the pre-task format-4 migration retaining Component data. Corrected the stale Frame static import-order assertion without changing its required import set or behavior checks.
+Published semantic hardening checkpoint: `04fab9e69a90ef5e90fd34a9030f6f2e389fb49a`.
 
-Executed on Node v24.19.0: `node qa/core/run-component-foundation-checks.mjs`: **62/62 current tests + 29/29 retained tests PASS**, 6 source syntax checks PASS, FORMAT_VERSION=4 check PASS. Retained test copies adapt only old ../../src import paths in a temporary directory; assertions unchanged. `git diff --check` PASS. Full output retained in `qa/core/evidence/INK_CLOUD_005_NODE_CHECKS.txt`.
+Closed malformed-input and verification edges:
 
-Initial expanded tests failed on a missing test-harness toast stub and an assertion that omitted existing semantic migration defaults; harness/expectation corrected and rerun. The final 91 tests passed. No browser/Canvas/WebGL visual, pointer, IndexedDB or hosted Actions run. Remaining: required report and exact final handoff fingerprint.
+- envelope construction requires a stable document/file ID and parseable timestamps;
+- cyclic or otherwise non-serializable native payloads fail with bounded diagnostics instead of recursing or throwing during inspection;
+- extension and asset-reference inspection is exception-safe and remains fail closed;
+- added one command that executes accepted 002–005 compatibility, retained shared-core tests, the 006 contract suite, source syntax, format-version and network-boundary checks;
+- captured the exact command output in `qa/core/evidence/INK_CLOUD_006_NODE_CHECKS.txt`.
 
-## Final handoff
+Actually executed: combined runner **112/112 Node tests PASS** (62 accepted structural/Component + 29 retained shared-core + 21 Layout/persistence), **8/8 source syntax checks PASS**, `FORMAT_VERSION = 4` PASS, bounded new modules contain no network transport primitive, and `git diff --check` PASS. Runtime browser/Canvas/WebGL/pointer/IndexedDB and hosted Actions QA remain DEFERRED.
 
-All authorized phases complete. Required report: `research/INK_COMPONENT_INSTANCE_DATA_MODEL_REPORT_v0.1.md`. Final implementation and executed-evidence checkpoint: `a40885903c2e17e910b6a57672a2be1576e5f29a`. The subsequent handoff commit changes only progress/status/report; its exact SHA is returned in the DEV response and available from the branch ref. A commit cannot embed its own resulting SHA. MR must pin that final branch HEAD.
+Published implementation and executed-QA checkpoint: `184c74195e976526713ad549b236e13c9dac9ad7`.
 
-`91/91 Node tests PASS`; `6/6 syntax checks PASS`; `FORMAT_VERSION_CHANGE=0`; `RUNTIME_QA=DEFERRED`. No new unexecuted test suite. No main/package mutation, Cloud or next Work Order.
+## Handoff
 
-`DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP`.
+The required closure report is `research/INK_LAYOUT_PERSISTENCE_CONTRACT_CLOSURE_REPORT_v0.1.md`. The final documentation-only handoff commit follows the exact implementation/QA checkpoint above. Because a Git commit cannot contain its own resulting SHA, its exact SHA is recorded in the DEV handoff response and is resolvable from the `work/ink-cloud-006` branch ref pinned for MR review.
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-006
+BRANCH = work/ink-cloud-006
+IMPLEMENTATION_AND_QA_HEAD = 184c74195e976526713ad549b236e13c9dac9ad7
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
