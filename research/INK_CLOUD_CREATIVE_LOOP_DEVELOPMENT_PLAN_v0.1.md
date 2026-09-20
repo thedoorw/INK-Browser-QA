@@ -407,3 +407,18 @@ Assigned branch:
 `work/ink-cloud-007`
 
 This workpack combines Phase 0 evidence with the minimum Phase 1 technical vertical slice so research does not stall before implementation.
+
+
+## Engine-first development rule
+
+The development sequence is corrected to prevent benchmark-fixture work from blocking the product capability itself.
+
+```text
+Build extraction capability first.
+Use simple deterministic fixtures to prove it works.
+Run the user rose-window only after the engine and Reference→Path slice exist.
+```
+
+The rose window remains the first hard benchmark, but it is no longer a prerequisite for Phases A–D.
+
+This rule applies to INK-CLOUD-007 and later extraction work.
