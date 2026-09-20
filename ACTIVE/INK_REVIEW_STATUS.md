@@ -1,25 +1,26 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / PROMOTED / RUNTIME_QA_DEFERRED`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / AUTO_PROMOTION`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-008B` |
-| DEV_BRANCH | `work/ink-cloud-008b` |
-| REVIEW_HEAD | `4bb8fe665a1576b1c98c0629f324bb2040cddbbc` |
-| CANDIDATE_CODE_QA_HEAD | `b3fb4ec0bed867ebae2010402b6fa9657fd0c356` |
+| TASK_ID | `INK-CLOUD-009` |
+| DEV_BRANCH | `work/ink-cloud-009` |
+| REVIEW_HEAD | `044703931886269945b9092019844795e78ddf5a` |
 | DECISION | `MR_PASS` |
-| GATE | `EDITABLE_PATH_AND_STROKE_WORKS` |
-| PROMOTION_BRANCH | `promote/ink-cloud-008b` |
-| PROMOTION_COMMIT | `9260f5944561ed725ed82f1f8fc18a2184935d81` |
-| PR | `#10 / MERGED` |
-| MAIN_PROMOTION | `b6a6706b2c09c3a1bc621b993e6d61d9c5eb2f0f` |
+| SOURCE_REVIEW | `PASS` |
+| GATE | `MULTI_CONTOUR_COMPOSITION_WORKS` |
 | FORMAT_VERSION_CHANGE | `0` |
 | PACKAGE_UPDATE | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
+| PROMOTION_POLICY | `AUTO / CONTINUOUS_ADVANCE` |
 
-008B is closed on main.
+Branch topology at review:
 
-Next planned stage:
+`17 ahead / 3 behind / diverged`
 
-`INK-CLOUD-009 — Multi-Contour Composition`
+Main-side divergence is governance/research only; no reviewed product-source overlap blocks clean promotion.
+
+Next action:
+
+`CLEAN_PROMOTION_FROM_CURRENT_MAIN`
