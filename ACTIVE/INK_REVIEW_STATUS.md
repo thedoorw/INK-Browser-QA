@@ -1,34 +1,29 @@
 # INK REVIEW STATUS
 
-STATUS: `PRE_CLOUD_CORE_READY / INK-CLOUD-007 AUTHORIZED`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / PROMOTION_AWAITING_USER`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-006` |
-| DEV_BRANCH | `work/ink-cloud-006` |
-| REVIEW_HEAD | `b3a59ab6a11869c6273ffdd7754b3b11af41ab74` |
-| IMPLEMENTATION_AND_QA_HEAD | `184c74195e976526713ad549b236e13c9dac9ad7` |
+| TASK_ID | `INK-CLOUD-007` |
+| DEV_BRANCH | `work/ink-cloud-007` |
+| REVIEW_HEAD | `b006a3a7dadc5d261e3dda5b377f61ec13221ddb` |
 | REVIEW_STATE | `COMPLETE` |
 | DECISION | `MR_PASS` |
 | SOURCE_REVIEW | `PASS` |
 | FORMAT_VERSION_CHANGE | `0` |
 | RUNTIME_QA | `DEFERRED` |
-| MAIN_PROMOTION | `PROMOTED / c0800bbc2345772b44aa310161aa446fc87fbe60` |
+| HARD_BENCHMARK | `DEFERRED_BY_USER_DECISION` |
+| MAIN_PROMOTION | `NOT_YET / USER_APPROVAL_REQUIRED` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 
-If `work/ink-cloud-006` moves beyond REVIEW_HEAD before promotion, this review becomes stale.
+Review is pinned to exact DEV handoff HEAD:
 
-PRE_CLOUD_CORE_READY: `YES`
+`b006a3a7dadc5d261e3dda5b377f61ec13221ddb`
 
-Next action: `INK-CLOUD-007 DEV WORK`.
+If the DEV branch moves, this review becomes stale.
 
+The branch is currently diverged from main. Direct merge is not approved. Promotion, if authorized, must be performed from current main through a bounded promotion branch containing only reviewed implementation / QA / report files and excluding stale branch-local governance state.
 
-DISCUSSION_HOLD: `ACTIVE`
+Next action:
 
-No new DEV / DEV WORK task is authorized until the user explicitly ends the discussion hold and approves the next implementation stage.
-
-
-DISCUSSION_HOLD: `ENDED`
-
-Authorized scope is the extraction benchmark and Reference-to-Path technical vertical slice only. Broader Cloud implementation remains outside this Work Order.
+`USER_PROMOTION_DECISION`
