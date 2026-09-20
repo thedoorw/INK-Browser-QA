@@ -268,3 +268,47 @@ RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR Review — INK-CLOUD-008A
+
+Reviewed HEAD:
+
+`1cbc69b56e060edc8523fdbfdcdd34417379b3db`
+
+Candidate code/QA HEAD:
+
+`aa0d37a52753a2b3ea1a5a00b914a4753db0c37a`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Accepted bounded result:
+
+```text
+Path edit mode = IMPLEMENTED
+Anchor edit = IMPLEMENTED
+Bézier handle edit = IMPLEMENTED
+Topology edit = IMPLEMENTED
+Simplify / refine = IMPLEMENTED
+History = REUSED
+Serialization contract = PRESERVED
+Extraction provenance = PRESERVED
+FORMAT_VERSION = 4
+Expressive Stroke = NOT_STARTED
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+```
+
+Gate:
+
+`EDITABLE_PATH_CORE_WORKS`
+
+The branch is 28 commits ahead and 0 behind main at review time.
+
+DEV remains stopped.
+
+Next action:
+
+`USER_PROMOTION_DECISION`
