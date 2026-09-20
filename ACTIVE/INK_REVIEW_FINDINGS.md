@@ -2,47 +2,42 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-008B`
+TASK: `INK-CLOUD-009`
 
-REVIEWED_HEAD: `4bb8fe665a1576b1c98c0629f324bb2040cddbbc`
-
-CANDIDATE_CODE_QA_HEAD: `b3fb4ec0bed867ebae2010402b6fa9657fd0c356`
+REVIEWED_HEAD: `044703931886269945b9092019844795e78ddf5a`
 
 ## Decision
 
 `MR_PASS`
 
-No blocking source/contract finding remains for the bounded Expressive Stroke scope.
+No blocking source/contract finding remains for the bounded Multi-Contour Composition scope.
 
 ## Findings
 
-- Expressive appearance is stored as optional Path appearance data; Path geometry remains authoritative.
-- Appearance payload is bounded/versioned and does not contain duplicate subpaths/anchors.
-- Path ID, geometry fingerprint and metadata/extraction provenance are guarded during style-only mutations.
-- Style assign/replace/patch/remove reuse existing scoped History.
-- No-op appearance mutation does not create a History entry.
-- Existing Path Editing remains independent from appearance; geometry edits operate on the same styled Path.
-- Existing ordinary vector `stroke/strokeWidth` remain the deterministic fallback.
-- Renderer integration evaluates appearance from the existing Path geometry; no replacement outline, raster source object or second renderer is introduced.
-- Existing `BUILTIN_BRUSH_PRESETS` are reused through a bounded bridge; no parallel brush registry/engine is introduced.
-- Unsupported media behaviors are disclosed as degraded vector approximation rather than silently treated as equivalent.
-- Document normalization, integrity inspection and file-envelope extension declaration include the optional appearance contract.
-- Structured SVG preserves Path `d` and records explicit ordinary-vector fallback metadata.
-- `FORMAT_VERSION = 4`; no format bump was introduced.
-- Composition, Repaint/Material, CHAT mutation and rose-window benchmark were not started.
-- No package mutation or DEV main merge occurred.
+- Multiple authoritative editable Paths coexist without flattening.
+- Existing transform, hierarchy, History, Path Editing, Expressive Stroke and persistence cores are reused.
+- Composition selection adds stale/locked/hidden/singular guards without introducing a second selection/transform model.
+- Explicit duplication regenerates Path object, subpath and anchor identities.
+- Extraction/source provenance and expressive appearance are preserved on duplicates.
+- Duplicate lineage is recorded in bounded composition metadata.
+- Group/Frame/reparent/z-order use existing hierarchy commands.
+- Structured SVG remains vector Path output with editable geometry.
+- File-envelope roundtrip evidence preserves identities and provenance.
+- `FORMAT_VERSION = 4`.
+- No package mutation, Repaint/Material, CHAT mutation or rose-window benchmark work occurred.
 
-## Non-blocking limitations / debt
+## Non-blocking debt
 
-- Full repository Node regression execution was not run in the DEV environment.
-- Actual file-envelope integration test execution was not run in the DEV environment.
-- Browser pointer/UI behavior, visual stroke fidelity, zoom/DPR behavior and service-worker lifecycle remain unverified.
-- Current natural-media rendering is a bounded deterministic vector approximation, not physical-media equivalence.
-- SVG export intentionally falls back to ordinary vector stroke rather than destructive profile outlining.
+- Full Node runner was not executed.
+- Browser/runtime interaction and visual QA remain deferred.
+- Hosted Actions were not used.
+- Runtime composition ergonomics remain browser-QA debt.
 
 ## Promotion
 
-Per continuous-advance authorization, MR_PASS proceeds directly to clean promotion from current main.
+The DEV branch diverged from current main after branch creation.
+
+Promotion must use a clean branch from current main and include only the reviewed product/QA/report payload.
 
 Exclude branch-local:
 - `ACTIVE/INK_DEV_PROGRESS.md`
