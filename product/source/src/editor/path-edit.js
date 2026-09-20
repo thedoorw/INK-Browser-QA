@@ -102,6 +102,90 @@ function requireSubpathViable(subpath, remaining) {
   if (remaining < minimum) fail(subpath.closed ? 'CLOSED_PATH_MINIMUM_ANCHORS' : 'OPEN_PATH_MINIMUM_ANCHORS', { minimum, remaining });
 }
 
+const handleLength = handle => Math.hypot(handle?.x || 0, handle?.y || 0);
+
+function segmentDistance(point, a, b) {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const lengthSquared = dx * dx + dy * dy;
+  if (!lengthSquared) return Math.hypot(point.x - a.x, point.y - a.y);
+  const t = Math.max(0, Math.min(1, ((point.x - a.x) * dx + (point.y - a.y) * dy) / lengthSquared));
+  return Math.hypot(point.x - (a.x + t * dx), point.y - (a.y + t * dy));
+}
+
+function pathNodeCount(path) {
+  return (path.subpaths || []).reduce((sum, subpath) => sum + (subpath.anchors?.length || 0), 0);
+}
+
+function removableLinearAnchor(subpath, index, tolerance, handleTolerance) {
+  const anchors = subpath.anchors;
+  const count = anchors.length;
+  if (count <= (subpath.closed ? 3 : 2)) return false;
+  if (!subpath.closed && (index === 0 || index === count - 1)) return false;
+  const previous = anchors[(index - 1 + count) % count];
+  const current = anchors[index];
+  const next = anchors[(index + 1) % count];
+  const handles = [previous.out, current.in, current.out, next.in];
+  if (handles.some(handle => handleLength(handle) > handleTolerance)) return false;
+  return segmentDistance(current, previous, next) <= tolerance;
+}
+
+function simplifyPathGeometry(path, { tolerance, handleTolerance, maxPasses }) {
+  let removed = 0;
+  let passes = 0;
+  while (passes < maxPasses) {
+    let changed = false;
+    for (let subpathIndex = 0; subpathIndex < path.subpaths.length && !changed; subpathIndex += 1) {
+      const subpath = path.subpaths[subpathIndex];
+      const start = subpath.closed ? 0 : 1;
+      const end = subpath.closed ? subpath.anchors.length : subpath.anchors.length - 1;
+      for (let index = start; index < end; index += 1) {
+        if (!removableLinearAnchor(subpath, index, tolerance, handleTolerance)) continue;
+        deleteAnchor(path, subpathIndex, index);
+        removed += 1;
+        changed = true;
+        break;
+      }
+    }
+    passes += 1;
+    if (!changed) break;
+  }
+  return { removed, passes };
+}
+
+function segmentControlLength(path, subpathIndex, segmentIndex) {
+  const { from, to } = validateSegmentRef(path, subpathIndex, segmentIndex);
+  const p0 = { x: from.x, y: from.y };
+  const p1 = { x: from.x + from.out.x, y: from.y + from.out.y };
+  const p2 = { x: to.x + to.in.x, y: to.y + to.in.y };
+  const p3 = { x: to.x, y: to.y };
+  return Math.hypot(p1.x - p0.x, p1.y - p0.y)
+    + Math.hypot(p2.x - p1.x, p2.y - p1.y)
+    + Math.hypot(p3.x - p2.x, p3.y - p2.y);
+}
+
+function firstLongSegment(path, maxControlLength) {
+  for (let subpathIndex = 0; subpathIndex < path.subpaths.length; subpathIndex += 1) {
+    const subpath = path.subpaths[subpathIndex];
+    const segmentCount = subpath.closed ? subpath.anchors.length : Math.max(0, subpath.anchors.length - 1);
+    for (let segmentIndex = 0; segmentIndex < segmentCount; segmentIndex += 1) {
+      if (segmentControlLength(path, subpathIndex, segmentIndex) > maxControlLength) return { subpathIndex, segmentIndex };
+    }
+  }
+  return null;
+}
+
+function refinePathGeometry(path, { maxControlLength, maxAddedAnchors }) {
+  let added = 0;
+  while (added < maxAddedAnchors) {
+    const target = firstLongSegment(path, maxControlLength);
+    if (!target) break;
+    splitPathSegment(path, target.subpathIndex, target.segmentIndex, 0.5);
+    added += 1;
+  }
+  return { added, truncated: Boolean(firstLongSegment(path, maxControlLength)) };
+}
+
 export class PathEditController {
   constructor(app) {
     this.app = app;
@@ -314,6 +398,55 @@ export class PathEditController {
       if (target.closed !== closed) target.closed = closed;
     });
     return { subpathIndex, closed: this.resolve().object.subpaths[subpathIndex].closed };
+  }
+
+  simplify({ tolerance = 0.75, handleTolerance = Math.max(0.05, tolerance * 0.25), maxPasses = 256 } = {}) {
+    finiteNumber(tolerance, 'SIMPLIFY_SETTINGS_INVALID');
+    finiteNumber(handleTolerance, 'SIMPLIFY_SETTINGS_INVALID');
+    finiteNumber(maxPasses, 'SIMPLIFY_SETTINGS_INVALID');
+    if (tolerance < 0 || handleTolerance < 0 || !Number.isInteger(maxPasses) || maxPasses < 1 || maxPasses > 4096) fail('SIMPLIFY_SETTINGS_INVALID');
+    const found = this.resolve();
+    const beforeNodeCount = pathNodeCount(found.object);
+    let operation = { removed: 0, passes: 0 };
+    this.mutate('Simplify Path', path => {
+      operation = simplifyPathGeometry(path, { tolerance, handleTolerance, maxPasses });
+    });
+    this.state.anchorKeys.clear();
+    this.state.handle = null;
+    const afterNodeCount = pathNodeCount(this.resolve().object);
+    return {
+      operation: 'simplify',
+      pathId: this.state.ref.objectId,
+      settings: { tolerance, handleTolerance, maxPasses },
+      beforeNodeCount,
+      afterNodeCount,
+      removedNodeCount: operation.removed,
+      passes: operation.passes
+    };
+  }
+
+  refine({ maxControlLength = 48, maxAddedAnchors = 128 } = {}) {
+    finiteNumber(maxControlLength, 'REFINE_SETTINGS_INVALID');
+    finiteNumber(maxAddedAnchors, 'REFINE_SETTINGS_INVALID');
+    if (maxControlLength <= 0 || !Number.isInteger(maxAddedAnchors) || maxAddedAnchors < 1 || maxAddedAnchors > 4096) fail('REFINE_SETTINGS_INVALID');
+    const found = this.resolve();
+    const beforeNodeCount = pathNodeCount(found.object);
+    let operation = { added: 0, truncated: false };
+    this.mutate('Refine Path', path => {
+      operation = refinePathGeometry(path, { maxControlLength, maxAddedAnchors });
+    });
+    this.state.anchorKeys.clear();
+    this.state.handle = null;
+    const afterNodeCount = pathNodeCount(this.resolve().object);
+    return {
+      operation: 'refine',
+      pathId: this.state.ref.objectId,
+      settings: { maxControlLength, maxAddedAnchors },
+      beforeNodeCount,
+      afterNodeCount,
+      addedNodeCount: operation.added,
+      truncated: operation.truncated
+    };
   }
 
   snapshot() {
