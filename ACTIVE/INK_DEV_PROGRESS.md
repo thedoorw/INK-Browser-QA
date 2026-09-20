@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-011 / READY_TO_START`
+STATUS: `INK-CLOUD-011 / PHASE_A_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -28,9 +28,6 @@ STATUS: `INK-CLOUD-011 / READY_TO_START`
 
 - GitHub is SSOT.
 - Work only on `work/ink-cloud-011`.
-- Read branch-local Current Work Order before implementation.
-- Commit every meaningful checkpoint.
-- Update this file continuously.
 - Reuse existing editor controllers and History.
 - Proposal/preview must not mutate authoritative document state.
 - Unapproved tasks must not execute.
@@ -42,6 +39,21 @@ STATUS: `INK-CLOUD-011 / READY_TO_START`
 - Do not change FORMAT_VERSION without STOP.
 - `RUNTIME_QA = DEFERRED`.
 
-## Start state
+## Source reconnaissance
 
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+Existing authoritative routes selected for reuse:
+
+- `PathRepaintMaterialController` for repaint/material appearance;
+- `PathEditController` for bounded Path edits;
+- `InkApp.translateSelection()` + existing composition/transform route for movement;
+- existing target-scoped `HistoryManager` for committed mutation and rollback.
+
+No second vector / transform / History / mutation engine is required.
+
+## Checkpoints
+
+### Start / Phase A
+
+`PHASE_A_IN_PROGRESS`
+
+Target: deterministic CHAT-facing document/page/selection/object summary with stable references and bounded geometry/appearance/provenance.
