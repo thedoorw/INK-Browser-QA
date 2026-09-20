@@ -5,12 +5,14 @@ import { FORMAT_VERSION } from '../../../../product/source/src/config.js';
 import {
   InkStore,
   RevisionController,
+  createFrame,
   defaultDocument,
   documentFingerprint,
   findPageObject,
   inspectDocument,
   inspectInkFileEnvelope,
   migrateDocument,
+  reparentPageObject,
   unwrapInkFile,
   wrapInkFile
 } from '../../../../product/source/src/document/index.js';
@@ -171,6 +173,7 @@ async function buildIntegratedLoop() {
   assert.notEqual(pathGeometryFingerprint(findPageObject(app.page(), first.id).object), geometryBeforeEdit);
 
   const strokeController = new PathStrokeAppearanceController(app);
+  const geometryAfterEdit = pathGeometryFingerprint(findPageObject(app.page(), first.id).object);
   strokeController.assign(normalizeExpressiveStroke({
     color: '#6e354e',
     baseWidth: 7,
@@ -178,11 +181,21 @@ async function buildIntegratedLoop() {
     profile: { taperStart: 0.2, taperEnd: 0.35 },
     media: { engine: 'ink', flow: 0.82, grain: 0.18, seed: 13 }
   }), { ref: localRefFor(app, first.id) });
+  assert.equal(pathGeometryFingerprint(findPageObject(app.page(), first.id).object), geometryAfterEdit);
 
   let idSequence = 0;
   const duplicate = cloneCompositionObject(first, { idFactory: () => `integrated-copy-${++idSequence}` });
+  const primaryFrame = createFrame({
+    id: 'frame-integrated-primary',
+    name: 'Primary composition',
+    width: 180,
+    height: 180
+  });
   app.history.push('Compose extracted Paths', () => {
-    app.layer().objects.push(second, duplicate);
+    app.layer().objects.push(second, duplicate, primaryFrame);
+    for (const path of [first, second, duplicate]) {
+      reparentPageObject(app.page(), path.id, primaryFrame.id, { targetLayerId: app.layer().id });
+    }
   });
   const composition = inspectComposition(app.page());
   assert.equal(composition.pathCount, 3);
@@ -197,6 +210,7 @@ async function buildIntegratedLoop() {
     parameterOverrides: { grain: 0.25 },
     fallback: { fill: '#d6a45f', stroke: '#5b3041' }
   }, { refs });
+  assert.equal(pathGeometryFingerprint(findPageObject(app.page(), first.id).object), geometryAfterEdit);
 
   const beforeChat = await app.revisions.capture({
     createdAt: '2026-09-20T12:01:00.000Z',
@@ -204,6 +218,27 @@ async function buildIntegratedLoop() {
     label: 'Before CHAT'
   });
   assert.equal(beforeChat.created, true);
+
+  const structuralProposal = app.chatBoundedEdit.propose(
+    chatRepaintTask(app, duplicate.id, 'stale-after-reparent', '#a85e48')
+  );
+  const structuralApproval = app.chatBoundedEdit.approve(structuralProposal.proposalId);
+  const alternateFrame = createFrame({
+    id: 'frame-integrated-alternate',
+    name: 'Alternate composition',
+    width: 120,
+    height: 120
+  });
+  app.history.push('Reparent composed Path', () => {
+    app.layer().objects.push(alternateFrame);
+    reparentPageObject(app.page(), duplicate.id, alternateFrame.id, { targetLayerId: app.layer().id });
+  });
+  const staleStructuralExecution = app.chatBoundedEditAdapter.execute(
+    structuralProposal.proposalId,
+    structuralApproval.approvalToken
+  );
+  assert.equal(staleStructuralExecution.ok, false);
+  assert.equal(staleStructuralExecution.code, 'CHAT_EDIT_TARGET_STALE');
 
   const staleProposal = app.chatBoundedEdit.propose(chatRepaintTask(app, first.id, 'stale-after-revision', '#bc6d45'));
   const staleApproval = app.chatBoundedEdit.approve(staleProposal.proposalId);
@@ -249,6 +284,10 @@ async function buildIntegratedLoop() {
     beforeChat,
     afterGeometry,
     afterChat,
+    hierarchy: Object.fromEntries([first.id, second.id, duplicate.id].map(id => {
+      const found = findPageObject(app.page(), id);
+      return [id, found.parentObject?.id || null];
+    })),
     fingerprint: documentFingerprint(app.doc)
   };
 }
@@ -302,6 +341,9 @@ test('cross-stage invariants survive Revision restore and History resumes from a
     materialAppearance: path.materialAppearance
   }, snapshotAppearance);
   assert.equal(inspectComposition(app.page()).valid, true);
+  for (const [objectId, parentId] of Object.entries(state.hierarchy)) {
+    assert.equal(findPageObject(app.page(), objectId).parentObject?.id || null, parentId);
+  }
 
   const postRestoreEditor = new PathEditController(app);
   postRestoreEditor.enter(localRefFor(app, state.firstId));

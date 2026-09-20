@@ -14,7 +14,7 @@ STATUS: `INK-CLOUD-013 / DEV_IN_PROGRESS / PHASE_A`
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
-| LATEST_CHECKPOINT | `PHASE_A_INTEGRATED_FIXTURE_COMPLETE` |
+| LATEST_CHECKPOINT | `PHASE_B_CROSS_STAGE_INVARIANTS_COMPLETE` |
 
 ## Authorized sequence
 
@@ -119,6 +119,32 @@ Extract → editable Path → anchor Edit → Expressive Stroke
 The fixture runs twice and proves equal final document and Revision
 fingerprints. It does not require browser image decoding, a remote service, a
 second document engine, or a second History/Revision authority.
+
+Executed:
+
+```text
+node --test qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs
+```
+
+Result: `3 PASS / 0 FAIL`.
+
+## Phase B — cross-stage invariants
+
+Checkpoint base: `6422f0f3adb7efe7fa70246e3c166d704120068a`
+
+The integrated fixture now proves:
+
+- extracted object, subpath and anchor IDs remain stable;
+- extraction provenance remains exact;
+- geometry remains editable after Stroke, nested Frame composition, Repaint,
+  Material, CHAT mutation and Revision restore;
+- geometry fingerprints do not change during appearance-only stages;
+- nested composition parentage survives Revision restore;
+- same-Revision CHAT target bindings reject a structural reparent with
+  `CHAT_EDIT_TARGET_STALE`;
+- cross-Revision CHAT bindings reject with `CHAT_EDIT_STALE_REVISION`;
+- Revision restore clears existing undo/redo as `RESET_TO_REVISION` and the
+  restored structured Path immediately supports new undo/redo edits.
 
 Executed:
 
