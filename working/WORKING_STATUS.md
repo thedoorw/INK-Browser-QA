@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-008A / DEVELOPMENT_AUTHORIZED / ACTIVE`
+STATUS: `INK-CLOUD-008A / MR_PASS / PROMOTION_AWAITING_USER`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
 | CURRENT_TASK_ID | `INK-CLOUD-008A` |
 | DEV_BRANCH | `work/ink-cloud-008a` |
-| DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING` |
+| DEV_BRANCH_HEAD | `1cbc69b56e060edc8523fdbfdcdd34417379b3db` |
+| DEV_HANDOFF | `ACCEPTED` |
+| MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / PATH_EDITING_CORE` |
+| NEXT_STAGE | `USER_PROMOTION_DECISION` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -261,3 +261,30 @@ editable INK Path
 Expressive Stroke is explicitly reserved for `INK-CLOUD-008B`.
 
 Hard rose-window benchmark remains deferred.
+
+
+## INK-CLOUD-008A MR review
+
+Reviewed exact DEV HEAD:
+
+`1cbc69b56e060edc8523fdbfdcdd34417379b3db`
+
+Candidate code/QA checkpoint:
+
+`aa0d37a52753a2b3ea1a5a00b914a4753db0c37a`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate:
+
+`EDITABLE_PATH_CORE_WORKS`
+
+Expressive Stroke remains not started.
+
+Branch topology at review:
+
+`28 ahead / 0 behind`
+
+Promotion requires explicit user approval.
