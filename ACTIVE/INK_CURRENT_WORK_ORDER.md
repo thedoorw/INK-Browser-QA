@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `PROMOTED / COMPLETE / RUNTIME_QA_DEFERRED`
 
 ## Control
 
@@ -14,8 +14,8 @@ STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `MR_PASS` |
-| NEXT_AUTHORIZED_ACTION | `USER_PROMOTION_DECISION_REQUIRED` |
+| CURRENT_GATE | `PROMOTED` |
+| NEXT_AUTHORIZED_ACTION | `MR_NEXT_STAGE_ASSESSMENT` |
 | CLOUD_START_GATE | `BLOCKED` |
 | RUNTIME_QA | `DEFERRED` |
 
@@ -404,3 +404,22 @@ DEV remains stopped.
 Main promotion requires user approval.
 
 Cloud implementation remains blocked; this PASS does not mark `PRE_CLOUD_CORE_READY`.
+
+
+## Promotion — INK-CLOUD-005
+
+User approved promotion after MR PASS.
+
+Promoted to main at:
+
+`58b584051afe6fab8cfcd387e65f62d4e78bd4f0`
+
+`INK-CLOUD-005` is complete at source-review level.
+
+`RUNTIME_QA = DEFERRED` remains validation debt.
+
+Next action:
+
+`MR_NEXT_STAGE_ASSESSMENT`
+
+Cloud Start Gate remains blocked until MR explicitly establishes `PRE_CLOUD_CORE_READY` and the user separately approves Cloud start.
