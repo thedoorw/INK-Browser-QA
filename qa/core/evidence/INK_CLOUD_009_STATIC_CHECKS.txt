@@ -1,0 +1,96 @@
+# INK-CLOUD-009 Source / Static Evidence
+
+Task: INK-CLOUD-009 — Multi-Contour Composition v0.1
+Branch: work/ink-cloud-009
+Runtime QA: DEFERRED
+
+## Executed
+
+### GitHub-source syntax/static parse
+
+Committed GitHub branch source was fetched through the GitHub connector and parsed in the V8 execution environment after removing ESM import/export declarations only for syntax parsing.
+
+PASS:
+- product/source/src/editor/composition.js
+- product/source/src/ink.js
+- product/source/service-worker.js
+- qa/core/tests/unit/multi-contour-composition-core-v0.1.test.mjs
+- qa/core/tests/unit/multi-contour-composition-source-v0.1.test.mjs
+
+editor/index.js uses export-star declarations and was verified directly for:
+- export * from './composition.js';
+
+### Accepted shared-core immutability against main
+
+Branch blob SHA equals main blob SHA for all of:
+- product/source/src/editor/transform.js
+- product/source/src/document/hierarchy.js
+- product/source/src/editor/path-edit.js
+- product/source/src/editor/expressive-stroke.js
+- product/source/src/history/history.js
+- product/source/src/document/file-envelope.js
+- product/source/src/config.js
+- product/source/src/vector/vector-core.js
+
+This confirms no second transform, hierarchy, Path Editing, Expressive Stroke, History, persistence, format-version or vector-export core was introduced.
+
+### Composition identity / provenance unit harness
+
+Executed the exact committed editor/composition.js function bodies with only imported shared plumbing supplied by the harness.
+
+PASS:
+- duplicate object ID refreshed;
+- duplicate subpath IDs refreshed;
+- duplicate anchor IDs refreshed;
+- extraction provenance preserved;
+- expressiveStroke preserved;
+- duplicate lineage sourceObjectId / duplicatedFromObjectId recorded;
+- composition diagnostics report no node identity collision;
+- locked target rejected;
+- hidden target rejected;
+- singular target rejected;
+- stale target rejected.
+
+### Native file-envelope roundtrip harness
+
+Executed the exact committed file-envelope.js wrap/inspect/unwrap implementation with deterministic imported utility stubs.
+
+PASS:
+- multiple Path object IDs preserved;
+- subpath/anchor IDs preserved;
+- extraction metadata/provenance preserved;
+- FORMAT_VERSION payload remains 4.
+
+### Structured vector SVG harness
+
+Executed the exact committed vectorObjectToSVG/pathData implementation with imported non-Path dependencies stubbed.
+
+PASS:
+- structured <path> output;
+- data-ink-id preserved;
+- data-ink-type="path" emitted;
+- editable d geometry emitted;
+- no raster <image> fallback.
+
+### Source contract checks
+
+PASS:
+- FORMAT_VERSION = 4;
+- composition module contains no rasterization or network transport;
+- fresh subpath/anchor identity regeneration is wired;
+- duplicate command remains History-backed;
+- z-order command remains History-backed;
+- transform guard uses composition selection validation;
+- UI SVG export routes Path through shared vectorObjectToSVG;
+- extraction still assigns fresh batch/reference identity;
+- vector exporter retains ordinary-vector expressive-stroke fallback;
+- service-worker shell includes composition module.
+
+## Not executed
+
+- Browser Runtime QA: DEFERRED by Current Work Order.
+- Hosted GitHub Actions: not used.
+- Full Node test runner: NOT EXECUTED. The local runner attempted to clone the GitHub SSOT branch but network DNS resolution for github.com failed. The committed Node suites remain available for MR/CI execution.
+- Rose-window benchmark: NOT RUN by explicit prohibition.
+
+No unexecuted check is claimed PASS.
