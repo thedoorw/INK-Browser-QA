@@ -1,6 +1,6 @@
 import { Matrix } from '../core/index.js';
 import { findPageObject } from '../document/hierarchy.js';
-import { moveAnchor, moveBezierHandle, setAnchorMode } from '../vector/vector-core.js';
+import { addAnchor, createAnchor, deleteAnchor, moveAnchor, moveBezierHandle, setAnchorMode } from '../vector/vector-core.js';
 
 const ANCHOR_MODES = new Set(['corner', 'smooth', 'symmetric']);
 const HANDLE_SIDES = new Set(['in', 'out']);
@@ -42,6 +42,7 @@ export function assertFinitePathGeometry(path) {
   for (let subpathIndex = 0; subpathIndex < path.subpaths.length; subpathIndex += 1) {
     const subpath = path.subpaths[subpathIndex];
     if (!subpath || !Array.isArray(subpath.anchors)) fail('SUBPATH_INVALID', { subpathIndex });
+    if (!['outer', 'hole'].includes(subpath.role || 'outer')) fail('SUBPATH_ROLE_INVALID', { subpathIndex });
     for (let anchorIndex = 0; anchorIndex < subpath.anchors.length; anchorIndex += 1) {
       const anchor = subpath.anchors[anchorIndex];
       const values = [anchor?.x, anchor?.y, anchor?.in?.x, anchor?.in?.y, anchor?.out?.x, anchor?.out?.y];
@@ -50,6 +51,55 @@ export function assertFinitePathGeometry(path) {
     }
   }
   return true;
+}
+
+function validateSegmentRef(path, subpathIndex, segmentIndex) {
+  if (!Number.isInteger(subpathIndex) || !Number.isInteger(segmentIndex)) fail('SEGMENT_REF_INVALID');
+  const subpath = path?.subpaths?.[subpathIndex];
+  const anchors = subpath?.anchors;
+  if (!subpath || !Array.isArray(anchors) || anchors.length < 2) fail('SEGMENT_NOT_FOUND', { subpathIndex, segmentIndex });
+  const count = subpath.closed ? anchors.length : anchors.length - 1;
+  if (segmentIndex < 0 || segmentIndex >= count) fail('SEGMENT_NOT_FOUND', { subpathIndex, segmentIndex });
+  return {
+    subpath,
+    from: anchors[segmentIndex],
+    to: anchors[(segmentIndex + 1) % anchors.length],
+    insertIndex: segmentIndex + 1
+  };
+}
+
+const lerpPoint = (a, b, t) => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
+
+function splitPathSegment(path, subpathIndex, segmentIndex, t = 0.5) {
+  if (!Number.isFinite(t) || t <= 0 || t >= 1) fail('SEGMENT_T_INVALID');
+  const { from, to, insertIndex } = validateSegmentRef(path, subpathIndex, segmentIndex);
+  const p0 = { x: from.x, y: from.y };
+  const p1 = { x: from.x + from.out.x, y: from.y + from.out.y };
+  const p2 = { x: to.x + to.in.x, y: to.y + to.in.y };
+  const p3 = { x: to.x, y: to.y };
+  const p01 = lerpPoint(p0, p1, t);
+  const p12 = lerpPoint(p1, p2, t);
+  const p23 = lerpPoint(p2, p3, t);
+  const p012 = lerpPoint(p01, p12, t);
+  const p123 = lerpPoint(p12, p23, t);
+  const p = lerpPoint(p012, p123, t);
+
+  from.out = { x: p01.x - p0.x, y: p01.y - p0.y };
+  to.in = { x: p23.x - p3.x, y: p23.y - p3.y };
+  const inserted = createAnchor(
+    p.x,
+    p.y,
+    { x: p012.x - p.x, y: p012.y - p.y },
+    { x: p123.x - p.x, y: p123.y - p.y },
+    { mode: 'smooth' }
+  );
+  const result = addAnchor(path, subpathIndex, insertIndex, inserted);
+  return { anchor: result, anchorIndex: insertIndex };
+}
+
+function requireSubpathViable(subpath, remaining) {
+  const minimum = subpath.closed ? 3 : 2;
+  if (remaining < minimum) fail(subpath.closed ? 'CLOSED_PATH_MINIMUM_ANCHORS' : 'OPEN_PATH_MINIMUM_ANCHORS', { minimum, remaining });
 }
 
 export class PathEditController {
@@ -217,6 +267,53 @@ export class PathEditController {
     });
     this.state.handle = null;
     return this.snapshot();
+  }
+
+  addAnchorOnSegment(subpathIndex, segmentIndex, t = 0.5) {
+    finiteNumber(t, 'SEGMENT_T_INVALID');
+    const found = this.resolve();
+    validateSegmentRef(found.object, subpathIndex, segmentIndex);
+    let inserted;
+    this.mutate('Add Path anchor', path => {
+      inserted = splitPathSegment(path, subpathIndex, segmentIndex, t);
+    });
+    this.state.anchorKeys.clear();
+    this.state.anchorKeys.add(keyForAnchor(subpathIndex, inserted.anchorIndex));
+    this.state.handle = null;
+    return { ...this.snapshot(), insertedAnchorId: inserted.anchor.id };
+  }
+
+  deleteSelectedAnchors() {
+    const refs = this.selectedAnchors();
+    if (!refs.length) fail('ANCHOR_SELECTION_EMPTY');
+    const found = this.resolve();
+    const counts = new Map();
+    for (const ref of refs) counts.set(ref.subpathIndex, (counts.get(ref.subpathIndex) || 0) + 1);
+    for (const [subpathIndex, count] of counts) {
+      const subpath = found.object.subpaths[subpathIndex];
+      requireSubpathViable(subpath, subpath.anchors.length - count);
+    }
+    const descending = [...refs].sort((a, b) => b.subpathIndex - a.subpathIndex || b.anchorIndex - a.anchorIndex);
+    this.mutate('Delete Path anchors', path => {
+      for (const ref of descending) deleteAnchor(path, ref.subpathIndex, ref.anchorIndex);
+    });
+    this.state.anchorKeys.clear();
+    this.state.handle = null;
+    return this.snapshot();
+  }
+
+  setSubpathClosed(subpathIndex, closed) {
+    if (typeof closed !== 'boolean') fail('CLOSED_STATE_INVALID');
+    const found = this.resolve();
+    const subpath = found.object.subpaths?.[subpathIndex];
+    if (!subpath) fail('SUBPATH_INVALID', { subpathIndex });
+    if (closed && subpath.anchors.length < 3) fail('CLOSE_REQUIRES_THREE_ANCHORS');
+    if (!closed && subpath.anchors.length < 2) fail('OPEN_REQUIRES_TWO_ANCHORS');
+    this.mutate(closed ? 'Close Path subpath' : 'Open Path subpath', path => {
+      const target = path.subpaths[subpathIndex];
+      if (target.closed !== closed) target.closed = closed;
+    });
+    return { subpathIndex, closed: this.resolve().object.subpaths[subpathIndex].closed };
   }
 
   snapshot() {
