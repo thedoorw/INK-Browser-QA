@@ -44,7 +44,8 @@ function pathGeometrySummary(path) {
     subpathCount: subpaths.length,
     anchorCount: subpaths.reduce((sum, subpath) => sum + (Array.isArray(subpath?.anchors) ? subpath.anchors.length : 0), 0),
     closedSubpathCount: subpaths.filter(subpath => subpath?.closed).length,
-    roles: subpaths.map(subpath => subpath?.role || 'outer'),
+    roles: subpaths.slice(0, 64).map(subpath => subpath?.role || 'outer'),
+    rolesTruncated: subpaths.length > 64,
     fingerprint: pathGeometryFingerprint(path)
   };
 }
@@ -330,7 +331,7 @@ function normalizeExpected(raw) {
     const keys = Object.keys(raw.targetFingerprints);
     if (keys.length > 64) editFail('EXPECTED_INVALID');
     expected.targetFingerprints = Object.fromEntries(keys.sort().map(key => [
-      boundedText(key, 'expected.targetFingerprints.key', { max: 160 }),
+      boundedText(key, 'expected.targetFingerprints.key', { max: 360 }),
       boundedText(raw.targetFingerprints[key], `expected.targetFingerprints.${key}`, { max: 160 })
     ]));
   }
