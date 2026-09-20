@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008B / READY_TO_START`
+STATUS: `INK-CLOUD-008B / PHASE_A_COMPLETE / PHASE_B_NEXT`
 
 | Field | Value |
 |---|---|
@@ -50,3 +50,17 @@ Style changes must not rewrite Path geometry, identity, topology or extraction p
 ## Start state
 
 `READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+
+
+## Checkpoint — Phase A
+
+- `Stroke appearance contract` implemented as optional Path appearance payload.
+- Contract is versioned and bounded: profile max `64` samples; finite width/pressure/taper/media ranges.
+- Path geometry is not duplicated inside the appearance payload.
+- `normalizeObject()` and document integrity now normalize/validate the optional payload.
+- File envelope declares `ink.path-expressive-stroke.v1` when required; `FORMAT_VERSION` remains `4`.
+- Ordinary `stroke/strokeWidth` remains on Path as the independent vector style/fallback source.
+- Package mutation: `0`.
+- Runtime QA: `DEFERRED`.
+
+NEXT: `BEGIN_PHASE_B / STYLE_MUTATION_HISTORY`
