@@ -208,3 +208,53 @@ The Cloud workspace should grow only as required to make this loop strong, edita
 Detailed plan:
 
 `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+
+
+## 10. Static-hosting + browser-local execution is a hard product constraint
+
+INK Cloud's human-AI collaboration core must be able to function under:
+
+```text
+static hosting
++
+browser-local execution
+```
+
+This is a product architecture requirement, not merely a deployment preference.
+
+The required creative collaboration loop must not depend on:
+
+- GitHub Actions;
+- a proprietary server API;
+- a mandatory application backend;
+- paid cloud compute;
+- paid AI orchestration infrastructure;
+- paid database/storage services;
+- any remote service whose absence prevents the core editor/collaboration workflow from functioning.
+
+The default architecture rule is:
+
+```text
+CORE CAPABILITY
+= static-hostable assets
++ browser-local execution
++ local document/history/state
++ optional external adapters
+```
+
+Remote/server capabilities may exist only as optional enhancements.
+
+Examples of optional enhancement layers:
+
+- remote persistence and sync;
+- account/session services;
+- collaboration transport;
+- server-side automation;
+- hosted inference;
+- GitHub Actions;
+- paid cloud storage/compute;
+- external model/API acceleration.
+
+If an optional enhancement is unavailable, the INK Cloud core must degrade to a still-usable browser-local workflow rather than become non-functional.
+
+Any future Work Order that introduces a mandatory server/Actions/paid-cloud dependency for the core human-AI collaboration loop must STOP for architecture review.
