@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008B / PHASE_D_COMPLETE / PHASE_E_NEXT`
+STATUS: `INK-CLOUD-008B / PHASE_E_COMPLETE / PHASE_F_NEXT`
 
 | Field | Value |
 |---|---|
@@ -88,7 +88,7 @@ NEXT: `BEGIN_PHASE_C / RENDERER_INTEGRATION`
 - New source modules are included in the existing service-worker source shell.
 - No second renderer introduced.
 
-Phase C source commits: `43715e92`, `759216a5`, `${swCommit.slice(0,8)}`.
+Phase C source commits include `43715e92` and `759216a5`; service-worker inclusion is verified in current branch source.
 
 NEXT: `BEGIN_PHASE_D / NATURAL_MEDIA_BRIDGE`
 
@@ -105,3 +105,66 @@ NEXT: `BEGIN_PHASE_D / NATURAL_MEDIA_BRIDGE`
 Phase D source commits: `7b9580e4`, `1d9d0744`, `a7dc0047`, `1ac849f6`.
 
 NEXT: `BEGIN_PHASE_E / INTEGRATION_REGRESSION_EVIDENCE`
+
+
+## Checkpoint — Phase E
+
+Regression evidence added:
+
+- `qa/core/tests/unit/expressive-stroke-core-v0.1.test.mjs`
+  - same Path geometry under multiple appearance styles;
+  - exact geometry fingerprint / Path `d` invariance for style-only changes;
+  - stable Path ID and extraction provenance;
+  - style no-op does not create History;
+  - geometry edit after expressive style assignment;
+  - independent style-only / geometry-only undo-redo sequencing;
+  - save/load envelope roundtrip and extension declaration;
+  - structured SVG keeps Path `d` and exposes explicit `ordinary-vector` fallback;
+  - removing expressive style restores ordinary vector stroke without geometry loss;
+  - busy History / hidden / locked rejection;
+  - bounded 64-sample profile and deterministic existing-brush bridge.
+- `qa/core/tests/unit/expressive-stroke-source-v0.1.test.mjs`
+  - shared editor/vector/History/serialization wiring;
+  - `FORMAT_VERSION = 4`;
+  - no destructive raster/outline route in appearance controller;
+  - existing renderer and brush preset reuse;
+  - service-worker and both shell controls;
+  - explicit SVG fallback metadata.
+
+Executed exact-branch source/static checks:
+
+- `FORMAT_VERSION = 4` — PASS.
+- editor/controller/vector/model/integrity/file-envelope wiring — PASS.
+- ordinary-vector fallback / structured SVG metadata — PASS.
+- service-worker module inclusion — PASS.
+- web + standalone bounded stroke controls — PASS.
+- both new regression files syntax parse — PASS.
+- exact `stroke-appearance.js` pure-module execution:
+  - 64-sample bound — PASS;
+  - contract validation — PASS;
+  - geometry fingerprint invariant under appearance mutation — PASS;
+  - deterministic brush bridge / ordinary-vector fallback — PASS.
+- branch topology at Phase E source checkpoint: `14 ahead / 0 behind`.
+- compare contains no package mutation.
+- main merge: `0`.
+
+Phase E commits:
+
+- `819636c7` — core integration regression.
+- `4d32dd8e` — source regression.
+
+Not executed / not claimed as PASS:
+
+- full repository Node regression execution against a live checkout;
+- actual file-envelope integration test execution;
+- browser pointer/UI runtime behavior;
+- service-worker lifecycle;
+- visual stroke rendering fidelity.
+
+Reason: exact repository checkout is unavailable in the current DEV execution environment and GitHub Actions quota is exhausted. Authored tests remain committed for MR/runtime execution.
+
+```text
+RUNTIME_QA = DEFERRED
+```
+
+NEXT: `BEGIN_PHASE_F / REPORT_AND_HANDOFF`
