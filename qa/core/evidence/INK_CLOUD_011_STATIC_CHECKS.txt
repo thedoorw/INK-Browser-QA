@@ -1,0 +1,75 @@
+INK-CLOUD-011 STATIC / CONTRACT CHECKS
+Branch: work/ink-cloud-011
+Authorized base: 87f11645a38b83c2d770a8601dccb11324f5165c
+RUNTIME_QA: DEFERRED
+
+EXECUTED PASS
+
+1. Exact GitHub-source static architecture checks
+   - source blob: product/source/src/editor/chat-bounded-edit.js @ 92bcffadffee9f6ea5c7145183c00552129cd87c
+   - FORMAT_VERSION remains 4
+   - state/task/proposal/result schema markers present
+   - bounded operation allowlist present
+   - explicit approval token/state present
+   - stale/locked/hidden/singular guards present
+   - execution routes reference existing pathRepaintMaterial, translateSelection and PathEditController
+   - no eval/new Function/fetch/WebSocket/XMLHttpRequest/sendBeacon in product collaboration module
+   - editor barrel export present
+   - InkApp install + architecture marker present
+   - service-worker static/offline cache entry present
+   - accepted Repaint/Path Edit controllers still use existing scoped History
+   - History rollback/no-op behavior remains present
+
+2. Exact GitHub-source lightweight syntax parse
+   - product/source/src/editor/chat-bounded-edit.js — PASS
+   - qa/core/tests/unit/chat-bounded-edit-core-v0.1.test.mjs — PASS
+   - qa/core/tests/unit/chat-bounded-edit-source-v0.1.test.mjs — PASS
+   Method: fetched exact branch blobs through GitHub SSOT, stripped static ESM import/export declarations only, parsed remaining source with the available V8 parser.
+
+3. Isolated collaboration-contract execution harness — PASS
+   - executed from exact chat-bounded-edit.js blob 92bcffadffee9f6ea5c7145183c00552129cd87c
+   - deterministic inspect summary
+   - proposal is mutation-neutral
+   - unapproved execution rejected
+   - approval is mutation-neutral
+   - approved repaint executes
+   - approved translate executes
+   - approved Path simplify executes
+   - locked target rejected before mutation
+   - stale approved target rejected before mutation
+   - forced controller failure rolls back atomically through History-style transaction
+   Note: controller/domain dependencies were bounded harness doubles; committed repository Node regressions cover the real accepted controllers when a full checkout is available.
+
+4. Branch scope compare against authorized base — PASS
+   - branch status: ahead
+   - ahead_by: 16 at check time
+   - behind_by: 0
+   - changed paths:
+     ACTIVE/INK_DEV_PROGRESS.md
+     product/source/service-worker.js
+     product/source/src/editor/chat-bounded-edit.js
+     product/source/src/editor/index.js
+     product/source/src/ink.js
+     qa/core/tests/unit/chat-bounded-edit-core-v0.1.test.mjs
+     qa/core/tests/unit/chat-bounded-edit-source-v0.1.test.mjs
+   - package mutation: 0
+   - product/source/src/config.js mutation: 0
+   - document model/file-envelope serialization mutation: 0
+
+AUTHORED / COMMITTED REGRESSION COVERAGE
+
+- qa/core/tests/unit/chat-bounded-edit-core-v0.1.test.mjs
+  Covers deterministic state summary, proposal/approval zero mutation, approval gate, repaint + History undo/redo, translation + History, Path simplify + History, invalid/stale/locked/hidden/singular rejection, forced atomic rollback, deterministic no-op and FORMAT_VERSION 4.
+
+- qa/core/tests/unit/chat-bounded-edit-source-v0.1.test.mjs
+  Covers shared-source wiring, operation allowlist, approval/stale guards, existing controller/History reuse, browser-local/no-required-network architecture, service-worker inclusion and FORMAT_VERSION 4.
+
+NOT EXECUTED
+
+- Full repository Node unit runner: NOT_EXECUTED.
+  Reason: direct exact-branch clone failed before checkout because the execution environment could not resolve github.com.
+- Browser interaction/runtime validation: DEFERRED by Current Work Order.
+- GitHub Actions: not used; runtime QA is explicitly deferred.
+- Rose-window benchmark: not run; outside this Work Order.
+
+No unexecuted check is claimed PASS.
