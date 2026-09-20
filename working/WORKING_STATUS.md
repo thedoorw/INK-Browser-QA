@@ -1,19 +1,19 @@
 # INK WORKING STATUS
 
-STATUS: `PRE_CLOUD_CORE_READY / CREATIVE_LOOP_PLANNING / DISCUSSION_HOLD`
+STATUS: `INK-CLOUD-007 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-006` |
-| DEV_BRANCH | `work/ink-cloud-006` |
-| DEV_BRANCH_HEAD | `b3a59ab6a11869c6273ffdd7754b3b11af41ab74` |
-| DEV_HANDOFF | `ACCEPTED` |
-| MR_REVIEW | `MR_PASS` |
+| CURRENT_TASK_ID | `INK-CLOUD-007` |
+| DEV_BRANCH | `work/ink-cloud-007` |
+| DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
+| DEV_HANDOFF | `NOT_YET` |
+| MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `CREATIVE_LOOP_PLAN_REFINEMENT / NO_IMPLEMENTATION` |
-| CLOUD_START_GATE | `DISCUSSION_HOLD` |
+| NEXT_STAGE | `DEV_WORK / EXTRACTION BENCHMARK + REFERENCE_TO_PATH` |
+| CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -133,3 +133,21 @@ Potrace: benchmark reference only unless license policy is separately approved.
 `EXTRACTION_PIPELINE_SELECTED = NO`
 
 Implementation remains blocked during discussion hold.
+
+
+## INK-CLOUD-007 authorization
+
+Discussion hold ended by explicit user direction.
+
+Current work:
+
+```text
+Rose Window Benchmark
+→ technology evidence
+→ selected extraction route
+→ Reference → Extract → editable Path vertical slice
+```
+
+Branch: `work/ink-cloud-007`
+
+Broader Cloud platform work remains out of scope.
