@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / AUTO_PROMOTION_AUTHORIZED`
+STATUS: `MR_PASS / PROMOTED / RUNTIME_QA_DEFERRED`
 
 | Field | Value |
 |---|---|
@@ -8,19 +8,18 @@ STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / AUTO_PROMOTION_AUT
 | DEV_BRANCH | `work/ink-cloud-008b` |
 | REVIEW_HEAD | `4bb8fe665a1576b1c98c0629f324bb2040cddbbc` |
 | CANDIDATE_CODE_QA_HEAD | `b3fb4ec0bed867ebae2010402b6fa9657fd0c356` |
-| REVIEW_STATE | `COMPLETE` |
 | DECISION | `MR_PASS` |
-| SOURCE_REVIEW | `PASS` |
 | GATE | `EDITABLE_PATH_AND_STROKE_WORKS` |
+| PROMOTION_BRANCH | `promote/ink-cloud-008b` |
+| PROMOTION_COMMIT | `9260f5944561ed725ed82f1f8fc18a2184935d81` |
+| PR | `#10 / MERGED` |
+| MAIN_PROMOTION | `b6a6706b2c09c3a1bc621b993e6d61d9c5eb2f0f` |
 | FORMAT_VERSION_CHANGE | `0` |
+| PACKAGE_UPDATE | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
-| PACKAGE_UPDATE | `PROHIBITED` |
-| PROMOTION_POLICY | `AUTO_PROMOTE_AFTER_MR_PASS` |
 
-Review is pinned to exact DEV handoff HEAD:
+008B is closed on main.
 
-`4bb8fe665a1576b1c98c0629f324bb2040cddbbc`
+Next planned stage:
 
-The branch is based on current main and was `18 ahead / 0 behind` at review start.
-
-Branch-local progress/status files are not part of the promotion payload.
+`INK-CLOUD-009 — Multi-Contour Composition`
