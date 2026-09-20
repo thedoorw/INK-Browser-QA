@@ -1,6 +1,6 @@
 import { deepClone, nowISO } from '../core/index.js';
 import { documentFingerprint, fnv1a32, inspectDocument, stableStringify } from './integrity.js';
-import { inspectInkFileEnvelope, wrapInkFile } from './file-envelope.js';
+import { inspectInkFileEnvelope, unwrapInkFile, wrapInkFile } from './file-envelope.js';
 import { walkPageObjects } from './hierarchy.js';
 
 export const REVISION_RECORD_SCHEMA = 'INK-REVISION-RECORD';
@@ -413,6 +413,39 @@ export function cloneRevisionRecord(revision) {
   return deepClone(revision);
 }
 
+export function restoreRevisionDocument(revision) {
+  const inspection = inspectRevisionRecord(revision);
+  if (!inspection.valid) fail('revision-restore-validation-failed', { inspection });
+  const document = unwrapInkFile(revision.envelope);
+  const documentInspection = inspectDocument(document);
+  if (!documentInspection.passed) fail('revision-restore-document-invalid', { inspection: documentInspection });
+  const fingerprint = documentInspection.fingerprint || documentFingerprint(document);
+  if (fingerprint !== revision.documentFingerprint) {
+    fail('revision-restore-fingerprint-mismatch', {
+      expected: revision.documentFingerprint,
+      actual: fingerprint
+    });
+  }
+  return deepClone(document);
+}
+
+function snapshotHistoryState(history) {
+  if (!history) return null;
+  return {
+    undoStack: deepClone(Array.isArray(history.undoStack) ? history.undoStack : []),
+    redoStack: deepClone(Array.isArray(history.redoStack) ? history.redoStack : []),
+    pending: history.pending == null ? null : deepClone(history.pending)
+  };
+}
+
+function restoreHistoryState(history, snapshot) {
+  if (!history || !snapshot) return;
+  history.undoStack = deepClone(snapshot.undoStack);
+  history.redoStack = deepClone(snapshot.redoStack);
+  history.pending = snapshot.pending == null ? null : deepClone(snapshot.pending);
+  history.app?.updateHistoryUI?.();
+}
+
 function revisionSummary(revision) {
   return {
     revisionId: revision.revisionId,
@@ -607,6 +640,95 @@ export class RevisionController {
       record: cloneRevisionRecord(revision),
       comparison: deepClone(comparison)
     };
+  }
+
+  async restore(revisionOrId, { documentId = this.app?.doc?.id || this.currentDocumentId } = {}) {
+    if (this.app?.history?.pending) fail('revision-history-busy');
+
+    const revision = typeof revisionOrId === 'string'
+      ? await this.loadRecord(revisionOrId, { documentId })
+      : cloneRevisionRecord(revisionOrId);
+    if (!revision) fail('revision-not-found', { revisionId: String(revisionOrId || '') });
+
+    const candidate = restoreRevisionDocument(revision);
+    if (documentId && revision.documentId !== documentId) {
+      fail('revision-document-mismatch', { expected: documentId, actual: revision.documentId });
+    }
+
+    const app = this.app;
+    if (!app) fail('revision-app-unavailable');
+    const before = {
+      document: deepClone(app.doc),
+      selection: deepClone(Array.isArray(app.selection) ? app.selection : []),
+      draft: app.draft == null ? null : deepClone(app.draft),
+      strokeEdit: app.strokeEdit == null ? null : deepClone(app.strokeEdit),
+      dirty: Boolean(app.dirty),
+      history: snapshotHistoryState(app.history),
+      currentDocumentId: this.currentDocumentId,
+      currentRevisionId: this.currentRevisionId
+    };
+
+    try {
+      if (typeof app.replaceDocument === 'function') {
+        app.replaceDocument(candidate, { skipSanitize: true });
+      } else {
+        app.doc = candidate;
+      }
+      app.history?.clear?.();
+      app.dirty = false;
+
+      const appliedInspection = inspectDocument(app.doc);
+      const appliedFingerprint = appliedInspection.passed
+        ? (appliedInspection.fingerprint || documentFingerprint(app.doc))
+        : null;
+      if (!appliedInspection.passed || appliedFingerprint !== revision.documentFingerprint) {
+        fail('revision-restore-postcondition-failed', {
+          inspection: appliedInspection,
+          expected: revision.documentFingerprint,
+          actual: appliedFingerprint
+        });
+      }
+
+      this.currentDocumentId = revision.documentId;
+      this.currentRevisionId = revision.revisionId;
+      return {
+        restored: true,
+        revisionId: revision.revisionId,
+        documentId: revision.documentId,
+        documentFingerprint: revision.documentFingerprint,
+        historyBoundary: 'RESET_TO_REVISION',
+        structuredDocument: true
+      };
+    } catch (error) {
+      try {
+        if (typeof app.replaceDocument === 'function') {
+          app.replaceDocument(deepClone(before.document), { fromHistory: true, skipSanitize: true });
+        } else {
+          app.doc = deepClone(before.document);
+        }
+      } catch (_) {
+        app.doc = deepClone(before.document);
+      }
+
+      app.selection = deepClone(before.selection);
+      app.draft = before.draft == null ? null : deepClone(before.draft);
+      app.strokeEdit = before.strokeEdit == null ? null : deepClone(before.strokeEdit);
+      app.dirty = before.dirty;
+      restoreHistoryState(app.history, before.history);
+      this.currentDocumentId = before.currentDocumentId;
+      this.currentRevisionId = before.currentRevisionId;
+      app.refreshAll?.();
+      app.renderer?.render?.();
+
+      fail('revision-restore-failed', {
+        cause: error?.code || String(error),
+        revisionId: revision.revisionId
+      });
+    }
+  }
+
+  async reopen(revisionId, options = {}) {
+    return this.restore(revisionId, options);
   }
 
   async list(documentId = this.app?.doc?.id) {
