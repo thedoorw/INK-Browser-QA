@@ -81,3 +81,13 @@ Bounded anchor correction delegates to native moveAnchor; overlay adjusts image 
 8 extraction engineering tests passed, including undo/redo, save/load migration,
 InkStore memory fallback, SVG export and repeated import identity uniqueness.
 Browser decode/Canvas/pointer/IndexedDB remain RUNTIME_QA_DEFERRED.
+
+## Phase D — reusable structure evidence
+
+Previous checkpoint: `f98257a00c179b14df30b23507abe48468771dc3`.
+Generic center/ring/rotation evidence, explicit sector mask and native Repeat
+reconstruction added. No reference-specific constants in product modules.
+Fourfold engineering raster test passed through actual tracing → Repeat →
+serialization/integrity. SAM remains optional mask input, inference NOT TESTED.
+Accepted regression attempt exposed absent historical Git object needed by one
+pre-task migration test; resolving source acquisition, not claiming that check PASS.
