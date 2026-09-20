@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-012 / READY_TO_START`
+STATUS: `INK-CLOUD-012 / PHASE_A_COMPLETE / PHASE_B_NEXT`
 
 | Field | Value |
 |---|---|
@@ -11,36 +11,26 @@ STATUS: `INK-CLOUD-012 / READY_TO_START`
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | GATE | `CREATIVE_LOOP_V1_COMPLETE` |
-| FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
+| FORMAT_VERSION_CHANGE | `0` |
+| PACKAGE_MUTATION | `0` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Authorized sequence
+## Phase checkpoints
 
-1. Phase A — Revision identity + snapshot contract
-2. Phase B — capture + comparison metadata
-3. Phase C — restore / reopen
-4. Phase D — CHAT revision binding
-5. Phase E — regression evidence
-6. Phase F — report + DEV handoff
+- Phase A — COMPLETE: versioned `INK-REVISION-RECORD`, stable relation-derived revision identity, parent/base metadata, existing `INK-FILE-ENVELOPE` structured snapshot, record/document integrity validation.
+- Phase B — NEXT: capture persistence + deterministic before/after metadata.
+- Phase C — PENDING: restore / reopen + atomic failure + History boundary.
+- Phase D — PENDING: CHAT revision binding.
+- Phase E — PENDING: regression evidence.
+- Phase F — PENDING: report + handoff.
 
-## Core rules
+## Guard state
 
-- GitHub is SSOT.
-- Work only on `work/ink-cloud-012`.
-- Reuse existing document/file-envelope/storage/History architecture.
-- Revision must preserve structured editable INK state.
-- No flattening or raster substitution.
-- Capture must not mutate the active document.
-- Failed restore must be atomic.
-- Core semantics must work with static hosting + browser-local execution.
-- Remote service may be an optional adapter only.
-- Do not run rose-window hard integrated benchmark.
-- Do not merge main.
-- Do not update package.
-- Do not change FORMAT_VERSION without STOP.
-- `RUNTIME_QA = DEFERRED`.
-
-## Start state
-
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+```text
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+REMOTE_SERVICE_REQUIRED = 0
+RUNTIME_QA = DEFERRED
+HARD_STOP = NOT_TRIGGERED
+```
