@@ -144,3 +144,23 @@ Not used. Project status records GitHub Actions quota as exhausted.
 NOT RUN by explicit prohibition.
 
 No unexecuted check is claimed PASS.
+
+
+## Post-evidence consistency recheck
+
+Follow-up bounded fixes were applied after the first evidence commit:
+
+- commit `1e320087455272cded60cbc588e75c52fdf1cc56` — absent material appearance is now omitted on newly created Paths rather than stored as `null`, matching load normalization;
+- commit `d3e0d3dce9e5ddd22dfc7a0675213685a6476a9e` — composition regression now explicitly asserts z-order invariance.
+
+Executed after those fixes:
+
+PASS:
+- latest `product/source/src/vector/vector-core.js` syntax parse;
+- latest `qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs` syntax parse;
+- exact latest `createPath()` harness confirms absent material does not create a `materialAppearance` field;
+- exact latest `createPath()` harness confirms supplied material creates the bounded appearance contract.
+
+Latest checked blob SHAs:
+- `product/source/src/vector/vector-core.js`: `4d27c79d6aede9b73394a298d71ccd50191957de`
+- `qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs`: `08581e0addaf0e1350daa626899e9c3ec953d035`
