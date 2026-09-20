@@ -1,13 +1,13 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-007 / DEVELOPMENT_AUTHORIZED`
+STATUS: `ACTIVE / INK-CLOUD-007 / ENGINE_FIRST DEVELOPMENT`
 
 ## Control
 
 | Field | Value |
 |---|---|
 | CURRENT_TASK_ID | `INK-CLOUD-007` |
-| TITLE | `Rose Window Extraction Benchmark + Reference-to-Path Technical Prototype v0.1` |
+| TITLE | `Extraction Engine + Reference-to-Path Technical Prototype + Rose Window Benchmark v0.1` |
 | AUTHORITY | `USER_EXPLICIT_DEVELOPMENT_AUTHORIZATION` |
 | DEV_WORK_BRANCH | `work/ink-cloud-007` |
 | DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
@@ -15,6 +15,7 @@ STATUS: `ACTIVE / INK-CLOUD-007 / DEVELOPMENT_AUTHORIZED`
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | CLOUD_SCOPE | `BOUNDED_EXTRACTION_WORKSPACE / NO_GENERIC_PLATFORM` |
+| DEVELOPMENT_ORDER | `ENGINE_FIRST / BENCHMARK_AFTER` |
 | RUNTIME_QA | `DEFERRED` |
 
 ## Product objective
@@ -25,13 +26,35 @@ The current highest-priority INK Cloud creative loop remains:
 Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
 ```
 
-This Work Order implements only the first technical slice:
+This Work Order implements only:
 
 ```text
 Reference → Extract → editable Path
 ```
 
-Do not expand into Compose, Repaint, CHAT mutation or broad Cloud platform features.
+The extraction capability is the product under construction. The rose-window image is a later hard benchmark, not a prerequisite for building the engine.
+
+## Engine-first principle
+
+Build the car before choosing the road.
+
+Development must not block on obtaining, uploading, hashing, or normalizing the user rose-window fixture.
+
+The required order is:
+
+```text
+Extraction core / adapters
+→ INK Path conversion
+→ deterministic engineering fixtures
+→ History / serialization / overlay contract
+→ hard rose-window benchmark
+→ direct-vs-structure-aware comparison
+→ pipeline selection
+```
+
+If the user benchmark binary is unavailable, continue all engineering work that does not require it.
+
+Do not spend extended time waiting for a binary fixture, external model download, or remote runtime. Record the blocker and proceed with available bounded work.
 
 ## Required reads
 
@@ -41,163 +64,170 @@ Do not expand into Compose, Repaint, CHAT mutation or broad Cloud platform featu
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-7. `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
-8. `research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
-
-Read additional source/governance only when implementation requires it.
-
-## Primary benchmark
-
-Canonical first hard reference:
-
-`CASE_A_PRIMARY / STRUCTURE_AWARE_HARD_REFERENCE`
-
-User-provided image identity:
-
-`ChatGPT Image 2026年6月26日 上午06_44_33.png`
-
-Observed metadata:
-
-`1086 × 1448 / RGBA`
-
-The image is a near-frontal Gothic tracery/rose-window composition with strong radial repetition and dense nested contours.
-
-If the binary fixture is not yet available in the repo, establish a documented fixture intake path and do not substitute a materially easier benchmark without recording it.
+7. `research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
+8. `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
 
 ## Technical candidates
 
-Benchmark and integrate only after license/runtime verification:
+Evaluate and integrate only after license/runtime verification:
 
-- SAM-class segmentation: semantic mask candidate;
-- OpenCV.js: preprocessing, contour hierarchy, approximation, perspective/geometric evidence;
-- VTracer: primary raster-to-vector candidate;
-- ImageTracerJS: lightweight browser baseline/fallback;
-- Potrace: quality benchmark only unless separate GPL decision;
+- OpenCV.js — contour/hierarchy/geometry preprocessing candidate;
+- VTracer — primary raster-to-vector candidate;
+- ImageTracerJS — lightweight browser baseline/fallback;
+- SAM-class segmentation — optional semantic mask adapter, not an engine-start blocker;
+- Potrace — benchmark reference only unless separate GPL decision;
 - existing INK Path / Repeat / Transform / History remain authoritative.
 
-Do not introduce a second vector engine, hierarchy, transform system, History engine or renderer.
+No second vector engine, hierarchy, transform system, History engine or renderer.
 
 ## Long Sequence phases
 
-### Phase A — Benchmark harness and fixture contract
+### Phase A — Extraction core and adapter contracts
 
-Create deterministic benchmark tooling/data contract for:
+Implement the engine scaffolding first.
 
-- source image identity;
-- extraction parameters;
-- mask/contour/vector outputs;
-- timing and node counts;
-- topology/hole diagnostics;
-- overlay/comparison evidence;
-- reproducible result records.
+Required:
 
-Checkpoint commit required.
+- extraction request/result contract;
+- raster/reference input boundary;
+- optional mask input boundary;
+- contour/vector adapter interface;
+- normalized editable-path result contract;
+- provenance metadata;
+- deterministic diagnostics;
+- failure/cancel behavior;
+- no dependency on the rose-window fixture.
 
-### Phase B — Direct extraction baselines
-
-Implement/evaluate at minimum feasible candidates:
-
-1. OpenCV contour/hierarchy baseline;
-2. VTracer direct vectorization;
-3. ImageTracerJS baseline if technically appropriate.
-
-Record actual executed evidence; do not claim unavailable dependency results.
+Use small deterministic repo fixtures or generated geometric fixtures for engineering tests.
 
 Checkpoint commit required.
 
-### Phase C — Segmentation-assisted and structure-aware route
+### Phase B — Direct extraction implementations
 
-Establish adapter boundary for semantic mask input.
+Implement the strongest feasible direct routes:
 
-If a SAM-class runtime can be integrated within reasonable browser/repo constraints, benchmark it. If model/runtime size prevents bounded integration, implement the adapter contract and document the exact blocker rather than inventing PASS evidence.
+1. OpenCV contour/hierarchy adapter where feasible;
+2. VTracer adapter where feasible;
+3. ImageTracerJS baseline/fallback where appropriate.
 
-Implement rose-window structural analysis sufficient to test:
+Requirements:
 
-- dominant center/rings where detectable;
-- radial/repeated motif evidence;
-- representative prototype candidate;
-- Repeat/Transform reconstruction using existing INK structures.
+- external dependency failures must not stall the whole workpack;
+- unavailable runtimes are recorded as blockers;
+- at least one executable baseline must reach authoritative INK Path conversion;
+- no benchmark-specific hardcoding.
 
 Checkpoint commit required.
 
-### Phase D — Reference → editable Path vertical slice
+### Phase C — INK Path vertical slice
 
-Integrate the strongest evidence-supported route into shared INK/editor code:
+Integrate:
 
-- import/reference object boundary;
-- extraction invocation;
-- conversion to authoritative editable INK Path;
-- original/path overlay;
-- local correction-ready output;
+```text
+Reference / raster
+→ extraction adapter
+→ authoritative editable INK Path
+```
+
+Required:
+
+- path/node geometry uses existing INK vector model;
 - History integration;
-- save/load/serialization integrity;
-- stable provenance from reference to extracted path.
+- save/load and serialization integrity;
+- reference-to-path provenance;
+- overlay/comparison boundary;
+- local correction-ready output;
+- minimum diagnostics/control surface only.
 
-No broad UI. Minimum controls/diagnostics only.
+This phase must be testable without the user rose-window fixture.
 
 Checkpoint commit required.
 
-### Phase E — Selection report and handoff
+### Phase D — Structure-aware extraction layer
+
+Add reusable structure reasoning support, not rose-window-only code.
+
+Establish reusable evidence/adapter contracts for:
+
+- center/ring candidates;
+- radial repetition;
+- repeated motif/prototype candidates;
+- Repeat / Transform reconstruction;
+- optional semantic segmentation input.
+
+A SAM-class runtime may be benchmarked if practical, but large model/runtime acquisition must not block completion. An adapter contract plus documented blocker is acceptable when runtime integration is not bounded.
+
+Checkpoint commit required.
+
+### Phase E — Hard benchmark
+
+Only after Phases A–D are functional, run the formal rose-window benchmark.
+
+Canonical benchmark:
+
+`CASE_A_PRIMARY / STRUCTURE_AWARE_HARD_REFERENCE`
+
+User image identity:
+
+`ChatGPT Image 2026年6月26日 上午06_44_33.png`
+
+If binary intake is unavailable, mark:
+
+`HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE`
+
+and still hand off the completed engine with all available engineering evidence.
+
+Compare:
+
+A. Direct extraction  
+B. AI/structure-aware INK reconstruction
+
+Record:
+
+- contour completeness;
+- topology/hole nesting;
+- false/missing contours;
+- node density;
+- curve fidelity;
+- symmetry/repetition consistency;
+- correction cost;
+- latency/memory where measurable;
+- browser feasibility;
+- license/portable implications.
+
+Checkpoint commit required when executed.
+
+### Phase F — Selection report and handoff
 
 Create:
 
 `research/INK_EXTRACTION_PIPELINE_SELECTION_REPORT_v0.1.md`
 
-Report:
+Report separately:
 
-- candidates actually tested;
-- versions/licenses;
-- benchmark fixture identities;
-- metrics/results;
-- direct trace vs structure-aware comparison;
-- selected pipeline and fallback;
-- browser/portable implications;
-- tests executed;
-- tests authored but not executed;
-- runtime debt;
-- known limitations;
-- exact final branch HEAD.
+1. engine capability actually implemented;
+2. engineering tests actually executed;
+3. external adapters tested/not tested;
+4. hard benchmark executed or blocked;
+5. direct-vs-structure-aware evidence if available;
+6. selected current pipeline and fallback;
+7. unresolved benchmark/runtime debt;
+8. exact final branch HEAD.
 
-## Evaluation criteria
+## Acceptance
 
-Do not select by visual similarity alone.
+MR must be able to verify at minimum:
 
-Measure:
-
-- contour completeness;
-- missing/false contours;
-- topology and hole nesting;
-- unnecessary node density;
-- curve fidelity;
-- radial symmetry error;
-- repeated motif consistency;
-- editability;
-- correction cost;
-- determinism;
-- latency/memory where measurable;
-- browser feasibility;
-- license suitability;
-- portability toward single `INK.html`.
-
-## Compatibility requirements
-
-Protect accepted:
-
-- FORMAT_VERSION 4 unless MR explicitly decides otherwise;
-- Frame/Group/ownership;
-- Transform/bounds/singular guards;
-- Component/Instance;
-- Repeat identity;
-- History;
-- native save/load;
-- InkStore;
-- structured SVG;
-- assetManifest;
-- portable shared-core direction.
-
-If FORMAT_VERSION change or accepted structural contract break becomes necessary:
-
-`STOP / MR_DECISION_REQUIRED`.
+1. extraction core exists independently of the benchmark image;
+2. at least one extraction route converts deterministic raster/contour input into editable INK Path;
+3. existing INK vector/History/serialization contracts are reused;
+4. extraction result retains source/provenance identity;
+5. failures do not leave partial History or corrupted document state;
+6. no second core engine was created;
+7. rose-window-specific logic is not baked into generic extraction core;
+8. hard benchmark status is explicit: executed or blocked, never implied;
+9. FORMAT_VERSION remains 4 unless MR explicitly approves otherwise;
+10. package/main remain untouched by DEV.
 
 ## Explicit exclusions
 
@@ -208,7 +238,7 @@ Do not implement:
 - remote persistence service;
 - permissions;
 - collaboration/presence;
-- Compose/Repaint workflow;
+- Compose/Repaint;
 - CHAT edit execution;
 - full Auto Layout;
 - package update;
@@ -221,7 +251,20 @@ Do not implement:
 
 `RUNTIME_QA = DEFERRED`
 
-All feasible source/static/unit/serialization/benchmark checks must be executed in the active environment. Never report an unexecuted check as PASS.
+Run all feasible source/static/unit/serialization/engine tests locally/in the active environment.
+
+Never claim an unexecuted test or unavailable external runtime as PASS.
+
+## Hard STOP
+
+STOP only if:
+
+1. FORMAT_VERSION change is required;
+2. accepted Frame/Group/Ownership/Transform/Component/History contract must be broken;
+3. a second vector/hierarchy/transform/renderer/History engine becomes necessary;
+4. scope must expand beyond this Work Order.
+
+A missing rose-window binary, unavailable SAM model, or unavailable external tracer is **not** a hard STOP; document and continue.
 
 ## Completion gate
 
@@ -229,8 +272,9 @@ All feasible source/static/unit/serialization/benchmark checks must be executed 
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-CLOUD-007
 BRANCH = work/ink-cloud-007
-BENCHMARK = EXECUTED_WITH_RECORDED_EVIDENCE
+EXTRACTION_ENGINE = IMPLEMENTED
 REFERENCE_TO_PATH = TECHNICAL_VERTICAL_SLICE_COMPLETE
+HARD_BENCHMARK = EXECUTED_OR_EXPLICITLY_BLOCKED
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
