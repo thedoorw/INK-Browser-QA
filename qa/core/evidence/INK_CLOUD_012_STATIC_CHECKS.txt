@@ -1,0 +1,82 @@
+INK-CLOUD-012 — Revision Closure v0.1
+Static/source/isolated regression evidence
+Recorded: 2026-09-20
+Branch: work/ink-cloud-012
+Base main: 8215489b7c52c741bccd927c38bd72749ea605cb
+RUNTIME_QA: DEFERRED
+
+EXECUTED CHECKS
+
+1. Exact committed-source syntax parse harness
+   PASS  product/source/src/document/revision.js
+   PASS  product/source/src/editor/chat-bounded-edit.js
+   PASS  qa/core/tests/unit/revision-closure-core-v0.1.test.mjs
+   PASS  qa/core/tests/unit/revision-chat-binding-v0.1.test.mjs
+   NOTE  revision-closure-source-v0.1.test.mjs uses import.meta and is therefore not parseable by the non-module Function harness; it was not reported as a module-run PASS.
+
+2. Exact committed-source isolated Revision harness
+   PASS  capture-created
+   PASS  capture-zero-mutation
+   PASS  record-valid
+   PASS  equivalent-no-op
+   PASS  comparison-changed-id
+   PASS  parent-relation
+   PASS  restore-equivalent
+   PASS  history-boundary
+   PASS  corrupt-prevalidation-atomic
+   PASS  browser-local-reopen
+
+3. Exact committed-source isolated CHAT binding harness
+   PASS  chat-proposal-revision-binding
+   PASS  chat-stale-revision-rejected
+   PASS  chat-state-revision-exposed
+
+4. Exact committed Revision serialization / failure harness
+   Revision blob SHA: 18028bb15866ff07c87d81073a63a3265ff6839e
+   PASS  JSON stringify/parse Revision record remains valid and restores the same document fingerprint
+   PASS  forced mid-restore failure rolls back document, undo/redo, selection, draft, strokeEdit and dirty state
+   Observed failure code: revision-restore-failed
+
+5. Static architecture checks against exact branch source
+   PASS  FORMAT_VERSION remains 4
+   PASS  installRevision(this,{store:this.store}) occurs before installChatBoundedEdit(this)
+   PASS  service-worker shell includes ./src/document/revision.js
+   PASS  Revision source has no fetch/XMLHttpRequest/WebSocket/http(s) dependency
+   PASS  Revision source reuses INK file-envelope + document integrity + existing History boundary
+   PASS  no raster/flatten Revision representation introduced
+
+6. GitHub compare: base main -> work/ink-cloud-012
+   status: ahead
+   ahead_by: 7
+   behind_by: 0
+   merge_base: 8215489b7c52c741bccd927c38bd72749ea605cb
+   changed paths at time of check:
+     ACTIVE/INK_DEV_PROGRESS.md
+     product/source/service-worker.js
+     product/source/src/document/index.js
+     product/source/src/document/revision.js
+     product/source/src/editor/chat-bounded-edit.js
+     product/source/src/ink.js
+     qa/core/tests/unit/revision-chat-binding-v0.1.test.mjs
+     qa/core/tests/unit/revision-closure-core-v0.1.test.mjs
+     qa/core/tests/unit/revision-closure-source-v0.1.test.mjs
+   PASS  package mutation = 0
+   PASS  product/source/src/config.js not changed
+   PASS  product/source/src/document/migration.js not changed
+   PASS  FORMAT_VERSION change = 0
+   PASS  main merge = 0
+
+NOT EXECUTED / DEFERRED
+
+- Browser runtime / external USER-path QA: DEFERRED by Work Order.
+- Full repository node:test runner: NOT EXECUTED in this connector-only DEV environment.
+- Package rebuild/regeneration: PROHIBITED / NOT EXECUTED.
+- Main merge: PROHIBITED / NOT EXECUTED.
+
+RESULT
+
+SOURCE_STATIC_ISOLATED_QA = PASS
+RUNTIME_QA = DEFERRED
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+REMOTE_SERVICE_REQUIRED = 0
