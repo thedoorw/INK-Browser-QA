@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `AUTHORIZED / DEV_WORK_READY`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 ## Control
 
@@ -14,8 +14,8 @@ STATUS: `AUTHORIZED / DEV_WORK_READY`
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `DEV_AUTHORIZED` |
-| NEXT_AUTHORIZED_ACTION | `DEV_WORK_IMPLEMENTATION` |
+| CURRENT_GATE | `MR_PASS` |
+| NEXT_AUTHORIZED_ACTION | `USER_PROMOTION_DECISION_REQUIRED` |
 | CLOUD_START_GATE | `BLOCKED` |
 | RUNTIME_QA | `DEFERRED` |
 
@@ -311,3 +311,24 @@ STOP
 After MR PASS + promotion, MR must perform the final PRE_CLOUD_CORE_READY assessment.
 
 Cloud implementation remains blocked until that assessment passes and the user explicitly approves Cloud start.
+
+
+## MR Pass
+
+MR reviewed final DEV handoff HEAD:
+
+`b3a59ab6a11869c6273ffdd7754b3b11af41ab74`
+
+Implementation + executed QA checkpoint:
+
+`184c74195e976526713ad549b236e13c9dac9ad7`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+No blocking source/schema finding remains. `FORMAT_VERSION_CHANGE = 0`.
+
+DEV remains stopped. Main promotion requires user approval.
+
+After promotion, MR must perform the final `PRE_CLOUD_CORE_READY` assessment. This PASS does not authorize Cloud implementation.
