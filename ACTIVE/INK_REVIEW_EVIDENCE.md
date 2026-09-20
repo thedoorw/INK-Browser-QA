@@ -2,40 +2,64 @@
 
 STATUS: `MR_PASS_EVIDENCE / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-006`
+TASK: `INK-CLOUD-007`
 
-REVIEWED_HEAD: `b3a59ab6a11869c6273ffdd7754b3b11af41ab74`
-
-IMPLEMENTATION_AND_QA_HEAD: `184c74195e976526713ad549b236e13c9dac9ad7`
+REVIEWED_HEAD: `b006a3a7dadc5d261e3dda5b377f61ec13221ddb`
 
 ## Reviewed product source
 
-- `product/source/src/document/layout.js`
-- `product/source/src/document/file-envelope.js`
-- `product/source/src/document/model.js`
-- `product/source/src/document/migration.js`
-- `product/source/src/document/integrity.js`
-- `product/source/src/document/index.js`
+- `product/source/src/extraction/core.js`
+- `product/source/src/extraction/adapters.js`
+- `product/source/src/extraction/workspace.js`
+- `product/source/src/extraction/structure.js`
+- `product/source/src/extraction/install.js`
+- bounded integration in `product/source/src/ink.js`
+- vendored `product/source/src/vendor/imagetracer-1.2.6.js`
 
 ## Reviewed QA / report
 
-- `qa/core/tests/unit/layout-persistence-contract-v0.1.test.mjs`
-- `qa/core/run-layout-persistence-closure-checks.mjs`
-- `qa/core/evidence/INK_CLOUD_006_NODE_CHECKS.txt`
-- `research/INK_LAYOUT_PERSISTENCE_CONTRACT_CLOSURE_REPORT_v0.1.md`
+- `qa/core/tests/unit/extraction-core-v0.1.test.mjs`
+- `qa/core/tests/unit/extraction-workspace-v0.1.test.mjs`
+- `qa/core/tests/unit/extraction-structure-v0.1.test.mjs`
+- `qa/extraction/DEPENDENCIES.md`
+- `research/INK_EXTRACTION_PIPELINE_SELECTION_REPORT_v0.1.md`
 - branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 
-## Executed DEV evidence retained
+## DEV evidence retained
 
-- accepted 002–005 structural/Component suites: `62/62 PASS`
-- retained shared-core suites: `29/29 PASS`
-- Layout/Constraints + persistence suite: `21/21 PASS`
-- total Node tests: `112/112 PASS`
-- source syntax checks: `8/8 PASS`
-- `FORMAT_VERSION = 4` assertion: PASS
-- bounded no-network-transport check: PASS
-- `git diff --check`: PASS
+Recorded branch checkpoint evidence:
 
-MR independently inspected source contracts and evidence but did not rerun browser/runtime QA.
+- Phase A extraction core: 3 tests executed successfully.
+- Phase B direct adapter suite: 5 tests executed successfully, including actual ImageTracerJS raster → native Path.
+- Phase C workspace/History/serialization evidence: total extraction engineering evidence reached 8 tests.
+- Phase D structure-aware Repeat route: 1 test executed successfully.
+- Final source syntax check: 5/5 extraction modules PASS.
+- Final closeout rerun of Phase-A subset: 3/3 PASS in reconstructed Node environment.
+- `FORMAT_VERSION = 4`.
+- benchmark-specific token scan reported no rose-window-specific product hardcoding.
+
+MR independently inspected the source contracts, integration boundaries and changed-file scope. MR did not independently rerun browser/runtime QA.
+
+## Explicitly not certified
+
+- OpenCV.js runtime
+- VTracer browser/WASM runtime
+- SAM inference
+- browser decode / Canvas / pointer
+- IndexedDB runtime
+- visual overlay fidelity
+- latency/memory behavior
+- hard rose-window benchmark
+- historical migration/endurance closure
 
 `RUNTIME_QA = DEFERRED`
+
+## Branch topology
+
+At review time:
+
+- DEV HEAD is 10 commits ahead of merge base.
+- DEV branch is 7 commits behind current main.
+- merge base: `40ed1a188c1f703425dcc6ae430603a6482d4fcd`.
+
+Therefore direct branch merge is not accepted as the promotion mechanism.
