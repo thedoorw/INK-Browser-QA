@@ -565,3 +565,20 @@ Target gate:
 `CHAT_BOUNDED_EDIT_LOOP_WORKS`
 
 This stage establishes the transport-neutral/browser-local collaboration contract and bounded proposal→approval→mutation path. Revision closure remains reserved for the next stage.
+
+
+## Current continuous stage — INK-CLOUD-012
+
+INK-CLOUD-011 completed and promoted with gate:
+
+`CHAT_BOUNDED_EDIT_LOOP_WORKS`
+
+The next bounded creative-loop stage is:
+
+`INK-CLOUD-012 — Revision Closure v0.1`
+
+Target gate:
+
+`CREATIVE_LOOP_V1_COMPLETE`
+
+This stage closes the first Reference→Revision creative loop with browser-local revision identity, structured snapshot/restore and CHAT revision binding. The deferred hard integrated rose-window benchmark remains outside this task.
