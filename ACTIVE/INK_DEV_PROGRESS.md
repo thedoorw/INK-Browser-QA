@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-011 / PHASE_D_COMPLETE / PHASE_E_IN_PROGRESS`
+STATUS: `INK-CLOUD-011 / PHASE_E_COMPLETE / PHASE_F_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -143,3 +143,39 @@ Additional guarantees:
 - no remote service dependency introduced.
 
 Next: Phase E regression/source evidence.
+
+
+### Phase E — complete
+
+`REGRESSION_EVIDENCE = RECORDED`
+
+Executed evidence is recorded in:
+
+- `qa/core/evidence/INK_CLOUD_011_STATIC_CHECKS.txt`.
+
+PASS evidence:
+
+- exact GitHub-source static architecture checks;
+- exact-source lightweight syntax parse for collaboration module + new tests;
+- isolated collaboration-contract harness from committed source blob;
+- deterministic summary/proposal/approval behavior;
+- approved repaint, translate and Path simplify operation families;
+- stale/locked rejection and forced atomic rollback;
+- branch scope compare: ahead, not behind authorized base;
+- `FORMAT_VERSION = 4`;
+- package mutation = 0;
+- serialization surface mutation = 0.
+
+Authored repository regressions:
+
+- `qa/core/tests/unit/chat-bounded-edit-core-v0.1.test.mjs`;
+- `qa/core/tests/unit/chat-bounded-edit-source-v0.1.test.mjs`.
+
+Not executed:
+
+- full repository Node runner — checkout unavailable because execution environment could not resolve github.com;
+- browser/runtime QA — `DEFERRED` by Work Order.
+
+No unexecuted check is claimed PASS.
+
+Next: Phase F report + DEV handoff.
