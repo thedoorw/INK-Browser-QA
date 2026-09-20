@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008B / PHASE_E_COMPLETE / PHASE_F_NEXT`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,8 @@ STATUS: `INK-CLOUD-008B / PHASE_E_COMPLETE / PHASE_F_NEXT`
 | TITLE | `Expressive Stroke v0.1` |
 | BRANCH | `work/ink-cloud-008b` |
 | BASE_MAIN | `18edd731d1fb4e10100190a0b303b284010e3de6` |
-| DEV_HANDOFF | `NOT_YET` |
+| CANDIDATE_CODE_QA_HEAD | `b3fb4ec0bed867ebae2010402b6fa9657fd0c356` |
+| DEV_HANDOFF | `YES / MR_REVIEW_REQUIRED` |
 | MR_REVIEW | `PENDING` |
 | GATE | `EDITABLE_PATH_AND_STROKE_WORKS` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
@@ -167,4 +168,28 @@ Reason: exact repository checkout is unavailable in the current DEV execution en
 RUNTIME_QA = DEFERRED
 ```
 
-NEXT: `BEGIN_PHASE_F / REPORT_AND_HANDOFF`
+NEXT: `MR_REVIEW_REQUIRED / STOP`
+
+## Checkpoint — Phase F
+
+- Created `research/INK_EXPRESSIVE_STROKE_REPORT_v0.1.md`.
+- Report commit: `71fc57db`.
+- Exact code/QA candidate remains `b3fb4ec0bed867ebae2010402b6fa9657fd0c356`.
+- Composition/Repaint/CHAT were not started.
+- Package mutation: `0`.
+- Main merge: `0`.
+- Runtime QA: `DEFERRED`.
+- MR must pin the exact current branch HEAD when review begins.
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-008B
+BRANCH = work/ink-cloud-008b
+CANDIDATE_CODE_QA_HEAD = b3fb4ec0bed867ebae2010402b6fa9657fd0c356
+GATE = EDITABLE_PATH_AND_STROKE_WORKS
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
