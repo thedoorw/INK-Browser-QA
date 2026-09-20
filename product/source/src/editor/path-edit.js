@@ -1,5 +1,6 @@
 import { Matrix } from '../core/index.js';
 import { findPageObject } from '../document/hierarchy.js';
+import { moveAnchor, moveBezierHandle, setAnchorMode } from '../vector/vector-core.js';
 
 const ANCHOR_MODES = new Set(['corner', 'smooth', 'symmetric']);
 const HANDLE_SIDES = new Set(['in', 'out']);
@@ -10,6 +11,15 @@ const fail = (code, details = {}) => {
 };
 
 const keyForAnchor = (subpathIndex, anchorIndex) => `${subpathIndex}:${anchorIndex}`;
+
+function finiteNumber(value, code = 'NON_FINITE_INPUT') {
+  if (!Number.isFinite(value)) fail(code);
+  return value;
+}
+
+function metadataFingerprint(path) {
+  return JSON.stringify(path?.metadata ?? {});
+}
 
 function selectedCandidate(app, ref = null) {
   if (ref) return findPageObject(app.page(), ref);
@@ -138,6 +148,75 @@ export class PathEditController {
       refs.push({ subpathIndex, anchorIndex });
     }
     return refs.sort((a, b) => a.subpathIndex - b.subpathIndex || a.anchorIndex - b.anchorIndex);
+  }
+
+  mutate(label, operation) {
+    const found = this.resolve({ requireHistoryIdle: true });
+    const target = this.app.objectPath?.(found);
+    if (!Array.isArray(target) || !this.app.history?.pushScoped) fail('HISTORY_REQUIRED');
+    const objectId = found.object.id;
+    const metadataBefore = metadataFingerprint(found.object);
+    let result;
+    this.app.history.pushScoped(label, [target], () => {
+      result = operation(found.object, found);
+      assertFinitePathGeometry(found.object);
+      if (found.object.id !== objectId) fail('IDENTITY_CHANGED');
+      if (metadataFingerprint(found.object) !== metadataBefore) fail('METADATA_CHANGED');
+    });
+    this.app.queueSpatialObject?.(this.state.ref);
+    this.app.spatialDirty = true;
+    this.app.refreshAll?.();
+    this.app.renderer?.render?.();
+    return result;
+  }
+
+  moveSelectedAnchors(dx, dy) {
+    finiteNumber(dx);
+    finiteNumber(dy);
+    const refs = this.selectedAnchors();
+    if (!refs.length) fail('ANCHOR_SELECTION_EMPTY');
+    this.mutate('Move Path anchors', path => {
+      for (const ref of refs) {
+        const { anchor } = validateAnchorRef(path, ref.subpathIndex, ref.anchorIndex);
+        moveAnchor(path, ref.subpathIndex, ref.anchorIndex, anchor.x + dx, anchor.y + dy);
+      }
+    });
+    return this.snapshot();
+  }
+
+  moveAnchorTo(subpathIndex, anchorIndex, x, y) {
+    finiteNumber(x);
+    finiteNumber(y);
+    this.resolve();
+    validateAnchorRef(this.resolve().object, subpathIndex, anchorIndex);
+    this.mutate('Reshape Path anchor', path => moveAnchor(path, subpathIndex, anchorIndex, x, y));
+    this.state.anchorKeys.clear();
+    this.state.anchorKeys.add(keyForAnchor(subpathIndex, anchorIndex));
+    this.state.handle = null;
+    return this.snapshot();
+  }
+
+  moveSelectedHandle(x, y) {
+    finiteNumber(x);
+    finiteNumber(y);
+    const selected = this.state?.handle;
+    if (!selected) fail('HANDLE_SELECTION_EMPTY');
+    this.mutate('Move Path Bézier handle', path => {
+      validateAnchorRef(path, selected.subpathIndex, selected.anchorIndex);
+      moveBezierHandle(path, selected.subpathIndex, selected.anchorIndex, selected.side, x, y);
+    });
+    return this.snapshot();
+  }
+
+  setSelectedAnchorMode(mode) {
+    if (!ANCHOR_MODES.has(mode)) fail('ANCHOR_MODE_INVALID');
+    const refs = this.selectedAnchors();
+    if (!refs.length) fail('ANCHOR_SELECTION_EMPTY');
+    this.mutate('Set Path anchor mode', path => {
+      for (const ref of refs) setAnchorMode(path, ref.subpathIndex, ref.anchorIndex, mode);
+    });
+    this.state.handle = null;
+    return this.snapshot();
   }
 
   snapshot() {
