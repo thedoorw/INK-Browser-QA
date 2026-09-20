@@ -1,37 +1,62 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-008A / DEVELOPMENT_AUTHORIZED`
+STATUS: `ACTIVE / INK-CLOUD-008B / DEVELOPMENT_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-008A` |
-| TITLE | `Path Editing Core v0.1` |
-| AUTHORITY | `USER_EXPLICIT_DEVELOPMENT_AUTHORIZATION` |
-| DEV_WORK_BRANCH | `work/ink-cloud-008a` |
+| CURRENT_TASK_ID | `INK-CLOUD-008B` |
+| TITLE | `Expressive Stroke v0.1` |
+| AUTHORITY | `USER_CONTINUOUS_ADVANCE_AUTHORIZATION` |
+| DEV_WORK_BRANCH | `work/ink-cloud-008b` |
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | RUNTIME_QA | `DEFERRED` |
 | FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
+| PROMOTION_POLICY | `MR_PASS_AUTO_PROMOTE / NO_USER_PAUSE` |
 
-## Product objective
+## Continuous advance rule
 
-Continue the creative loop from the accepted INK-CLOUD-007 baseline:
+The user has authorized forward progression without waiting for a separate promotion decision.
 
-```text
-Reference → Extract → editable Path
-```
-
-This Work Order implements only:
+For bounded INK creative-loop work:
 
 ```text
-editable Path → direct Path Editing
+DEV_HANDOFF
+→ MR_REVIEW
+→ if MR_PASS: clean promotion to main
+→ issue next bounded Work Order
 ```
 
-The purpose is to make extracted/native INK Paths safely and precisely editable before expressive stroke work begins.
+Do not pause for a user promotion decision after MR_PASS.
+
+Still STOP for any Hard STOP condition, MR_REVISE/MR_HOLD, FORMAT_VERSION change, architecture break, package/release decision, or scope expansion outside the planned creative loop.
+
+## Accepted baseline
+
+INK-CLOUD-008A is promoted to main.
+
+Accepted chain:
+
+```text
+Reference
+→ Extract
+→ authoritative editable INK Path
+→ direct Path Editing
+```
+
+008B extends this only to:
+
+```text
+editable Path Geometry
++
+independent Expressive Stroke Appearance
+```
+
+Geometry must remain authoritative and editable.
 
 ## Required reads
 
@@ -41,117 +66,97 @@ The purpose is to make extracted/native INK Paths safely and precisely editable 
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-7. `research/INK_EXTRACTION_PIPELINE_SELECTION_REPORT_v0.1.md`
-8. existing vector/editor/History source required by implementation
+7. `research/INK_PATH_EDITING_CORE_REPORT_v0.1.md`
+8. existing vector/stroke/render/History/serialization source as required
 
-## Accepted baseline
+## Product objective
 
-INK-CLOUD-007 is promoted to main.
+Implement expressive stroke assignment on editable Path geometry without converting the Path into raster or destructive outline geometry.
 
-Accepted capability:
+Core rule:
 
 ```text
-Reference
-→ Extract
-→ authoritative editable INK Path
-→ existing History / serialization
+Path Geometry != Stroke Appearance
 ```
 
-Do not redesign or replace extraction, vector, transform, hierarchy, History or renderer architecture.
+Changing stroke appearance must not alter anchor positions, Bézier handles, topology, subpath roles, extraction provenance, or Path identity.
 
 ## Scope
 
-Implement a bounded Path Editing Core using the existing INK vector model.
+Required capabilities:
 
-Required editing capabilities:
+- assign expressive stroke style to an authoritative Path;
+- change stroke style independently from geometry;
+- retain ordinary vector stroke compatibility;
+- define a bounded serializable stroke-style contract;
+- support width/profile behavior without rewriting geometry;
+- support pressure-like/taper/profile samples as appearance data where structurally appropriate;
+- map approved existing INK brush/media characteristics onto Path stroke appearance through the existing renderer architecture;
+- allow switching/removing expressive stroke without geometry loss;
+- History-backed style mutation;
+- undo/redo;
+- save/load/serialization;
+- structured SVG fallback/export behavior must remain explicit and non-corrupting;
+- extraction provenance and Path editing remain intact after stroke assignment.
 
-- enter/exit path edit mode;
-- select a Path object for node editing;
-- select one or multiple anchors;
-- move selected anchors;
-- select and move incoming/outgoing Bézier handles;
-- corner / smooth / symmetric anchor modes;
-- add anchor on an existing segment;
-- delete anchor while protecting minimum viable geometry;
-- open/close path integrity where existing model permits;
-- local path reshape without replacing the whole Path object;
-- bounded simplify/refine operation with explicit tolerance/diagnostics;
-- extracted-path provenance must survive editing;
-- stable object identity must survive editing;
-- all mutations use existing History;
-- undo/redo must restore exact geometry/state;
-- save/load/serialization must preserve edit state geometry;
-- structured SVG export must remain valid.
-
-## UX boundary
-
-Only the minimum editing interaction/control surface necessary to prove the core is authorized.
-
-Do not redesign the full INK UI.
-
-The implementation may add or extend bounded path-edit controls, hit-testing and handles necessary to operate the core.
+Do not require artistic perfection in this workpack. Prove separation, editability, persistence and bounded rendering behavior first.
 
 ## Long Sequence phases
 
-### Phase A — Path edit state and selection contract
+### Phase A — Stroke appearance contract
 
-Establish reusable editor state for:
+Establish a versioned, bounded Path stroke-appearance contract using existing document/vector conventions.
 
-- active edited Path identity;
-- subpath/anchor selection;
-- handle selection;
-- stale/locked/hidden/singular target guards;
-- edit-mode enter/exit behavior;
-- no mutation during selection-only actions.
+Required:
 
-Use stable existing object IDs.
-
-Checkpoint commit required.
-
-### Phase B — Anchor and handle editing
-
-Implement through existing vector primitives where possible:
-
-- anchor movement;
-- Bézier handle movement;
-- corner/smooth/symmetric modes;
-- multi-anchor move;
-- bounded local reshape.
-
-All mutations must be History-backed.
+- geometry-independent style payload;
+- normalization/validation;
+- deterministic defaults;
+- bounded sample/profile limits;
+- no duplicate Path geometry;
+- no FORMAT_VERSION change unless Hard STOP is raised.
 
 Checkpoint commit required.
 
-### Phase C — Topology editing
+### Phase B — Style mutation + History
 
 Implement:
 
-- add anchor on segment;
-- delete anchor;
-- protect closed-path minimum anchor count;
-- open/close path transition if supported without schema change;
-- preserve outer/hole subpath role and compound-path integrity;
-- reject invalid/non-finite geometry.
-
-No whole-object regeneration for ordinary node edits.
+- assign style;
+- replace style;
+- remove expressive style / return to ordinary vector stroke;
+- bounded width/profile/taper parameters;
+- stable Path ID and metadata/provenance;
+- existing scoped History;
+- no-op edits do not create corrupt History.
 
 Checkpoint commit required.
 
-### Phase D — Simplify / refine
+### Phase C — Renderer integration
 
-Implement a bounded geometry cleanup operation.
+Use existing INK renderer domains.
 
-Requirements:
+Required:
 
-- explicit tolerance/settings;
-- deterministic result;
-- diagnostic before/after node counts;
-- preserve Path identity and metadata;
-- preserve closed/open state and subpath roles;
-- History-backed;
-- no rasterization;
-- no destructive flattening;
-- no hidden benchmark-specific tuning.
+- render expressive Path stroke without rasterizing source geometry;
+- preserve existing ordinary vector rendering;
+- deterministic fallback when advanced media cannot render;
+- no second renderer;
+- no brush-to-outline destructive conversion;
+- geometry edit after style assignment updates rendering from the same Path.
+
+Checkpoint commit required.
+
+### Phase D — Existing natural-media bridge
+
+Where bounded and structurally compatible, map selected existing INK brush/media properties to Path stroke appearance.
+
+Required:
+
+- reuse existing brush/media concepts rather than create a parallel brush system;
+- keep geometry/style separation explicit;
+- unsupported natural-media fields must degrade predictably;
+- no new generic brush marketplace/preset platform.
 
 Checkpoint commit required.
 
@@ -159,37 +164,37 @@ Checkpoint commit required.
 
 Prove at minimum:
 
-- native Path editing;
-- extracted Path editing from the INK-CLOUD-007 provenance contract;
-- undo/redo for each editing class;
-- repeated edits without identity collision;
+- same Path geometry under multiple stroke styles;
+- geometry hash/invariant unchanged by style-only mutation;
+- anchor/handle editing after expressive style assignment;
+- undo/redo of style-only and geometry-only changes independently;
 - save/load roundtrip;
-- migration/integrity compatibility where runnable;
-- structured SVG export;
-- locked/hidden/singular/busy-History rejection;
-- failure/cancel/no-op does not create corrupt History entries;
-- `FORMAT_VERSION = 4`.
-
-Create/update bounded QA tests.
+- extraction provenance retention;
+- ordinary vector stroke fallback;
+- SVG export behavior explicitly tested/documented;
+- locked/hidden/busy-History invalid target rejection;
+- `FORMAT_VERSION = 4`;
+- no package mutation.
 
 Checkpoint commit required.
 
-### Phase F — report and DEV handoff
+### Phase F — report + handoff
 
 Create:
 
-`research/INK_PATH_EDITING_CORE_REPORT_v0.1.md`
+`research/INK_EXPRESSIVE_STROKE_REPORT_v0.1.md`
 
 Report:
 
-- implemented capabilities;
-- source files changed;
-- tests actually executed;
+- implemented contract;
+- rendering route;
+- existing brush/media reuse;
+- tests executed;
 - tests not executed;
-- runtime/browser QA debt;
-- known limitations;
-- exact reviewed candidate HEAD;
-- explicit confirmation that expressive stroke was not started.
+- browser/runtime debt;
+- SVG/export limitations;
+- exact candidate HEAD;
+- confirmation that Composition/Repaint were not started.
 
 Set:
 
@@ -198,51 +203,46 @@ Set:
 ## Acceptance gate
 
 ```text
-PATH_EDIT_MODE = IMPLEMENTED
-ANCHOR_EDIT = IMPLEMENTED
-BEZIER_HANDLE_EDIT = IMPLEMENTED
-TOPOLOGY_EDIT = IMPLEMENTED
-SIMPLIFY_REFINE = IMPLEMENTED
+EXPRESSIVE_STROKE = IMPLEMENTED
+PATH_GEOMETRY_SEPARATION = PRESERVED
+PATH_EDIT_AFTER_STYLE = WORKS
 HISTORY = REUSED
 SERIALIZATION = PRESERVED
 EXTRACTION_PROVENANCE = PRESERVED
+ORDINARY_VECTOR_FALLBACK = PRESERVED
 FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
 ```
 
-The Work Order gate is:
+Full Phase-2 gate:
 
-`EDITABLE_PATH_CORE_WORKS`
-
-This is not yet the full Phase-2 gate `EDITABLE_PATH_AND_STROKE_WORKS`; expressive stroke belongs to INK-CLOUD-008B.
+`EDITABLE_PATH_AND_STROKE_WORKS`
 
 ## Explicit exclusions
 
 Do not implement:
 
-- expressive stroke / brush assignment;
-- variable-width stroke profile;
-- natural-media stroke rendering changes;
-- multi-contour composition;
-- repaint/material;
+- Multi-Contour Composition;
+- Repaint / Material;
 - CHAT mutation;
 - rose-window benchmark;
 - generic Cloud backend/auth/collaboration;
+- full brush/preset marketplace;
 - package/single-file release;
 - FORMAT_VERSION bump;
 - second vector/History/transform/renderer engine.
 
 ## Hard STOP
 
-STOP and request MR decision if any of these become necessary:
+STOP and request MR decision if:
 
-1. FORMAT_VERSION change;
-2. break to accepted Path/Frame/Group/Transform/History contracts;
-3. second vector/history/transform/renderer engine;
-4. broad UI redesign;
-5. scope expansion into Expressive Stroke or later creative-loop phases.
+1. FORMAT_VERSION change is required;
+2. accepted Path/History/renderer/transform contract must break;
+3. a second vector, brush, History or renderer engine becomes necessary;
+4. expressive stroke requires destructive Path-to-outline/raster conversion as the authoritative representation;
+5. scope must expand into Composition/Repaint/CHAT or broad UI redesign.
 
 ## QA constraint
 
@@ -250,7 +250,7 @@ STOP and request MR decision if any of these become necessary:
 
 `RUNTIME_QA = DEFERRED`
 
-Run all feasible source/static/unit/serialization tests in the active environment.
+Run all feasible source/static/unit/serialization checks.
 
 Never claim unexecuted checks as PASS.
 
@@ -258,57 +258,12 @@ Never claim unexecuted checks as PASS.
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-008A
-BRANCH = work/ink-cloud-008a
-GATE = EDITABLE_PATH_CORE_WORKS
-EXPRESSIVE_STROKE = NOT_STARTED
+TASK_ID = INK-CLOUD-008B
+BRANCH = work/ink-cloud-008b
+GATE = EDITABLE_PATH_AND_STROKE_WORKS
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
-
-
-## MR Review — INK-CLOUD-008A
-
-Reviewed HEAD:
-
-`1cbc69b56e060edc8523fdbfdcdd34417379b3db`
-
-Candidate code/QA HEAD:
-
-`aa0d37a52753a2b3ea1a5a00b914a4753db0c37a`
-
-Decision:
-
-`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
-
-Accepted bounded result:
-
-```text
-Path edit mode = IMPLEMENTED
-Anchor edit = IMPLEMENTED
-Bézier handle edit = IMPLEMENTED
-Topology edit = IMPLEMENTED
-Simplify / refine = IMPLEMENTED
-History = REUSED
-Serialization contract = PRESERVED
-Extraction provenance = PRESERVED
-FORMAT_VERSION = 4
-Expressive Stroke = NOT_STARTED
-PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-```
-
-Gate:
-
-`EDITABLE_PATH_CORE_WORKS`
-
-The branch is 28 commits ahead and 0 behind main at review time.
-
-DEV remains stopped.
-
-Next action:
-
-`USER_PROMOTION_DECISION`
