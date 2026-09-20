@@ -1,5 +1,6 @@
 import { Matrix } from '../core/index.js';
 import { findPageObject, walkPageObjects } from '../document/hierarchy.js';
+import { PathEditController } from './path-edit.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
@@ -514,5 +515,153 @@ export class ChatBoundedEditController {
 export function installChatBoundedEdit(app) {
   const controller = new ChatBoundedEditController(app);
   app.chatBoundedEdit = controller;
+  app.chatBoundedEditAdapter = createChatBoundedEditAdapter(controller);
   return controller;
+}
+
+
+export const CHAT_EDIT_RESULT_SCHEMA = 'INK-CHAT-EDIT-RESULT';
+export const CHAT_EDIT_RESULT_VERSION = 1;
+
+function snapshotTaskTargets(app, task) {
+  const page = app.page();
+  return task.targets.map(ref => {
+    const found = findPageObject(page, ref);
+    if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
+    return {
+      ref: clone(ref),
+      stateFingerprint: currentTargetFingerprint(page, found),
+      worldMatrix: clone(found.worldMatrix || found.object?.matrix || null)
+    };
+  });
+}
+
+function targetSnapshotsChanged(before, after) {
+  if (before.length !== after.length) return true;
+  return before.some((item, index) =>
+    item.ref.layerId !== after[index]?.ref?.layerId
+    || item.ref.objectId !== after[index]?.ref?.objectId
+    || item.stateFingerprint !== after[index]?.stateFingerprint);
+}
+
+function withTemporarySelection(app, refs, operation) {
+  const previous = clone(Array.isArray(app.selection) ? app.selection : []);
+  app.selection = refs.map(ref => ({ layerId: ref.layerId, objectId: ref.objectId }));
+  try {
+    return operation();
+  } finally {
+    app.selection = previous;
+    app.refreshSelectionUI?.();
+    app.renderer?.render?.();
+  }
+}
+
+function executeAppearanceTask(app, task) {
+  const controller = app.pathRepaintMaterial;
+  if (!controller) editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+  const refs = task.targets.map(ref => ({ layerId: ref.layerId, objectId: ref.objectId }));
+  if (task.operation === 'path.repaint.v1') return controller.repaint(task.arguments, { refs, label: 'CHAT repaint Path' });
+  if (task.operation === 'path.material.apply.v1') return controller.applyMaterial(task.arguments, { refs, label: 'CHAT apply Path material' });
+  if (task.operation === 'path.material.remove.v1') return controller.removeMaterial({ refs, label: 'CHAT remove Path material' });
+  editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
+}
+
+function executeTranslateTask(app, task) {
+  if (typeof app.translateSelection !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+  return withTemporarySelection(app, task.targets, () => {
+    app.translateSelection(task.arguments.dx, task.arguments.dy, 'CHAT translate objects');
+    return { dx: task.arguments.dx, dy: task.arguments.dy };
+  });
+}
+
+function executePathEditTask(app, task) {
+  if (app.pathEditing?.active) editFail('EDIT_MODE_BUSY', { operation: task.operation });
+  const ref = task.targets[0];
+  return withTemporarySelection(app, [ref], () => {
+    const editor = new PathEditController(app);
+    editor.enter({ layerId: ref.layerId, objectId: ref.objectId });
+    try {
+      if (task.operation === 'path.simplify.v1') return editor.simplify(task.arguments);
+      if (task.operation === 'path.refine.v1') return editor.refine(task.arguments);
+      editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
+    } finally {
+      editor.exit();
+    }
+  });
+}
+
+function executeApprovedTask(app, task) {
+  if (task.operation === 'path.repaint.v1'
+    || task.operation === 'path.material.apply.v1'
+    || task.operation === 'path.material.remove.v1') {
+    return executeAppearanceTask(app, task);
+  }
+  if (task.operation === 'object.translate.v1') return executeTranslateTask(app, task);
+  if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1') return executePathEditTask(app, task);
+  editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
+}
+
+ChatBoundedEditController.prototype.execute = function execute(proposalId, approvalToken) {
+  const proposal = this.assertApproved(proposalId, approvalToken);
+  const beforeTargets = snapshotTaskTargets(this.app, proposal.task);
+  const beforeUndoCount = this.app.history?.undoStack?.length ?? null;
+
+  const controllerResult = executeApprovedTask(this.app, proposal.task);
+
+  const afterTargets = snapshotTaskTargets(this.app, proposal.task);
+  const afterUndoCount = this.app.history?.undoStack?.length ?? null;
+  const changed = targetSnapshotsChanged(beforeTargets, afterTargets);
+  const latestHistory = this.app.history?.undoStack?.at?.(-1) || null;
+
+  proposal.state = 'EXECUTED';
+  proposal.approved = false;
+  proposal.approvalToken = null;
+  this.proposals.set(proposal.proposalId, proposal);
+
+  return {
+    schema: CHAT_EDIT_RESULT_SCHEMA,
+    version: CHAT_EDIT_RESULT_VERSION,
+    ok: true,
+    proposalId: proposal.proposalId,
+    taskId: proposal.task.taskId,
+    operation: proposal.task.operation,
+    state: 'EXECUTED',
+    changed,
+    targets: afterTargets,
+    history: {
+      beforeUndoCount,
+      afterUndoCount,
+      latestLabel: latestHistory?.label || null
+    },
+    controllerResult: clone(controllerResult ?? null)
+  };
+};
+
+export function createChatBoundedEditAdapter(appOrController) {
+  const controller = appOrController instanceof ChatBoundedEditController
+    ? appOrController
+    : (appOrController?.chatBoundedEdit || new ChatBoundedEditController(appOrController));
+
+  return Object.freeze({
+    inspect() {
+      try { return { ok: true, action: 'inspect', result: controller.inspect() }; }
+      catch (error) { return chatEditDiagnostic(error, 'inspect'); }
+    },
+    propose(task) {
+      try { return { ok: true, action: 'propose', result: controller.propose(task) }; }
+      catch (error) { return chatEditDiagnostic(error, 'propose'); }
+    },
+    approve(proposalId) {
+      try { return { ok: true, action: 'approve', result: controller.approve(proposalId) }; }
+      catch (error) { return chatEditDiagnostic(error, 'approve'); }
+    },
+    reject(proposalId) {
+      try { return { ok: true, action: 'reject', result: controller.reject(proposalId) }; }
+      catch (error) { return chatEditDiagnostic(error, 'reject'); }
+    },
+    execute(proposalId, approvalToken) {
+      try { return { ok: true, action: 'execute', result: controller.execute(proposalId, approvalToken) }; }
+      catch (error) { return chatEditDiagnostic(error, 'execute'); }
+    }
+  });
 }
