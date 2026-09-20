@@ -14,7 +14,7 @@ STATUS: `INK-CLOUD-013 / DEV_IN_PROGRESS / PHASE_A`
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
-| LATEST_CHECKPOINT | `PHASE_C_SAVE_LOAD_CLOSURE_COMPLETE` |
+| LATEST_CHECKPOINT | `PHASE_D_HARD_BENCHMARK_INTAKE_BLOCKED` |
 
 ## Authorized sequence
 
@@ -177,3 +177,31 @@ node --test qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs
 ```
 
 Result: `3 PASS / 0 FAIL`.
+
+## Phase D — rose-window hard integrated benchmark
+
+Checkpoint base: `b2736f612a9bc45830e369709410ba90591d42e4`
+
+Repository search found only:
+
+- `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+
+No canonical benchmark binary matching
+`ChatGPT Image 2026年6月26日 上午06_44_33.png` is present.
+
+The available external attachment was inspected and is not a rose window:
+
+```text
+file: 01-3-.jpg
+type: JPEG / 1161 × 1650 / RGB
+sha256: 313229c3336a77fbaf1907844c0e597fb7059ab03845dae51dc61e75649dcecf
+content: horse ink painting
+```
+
+It was not copied into the repository or substituted for the registered hard
+fixture.
+
+`HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE`
+
+Per Work Order this does not block Phase E/F or invalidate the deterministic
+integrated harness.
