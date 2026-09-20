@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-008B / MR_PASS / AUTO_PROMOTION_IN_PROGRESS`
+STATUS: `INK-CLOUD-009 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-008B` |
-| DEV_BRANCH | `work/ink-cloud-008b` |
-| DEV_BRANCH_HEAD | `4bb8fe665a1576b1c98c0629f324bb2040cddbbc` |
-| DEV_HANDOFF | `ACCEPTED` |
-| MR_REVIEW | `MR_PASS` |
+| CURRENT_TASK_ID | `INK-CLOUD-009` |
+| DEV_BRANCH | `work/ink-cloud-009` |
+| DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
+| DEV_HANDOFF | `NOT_YET` |
+| MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `AUTO_PROMOTION` |
+| NEXT_STAGE | `DEV_WORK / MULTI_CONTOUR_COMPOSITION` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -350,3 +350,29 @@ Gate:
 `EDITABLE_PATH_AND_STROKE_WORKS`
 
 Per continuous-advance authorization, clean promotion follows automatically.
+
+
+## INK-CLOUD-008B promotion
+
+PR `#10` merged.
+
+Main promotion:
+
+`b6a6706b2c09c3a1bc621b993e6d61d9c5eb2f0f`
+
+Gate accepted:
+
+`EDITABLE_PATH_AND_STROKE_WORKS`
+
+## INK-CLOUD-009 authorization
+
+Current objective:
+
+```text
+Path A + Path B + Path C
+→ Compose
+```
+
+Branch:
+
+`work/ink-cloud-009`
