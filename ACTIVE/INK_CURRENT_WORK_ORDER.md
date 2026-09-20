@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `COMPLETE / PROMOTED / PRE_CLOUD_CORE_READY`
 
 ## Control
 
@@ -14,9 +14,9 @@ STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `MR_PASS` |
-| NEXT_AUTHORIZED_ACTION | `USER_PROMOTION_DECISION_REQUIRED` |
-| CLOUD_START_GATE | `BLOCKED` |
+| CURRENT_GATE | `PRE_CLOUD_CORE_READY` |
+| NEXT_AUTHORIZED_ACTION | `USER_CLOUD_START_APPROVAL_REQUIRED` |
+| CLOUD_START_GATE | `WAITING_USER_APPROVAL` |
 | RUNTIME_QA | `DEFERRED` |
 
 ## Baseline
@@ -332,3 +332,18 @@ No blocking source/schema finding remains. `FORMAT_VERSION_CHANGE = 0`.
 DEV remains stopped. Main promotion requires user approval.
 
 After promotion, MR must perform the final `PRE_CLOUD_CORE_READY` assessment. This PASS does not authorize Cloud implementation.
+
+
+## Main Promotion + Final Pre-Cloud Readiness
+
+INK-CLOUD-006 was promoted to main at:
+
+`c0800bbc2345772b44aa310161aa446fc87fbe60`
+
+Final readiness assessment:
+
+`PRE_CLOUD_CORE_READY = YES`
+
+The pre-Cloud structural stage is complete.
+
+Cloud implementation is still not authorized automatically. The next action is explicit user approval to begin the first Cloud Work Order.
