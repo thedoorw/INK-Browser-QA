@@ -582,3 +582,20 @@ Target gate:
 `CREATIVE_LOOP_V1_COMPLETE`
 
 This stage closes the first Reference→Revision creative loop with browser-local revision identity, structured snapshot/restore and CHAT revision binding. The deferred hard integrated rose-window benchmark remains outside this task.
+
+
+## Current continuous stage — INK-CLOUD-013
+
+INK-CLOUD-012 completed and promoted with gate:
+
+`CREATIVE_LOOP_V1_COMPLETE`
+
+The next bounded stage is:
+
+`INK-CLOUD-013 — Integrated Creative Loop Validation v0.1`
+
+Target gate:
+
+`INTEGRATED_CREATIVE_LOOP_VALIDATED`
+
+This stage validates the full accepted chain as one workflow and, when the registered fixture is available, executes the deferred rose-window hard integrated benchmark before broader workspace UX work.
