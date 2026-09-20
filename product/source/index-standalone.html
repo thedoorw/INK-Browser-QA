@@ -299,6 +299,17 @@
             <button id="resetSegmentStyleBtn" class="wide-button">恢復整筆樣式</button>
           </div>
         </div>
+        <div id="pathEditCard" class="property-card stroke-edit-card" hidden>
+          <div class="subpanel-title"><strong>Path 節點</strong><span>PATH EDIT</span></div>
+          <p id="pathEditStatus" class="stroke-edit-status">選取一個 Path 後進入編輯。</p>
+          <div class="stroke-edit-entry"><button id="enterPathEditBtn" class="wide-button">編輯 Path</button><button id="exitPathEditBtn" class="wide-button" hidden>完成編輯</button></div>
+          <div id="pathEditActions" class="stroke-edit-actions" hidden>
+            <button id="selectAllPathAnchorsBtn">全選節點</button><button id="simplifyPathBtn">簡化</button>
+            <button id="insertPathAnchorBtn" disabled>插入節點</button><button id="refinePathBtn">Refine</button>
+            <button id="pathCornerBtn" disabled>角點</button><button id="pathSmoothBtn" disabled>平滑</button><button id="pathSymmetricBtn" disabled>對稱</button>
+            <button id="togglePathClosedBtn">閉合路徑</button><button id="deletePathAnchorsBtn" class="danger" disabled>刪除節點</button>
+          </div>
+        </div>
         <div class="property-card transform-card">
           <div class="subpanel-title"><strong>位置與尺寸</strong><button id="aspectLockBtn" class="aspect-lock active" title="鎖定比例" aria-pressed="true"><svg><use href="#i-lock"/></svg></button></div>
           <div class="transform-grid">
