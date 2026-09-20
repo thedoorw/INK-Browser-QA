@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-007 / ENGINE_FIRST / DEVELOPMENT_ACTIVE`
+STATUS: `INK-CLOUD-007 / ENGINE_COMPLETE_NEAR_HANDOFF / HARD_BENCHMARK_DEFERRED`
 
 | Field | Value |
 |---|---|
@@ -12,7 +12,7 @@ STATUS: `INK-CLOUD-007 / ENGINE_FIRST / DEVELOPMENT_ACTIVE`
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / EXTRACTION_ENGINE_FIRST` |
+| NEXT_STAGE | `DEV FINISH REPORT + HANDOFF / THEN MR REVIEW` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -172,3 +172,18 @@ engine
 The rose-window image is now an acceptance benchmark, not an engine-start prerequisite.
 
 Missing benchmark binary or external model runtime is not a STOP condition.
+
+
+## Benchmark deferral
+
+User decision:
+
+`HARD_BENCHMARK = DEFERRED_BY_USER_DECISION`
+
+INK-CLOUD-007 should now close on implemented extraction capability and engineering evidence without executing the rose-window benchmark.
+
+After MR acceptance/promotion, the planned next product stage is:
+
+`Path Editing + Expressive Stroke`
+
+Rose-window validation remains registered as future hard acceptance work.
