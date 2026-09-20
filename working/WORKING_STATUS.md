@@ -577,3 +577,54 @@ Branch:
 Target gate:
 
 `INTEGRATED_CREATIVE_LOOP_VALIDATED`
+
+
+## INK-CLOUD-013 MR review and promotion
+
+Reviewed DEV checkpoint:
+
+`0b610a5e68cde3951190088d9e5130dde8948564`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate accepted:
+
+`INTEGRATED_CREATIVE_LOOP_VALIDATED`
+
+Hard benchmark:
+
+```text
+HARD_BENCHMARK = EXECUTED
+EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
+STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
+```
+
+Clean promotion:
+
+- branch: `promote/ink-cloud-013`
+- PR: `#15 / MERGED`
+- main promotion: `1780118ec1c92241851af68649626b7c0a095dd1`
+
+## INK-CLOUD-014 authorization
+
+Current objective:
+
+```text
+accepted creative-loop engine
+→ one coherent minimum workspace
+→ visible state and stage continuity
+→ CHAT approval loop
+→ Revision capture/restore UX
+```
+
+Branch:
+
+`work/ink-cloud-014`
+
+Target gate:
+
+`CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
+
+Broad UI redesign, multi-step agent planning, Structure-Aware Reconstruction redesign and Portable INK packaging remain out of scope.
