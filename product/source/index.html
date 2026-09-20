@@ -309,6 +309,16 @@
             <button id="pathCornerBtn" disabled>角點</button><button id="pathSmoothBtn" disabled>平滑</button><button id="pathSymmetricBtn" disabled>對稱</button>
             <button id="togglePathClosedBtn">閉合路徑</button><button id="deletePathAnchorsBtn" class="danger" disabled>刪除節點</button>
           </div>
+          <div id="pathStrokeControls" class="segment-style-controls" hidden>
+            <div class="subpanel-title"><strong>Path 表現筆畫</strong><span>APPEARANCE</span></div>
+            <label class="control-row"><span>筆刷來源</span><select id="pathStrokePreset"><option value="ink">Ink</option><option value="pencil">Pencil</option><option value="marker">Marker</option><option value="opaque-paint">Opaque</option><option value="soft-paint">Soft</option><option value="watercolor">Watercolor</option><option value="oil-like">Oil-like</option><option value="dry-brush">Dry Brush</option><option value="texture-brush">Texture</option></select></label>
+            <label class="control-row"><span>顏色</span><input id="pathStrokeColor" type="color" value="#202020"></label>
+            <label class="control-row range-row"><span>基準寬度</span><input id="pathStrokeWidth" type="range" min="0.5" max="120" step="0.5" value="6"><output id="pathStrokeWidthOutput">6</output></label>
+            <label class="control-row range-row"><span>起點收尖</span><input id="pathStrokeTaperStart" type="range" min="0" max="100" step="1" value="0"><output id="pathStrokeTaperStartOutput">0%</output></label>
+            <label class="control-row range-row"><span>終點收尖</span><input id="pathStrokeTaperEnd" type="range" min="0" max="100" step="1" value="0"><output id="pathStrokeTaperEndOutput">0%</output></label>
+            <div class="stroke-edit-entry"><button id="applyPathStrokeBtn" class="wide-button">套用／更新</button><button id="removePathStrokeBtn" class="wide-button">移除表現</button></div>
+            <p id="pathStrokeStatus" class="stroke-edit-status">ORDINARY VECTOR</p>
+          </div>
         </div>
         <div class="property-card transform-card">
           <div class="subpanel-title"><strong>位置與尺寸</strong><button id="aspectLockBtn" class="aspect-lock active" title="鎖定比例" aria-pressed="true"><svg><use href="#i-lock"/></svg></button></div>
