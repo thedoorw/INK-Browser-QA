@@ -2,43 +2,46 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-010`
+TASK: `INK-CLOUD-011`
 
-REVIEWED_HEAD: `4fabf00e78ae46450a36eb8cf7bedb8ef80b2748`
+REVIEWED_HEAD: `1ea7cf0c4fb0fb892b96cdedfa25a77e4517a3f2`
 
 ## Decision
 
 `MR_PASS`
 
-No blocking source/contract finding remains for the bounded Repaint + Material scope.
+No blocking source/contract finding remains for the bounded CHAT Review + Structured Edit Tasks scope.
 
 ## Findings
 
-- Repaint/material appearance remains separate from authoritative Path geometry and composition.
-- Existing Path, History, renderer, hierarchy, transform and persistence architecture is reused.
-- Multi-Path repaint/material mutation is bounded and target-scoped.
-- Locked/hidden/stale/singular/busy-History guards are present.
-- Deterministic no-op does not create a History mutation.
-- Path identity, geometry fingerprint, transform, hierarchy/z-order and provenance are preserved.
-- Expressive Stroke remains unchanged unless explicitly requested.
-- Material assignment uses bounded existing material-library reuse with explicit ordinary-vector fallback.
-- Structured SVG remains editable `<path>` output and does not rasterize materialized Paths.
-- File-envelope extension `ink.path-material-appearance.v1` preserves material appearance without `FORMAT_VERSION` change.
+- CHAT-facing state summary is deterministic and bounded and uses stable page/layer/object references.
+- Proposal, approval and rejection remain document/History-neutral.
+- Execution requires explicit browser-local approval state plus matching approval token.
+- Targets are revalidated for missing/stale/locked/hidden/unexposed/singular state before execution.
+- Supported operations are allowlisted; no arbitrary eval/script surface was introduced.
+- Repaint/material routes reuse `PathRepaintMaterialController`.
+- Translation reuses the existing composition/transform route.
+- Simplify/refine reuse `PathEditController`.
+- Existing target-scoped History remains authoritative for committed mutation and rollback.
+- Static-hosting + browser-local core remains viable; no mandatory backend, WebSocket, XHR or remote AI dependency was added.
 - `FORMAT_VERSION = 4`.
-- No package mutation, CHAT mutation, Revision closure or rose-window benchmark work occurred.
+- Package, migration, file-format and Revision-closure scope were not expanded.
 
 ## Non-blocking debt
 
-- Full Node test runner was not executed because the DEV execution environment could not resolve `github.com`.
-- Browser/runtime interaction and visual QA remain deferred.
-- Hosted Actions were not used.
-- Runtime material/render ergonomics remain browser-QA debt.
+- Full repository Node runner was not executed in the DEV environment because exact checkout/network resolution failed.
+- Browser/runtime interaction and service-worker lifecycle QA remain deferred.
+- Initial CHAT operation vocabulary is intentionally bounded.
+- Revision snapshot/restore closure remains the next planned stage.
 
 ## Promotion
 
-The DEV branch is ahead of current main with no behind/divergence at review.
+Branch topology at review:
 
-Promotion should carry only the reviewed product/QA/report payload.
+`20 ahead / 0 behind`
 
-Exclude branch-local:
-- `ACTIVE/INK_DEV_PROGRESS.md`
+Clean promotion completed through PR `#13`, excluding branch-local `ACTIVE/INK_DEV_PROGRESS.md`.
+
+Main promotion:
+
+`680d465ffcc05a47da8fc39f0ad68b2647807864`
