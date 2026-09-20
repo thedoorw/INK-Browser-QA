@@ -1,0 +1,43 @@
+CHECK: accepted INK-CLOUD-002 through 005 and retained shared-core suites
+CHECK: current Component + accepted 002/003/004 contracts
+ℹ tests 62
+ℹ pass 62
+ℹ fail 0
+CHECK: retained core/editor/history/spatial/storage/stroke/artboard tests (import paths adapted only)
+ℹ tests 29
+ℹ pass 29
+ℹ fail 0
+PASS: 6 product syntax checks; FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED (no browser, Canvas/WebGL visual, pointer, IndexedDB or hosted Actions execution)
+CHECK: INK-CLOUD-006 Layout / Constraints + persistence envelope suite
+✔ format-4 Frame without layout remains exact no-layout behavior (7.785005ms)
+✔ known layout fields normalize deterministically while future fields survive (0.313382ms)
+✔ migration normalizes known schema and preserves unknown future extension fields (1.028715ms)
+✔ Frame is sole layout-container authority; Group and Repeat are not reclassified (0.659831ms)
+✔ horizontal flow resolves hug/fixed/fill, padding, gap and cross alignment without mutation (0.783174ms)
+✔ vertical flow keeps absolute children out and computes hug container intent (0.445456ms)
+✔ resize constraints express start/end/center/scale/stretch without changing matrices (0.521508ms)
+✔ layout History commands are atomic, undoable and reject busy/invalid targets before mutation (1.903443ms)
+✔ layout metadata keeps child identity/ownership and singular transforms untouched (0.687933ms)
+✔ integrity diagnoses malformed raw layout and accepts normalized save/load data (2.417931ms)
+✔ Component source and Instance identity/override/detach remain compatible with layout metadata (2.46473ms)
+✔ structured SVG stays structural and ignores layout metadata rather than flattening (0.59094ms)
+✔ file envelope wraps/unwraps native document losslessly without mutation (1.105528ms)
+✔ envelope declares Component/Layout extensions and rejects omitted required declaration (0.523591ms)
+✔ fingerprint, format version and malformed envelope fail closed (2.425772ms)
+✔ asset reference boundary mirrors assetManifest and detects divergence (0.433378ms)
+✔ next revision keeps file identity, advances monotonically and fingerprints new native payload (0.774141ms)
+✔ unsupported future layout schemas are preserved but never interpreted as current layout (0.401491ms)
+✔ file-envelope constructors reject malformed known input before producing an envelope (0.357306ms)
+✔ malformed cyclic or unserializable envelopes fail as diagnostics instead of recursing/throwing (104.555936ms)
+✔ InkStore remains a separate native-document recovery path with layout and assetManifest (1.326885ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235.733407
+PASS: 8 source syntax checks; FORMAT_VERSION = 4; no network transport primitive in new schema modules
+RUNTIME_QA = DEFERRED (no browser, Canvas/WebGL visual, pointer, IndexedDB or hosted Actions execution)

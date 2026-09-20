@@ -182,8 +182,18 @@ test('file-envelope constructors reject malformed known input before producing a
   const f=fixture();
   for(const call of [
     ()=>wrapInkFile(f.doc,{extensions:'bad'}),()=>wrapInkFile(f.doc,{savedAt:''}),
-    ()=>wrapInkFile(f.doc,{revisionId:''}),()=>wrapInkFile({...f.doc,formatVersion:0})
+    ()=>wrapInkFile(f.doc,{revisionId:''}),()=>wrapInkFile({...f.doc,formatVersion:0}),
+    ()=>wrapInkFile({...f.doc,id:''}),()=>wrapInkFile(f.doc,{savedAt:'yesterday'})
   ]) assert.throws(call);
+});
+
+test('malformed cyclic or unserializable envelopes fail as diagnostics instead of recursing/throwing',()=>{
+  const f=fixture(),valid=wrapInkFile(f.doc),cyclic=structuredClone(valid);cyclic.document.loop=cyclic.document;
+  assert.doesNotThrow(()=>inspectInkFileEnvelope(cyclic));
+  assert.ok(inspectInkFileEnvelope(cyclic).errors.some(x=>x.code==='file-envelope-document-not-serializable'));
+  const invalid=structuredClone(valid);invalid.document.bad=1n;
+  assert.doesNotThrow(()=>inspectInkFileEnvelope(invalid));
+  assert.throws(()=>unwrapInkFile(invalid),{code:'file-envelope-verification-failed'});
 });
 
 test('InkStore remains a separate native-document recovery path with layout and assetManifest',async()=>{

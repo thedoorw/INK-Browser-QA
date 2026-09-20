@@ -1,4 +1,4 @@
-import { deepClone, nowISO, uid } from '../core/index.js';
+import { deepClone, nowISO } from '../core/index.js';
 import { documentFingerprint, stableStringify } from './integrity.js';
 import { walkPageObjects } from './hierarchy.js';
 
@@ -7,6 +7,7 @@ export const FILE_ENVELOPE_VERSION = '1.0';
 
 const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const validString = value => typeof value === 'string' && value.trim().length > 0;
+const validTimestamp = value => validString(value) && Number.isFinite(Date.parse(value));
 const fail = (code, details = {}) => { throw Object.assign(new Error(code), { code, ...details }); };
 
 export function declaredDocumentExtensions(document) {
@@ -25,7 +26,7 @@ function assetReferences(document) {
 }
 
 export function wrapInkFile(document, {
-  fileId = document?.id || uid(), revision = 1, revisionId = null,
+  fileId = document?.id, revision = 1, revisionId = null,
   extensions = null, appliedMigrations = [], savedAt = nowISO()
 } = {}) {
   if (!record(document) || document.format !== 'INK') fail('file-envelope-invalid-document');
@@ -33,13 +34,15 @@ export function wrapInkFile(document, {
   if (!Number.isSafeInteger(revision) || revision < 0) fail('file-envelope-invalid-revision');
   if (!Array.isArray(appliedMigrations) || appliedMigrations.some(item => !validString(item))) fail('file-envelope-invalid-migrations');
   if (extensions !== null && !Array.isArray(extensions)) fail('file-envelope-invalid-extensions');
-  if (!validString(savedAt)) fail('file-envelope-invalid-timestamp');
+  if (!validTimestamp(savedAt) || (document.modifiedAt !== undefined && !validTimestamp(document.modifiedAt))) fail('file-envelope-invalid-timestamp');
   if (revisionId !== null && !validString(revisionId)) fail('file-envelope-invalid-revision-id');
   const documentPayload = deepClone(document);
   if (!Number.isInteger(documentPayload.formatVersion) || documentPayload.formatVersion < 1) fail('file-envelope-invalid-format-version');
   const declared = extensions === null ? declaredDocumentExtensions(documentPayload) : [...extensions];
   if (declared.some(item => !validString(item))) fail('file-envelope-invalid-extensions');
-  const fingerprint = documentFingerprint(documentPayload);
+  let fingerprint;
+  try { fingerprint = documentFingerprint(documentPayload); }
+  catch (error) { fail('file-envelope-document-not-serializable', { cause: String(error) }); }
   return {
     schema: FILE_ENVELOPE_SCHEMA,
     version: FILE_ENVELOPE_VERSION,
@@ -68,15 +71,26 @@ export function inspectInkFileEnvelope(envelope) {
   if (!record(envelope.document) || envelope.document.format !== 'INK') add('file-envelope-invalid-document');
   if (envelope.documentFormatVersion !== envelope.document?.formatVersion) add('file-envelope-format-version-mismatch');
   if (!Array.isArray(envelope.extensions) || envelope.extensions.some(item => !validString(item))) add('file-envelope-invalid-extensions');
-  else for (const required of declaredDocumentExtensions(envelope.document)) {
-    if (!envelope.extensions.includes(required)) add('file-envelope-missing-extension', { extension: required });
+  else {
+    try {
+      for (const required of declaredDocumentExtensions(envelope.document)) {
+        if (!envelope.extensions.includes(required)) add('file-envelope-missing-extension', { extension: required });
+      }
+    } catch (error) { add('file-envelope-invalid-document-structure', { cause: String(error) }); }
   }
   if (!Array.isArray(envelope.appliedMigrations) || envelope.appliedMigrations.some(item => !validString(item))) add('file-envelope-invalid-migrations');
   if (!Array.isArray(envelope.assetReferences)) add('file-envelope-invalid-assets');
-  else if (stableStringify(envelope.assetReferences) !== stableStringify(assetReferences(envelope.document))) add('file-envelope-asset-reference-mismatch');
-  if (!validString(envelope.savedAt) || !validString(envelope.modifiedAt)) add('file-envelope-invalid-timestamps');
+  else {
+    try {
+      if (stableStringify(envelope.assetReferences) !== stableStringify(assetReferences(envelope.document))) add('file-envelope-asset-reference-mismatch');
+    } catch (error) { add('file-envelope-invalid-assets', { cause: String(error) }); }
+  }
+  if (!validTimestamp(envelope.savedAt) || !validTimestamp(envelope.modifiedAt)) add('file-envelope-invalid-timestamps');
   let actualFingerprint = null;
-  if (record(envelope.document)) actualFingerprint = documentFingerprint(envelope.document);
+  if (record(envelope.document)) {
+    try { actualFingerprint = documentFingerprint(envelope.document); }
+    catch (error) { add('file-envelope-document-not-serializable', { cause: String(error) }); }
+  }
   if (envelope.integrity?.algorithm !== 'fnv1a32-canonical-json' || envelope.integrity?.fingerprint !== actualFingerprint) add('file-envelope-fingerprint-mismatch', { actualFingerprint });
   return { valid: errors.length === 0, errors, actualFingerprint };
 }

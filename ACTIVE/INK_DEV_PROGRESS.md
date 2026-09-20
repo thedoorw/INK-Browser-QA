@@ -7,9 +7,9 @@ STATUS: `DEV_IN_PROGRESS`
 | CURRENT_TASK_ID | `INK-CLOUD-006` |
 | DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
 | DEV_WORK_BRANCH | `work/ink-cloud-006` |
-| BASE_BRANCH_HEAD_AT_START | `ef88e8432690df6de7f05d67c281d351aa58353d` |
-| LATEST_DEV_COMMIT | `dc6c20ca71543773b791c571c51a423372b20d28` |
-| DEV_STATE | `EDGE_HARDENING_CHECKPOINT` |
+| BASE_BRANCH_HEAD_AT_START | `d1f90889ed3f50a372692a7b41bd5a7323d2f6fd` |
+| LATEST_DEV_COMMIT | `04fab9e69a90ef5e90fd34a9030f6f2e389fb49a` |
+| DEV_STATE | `VERIFICATION_COMPLETE` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
 | FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSIONS` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -92,3 +92,17 @@ Hardened deterministic evaluation and envelope behavior:
 - feature detection now scans structural objects only, so workspace `cameras.layout` cannot falsely declare `ink.layout.v1`.
 
 Actually executed: new suite **20/20 PASS**; accepted Component/Frame/Group/Transform plus retained core suites via `run-component-foundation-checks.mjs`: **62/62 + 29/29 PASS**, 6 syntax checks and FORMAT_VERSION=4 PASS. Initial edge test exposed false `ink.layout.v1` detection from workspace camera naming; fixed by using `walkPageObjects()` and rerun. Runtime QA remains DEFERRED.
+
+## Checkpoint 3 — fail-closed persistence validation and combined evidence
+
+Published semantic hardening checkpoint: `04fab9e69a90ef5e90fd34a9030f6f2e389fb49a`.
+
+Closed malformed-input and verification edges:
+
+- envelope construction requires a stable document/file ID and parseable timestamps;
+- cyclic or otherwise non-serializable native payloads fail with bounded diagnostics instead of recursing or throwing during inspection;
+- extension and asset-reference inspection is exception-safe and remains fail closed;
+- added one command that executes accepted 002–005 compatibility, retained shared-core tests, the 006 contract suite, source syntax, format-version and network-boundary checks;
+- captured the exact command output in `qa/core/evidence/INK_CLOUD_006_NODE_CHECKS.txt`.
+
+Actually executed: combined runner **112/112 Node tests PASS** (62 accepted structural/Component + 29 retained shared-core + 21 Layout/persistence), **8/8 source syntax checks PASS**, `FORMAT_VERSION = 4` PASS, bounded new modules contain no network transport primitive, and `git diff --check` PASS. Runtime browser/Canvas/WebGL/pointer/IndexedDB and hosted Actions QA remain DEFERRED.
