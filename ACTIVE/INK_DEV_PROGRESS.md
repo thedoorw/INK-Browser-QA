@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008B / PHASE_C_COMPLETE / PHASE_D_NEXT`
+STATUS: `INK-CLOUD-008B / PHASE_D_COMPLETE / PHASE_E_NEXT`
 
 | Field | Value |
 |---|---|
@@ -91,3 +91,17 @@ NEXT: `BEGIN_PHASE_C / RENDERER_INTEGRATION`
 Phase C source commits: `43715e92`, `759216a5`, `${swCommit.slice(0,8)}`.
 
 NEXT: `BEGIN_PHASE_D / NATURAL_MEDIA_BRIDGE`
+
+
+## Checkpoint — Phase D
+
+- Existing `BUILTIN_BRUSH_PRESETS` are now selectable as Path appearance sources; no duplicate preset registry was created.
+- Bounded bridge maps preset size, opacity, pressure-size dynamics, flow, grain, wetness, bristle, softness and fixed seed into Path appearance data.
+- Unsupported physical/media behaviors are disclosed through deterministic vector-approximation diagnostics and preserve ordinary-vector fallback.
+- Existing Path inspector card now exposes preset, color, base width and start/end taper plus assign/update/remove controls.
+- The Path remains authoritative geometry; applying a brush does not create a Stroke object, outline, raster object or new renderer.
+- Brush marketplace/package scope remains untouched.
+
+Phase D source commits: `7b9580e4`, `1d9d0744`, `a7dc0047`, `1ac849f6`.
+
+NEXT: `BEGIN_PHASE_E / INTEGRATION_REGRESSION_EVIDENCE`
