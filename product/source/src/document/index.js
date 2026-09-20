@@ -8,3 +8,4 @@ export * from './hierarchy.js';
 export * from './components.js';
 export * from './layout.js';
 export * from './file-envelope.js';
+export * from './revision.js';

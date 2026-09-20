@@ -2,6 +2,7 @@ import { Matrix } from '../core/index.js';
 import { findPageObject, walkPageObjects } from '../document/hierarchy.js';
 import { PathEditController } from './path-edit.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
+import { documentFingerprint } from '../document/integrity.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -181,6 +182,10 @@ export function buildChatStateSummary(app) {
       activePageId: document.activePageId || page.id || null,
       pageCount: document.pages?.length || 0
     },
+    revision: {
+      revisionId: app?.revisions?.revisionIdFor?.(document.id) ?? null,
+      documentFingerprint: documentFingerprint(document)
+    },
     page: {
       id: page.id || null,
       name: page.name || null,
@@ -326,6 +331,11 @@ function normalizeExpected(raw) {
   const expected = {};
   if (raw.documentId != null) expected.documentId = boundedText(raw.documentId, 'expected.documentId', { max: 160 });
   if (raw.pageId != null) expected.pageId = boundedText(raw.pageId, 'expected.pageId', { max: 160 });
+  if (hasOwn(raw, 'revisionId')) {
+    expected.revisionId = raw.revisionId == null
+      ? null
+      : boundedText(raw.revisionId, 'expected.revisionId', { max: 220 });
+  }
   if (raw.targetFingerprints != null) {
     if (!raw.targetFingerprints || typeof raw.targetFingerprints !== 'object' || Array.isArray(raw.targetFingerprints)) editFail('EXPECTED_INVALID');
     const keys = Object.keys(raw.targetFingerprints);
@@ -364,6 +374,7 @@ export function createChatEditProposal(rawTask, { proposalId = null, expected = 
     proposalId: boundedText(identity, 'proposalId', { max: 220 }),
     task,
     expected: normalizeExpected(expected ?? task.expected),
+    revisionId: normalizeExpected(expected ?? task.expected)?.revisionId ?? null,
     stateFingerprint: stateFingerprint ? boundedText(stateFingerprint, 'stateFingerprint', { max: 160 }) : null,
     state: 'PROPOSED',
     approved: false,
@@ -398,6 +409,7 @@ function captureExpectedState(app, task, resolved) {
   return {
     documentId: app.doc?.id || null,
     pageId: page?.id || null,
+    revisionId: app?.revisions?.revisionIdFor?.(app.doc?.id) ?? null,
     targetFingerprints: Object.fromEntries(resolved
       .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found)])
       .sort((a, b) => a[0].localeCompare(b[0])))
@@ -417,6 +429,12 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
   }
   if (preconditions?.pageId && preconditions.pageId !== page.id) {
     editFail('STALE_PAGE', { expected: preconditions.pageId, actual: page.id || null });
+  }
+  if (preconditions && hasOwn(preconditions, 'revisionId')) {
+    const actualRevisionId = app?.revisions?.revisionIdFor?.(document.id) ?? null;
+    if (preconditions.revisionId !== actualRevisionId) {
+      editFail('STALE_REVISION', { expected: preconditions.revisionId, actual: actualRevisionId });
+    }
   }
 
   const resolved = task.targets.map(ref => {
@@ -633,6 +651,11 @@ ChatBoundedEditController.prototype.execute = function execute(proposalId, appro
       beforeUndoCount,
       afterUndoCount,
       latestLabel: latestHistory?.label || null
+    },
+    revision: {
+      inspectedRevisionId: proposal.revisionId ?? null,
+      currentRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null,
+      documentFingerprint: documentFingerprint(this.app.doc)
     },
     controllerResult: clone(controllerResult ?? null)
   };
