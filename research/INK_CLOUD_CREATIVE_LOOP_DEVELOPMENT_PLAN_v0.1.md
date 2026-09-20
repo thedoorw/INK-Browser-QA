@@ -599,3 +599,31 @@ Target gate:
 `INTEGRATED_CREATIVE_LOOP_VALIDATED`
 
 This stage validates the full accepted chain as one workflow and, when the registered fixture is available, executes the deferred rose-window hard integrated benchmark before broader workspace UX work.
+
+
+## Current continuous stage — INK-CLOUD-014
+
+INK-CLOUD-013 completed and promoted with gate:
+
+`INTEGRATED_CREATIVE_LOOP_VALIDATED`
+
+The first Reference→Revision engine chain has now been validated as one integrated workflow, including the deferred canonical rose-window hard benchmark.
+
+Current extraction decision:
+
+```text
+EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
+STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
+```
+
+The next bounded stage is:
+
+`INK-CLOUD-014 — Creative Workspace Minimum UX v0.1`
+
+Target gate:
+
+`CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
+
+This stage changes emphasis from engine construction to human-usable workflow integration. It must expose the accepted engine through one coherent minimum workspace without introducing a second document/editor authority or broad visual redesign.
+
+Multi-step CHAT creative reasoning remains explicitly deferred until the minimum workspace boundary is proven.
