@@ -1,24 +1,19 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / PROMOTED / RUNTIME_QA_DEFERRED`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED / PROMOTION_AUTHORIZED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-009` |
-| DEV_BRANCH | `work/ink-cloud-009` |
-| REVIEW_HEAD | `044703931886269945b9092019844795e78ddf5a` |
+| TASK_ID | `INK-CLOUD-010` |
+| DEV_BRANCH | `work/ink-cloud-010` |
+| REVIEW_HEAD | `4fabf00e78ae46450a36eb8cf7bedb8ef80b2748` |
 | DECISION | `MR_PASS` |
-| GATE | `MULTI_CONTOUR_COMPOSITION_WORKS` |
-| PROMOTION_BRANCH | `promote/ink-cloud-009` |
-| PROMOTION_COMMIT | `6fc10bd70b687e888c678041fb276f77973fd2a1` |
-| PR | `#11 / MERGED` |
-| MAIN_PROMOTION | `d80b0c1589bb962702f857cb11a3111502509c83` |
+| GATE | `REPAINT_MATERIAL_WORKS` |
 | FORMAT_VERSION_CHANGE | `0` |
 | PACKAGE_UPDATE | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
+| PROMOTION_POLICY | `AUTO_PROMOTE / CONTINUOUS_ADVANCE` |
 
-009 is closed on main.
+No blocking source/contract finding remains for the bounded Repaint + Material scope.
 
-Next planned stage:
-
-`INK-CLOUD-010 — Repaint / Material`
+Promotion is authorized under continuous-advance governance.
