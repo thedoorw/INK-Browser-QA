@@ -1,82 +1,41 @@
-# INK REVIEW EVIDENCE — INK-CLOUD-005
+# INK REVIEW EVIDENCE
 
 STATUS: `MR_PASS_EVIDENCE / RUNTIME_QA_DEFERRED`
 
-## Fingerprint
+TASK: `INK-CLOUD-006`
 
-| Field | Value |
-|---|---|
-| TASK_ID | `INK-CLOUD-005` |
-| DEV_BRANCH | `work/ink-cloud-005` |
-| REVIEW_HEAD | `315d4ac2b33894630c0d1a67333fc40acbc145e9` |
-| IMPLEMENTATION_QA_HEAD | `a40885903c2e17e910b6a57672a2be1576e5f29a` |
-| FORMAT_VERSION_CHANGE | `0` |
-| RUNTIME_QA | `DEFERRED` |
+REVIEWED_HEAD: `b3a59ab6a11869c6273ffdd7754b3b11af41ab74`
 
-## Scope reviewed
+IMPLEMENTATION_AND_QA_HEAD: `184c74195e976526713ad549b236e13c9dac9ad7`
 
-Relative to the DEV initialization checkpoint, MR reviewed the Component/Instance implementation and bounded integration across:
+## Reviewed product source
 
-- `product/source/src/document/components.js`
-- `product/source/src/document/hierarchy.js`
-- `product/source/src/document/index.js`
+- `product/source/src/document/layout.js`
+- `product/source/src/document/file-envelope.js`
+- `product/source/src/document/model.js`
+- `product/source/src/document/migration.js`
 - `product/source/src/document/integrity.js`
-- `product/source/src/ink.js`
-- `product/source/src/studio-core.js`
-- `qa/core/tests/unit/component-instance-v0.1.test.mjs`
-- retained Frame / Group / Transform regression evidence
-- `research/INK_COMPONENT_INSTANCE_DATA_MODEL_REPORT_v0.1.md`
+- `product/source/src/document/index.js`
 
-## Source evidence
+## Reviewed QA / report
 
-MR directly verified:
+- `qa/core/tests/unit/layout-persistence-contract-v0.1.test.mjs`
+- `qa/core/run-layout-persistence-closure-checks.mjs`
+- `qa/core/evidence/INK_CLOUD_006_NODE_CHECKS.txt`
+- `research/INK_LAYOUT_PERSISTENCE_CONTRACT_CLOSURE_REPORT_v0.1.md`
+- branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 
-1. Definition authority is registry metadata referencing ordinary Frame/Group roots.
-2. Resolution clones source geometry into a disposable view and does not persist resolved children.
-3. Source root canvas placement is explicitly excluded; instance placement remains the ordinary INK local matrix.
-4. source-node identity is ordinary stable object ID and survives reorder / rename / reparent.
-5. duplicate source-node IDs fail closed.
-6. Instance-owned children are rejected.
-7. nested Instances are explicitly unsupported and rejected rather than recursively resolved.
-8. missing / duplicate / invalid definitions produce broken diagnostic results rather than silent retargeting.
-9. override application is restricted to validated opacity data.
-10. detach remaps all ordinary geometry IDs and removes Component linkage.
-11. mutation commands reject when History is already pending and otherwise use existing scoped History.
-12. broken detach / invalid placement reject before mutation.
-13. renderer, world bounds, atomic hit-test and SVG all resolve the same linked geometry path.
-14. Component documents conservatively rebuild the existing spatial index to avoid stale linked bounds.
-15. integrity reports Component diagnostics without converting broken links into structural corruption.
-16. `FORMAT_VERSION` and app version remain unchanged.
+## Executed DEV evidence retained
 
-## DEV execution evidence
-
-Recorded branch evidence reports:
-
-- Component/current contract tests: `62/62 PASS`
-- retained compatibility tests: `29/29 PASS`
-- total Node tests: `91/91 PASS`
-- source syntax checks: `6/6 PASS`
-- `FORMAT_VERSION = 4`: PASS
+- accepted 002–005 structural/Component suites: `62/62 PASS`
+- retained shared-core suites: `29/29 PASS`
+- Layout/Constraints + persistence suite: `21/21 PASS`
+- total Node tests: `112/112 PASS`
+- source syntax checks: `8/8 PASS`
+- `FORMAT_VERSION = 4` assertion: PASS
+- bounded no-network-transport check: PASS
 - `git diff --check`: PASS
 
-The evidence log is:
+MR independently inspected source contracts and evidence but did not rerun browser/runtime QA.
 
-`qa/core/evidence/INK_CLOUD_005_NODE_CHECKS.txt`
-
-MR did not independently execute the complete Node suite; these results are treated as DEV execution evidence. MR independently reviewed the relevant source paths and test definitions.
-
-## Deferred evidence
-
-Still deferred:
-
-- live browser Canvas/WebGL rendering;
-- pointer move/scale/rotate;
-- browser nested visibility/lock/opacity interaction;
-- real browser IndexedDB recovery;
-- browser project open/save;
-- browser SVG inspection;
-- GPU/tile/natural-media fidelity.
-
-Therefore:
-
-`SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+`RUNTIME_QA = DEFERRED`
