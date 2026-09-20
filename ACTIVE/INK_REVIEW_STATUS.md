@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / PROMOTED / PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
+STATUS: `PRE_CLOUD_CORE_READY / INK-CLOUD-007 AUTHORIZED`
 
 | Field | Value |
 |---|---|
@@ -15,15 +15,20 @@ STATUS: `MR_PASS / PROMOTED / PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
 | RUNTIME_QA | `DEFERRED` |
 | MAIN_PROMOTION | `PROMOTED / c0800bbc2345772b44aa310161aa446fc87fbe60` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| CLOUD_START_GATE | `DISCUSSION_HOLD` |
+| CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 
 If `work/ink-cloud-006` moves beyond REVIEW_HEAD before promotion, this review becomes stale.
 
 PRE_CLOUD_CORE_READY: `YES`
 
-Next action: `DESIGN_DISCUSSION / NO_IMPLEMENTATION`.
+Next action: `INK-CLOUD-007 DEV WORK`.
 
 
 DISCUSSION_HOLD: `ACTIVE`
 
 No new DEV / DEV WORK task is authorized until the user explicitly ends the discussion hold and approves the next implementation stage.
+
+
+DISCUSSION_HOLD: `ENDED`
+
+Authorized scope is the extraction benchmark and Reference-to-Path technical vertical slice only. Broader Cloud implementation remains outside this Work Order.
