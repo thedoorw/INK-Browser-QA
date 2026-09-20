@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-013 / READY_TO_START`
+STATUS: `INK-CLOUD-013 / DEV_IN_PROGRESS / PHASE_A`
 
 | Field | Value |
 |---|---|
@@ -13,6 +13,8 @@ STATUS: `INK-CLOUD-013 / READY_TO_START`
 | GATE | `INTEGRATED_CREATIVE_LOOP_VALIDATED` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
+| START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
+| LATEST_CHECKPOINT | `PHASE_A_VALIDATION_BASELINE` |
 
 ## Authorized sequence
 
@@ -41,4 +43,59 @@ STATUS: `INK-CLOUD-013 / READY_TO_START`
 
 ## Start state
 
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+`DEV_IN_PROGRESS / PHASE_A`
+
+## Required reads completed
+
+- `README.md`
+- `AGENTS.md`
+- `ACTIVE/README.md`
+- `ACTIVE/INK_CURRENT_WORK_ORDER.md`
+- `working/WORKING_STATUS.md`
+- `ACTIVE/INK_DEV_PROGRESS.md`
+- `ACTIVE/INK_DEV_NEW_WINDOW_START.md`
+- `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
+- `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
+- `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+- `research/INK_REVISION_CLOSURE_REPORT_v0.1.md`
+- `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+
+## Validation-first baseline
+
+Relevant accepted-stage unit suites were executed together before the integrated
+harness was added.
+
+```text
+node --test \
+  qa/core/tests/unit/extraction-core-v0.1.test.mjs \
+  qa/core/tests/unit/extraction-structure-v0.1.test.mjs \
+  qa/core/tests/unit/path-editing-core-v0.1.test.mjs \
+  qa/core/tests/unit/expressive-stroke-core-v0.1.test.mjs \
+  qa/core/tests/unit/multi-contour-composition-core-v0.1.test.mjs \
+  qa/core/tests/unit/repaint-material-core-v0.1.test.mjs \
+  qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs \
+  qa/core/tests/unit/chat-bounded-edit-core-v0.1.test.mjs \
+  qa/core/tests/unit/revision-closure-core-v0.1.test.mjs \
+  qa/core/tests/unit/revision-chat-binding-v0.1.test.mjs
+```
+
+Result: `39 PASS / 6 FAIL / 45 TOTAL`.
+
+The six failures are pre-existing cross-suite contract assertions:
+
+- four file-roundtrip assertions compare all metadata even though current
+  migration adds the accepted semantic default `semanticLabel`;
+- two History assertions expect an absent expressive-stroke property even
+  though `createPath()` represents the initial no-style state as `null`.
+
+No product source has been changed. Phase A will use contract-specific
+identity/provenance assertions and will retain these baseline failures for
+bounded Phase E reconciliation.
+
+## Fixture intake checkpoint
+
+The available user attachment is a horse ink painting, not the registered rose
+window reference. Repository search found the benchmark specification but no
+canonical rose-window binary. Phase D must therefore record:
+
+`HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE`
