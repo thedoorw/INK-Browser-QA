@@ -1,14 +1,14 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-007 / ENGINE_IMPLEMENTED / FINISH_REPORT_AND_HANDOFF`
+STATUS: `INK-CLOUD-007 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 | Field | Value |
 |---|---|
 | TASK_ID | `INK-CLOUD-007` |
-| TITLE | `Extraction Engine + Reference-to-Path Technical Prototype + Rose Window Benchmark v0.1` |
+| TITLE | `Extraction Engine + Reference-to-Path Technical Prototype v0.1` |
 | BRANCH | `work/ink-cloud-007` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING` |
+| DEV_HANDOFF | `READY` |
+| MR_REVIEW | `REQUIRED` |
 | DEVELOPMENT_ORDER | `ENGINE_FIRST / BENCHMARK_AFTER` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
@@ -110,3 +110,61 @@ Remaining authorized work:
 7. STOP.
 
 Do not begin Path Editing / Expressive Stroke inside INK-CLOUD-007.
+
+
+## Phase F — selection report and DEV handoff
+
+Created:
+
+`research/INK_EXTRACTION_PIPELINE_SELECTION_REPORT_v0.1.md`
+
+Closeout evidence:
+
+- branch checkpoint suites recorded 5 core adapter tests, 3 workspace/History/serialization tests, and 1 structure-aware Repeat test as executed successfully;
+- final closeout reran the Phase-A core subset: 3/3 PASS in a reconstructed Node environment using the exact branch extraction core module;
+- final source syntax check: 5/5 extraction modules PASS;
+- `FORMAT_VERSION = 4` confirmed from branch `product/source/src/config.js`;
+- benchmark-specific token scan found no rose-window-specific product hardcoding;
+- OpenCV.js runtime: `NOT TESTED`;
+- VTracer runtime/WASM bridge: `NOT TESTED`;
+- SAM-class inference: `NOT TESTED`;
+- browser decode / Canvas / pointer / IndexedDB runtime: `NOT TESTED / RUNTIME_QA_DEFERRED`;
+- historical migration/endurance regression closure: `BLOCKED / NOT TESTED` because the accepted regression attempt lacks the historical source/object closure required to reproduce it in the active environment;
+- hard rose-window benchmark: `DEFERRED_BY_USER_DECISION`.
+
+Current executable route:
+
+`Reference → optional binary/source-bound mask → ImageTracerJS 1.2.6 → authoritative INK Path → existing History/serialization`
+
+Structure-aware candidate route:
+
+`radial evidence → sector mask/prototype → ImageTracerJS → native Repeat/Transform → overlay QA`
+
+OpenCV.js and VTracer remain optional upgrade adapters pending executable browser/runtime evidence.
+
+No Path Editing / Expressive Stroke, generic Cloud capability, package update, main merge, or FORMAT_VERSION change was performed.
+
+### Handoff identity
+
+Pre-handoff branch HEAD:
+
+`f02677d59f779fe240f0d23df90579171340eea0`
+
+The report/progress commit itself is the final branch HEAD. A Git commit cannot embed its own resolved SHA in its tracked content without changing that SHA; therefore MR must pin the exact resolved commit ID from the branch ref / DEV handoff response.
+
+Final state:
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-007
+BRANCH = work/ink-cloud-007
+EXTRACTION_ENGINE = IMPLEMENTED
+REFERENCE_TO_PATH = TECHNICAL_VERTICAL_SLICE_COMPLETE
+HARD_BENCHMARK = DEFERRED_BY_USER_DECISION
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
