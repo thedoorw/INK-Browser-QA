@@ -2,68 +2,37 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-005`
+TASK: `INK-CLOUD-006`
 
-Reviewed fingerprint:
+REVIEWED_HEAD: `b3a59ab6a11869c6273ffdd7754b3b11af41ab74`
 
-```text
-BRANCH work/ink-cloud-005
-HEAD   315d4ac2b33894630c0d1a67333fc40acbc145e9
-```
+IMPLEMENTATION_AND_QA_HEAD: `184c74195e976526713ad549b236e13c9dac9ad7`
 
-## MR decision
+## Decision
 
 `MR_PASS`
 
-The Component / Instance Data Model Foundation satisfies the bounded source-level requirements of the Current Work Order.
+No blocking source/schema finding remains.
 
-## Accepted findings
+## Findings
 
-- Component definition authority is a single optional native registry referencing ordinary INK structural roots.
-- Definition IDs, source-node IDs, and Instance object IDs remain distinct identities.
-- Source-node targeting uses stable object IDs rather than array positions.
-- Linked Instances remain ordinary INK-owned objects using existing matrix/parent semantics.
-- Instance resolution produces disposable ordinary geometry rather than a second scene graph.
-- Instance transforms do not mutate Component definitions.
-- Missing definitions, invalid source roots, duplicate definition IDs, ambiguous source-node IDs, malformed override envelopes, unsupported nested Instances, and cycles fail safely.
-- v0.1 override scope is explicitly bounded to opacity and is serialized by stable source-node ID.
-- stale override targets remain diagnostic and non-destructive.
-- detach materializes ordinary editable INK structure, removes linkage, generates fresh IDs, preserves placement/appearance, and is undoable.
-- register/create/override/reset/detach/duplicate/repair operations use the existing HistoryManager.
-- renderer, bounds, hit-test, spatial and SVG paths resolve through the same ordinary geometry semantics.
-- native save/load retains definition / Instance / override data, including broken references.
-- integrity exposes Component reference problems as diagnostics without silently retargeting data.
-- structured SVG exports resolved structural geometry without raster flattening.
-- existing Frame / Group / Transform / Repeat compatibility suites remain passing in DEV evidence.
-- no parallel renderer, hierarchy, transform, selection or History engine was introduced.
-- no Cloud backend, variants, constraints, auto-layout, full Component UI, package update or product-version promotion was introduced.
-- `FORMAT_VERSION = 4` remains unchanged.
+- Layout metadata is optional and versioned: `INK-LAYOUT-1` / `INK-LAYOUT-ITEM-1`.
+- Frame remains the sole layout-container authority; Group and Repeat are not reclassified.
+- Layout evaluation produces disposable local-coordinate plans and does not silently rewrite committed transforms/geometry.
+- Accepted hierarchy, ownership, transform, Component/Instance and History contracts remain reused rather than replaced.
+- Known current layout fields normalize deterministically; unknown future fields/schemas remain preserved and are not interpreted as v1.
+- Layout mutation commands use existing History and reject busy/invalid targets before mutation.
+- Native format remains `FORMAT_VERSION = 4`; no format-version change is required.
+- `INK-FILE-ENVELOPE` v1.0 is transport-neutral and keeps the native INK document authoritative.
+- Envelope inspection fails closed on malformed identity/revision/schema/timestamps/asset mirror/fingerprint and unserializable payloads.
+- No HTTP/API/auth/permissions/server storage/sync/collaboration transport was introduced.
+- Runtime/browser QA remains explicitly deferred.
 
-## Format-version conclusion
+## Non-blocking limitations
 
-MR accepts the v0.1 decision:
+- Layout evaluator is intentionally minimal and does not implement a full Auto Layout engine/UI.
+- Layout plans are not automatically committed to matrices/geometry.
+- FNV fingerprint is integrity/change-detection only, not cryptographic authentication.
+- Runtime browser/Canvas/WebGL/pointer/IndexedDB/visual SVG validation remains debt.
 
-`FORMAT_VERSION_CHANGE = 0`
-
-The Component model is implemented as an optional identified extension within the existing format-4 envelope, and DEV evidence verifies that the pre-task format-4 migration retains the new registry and Instance payload.
-
-This does not claim that older INK builds understand or render Components; it establishes current-format data retention and forward capability within the accepted extensible document model.
-
-## Runtime QA
-
-`RUNTIME_QA_DEFERRED`
-
-Browser/runtime evidence remains validation debt, including Canvas/WebGL visual equivalence, pointer transforms, browser IndexedDB/open-save behavior, and browser SVG inspection.
-
-No Runtime certification claim is made.
-
-## Gate
-
-```text
-INK-CLOUD-005
-→ MR_PASS
-→ SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED
-→ USER_PROMOTION_DECISION_REQUIRED
-```
-
-Cloud implementation remains blocked.
+Main promotion is not automatic and requires user approval.
