@@ -18,7 +18,7 @@ const validString = value => typeof value === 'string' && value.trim().length > 
 const validTimestamp = value => validString(value) && Number.isFinite(Date.parse(value));
 const nullableString = value => value == null || validString(value);
 const fail = (code, details = {}) => { throw Object.assign(new Error(code), { code, ...details }); };
-const fingerprintValue = value => \`fnv1a32:\${fnv1a32(stableStringify(value))}\`;
+const fingerprintValue = value => `fnv1a32:${fnv1a32(stableStringify(value))}`;
 
 function boundedText(value, fallback, max = 240) {
   const text = String(value == null ? fallback : value).trim();
@@ -281,7 +281,7 @@ export function deriveRevisionId({
     sequence,
     documentFingerprint: fingerprint
   }));
-  return \`ink-rev:\${documentKey}:r\${sequence}:\${relationKey}:\${fingerprint.split(':').at(-1)}\`;
+  return `ink-rev:${documentKey}:r${sequence}:${relationKey}:${fingerprint.split(':').at(-1)}`;
 }
 
 export function inspectRevisionRecord(revision) {
@@ -457,11 +457,11 @@ export class RevisionController {
   }
 
   recordKey(documentId, revisionId) {
-    return \`revision:\${documentId}:\${revisionId}\`;
+    return `revision:${documentId}:${revisionId}`;
   }
 
   indexKey(documentId) {
-    return \`revision-index:\${documentId}\`;
+    return `revision-index:${documentId}`;
   }
 
   revisionIdFor(documentId = this.app?.doc?.id) {
@@ -469,7 +469,7 @@ export class RevisionController {
   }
 
   cacheKey(documentId, revisionId) {
-    return \`\${documentId}\u0000\${revisionId}\`;
+    return `${documentId}\u0000${revisionId}`;
   }
 
   async loadIndex(documentId) {
