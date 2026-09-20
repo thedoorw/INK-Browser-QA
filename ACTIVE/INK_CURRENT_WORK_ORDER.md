@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `COMPLETE / PROMOTED / PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
+STATUS: `PRE_CLOUD_CORE_READY / CREATIVE_LOOP_PLANNING / DISCUSSION_HOLD`
 
 ## Control
 
@@ -15,7 +15,7 @@ STATUS: `COMPLETE / PROMOTED / PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | CURRENT_GATE | `PRE_CLOUD_CORE_READY` |
-| NEXT_AUTHORIZED_ACTION | `DESIGN_DISCUSSION / NO_IMPLEMENTATION` |
+| NEXT_AUTHORIZED_ACTION | `REFINE_CREATIVE_LOOP_PLAN / NO_IMPLEMENTATION` |
 | CLOUD_START_GATE | `DISCUSSION_HOLD` |
 | RUNTIME_QA | `DEFERRED` |
 
@@ -369,3 +369,32 @@ During this hold:
 - no package/version/certification work is authorized;
 - architecture, product direction, Cloud scope, workflow and sequencing may be discussed;
 - after discussion, a new explicit user decision is required before issuing the first Cloud implementation Work Order.
+
+
+## Current Primary Product Goal
+
+The user has selected the first concrete INK Cloud creative milestone:
+
+```text
+Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
+```
+
+This closed loop is now the highest-priority product objective.
+
+Planning baseline:
+
+`research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+
+Development sequence currently planned:
+
+1. Extraction Benchmark + Workflow Contract
+2. Reference / Extract / Path minimum vertical slice
+3. Path Editing + Expressive Stroke
+4. Multi-Contour Composition
+5. Repaint + Material
+6. CHAT Review + Structured Edit Tasks
+7. Revision Closure
+
+Current authorization remains planning-only.
+
+No implementation Work Order has been issued.
