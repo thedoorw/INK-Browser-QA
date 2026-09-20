@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-007 / DEVELOPMENT_AUTHORIZED / ACTIVE`
+STATUS: `INK-CLOUD-007 / ENGINE_FIRST / DEVELOPMENT_ACTIVE`
 
 | Field | Value |
 |---|---|
@@ -12,7 +12,7 @@ STATUS: `INK-CLOUD-007 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / EXTRACTION BENCHMARK + REFERENCE_TO_PATH` |
+| NEXT_STAGE | `DEV_WORK / EXTRACTION_ENGINE_FIRST` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -151,3 +151,24 @@ Rose Window Benchmark
 Branch: `work/ink-cloud-007`
 
 Broader Cloud platform work remains out of scope.
+
+
+## Engine-first correction
+
+User clarified that the extraction engine must be built before the hard benchmark is allowed to become a dependency.
+
+Current order:
+
+```text
+engine
+→ adapters
+→ editable INK Path
+→ engineering fixtures
+→ History/save-load/overlay
+→ rose-window benchmark
+→ pipeline selection
+```
+
+The rose-window image is now an acceptance benchmark, not an engine-start prerequisite.
+
+Missing benchmark binary or external model runtime is not a STOP condition.
