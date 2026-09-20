@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008B / PHASE_B_COMPLETE / PHASE_C_NEXT`
+STATUS: `INK-CLOUD-008B / PHASE_C_COMPLETE / PHASE_D_NEXT`
 
 | Field | Value |
 |---|---|
@@ -76,3 +76,18 @@ NEXT: `BEGIN_PHASE_B / STYLE_MUTATION_HISTORY`
 - No second History or geometry model introduced.
 
 NEXT: `BEGIN_PHASE_C / RENDERER_INTEGRATION`
+
+
+## Checkpoint — Phase C
+
+- Existing vector renderer evaluates Path appearance from the same authoritative Bézier geometry using deterministic flattened segments.
+- Geometry edits repaint the same styled Path; no generated outline or raster source object is created.
+- Ordinary vector stroke remains the fallback when expressive appearance is absent or cannot draw.
+- Structured SVG keeps the same Path `d` and records explicit `ordinary-vector` fallback metadata.
+- Hit/spatial bounds include expressive stroke width without changing geometric `pathBounds()` semantics.
+- New source modules are included in the existing service-worker source shell.
+- No second renderer introduced.
+
+Phase C source commits: `43715e92`, `759216a5`, `${swCommit.slice(0,8)}`.
+
+NEXT: `BEGIN_PHASE_D / NATURAL_MEDIA_BRIDGE`
