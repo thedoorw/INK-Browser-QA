@@ -124,3 +124,68 @@ The first Cloud work order requires all of the following:
 - the user explicitly authorizes beginning Cloud implementation.
 
 This gate prevents Cloud transport/storage work from freezing an unstable document structure.
+
+
+## 7. Continuous shared-core evolution after Cloud start
+
+Starting INK Cloud does **not** freeze or declare the shared INK core functionally complete.
+
+The Cloud milestone means only that the document-format / structural foundation is stable enough for Cloud persistence and adapter work to begin.
+
+After Cloud starts, INK continues to evolve through one shared core.
+
+Core/editor capabilities that should continue to mature in the shared layer include, where applicable:
+
+- Frame / container behavior;
+- Component / Instance / Variant capabilities;
+- Layout / Constraints / future flex-grid behavior;
+- transform, bounds, selection and editor overlays;
+- snapping, rulers and guides;
+- vector/path editing;
+- text and effects;
+- History;
+- serialization, migration and integrity;
+- rendering and performance;
+- reusable editor-domain UI logic.
+
+The default rule is:
+
+```text
+If a capability is fundamentally an editor/document capability,
+implement it in the shared INK core/editor domain first.
+
+Portable/Web INK and INK Cloud then consume the same accepted capability.
+```
+
+Cloud-only capabilities remain adapter/service concerns where possible:
+
+- authentication;
+- remote file transport;
+- remote revision storage;
+- permissions;
+- synchronization;
+- presence;
+- collaboration transport;
+- remote service integration.
+
+A Cloud requirement must not create a second drawing engine, document model, hierarchy, transform engine, History engine or renderer merely for the Cloud delivery form.
+
+## 8. Portable target remains active during Cloud development
+
+The long-term portable target remains a current, directly usable single `INK.html`.
+
+Cloud development does not supersede this target.
+
+The modular source tree is the development authority; the portable single-file artifact may be rebuilt at controlled packaging checkpoints from the same accepted shared core.
+
+Therefore:
+
+```text
+shared core evolves continuously
+        ↓
+Portable/Web INK is refreshed at controlled package checkpoints
+        +
+INK Cloud consumes the same evolving core
+```
+
+Neither delivery form is allowed to become a permanently divergent product fork.
