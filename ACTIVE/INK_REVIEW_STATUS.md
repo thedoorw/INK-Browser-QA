@@ -4,20 +4,22 @@ STATUS: `MR_PASS / PROMOTED / RUNTIME_QA_DEFERRED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-012` |
-| DEV_BRANCH | `work/ink-cloud-012` |
-| REVIEW_HEAD | `474f4e037b5eb351337258e77ce01fceeefccf0b` |
+| TASK_ID | `INK-CLOUD-013` |
+| DEV_BRANCH | `work/ink-cloud-013` |
+| REVIEW_HEAD | `0b610a5e68cde3951190088d9e5130dde8948564` |
 | DECISION | `MR_PASS` |
-| GATE | `CREATIVE_LOOP_V1_COMPLETE` |
-| PROMOTION_BRANCH | `promote/ink-cloud-012` |
-| PR | `#14 / MERGED` |
-| MAIN_PROMOTION | `036a6bfb666627ddc52c9a611d4c84b45c504550` |
+| GATE | `INTEGRATED_CREATIVE_LOOP_VALIDATED` |
+| PROMOTION_BRANCH | `promote/ink-cloud-013` |
+| PR | `#15 / MERGED` |
+| MAIN_PROMOTION | `1780118ec1c92241851af68649626b7c0a095dd1` |
+| HARD_BENCHMARK | `EXECUTED` |
+| EXTRACTION_BASELINE | `DIRECT_EXTRACTION_CURRENT_BASELINE` |
 | FORMAT_VERSION_CHANGE | `0` |
 | PACKAGE_UPDATE | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
 
-INK-CLOUD-012 is closed on main.
+INK-CLOUD-013 is closed on main.
 
 Next bounded stage:
 
-`INK-CLOUD-013 — Integrated Creative Loop Validation v0.1`
+`INK-CLOUD-014 — Creative Workspace Minimum UX v0.1`
