@@ -1,0 +1,166 @@
+# INK-CLOUD-010 Source / Static Evidence
+
+Task: INK-CLOUD-010 — Repaint + Material v0.1
+Branch: work/ink-cloud-010
+Runtime QA: DEFERRED
+FORMAT_VERSION: 4
+
+## Executed
+
+### GitHub-source syntax/static parse
+
+Exact committed GitHub branch source was fetched through the GitHub connector and parsed in the V8 execution environment after removing ESM import/export declarations only for syntax parsing.
+
+PASS:
+- product/source/src/vector/paint-appearance.js
+- product/source/src/editor/repaint-material.js
+- product/source/src/document/model.js
+- product/source/src/vector/vector-core.js
+- product/source/src/editor/index.js
+- product/source/src/ink.js
+- product/source/src/document/file-envelope.js
+- product/source/service-worker.js
+- qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs
+- qa/core/tests/unit/repaint-material-core-v0.1.test.mjs
+- qa/core/tests/unit/repaint-material-source-v0.1.test.mjs
+
+### Appearance-contract harness
+
+Executed the exact committed paint-appearance.js implementation in V8.
+
+PASS:
+- repaint normalization;
+- opacity clamp;
+- material JSON roundtrip;
+- missing-template deterministic ordinary-vector fallback;
+- bounded template pathAppearance resolution;
+- unsupported appearance-key diagnostics;
+- ignored parameter-override diagnostics;
+- extension identity = ink.path-material-appearance.v1.
+
+### Repaint/material controller harness
+
+Executed the exact committed repaint-material.js controller with bounded imported shared plumbing supplied by the harness.
+
+PASS:
+- multi-Path repaint;
+- deterministic no-op does not add a History push;
+- expressive stroke retained unless explicitly changed;
+- bounded material assignment;
+- locked target rejected;
+- busy-History target rejected.
+
+The committed regression suites additionally cover hidden, stale and singular guards for execution by MR/CI.
+
+### Native file-envelope roundtrip harness
+
+Executed the exact committed file-envelope.js implementation with deterministic imported utility stubs.
+
+PASS:
+- FORMAT_VERSION payload remains 4;
+- material appearance extension is declared;
+- envelope inspection remains valid;
+- materialAppearance survives wrap/inspect/unwrap;
+- no format-version bump.
+
+### Source contract checks
+
+PASS:
+- FORMAT_VERSION = 4;
+- bounded INK-PATH-MATERIAL-APPEARANCE contract exists;
+- repaint/material controller reuses target-scoped History;
+- existing History no-op behavior remains present;
+- locked/hidden/stale/singular/busy-History guards are present;
+- geometry fingerprint invariants are present;
+- controller contains no rasterization route;
+- controller contains no remote/network dependency;
+- document model normalizes materialAppearance;
+- file-envelope declares material appearance extension;
+- existing Path renderer resolves appearance through the bounded contract;
+- structured SVG emits data-ink-material-ref and data-ink-material-fallback="ordinary-vector";
+- structured SVG remains a Path route, not raster fallback;
+- service-worker shell includes the new appearance/controller modules.
+
+### Branch topology
+
+Observed before evidence commit:
+
+- branch status: ahead
+- ahead_by: 22
+- behind_by: 0
+
+No package branch or main mutation was performed by DEV.
+
+## Committed regression suites
+
+- qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs
+- qa/core/tests/unit/repaint-material-core-v0.1.test.mjs
+- qa/core/tests/unit/repaint-material-source-v0.1.test.mjs
+
+Coverage encoded in these suites includes:
+- three independently composed Paths repaint/materialize independently;
+- geometry fingerprints and path data remain invariant under appearance changes;
+- transforms, hierarchy and provenance remain unchanged;
+- expressive stroke retention;
+- multi-selection repaint;
+- deterministic no-op;
+- independent geometry-vs-appearance History undo/redo;
+- native file-envelope save/load;
+- material extension declaration;
+- structured SVG material fallback;
+- locked/hidden/stale/singular/busy-History rejection.
+
+## Not executed
+
+### Full Node test runner
+
+NOT EXECUTED.
+
+A direct exact-branch checkout was attempted from the execution environment:
+
+```text
+git clone --depth 1 --branch work/ink-cloud-010 https://github.com/thedoorw/INK-Browser-QA.git
+```
+
+The environment failed before checkout with:
+
+```text
+fatal: unable to access 'https://github.com/thedoorw/INK-Browser-QA.git/':
+Could not resolve host: github.com
+```
+
+Therefore the committed Node suites are not claimed PASS.
+
+### Browser Runtime QA
+
+DEFERRED by Current Work Order.
+
+### Hosted GitHub Actions
+
+Not used. Project status records GitHub Actions quota as exhausted.
+
+### Rose-window benchmark
+
+NOT RUN by explicit prohibition.
+
+No unexecuted check is claimed PASS.
+
+
+## Post-evidence consistency recheck
+
+Follow-up bounded fixes were applied after the first evidence commit:
+
+- commit `1e320087455272cded60cbc588e75c52fdf1cc56` — absent material appearance is now omitted on newly created Paths rather than stored as `null`, matching load normalization;
+- commit `d3e0d3dce9e5ddd22dfc7a0675213685a6476a9e` — composition regression now explicitly asserts z-order invariance.
+
+Executed after those fixes:
+
+PASS:
+- latest `product/source/src/vector/vector-core.js` syntax parse;
+- latest `qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs` syntax parse;
+- exact latest `createPath()` harness confirms absent material does not create a `materialAppearance` field;
+- exact latest `createPath()` harness confirms supplied material creates the bounded appearance contract.
+
+Latest checked blob SHAs:
+- `product/source/src/vector/vector-core.js`: `4d27c79d6aede9b73394a298d71ccd50191957de`
+- `qa/core/tests/unit/repaint-material-composition-v0.1.test.mjs`: `08581e0addaf0e1350daa626899e9c3ec953d035`

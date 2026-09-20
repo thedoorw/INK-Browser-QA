@@ -6,6 +6,7 @@ import { normalizeSemantic } from '../semantic/semantic-model.js';
 import { createFrame } from './hierarchy.js';
 import { normalizeObjectLayout } from './layout.js';
 import { normalizeExpressiveStroke } from '../vector/stroke-appearance.js';
+import { normalizePathMaterialAppearance } from '../vector/paint-appearance.js';
 
 export const DEFAULT_RECENT = [
   '#202020', '#ffffff', '#b63c36', '#d18b2f',
@@ -115,6 +116,8 @@ export function normalizeObject(object, { parentId = null, structuralState = nul
   if (object.type === 'path') {
     if (object.expressiveStroke == null) delete object.expressiveStroke;
     else object.expressiveStroke = normalizeExpressiveStroke(object.expressiveStroke, { color: object.stroke, width: object.strokeWidth });
+    if (object.materialAppearance == null) delete object.materialAppearance;
+    else object.materialAppearance = normalizePathMaterialAppearance(object.materialAppearance, { fill: object.fill, stroke: object.stroke });
   }
   if (object.type === 'stroke') {
     object.points = Array.isArray(object.points) ? object.points.map(point => ({
