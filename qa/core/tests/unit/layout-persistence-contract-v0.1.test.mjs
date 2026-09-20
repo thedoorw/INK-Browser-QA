@@ -76,8 +76,8 @@ test('vertical flow keeps absolute children out and computes hug container inten
   f.frame.children[2].layoutItem=fullItem({participation:'absolute'});
   const plan=evaluateFrameLayout(f.frame);
   assert.deepEqual(plan.items.map(x=>x.objectId),['a','b']);assert.deepEqual(plan.absoluteObjectIds,['c']);
-  assert.deepEqual(plan.items.map(x=>x.width),[186,186]);
-  assert.deepEqual(plan.frameSize,{width:200,height:46});
+  assert.deepEqual(plan.items.map(x=>x.width),[20,30]);
+  assert.deepEqual(plan.frameSize,{width:44,height:46});
   assert.deepEqual(f.frame.children[2].matrix,Matrix.translate(7,8));
 });
 
@@ -164,10 +164,26 @@ test('asset reference boundary mirrors assetManifest and detects divergence',()=
 });
 
 test('next revision keeps file identity, advances monotonically and fingerprints new native payload',()=>{
-  const f=fixture(),first=wrapInkFile(f.doc,{fileId:'file-stable',revision:0});
+  const f=fixture(),first=wrapInkFile(f.doc,{fileId:'file-stable',revision:0,extensions:['vendor.future.v3']});
   const nextDoc=structuredClone(f.doc);nextDoc.title='Revision 1';
   const next=nextInkFileRevision(first,nextDoc,{savedAt:'2026-09-20T01:00:00.000Z'});
-  assert.equal(next.fileId,'file-stable');assert.equal(next.revision,1);assert.notEqual(next.revisionId,first.revisionId);assert.deepEqual(unwrapInkFile(next),nextDoc);assert.equal(first.document.title,f.doc.title);
+  assert.equal(next.fileId,'file-stable');assert.equal(next.revision,1);assert.notEqual(next.revisionId,first.revisionId);assert.deepEqual(unwrapInkFile(next),nextDoc);assert.equal(first.document.title,f.doc.title);assert.ok(next.extensions.includes('vendor.future.v3'));
+});
+
+test('unsupported future layout schemas are preserved but never interpreted as current layout',()=>{
+  const f=fixture();f.frame.layout={schema:'INK-LAYOUT-2',mode:'grid',future:true};
+  const plan=evaluateFrameLayout(f.frame);assert.equal(plan.status,'unsupported-layout-schema');assert.equal(f.frame.layout.future,true);
+  f.frame.layout=fullLayout({sizing:{horizontal:'hug',vertical:'fixed'}});f.frame.children[0].layoutItem=fullItem({sizing:{horizontal:'fill',vertical:'hug'}});
+  const hug=evaluateFrameLayout(f.frame);assert.equal(hug.items[0].width,20);assert.ok(hug.diagnostics.some(x=>x.code==='layout-fill-in-hug-axis-uses-intrinsic'));
+  f.frame.children[0].layoutItem={schema:'INK-LAYOUT-ITEM-2',future:true};assert.throws(()=>evaluateFrameLayout(f.frame),{code:'layout-item-unsupported-schema'});
+});
+
+test('file-envelope constructors reject malformed known input before producing an envelope',()=>{
+  const f=fixture();
+  for(const call of [
+    ()=>wrapInkFile(f.doc,{extensions:'bad'}),()=>wrapInkFile(f.doc,{savedAt:''}),
+    ()=>wrapInkFile(f.doc,{revisionId:''}),()=>wrapInkFile({...f.doc,formatVersion:0})
+  ]) assert.throws(call);
 });
 
 test('InkStore remains a separate native-document recovery path with layout and assetManifest',async()=>{

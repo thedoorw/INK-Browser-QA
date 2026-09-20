@@ -80,10 +80,10 @@ function intrinsicSize(object, boundsForObject) {
   return { width: nonNegative(object?.w, 1), height: nonNegative(object?.h, 1) };
 }
 
-function sized(object, item, frame, axis, available, intrinsic) {
+function sized(object, item, frame, axis, available, intrinsic, fillUsesIntrinsic = false) {
   const key = axis === 'horizontal' ? 'width' : 'height';
   const mode = item.sizing[axis];
-  if (mode === 'fill') return Math.max(0, available);
+  if (mode === 'fill') return fillUsesIntrinsic ? intrinsic[key] : Math.max(0, available);
   if (mode === 'hug') return intrinsic[key];
   return nonNegative(item.fixedSize[key], intrinsic[key]);
 }
@@ -93,7 +93,8 @@ function sized(object, item, frame, axis, available, intrinsic) {
 export function evaluateFrameLayout(frame, { boundsForObject = null } = {}) {
   if (!isFrame(frame)) throw Object.assign(new Error('layout-frame-required'), { code: 'layout-frame-required' });
   const layout = normalizeFrameLayout(frame.layout);
-  if (!layout || layout.schema !== LAYOUT_SCHEMA) return { schema: LAYOUT_SCHEMA, status: 'no-layout', frameId: frame.id, items: [] };
+  if (!layout) return { schema: LAYOUT_SCHEMA, status: 'no-layout', frameId: frame.id, items: [] };
+  if (layout.schema !== LAYOUT_SCHEMA) return { schema: LAYOUT_SCHEMA, status: 'unsupported-layout-schema', frameId: frame.id, items: [], diagnostics: [{ code: 'layout-unsupported-schema' }] };
   if (layout.mode === 'manual') return { schema: LAYOUT_SCHEMA, status: 'manual', frameId: frame.id, frameSize: { width: frame.width, height: frame.height }, items: [] };
   const horizontal = layout.mode === 'horizontal';
   const mainPadding = horizontal ? layout.padding.left + layout.padding.right : layout.padding.top + layout.padding.bottom;
@@ -102,19 +103,26 @@ export function evaluateFrameLayout(frame, { boundsForObject = null } = {}) {
   const frameCross = horizontal ? frame.height : frame.width;
   const flow = (frame.children || []).filter(child => normalizeLayoutItem(child.layoutItem)?.participation !== 'absolute');
   const absolute = (frame.children || []).filter(child => normalizeLayoutItem(child.layoutItem)?.participation === 'absolute');
-  const details = flow.map(object => ({ object, item: normalizeLayoutItem(object.layoutItem) || normalizeLayoutItem({ schema: LAYOUT_ITEM_SCHEMA }), intrinsic: intrinsicSize(object, boundsForObject) }));
-  const fill = details.filter(({ item }) => item.sizing[horizontal ? 'horizontal' : 'vertical'] === 'fill');
-  const nonFillMain = details.filter(detail => !fill.includes(detail)).reduce((sum, detail) => sum + sized(detail.object, detail.item, frame, horizontal ? 'horizontal' : 'vertical', 0, detail.intrinsic), 0);
+  const details = flow.map(object => {
+    if (object.layoutItem !== undefined && object.layoutItem?.schema !== LAYOUT_ITEM_SCHEMA) {
+      throw Object.assign(new Error('layout-item-unsupported-schema'), { code: 'layout-item-unsupported-schema', objectId: object.id });
+    }
+    return { object, item: normalizeLayoutItem(object.layoutItem) || normalizeLayoutItem({ schema: LAYOUT_ITEM_SCHEMA }), intrinsic: intrinsicSize(object, boundsForObject) };
+  });
+  const mainAxis = horizontal ? 'horizontal' : 'vertical', crossAxis = horizontal ? 'vertical' : 'horizontal';
+  const mainHug = layout.sizing[mainAxis] === 'hug', crossHug = layout.sizing[crossAxis] === 'hug';
+  const fill = mainHug ? [] : details.filter(({ item }) => item.sizing[mainAxis] === 'fill');
+  const nonFillMain = details.filter(detail => !fill.includes(detail)).reduce((sum, detail) => sum + sized(detail.object, detail.item, frame, mainAxis, 0, detail.intrinsic, mainHug), 0);
   const baseGap = Math.max(0, details.length - 1) * layout.gap;
   const remaining = Math.max(0, frameMain - mainPadding - baseGap - nonFillMain);
   const fillShare = fill.length ? remaining / fill.length : 0;
   const measured = details.map(detail => {
-    const main = sized(detail.object, detail.item, frame, horizontal ? 'horizontal' : 'vertical', fillShare, detail.intrinsic);
-    const cross = sized(detail.object, detail.item, frame, horizontal ? 'vertical' : 'horizontal', Math.max(0, frameCross - crossPadding), detail.intrinsic);
+    const main = sized(detail.object, detail.item, frame, mainAxis, fillShare, detail.intrinsic, mainHug);
+    const cross = sized(detail.object, detail.item, frame, crossAxis, Math.max(0, frameCross - crossPadding), detail.intrinsic, crossHug);
     return { ...detail, main, cross };
   });
   const contentMain = measured.reduce((sum, item) => sum + item.main, 0) + baseGap;
-  const free = Math.max(0, frameMain - mainPadding - contentMain);
+  const free = mainHug ? 0 : Math.max(0, frameMain - mainPadding - contentMain);
   let cursor = horizontal ? layout.padding.left : layout.padding.top;
   let gap = layout.gap;
   if (layout.align.main === 'center') cursor += free / 2;
@@ -122,7 +130,7 @@ export function evaluateFrameLayout(frame, { boundsForObject = null } = {}) {
   else if (layout.align.main === 'space-between' && measured.length > 1) gap += free / (measured.length - 1);
   const items = measured.map(({ object, main, cross }) => {
     const availableCross = Math.max(0, frameCross - crossPadding);
-    const finalCross = layout.align.cross === 'stretch' ? availableCross : cross;
+    const finalCross = layout.align.cross === 'stretch' && !crossHug ? availableCross : cross;
     let crossPosition = horizontal ? layout.padding.top : layout.padding.left;
     if (layout.align.cross === 'center') crossPosition += (availableCross - finalCross) / 2;
     else if (layout.align.cross === 'end') crossPosition += availableCross - finalCross;
@@ -142,7 +150,10 @@ export function evaluateFrameLayout(frame, { boundsForObject = null } = {}) {
       height: layout.sizing.vertical === 'hug' ? hugHeight : frame.height
     },
     items,
-    absoluteObjectIds: absolute.map(object => object.id)
+    absoluteObjectIds: absolute.map(object => object.id),
+    diagnostics: details.filter(({ item }) =>
+      (mainHug && item.sizing[mainAxis] === 'fill') || (crossHug && item.sizing[crossAxis] === 'fill')
+    ).map(({ object }) => ({ code: 'layout-fill-in-hug-axis-uses-intrinsic', objectId: object.id }))
   };
 }
 
@@ -162,6 +173,9 @@ export function evaluateResizeConstraints(frame, { previousWidth, previousHeight
     schema: LAYOUT_SCHEMA, status: 'resolved-constraints', frameId: frame.id,
     frameSize: { width: nextW, height: nextH },
     items: (frame.children || []).map(object => {
+      if (object.layoutItem !== undefined && object.layoutItem?.schema !== LAYOUT_ITEM_SCHEMA) {
+        throw Object.assign(new Error('layout-item-unsupported-schema'), { code: 'layout-item-unsupported-schema', objectId: object.id });
+      }
       const item = normalizeLayoutItem(object.layoutItem) || normalizeLayoutItem({ schema: LAYOUT_ITEM_SCHEMA });
       const size = intrinsicSize(object, boundsForObject), matrix = object.matrix || [1, 0, 0, 1, 0, 0];
       const horizontal = axis(finite(matrix[4]), size.width, oldW, nextW, item.constraints.horizontal);

@@ -8,8 +8,8 @@ STATUS: `DEV_IN_PROGRESS`
 | DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
 | DEV_WORK_BRANCH | `work/ink-cloud-006` |
 | BASE_BRANCH_HEAD_AT_START | `ef88e8432690df6de7f05d67c281d351aa58353d` |
-| LATEST_DEV_COMMIT | `d1f90889ed3f50a372692a7b41bd5a7323d2f6fd` |
-| DEV_STATE | `SCHEMA_IMPLEMENTATION_CHECKPOINT` |
+| LATEST_DEV_COMMIT | `dc6c20ca71543773b791c571c51a423372b20d28` |
+| DEV_STATE | `EDGE_HARDENING_CHECKPOINT` |
 | MR_GATE | `REQUIRED_AFTER_HANDOFF` |
 | FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSIONS` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -76,3 +76,19 @@ Implemented initial optional schemas:
 - migration/integrity exports and diagnostics.
 
 Actually executed: source syntax checks for new modules and touched document modules PASS; `git diff --check` PASS. New layout/persistence suite initially 17/18 because one expected hug-height arithmetic value was incorrect (51 vs actual 46); expectation corrected from padding + intrinsic sizes + gap. Final rerun pending at this checkpoint. Browser Runtime QA remains DEFERRED.
+
+## Checkpoint 2 — semantic edge hardening
+
+Published schema checkpoint: `dc6c20ca71543773b791c571c51a423372b20d28`.
+
+Hardened deterministic evaluation and envelope behavior:
+
+- unknown future Frame layout schemas are preserved and reported as unsupported, never interpreted as v1;
+- unknown child schemas reject evaluation safely;
+- `fill` inside a `hug` axis uses intrinsic size with an explicit diagnostic, avoiding cyclic size authority;
+- cross-axis stretch is suppressed when that container axis is hug;
+- envelope input validates arrays/IDs/timestamps/format version;
+- revision creation retains existing future extension declarations while adding newly required native extensions;
+- feature detection now scans structural objects only, so workspace `cameras.layout` cannot falsely declare `ink.layout.v1`.
+
+Actually executed: new suite **20/20 PASS**; accepted Component/Frame/Group/Transform plus retained core suites via `run-component-foundation-checks.mjs`: **62/62 + 29/29 PASS**, 6 syntax checks and FORMAT_VERSION=4 PASS. Initial edge test exposed false `ink.layout.v1` detection from workspace camera naming; fixed by using `walkPageObjects()` and rerun. Runtime QA remains DEFERRED.

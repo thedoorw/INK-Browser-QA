@@ -1,5 +1,6 @@
 import { deepClone, nowISO, uid } from '../core/index.js';
 import { documentFingerprint, stableStringify } from './integrity.js';
+import { walkPageObjects } from './hierarchy.js';
 
 export const FILE_ENVELOPE_SCHEMA = 'INK-FILE-ENVELOPE';
 export const FILE_ENVELOPE_VERSION = '1.0';
@@ -11,15 +12,8 @@ const fail = (code, details = {}) => { throw Object.assign(new Error(code), { co
 export function declaredDocumentExtensions(document) {
   const found = new Set();
   if (document?.components !== undefined) found.add('ink.components.v1');
-  const stack = [...(document?.pages || [])];
-  const seen = new WeakSet();
-  while (stack.length) {
-    const value = stack.pop();
-    if (!value || typeof value !== 'object' || seen.has(value)) continue;
-    seen.add(value);
-    if (value.layout !== undefined || value.layoutItem !== undefined) found.add('ink.layout.v1');
-    if (Array.isArray(value)) stack.push(...value);
-    else stack.push(...Object.values(value));
+  for (const page of document?.pages || []) {
+    if (walkPageObjects(page).some(({ object }) => object.layout !== undefined || object.layoutItem !== undefined)) found.add('ink.layout.v1');
   }
   return [...found].sort();
 }
@@ -38,7 +32,11 @@ export function wrapInkFile(document, {
   if (!validString(fileId)) fail('file-envelope-invalid-file-id');
   if (!Number.isSafeInteger(revision) || revision < 0) fail('file-envelope-invalid-revision');
   if (!Array.isArray(appliedMigrations) || appliedMigrations.some(item => !validString(item))) fail('file-envelope-invalid-migrations');
+  if (extensions !== null && !Array.isArray(extensions)) fail('file-envelope-invalid-extensions');
+  if (!validString(savedAt)) fail('file-envelope-invalid-timestamp');
+  if (revisionId !== null && !validString(revisionId)) fail('file-envelope-invalid-revision-id');
   const documentPayload = deepClone(document);
+  if (!Number.isInteger(documentPayload.formatVersion) || documentPayload.formatVersion < 1) fail('file-envelope-invalid-format-version');
   const declared = extensions === null ? declaredDocumentExtensions(documentPayload) : [...extensions];
   if (declared.some(item => !validString(item))) fail('file-envelope-invalid-extensions');
   const fingerprint = documentFingerprint(documentPayload);
@@ -89,13 +87,14 @@ export function unwrapInkFile(envelope) {
   return deepClone(envelope.document);
 }
 
-export function nextInkFileRevision(envelope, document, { revisionId = null, appliedMigrations = null, savedAt = nowISO() } = {}) {
+export function nextInkFileRevision(envelope, document, { revisionId = null, extensions = null, appliedMigrations = null, savedAt = nowISO() } = {}) {
   const previous = inspectInkFileEnvelope(envelope);
   if (!previous.valid) fail('file-envelope-verification-failed', { inspection: previous });
   return wrapInkFile(document, {
     fileId: envelope.fileId,
     revision: envelope.revision + 1,
     revisionId,
+    extensions: extensions ?? [...new Set([...envelope.extensions, ...declaredDocumentExtensions(document)])],
     appliedMigrations: appliedMigrations ?? envelope.appliedMigrations,
     savedAt
   });
