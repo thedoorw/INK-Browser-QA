@@ -4,6 +4,7 @@ import { createArtboard } from './artboard.js';
 import { createWorkspace } from './workspace.js';
 import { normalizeSemantic } from '../semantic/semantic-model.js';
 import { createFrame } from './hierarchy.js';
+import { normalizeObjectLayout } from './layout.js';
 
 export const DEFAULT_RECENT = [
   '#202020', '#ffffff', '#b63c36', '#d18b2f',
@@ -161,6 +162,7 @@ export function normalizeObject(object, { parentId = null, structuralState = nul
     object.materialInstance.localOverrideState = object.materialInstance.localOverrideState && typeof object.materialInstance.localOverrideState === 'object' ? object.materialInstance.localOverrideState : { parameters: [], geometryDetached: false, styleDetached: false };
   }
   normalizeSemantic(object);
+  normalizeObjectLayout(object);
   if (structural) state.activeObjects.delete(object);
   return object;
 }
