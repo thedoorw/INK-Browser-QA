@@ -189,3 +189,190 @@ export function buildChatStateSummary(app) {
     objects
   };
 }
+
+
+export const CHAT_EDIT_TASK_SCHEMA = 'INK-CHAT-EDIT-TASK';
+export const CHAT_EDIT_TASK_VERSION = 1;
+export const CHAT_EDIT_PROPOSAL_SCHEMA = 'INK-CHAT-EDIT-PROPOSAL';
+export const CHAT_EDIT_PROPOSAL_VERSION = 1;
+
+export const CHAT_EDIT_OPERATIONS = Object.freeze([
+  'path.repaint.v1',
+  'path.material.apply.v1',
+  'path.material.remove.v1',
+  'object.translate.v1',
+  'path.simplify.v1',
+  'path.refine.v1'
+]);
+
+const CHAT_EDIT_OPERATION_SET = new Set(CHAT_EDIT_OPERATIONS);
+const hasOwn = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
+
+function editFail(code, details = {}) {
+  throw Object.assign(new Error(`INK_CHAT_EDIT_${code}`), { code: `CHAT_EDIT_${code}`, ...details });
+}
+
+function boundedText(value, field, { required = true, max = 160 } = {}) {
+  if (value == null || value === '') {
+    if (!required) return null;
+    editFail('FIELD_REQUIRED', { field });
+  }
+  if (typeof value !== 'string') editFail('FIELD_INVALID', { field });
+  const text = value.trim();
+  if ((required && !text) || text.length > max) editFail('FIELD_INVALID', { field });
+  return text || null;
+}
+
+function boundedNumber(value, field, { min = -1e6, max = 1e6, integer = false } = {}) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number < min || number > max || (integer && !Number.isInteger(number))) {
+    editFail('ARGUMENT_INVALID', { field });
+  }
+  return number;
+}
+
+function boundedPaintToken(value, field) {
+  return boundedText(value, field, { max: 256 });
+}
+
+function normalizeTargetRef(ref, index) {
+  if (!ref || typeof ref !== 'object' || Array.isArray(ref)) editFail('TARGET_REF_INVALID', { index });
+  return {
+    pageId: boundedText(ref.pageId, `targets[${index}].pageId`, { max: 160 }),
+    layerId: boundedText(ref.layerId, `targets[${index}].layerId`, { max: 160 }),
+    objectId: boundedText(ref.objectId, `targets[${index}].objectId`, { max: 160 })
+  };
+}
+
+function normalizeTargets(raw, { exact = null, max = 64 } = {}) {
+  if (!Array.isArray(raw) || !raw.length || raw.length > max) editFail('TARGETS_INVALID');
+  const targets = raw.map(normalizeTargetRef);
+  const unique = new Set(targets.map(ref => `${ref.pageId}\u0000${ref.layerId}\u0000${ref.objectId}`));
+  if (unique.size !== targets.length) editFail('TARGET_DUPLICATE');
+  if (exact != null && targets.length !== exact) editFail('TARGET_COUNT_INVALID', { expected: exact, actual: targets.length });
+  return targets;
+}
+
+function normalizeRepaintArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const patch = {};
+  if (hasOwn(raw, 'fill')) patch.fill = boundedPaintToken(raw.fill, 'arguments.fill');
+  if (hasOwn(raw, 'stroke')) patch.stroke = boundedPaintToken(raw.stroke, 'arguments.stroke');
+  if (hasOwn(raw, 'opacity')) patch.opacity = boundedNumber(raw.opacity, 'arguments.opacity', { min: 0, max: 1 });
+  if (hasOwn(raw, 'expressiveStrokeColor')) patch.expressiveStrokeColor = boundedPaintToken(raw.expressiveStrokeColor, 'arguments.expressiveStrokeColor');
+  if (!Object.keys(patch).length) editFail('ARGUMENTS_EMPTY');
+  return patch;
+}
+
+function normalizeMaterialArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const templateId = boundedText(raw.templateId ?? raw.materialRef?.templateId, 'arguments.templateId', { max: 160 });
+  const templateVersion = boundedText(raw.templateVersion ?? raw.materialRef?.templateVersion, 'arguments.templateVersion', { required: false, max: 80 });
+  let parameterOverrides = {};
+  if (raw.parameterOverrides !== undefined) {
+    if (!raw.parameterOverrides || typeof raw.parameterOverrides !== 'object' || Array.isArray(raw.parameterOverrides)) editFail('ARGUMENTS_INVALID');
+    if (Object.keys(raw.parameterOverrides).length > 32 || stableChatStringify(raw.parameterOverrides).length > 4096) editFail('ARGUMENTS_BOUNDS');
+    parameterOverrides = clone(raw.parameterOverrides);
+  }
+  const fallback = {};
+  if (raw.fallback !== undefined) {
+    if (!raw.fallback || typeof raw.fallback !== 'object' || Array.isArray(raw.fallback)) editFail('ARGUMENTS_INVALID');
+    if (hasOwn(raw.fallback, 'fill')) fallback.fill = boundedPaintToken(raw.fallback.fill, 'arguments.fallback.fill');
+    if (hasOwn(raw.fallback, 'stroke')) fallback.stroke = boundedPaintToken(raw.fallback.stroke, 'arguments.fallback.stroke');
+  }
+  return { templateId, templateVersion, parameterOverrides, fallback };
+}
+
+function normalizeOperationArguments(operation, raw) {
+  if (operation === 'path.repaint.v1') return normalizeRepaintArguments(raw);
+  if (operation === 'path.material.apply.v1') return normalizeMaterialArguments(raw);
+  if (operation === 'path.material.remove.v1') {
+    if (raw != null && (typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).length)) editFail('ARGUMENTS_INVALID');
+    return {};
+  }
+  if (operation === 'object.translate.v1') {
+    const dx = boundedNumber(raw?.dx, 'arguments.dx');
+    const dy = boundedNumber(raw?.dy, 'arguments.dy');
+    if (dx === 0 && dy === 0) editFail('NO_OP');
+    return { dx, dy };
+  }
+  if (operation === 'path.simplify.v1') {
+    return {
+      tolerance: boundedNumber(raw?.tolerance ?? 0.75, 'arguments.tolerance', { min: 0, max: 1e6 }),
+      handleTolerance: boundedNumber(raw?.handleTolerance ?? Math.max(0.05, Number(raw?.tolerance ?? 0.75) * 0.25), 'arguments.handleTolerance', { min: 0, max: 1e6 }),
+      maxPasses: boundedNumber(raw?.maxPasses ?? 256, 'arguments.maxPasses', { min: 1, max: 4096, integer: true })
+    };
+  }
+  if (operation === 'path.refine.v1') {
+    return {
+      maxControlLength: boundedNumber(raw?.maxControlLength ?? 48, 'arguments.maxControlLength', { min: Number.EPSILON, max: 1e6 }),
+      maxAddedAnchors: boundedNumber(raw?.maxAddedAnchors ?? 128, 'arguments.maxAddedAnchors', { min: 1, max: 4096, integer: true })
+    };
+  }
+  editFail('OPERATION_NOT_ALLOWED', { operation });
+}
+
+function operationTargetRules(operation) {
+  if (operation.startsWith('path.simplify.') || operation.startsWith('path.refine.')) return { exact: 1, max: 1 };
+  return { max: 64 };
+}
+
+function normalizeExpected(raw) {
+  if (raw == null) return null;
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('EXPECTED_INVALID');
+  const expected = {};
+  if (raw.documentId != null) expected.documentId = boundedText(raw.documentId, 'expected.documentId', { max: 160 });
+  if (raw.pageId != null) expected.pageId = boundedText(raw.pageId, 'expected.pageId', { max: 160 });
+  if (raw.targetFingerprints != null) {
+    if (!raw.targetFingerprints || typeof raw.targetFingerprints !== 'object' || Array.isArray(raw.targetFingerprints)) editFail('EXPECTED_INVALID');
+    const keys = Object.keys(raw.targetFingerprints);
+    if (keys.length > 64) editFail('EXPECTED_INVALID');
+    expected.targetFingerprints = Object.fromEntries(keys.sort().map(key => [
+      boundedText(key, 'expected.targetFingerprints.key', { max: 160 }),
+      boundedText(raw.targetFingerprints[key], `expected.targetFingerprints.${key}`, { max: 160 })
+    ]));
+  }
+  return expected;
+}
+
+export function normalizeChatEditTask(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('TASK_INVALID');
+  if (raw.schema != null && raw.schema !== CHAT_EDIT_TASK_SCHEMA) editFail('SCHEMA_UNSUPPORTED', { schema: raw.schema });
+  if (raw.version != null && Number(raw.version) !== CHAT_EDIT_TASK_VERSION) editFail('VERSION_UNSUPPORTED', { version: raw.version });
+  const operation = boundedText(raw.operation, 'operation', { max: 80 });
+  if (!CHAT_EDIT_OPERATION_SET.has(operation)) editFail('OPERATION_NOT_ALLOWED', { operation });
+  return {
+    schema: CHAT_EDIT_TASK_SCHEMA,
+    version: CHAT_EDIT_TASK_VERSION,
+    taskId: boundedText(raw.taskId, 'taskId', { max: 160 }),
+    operation,
+    targets: normalizeTargets(raw.targets, operationTargetRules(operation)),
+    arguments: normalizeOperationArguments(operation, raw.arguments),
+    expected: normalizeExpected(raw.expected)
+  };
+}
+
+export function createChatEditProposal(rawTask, { proposalId = null, expected = null, stateFingerprint = null } = {}) {
+  const task = normalizeChatEditTask(rawTask);
+  const identity = proposalId || `proposal:${task.taskId}:${chatStateFingerprint(task).slice(-8)}`;
+  return {
+    schema: CHAT_EDIT_PROPOSAL_SCHEMA,
+    version: CHAT_EDIT_PROPOSAL_VERSION,
+    proposalId: boundedText(identity, 'proposalId', { max: 220 }),
+    task,
+    expected: normalizeExpected(expected ?? task.expected),
+    stateFingerprint: stateFingerprint ? boundedText(stateFingerprint, 'stateFingerprint', { max: 160 }) : null,
+    state: 'PROPOSED',
+    approved: false,
+    approvalToken: null
+  };
+}
+
+export function chatEditDiagnostic(error, phase = 'unknown') {
+  const code = typeof error?.code === 'string' ? error.code : 'CHAT_EDIT_UNKNOWN';
+  const diagnostic = { ok: false, phase, code };
+  for (const key of ['field', 'operation', 'index', 'objectId', 'pageId', 'layerId', 'expected', 'actual']) {
+    if (error?.[key] !== undefined) diagnostic[key] = clone(error[key]);
+  }
+  return diagnostic;
+}
