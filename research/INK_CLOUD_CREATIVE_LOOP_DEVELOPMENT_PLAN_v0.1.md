@@ -422,3 +422,23 @@ Run the user rose-window only after the engine and Reference→Path slice exist.
 The rose window remains the first hard benchmark, but it is no longer a prerequisite for Phases A–D.
 
 This rule applies to INK-CLOUD-007 and later extraction work.
+
+
+## Benchmark timing decision
+
+The user chose to defer the rose-window hard benchmark until later in the creative-loop buildout.
+
+Development priority is now continuous capability growth:
+
+```text
+Extraction
+→ Path Editing
+→ Expressive Stroke
+→ Multi-Contour Compose
+→ Repaint / Material
+→ CHAT Review
+→ Revision
+→ hard integrated benchmark
+```
+
+Engineering fixtures and bounded regression tests remain required at each stage. The deferred rose-window benchmark remains registered as a future integrated acceptance case and is not removed from the program.
