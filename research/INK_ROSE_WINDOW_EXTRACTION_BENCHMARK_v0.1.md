@@ -113,3 +113,36 @@ Target decision:
 `EXTRACTION_PIPELINE_SELECTED`
 
 No implementation is authorized by this benchmark document.
+
+
+## Benchmark Candidate A — User Long-Running Rose Window Reference
+
+User-selected reference image:
+
+`ChatGPT Image 2026年6月26日 上午06_44_33.png`
+
+Observed file metadata in current conversation:
+
+- 1086 × 1448 px;
+- RGBA;
+- near-frontal Gothic rose-window/tracery composition;
+- dense nested closed contours;
+- strong central radial organization;
+- repeated quatrefoil/trefoil-like motifs;
+- layered pointed-arch geometry;
+- side circular windows and architectural framing;
+- sufficient regularity for AI structural inference and sufficient ornamental complexity to expose tracing noise.
+
+Benchmark role:
+
+`CASE_A_PRIMARY / STRUCTURE_AWARE_HARD_REFERENCE`
+
+This image is specifically intended to test whether INK can outperform blind tracing by combining:
+
+- geometric/radial reasoning;
+- prototype extraction;
+- Repeat / Transform reconstruction;
+- contour/path capture;
+- local exception correction.
+
+The binary asset itself must be added to the repository benchmark fixtures by the implementation task using an authorized binary-safe path. This planning document records the canonical benchmark identity and purpose.
