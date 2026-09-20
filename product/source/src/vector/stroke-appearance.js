@@ -170,8 +170,12 @@ export function expressiveStrokeOpacityAt(raw, index = 0) {
   const style = normalizeExpressiveStroke(raw);
   if (!style) return 0;
   const unit = mix32((style.media.seed + Math.imul(index + 1, 0x9e3779b1)) >>> 0) / 4294967295;
-  const grainFactor = 1 - style.media.grain * (.06 + unit * .16);
-  return clamp(style.opacity * (.35 + style.media.flow * .65) * grainFactor, 0, 1);
+  const engineFactor = ({ pencil:.9, marker:.84, watercolor:.76, dry:.72, texture:.78, soft:.82, oil:.96, opaque:.98, ink:1 })[style.media.engine] ?? 1;
+  const textureStrength = clamp(style.media.grain * .7 + style.media.bristle * .3, 0, 1);
+  const textureFactor = 1 - textureStrength * (.05 + unit * .17);
+  const softnessFactor = 1 - style.media.softness * .06;
+  const wetnessFactor = 1 + style.media.wetness * .035;
+  return clamp(style.opacity * (.35 + style.media.flow * .65) * engineFactor * textureFactor * softnessFactor * wetnessFactor, 0, 1);
 }
 
 export function pathGeometryFingerprint(path) {
