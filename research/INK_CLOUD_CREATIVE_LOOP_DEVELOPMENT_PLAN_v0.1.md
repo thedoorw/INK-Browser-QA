@@ -460,3 +460,24 @@ Only after 008A is reviewed/promoted should 008B implement geometry-independent 
 Current authorized task:
 
 `INK-CLOUD-008A — Path Editing Core v0.1`
+
+
+## Continuous advancement governance
+
+The user authorized bounded creative-loop progression without a separate pause for each promotion.
+
+Default sequence:
+
+```text
+DEV_HANDOFF
+→ MR_REVIEW
+→ MR_PASS
+→ clean promotion to main
+→ next planned bounded Work Order
+```
+
+This automatic progression applies only while the next stage is already inside the accepted creative-loop plan and no Hard STOP, MR_REVISE/MR_HOLD, FORMAT_VERSION, architecture, package/release or broader-scope decision is encountered.
+
+Current stage:
+
+`INK-CLOUD-008B — Expressive Stroke v0.1`
