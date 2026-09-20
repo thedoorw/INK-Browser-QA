@@ -376,3 +376,22 @@ Path A + Path B + Path C
 Branch:
 
 `work/ink-cloud-009`
+
+
+## Permanent Cloud architecture constraint
+
+Authoritative product constraint:
+
+```text
+INK Cloud human-AI collaboration core
+must work with:
+static hosting + browser-local execution
+```
+
+Actions, server APIs, hosted backends and paid cloud services are optional enhancements only.
+
+They must never become dependencies for the core creative/collaboration loop.
+
+Architecture failure condition:
+
+`REMOTE_SERVICE_REQUIRED_FOR_CORE = HARD_STOP`
