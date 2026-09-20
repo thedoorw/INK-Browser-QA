@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-011 / PHASE_A_IN_PROGRESS`
+STATUS: `INK-CLOUD-011 / PHASE_A_COMPLETE / PHASE_B_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -57,3 +57,22 @@ No second vector / transform / History / mutation engine is required.
 `PHASE_A_IN_PROGRESS`
 
 Target: deterministic CHAT-facing document/page/selection/object summary with stable references and bounded geometry/appearance/provenance.
+
+
+### Phase A — complete
+
+`CHAT_STATE_SUMMARY = IMPLEMENTED`
+
+Committed contract:
+
+- `INK-CHAT-STATE-SUMMARY / version 1`;
+- stable `pageId/layerId/objectId` references;
+- deterministic hierarchy/render ordering from the authoritative page walk;
+- effective visible/locked/opacity/exposure state;
+- bounded geometry + appearance summary;
+- Path geometry fingerprint;
+- bounded extraction/source provenance;
+- no raster/binary payload;
+- shared editor export + static/offline shell cache entry.
+
+Next: Phase B structured edit-task / proposal schema.
