@@ -200,7 +200,7 @@ export class PathEditController {
     if (this.app.history?.pending) fail('HISTORY_BUSY');
     const found = selectedCandidate(this.app, ref);
     if (!found || found.object?.type !== 'path') fail('PATH_NOT_FOUND');
-    if (found.effectiveLocked || found.effectiveVisible === false) fail('TARGET_UNAVAILABLE');
+    if (found.effectiveLocked || found.effectiveVisible === false || found.interactionExposed === false) fail('TARGET_UNAVAILABLE');
     if (!Matrix.isInvertible(found.worldMatrix || found.object.matrix || Matrix.identity())) fail('SINGULAR_TARGET');
     assertFinitePathGeometry(found.object);
     this.state = {
