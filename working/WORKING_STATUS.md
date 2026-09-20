@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-009 / MR_PASS / AUTO_PROMOTION`
+STATUS: `INK-CLOUD-010 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-009` |
-| DEV_BRANCH | `work/ink-cloud-009` |
+| CURRENT_TASK_ID | `INK-CLOUD-010` |
+| DEV_BRANCH | `work/ink-cloud-010` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / MULTI_CONTOUR_COMPOSITION` |
+| NEXT_STAGE | `DEV_WORK / REPAINT_MATERIAL` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -416,3 +416,37 @@ Branch topology:
 `17 ahead / 3 behind / diverged`
 
 Clean promotion from current main is required and is authorized automatically by continuous-advance governance.
+
+
+## INK-CLOUD-009 promotion
+
+PR `#11` merged.
+
+Promotion commit:
+
+`6fc10bd70b687e888c678041fb276f77973fd2a1`
+
+Main merge commit:
+
+`d80b0c1589bb962702f857cb11a3111502509c83`
+
+Gate accepted:
+
+`MULTI_CONTOUR_COMPOSITION_WORKS`
+
+## INK-CLOUD-010 authorization
+
+Current objective:
+
+```text
+editable composed Paths
+→ Repaint / Material
+```
+
+Branch:
+
+`work/ink-cloud-010`
+
+Target gate:
+
+`REPAINT_MATERIAL_WORKS`
