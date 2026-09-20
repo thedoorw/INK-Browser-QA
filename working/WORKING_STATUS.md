@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
+STATUS: `PRE_CLOUD_CORE_READY / CREATIVE_LOOP_PLANNING / DISCUSSION_HOLD`
 
 | Field | Value |
 |---|---|
@@ -12,7 +12,7 @@ STATUS: `PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
 | MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DESIGN_DISCUSSION / NO_IMPLEMENTATION` |
+| NEXT_STAGE | `CREATIVE_LOOP_PLAN_REFINEMENT / NO_IMPLEMENTATION` |
 | CLOUD_START_GATE | `DISCUSSION_HOLD` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -86,3 +86,22 @@ CLOUD_START_APPROVAL = NOT_YET_GIVEN
 ```
 
 Resume only after a new explicit user decision.
+
+
+## Primary creative loop
+
+```text
+Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
+```
+
+This is now the first INK Cloud development target.
+
+Plan:
+
+`research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+
+First planned technical stage:
+
+`Phase 0 — Extraction Benchmark + Workflow Contract`
+
+Implementation remains blocked while discussion hold is active.
