@@ -145,7 +145,11 @@ This image is specifically intended to test whether INK can outperform blind tra
 - contour/path capture;
 - local exception correction.
 
-The binary asset itself must be added to the repository benchmark fixtures by the implementation task using an authorized binary-safe path. This planning document records the canonical benchmark identity and purpose.
+Canonical binary fixture is now present on the active DEV branch at:
+
+`qa/fixtures/rose-window/rose-window-primary.png`
+
+This path is the authoritative Phase D benchmark input for INK-CLOUD-013.
 
 
 ## Deferral checkpoint
@@ -160,3 +164,21 @@ CURRENT_IMPLEMENTATION_BLOCKER = NO
 ```
 
 This benchmark is not cancelled. It remains the first designated high-complexity acceptance case for a later validation checkpoint.
+
+
+## Fixture intake resolved — INK-CLOUD-013
+
+The canonical hard benchmark fixture is now available at:
+
+`qa/fixtures/rose-window/rose-window-primary.png`
+
+Blob SHA:
+
+`0977531b94011300300bd69602c566fb58452522`
+
+Phase D blocker is cleared.
+
+```text
+HARD_BENCHMARK = READY_TO_EXECUTE
+REFERENCE = qa/fixtures/rose-window/rose-window-primary.png
+```
