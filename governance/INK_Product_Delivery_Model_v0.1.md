@@ -189,3 +189,22 @@ INK Cloud consumes the same evolving core
 ```
 
 Neither delivery form is allowed to become a permanently divergent product fork.
+
+
+## 9. Current primary creative objective
+
+The first INK Cloud product milestone is not a complete generic Cloud platform.
+
+The current highest-priority creative loop is:
+
+```text
+Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
+```
+
+This loop is the product-level organizing principle for the next development sequence.
+
+The Cloud workspace should grow only as required to make this loop strong, editable and repeatable.
+
+Detailed plan:
+
+`research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
