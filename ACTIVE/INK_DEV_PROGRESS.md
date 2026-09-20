@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-011 / PHASE_A_COMPLETE / PHASE_B_IN_PROGRESS`
+STATUS: `INK-CLOUD-011 / PHASE_B_COMPLETE / PHASE_C_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -76,3 +76,25 @@ Committed contract:
 - shared editor export + static/offline shell cache entry.
 
 Next: Phase B structured edit-task / proposal schema.
+
+
+### Phase B — complete
+
+`STRUCTURED_EDIT_TASK_SCHEMA = IMPLEMENTED`
+
+Committed contracts:
+
+- `INK-CHAT-EDIT-TASK / version 1`;
+- `INK-CHAT-EDIT-PROPOSAL / version 1`;
+- explicit task/proposal identity;
+- stable target refs;
+- operation allowlist only;
+- bounded operation-specific arguments;
+- optional expected preconditions;
+- separate `PROPOSED` state with no approval token;
+- deterministic diagnostic shape;
+- no arbitrary code/eval surface.
+
+Initial operation vocabulary is bounded to repaint/material, translate, and Path simplify/refine families.
+
+Next: Phase C validation + explicit local approval boundary.
