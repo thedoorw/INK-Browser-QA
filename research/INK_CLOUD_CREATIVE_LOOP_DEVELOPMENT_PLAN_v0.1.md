@@ -496,3 +496,40 @@ The next bounded creative-loop stage is:
 Target gate:
 
 `MULTI_CONTOUR_COMPOSITION_WORKS`
+
+
+## Static-hosting / browser-local collaboration constraint
+
+The human-AI collaboration core for INK Cloud must remain viable under:
+
+```text
+static hosting
++
+browser-local execution
+```
+
+This requirement applies to the full creative loop, including the future CHAT Review / bounded edit / Revision stages.
+
+Therefore:
+
+- browser-local document state is authoritative for the core workflow;
+- History, structured edits, proposals, approvals and revision logic must be executable client-side;
+- any CHAT collaboration contract must support a transport-neutral/local execution path;
+- GitHub Actions cannot be a required runtime dependency;
+- server APIs cannot be required for core editing/collaboration semantics;
+- paid cloud services cannot be required for the core loop;
+- remote AI, sync, hosted storage and automation may be added only as optional adapters/accelerators.
+
+Architecture test:
+
+```text
+If all optional remote services are removed,
+can the static-hosted INK workspace still execute
+the core human-AI collaboration workflow locally?
+```
+
+Required answer:
+
+`YES`
+
+A `NO` result is a Hard STOP / architecture failure.
