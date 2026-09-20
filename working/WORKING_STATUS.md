@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-007 / PROMOTED / RUNTIME_QA_DEFERRED`
+STATUS: `INK-CLOUD-008A / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-007` |
-| DEV_BRANCH | `work/ink-cloud-007` |
+| CURRENT_TASK_ID | `INK-CLOUD-008A` |
+| DEV_BRANCH | `work/ink-cloud-008a` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
-| DEV_HANDOFF | `ACCEPTED` |
-| MR_REVIEW | `MR_PASS` |
+| DEV_HANDOFF | `NOT_YET` |
+| MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `NEXT_PRODUCT_STAGE_PLANNING` |
+| NEXT_STAGE | `DEV_WORK / PATH_EDITING_CORE` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -237,3 +237,27 @@ Reference
 Hard rose-window benchmark remains `DEFERRED_BY_USER_DECISION`.
 
 No next Work Order has been issued yet.
+
+
+## INK-CLOUD-008A authorization
+
+User authorized the next bounded product stage:
+
+`INK-CLOUD-008A — Path Editing Core v0.1`
+
+Branch:
+
+`work/ink-cloud-008a`
+
+Current objective:
+
+```text
+editable INK Path
+→ anchor / handle / topology editing
+→ simplify/refine
+→ History / serialization closure
+```
+
+Expressive Stroke is explicitly reserved for `INK-CLOUD-008B`.
+
+Hard rose-window benchmark remains deferred.
