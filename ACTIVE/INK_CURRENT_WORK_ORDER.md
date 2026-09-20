@@ -296,3 +296,34 @@ NEXT_PRODUCT_STAGE_AFTER_MR = PATH_EDITING + EXPRESSIVE_STROKE
 ```
 
 DEV must not spend time on the rose-window benchmark in this Work Order.
+
+
+## MR Review — INK-CLOUD-007
+
+Reviewed HEAD:
+
+`b006a3a7dadc5d261e3dda5b377f61ec13221ddb`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Accepted bounded result:
+
+```text
+Extraction engine = IMPLEMENTED
+Reference → editable Path = TECHNICAL_VERTICAL_SLICE_COMPLETE
+Structure-aware radial/Repeat candidate = IMPLEMENTED
+Hard rose-window benchmark = DEFERRED_BY_USER_DECISION
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+```
+
+DEV remains stopped.
+
+The branch is diverged from current main; do not merge it directly. Any promotion must be performed from current main using a bounded promotion branch and requires explicit user approval.
+
+Next action:
+
+`USER_PROMOTION_DECISION`
