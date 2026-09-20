@@ -208,7 +208,8 @@ export class PathEditController {
       pageId: this.app.page()?.id || null,
       ref: { layerId: found.layer.id, objectId: found.object.id },
       anchorKeys: new Set(),
-      handle: null
+      handle: null,
+      segment: null
     };
     this.app.selection = [{ ...this.state.ref }];
     return this.snapshot();
@@ -237,6 +238,7 @@ export class PathEditController {
     this.resolve();
     this.state.anchorKeys.clear();
     this.state.handle = null;
+    this.state.segment = null;
     return this.snapshot();
   }
 
@@ -248,6 +250,7 @@ export class PathEditController {
     if (toggle && this.state.anchorKeys.has(key)) this.state.anchorKeys.delete(key);
     else this.state.anchorKeys.add(key);
     this.state.handle = null;
+    this.state.segment = null;
     return this.snapshot();
   }
 
@@ -260,6 +263,7 @@ export class PathEditController {
       this.state.anchorKeys.add(keyForAnchor(ref.subpathIndex, ref.anchorIndex));
     }
     this.state.handle = null;
+    this.state.segment = null;
     return this.snapshot();
   }
 
@@ -270,6 +274,17 @@ export class PathEditController {
     this.state.anchorKeys.clear();
     this.state.anchorKeys.add(keyForAnchor(subpathIndex, anchorIndex));
     this.state.handle = { subpathIndex, anchorIndex, side };
+    this.state.segment = null;
+    return this.snapshot();
+  }
+
+  selectSegment(subpathIndex, segmentIndex, t = 0.5) {
+    const found = this.resolve();
+    validateSegmentRef(found.object, subpathIndex, segmentIndex);
+    if (!Number.isFinite(t) || t < 0 || t > 1) fail('SEGMENT_T_INVALID');
+    this.state.anchorKeys.clear();
+    this.state.handle = null;
+    this.state.segment = { subpathIndex, segmentIndex, t };
     return this.snapshot();
   }
 
@@ -327,6 +342,7 @@ export class PathEditController {
     this.state.anchorKeys.clear();
     this.state.anchorKeys.add(keyForAnchor(subpathIndex, anchorIndex));
     this.state.handle = null;
+    this.state.segment = null;
     return this.snapshot();
   }
 
@@ -350,6 +366,7 @@ export class PathEditController {
       for (const ref of refs) setAnchorMode(path, ref.subpathIndex, ref.anchorIndex, mode);
     });
     this.state.handle = null;
+    this.state.segment = null;
     return this.snapshot();
   }
 
@@ -364,6 +381,7 @@ export class PathEditController {
     this.state.anchorKeys.clear();
     this.state.anchorKeys.add(keyForAnchor(subpathIndex, inserted.anchorIndex));
     this.state.handle = null;
+    this.state.segment = null;
     return { ...this.snapshot(), insertedAnchorId: inserted.anchor.id };
   }
 
@@ -383,6 +401,7 @@ export class PathEditController {
     });
     this.state.anchorKeys.clear();
     this.state.handle = null;
+    this.state.segment = null;
     return this.snapshot();
   }
 
@@ -413,6 +432,7 @@ export class PathEditController {
     });
     this.state.anchorKeys.clear();
     this.state.handle = null;
+    this.state.segment = null;
     const afterNodeCount = pathNodeCount(this.resolve().object);
     return {
       operation: 'simplify',
@@ -437,6 +457,7 @@ export class PathEditController {
     });
     this.state.anchorKeys.clear();
     this.state.handle = null;
+    this.state.segment = null;
     const afterNodeCount = pathNodeCount(this.resolve().object);
     return {
       operation: 'refine',
@@ -450,12 +471,13 @@ export class PathEditController {
   }
 
   snapshot() {
-    if (!this.state) return { active: false, ref: null, anchors: [], handle: null };
+    if (!this.state) return { active: false, ref: null, anchors: [], handle: null, segment: null };
     return {
       active: true,
       ref: { ...this.state.ref },
       anchors: [...this.state.anchorKeys].sort(),
-      handle: this.state.handle ? { ...this.state.handle } : null
+      handle: this.state.handle ? { ...this.state.handle } : null,
+      segment: this.state.segment ? { ...this.state.segment } : null
     };
   }
 }
