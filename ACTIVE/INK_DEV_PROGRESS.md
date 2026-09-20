@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_B_COMPLETE`
+STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_C_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -90,3 +90,25 @@ Files:
 - `product/source/src/ink.js`
 
 Next: `BEGIN_PHASE_C / RENDERER_INTEGRATION`
+
+
+## Checkpoint — Phase C
+
+Status: `COMPLETE`
+
+Checkpoint HEAD: `e3ec6cf63195e47b6cdc80c4bc51f60d2ee8c062`
+
+Implemented:
+- existing Path Canvas renderer resolves material appearance through the bounded contract;
+- existing vector renderer reuses the same deterministic ordinary-vector fallback;
+- structured SVG remains a `<path>` and records explicit material reference/fallback attributes;
+- expressive stroke renderer remains authoritative when present;
+- offline shell includes the new contract/controller modules;
+- no raster replacement and no second renderer.
+
+Files:
+- `product/source/src/vector/vector-core.js`
+- `product/source/src/ink.js`
+- `product/source/service-worker.js`
+
+Next: `BEGIN_PHASE_D / COMPOSITION_INTEGRATION`
