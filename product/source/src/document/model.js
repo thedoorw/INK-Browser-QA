@@ -5,6 +5,7 @@ import { createWorkspace } from './workspace.js';
 import { normalizeSemantic } from '../semantic/semantic-model.js';
 import { createFrame } from './hierarchy.js';
 import { normalizeObjectLayout } from './layout.js';
+import { normalizeExpressiveStroke } from '../vector/stroke-appearance.js';
 
 export const DEFAULT_RECENT = [
   '#202020', '#ffffff', '#b63c36', '#d18b2f',
@@ -111,6 +112,10 @@ export function normalizeObject(object, { parentId = null, structuralState = nul
     : Matrix.identity();
   if (!Number.isFinite(+object.opacity)) object.opacity = 1;
   object.opacity = Math.max(0, Math.min(1, +object.opacity));
+  if (object.type === 'path') {
+    if (object.expressiveStroke == null) delete object.expressiveStroke;
+    else object.expressiveStroke = normalizeExpressiveStroke(object.expressiveStroke, { color: object.stroke, width: object.strokeWidth });
+  }
   if (object.type === 'stroke') {
     object.points = Array.isArray(object.points) ? object.points.map(point => ({
       x: Number.isFinite(+point.x) ? +point.x : 0,

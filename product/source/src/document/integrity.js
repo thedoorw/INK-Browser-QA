@@ -1,6 +1,7 @@
 import { inspectComponents } from './components.js';
 import { inspectLayouts } from './layout.js';
 import { deepClone, nowISO } from '../core/index.js';
+import { validateExpressiveStroke } from '../vector/stroke-appearance.js';
 
 function canonicalize(value) {
   if (Array.isArray(value)) return value.map(canonicalize);
@@ -41,7 +42,7 @@ export function inspectDocument(document, {
 } = {}) {
   const errors = [], warnings = [];
   const stats = {
-    pages: 0, layers: 0, objects: 0, groups: 0, frames: 0, strokes: 0, points: 0,
+    pages: 0, layers: 0, objects: 0, groups: 0, frames: 0, paths: 0, expressiveStrokes: 0, strokes: 0, points: 0,
     duplicateIds: 0, duplicateOwnership: 0, structuralCycles: 0, staleParentIds: 0, byteLength: 0
   };
   const ids = new Set();
@@ -87,6 +88,14 @@ export function inspectDocument(document, {
 
     if (!Array.isArray(object.matrix) || object.matrix.length !== 6 || object.matrix.some(value => !Number.isFinite(+value))) {
       issue(errors, 'invalid-matrix', `${path}.matrix`, '物件矩陣必須包含六個有限數值');
+    }
+    if (object.type === 'path') {
+      stats.paths++;
+      if (object.expressiveStroke != null) {
+        stats.expressiveStrokes++;
+        const validation = validateExpressiveStroke(object.expressiveStroke);
+        for (const error of validation.errors) issue(errors, 'invalid-expressive-stroke', `${path}.expressiveStroke.${error}`, 'Expressive Stroke appearance payload is invalid', { field: error });
+      }
     }
     if (object.type === 'stroke') {
       stats.strokes++;
