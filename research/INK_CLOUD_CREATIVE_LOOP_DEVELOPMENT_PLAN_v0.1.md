@@ -548,3 +548,20 @@ The next bounded creative-loop stage is:
 Target gate:
 
 `REPAINT_MATERIAL_WORKS`
+
+
+## Current continuous stage — INK-CLOUD-011
+
+INK-CLOUD-010 completed and promoted with gate:
+
+`REPAINT_MATERIAL_WORKS`
+
+The next bounded creative-loop stage is:
+
+`INK-CLOUD-011 — CHAT Review + Structured Edit Tasks v0.1`
+
+Target gate:
+
+`CHAT_BOUNDED_EDIT_LOOP_WORKS`
+
+This stage establishes the transport-neutral/browser-local collaboration contract and bounded proposal→approval→mutation path. Revision closure remains reserved for the next stage.
