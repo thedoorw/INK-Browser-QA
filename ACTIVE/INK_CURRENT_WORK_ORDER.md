@@ -1,426 +1,239 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `PRE_CLOUD_CORE_READY / CREATIVE_LOOP_PLANNING / DISCUSSION_HOLD`
+STATUS: `ACTIVE / INK-CLOUD-007 / DEVELOPMENT_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-006` |
-| TITLE | `INK Layout / Constraints Schema + Persistence Contract Closure v0.1` |
-| AUTHORITY | `MAIN REVIEW + USER_CONTINUE_AUTHORIZATION` |
-| DEV_WORK_BRANCH | `work/ink-cloud-006` |
+| CURRENT_TASK_ID | `INK-CLOUD-007` |
+| TITLE | `Rose Window Extraction Benchmark + Reference-to-Path Technical Prototype v0.1` |
+| AUTHORITY | `USER_EXPLICIT_DEVELOPMENT_AUTHORIZATION` |
+| DEV_WORK_BRANCH | `work/ink-cloud-007` |
 | DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CURRENT_GATE | `PRE_CLOUD_CORE_READY` |
-| NEXT_AUTHORIZED_ACTION | `REFINE_CREATIVE_LOOP_PLAN / NO_IMPLEMENTATION` |
-| CLOUD_START_GATE | `DISCUSSION_HOLD` |
+| CLOUD_SCOPE | `BOUNDED_EXTRACTION_WORKSPACE / NO_GENERIC_PLATFORM` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Baseline
+## Product objective
 
-Accepted and promoted structural foundations:
+The current highest-priority INK Cloud creative loop remains:
 
-- `INK-CLOUD-002` — Frame + Nested Hierarchy
-- `INK-CLOUD-003` — Container / Ownership Structural Semantics
-- `INK-CLOUD-004` — Transform / Bounds / Coordinate System
-- `INK-CLOUD-005` — Component / Instance Data Model
+```text
+Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
+```
 
-Pre-Cloud readiness assessment:
+This Work Order implements only the first technical slice:
 
-`research/INK_PRE_CLOUD_CORE_READINESS_ASSESSMENT_v0.1.md`
+```text
+Reference → Extract → editable Path
+```
 
-Decision:
+Do not expand into Compose, Repaint, CHAT mutation or broad Cloud platform features.
 
-`PRE_CLOUD_CORE_READY = NO / ONE_FINAL_STRUCTURAL_WORKPACK_REQUIRED`
-
-## Objective
-
-Close the final document-format / structural gaps before first Cloud implementation:
-
-1. establish a minimal versioned Layout / Constraints data contract;
-2. establish a transport-neutral persistence / revision envelope contract;
-3. prove migration, integrity, save/load, History and existing structural compatibility;
-4. do not build Cloud transport or a full layout editor.
-
-This is a shared-core structural task, not Cloud implementation.
-
-## Required starting reads
+## Required reads
 
 1. `README.md`
 2. `AGENTS.md`
-3. this Current Work Order
+3. this Work Order
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
+6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+7. `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+8. `research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
 
-Read governance, accepted reports and source/QA only when required by this Work Order or implementation.
+Read additional source/governance only when implementation requires it.
 
-## A. Layout / Constraints structural schema
+## Primary benchmark
 
-Create the smallest versioned optional structural contract that future responsive layout can extend without destabilizing existing documents.
+Canonical first hard reference:
 
-Requirements:
+`CASE_A_PRIMARY / STRUCTURE_AWARE_HARD_REFERENCE`
 
-- Frame is the primary layout-container authority.
-- Group remains grouping semantics and must not silently become a layout Frame.
-- Repeat remains procedural and is not a layout container.
-- layout metadata must be optional and versioned.
-- child layout/constraint metadata must be optional and versioned or unambiguously scoped.
-- existing Frame documents without layout metadata must retain current behavior exactly.
-- no derived world geometry/bounds are serialized.
+User-provided image identity:
 
-The model must define enough semantics for future:
+`ChatGPT Image 2026年6月26日 上午06_44_33.png`
 
-- no-layout / manual positioning;
-- horizontal / vertical flow capability;
-- gap;
-- padding;
-- alignment;
-- fixed / fill / hug-style sizing concepts or an equally explicit INK-native equivalent;
-- child participation versus absolute/manual placement;
-- horizontal and vertical resize/anchor constraint intent.
+Observed metadata:
 
-Do not implement a broad UI.
+`1086 × 1448 / RGBA`
 
-Do not overbuild a full production Auto Layout engine.
+The image is a near-frontal Gothic tracery/rose-window composition with strong radial repetition and dense nested contours.
 
-Implement only the minimum deterministic evaluation/normalization needed to prove that the schema is coherent and can evolve safely.
+If the binary fixture is not yet available in the repo, establish a documented fixture intake path and do not substitute a materially easier benchmark without recording it.
 
-## B. Layout identity / transform / ownership rules
+## Technical candidates
 
-Layout must reuse accepted hierarchy and transform contracts.
+Benchmark and integrate only after license/runtime verification:
 
-Required:
+- SAM-class segmentation: semantic mask candidate;
+- OpenCV.js: preprocessing, contour hierarchy, approximation, perspective/geometric evidence;
+- VTracer: primary raster-to-vector candidate;
+- ImageTracerJS: lightweight browser baseline/fallback;
+- Potrace: quality benchmark only unless separate GPL decision;
+- existing INK Path / Repeat / Transform / History remain authoritative.
 
-- layout does not create a second hierarchy;
-- ownership remains existing Frame/Group arrays;
-- child IDs remain stable;
-- layout evaluation never changes definition/Instance identity semantics;
-- parent/local/world matrix meaning remains unchanged;
-- layout-computed geometry must have a clearly documented authority boundary;
-- resize/constraint evaluation must not silently mutate unrelated ancestors;
-- singular transform protections remain intact.
+Do not introduce a second vector engine, hierarchy, transform system, History engine or renderer.
 
-If implementing layout requires replacing accepted transform/ownership semantics:
+## Long Sequence phases
 
-`STOP / MR_DECISION_REQUIRED`.
+### Phase A — Benchmark harness and fixture contract
 
-## C. History
+Create deterministic benchmark tooling/data contract for:
 
-Use existing HistoryManager.
+- source image identity;
+- extraction parameters;
+- mask/contour/vector outputs;
+- timing and node counts;
+- topology/hole diagnostics;
+- overlay/comparison evidence;
+- reproducible result records.
 
-At minimum, any source-level commands introduced for:
+Checkpoint commit required.
 
-- applying/removing layout metadata;
-- changing bounded layout properties;
-- changing child sizing/constraint metadata
+### Phase B — Direct extraction baselines
 
-must be atomic, undoable, and not leave partial History state.
+Implement/evaluate at minimum feasible candidates:
 
-No replacement History engine.
+1. OpenCV contour/hierarchy baseline;
+2. VTracer direct vectorization;
+3. ImageTracerJS baseline if technically appropriate.
 
-## D. Serialization / migration / integrity
+Record actual executed evidence; do not claim unavailable dependency results.
 
-Verify and formalize:
+Checkpoint commit required.
 
-- old format-4 documents without layout data remain valid;
-- Frame / Group / Component / Instance documents remain valid;
-- optional layout data survives native save/load;
-- unknown future extension fields are preserved unless explicitly migrated;
-- malformed known layout fields fail or normalize deterministically;
-- integrity can diagnose invalid known layout/constraint data;
-- no silent identity retargeting;
-- structured SVG remains based on resolved geometry and does not raster-flatten merely because layout metadata exists.
+### Phase C — Segmentation-assisted and structure-aware route
 
-DEV must explicitly decide whether a FORMAT_VERSION change is necessary.
+Establish adapter boundary for semantic mask input.
 
-If yes:
+If a SAM-class runtime can be integrated within reasonable browser/repo constraints, benchmark it. If model/runtime size prevents bounded integration, implement the adapter contract and document the exact blocker rather than inventing PASS evidence.
 
-`STOP / MR_DECISION_REQUIRED`
+Implement rose-window structural analysis sufficient to test:
 
-before changing it.
+- dominant center/rings where detectable;
+- radial/repeated motif evidence;
+- representative prototype candidate;
+- Repeat/Transform reconstruction using existing INK structures.
 
-## E. Transport-neutral file / revision envelope
+Checkpoint commit required.
 
-Define and implement/test a backend-neutral persistence envelope around the native INK document.
+### Phase D — Reference → editable Path vertical slice
 
-This is a schema/adapter boundary only.
+Integrate the strongest evidence-supported route into shared INK/editor code:
 
-Minimum concepts:
+- import/reference object boundary;
+- extraction invocation;
+- conversion to authoritative editable INK Path;
+- original/path overlay;
+- local correction-ready output;
+- History integration;
+- save/load/serialization integrity;
+- stable provenance from reference to extracted path.
 
-- envelope schema/version;
-- stable file ID;
-- revision identity or monotonic revision field;
-- native document formatVersion;
-- declared feature/extension identifiers;
-- migration identifiers or applied-migration record;
-- document payload;
-- asset/media reference list compatible with existing assetManifest;
-- savedAt / modifiedAt;
-- integrity fingerprint.
+No broad UI. Minimum controls/diagnostics only.
 
-Required behavior:
+Checkpoint commit required.
 
-- wrapping/unwrapping must not alter the native document;
-- invalid fingerprint / malformed envelope must fail safely;
-- native document remains authoritative;
-- local InkStore remains separate and continues to work;
-- envelope must be usable later by either local file transport or Cloud transport;
-- no remote backend assumptions in core schema.
-
-Do NOT add:
-
-- HTTP/API calls;
-- authentication;
-- permissions;
-- server storage;
-- sync;
-- collaboration;
-- conflict-resolution protocol;
-- websocket/presence.
-
-## F. Compatibility closure
-
-Protect at minimum:
-
-- legacy non-Frame documents;
-- Frame / nested hierarchy;
-- Group ownership semantics;
-- Transform / bounds / singular guards;
-- Component / Instance identity, overrides and detach;
-- Repeat identity;
-- History;
-- spatial indexing;
-- native save/load;
-- InkStore recovery;
-- structured SVG;
-- creation/layout workspace cameras;
-- assetManifest.
-
-## G. Required report
+### Phase E — Selection report and handoff
 
 Create:
 
-`research/INK_LAYOUT_PERSISTENCE_CONTRACT_CLOSURE_REPORT_v0.1.md`
+`research/INK_EXTRACTION_PIPELINE_SELECTION_REPORT_v0.1.md`
 
 Report:
 
-- final layout schema;
-- container/child authority;
-- constraint/sizing semantics;
-- normalization/evaluation behavior;
-- History behavior;
-- serialization/migration/integrity behavior;
-- file/revision envelope schema;
-- extension/feature policy;
-- asset reference policy;
-- FORMAT_VERSION conclusion;
-- tests actually executed;
+- candidates actually tested;
+- versions/licenses;
+- benchmark fixture identities;
+- metrics/results;
+- direct trace vs structure-aware comparison;
+- selected pipeline and fallback;
+- browser/portable implications;
+- tests executed;
 - tests authored but not executed;
-- Runtime QA debt;
+- runtime debt;
 - known limitations;
-- exact handoff fingerprint.
+- exact final branch HEAD.
+
+## Evaluation criteria
+
+Do not select by visual similarity alone.
+
+Measure:
+
+- contour completeness;
+- missing/false contours;
+- topology and hole nesting;
+- unnecessary node density;
+- curve fidelity;
+- radial symmetry error;
+- repeated motif consistency;
+- editability;
+- correction cost;
+- determinism;
+- latency/memory where measurable;
+- browser feasibility;
+- license suitability;
+- portability toward single `INK.html`.
+
+## Compatibility requirements
+
+Protect accepted:
+
+- FORMAT_VERSION 4 unless MR explicitly decides otherwise;
+- Frame/Group/ownership;
+- Transform/bounds/singular guards;
+- Component/Instance;
+- Repeat identity;
+- History;
+- native save/load;
+- InkStore;
+- structured SVG;
+- assetManifest;
+- portable shared-core direction.
+
+If FORMAT_VERSION change or accepted structural contract break becomes necessary:
+
+`STOP / MR_DECISION_REQUIRED`.
 
 ## Explicit exclusions
 
 Do not implement:
 
-- first Cloud backend;
-- remote storage;
-- auth;
+- generic Cloud backend;
+- auth/accounts;
+- remote persistence service;
 - permissions;
 - collaboration/presence;
-- remote libraries;
-- full Component variants;
-- full Auto Layout UI;
-- mature flex/grid property panels;
-- persistent rulers/guides;
-- snapping redesign;
-- worker architecture;
-- renderer replacement;
+- Compose/Repaint workflow;
+- CHAT edit execution;
+- full Auto Layout;
 - package update;
 - single-file packaging;
-- version promotion/certification;
-- next Work Order.
+- release/version certification.
 
-## Runtime QA constraint
+## QA constraint
 
 `GITHUB_ACTIONS = QUOTA_EXHAUSTED`
 
 `RUNTIME_QA = DEFERRED`
 
-Execute all feasible source/static/unit/serialization/migration tests locally/in the active environment.
-
-Never claim unexecuted tests as PASS.
-
-## Long Sequence rule
-
-WORK may proceed continuously across implementation phases without user confirmation.
-
-Each meaningful checkpoint must:
-
-- commit;
-- update `ACTIVE/INK_DEV_PROGRESS.md`;
-- record exact SHA;
-- retain evidence.
-
-Hard STOP only if:
-
-1. FORMAT_VERSION change is required;
-2. accepted hierarchy/ownership/transform/component contracts must be broken;
-3. a parallel engine becomes necessary;
-4. scope must expand beyond this Work Order.
-
-## Acceptance
-
-MR must be able to verify:
-
-1. layout/constraint metadata has a clear versioned optional schema;
-2. existing no-layout documents preserve behavior;
-3. Frame remains layout authority without reclassifying Group/Repeat;
-4. child identity/ownership stays stable;
-5. layout/constraint mutations use existing History;
-6. known malformed layout data is handled deterministically;
-7. save/load preserves valid layout data;
-8. old format-4 documents remain compatible;
-9. Component/Instance documents remain compatible;
-10. file/revision envelope round-trips native document losslessly;
-11. envelope fingerprint validation fails closed;
-12. local InkStore remains compatible;
-13. asset references have a documented stable boundary;
-14. no Cloud transport/backend capability was introduced;
-15. FORMAT_VERSION is unchanged unless MR explicitly authorizes otherwise.
+All feasible source/static/unit/serialization/benchmark checks must be executed in the active environment. Never report an unexecuted check as PASS.
 
 ## Completion gate
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-006
-BRANCH = work/ink-cloud-006
-PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
-FORMAT_VERSION_CHANGE = 0 OR MR_DECISION_REQUIRED
+TASK_ID = INK-CLOUD-007
+BRANCH = work/ink-cloud-007
+BENCHMARK = EXECUTED_WITH_RECORDED_EVIDENCE
+REFERENCE_TO_PATH = TECHNICAL_VERTICAL_SLICE_COMPLETE
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
-
-After MR PASS + promotion, MR must perform the final PRE_CLOUD_CORE_READY assessment.
-
-Cloud implementation remains blocked until that assessment passes and the user explicitly approves Cloud start.
-
-
-## MR Pass
-
-MR reviewed final DEV handoff HEAD:
-
-`b3a59ab6a11869c6273ffdd7754b3b11af41ab74`
-
-Implementation + executed QA checkpoint:
-
-`184c74195e976526713ad549b236e13c9dac9ad7`
-
-Decision:
-
-`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
-
-No blocking source/schema finding remains. `FORMAT_VERSION_CHANGE = 0`.
-
-DEV remains stopped. Main promotion requires user approval.
-
-After promotion, MR must perform the final `PRE_CLOUD_CORE_READY` assessment. This PASS does not authorize Cloud implementation.
-
-
-## Main Promotion + Final Pre-Cloud Readiness
-
-INK-CLOUD-006 was promoted to main at:
-
-`c0800bbc2345772b44aa310161aa446fc87fbe60`
-
-Final readiness assessment:
-
-`PRE_CLOUD_CORE_READY = YES`
-
-The pre-Cloud structural stage is complete.
-
-Cloud implementation is still not authorized automatically. The next action is explicit user approval to begin the first Cloud Work Order.
-
-
-## Discussion Hold
-
-The user has requested a discussion period before authorizing the first Cloud implementation Work Order.
-
-Current control state:
-
-```text
-PRE_CLOUD_CORE_READY = YES
-CLOUD_IMPLEMENTATION = NOT_AUTHORIZED
-NEXT_WORK_ORDER = NOT_ISSUED
-DISCUSSION_HOLD = ACTIVE
-```
-
-During this hold:
-
-- no DEV / DEV WORK implementation is authorized;
-- no Cloud branch is to be started;
-- no package/version/certification work is authorized;
-- architecture, product direction, Cloud scope, workflow and sequencing may be discussed;
-- after discussion, a new explicit user decision is required before issuing the first Cloud implementation Work Order.
-
-
-## Current Primary Product Goal
-
-The user has selected the first concrete INK Cloud creative milestone:
-
-```text
-Reference → Extract → Path → Edit → Compose → Repaint → CHAT Review → Revision
-```
-
-This closed loop is now the highest-priority product objective.
-
-Planning baseline:
-
-`research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-
-Development sequence currently planned:
-
-1. Extraction Benchmark + Workflow Contract
-2. Reference / Extract / Path minimum vertical slice
-3. Path Editing + Expressive Stroke
-4. Multi-Contour Composition
-5. Repaint + Material
-6. CHAT Review + Structured Edit Tasks
-7. Revision Closure
-
-Current authorization remains planning-only.
-
-No implementation Work Order has been issued.
-
-
-## Phase 0 Extraction Research Checkpoint
-
-The Rose Window benchmark is now the first hard extraction benchmark.
-
-Documents:
-
-- `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
-- `research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
-
-Current research direction:
-
-```text
-Reference
-→ semantic segmentation
-→ deterministic geometry/contour analysis
-→ vectorization
-→ INK structure-aware reconstruction
-→ overlay QA
-→ bounded correction
-```
-
-Direct tracing and AI + INK structural reconstruction must be compared on the same rose-window cases.
-
-No implementation authorization is implied by this research checkpoint.
