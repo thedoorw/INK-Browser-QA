@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-007 / ENGINE_COMPLETE_NEAR_HANDOFF / HARD_BENCHMARK_DEFERRED`
+STATUS: `INK-CLOUD-007 / MR_PASS / PROMOTION_AWAITING_USER`
 
 | Field | Value |
 |---|---|
@@ -8,11 +8,11 @@ STATUS: `INK-CLOUD-007 / ENGINE_COMPLETE_NEAR_HANDOFF / HARD_BENCHMARK_DEFERRED`
 | CURRENT_TASK_ID | `INK-CLOUD-007` |
 | DEV_BRANCH | `work/ink-cloud-007` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING` |
+| DEV_HANDOFF | `ACCEPTED` |
+| MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV FINISH REPORT + HANDOFF / THEN MR REVIEW` |
+| NEXT_STAGE | `USER_PROMOTION_DECISION` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -187,3 +187,20 @@ After MR acceptance/promotion, the planned next product stage is:
 `Path Editing + Expressive Stroke`
 
 Rose-window validation remains registered as future hard acceptance work.
+
+
+## INK-CLOUD-007 MR review
+
+Reviewed exact DEV HEAD:
+
+`b006a3a7dadc5d261e3dda5b377f61ec13221ddb`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Hard benchmark remains:
+
+`DEFERRED_BY_USER_DECISION`
+
+Because the DEV branch diverged from main, direct merge is not approved. Promotion requires explicit user approval and a bounded promotion branch from current main.
