@@ -1,6 +1,6 @@
 # INK Cloud Creative Loop Development Plan v0.1
 
-STATUS: `PLANNING_BASELINE / DISCUSSION_HOLD / NO_IMPLEMENTATION_AUTHORIZATION`
+STATUS: `ACTIVE DEVELOPMENT PLAN / PHASE_0_1 AUTHORIZED`
 
 ## Primary Product Goal
 
@@ -368,9 +368,9 @@ This checkpoint is validation of shared-core integrity, not a requirement to fre
 PRE_CLOUD_CORE_READY = YES
 PRIMARY_CREATIVE_GOAL = REFERENCE_TO_REVISION_CLOSED_LOOP
 DEVELOPMENT_PLAN = CREATED
-DISCUSSION_HOLD = ACTIVE
-CLOUD_IMPLEMENTATION = NOT_AUTHORIZED
-NEXT_WORK_ORDER = NOT_ISSUED
+DISCUSSION_HOLD = ENDED
+CLOUD_IMPLEMENTATION = BOUNDED_EXTRACTION_WORK_AUTHORIZED
+NEXT_WORK_ORDER = INK-CLOUD-007
 ```
 
 The next step is to discuss/refine this plan, especially Phase 0 extraction benchmark scope and acceptance criteria, before issuing the first implementation Work Order.
@@ -392,3 +392,18 @@ Research conclusion so far:
 - prefer hybrid extraction rather than a monolithic tracer.
 
 No extraction implementation has started.
+
+
+## Development Authorization Checkpoint
+
+The user explicitly ended the discussion-only phase and requested that planning be completed and technical development proceed without extended discussion.
+
+Authorized first implementation workpack:
+
+`INK-CLOUD-007 — Rose Window Extraction Benchmark + Reference-to-Path Technical Prototype v0.1`
+
+Assigned branch:
+
+`work/ink-cloud-007`
+
+This workpack combines Phase 0 evidence with the minimum Phase 1 technical vertical slice so research does not stall before implementation.
