@@ -1,4 +1,5 @@
-import { walkPageObjects } from '../document/hierarchy.js';
+import { Matrix } from '../core/index.js';
+import { findPageObject, walkPageObjects } from '../document/hierarchy.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
@@ -375,4 +376,143 @@ export function chatEditDiagnostic(error, phase = 'unknown') {
     if (error?.[key] !== undefined) diagnostic[key] = clone(error[key]);
   }
   return diagnostic;
+}
+
+
+function targetRefKey(ref) {
+  return `${ref.layerId}/${ref.objectId}`;
+}
+
+function operationRequiresPath(operation) {
+  return operation.startsWith('path.');
+}
+
+function currentTargetFingerprint(page, found) {
+  return summarizeChatObject(page.id, found).stateFingerprint;
+}
+
+function captureExpectedState(app, task, resolved) {
+  const page = app.page();
+  return {
+    documentId: app.doc?.id || null,
+    pageId: page?.id || null,
+    targetFingerprints: Object.fromEntries(resolved
+      .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found)])
+      .sort((a, b) => a[0].localeCompare(b[0])))
+  };
+}
+
+export function validateChatEditTaskAgainstState(app, rawTask, { expected = null, requireHistoryIdle = false } = {}) {
+  const task = normalizeChatEditTask(rawTask);
+  const document = app?.doc;
+  const page = typeof app?.page === 'function' ? app.page() : null;
+  if (!document || !page) editFail('STATE_UNAVAILABLE');
+  if (requireHistoryIdle && app.history?.pending) editFail('HISTORY_BUSY');
+
+  const preconditions = normalizeExpected(expected ?? task.expected);
+  if (preconditions?.documentId && preconditions.documentId !== document.id) {
+    editFail('STALE_DOCUMENT', { expected: preconditions.documentId, actual: document.id || null });
+  }
+  if (preconditions?.pageId && preconditions.pageId !== page.id) {
+    editFail('STALE_PAGE', { expected: preconditions.pageId, actual: page.id || null });
+  }
+
+  const resolved = task.targets.map(ref => {
+    if (ref.pageId !== page.id) editFail('TARGET_PAGE_INACTIVE', { pageId: ref.pageId, actual: page.id || null });
+    const found = findPageObject(page, ref);
+    if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
+    if (operationRequiresPath(task.operation) && found.object?.type !== 'path') {
+      editFail('PATH_REQUIRED', { objectId: found.object?.id || null });
+    }
+    if (found.effectiveLocked) editFail('TARGET_LOCKED', { objectId: found.object.id });
+    if (found.effectiveVisible === false) editFail('TARGET_HIDDEN', { objectId: found.object.id });
+    if (found.interactionExposed === false) editFail('TARGET_UNEXPOSED', { objectId: found.object.id });
+    if (!Matrix.isInvertible(found.worldMatrix || found.object?.matrix || Matrix.identity())) {
+      editFail('TARGET_SINGULAR', { objectId: found.object.id });
+    }
+    const expectedFingerprint = preconditions?.targetFingerprints?.[targetRefKey(ref)];
+    if (expectedFingerprint) {
+      const actualFingerprint = currentTargetFingerprint(page, found);
+      if (actualFingerprint !== expectedFingerprint) {
+        editFail('TARGET_STALE', { objectId: found.object.id, expected: expectedFingerprint, actual: actualFingerprint });
+      }
+    }
+    return { ref, found };
+  });
+
+  return { task, resolved, expected: preconditions };
+}
+
+export class ChatBoundedEditController {
+  constructor(app) {
+    this.app = app;
+    this.proposals = new Map();
+    this.approvalSequence = 0;
+  }
+
+  inspect() {
+    return buildChatStateSummary(this.app);
+  }
+
+  getProposal(proposalId) {
+    const proposal = this.proposals.get(String(proposalId || ''));
+    return proposal ? clone(proposal) : null;
+  }
+
+  propose(rawTask) {
+    const { task, resolved } = validateChatEditTaskAgainstState(this.app, rawTask);
+    const summary = this.inspect();
+    const expected = captureExpectedState(this.app, task, resolved);
+    const proposal = createChatEditProposal(task, {
+      expected,
+      stateFingerprint: chatStateFingerprint(summary)
+    });
+    if (this.proposals.has(proposal.proposalId)) editFail('PROPOSAL_EXISTS', { proposalId: proposal.proposalId });
+    this.proposals.set(proposal.proposalId, proposal);
+    return clone(proposal);
+  }
+
+  approve(proposalId) {
+    const key = String(proposalId || '');
+    const proposal = this.proposals.get(key);
+    if (!proposal) editFail('PROPOSAL_NOT_FOUND');
+    if (proposal.state !== 'PROPOSED') editFail('PROPOSAL_STATE_INVALID', { actual: proposal.state });
+    validateChatEditTaskAgainstState(this.app, proposal.task, { expected: proposal.expected });
+    const approvalToken = `INK-LOCAL-APPROVAL:${proposal.proposalId}:${++this.approvalSequence}`;
+    proposal.state = 'APPROVED';
+    proposal.approved = true;
+    proposal.approvalToken = approvalToken;
+    this.proposals.set(key, proposal);
+    return clone(proposal);
+  }
+
+  reject(proposalId) {
+    const key = String(proposalId || '');
+    const proposal = this.proposals.get(key);
+    if (!proposal) editFail('PROPOSAL_NOT_FOUND');
+    if (proposal.state === 'EXECUTED') editFail('PROPOSAL_STATE_INVALID', { actual: proposal.state });
+    proposal.state = 'REJECTED';
+    proposal.approved = false;
+    proposal.approvalToken = null;
+    this.proposals.set(key, proposal);
+    return clone(proposal);
+  }
+
+  assertApproved(proposalId, approvalToken) {
+    const proposal = this.proposals.get(String(proposalId || ''));
+    if (!proposal) editFail('PROPOSAL_NOT_FOUND');
+    if (proposal.state !== 'APPROVED' || !proposal.approved) editFail('APPROVAL_REQUIRED', { actual: proposal.state });
+    if (!approvalToken || approvalToken !== proposal.approvalToken) editFail('APPROVAL_TOKEN_INVALID');
+    validateChatEditTaskAgainstState(this.app, proposal.task, {
+      expected: proposal.expected,
+      requireHistoryIdle: true
+    });
+    return proposal;
+  }
+}
+
+export function installChatBoundedEdit(app) {
+  const controller = new ChatBoundedEditController(app);
+  app.chatBoundedEdit = controller;
+  return controller;
 }
