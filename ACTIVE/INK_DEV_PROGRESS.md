@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-013 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+STATUS: `INK-CLOUD-013 / REOPENED_PHASE_D / HARD_BENCHMARK_READY`
 
 | Field | Value |
 |---|---|
@@ -8,13 +8,13 @@ STATUS: `INK-CLOUD-013 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 | TITLE | `Integrated Creative Loop Validation v0.1` |
 | BRANCH | `work/ink-cloud-013` |
 | BASE_MAIN | `4de2a4324c318abebab6a3fb1dcd096b7d0ac78a` |
-| DEV_HANDOFF | `YES` |
-| MR_REVIEW | `REQUIRED` |
+| DEV_HANDOFF | `REOPENED_FOR_PHASE_D` |
+| MR_REVIEW | `PENDING_AFTER_PHASE_D` |
 | GATE | `INTEGRATED_CREATIVE_LOOP_VALIDATED` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | START_HEAD | `9721e8b4a51f9642dfd4f4aea9eef02360446001` |
-| LATEST_CHECKPOINT | `PHASE_F_REPORT_AND_HANDOFF` |
+| LATEST_CHECKPOINT | `PHASE_D_REOPENED / FIXTURE_READY` |
 
 ## Authorized sequence
 
@@ -292,3 +292,33 @@ RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## Phase D reopened — canonical fixture received
+
+Canonical fixture:
+
+`qa/fixtures/rose-window/rose-window-primary.png`
+
+Blob SHA:
+
+`0977531b94011300300bd69602c566fb58452522`
+
+Previous state:
+
+`HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE`
+
+is superseded for this branch by:
+
+`HARD_BENCHMARK = READY_TO_EXECUTE`
+
+DEV must now:
+
+1. execute only the deferred Phase D hard benchmark against this exact fixture;
+2. compare Direct Extraction vs Structure-Aware Reconstruction using the existing benchmark criteria;
+3. update Phase D evidence and `research/INK_INTEGRATED_CREATIVE_LOOP_VALIDATION_REPORT_v0.1.md`;
+4. rerun only regressions materially affected by Phase D or any bounded fix;
+5. return to `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
+
+Do not redo Phases A-C unless Phase D reveals a concrete cross-stage defect.
+Do not start new feature work.
