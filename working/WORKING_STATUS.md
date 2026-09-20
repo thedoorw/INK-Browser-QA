@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-007 / MR_PASS / PROMOTION_AWAITING_USER`
+STATUS: `INK-CLOUD-007 / PROMOTED / RUNTIME_QA_DEFERRED`
 
 | Field | Value |
 |---|---|
@@ -12,7 +12,7 @@ STATUS: `INK-CLOUD-007 / MR_PASS / PROMOTION_AWAITING_USER`
 | MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `USER_PROMOTION_DECISION` |
+| NEXT_STAGE | `NEXT_PRODUCT_STAGE_PLANNING` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -204,3 +204,36 @@ Hard benchmark remains:
 `DEFERRED_BY_USER_DECISION`
 
 Because the DEV branch diverged from main, direct merge is not approved. Promotion requires explicit user approval and a bounded promotion branch from current main.
+
+
+## INK-CLOUD-007 promotion
+
+Clean promotion completed through:
+
+`promote/ink-cloud-007`
+
+Promotion commit:
+
+`1823a5b523cb6da8182b5356361ea526ec3ccc35`
+
+PR:
+
+`#8 / MERGED`
+
+Main merge commit:
+
+`59d8cbfe374e172293a2b2ba1a5dd367d72e20ee`
+
+The promoted payload contained only the reviewed product source, extraction QA/dependency files and selection report. Branch-local stale governance/progress files were excluded.
+
+Current accepted capability:
+
+```text
+Reference
+→ Extract
+→ editable INK Path
+```
+
+Hard rose-window benchmark remains `DEFERRED_BY_USER_DECISION`.
+
+No next Work Order has been issued yet.
