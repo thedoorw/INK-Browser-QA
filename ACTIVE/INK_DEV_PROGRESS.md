@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-012 / PHASE_C_COMPLETE / PHASE_D_NEXT`
+STATUS: `INK-CLOUD-012 / PHASE_D_COMPLETE / PHASE_E_NEXT`
 
 | Field | Value |
 |---|---|
@@ -19,9 +19,9 @@ STATUS: `INK-CLOUD-012 / PHASE_C_COMPLETE / PHASE_D_NEXT`
 
 - Phase A — COMPLETE @ `f99c72e64cd328725857509f1ad75387cc3680e8`: versioned revision identity + structured file-envelope snapshot contract.
 - Phase B — COMPLETE @ `b7424675d8cc3baa62d29a71226a8637c6e86bd9`, syntax correction @ `aa4c9bed77a30afb890d29c3d429cca0b6e77a85`: deterministic comparison metadata, mutation-neutral capture, equivalent no-op and browser-local persistence.
-- Phase C — COMPLETE: validated structured restore/reopen, exact fingerprint postcondition, explicit `RESET_TO_REVISION` History boundary, prevalidation and rollback preserving active document/History on failed apply.
-- Phase D — NEXT: CHAT revision binding.
-- Phase E — PENDING: regression evidence.
+- Phase C — COMPLETE @ `ebca644021739b854351939f78ad3ba179d364ac`: validated structured restore/reopen, exact fingerprint postcondition, atomic rollback and explicit History reset boundary.
+- Phase D — COMPLETE: shared runtime installs Revision before CHAT; CHAT state exposes stable revision identity + document fingerprint; proposal expected-state binds revision; stale revision rejects before execution; result records inspected/current revision identity.
+- Phase E — NEXT: regression evidence.
 - Phase F — PENDING: report + handoff.
 
 ## Guard state
