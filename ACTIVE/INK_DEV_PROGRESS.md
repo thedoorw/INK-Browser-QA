@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_A_COMPLETE`
+STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_B_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -68,3 +68,25 @@ Files:
 - `product/source/src/document/model.js`
 
 Next: `BEGIN_PHASE_B / MUTATION_HISTORY`
+
+
+## Checkpoint — Phase B
+
+Status: `COMPLETE`
+
+Checkpoint HEAD: `879287ffa056514b56af6e6c8bc8c981a6596671`
+
+Implemented:
+- multi-Path repaint/material mutation controller;
+- locked/hidden/unexposed/stale/singular/busy-History guards;
+- target-scoped History reuse;
+- deterministic no-op with no History entry;
+- Path ID, transform, hierarchy, geometry/node identity and provenance invariants;
+- expressive stroke is retained unless `expressiveStrokeColor` is explicitly supplied.
+
+Files:
+- `product/source/src/editor/repaint-material.js`
+- `product/source/src/editor/index.js`
+- `product/source/src/ink.js`
+
+Next: `BEGIN_PHASE_C / RENDERER_INTEGRATION`
