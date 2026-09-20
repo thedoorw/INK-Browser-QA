@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `PRE_CLOUD_CORE_READY / USER_CLOUD_START_APPROVAL_REQUIRED`
+STATUS: `PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
 
 | Field | Value |
 |---|---|
@@ -12,8 +12,8 @@ STATUS: `PRE_CLOUD_CORE_READY / USER_CLOUD_START_APPROVAL_REQUIRED`
 | MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `USER_CLOUD_START_APPROVAL_REQUIRED` |
-| CLOUD_START_GATE | `WAITING_USER_APPROVAL` |
+| NEXT_STAGE | `DESIGN_DISCUSSION / NO_IMPLEMENTATION` |
+| CLOUD_START_GATE | `DISCUSSION_HOLD` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
@@ -69,3 +69,20 @@ Final readiness decision:
 `PRE_CLOUD_CORE_READY = YES`
 
 No Cloud implementation is authorized until explicit user approval.
+
+
+## Discussion checkpoint
+
+The pre-Cloud structural core remains ready.
+
+The user has explicitly paused progression into Cloud implementation for discussion.
+
+```text
+PRE_CLOUD_CORE_READY = YES
+DISCUSSION_HOLD = ACTIVE
+DEV_AUTHORIZATION = NONE
+DEV_WORK_AUTHORIZATION = NONE
+CLOUD_START_APPROVAL = NOT_YET_GIVEN
+```
+
+Resume only after a new explicit user decision.
