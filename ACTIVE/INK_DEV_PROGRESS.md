@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008A / IN_PROGRESS / PHASE_E_COMPLETE`
+STATUS: `INK-CLOUD-008A / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 | Field | Value |
 |---|---|
@@ -9,8 +9,9 @@ STATUS: `INK-CLOUD-008A / IN_PROGRESS / PHASE_E_COMPLETE`
 | BRANCH | `work/ink-cloud-008a` |
 | BASE_MAIN | `1c29d4e1eee2158678b5cc351b673717fdd5c15e` |
 | LAST_CODE_CHECKPOINT | `aa0d37a52753a2b3ea1a5a00b914a4753db0c37a` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING` |
+| REPORT_COMMIT | `a72199545eb6891aef3779d14e73d6c0ae3987e0` |
+| DEV_HANDOFF | `READY` |
+| MR_REVIEW | `REQUIRED` |
 | GATE | `EDITABLE_PATH_CORE_WORKS` |
 | EXPRESSIVE_STROKE | `NOT_STARTED / OUT_OF_SCOPE` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
@@ -180,4 +181,29 @@ Executable branch unit/static evidence will be added in Phase E. Browser/runtime
 
 ## Next
 
-`BEGIN_PHASE_F / REPORT_AND_DEV_HANDOFF`
+## Phase F checkpoint
+
+Status: `COMPLETE`
+
+Report:
+
+- `research/INK_PATH_EDITING_CORE_REPORT_v0.1.md`
+- report commit: `a72199545eb6891aef3779d14e73d6c0ae3987e0`
+- exact candidate code/QA HEAD: `aa0d37a52753a2b3ea1a5a00b914a4753db0c37a`
+
+No package mutation. No main merge. Expressive Stroke remains not started.
+
+## Completion
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-008A
+BRANCH = work/ink-cloud-008a
+GATE = EDITABLE_PATH_CORE_WORKS
+EXPRESSIVE_STROKE = NOT_STARTED
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
