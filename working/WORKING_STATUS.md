@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-006 / MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `PRE_CLOUD_CORE_READY / USER_CLOUD_START_APPROVAL_REQUIRED`
 
 | Field | Value |
 |---|---|
@@ -12,9 +12,9 @@ STATUS: `INK-CLOUD-006 / MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 | MR_REVIEW | `MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `USER_PROMOTION_DECISION_REQUIRED` |
-| CLOUD_START_GATE | `BLOCKED` |
-| PRE_CLOUD_CORE_READY | `NO` |
+| NEXT_STAGE | `USER_CLOUD_START_APPROVAL_REQUIRED` |
+| CLOUD_START_GATE | `WAITING_USER_APPROVAL` |
+| PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
 
@@ -56,3 +56,16 @@ Decision:
 `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 Main promotion requires user approval. After promotion, MR must perform the final `PRE_CLOUD_CORE_READY` assessment before any Cloud implementation can begin.
+
+
+## INK-CLOUD-006 promotion
+
+Promoted reviewed source/QA/report to main:
+
+`c0800bbc2345772b44aa310161aa446fc87fbe60`
+
+Final readiness decision:
+
+`PRE_CLOUD_CORE_READY = YES`
+
+No Cloud implementation is authorized until explicit user approval.
