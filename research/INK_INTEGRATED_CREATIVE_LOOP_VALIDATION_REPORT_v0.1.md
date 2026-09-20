@@ -67,7 +67,7 @@ The second checkpoint also exercises the existing verified `InkStore`
 browser-local persistence path. Identity, provenance, editable geometry,
 hierarchy, appearance extensions and `FORMAT_VERSION = 4` remain intact.
 
-## Bounded cross-stage fix
+## Bounded cross-stage fixes
 
 Validation exposed one exporter defect. After removing an expressive stroke,
 `vectorObjectToSVG()` passed an absent value to a normalizer whose default
@@ -84,24 +84,43 @@ contracts: migration-owned additive semantic metadata is checked separately,
 canonical no-style states are compared consistently, and static source tests
 inspect their intended module boundary rather than unrelated identifiers.
 
+The hard fixture exposed one extraction-adapter boundary defect: ImageTracer
+could emit degenerate contours with fewer than three distinct vertices, which
+the authoritative editable-Path normalizer correctly rejects. The adapter now
+filters those contours and remaps `holechildren` before SVG generation. This
+does not change Path, document, History, Revision or CHAT authority.
+
 ## Hard rose-window benchmark
 
-The registered reference is:
+The canonical 1086 × 1448 RGB fixture was executed from
+`qa/fixtures/rose-window/rose-window-primary.png` with SHA-256
+`e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807`.
 
-`ChatGPT Image 2026年6月26日 上午06_44_33.png`
+Machine-readable evidence is recorded in
+`qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`.
 
-No matching binary exists in the repository or available task attachments. The
-available external file is instead a 1161 × 1650 horse ink painting:
+| Measure | Direct Extraction | Structure-Aware Reconstruction |
+|---|---:|---:|
+| raster-proxy recall | `0.904256` | `0.031866` |
+| raster-proxy precision | `0.932975` | `0.654303` |
+| raster-proxy IoU | `0.849098` | `0.031339` |
+| unique editable nodes | `9339` | `67` |
+| effective expanded nodes | `9339` | `402` |
+| deterministic rerun | PASS | PASS |
+| exact provenance | PASS | PASS |
 
-`sha256:313229c3336a77fbaf1907844c0e597fb7059ab03845dae51dc61e75649dcecf`
+The structure-aware result is a deterministic sixfold linked Repeat and wins
+regularity/editability density, but the current single-Path prototype boundary
+retains only 3 subpaths from a 265-Path sector extraction. Its 3.19% recall is
+not an acceptable hard-fixture result. Direct Extraction is selected as the
+current baseline because it minimizes total correction cost at 90.43% recall,
+despite its higher node-cleanup burden.
 
-It was not substituted for the canonical benchmark or copied into the repo.
-
-`HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE`
-
-This is the Work Order's explicit non-blocking outcome. Direct extraction vs
-structure-aware reconstruction was not fabricated without the registered
-fixture.
+```text
+HARD_BENCHMARK = EXECUTED
+EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
+STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
+```
 
 ## QA executed
 
@@ -109,10 +128,14 @@ Evidence:
 
 `qa/core/evidence/INK_CLOUD_013_STATIC_CHECKS.txt`
 
+`qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`
+
 Results:
 
 - accepted-stage + integrated unit regression: `48 PASS / 0 FAIL`;
 - source/static/persistence contracts: `31 PASS / 0 FAIL`;
+- Phase D materially affected extraction/integrated regression: `13 PASS / 0 FAIL`;
+- deterministic hard benchmark: PASS;
 - changed source and harness syntax: PASS;
 - `git diff --check`: PASS;
 - `FORMAT_VERSION = 4`: PASS;
@@ -132,7 +155,8 @@ COMPOSITION = PRESERVED
 CHAT_BINDING = VALIDATED
 HISTORY_REVISION_BOUNDARY = VALIDATED
 SAVE_LOAD = VALIDATED
-HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE
+HARD_BENCHMARK = EXECUTED
+EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
 FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
@@ -148,6 +172,7 @@ No Hard STOP condition was triggered.
 - Phase C: `b2736f612a9bc45830e369709410ba90591d42e4`
 - Phase D: `d0a13660c51d9527542b37c3b2e3b6d2a93cc2fd`
 - Phase E: `3786ee99b69c94eee37eb1e2f970d98ee9a70266`
+- Phase D reopened benchmark execution: `0b610a5e68cde3951190088d9e5130dde8948564`
 
 ## Handoff
 

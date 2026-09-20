@@ -1,7 +1,7 @@
 INK-CLOUD-013 — Integrated Creative Loop Validation v0.1
 Evidence date: 2026-09-20
 Branch: work/ink-cloud-013
-Checked source checkpoint: 3786ee99b69c94eee37eb1e2f970d98ee9a70266
+Checked source checkpoint: 0b610a5e68cde3951190088d9e5130dde8948564
 
 INTEGRATED / ACCEPTED-STAGE UNIT REGRESSION
 Command scope:
@@ -46,6 +46,8 @@ todo 0
 
 ADDITIONAL STATIC CHECKS
 - node --check product/source/src/vector/vector-core.js: PASS
+- node --check product/source/src/extraction/adapters.js: PASS
+- node --check qa/core/tests/rose-window-hard-benchmark-v0.1.mjs: PASS
 - node --check qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs: PASS
 - git diff --check: PASS
 - FORMAT_VERSION = 4: PASS
@@ -70,11 +72,35 @@ INTEGRATED CONTRACT RESULTS
 BOUNDED FIX
 - vectorObjectToSVG no longer synthesizes a default expressive stroke when the
   Path expressiveStroke field is null/absent.
+- ImageTracer adapter omits contours with fewer than three distinct vertices
+  and remaps holechildren before emitting SVG for core normalization.
 
 HARD BENCHMARK
-HARD_BENCHMARK = BLOCKED_BY_FIXTURE_INTAKE
-The registered rose-window binary is absent. The available external JPEG is a
-horse ink painting and was not substituted or added to the repository.
+Command:
+- node qa/core/tests/rose-window-hard-benchmark-v0.1.mjs
+
+Result:
+- HARD_BENCHMARK = EXECUTED
+- fixture SHA-256: e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807
+- Direct Extraction raster-proxy IoU: 0.849098
+- Structure-Aware raster-proxy IoU: 0.031339
+- Direct deterministic rerun: PASS
+- Structure prototype deterministic rerun: PASS
+- provenance exact: PASS / PASS
+- EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
+- structured evidence: qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json
+
+PHASE D MATERIALLY AFFECTED REGRESSION
+Command scope:
+- extraction-core-v0.1
+- extraction-structure-v0.1
+- extraction-workspace-v0.1
+- integrated-creative-loop-v0.1
+
+Result:
+- tests 13
+- pass 13
+- fail 0
 
 DEFERRED
 - browser runtime / external USER-path QA: DEFERRED by Work Order
