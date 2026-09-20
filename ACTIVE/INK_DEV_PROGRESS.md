@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-011 / PHASE_C_COMPLETE / PHASE_D_IN_PROGRESS`
+STATUS: `INK-CLOUD-011 / PHASE_D_COMPLETE / PHASE_E_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -119,3 +119,27 @@ Committed behavior:
 No product mutation occurs in inspect/propose/approve/reject.
 
 Next: Phase D structured execution through accepted controllers/History.
+
+
+### Phase D — complete
+
+`BOUNDED_EXECUTION = IMPLEMENTED`
+
+Approved tasks now route only through accepted authoritative paths:
+
+- repaint/material → existing `PathRepaintMaterialController`;
+- translate → existing `InkApp.translateSelection()` / composition-transform route;
+- simplify/refine → existing `PathEditController`;
+- committed mutation → existing target-scoped `HistoryManager`.
+
+Additional guarantees:
+
+- execution requires matching APPROVED state + local approval token;
+- target fingerprints are revalidated immediately before execution;
+- temporary selection is restored after structured operations;
+- successful execution consumes approval state/token;
+- result object reports operation, target fingerprints and History evidence;
+- static/browser-local adapter is installed as `app.chatBoundedEditAdapter`;
+- no remote service dependency introduced.
+
+Next: Phase E regression/source evidence.
