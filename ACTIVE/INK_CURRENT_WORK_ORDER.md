@@ -398,3 +398,29 @@ Development sequence currently planned:
 Current authorization remains planning-only.
 
 No implementation Work Order has been issued.
+
+
+## Phase 0 Extraction Research Checkpoint
+
+The Rose Window benchmark is now the first hard extraction benchmark.
+
+Documents:
+
+- `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+- `research/INK_EXTRACTION_TECHNOLOGY_SURVEY_v0.1.md`
+
+Current research direction:
+
+```text
+Reference
+→ semantic segmentation
+→ deterministic geometry/contour analysis
+→ vectorization
+→ INK structure-aware reconstruction
+→ overlay QA
+→ bounded correction
+```
+
+Direct tracing and AI + INK structural reconstruction must be compared on the same rose-window cases.
+
+No implementation authorization is implied by this research checkpoint.
