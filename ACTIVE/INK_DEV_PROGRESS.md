@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_E_COMPLETE`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `INK-CLOUD-010 / DEV_IN_PROGRESS / PHASE_E_COMPLETE`
 | TITLE | `Repaint + Material v0.1` |
 | BRANCH | `work/ink-cloud-010` |
 | BASE_MAIN | `7ac7c4a65d198c79cd713f389aea9da78928af94` |
-| DEV_HANDOFF | `NOT_YET` |
+| DEV_HANDOFF | `READY` |
 | MR_REVIEW | `PENDING` |
 | GATE | `REPAINT_MATERIAL_WORKS` |
 | FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
@@ -47,7 +47,7 @@ Geometry / Composition != Paint / Material Appearance
 
 ## Start state
 
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+`PHASE_F_COMPLETE / DEV_HANDOFF`
 
 
 ## Checkpoint — Phase A
@@ -170,3 +170,51 @@ Evidence:
 `qa/core/evidence/INK_CLOUD_010_STATIC_CHECKS.txt`
 
 Next: `BEGIN_PHASE_F / REPORT_HANDOFF`
+
+
+## Checkpoint — Phase F
+
+Closure report checkpoint: `507a2a6b93e71980bed4b9be8230fded2a6da04c`.
+
+Report:
+`research/INK_REPAINT_MATERIAL_REPORT_v0.1.md`
+
+Acceptance:
+- `REPAINT = IMPLEMENTED`
+- `MATERIAL_APPEARANCE = IMPLEMENTED_WITH_BOUNDED_EXISTING_LIBRARY_REUSE`
+- `GEOMETRY_SEPARATION = PRESERVED`
+- `COMPOSITION = PRESERVED`
+- `EXPRESSIVE_STROKE = PRESERVED`
+- `PROVENANCE = PRESERVED`
+- `HISTORY = REUSED`
+- `SERIALIZATION = PRESERVED`
+- `SVG_EXPORT = PRESERVED_WITH_EXPLICIT_FALLBACK`
+- `FORMAT_VERSION = 4`
+- `PACKAGE_MUTATION = 0`
+- `MAIN_MERGE = 0`
+- `RUNTIME_QA = DEFERRED`
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-010
+BRANCH = work/ink-cloud-010
+GATE = REPAINT_MATERIAL_WORKS
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+## Final topology check
+
+Final pre-handoff comparison against `main`:
+
+- branch status: `ahead`;
+- ahead: `28`;
+- behind: `0`;
+- no divergence detected;
+- package branch untouched;
+- main untouched by DEV.
+
+The final progress/handoff commit follows this topology checkpoint and becomes the review HEAD.
