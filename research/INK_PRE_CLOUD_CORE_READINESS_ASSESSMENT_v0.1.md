@@ -1,6 +1,6 @@
 # INK Pre-Cloud Core Readiness Assessment v0.1
 
-STATUS: `PRE_CLOUD_CORE_READY / USER_APPROVAL_REQUIRED`
+STATUS: `PRE_CLOUD_CORE_READY / DISCUSSION_HOLD`
 
 ASSESSMENT_BASELINE: `main`
 
@@ -99,3 +99,22 @@ CLOUD_IMPLEMENTATION = NOT_YET_AUTHORIZED
 ```
 
 Only after explicit user approval may MR issue the first actual Cloud implementation Work Order.
+
+
+## Discussion Hold
+
+After readiness was reached, the user requested a discussion period before any Cloud implementation begins.
+
+This does not change the readiness decision:
+
+`PRE_CLOUD_CORE_READY = YES`
+
+It changes only execution authorization:
+
+```text
+DISCUSSION_HOLD = ACTIVE
+CLOUD_IMPLEMENTATION = NOT_AUTHORIZED
+NEXT_WORK_ORDER = NOT_ISSUED
+```
+
+The discussion may revise Cloud scope, architecture, workflow, sequencing, or product direction without reopening already accepted structural-core work unless a new structural conflict is identified.
