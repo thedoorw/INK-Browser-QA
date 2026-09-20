@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-008A / READY_TO_START`
+STATUS: `INK-CLOUD-008A / IN_PROGRESS / PHASE_A_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,6 +8,7 @@ STATUS: `INK-CLOUD-008A / READY_TO_START`
 | TITLE | `Path Editing Core v0.1` |
 | BRANCH | `work/ink-cloud-008a` |
 | BASE_MAIN | `1c29d4e1eee2158678b5cc351b673717fdd5c15e` |
+| LAST_CODE_CHECKPOINT | `d31cabeae2bdb3363776afdd2cb6acf2162c94f2` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | GATE | `EDITABLE_PATH_CORE_WORKS` |
@@ -33,12 +34,39 @@ INK-CLOUD-007 is promoted to main and provides:
 Reference → Extract → authoritative editable INK Path
 ```
 
-008A must reuse existing vector primitives, object identity, History, serialization and SVG.
+008A reuses existing vector primitives, object identity, History, serialization and SVG.
+
+## Phase A checkpoint
+
+Status: `COMPLETE`
+
+Implemented:
+
+- reusable `PathEditController` in `product/source/src/editor/path-edit.js`;
+- enter/exit path edit mode using stable existing Path object IDs;
+- single/multi anchor selection and handle-selection state;
+- selection-only actions do not mutate document geometry or create History entries;
+- busy-History, stale document/page, missing Path, hidden/locked and singular-transform guards;
+- finite geometry and anchor-mode validation;
+- shared editor export and bounded app installation through existing `InkApp`.
+
+Code commits:
+
+- `90b2269de1e077c874f6d8a4fb39d2f006a1f6e2` — path edit state contract;
+- `35a8ebbd355ec5d04c0e4f76c97a22e08afc0982` — editor export;
+- `d31cabeae2bdb3363776afdd2cb6acf2162c94f2` — app installation.
+
+No schema/FORMAT_VERSION change. No package/main mutation. Expressive Stroke not started.
+
+## QA state
+
+Phase-A source implementation reviewed against existing hierarchy/History/vector contracts.
+
+Executable branch unit/static evidence will be added in Phase E. Browser/runtime interaction remains `RUNTIME_QA_DEFERRED`.
 
 ## Rules
 
 - GitHub is SSOT.
-- Read Current Work Order before implementation.
 - Work only on `work/ink-cloud-008a`.
 - Commit every meaningful checkpoint.
 - Update this file continuously.
@@ -51,6 +79,6 @@ Reference → Extract → authoritative editable INK Path
 - Do not begin 008B or later tasks.
 - STOP for FORMAT_VERSION change, accepted contract break, second core engine, broad UI redesign or scope expansion.
 
-## Start state
+## Next
 
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+`BEGIN_PHASE_B / ANCHOR_HANDLE_EDITING`
