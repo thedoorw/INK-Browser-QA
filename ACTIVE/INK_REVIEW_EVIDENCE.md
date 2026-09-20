@@ -2,55 +2,52 @@
 
 STATUS: `MR_PASS_EVIDENCE / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-007`
+TASK: `INK-CLOUD-008A`
 
-REVIEWED_HEAD: `b006a3a7dadc5d261e3dda5b377f61ec13221ddb`
+REVIEWED_HEAD: `1cbc69b56e060edc8523fdbfdcdd34417379b3db`
+
+CANDIDATE_CODE_QA_HEAD: `aa0d37a52753a2b3ea1a5a00b914a4753db0c37a`
 
 ## Reviewed product source
 
-- `product/source/src/extraction/core.js`
-- `product/source/src/extraction/adapters.js`
-- `product/source/src/extraction/workspace.js`
-- `product/source/src/extraction/structure.js`
-- `product/source/src/extraction/install.js`
-- bounded integration in `product/source/src/ink.js`
-- vendored `product/source/src/vendor/imagetracer-1.2.6.js`
+- `product/source/src/editor/path-edit.js`
+- `product/source/src/editor/index.js`
+- bounded Path-edit integration in `product/source/src/ink.js`
+- `product/source/index.html`
+- `product/source/index-standalone.html`
+- `product/source/service-worker.js`
 
 ## Reviewed QA / report
 
-- `qa/core/tests/unit/extraction-core-v0.1.test.mjs`
-- `qa/core/tests/unit/extraction-workspace-v0.1.test.mjs`
-- `qa/core/tests/unit/extraction-structure-v0.1.test.mjs`
-- `qa/extraction/DEPENDENCIES.md`
-- `research/INK_EXTRACTION_PIPELINE_SELECTION_REPORT_v0.1.md`
+- `qa/core/tests/unit/path-editing-core-v0.1.test.mjs`
+- `qa/core/tests/unit/path-editing-source-v0.1.test.mjs`
+- `research/INK_PATH_EDITING_CORE_REPORT_v0.1.md`
 - branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 
 ## DEV evidence retained
 
-Recorded branch checkpoint evidence:
+Recorded branch evidence includes:
 
-- Phase A extraction core: 3 tests executed successfully.
-- Phase B direct adapter suite: 5 tests executed successfully, including actual ImageTracerJS raster → native Path.
-- Phase C workspace/History/serialization evidence: total extraction engineering evidence reached 8 tests.
-- Phase D structure-aware Repeat route: 1 test executed successfully.
-- Final source syntax check: 5/5 extraction modules PASS.
-- Final closeout rerun of Phase-A subset: 3/3 PASS in reconstructed Node environment.
-- `FORMAT_VERSION = 4`.
-- benchmark-specific token scan reported no rose-window-specific product hardcoding.
+- Path editor source syntax parse: PASS.
+- `ink.js` source syntax parse: PASS.
+- authored core/source regression test syntax parse: PASS.
+- `FORMAT_VERSION = 4`: PASS.
+- both HTML shells contain bounded Path edit controls: PASS.
+- service-worker includes `src/editor/path-edit.js`: PASS.
+- isolated Path-edit domain harness: PASS for multi-anchor movement, exact undo/redo, symmetric handle behavior, exact segment insertion, identity/provenance preservation, topology guards, simplify and refine.
+- branch scope check against authorized base: PASS.
+- no package files changed.
 
-MR independently inspected the source contracts, integration boundaries and changed-file scope. MR did not independently rerun browser/runtime QA.
+MR independently inspected the Path editing source, History rollback behavior, topology mutation design, QA coverage and changed-file scope.
 
 ## Explicitly not certified
 
-- OpenCV.js runtime
-- VTracer browser/WASM runtime
-- SAM inference
-- browser decode / Canvas / pointer
-- IndexedDB runtime
-- visual overlay fidelity
-- latency/memory behavior
-- hard rose-window benchmark
-- historical migration/endurance closure
+- full repository Node regression execution
+- real product file-envelope/migration runtime
+- browser pointer interaction
+- runtime visual verification
+- service-worker browser lifecycle
+- browser performance/latency
 
 `RUNTIME_QA = DEFERRED`
 
@@ -58,8 +55,8 @@ MR independently inspected the source contracts, integration boundaries and chan
 
 At review time:
 
-- DEV HEAD is 10 commits ahead of merge base.
-- DEV branch is 7 commits behind current main.
-- merge base: `40ed1a188c1f703425dcc6ae430603a6482d4fcd`.
+- branch is `28 commits ahead` of main;
+- branch is `0 commits behind` main;
+- merge base is `1c29d4e1eee2158678b5cc351b673717fdd5c15e`.
 
-Therefore direct branch merge is not accepted as the promotion mechanism.
+No divergence repair is required before promotion, provided the reviewed branch HEAD remains unchanged.
