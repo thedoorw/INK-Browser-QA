@@ -1,404 +1,100 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-017 / USER_AUTHORIZED_SUPPLEMENTARY_BENCHMARK_CONTINUATION`
+STATUS: `NO_ACTIVE_DEV_WORK_ORDER / REAL_CREATIVE_WORK_READY`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| AUTHORITY | `USER_CONTINUOUS_ADVANCE_AUTHORIZATION` |
-| DEV_WORK_BRANCH | `work/ink-cloud-017` |
-| DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_STRUCTURE_AWARE_MULTI_PATH_SCOPE` |
-| PACKAGE_MUTATION | `PROHIBITED` |
-| MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
-| RUNTIME_QA | `DEFERRED_EXCEPT_EXECUTABLE_LOCAL_HARNESS` |
+| CURRENT_TASK_ID | `NONE` |
+| LAST_CLOSED_TASK | `INK-CLOUD-017` |
+| LAST_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
+| LAST_REVIEWED_DEV_HEAD | `a0fe5833f0a3449c380c7adb5817b4c7cc4b5bd8` |
+| LAST_PROMOTION_PR | `#19 / MERGED` |
+| LAST_MAIN_PROMOTION | `edb8f11c39e43043584a20ec648dace242574742` |
+| DEFAULT_EXTRACTION | `DIRECT_EXTRACTION` |
+| STRUCTURE_AWARE_ROLE | `OPTIONAL_STRUCTURED_RECONSTRUCTION` |
+| FORMAT_VERSION | `4` |
 | CORE_RUNTIME | `STATIC_HOSTING + BROWSER_LOCAL` |
+| RUNTIME_QA | `DEFERRED` |
 
-## Accepted baseline
+## Accepted creative baseline
 
-INK-CLOUD-016 is promoted with gate:
-
-`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
-
-Portable/shared-core constraints are preserved:
+The first INK creative-loop core is accepted:
 
 ```text
-STATIC_MODULE_CLOSURE = VERIFIED
-SHARED_CORE_REUSED = VERIFIED
-MANDATORY_REMOTE_DEPENDENCY = 0
-SECOND_EDITOR_CORE = 0
-FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-RUNTIME_QA = DEFERRED
+Reference
+→ Extract
+→ editable Path
+→ Edit
+→ Expressive Stroke
+→ Multi-Contour Compose
+→ Repaint / Material
+→ CHAT Review / Structured Edit
+→ CHAT Multi-Step Creative Plan
+→ Revision
 ```
 
-The hard rose-window benchmark from INK-CLOUD-013 remains authoritative for extraction comparison:
+Also accepted:
 
 ```text
-DIRECT_EXTRACTION = CURRENT_ACCEPTED_BASELINE
-STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
-
-sector extraction = 265 Paths / 269 subpaths / 4 holes / 1631 nodes
-retained structural prototype = 1 Path / 3 subpaths / 2 holes / 67 nodes
-structure-aware recall = 0.031866
-direct-extraction recall = 0.904256
+Portable/shared-core integrity = VERIFIED
+Structure-Aware multi-Path reconstruction = TECHNICALLY_CLOSED
 ```
 
-The known defect is bounded: the current `reconstructRadial()` contract accepts one Path, while the extracted sector contains many editable Paths.
+## Extraction decision
 
-## Objective
-
-Close the single-Path reconstruction bottleneck without redesigning the extraction stack.
-
-Target:
+The INK-CLOUD-017 benchmark showed:
 
 ```text
-sector extraction
-→ complete multi-Path prototype set
-→ structured radial reconstruction
-→ existing Repeat / Transform
-→ deterministic overlay QA
-→ bounded local-correction compatibility
-→ fair hard-benchmark comparison
+Direct Extraction:
+recall 0.904256
+precision 0.932975
+IoU 0.849098
+
+Structure-Aware multi-Path:
+recall 0.505239
+precision 0.509176
+IoU 0.339764
 ```
 
-The purpose is to obtain a valid multi-Path Structure-Aware result. It is not to force Structure-Aware Reconstruction to replace Direct Extraction.
-
-## Required reads
-
-1. `README.md`
-2. `AGENTS.md`
-3. this Work Order
-4. `working/WORKING_STATUS.md`
-5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-7. `research/INK_CHAT_BOUNDED_EDIT_LOOP_REPORT_v0.1.md`
-8. `research/INK_INTEGRATED_CREATIVE_LOOP_VALIDATION_REPORT_v0.1.md`
-9. `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
-10. `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs`
-11. `qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`
-12. `product/source/src/extraction/structure.js`
-13. existing Repeat / Transform / vector serialization-rendering source only as required
-
-## Product principle
-
-Direct Extraction remains the production baseline during this task.
+Therefore:
 
 ```text
-MULTI_PATH_CLOSURE
-≠
-PIPELINE_REPLACEMENT
+DIRECT_EXTRACTION = DEFAULT
+STRUCTURE_AWARE = OPTIONAL / SPECIALIZED STRUCTURED TOOL
+AUTOMATIC PIPELINE REPLACEMENT = NO
 ```
 
-DEV may produce comparative evidence. Only MR may change the accepted extraction baseline after review.
+Structure-Aware remains available when repeated/radial geometry and linked editing are useful.
 
-The implementation must reuse the existing INK Path / Group / Repeat / Transform / History / Revision authorities.
+## Current operating mode
 
-## Scope
+No new numbered engineering Work Order is automatically authorized.
 
-Required:
-
-- audit the exact single-Path assumptions in Structure-Aware reconstruction and its benchmark/QA path;
-- extend the reconstruction contract to accept a deterministic multi-Path prototype set while retaining single-Path compatibility where feasible;
-- preserve all valid extracted prototype Paths required by the selected sector instead of selecting only the largest Path;
-- represent the prototype set using existing structured vector/container primitives rather than flattening into raster or inventing a second geometry engine;
-- reconstruct the prototype set through existing Repeat / Transform semantics;
-- preserve stable editable Path identity inside the prototype set and deterministic generated Repeat identity;
-- preserve exact extraction/source/mask provenance for the reconstructed structured result;
-- verify serialization/export/render traversal required by repeat-of-prototype-set output, fixing only bounded compatibility defects;
-- verify a bounded local-correction path remains possible on the editable prototype set without destructively flattening the Repeat architecture;
-- update the rose-window hard benchmark so Structure-Aware metrics are measured across the complete reconstructed prototype set;
-- add deterministic overlay/comparison QA that records Direct Extraction and Structure-Aware output using the same ROI, threshold and sampling contract;
-- compare completeness, precision/IoU proxy, retained paths/subpaths/holes/nodes, effective expanded nodes, Repeat identity, provenance, deterministic rerun and a bounded correction-cost proxy;
-- retain the canonical fixture identity and existing Direct Extraction route unchanged except for QA plumbing strictly required for fair comparison;
-- run all feasible source/static/unit/serialization/integration checks;
-- produce a closure report;
-- keep `FORMAT_VERSION = 4`;
-- do not mutate package/release artifacts.
-
-## Phases
-
-### Phase A — Reconstruction contract audit
-
-Pin the current assumptions and evidence.
-
-Required findings:
-
-- where the prototype collapses from many Paths to one;
-- which existing structured primitive should own the multi-Path prototype set;
-- current Repeat source/render/export/serialization behavior for that primitive;
-- exact provenance and identity requirements;
-- any bounded compatibility gaps.
-
-Checkpoint commit required.
-
-### Phase B — Multi-Path prototype-set reconstruction
-
-Implement a deterministic prototype-set contract.
-
-Required:
-
-- accept the complete valid sector Path set;
-- preserve child Path structure and IDs;
-- preserve Path-level extraction metadata;
-- produce one linked radial reconstruction using existing Repeat / Transform semantics;
-- retain compatibility with current single-Path callers unless doing so requires a broader architecture change;
-- no raster flattening;
-- no second vector engine.
-
-Checkpoint commit required.
-
-### Phase C — Structured output + local correction closure
-
-Verify the reconstructed output remains usable as structured INK geometry.
-
-At minimum verify:
-
-- source prototype children remain editable Paths;
-- Repeat identity is deterministic;
-- expand/structured traversal retains child identities correctly;
-- serialization/export required by the accepted core can represent the output;
-- renderer/exporter traversal handles the prototype set without introducing a second rendering authority;
-- a bounded correction to a prototype child can propagate through the linked reconstruction using existing Repeat refresh/identity semantics;
-- History/Revision authority is not duplicated or bypassed.
-
-Bounded fixes are allowed only where the multi-Path source exposes a concrete compatibility defect.
-
-Checkpoint commit required.
-
-### Phase D — Overlay QA + hard benchmark rerun
-
-Use the same canonical fixture:
-
-`qa/fixtures/rose-window/rose-window-primary.png`
-
-Preserve:
-
-- fixture SHA-256;
-- ROI;
-- threshold;
-- candidate radial counts;
-- sampling grid;
-- Direct Extraction measurement contract.
-
-Measure the full multi-Path Structure-Aware result rather than a single retained Path.
-
-Evidence must include at least:
-
-- sector prototype total vs retained path count;
-- subpaths / holes / unique nodes;
-- effective expanded nodes;
-- raster-proxy recall / precision / IoU;
-- false-positive / false-negative samples;
-- selected radial count and evidence score;
-- Repeat instance count / transform consistency;
-- exact provenance;
-- deterministic rerun;
-- machine-readable comparison output.
-
-Do not reinterpret raster-proxy metrics as semantic vector ground truth.
-
-Checkpoint commit required.
-
-### Phase E — Comparative decision evidence
-
-Record a fair comparison against the currently accepted Direct Extraction baseline.
-
-Required outcome classification:
+Current priority:
 
 ```text
-STRUCTURE_AWARE_TECHNICALLY_CLOSED = YES / NO
-STRUCTURE_AWARE_BENCHMARK = IMPROVED / NOT_IMPROVED / MIXED
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
+use INK on real creative work
+→ observe actual friction / missing capability
+→ preserve successful workflow
+→ issue a bounded engineering task only for a concrete gap
 ```
 
-A weaker benchmark result is not by itself task failure if the multi-Path reconstruction contract is correctly closed and measured. Do not tune the benchmark or discard prototype Paths merely to improve the score.
+This is the transition from capability construction to real-use creative development.
 
-Checkpoint commit required.
+## Persistent constraints
 
-### Phase F — report + DEV handoff
+- GitHub remains the engineering SSOT.
+- Do not create a second vector/document/History/Revision/renderer authority.
+- Static hosting + browser-local execution remains the core requirement.
+- Remote AI/services remain optional adapters.
+- Do not bump `FORMAT_VERSION` without an explicit new Work Order.
+- Do not mutate package/release artifacts without explicit authorization.
+- Do not start an autonomous/open-ended agent implementation by default.
 
-Create:
+## Next action
 
-`research/INK_STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_REPORT_v0.1.md`
+`USER_REAL_CREATIVE_CASE`
 
-Update branch-local:
-
-`ACTIVE/INK_DEV_PROGRESS.md`
-
-Return:
-
-`DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
-
-## Acceptance gate
-
-```text
-MULTI_PATH_PROTOTYPE_SET = IMPLEMENTED
-SINGLE_PATH_BOTTLENECK = CLOSED
-VALID_SECTOR_PATH_RETENTION = COMPLETE
-EXISTING_REPEAT_TRANSFORM = REUSED
-EDITABLE_STRUCTURED_OUTPUT = VERIFIED
-REPEAT_IDENTITY = DETERMINISTIC
-EXACT_PROVENANCE = PRESERVED
-LOCAL_CORRECTION_COMPATIBILITY = VERIFIED
-OVERLAY_QA = EXECUTED
-HARD_BENCHMARK_COMPARISON = RECORDED
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
-MANDATORY_REMOTE_DEPENDENCY = 0
-SECOND_VECTOR_ENGINE = 0
-FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-```
-
-Gate:
-
-`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
-
-## Explicit exclusions
-
-Do not implement:
-
-- broad extraction-stack redesign;
-- new segmentation/model runtime;
-- automatic replacement of Direct Extraction;
-- semantic ground-truth annotation program;
-- broad UI redesign;
-- autonomous/open-ended CHAT agent execution;
-- new vector/document/History/Revision/renderer authority;
-- Cloud account/auth/sync/backend;
-- package/release regeneration;
-- final single-file `INK.html` build;
-- `FORMAT_VERSION` bump.
-
-## Hard STOP
-
-STOP if:
-
-1. `FORMAT_VERSION` change is required;
-2. multi-Path support requires a second vector/document/History/Revision/renderer engine;
-3. existing Repeat/Transform cannot represent the prototype set without a broad architecture redesign;
-4. mandatory backend/remote service is required;
-5. package/release mutation becomes necessary;
-6. accepted Direct Extraction behavior must be broken to complete the task;
-7. the canonical benchmark contract must be materially redefined rather than fairly extended;
-8. a broader product/pipeline selection decision is required before implementation can continue.
-
-## QA
-
-GitHub Actions quota remains exhausted.
-
-Run all feasible:
-
-- source/static checks;
-- exact changed-module syntax checks;
-- focused unit tests;
-- Repeat/identity tests;
-- serialization/export tests affected by prototype-set traversal;
-- extraction regression;
-- integrated creative-loop regression affected by the change;
-- deterministic rose-window hard benchmark;
-- machine-readable comparison validation;
-- `git diff --check`.
-
-Never claim unexecuted browser/runtime paths pass.
-
-`RUNTIME_QA = DEFERRED`
-
-## Completion
-
-```text
-TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
-FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-NEXT_ACTION = MR_REVIEW_REQUIRED
-STOP
-```
-
-
-## MR review checkpoint — canonical benchmark continuation
-
-Reviewed DEV handoff HEAD:
-
-`3000674329127956d20f6cb7f4a2fb88938152a7`
-
-MR classification:
-
-```text
-SOURCE_REVIEW = PASS
-TECHNICAL_CLOSURE = PASS
-OVERLAY_QA = NOT_EXECUTED
-HARD_BENCHMARK_COMPARISON = NOT_EXECUTED
-FULL_GATE = OPEN
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = NO_CHANGE
-```
-
-The multi-Path source implementation is accepted for review purposes, but the Work Order is not complete because the canonical Rose Window harness has not been executed.
-
-### Authorized continuation only
-
-Resume INK-CLOUD-017 only to:
-
-1. execute the existing `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs` against the authoritative canonical fixture;
-2. preserve the existing fixture SHA-256, ROI, threshold, candidate radial counts, sampling grid and Direct Extraction route;
-3. record complete multi-Path Structure-Aware metrics and overlay/comparison evidence;
-4. update `qa/core/evidence/INK_CLOUD_017_COMPARISON_STATUS.json` or add the exact machine-readable executed evidence required by the harness;
-5. update `research/INK_STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_REPORT_v0.1.md`;
-6. update branch-local `ACTIVE/INK_DEV_PROGRESS.md`;
-7. return a new exact `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
-
-No new product feature, benchmark redefinition, package mutation, FORMAT_VERSION change, pipeline replacement or broader architecture change is authorized.
-
-If the exact canonical binary cannot be materialized in the execution environment, report the same environment blocker and STOP. Do not substitute a different image, downsampled fixture, synthetic fixture or external browser result for the canonical benchmark.
-
-
-## User override — supplementary rose-window execution accepted for 017 completion
-
-User direction supersedes the prior canonical-binary execution blocker for this task.
-
-The currently supplied rose-window image may be used to complete the remaining INK-CLOUD-017 execution evidence even though its file encoding/hash differs from the historical canonical binary.
-
-Known supplied fixture identity:
-
-```text
-dimensions = 1086 × 1448
-mode = RGBA
-sha256 = af86d03e8947234a1cc301cd8c224520fc6065272f3f80d795b5a314953fdc25
-```
-
-Execution classification:
-
-`NON_CANONICAL_SUPPLEMENTARY_TEST / USER_ACCEPTED_FOR_OPERATIONAL_017_COMPLETION`
-
-Rules:
-
-- run the existing 017 multi-Path Structure-Aware benchmark logic against this supplied same-size rose-window image;
-- preserve ROI, threshold, candidate radial counts, sampling grid, Direct Extraction route, and measurement definitions where technically applicable;
-- if the runner requires RGB input or exact historical SHA, make only the minimal fixture-intake compatibility change needed for this supplementary execution and document it explicitly;
-- record recall / precision / IoU, false positives / false negatives, retained paths / subpaths / holes / nodes, effective expanded nodes, Repeat identity, deterministic rerun and correction-cost proxy;
-- do not overwrite or relabel INK-CLOUD-013 canonical evidence;
-- do not claim that the new numbers are a strict same-binary comparison to INK-CLOUD-013;
-- do not change product architecture, Direct Extraction implementation, FORMAT_VERSION, or package/release artifacts.
-
-For INK-CLOUD-017 task closure, a successfully executed and internally consistent supplementary benchmark is now sufficient to satisfy the remaining operational execution requirement, provided all evidence is explicitly labeled non-canonical and MR finds no source/measurement defect.
-
-The historical canonical fixture remains preserved as reference evidence, but its hash mismatch is no longer a STOP condition for this task.
-
-Return:
-
-`DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+When the user begins a concrete artwork/workflow, use the accepted capabilities first. If the real task exposes a bounded technical gap, MR may define the next engineering Work Order from that evidence.
