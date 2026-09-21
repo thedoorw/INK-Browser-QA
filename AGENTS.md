@@ -75,3 +75,26 @@ GitHub Action / GitHub API step
 ```
 
 A new PowerShell workflow is not considered accepted merely because the Action reports SUCCESS. Before it becomes a reusable project method, verify that it completes on the existing self-hosted Windows runner without changing PowerShell policy and without antivirus / endpoint-security intervention.
+
+
+Verified RA ZIP import pattern (2026-09-21):
+
+```text
+curl / standard step downloads trusted repository ZIP to RUNNER_TEMP
+→ cmd launches powershell.exe -NoLogo -NoProfile -NonInteractive -Command
+→ PowerShell uses System.IO.Compression.ZipFile only for local extraction
+→ actions/github-script verifies SHA256 + file count and writes Git blobs/tree/commit
+→ local temp cleanup
+```
+
+Verified run: `35615070012 / SUCCESS`
+
+Verified evidence:
+
+- PowerShell extraction step = PASS
+- no `ExecutionPolicy Bypass`
+- no downloaded/executed remote `.ps1`
+- ZIP SHA256 = `525fdff89305135eedebde4fa039517040220724fdee8e557a3d5a2ad5add1d4`
+- extracted file count = `158`
+- extracted bytes = `19909084`
+- import commit = `342a20ecf7932a9b532e3ae9a861e8c240ca7d26`
