@@ -683,3 +683,53 @@ without Cloud-only dependencies or a forked editor core
 ```
 
 This task validates module/dependency closure, persistence, History, Revision and CHAT local collaboration compatibility. It does not authorize package/release regeneration or a final single-file `INK.html` build.
+
+
+## Next bounded stage after Portable Baseline Integration — INK-CLOUD-017
+
+INK-CLOUD-016 completed and was promoted with gate:
+
+`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
+
+The portable/static shared-core checkpoint is therefore closed.
+
+The next bounded stage is selected from the remaining hard-benchmark gap already documented by INK-CLOUD-013:
+
+`INK-CLOUD-017 — Structure-Aware Reconstruction Multi-Path Closure v0.1`
+
+Target technical problem:
+
+```text
+rose-window sector extraction = many editable Paths
+current reconstructRadial() boundary = single Path
+→ most sector topology discarded
+→ structure-aware completeness collapses
+```
+
+Bounded target:
+
+```text
+multi-Path prototype set
+→ structured radial reconstruction
+→ Repeat / Transform identity
+→ overlay QA
+→ bounded local correction
+→ hard benchmark comparison
+```
+
+Provisional gate:
+
+`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
+
+Constraints:
+
+- Direct Extraction remains the current accepted baseline until new evidence proves otherwise.
+- Do not redesign the full extraction stack.
+- Do not introduce a second vector/Path/History/Revision engine.
+- Preserve exact provenance and editable structured output.
+- Preserve static hosting + browser-local execution.
+- Remote AI may assist reasoning only as an optional adapter.
+- `FORMAT_VERSION = 4` unless a required change triggers Hard STOP.
+- Package/release mutation remains out of scope.
+
+The purpose is not to force Structure-Aware Reconstruction to win; it is to close the known one-Path bottleneck and obtain a fair multi-Path benchmark.
