@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_HOLD / INK-CLOUD-017 / CANONICAL_BENCHMARK_REQUIRED`
+STATUS: `INK-CLOUD-017 / SUPPLEMENTARY_BENCHMARK_AUTHORIZED / REVIEW_PENDING`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `MR_HOLD / INK-CLOUD-017 / CANONICAL_BENCHMARK_REQUIRED`
 | DEV_BRANCH | `work/ink-cloud-017` |
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
 | REVIEW_PAYLOAD_HEAD | `3000674329127956d20f6cb7f4a2fb88938152a7` |
-| DECISION | `MR_HOLD_BENCHMARK_EXECUTION_REQUIRED` |
+| DECISION | `USER_OVERRIDE / SUPPLEMENTARY_EXECUTION_AUTHORIZED` |
 | SOURCE_REVIEW | `PASS` |
 | TECHNICAL_CLOSURE | `PASS` |
 | TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
@@ -18,7 +18,7 @@ STATUS: `MR_HOLD / INK-CLOUD-017 / CANONICAL_BENCHMARK_REQUIRED`
 | PIPELINE_SELECTION | `NO_CHANGE / DIRECT_EXTRACTION_CURRENT_BASELINE` |
 | FORMAT_VERSION | `4 / UNCHANGED` |
 | PACKAGE_UPDATE | `0` |
-| MAIN_PROMOTION | `NOT_AUTHORIZED_WHILE_GATE_OPEN` |
+| MAIN_PROMOTION | `PENDING_SUPPLEMENTARY_EXECUTION_REVIEW` |
 | RUNTIME_QA | `DEFERRED` |
 
 ## MR checkpoint
@@ -53,3 +53,22 @@ INK-CLOUD-017 remains the active task. The only authorized continuation is to ex
 with the existing fixture identity and benchmark contract, record machine-readable comparison evidence, update the closure report / branch-local DEV progress, and return a new exact `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
 
 No new product scope is authorized.
+
+
+## User execution decision
+
+The user explicitly accepted the currently supplied 1086 × 1448 rose-window image for completion of INK-CLOUD-017 despite file hash / RGB-RGBA differences.
+
+The prior canonical-binary blocker is therefore removed for this task.
+
+Required next evidence:
+
+```text
+TEST_CLASS = NON_CANONICAL_SUPPLEMENTARY_TEST
+USER_ACCEPTED_FOR_017_OPERATIONAL_COMPLETION = YES
+OVERLAY_QA = EXECUTE
+MULTI_PATH_HARD_COMPARISON = RECORD
+DIRECT_EXTRACTION_BASELINE = PRESERVE_PENDING_MR
+```
+
+MR will review the executed metrics and may close/promote 017 if the supplementary execution is technically valid. The results must not overwrite or masquerade as the INK-CLOUD-013 canonical evidence.
