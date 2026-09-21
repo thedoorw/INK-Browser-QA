@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-016 / DEVELOPMENT_AUTHORIZED / ACTIVE`
+STATUS: `INK-CLOUD-017 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-016` |
-| DEV_BRANCH | `work/ink-cloud-016` |
+| CURRENT_TASK_ID | `INK-CLOUD-017` |
+| DEV_BRANCH | `work/ink-cloud-017` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / PORTABLE_BASELINE_INTEGRATION` |
+| NEXT_STAGE | `DEV_WORK / STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -773,3 +773,37 @@ multi-Path sector extraction
 Direct Extraction remains the accepted production baseline. INK-CLOUD-017 must not replace it unless benchmark evidence demonstrates lower correction cost with adequate completeness/topology retention.
 
 No new backend, no second vector/document/History engine, no package mutation, and no FORMAT_VERSION bump are implied by this stage decision.
+
+
+## INK-CLOUD-017 authorization
+
+Current bounded objective:
+
+```text
+265-Path sector prototype evidence
+→ complete multi-Path prototype set
+→ existing Repeat / Transform reconstruction
+→ overlay QA
+→ bounded local-correction compatibility
+→ fair comparison with Direct Extraction
+```
+
+Branch:
+
+`work/ink-cloud-017`
+
+Target gate:
+
+`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
+
+Direct Extraction remains the accepted production baseline throughout DEV execution. Any pipeline-selection change is reserved for MR after benchmark review.
+
+Constraints:
+
+```text
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+MANDATORY_REMOTE_DEPENDENCY = 0
+SECOND_VECTOR_ENGINE = 0
+RUNTIME_QA = DEFERRED
+```
