@@ -312,3 +312,58 @@ Browser execution is reserved for the required Phase F self-hosted Windows run a
 Next:
 
 `PHASE_D_ROSE_WINDOW_VISIBLE_RUNTIME`
+
+
+## Phase D — Rose Window visible runtime path checkpoint
+
+Product / QA harness checkpoint SHA:
+
+`9f9f6f0e7a3b7a8b4edf5428cc71c3b47187aa10`
+
+Integrated:
+
+- Direct Extraction remains the default visible action;
+- extraction output now exposes visible path/node/source/batch diagnostics;
+- optional Structure-Aware entry is visible but gated behind the same imported Direct reference;
+- Structure-Aware reuses `radialEvidence → sectorMask → complete multi-Path prototype set → existing Repeat`;
+- selected radial count, prototype Path/node count, mask IoU and linked Repeat id are visible;
+- no second image/reference authority is created;
+- Rose Window real-browser harness added at `qa/runtime/ink-cloud-018-browser-harness.html`.
+
+The harness is prepared to execute the required case against `qa/fixtures/rose-window/rose-window-primary.png` and verify:
+
+- reference import/display;
+- Direct extraction and editable Path;
+- overlay;
+- diagnostics/provenance;
+- Path edit entry;
+- bounded CHAT proposal / blocked pre-approval execution / approved execution;
+- natural-language document-context discussion without mutation;
+- optional Structure-Aware count=6 reconstruction;
+- Revision capture + restore;
+- project save/reload integrity;
+- runtime health.
+
+This checkpoint prepares the actual Rose Window case. The case is not marked executed until the Phase F self-hosted Windows Chromium workflow completes.
+
+Files changed:
+
+- `product/source/src/extraction/workspace.js`
+- `product/source/src/extraction/install.js`
+- `product/source/src/editor/creative-workspace.js`
+- `product/source/styles.css`
+- `qa/runtime/ink-cloud-018-browser-harness.html`
+
+Invariant checks:
+
+- Direct Extraction default = preserved;
+- Structure-Aware = optional;
+- existing Repeat/Transform authority reused;
+- `FORMAT_VERSION = 4`;
+- second editor core = 0;
+- second document authority = 0;
+- package mutation = 0.
+
+Next:
+
+`PHASE_E_STATIC_DEPLOYMENT_PREPARATION`
