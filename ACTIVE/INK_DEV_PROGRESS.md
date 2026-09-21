@@ -167,3 +167,24 @@ Checkpoint series:
 - `Add INK-CLOUD-015 source contract regression tests`
 
 `PHASE_F_EXECUTION_EVIDENCE_NEXT`
+
+
+## Phase F exact-source harness correction
+
+The first exact-source isolated harness exposed a pre-execution result-shape gap:
+
+- after a valid human plan approval, a stale Revision/target at execution time was rejected during whole-plan preflight before a deterministic plan `STOPPED` record could be produced.
+
+Bounded correction:
+
+- approval still performs full plan validation;
+- `assertApproved` now checks only the explicit approval state/token;
+- execution enters ordered orchestration and immediately revalidates each step;
+- stale Revision/target/precondition failures now produce the required per-step + whole-plan `STOPPED` record with remaining steps untouched.
+
+Checkpoint series:
+
+- `INK-CLOUD-015 make execution precondition failures deterministic plan stops`
+- `Align stale Revision regression with deterministic STOP result`
+
+`PHASE_F_HARNESS_RERUN_REQUIRED`
