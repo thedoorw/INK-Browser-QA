@@ -215,8 +215,12 @@ test('stale Revision rejects before plan mutation', async () => {
   app.revisions.currentRevisionId = 'revision-external';
   const response = await adapter.execute(proposed.planId, approved.approvalToken);
 
-  assert.equal(response.ok, false);
-  assert.equal(response.code, 'CHAT_PLAN_STALE_REVISION');
+  assert.equal(response.ok, true);
+  assert.equal(response.result.ok, false);
+  assert.equal(response.result.status, 'STOPPED');
+  assert.equal(response.result.stoppedStepId, 'repaint-a');
+  assert.equal(response.result.diagnostic.code, 'CHAT_PLAN_STALE_REVISION');
+  assert.deepEqual(response.result.remainingStepIds, ['move-b']);
   assert.deepEqual(app.doc, before);
   assert.equal(app.history.undoStack.length, 0);
 });
