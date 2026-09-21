@@ -107,24 +107,81 @@ async function run() {
   const evidence = radialEvidence(raster, { ...ROI, counts: [...COUNTS], threshold: THRESHOLD });
   const count = evidence.candidates[0].count, prototypeMask = sectorMask(raster, source, evidence, { count, threshold: THRESHOLD });
   const prototype = await executeExtraction({ raster, source, mask: prototypeMask, parameters: { threshold: THRESHOLD } }, adapter);
-  const prototypePath = prototype.paths.toSorted((a, b) => pathStats([b]).nodes - pathStats([a]).nodes)[0];
-  const repeat = reconstructRadial(prototypePath, evidence, { count, id: 'rose-window-structure-repeat' });
+  const repeat = reconstructRadial(prototype.paths, evidence, { count, id: 'rose-window-structure-repeat' });
   const directAgain = await executeExtraction({ raster, source, mask, parameters: { threshold: THRESHOLD } }, adapter);
   const prototypeAgain = await executeExtraction({ raster, source, mask: prototypeMask, parameters: { threshold: THRESHOLD } }, adapter);
+  const repeatAgain = reconstructRadial(prototypeAgain.paths, evidence, { count, id: 'rose-window-structure-repeat' });
+  const structuredPaths = repeat.source?.type === 'group' ? repeat.source.children : [repeat.source];
+  const prototypeStats = pathStats(prototype.paths), retainedStats = pathStats(structuredPaths);
+  const transforms = repeatTransforms(repeat), transformExact = repeat.instances.every((instance, i) => JSON.stringify(instance.transform) === JSON.stringify(transforms[i]));
   const directMetrics = confusion(sampleMask(raster, direct.paths));
-  const structureMetrics = confusion(sampleMask(raster, [repeat.source], repeatTransforms(repeat)));
+  const structureMetrics = confusion(sampleMask(raster, structuredPaths, transforms));
+  const repeatDeterministic = JSON.stringify(repeat) === JSON.stringify(repeatAgain);
+  const prototypeRetentionExact = ['paths','subpaths','holes','nodes'].every(key => retainedStats[key] === prototypeStats[key]);
+  const prototypeProvenanceExact = structuredPaths.every(path => path.metadata?.extraction?.source?.sha256 === sourceSha256 && path.metadata?.extraction?.mask?.provider === prototypeMask.provider);
+  const mismatch = metrics => metrics.falsePositive + metrics.falseNegative;
   const result = {
     schema: 'INK-ROSE-WINDOW-HARD-BENCHMARK/1', fixture: { path: 'qa/fixtures/rose-window/rose-window-primary.png', sha256: sourceSha256, width: raster.width, height: raster.height, colorType: 'RGB' },
     setup: { threshold: THRESHOLD, roi: ROI, gridStep: GRID_STEP, candidateCounts: COUNTS },
+    overlayQA: { roi: ROI, threshold: THRESHOLD, gridStep: GRID_STEP, sampleCoordinatesShared: true, rasterProxyOnly: true },
     directExtraction: { ...pathStats(direct.paths), geometrySha256: direct.diagnostics.geometrySha256, warnings: direct.diagnostics.warnings, rasterProxy: directMetrics, provenanceExact: direct.provenance.source.sha256 === sourceSha256 && direct.provenance.mask.provider === mask.provider },
-    structureAware: { selectedCount: count, selectedMaskIoU: +evidence.candidates[0].maskIoU.toFixed(6), candidates: evidence.candidates.map(x => ({ count: x.count, maskIoU: +x.maskIoU.toFixed(6) })), prototype: pathStats(prototype.paths), prototypeWarnings: prototype.diagnostics.warnings, retainedPrototype: pathStats([prototypePath]), effectiveExpandedNodes: pathStats([prototypePath]).nodes * count, linkedRepeatInstances: repeat.instances.length, rasterProxy: structureMetrics, provenanceExact: repeat.metadata.extraction.source.sha256 === sourceSha256 && repeat.metadata.structureEvidence.schema === evidence.schema },
-    deterministic: { direct: direct.diagnostics.geometrySha256 === directAgain.diagnostics.geometrySha256, prototype: prototype.diagnostics.geometrySha256 === prototypeAgain.diagnostics.geometrySha256, resultSha256: digest({ direct: direct.diagnostics.geometrySha256, prototype: prototype.diagnostics.geometrySha256, count, directMetrics, structureMetrics }) },
-    interpretation: { contourCountsAreThresholdDerived: true, missingAndAdditionalCountsUseSampledPixelProxy: true, semanticGroundTruthAvailable: false, decision: 'DIRECT_EXTRACTION_CURRENT_BASELINE', structureStatus: 'CANDIDATE_REQUIRES_OVERLAY_QA' }
+    structureAware: {
+      selectedCount: count,
+      selectedMaskIoU: +evidence.candidates[0].maskIoU.toFixed(6),
+      candidates: evidence.candidates.map(x => ({ count: x.count, maskIoU: +x.maskIoU.toFixed(6) })),
+      prototype: prototypeStats,
+      prototypeWarnings: prototype.diagnostics.warnings,
+      retainedPrototype: retainedStats,
+      prototypeSet: {
+        sourceType: repeat.source?.type || null,
+        sourceObjectId: repeat.source?.id || null,
+        pathRetentionExact: prototypeRetentionExact,
+        retainedPathIdsExact: JSON.stringify(structuredPaths.map(path => path.id)) === JSON.stringify(prototype.paths.map(path => path.id))
+      },
+      effectiveExpandedNodes: retainedStats.nodes * count,
+      linkedRepeatInstances: repeat.instances.length,
+      repeatIdentity: {
+        instanceIds: repeat.instances.map(instance => instance.instanceId),
+        deterministicRerun: repeatDeterministic,
+        transformsExact: transformExact
+      },
+      rasterProxy: structureMetrics,
+      provenanceExact: prototypeProvenanceExact && repeat.metadata.extraction?.source?.sha256 === sourceSha256 && repeat.metadata.structureEvidence.schema === evidence.schema
+    },
+    comparison: {
+      recallDelta: +(structureMetrics.recall - directMetrics.recall).toFixed(6),
+      precisionDelta: +(structureMetrics.precision - directMetrics.precision).toFixed(6),
+      iouDelta: +(structureMetrics.iou - directMetrics.iou).toFixed(6),
+      falsePositiveDelta: structureMetrics.falsePositive - directMetrics.falsePositive,
+      falseNegativeDelta: structureMetrics.falseNegative - directMetrics.falseNegative,
+      uniqueEditableNodeDelta: retainedStats.nodes - pathStats(direct.paths).nodes,
+      effectiveExpandedNodeDelta: retainedStats.nodes * count - pathStats(direct.paths).nodes,
+      correctionCostProxy: {
+        definition: 'Two-component bounded proxy only: sampledMismatch estimates missing/additional raster correction while uniqueEditableNodes estimates editable cleanup surface; no scalar weighting or automatic pipeline winner.',
+        directExtraction: { sampledMismatch: mismatch(directMetrics), uniqueEditableNodes: pathStats(direct.paths).nodes, linkedEditReuse: 1 },
+        structureAware: { sampledMismatch: mismatch(structureMetrics), uniqueEditableNodes: retainedStats.nodes, linkedEditReuse: count }
+      }
+    },
+    deterministic: {
+      direct: direct.diagnostics.geometrySha256 === directAgain.diagnostics.geometrySha256,
+      prototype: prototype.diagnostics.geometrySha256 === prototypeAgain.diagnostics.geometrySha256,
+      structure: repeatDeterministic,
+      resultSha256: digest({ direct: direct.diagnostics.geometrySha256, prototype: prototype.diagnostics.geometrySha256, count, directMetrics, structureMetrics, repeat: repeat.instances.map(instance => instance.instanceId) })
+    },
+    interpretation: {
+      contourCountsAreThresholdDerived: true,
+      missingAndAdditionalCountsUseSampledPixelProxy: true,
+      semanticGroundTruthAvailable: false,
+      decision: 'DIRECT_EXTRACTION_CURRENT_BASELINE',
+      structureStatus: 'MULTI_PATH_TECHNICALLY_CLOSED_MR_DECISION_REQUIRED'
+    }
   };
-  assert.equal(result.deterministic.direct, true); assert.equal(result.deterministic.prototype, true);
+  assert.equal(result.deterministic.direct, true); assert.equal(result.deterministic.prototype, true); assert.equal(result.deterministic.structure, true);
   assert.equal(result.directExtraction.provenanceExact, true); assert.equal(result.structureAware.provenanceExact, true);
   assert.equal(result.structureAware.linkedRepeatInstances, result.structureAware.selectedCount);
-  assert.ok(result.directExtraction.rasterProxy.iou > .8); assert.ok(result.structureAware.rasterProxy.recall < .1);
+  assert.equal(result.structureAware.prototypeSet.pathRetentionExact, true); assert.equal(result.structureAware.prototypeSet.retainedPathIdsExact, true);
+  assert.equal(result.structureAware.repeatIdentity.transformsExact, true);
+  assert.ok(result.directExtraction.rasterProxy.iou > .8);
   process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
 }
 

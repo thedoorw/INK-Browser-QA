@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `ACTIVE / PHASE_C_COMPLETE`
+STATUS: `ACTIVE / PHASE_D_HARNESS_READY`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `ACTIVE / PHASE_C_COMPLETE`
 | TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
 | BRANCH | `work/ink-cloud-017` |
 | BASE_MAIN | `38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e` |
-| TASK_STATUS | `ACTIVE / PHASE_C_COMPLETE` |
+| TASK_STATUS | `ACTIVE / PHASE_D_HARNESS_READY` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
@@ -48,7 +48,7 @@ sector extraction
   provenance; no flattening or second vector engine.
 
 ### Phase C — Structured output + local correction closure
-- Status: `COMPLETE / CHECKPOINT_COMMIT_CONTAINS_THIS_RECORD`
+- Status: `COMPLETE`\n- Checkpoint: `a781b7dce261c8843f223d01ffc463e0e451dc16`
 - Bounded workspace compatibility fix adds existing Repeat traversal to:
   - canvas renderer;
   - world-bounds traversal;
@@ -89,7 +89,7 @@ Browser/runtime QA remains `DEFERRED`.
 - Phase A — Reconstruction contract audit — `COMPLETE`
 - Phase B — Multi-Path prototype-set reconstruction — `COMPLETE`
 - Phase C — Structured output + local correction closure — `COMPLETE`
-- Phase D — Overlay QA + hard benchmark rerun — `NEXT`
+- Phase D — Overlay QA + hard benchmark rerun — `HARNESS_READY / EXECUTION_NEXT`
 - Phase E — Comparative decision evidence
 - Phase F — report + DEV handoff
 
@@ -110,3 +110,28 @@ RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## Phase D harness checkpoint
+
+Status: `READY_FOR_EXECUTION / CHECKPOINT_COMMIT_CONTAINS_THIS_RECORD`
+
+The canonical hard-benchmark runner now:
+
+- passes all sector `prototype.paths` into `reconstructRadial()`;
+- samples the complete Group-backed prototype set through the same Repeat
+  transforms;
+- preserves the original fixture SHA, ROI, threshold, candidate counts, grid
+  step and Direct Extraction route;
+- records complete retained Path/subpath/hole/node counts;
+- records effective expanded nodes, stable Repeat instance IDs and exact
+  transforms;
+- verifies exact Path-level extraction provenance;
+- records deterministic rerun status;
+- records same-coordinate overlay raster-proxy recall/precision/IoU and
+  false-positive/false-negative samples;
+- records a bounded two-component correction-cost proxy without choosing a
+  pipeline.
+
+No old benchmark assertion requiring Structure-Aware recall < 0.1 remains.
+A weaker result is recordable and does not auto-fail the technical contract.
