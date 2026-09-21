@@ -7,8 +7,8 @@ STATUS: `INK-RA-001 / IN_PROGRESS`
 | TASK_ID | `INK-RA-001` |
 | BRANCH | `work/ink-ra-001` |
 | BRANCH_BASE | `94fbdb12753feecfe3dc7053677812c96cd2cf76` |
-| CHECKPOINT_INPUT_HEAD | `7e060235504aace42333ba7c961298ddf5cc58f5` |
-| CURRENT_PHASE | `PHASE_F / CLOSURE_VALIDATION` |
+| CHECKPOINT_INPUT_HEAD | `96c0082850884cd1eff393aff015695fc59c9749` |
+| CURRENT_PHASE | `PHASE_F / WINDOWS_RUNTIME_PENDING` |
 | PHASE_A | `COMPLETE` |
 | PHASE_B | `COMPLETE` |
 | PHASE_C | `COMPLETE` |
@@ -138,3 +138,23 @@ UI/display-version/package mutation: `0 / 0 / 0`
 Blockers: `NONE`
 
 Next: complete static/deterministic closure and self-hosted Windows real-browser QA with a complex geometry acceptance case.
+
+## Phase F runtime checkpoint
+
+Prepared:
+
+- `qa/runtime/ink-ra-001-browser-harness.html` for real Chromium module execution;
+- `.github/workflows/ink-ra-001-windows-runtime.yml` for the existing self-hosted Windows X64 runner;
+- real Rose Window fixture identity check (`1086 x 1448`), deterministic 12-part geometry offset/measurement, cubic intersection/project and finite-coordinate assertions;
+- unchanged PowerShell execution policy with no `ExecutionPolicy Bypass`.
+
+Local preflight:
+
+- focused geometry-kernel unit execution → `PASS`;
+- RA module verification → `PASS`;
+- isolated external benchmark → `PASS`;
+- workflow YAML parse → `PASS`.
+
+Blockers: `NONE`
+
+Next: push this runtime checkpoint and require a successful exact-SHA self-hosted Windows browser run before DEV handoff.

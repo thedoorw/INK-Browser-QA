@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en" data-qa="RUNNING">
+<head>
+  <meta charset="utf-8">
+  <title>INK-RA-001 Browser Runtime</title>
+</head>
+<body>
+  <img id="rose-reference" src="./__qa_rose_window.png" alt="Rose Window runtime fixture">
+  <pre id="result">RUNNING</pre>
+  <script type="module">
+    import { createAnchor, createPath, pathMetrics } from './src/vector/vector-core.js';
+    import { intersectPathSegments, measurePathGeometry, offsetPathRobust, projectPointToPath } from './src/vector/geometry-kernel.js';
+
+    const result = document.querySelector('#result');
+    const anchor = (id, x, y, incoming = null, outgoing = null) => createAnchor(x, y, incoming, outgoing, { id });
+    const assert = (condition, code) => { if (!condition) throw new Error(code); };
+    const imageReady = image => image.complete && image.naturalWidth > 0
+      ? Promise.resolve()
+      : new Promise((resolve, reject) => { image.addEventListener('load', resolve, { once: true }); image.addEventListener('error', () => reject(new Error('ROSE_FIXTURE_LOAD_FAILED')), { once: true }); });
+
+    function cubicPath(id, values) {
+      const [p0, p1, p2, p3] = values;
+      return createPath({ id, subpaths: [{ id: `${id}:s0`, role: 'outer', closed: false, anchors: [
+        anchor(`${id}:a0`, p0.x, p0.y, null, { x: p1.x - p0.x, y: p1.y - p0.y }),
+        anchor(`${id}:a1`, p3.x, p3.y, { x: p2.x - p3.x, y: p2.y - p3.y }, null)
+      ] }] });
+    }
+
+    function roseGeometry(count = 12) {
+      const subpaths = [];
+      for (let index = 0; index < count; index += 1) {
+        const angle = index * Math.PI * 2 / count;
+        const radial = { x: Math.cos(angle), y: Math.sin(angle) };
+        const tangent = { x: -Math.sin(angle), y: Math.cos(angle) };
+        const point = (radius, width) => ({ x: 500 + radial.x * radius + tangent.x * width, y: 500 + radial.y * radius + tangent.y * width });
+        const values = [point(140, 34), point(360, 9.52), point(360, -9.52), point(140, -34)];
+        subpaths.push({ id: `rose:s${index}`, role: 'outer', closed: true, anchors: values.map((value, anchorIndex) => anchor(`rose:s${index}:a${anchorIndex}`, value.x, value.y)) });
+      }
+      return createPath({ id: 'rose-window-geometry', name: 'Rose Window geometry acceptance', subpaths });
+    }
+
+    try {
+      const image = document.querySelector('#rose-reference');
+      await imageReady(image);
+      assert(image.naturalWidth === 1086 && image.naturalHeight === 1448, 'ROSE_FIXTURE_IDENTITY_MISMATCH');
+
+      const curveA = cubicPath('browser-curve-a', [{ x: 0, y: 0 }, { x: 50, y: 100 }, { x: 100, y: -100 }, { x: 150, y: 0 }]);
+      const curveB = cubicPath('browser-curve-b', [{ x: 0, y: 50 }, { x: 50, y: -50 }, { x: 100, y: 150 }, { x: 150, y: -50 }]);
+      const intersections = intersectPathSegments(curveA, { subpathIndex: 0, segmentIndex: 0 }, curveB, { subpathIndex: 0, segmentIndex: 0 });
+      const projection = projectPointToPath(curveA, { x: 70, y: 20 });
+      assert(intersections.intersections.length === 3, 'CUBIC_INTERSECTION_FAILED');
+      assert(Number.isFinite(projection.distance), 'CUBIC_PROJECT_FAILED');
+
+      const rose = roseGeometry();
+      const offset = offsetPathRobust(rose, 3, { join: 'round' });
+      const repeat = offsetPathRobust(rose, 3, { join: 'round' });
+      assert(offset.subpaths.length === 12, 'ROSE_OFFSET_TOPOLOGY_FAILED');
+      assert(JSON.stringify(offset) === JSON.stringify(repeat), 'ROSE_OFFSET_NONDETERMINISTIC');
+      assert(offset.subpaths.every(subpath => subpath.anchors.length >= 4 && subpath.anchors.every(item => Number.isFinite(item.x) && Number.isFinite(item.y))), 'ROSE_OFFSET_NONFINITE');
+      const measurement = measurePathGeometry(offset);
+      assert(measurement.metrics.subpaths === 12 && measurement.metrics.area > 0, 'ROSE_MEASUREMENT_FAILED');
+      assert(pathMetrics(offset).holes === 0, 'ROSE_HOLE_CLASSIFICATION_FAILED');
+
+      const evidence = {
+        status: 'PASS',
+        browserLocal: true,
+        roseFixture: { width: image.naturalWidth, height: image.naturalHeight },
+        cubicIntersections: intersections.intersections.length,
+        projectionDistance: projection.distance,
+        roseInputSubpaths: rose.subpaths.length,
+        roseOutputSubpaths: offset.subpaths.length,
+        roseArea: measurement.metrics.area,
+        deterministicRepeat: true,
+        formatVersion: 4
+      };
+      result.textContent = JSON.stringify(evidence, null, 2);
+      document.documentElement.dataset.qa = 'PASS';
+    } catch (error) {
+      result.textContent = JSON.stringify({ status: 'FAIL', message: error?.message || String(error), stack: error?.stack || null }, null, 2);
+      document.documentElement.dataset.qa = 'FAIL';
+    }
+  </script>
+</body>
+</html>
