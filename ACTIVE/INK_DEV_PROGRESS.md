@@ -367,3 +367,50 @@ Invariant checks:
 Next:
 
 `PHASE_E_STATIC_DEPLOYMENT_PREPARATION`
+
+
+## Phase E — static deployment preparation checkpoint
+
+Deployment checkpoint SHA:
+
+`dbc6013b9ac6328fd4f12a1704c934e96f01512f`
+
+Prepared:
+
+- branch-root `index.html` is a replaceable relative redirect to the authoritative `./product/source/`;
+- branch-root `.nojekyll` enables direct static serving without a build pipeline;
+- product source is not copied or forked;
+- manifest remains `start_url = ./index.html`, `scope = ./`;
+- Service Worker remains `./service-worker.js` with relative shell paths;
+- source scan returned zero root-absolute `src`, `href`, `fetch`, `localhost` or `127.0.0.1` bindings inside `product/source`;
+- no mandatory server/backend added;
+- no GitHub Actions deployment dependency added.
+
+GitHub Pages preparation:
+
+`PUBLIC_URL = USER_ONE_TIME_PAGES_ACTION_REQUIRED`
+
+After MR promotion, repository setting required once:
+
+1. GitHub repository → Settings → Pages
+2. Build and deployment → Source: `Deploy from a branch`
+3. Branch: `main`
+4. Folder: `/ (root)`
+
+Default expected Pages entry after enablement:
+
+`https://thedoorw.github.io/INK-Browser-QA/`
+
+The root landing immediately redirects to the authoritative static browser source.
+
+Invariant checks:
+
+- `package/ink-current` mutation = 0;
+- deployment build step = 0;
+- second product/editor shell = 0 (root file is redirect-only);
+- mandatory remote dependency = 0;
+- `FORMAT_VERSION = 4`.
+
+Next:
+
+`PHASE_F_SELF_HOSTED_WINDOWS_BROWSER_QA`
