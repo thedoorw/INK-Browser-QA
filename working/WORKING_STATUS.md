@@ -717,3 +717,59 @@ Target gate:
 `PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
 
 This is integration/readiness validation only. Package/release mutation remains prohibited.
+
+
+## INK-CLOUD-016 MR review and promotion
+
+DEV handoff was confirmed complete.
+
+Review decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate accepted:
+
+`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
+
+Clean promotion:
+
+- branch: `promote/ink-cloud-016`
+- PR: `#18 / MERGED`
+- main promotion: `6c332220a26c966193c128a0059724e8a644faa6`
+
+Portable baseline result:
+
+```text
+STATIC_MODULE_CLOSURE = VERIFIED
+SHARED_CORE_REUSED = VERIFIED
+MANDATORY_REMOTE_DEPENDENCY = 0
+SECOND_EDITOR_CORE = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+RUNTIME_QA = DEFERRED
+```
+
+## Next bounded-stage decision
+
+The next bounded technical stage is:
+
+`INK-CLOUD-017 — Structure-Aware Reconstruction Multi-Path Closure v0.1`
+
+Reason:
+
+The hard rose-window benchmark already isolated a specific structural bottleneck: a sector extraction produced 265 Paths, but the current radial reconstruction boundary consumed only one Path. This collapsed completeness to approximately 3.19% recall despite strong regularity/editability density.
+
+Bounded objective:
+
+```text
+multi-Path sector extraction
+→ prototype-set reconstruction
+→ Repeat / Transform structured expansion
+→ overlay QA
+→ local correction compatibility
+→ compare against direct-extraction baseline
+```
+
+Direct Extraction remains the accepted production baseline. INK-CLOUD-017 must not replace it unless benchmark evidence demonstrates lower correction cost with adequate completeness/topology retention.
+
+No new backend, no second vector/document/History engine, no package mutation, and no FORMAT_VERSION bump are implied by this stage decision.
