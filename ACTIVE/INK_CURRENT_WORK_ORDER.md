@@ -13,7 +13,7 @@ STATUS: `AUTHORIZED / READY_FOR_DEV / RA_FOUNDATION_A`
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED_ONLY_AFTER_EVALUATION_GATE` |
 | UI_MUTATION | `PROHIBITED` |
-| PRODUCT_DISPLAY_VERSION_CHANGE | `DEFERRED_TO_INK_WEB_DISCUSSION` |
+| PRODUCT_DISPLAY_VERSION_CHANGE | `POLICY_DECIDED / MUTATION_OUT_OF_SCOPE` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
@@ -313,12 +313,12 @@ User observation:
 
 ```text
 INK_WEB_UI = VISUALLY_TOO_CLUTTERED / DISCUSSION_REQUIRED
-PRODUCT_VERSION_NUMBER = USER_WANTS_CHANGE / DISCUSSION_REQUIRED
+PRODUCT_VERSION_POLICY = PORTABLE_v0.1 + WEB_v0.1 / USER_DECIDED
 ```
 
 These are intentionally not part of INK-RA-001.
 
-After RA work is underway, MR and USER will separately define the INK Web UI direction and version-number policy. No DEV should pre-empt that discussion.
+The product display-version policy is now decided: both Portable and Web/Cloud remain at base version `v0.1`, with optional supplementary text after the base version. Actual product/UI string mutation remains outside INK-RA-001. MR and USER will still separately define the INK Web UI direction. No DEV should pre-empt that UI discussion.
 
 ## Completion
 
@@ -335,3 +335,22 @@ BROWSER_RUNTIME_QA = EXECUTED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## Product display-version decision
+
+USER decision:
+
+```text
+PORTABLE_BASE_VERSION = v0.1
+CLOUD_WEB_BASE_VERSION = v0.1
+SUPPLEMENTARY_TEXT = ALLOWED_AFTER_BASE_VERSION
+FIX_ONLY_VERSION_BUMP = PROHIBITED
+BASE_VERSION_CHANGE = USER_EXPLICIT_ONLY
+```
+
+This corrects the prior habit of treating ordinary fixes or bounded milestones as reasons to advance the visible product version.
+
+Historical `v1.6.5 RC` references remain source/baseline identity only.
+
+This decision does not authorize version-string mutation inside `INK-RA-001`.
