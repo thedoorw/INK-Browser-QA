@@ -89,3 +89,22 @@ At `MR_REVIEW_REQUIRED`, DEV stops.
 At `MR_PASS`, DEV still stops until a new Current Work Order exists.
 
 Packaging, certification, version promotion and `package/ink-current` updates require separate explicit authorization.
+
+
+## Shared collaboration language
+
+For USER ↔ CHAT collaboration, keep language simple.
+
+Examples:
+
+```text
+用 Figma 畫圖
+用 INK 畫圖
+讓 CHAT 用 INK 畫圖
+```
+
+These phrases mean: CHAT uses the target application's available structured controls, document model and editing operations to complete the intended visual result.
+
+They do not imply literal mouse imitation or manual cursor simulation.
+
+Do not over-explain this distinction in ordinary conversation. USER and CHAT share this understanding unless a technical implementation detail requires a more precise description.
