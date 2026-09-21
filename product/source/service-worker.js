@@ -1,27 +1,66 @@
 const RELEASE_VERSION = '1.5.1';
 const SHELL_CACHE = `ink-v${RELEASE_VERSION}-shell`;
 const RUNTIME_CACHE = `ink-v${RELEASE_VERSION}-runtime`;
-const APP_SHELL = [
-  './', './index.html', './index-standalone.html', './styles.css',
-  './src/config.js', './src/ink.js', './src/ai/ai-core.js', './src/ai/install-ai.js', './src/export/png-worker-encoder.js',
-  './src/studio-core.js', './src/vector/vector-core.js', './src/vector/stroke-appearance.js', './src/vector/paint-appearance.js', './src/image/image-core.js', './src/paint/paint-core.js', './src/paint/stroke-model.js', './src/paint/brush-engine.js', './src/paint/stroke-session.js', './src/paint/drawing-workflow-import.js', './src/paint/drawing-quality.js', './src/recipe/recipe-engine.js', './src/vendor/polygon-clipping.umd.min.js',
-  './src/program-import/index.js', './src/program-import/importer.js', './src/program-import/format-detector.js', './src/program-import/parsers.js', './src/program-import/security.js', './src/program-import/canonical-operation.js', './src/program-import/compiler.js', './src/program-import/coverage-engine.js', './src/program-import/comparison-engine.js',
-  './src/core/index.js', './src/core/math.js', './src/core/geometry.js', './src/core/utils.js',
-  './src/document/index.js', './src/document/artboard.js', './src/document/workspace.js', './src/document/model.js', './src/document/migration.js', './src/document/storage.js', './src/document/integrity.js', './src/document/revision.js',
-  './src/history/index.js', './src/history/diff.js', './src/history/history.js',
-  './src/input/input-arbiter.js', './src/input/pen-calibration.js', './src/input/stylus-test.js',
-  './src/stroke/index.js', './src/stroke/edit.js',
-  './src/spatial/index.js', './src/spatial/quadtree.js', './src/spatial/page-spatial-index.js',
-  './src/editor/index.js', './src/editor/selection.js', './src/editor/transform.js', './src/editor/path-edit.js', './src/editor/expressive-stroke.js', './src/editor/composition.js', './src/editor/repaint-material.js', './src/editor/chat-bounded-edit.js', './src/editor/chat-creative-plan.js', './src/editor/creative-workspace.js',
-  './src/render/index.js', './src/render/natural-media-utils.js', './src/render/natural-media-run-utils.js',
-  './src/render/paper-profile.js', './src/render/multi-channel-ink.js', './src/render/gpu-resource-budget.js',
-  './src/render/tile-atlas.js', './src/render/live-canvas-tile-renderer.js', './src/render/pixel-compare.js', './src/render/tiled-export.js', './src/render/natural-media-controller.js', './src/render/interactive-benchmark.js',
-  './src/render/canvas2d/natural-media-canvas2d.js', './src/render/canvas2d/multi-channel-ink-canvas2d.js',
-  './src/render/webgl/natural-media-webgl.js', './src/render/webgl/multi-channel-ink-webgl.js',
-  './src/export/index.js', './src/export/pdf.js',
-  './src/release/index.js', './src/release/runtime-health.js', './src/release/external-diagnostics.js', './src/pwa/index.js', './src/pwa/update-manager.js',
-  './dist/ink.compat.js', './manifest.webmanifest', './icons/ink-192.png', './icons/ink-512.png'
-];
+
+// Portable/static closure for the authoritative modular runtime.
+// Keep this inventory synchronized with product/source/src; INK-CLOUD-016
+// adds a deterministic source/static harness that fails on drift.
+const SOURCE_SHELL = Object.freeze([
+  "./src/ai/ai-core.js", "./src/ai/chat-runtime.js", "./src/ai/conversation-flower-contract.js", "./src/ai/install-ai.js",
+  "./src/ai/intent/flower-vocabulary-v1.json", "./src/ai/intent/intent-parser.js", "./src/ai/intent/intent-schema.js", "./src/ai/intent/intent-to-plan.js",
+  "./src/ai/intent/intent-validator.js", "./src/ai/plan-analyzers.js", "./src/assets/asset-error.js", "./src/assets/asset-manifest.js",
+  "./src/assets/asset-migration.js", "./src/assets/index.js", "./src/composition/composition-constraints.js", "./src/config.js",
+  "./src/core/geometry.js", "./src/core/index.js", "./src/core/math.js", "./src/core/stable-id.js",
+  "./src/core/utils.js", "./src/document/artboard.js", "./src/document/components.js", "./src/document/file-envelope.js",
+  "./src/document/hierarchy.js", "./src/document/index.js", "./src/document/integrity.js", "./src/document/layout.js",
+  "./src/document/migration.js", "./src/document/model.js", "./src/document/revision.js", "./src/document/storage.js",
+  "./src/document/workspace.js", "./src/editor/bounds.js", "./src/editor/chat-bounded-edit.js", "./src/editor/chat-creative-plan.js",
+  "./src/editor/composition.js", "./src/editor/creative-workspace.js", "./src/editor/expressive-stroke.js", "./src/editor/index.js",
+  "./src/editor/path-edit.js", "./src/editor/repaint-material.js", "./src/editor/selection.js", "./src/editor/transform.js",
+  "./src/export/index.js", "./src/export/pdf.js", "./src/export/png-worker-encoder.js", "./src/extraction/adapters.js",
+  "./src/extraction/core.js", "./src/extraction/install.js", "./src/extraction/structure.js", "./src/extraction/workspace.js",
+  "./src/flora/action/flora-action-errors.js", "./src/flora/action/flora-action-schema.js", "./src/flora/action/flora-action-validator.js", "./src/flora/action/flora-command-dispatcher.js",
+  "./src/flora/crown/crown-painting-compiler.js", "./src/flora/crown/crown-painting-plan-schema.js", "./src/flora/crown/crown-painting-plan-validator.js", "./src/flora/crown/crown-painting-runtime.js",
+  "./src/flora/crown/crown-visual-checks.js", "./src/flora/crown/petal-recipe-generation.js", "./src/flora/hero/a4-hero-plan-schema.js", "./src/flora/hero/a4-hero-plan-validator.js",
+  "./src/flora/hero/a4-hero-visual-checks.js", "./src/flora/hero/complete-hero-painting-compiler.js", "./src/flora/hero/complete-hero-painting-runtime.js", "./src/flora/hero/complete-hero-recipe-generation.js",
+  "./src/flora/hero/complete-hero-structure.js", "./src/flora/index.js", "./src/flora/mask/vector-mask.js", "./src/flora/painting/abstract-petal-benchmark.js",
+  "./src/flora/painting/complete-crown-benchmark.js", "./src/flora/painting/region-paint-operations.js", "./src/flora/painting/region-stroke-compiler.js", "./src/flora/painting/three-petal-benchmark.js",
+  "./src/flora/recipe/painting-recipe-compiler.js", "./src/flora/recipe/painting-recipe-runtime.js", "./src/flora/recipe/painting-recipe-schema.js", "./src/flora/recipe/painting-recipe-validator.js",
+  "./src/flora/recipe/refined-painting-parameters.js", "./src/flora/reference/reference-mapping.js", "./src/flora/retention/painted-geometry-retention.js", "./src/flora/runtime/flora-runtime-adapter.js",
+  "./src/flora/species/flr012-adonis.js", "./src/flora/structure/geometry-measurement-gates.js", "./src/flora/structure/hero-geometry.js", "./src/flora/structure/hero-profile.js",
+  "./src/flora/structure/hero-runtime.js", "./src/history/diff.js", "./src/history/history.js", "./src/history/index.js",
+  "./src/image/image-core.js", "./src/ink.js", "./src/input/device-validation.js", "./src/input/input-arbiter.js",
+  "./src/input/pen-calibration.js", "./src/input/stylus-test.js", "./src/material/flower-batch-01.js", "./src/material/index.js",
+  "./src/material/material-library.js", "./src/paint/brush-engine.js", "./src/paint/drawing-quality.js", "./src/paint/drawing-workflow-import.js",
+  "./src/paint/index.js", "./src/paint/natural-media-state.js", "./src/paint/paint-core.js", "./src/paint/stroke-model.js",
+  "./src/paint/stroke-quality-tools.js", "./src/paint/stroke-session.js", "./src/paint/vector-watercolor.js", "./src/program-import/canonical-operation.js",
+  "./src/program-import/comparison-engine.js", "./src/program-import/compiler.js", "./src/program-import/coverage-engine.js", "./src/program-import/expression-ir.js",
+  "./src/program-import/format-detector.js", "./src/program-import/importer.js", "./src/program-import/index.js", "./src/program-import/parsers.js",
+  "./src/program-import/reference-package.js", "./src/program-import/reference-pipeline.js", "./src/program-import/reference-runner.js", "./src/program-import/security.js",
+  "./src/pwa/index.js", "./src/pwa/update-manager.js", "./src/recipe/recipe-asset.js", "./src/recipe/recipe-engine.js",
+  "./src/recipe/recipe-io.js", "./src/recipe/recipe-migration.js", "./src/recipe/recipe-validator.js", "./src/recompute/affected-scope.js",
+  "./src/recompute/change-domain.js", "./src/recompute/dependency-graph.js", "./src/recompute/local-recompute.js", "./src/recompute/recompute-report.js",
+  "./src/recompute/recompute-validator.js", "./src/release/external-diagnostics.js", "./src/release/index.js", "./src/release/runtime-health.js",
+  "./src/render/canvas2d/multi-channel-ink-canvas2d.js", "./src/render/canvas2d/natural-media-canvas2d.js", "./src/render/gpu-resource-budget.js", "./src/render/index.js",
+  "./src/render/interactive-benchmark.js", "./src/render/live-canvas-tile-renderer.js", "./src/render/multi-channel-ink.js", "./src/render/natural-media-controller.js",
+  "./src/render/natural-media-run-utils.js", "./src/render/natural-media-utils.js", "./src/render/paper-profile.js", "./src/render/pixel-compare.js",
+  "./src/render/tile-atlas.js", "./src/render/tiled-export.js", "./src/render/webgl/multi-channel-ink-webgl.js", "./src/render/webgl/natural-media-webgl.js",
+  "./src/repeat/repeat-identity.js", "./src/semantic/relationship-graph.js", "./src/semantic/semantic-migration.js", "./src/semantic/semantic-model.js",
+  "./src/semantic/semantic-resolver.js", "./src/semantic/semantic-validator.js", "./src/spatial/index.js", "./src/spatial/page-spatial-index.js",
+  "./src/spatial/quadtree.js", "./src/stroke/edit.js", "./src/stroke/index.js", "./src/studio-core.js",
+  "./src/vector/deformation.js", "./src/vector/paint-appearance.js", "./src/vector/stroke-appearance.js", "./src/vector/svg-id-normalizer.js",
+  "./src/vector/vector-core.js", "./src/vendor/imagetracer-1.2.6.js", "./src/vendor/polygon-clipping.umd.min.js"
+]);
+
+const APP_SHELL = Object.freeze([
+  './',
+  './index.html',
+  './index-standalone.html',
+  './styles.css',
+  './dist/ink.compat.js',
+  './manifest.webmanifest',
+  ...SOURCE_SHELL
+]);
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.addAll(APP_SHELL)));
