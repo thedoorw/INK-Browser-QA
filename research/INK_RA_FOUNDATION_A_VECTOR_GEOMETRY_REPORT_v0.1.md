@@ -1,6 +1,6 @@
 # INK RA Foundation A — Vector Geometry Report v0.1
 
-STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_COMPLETE / PHASE_D_IN_PROGRESS`
+STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_COMPLETE / PHASE_D_COMPLETE / PHASE_E_IN_PROGRESS`
 
 ## Control
 
@@ -109,7 +109,44 @@ The older npm package `clipper2-js@1.2.4` was inspected but rejected from the ac
 
 ## Phase D — selection matrix
 
-Pending.
+Selection gate result: `PASS / BOUNDED_ARCHITECTURE_ESTABLISHED`
+
+| Capability | KEEP_INK | ADAPT_RA | USE_EXTERNAL_ADAPTER | REFERENCE_ONLY | DEFER |
+|---|---|---|---|---|---|
+| Authoritative Path/subpath/anchor/compound model | `YES` | — | — | — | — |
+| Boolean union/subtract/intersect/exclude | `YES — existing polygon-clipping + INK normalization` | — | — | Paper.js comparison only | Curve-exact Boolean handle preservation |
+| Cubic split/project/nearest/intersection | Editor split behavior retained | — | `Bezier.js 6.1.4` behind pure INK adapter | Paper.js | — |
+| Robust polygon offset/inflate/deflate | Existing offset retained as legacy bounded fallback | — | `clipper2-ts 2.0.1-18` behind scale/orientation/validation adapter | old `clipper2-js` rejected | Curve-exact joined offset |
+| Measurement/fitting | Existing `pathMetrics()` retained | `fitLine` / `fitCircle` numerical concepts only, normalized to INK result | Bezier.js supplies curve-local length/project data | RA review/candidate envelope | General fitting/solver expansion |
+| Compound/hole/winding authority | `YES` | — | Clipper signed contours are temporary input to INK normalization only | RA compound review vocabulary / Paper compound paths | General weave/crossing authoring |
+| Dependency/recompute | `YES — INK typed graph` | — | — | RA local recompute concepts | New geometry-operation graph nodes until demonstrated |
+| Generator/constraints | `YES — existing Repeat/Transform` | — | — | RA generator concepts | General constraint solver/shared-parameter persistence |
+| History/Revision/mutation | `YES` | — | External objects prohibited from state | — | — |
+
+### Frozen adapter architecture
+
+```text
+INK Path (authoritative)
+  → deterministic plain cubic/polygon inputs
+  → Bezier.js or Clipper2 TS temporary computation
+  → validation + epsilon/scaling normalization
+  → plain INK Path/result only
+  → existing INK History transaction for mutation
+  → existing document save/load + Revision
+```
+
+Rules frozen at this gate:
+
+- no Paper.js product dependency;
+- no RA runtime module imported from `reference/` by product source;
+- no external class instance stored in Document, Path metadata, History or Revision;
+- all operation IDs/results are deterministic from authoritative INK IDs + parameters;
+- Clipper coordinates are scaled within JavaScript safe-integer bounds, outer/hole orientation is normalized before execution, and results are reclassified by signed area;
+- Bezier intersection pairs are sorted and epsilon-de-duplicated before return;
+- offset collapse/empty/unsafe input fails explicitly rather than silently falling back;
+- product mutation begins only after this recorded selection gate.
+
+This architecture does not create a parallel vector authority; Phase E may continue automatically.
 
 ## Phase E — selected adapter architecture and product changes
 

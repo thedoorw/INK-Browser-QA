@@ -7,11 +7,12 @@ STATUS: `INK-RA-001 / IN_PROGRESS`
 | TASK_ID | `INK-RA-001` |
 | BRANCH | `work/ink-ra-001` |
 | BRANCH_BASE | `94fbdb12753feecfe3dc7053677812c96cd2cf76` |
-| CHECKPOINT_INPUT_HEAD | `5589217d8c4413cc20ddd177eb5197e70cf6884b` |
-| CURRENT_PHASE | `PHASE_D / SELECTION_GATE` |
+| CHECKPOINT_INPUT_HEAD | `692107b93a5b79d72e95fbda3cee4e3b458e0f03` |
+| CURRENT_PHASE | `PHASE_E / BOUNDED_ADAPTER_IMPLEMENTATION` |
 | PHASE_A | `COMPLETE` |
 | PHASE_B | `COMPLETE` |
 | PHASE_C | `COMPLETE` |
+| PHASE_D | `COMPLETE` |
 | DEV_HANDOFF | `NO` |
 | TARGET_GATE | `STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
@@ -90,3 +91,21 @@ Product dependencies introduced in Phase C: `0` (benchmark-only install boundary
 Blockers: `NONE`
 
 Next: freeze the Phase D selection matrix before any product mutation.
+
+## Phase D checkpoint
+
+Selection gate: `PASS / BOUNDED_ARCHITECTURE_ESTABLISHED`
+
+```text
+KEEP_INK = Path / Boolean / compound / dependency / History / Revision authority
+ADAPT_RA = pure line/circle measurement concepts only
+USE_EXTERNAL_ADAPTER = Bezier.js cubic queries + Clipper2 TS polygon offset
+REFERENCE_ONLY = Paper.js + RA compound/generator/dependency concepts
+DEFER = constraint solver / curve-exact Boolean / general parametric system
+```
+
+Permanent product dependency before gate: `0`
+
+Hard STOP encountered: `NO`
+
+Next: implement the frozen INK-owned adapter and its focused tests without UI change.
