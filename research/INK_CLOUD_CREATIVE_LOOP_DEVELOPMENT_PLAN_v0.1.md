@@ -656,3 +656,30 @@ The user explicitly approves before execution.
 Remote AI remains optional. The browser-local orchestration, validation, approval and execution path must work without any mandatory backend.
 
 This stage does not authorize autonomous open-ended agents, recursive self-planning, broad Cloud platform work, or a second editor/History/Revision authority.
+
+
+## Current continuous stage — INK-CLOUD-016
+
+INK-CLOUD-015 completed and promoted with gate:
+
+`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
+
+The accepted creative-loop plan already registered a Portable INK checkpoint after the Cloud adapter/workspace boundary was proven. That checkpoint is now due.
+
+Next bounded stage:
+
+`INK-CLOUD-016 — Portable Baseline Integration v0.1`
+
+Target gate:
+
+`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
+
+Purpose:
+
+```text
+verify that the evolved shared core
+still supports a static/browser-local portable baseline
+without Cloud-only dependencies or a forked editor core
+```
+
+This task validates module/dependency closure, persistence, History, Revision and CHAT local collaboration compatibility. It does not authorize package/release regeneration or a final single-file `INK.html` build.
