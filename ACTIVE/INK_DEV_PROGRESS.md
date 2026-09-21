@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / PHASE_F_IN_PROGRESS / LIVE_STATE_SYNC_FIXED`
+STATUS: `INK-CLOUD-014 / PHASE_F_IN_PROGRESS / REVISION_SUMMARY_EXPOSED`
 
 | Field | Value |
 |---|---|
@@ -22,23 +22,28 @@ STATUS: `INK-CLOUD-014 / PHASE_F_IN_PROGRESS / LIVE_STATE_SYNC_FIXED`
 - Phase C `c0d4ab2f2099d80e967920693254bcaa8c071f0d` — Edit → Compose → Repaint.
 - Phase D `dd9f39a9282104080cce8117e6a9cdebf52d9ca8` — CHAT bounded proposal/approval/execute.
 - Phase E `0e5fe1f5b525e3eef325e9d099d0a2884f1fdd4a` — Revision capture/restore UX.
+- Phase F sync fix `29df784c5cbf3baca6ca6d66ecd2da5717637c11` — live tool/selection/History state refresh.
 
-## Phase F — integrated regression
-
-Executed so far:
+## Phase F executed QA so far
 
 - exact GitHub source parse/evaluation harness: PASS;
-- workspace state model / provenance / Revision / FORMAT_VERSION=4 diagnostics: PASS;
-- deterministic controller-delegation path across extraction → Path edit → expressive stroke → repaint → CHAT proposal/approval/execute → Revision capture/restore: PASS;
-- explicit pre-approval execute guard: PASS (`APPROVAL_REQUIRED`).
+- deterministic end-to-end workspace controller delegation: PASS;
+- explicit CHAT pre-approval execution guard: PASS;
+- source/static gate: `28/28 PASS`.
 
-Bounded fix from regression:
+## Final bounded compliance fix
 
-- workspace state refresh is now wired to normal tool, selection and History UI refresh paths, so visible state does not depend only on workspace-originated actions or full refresh.
+Revision capture now exposes its existing bounded comparison metadata in the workspace:
+
+- object count before → after;
+- added / removed / changed;
+- touched count.
+
+No comparison engine was added; the UI only renders `RevisionController.capture().comparison.objectCounts`.
 
 Pending:
 
-- final source/static assertions;
-- reproducible QA test/evidence files;
-- `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`;
-- final DEV handoff state.
+- rerun exact-source harness/static gate after this fix;
+- commit reproducible QA test/evidence;
+- create `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`;
+- final `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.

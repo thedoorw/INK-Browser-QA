@@ -709,7 +709,12 @@ export class CreativeWorkspaceController {
       if (this.lastRevisionResult?.action === 'restore') {
         output.textContent = `RESTORED · ${this.lastRevisionResult.revisionId} · ${this.lastRevisionResult.historyBoundary}`;
       } else if (this.lastRevisionResult?.action === 'capture') {
-        output.textContent = `${this.lastRevisionResult.created ? 'CAPTURED' : 'EQUIVALENT'} · ${this.lastRevisionResult.revisionId || current || 'none'}`;
+        const comparison = this.lastRevisionResult.comparison;
+        const counts = comparison?.objectCounts;
+        const delta = counts
+          ? `objects ${counts.before}→${counts.after} · +${counts.added} −${counts.removed} Δ${counts.changed} · touched ${counts.touched}`
+          : 'comparison unavailable';
+        output.textContent = `${this.lastRevisionResult.created ? 'CAPTURED' : 'EQUIVALENT'} · ${this.lastRevisionResult.revisionId || current || 'none'} · ${delta}`;
       } else {
         output.textContent = `Current revision: ${current || 'none'} · ${this.revisionItems.length} stored`;
       }
