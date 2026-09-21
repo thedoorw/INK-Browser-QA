@@ -1,0 +1,52 @@
+INK-CLOUD-017 STATIC / UNIT / SERIALIZATION CHECKS
+Branch: work/ink-cloud-017
+Base main: 38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e
+Checkpoint source: 1615eb51e10934c586b53764108d1b16796a7c60
+
+EXECUTED PASS
+- structure.js exact-source syntax parse
+- ink.js exact-source syntax parse
+- extraction-structure-v0.1.test.mjs exact-source syntax parse
+- extraction-structure-workspace-source-v0.1.test.mjs exact-source syntax parse
+- rose-window-hard-benchmark-v0.1.mjs module syntax parse
+- focused multi-Path Structure/Repeat/vector execution
+- complete Group-backed prototype-set retention
+- stable child Path identities
+- deterministic Repeat instance identities
+- deterministic expanded generated child identities
+- bounded prototype-child correction propagation
+- structured Repeat-of-Group SVG traversal
+- JSON serialization roundtrip
+- workspace renderer/bounds/hit/export Repeat source contract
+- FORMAT_VERSION = 4
+
+UNCHANGED FROM BASE MAIN BY EXACT GITHUB BLOB SHA
+- product/source/src/extraction/core.js
+- product/source/src/extraction/adapters.js
+- product/source/src/vector/vector-core.js
+- product/source/src/repeat/repeat-identity.js
+- product/source/src/document/migration.js
+- product/source/src/document/integrity.js
+- product/source/src/document/revision.js
+- product/source/src/history/index.js
+- qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs
+
+BRANCH SCOPE
+- ahead by 4 / behind by 0 before this evidence commit
+- six changed files before this evidence commit
+- package/release mutation: 0
+- main merge: 0
+
+NOT EXECUTED / NOT CLAIMED
+- canonical rose-window hard-benchmark rerun
+Reason: current local execution environment cannot resolve github.com, and the
+canonical 2.97 MB PNG fixture is not present in the available local INK ZIP
+packages. GitHub connector confirms the authoritative fixture path/blob but does
+not materialize binary repository content into the local executor.
+- browser/runtime USER-path QA
+
+Per user instruction:
+RUNTIME_QA = DEFERRED
+No external browser workaround is used.
+No new Structure-Aware raster metrics are claimed.
+Direct Extraction remains the accepted baseline.

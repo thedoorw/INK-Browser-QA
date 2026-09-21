@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `ACTIVE / PHASE_D_HARNESS_READY`
+STATUS: `ACTIVE / PHASE_E_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `ACTIVE / PHASE_D_HARNESS_READY`
 | TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
 | BRANCH | `work/ink-cloud-017` |
 | BASE_MAIN | `38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e` |
-| TASK_STATUS | `ACTIVE / PHASE_D_HARNESS_READY` |
+| TASK_STATUS | `ACTIVE / PHASE_E_COMPLETE` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
@@ -89,8 +89,8 @@ Browser/runtime QA remains `DEFERRED`.
 - Phase A — Reconstruction contract audit — `COMPLETE`
 - Phase B — Multi-Path prototype-set reconstruction — `COMPLETE`
 - Phase C — Structured output + local correction closure — `COMPLETE`
-- Phase D — Overlay QA + hard benchmark rerun — `HARNESS_READY / EXECUTION_NEXT`
-- Phase E — Comparative decision evidence
+- Phase D — Overlay QA + hard benchmark rerun — `HARNESS_READY / EXECUTION_DEFERRED_BY_ENVIRONMENT`
+- Phase E — Comparative decision evidence — `COMPLETE`
 - Phase F — report + DEV handoff
 
 ## Completion
@@ -135,3 +135,75 @@ The canonical hard-benchmark runner now:
 
 No old benchmark assertion requiring Structure-Aware recall < 0.1 remains.
 A weaker result is recordable and does not auto-fail the technical contract.
+
+
+## Executed QA checkpoint
+
+Executed against exact GitHub branch source:
+
+- changed-module syntax parse:
+  - `product/source/src/extraction/structure.js` — PASS
+  - `product/source/src/ink.js` — PASS
+  - `qa/core/tests/unit/extraction-structure-v0.1.test.mjs` — PASS
+  - `qa/core/tests/unit/extraction-structure-workspace-source-v0.1.test.mjs` — PASS
+  - `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs` — PASS as module syntax
+- focused multi-Path execution using exact Structure/Repeat/vector source:
+  `FOCUSED_MULTI_PATH_UNIT = PASS`;
+- Repeat instance IDs remain stable across bounded prototype-child correction;
+- expanded generated child IDs remain deterministic;
+- local correction propagates through linked reconstruction;
+- structured SVG export traverses Repeat-of-Group correctly;
+- JSON serialization roundtrip preserves prototype Path IDs and Repeat IDs;
+- workspace renderer/bounds/hit/export Repeat source contract — PASS;
+- `FORMAT_VERSION = 4` — PASS.
+
+Authoritative branch/base SHA equality confirms the following are unchanged:
+
+- Direct Extraction core;
+- extraction adapters;
+- vector/Repeat engine;
+- migration/integrity serialization authority;
+- History;
+- Revision;
+- integrated creative-loop test.
+
+Branch scope compare from base main:
+
+```text
+ahead = 4
+behind = 0
+changed files = 6
+package/release mutation = 0
+main merge = 0
+```
+
+Local Git checkout was attempted and failed before checkout because the execution
+environment cannot resolve `github.com`. The two pre-existing local INK ZIP
+packages were inspected only for a byte-identical cache of the canonical
+rose-window fixture; neither contains that fixture.
+
+Therefore the canonical deterministic rose-window harness is committed and
+ready, but the 2.97 MB binary fixture cannot be materialized in the current
+execution environment. Per the user's explicit instruction, no external browser
+workaround is used and no unexecuted benchmark result is claimed.
+
+```text
+RUNTIME_QA = DEFERRED
+ROSE_WINDOW_HARD_BENCHMARK_RERUN = NOT_EXECUTED_ENVIRONMENT
+OVERLAY_QA_HARNESS = READY
+NEW_STRUCTURE_AWARE_METRICS = NOT_CLAIMED
+```
+
+## Phase E — Comparative decision evidence
+
+Status: `COMPLETE / CHECKPOINT_COMMIT_CONTAINS_THIS_RECORD`
+
+```text
+STRUCTURE_AWARE_TECHNICALLY_CLOSED = YES
+STRUCTURE_AWARE_BENCHMARK = NOT_EVALUATED_CURRENT_ENVIRONMENT
+DIRECT_EXTRACTION_BASELINE = PRESERVED
+PIPELINE_SELECTION = MR_DECISION_REQUIRED
+```
+
+The original INK-CLOUD-013 benchmark remains the only executed canonical
+rose-window comparison evidence. No DEV-side pipeline replacement is authorized.

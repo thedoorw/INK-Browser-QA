@@ -1,0 +1,36 @@
+{
+  "schema": "INK-CLOUD-017-COMPARISON-STATUS/1",
+  "taskId": "INK-CLOUD-017",
+  "branch": "work/ink-cloud-017",
+  "baseMain": "38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e",
+  "technicalClosure": {
+    "multiPathPrototypeSet": "IMPLEMENTED",
+    "singlePathBottleneck": "CLOSED",
+    "validSectorPathRetentionContract": "COMPLETE",
+    "existingRepeatTransform": "REUSED",
+    "editableStructuredOutput": "VERIFIED_BY_FOCUSED_EXECUTION",
+    "repeatIdentity": "DETERMINISTIC",
+    "exactProvenanceContract": "PRESERVED",
+    "localCorrectionCompatibility": "VERIFIED",
+    "formatVersion": 4,
+    "packageMutation": 0,
+    "mainMerge": 0
+  },
+  "canonicalBenchmark": {
+    "fixturePath": "qa/fixtures/rose-window/rose-window-primary.png",
+    "fixtureSha256": "e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807",
+    "harness": "qa/core/tests/rose-window-hard-benchmark-v0.1.mjs",
+    "harnessStatus": "READY",
+    "rerunStatus": "NOT_EXECUTED_ENVIRONMENT",
+    "newMetrics": null,
+    "priorAuthoritativeEvidence": "qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json",
+    "semanticGroundTruthAvailable": false
+  },
+  "decision": {
+    "structureAwareTechnicallyClosed": "YES",
+    "structureAwareBenchmark": "NOT_EVALUATED_CURRENT_ENVIRONMENT",
+    "directExtractionBaseline": "PRESERVED",
+    "pipelineSelection": "MR_DECISION_REQUIRED",
+    "runtimeQA": "DEFERRED"
+  }
+}
