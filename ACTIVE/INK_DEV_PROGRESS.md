@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `ACTIVE / PHASE_A_COMPLETE`
+STATUS: `ACTIVE / PHASE_B_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `ACTIVE / PHASE_A_COMPLETE`
 | TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
 | BRANCH | `work/ink-cloud-017` |
 | BASE_MAIN | `38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e` |
-| TASK_STATUS | `ACTIVE / PHASE_A_COMPLETE` |
+| TASK_STATUS | `ACTIVE / PHASE_B_COMPLETE` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
@@ -21,8 +21,6 @@ STATUS: `ACTIVE / PHASE_A_COMPLETE`
 
 ## Objective
 
-Close the known Structure-Aware single-Path reconstruction bottleneck:
-
 ```text
 sector extraction
 → complete multi-Path prototype set
@@ -32,86 +30,78 @@ sector extraction
 → hard-benchmark comparison
 ```
 
-The authoritative scope and STOP rules are in:
+## Checkpoints
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+### Phase A — Reconstruction contract audit
 
-## Checkpoint rule
+Status: `COMPLETE`  
+Checkpoint: `0a56b3389ca4372028628ea488d58cc8560a8e50`
 
-At every meaningful checkpoint:
+Findings pinned:
 
-- commit;
-- update this branch-local file;
-- record exact SHA when known from the preceding checkpoint;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
+- benchmark collapsed `prototype.paths` to the single largest Path;
+- `reconstructRadial()` enforced Path-only input;
+- existing Group is the correct prototype-set owner;
+- existing Repeat/Transform and recursive SVG traversal already support a structured source;
+- Path-level extraction provenance is already exact and independently retained;
+- workspace renderer/export traversal has a bounded missing `repeat` branch to close in Phase C;
+- no Hard STOP condition.
 
-Do not replace the Direct Extraction baseline during DEV execution.
+### Phase B — Multi-Path prototype-set reconstruction
 
-## Phase A — Reconstruction contract audit
+Status: `COMPLETE / CHECKPOINT_COMMIT_CONTAINS_THIS_RECORD`
 
-Status: `COMPLETE`
+Implemented:
 
-Branch was identical to main at task start:
+- `createStructurePrototypeSet()` using existing `group`;
+- deterministic Path ID uniqueness validation;
+- common Path-level extraction provenance validation;
+- `reconstructRadial()` now accepts either one Path or a complete Path array;
+- single-Path callers remain compatible;
+- multi-Path reconstruction creates one linked Repeat whose source is the
+  structured Group;
+- Repeat metadata records source type, prototype-set ID, retained Path IDs/count
+  and provenance status;
+- no raster flattening, second geometry engine, FORMAT_VERSION change, backend,
+  package mutation or Direct Extraction route mutation.
 
-```text
-BASE_MAIN = 38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e
-AHEAD = 0
-BEHIND = 0
-```
+Focused QA added:
 
-Findings:
+- deterministic multi-Path Repeat rerun;
+- source child Path IDs retained;
+- Repeat instance identity retained after bounded prototype-child correction;
+- expanded generated child IDs deterministic;
+- SVG traversal reaches every repeated child Path;
+- JSON/migration/integrity roundtrip accepts Repeat-of-Group;
+- duplicate prototype Path IDs rejected.
 
-1. The hard benchmark collapses the sector from many Paths to one at
-   `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs` by sorting
-   `prototype.paths` by node count and selecting only the largest Path.
-2. `product/source/src/extraction/structure.js::reconstructRadial()` enforces
-   `prototype.type === 'path'`, so the reconstruction contract itself also
-   rejects a structured multi-Path source.
-3. Existing `group` is the correct prototype-set owner. It preserves child
-   Path structure and IDs and requires no new vector/document primitive.
-4. Existing `createRepeat()` accepts and clones an arbitrary structured
-   source. `expandRepeat()` recursively clones the source and remaps generated
-   instance identities deterministically through existing repeat identity
-   semantics.
-5. Existing `vectorObjectToSVG()` already traverses Repeat → structured source
-   and Group → children recursively.
-6. Extraction provenance is already attached independently to every normalized
-   Path by `executeExtraction()`; the prototype set can therefore preserve
-   exact Path-level source/mask/adapter/parameter provenance without flattening.
-7. Bounded compatibility gap found: the main workspace
-   `product/source/src/ink.js` renderer/export traversal handles Group/Frame
-   but does not directly traverse `repeat`. This is a bounded compatibility
-   defect exposed by multi-Path reconstruction and may be fixed under Phase C.
-8. No Hard STOP condition is present. Existing Group + Repeat + Transform can
-   represent the prototype set without FORMAT_VERSION change, backend, package
-   mutation, or a second vector/render authority.
+Files changed in Phase B checkpoint:
 
-Checks executed:
+- `product/source/src/extraction/structure.js`
+- `qa/core/tests/unit/extraction-structure-v0.1.test.mjs`
+- `ACTIVE/INK_DEV_PROGRESS.md`
 
-- exact branch/main topology comparison;
-- source audit of extraction core, Structure-Aware reconstruction, Repeat
-  identity, vector Group/Repeat expansion, SVG traversal, document integrity,
-  workspace rendering/export traversal, benchmark and accepted reports.
+Checks actually executed so far:
 
-Checks not yet executed:
+- exact GitHub source audit and contract reasoning from Phase A.
 
-- modified-module syntax/unit tests (no product mutation yet);
-- serialization/export closure tests for multi-Path Repeat;
-- canonical hard benchmark rerun;
-- browser/runtime QA remains `DEFERRED`.
+Checks pending execution after bounded renderer/export closure:
 
-Benchmark delta: none in Phase A; INK-CLOUD-013 evidence remains the comparison
-baseline.
+- changed-module syntax;
+- focused unit regression;
+- serialization/export closure;
+- extraction/integrated regressions;
+- hard benchmark;
+- machine-readable comparison;
+- diff whitespace check.
+
+Browser/runtime QA remains `DEFERRED`.
 
 ## Planned phases
 
 - Phase A — Reconstruction contract audit — `COMPLETE`
-- Phase B — Multi-Path prototype-set reconstruction — `NEXT`
-- Phase C — Structured output + local correction closure
+- Phase B — Multi-Path prototype-set reconstruction — `COMPLETE`
+- Phase C — Structured output + local correction closure — `NEXT`
 - Phase D — Overlay QA + hard benchmark rerun
 - Phase E — Comparative decision evidence
 - Phase F — report + DEV handoff

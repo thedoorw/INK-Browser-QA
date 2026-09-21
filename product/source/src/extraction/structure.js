@@ -1,6 +1,9 @@
-import { createRepeat } from '../vector/vector-core.js';
+import { createRepeat, createVectorGroup } from '../vector/vector-core.js';
 import { binaryRaster } from './adapters.js';
 import { requireValue, validateRaster } from './core.js';
+
+const copy = value => value == null ? value : JSON.parse(JSON.stringify(value));
+
 // Evidence only. A high rotational score does not establish semantic equivalence.
 export function radialEvidence(raster,{center=null,radius=null,counts=[2,3,4,5,6,8,10,12,16],threshold=128}={}) {
   validateRaster(raster);const binary=binaryRaster({raster,parameters:{threshold}}),{width,height}=raster;
@@ -28,9 +31,54 @@ export function sectorMask(raster,source,evidence,{count,sector=0,innerRadius=0,
   }
   return{width:raster.width,height:raster.height,data,sourceSha256:source.sha256,provider:'geometric-sector-mask',model:null};
 }
-export function reconstructRadial(prototype,evidence,{count,id='extracted-repeat'}={}) {
-  requireValue(prototype?.type==='path'&&evidence?.schema==='INK-RADIAL-EVIDENCE/1'&&evidence.candidates.some(c=>c.count===count),'EXTRACTION_REPEAT_EVIDENCE');
-  const repeat=createRepeat(prototype,{id,name:'Structure reconstruction candidate',mode:'radial',count,center:evidence.center,sourceObjectId:prototype.id});
-  repeat.metadata={...repeat.metadata,extraction:prototype.metadata?.extraction,structureEvidence:JSON.parse(JSON.stringify(evidence)),status:'CANDIDATE_REQUIRES_OVERLAY_QA'};
+
+function validatePrototypePaths(paths){
+  requireValue(Array.isArray(paths)&&paths.length>0&&paths.every(path=>path?.type==='path'),'EXTRACTION_PROTOTYPE_SET');
+  const ids=paths.map(path=>path.id);
+  requireValue(ids.every(id=>typeof id==='string'&&id.length>0)&&new Set(ids).size===ids.length,'EXTRACTION_PROTOTYPE_IDENTITY');
+  const signatures=paths.map(path=>JSON.stringify(path.metadata?.extraction??null));
+  requireValue(signatures.every(signature=>signature===signatures[0]),'EXTRACTION_PROTOTYPE_PROVENANCE_MISMATCH');
+  return paths;
+}
+
+export function createStructurePrototypeSet(paths,{id='extracted-prototype-set',name='Structure reconstruction prototype set'}={}){
+  validatePrototypePaths(paths);
+  const group=createVectorGroup(paths,{id,name});
+  const extraction=copy(paths[0].metadata?.extraction??null);
+  group.metadata={
+    extraction,
+    prototypeSet:{
+      schema:'INK-STRUCTURE-PROTOTYPE-SET/1',
+      pathCount:paths.length,
+      pathIds:paths.map(path=>path.id),
+      pathProvenanceExact:Boolean(extraction)
+    }
+  };
+  return group;
+}
+
+export function reconstructRadial(prototype,evidence,{count,id='extracted-repeat',prototypeSetId=`${id}:prototype-set`}={}) {
+  requireValue(evidence?.schema==='INK-RADIAL-EVIDENCE/1'&&evidence.candidates.some(c=>c.count===count),'EXTRACTION_REPEAT_EVIDENCE');
+  const source=Array.isArray(prototype)
+    ? createStructurePrototypeSet(prototype,{id:prototypeSetId})
+    : prototype;
+  requireValue(source?.type==='path'||(source?.type==='group'&&validatePrototypePaths(source.children)),'EXTRACTION_REPEAT_EVIDENCE');
+  const paths=source.type==='group'?source.children:[source];
+  const extraction=copy(source.metadata?.extraction??paths[0].metadata?.extraction??null);
+  const repeat=createRepeat(source,{id,name:'Structure reconstruction candidate',mode:'radial',count,center:evidence.center,sourceObjectId:source.id});
+  repeat.metadata={
+    ...repeat.metadata,
+    extraction,
+    prototypeSet:{
+      schema:'INK-STRUCTURE-PROTOTYPE-SET/1',
+      sourceType:source.type,
+      sourceObjectId:source.id,
+      pathCount:paths.length,
+      pathIds:paths.map(path=>path.id),
+      pathProvenanceExact:paths.every(path=>JSON.stringify(path.metadata?.extraction??null)===JSON.stringify(extraction))
+    },
+    structureEvidence:copy(evidence),
+    status:'CANDIDATE_REQUIRES_OVERLAY_QA'
+  };
   return repeat;
 }
