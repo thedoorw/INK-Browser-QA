@@ -1,52 +1,36 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-RA-001 / READY_TO_START`
+STATUS: `INK-RA-001 / IN_PROGRESS`
 
 | Field | Value |
 |---|---|
 | TASK_ID | `INK-RA-001` |
 | BRANCH | `work/ink-ra-001` |
 | BRANCH_BASE | `94fbdb12753feecfe3dc7053677812c96cd2cf76` |
-| CURRENT_PHASE | `PHASE_A / INK_GEOMETRY_INVENTORY` |
+| CHECKPOINT_INPUT_HEAD | `4fefcdbc0fec84523ab9fb21e32cb8cc8e746ee5` |
+| CURRENT_PHASE | `PHASE_B / RA_CAPABILITY_VERIFICATION` |
+| PHASE_A | `COMPLETE` |
 | DEV_HANDOFF | `NO` |
 | TARGET_GATE | `STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| UI_MUTATION | `PROHIBITED` |
-| PRODUCT_VERSION_CHANGE | `PROHIBITED_IN_THIS_TASK` |
-| PACKAGE_MUTATION | `PROHIBITED` |
+| UI_MUTATION | `0` |
+| PRODUCT_VERSION_CHANGE | `0` |
+| PACKAGE_MUTATION | `0` |
 
-## Workpack
+## Phase A checkpoint
 
-Read and execute:
+Files changed:
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+- `research/INK_RA_FOUNDATION_A_VECTOR_GEOMETRY_REPORT_v0.1.md`
+- `ACTIVE/INK_DEV_PROGRESS.md`
 
-Long sequence:
+Checks performed:
 
-```text
-Phase A — exact INK geometry inventory
-Phase B — RA capability verification
-Phase C — Paper.js / Clipper2 / Bezier.js isolated benchmark
-Phase D — selection gate
-Phase E — bounded INK-owned adapter implementation
-Phase F — deterministic + real-browser closure
-```
+- inventoried current `product/source` vector, path-edit, document, semantic, dependency and History boundaries;
+- confirmed existing INK Boolean union/difference/intersection/xor and compound outer/hole authority;
+- isolated gaps in cubic intersection/project/nearest, robust offset, and shared measurement fitting;
+- confirmed no product mutation and no external product dependency introduced.
 
-## Starting baseline
+Blockers: `NONE`
 
-```text
-RA_BASELINE = IMPORTED_REFERENCE_BASELINE
-RA_FILES = 158
-RA_BYTES = 19909084
-RA_ZIP_SHA256 = 525fdff89305135eedebde4fa039517040220724fdee8e557a3d5a2ad5add1d4
-INK_WEB_STAGING = LIVE
-```
-
-## Required DEV discipline
-
-- meaningful checkpoint commit after each phase;
-- update this file at each checkpoint;
-- do not wait for user confirmation between phases unless Work Order STOP condition is hit;
-- do not touch INK Web UI or display version;
-- do not add permanent external dependency before Phase D selection gate;
-- final DEV_HANDOFF then STOP for MR.
+Next: execute bounded RA module verification and freeze module dispositions.
