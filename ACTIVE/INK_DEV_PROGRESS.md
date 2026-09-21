@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-016 / PHASE_D_COMPLETE / PHASE_E_COMPLETE / PHASE_F_ACTIVE`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,13 +8,13 @@ STATUS: `INK-CLOUD-016 / PHASE_D_COMPLETE / PHASE_E_COMPLETE / PHASE_F_ACTIVE`
 | TITLE | `Portable Baseline Integration v0.1` |
 | BRANCH | `work/ink-cloud-016` |
 | BASE_MAIN | `6d013fb7fab47e6bd50d6debd186e6c6db2fd3a2` |
-| TASK_STATUS | `IN_PROGRESS` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING` |
-| GATE | `PORTABLE_SHARED_CORE_INTEGRITY_WORKS` |
+| TASK_STATUS | `DEV_COMPLETE` |
+| DEV_HANDOFF | `READY` |
+| MR_REVIEW | `REQUIRED` |
+| GATE | `PORTABLE_SHARED_CORE_INTEGRITY_WORKS / DEV_EVIDENCE_PASS` |
 | FORMAT_VERSION | `4 / UNCHANGED` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
-| MAIN_MERGE | `0 / PROHIBITED` |
+| PACKAGE_MUTATION | `0` |
+| MAIN_MERGE | `0` |
 | RUNTIME_QA | `DEFERRED` |
 
 ## Phase A — Portable dependency inventory
@@ -25,15 +25,6 @@ Checkpoint: `a976c92e0cb15712d0592c255c25972bf7d5614d`
 
 Evidence: `research/INK_PORTABLE_DEPENDENCY_INVENTORY_v0.1.md`
 
-Result:
-
-```text
-PORTABLE_DEPENDENCY_INVENTORY = COMPLETE
-SHARED_CORE_IDENTITY = PRESERVED
-MANDATORY_REMOTE_DEPENDENCY_FOUND = 0
-SECOND_EDITOR_CORE_FOUND = 0
-```
-
 ## Phase B — Static/portable load closure
 
 Status: `COMPLETE`
@@ -42,13 +33,15 @@ Implementation checkpoint: `7811cd37619a8ec864aa7de2dc2f89183fa4aca2`
 
 Checkpoint record: `a5b12652a943010e4652ff2e5499a3c278429506`
 
-Bounded corrections:
+Result:
 
-- service-worker `SOURCE_SHELL` covers the exact current `product/source/src` JS/JSON tree;
-- invalid icon precache/manifest dependencies removed;
-- no editor/document/History/Revision implementation forked or replaced.
-
-Static verification: `10 / 10 PASS`.
+```text
+SOURCE_SHELL ↔ current src tree = 175 / 175
+missing = 0
+extra = 0
+invalid icon dependencies = 0
+static checks = 10 / 10 PASS
+```
 
 ## Phase C — Persistence + collaboration compatibility
 
@@ -58,65 +51,77 @@ Evidence checkpoint: `ec5007bbc28b6453af373171c84e8e312889e7de`
 
 Evidence: `qa/core/evidence/INK_CLOUD_016_PHASE_C_COMPATIBILITY.txt`
 
-Verification: `14 / 14 PASS`.
-
-Result:
-
-```text
-DOCUMENT_PERSISTENCE_COMPATIBILITY = VERIFIED
-HISTORY_AUTHORITY = PRESERVED
-REVISION_COMPATIBILITY = VERIFIED
-CHAT_BOUNDED_EDIT_LOCAL = VERIFIED
-CHAT_MULTI_STEP_LOCAL = VERIFIED
-WORKSPACE_CORE_DEPENDENCY = 0
-```
+Result: `14 / 14 PASS`
 
 ## Phase D — Portable integration harness
 
 Status: `COMPLETE`
 
-Harness checkpoint:
+Harness checkpoint: `de1c3e94fec8404ca2841452901ff288fc7f74b7`
 
-`de1c3e94fec8404ca2841452901ff288fc7f74b7`
-
-Evidence checkpoint:
-
-`f48619e9ecf3065e3814c1d67735906de88ea78d`
+Evidence checkpoint: `f48619e9ecf3065e3814c1d67735906de88ea78d`
 
 Files:
 
 - `qa/core/tests/unit/portable-baseline-integration-v0.1.test.mjs`
 - `qa/core/evidence/INK_CLOUD_016_PORTABLE_INTEGRATION_HARNESS.txt`
 
-Executed evidence:
+Executed:
 
 ```text
-SOURCE_SHELL ↔ src tree                         175 / 175 PASS
-STATIC ENTRY / INSTALL CHECKS                   10 / 10 PASS
-PERSISTENCE + COLLABORATION SOURCE CHECKS       14 / 14 PASS
-NODE 22 HARNESS SYNTAX                          PASS
-FULL NODE HARNESS EXECUTION                     DEFERRED
-BROWSER RUNTIME QA                              DEFERRED
+Git tree / static shell closure                 PASS
+static entry/install                            10 / 10 PASS
+persistence/collaboration source compatibility  14 / 14 PASS
+exact branch harness node --check               PASS
+full node --test                                DEFERRED
+browser runtime QA                              DEFERRED
 ```
-
-The full Node harness was not claimed as executed because this DEV environment has connector access but no materialized branch checkout/network clone, and GitHub Actions is quota-exhausted. The harness is committed and directly runnable from a checkout.
 
 ## Phase E — Bounded gap correction
 
 Status: `COMPLETE / NO FURTHER GAP`
 
-The only portable integration blockers found were the Phase B static-shell defects. After correction:
+The Phase B static-shell defects were the only bounded integration blockers found.
 
-- no additional shared-core code change is required;
-- no format bump is required;
-- no core fork is required;
-- no mandatory backend is required;
-- no package mutation is required.
+```text
+FORMAT_BUMP_REQUIRED = NO
+CORE_FORK_REQUIRED = NO
+MANDATORY_BACKEND_REQUIRED = NO
+PACKAGE_MUTATION_REQUIRED = NO
+HARD_STOP = NO
+```
 
-`HARD_STOP = NO`
+## Phase F — Integration report
 
-## Current work
+Status: `COMPLETE`
 
-Proceeding with:
+Report checkpoint:
 
-`Phase F — Portable Baseline Integration Report / DEV handoff`
+`637cc9253b38a5ebef8103440ee87cc76d700c65`
+
+Report:
+
+`research/INK_PORTABLE_BASELINE_INTEGRATION_REPORT_v0.1.md`
+
+## Final acceptance
+
+```text
+PORTABLE_DEPENDENCY_INVENTORY = COMPLETE
+STATIC_MODULE_CLOSURE = VERIFIED
+SHARED_CORE_REUSED = VERIFIED
+DOCUMENT_PERSISTENCE_COMPATIBILITY = VERIFIED
+HISTORY_AUTHORITY_PRESERVED = VERIFIED
+REVISION_COMPATIBILITY = VERIFIED
+CHAT_BOUNDED_EDIT_LOCAL = VERIFIED
+CHAT_MULTI_STEP_LOCAL = VERIFIED
+MANDATORY_REMOTE_DEPENDENCY = 0
+SECOND_EDITOR_CORE = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+```
+
+No package/release artifact was mutated. No merge to `main` was performed.
+
+`DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
