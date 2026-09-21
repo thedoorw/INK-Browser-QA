@@ -1,8 +1,8 @@
-$ErrorActionPreference = 'Stop'
-
 param(
   [string]$BaseUrl = 'http://127.0.0.1:4173'
 )
+
+$ErrorActionPreference = 'Stop'
 
 $BaseUrl = $BaseUrl.TrimEnd('/')
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
