@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'reference/RA0_9_baseline/incoming/*.zip'
+      - '.github/workflows/ra0-9-baseline-import.yml'
   workflow_dispatch:
 
 permissions:
@@ -14,102 +15,157 @@ jobs:
   import-ra-baseline:
     if: github.actor != 'github-actions[bot]'
     runs-on: [self-hosted, Windows, X64]
-    timeout-minutes: 20
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
 
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-          persist-credentials: true
-
-      - name: Import RA baseline ZIP
+      - name: Import RA baseline without checkout
         shell: powershell
         run: |
           $ErrorActionPreference = 'Stop'
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
 
-          $root = Join-Path $env:GITHUB_WORKSPACE 'reference\RA0_9_baseline'
-          $incoming = Join-Path $root 'incoming'
-          $source = Join-Path $root 'source'
+          $repo = $env:GITHUB_REPOSITORY
+          $api = "https://api.github.com/repos/$repo"
+          $zipName = 'RA0_9_AI_Review_Mode_Current_Baseline_v1.0.zip'
+          $zipPathInRepo = "reference/RA0_9_baseline/incoming/$zipName"
+          $rawUrl = "https://raw.githubusercontent.com/$repo/main/$zipPathInRepo"
           $temp = Join-Path $env:RUNNER_TEMP ('ra-import-' + [guid]::NewGuid().ToString('N'))
+          $zipLocal = Join-Path $temp $zipName
+          $extractRoot = Join-Path $temp 'extracted'
 
-          $zips = @(Get-ChildItem -LiteralPath $incoming -Filter '*.zip' -File -ErrorAction SilentlyContinue)
-          if ($zips.Count -eq 0) {
-            Write-Host 'No RA ZIP found. Nothing to import.'
-            exit 0
+          $headers = @{
+            Authorization = "Bearer $env:GH_TOKEN"
+            Accept = 'application/vnd.github+json'
+            'X-GitHub-Api-Version' = '2022-11-28'
+            'User-Agent' = 'INK-RA-baseline-import'
           }
-          if ($zips.Count -ne 1) {
-            throw "Expected exactly one ZIP in $incoming, found $($zips.Count)."
-          }
 
-          $zip = $zips[0]
-
-          if (Test-Path -LiteralPath $source) {
-            $existing = @(Get-ChildItem -LiteralPath $source -Recurse -File -ErrorAction SilentlyContinue)
-            if ($existing.Count -gt 0) {
-              throw 'RA baseline source is already populated. Refusing to overwrite an existing baseline.'
+          function Invoke-GitHubJson {
+            param(
+              [Parameter(Mandatory=$true)][string]$Method,
+              [Parameter(Mandatory=$true)][string]$Uri,
+              $Body = $null
+            )
+            if ($null -eq $Body) {
+              return Invoke-RestMethod -Method $Method -Uri $Uri -Headers $headers
             }
+            $json = $Body | ConvertTo-Json -Depth 20 -Compress
+            $bytes = [System.Text.Encoding]::UTF8.GetBytes($json)
+            return Invoke-RestMethod -Method $Method -Uri $Uri -Headers $headers -ContentType 'application/json; charset=utf-8' -Body $bytes
           }
 
-          New-Item -ItemType Directory -Force -Path $temp | Out-Null
-          Expand-Archive -LiteralPath $zip.FullName -DestinationPath $temp -Force
+          New-Item -ItemType Directory -Force -Path $temp, $extractRoot | Out-Null
 
-          $files = @(Get-ChildItem -LiteralPath $temp -Recurse -File)
+          Write-Host "Downloading $zipPathInRepo"
+          Invoke-WebRequest -Uri $rawUrl -Headers @{ Authorization = "Bearer $env:GH_TOKEN"; 'User-Agent'='INK-RA-baseline-import' } -OutFile $zipLocal
+
+          if (-not (Test-Path -LiteralPath $zipLocal)) {
+            throw 'RA ZIP download failed.'
+          }
+
+          $zipInfo = Get-Item -LiteralPath $zipLocal
+          $zipSha = (Get-FileHash -LiteralPath $zipLocal -Algorithm SHA256).Hash.ToLowerInvariant()
+
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($zipLocal, $extractRoot)
+
+          $files = @(Get-ChildItem -LiteralPath $extractRoot -Recurse -File)
           if ($files.Count -eq 0) {
             throw 'ZIP extracted successfully but contained no files.'
           }
 
-          New-Item -ItemType Directory -Force -Path $source | Out-Null
-          Copy-Item -Path (Join-Path $temp '*') -Destination $source -Recurse -Force
+          $extractedBytes = ($files | Measure-Object -Property Length -Sum).Sum
+          Write-Host "Extracted files: $($files.Count)"
+          Write-Host "Extracted bytes: $extractedBytes"
+          Write-Host "ZIP SHA256: $zipSha"
 
-          $sha = (Get-FileHash -LiteralPath $zip.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
-          $byteCount = ($files | Measure-Object -Property Length -Sum).Sum
-          $zipBytes = $zip.Length
+          $ref = Invoke-GitHubJson -Method GET -Uri "$api/git/ref/heads/main"
+          $headSha = $ref.object.sha
+          $headCommit = Invoke-GitHubJson -Method GET -Uri "$api/git/commits/$headSha"
+          $baseTreeSha = $headCommit.tree.sha
+
+          $treeEntries = New-Object System.Collections.Generic.List[object]
+          $i = 0
+
+          foreach ($file in $files) {
+            $i++
+            $relative = $file.FullName.Substring($extractRoot.Length).TrimStart('\','/')
+            $relative = $relative -replace '\','/'
+            $targetPath = "reference/RA0_9_baseline/source/$relative"
+
+            $fileBytes = [System.IO.File]::ReadAllBytes($file.FullName)
+            $b64 = [Convert]::ToBase64String($fileBytes)
+            $blob = Invoke-GitHubJson -Method POST -Uri "$api/git/blobs" -Body @{
+              content = $b64
+              encoding = 'base64'
+            }
+
+            $treeEntries.Add([pscustomobject]@{
+              path = $targetPath
+              mode = '100644'
+              type = 'blob'
+              sha = $blob.sha
+            })
+
+            if (($i % 20) -eq 0 -or $i -eq $files.Count) {
+              Write-Host "Prepared blobs: $i / $($files.Count)"
+            }
+          }
+
           $importedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
-
           $manifest = @"
-          # RA0.9 Baseline Import Manifest
+# RA0.9 Baseline Import Manifest
 
-          Status: `IMPORTED_REFERENCE_BASELINE`
+Status: `IMPORTED_REFERENCE_BASELINE`
 
-          - Source ZIP: `$($zip.Name)`
-          - ZIP SHA256: `$sha`
-          - ZIP bytes: `$zipBytes`
-          - Extracted file count: `$($files.Count)`
-          - Extracted bytes: `$byteCount`
-          - Imported at UTC: `$importedAt`
-          - Import workflow: `.github/workflows/ra0-9-baseline-import.yml`
+- Source ZIP: `$zipName`
+- ZIP SHA256: `$zipSha`
+- ZIP bytes: `$($zipInfo.Length)`
+- Extracted file count: `$($files.Count)`
+- Extracted bytes: `$extractedBytes`
+- Imported at UTC: `$importedAt`
+- Import workflow: `.github/workflows/ra0-9-baseline-import.yml`
 
-          This baseline is reference material only and is not authoritative INK product source.
-          "@
+This baseline is reference material only and is not authoritative INK product source.
+"@
 
-          Set-Content -LiteralPath (Join-Path $root 'IMPORT_MANIFEST.md') -Value $manifest -Encoding UTF8
-
-          Remove-Item -LiteralPath $zip.FullName -Force
-          Remove-Item -LiteralPath $temp -Recurse -Force
-
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add --all -- 'reference/RA0_9_baseline'
-          git status --short
-
-          if (-not (git diff --cached --quiet)) {
-            git commit -m "Reference: import RA0.9 accepted baseline"
-            git push origin HEAD:main
-          } else {
-            Write-Host 'No changes to commit.'
+          $manifestBytes = [System.Text.Encoding]::UTF8.GetBytes($manifest)
+          $manifestBlob = Invoke-GitHubJson -Method POST -Uri "$api/git/blobs" -Body @{
+            content = [Convert]::ToBase64String($manifestBytes)
+            encoding = 'base64'
           }
 
-      - name: Verify imported baseline exists
-        shell: powershell
-        run: |
-          $source = Join-Path $env:GITHUB_WORKSPACE 'reference\RA0_9_baseline\source'
-          if (-not (Test-Path -LiteralPath $source)) {
-            throw 'RA source folder was not created.'
+          $treeEntries.Add([pscustomobject]@{
+            path = 'reference/RA0_9_baseline/IMPORT_MANIFEST.md'
+            mode = '100644'
+            type = 'blob'
+            sha = $manifestBlob.sha
+          })
+
+          # Delete the uploaded ZIP in the same import commit.
+          $treeEntries.Add([pscustomobject]@{
+            path = $zipPathInRepo
+            sha = $null
+          })
+
+          $newTree = Invoke-GitHubJson -Method POST -Uri "$api/git/trees" -Body @{
+            base_tree = $baseTreeSha
+            tree = @($treeEntries)
           }
-          $count = @(Get-ChildItem -LiteralPath $source -Recurse -File).Count
-          if ($count -lt 1) {
-            throw 'RA source folder is empty.'
+
+          $newCommit = Invoke-GitHubJson -Method POST -Uri "$api/git/commits" -Body @{
+            message = 'Reference: import RA0.9 accepted baseline'
+            tree = $newTree.sha
+            parents = @($headSha)
           }
-          Write-Host "Imported RA source files: $count"
+
+          $updatedRef = Invoke-GitHubJson -Method PATCH -Uri "$api/git/refs/heads/main" -Body @{
+            sha = $newCommit.sha
+            force = $false
+          }
+
+          Write-Host "RA baseline import commit: $($newCommit.sha)"
+          Write-Host "Imported source files: $($files.Count)"
+
+          Remove-Item -LiteralPath $temp -Recurse -Force -ErrorAction SilentlyContinue
