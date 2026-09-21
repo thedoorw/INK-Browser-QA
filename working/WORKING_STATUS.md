@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-017 / MR_HOLD / CANONICAL_BENCHMARK_REQUIRED`
+STATUS: `INK-CLOUD-017 / SUPPLEMENTARY_BENCHMARK_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
@@ -9,10 +9,10 @@ STATUS: `INK-CLOUD-017 / MR_HOLD / CANONICAL_BENCHMARK_REQUIRED`
 | DEV_BRANCH | `work/ink-cloud-017` |
 | DEV_BRANCH_HEAD | `3000674329127956d20f6cb7f4a2fb88938152a7` |
 | DEV_HANDOFF | `YES / REVIEWED` |
-| MR_REVIEW | `MR_HOLD_BENCHMARK_EXECUTION_REQUIRED` |
+| MR_REVIEW | `SOURCE_PASS / AWAITING_SUPPLEMENTARY_EXECUTION` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `SAME_TASK_CONTINUATION / CANONICAL_BENCHMARK_EXECUTION` |
+| NEXT_STAGE | `SAME_TASK_CONTINUATION / USER_ACCEPTED_SUPPLEMENTARY_BENCHMARK` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -843,3 +843,18 @@ HARD_BENCHMARK_COMPARISON = NOT_EXECUTED
 Direct Extraction remains the accepted baseline.
 
 Authorized next action is not a new product stage. It is a bounded continuation of INK-CLOUD-017 to execute the existing canonical Rose Window harness and commit the machine-readable comparison evidence. After a new DEV handoff, MR will review only the delta plus the new benchmark evidence.
+
+
+## INK-CLOUD-017 user override checkpoint
+
+User accepted the supplied same-size rose-window image as sufficient to finish the remaining 017 operational test.
+
+```text
+SUPPLEMENTARY_FIXTURE_SHA256 = af86d03e8947234a1cc301cd8c224520fc6065272f3f80d795b5a314953fdc25
+DIMENSIONS = 1086 × 1448
+MODE = RGBA
+TEST_CLASS = NON_CANONICAL_SUPPLEMENTARY_TEST
+CANONICAL_HASH_MISMATCH = NON_BLOCKING_FOR_017
+```
+
+The next action is to execute the existing multi-Path comparison, preserve explicit non-canonical labeling, return DEV_HANDOFF, then MR decides closure/promotion.
