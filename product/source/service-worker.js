@@ -1,4 +1,4 @@
-const RELEASE_VERSION = '1.5.1';
+const RELEASE_VERSION = '1.6.5-RC';
 const SHELL_CACHE = `ink-v${RELEASE_VERSION}-shell`;
 const RUNTIME_CACHE = `ink-v${RELEASE_VERSION}-runtime`;
 

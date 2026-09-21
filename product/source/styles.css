@@ -1272,3 +1272,27 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 .creative-workspace-field select{min-width:0;height:30px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 7px;font-size:10px}
 .creative-workspace-inline{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .creative-workspace-inline input{width:100%}
+
+/* INK-CLOUD-018 — first visible web surface */
+.web-surface-badge{display:inline-flex;align-items:center;height:16px;padding:0 5px;border:1px solid currentColor;border-radius:3px;font-size:7px;font-weight:850;letter-spacing:.08em;opacity:.82}
+
+
+/* INK-CLOUD-018 — visible conversational CHAT */
+.creative-chat-runtime{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:rgba(35,107,99,.04)}
+.creative-chat-runtime span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:750 8px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted)}
+.creative-chat-runtime button{flex:0 0 auto;min-height:25px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:8px;font-weight:750}
+.creative-chat-transcript{display:grid;gap:6px;max-height:180px;overflow:auto;padding:7px;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.74)}
+.creative-chat-message{display:grid;grid-template-columns:38px minmax(0,1fr);gap:6px;align-items:start}
+.creative-chat-message>strong{font:800 8px/1.35 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--accent)}
+.creative-chat-message>p,.creative-chat-empty{margin:0!important;font-size:9px!important;line-height:1.45!important;color:var(--text)!important;white-space:pre-wrap;overflow-wrap:anywhere}
+.creative-chat-message[data-role="user"]>strong{color:var(--muted)}
+.creative-workspace-prompt{align-items:start}
+.creative-workspace-prompt textarea{min-width:0;resize:vertical;min-height:54px;max-height:130px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:7px;font:10px/1.4 system-ui,sans-serif;color:var(--text)}
+
+
+/* INK-CLOUD-018 — optional Structure-Aware entry */
+.creative-structure-option{border:1px solid var(--line);border-radius:8px;background:rgba(47,113,143,.035);overflow:hidden}
+.creative-structure-option>summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px;font-size:9px;font-weight:800;color:var(--text)}
+.creative-structure-option>summary span{font:800 7px/1 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);letter-spacing:.08em}
+.creative-structure-option[open]{padding-bottom:8px}.creative-structure-option[open]>summary{margin-bottom:6px;border-bottom:1px solid var(--line)}
+.creative-structure-option>p,.creative-structure-option>label,.creative-structure-option>button,.creative-structure-option>output{margin-left:8px;margin-right:8px}
