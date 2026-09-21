@@ -229,7 +229,7 @@ export class CreativeWorkspaceController {
     root.setAttribute('aria-label', 'INK Creative Workspace');
     root.innerHTML = `
       <div class="creative-workspace-head">
-        <div><span class="eyebrow">CREATIVE LOOP</span><strong>Workspace v0.1</strong></div>
+        <div><span class="eyebrow">INK WEB · CREATIVE LOOP</span><strong>Creative Workspace</strong></div>
         <button type="button" class="mini-button" data-workspace-action="close" aria-label="關閉 Creative Workspace">×</button>
       </div>
       <div class="creative-workspace-state" aria-label="Workspace state">
@@ -246,7 +246,7 @@ export class CreativeWorkspaceController {
       </div>
       <div class="creative-workspace-body">
         <section data-workspace-pane="reference">
-          <strong>Reference → Extract → Path</strong>
+          <strong>Reference → Direct Extraction → editable Path</strong>
           <label class="creative-workspace-field"><span>Reference image</span><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp"></label>
           <label class="creative-workspace-field"><span>Threshold</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">Extract</button><button type="button" data-workspace-action="cancel-extract" disabled>Cancel</button></div>
