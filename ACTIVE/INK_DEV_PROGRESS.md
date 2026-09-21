@@ -188,3 +188,26 @@ Checkpoint series:
 - `Align stale Revision regression with deterministic STOP result`
 
 `PHASE_F_HARNESS_RERUN_REQUIRED`
+
+
+## Phase F serialization + workspace regression coverage
+
+Added explicit feasible checks required by the Work Order:
+
+- normalized plan JSON round-trip;
+- completed plan result JSON round-trip;
+- Creative Workspace ordered step builder;
+- previous-step dependency wiring;
+- workspace plan propose → explicit approve → execute delegation;
+- execution receives the exact local plan approval token and consumes it after use.
+
+Additional test:
+
+- `qa/core/tests/unit/chat-multi-step-creative-workspace-v0.1.test.mjs`
+
+Checkpoint series:
+
+- `Add plan and result serialization regression coverage`
+- `Add INK-CLOUD-015 workspace plan orchestration regression`
+
+`PHASE_F_FINAL_EVIDENCE_NEXT`
