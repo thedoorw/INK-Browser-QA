@@ -448,10 +448,6 @@ export class ChatCreativePlanController {
     if (!approvalToken || approvalToken !== record.approvalToken) {
       planFail('APPROVAL_TOKEN_INVALID');
     }
-    validateChatCreativePlanAgainstState(this.app, record, {
-      requireHistoryIdle: true,
-      source: record.source
-    });
     return record;
   }
 
