@@ -1,60 +1,73 @@
 # INK REVIEW FINDINGS
 
-STATUS: `MR_HOLD / SOURCE_REVIEW_PASS / BENCHMARK_REQUIRED`
+STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
 TASK: `INK-CLOUD-017`
 
-REVIEW_PAYLOAD_HEAD: `3000674329127956d20f6cb7f4a2fb88938152a7`
+REVIEW_PAYLOAD_HEAD: `a0fe5833f0a3449c380c7adb5817b4c7cc4b5bd8`
 
 ## Decision
 
-`MR_HOLD_BENCHMARK_EXECUTION_REQUIRED`
+`MR_PASS`
 
-The source and architecture review passes. The full task gate does not pass because required canonical benchmark evidence is absent.
+Gate accepted:
 
-## Source findings
+`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
 
-- `reconstructRadial()` now accepts the existing single Path contract and a deterministic complete Path array.
-- Multi-Path prototypes are represented with the existing `group` primitive.
-- Reconstruction delegates to the existing `createRepeat()` / Repeat / Transform authority.
-- Child Path IDs and extraction metadata are retained.
-- Focused evidence verifies deterministic Repeat identities, deterministic expanded child identities, JSON serialization, structured SVG traversal and bounded child-correction propagation.
-- The existing vector/Repeat engine, Direct Extraction core/adapter, migration/integrity, History and Revision authorities are unchanged by exact branch evidence.
-- The bounded `ink.js` change adds traversal of existing Repeat sources for canvas rendering, world bounds, hit testing and SVG export; it does not introduce a second renderer authority.
+## Findings
+
+- The single-Path reconstruction bottleneck is closed.
+- All 265 valid sector prototype Paths are retained in the tested multi-Path result.
+- Existing Group + Repeat / Transform authorities are reused.
+- Editable child Path identity, provenance, Repeat identity and transform determinism are preserved.
+- Bounded prototype-child correction propagates through linked instances.
+- Renderer/bounds/hit/SVG traversal support existing Repeat sources without a second renderer authority.
+- No second vector/document/History/Revision engine was introduced.
 - `FORMAT_VERSION = 4`.
-- Package/release mutation = 0.
-- Mandatory remote runtime dependency = 0.
-- Branch is 6 ahead / 0 behind main at the reviewed handoff.
+- Package mutation = 0.
+- Mandatory remote dependency = 0.
+- Browser/runtime USER-path QA remains deferred.
 
-No blocking source/architecture defect was found.
+## Benchmark finding
 
-## Blocking evidence finding
-
-The Work Order explicitly requires:
+USER-authorized supplementary same-input comparison:
 
 ```text
-OVERLAY_QA = EXECUTED
-HARD_BENCHMARK_COMPARISON = RECORDED
+Direct Extraction
+recall     = 0.904256
+precision  = 0.932975
+IoU        = 0.849098
+mismatch   = 2224
+nodes      = 9339
+
+Structure-Aware multi-Path
+recall     = 0.505239
+precision  = 0.509176
+IoU        = 0.339764
+mismatch   = 13587
+unique nodes = 1631
+linked reuse = 6
 ```
 
-DEV recorded:
-
-```text
-ROSE_WINDOW_HARD_BENCHMARK_RERUN = NOT_EXECUTED_ENVIRONMENT
-NEW_STRUCTURE_AWARE_RASTER_METRICS = NOT_CLAIMED
-```
-
-MR independently reproduced the environment limitation: the local executor cannot resolve `github.com`; the available uploaded INK ZIP packages do not contain the canonical rose-window fixture; and the GitHub connector can confirm the binary blob but cannot materialize the binary into the local executor.
-
-This is an evidence-execution blocker, not a source defect.
+Structure-Aware materially improves on the old one-Path failure and preserves all prototype Paths, but it does not outperform Direct Extraction on the current hard image.
 
 ## Pipeline decision
 
 ```text
-STRUCTURE_AWARE_TECHNICALLY_CLOSED = YES
-STRUCTURE_AWARE_BENCHMARK = NOT_EVALUATED
 DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = DIRECT_EXTRACTION_CURRENT_BASELINE
+DIRECT_EXTRACTION = DEFAULT
+STRUCTURE_AWARE = OPTIONAL_STRUCTURED_RECONSTRUCTION
+STRUCTURE_AWARE_BENCHMARK = NOT_IMPROVED
 ```
 
-No promotion or next product stage is authorized until the same-task benchmark continuation closes the missing evidence.
+Structure-Aware remains valuable where radial/repeated geometry and linked editing matter, but it is not selected as the default extraction route.
+
+## Promotion
+
+Clean promotion completed through PR `#19`.
+
+Main promotion:
+
+`edb8f11c39e43043584a20ec648dace242574742`
+
+Branch-local `ACTIVE/INK_DEV_PROGRESS.md` was excluded from promotion.
