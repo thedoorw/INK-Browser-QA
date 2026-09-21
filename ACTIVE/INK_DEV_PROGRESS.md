@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `MR_PRE_RUNTIME_PREP_COMPLETE / AWAITING_USER_POWERSHELL_PREFLIGHT`
+STATUS: `PRE_RUNTIME_ENVIRONMENT_VERIFIED / READY_FOR_DEV_PRODUCT_INTEGRATION`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `MR_PRE_RUNTIME_PREP_COMPLETE / AWAITING_USER_POWERSHELL_PREFLIGHT`
 | TITLE | `First Visible Web Platform + Rose Window Runtime v0.1` |
 | BRANCH | `work/ink-cloud-018` |
 | BASE_MAIN | `f964ee758d8d3db31ad1054eb0de046de4e1b53d` |
-| TASK_STATUS | `PRE_RUNTIME_PREP_COMPLETE / DEV_PRODUCT_WORK_NOT_STARTED` |
+| TASK_STATUS | `PRE_RUNTIME_ENVIRONMENT_VERIFIED / DEV_PRODUCT_INTEGRATION_READY` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS` |
@@ -162,3 +162,71 @@ Next prerequisite before dispatch:
 - confirm registered runner labels;
 - prepare a bounded 018 self-hosted runtime workflow;
 - ensure it targets self-hosted Windows only.
+
+
+## Self-hosted Windows runtime verification — PASS
+
+Successful workflow run:
+
+`35574792555`
+
+Exact tested branch SHA:
+
+`1b0740126ccf712a4c500681b625b78d5606b83d`
+
+Environment:
+
+```text
+RUNNER_NAME = DESKTOP-NSOQH69
+RUNNER_VERSION = 2.337.0
+RUNNER_LABELS = self-hosted / Windows / X64
+POWERSHELL = 5.1.19041.7725
+BROWSER = C:\Program Files\Google\Chrome\Application\chrome.exe
+GIT = NOT_REQUIRED
+NODE = NOT_REQUIRED_FOR_PREFLIGHT
+```
+
+Bounded exact-SHA materialization:
+
+```text
+product/source/** = MATERIALIZED
+qa/runtime/** = MATERIALIZED
+qa/fixtures/rose-window/** = MATERIALIZED
+file count = 223
+```
+
+HTTP/module checks:
+
+```text
+/ = 200 text/html
+/styles.css = 200 text/css
+/src/ink.js = 200 text/javascript
+/src/editor/creative-workspace.js = 200 text/javascript
+/src/ai/chat-runtime.js = 200 text/javascript
+/manifest.webmanifest = 200 application/manifest+json
+/service-worker.js = 200 text/javascript
+PRECHECK = PASS
+```
+
+Real Chromium smoke:
+
+```text
+INK_SHELL_RENDERED = PASS
+CREATIVE_WORKSPACE_MOUNTED = PASS
+CREATIVE_WORKSPACE_TOGGLE_MOUNTED = PASS
+```
+
+Runtime path decision:
+
+```text
+PRIMARY_RUNTIME = SELF_HOSTED_WINDOWS_RUNNER
+GITHUB_HOSTED_RUNNER = DO_NOT_USE
+VAL_TOWN_OR_EXTERNAL_PROXY = DO_NOT_USE
+MANUAL_LOCAL_POWERSHELL = FALLBACK_ONLY
+```
+
+This checkpoint verifies the Windows/PowerShell/HTTP/Chromium execution environment only. It does not yet close the full INK-CLOUD-018 product gate.
+
+Next:
+
+`DEV_PRODUCT_INTEGRATION_READY`

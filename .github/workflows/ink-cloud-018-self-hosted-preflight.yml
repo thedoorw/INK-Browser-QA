@@ -8,7 +8,6 @@ on:
       - '.github/workflows/ink-cloud-018-self-hosted-preflight.yml'
       - 'product/source/**'
       - 'qa/runtime/**'
-      - 'ACTIVE/INK_DEV_PROGRESS.md'
   workflow_dispatch:
 
 permissions:
