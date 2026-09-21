@@ -733,3 +733,37 @@ Constraints:
 - Package/release mutation remains out of scope.
 
 The purpose is not to force Structure-Aware Reconstruction to win; it is to close the known one-Path bottleneck and obtain a fair multi-Path benchmark.
+
+
+## Post-017 transition — real creative work
+
+INK-CLOUD-017 completed and was promoted with gate:
+
+`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
+
+Final extraction decision:
+
+```text
+DIRECT_EXTRACTION = DEFAULT
+STRUCTURE_AWARE = OPTIONAL_STRUCTURED_RECONSTRUCTION
+STRUCTURE_AWARE_BENCHMARK = NOT_IMPROVED
+```
+
+The first planned creative-loop capability buildout is now considered sufficient to begin real creative use.
+
+Current transition:
+
+```text
+capability construction
+→ real artwork / real workflow use
+→ observed friction and gap register
+→ need-driven bounded engineering
+```
+
+No automatic INK-CLOUD-018 feature workpack is pre-authorized.
+
+The next engineering stage should come from a concrete limitation encountered while making real work, rather than from speculative feature accumulation.
+
+Program state:
+
+`REAL_CREATIVE_WORK_READY`
