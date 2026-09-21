@@ -6,6 +6,7 @@ on:
     paths:
       - 'reference/RA0_9_baseline/incoming/*.zip'
       - '.github/workflows/ra0-9-baseline-import.yml'
+      - 'reference/RA0_9_baseline/incoming/RETRY_TRIGGER.txt'
   workflow_dispatch:
 
 permissions:
