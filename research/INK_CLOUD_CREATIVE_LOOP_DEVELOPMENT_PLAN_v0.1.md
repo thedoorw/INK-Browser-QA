@@ -627,3 +627,32 @@ Target gate:
 This stage changes emphasis from engine construction to human-usable workflow integration. It must expose the accepted engine through one coherent minimum workspace without introducing a second document/editor authority or broad visual redesign.
 
 Multi-step CHAT creative reasoning remains explicitly deferred until the minimum workspace boundary is proven.
+
+
+## Current continuous stage — INK-CLOUD-015
+
+INK-CLOUD-014 completed and promoted with gate:
+
+`CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
+
+The minimum workspace boundary is now proven. The previously deferred next collaboration layer is authorized:
+
+`INK-CLOUD-015 — CHAT Multi-Step Creative Collaboration v0.1`
+
+Target gate:
+
+`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
+
+This stage advances CHAT from a single bounded edit proposal to a reviewable ordered creative plan composed of existing bounded operations.
+
+Core rule:
+
+```text
+AI / CHAT may propose the plan.
+INK validates and executes the plan locally.
+The user explicitly approves before execution.
+```
+
+Remote AI remains optional. The browser-local orchestration, validation, approval and execution path must work without any mandatory backend.
+
+This stage does not authorize autonomous open-ended agents, recursive self-planning, broad Cloud platform work, or a second editor/History/Revision authority.
