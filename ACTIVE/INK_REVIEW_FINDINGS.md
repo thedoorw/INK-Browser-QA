@@ -71,3 +71,25 @@ Main promotion:
 `edb8f11c39e43043584a20ec648dace242574742`
 
 Branch-local `ACTIVE/INK_DEV_PROGRESS.md` was excluded from promotion.
+
+
+## INK-CLOUD-018 — MR_PASS
+
+No blocking findings.
+
+Accepted:
+- existing editor/shared core reused;
+- first visible Web shell works;
+- Direct Extraction remains default;
+- Structure-Aware remains optional;
+- conversational CHAT visible;
+- mutation approval boundary preserved;
+- Revision capture/restore verified;
+- project save/reload integrity verified;
+- no committed secret;
+- mandatory remote dependency for editor = 0;
+- FORMAT_VERSION = 4;
+- package mutation = 0;
+- Windows self-hosted real Chromium runtime = PASS.
+
+Earlier Phase F failures were QA harness/process synchronization issues and were corrected without requiring a product-core bounded fix.
