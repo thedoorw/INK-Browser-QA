@@ -767,3 +767,44 @@ The next engineering stage should come from a concrete limitation encountered wh
 Program state:
 
 `REAL_CREATIVE_WORK_READY`
+
+
+## INK-CLOUD-018 — First Visible Web Platform
+
+User clarified the post-017 priority:
+
+```text
+existing core capability
+→ first visible web platform
+→ visible CHAT + image import
+→ Rose Window first runtime case
+→ evaluate actual usable capability before further engine expansion
+```
+
+This stage intentionally does not seek Figma parity. The first target is a single-user browser platform.
+
+Existing source already includes:
+
+- `product/source/index.html` browser UI;
+- Creative Workspace;
+- image import;
+- extraction/overlay controllers;
+- Path editing / compose / repaint;
+- CHAT bounded edit + multi-step plan;
+- CHAT runtime/provider contract;
+- Revision.
+
+INK-CLOUD-018 therefore focuses on:
+
+1. static web/deployment closure;
+2. visible/discoverable Creative Workspace;
+3. visible natural-language CHAT surface over the existing runtime;
+4. Rose Window as first end-to-end visible runtime case;
+5. actual browser QA;
+6. fixed public/static URL preparation.
+
+Target gate:
+
+`INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS`
+
+No automatic next feature stage should be selected until the user has seen and used this first web platform.
