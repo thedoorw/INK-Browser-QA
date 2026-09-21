@@ -1,17 +1,17 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-016 / DEVELOPMENT_AUTHORIZED`
+STATUS: `ACTIVE / INK-CLOUD-017 / DEVELOPMENT_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-016` |
-| TITLE | `Portable Baseline Integration v0.1` |
+| CURRENT_TASK_ID | `INK-CLOUD-017` |
+| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
 | AUTHORITY | `USER_CONTINUOUS_ADVANCE_AUTHORIZATION` |
-| DEV_WORK_BRANCH | `work/ink-cloud-016` |
+| DEV_WORK_BRANCH | `work/ink-cloud-017` |
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_PORTABLE_INTEGRATION_SCOPE` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_STRUCTURE_AWARE_MULTI_PATH_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
@@ -20,44 +20,53 @@ STATUS: `ACTIVE / INK-CLOUD-016 / DEVELOPMENT_AUTHORIZED`
 
 ## Accepted baseline
 
-INK-CLOUD-015 is promoted with gate:
+INK-CLOUD-016 is promoted with gate:
 
-`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
+`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
 
-Accepted shared-core chain:
+Portable/shared-core constraints are preserved:
 
 ```text
-Reference
-→ Extract
-→ editable Path
-→ Path Edit / Expressive Stroke
-→ Multi-Contour Compose
-→ Repaint / Material
-→ CHAT bounded edit
-→ CHAT multi-step creative plan
-→ Revision
-→ Creative Workspace
+STATIC_MODULE_CLOSURE = VERIFIED
+SHARED_CORE_REUSED = VERIFIED
+MANDATORY_REMOTE_DEPENDENCY = 0
+SECOND_EDITOR_CORE = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+RUNTIME_QA = DEFERRED
 ```
 
-The first human-AI creative loop and its minimum workspace are now established on main.
+The hard rose-window benchmark from INK-CLOUD-013 remains authoritative for extraction comparison:
+
+```text
+DIRECT_EXTRACTION = CURRENT_ACCEPTED_BASELINE
+STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
+
+sector extraction = 265 Paths / 269 subpaths / 4 holes / 1631 nodes
+retained structural prototype = 1 Path / 3 subpaths / 2 holes / 67 nodes
+structure-aware recall = 0.031866
+direct-extraction recall = 0.904256
+```
+
+The known defect is bounded: the current `reconstructRadial()` contract accepts one Path, while the extracted sector contains many editable Paths.
 
 ## Objective
 
-Perform the planned Portable INK checkpoint: verify that the evolved shared core remains compatible with a portable/static browser baseline and can still be integrated toward a single `INK.html` without creating Cloud-only dependencies in the editing core.
-
-This is an integration/readiness checkpoint, not package/release production.
+Close the single-Path reconstruction bottleneck without redesigning the extraction stack.
 
 Target:
 
 ```text
-accepted shared core
-→ portable/static entry compatibility
-→ module/dependency closure
-→ persistence + History + Revision integrity
-→ CHAT local orchestration integrity
-→ no mandatory Cloud/backend dependency
-→ portable baseline readiness evidence
+sector extraction
+→ complete multi-Path prototype set
+→ structured radial reconstruction
+→ existing Repeat / Transform
+→ deterministic overlay QA
+→ bounded local-correction compatibility
+→ fair hard-benchmark comparison
 ```
+
+The purpose is to obtain a valid multi-Path Structure-Aware result. It is not to force Structure-Aware Reconstruction to replace Direct Extraction.
 
 ## Required reads
 
@@ -67,122 +76,160 @@ accepted shared core
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-7. `research/INK_INTEGRATED_CREATIVE_LOOP_VALIDATION_REPORT_v0.1.md` if present
-8. `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`
-9. `research/INK_CHAT_MULTI_STEP_CREATIVE_COLLABORATION_REPORT_v0.1.md`
-10. current portable/static entry, service-worker, document persistence, History, Revision and editor install source as required
+7. `research/INK_CHAT_BOUNDED_EDIT_LOOP_REPORT_v0.1.md`
+8. `research/INK_INTEGRATED_CREATIVE_LOOP_VALIDATION_REPORT_v0.1.md`
+9. `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+10. `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs`
+11. `qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`
+12. `product/source/src/extraction/structure.js`
+13. existing Repeat / Transform / vector serialization-rendering source only as required
 
 ## Product principle
 
-Portable INK and INK Cloud must consume the same authoritative editing core.
+Direct Extraction remains the production baseline during this task.
 
 ```text
-PORTABLE INTEGRATION
+MULTI_PATH_CLOSURE
 ≠
-FORKED EDITOR CORE
+PIPELINE_REPLACEMENT
 ```
 
-Cloud/session/remote services remain optional adapters.
+DEV may produce comparative evidence. Only MR may change the accepted extraction baseline after review.
+
+The implementation must reuse the existing INK Path / Group / Repeat / Transform / History / Revision authorities.
 
 ## Scope
 
 Required:
 
-- inventory the current portable/static entry path and shared-core dependency graph;
-- verify all creative-loop modules can load under the portable/static browser-local runtime;
-- verify no mandatory backend/remote API dependency has entered core editing/collaboration;
-- verify document save/load, History and Revision contracts remain compatible;
-- verify CHAT bounded edit and multi-step plan orchestration remain browser-local;
-- identify any module-order, service-worker, import/export, asset-path or initialization gaps that block portable integration;
-- fix only bounded shared-core/static integration defects;
-- add deterministic source/static/integration harness coverage;
-- produce a portable-baseline integration report;
+- audit the exact single-Path assumptions in Structure-Aware reconstruction and its benchmark/QA path;
+- extend the reconstruction contract to accept a deterministic multi-Path prototype set while retaining single-Path compatibility where feasible;
+- preserve all valid extracted prototype Paths required by the selected sector instead of selecting only the largest Path;
+- represent the prototype set using existing structured vector/container primitives rather than flattening into raster or inventing a second geometry engine;
+- reconstruct the prototype set through existing Repeat / Transform semantics;
+- preserve stable editable Path identity inside the prototype set and deterministic generated Repeat identity;
+- preserve exact extraction/source/mask provenance for the reconstructed structured result;
+- verify serialization/export/render traversal required by repeat-of-prototype-set output, fixing only bounded compatibility defects;
+- verify a bounded local-correction path remains possible on the editable prototype set without destructively flattening the Repeat architecture;
+- update the rose-window hard benchmark so Structure-Aware metrics are measured across the complete reconstructed prototype set;
+- add deterministic overlay/comparison QA that records Direct Extraction and Structure-Aware output using the same ROI, threshold and sampling contract;
+- compare completeness, precision/IoU proxy, retained paths/subpaths/holes/nodes, effective expanded nodes, Repeat identity, provenance, deterministic rerun and a bounded correction-cost proxy;
+- retain the canonical fixture identity and existing Direct Extraction route unchanged except for QA plumbing strictly required for fair comparison;
+- run all feasible source/static/unit/serialization/integration checks;
+- produce a closure report;
 - keep `FORMAT_VERSION = 4`;
-- do not regenerate or mutate release/package artifacts.
+- do not mutate package/release artifacts.
 
 ## Phases
 
-### Phase A — Portable dependency inventory
+### Phase A — Reconstruction contract audit
 
-Map:
+Pin the current assumptions and evidence.
 
-- entry points;
-- shared editor/core modules;
-- service-worker/static shell dependencies;
-- persistence/Revision dependencies;
-- CHAT collaboration dependencies;
-- optional remote adapters.
+Required findings:
 
-Classify each dependency as:
-
-`SHARED_CORE / STATIC_LOCAL / OPTIONAL_REMOTE / PACKAGE_ONLY`
+- where the prototype collapses from many Paths to one;
+- which existing structured primitive should own the multi-Path prototype set;
+- current Repeat source/render/export/serialization behavior for that primitive;
+- exact provenance and identity requirements;
+- any bounded compatibility gaps.
 
 Checkpoint commit required.
 
-### Phase B — Static/portable load closure
+### Phase B — Multi-Path prototype-set reconstruction
 
-Verify source-level/module-level closure for the accepted creative-loop modules.
+Implement a deterministic prototype-set contract.
 
 Required:
 
-- imports/exports resolve;
-- install order is deterministic;
-- no Cloud-only mandatory bootstrap;
-- no backend/auth/network requirement for core editing;
-- no duplicate editor/document authority.
-
-Bounded fixes allowed.
-
-Checkpoint commit required.
-
-### Phase C — Persistence + collaboration compatibility
-
-Verify:
-
-- structured document save/load;
-- History authority remains single;
-- Revision capture/restore remains compatible;
-- CHAT bounded edit still validates/executes locally;
-- CHAT multi-step plans still require explicit approval and execute locally;
-- current workspace is an adapter/view, not a portable-core dependency.
+- accept the complete valid sector Path set;
+- preserve child Path structure and IDs;
+- preserve Path-level extraction metadata;
+- produce one linked radial reconstruction using existing Repeat / Transform semantics;
+- retain compatibility with current single-Path callers unless doing so requires a broader architecture change;
+- no raster flattening;
+- no second vector engine.
 
 Checkpoint commit required.
 
-### Phase D — Portable integration harness
+### Phase C — Structured output + local correction closure
 
-Build deterministic checks for at least:
+Verify the reconstructed output remains usable as structured INK geometry.
 
-- static module closure;
-- editor install sequence;
-- document open/save round-trip surface;
-- History + Revision authority wiring;
-- CHAT bounded-edit presence;
-- CHAT creative-plan presence;
-- no mandatory remote runtime calls;
-- service-worker/static-shell references;
-- `FORMAT_VERSION = 4`.
+At minimum verify:
 
-Do not claim real browser/runtime paths that are not executed.
+- source prototype children remain editable Paths;
+- Repeat identity is deterministic;
+- expand/structured traversal retains child identities correctly;
+- serialization/export required by the accepted core can represent the output;
+- renderer/exporter traversal handles the prototype set without introducing a second rendering authority;
+- a bounded correction to a prototype child can propagate through the linked reconstruction using existing Repeat refresh/identity semantics;
+- History/Revision authority is not duplicated or bypassed.
+
+Bounded fixes are allowed only where the multi-Path source exposes a concrete compatibility defect.
 
 Checkpoint commit required.
 
-### Phase E — Gap correction
+### Phase D — Overlay QA + hard benchmark rerun
 
-If Phase A-D reveal bounded portable/static integration defects, correct them without:
+Use the same canonical fixture:
 
-- package mutation;
-- format bump;
-- new backend;
-- second editor/document/History/Revision engine;
-- broad UI redesign.
+`qa/fixtures/rose-window/rose-window-primary.png`
 
-Checkpoint commit required if changes occur.
+Preserve:
+
+- fixture SHA-256;
+- ROI;
+- threshold;
+- candidate radial counts;
+- sampling grid;
+- Direct Extraction measurement contract.
+
+Measure the full multi-Path Structure-Aware result rather than a single retained Path.
+
+Evidence must include at least:
+
+- sector prototype total vs retained path count;
+- subpaths / holes / unique nodes;
+- effective expanded nodes;
+- raster-proxy recall / precision / IoU;
+- false-positive / false-negative samples;
+- selected radial count and evidence score;
+- Repeat instance count / transform consistency;
+- exact provenance;
+- deterministic rerun;
+- machine-readable comparison output.
+
+Do not reinterpret raster-proxy metrics as semantic vector ground truth.
+
+Checkpoint commit required.
+
+### Phase E — Comparative decision evidence
+
+Record a fair comparison against the currently accepted Direct Extraction baseline.
+
+Required outcome classification:
+
+```text
+STRUCTURE_AWARE_TECHNICALLY_CLOSED = YES / NO
+STRUCTURE_AWARE_BENCHMARK = IMPROVED / NOT_IMPROVED / MIXED
+DIRECT_EXTRACTION_BASELINE = PRESERVED
+PIPELINE_SELECTION = MR_DECISION_REQUIRED
+```
+
+A weaker benchmark result is not by itself task failure if the multi-Path reconstruction contract is correctly closed and measured. Do not tune the benchmark or discard prototype Paths merely to improve the score.
+
+Checkpoint commit required.
 
 ### Phase F — report + DEV handoff
 
 Create:
 
-`research/INK_PORTABLE_BASELINE_INTEGRATION_REPORT_v0.1.md`
+`research/INK_STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_REPORT_v0.1.md`
+
+Update branch-local:
+
+`ACTIVE/INK_DEV_PROGRESS.md`
 
 Return:
 
@@ -191,16 +238,20 @@ Return:
 ## Acceptance gate
 
 ```text
-PORTABLE_DEPENDENCY_INVENTORY = COMPLETE
-STATIC_MODULE_CLOSURE = VERIFIED
-SHARED_CORE_REUSED = VERIFIED
-DOCUMENT_PERSISTENCE_COMPATIBILITY = VERIFIED
-HISTORY_AUTHORITY = PRESERVED
-REVISION_COMPATIBILITY = VERIFIED
-CHAT_BOUNDED_EDIT_LOCAL = VERIFIED
-CHAT_MULTI_STEP_LOCAL = VERIFIED
+MULTI_PATH_PROTOTYPE_SET = IMPLEMENTED
+SINGLE_PATH_BOTTLENECK = CLOSED
+VALID_SECTOR_PATH_RETENTION = COMPLETE
+EXISTING_REPEAT_TRANSFORM = REUSED
+EDITABLE_STRUCTURED_OUTPUT = VERIFIED
+REPEAT_IDENTITY = DETERMINISTIC
+EXACT_PROVENANCE = PRESERVED
+LOCAL_CORRECTION_COMPATIBILITY = VERIFIED
+OVERLAY_QA = EXECUTED
+HARD_BENCHMARK_COMPARISON = RECORDED
+DIRECT_EXTRACTION_BASELINE = PRESERVED
+PIPELINE_SELECTION = MR_DECISION_REQUIRED
 MANDATORY_REMOTE_DEPENDENCY = 0
-SECOND_EDITOR_CORE = 0
+SECOND_VECTOR_ENGINE = 0
 FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
@@ -209,20 +260,22 @@ RUNTIME_QA = DEFERRED
 
 Gate:
 
-`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
+`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
 
 ## Explicit exclusions
 
 Do not implement:
 
-- package/release regeneration;
-- final single-file `INK.html` release build;
-- Cloud account/auth/sync;
-- multiplayer/presence/comments;
-- autonomous agent execution;
-- Structure-Aware Reconstruction redesign;
+- broad extraction-stack redesign;
+- new segmentation/model runtime;
+- automatic replacement of Direct Extraction;
+- semantic ground-truth annotation program;
 - broad UI redesign;
-- new document/vector/History/Revision/renderer engine;
+- autonomous/open-ended CHAT agent execution;
+- new vector/document/History/Revision/renderer authority;
+- Cloud account/auth/sync/backend;
+- package/release regeneration;
+- final single-file `INK.html` build;
 - `FORMAT_VERSION` bump.
 
 ## Hard STOP
@@ -230,17 +283,30 @@ Do not implement:
 STOP if:
 
 1. `FORMAT_VERSION` change is required;
-2. portable support requires forking the editor/document core;
-3. mandatory backend/remote service is required for the accepted creative loop;
-4. package/release mutation becomes necessary;
-5. accepted persistence/History/Revision contracts must be broken;
-6. a broad architecture decision outside bounded integration is required.
+2. multi-Path support requires a second vector/document/History/Revision/renderer engine;
+3. existing Repeat/Transform cannot represent the prototype set without a broad architecture redesign;
+4. mandatory backend/remote service is required;
+5. package/release mutation becomes necessary;
+6. accepted Direct Extraction behavior must be broken to complete the task;
+7. the canonical benchmark contract must be materially redefined rather than fairly extended;
+8. a broader product/pipeline selection decision is required before implementation can continue.
 
 ## QA
 
 GitHub Actions quota remains exhausted.
 
-Run all feasible source/static/unit/serialization/integration checks.
+Run all feasible:
+
+- source/static checks;
+- exact changed-module syntax checks;
+- focused unit tests;
+- Repeat/identity tests;
+- serialization/export tests affected by prototype-set traversal;
+- extraction regression;
+- integrated creative-loop regression affected by the change;
+- deterministic rose-window hard benchmark;
+- machine-readable comparison validation;
+- `git diff --check`.
 
 Never claim unexecuted browser/runtime paths pass.
 
@@ -250,9 +316,12 @@ Never claim unexecuted browser/runtime paths pass.
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-016
-BRANCH = work/ink-cloud-016
-GATE = PORTABLE_SHARED_CORE_INTEGRITY_WORKS
+TASK_ID = INK-CLOUD-017
+BRANCH = work/ink-cloud-017
+GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
+DIRECT_EXTRACTION_BASELINE = PRESERVED
+PIPELINE_SELECTION = MR_DECISION_REQUIRED
+FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
