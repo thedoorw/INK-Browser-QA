@@ -1,38 +1,53 @@
 # INK-CLOUD-018 PowerShell Runtime Runbook
 
-Purpose: run the first visible INK Web platform on the user's Windows computer without GitHub Actions and without any external proxy.
+Purpose: run the first visible INK Web platform on the user's Windows computer without GitHub Actions, Git, Node, Python or any external proxy.
 
 ## Architecture
 
 ```text
-GitHub repository checkout
-→ PowerShell
+GitHub branch ZIP
+→ PowerShell download + Expand-Archive
 → local static HTTP server on 127.0.0.1
 → Chrome / Edge
 → product/source/index.html
 ```
 
-No cloud backend is required for the editor core.
+Git is NOT required.
 
-## Why HTTP is required
+GitHub Actions/self-hosted runner is NOT used for this runtime path.
 
-Do not open `product/source/index.html` with `file://`.
+## Step 1 — download the exact 018 branch ZIP
 
-INK uses ES modules, a web manifest and Service Worker behavior. The supported local validation path is a local HTTP origin such as:
+Open Windows PowerShell at any location and run:
 
-`http://127.0.0.1:4173/`
+```powershell
+$zip = "$HOME\Downloads\INK-CLOUD-018.zip"
+$dest = "$HOME\INK-CLOUD-018"
 
-## Step 1 — open PowerShell in the repository root
+Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
+Invoke-WebRequest "https://github.com/thedoorw/INK-Browser-QA/archive/refs/heads/work/ink-cloud-018.zip" -OutFile $zip
+Expand-Archive $zip -DestinationPath $dest -Force
 
-Expected repository folder contains:
+$root = (Get-ChildItem $dest -Directory |
+  Where-Object { Test-Path (Join-Path $_.FullName 'qa\runtime\start-ink-local.ps1') } |
+  Select-Object -First 1).FullName
+
+Set-Location $root
+Get-Location
+```
+
+Expected: the current folder is the extracted `work/ink-cloud-018` snapshot and contains:
 
 - `README.md`
 - `product/source/index.html`
 - `qa/runtime/start-ink-local.ps1`
+- `qa/runtime/check-ink-local.ps1`
+
+No `git status` check is required.
 
 ## Step 2 — start INK
 
-Run:
+From that extracted root:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\qa\runtime\start-ink-local.ps1
@@ -54,11 +69,13 @@ Keep this PowerShell window open while testing.
 
 ## Step 3 — preflight from a second PowerShell window
 
+Change to the same extracted root, then run:
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1
 ```
 
-For a different port:
+For port 4174:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1 -BaseUrl http://127.0.0.1:4174
@@ -118,8 +135,6 @@ After the 018 web integration is ready:
 
 ## Evidence to return to MR
 
-Copy/paste the following values:
-
 ```text
 POWERSHELL_VERSION =
 LOCAL_URL =
@@ -142,12 +157,11 @@ REVISION_CAPTURE_RESTORE =
 NOTES =
 ```
 
-Screenshots are optional but useful if the visible UI is wrong.
-
 ## Security / deployment notes
 
 - No API key belongs in the repository.
 - Local editor runtime does not require an external service.
 - Remote AI remains optional.
-- The local server intentionally exposes only the repository's `product/source` directory on loopback.
+- The local server exposes only `product/source` on loopback.
 - This runbook does not mutate `package/ink-current`.
+- The ZIP is a disposable local runtime snapshot; Git is not required.
