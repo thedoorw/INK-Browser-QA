@@ -227,7 +227,10 @@ export function validateChatCreativePlanAgainstState(app, rawPlan, {
 } = {}) {
   const plan = normalizeChatCreativePlan(rawPlan, { source: source ?? chatCreativePlanSource(app) });
   const currentSource = assertPlanSourceCurrent(app, plan.source);
-  if (requireHistoryIdle && app?.history?.pending) planFail('HISTORY_BUSY');
+  if (!app?.history || !Array.isArray(app.history.undoStack) || !Array.isArray(app.history.redoStack)) {
+    planFail('HISTORY_INVALID');
+  }
+  if (requireHistoryIdle && app.history.pending) planFail('HISTORY_BUSY');
 
   const steps = plan.steps.map((step, stepIndex) => {
     const task = stepAsEditTask(plan, step);
@@ -308,7 +311,10 @@ function assertExecutionIdentity(app, source) {
   if (current.revisionId !== source.revisionId) {
     planFail('STALE_REVISION', { expected: source.revisionId, actual: current.revisionId });
   }
-  if (app?.history?.pending) planFail('HISTORY_BUSY');
+  if (!app?.history || !Array.isArray(app.history.undoStack) || !Array.isArray(app.history.redoStack)) {
+    planFail('HISTORY_INVALID');
+  }
+  if (app.history.pending) planFail('HISTORY_BUSY');
   return current;
 }
 
@@ -482,13 +488,13 @@ export class ChatCreativePlanController {
         }
 
         assertExecutionIdentity(this.app, record.source);
-        assertExecutionFingerprint(this.app, expectedFingerprint);
 
         const task = stepAsEditTask(record, step);
         validateChatEditTaskAgainstState(this.app, task, {
           expected: task.expected,
           requireHistoryIdle: true
         });
+        assertExecutionFingerprint(this.app, expectedFingerprint);
 
         const proposal = bounded.propose(task);
         const technicalApproval = bounded.approve(proposal.proposalId);
