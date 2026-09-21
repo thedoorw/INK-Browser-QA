@@ -1,29 +1,55 @@
 # INK REVIEW STATUS
 
-STATUS: `DEVELOPMENT_AUTHORIZED / INK-CLOUD-017 / REVIEW_PENDING`
+STATUS: `MR_HOLD / INK-CLOUD-017 / CANONICAL_BENCHMARK_REQUIRED`
 
 | Field | Value |
 |---|---|
 | TASK_ID | `INK-CLOUD-017` |
 | DEV_BRANCH | `work/ink-cloud-017` |
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| REVIEW_PAYLOAD_HEAD | `NOT_YET` |
-| DECISION | `PENDING_DEV_HANDOFF` |
+| REVIEW_PAYLOAD_HEAD | `3000674329127956d20f6cb7f4a2fb88938152a7` |
+| DECISION | `MR_HOLD_BENCHMARK_EXECUTION_REQUIRED` |
+| SOURCE_REVIEW | `PASS` |
+| TECHNICAL_CLOSURE | `PASS` |
 | TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| ACCEPTED_PREDECESSOR | `INK-CLOUD-016` |
-| PREDECESSOR_GATE | `PORTABLE_SHARED_CORE_INTEGRITY_WORKS` |
-| PREDECESSOR_MAIN_PROMOTION | `6c332220a26c966193c128a0059724e8a644faa6` |
+| OVERLAY_QA | `NOT_EXECUTED` |
+| HARD_BENCHMARK_COMPARISON | `NOT_EXECUTED` |
 | DIRECT_EXTRACTION_BASELINE | `PRESERVED` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED_AFTER_BENCHMARK` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
-| PACKAGE_UPDATE | `0 / PROHIBITED` |
+| PIPELINE_SELECTION | `NO_CHANGE / DIRECT_EXTRACTION_CURRENT_BASELINE` |
+| FORMAT_VERSION | `4 / UNCHANGED` |
+| PACKAGE_UPDATE | `0` |
+| MAIN_PROMOTION | `NOT_AUTHORIZED_WHILE_GATE_OPEN` |
 | RUNTIME_QA | `DEFERRED` |
 
-INK-CLOUD-016 remains closed and accepted. INK-CLOUD-017 is now authorized as the bounded closure of the known single-Path Structure-Aware reconstruction bottleneck.
+## MR checkpoint
 
-The prior 016 review record remains preserved in:
+Exact DEV handoff HEAD reviewed:
 
-- `ACTIVE/INK_REVIEW_FINDINGS.md`
-- `ACTIVE/INK_REVIEW_EVIDENCE.md`
+`3000674329127956d20f6cb7f4a2fb88938152a7`
 
-No MR decision for 017 exists until DEV produces an exact handoff HEAD and comparative benchmark evidence.
+Branch topology at review:
+
+`6 ahead / 0 behind`
+
+The bounded source/architecture closure is acceptable: multi-Path prototype reconstruction uses the existing Group + Repeat / Transform authorities, preserves editable child Paths and deterministic identities, and does not introduce a second vector/document/History/Revision/renderer authority.
+
+The Work Order acceptance gate is not yet closed because the canonical Rose Window rerun was not executed. The required gate items:
+
+```text
+OVERLAY_QA = EXECUTED
+HARD_BENCHMARK_COMPARISON = RECORDED
+```
+
+remain unsatisfied.
+
+Direct Extraction therefore remains the accepted production baseline. No pipeline-selection change is authorized.
+
+## Continuation
+
+INK-CLOUD-017 remains the active task. The only authorized continuation is to execute the existing canonical hard-benchmark harness against:
+
+`qa/fixtures/rose-window/rose-window-primary.png`
+
+with the existing fixture identity and benchmark contract, record machine-readable comparison evidence, update the closure report / branch-local DEV progress, and return a new exact `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
+
+No new product scope is authorized.
