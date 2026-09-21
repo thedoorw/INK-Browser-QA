@@ -1,89 +1,52 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / INK-CLOUD-018 / PROMOTED / STAGING_LIVE / VISIBLE_ACCEPTANCE_PENDING`
+STATUS: `INK-RA-001 / DEV_NOT_STARTED / MR_REVIEW_PENDING_HANDOFF`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-018` |
-| DEV_BRANCH | `work/ink-cloud-018` |
+| TASK_ID | `INK-RA-001` |
+| DEV_BRANCH | `work/ink-ra-001` |
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| DECISION | `USER_AUTHORIZED_PREPARATION` |
-| TARGET_GATE | `INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS` |
+| TARGET_GATE | `STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `NOT_STARTED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| DEFAULT_EXTRACTION | `DIRECT_EXTRACTION` |
-| STRUCTURE_AWARE | `OPTIONAL` |
+| UI_MUTATION | `PROHIBITED` |
+| PRODUCT_DISPLAY_VERSION_CHANGE | `DEFERRED` |
 | PACKAGE_INK_CURRENT | `NO_MUTATION` |
-| BROWSER_RUNTIME_QA | `REQUIRED_FOR_GATE` |
+| BROWSER_RUNTIME_QA | `REQUIRED_FOR_FINAL_GATE` |
 
-## Prepared scope
+## Review boundary
 
-The next bounded stage turns the existing browser/editor/Creative Workspace/CHAT runtime into the first visible INK Web platform.
+MR will review:
 
-The first runtime case is the Rose Window.
+- exact current INK geometry inventory;
+- RA module evidence and disposition;
+- external geometry benchmark evidence;
+- adapter boundary;
+- normalized INK Path behavior;
+- History / serialization closure;
+- self-hosted browser runtime evidence;
+- final report `research/INK_RA_FOUNDATION_A_VECTOR_GEOMETRY_REPORT_v0.1.md`.
 
-No Figma parity, multi-user collaboration, account system or broad SaaS platform is required for this task.
+MR will reject:
 
-MR review begins only after exact DEV handoff.
+- direct RA workbench transplantation;
+- a second vector/document/history authority;
+- unbenchmarked permanent library inclusion;
+- UI changes;
+- product display-version changes;
+- FORMAT_VERSION changes;
+- broad constraint-solver expansion.
 
-
-## INK-CLOUD-018 closure
-
-```text
-DECISION = MR_PASS
-GATE = INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS
-DEV_FINAL_HEAD = 662f56fb4ac28d5102871681f6ab2b5747a523fc
-RUNTIME_TESTED_SHA = ed5ea6c6660da52f3b18cf4b7f66deb8ad0253a3
-RUNTIME_RUN = 35586901099 / SUCCESS
-PROMOTION_PR = #20 / MERGED
-MAIN_PROMOTION_SHA = ed0b78a7fa3ac6db901863edd0246ee163c00ec4
-PUBLIC_URL = USER_ONE_TIME_PAGES_ACTION_REQUIRED
-```
-
-
-## Public deployment checkpoint
+## Parallel INK Web status
 
 ```text
-PUBLIC_URL = https://thedoorw.github.io/INK/
-PAGES_ONE_TIME_ACTION = COMPLETE
-NEXT_ACTION = USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE
+STAGING = LIVE
+URL = https://thedoorw.github.io/INK-Browser-QA/
+USER_UI_OBSERVATION = TOO_CLUTTERED
+VERSION_NUMBER_CHANGE = DISCUSSION_PENDING
+WEB_UI_MUTATION = NOT_AUTHORIZED_BY_INK-RA-001
 ```
 
-
-## Public URL correction — GitHub Pages not live
-
-User browser evidence returned GitHub Pages 404 for:
-
-`https://thedoorw.github.io/INK/`
-
-Repository inventory confirms the current product repository is:
-
-`thedoorw/INK-Browser-QA`
-
-and no accessible repository named `thedoorw/INK` exists.
-
-Therefore the prior `PUBLIC_URL = READY` entry is superseded.
-
-```text
-PUBLIC_URL = NOT_YET_LIVE
-PAGES_STATUS = CONFIGURATION_REQUIRED
-INVALID_ASSUMED_URL = https://thedoorw.github.io/INK/
-CURRENT_REPO = thedoorw/INK-Browser-QA
-EXPECTED_REPO_PAGES_URL = https://thedoorw.github.io/INK-Browser-QA/
-NEXT_ACTION = CONFIGURE_GITHUB_PAGES_OR_CREATE_DEDICATED_INK_REPO
-```
-
-
-## Staging live verification
-
-```text
-STAGING_URL = https://thedoorw.github.io/INK-Browser-QA/
-FINAL_URL = https://thedoorw.github.io/INK-Browser-QA/product/source/
-PUBLIC_HTTP_ACCESS = PASS
-ROOT_REDIRECT = PASS
-INK_WEB_STAGING = LIVE
-USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE = PENDING
-```
-
-The dedicated future public target `https://thedoorw.github.io/INK/` remains deferred.
+This preserves separation between the RA integration task and the upcoming INK Web UI/version discussion.
