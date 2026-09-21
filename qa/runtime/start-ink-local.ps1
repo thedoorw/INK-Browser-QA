@@ -1,6 +1,7 @@
 param(
   [int]$Port = 4173,
-  [switch]$NoBrowser
+  [switch]$NoBrowser,
+  [string]$QaResultPath = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -81,9 +82,14 @@ try {
         continue
       }
 
+      $Headers = @{}
       while ($true) {
         $Line = $Reader.ReadLine()
         if ($null -eq $Line -or $Line -eq '') { break }
+        $Colon = $Line.IndexOf(':')
+        if ($Colon -gt 0) {
+          $Headers[$Line.Substring(0, $Colon).Trim()] = $Line.Substring($Colon + 1).Trim()
+        }
       }
 
       $Parts = $RequestLine.Split(' ')
@@ -95,6 +101,42 @@ try {
 
       $Method = $Parts[0].ToUpperInvariant()
       $RawPath = ($Parts[1] -split '\?')[0]
+
+      if ($Method -eq 'POST' -and $RawPath -eq '/__qa_result' -and -not [string]::IsNullOrWhiteSpace($QaResultPath)) {
+        $ContentLength = 0
+        if (-not $Headers.ContainsKey('Content-Length') -or
+            -not [int]::TryParse($Headers['Content-Length'], [ref]$ContentLength) -or
+            $ContentLength -lt 1 -or
+            $ContentLength -gt 1048576) {
+          $Body = [Text.Encoding]::UTF8.GetBytes('Invalid QA result payload')
+          Write-Response $Client 400 'Bad Request' $Body 'text/plain; charset=utf-8'
+          continue
+        }
+
+        $Chars = New-Object char[] $ContentLength
+        $Read = 0
+        while ($Read -lt $ContentLength) {
+          $Count = $Reader.Read($Chars, $Read, $ContentLength - $Read)
+          if ($Count -le 0) { break }
+          $Read += $Count
+        }
+        if ($Read -ne $ContentLength) {
+          $Body = [Text.Encoding]::UTF8.GetBytes('Incomplete QA result payload')
+          Write-Response $Client 400 'Bad Request' $Body 'text/plain; charset=utf-8'
+          continue
+        }
+
+        $Payload = -join $Chars
+        $ResultDirectory = Split-Path $QaResultPath -Parent
+        if (-not [string]::IsNullOrWhiteSpace($ResultDirectory)) {
+          [IO.Directory]::CreateDirectory($ResultDirectory) | Out-Null
+        }
+        [IO.File]::WriteAllText($QaResultPath, $Payload, [Text.Encoding]::ASCII)
+        $Body = [Text.Encoding]::UTF8.GetBytes('OK')
+        Write-Response $Client 200 'OK' $Body 'text/plain; charset=utf-8'
+        continue
+      }
+
       if ($Method -notin @('GET','HEAD')) {
         $Body = [Text.Encoding]::UTF8.GetBytes('Method Not Allowed')
         Write-Response $Client 405 'Method Not Allowed' $Body 'text/plain; charset=utf-8'
