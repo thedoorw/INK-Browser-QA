@@ -274,6 +274,21 @@ DEV branch：
 
 ### Runtime QA 狀態
 
+Self-hosted Windows runtime 的正式基線：
+`governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
+
+重要區分：
+
+```text
+GitHub-hosted Actions quota exhausted
+≠
+self-hosted Windows runner unavailable
+```
+
+若 `C:\actions-runner-ink\run.cmd` 已處於 `Connected to GitHub / Listening for Jobs`，應優先使用既有 `[self-hosted, Windows, X64]` runtime 路徑，不得僅因 GitHub-hosted Actions 額度耗盡就自動標記 Runtime QA 為 deferred。
+
+### Runtime QA 狀態
+
 目前 GitHub Actions quota 已用盡：
 
 ```text
