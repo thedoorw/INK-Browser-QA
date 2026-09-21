@@ -44,3 +44,34 @@ Browser/runtime QA involving the user's Windows machine must first read:
 `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
 
 Do not equate GitHub-hosted Actions quota exhaustion with self-hosted runtime unavailability. Reuse the existing `C:\actions-runner-ink` / `[self-hosted, Windows, X64]` path before inventing a new runtime route.
+
+
+## Self-hosted PowerShell safety
+
+When a GitHub Actions job uses the user's Windows self-hosted runner, PowerShell is allowed as a bounded local-processing tool, but the workflow must minimize antivirus / endpoint-security triggers.
+
+Required default:
+
+- prefer PowerShell only for local filesystem, compression, hashing, or deterministic runtime tasks;
+- do not change the machine-wide or user-wide PowerShell execution policy;
+- do not use `Set-ExecutionPolicy` as a workflow setup step;
+- do not combine `ExecutionPolicy Bypass` with downloading and immediately executing remote `.ps1` content;
+- keep GitHub token / API mutation outside PowerShell when a standard GitHub Action or connector can perform it;
+- prefer checked-in, reviewable workflow logic over dynamically downloaded executable scripts;
+- prefer `.NET System.IO.Compression` for ZIP extraction on Windows;
+- preserve antivirus / endpoint protection; do not add exclusions merely to make a workflow pass.
+
+Preferred bounded pattern:
+
+```text
+GitHub Action / standard step
+→ obtain trusted repository input
+
+PowerShell
+→ local ZIP / filesystem / hash operation only
+
+GitHub Action / GitHub API step
+→ commit or publish the resulting repository changes
+```
+
+A new PowerShell workflow is not considered accepted merely because the Action reports SUCCESS. Before it becomes a reusable project method, verify that it completes on the existing self-hosted Windows runner without changing PowerShell policy and without antivirus / endpoint-security intervention.
