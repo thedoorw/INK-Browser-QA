@@ -230,3 +230,44 @@ This checkpoint verifies the Windows/PowerShell/HTTP/Chromium execution environm
 Next:
 
 `DEV_PRODUCT_INTEGRATION_READY`
+
+
+## Phase B — first visible web shell checkpoint
+
+Product checkpoint SHA:
+
+`f8ca3f2c3e99d6937d2459fd84d0e2517fee9616`
+
+Implemented:
+
+- retained `product/source/index.html` as the single browser/editor entrypoint;
+- retained the existing canvas/editor and Creative Workspace authority;
+- kept Creative Workspace open on first mount and made the Reference → Direct Extraction entry explicit;
+- aligned visible shell / manifest / Service Worker version identity to `1.6.5-RC`;
+- added a bounded `WEB` surface marker only; no duplicate shell or document authority;
+- retained no-sign-in static/browser-local startup.
+
+Files changed:
+
+- `product/source/index.html`
+- `product/source/manifest.webmanifest`
+- `product/source/service-worker.js`
+- `product/source/src/editor/creative-workspace.js`
+- `product/source/styles.css`
+
+Checks actually executed:
+
+- exact branch source reread through GitHub SSOT;
+- manifest `start_url = ./index.html` and `scope = ./` retained;
+- Service Worker asset paths remain relative/static-host compatible;
+- `FORMAT_VERSION = 4` unchanged;
+- `package/ink-current` mutation = 0;
+- second editor/document authority = 0.
+
+Runtime note:
+
+The already-verified Windows self-hosted preflight workflow is path-triggered by these product-source changes. Full Phase F runtime acceptance remains pending after Phase C–E integration.
+
+Next:
+
+`PHASE_C_VISIBLE_CONVERSATIONAL_CHAT`
