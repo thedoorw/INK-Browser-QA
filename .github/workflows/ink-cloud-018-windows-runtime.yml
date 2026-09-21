@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: read
+  statuses: write
 
 concurrency:
   group: ink-cloud-018-windows-browser-runtime
@@ -28,6 +29,24 @@ jobs:
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
 
     steps:
+      - name: Publish runtime status / pending
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $headers = @{
+            Authorization = "Bearer $env:GITHUB_TOKEN"
+            Accept = 'application/vnd.github+json'
+            'X-GitHub-Api-Version' = '2022-11-28'
+          }
+          $body = @{
+            state = 'pending'
+            context = 'INK-CLOUD-018/runtime'
+            description = 'Phase F Windows browser runtime is running'
+            target_url = "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } | ConvertTo-Json
+          Invoke-RestMethod -Method Post -Headers $headers -Uri "https://api.github.com/repos/$env:GITHUB_REPOSITORY/statuses/$env:GITHUB_SHA" -Body $body -ContentType 'application/json' | Out-Null
+
       - name: Materialize exact bounded revision without Git
         run: |
           $ErrorActionPreference = 'Stop'
@@ -141,6 +160,8 @@ jobs:
           $browserErr = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-browser.err.log'
           $qaResult = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-browser.result.b64'
           Remove-Item $qaResult -Force -ErrorAction SilentlyContinue
+          Remove-Item $browserOut -Force -ErrorAction SilentlyContinue
+          Remove-Item $browserErr -Force -ErrorAction SilentlyContinue
           $server = $null
           $browser = $null
           try {
@@ -174,36 +195,47 @@ jobs:
               '--disable-extensions',
               '--disable-background-timer-throttling',
               '--disable-background-networking',
+              '--dump-dom',
+              '--virtual-time-budget=240000',
               "--user-data-dir=$profile",
               'http://127.0.0.1:4173/__qa_runtime.html'
             )
             $browser = Start-Process $env:INK_CHROMIUM_PATH -ArgumentList $args -RedirectStandardOutput $browserOut -RedirectStandardError $browserErr -PassThru
-            # Keep the real browser alive while the asynchronous extraction / CHAT /
-            # Structure-Aware / Revision harness runs. The harness posts terminal
-            # evidence back to the loopback-only QA callback.
+            # The previous Phase F attempt treated a blank ExitCode as nonzero.
+            # This bounded retry uses the dumped DOM marker as primary completion
+            # evidence and only rejects an explicit numeric nonzero exit code.
             $null = $browser.Handle
-            $reported = $false
+            $exited = $false
             for ($i=0; $i -lt 480; $i++) {
-              if (Test-Path $qaResult) { $reported = $true; break }
-              if ($browser.HasExited) { break }
+              if ($browser.HasExited) { $exited = $true; break }
               Start-Sleep -Milliseconds 500
             }
-            if (-not $reported) {
-              if (-not $browser.HasExited) {
-                Stop-Process -Id $browser.Id -Force -ErrorAction SilentlyContinue
-              } else {
-                $browser.Refresh()
-                Write-Host "Chromium exited before QA callback. ExitCode=$($browser.ExitCode)"
-              }
+            if (-not $exited) {
+              Stop-Process -Id $browser.Id -Force -ErrorAction SilentlyContinue
               Get-Content $browserOut -ErrorAction SilentlyContinue
               Get-Content $browserErr -ErrorAction SilentlyContinue
-              throw 'Rose Window browser harness did not deliver terminal evidence within 240 seconds.'
+              throw 'Rose Window Chromium dump-dom did not finish within 240 seconds.'
             }
 
-            if (-not $browser.HasExited) {
-              Stop-Process -Id $browser.Id -Force -ErrorAction SilentlyContinue
+            $browser.WaitForExit()
+            $browser.Refresh()
+            $exitCode = $browser.ExitCode
+            if ($exitCode -is [int] -and $exitCode -ne 0) {
+              Get-Content $browserOut -ErrorAction SilentlyContinue
+              Get-Content $browserErr -ErrorAction SilentlyContinue
+              throw "Chromium exited with explicit nonzero code $exitCode."
             }
 
+            $dom = Get-Content $browserOut -Raw -ErrorAction Stop
+            if ($dom -notmatch 'data-qa=["'']PASS["'']') {
+              Get-Content $browserOut -ErrorAction SilentlyContinue
+              Get-Content $browserErr -ErrorAction SilentlyContinue
+              throw 'Rose Window dump-dom did not contain data-qa=PASS.'
+            }
+
+            if (-not (Test-Path $qaResult)) {
+              throw 'Rose Window harness reached PASS DOM state but did not deliver detailed evidence.'
+            }
             $encoded = (Get-Content $qaResult -Raw).Trim()
             if ([string]::IsNullOrWhiteSpace($encoded)) { throw 'Runtime evidence callback was empty.' }
             try {
@@ -244,6 +276,28 @@ jobs:
             if ($browser -and -not $browser.HasExited) { Stop-Process -Id $browser.Id -Force -ErrorAction SilentlyContinue }
             if ($server -and -not $server.HasExited) { Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue }
           }
+
+      - name: Publish runtime status / final
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $jobStatus = "${{ job.status }}"
+          $state = if ($jobStatus -eq 'success') { 'success' } else { 'failure' }
+          $description = if ($state -eq 'success') { 'Phase F Rose Window browser runtime passed' } else { "Phase F Windows browser runtime $jobStatus" }
+          $headers = @{
+            Authorization = "Bearer $env:GITHUB_TOKEN"
+            Accept = 'application/vnd.github+json'
+            'X-GitHub-Api-Version' = '2022-11-28'
+          }
+          $body = @{
+            state = $state
+            context = 'INK-CLOUD-018/runtime'
+            description = $description
+            target_url = "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } | ConvertTo-Json
+          Invoke-RestMethod -Method Post -Headers $headers -Uri "https://api.github.com/repos/$env:GITHUB_REPOSITORY/statuses/$env:GITHUB_SHA" -Body $body -ContentType 'application/json' | Out-Null
 
       - name: Summary
         if: always()
