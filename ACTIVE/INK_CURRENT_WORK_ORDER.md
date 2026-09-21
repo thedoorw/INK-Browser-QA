@@ -413,3 +413,28 @@ USER_MACHINE_BROWSER_QA = AUTHORITATIVE_FOR_018_RUNTIME_GATE
 ```
 
 The next checkpoint is a local PowerShell preflight only. Product integration may continue after the local runtime path is confirmed operational.
+
+
+## Local Windows runtime clarification — no Git requirement
+
+The user machine does not have Git installed. Git is not required for INK-CLOUD-018 runtime QA.
+
+Authoritative local flow:
+
+```text
+GitHub branch ZIP
+→ PowerShell Invoke-WebRequest
+→ Expand-Archive
+→ loopback static server
+→ Chrome / Edge
+```
+
+Do not require:
+
+- `git --version`
+- `git status`
+- repository checkout
+- GitHub self-hosted runner
+- GitHub Actions
+
+Use the exact branch ZIP for `work/ink-cloud-018`.
