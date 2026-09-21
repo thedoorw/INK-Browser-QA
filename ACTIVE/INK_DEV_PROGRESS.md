@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / PHASE_B_COMPLETE / PHASE_C_NEXT`
+STATUS: `INK-CLOUD-014 / PHASE_C_COMPLETE / PHASE_D_NEXT`
 
 | Field | Value |
 |---|---|
@@ -17,36 +17,31 @@ STATUS: `INK-CLOUD-014 / PHASE_B_COMPLETE / PHASE_C_NEXT`
 
 ## Completed checkpoints
 
-### Phase A — workspace state model and shell
+- Phase A commit `673f2730b3bfbaa27d031d4b63beb3a5f76eef84` — workspace view/state shell.
+- Phase B commit `69496072abd2be2119b0018ab1762d343810a36d` — Reference → Extract → editable Path continuity.
 
-Commit: `673f2730b3bfbaa27d031d4b63beb3a5f76eef84`
+### Phase C — Edit → Compose → Repaint continuity
 
-- deterministic view/state model;
-- visible document/page/context/selection/provenance/Revision/CHAT/History state;
-- compact stage shell;
-- no second document/editor authority.
+Implemented through existing authorities:
 
-### Phase B — Reference → Extract → Path continuity
+- enter/exit Path edit mode;
+- simplify/refine entry points;
+- expressive stroke apply/remove while retaining Path geometry;
+- duplicate/group/frame/z-order composition commands;
+- repaint selected Paths;
+- material apply/remove;
+- workspace selection remains the existing `app.selection`;
+- all structural/appearance mutations remain History-backed existing commands/controllers.
 
-Implemented:
-
-- reference file intake from the Creative Workspace;
-- deterministic threshold entry and extraction trigger through existing extraction authority;
-- cancellable extraction via AbortController;
-- reference overlay through existing History-backed overlay operation;
-- extraction result diagnostics;
-- automatic handoff to the first accepted editable Path through existing selection authority;
-- extraction install is now controller/API-only, removing the duplicate legacy Core-panel entry point.
+No second Path editor, composition model, material engine or History engine was introduced.
 
 Preserved:
 
-- accepted direct extraction baseline;
-- no new extraction pipeline;
-- source/provenance metadata;
+- structured document identity/provenance;
 - `FORMAT_VERSION = 4`;
 - package/main unchanged;
-- browser-local operation.
+- browser-local core.
 
 Next:
 
-`BEGIN_PHASE_C / EDIT_COMPOSE_REPAINT_CONTINUITY`
+`BEGIN_PHASE_D / CHAT_CANVAS_BOUNDED_EDIT_LOOP`

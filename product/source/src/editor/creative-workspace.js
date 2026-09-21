@@ -219,8 +219,30 @@ export class CreativeWorkspaceController {
           <label class="creative-workspace-field"><span>Reference overlay</span><input type="range" data-workspace-input="overlay" min="0" max="1" step="0.1" value="0.5"></label>
           <output data-workspace-output="extraction">No extraction in this session.</output>
         </section>
-        <section data-workspace-pane="edit" hidden><strong>Path Edit</strong><p>Path and appearance controls are connected in Phase C.</p></section>
-        <section data-workspace-pane="compose" hidden><strong>Compose → Repaint</strong><p>Composition and repaint controls are connected in Phase C.</p></section>
+        <section data-workspace-pane="edit" hidden>
+          <strong>Path Edit + Expressive Stroke</strong>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="enter-path-edit">Enter Path Edit</button><button type="button" data-workspace-action="exit-path-edit">Exit</button></div>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="simplify-path">Simplify</button><button type="button" data-workspace-action="refine-path">Refine</button></div>
+          <label class="creative-workspace-field"><span>Stroke color</span><input type="color" data-workspace-input="stroke-color" value="#202020"></label>
+          <label class="creative-workspace-field"><span>Base width</span><input type="number" data-workspace-input="stroke-width" min="0.5" max="128" step="0.5" value="2"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-expressive-stroke">Apply expressive</button><button type="button" data-workspace-action="clear-expressive-stroke">Clear expressive</button></div>
+          <output data-workspace-output="edit">Select one editable Path.</output>
+        </section>
+        <section data-workspace-pane="compose" hidden>
+          <strong>Compose → Repaint / Material</strong>
+          <div class="creative-workspace-action-grid">
+            <button type="button" data-workspace-action="duplicate">Duplicate</button>
+            <button type="button" data-workspace-action="group">Group</button>
+            <button type="button" data-workspace-action="frame">Frame</button>
+            <button type="button" data-workspace-action="front">Front</button>
+            <button type="button" data-workspace-action="back">Back</button>
+          </div>
+          <label class="creative-workspace-field"><span>Fill</span><input type="color" data-workspace-input="fill" value="#f0d9c8"></label>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="repaint">Repaint selected Path</button>
+          <label class="creative-workspace-field"><span>Material ID</span><input type="text" data-workspace-input="material-id" value="workspace-material"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-material">Apply material</button><button type="button" data-workspace-action="clear-material">Clear material</button></div>
+          <output data-workspace-output="compose">Composition commands preserve structured objects.</output>
+        </section>
         <section data-workspace-pane="chat" hidden><strong>CHAT bounded edit</strong><p>Proposal / approval controls are connected in Phase D.</p></section>
         <section data-workspace-pane="revision" hidden><strong>Revision</strong><p>Capture / restore controls are connected in Phase E.</p></section>
       </div>
@@ -257,6 +279,8 @@ export class CreativeWorkspaceController {
   async handleAction(action) {
     if (action === 'extract') return this.runExtraction();
     if (action === 'cancel-extract') return this.cancelExtraction();
+    if (['enter-path-edit','exit-path-edit','simplify-path','refine-path','apply-expressive-stroke','clear-expressive-stroke'].includes(action)) return this.runEditAction(action);
+    if (['duplicate','group','frame','front','back','repaint','apply-material','clear-material'].includes(action)) return this.runComposeAction(action);
     return null;
   }
 
@@ -357,6 +381,95 @@ export class CreativeWorkspaceController {
     }
   }
 
+  selectedPath() {
+    const selected = typeof this.app?.selectedObjects === 'function' ? this.app.selectedObjects() : [];
+    return selected.length === 1 && selected[0]?.object?.type === 'path' ? selected[0] : null;
+  }
+
+  runEditAction(action) {
+    const path = this.selectedPath();
+    try {
+      let result = null;
+      if (action === 'enter-path-edit') result = this.app.enterPathEdit?.(path ? { layerId: path.layer.id, objectId: path.object.id } : null);
+      else if (action === 'exit-path-edit') result = this.app.exitPathEdit?.();
+      else if (action === 'simplify-path') result = this.app.simplifyEditedPath?.();
+      else if (action === 'refine-path') result = this.app.refineEditedPath?.();
+      else if (action === 'apply-expressive-stroke') {
+        if (!path) throw Object.assign(new Error('Select one Path'), { code: 'PATH_REQUIRED' });
+        const color = this.root?.querySelector('[data-workspace-input="stroke-color"]')?.value || '#202020';
+        const baseWidth = Number(this.root?.querySelector('[data-workspace-input="stroke-width"]')?.value || 2);
+        result = this.app.setPathStrokeFromBrush?.('ink', { color, baseWidth }, { layerId: path.layer.id, objectId: path.object.id });
+      } else if (action === 'clear-expressive-stroke') {
+        if (!path) throw Object.assign(new Error('Select one Path'), { code: 'PATH_REQUIRED' });
+        result = this.app.clearPathExpressiveStroke?.({ layerId: path.layer.id, objectId: path.object.id });
+      }
+      if (result === false || result == null && action !== 'exit-path-edit') {
+        this.setStatus('PATH_EDIT_NO_RESULT', 'Path edit command did not execute', 'error');
+        return result;
+      }
+      this.setStatus('PATH_EDIT_UPDATED', action, 'pass');
+      this.refresh();
+      return result;
+    } catch (error) {
+      this.setStatus(error?.code || 'PATH_EDIT_FAILED', error?.message || 'Path edit failed', 'error');
+      return null;
+    }
+  }
+
+  runComposeAction(action) {
+    try {
+      let result = true;
+      if (action === 'duplicate') result = this.app.duplicateSelection?.();
+      else if (action === 'group') result = this.app.groupSelection?.();
+      else if (action === 'frame') result = this.app.frameSelection?.();
+      else if (action === 'front') result = this.app.reorderSelection?.('front');
+      else if (action === 'back') result = this.app.reorderSelection?.('back');
+      else if (action === 'repaint') {
+        const fill = this.root?.querySelector('[data-workspace-input="fill"]')?.value || '#f0d9c8';
+        result = this.app.repaintSelectedPaths?.({ fill });
+      } else if (action === 'apply-material') {
+        const templateId = text(this.root?.querySelector('[data-workspace-input="material-id"]')?.value);
+        if (!templateId) throw Object.assign(new Error('Material template ID required'), { code: 'MATERIAL_TEMPLATE_REQUIRED' });
+        const fill = this.root?.querySelector('[data-workspace-input="fill"]')?.value || '#f0d9c8';
+        result = this.app.applySelectedPathMaterial?.({ templateId, parameterOverrides: {}, fallback: { fill } });
+      } else if (action === 'clear-material') {
+        result = this.app.clearSelectedPathMaterial?.();
+      }
+      if ((action === 'repaint' || action === 'apply-material' || action === 'clear-material') && !result) {
+        this.setStatus('COMPOSE_COMMAND_NO_RESULT', 'Selected object is not an editable Path or command was blocked', 'error');
+        return result;
+      }
+      this.setStatus('COMPOSE_UPDATED', action, 'pass');
+      this.refresh();
+      return result;
+    } catch (error) {
+      this.setStatus(error?.code || 'COMPOSE_FAILED', error?.message || 'Composition command failed', 'error');
+      return null;
+    }
+  }
+
+  refreshEditCompose(state) {
+    if (!this.root) return;
+    const path = this.selectedPath();
+    const editOutput = this.root.querySelector('[data-workspace-output="edit"]');
+    if (editOutput) {
+      if (!path) editOutput.textContent = 'Select one editable Path.';
+      else {
+        const nodes = path.object.subpaths?.reduce((sum, subpath) => sum + (subpath.anchors?.length || 0), 0) || 0;
+        editOutput.textContent = `${path.object.id} · ${nodes} nodes · ${this.app.pathEditing?.active ? 'EDIT MODE' : 'OBJECT MODE'} · ${path.object.expressiveStroke ? 'EXPRESSIVE' : 'VECTOR'}`;
+      }
+    }
+    const composeOutput = this.root.querySelector('[data-workspace-output="compose"]');
+    if (composeOutput) {
+      const selectedTypes = state.selection.items.map(item => item.type).join(', ') || 'none';
+      composeOutput.textContent = `${state.selection.count} selected · ${selectedTypes} · History ${state.history.undoCount}/${state.history.redoCount}`;
+    }
+    const enter = this.root.querySelector('[data-workspace-action="enter-path-edit"]');
+    const exit = this.root.querySelector('[data-workspace-action="exit-path-edit"]');
+    if (enter) enter.disabled = !path || Boolean(this.app.pathEditing?.active);
+    if (exit) exit.disabled = !this.app.pathEditing?.active;
+  }
+
   setOpen(open) {
     this.open = Boolean(open);
     this.root?.classList.toggle('open', this.open);
@@ -412,6 +525,7 @@ export class CreativeWorkspaceController {
     this.root.dataset.historyPending = String(state.history.pending);
     this.root.dataset.formatVersion = String(state.document?.formatVersion ?? '');
     this.refreshReference(state);
+    this.refreshEditCompose(state);
     return state;
   }
 }

@@ -1260,3 +1260,9 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 .creative-workspace-actions button:first-child{background:var(--accent-soft);color:var(--accent)}
 .creative-workspace-actions button:disabled{opacity:.45}
 .creative-workspace-body output{display:block;min-height:30px;padding:7px 8px;border-radius:8px;background:rgba(35,107,99,.06);font:650 9px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);overflow-wrap:anywhere}
+
+
+/* INK-CLOUD-014 Phase C controls */
+.creative-workspace-action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.creative-workspace-action-grid button,.creative-workspace-primary{min-height:31px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:9px;font-weight:700}
+.creative-workspace-primary{width:100%;background:var(--accent-soft);color:var(--accent)}
