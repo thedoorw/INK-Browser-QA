@@ -1,80 +1,80 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_PASS / PROMOTED / STAGING_LIVE / USER_VISIBLE_ACCEPTANCE_PENDING`
+STATUS: `AUTHORIZED / READY_FOR_DEV / RA_FOUNDATION_A`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-018` |
-| TITLE | `First Visible Web Platform + Rose Window Runtime v0.1` |
-| AUTHORITY | `USER_EXPLICIT_PREPARE_WEB_PLATFORM` |
-| DEV_WORK_BRANCH | `work/ink-cloud-018` |
+| CURRENT_TASK_ID | `INK-RA-001` |
+| TITLE | `RA Foundation A — Vector Geometry Kernel Integration v0.1` |
+| AUTHORITY | `USER_EXPLICIT_RA_FIRST / PACKAGE_WORK` |
+| DEV_WORK_BRANCH | `work/ink-ra-001` |
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_WEB_INTEGRATION_SCOPE` |
-| DEPLOYMENT_PREPARATION | `AUTHORIZED` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_ONLY_AFTER_EVALUATION_GATE` |
+| UI_MUTATION | `PROHIBITED` |
+| PRODUCT_DISPLAY_VERSION_CHANGE | `DEFERRED_TO_INK_WEB_DISCUSSION` |
+| FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
 | CORE_RUNTIME | `STATIC_HOSTING + BROWSER_LOCAL` |
-| REMOTE_AI | `OPTIONAL_ADAPTER_ONLY` |
-| RUNTIME_QA | `REQUIRED_FOR_GATE` |
+| RUNTIME_QA | `REQUIRED_FOR_FINAL_GATE` |
 
-## User product decision
+## Why this task exists
 
-The next priority is not Figma feature parity and not another invisible engine expansion.
+The RA0.9 accepted baseline is now imported as read-only reference material:
 
-Target:
+`reference/RA0_9_baseline/source/RA0_9_AI_Review_Mode_Current_Baseline_v1.0/`
 
-```text
-existing INK shared core
-→ visible browser platform
-→ image import
-→ Reference / Extract / Path / Overlay
-→ natural-language CHAT surface
-→ bounded proposal / approval / execution
-→ Revision
-→ Rose Window first visible runtime case
-→ fixed web URL
-```
-
-The first web platform is for one user. It does not require multi-user collaboration, team workspace, comments, presence, account administration or broad SaaS infrastructure.
-
-## Accepted baseline
-
-INK-CLOUD-017 is closed and promoted.
-
-Accepted core:
+Import identity:
 
 ```text
-Reference
-→ Extract
-→ editable Path
-→ Edit
-→ Expressive Stroke
-→ Multi-Contour Compose
-→ Repaint / Material
-→ CHAT bounded edit
-→ CHAT multi-step plan
-→ Revision
+ZIP_SHA256 = 525fdff89305135eedebde4fa039517040220724fdee8e557a3d5a2ad5add1d4
+EXTRACTED_FILE_COUNT = 158
+EXTRACTED_BYTES = 19909084
+STATUS = IMPORTED_REFERENCE_BASELINE
 ```
 
-Additional accepted state:
+The user has explicitly asked to start the RA line first and prefers work to be issued as a DEV package rather than handled as open-ended MR analysis.
+
+The product roadmap remains:
+
+`research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+
+This Work Order activates its first RA-first foundation:
+
+`Foundation A — Vector Geometry Kernel integration`
+
+## Product boundary
+
+RA is implementation material, not a second INK product.
+
+Mandatory authority chain:
 
 ```text
-Creative Workspace minimum UX = IMPLEMENTED
-Portable/shared-core integrity = VERIFIED
-Structure-Aware multi-Path reconstruction = TECHNICALLY_CLOSED
-Direct Extraction = DEFAULT
-Structure-Aware = OPTIONAL_STRUCTURED_RECONSTRUCTION
-FORMAT_VERSION = 4
+existing INK capability
++ reusable RA capability
++ mature external geometry capability where stronger
+        ↓
+evidence-based selection
+        ↓
+bounded INK-owned adapter
+        ↓
+authoritative INK Path / Document / Command / History / Revision
 ```
 
-Current browser source already exists at:
+Hard prohibitions:
 
-`product/source/index.html`
-
-The task is to expose and validate the accepted capabilities as one real web platform, not to create a second application.
+- no second Document authority;
+- no second Path authority;
+- no second History / Revision authority;
+- no second renderer;
+- no RA workbench shell transplanted into INK;
+- no UI redesign in this task;
+- no INK Web version-number change in this task;
+- no CRDT / multiplayer;
+- no broad parametric solver project;
+- no speculative import of every RA module or every external library.
 
 ## Required reads
 
@@ -83,544 +83,255 @@ The task is to expose and validate the accepted capabilities as one real web pla
 3. this Work Order
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `governance/INK_Product_Delivery_Model_v0.1.md`
-7. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-8. `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`
-9. `research/INK_CHAT_BOUNDED_EDIT_LOOP_REPORT_v0.1.md`
-10. `research/INK_CHAT_MULTI_STEP_CREATIVE_COLLABORATION_REPORT_v0.1.md`
-11. `research/INK_STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_REPORT_v0.1.md`
-12. `product/source/index.html`
-13. `product/source/src/ink.js`
-14. `product/source/src/editor/creative-workspace.js`
-15. `product/source/src/ai/chat-runtime.js`
-16. existing extraction / Structure-Aware / Revision controllers only as required
+6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+7. `reference/RA0_9_baseline/README.md`
+8. `reference/RA0_9_baseline/IMPORT_MANIFEST.md`
+9. only the RA source / INK source / QA files required by the phases below
 
-## Product principle
+## Candidate RA material
+
+Evaluate at minimum:
+
+- `runtime/geometry_measurement_engine.js`
+- `runtime/compound_topology_engine.js`
+- `runtime/constraint_parameter_engine.js`
+- `runtime/generator_authoring_engine.js`
+- `runtime/dependency_recompute_engine.js`
+
+Also inspect their directly relevant tests, schemas and documented limitations.
+
+Do not assume these modules are production-ready for INK merely because they exist.
+
+## External benchmark candidates
+
+Benchmark only where they solve the same concrete geometry problem:
+
+- Paper.js — Bézier path intersections / compound path / Boolean behavior;
+- Clipper2 — polygon Boolean / offset / inflate / deflate robustness;
+- Bezier.js — Bézier split / project / nearest / intersection / reduction math.
+
+For each candidate verify:
+
+- official/current project source;
+- license;
+- browser-local compatibility;
+- dependency / bundle implications;
+- deterministic behavior relevant to INK;
+- normalization cost back into INK Path.
+
+No library is pre-authorized for permanent product inclusion before the evaluation gate.
+
+## Long Sequence Workpack
+
+### Phase A — Exact INK geometry inventory
+
+Map current INK capabilities before adding anything.
+
+At minimum determine current support and exact gaps for:
+
+- path / curve intersection;
+- Boolean union / subtract / intersect / exclude;
+- offset / inflate / deflate;
+- split / project / nearest-point;
+- compound path / winding / hole integrity;
+- geometry measurement / fitting;
+- topology relations;
+- dependency / recompute concepts already present in INK.
+
+Output a concise capability matrix:
 
 ```text
-WEB_PLATFORM
-=
-VISIBLE SHELL OVER EXISTING AUTHORITIES
-
-WEB_PLATFORM
-≠
-SECOND EDITOR
-≠
-SECOND DOCUMENT MODEL
-≠
-FIGMA CLONE
+CAPABILITY
+→ EXISTING_INK
+→ GAP
+→ RA_CANDIDATE
+→ EXTERNAL_CANDIDATE
+→ DECISION_PENDING
 ```
 
-Do not duplicate accepted INK engines merely to make deployment easier.
+Checkpoint commit required.
 
-## Objective
+### Phase B — RA capability verification
 
-Deliver the first visible INK Web platform that the user can open in a normal desktop browser and use to inspect what INK can currently do.
+Execute or extend bounded tests against the relevant RA modules.
 
-Minimum visible experience:
+Required result for each module:
+
+`ADOPT / ADAPT / REFERENCE_ONLY / DEFER`
+
+Record why.
+
+Pay special attention to:
+
+- numerical behavior;
+- topology preservation;
+- stable IDs / provenance assumptions;
+- dependency semantics;
+- known unsupported compound / weave / offset cases;
+- whether the module assumes an RA-specific scene/workbench authority.
+
+Checkpoint commit required.
+
+### Phase C — External geometry benchmark
+
+Build a small isolated benchmark harness; do not wire external libraries into product source yet.
+
+Use representative fixtures, including:
+
+1. intersecting cubic Béziers;
+2. overlapping closed contours;
+3. subtract producing a hole;
+4. compound path with winding/hole preservation;
+5. positive and negative offset;
+6. near-tangent / numerically difficult intersection;
+7. split/project/nearest-point case;
+8. one geometry fixture derived from existing INK/Rose Window material where practical.
+
+Compare:
+
+- correctness;
+- deterministic repeatability;
+- topology preservation;
+- browser-local execution;
+- serialization friendliness;
+- performance adequate for editor use;
+- dependency size / complexity;
+- normalization into INK Path.
+
+Checkpoint commit required.
+
+### Phase D — Selection gate
+
+Before product mutation, freeze one explicit decision matrix.
+
+Required form:
 
 ```text
-open fixed web URL
-→ INK workspace loads
-→ import reference image
-→ see reference on canvas
-→ run Direct Extraction
-→ see editable Paths + overlay
-→ optionally run Structure-Aware reconstruction
-→ inspect structure/result diagnostics
-→ make bounded edits / repaint / compose
-→ discuss through visible CHAT surface
-→ approve bounded CHAT operation/plan
-→ capture/restore Revision
+CAPABILITY
+→ KEEP_INK
+→ ADAPT_RA
+→ USE_EXTERNAL_ADAPTER
+→ REFERENCE_ONLY
+→ DEFER
 ```
 
-The Rose Window is the first runtime case.
+Selection principle:
 
-## Phase A — Existing-web audit + deployment closure plan
+```text
+RA = semantic geometry / measurement / dependency intelligence where useful
+external = low-level geometry math only where demonstrably stronger
+INK = sole authoritative editable model
+```
 
-Audit the current `product/source` browser application before changing UI.
+If the matrix cannot establish a bounded architecture without creating a parallel vector authority:
 
-Required findings:
+`STOP = MR_REVIEW_REQUIRED`
 
-- exact static entrypoint and module closure;
-- relative-path / CSP / Service Worker constraints under static hosting;
-- whether Creative Workspace is already mounted and how it is reached;
-- current image import route;
-- current extraction + overlay route;
-- current Structure-Aware route and what UI wiring is missing;
-- current CHAT runtime vs current Creative Workspace CHAT controls;
-- exact deployment payload needed for a static web URL;
-- any blocker to GitHub Pages or equivalent static hosting.
+Otherwise continue automatically to Phase E.
 
-Do not add product features in this phase.
+### Phase E — Bounded shared-core implementation
 
-Checkpoint commit required.
+Implement only the selected Foundation A capabilities through INK-owned adapter boundaries.
 
-## Phase B — First visible web shell
+Requirements:
 
-Make the existing application usable as the first INK Web surface.
+- normalize all results to existing authoritative INK Path structures;
+- all mutations must pass existing INK command / transaction / History semantics;
+- preserve stable object identity rules;
+- preserve save/load/serialization;
+- preserve `FORMAT_VERSION = 4`;
+- external or RA internal objects must not survive as second authoritative document state;
+- adapters must be replaceable without rewriting the document model.
 
-Required:
+Do not add UI except minimal non-user-facing hooks required for QA.
 
-- normal browser load from HTTP(S), not file-only assumptions;
-- existing canvas/editor is the primary workspace;
-- Creative Workspace is visible or clearly discoverable on first use;
-- image/reference import is visible and usable;
-- no sign-in requirement for this first single-user version;
-- no duplicate editor shell;
-- no new document authority.
+Checkpoint commits required by meaningful capability group.
 
-UI polish should be bounded. This is a visibility/usability integration task, not a broad redesign.
+### Phase F — Closure validation
 
-Checkpoint commit required.
+Required checks:
 
-## Phase C — Visible conversational CHAT surface
+- source/static checks;
+- deterministic geometry fixtures;
+- repeated-run equality where applicable;
+- History undo/redo;
+- save/load roundtrip;
+- compound/hole integrity;
+- no stale/duplicate ownership;
+- browser-local execution;
+- self-hosted Windows real-browser QA;
+- at least one real artwork/complex-geometry acceptance case.
 
-The current Creative Workspace CHAT controls expose structured edit operations, but they are not sufficient as the user's first visible discussion surface.
+Use the existing self-hosted Windows runtime path. Do not modify PowerShell execution policy.
 
-Add a bounded conversational panel over the existing CHAT runtime.
+Final gate:
 
-Required visible behavior:
+`STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED`
 
-- transcript area;
-- natural-language prompt input;
-- current document/context binding through the existing context/runtime contract;
-- visible provider/runtime status;
-- ability to inspect the current document before proposing edits;
-- AI/manual response may discuss the artwork without mutating it;
-- any actual document mutation must still become an existing bounded edit task or multi-step creative plan;
-- explicit approval remains required before execution;
-- Revision/History authority remains unchanged;
-- no direct model access to DOM/canvas/file system;
-- no committed API key or secret;
-- credential handling must remain session-only or use an explicitly configured external endpoint;
-- local/manual mode remains available when no remote provider is configured.
+## Required evidence artifact
 
-For a real AI provider path, reuse the existing provider/endpoint adapter contract where possible. Do not hard-wire a vendor into the document/editor core.
+Create/update exactly one task-level report:
 
-If real conversational response cannot be supported without a new mandatory backend or unsafe committed credential, STOP and document the exact transport blocker. Do not fake AI conversation.
+`research/INK_RA_FOUNDATION_A_VECTOR_GEOMETRY_REPORT_v0.1.md`
 
-Checkpoint commit required.
+It must contain:
 
-## Phase D — Rose Window first visible runtime case
+- exact INK inventory;
+- RA module disposition;
+- external benchmark evidence;
+- selected adapter architecture;
+- product files changed;
+- tests executed;
+- runtime evidence;
+- unresolved limitations;
+- final gate status.
 
-Use the Rose Window as the first user-visible proof.
+Do not create additional planning documents unless a concrete technical contract cannot fit in the Work Order or report.
 
-Preferred source:
+## DEV progress discipline
 
-`qa/fixtures/rose-window/rose-window-primary.png`
-
-If the browser runtime cannot directly materialize that repository binary in the test environment, the USER-approved 1086 × 1448 supplied Rose Window may be used. SHA/RGB-RGBA mismatch is not a STOP condition for this visible runtime stage.
-
-Required visible operations:
-
-1. import the Rose Window;
-2. display reference image;
-3. run Direct Extraction as default;
-4. display extracted editable Path result;
-5. display reference/path overlay with controllable opacity;
-6. expose path/node/provenance diagnostics sufficient to understand the result;
-7. expose Structure-Aware as an optional structured reconstruction path;
-8. show selected radial count / retained prototype information when Structure-Aware is used;
-9. allow at least one bounded Path/appearance/composition edit;
-10. capture a Revision and restore it;
-11. bind the current artwork state to the visible CHAT panel.
-
-Do not require the Structure-Aware result to beat Direct Extraction.
-
-Checkpoint commit required.
-
-## Phase E — Static deployment preparation
-
-Prepare the exact static deployment payload.
-
-Preferred hosting target:
-
-`GitHub Pages`
-
-unless an existing repository constraint proves another static host materially simpler.
-
-Rules:
-
-- static assets only for core app;
-- no mandatory server runtime;
-- no GitHub Actions dependency;
-- do not mutate `package/ink-current`;
-- preserve shared-core module paths or document any bounded deployment mapping;
-- Service Worker / manifest scope must be correct for the deployed base path;
-- no environment-specific absolute localhost paths;
-- no secrets in repository;
-- deployment must remain replaceable/upgradeable without forking the product source.
-
-DEV may prepare deployment files/configuration on the work branch.
-
-If activating the final public URL requires a GitHub repository Pages setting unavailable to DEV/MR tooling, record:
-
-`USER_ONE_TIME_PAGES_ACTION_REQUIRED`
-
-with the exact setting required. That is not permission to substitute another external proxy.
-
-Checkpoint commit required.
-
-## Phase F — Real browser runtime QA
-
-Unlike earlier source-only stages, this stage exists to make the platform visible.
-
-Therefore the gate requires actual browser execution.
-
-At minimum validate in current desktop Chrome-compatible runtime:
-
-- page loads without fatal console/module errors;
-- canvas/editor renders;
-- Creative Workspace opens;
-- image/reference import works;
-- Rose Window displays;
-- Direct Extraction completes;
-- overlay works;
-- resulting Paths are selectable/editable;
-- Structure-Aware visible path executes or reports a bounded actionable error;
-- CHAT panel accepts natural-language input;
-- document context can be inspected;
-- proposal/plan approval boundary is enforced;
-- Revision capture/restore works;
-- save/reload does not corrupt the document;
-- no mandatory remote dependency for non-AI editing core.
-
-Record concrete runtime evidence. Browser/runtime QA may not be marked DEFERRED for final gate closure.
-
-Checkpoint commit required.
-
-## Phase G — report + DEV handoff
-
-Create:
-
-`research/INK_FIRST_VISIBLE_WEB_PLATFORM_REPORT_v0.1.md`
-
-Update branch-local:
+Branch-local:
 
 `ACTIVE/INK_DEV_PROGRESS.md`
 
-Return:
+Update at every meaningful checkpoint with:
 
-`DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+- exact HEAD;
+- phase;
+- files changed;
+- tests run;
+- current blockers;
+- next phase.
 
-## Acceptance gate
+## Current INK Web observation — held outside this task
+
+The deployed staging platform is live:
+
+`https://thedoorw.github.io/INK-Browser-QA/`
+
+User observation:
 
 ```text
-STATIC_WEB_ENTRY = VERIFIED
-FIRST_VISIBLE_WEB_SHELL = WORKS
-CREATIVE_WORKSPACE_VISIBLE = VERIFIED
-REFERENCE_IMAGE_IMPORT = WORKS
-DIRECT_EXTRACTION_VISIBLE = WORKS
-EDITABLE_PATH_RESULT_VISIBLE = WORKS
-REFERENCE_OVERLAY_VISIBLE = WORKS
-STRUCTURE_AWARE_OPTION_VISIBLE = WORKS
-ROSE_WINDOW_RUNTIME_CASE = EXECUTED
-CHAT_CONVERSATION_UI = IMPLEMENTED
-CHAT_DOCUMENT_CONTEXT = VERIFIED
-CHAT_MUTATION_APPROVAL_BOUNDARY = PRESERVED
-CHAT_REMOTE_PROVIDER = OPTIONAL
-NO_COMMITTED_SECRET = VERIFIED
-REVISION_CAPTURE_RESTORE = VERIFIED
-STATIC_DEPLOYMENT_PAYLOAD = READY
-PUBLIC_URL = READY_OR_USER_ONE_TIME_PAGES_ACTION_REQUIRED
-SHARED_CORE_REUSED = VERIFIED
-SECOND_EDITOR_CORE = 0
-SECOND_DOCUMENT_AUTHORITY = 0
-MANDATORY_REMOTE_DEPENDENCY_FOR_EDITOR = 0
-FORMAT_VERSION = 4
-PACKAGE_INK_CURRENT_MUTATION = 0
-MAIN_MERGE = 0
-BROWSER_RUNTIME_QA = EXECUTED
+INK_WEB_UI = VISUALLY_TOO_CLUTTERED / DISCUSSION_REQUIRED
+PRODUCT_VERSION_NUMBER = USER_WANTS_CHANGE / DISCUSSION_REQUIRED
 ```
 
-Target gate:
+These are intentionally not part of INK-RA-001.
 
-`INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS`
-
-## Explicit exclusions
-
-Do not implement:
-
-- real-time multi-user collaboration;
-- team workspace;
-- comments/presence;
-- account/auth system unless a concrete deployment blocker requires a separate decision;
-- Figma feature parity;
-- generic plugin marketplace;
-- broad UI redesign;
-- autonomous/open-ended CHAT agent;
-- recursive self-planning;
-- second editor/document/History/Revision/renderer engine;
-- mandatory Cloud backend for core editing;
-- new extraction engine merely for this stage;
-- SAM/OpenCV/VTracer integration unless a concrete current runtime dependency already exists and only bounded wiring is required;
-- `FORMAT_VERSION` bump;
-- `package/ink-current` regeneration.
-
-## Hard STOP
-
-STOP if:
-
-1. `FORMAT_VERSION` change is required;
-2. deployment requires forking/duplicating the editor core;
-3. a mandatory backend becomes required for core editing;
-4. CHAT requires committing a secret or unsafe permanent browser credential;
-5. current browser source cannot be statically hosted without broad architecture redesign;
-6. accepted document/History/Revision behavior must be broken;
-7. actual browser runtime cannot be executed and no user-visible platform can be demonstrated;
-8. a broader product/hosting decision is required.
-
-A one-time GitHub Pages enable/source-setting action is not an architecture STOP; document it for USER/MR.
+After RA work is underway, MR and USER will separately define the INK Web UI direction and version-number policy. No DEV should pre-empt that discussion.
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-018
-BRANCH = work/ink-cloud-018
-GATE = INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS
-DEFAULT_EXTRACTION = DIRECT_EXTRACTION
-STRUCTURE_AWARE = OPTIONAL
+TASK_ID = INK-RA-001
+BRANCH = work/ink-ra-001
+GATE = STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED
 FORMAT_VERSION = 4
-PACKAGE_INK_CURRENT_MUTATION = 0
-MAIN_MERGE = 0
+UI_MUTATION = 0
+PRODUCT_DISPLAY_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
 BROWSER_RUNTIME_QA = EXECUTED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
-
-
-## Local runtime override — GitHub Actions quota exhausted
-
-For INK-CLOUD-018, browser/runtime QA is to be executed from the user's Windows computer through PowerShell and a loopback HTTP server.
-
-Prepared branch artifacts:
-
-- `qa/runtime/start-ink-local.ps1`
-- `qa/runtime/check-ink-local.ps1`
-- `qa/runtime/INK_CLOUD_018_POWERSHELL_RUNTIME_RUNBOOK.md`
-- `research/INK_FIRST_VISIBLE_WEB_PLATFORM_PRE_RUNTIME_AUDIT_v0.1.md`
-
-Rules:
-
-```text
-GITHUB_ACTIONS = DO_NOT_USE
-EXTERNAL_PROXY = DO_NOT_USE
-LOCAL_POWERSHELL_RUNTIME = AUTHORIZED
-LOOPBACK = 127.0.0.1
-USER_MACHINE_BROWSER_QA = AUTHORITATIVE_FOR_018_RUNTIME_GATE
-```
-
-The next checkpoint is a local PowerShell preflight only. Product integration may continue after the local runtime path is confirmed operational.
-
-
-## Local Windows runtime clarification — no Git requirement
-
-The user machine does not have Git installed. Git is not required for INK-CLOUD-018 runtime QA.
-
-Authoritative local flow:
-
-```text
-GitHub branch ZIP
-→ PowerShell Invoke-WebRequest
-→ Expand-Archive
-→ loopback static server
-→ Chrome / Edge
-```
-
-Do not require:
-
-- `git --version`
-- `git status`
-- repository checkout
-- GitHub self-hosted runner
-- GitHub Actions
-
-Use the exact branch ZIP for `work/ink-cloud-018`.
-
-
-## Windows runtime correction — existing self-hosted runner
-
-The user's existing Windows GitHub self-hosted runner is the preferred runtime execution path for INK-CLOUD-018.
-
-Confirmed by user-machine console:
-
-```text
-C:\actions-runner-ink
-runner version = 2.337.0
-Connected to GitHub
-Listening for Jobs
-```
-
-Authoritative execution model:
-
-```text
-bounded GitHub workflow
-→ self-hosted Windows runner
-→ PowerShell / local browser runtime
-```
-
-Do not use a GitHub-hosted runner. Do not use Val Town or another external proxy.
-
-The previously recorded ZIP-first local flow is retained only as manual fallback if workflow dispatch is unavailable.
-
-
-## Pre-runtime gate — VERIFIED
-
-The user's existing Windows self-hosted runner has successfully executed the 018 web preflight.
-
-Accepted evidence:
-
-```text
-RUN_ID = 35574792555
-RUNNER = DESKTOP-NSOQH69
-RUNNER_VERSION = 2.337.0
-LABELS = self-hosted / Windows / X64
-POWERSHELL = 5.1.19041.7725
-CHROME_DISCOVERY = PASS
-BOUNDED_EXACT_SHA_MATERIALIZATION = PASS
-LOOPBACK_HTTP = PASS
-ES_MODULE_MIME = PASS
-MANIFEST = PASS
-SERVICE_WORKER_ASSET = PASS
-INK_SHELL_RENDER = PASS
-CREATIVE_WORKSPACE_MOUNT = PASS
-```
-
-The local Windows runtime environment is no longer a blocker.
-
-The same task may now proceed to:
-
-`Phase B / Phase C / Phase D — visible web integration, conversational CHAT surface and Rose Window runtime case.`
-
-This is not a final 018 gate pass. The finished product integration still requires the full browser/runtime acceptance defined above.
-
-
-## Browser/runtime tool boundary — explicit
-
-For INK-CLOUD-018 browser/runtime validation:
-
-```text
-AUTHORITATIVE_RUNTIME = Windows self-hosted runner
-RUNNER_LABELS = [self-hosted, Windows, X64]
-```
-
-The following are NOT authorized as substitutes for runtime evidence:
-
-- TinyFish;
-- ChatGPT Cloud Browser / Work browser;
-- external proxy browser services;
-- Val Town browser/proxy workarounds;
-- any remote browser session that does not execute on the user's registered Windows self-hosted runner.
-
-These tools may not be used to claim Phase F runtime acceptance.
-
-If browser interaction is required, it must be executed through the existing self-hosted Windows workflow or an explicitly authorized user-operated local browser path.
-
-
-## INK-CLOUD-018 final closure
-
-```text
-TASK = INK-CLOUD-018
-DECISION = MR_PASS
-GATE = INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS
-BROWSER_RUNTIME_QA = EXECUTED / PASS
-PROMOTION_PR = #20 / MERGED
-MAIN_PROMOTION_SHA = ed0b78a7fa3ac6db901863edd0246ee163c00ec4
-DEFAULT_EXTRACTION = DIRECT_EXTRACTION
-STRUCTURE_AWARE = OPTIONAL
-FORMAT_VERSION = 4
-PACKAGE_INK_CURRENT_MUTATION = 0
-PUBLIC_URL = USER_ONE_TIME_PAGES_ACTION_REQUIRED
-```
-
-Next action is not a new engineering Work Order.
-
-The next action is the one-time GitHub Pages repository setting:
-
-```text
-Settings
-→ Pages
-→ Deploy from a branch
-→ main
-→ / (root)
-```
-
-After the public URL is live, USER performs the first visible/manual Rose Window acceptance in the deployed INK Web platform.
-
-
-## Post-promotion public URL confirmation
-
-User-confirmed public INK Web URL:
-
-`https://thedoorw.github.io/INK/`
-
-```text
-PUBLIC_URL = https://thedoorw.github.io/INK/
-PAGES_ONE_TIME_ACTION = COMPLETE
-NEXT_ACTION = USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE
-```
-
-This supersedes the earlier provisional `USER_ONE_TIME_PAGES_ACTION_REQUIRED` state for the live deployment checkpoint.
-
-
-## Public URL correction — GitHub Pages not live
-
-User browser evidence returned GitHub Pages 404 for:
-
-`https://thedoorw.github.io/INK/`
-
-Repository inventory confirms the current product repository is:
-
-`thedoorw/INK-Browser-QA`
-
-and no accessible repository named `thedoorw/INK` exists.
-
-Therefore the prior `PUBLIC_URL = READY` entry is superseded.
-
-```text
-PUBLIC_URL = NOT_YET_LIVE
-PAGES_STATUS = CONFIGURATION_REQUIRED
-INVALID_ASSUMED_URL = https://thedoorw.github.io/INK/
-CURRENT_REPO = thedoorw/INK-Browser-QA
-EXPECTED_REPO_PAGES_URL = https://thedoorw.github.io/INK-Browser-QA/
-NEXT_ACTION = CONFIGURE_GITHUB_PAGES_OR_CREATE_DEDICATED_INK_REPO
-```
-
-
-## Deployment decision — staging first, formal INK repo later
-
-User decision:
-
-```text
-FIRST = publish current INK-Browser-QA through GitHub Pages
-VERIFY = open deployed INK Web + Rose Window visible acceptance
-LATER = create dedicated thedoorw/INK repository for formal public release
-FINAL_PUBLIC_URL_TARGET = https://thedoorw.github.io/INK/
-```
-
-Current immediate target:
-
-`https://thedoorw.github.io/INK-Browser-QA/`
-
-
-## Staging live verification — 2026-09-21
-
-Public staging was independently opened after GitHub Pages configuration.
-
-```text
-STAGING_URL = https://thedoorw.github.io/INK-Browser-QA/
-FINAL_URL = https://thedoorw.github.io/INK-Browser-QA/product/source/
-PAGE_TITLE = INK v1.6.5 RC · Web
-PUBLIC_HTTP_ACCESS = PASS
-ROOT_REDIRECT = PASS
-INK_WEB_STAGING = LIVE
-USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE = PENDING
-FORMAL_PUBLIC_REPO = DEFERRED
-FORMAL_PUBLIC_URL_TARGET = https://thedoorw.github.io/INK/
-```
-
-This supersedes the earlier `PUBLIC_URL = NOT_YET_LIVE` staging state. It does not claim the future dedicated `thedoorw/INK` site is live.
-
-No new product Work Order is authorized by this deployment checkpoint alone.
