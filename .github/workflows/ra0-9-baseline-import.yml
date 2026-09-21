@@ -1,0 +1,115 @@
+name: RA0.9 Baseline ZIP Import
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'reference/RA0_9_baseline/incoming/*.zip'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-ra-baseline:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Import RA baseline ZIP
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          $root = Join-Path $env:GITHUB_WORKSPACE 'reference\RA0_9_baseline'
+          $incoming = Join-Path $root 'incoming'
+          $source = Join-Path $root 'source'
+          $temp = Join-Path $env:RUNNER_TEMP ('ra-import-' + [guid]::NewGuid().ToString('N'))
+
+          $zips = @(Get-ChildItem -LiteralPath $incoming -Filter '*.zip' -File -ErrorAction SilentlyContinue)
+          if ($zips.Count -eq 0) {
+            Write-Host 'No RA ZIP found. Nothing to import.'
+            exit 0
+          }
+          if ($zips.Count -ne 1) {
+            throw "Expected exactly one ZIP in $incoming, found $($zips.Count)."
+          }
+
+          $zip = $zips[0]
+
+          if (Test-Path -LiteralPath $source) {
+            $existing = @(Get-ChildItem -LiteralPath $source -Recurse -File -ErrorAction SilentlyContinue)
+            if ($existing.Count -gt 0) {
+              throw 'RA baseline source is already populated. Refusing to overwrite an existing baseline.'
+            }
+          }
+
+          New-Item -ItemType Directory -Force -Path $temp | Out-Null
+          Expand-Archive -LiteralPath $zip.FullName -DestinationPath $temp -Force
+
+          $files = @(Get-ChildItem -LiteralPath $temp -Recurse -File)
+          if ($files.Count -eq 0) {
+            throw 'ZIP extracted successfully but contained no files.'
+          }
+
+          New-Item -ItemType Directory -Force -Path $source | Out-Null
+          Copy-Item -Path (Join-Path $temp '*') -Destination $source -Recurse -Force
+
+          $sha = (Get-FileHash -LiteralPath $zip.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          $byteCount = ($files | Measure-Object -Property Length -Sum).Sum
+          $zipBytes = $zip.Length
+          $importedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
+
+          $manifest = @"
+          # RA0.9 Baseline Import Manifest
+
+          Status: `IMPORTED_REFERENCE_BASELINE`
+
+          - Source ZIP: `$($zip.Name)`
+          - ZIP SHA256: `$sha`
+          - ZIP bytes: `$zipBytes`
+          - Extracted file count: `$($files.Count)`
+          - Extracted bytes: `$byteCount`
+          - Imported at UTC: `$importedAt`
+          - Import workflow: `.github/workflows/ra0-9-baseline-import.yml`
+
+          This baseline is reference material only and is not authoritative INK product source.
+          "@
+
+          Set-Content -LiteralPath (Join-Path $root 'IMPORT_MANIFEST.md') -Value $manifest -Encoding UTF8
+
+          Remove-Item -LiteralPath $zip.FullName -Force
+          Remove-Item -LiteralPath $temp -Recurse -Force
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all -- 'reference/RA0_9_baseline'
+          git status --short
+
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "Reference: import RA0.9 accepted baseline"
+            git push origin HEAD:main
+          } else {
+            Write-Host 'No changes to commit.'
+          }
+
+      - name: Verify imported baseline exists
+        shell: powershell
+        run: |
+          $source = Join-Path $env:GITHUB_WORKSPACE 'reference\RA0_9_baseline\source'
+          if (-not (Test-Path -LiteralPath $source)) {
+            throw 'RA source folder was not created.'
+          }
+          $count = @(Get-ChildItem -LiteralPath $source -Recurse -File).Count
+          if ($count -lt 1) {
+            throw 'RA source folder is empty.'
+          }
+          Write-Host "Imported RA source files: $count"
