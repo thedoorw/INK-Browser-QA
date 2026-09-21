@@ -23,16 +23,34 @@ jobs:
     name: Windows Self-Hosted Web Preflight
     runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 20
+    defaults:
+      run:
+        shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
 
     steps:
-      - name: Checkout exact branch revision
-        uses: actions/checkout@v4
-        with:
-          ref: work/ink-cloud-018
-          fetch-depth: 1
+      - name: Materialize exact revision without Git
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $archive = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-source.zip'
+          $extract = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-source'
+          Remove-Item $archive -Force -ErrorAction SilentlyContinue
+          Remove-Item $extract -Recurse -Force -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force -Path $extract | Out-Null
+          $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; 'X-GitHub-Api-Version' = '2022-11-28' }
+          $url = "https://api.github.com/repos/$env:GITHUB_REPOSITORY/zipball/$env:GITHUB_SHA"
+          Invoke-WebRequest -Uri $url -Headers $headers -OutFile $archive -UseBasicParsing
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($archive, $extract)
+          $root = Get-ChildItem $extract -Directory | Select-Object -First 1
+          if (-not $root) { throw 'Extracted revision root not found.' }
+          Get-ChildItem $env:GITHUB_WORKSPACE -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+          Copy-Item (Join-Path $root.FullName '*') $env:GITHUB_WORKSPACE -Recurse -Force
+          if (-not (Test-Path (Join-Path $env:GITHUB_WORKSPACE 'product\source\index.html'))) { throw 'INK source entry missing after materialization.' }
+          Write-Host "Materialized exact SHA: $env:GITHUB_SHA"
 
       - name: Record exact environment
-        shell: powershell
         run: |
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
           Write-Host "SHA: $env:GITHUB_SHA"
@@ -40,10 +58,9 @@ jobs:
           Write-Host "OS: $env:RUNNER_OS"
           Write-Host "Arch: $env:RUNNER_ARCH"
           Write-Host "PowerShell: $($PSVersionTable.PSVersion)"
-          if (Get-Command node -ErrorAction SilentlyContinue) { node --version } else { Write-Host "Node: NOT REQUIRED FOR PREFLIGHT" }
+          if (Get-Command node -ErrorAction SilentlyContinue) { node --version } else { Write-Host 'Node: NOT REQUIRED FOR PREFLIGHT' }
 
       - name: Locate Chrome or Edge
-        shell: powershell
         run: |
           $candidates = @(
             $env:INK_CHROMIUM_PATH,
@@ -55,28 +72,26 @@ jobs:
             (Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe')
           ) | Where-Object { $_ -and (Test-Path $_) }
           $browser = $candidates | Select-Object -First 1
-          if (-not $browser) { Write-Error 'No supported Chrome/Edge browser found on the self-hosted runner.'; exit 1 }
+          if (-not $browser) { throw 'No supported Chrome/Edge browser found on the self-hosted runner.' }
           "INK_CHROMIUM_PATH=$browser" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Host "Browser: $browser"
 
       - name: Start INK loopback server
-        shell: powershell
         run: |
           $stdout = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-server.out.log'
           $stderr = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-server.err.log'
-          $server = Start-Process powershell -ArgumentList @('-ExecutionPolicy','Bypass','-File',(Join-Path $env:GITHUB_WORKSPACE 'qa\runtime\start-ink-local.ps1'),'-NoBrowser') -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+          $server = Start-Process powershell -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $env:GITHUB_WORKSPACE 'qa\runtime\start-ink-local.ps1'),'-NoBrowser') -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
           $server.Id | Out-File (Join-Path $env:RUNNER_TEMP 'ink-cloud-018-server.pid') -Encoding ascii
           Start-Sleep -Seconds 2
-          if ($server.HasExited) { Get-Content $stdout -ErrorAction SilentlyContinue; Get-Content $stderr -ErrorAction SilentlyContinue; Write-Error 'INK local server exited during startup.'; exit 1 }
+          if ($server.HasExited) { Get-Content $stdout -ErrorAction SilentlyContinue; Get-Content $stderr -ErrorAction SilentlyContinue; throw 'INK local server exited during startup.' }
           Write-Host "INK server PID: $($server.Id)"
 
       - name: HTTP and module preflight
-        shell: powershell
         run: |
-          powershell -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1
+          & powershell -NoProfile -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Headless browser shell smoke
-        shell: powershell
         run: |
           $profile = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-chrome-profile'
           Remove-Item $profile -Recurse -Force -ErrorAction SilentlyContinue
@@ -86,16 +101,15 @@ jobs:
           $exit = $LASTEXITCODE
           $browserOutput | Out-File $dom -Encoding utf8
           $html = Get-Content $dom -Raw
-          if ($exit -ne 0) { Write-Host $html; Write-Error "Browser exited with code $exit"; exit 1 }
-          if ($html -notmatch 'id="app"') { Write-Host $html; Write-Error 'INK app root not found in rendered DOM.'; exit 1 }
-          if ($html -notmatch 'creativeWorkspace') { Write-Host $html; Write-Error 'Creative Workspace did not mount in rendered DOM.'; exit 1 }
-          if ($html -notmatch 'creativeWorkspaceToggle') { Write-Host $html; Write-Error 'Creative Workspace toggle did not mount in rendered DOM.'; exit 1 }
+          if ($exit -ne 0) { Write-Host $html; throw "Browser exited with code $exit" }
+          if ($html -notmatch 'id="app"') { Write-Host $html; throw 'INK app root not found in rendered DOM.' }
+          if ($html -notmatch 'creativeWorkspace') { Write-Host $html; throw 'Creative Workspace did not mount in rendered DOM.' }
+          if ($html -notmatch 'creativeWorkspaceToggle') { Write-Host $html; throw 'Creative Workspace toggle did not mount in rendered DOM.' }
           Write-Host '[PASS] INK shell rendered under real Chromium.'
           Write-Host '[PASS] Creative Workspace mounted.'
 
       - name: Summarize preflight
         if: always()
-        shell: powershell
         run: |
           Add-Content $env:GITHUB_STEP_SUMMARY '## INK-CLOUD-018 self-hosted web preflight'
           Add-Content $env:GITHUB_STEP_SUMMARY "- Runner: $env:RUNNER_NAME"
@@ -106,7 +120,9 @@ jobs:
 
       - name: Stop INK loopback server
         if: always()
-        shell: powershell
         run: |
           $pidFile = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-server.pid'
-          if (Test-Path $pidFile) { $serverPid = [int](Get-Content $pidFile -Raw); Stop-Process -Id $serverPid -Force -ErrorAction SilentlyContinue }
+          if (Test-Path $pidFile) {
+            $serverPid = [int](Get-Content $pidFile -Raw)
+            Stop-Process -Id $serverPid -Force -ErrorAction SilentlyContinue
+          }
