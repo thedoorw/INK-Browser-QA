@@ -1,48 +1,60 @@
 # INK REVIEW FINDINGS
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `MR_HOLD / SOURCE_REVIEW_PASS / BENCHMARK_REQUIRED`
 
-TASK: `INK-CLOUD-016`
+TASK: `INK-CLOUD-017`
 
-REVIEW_PAYLOAD_HEAD: `5997787da7d043f825e777dc8ea72a4227480b74`
+REVIEW_PAYLOAD_HEAD: `3000674329127956d20f6cb7f4a2fb88938152a7`
 
 ## Decision
 
-`MR_PASS`
+`MR_HOLD_BENCHMARK_EXECUTION_REQUIRED`
 
-No blocking source/contract finding remains for Portable Baseline Integration v0.1.
+The source and architecture review passes. The full task gate does not pass because required canonical benchmark evidence is absent.
 
-## Findings
+## Source findings
 
-- The portable/static entries still converge on the same authoritative `product/source/src/ink.js` shared core.
-- No `product/source/src/**` implementation changed in this task.
-- The bounded product changes are limited to `service-worker.js` and `manifest.webmanifest`.
-- The service-worker source shell is synchronized with the current JS/JSON source tree; the previously missing PWA icon references were removed.
-- Document persistence, single History authority, Revision, CHAT bounded edit, CHAT multi-step planning and Creative Workspace remain on the accepted shared authorities.
-- Mandatory remote dependency = 0.
-- Second editor/document/History/Revision core = 0.
+- `reconstructRadial()` now accepts the existing single Path contract and a deterministic complete Path array.
+- Multi-Path prototypes are represented with the existing `group` primitive.
+- Reconstruction delegates to the existing `createRepeat()` / Repeat / Transform authority.
+- Child Path IDs and extraction metadata are retained.
+- Focused evidence verifies deterministic Repeat identities, deterministic expanded child identities, JSON serialization, structured SVG traversal and bounded child-correction propagation.
+- The existing vector/Repeat engine, Direct Extraction core/adapter, migration/integrity, History and Revision authorities are unchanged by exact branch evidence.
+- The bounded `ink.js` change adds traversal of existing Repeat sources for canvas rendering, world bounds, hit testing and SVG export; it does not introduce a second renderer authority.
 - `FORMAT_VERSION = 4`.
-- Package mutation = 0.
-- Browser/service-worker runtime interaction was not executed and is not certified.
+- Package/release mutation = 0.
+- Mandatory remote runtime dependency = 0.
+- Branch is 6 ahead / 0 behind main at the reviewed handoff.
 
-## Promotion
+No blocking source/architecture defect was found.
 
-Clean promotion completed through PR `#18`.
+## Blocking evidence finding
 
-Main promotion:
+The Work Order explicitly requires:
 
-`6c332220a26c966193c128a0059724e8a644faa6`
+```text
+OVERLAY_QA = EXECUTED
+HARD_BENCHMARK_COMPARISON = RECORDED
+```
 
-Gate accepted:
+DEV recorded:
 
-`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
+```text
+ROSE_WINDOW_HARD_BENCHMARK_RERUN = NOT_EXECUTED_ENVIRONMENT
+NEW_STRUCTURE_AWARE_RASTER_METRICS = NOT_CLAIMED
+```
 
-## Next bounded-stage rationale
+MR independently reproduced the environment limitation: the local executor cannot resolve `github.com`; the available uploaded INK ZIP packages do not contain the canonical rose-window fixture; and the GitHub connector can confirm the binary blob but cannot materialize the binary into the local executor.
 
-The remaining high-value bounded technical gap is the structure-aware reconstruction limitation documented by the integrated rose-window benchmark: 265 sector Paths were reduced through a reconstruction boundary that could consume only one Path, producing only 3.19% recall. This is a concrete bounded engine gap and was explicitly deferred during workspace/collaboration work.
+This is an evidence-execution blocker, not a source defect.
 
-Next stage:
+## Pipeline decision
 
-`INK-CLOUD-017 — Structure-Aware Reconstruction Multi-Path Closure v0.1`
+```text
+STRUCTURE_AWARE_TECHNICALLY_CLOSED = YES
+STRUCTURE_AWARE_BENCHMARK = NOT_EVALUATED
+DIRECT_EXTRACTION_BASELINE = PRESERVED
+PIPELINE_SELECTION = DIRECT_EXTRACTION_CURRENT_BASELINE
+```
 
-Direct extraction remains the current production baseline until a new benchmark proves otherwise.
+No promotion or next product stage is authorized until the same-task benchmark continuation closes the missing evidence.
