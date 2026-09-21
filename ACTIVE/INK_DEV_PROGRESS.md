@@ -1,284 +1,125 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-015 / DEV_HANDOFF`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-015` |
-| TITLE | `CHAT Multi-Step Creative Collaboration v0.1` |
-| BRANCH | `work/ink-cloud-015` |
-| BASE_MAIN | `425c58c400bd08610574c0d5e8085e1cb55ec1f5` |
-| TASK_STATUS | `DEV_HANDOFF` |
-| DEV_HANDOFF | `YES` |
-| MR_REVIEW | `REQUIRED` |
-| GATE | `CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS` |
-| FORMAT_VERSION | `4 / UNCHANGED_EXPECTED` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
-| MAIN_MERGE | `0 / PROHIBITED` |
-| REMOTE_SERVICE_REQUIRED | `0` |
-| AUTONOMOUS_APPROVAL | `0` |
+| CURRENT_TASK_ID | `INK-CLOUD-006` |
+| DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
+| DEV_WORK_BRANCH | `work/ink-cloud-006` |
+| BASE_BRANCH_HEAD_AT_START | `d1f908825f8419f053753b93d13a1a4ee901de91` |
+| LATEST_DEV_COMMIT | `184c74195e976526713ad549b236e13c9dac9ad7` |
+| DEV_STATE | `DEV_HANDOFF` |
+| MR_GATE | `REQUIRED_AFTER_HANDOFF` |
+| FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSIONS` |
+| GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
+| CLOUD_START_GATE | `BLOCKED` |
 
-## Start state
+## Objective
 
-Read `ACTIVE/INK_CURRENT_WORK_ORDER.md` and begin:
+Complete the final pre-Cloud structural workpack defined in:
 
-`Phase A — Creative plan contract`
+`ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-Meaningful checkpoints must be committed and recorded here.
+Focus:
 
-Hard STOP conditions from the Current Work Order remain binding.
+- Layout / Constraints versioned structural schema;
+- transport-neutral file/revision persistence contract;
+- migration / integrity / save-load closure;
+- compatibility with accepted INK-CLOUD-002 through 005.
 
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+## Progress rule
 
+At each meaningful checkpoint record:
 
-## Phase A — Creative plan contract
+- exact SHA;
+- files changed;
+- schema decisions;
+- checks actually executed;
+- checks not executed;
+- known gaps.
 
-Implemented:
+If FORMAT_VERSION change is required:
 
-- `INK-CHAT-CREATIVE-PLAN / version 1`;
-- stable `planId`, source document/page/Revision/fingerprint identity;
-- bounded ordered `steps[]` with stable `stepId`;
-- existing CHAT edit-task operation/target/argument normalization reused;
-- explicit dependency references with deterministic earlier-step ordering;
-- status/diagnostic fields remain data, not an alternate document model.
+`STOP / MR_DECISION_REQUIRED`
 
-Checkpoint: `INK-CLOUD-015 Phase A creative plan contract`
+Do not independently change FORMAT_VERSION.
 
-`PHASE_A_COMPLETE / BEGIN_PHASE_B`
-
-
-## Phase B — Validation + preconditions
-
-Implemented deterministic, mutation-free plan validation:
-
-- plan source document/page/Revision/document-fingerprint must match current structured state;
-- every step resolves through the existing `normalizeChatEditTask` and `validateChatEditTaskAgainstState`;
-- supported-operation, target existence/type, lock/visibility/exposure and existing transform guards are reused;
-- History busy state blocks plan validation/execution eligibility;
-- dependency validity/order remains deterministic and cycles are rejected by earlier-step-only dependency ordering;
-- validation returns per-step target/operation summaries without document mutation.
-
-Checkpoint: `INK-CLOUD-015 Phase B plan validation and preconditions`
-
-`PHASE_B_COMPLETE / BEGIN_PHASE_C`
-
-
-## Phase C — Approval + local orchestration
-
-Implemented:
-
-- plan states `PROPOSED → APPROVED → EXECUTING → COMPLETED | STOPPED | REJECTED`;
-- explicit browser-local plan approval token; execute-before-approval is rejected;
-- plan approval is the human authority boundary; ordered steps then route through the existing CHAT bounded-edit controller and its accepted editor/History paths;
-- every step is revalidated immediately before execution;
-- execution tracks the exact expected document fingerprint after each successful step, so unaccounted state drift stops the plan;
-- first failure produces deterministic `STOPPED` result, records completed steps and leaves all remaining steps unexecuted;
-- no silent retarget, skip or autonomous plan approval.
-
-Checkpoint: `INK-CLOUD-015 Phase C approval and local orchestration`
-
-`PHASE_C_COMPLETE / BEGIN_PHASE_D`
-
-
-## Phase D — Revision-aware result / continuation
-
-Implemented:
-
-- plan execution records its starting Revision identity;
-- a completed plan captures an ending Revision through the accepted `RevisionController`;
-- a mid-plan STOP after successful steps captures the partial resulting state when the source Revision is still current;
-- if source Revision changed externally, capture is skipped rather than silently rebasing;
-- plan result records before/after Revision IDs, capture/equivalence state and accepted Revision comparison metadata;
-- the resulting Revision becomes the explicit base for a later plan;
-- no second diff or Revision engine was introduced.
-
-Checkpoint: `INK-CLOUD-015 Phase D Revision-aware plan results`
-
-`PHASE_D_COMPLETE / BEGIN_PHASE_E`
-
-
-## Phase E — Creative Workspace plan UX
-
-Connected the multi-step plan flow to the existing Creative Workspace CHAT pane:
-
-- editable intent summary;
-- ordered step builder using the existing operation/selection controls;
-- visible draft/proposed step list with operation, target count and validation/execution state;
-- Propose / Approve plan / Reject plan / Execute plan;
-- execution progress and STOP diagnostic display;
-- resulting Revision relation display;
-- runtime installation order is Revision → bounded edit → creative plan → Creative Workspace;
-- service-worker shell includes the new browser-local module.
-
-No broad UI redesign and no alternate editor authority were introduced.
-
-Checkpoint series:
-
-- `INK-CLOUD-015 Phase E Creative Workspace plan UX`
-- `Export CHAT creative-plan controller`
-- `Install CHAT creative-plan runtime before workspace`
-- `Cache CHAT creative-plan module in browser shell`
-
-`PHASE_E_COMPLETE / BEGIN_PHASE_F`
-
-
-## Phase F pretest bounded corrections
-
-Pre-regression inspection tightened three Work Order edges:
-
-- invalid/missing History authority is now rejected explicitly as `CHAT_PLAN_HISTORY_INVALID`;
-- per-step target validation runs before the document-fingerprint drift check so a removed/stale target yields the specific existing bounded-edit stale-target diagnostic rather than being masked by a generic fingerprint drift;
-- Creative Workspace step review now exposes concrete target object IDs, not only a target count.
-
-Checkpoint series:
-
-- `INK-CLOUD-015 Phase F tighten preconditions and stale-target diagnostics`
-- `INK-CLOUD-015 show plan target identities in workspace`
-
-`PHASE_F_REGRESSION_NEXT`
-
-
-## Phase F regression suite added
-
-Added reproducible unit/source coverage for:
-
-- deterministic 2+ step plan contract and dependency order rejection;
-- validation zero mutation;
-- execute-before-approval rejection;
-- ordered bounded execution through existing History;
-- Revision before/after capture relation;
-- stale Revision rejection;
-- stale target rejection with no retarget;
-- mid-plan failure STOP with remaining steps untouched;
-- invalid/busy History guard;
-- browser-local/no-remote source contract;
-- runtime export/install/cache wiring;
-- `FORMAT_VERSION = 4`.
-
-Tests:
-
-- `qa/core/tests/unit/chat-multi-step-creative-plan-v0.1.test.mjs`
-- `qa/core/tests/unit/chat-multi-step-creative-plan-source-v0.1.test.mjs`
-
-Checkpoint series:
-
-- `Add INK-CLOUD-015 multi-step plan regression tests`
-- `Add INK-CLOUD-015 source contract regression tests`
-
-`PHASE_F_EXECUTION_EVIDENCE_NEXT`
-
-
-## Phase F exact-source harness correction
-
-The first exact-source isolated harness exposed a pre-execution result-shape gap:
-
-- after a valid human plan approval, a stale Revision/target at execution time was rejected during whole-plan preflight before a deterministic plan `STOPPED` record could be produced.
-
-Bounded correction:
-
-- approval still performs full plan validation;
-- `assertApproved` now checks only the explicit approval state/token;
-- execution enters ordered orchestration and immediately revalidates each step;
-- stale Revision/target/precondition failures now produce the required per-step + whole-plan `STOPPED` record with remaining steps untouched.
-
-Checkpoint series:
-
-- `INK-CLOUD-015 make execution precondition failures deterministic plan stops`
-- `Align stale Revision regression with deterministic STOP result`
-
-`PHASE_F_HARNESS_RERUN_REQUIRED`
-
-
-## Phase F serialization + workspace regression coverage
-
-Added explicit feasible checks required by the Work Order:
-
-- normalized plan JSON round-trip;
-- completed plan result JSON round-trip;
-- Creative Workspace ordered step builder;
-- previous-step dependency wiring;
-- workspace plan propose → explicit approve → execute delegation;
-- execution receives the exact local plan approval token and consumes it after use.
-
-Additional test:
-
-- `qa/core/tests/unit/chat-multi-step-creative-workspace-v0.1.test.mjs`
-
-Checkpoint series:
-
-- `Add plan and result serialization regression coverage`
-- `Add INK-CLOUD-015 workspace plan orchestration regression`
-
-`PHASE_F_FINAL_EVIDENCE_NEXT`
-
-
-## Phase F — Regression evidence + report COMPLETE
-
-Executed against exact committed branch source:
-
-- creative-plan isolated orchestration harness: `14 / 14 PASS`;
-- Creative Workspace plan action harness: `7 / 7 PASS`;
-- syntax/static/architecture checks: `21 / 21 PASS`;
-- authorized-base branch scope compare: package mutation `0`, format/migration mutation `0`.
-
-Reproducible tests committed:
-
-- `qa/core/tests/unit/chat-multi-step-creative-plan-v0.1.test.mjs`;
-- `qa/core/tests/unit/chat-multi-step-creative-plan-source-v0.1.test.mjs`;
-- `qa/core/tests/unit/chat-multi-step-creative-workspace-v0.1.test.mjs`.
-
-Evidence:
-
-- `qa/core/evidence/INK_CLOUD_015_STATIC_CHECKS.txt`.
-
-Report:
-
-- `research/INK_CHAT_MULTI_STEP_CREATIVE_COLLABORATION_REPORT_v0.1.md`.
-
-Full repository Node runner and real browser/runtime interaction were not executed because direct checkout was unavailable in the execution environment. No browser/runtime PASS is claimed.
-
-`RUNTIME_QA = DEFERRED`
-
-## Acceptance gate candidate
-
-```text
-MULTI_STEP_PLAN_SCHEMA = IMPLEMENTED
-PLAN_VALIDATION = IMPLEMENTED
-EXPLICIT_APPROVAL = PRESERVED
-ORDERED_BOUNDED_EXECUTION = IMPLEMENTED
-STEP_REVALIDATION = IMPLEMENTED
-STOP_ON_FAILURE = IMPLEMENTED
-STALE_REVISION_REJECTION = IMPLEMENTED
-STALE_TARGET_REJECTION = IMPLEMENTED
-PLAN_RESULT_RECORD = IMPLEMENTED
-REVISION_BINDING = IMPLEMENTED
-WORKSPACE_PLAN_UI = CONNECTED
-EXISTING_CONTROLLERS = REUSED
-HISTORY_AUTHORITY = PRESERVED
-STRUCTURED_DOCUMENT = PRESERVED
-STATIC_BROWSER_LOCAL_CORE = PRESERVED
-REMOTE_SERVICE_REQUIRED = 0
-AUTONOMOUS_APPROVAL = 0
-FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-```
-
-Gate candidate:
-
-`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
-
-No Hard STOP condition was triggered.
-
-## DEV handoff
+## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-015
-BRANCH = work/ink-cloud-015
-GATE = CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS
+TASK_ID = INK-CLOUD-006
+BRANCH = work/ink-cloud-006
+FINAL_HEAD = <exact SHA>
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0 OR MR_DECISION_REQUIRED
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+## Checkpoint 1 — Layout and persistence schema
+
+Branch checkout started from GitHub `d1f908825f8419f053753b93d13a1a4ee901de91`. Read required control files, readiness assessment, accepted Component report, and required document/storage/assets/source tests.
+
+Implemented initial optional schemas:
+
+- `INK-LAYOUT-1` on Frame and `INK-LAYOUT-ITEM-1` on Frame children;
+- pure horizontal/vertical flow and resize-constraint evaluation plans;
+- existing-History commands for set/remove Frame and child metadata;
+- deterministic known-field normalization with unknown extension preservation;
+- `INK-FILE-ENVELOPE` v1.0 with stable file/revision identity, format/extension/migration declarations, document payload, asset reference mirror, timestamps and canonical fingerprint;
+- migration/integrity exports and diagnostics.
+
+Actually executed: source syntax checks for new modules and touched document modules PASS; `git diff --check` PASS. New layout/persistence suite initially 17/18 because one expected hug-height arithmetic value was incorrect (51 vs actual 46); expectation corrected from padding + intrinsic sizes + gap. Final rerun pending at this checkpoint. Browser Runtime QA remains DEFERRED.
+
+## Checkpoint 2 — semantic edge hardening
+
+Published schema checkpoint: `dc6c20ca71543773b791c571c51a423372b20d28`.
+
+Hardened deterministic evaluation and envelope behavior:
+
+- unknown future Frame layout schemas are preserved and reported as unsupported, never interpreted as v1;
+- unknown child schemas reject evaluation safely;
+- `fill` inside a `hug` axis uses intrinsic size with an explicit diagnostic, avoiding cyclic size authority;
+- cross-axis stretch is suppressed when that container axis is hug;
+- envelope input validates arrays/IDs/timestamps/format version;
+- revision creation retains existing future extension declarations while adding newly required native extensions;
+- feature detection now scans structural objects only, so workspace `cameras.layout` cannot falsely declare `ink.layout.v1`.
+
+Actually executed: new suite **20/20 PASS**; accepted Component/Frame/Group/Transform plus retained core suites via `run-component-foundation-checks.mjs`: **62/62 + 29/29 PASS**, 6 syntax checks and FORMAT_VERSION=4 PASS. Initial edge test exposed false `ink.layout.v1` detection from workspace camera naming; fixed by using `walkPageObjects()` and rerun. Runtime QA remains DEFERRED.
+
+## Checkpoint 3 — fail-closed persistence validation and combined evidence
+
+Published semantic hardening checkpoint: `04fab9e69a90ef5e90fd34a9030f6f2e389fb49a`.
+
+Closed malformed-input and verification edges:
+
+- envelope construction requires a stable document/file ID and parseable timestamps;
+- cyclic or otherwise non-serializable native payloads fail with bounded diagnostics instead of recursing or throwing during inspection;
+- extension and asset-reference inspection is exception-safe and remains fail closed;
+- added one command that executes accepted 002–005 compatibility, retained shared-core tests, the 006 contract suite, source syntax, format-version and network-boundary checks;
+- captured the exact command output in `qa/core/evidence/INK_CLOUD_006_NODE_CHECKS.txt`.
+
+Actually executed: combined runner **112/112 Node tests PASS** (62 accepted structural/Component + 29 retained shared-core + 21 Layout/persistence), **8/8 source syntax checks PASS**, `FORMAT_VERSION = 4` PASS, bounded new modules contain no network transport primitive, and `git diff --check` PASS. Runtime browser/Canvas/WebGL/pointer/IndexedDB and hosted Actions QA remain DEFERRED.
+
+Published implementation and executed-QA checkpoint: `184c74195e976526713ad549b236e13c9dac9ad7`.
+
+## Handoff
+
+The required closure report is `research/INK_LAYOUT_PERSISTENCE_CONTRACT_CLOSURE_REPORT_v0.1.md`. The final documentation-only handoff commit follows the exact implementation/QA checkpoint above. Because a Git commit cannot contain its own resulting SHA, its exact SHA is recorded in the DEV handoff response and is resolvable from the `work/ink-cloud-006` branch ref pinned for MR review.
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-006
+BRANCH = work/ink-cloud-006
+IMPLEMENTATION_AND_QA_HEAD = 184c74195e976526713ad549b236e13c9dac9ad7
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
