@@ -195,7 +195,7 @@
     "measurementContractChanged": false,
     "executedTwice": true,
     "secondRunJsonIdentical": true,
-    "emittedEvidenceFileSha256": "4dbea7923a5e9a69f4e24804e8f546f2b1e0b5fe9867d7adc29d0eb4a85a4057"
+    "rawRunnerOutputFileSha256": "4dbea7923a5e9a69f4e24804e8f546f2b1e0b5fe9867d7adc29d0eb4a85a4057"
   },
   "interpretation": {
     "contourCountsAreThresholdDerived": true,
