@@ -1,0 +1,81 @@
+INK-CLOUD-016 — Portable Integration Harness Evidence
+Branch: work/ink-cloud-016
+Phase: D
+Runtime QA: DEFERRED
+
+Harness:
+qa/core/tests/unit/portable-baseline-integration-v0.1.test.mjs
+Commit: de1c3e94fec8404ca2841452901ff288fc7f74b7
+
+Harness coverage:
+- exact product/source/src JS+JSON ↔ service-worker SOURCE_SHELL closure
+- all relative static import/export/dynamic-import file resolution
+- index.html and index-standalone shared-runtime convergence
+- deterministic runtime install sequence
+- single InkStore / single HistoryManager construction
+- structured document file-envelope open/save roundtrip
+- FORMAT_VERSION 4 preservation
+- executable History undo/redo
+- executable Revision capture/restore with RESET_TO_REVISION
+- CHAT bounded-edit / creative-plan / workspace controller presence
+- no mandatory network transport in persistence/Revision/CHAT local core
+- optional remote adapter remains guarded by localOnlyMode/endpoint configuration
+- package boundary remains outside product/source shared-core integration
+
+Executed in this DEV session:
+
+1. Exact branch service-worker/source-tree closure
+   - current source JS/JSON tree entries: 175
+   - current SOURCE_SHELL entries:        175
+   - missing:                             0
+   - extra:                               0
+   - result:                              PASS
+
+2. Exact branch static entry/install checks
+   - service-worker syntax parse          PASS
+   - manifest parse                       PASS
+   - invalid icon references              0
+   - index.html → src/ink.js              PASS
+   - standalone → compat → src/ink.js     PASS
+   - deterministic install sequence       PASS
+   - FORMAT_VERSION = 4                   PASS
+   - result                               10 / 10 PASS
+
+3. Persistence/collaboration exact branch checks
+   - document/file-envelope               PASS
+   - browser-local InkStore               PASS
+   - single History authority             PASS
+   - Revision same-store wiring           PASS
+   - CHAT bounded edit local              PASS
+   - CHAT creative-plan local             PASS
+   - Creative Workspace adapter boundary  PASS
+   - shared-core branch source diff        0 files
+   - result                               14 / 14 PASS
+
+4. Harness syntax
+   - exact GitHub branch harness fetched as base64
+   - Node v22.16.0
+   - node --check                         PASS
+
+Not executed / not claimed:
+- browser interaction QA
+- service-worker installation in a real browser
+- full node --test against a local branch checkout
+
+Reason:
+- this DEV environment has GitHub connector access but no materialized branch checkout/network clone;
+- GitHub Actions remains quota-exhausted per governance;
+- runtime/browser QA is explicitly DEFERRED for INK-CLOUD-016.
+
+The committed harness is deterministic and runnable from a repository checkout with:
+
+node --test qa/core/tests/unit/portable-baseline-integration-v0.1.test.mjs
+
+Disposition:
+PORTABLE_INTEGRATION_HARNESS = ADDED
+HARNESS_SYNTAX = PASS
+STATIC_TREE_CLOSURE = PASS
+STATIC_ENTRY_WIRING = PASS
+PERSISTENCE_COLLABORATION_SOURCE_COMPATIBILITY = PASS
+FULL_NODE_HARNESS_EXECUTION = DEFERRED
+BROWSER_RUNTIME_QA = DEFERRED
