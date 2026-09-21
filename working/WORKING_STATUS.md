@@ -1092,3 +1092,19 @@ CURRENT_REPO = thedoorw/INK-Browser-QA
 EXPECTED_REPO_PAGES_URL = https://thedoorw.github.io/INK-Browser-QA/
 NEXT_ACTION = CONFIGURE_GITHUB_PAGES_OR_CREATE_DEDICATED_INK_REPO
 ```
+
+
+## Deployment decision — staging first, formal INK repo later
+
+User decision:
+
+```text
+FIRST = publish current INK-Browser-QA through GitHub Pages
+VERIFY = open deployed INK Web + Rose Window visible acceptance
+LATER = create dedicated thedoorw/INK repository for formal public release
+FINAL_PUBLIC_URL_TARGET = https://thedoorw.github.io/INK/
+```
+
+Current immediate target:
+
+`https://thedoorw.github.io/INK-Browser-QA/`
