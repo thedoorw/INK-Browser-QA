@@ -1,30 +1,10 @@
-name: RA0.9 Baseline ZIP Import
+name: RA0.9 Baseline ZIP Import (disabled)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'reference/RA0_9_baseline/incoming/*.zip'
-      - '.github/workflows/ra0-9-baseline-import.yml'
-      - '.github/scripts/import-ra-baseline.ps1'
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
-  import-ra-baseline:
-    if: github.actor != 'github-actions[bot]'
-    runs-on: [self-hosted, Windows, X64]
-    timeout-minutes: 30
-    env:
-      GH_TOKEN: ${{ github.token }}
-
+  disabled:
+    runs-on: ubuntu-latest
     steps:
-      - name: Download importer script
-        shell: cmd
-        run: curl.exe -L -H "Authorization: Bearer %GH_TOKEN%" -H "User-Agent: INK-RA-baseline-import" "https://raw.githubusercontent.com/%GITHUB_REPOSITORY%/main/.github/scripts/import-ra-baseline.ps1" -o "%RUNNER_TEMP%\import-ra-baseline.ps1"
-
-      - name: Import RA baseline
-        shell: cmd
-        run: powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%RUNNER_TEMP%\import-ra-baseline.ps1"
+      - run: echo "RA baseline importer disabled. Do not use local PowerShell bypass."
