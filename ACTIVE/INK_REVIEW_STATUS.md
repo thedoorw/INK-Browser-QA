@@ -1,26 +1,29 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / PROMOTED / RUNTIME_QA_DEFERRED`
+STATUS: `DEVELOPMENT_AUTHORIZED / INK-CLOUD-017 / REVIEW_PENDING`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-016` |
-| DEV_BRANCH | `work/ink-cloud-016` |
-| REVIEW_PAYLOAD_HEAD | `5997787da7d043f825e777dc8ea72a4227480b74` |
-| DEV_REPORT_CHECKPOINT | `637cc9253b38a5ebef8103440ee87cc76d700c65` |
-| DECISION | `MR_PASS` |
-| GATE | `PORTABLE_SHARED_CORE_INTEGRITY_WORKS` |
-| PROMOTION_BRANCH | `promote/ink-cloud-016` |
-| PR | `#18 / MERGED` |
-| MAIN_PROMOTION | `6c332220a26c966193c128a0059724e8a644faa6` |
-| FORMAT_VERSION_CHANGE | `0` |
+| TASK_ID | `INK-CLOUD-017` |
+| DEV_BRANCH | `work/ink-cloud-017` |
+| CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
+| REVIEW_PAYLOAD_HEAD | `NOT_YET` |
+| DECISION | `PENDING_DEV_HANDOFF` |
+| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
+| ACCEPTED_PREDECESSOR | `INK-CLOUD-016` |
+| PREDECESSOR_GATE | `PORTABLE_SHARED_CORE_INTEGRITY_WORKS` |
+| PREDECESSOR_MAIN_PROMOTION | `6c332220a26c966193c128a0059724e8a644faa6` |
+| DIRECT_EXTRACTION_BASELINE | `PRESERVED` |
+| PIPELINE_SELECTION | `MR_DECISION_REQUIRED_AFTER_BENCHMARK` |
+| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
 | PACKAGE_UPDATE | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
 
-INK-CLOUD-016 is closed on main.
+INK-CLOUD-016 remains closed and accepted. INK-CLOUD-017 is now authorized as the bounded closure of the known single-Path Structure-Aware reconstruction bottleneck.
 
-Next bounded-stage decision:
+The prior 016 review record remains preserved in:
 
-`INK-CLOUD-017 — Structure-Aware Reconstruction Multi-Path Closure v0.1`
+- `ACTIVE/INK_REVIEW_FINDINGS.md`
+- `ACTIVE/INK_REVIEW_EVIDENCE.md`
 
-This stage is selected because the hard rose-window benchmark already isolated a bounded structural gap: sector extraction can produce many Paths, while the current radial reconstruction boundary consumes only one Path. The next stage should close that multi-Path/prototype reconstruction boundary and add overlay QA without replacing the accepted direct-extraction baseline unless evidence justifies it.
+No MR decision for 017 exists until DEV produces an exact handoff HEAD and comparative benchmark evidence.
