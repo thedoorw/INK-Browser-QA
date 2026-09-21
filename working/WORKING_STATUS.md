@@ -7,7 +7,7 @@ STATUS: `INK-CLOUD-018 / READY_FOR_DEV / FIRST_VISIBLE_WEB_PLATFORM`
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
 | CURRENT_TASK_ID | `INK-CLOUD-018` |
 | DEV_BRANCH | `work/ink-cloud-018` |
-| DEV_BRANCH_HEAD | `2e25e348051d700d2da068d6b4da2467610b8377` |
+| DEV_BRANCH_HEAD | `65ad8553f8ac81c8c12d14d4160cd9ccfb424e26` |
 | DEV_HANDOFF | `NO / TASK_NOT_STARTED` |
 | MR_REVIEW | `NOT_STARTED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
@@ -941,3 +941,28 @@ Important distinction:
 - It is not a second editor and not a Figma-clone build.
 
 Runtime QA is required for this gate and may not be deferred at final closure.
+
+
+## INK-CLOUD-018 local runtime preparation
+
+GitHub Actions quota is exhausted, so the authoritative runtime path for this stage is the user's Windows computer.
+
+Prepared on `work/ink-cloud-018`:
+
+```text
+PowerShell loopback static server = READY
+local HTTP/MIME preflight = READY
+runtime runbook = READY
+pre-runtime web audit = COMPLETE
+user-machine execution = NOT_YET_RUN
+```
+
+Branch checkpoint:
+
+`65ad8553f8ac81c8c12d14d4160cd9ccfb424e26`
+
+Next action:
+
+`USER_POWERSHELL_PREFLIGHT`
+
+Do not use GitHub Actions, Val Town or another external proxy as a substitute.
