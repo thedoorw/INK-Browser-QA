@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_PASS / PROMOTED / PUBLIC_URL_READY / USER_VISIBLE_ACCEPTANCE_NEXT`
+STATUS: `MR_PASS / PROMOTED / STAGING_LIVE / USER_VISIBLE_ACCEPTANCE_PENDING`
 
 ## Control
 
@@ -603,3 +603,24 @@ FINAL_PUBLIC_URL_TARGET = https://thedoorw.github.io/INK/
 Current immediate target:
 
 `https://thedoorw.github.io/INK-Browser-QA/`
+
+
+## Staging live verification — 2026-09-21
+
+Public staging was independently opened after GitHub Pages configuration.
+
+```text
+STAGING_URL = https://thedoorw.github.io/INK-Browser-QA/
+FINAL_URL = https://thedoorw.github.io/INK-Browser-QA/product/source/
+PAGE_TITLE = INK v1.6.5 RC · Web
+PUBLIC_HTTP_ACCESS = PASS
+ROOT_REDIRECT = PASS
+INK_WEB_STAGING = LIVE
+USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE = PENDING
+FORMAL_PUBLIC_REPO = DEFERRED
+FORMAL_PUBLIC_URL_TARGET = https://thedoorw.github.io/INK/
+```
+
+This supersedes the earlier `PUBLIC_URL = NOT_YET_LIVE` staging state. It does not claim the future dedicated `thedoorw/INK` site is live.
+
+No new product Work Order is authorized by this deployment checkpoint alone.
