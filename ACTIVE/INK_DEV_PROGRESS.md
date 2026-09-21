@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-015 / PHASE_E_COMPLETE`
+STATUS: `INK-CLOUD-015 / DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
@@ -8,9 +8,9 @@ STATUS: `INK-CLOUD-015 / PHASE_E_COMPLETE`
 | TITLE | `CHAT Multi-Step Creative Collaboration v0.1` |
 | BRANCH | `work/ink-cloud-015` |
 | BASE_MAIN | `425c58c400bd08610574c0d5e8085e1cb55ec1f5` |
-| TASK_STATUS | `PHASE_E_COMPLETE / PHASE_F_NEXT` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| DEV_HANDOFF | `YES` |
+| MR_REVIEW | `REQUIRED` |
 | GATE | `CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS` |
 | FORMAT_VERSION | `4 / UNCHANGED_EXPECTED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
@@ -211,3 +211,77 @@ Checkpoint series:
 - `Add INK-CLOUD-015 workspace plan orchestration regression`
 
 `PHASE_F_FINAL_EVIDENCE_NEXT`
+
+
+## Phase F — Regression evidence + report COMPLETE
+
+Executed against exact committed branch source:
+
+- creative-plan isolated orchestration harness: `14 / 14 PASS`;
+- Creative Workspace plan action harness: `7 / 7 PASS`;
+- syntax/static/architecture checks: `21 / 21 PASS`;
+- authorized-base branch scope compare: package mutation `0`, format/migration mutation `0`.
+
+Reproducible tests committed:
+
+- `qa/core/tests/unit/chat-multi-step-creative-plan-v0.1.test.mjs`;
+- `qa/core/tests/unit/chat-multi-step-creative-plan-source-v0.1.test.mjs`;
+- `qa/core/tests/unit/chat-multi-step-creative-workspace-v0.1.test.mjs`.
+
+Evidence:
+
+- `qa/core/evidence/INK_CLOUD_015_STATIC_CHECKS.txt`.
+
+Report:
+
+- `research/INK_CHAT_MULTI_STEP_CREATIVE_COLLABORATION_REPORT_v0.1.md`.
+
+Full repository Node runner and real browser/runtime interaction were not executed because direct checkout was unavailable in the execution environment. No browser/runtime PASS is claimed.
+
+`RUNTIME_QA = DEFERRED`
+
+## Acceptance gate candidate
+
+```text
+MULTI_STEP_PLAN_SCHEMA = IMPLEMENTED
+PLAN_VALIDATION = IMPLEMENTED
+EXPLICIT_APPROVAL = PRESERVED
+ORDERED_BOUNDED_EXECUTION = IMPLEMENTED
+STEP_REVALIDATION = IMPLEMENTED
+STOP_ON_FAILURE = IMPLEMENTED
+STALE_REVISION_REJECTION = IMPLEMENTED
+STALE_TARGET_REJECTION = IMPLEMENTED
+PLAN_RESULT_RECORD = IMPLEMENTED
+REVISION_BINDING = IMPLEMENTED
+WORKSPACE_PLAN_UI = CONNECTED
+EXISTING_CONTROLLERS = REUSED
+HISTORY_AUTHORITY = PRESERVED
+STRUCTURED_DOCUMENT = PRESERVED
+STATIC_BROWSER_LOCAL_CORE = PRESERVED
+REMOTE_SERVICE_REQUIRED = 0
+AUTONOMOUS_APPROVAL = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+```
+
+Gate candidate:
+
+`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
+
+No Hard STOP condition was triggered.
+
+## DEV handoff
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-015
+BRANCH = work/ink-cloud-015
+GATE = CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
