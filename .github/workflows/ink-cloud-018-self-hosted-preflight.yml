@@ -1,13 +1,6 @@
 name: INK-CLOUD-018 Self-Hosted Web Preflight
 
 on:
-  push:
-    branches:
-      - work/ink-cloud-018
-    paths:
-      - '.github/workflows/ink-cloud-018-self-hosted-preflight.yml'
-      - 'product/source/**'
-      - 'qa/runtime/**'
   workflow_dispatch:
 
 permissions:
