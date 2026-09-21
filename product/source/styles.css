@@ -1272,3 +1272,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 .creative-workspace-field select{min-width:0;height:30px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 7px;font-size:10px}
 .creative-workspace-inline{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .creative-workspace-inline input{width:100%}
+
+/* INK-CLOUD-018 — first visible web surface */
+.web-surface-badge{display:inline-flex;align-items:center;height:16px;padding:0 5px;border:1px solid currentColor;border-radius:3px;font-size:7px;font-weight:850;letter-spacing:.08em;opacity:.82}
