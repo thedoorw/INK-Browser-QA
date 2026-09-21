@@ -1,0 +1,152 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>INK-CLOUD-018 Browser Runtime QA</title>
+<style>
+body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:1200px;height:800px;border:1px solid #aaa}pre{white-space:pre-wrap}#qa-result[data-state="PASS"]{color:#08752f}#qa-result[data-state="FAIL"]{color:#a20d0d}
+</style>
+<h1>INK-CLOUD-018 Browser Runtime QA</h1>
+<strong id="qa-result" data-state="RUNNING">RUNNING</strong>
+<pre id="qa-log"></pre>
+<iframe id="ink-frame" src="/index.html?fresh=1"></iframe>
+<script>
+(() => {
+  const resultNode = document.querySelector('#qa-result');
+  const logNode = document.querySelector('#qa-log');
+  const frame = document.querySelector('#ink-frame');
+  const evidence = { task:'INK-CLOUD-018', fixture:'rose-window-primary.png', checks:[], metrics:{}, failures:[] };
+  const pass = (name, details={}) => { evidence.checks.push({name,status:'PASS',...details}); logNode.textContent = JSON.stringify(evidence,null,2); };
+  const assert = (condition, name, details={}) => { if (!condition) throw Object.assign(new Error(name),{qa:name,details}); pass(name,details); };
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  async function ready() {
+    for (let i=0;i<120;i++) {
+      const w=frame.contentWindow;
+      if (w?.INK_APP && w?.INK_TEST && w?.INK_AI && w.INK_APP.creativeWorkspace) return w;
+      await wait(250);
+    }
+    throw new Error('INK runtime did not boot');
+  }
+
+  async function run() {
+    const w=await ready(), app=w.INK_APP, cw=app.creativeWorkspace;
+    assert(w.INK_ARCHITECTURE?.formatVersion===4,'FORMAT_VERSION_4',{value:w.INK_ARCHITECTURE?.formatVersion});
+    assert(Boolean(w.document.querySelector('#stage')),'CANVAS_EDITOR_RENDERED');
+    assert(Boolean(cw.root?.classList.contains('open')),'CREATIVE_WORKSPACE_VISIBLE');
+    assert(Boolean(cw.root?.querySelector('[data-workspace-input="reference-file"]')),'REFERENCE_IMPORT_VISIBLE');
+    assert(Boolean(cw.root?.querySelector('[data-workspace-input="chat-prompt"]')),'CHAT_PROMPT_VISIBLE');
+    assert(Boolean(cw.root?.querySelector('[data-workspace-action="structure-reconstruct"]')),'STRUCTURE_AWARE_OPTION_VISIBLE');
+
+    const fixtureResponse=await fetch('/__qa_rose_window.png',{cache:'no-store'});
+    assert(fixtureResponse.ok,'ROSE_WINDOW_FIXTURE_HTTP',{status:fixtureResponse.status});
+    const blob=await fixtureResponse.blob();
+    const file=new File([blob],'rose-window-primary.png',{type:'image/png'});
+    const input=cw.root.querySelector('[data-workspace-input="reference-file"]');
+    const transfer=new DataTransfer(); transfer.items.add(file); input.files=transfer.files;
+
+    cw.setStage('reference');
+    const direct=await cw.runExtraction();
+    assert(Boolean(direct),'DIRECT_EXTRACTION_EXECUTED');
+    evidence.metrics.directPaths=direct?.diagnostics?.paths;
+    evidence.metrics.directNodes=direct?.diagnostics?.nodes;
+    evidence.metrics.directGeometrySha256=direct?.diagnostics?.geometrySha256;
+    assert((direct?.diagnostics?.paths||0)>0,'DIRECT_EXTRACTION_PATHS',{paths:direct?.diagnostics?.paths,nodes:direct?.diagnostics?.nodes});
+    const reference=app.findObject({objectId:direct.referenceObjectId});
+    assert(reference?.object?.type==='image','REFERENCE_IMAGE_DISPLAYED',{referenceObjectId:direct.referenceObjectId});
+    const firstPath=direct.paths?.[0], foundPath=firstPath?app.findObject({objectId:firstPath.id}):null;
+    assert(foundPath?.object?.type==='path','EDITABLE_PATH_RESULT_VISIBLE',{objectId:firstPath?.id});
+
+    const overlayChanged=cw.changeOverlay(.35);
+    assert(overlayChanged && Math.abs(app.findObject({objectId:direct.referenceObjectId}).object.opacity-.35)<1e-9,'REFERENCE_OVERLAY_CONTROLLABLE',{opacity:.35});
+
+    const enter=app.enterPathEdit({layerId:foundPath.layer.id,objectId:firstPath.id});
+    assert(Boolean(enter),'PATH_EDIT_ENTERED',{objectId:firstPath.id});
+    app.exitPathEdit();
+    app.selectOnly(foundPath.layer.id,firstPath.id);
+
+    cw.setStage('revision');
+    cw.root.querySelector('[data-workspace-input="revision-label"]').value='Rose Window direct baseline';
+    const baselineCapture=await cw.runRevisionAction('revision-capture');
+    const baselineRevision=baselineCapture?.record?.revisionId || app.revisions.revisionIdFor?.(app.doc.id);
+    assert(Boolean(baselineRevision),'REVISION_BASELINE_CAPTURED',{revisionId:baselineRevision});
+
+    cw.setStage('chat');
+    const inspected=cw.runChatAction('chat-inspect');
+    assert(inspected?.ok===true,'BOUNDED_CHAT_INSPECTED');
+    cw.root.querySelector('[data-workspace-input="chat-operation"]').value='path.repaint.v1';
+    cw.root.querySelector('[data-workspace-input="chat-color"]').value='#9f4f43';
+    const proposal=cw.runChatAction('chat-propose');
+    assert(proposal?.ok===true,'BOUNDED_EDIT_PROPOSED',{proposalId:cw.activeProposalId});
+    const beforeBlocked=JSON.stringify(app.doc);
+    const blocked=cw.runChatAction('chat-execute');
+    assert(blocked===null && cw.status?.code==='APPROVAL_REQUIRED' && JSON.stringify(app.doc)===beforeBlocked,'MUTATION_BLOCKED_BEFORE_APPROVAL',{code:cw.status?.code});
+    const approved=cw.runChatAction('chat-approve');
+    assert(approved?.ok===true && Boolean(cw.approvalToken),'BOUNDED_EDIT_APPROVED');
+    const executed=cw.runChatAction('chat-execute');
+    assert(executed?.ok===true,'BOUNDED_EDIT_EXECUTED',{changed:executed?.result?.changed});
+
+    const prompt=cw.root.querySelector('[data-workspace-input="chat-prompt"]');
+    prompt.value='Describe the current Rose Window document context without changing the artwork.';
+    const conversationBefore=JSON.stringify(app.doc);
+    const context=await cw.runConversationAction('chat-conversation-inspect');
+    assert(context?.format==='INK-CHAT-CONTEXT','CHAT_DOCUMENT_CONTEXT_BOUND',{sourceVersion:context?.sourceVersion});
+    const conversation=await cw.runConversationAction('chat-conversation-send');
+    assert(Boolean(conversation?.content),'CHAT_NATURAL_LANGUAGE_RESPONSE',{source:conversation?.source,provider:conversation?.provider});
+    assert(JSON.stringify(app.doc)===conversationBefore,'CHAT_DISCUSSION_NON_MUTATING');
+
+    cw.setStage('reference');
+    cw.root.querySelector('[data-workspace-input="structure-count"]').value='6';
+    const structured=await cw.runStructure();
+    assert(Boolean(structured),'STRUCTURE_AWARE_EXECUTED');
+    evidence.metrics.structureRadialCount=structured?.radialCount;
+    evidence.metrics.structurePrototypePaths=structured?.prototypePaths?.length;
+    evidence.metrics.structurePrototypeNodes=structured?.prototypeDiagnostics?.nodes;
+    evidence.metrics.structureMaskIoU=structured?.maskIoU;
+    assert(structured?.radialCount===6 && (structured?.prototypePaths?.length||0)>0,'STRUCTURE_AWARE_VISIBLE_RESULT',{radialCount:structured?.radialCount,prototypePaths:structured?.prototypePaths?.length,repeatId:structured?.repeatId});
+
+    cw.setStage('revision');
+    cw.root.querySelector('[data-workspace-input="revision-label"]').value='Rose Window structure checkpoint';
+    const structureCapture=await cw.runRevisionAction('revision-capture');
+    const structureRevision=structureCapture?.record?.revisionId || app.revisions.revisionIdFor?.(app.doc.id);
+    assert(Boolean(structureRevision),'REVISION_STRUCTURE_CAPTURED',{revisionId:structureRevision});
+
+    const revisionSelect=cw.root.querySelector('[data-workspace-input="revision-id"]');
+    revisionSelect.value=baselineRevision;
+    const restored=await cw.runRevisionAction('revision-restore');
+    assert(Boolean(restored) && cw.lastRevisionResult?.action==='restore','REVISION_RESTORE_EXECUTED',{revisionId:baselineRevision});
+    assert(w.INK_TEST.documentIntegrity()?.passed===true,'DOCUMENT_INTEGRITY_AFTER_RESTORE');
+
+    let savedBlob=null, savedName=null;
+    const originalDownload=app.download.bind(app);
+    app.download=(blobValue,name)=>{savedBlob=blobValue;savedName=name;};
+    await app.saveProject();
+    app.download=originalDownload;
+    assert(savedBlob instanceof Blob && savedBlob.size>0,'PROJECT_SAVE_SERIALIZED',{name:savedName,size:savedBlob?.size});
+    const savedFile=new File([savedBlob],savedName||'rose-window.ink',{type:'application/json'});
+    await app.openProjectFile(savedFile);
+    assert(w.INK_TEST.documentIntegrity()?.passed===true && app.doc.formatVersion===4,'PROJECT_RELOAD_INTEGRITY',{formatVersion:app.doc.formatVersion});
+
+    const health=w.INK_TEST.runtimeHealth?.();
+    evidence.metrics.runtimeHealth=health;
+    const fatalCount=Number(health?.errors?.fatal || health?.fatalErrors || health?.fatal || 0);
+    assert(!Number.isFinite(fatalCount) || fatalCount===0,'NO_FATAL_RUNTIME_HEALTH_ERRORS',{fatalCount});
+
+    evidence.final={
+      formatVersion:app.doc.formatVersion,
+      directExtractionDefault:app.extraction?.diagnostics?.().directExtractionDefault,
+      structureAwareOptional:app.extraction?.diagnostics?.().structureAwareOptional,
+      conversationMessages:cw.conversationMessages.length,
+      integrity:w.INK_TEST.documentIntegrity()
+    };
+    resultNode.dataset.state='PASS'; resultNode.textContent='PASS';
+    logNode.textContent=JSON.stringify(evidence,null,2);
+    document.documentElement.dataset.qa='PASS';
+  }
+
+  frame.addEventListener('load',()=>run().catch(error=>{
+    evidence.failures.push({message:error?.message||String(error),qa:error?.qa||null,details:error?.details||null,stack:error?.stack||null});
+    resultNode.dataset.state='FAIL'; resultNode.textContent='FAIL';
+    logNode.textContent=JSON.stringify(evidence,null,2);
+    document.documentElement.dataset.qa='FAIL';
+  }),{once:true});
+})();
+</script>
