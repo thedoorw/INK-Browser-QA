@@ -203,6 +203,13 @@ export class CreativeWorkspaceController {
     this.draftPlanSteps = [];
     this.planApprovalToken = null;
     this.lastPlanResult = null;
+    this.conversationMessages = [];
+    this.conversationSessionId = null;
+    this.conversationClient = null;
+    this.conversationPending = null;
+    this.lastConversationContext = null;
+    this.lastTransmissionPreview = null;
+    this.conversationBusy = false;
     this.revisionItems = [];
     this.lastRevisionResult = null;
   }
@@ -278,7 +285,18 @@ export class CreativeWorkspaceController {
           <output data-workspace-output="compose">Composition commands preserve structured objects.</output>
         </section>
         <section data-workspace-pane="chat" hidden>
-          <strong>CHAT bounded edit</strong>
+          <strong>Natural-language CHAT</strong>
+          <div class="creative-chat-runtime">
+            <span data-workspace-value="chat-runtime">LOCAL · manual-json</span>
+            <button type="button" data-workspace-action="chat-conversation-inspect">Inspect context</button>
+          </div>
+          <div class="creative-chat-transcript" data-workspace-output="chat-conversation" aria-live="polite"></div>
+          <label class="creative-workspace-field creative-workspace-prompt"><span>Prompt</span><textarea data-workspace-input="chat-prompt" rows="3" placeholder="Discuss the current artwork…"></textarea></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-conversation-send">Send</button><button type="button" data-workspace-action="chat-conversation-clear">Clear</button></div>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="chat-conversation-transmit" hidden>Approve external transmission</button>
+          <output data-workspace-output="chat-context">Context not inspected.</output>
+          <hr>
+          <strong>Bounded mutation</strong>
           <label class="creative-workspace-field"><span>Operation</span>
             <select data-workspace-input="chat-operation">
               <option value="path.repaint.v1">Repaint Path</option>
@@ -355,6 +373,7 @@ export class CreativeWorkspaceController {
     if (action === 'cancel-extract') return this.cancelExtraction();
     if (['enter-path-edit','exit-path-edit','simplify-path','refine-path','apply-expressive-stroke','clear-expressive-stroke'].includes(action)) return this.runEditAction(action);
     if (['duplicate','group','frame','front','back','repaint','apply-material','clear-material'].includes(action)) return this.runComposeAction(action);
+    if (['chat-conversation-inspect','chat-conversation-send','chat-conversation-clear','chat-conversation-transmit'].includes(action)) return this.runConversationAction(action);
     if (['chat-inspect','chat-propose','chat-approve','chat-reject','chat-execute'].includes(action)) return this.runChatAction(action);
     if (['chat-plan-add-step','chat-plan-clear','chat-plan-propose','chat-plan-approve','chat-plan-reject','chat-plan-execute'].includes(action)) return this.runChatPlanAction(action);
     if (['revision-capture','revision-list','revision-restore'].includes(action)) return this.runRevisionAction(action);
@@ -689,6 +708,112 @@ export class CreativeWorkspaceController {
     }
   }
 
+  conversationRuntime() {
+    return globalThis.INK_AI?.runtime || null;
+  }
+
+  conversationClientName() {
+    return globalThis.INK_AI?.uiState?.runtimeClient || 'manual-json';
+  }
+
+  ensureConversationSession() {
+    const runtime = this.conversationRuntime();
+    if (!runtime?.manager) throw Object.assign(new Error('CHAT runtime unavailable'), { code: 'CHAT_RUNTIME_UNAVAILABLE' });
+    const client = this.conversationClientName();
+    if (this.conversationSessionId && this.conversationClient === client) return this.conversationSessionId;
+    if (this.conversationSessionId) runtime.manager.end(this.conversationSessionId, { clearCredentials: false });
+    const session = runtime.manager.start({ client });
+    this.conversationSessionId = session.sessionId;
+    this.conversationClient = client;
+    return this.conversationSessionId;
+  }
+
+  inspectConversationContext() {
+    const runtime = this.conversationRuntime();
+    if (!runtime?.contextBuilder) throw Object.assign(new Error('CHAT context runtime unavailable'), { code: 'CHAT_CONTEXT_UNAVAILABLE' });
+    const context = runtime.contextBuilder.build({ level: 'DOCUMENT_SUMMARY', includeHistory: false });
+    this.lastConversationContext = clone(context);
+    return context;
+  }
+
+  appendConversationMessage(role, content, metadata = {}) {
+    this.conversationMessages.push({
+      id: `conversation-${this.conversationMessages.length + 1}`,
+      role,
+      content: String(content || ''),
+      provider: metadata.provider || null,
+      source: metadata.source || null
+    });
+    if (this.conversationMessages.length > 40) this.conversationMessages.splice(0, this.conversationMessages.length - 40);
+  }
+
+  async runConversationAction(action) {
+    try {
+      if (action === 'chat-conversation-clear') {
+        const runtime = this.conversationRuntime();
+        if (this.conversationSessionId) runtime?.manager?.end?.(this.conversationSessionId, { clearCredentials: false });
+        this.conversationMessages = [];
+        this.conversationSessionId = null;
+        this.conversationClient = null;
+        this.conversationPending = null;
+        this.lastTransmissionPreview = null;
+        this.setStatus('CHAT_CONVERSATION_CLEARED', 'Conversation cleared; document unchanged', 'info');
+        this.refresh();
+        return true;
+      }
+      if (action === 'chat-conversation-inspect') {
+        const context = this.inspectConversationContext();
+        this.setStatus('CHAT_DOCUMENT_CONTEXT_INSPECTED', `${context.level} · ${context.sourceVersion}`, 'pass');
+        this.refresh();
+        return context;
+      }
+
+      const promptInput = this.root?.querySelector('[data-workspace-input="chat-prompt"]');
+      const isApprovedTransmission = action === 'chat-conversation-transmit';
+      const prompt = isApprovedTransmission
+        ? this.conversationPending?.prompt
+        : text(promptInput?.value);
+      if (!prompt) throw Object.assign(new Error('Enter a natural-language prompt'), { code: 'CHAT_PROMPT_REQUIRED' });
+
+      const runtime = this.conversationRuntime();
+      const sessionId = this.ensureConversationSession();
+      const context = this.inspectConversationContext();
+      if (!isApprovedTransmission) this.appendConversationMessage('user', prompt);
+      const before = JSON.stringify(this.app?.doc || null);
+      this.conversationBusy = true;
+      this.refresh();
+      const response = await runtime.manager.requestConversation(sessionId, {
+        prompt,
+        contextOptions: { level: 'DOCUMENT_SUMMARY', includeHistory: false },
+        transmissionDecision: 'TEXT_SUMMARY',
+        userConsent: isApprovedTransmission
+      });
+      if (JSON.stringify(this.app?.doc || null) !== before) {
+        throw Object.assign(new Error('Conversation runtime changed the document outside the bounded edit authority'), { code: 'CHAT_CONVERSATION_MUTATED_DOCUMENT' });
+      }
+      if (response?.status === 'TRANSMISSION_APPROVAL_REQUIRED') {
+        this.conversationPending = { prompt };
+        this.lastTransmissionPreview = clone(response.transmissionPreview || null);
+        this.setStatus('CHAT_TRANSMISSION_APPROVAL_REQUIRED', 'Review and approve external text/context transmission', 'info');
+        this.refresh();
+        return response;
+      }
+      this.conversationPending = null;
+      this.lastTransmissionPreview = null;
+      this.appendConversationMessage('assistant', response?.content || '', { provider: response?.provider, source: response?.source });
+      if (promptInput) promptInput.value = '';
+      this.setStatus('CHAT_CONVERSATION_RESPONSE', `${response?.source || 'MODEL'} · document unchanged`, 'pass');
+      this.refresh();
+      return response;
+    } catch (error) {
+      this.setStatus(error?.code || 'CHAT_CONVERSATION_FAILED', error?.message || 'Conversation failed', 'error');
+      return null;
+    } finally {
+      this.conversationBusy = false;
+      this.refresh();
+    }
+  }
+
   runChatAction(action) {
     const adapter = this.app?.chatBoundedEditAdapter;
     if (!adapter) {
@@ -738,8 +863,61 @@ export class CreativeWorkspaceController {
     }
   }
 
+  refreshConversation() {
+    if (!this.root) return;
+    const runtime = this.conversationRuntime();
+    const client = this.conversationClientName();
+    const mode = runtime?.manager?.mode || 'LOCAL_ONLY';
+    const runtimeValue = this.root.querySelector('[data-workspace-value="chat-runtime"]');
+    if (runtimeValue) runtimeValue.textContent = `${mode} · ${client}${this.conversationBusy ? ' · BUSY' : ''}`;
+
+    const transcript = this.root.querySelector('[data-workspace-output="chat-conversation"]');
+    if (transcript) {
+      transcript.innerHTML = '';
+      if (!this.conversationMessages.length) {
+        const empty = document.createElement('p');
+        empty.className = 'creative-chat-empty';
+        empty.textContent = 'No conversation. Inspect the current document or enter a prompt.';
+        transcript.append(empty);
+      } else {
+        for (const message of this.conversationMessages) {
+          const row = document.createElement('div');
+          row.className = 'creative-chat-message';
+          row.dataset.role = message.role;
+          const label = document.createElement('strong');
+          label.textContent = message.role === 'user' ? 'YOU' : (message.source === 'LOCAL_CONTEXT' ? 'LOCAL' : 'CHAT');
+          const body = document.createElement('p');
+          body.textContent = message.content;
+          row.append(label, body);
+          transcript.append(row);
+        }
+      }
+    }
+
+    const contextOutput = this.root.querySelector('[data-workspace-output="chat-context"]');
+    if (contextOutput) {
+      if (this.lastTransmissionPreview) {
+        contextOutput.textContent = `EXTERNAL REVIEW · ${this.lastTransmissionPreview.provider} · ${this.lastTransmissionPreview.endpoint} · ${this.lastTransmissionPreview.estimatedBytes} bytes · text/context only`;
+      } else if (this.lastConversationContext) {
+        contextOutput.textContent = `${this.lastConversationContext.format} · ${this.lastConversationContext.level} · source ${this.lastConversationContext.sourceVersion} · ~${this.lastConversationContext.estimatedTokens} tokens`;
+      } else {
+        contextOutput.textContent = 'Context not inspected.';
+      }
+    }
+    const send = this.root.querySelector('[data-workspace-action="chat-conversation-send"]');
+    const inspect = this.root.querySelector('[data-workspace-action="chat-conversation-inspect"]');
+    const transmit = this.root.querySelector('[data-workspace-action="chat-conversation-transmit"]');
+    if (send) send.disabled = this.conversationBusy || Boolean(this.conversationPending);
+    if (inspect) inspect.disabled = this.conversationBusy;
+    if (transmit) {
+      transmit.hidden = !this.conversationPending;
+      transmit.disabled = this.conversationBusy || !this.conversationPending;
+    }
+  }
+
   refreshChat() {
     if (!this.root) return;
+    this.refreshConversation();
     const proposal = this.activeProposalId ? this.app?.chatBoundedEdit?.getProposal?.(this.activeProposalId) : null;
     const output = this.root.querySelector('[data-workspace-output="chat"]');
     if (output) {
