@@ -1,6 +1,8 @@
 import {
+  buildChatStateSummary,
   chatStateFingerprint,
-  normalizeChatEditTask
+  normalizeChatEditTask,
+  validateChatEditTaskAgainstState
 } from './chat-bounded-edit.js';
 
 export const CHAT_CREATIVE_PLAN_SCHEMA = 'INK-CHAT-CREATIVE-PLAN';
@@ -167,4 +169,101 @@ export function chatCreativePlanDiagnostic(error, phase = 'unknown') {
     if (error?.[key] !== undefined) diagnostic[key] = clone(error[key]);
   }
   return diagnostic;
+}
+
+
+export const CHAT_CREATIVE_PLAN_VALIDATION_SCHEMA = 'INK-CHAT-CREATIVE-PLAN-VALIDATION';
+export const CHAT_CREATIVE_PLAN_VALIDATION_VERSION = 1;
+
+export function chatCreativePlanSource(app) {
+  const summary = buildChatStateSummary(app);
+  return {
+    documentId: summary.document.id,
+    pageId: summary.page.id,
+    revisionId: summary.revision.revisionId ?? null,
+    documentFingerprint: summary.revision.documentFingerprint
+  };
+}
+
+function assertPlanSourceCurrent(app, source) {
+  const current = chatCreativePlanSource(app);
+  if (source.documentId !== current.documentId) {
+    planFail('STALE_DOCUMENT', { expected: source.documentId, actual: current.documentId });
+  }
+  if (source.pageId !== current.pageId) {
+    planFail('STALE_PAGE', { expected: source.pageId, actual: current.pageId });
+  }
+  if (source.revisionId !== current.revisionId) {
+    planFail('STALE_REVISION', { expected: source.revisionId, actual: current.revisionId });
+  }
+  if (source.documentFingerprint !== current.documentFingerprint) {
+    planFail('STALE_DOCUMENT_FINGERPRINT', {
+      expected: source.documentFingerprint,
+      actual: current.documentFingerprint
+    });
+  }
+  return current;
+}
+
+function stepAsEditTask(plan, step) {
+  return {
+    schema: 'INK-CHAT-EDIT-TASK',
+    version: 1,
+    taskId: `${plan.planId}:${step.stepId}`,
+    operation: step.operation,
+    targets: clone(step.targets),
+    arguments: clone(step.arguments),
+    expected: {
+      documentId: plan.source.documentId,
+      pageId: plan.source.pageId,
+      revisionId: plan.source.revisionId
+    }
+  };
+}
+
+export function validateChatCreativePlanAgainstState(app, rawPlan, {
+  requireHistoryIdle = true,
+  source = null
+} = {}) {
+  const plan = normalizeChatCreativePlan(rawPlan, { source: source ?? chatCreativePlanSource(app) });
+  const currentSource = assertPlanSourceCurrent(app, plan.source);
+  if (requireHistoryIdle && app?.history?.pending) planFail('HISTORY_BUSY');
+
+  const steps = plan.steps.map((step, stepIndex) => {
+    const task = stepAsEditTask(plan, step);
+    const validation = validateChatEditTaskAgainstState(app, task, {
+      expected: task.expected,
+      requireHistoryIdle
+    });
+    return {
+      stepId: step.stepId,
+      stepIndex,
+      operation: step.operation,
+      dependsOn: clone(step.dependsOn),
+      targetCount: validation.task.targets.length,
+      targets: clone(validation.task.targets),
+      valid: true
+    };
+  });
+
+  return {
+    plan,
+    validation: {
+      schema: CHAT_CREATIVE_PLAN_VALIDATION_SCHEMA,
+      version: CHAT_CREATIVE_PLAN_VALIDATION_VERSION,
+      valid: true,
+      source: currentSource,
+      stepCount: steps.length,
+      steps
+    }
+  };
+}
+
+export function createChatCreativePlanProposal(app, rawPlan) {
+  const source = chatCreativePlanSource(app);
+  const candidate = rawPlan?.source ? rawPlan : { ...rawPlan, source };
+  return validateChatCreativePlanAgainstState(app, candidate, {
+    requireHistoryIdle: true,
+    source
+  });
 }
