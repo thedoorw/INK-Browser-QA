@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-015 / PHASE_D_COMPLETE`
+STATUS: `INK-CLOUD-015 / PHASE_E_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `INK-CLOUD-015 / PHASE_D_COMPLETE`
 | TITLE | `CHAT Multi-Step Creative Collaboration v0.1` |
 | BRANCH | `work/ink-cloud-015` |
 | BASE_MAIN | `425c58c400bd08610574c0d5e8085e1cb55ec1f5` |
-| TASK_STATUS | `PHASE_D_COMPLETE / PHASE_E_NEXT` |
+| TASK_STATUS | `PHASE_E_COMPLETE / PHASE_F_NEXT` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | GATE | `CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS` |
@@ -96,3 +96,28 @@ Implemented:
 Checkpoint: `INK-CLOUD-015 Phase D Revision-aware plan results`
 
 `PHASE_D_COMPLETE / BEGIN_PHASE_E`
+
+
+## Phase E — Creative Workspace plan UX
+
+Connected the multi-step plan flow to the existing Creative Workspace CHAT pane:
+
+- editable intent summary;
+- ordered step builder using the existing operation/selection controls;
+- visible draft/proposed step list with operation, target count and validation/execution state;
+- Propose / Approve plan / Reject plan / Execute plan;
+- execution progress and STOP diagnostic display;
+- resulting Revision relation display;
+- runtime installation order is Revision → bounded edit → creative plan → Creative Workspace;
+- service-worker shell includes the new browser-local module.
+
+No broad UI redesign and no alternate editor authority were introduced.
+
+Checkpoint series:
+
+- `INK-CLOUD-015 Phase E Creative Workspace plan UX`
+- `Export CHAT creative-plan controller`
+- `Install CHAT creative-plan runtime before workspace`
+- `Cache CHAT creative-plan module in browser shell`
+
+`PHASE_E_COMPLETE / BEGIN_PHASE_F`
