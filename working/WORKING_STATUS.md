@@ -1055,3 +1055,16 @@ Next:
 `USER_ENABLE_GITHUB_PAGES → OPEN_DEPLOYED_INK_WEB → USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE`
 
 Do not start INK-CLOUD-019 before this visible/manual use checkpoint unless a separate explicit user direction overrides it.
+
+
+## INK Web public URL
+
+User-confirmed deployed URL:
+
+`https://thedoorw.github.io/INK/`
+
+```text
+PUBLIC_URL = https://thedoorw.github.io/INK/
+PUBLIC_DEPLOYMENT = READY
+NEXT = USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE
+```
