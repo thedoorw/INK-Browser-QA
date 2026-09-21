@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-017 / DEVELOPMENT_AUTHORIZED`
+STATUS: `ACTIVE / INK-CLOUD-017 / MR_HOLD_BENCHMARK_CONTINUATION`
 
 ## Control
 
@@ -328,3 +328,40 @@ RUNTIME_QA = DEFERRED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR review checkpoint — canonical benchmark continuation
+
+Reviewed DEV handoff HEAD:
+
+`3000674329127956d20f6cb7f4a2fb88938152a7`
+
+MR classification:
+
+```text
+SOURCE_REVIEW = PASS
+TECHNICAL_CLOSURE = PASS
+OVERLAY_QA = NOT_EXECUTED
+HARD_BENCHMARK_COMPARISON = NOT_EXECUTED
+FULL_GATE = OPEN
+DIRECT_EXTRACTION_BASELINE = PRESERVED
+PIPELINE_SELECTION = NO_CHANGE
+```
+
+The multi-Path source implementation is accepted for review purposes, but the Work Order is not complete because the canonical Rose Window harness has not been executed.
+
+### Authorized continuation only
+
+Resume INK-CLOUD-017 only to:
+
+1. execute the existing `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs` against the authoritative canonical fixture;
+2. preserve the existing fixture SHA-256, ROI, threshold, candidate radial counts, sampling grid and Direct Extraction route;
+3. record complete multi-Path Structure-Aware metrics and overlay/comparison evidence;
+4. update `qa/core/evidence/INK_CLOUD_017_COMPARISON_STATUS.json` or add the exact machine-readable executed evidence required by the harness;
+5. update `research/INK_STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_REPORT_v0.1.md`;
+6. update branch-local `ACTIVE/INK_DEV_PROGRESS.md`;
+7. return a new exact `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
+
+No new product feature, benchmark redefinition, package mutation, FORMAT_VERSION change, pipeline replacement or broader architecture change is authorized.
+
+If the exact canonical binary cannot be materialized in the execution environment, report the same environment blocker and STOP. Do not substitute a different image, downsampled fixture, synthetic fixture or external browser result for the canonical benchmark.
