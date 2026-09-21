@@ -135,3 +135,30 @@ service-worker.js RELEASE_VERSION = 1.5.1
 ```
 
 Do not declare the 018 runtime gate until user-machine PowerShell/browser evidence is recorded.
+
+
+## User runtime correction
+
+The user's existing Windows self-hosted GitHub runner is confirmed online:
+
+```text
+path = C:\actions-runner-ink
+runner version = 2.337.0
+state = Connected to GitHub / Listening for Jobs
+```
+
+Therefore the primary INK-CLOUD-018 runtime path is:
+
+```text
+GitHub bounded workflow
+→ self-hosted Windows runner
+→ local PowerShell/browser execution
+```
+
+The ZIP-first manual path is superseded as the primary method and retained only as fallback.
+
+Next prerequisite before dispatch:
+
+- confirm registered runner labels;
+- prepare a bounded 018 self-hosted runtime workflow;
+- ensure it targets self-hosted Windows only.
