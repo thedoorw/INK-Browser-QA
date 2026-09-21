@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_semantic_compile_result_v1.schema.json",
+  "title": "RA Semantic Compile Result v1",
+  "type": "object",
+  "required": ["kind", "version", "status", "diagnostics", "recipe", "digest"],
+  "properties": {
+    "kind": {"const": "ra-semantic-compile-result"},
+    "version": {"const": "1.0"},
+    "status": {"enum": ["PASS", "BLOCKED"]},
+    "diagnostics": {
+      "type": "object",
+      "required": ["valid", "errors", "warnings"],
+      "properties": {
+        "valid": {"type": "boolean"},
+        "errors": {"type": "array"},
+        "warnings": {"type": "array"}
+      }
+    },
+    "recipe": {"type": ["object", "null"]},
+    "digest": {"type": ["string", "null"]}
+  }
+}

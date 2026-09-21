@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ra-segment-candidate-v1.schema.json",
+  "title": "RA Segment Candidate Analysis v1",
+  "type": "object",
+  "required": [
+    "kind",
+    "version",
+    "caseId",
+    "thresholds",
+    "families",
+    "aggregate"
+  ],
+  "properties": {
+    "kind": {
+      "const": "ra-segment-candidate-analysis"
+    },
+    "version": {
+      "const": "1.0"
+    },
+    "caseId": {
+      "type": "string"
+    },
+    "thresholds": {
+      "type": "object"
+    },
+    "families": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "familyId",
+          "segments",
+          "summary"
+        ],
+        "properties": {
+          "familyId": {
+            "type": "string"
+          },
+          "segments": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "pointRange",
+                "selectedPrimitive",
+                "selectedParameters",
+                "candidates"
+              ],
+              "properties": {
+                "selectedPrimitive": {
+                  "enum": [
+                    "LINE",
+                    "ARC",
+                    "SPLINE"
+                  ]
+                },
+                "selectedParameters": {
+                  "type": "object"
+                },
+                "candidates": {
+                  "type": "array",
+                  "minItems": 3
+                }
+              }
+            }
+          },
+          "summary": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "aggregate": {
+      "type": "object",
+      "required": [
+        "segmentCount",
+        "lineCount",
+        "arcCount",
+        "splineCount",
+        "allSegmentsResolved"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

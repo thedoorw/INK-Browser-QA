@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_geometry_measurement_v1.schema.json",
+  "title": "RA Geometry Measurement Candidate v1",
+  "type": "object",
+  "required": ["id", "caseId", "candidateType", "sourceKind", "sourcePoints", "parameters", "metrics", "scores", "gate", "decisionState", "recipeEligible", "formalPromotionBlocked", "requiresRescore"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "caseId": {"type": "string", "minLength": 1},
+    "candidateType": {"enum": ["LINE", "ARC", "CIRCLE"]},
+    "sourceKind": {"enum": ["manualPoints", "contourSpan"]},
+    "sourcePoints": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["x", "y"],
+        "properties": {"x": {"type": "number"}, "y": {"type": "number"}},
+        "additionalProperties": true
+      }
+    },
+    "sourceContourIds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "parameters": {"type": "object"},
+    "metrics": {
+      "type": "object",
+      "required": ["pointCount", "rmse", "maxResidual", "normalizedRmse", "coverage"],
+      "properties": {
+        "pointCount": {"type": "integer", "minimum": 2},
+        "rmse": {"type": "number", "minimum": 0},
+        "maxResidual": {"type": "number", "minimum": 0},
+        "normalizedRmse": {"type": "number", "minimum": 0},
+        "coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "radiusDeviation": {"type": "number", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "scores": {
+      "type": "object",
+      "required": ["fitQuality", "geometricStability", "structuralConsistency", "topologyContinuity", "representationComplexity", "editabilityReplay", "total"],
+      "properties": {
+        "fitQuality": {"type": "number", "minimum": 0, "maximum": 30},
+        "geometricStability": {"type": "number", "minimum": 0, "maximum": 15},
+        "structuralConsistency": {"type": "number", "minimum": 0, "maximum": 15},
+        "topologyContinuity": {"type": "number", "minimum": 0, "maximum": 15},
+        "representationComplexity": {"type": "number", "minimum": 0, "maximum": 15},
+        "editabilityReplay": {"type": "number", "minimum": 0, "maximum": 10},
+        "total": {"type": "number", "minimum": 0, "maximum": 100}
+      },
+      "additionalProperties": false
+    },
+    "gate": {
+      "type": "object",
+      "required": ["passed", "checks", "failReasons"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "checks": {"type": "array"},
+        "failReasons": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "decisionState": {"const": "unresolved"},
+    "recipeEligible": {"const": false},
+    "formalPromotionBlocked": {"const": true},
+    "requiresRescore": {"const": true},
+    "evidenceState": {"const": "measured"}
+  },
+  "additionalProperties": true
+}

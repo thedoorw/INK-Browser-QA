@@ -1,0 +1,33 @@
+{
+  "kind": "ra0.9-ai-review-mode-static-test",
+  "version": "1.0",
+  "status": "PASS",
+  "failures": [],
+  "checks": {
+    "parentManifestFilesPresent": true,
+    "parentManifestFilesUnchanged": true,
+    "parentMissingFiles": [],
+    "parentChangedFiles": [],
+    "candidateEntryPresent": true,
+    "uiModulesPresent": true,
+    "candidateLoadsUiModules": true,
+    "requiredRegionsPresent": true,
+    "requiredActionButtonsPresent": true,
+    "rawBoundaryDefaultCollapsed": true,
+    "rawBoundaryLabelsPresent": true,
+    "taskStateFieldsPresent": true,
+    "actionHooksPresent": true,
+    "taskStateEventPresent": true,
+    "taskStateSerializableClone": true,
+    "reviewAuthorityDelegation": true,
+    "noCompilerRuntimeSchemaWrite": true,
+    "keyboardNavigationPresent": true,
+    "cssNonColorStatusSupport": true,
+    "javascriptSyntax": true,
+    "javascriptSyntaxOutput": "",
+    "noPycacheOrPyc": true,
+    "forbiddenCacheFiles": [],
+    "noNestedZip": true,
+    "nestedZipFiles": []
+  }
+}

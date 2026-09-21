@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_raw_boundary_capture_v1.schema.json",
+  "title": "RA Raw Boundary Capture Evidence",
+  "type": "object",
+  "required": ["kind", "version", "caseId", "source", "capture", "contours", "summary"],
+  "properties": {
+    "kind": {"const": "ra-raw-boundary-capture"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "source": {
+      "type": "object",
+      "required": ["path", "width", "height"],
+      "properties": {
+        "path": {"type": "string"},
+        "width": {"type": "integer", "minimum": 1},
+        "height": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "capture": {
+      "type": "object",
+      "required": ["method", "formalPolicy"],
+      "properties": {
+        "method": {"type": "string"},
+        "lowThreshold": {"type": "integer"},
+        "highThreshold": {"type": "integer"},
+        "maxContours": {"type": "integer", "minimum": 1},
+        "formalPolicy": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "contours": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["contourId", "stableFingerprint", "evidenceState", "recipeEligible", "formalPromotionBlocked", "closed", "chainType", "points", "bbox", "fits"],
+        "properties": {
+          "contourId": {"type": "string", "pattern": "-contour-[0-9]{4}$"},
+          "stableFingerprint": {"type": "string", "pattern": "^[0-9a-f]{16}$"},
+          "evidenceState": {"const": "measured"},
+          "recipeEligible": {"const": false},
+          "formalPromotionBlocked": {"const": true},
+          "closed": {"type": "boolean"},
+          "chainType": {"enum": ["openChain", "closedLoop", "junctionNetwork"]},
+          "sourcePointCount": {"type": "integer", "minimum": 1},
+          "samplePointCount": {"type": "integer", "minimum": 1},
+          "points": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "required": ["x", "y"],
+              "properties": {"x": {"type": "number"}, "y": {"type": "number"}},
+              "additionalProperties": false
+            }
+          },
+          "bbox": {
+            "type": "object",
+            "required": ["x", "y", "width", "height"],
+            "properties": {
+              "x": {"type": "number"}, "y": {"type": "number"},
+              "width": {"type": "number", "minimum": 0}, "height": {"type": "number", "minimum": 0}
+            },
+            "additionalProperties": false
+          },
+          "centroid": {"type": "object"},
+          "perimeter": {"type": "number", "minimum": 0},
+          "area": {"type": "number", "minimum": 0},
+          "touchesCanvas": {"type": "boolean"},
+          "parentContourId": {"type": ["string", "null"]},
+          "fits": {
+            "type": "object",
+            "required": ["LINE", "ARC", "CIRCLE"],
+            "properties": {
+              "LINE": {"type": "object"},
+              "ARC": {"type": "object"},
+              "CIRCLE": {"type": "object"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["contourCount", "closedCount", "openCount", "recipeEligibleCount"],
+      "properties": {
+        "contourCount": {"type": "integer", "minimum": 0},
+        "closedCount": {"type": "integer", "minimum": 0},
+        "openCount": {"type": "integer", "minimum": 0},
+        "recipeEligibleCount": {"const": 0}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

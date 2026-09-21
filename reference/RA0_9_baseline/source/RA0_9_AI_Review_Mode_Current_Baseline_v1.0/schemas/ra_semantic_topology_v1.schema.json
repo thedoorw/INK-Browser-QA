@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_semantic_topology_v1.schema.json",
+  "title": "RA Semantic Topology v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "version", "relations", "unresolvedItems"],
+  "properties": {
+    "kind": {"const": "ra-semantic-topology"},
+    "version": {"const": "1.0"},
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "decisionState"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "type": {"enum": ["contains", "inside", "touches", "intersect", "intersects", "overlaps", "occludes", "occludedBy", "sharesBoundary", "drawOrder", "canvasCrop", "booleanSubtract", "booleanUnion", "hole", "island"]},
+          "decisionState": {"enum": ["selected", "rejected", "unresolved"]}
+        }
+      }
+    },
+    "unresolvedItems": {"type": "array", "items": {"type": "string"}}
+  }
+}

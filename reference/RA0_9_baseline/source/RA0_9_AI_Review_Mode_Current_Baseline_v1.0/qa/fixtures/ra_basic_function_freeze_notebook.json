@@ -1,0 +1,777 @@
+{
+  "kind": "ra-geometry-notebook",
+  "version": "1.0",
+  "caseId": "FREEZE-CORE-001",
+  "referenceIdentity": {
+    "id": "synthetic-reference",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "observations": [
+    {
+      "id": "obs-1",
+      "statement": "Synthetic fixture exercises the complete authoring and replay chain.",
+      "evidenceIds": [
+        "evidence-freeze-contract"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hyp-1",
+      "candidateType": "LINE_ARC_COMPOUND",
+      "parameters": {
+        "compoundId": "compound-line-arc"
+      },
+      "state": "selected"
+    },
+    {
+      "id": "hyp-2",
+      "candidateType": "SPLINE_STACK",
+      "parameters": {},
+      "state": "rejected"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec-1",
+      "targetId": "compound-line-arc",
+      "state": "selected",
+      "reason": "Lower-complexity native compound is sufficient."
+    }
+  ],
+  "selectedCandidateIds": [
+    "compound-line-arc",
+    "gen-offset-427d4afd",
+    "gen-array-be785398"
+  ],
+  "rejectedCandidateIds": [
+    "hyp-2"
+  ],
+  "unresolvedItems": [],
+  "confidence": 0.99,
+  "provenance": {
+    "source": "synthetic-freeze-audit",
+    "testOnly": true
+  },
+  "semanticRecipe": {
+    "kind": "icad-auto-drawing-recipe",
+    "schemaVersion": "1.1",
+    "recipeId": "FREEZE-CORE-001",
+    "revision": 1,
+    "producer": {
+      "name": "Recipe Authoring Workbench",
+      "version": "RA0.9 Basic Function Freeze Candidate"
+    },
+    "document": {
+      "id": "FREEZE-CORE-001",
+      "name": "Basic Function Freeze Core Loop",
+      "units": "px",
+      "coordinateSpace": "absolute",
+      "width": 640,
+      "height": 600,
+      "origin": {
+        "x": 0,
+        "y": 0
+      },
+      "background": "#ffffff"
+    },
+    "layers": [
+      {
+        "id": "GEOMETRY",
+        "name": "Semantic Geometry",
+        "visible": true,
+        "locked": false
+      }
+    ],
+    "objects": [
+      {
+        "id": "line-main",
+        "type": "line",
+        "layer": "GEOMETRY",
+        "zIndex": 1,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "LINE",
+          "sourceId": "line-main"
+        },
+        "start": {
+          "x": 50,
+          "y": 80
+        },
+        "end": {
+          "x": 220,
+          "y": 80
+        }
+      },
+      {
+        "id": "circle-main",
+        "type": "circle",
+        "layer": "GEOMETRY",
+        "zIndex": 2,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "CIRCLE",
+          "sourceId": "circle-main"
+        },
+        "center": {
+          "x": 120,
+          "y": 180
+        },
+        "radius": 45
+      },
+      {
+        "id": "arc-main",
+        "type": "arc",
+        "layer": "GEOMETRY",
+        "zIndex": 3,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "ARC",
+          "sourceId": "arc-main"
+        },
+        "center": {
+          "x": 280,
+          "y": 180
+        },
+        "radius": 55,
+        "startAngleDeg": 180,
+        "endAngleDeg": 360,
+        "sweepDeg": 180,
+        "clockwiseScreen": true
+      },
+      {
+        "id": "ellipse-main",
+        "type": "ellipse",
+        "layer": "GEOMETRY",
+        "zIndex": 4,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "ELLIPSE",
+          "sourceId": "ellipse-main"
+        },
+        "center": {
+          "x": 450,
+          "y": 180
+        },
+        "radiusX": 70,
+        "radiusY": 40
+      },
+      {
+        "id": "polyline-main",
+        "type": "polyline",
+        "layer": "GEOMETRY",
+        "zIndex": 5,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "POLYLINE",
+          "sourceId": "polyline-main"
+        },
+        "points": [
+          {
+            "x": 50,
+            "y": 300
+          },
+          {
+            "x": 110,
+            "y": 260
+          },
+          {
+            "x": 170,
+            "y": 300
+          }
+        ],
+        "closed": false
+      },
+      {
+        "id": "spline-main",
+        "type": "spline",
+        "layer": "GEOMETRY",
+        "zIndex": 6,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "SPLINE",
+          "sourceId": "spline-main"
+        },
+        "p0": {
+          "x": 230,
+          "y": 300
+        },
+        "p1": {
+          "x": 280,
+          "y": 240
+        },
+        "p2": {
+          "x": 350,
+          "y": 360
+        },
+        "p3": {
+          "x": 410,
+          "y": 300
+        }
+      },
+      {
+        "id": "center-path",
+        "type": "line",
+        "layer": "GEOMETRY",
+        "zIndex": 7,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "LINE",
+          "sourceId": "center-path"
+        },
+        "start": {
+          "x": 80,
+          "y": 420
+        },
+        "end": {
+          "x": 360,
+          "y": 420
+        }
+      },
+      {
+        "id": "gen-offset-427d4afd-primitive-0001",
+        "type": "line",
+        "layer": "GEOMETRY",
+        "zIndex": 7,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "LINE",
+          "sourceId": "gen-offset-427d4afd-primitive-0001",
+          "generatorId": "gen-offset-427d4afd",
+          "generatorRevision": 2
+        },
+        "start": {
+          "x": 80,
+          "y": 432
+        },
+        "end": {
+          "x": 360,
+          "y": 432
+        }
+      },
+      {
+        "id": "outer-region",
+        "type": "circle",
+        "layer": "GEOMETRY",
+        "zIndex": 8,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "CIRCLE",
+          "sourceId": "outer-region"
+        },
+        "center": {
+          "x": 520,
+          "y": 390
+        },
+        "radius": 80
+      },
+      {
+        "id": "hole-region",
+        "type": "circle",
+        "layer": "GEOMETRY",
+        "zIndex": 9,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "CIRCLE",
+          "sourceId": "hole-region"
+        },
+        "center": {
+          "x": 520,
+          "y": 390
+        },
+        "radius": 35
+      },
+      {
+        "id": "island-region",
+        "type": "circle",
+        "layer": "GEOMETRY",
+        "zIndex": 10,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "CIRCLE",
+          "sourceId": "island-region"
+        },
+        "center": {
+          "x": 520,
+          "y": 390
+        },
+        "radius": 12
+      },
+      {
+        "id": "gen-array-be785398-primitive-0001",
+        "type": "circle",
+        "layer": "GEOMETRY",
+        "zIndex": 20,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "CIRCLE",
+          "sourceId": "gen-array-be785398-primitive-0001",
+          "generatorId": "gen-array-be785398",
+          "generatorRevision": 1
+        },
+        "center": {
+          "x": 100,
+          "y": 520
+        },
+        "radius": 15
+      },
+      {
+        "id": "gen-array-be785398-primitive-0002",
+        "type": "circle",
+        "layer": "GEOMETRY",
+        "zIndex": 20,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "CIRCLE",
+          "sourceId": "gen-array-be785398-primitive-0002",
+          "generatorId": "gen-array-be785398",
+          "generatorRevision": 1
+        },
+        "center": {
+          "x": 155,
+          "y": 520
+        },
+        "radius": 15
+      },
+      {
+        "id": "gen-array-be785398-primitive-0003",
+        "type": "circle",
+        "layer": "GEOMETRY",
+        "zIndex": 20,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "CIRCLE",
+          "sourceId": "gen-array-be785398-primitive-0003",
+          "generatorId": "gen-array-be785398",
+          "generatorRevision": 1
+        },
+        "center": {
+          "x": 210,
+          "y": 520
+        },
+        "radius": 15
+      },
+      {
+        "id": "compound-line",
+        "type": "line",
+        "layer": "GEOMETRY",
+        "zIndex": 30,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "LINE",
+          "sourceId": "compound-line",
+          "compoundId": "compound-line-arc"
+        },
+        "start": {
+          "x": 420,
+          "y": 500
+        },
+        "end": {
+          "x": 500,
+          "y": 500
+        }
+      },
+      {
+        "id": "ct-offset-member-23606248-compound-line",
+        "type": "line",
+        "layer": "GEOMETRY",
+        "zIndex": 30,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "LINE",
+          "sourceId": "ct-offset-member-23606248-compound-line",
+          "compoundOffsetId": "ct-compound-offset-0e90909a",
+          "offset": 8
+        },
+        "start": {
+          "x": 420,
+          "y": 508
+        },
+        "end": {
+          "x": 500,
+          "y": 508
+        }
+      },
+      {
+        "id": "ct-offset-member-60fbb207-compound-line",
+        "type": "line",
+        "layer": "GEOMETRY",
+        "zIndex": 30,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "LINE",
+          "sourceId": "ct-offset-member-60fbb207-compound-line",
+          "compoundOffsetId": "ct-compound-offset-0e90909a",
+          "offset": -8
+        },
+        "start": {
+          "x": 420,
+          "y": 492
+        },
+        "end": {
+          "x": 500,
+          "y": 492
+        }
+      },
+      {
+        "id": "compound-arc",
+        "type": "arc",
+        "layer": "GEOMETRY",
+        "zIndex": 31,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "ARC",
+          "sourceId": "compound-arc",
+          "compoundId": "compound-line-arc"
+        },
+        "center": {
+          "x": 500,
+          "y": 550
+        },
+        "radius": 50,
+        "startAngleDeg": -90,
+        "endAngleDeg": 0,
+        "sweepDeg": 90,
+        "clockwiseScreen": true
+      },
+      {
+        "id": "ct-offset-member-23606248-compound-arc",
+        "type": "arc",
+        "layer": "GEOMETRY",
+        "zIndex": 31,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "ARC",
+          "sourceId": "ct-offset-member-23606248-compound-arc",
+          "compoundOffsetId": "ct-compound-offset-0e90909a",
+          "offset": 8
+        },
+        "center": {
+          "x": 500,
+          "y": 566
+        },
+        "radius": 58,
+        "startAngleDeg": -90,
+        "endAngleDeg": 0,
+        "sweepDeg": 90,
+        "clockwiseScreen": true
+      },
+      {
+        "id": "ct-offset-member-60fbb207-compound-arc",
+        "type": "arc",
+        "layer": "GEOMETRY",
+        "zIndex": 31,
+        "visible": true,
+        "locked": false,
+        "style": {
+          "stroke": "#17202a",
+          "fill": "none",
+          "strokeWidth": 2,
+          "opacity": 1
+        },
+        "metadata": {
+          "authoringType": "ARC",
+          "sourceId": "ct-offset-member-60fbb207-compound-arc",
+          "compoundOffsetId": "ct-compound-offset-0e90909a",
+          "offset": -8
+        },
+        "center": {
+          "x": 500,
+          "y": 534
+        },
+        "radius": 42,
+        "startAngleDeg": -90,
+        "endAngleDeg": 0,
+        "sweepDeg": 90,
+        "clockwiseScreen": true
+      }
+    ],
+    "topologyOperations": [],
+    "topologyRelations": [
+      {
+        "id": "rel-contains",
+        "type": "contains",
+        "parentId": "outer-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-draw-order",
+        "type": "drawOrder",
+        "beforeId": "hole-region",
+        "afterId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-hole",
+        "type": "hole",
+        "parentId": "outer-region",
+        "childId": "hole-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-island",
+        "type": "island",
+        "parentId": "hole-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-subtract",
+        "type": "booleanSubtract",
+        "targetId": "outer-region",
+        "operandId": "hole-region",
+        "resultId": "ring-region",
+        "decisionState": "selected"
+      }
+    ],
+    "sharedParameters": [
+      {
+        "id": "shared-band-width",
+        "kind": "sharedParameter",
+        "parameterKind": "width",
+        "value": 12,
+        "memberIds": [
+          "center-path",
+          "gen-offset-427d4afd"
+        ],
+        "provenance": {
+          "sourceKind": "semantic-authoring",
+          "algorithm": "Freeze Contract",
+          "algorithmVersion": "1.0"
+        }
+      }
+    ],
+    "compileProvenance": {
+      "compiler": "RA Semantic Compiler",
+      "compilerVersion": "1.1-freeze",
+      "authoringVersion": "RA0.9 Basic Function Freeze Test",
+      "sourceDigest": "eebe8148",
+      "reviewTargetIds": [
+        "compound-line-arc",
+        "ct-compound-offset-0e90909a",
+        "gen-array-be785398",
+        "gen-offset-427d4afd",
+        "shared-band-width"
+      ]
+    }
+  },
+  "topologyDecision": {
+    "kind": "ra-semantic-topology",
+    "version": "1.0",
+    "relations": [
+      {
+        "id": "rel-hole",
+        "type": "hole",
+        "parentId": "outer-region",
+        "childId": "hole-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-island",
+        "type": "island",
+        "parentId": "hole-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-subtract",
+        "type": "booleanSubtract",
+        "targetId": "outer-region",
+        "operandId": "hole-region",
+        "resultId": "ring-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-contains",
+        "type": "contains",
+        "parentId": "outer-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-draw-order",
+        "type": "drawOrder",
+        "beforeId": "hole-region",
+        "afterId": "island-region",
+        "decisionState": "selected"
+      }
+    ],
+    "unresolvedItems": []
+  },
+  "reviewState": {
+    "state": "FORMAL_COMPILED",
+    "reviewAuthority": "MAIN_CHAT",
+    "silentFormalization": false
+  },
+  "stableObjectIds": [
+    "line-main",
+    "circle-main",
+    "arc-main",
+    "ellipse-main",
+    "polyline-main",
+    "spline-main",
+    "center-path",
+    "gen-offset-427d4afd-primitive-0001",
+    "outer-region",
+    "hole-region",
+    "island-region",
+    "gen-array-be785398-primitive-0001",
+    "gen-array-be785398-primitive-0002",
+    "gen-array-be785398-primitive-0003",
+    "compound-line",
+    "ct-offset-member-23606248-compound-line",
+    "ct-offset-member-60fbb207-compound-line",
+    "compound-arc",
+    "ct-offset-member-23606248-compound-arc",
+    "ct-offset-member-60fbb207-compound-arc"
+  ],
+  "versionIdentity": {
+    "authoringVersion": "RA0.9 Basic Function Freeze Test",
+    "recipeVersion": "1.1"
+  },
+  "replayIdentity": {
+    "algorithm": "RA Semantic Compiler + SVG Adapter",
+    "hash": "e8f4e5bad8cde36659bb34ab899556451a3d5eb846161336abfcd2438a984921"
+  },
+  "layerSeparation": {
+    "evidence": "referenceIdentity/observations",
+    "workingDraft": "transaction document",
+    "formalRecipe": "compiledRecipe",
+    "runtimeExpansion": "recipe.objects",
+    "mainAIReviewState": "reviewState"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_workbench_state_v3.schema.json",
+  "title": "RA Authoring Workbench State v3",
+  "type": "object",
+  "required": ["caseId", "compareMode", "viewport", "evidenceFilters", "boundaryCapture", "geometryMeasurement"],
+  "properties": {
+    "caseId": {"type": "string", "minLength": 1},
+    "compareMode": {"enum": ["side-by-side", "overlay", "wipe", "difference", "reference", "runtime"]},
+    "viewport": {"$ref": "ra_workbench_state_v1.schema.json#/properties/viewport"},
+    "selection": {
+      "type": ["object", "null"],
+      "properties": {
+        "kind": {"enum": ["program", "target", "segment", "contour", "measurement"]},
+        "id": {"type": "string"}
+      },
+      "required": ["kind", "id"],
+      "additionalProperties": false
+    },
+    "region": {"$ref": "ra_workbench_state_v1.schema.json#/properties/region"},
+    "evidenceFilters": {"$ref": "ra_workbench_state_v1.schema.json#/properties/evidenceFilters"},
+    "workingDraft": {"$ref": "ra_workbench_state_v1.schema.json#/properties/workingDraft"},
+    "boundaryCapture": {"$ref": "ra_workbench_state_v2.schema.json#/properties/boundaryCapture"},
+    "geometryMeasurement": {
+      "type": "object",
+      "required": ["activeTool", "points", "contourSpan", "candidates", "constraints"],
+      "properties": {
+        "activeTool": {"type": ["string", "null"], "enum": [null, "LINE_2P", "CIRCLE_3P", "ARC_3P", "CONTOUR_SPAN"]},
+        "points": {"type": "array"},
+        "contourSpan": {"type": ["object", "null"]},
+        "candidates": {"type": "array", "items": {"$ref": "ra_geometry_measurement_v1.schema.json"}},
+        "constraints": {"type": "array"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+{
+  "kind": "ra0.9-ai-review-mode-parent-baseline-verification",
+  "parentFilename": "RA0_9_Frozen_Toolkit_Baseline_v1.2(1).zip",
+  "parentZipSha256": "72beebf6bcd0d15c7a82ce17d77a78504cb830ba28a5846d9a6d76b3db2689f9",
+  "originalMainProgram": "Recipe_Authoring_Workbench_RA0_9_RC4.html",
+  "originalMainSha256": "70e6ece15b38724a4a5515d6bb27631d6884595529ac3ef54b98c407185827fd",
+  "crc": "PASS",
+  "baselineStatus": "RA_BASIC_FUNCTION_FROZEN",
+  "selfVerifier": "PASS",
+  "freezeContract": "PASS"
+}

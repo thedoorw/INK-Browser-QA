@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_workbench_state_v4.schema.json",
+  "title": "RA Workbench State v4",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "caseId", "semanticBoundaryResolution"],
+  "properties": {
+    "version": {"const": "4.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "semanticBoundaryResolution": {
+      "type": ["object", "null"]
+    }
+  }
+}

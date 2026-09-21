@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_dependency_recompute_v1.schema.json",
+  "title": "RA Dependency Graph and Local Recompute v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "version", "caseId", "graph", "summary"],
+  "properties": {
+    "kind": {"const": "ra-dependency-recompute-document"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "graph": {"$ref": "#/$defs/graph"},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeCount", "edgeCount", "revision", "valid", "undoDepth", "redoDepth"],
+      "properties": {
+        "nodeCount": {"type": "integer", "minimum": 0},
+        "edgeCount": {"type": "integer", "minimum": 0},
+        "revision": {"type": "integer", "minimum": 0},
+        "valid": {"const": true},
+        "undoDepth": {"type": "integer", "minimum": 0},
+        "redoDepth": {"type": "integer", "minimum": 0}
+      }
+    }
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "value", "expression", "dependencies", "reviewTargetId", "metadata", "revision"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["PARAMETER", "EXTERNAL", "COMPUTED", "GENERATOR", "GEOMETRY", "RUNTIME"]},
+        "value": {},
+        "expression": {"type": ["object", "null"]},
+        "dependencies": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "reviewTargetId": {"type": ["string", "null"]},
+        "metadata": {"type": "object"},
+        "revision": {"type": "integer", "minimum": 0}
+      }
+    },
+    "graph": {
+      "type": "object",
+      "required": ["kind", "version", "caseId", "revision", "nodes", "history", "future", "lastTransaction", "validation"],
+      "properties": {
+        "kind": {"const": "ra-dependency-graph"},
+        "version": {"const": "1.0"},
+        "caseId": {"type": "string", "minLength": 1},
+        "revision": {"type": "integer", "minimum": 0},
+        "nodes": {"type": "object", "additionalProperties": {"$ref": "#/$defs/node"}},
+        "history": {"type": "array"},
+        "future": {"type": "array"},
+        "lastTransaction": {"type": ["object", "null"]},
+        "validation": {
+          "type": "object",
+          "required": ["valid", "missing", "cycles"],
+          "properties": {
+            "valid": {"const": true},
+            "missing": {"type": "array", "maxItems": 0},
+            "cycles": {"type": "array", "maxItems": 0}
+          }
+        }
+      }
+    }
+  }
+}

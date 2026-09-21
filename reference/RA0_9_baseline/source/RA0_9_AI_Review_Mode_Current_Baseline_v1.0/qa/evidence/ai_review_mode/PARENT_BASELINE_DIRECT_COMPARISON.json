@@ -1,0 +1,14 @@
+{
+  "kind": "ra0.9-v1.2-frozen-parent-direct-comparison",
+  "version": "1.0",
+  "status": "PASS",
+  "frozenParent": "RA0_9_Frozen_Toolkit_Baseline_v1.2.zip",
+  "frozenParentZipSha256": "72beebf6bcd0d15c7a82ce17d77a78504cb830ba28a5846d9a6d76b3db2689f9",
+  "candidateParent": "RA0_9_AI_Review_Mode_Candidate.zip",
+  "candidateParentZipSha256": "1b6022e5e5f379e0a02909f06e384fa857464976108ce14edf0bdb2e5b40bb9b",
+  "protectedFileCount": 99,
+  "missing": [],
+  "changed": [],
+  "mainProgramSha256": "70e6ece15b38724a4a5515d6bb27631d6884595529ac3ef54b98c407185827fd",
+  "expectedMainProgramSha256": "70e6ece15b38724a4a5515d6bb27631d6884595529ac3ef54b98c407185827fd"
+}

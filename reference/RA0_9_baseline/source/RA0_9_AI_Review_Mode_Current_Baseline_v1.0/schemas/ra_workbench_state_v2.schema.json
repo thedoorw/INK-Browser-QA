@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_workbench_state_v2.schema.json",
+  "title": "RA Authoring Workbench State v2",
+  "type": "object",
+  "required": ["caseId", "compareMode", "viewport", "evidenceFilters", "boundaryCapture"],
+  "properties": {
+    "caseId": {"type": "string", "minLength": 1},
+    "compareMode": {"enum": ["side-by-side", "overlay", "wipe", "difference", "reference", "runtime"]},
+    "viewport": {"$ref": "ra_workbench_state_v1.schema.json#/properties/viewport"},
+    "selection": {
+      "type": ["object", "null"],
+      "properties": {
+        "kind": {"enum": ["program", "target", "segment", "contour"]},
+        "id": {"type": "string"}
+      },
+      "required": ["kind", "id"],
+      "additionalProperties": false
+    },
+    "region": {"$ref": "ra_workbench_state_v1.schema.json#/properties/region"},
+    "evidenceFilters": {"$ref": "ra_workbench_state_v1.schema.json#/properties/evidenceFilters"},
+    "workingDraft": {"$ref": "ra_workbench_state_v1.schema.json#/properties/workingDraft"},
+    "boundaryCapture": {
+      "type": "object",
+      "required": ["overlay", "isolate", "selectedContourIds", "groups", "workingCandidates"],
+      "properties": {
+        "overlay": {"type": "boolean"},
+        "isolate": {"type": "boolean"},
+        "selectedContourIds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "groups": {"type": "array"},
+        "workingCandidates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "candidateType", "sourceContourIds", "decisionState", "recipeEligible", "formalPromotionBlocked", "requiresRescore"],
+            "properties": {
+              "id": {"type": "string"},
+              "candidateType": {"enum": ["LINE", "ARC", "CIRCLE"]},
+              "sourceContourIds": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+              "parameters": {"type": "object"},
+              "metrics": {"type": "object"},
+              "gate": {"type": "object"},
+              "decisionState": {"const": "unresolved"},
+              "recipeEligible": {"const": false},
+              "formalPromotionBlocked": {"const": true},
+              "requiresRescore": {"const": true}
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

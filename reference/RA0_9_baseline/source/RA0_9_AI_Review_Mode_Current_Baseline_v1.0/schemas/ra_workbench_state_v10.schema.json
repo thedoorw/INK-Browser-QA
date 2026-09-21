@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_workbench_state_v10.schema.json",
+  "title": "RA Workbench State v10",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "caseId", "authoring", "compileResult", "projectPackage"],
+  "properties": {
+    "version": {"const": "10.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "authoring": {"type": "object"},
+    "compileResult": {"type": ["object", "null"]},
+    "projectPackage": {"type": ["object", "null"]}
+  }
+}

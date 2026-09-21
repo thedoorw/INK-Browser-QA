@@ -1,0 +1,128 @@
+{
+  "kind": "ra-basic-function-freeze-manifest",
+  "version": "1.0-FROZEN-v1.2",
+  "status": "RA_BASIC_FUNCTION_FROZEN",
+  "createdAt": "2026-07-31T14:10:00+08:00",
+  "frozenBaselineName": "RA0_9_Frozen_Toolkit_Baseline_v1.2.zip",
+  "directParent": {
+    "filename": "Recipe_Authoring_Workbench_RA0_9_Basic_Function_Freeze_Candidate.zip",
+    "sha256": "65f9b9fd1a603b116d0f918112a81ea04fc2dd085cf818b05538f430733d3200"
+  },
+  "workingTreeId": "ra0.9-basic-freeze-r1-31db8310092a5240",
+  "workingTreeRootIdentityHash": "31db8310092a5240c5df460671f0785098b8492ce68e468c6d12d3f0d7dd9825",
+  "schemaVersion": "RA Geometry Notebook v1 + existing RA workbench schemas v1-v10",
+  "recipeVersion": "iCAD Recipe v1.1 semantic",
+  "compilerVersion": "RA Semantic Compiler 1.1-freeze",
+  "runtimeAdapterVersion": "RA SVG Runtime + RC4 Recovery Adapter",
+  "icadCompatibilityVersion": "iCAD Runtime Adapter 1.1-freeze",
+  "reviewAuthorityVersion": "RA AI Review Queue v1 / Basic Freeze Authority Contract 1.0",
+  "supportedPrimitives": [
+    "LINE",
+    "CIRCLE",
+    "ARC",
+    "ELLIPSE",
+    "POLYLINE",
+    "SPLINE"
+  ],
+  "supportedTopologyConstructs": [
+    "OFFSET",
+    "COMPOUND",
+    "BOOLEAN",
+    "HOLE",
+    "ISLAND",
+    "contains",
+    "inside",
+    "touches",
+    "intersect",
+    "intersects",
+    "overlaps",
+    "occludes",
+    "occludedBy",
+    "sharesBoundary",
+    "drawOrder",
+    "canvasCrop"
+  ],
+  "supportedGeneratorConstructs": [
+    "SHARED_PARAMETERS",
+    "GENERATOR",
+    "ARRAY",
+    "TRANSFORM"
+  ],
+  "gates": {
+    "Schema Gate": "PASS",
+    "Authoring Gate": "PASS",
+    "Compile Gate": "PASS",
+    "Save/Open Gate": "PASS",
+    "JSON Roundtrip Gate": "PASS",
+    "Deterministic Replay Gate": "PASS",
+    "iCAD Compatibility Gate": "PASS",
+    "Review Authority Gate": "PASS",
+    "Compact Gate clean-directory contract": "PASS",
+    "Packaging Gate": "PASS",
+    "Working Tree Preservation and Standard 10 Transition": "PASS"
+  },
+  "saveOpenStatus": "PASS",
+  "jsonRoundtripStatus": "PASS",
+  "deterministicReplayStatus": "PASS",
+  "icadImportStatus": "PASS",
+  "reviewAuthorityStatus": "PASS",
+  "compactGateStatus": "PASS",
+  "acceptedCases": [
+    "PL-055",
+    "PL-057",
+    "PL-145",
+    "PL-007",
+    "PL-015"
+  ],
+  "geometryBrainDiagnosticCases": [
+    "PL-036",
+    "PL-094",
+    "PL-104",
+    "PL-133",
+    "PL-034"
+  ],
+  "knownLimitationsFile": "RA_BASIC_FUNCTION_FREEZE_KNOWN_LIMITATIONS.json",
+  "excludedGeometryBrainResponsibilities": [
+    "Primitive inference",
+    "Topology inference",
+    "Perspective correction",
+    "Symmetry/repetition discovery",
+    "Counterfactual candidate ranking",
+    "Confidence calibration",
+    "Reference-specific reconstruction quality"
+  ],
+  "unfreezeConditions": [
+    "A Geometry Brain produces legal semantics that the RA Schema cannot express.",
+    "A legal Recipe cannot compile or replay deterministically.",
+    "Save/Open or JSON roundtrip loses semantic relationships.",
+    "The iCAD Recipe v1.1 adapter exposes a real format gap.",
+    "Review Authority cannot prevent unauthorized promotion.",
+    "A new case proves a missing general-purpose primitive or topology construct."
+  ],
+  "formalRelease": "APPROVED_RA_BASIC_FUNCTION_FROZEN",
+  "ra1Created": false,
+  "frozenBaselineContentSha256": "31db8310092a5240c5df460671f0785098b8492ce68e468c6d12d3f0d7dd9825",
+  "fileCountAtFreeze": 259,
+  "unpackedBytesAtFreeze": 49815525,
+  "archiveSha256": "reported externally because an archive cannot embed its own stable hash",
+  "technicalDocumentsParent": {
+    "filename": "RA_Basic_Function_Freeze_and_Geometry_Brain_Transition_Documents.zip",
+    "sha256": "163b18e1ed906fc27edbd91eeac5d479442d6edac2d74b1c10a5592b6be32e95"
+  },
+  "verifierOrchestrationVersion": "Freeze Audit Orchestration R1",
+  "packagingGateSource": "immutable package snapshot created before test execution",
+  "auditOutputSeparation": "audit_output is separate from protected product files",
+  "previousCandidateApproval": "FORMALLY_PROMOTED_TO_RA_BASIC_FUNCTION_FROZEN_BY_BASELINE_DECISION_RECORD",
+  "raFunctionBodyStatus": "UNCHANGED_FROM_VERIFIED_V1.1",
+  "identityExclusions": [
+    "COMPACT_BASELINE_IDENTITY.json",
+    "COMPACT_SHA256_MANIFEST.json",
+    "CURRENT_BASELINE.json",
+    "RA_BASIC_FUNCTION_FREEZE_MANIFEST_v1.0.json",
+    "WORKING_TREE_IDENTITY.json",
+    "audit_output/RA_BASIC_FUNCTION_FREEZE_AUDIT_RESULTS.json"
+  ],
+  "freezeAuditExpected": "11/11 PASS",
+  "compactGateExpected": "PASS",
+  "baselineDecisionRecord": "RA0_9_BASELINE_DECISION_RECORD_v1.0.md"
+}

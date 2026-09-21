@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_workbench_state_v9.schema.json",
+  "title": "RA Workbench State v9",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "caseId",
+    "dependencyRecompute",
+    "compoundTopology",
+    "aiReviewQueue"
+  ],
+  "properties": {
+    "version": {"const": "9.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "dependencyRecompute": {"type": ["object", "null"]},
+    "compoundTopology": {"type": ["object", "null"]},
+    "aiReviewQueue": {"type": ["object", "null"]}
+  }
+}

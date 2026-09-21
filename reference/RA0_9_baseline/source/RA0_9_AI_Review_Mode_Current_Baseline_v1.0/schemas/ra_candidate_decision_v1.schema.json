@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ra-candidate-decision-v1.schema.json",
+  "title": "RA Geometry Candidate Decision v1",
+  "type": "object",
+  "required": [
+    "version",
+    "skillVersion",
+    "prototypeLadder",
+    "weights",
+    "targets",
+    "formalCompile"
+  ],
+  "properties": {
+    "version": {
+      "const": "1.0"
+    },
+    "skillVersion": {
+      "const": "1.1"
+    },
+    "prototypeLadder": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "string"
+      }
+    },
+    "weights": {
+      "type": "object",
+      "required": [
+        "fitQuality",
+        "geometricStability",
+        "structuralConsistency",
+        "topologyContinuity",
+        "representationComplexity",
+        "editabilityReplay"
+      ],
+      "properties": {
+        "fitQuality": {
+          "const": 30
+        },
+        "geometricStability": {
+          "const": 15
+        },
+        "structuralConsistency": {
+          "const": 15
+        },
+        "topologyContinuity": {
+          "const": 15
+        },
+        "representationComplexity": {
+          "const": 15
+        },
+        "editabilityReplay": {
+          "const": 10
+        }
+      },
+      "additionalProperties": false
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "targetId",
+          "generationLogic",
+          "candidates",
+          "decision"
+        ],
+        "properties": {
+          "targetId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "generationLogic": {
+            "type": "string",
+            "minLength": 1
+          },
+          "candidates": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "candidateType",
+                "metrics",
+                "gate",
+                "scores",
+                "decisionState",
+                "reason"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "candidateType": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object"
+                },
+                "metrics": {
+                  "type": "object"
+                },
+                "gate": {
+                  "type": "object",
+                  "required": [
+                    "passed",
+                    "checks",
+                    "failReasons"
+                  ],
+                  "properties": {
+                    "passed": {
+                      "type": "boolean"
+                    },
+                    "checks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "id",
+                          "passed",
+                          "reason",
+                          "evidence"
+                        ]
+                      }
+                    },
+                    "failReasons": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "scores": {
+                  "type": "object",
+                  "required": [
+                    "fitQuality",
+                    "geometricStability",
+                    "structuralConsistency",
+                    "topologyContinuity",
+                    "representationComplexity",
+                    "editabilityReplay",
+                    "total"
+                  ],
+                  "properties": {
+                    "fitQuality": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 30
+                    },
+                    "geometricStability": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 15
+                    },
+                    "structuralConsistency": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 15
+                    },
+                    "topologyContinuity": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 15
+                    },
+                    "representationComplexity": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 15
+                    },
+                    "editabilityReplay": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 10
+                    },
+                    "total": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "decisionState": {
+                  "enum": [
+                    "pending",
+                    "selected",
+                    "rejected",
+                    "unresolved"
+                  ]
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "decision": {
+            "type": "object",
+            "required": [
+              "state",
+              "selected",
+              "rejected",
+              "unresolved",
+              "nextMeasurement"
+            ],
+            "properties": {
+              "state": {
+                "enum": [
+                  "selected",
+                  "unresolved"
+                ]
+              },
+              "selected": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "rejected": {
+                "type": "array"
+              },
+              "unresolved": {
+                "type": "array"
+              },
+              "nextMeasurement": {
+                "type": "array"
+              }
+            }
+          }
+        }
+      }
+    },
+    "relationshipGraph": {
+      "type": "array"
+    },
+    "formalCompile": {
+      "type": "object",
+      "required": [
+        "allowed",
+        "mode",
+        "blockers"
+      ],
+      "properties": {
+        "allowed": {
+          "type": "boolean"
+        },
+        "mode": {
+          "enum": [
+            "FORMAL",
+            "DEVELOPMENT_PREVIEW"
+          ]
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

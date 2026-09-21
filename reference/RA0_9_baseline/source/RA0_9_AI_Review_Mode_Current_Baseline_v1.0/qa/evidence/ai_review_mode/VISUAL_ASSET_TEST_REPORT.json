@@ -1,0 +1,60 @@
+{
+  "kind": "ra0.9-ai-review-mode-real-visual-asset-test",
+  "version": "1.0",
+  "status": "PASS",
+  "checks": {
+    "classification": true,
+    "lockedEvidencePackageHash": true,
+    "PL-015.reference.present": true,
+    "PL-015.runtime.present": true,
+    "PL-015.case.present": true,
+    "PL-015.targets.present": true,
+    "PL-015.role": true,
+    "PL-015.reference.hash": true,
+    "PL-015.runtime.hash": true,
+    "PL-015.samePixelSize": true,
+    "PL-015.portraitAspect": true,
+    "PL-015.caseExact": true,
+    "PL-015.targetsExact": true,
+    "PL-015.identityDifferenceZero": true,
+    "PL-015.runtimeNotReference": true,
+    "PL-036.reference.present": true,
+    "PL-036.runtime.present": true,
+    "PL-036.case.present": true,
+    "PL-036.targets.present": true,
+    "PL-036.role": true,
+    "PL-036.reference.hash": true,
+    "PL-036.runtime.hash": true,
+    "PL-036.samePixelSize": true,
+    "PL-036.portraitAspect": true,
+    "PL-036.caseExact": true,
+    "PL-036.targetsExact": true,
+    "PL-036.identityDifferenceZero": true,
+    "PL-036.runtimeNotReference": true,
+    "noHistoricalOverlayDifferenceEmbedded": true,
+    "resolverLoadedBeforeUi": true
+  },
+  "imageMetrics": {
+    "PL-015": {
+      "meanAbsoluteDifference": 32.91431021359822,
+      "changedPixelRatio": 0.8036572793926373,
+      "differenceBBox": [
+        1,
+        0,
+        270,
+        383
+      ]
+    },
+    "PL-036": {
+      "meanAbsoluteDifference": 75.92624743479811,
+      "changedPixelRatio": 0.7656393013016292,
+      "differenceBBox": [
+        1,
+        0,
+        270,
+        383
+      ]
+    }
+  },
+  "failures": []
+}

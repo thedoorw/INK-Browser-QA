@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "iCAD Auto Drawing Recipe v1.1 — RA6.2 semantic output",
+  "type": "object",
+  "required": [
+    "kind",
+    "schemaVersion",
+    "document",
+    "objects"
+  ],
+  "properties": {
+    "kind": {
+      "const": "icad-auto-drawing-recipe"
+    },
+    "schemaVersion": {
+      "const": "1.1"
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "line",
+              "rectangle",
+              "circle",
+              "ellipse",
+              "arc",
+              "spline",
+              "polyline",
+              "text",
+              "mtext",
+              "point",
+              "blockRef"
+            ]
+          },
+          "points": {
+            "type": "array",
+            "minItems": 3,
+            "items": {
+              "type": "object",
+              "required": [
+                "x",
+                "y"
+              ],
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

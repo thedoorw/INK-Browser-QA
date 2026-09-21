@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_semantic_boundary_resolution_v1.schema.json",
+  "title": "RA Semantic Boundary Resolution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "version",
+    "caseId",
+    "sourceBoundaryVersion",
+    "formalPolicy",
+    "hierarchyValidation",
+    "hierarchyCandidates",
+    "splitCandidates",
+    "mergeCandidates",
+    "relationshipCandidates",
+    "gapBridgeCandidates",
+    "crossingCandidates",
+    "occlusionCandidates",
+    "primitiveProvenance",
+    "summary"
+  ],
+  "properties": {
+    "kind": {"const": "ra-semantic-boundary-resolution"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "sourceBoundaryVersion": {"type": "string", "minLength": 1},
+    "formalPolicy": {"type": "string", "minLength": 1},
+    "hierarchyValidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["valid", "cycles", "invalidParents"],
+      "properties": {
+        "valid": {"type": "boolean"},
+        "cycles": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}},
+        "invalidParents": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "hierarchyCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "splitCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "mergeCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "relationshipCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "gapBridgeCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "crossingCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "occlusionCandidates": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "primitiveProvenance": {"type": "array", "items": {"$ref": "#/$defs/candidate"}},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contourCount",
+        "hierarchyCandidateCount",
+        "splitCandidateCount",
+        "mergeCandidateCount",
+        "relationshipCandidateCount",
+        "gapBridgeCandidateCount",
+        "crossingCandidateCount",
+        "occlusionCandidateCount",
+        "primitiveProvenanceCount",
+        "pendingAIReviewCount",
+        "formalReadyCount"
+      ],
+      "properties": {
+        "contourCount": {"type": "integer", "minimum": 0},
+        "hierarchyCandidateCount": {"type": "integer", "minimum": 0},
+        "splitCandidateCount": {"type": "integer", "minimum": 0},
+        "mergeCandidateCount": {"type": "integer", "minimum": 0},
+        "relationshipCandidateCount": {"type": "integer", "minimum": 0},
+        "gapBridgeCandidateCount": {"type": "integer", "minimum": 0},
+        "crossingCandidateCount": {"type": "integer", "minimum": 0},
+        "occlusionCandidateCount": {"type": "integer", "minimum": 0},
+        "primitiveProvenanceCount": {"type": "integer", "minimum": 0},
+        "pendingAIReviewCount": {"type": "integer", "minimum": 0},
+        "formalReadyCount": {"const": 0}
+      }
+    }
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "evidenceIds",
+        "reviewState",
+        "decisionState",
+        "recipeEligible",
+        "formalPromotionBlocked",
+        "requiresAIReview",
+        "provenance"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {
+          "enum": [
+            "HIERARCHY_ROLE",
+            "SPLIT",
+            "MERGE",
+            "RELATIONSHIP",
+            "GAP_BRIDGE",
+            "CROSSING",
+            "OCCLUSION",
+            "PRIMITIVE_PROVENANCE"
+          ]
+        },
+        "evidenceIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+        "reviewState": {"const": "AUTO_PROPOSED"},
+        "decisionState": {"const": "unresolved"},
+        "recipeEligible": {"const": false},
+        "formalPromotionBlocked": {"const": true},
+        "requiresAIReview": {"const": true},
+        "provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceKind", "algorithm", "algorithmVersion"],
+          "properties": {
+            "sourceKind": {"const": "raw-boundary-evidence"},
+            "algorithm": {"const": "RA Semantic Boundary Engine"},
+            "algorithmVersion": {"const": "1.0"}
+          }
+        }
+      }
+    }
+  }
+}

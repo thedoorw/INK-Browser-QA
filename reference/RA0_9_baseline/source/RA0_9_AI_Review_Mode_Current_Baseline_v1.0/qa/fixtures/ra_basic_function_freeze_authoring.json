@@ -1,0 +1,1368 @@
+{
+  "kind": "ra-working-authoring-export",
+  "version": "RA0.9 Basic Function Freeze Test",
+  "caseId": "FREEZE-CORE-001",
+  "case": {
+    "id": "FREEZE-CORE-001",
+    "name": "Basic Function Freeze Core Loop"
+  },
+  "canvas": {
+    "width": 640,
+    "height": 600,
+    "origin": {
+      "x": 0,
+      "y": 0
+    },
+    "background": "#ffffff"
+  },
+  "layers": [
+    {
+      "id": "GEOMETRY",
+      "name": "Semantic Geometry",
+      "visible": true,
+      "locked": false
+    }
+  ],
+  "referenceIdentity": {
+    "id": "synthetic-reference",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "observations": [
+    {
+      "id": "obs-1",
+      "statement": "Synthetic fixture exercises the complete authoring and replay chain.",
+      "evidenceIds": [
+        "evidence-freeze-contract"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "hyp-1",
+      "candidateType": "LINE_ARC_COMPOUND",
+      "parameters": {
+        "compoundId": "compound-line-arc"
+      },
+      "state": "selected"
+    },
+    {
+      "id": "hyp-2",
+      "candidateType": "SPLINE_STACK",
+      "parameters": {},
+      "state": "rejected"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec-1",
+      "targetId": "compound-line-arc",
+      "state": "selected",
+      "reason": "Lower-complexity native compound is sufficient."
+    }
+  ],
+  "selectedCandidateIds": [
+    "compound-line-arc",
+    "gen-offset-427d4afd",
+    "gen-array-be785398"
+  ],
+  "rejectedCandidateIds": [
+    "hyp-2"
+  ],
+  "unresolvedItems": [],
+  "confidence": 0.99,
+  "provenance": {
+    "source": "synthetic-freeze-audit",
+    "testOnly": true
+  },
+  "semanticRecipe": {
+    "source": "authoring"
+  },
+  "topologyDecision": {
+    "kind": "ra-semantic-topology",
+    "version": "1.0",
+    "relations": [
+      {
+        "id": "rel-hole",
+        "type": "hole",
+        "parentId": "outer-region",
+        "childId": "hole-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-island",
+        "type": "island",
+        "parentId": "hole-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-subtract",
+        "type": "booleanSubtract",
+        "targetId": "outer-region",
+        "operandId": "hole-region",
+        "resultId": "ring-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-contains",
+        "type": "contains",
+        "parentId": "outer-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-draw-order",
+        "type": "drawOrder",
+        "beforeId": "hole-region",
+        "afterId": "island-region",
+        "decisionState": "selected"
+      }
+    ],
+    "unresolvedItems": []
+  },
+  "reviewState": {
+    "state": "FORMAL_COMPILED",
+    "reviewAuthority": "MAIN_CHAT",
+    "silentFormalization": false
+  },
+  "stableObjectIds": [
+    "line-main",
+    "circle-main",
+    "arc-main",
+    "ellipse-main",
+    "polyline-main",
+    "spline-main",
+    "center-path",
+    "outer-region",
+    "hole-region",
+    "island-region"
+  ],
+  "versionIdentity": {
+    "authoringVersion": "RA0.9 Basic Function Freeze Test",
+    "recipeVersion": "1.1"
+  },
+  "replayIdentity": {
+    "algorithm": "RA Semantic Compiler + SVG Adapter",
+    "hash": "e8f4e5bad8cde36659bb34ab899556451a3d5eb846161336abfcd2438a984921"
+  },
+  "layerSeparation": {
+    "evidence": "referenceIdentity/observations",
+    "workingDraft": "transaction document",
+    "formalRecipe": "compiledRecipe",
+    "runtimeExpansion": "recipe.objects",
+    "mainAIReviewState": "reviewState"
+  },
+  "primitives": [
+    {
+      "id": "line-main",
+      "type": "LINE",
+      "parameters": {
+        "start": {
+          "x": 50,
+          "y": 80
+        },
+        "end": {
+          "x": 220,
+          "y": 80
+        }
+      },
+      "zIndex": 1,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "circle-main",
+      "type": "CIRCLE",
+      "parameters": {
+        "center": {
+          "x": 120,
+          "y": 180
+        },
+        "radius": 45
+      },
+      "zIndex": 2,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "arc-main",
+      "type": "ARC",
+      "parameters": {
+        "center": {
+          "x": 280,
+          "y": 180
+        },
+        "radius": 55,
+        "startAngleDeg": 180,
+        "endAngleDeg": 360,
+        "sweepDeg": 180,
+        "clockwiseScreen": true
+      },
+      "zIndex": 3,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "ellipse-main",
+      "type": "ELLIPSE",
+      "parameters": {
+        "center": {
+          "x": 450,
+          "y": 180
+        },
+        "radiusX": 70,
+        "radiusY": 40
+      },
+      "zIndex": 4,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "polyline-main",
+      "type": "POLYLINE",
+      "parameters": {
+        "points": [
+          {
+            "x": 50,
+            "y": 300
+          },
+          {
+            "x": 110,
+            "y": 260
+          },
+          {
+            "x": 170,
+            "y": 300
+          }
+        ],
+        "closed": false
+      },
+      "zIndex": 5,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "spline-main",
+      "type": "SPLINE",
+      "parameters": {
+        "p0": {
+          "x": 230,
+          "y": 300
+        },
+        "p1": {
+          "x": 280,
+          "y": 240
+        },
+        "p2": {
+          "x": 350,
+          "y": 360
+        },
+        "p3": {
+          "x": 410,
+          "y": 300
+        }
+      },
+      "zIndex": 6,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "center-path",
+      "type": "LINE",
+      "parameters": {
+        "start": {
+          "x": 80,
+          "y": 420
+        },
+        "end": {
+          "x": 360,
+          "y": 420
+        }
+      },
+      "zIndex": 7,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "outer-region",
+      "type": "CIRCLE",
+      "parameters": {
+        "center": {
+          "x": 520,
+          "y": 390
+        },
+        "radius": 80
+      },
+      "zIndex": 8,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "hole-region",
+      "type": "CIRCLE",
+      "parameters": {
+        "center": {
+          "x": 520,
+          "y": 390
+        },
+        "radius": 35
+      },
+      "zIndex": 9,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    },
+    {
+      "id": "island-region",
+      "type": "CIRCLE",
+      "parameters": {
+        "center": {
+          "x": 520,
+          "y": 390
+        },
+        "radius": 12
+      },
+      "zIndex": 10,
+      "style": {
+        "stroke": "#17202a",
+        "fill": "none",
+        "strokeWidth": 2,
+        "opacity": 1
+      },
+      "provenance": {
+        "sourceKind": "semantic-authoring",
+        "testOnly": true
+      }
+    }
+  ],
+  "dirtyObjectIds": [],
+  "boundaryWorkingCandidates": [],
+  "geometryMeasurements": [],
+  "decisionModel": {
+    "targets": []
+  },
+  "generatorAuthoring": {
+    "kind": "ra-generator-authoring-document",
+    "version": "1.0",
+    "caseId": "FREEZE-CORE-001",
+    "generatorCandidates": [
+      {
+        "id": "gen-offset-427d4afd",
+        "kind": "GENERATOR",
+        "generatorType": "OFFSET",
+        "sourceIds": [
+          "center-path"
+        ],
+        "parameters": {
+          "primitive": {
+            "id": "center-path",
+            "type": "LINE",
+            "parameters": {
+              "start": {
+                "x": 80,
+                "y": 420
+              },
+              "end": {
+                "x": 360,
+                "y": 420
+              }
+            },
+            "zIndex": 7,
+            "style": {
+              "stroke": "#17202a",
+              "fill": "none",
+              "strokeWidth": 2,
+              "opacity": 1
+            },
+            "provenance": {
+              "sourceKind": "semantic-authoring",
+              "testOnly": true
+            }
+          },
+          "distance": 12
+        },
+        "revision": 2,
+        "reviewState": "AUTO_PROPOSED",
+        "decisionState": "unresolved",
+        "recipeEligible": false,
+        "formalPromotionBlocked": true,
+        "requiresAIReview": true,
+        "requiresRescore": true,
+        "provenance": {
+          "sourceKind": "semantic-authoring",
+          "algorithm": "RA Generator Authoring Engine",
+          "algorithmVersion": "1.0"
+        },
+        "previousReviewInvalidated": true
+      },
+      {
+        "id": "gen-array-be785398",
+        "kind": "GENERATOR",
+        "generatorType": "ARRAY",
+        "sourceIds": [
+          "array-source"
+        ],
+        "parameters": {
+          "primitives": [
+            {
+              "id": "array-source",
+              "type": "CIRCLE",
+              "parameters": {
+                "center": {
+                  "x": 100,
+                  "y": 520
+                },
+                "radius": 15
+              },
+              "zIndex": 20,
+              "style": {
+                "stroke": "#17202a",
+                "fill": "none",
+                "strokeWidth": 2,
+                "opacity": 1
+              },
+              "provenance": {
+                "sourceKind": "semantic-authoring",
+                "testOnly": true
+              }
+            }
+          ],
+          "count": 3,
+          "dx": 55,
+          "dy": 0
+        },
+        "revision": 1,
+        "reviewState": "AUTO_PROPOSED",
+        "decisionState": "unresolved",
+        "recipeEligible": false,
+        "formalPromotionBlocked": true,
+        "requiresAIReview": true,
+        "requiresRescore": true,
+        "provenance": {
+          "sourceKind": "semantic-authoring",
+          "algorithm": "RA Generator Authoring Engine",
+          "algorithmVersion": "1.0"
+        }
+      }
+    ],
+    "workingExpansions": {
+      "gen-offset-427d4afd": {
+        "kind": "ra-generator-expansion",
+        "version": "1.0",
+        "generatorId": "gen-offset-427d4afd",
+        "generatorRevision": 2,
+        "primitiveCount": 1,
+        "primitives": [
+          {
+            "id": "gen-offset-427d4afd-primitive-0001",
+            "type": "LINE",
+            "parameters": {
+              "start": {
+                "x": 80,
+                "y": 432
+              },
+              "end": {
+                "x": 360,
+                "y": 432
+              }
+            },
+            "zIndex": 7,
+            "style": {
+              "stroke": "#17202a",
+              "fill": "none",
+              "strokeWidth": 2,
+              "opacity": 1
+            },
+            "provenance": {
+              "sourceKind": "semantic-authoring",
+              "testOnly": true
+            },
+            "generatorProvenance": {
+              "generatorId": "gen-offset-427d4afd",
+              "generatorRevision": 2,
+              "instanceIndex": 0,
+              "distance": 12
+            },
+            "formalEligible": false
+          }
+        ],
+        "digest": "280d314d",
+        "formalEligible": false
+      },
+      "gen-array-be785398": {
+        "kind": "ra-generator-expansion",
+        "version": "1.0",
+        "generatorId": "gen-array-be785398",
+        "generatorRevision": 1,
+        "primitiveCount": 3,
+        "primitives": [
+          {
+            "id": "gen-array-be785398-primitive-0001",
+            "type": "CIRCLE",
+            "parameters": {
+              "center": {
+                "x": 100,
+                "y": 520
+              },
+              "radius": 15
+            },
+            "zIndex": 20,
+            "style": {
+              "stroke": "#17202a",
+              "fill": "none",
+              "strokeWidth": 2,
+              "opacity": 1
+            },
+            "provenance": {
+              "sourceKind": "semantic-authoring",
+              "testOnly": true
+            },
+            "generatorProvenance": {
+              "generatorId": "gen-array-be785398",
+              "generatorRevision": 1,
+              "instanceIndex": 0,
+              "instance": 0
+            },
+            "formalEligible": false
+          },
+          {
+            "id": "gen-array-be785398-primitive-0002",
+            "type": "CIRCLE",
+            "parameters": {
+              "center": {
+                "x": 155,
+                "y": 520
+              },
+              "radius": 15
+            },
+            "zIndex": 20,
+            "style": {
+              "stroke": "#17202a",
+              "fill": "none",
+              "strokeWidth": 2,
+              "opacity": 1
+            },
+            "provenance": {
+              "sourceKind": "semantic-authoring",
+              "testOnly": true
+            },
+            "generatorProvenance": {
+              "generatorId": "gen-array-be785398",
+              "generatorRevision": 1,
+              "instanceIndex": 1,
+              "instance": 1
+            },
+            "formalEligible": false
+          },
+          {
+            "id": "gen-array-be785398-primitive-0003",
+            "type": "CIRCLE",
+            "parameters": {
+              "center": {
+                "x": 210,
+                "y": 520
+              },
+              "radius": 15
+            },
+            "zIndex": 20,
+            "style": {
+              "stroke": "#17202a",
+              "fill": "none",
+              "strokeWidth": 2,
+              "opacity": 1
+            },
+            "provenance": {
+              "sourceKind": "semantic-authoring",
+              "testOnly": true
+            },
+            "generatorProvenance": {
+              "generatorId": "gen-array-be785398",
+              "generatorRevision": 1,
+              "instanceIndex": 2,
+              "instance": 2
+            },
+            "formalEligible": false
+          }
+        ],
+        "digest": "b3ecf109",
+        "formalEligible": false
+      }
+    },
+    "summary": {
+      "generatorCount": 2,
+      "expandedPrimitiveCount": 4,
+      "pendingAIReviewCount": 0,
+      "formalReadyCount": 0
+    }
+  },
+  "compoundTopology": {
+    "kind": "ra-compound-topology-document",
+    "version": "1.0",
+    "caseId": "FREEZE-CORE-001",
+    "compoundCandidates": [
+      {
+        "id": "compound-line-arc",
+        "kind": "COMPOUND_PATH",
+        "segments": [
+          {
+            "id": "compound-line",
+            "type": "LINE",
+            "parameters": {
+              "start": {
+                "x": 420,
+                "y": 500
+              },
+              "end": {
+                "x": 500,
+                "y": 500
+              }
+            },
+            "zIndex": 30,
+            "style": {
+              "stroke": "#17202a",
+              "fill": "none",
+              "strokeWidth": 2,
+              "opacity": 1
+            },
+            "provenance": {
+              "sourceKind": "semantic-authoring",
+              "testOnly": true
+            }
+          },
+          {
+            "id": "compound-arc",
+            "type": "ARC",
+            "parameters": {
+              "center": {
+                "x": 500,
+                "y": 550
+              },
+              "radius": 50,
+              "startAngleDeg": -90,
+              "endAngleDeg": 0,
+              "sweepDeg": 90,
+              "clockwiseScreen": true
+            },
+            "zIndex": 31,
+            "style": {
+              "stroke": "#17202a",
+              "fill": "none",
+              "strokeWidth": 2,
+              "opacity": 1
+            },
+            "provenance": {
+              "sourceKind": "semantic-authoring",
+              "testOnly": true
+            }
+          }
+        ],
+        "continuity": {
+          "valid": true,
+          "joins": [
+            {
+              "id": "ct-join-4d66949d",
+              "leftSegmentId": "compound-line",
+              "rightSegmentId": "compound-arc",
+              "gap": 0,
+              "tangentErrorDeg": 0,
+              "curvatureError": 0.02,
+              "achieved": "G1",
+              "g0Passed": true,
+              "g1Passed": true,
+              "g2Passed": false
+            }
+          ],
+          "minimumContinuity": "G1",
+          "tolerance": {
+            "g0": 0.5,
+            "g1": 2,
+            "g2": 0.005
+          }
+        },
+        "requestedContinuity": "G1",
+        "evidenceIds": [
+          "compound-arc",
+          "compound-line"
+        ],
+        "reviewState": "AUTO_PROPOSED",
+        "decisionState": "unresolved",
+        "recipeEligible": false,
+        "formalPromotionBlocked": true,
+        "requiresAIReview": true,
+        "requiresRescore": true,
+        "provenance": {
+          "sourceKind": "semantic-geometry",
+          "algorithm": "RA Compound and Topology Engine",
+          "algorithmVersion": "1.0"
+        }
+      }
+    ],
+    "compoundOffsetCandidates": [
+      {
+        "id": "ct-compound-offset-0e90909a",
+        "kind": "COMPOUND_OFFSET",
+        "sourceCompoundId": "compound-line-arc",
+        "offsets": [
+          -8,
+          8
+        ],
+        "members": [
+          {
+            "offset": -8,
+            "compound": {
+              "id": "ct-offset-member-60fbb207",
+              "segments": [
+                {
+                  "id": "compound-line",
+                  "type": "LINE",
+                  "parameters": {
+                    "start": {
+                      "x": 420,
+                      "y": 492
+                    },
+                    "end": {
+                      "x": 500,
+                      "y": 492
+                    }
+                  },
+                  "zIndex": 30,
+                  "style": {
+                    "stroke": "#17202a",
+                    "fill": "none",
+                    "strokeWidth": 2,
+                    "opacity": 1
+                  },
+                  "provenance": {
+                    "sourceKind": "semantic-authoring",
+                    "testOnly": true
+                  }
+                },
+                {
+                  "id": "compound-arc",
+                  "type": "ARC",
+                  "parameters": {
+                    "center": {
+                      "x": 500,
+                      "y": 534
+                    },
+                    "radius": 42,
+                    "startAngleDeg": -90,
+                    "endAngleDeg": 0,
+                    "sweepDeg": 90,
+                    "clockwiseScreen": true
+                  },
+                  "zIndex": 31,
+                  "style": {
+                    "stroke": "#17202a",
+                    "fill": "none",
+                    "strokeWidth": 2,
+                    "opacity": 1
+                  },
+                  "provenance": {
+                    "sourceKind": "semantic-authoring",
+                    "testOnly": true
+                  }
+                }
+              ]
+            },
+            "continuity": {
+              "valid": true,
+              "joins": [
+                {
+                  "id": "ct-join-4d66949d",
+                  "leftSegmentId": "compound-line",
+                  "rightSegmentId": "compound-arc",
+                  "gap": 0,
+                  "tangentErrorDeg": 0,
+                  "curvatureError": 0.023809524,
+                  "achieved": "G1",
+                  "g0Passed": true,
+                  "g1Passed": true,
+                  "g2Passed": false
+                }
+              ],
+              "minimumContinuity": "G1",
+              "tolerance": {
+                "g0": 0.5,
+                "g1": 2,
+                "g2": 0.005
+              }
+            }
+          },
+          {
+            "offset": 8,
+            "compound": {
+              "id": "ct-offset-member-23606248",
+              "segments": [
+                {
+                  "id": "compound-line",
+                  "type": "LINE",
+                  "parameters": {
+                    "start": {
+                      "x": 420,
+                      "y": 508
+                    },
+                    "end": {
+                      "x": 500,
+                      "y": 508
+                    }
+                  },
+                  "zIndex": 30,
+                  "style": {
+                    "stroke": "#17202a",
+                    "fill": "none",
+                    "strokeWidth": 2,
+                    "opacity": 1
+                  },
+                  "provenance": {
+                    "sourceKind": "semantic-authoring",
+                    "testOnly": true
+                  }
+                },
+                {
+                  "id": "compound-arc",
+                  "type": "ARC",
+                  "parameters": {
+                    "center": {
+                      "x": 500,
+                      "y": 566
+                    },
+                    "radius": 58,
+                    "startAngleDeg": -90,
+                    "endAngleDeg": 0,
+                    "sweepDeg": 90,
+                    "clockwiseScreen": true
+                  },
+                  "zIndex": 31,
+                  "style": {
+                    "stroke": "#17202a",
+                    "fill": "none",
+                    "strokeWidth": 2,
+                    "opacity": 1
+                  },
+                  "provenance": {
+                    "sourceKind": "semantic-authoring",
+                    "testOnly": true
+                  }
+                }
+              ]
+            },
+            "continuity": {
+              "valid": true,
+              "joins": [
+                {
+                  "id": "ct-join-4d66949d",
+                  "leftSegmentId": "compound-line",
+                  "rightSegmentId": "compound-arc",
+                  "gap": 0,
+                  "tangentErrorDeg": 0,
+                  "curvatureError": 0.017241379,
+                  "achieved": "G1",
+                  "g0Passed": true,
+                  "g1Passed": true,
+                  "g2Passed": false
+                }
+              ],
+              "minimumContinuity": "G1",
+              "tolerance": {
+                "g0": 0.5,
+                "g1": 2,
+                "g2": 0.005
+              }
+            }
+          }
+        ],
+        "requestedContinuity": "G1",
+        "unresolved": [],
+        "allPassed": true,
+        "evidenceIds": [
+          "compound-arc",
+          "compound-line",
+          "compound-line-arc"
+        ],
+        "reviewState": "AUTO_PROPOSED",
+        "decisionState": "unresolved",
+        "recipeEligible": false,
+        "formalPromotionBlocked": true,
+        "requiresAIReview": true,
+        "requiresRescore": true,
+        "provenance": {
+          "sourceKind": "semantic-geometry",
+          "algorithm": "RA Compound and Topology Engine",
+          "algorithmVersion": "1.0"
+        }
+      }
+    ],
+    "topologyCandidates": [],
+    "weaveGraph": {
+      "kind": "weaveGraph",
+      "paths": [],
+      "crossingIds": [],
+      "unresolvedCrossingIds": [],
+      "validation": {
+        "valid": true,
+        "invalid": [],
+        "cycle": null
+      }
+    },
+    "summary": {
+      "compoundCount": 1,
+      "compoundOffsetCount": 1,
+      "crossingCount": 0,
+      "unresolvedCrossingCount": 0,
+      "topologyValid": true,
+      "formalReadyCount": 0
+    }
+  },
+  "constraintParameters": {
+    "kind": "ra-constraint-parameter-document",
+    "version": "1.0",
+    "caseId": "FREEZE-CORE-001",
+    "constraintCandidates": [],
+    "sharedParameterCandidates": [
+      {
+        "id": "shared-band-width",
+        "kind": "SHARED_PARAMETER",
+        "parameterKind": "width",
+        "memberIds": [
+          "center-path",
+          "gen-offset-427d4afd"
+        ],
+        "value": 12,
+        "decisionState": "selected",
+        "unresolved": [],
+        "reviewState": "FORMAL_COMPILED",
+        "recipeEligible": true,
+        "formalPromotionBlocked": false,
+        "requiresAIReview": false,
+        "requiresRescore": false,
+        "provenance": {
+          "sourceKind": "semantic-authoring",
+          "algorithm": "Freeze Contract",
+          "algorithmVersion": "1.0"
+        }
+      }
+    ],
+    "conflictValidation": {
+      "valid": true,
+      "conflicts": []
+    },
+    "summary": {
+      "constraintCount": 0,
+      "sharedParameterCount": 1,
+      "passingResidualCount": 0,
+      "conflictCount": 0,
+      "formalReadyCount": 0
+    }
+  },
+  "semanticTopology": {
+    "kind": "ra-semantic-topology",
+    "version": "1.0",
+    "relations": [
+      {
+        "id": "rel-hole",
+        "type": "hole",
+        "parentId": "outer-region",
+        "childId": "hole-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-island",
+        "type": "island",
+        "parentId": "hole-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-subtract",
+        "type": "booleanSubtract",
+        "targetId": "outer-region",
+        "operandId": "hole-region",
+        "resultId": "ring-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-contains",
+        "type": "contains",
+        "parentId": "outer-region",
+        "childId": "island-region",
+        "decisionState": "selected"
+      },
+      {
+        "id": "rel-draw-order",
+        "type": "drawOrder",
+        "beforeId": "hole-region",
+        "afterId": "island-region",
+        "decisionState": "selected"
+      }
+    ],
+    "unresolvedItems": []
+  },
+  "aiReviewQueue": {
+    "kind": "ra-ai-review-queue",
+    "version": "1.0",
+    "caseId": "FREEZE-CORE-001",
+    "authoringVersion": "RA0.9 Basic Function Freeze Test",
+    "items": [
+      {
+        "reviewId": "review-gen-offset-427d4afd",
+        "targetId": "gen-offset-427d4afd",
+        "targetKind": "GENERATOR",
+        "state": "FORMAL_COMPILED",
+        "reviewer": "QA Test Authority",
+        "reviewAuthority": "MAIN_CHAT",
+        "mainAIReviewStatus": "MAIN_AI_CONFIRMED",
+        "geometryCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "structureCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "runtimeCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "evidenceIds": [
+          "evidence-freeze-contract"
+        ],
+        "candidateIdsCompared": [
+          "gen-offset-427d4afd"
+        ],
+        "decisionReason": "Synthetic test-only fixture explicitly authorizes compile contract.",
+        "provenance": {
+          "sourceCandidateId": "gen-offset-427d4afd",
+          "testOnly": true
+        },
+        "authoringVersion": "RA0.9 Basic Function Freeze Test",
+        "qa": {
+          "runtime": true,
+          "topology": true,
+          "roundtrip": true,
+          "hardFailures": []
+        },
+        "workingDraftDirty": false,
+        "formalBlockers": [],
+        "createdAt": "2026-07-31T00:00:00Z",
+        "reviewedAt": "2026-07-31T00:00:00Z",
+        "history": [],
+        "future": [],
+        "compiler": {
+          "id": "freeze-contract",
+          "version": "1.0"
+        }
+      },
+      {
+        "reviewId": "review-gen-array-be785398",
+        "targetId": "gen-array-be785398",
+        "targetKind": "GENERATOR",
+        "state": "FORMAL_COMPILED",
+        "reviewer": "QA Test Authority",
+        "reviewAuthority": "MAIN_CHAT",
+        "mainAIReviewStatus": "MAIN_AI_CONFIRMED",
+        "geometryCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "structureCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "runtimeCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "evidenceIds": [
+          "evidence-freeze-contract"
+        ],
+        "candidateIdsCompared": [
+          "gen-array-be785398"
+        ],
+        "decisionReason": "Synthetic test-only fixture explicitly authorizes compile contract.",
+        "provenance": {
+          "sourceCandidateId": "gen-array-be785398",
+          "testOnly": true
+        },
+        "authoringVersion": "RA0.9 Basic Function Freeze Test",
+        "qa": {
+          "runtime": true,
+          "topology": true,
+          "roundtrip": true,
+          "hardFailures": []
+        },
+        "workingDraftDirty": false,
+        "formalBlockers": [],
+        "createdAt": "2026-07-31T00:00:00Z",
+        "reviewedAt": "2026-07-31T00:00:00Z",
+        "history": [],
+        "future": [],
+        "compiler": {
+          "id": "freeze-contract",
+          "version": "1.0"
+        }
+      },
+      {
+        "reviewId": "review-compound-line-arc",
+        "targetId": "compound-line-arc",
+        "targetKind": "COMPOUND_PATH",
+        "state": "FORMAL_COMPILED",
+        "reviewer": "QA Test Authority",
+        "reviewAuthority": "MAIN_CHAT",
+        "mainAIReviewStatus": "MAIN_AI_CONFIRMED",
+        "geometryCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "structureCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "runtimeCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "evidenceIds": [
+          "evidence-freeze-contract"
+        ],
+        "candidateIdsCompared": [
+          "compound-line-arc"
+        ],
+        "decisionReason": "Synthetic test-only fixture explicitly authorizes compile contract.",
+        "provenance": {
+          "sourceCandidateId": "compound-line-arc",
+          "testOnly": true
+        },
+        "authoringVersion": "RA0.9 Basic Function Freeze Test",
+        "qa": {
+          "runtime": true,
+          "topology": true,
+          "roundtrip": true,
+          "hardFailures": []
+        },
+        "workingDraftDirty": false,
+        "formalBlockers": [],
+        "createdAt": "2026-07-31T00:00:00Z",
+        "reviewedAt": "2026-07-31T00:00:00Z",
+        "history": [],
+        "future": [],
+        "compiler": {
+          "id": "freeze-contract",
+          "version": "1.0"
+        }
+      },
+      {
+        "reviewId": "review-ct-compound-offset-0e90909a",
+        "targetId": "ct-compound-offset-0e90909a",
+        "targetKind": "COMPOUND_OFFSET",
+        "state": "FORMAL_COMPILED",
+        "reviewer": "QA Test Authority",
+        "reviewAuthority": "MAIN_CHAT",
+        "mainAIReviewStatus": "MAIN_AI_CONFIRMED",
+        "geometryCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "structureCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "runtimeCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "evidenceIds": [
+          "evidence-freeze-contract"
+        ],
+        "candidateIdsCompared": [
+          "ct-compound-offset-0e90909a"
+        ],
+        "decisionReason": "Synthetic test-only fixture explicitly authorizes compile contract.",
+        "provenance": {
+          "sourceCandidateId": "ct-compound-offset-0e90909a",
+          "testOnly": true
+        },
+        "authoringVersion": "RA0.9 Basic Function Freeze Test",
+        "qa": {
+          "runtime": true,
+          "topology": true,
+          "roundtrip": true,
+          "hardFailures": []
+        },
+        "workingDraftDirty": false,
+        "formalBlockers": [],
+        "createdAt": "2026-07-31T00:00:00Z",
+        "reviewedAt": "2026-07-31T00:00:00Z",
+        "history": [],
+        "future": [],
+        "compiler": {
+          "id": "freeze-contract",
+          "version": "1.0"
+        }
+      },
+      {
+        "reviewId": "review-shared-band-width",
+        "targetId": "shared-band-width",
+        "targetKind": "SHARED_PARAMETER",
+        "state": "FORMAL_COMPILED",
+        "reviewer": "QA Test Authority",
+        "reviewAuthority": "MAIN_CHAT",
+        "mainAIReviewStatus": "MAIN_AI_CONFIRMED",
+        "geometryCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "structureCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "runtimeCheck": {
+          "passed": true,
+          "notes": [
+            "synthetic freeze contract"
+          ]
+        },
+        "evidenceIds": [
+          "evidence-freeze-contract"
+        ],
+        "candidateIdsCompared": [
+          "shared-band-width"
+        ],
+        "decisionReason": "Synthetic test-only fixture explicitly authorizes compile contract.",
+        "provenance": {
+          "sourceCandidateId": "shared-band-width",
+          "testOnly": true
+        },
+        "authoringVersion": "RA0.9 Basic Function Freeze Test",
+        "qa": {
+          "runtime": true,
+          "topology": true,
+          "roundtrip": true,
+          "hardFailures": []
+        },
+        "workingDraftDirty": false,
+        "formalBlockers": [],
+        "createdAt": "2026-07-31T00:00:00Z",
+        "reviewedAt": "2026-07-31T00:00:00Z",
+        "history": [],
+        "future": [],
+        "compiler": {
+          "id": "freeze-contract",
+          "version": "1.0"
+        }
+      }
+    ],
+    "audit": [
+      {
+        "action": "TEST_ONLY_QUEUE_CREATED",
+        "targetIds": [
+          "gen-offset-427d4afd",
+          "gen-array-be785398",
+          "compound-line-arc",
+          "ct-compound-offset-0e90909a",
+          "shared-band-width"
+        ],
+        "at": "2026-07-31T00:00:00Z"
+      }
+    ]
+  }
+}

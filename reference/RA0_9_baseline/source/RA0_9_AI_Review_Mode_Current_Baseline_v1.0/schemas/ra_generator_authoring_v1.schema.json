@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_generator_authoring_v1.schema.json",
+  "title": "RA Generator Authoring Document v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "version", "caseId", "generatorCandidates", "workingExpansions", "summary"],
+  "properties": {
+    "kind": {"const": "ra-generator-authoring-document"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "generatorCandidates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/generator"}
+    },
+    "workingExpansions": {"type": "object"},
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generatorCount", "expandedPrimitiveCount", "pendingAIReviewCount", "formalReadyCount"],
+      "properties": {
+        "generatorCount": {"type": "integer", "minimum": 0},
+        "expandedPrimitiveCount": {"type": "integer", "minimum": 0},
+        "pendingAIReviewCount": {"type": "integer", "minimum": 0},
+        "formalReadyCount": {"const": 0}
+      }
+    }
+  },
+  "$defs": {
+    "generator": {
+      "type": "object",
+      "required": [
+        "id", "kind", "generatorType", "sourceIds", "parameters", "revision",
+        "reviewState", "decisionState", "recipeEligible", "formalPromotionBlocked",
+        "requiresAIReview", "requiresRescore", "provenance"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"const": "GENERATOR"},
+        "generatorType": {
+          "enum": [
+            "CONCENTRIC_ARC_FIELD", "PARALLEL_PATH_FIELD", "OFFSET",
+            "ARRAY", "MIRROR", "ROTATION", "RADIUS_SEQUENCE"
+          ]
+        },
+        "sourceIds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "parameters": {"type": "object"},
+        "revision": {"type": "integer", "minimum": 1},
+        "reviewState": {"const": "AUTO_PROPOSED"},
+        "decisionState": {"const": "unresolved"},
+        "recipeEligible": {"const": false},
+        "formalPromotionBlocked": {"const": true},
+        "requiresAIReview": {"const": true},
+        "requiresRescore": {"const": true},
+        "previousReviewInvalidated": {"type": "boolean"},
+        "provenance": {"type": "object"}
+      }
+    }
+  }
+}

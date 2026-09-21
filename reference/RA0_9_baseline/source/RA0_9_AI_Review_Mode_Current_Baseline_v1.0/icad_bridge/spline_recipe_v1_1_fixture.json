@@ -1,0 +1,58 @@
+{
+  "kind": "icad-auto-drawing-recipe",
+  "schemaVersion": "1.1",
+  "recipeId": "spline-extension-fixture",
+  "revision": 1,
+  "producer": {
+    "name": "RA6.1"
+  },
+  "document": {
+    "id": "spline-fixture",
+    "name": "Spline fixture",
+    "units": "px",
+    "coordinateSpace": "absolute",
+    "width": 400,
+    "height": 300,
+    "origin": {
+      "x": 0,
+      "y": 0
+    },
+    "background": "#ffffff"
+  },
+  "objects": [
+    {
+      "id": "spline-1",
+      "type": "spline",
+      "layer": "GEOMETRY",
+      "points": [
+        {
+          "x": 20,
+          "y": 150
+        },
+        {
+          "x": 80,
+          "y": 40
+        },
+        {
+          "x": 160,
+          "y": 60
+        },
+        {
+          "x": 240,
+          "y": 240
+        },
+        {
+          "x": 340,
+          "y": 150
+        }
+      ],
+      "closed": false,
+      "style": {
+        "stroke": "#111111",
+        "fill": "none",
+        "strokeWidth": 6,
+        "opacity": 1
+      }
+    }
+  ]
+}

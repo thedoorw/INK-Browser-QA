@@ -1,0 +1,97 @@
+{
+  "kind": "ra-basic-function-freeze-node-contract",
+  "version": "1.0",
+  "status": "PASS",
+  "authoring": {
+    "add": true,
+    "select": true,
+    "modify": true,
+    "delete": true,
+    "undo": true,
+    "redo": true,
+    "rollback": true,
+    "stableIds": true
+  },
+  "compile": {
+    "status": "PASS",
+    "objectCount": 20,
+    "types": [
+      "arc",
+      "circle",
+      "ellipse",
+      "line",
+      "polyline",
+      "spline"
+    ],
+    "topologyRelationTypes": [
+      "booleanSubtract",
+      "contains",
+      "drawOrder",
+      "hole",
+      "island"
+    ],
+    "sharedParameterCount": 1,
+    "noSilentFallback": true
+  },
+  "saveOpen": {
+    "status": "PASS",
+    "authoringPreserved": true,
+    "objectIdsPreserved": true
+  },
+  "jsonRoundtrip": {
+    "status": "PASS",
+    "authoringPreserved": true,
+    "recipePreserved": true
+  },
+  "deterministicReplay": {
+    "status": "PASS",
+    "runs": 3,
+    "hashes": [
+      "e8f4e5bad8cde36659bb34ab899556451a3d5eb846161336abfcd2438a984921",
+      "e8f4e5bad8cde36659bb34ab899556451a3d5eb846161336abfcd2438a984921",
+      "e8f4e5bad8cde36659bb34ab899556451a3d5eb846161336abfcd2438a984921"
+    ],
+    "objectCounts": [
+      20,
+      20,
+      20
+    ]
+  },
+  "icadCompatibility": {
+    "status": "PASS",
+    "preserved": true,
+    "objectCount": 20,
+    "commandCount": 25,
+    "compatibilityReport": {
+      "status": "PASS_WITH_EXPLICIT_ANNOTATIONS",
+      "unsupportedTopLevelFields": [],
+      "unsupportedObjectTypes": [],
+      "unsupportedTopologyRelationTypes": [],
+      "sharedParameterCount": 1,
+      "note": "Unknown top-level fields are reported and preserved through the template; no silent discard."
+    }
+  },
+  "reviewAuthority": {
+    "rejectsWorkAuthority": true,
+    "acceptsExplicitMainChat": true,
+    "rawContourFormalizationBlocked": true,
+    "unresolvedSilentFormalizationBlocked": true
+  },
+  "primitiveCoverage": {
+    "LINE": true,
+    "CIRCLE": true,
+    "ARC": true,
+    "ELLIPSE": true,
+    "POLYLINE": true,
+    "SPLINE": true,
+    "OFFSET": true,
+    "COMPOUND": true,
+    "BOOLEAN": true,
+    "HOLE": true,
+    "ISLAND": true,
+    "SHARED_PARAMETERS": true,
+    "GENERATOR": true,
+    "ARRAY": true,
+    "TRANSFORM": true
+  }
+}

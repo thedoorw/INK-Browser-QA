@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_geometry_notebook_v1.schema.json",
+  "title": "RA Geometry Notebook v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "kind", "version", "caseId", "referenceIdentity", "observations",
+    "hypotheses", "decisions", "selectedCandidateIds", "rejectedCandidateIds",
+    "unresolvedItems", "confidence", "provenance", "semanticRecipe",
+    "topologyDecision", "reviewState", "stableObjectIds", "versionIdentity",
+    "replayIdentity", "layerSeparation"
+  ],
+  "properties": {
+    "kind": {"const": "ra-geometry-notebook"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "referenceIdentity": {
+      "type": "object",
+      "required": ["id", "sha256"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "observations": {"type": "array", "items": {"$ref": "#/$defs/note"}},
+    "hypotheses": {"type": "array", "items": {"$ref": "#/$defs/hypothesis"}},
+    "decisions": {"type": "array", "items": {"$ref": "#/$defs/decision"}},
+    "selectedCandidateIds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "rejectedCandidateIds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "unresolvedItems": {"type": "array", "items": {"$ref": "#/$defs/unresolved"}},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "provenance": {"type": "object"},
+    "semanticRecipe": {"type": "object"},
+    "topologyDecision": {"type": "object"},
+    "reviewState": {
+      "type": "object",
+      "required": ["state", "reviewAuthority", "silentFormalization"],
+      "properties": {
+        "state": {"enum": ["AUTO_PROPOSED", "WORK_REVIEW_CONFIRMED", "MAIN_AI_REVIEW_REQUIRED", "MAIN_AI_CONFIRMED", "FINAL_ACCEPTANCE_CANDIDATE", "UNRESOLVED", "FORMAL_BLOCKED", "FORMAL_READY", "FORMAL_COMPILED"]},
+        "reviewAuthority": {"enum": ["WORK", "MAIN_CHAT", null]},
+        "silentFormalization": {"const": false}
+      }
+    },
+    "stableObjectIds": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+    "versionIdentity": {"type": "object", "required": ["authoringVersion", "recipeVersion"]},
+    "replayIdentity": {"type": "object", "required": ["algorithm", "hash"]},
+    "layerSeparation": {
+      "type": "object",
+      "required": ["evidence", "workingDraft", "formalRecipe", "runtimeExpansion", "mainAIReviewState"],
+      "properties": {
+        "evidence": {"type": "string"},
+        "workingDraft": {"type": "string"},
+        "formalRecipe": {"type": "string"},
+        "runtimeExpansion": {"type": "string"},
+        "mainAIReviewState": {"type": "string"}
+      }
+    }
+  },
+  "$defs": {
+    "note": {
+      "type": "object",
+      "required": ["id", "statement", "evidenceIds"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "statement": {"type": "string", "minLength": 1},
+        "evidenceIds": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "hypothesis": {
+      "type": "object",
+      "required": ["id", "candidateType", "parameters", "state"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "candidateType": {"type": "string", "minLength": 1},
+        "parameters": {"type": "object"},
+        "state": {"enum": ["selected", "rejected", "unresolved"]}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["id", "targetId", "state", "reason"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "targetId": {"type": "string", "minLength": 1},
+        "state": {"enum": ["selected", "rejected", "unresolved"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "unresolved": {
+      "type": "object",
+      "required": ["id", "reason", "missingEvidence"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1},
+        "missingEvidence": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

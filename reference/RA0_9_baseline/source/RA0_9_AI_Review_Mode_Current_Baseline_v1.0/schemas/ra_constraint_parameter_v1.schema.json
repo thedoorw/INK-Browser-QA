@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_constraint_parameter_v1.schema.json",
+  "title": "RA Constraint and Shared Parameter Document v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind", "version", "caseId", "constraintCandidates",
+    "sharedParameterCandidates", "conflictValidation", "summary"
+  ],
+  "properties": {
+    "kind": {"const": "ra-constraint-parameter-document"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "constraintCandidates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/proposal"}
+    },
+    "sharedParameterCandidates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/proposal"}
+    },
+    "conflictValidation": {
+      "type": "object",
+      "required": ["valid", "conflicts"],
+      "properties": {
+        "valid": {"type": "boolean"},
+        "conflicts": {"type": "array"}
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constraintCount", "sharedParameterCount", "passingResidualCount",
+        "conflictCount", "formalReadyCount"
+      ],
+      "properties": {
+        "constraintCount": {"type": "integer", "minimum": 0},
+        "sharedParameterCount": {"type": "integer", "minimum": 0},
+        "passingResidualCount": {"type": "integer", "minimum": 0},
+        "conflictCount": {"type": "integer", "minimum": 0},
+        "formalReadyCount": {"const": 0}
+      }
+    }
+  },
+  "$defs": {
+    "proposal": {
+      "type": "object",
+      "required": [
+        "id", "kind", "evidenceIds", "reviewState", "decisionState",
+        "recipeEligible", "formalPromotionBlocked", "requiresAIReview",
+        "requiresRescore", "provenance"
+      ],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["CONSTRAINT", "SHARED_PARAMETER"]},
+        "evidenceIds": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+        "reviewState": {"const": "AUTO_PROPOSED"},
+        "decisionState": {"const": "unresolved"},
+        "recipeEligible": {"const": false},
+        "formalPromotionBlocked": {"const": true},
+        "requiresAIReview": {"const": true},
+        "requiresRescore": {"const": true},
+        "provenance": {"type": "object"}
+      }
+    }
+  }
+}

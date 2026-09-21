@@ -1,0 +1,26 @@
+{
+  "packageRole": "CURRENT_RA_MAIN_AND_TECHNICAL_BASELINE",
+  "coreStatus": "RA_BASIC_FUNCTION_FROZEN",
+  "uiStatus": "RA_AI_REVIEW_MODE_ACCEPTED",
+  "acceptanceDecision": "RA_AI_REVIEW_MODE_ACCEPTED",
+  "finalStatus": "ACCEPTED_CURRENT_BASELINE",
+  "parentCoreBaseline": "RA0_9_Frozen_Toolkit_Baseline_v1.2.zip",
+  "parentCoreBaselineSha256": "72beebf6bcd0d15c7a82ce17d77a78504cb830ba28a5846d9a6d76b3db2689f9",
+  "acceptedCandidate": "RA0_9_AI_Review_Mode_Visual_Verified_Candidate.zip",
+  "acceptedCandidateSha256": "ad52fb582ed3ae258c0cec36f4aa292d6d4e5fd74421c4a82be64b2861d6673e",
+  "frozenMainProgram": "Recipe_Authoring_Workbench_RA0_9_RC4.html",
+  "frozenMainProgramSha256": "70e6ece15b38724a4a5515d6bb27631d6884595529ac3ef54b98c407185827fd",
+  "aiReviewEntry": "RA0_9_AI_Review_Mode_Candidate.html",
+  "visualAssetClassification": "TEST_ONLY_NON_AUTHORITATIVE",
+  "visualCases": {
+    "accepted": [
+      "PL-015"
+    ],
+    "diagnostic": [
+      "PL-036"
+    ]
+  },
+  "raVersion": "0.9",
+  "baselineVersion": "1.0",
+  "createdAt": "2026-07-31T16:30:00+08:00"
+}

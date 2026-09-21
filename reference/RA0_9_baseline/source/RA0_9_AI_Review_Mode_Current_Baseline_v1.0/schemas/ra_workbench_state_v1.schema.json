@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_workbench_state_v1.schema.json",
+  "title": "RA Authoring Workbench State",
+  "type": "object",
+  "required": ["caseId", "compareMode", "viewport", "evidenceFilters"],
+  "properties": {
+    "caseId": {"type": "string", "minLength": 1},
+    "compareMode": {
+      "enum": ["side-by-side", "overlay", "wipe", "difference", "reference", "runtime"]
+    },
+    "viewport": {
+      "type": "object",
+      "required": ["zoom", "panX", "panY", "fit"],
+      "properties": {
+        "zoom": {"type": "number", "exclusiveMinimum": 0},
+        "panX": {"type": "number"},
+        "panY": {"type": "number"},
+        "fit": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "selection": {
+      "type": ["object", "null"],
+      "properties": {
+        "kind": {"enum": ["program", "target", "segment"]},
+        "id": {"type": "string"}
+      },
+      "required": ["kind", "id"],
+      "additionalProperties": false
+    },
+    "region": {
+      "type": ["object", "null"],
+      "properties": {
+        "x": {"type": "number"},
+        "y": {"type": "number"},
+        "width": {"type": "number", "minimum": 0},
+        "height": {"type": "number", "minimum": 0}
+      },
+      "required": ["x", "y", "width", "height"],
+      "additionalProperties": false
+    },
+    "evidenceFilters": {
+      "type": "array",
+      "items": {"enum": ["measured", "corrected", "inferred", "unresolved"]},
+      "uniqueItems": true
+    },
+    "workingDraft": {
+      "type": ["object", "null"],
+      "properties": {
+        "targetId": {"type": "string"},
+        "parameters": {"type": "object"},
+        "dirty": {"type": "boolean"},
+        "requiresRescore": {"type": "boolean"}
+      },
+      "required": ["targetId", "parameters", "dirty", "requiresRescore"],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

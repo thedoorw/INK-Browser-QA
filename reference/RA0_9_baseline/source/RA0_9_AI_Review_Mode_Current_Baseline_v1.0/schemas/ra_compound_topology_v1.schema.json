@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_compound_topology_v1.schema.json",
+  "title": "RA Compound Path and Topology Document",
+  "type": "object",
+  "required": [
+    "kind",
+    "version",
+    "caseId",
+    "compoundCandidates",
+    "compoundOffsetCandidates",
+    "topologyCandidates",
+    "weaveGraph",
+    "summary"
+  ],
+  "properties": {
+    "kind": {"const": "ra-compound-topology-document"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "compoundCandidates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/reviewCandidate"}
+    },
+    "compoundOffsetCandidates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/reviewCandidate"}
+    },
+    "topologyCandidates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/reviewCandidate"}
+    },
+    "weaveGraph": {
+      "type": "object",
+      "required": ["kind", "paths", "crossingIds", "unresolvedCrossingIds", "validation"],
+      "properties": {
+        "kind": {"const": "weaveGraph"},
+        "paths": {"type": "array", "items": {"type": "string"}},
+        "crossingIds": {"type": "array", "items": {"type": "string"}},
+        "unresolvedCrossingIds": {"type": "array", "items": {"type": "string"}},
+        "validation": {
+          "type": "object",
+          "required": ["valid", "invalid", "cycle"],
+          "properties": {
+            "valid": {"type": "boolean"},
+            "invalid": {"type": "array"},
+            "cycle": {"type": ["string", "null"]}
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "compoundCount",
+        "compoundOffsetCount",
+        "crossingCount",
+        "unresolvedCrossingCount",
+        "topologyValid",
+        "formalReadyCount"
+      ],
+      "properties": {
+        "formalReadyCount": {"const": 0}
+      }
+    }
+  },
+  "$defs": {
+    "reviewCandidate": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "reviewState",
+        "decisionState",
+        "recipeEligible",
+        "formalPromotionBlocked",
+        "requiresAIReview",
+        "requiresRescore",
+        "evidenceIds",
+        "provenance"
+      ],
+      "properties": {
+        "reviewState": {"const": "AUTO_PROPOSED"},
+        "decisionState": {"const": "unresolved"},
+        "recipeEligible": {"const": false},
+        "formalPromotionBlocked": {"const": true},
+        "requiresAIReview": {"const": true},
+        "requiresRescore": {"const": true}
+      }
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "kind": "ra0.9-frozen-toolkit-current-baseline",
+  "version": "RA0.9 Frozen Toolkit Baseline v1.2",
+  "parentBaseline": "RA0_9_Frozen_Toolkit_Baseline_v1.1.zip",
+  "currentStatus": "RA_BASIC_FUNCTION_FROZEN",
+  "acceptedCases": [
+    "PL-055",
+    "PL-057",
+    "PL-145",
+    "PL-007",
+    "PL-015"
+  ],
+  "candidateCases": [],
+  "partialCases": [
+    "PL-036",
+    "PL-094",
+    "PL-104",
+    "PL-133",
+    "PL-034"
+  ],
+  "historicalRecoveryIdentityPreserved": true,
+  "formalRelease": "APPROVED_RA_BASIC_FUNCTION_FROZEN",
+  "ra1Created": false,
+  "updatedAt": "2026-07-31T14:10:00+08:00",
+  "engineeringGate": "PASS",
+  "parentRegression": "PASS_WITH_UNVERIFIED",
+  "testSummary": {
+    "PASS": 21,
+    "FAIL": 0,
+    "UNVERIFIED": 3
+  },
+  "directParent": {
+    "filename": "Recipe_Authoring_Workbench_RA0_9_Basic_Function_Freeze_Candidate.zip",
+    "sha256": "65f9b9fd1a603b116d0f918112a81ea04fc2dd085cf818b05538f430733d3200"
+  },
+  "historicalAncestor": {
+    "filename": "Recipe_Authoring_Workbench_RA0_9_RC4_Full_Working_Tree.zip",
+    "relationship": "historical ancestry only; not a direct parent"
+  },
+  "reviewEvidenceDependency": {
+    "filename": "RA0_9_RC4_Standard10_Review_and_Correction_Minimal_Package.zip",
+    "sha256": "213cde7a0227ce0ef8b495182519f1a94ef2e7f3297192534acaab2987a3e334",
+    "embedded": false
+  },
+  "compactRetainedSubset": {
+    "classificationManifest": "COMPACT_PROTECTED_FILE_CLASSIFICATION.json",
+    "historicalFileCount": 394,
+    "counts": {
+      "INTENTIONALLY_OMITTED": 299,
+      "PROTECTED_PRESENT": 66,
+      "PROTECTED_EXTERNALIZED": 27,
+      "REGENERABLE": 2
+    }
+  },
+  "manualGeometryConvergenceStopped": true,
+  "standard10Role": "GEOMETRY_BRAIN_DIAGNOSTIC_AND_BENCHMARK_SET",
+  "geometryBrainDiagnosticCases": [
+    "PL-036",
+    "PL-094",
+    "PL-104",
+    "PL-133",
+    "PL-034"
+  ],
+  "parentSha256": "65f9b9fd1a603b116d0f918112a81ea04fc2dd085cf818b05538f430733d3200",
+  "workingTreeId": "ra0.9-basic-freeze-r1-31db8310092a5240",
+  "basicFunctionFreezeStatus": "RA_BASIC_FUNCTION_FROZEN",
+  "rootIdentityHash": "31db8310092a5240c5df460671f0785098b8492ce68e468c6d12d3f0d7dd9825",
+  "fileCount": 259,
+  "unpackedBytes": 49815525,
+  "technicalDocumentsParent": {
+    "filename": "RA_Basic_Function_Freeze_and_Geometry_Brain_Transition_Documents.zip",
+    "sha256": "163b18e1ed906fc27edbd91eeac5d479442d6edac2d74b1c10a5592b6be32e95"
+  },
+  "verifierRepair": "SELF_CONTAMINATION_ORCHESTRATION_REPAIRED",
+  "packagingSourceOfTruth": "RA0_9_Frozen_Toolkit_Baseline_v1.2",
+  "auditOutputLocation": "audit_output/",
+  "raCoreModified": false,
+  "standard10GeometryModified": false,
+  "rootIdentityScope": "all files excluding identity, manifest, and regenerable audit-output files",
+  "identityExclusions": [
+    "COMPACT_BASELINE_IDENTITY.json",
+    "COMPACT_SHA256_MANIFEST.json",
+    "CURRENT_BASELINE.json",
+    "RA_BASIC_FUNCTION_FREEZE_MANIFEST_v1.0.json",
+    "WORKING_TREE_IDENTITY.json",
+    "audit_output/RA_BASIC_FUNCTION_FREEZE_AUDIT_RESULTS.json"
+  ],
+  "totalExtractedBytes": 49815525,
+  "workingTreeFullySaved": true,
+  "createdAt": "2026-07-31T10:44:00+08:00",
+  "baselineDecisionRecord": "RA0_9_BASELINE_DECISION_RECORD_v1.0.md"
+}

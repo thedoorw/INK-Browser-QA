@@ -1,0 +1,379 @@
+[
+  {
+    "targetId": "PL-036-silhouette",
+    "generationLogic": "The black silhouette is a union of rectangles and circles.",
+    "candidates": [
+      {
+        "id": "PL036-silhouette-union",
+        "candidateType": "PRIMITIVE_UNION",
+        "parameters": {},
+        "metrics": {
+          "primitiveTypes": [
+            "RECTANGLE",
+            "CIRCLE"
+          ],
+          "primitiveCount": 10
+        },
+        "gate": {
+          "passed": true,
+          "checks": [
+            {
+              "id": "nativeRepresentation",
+              "passed": true,
+              "reason": "Silhouette uses native primitives.",
+              "evidence": "RECTANGLE and CIRCLE members are explicit."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "No trace dependency.",
+              "evidence": "Manual union."
+            }
+          ],
+          "failReasons": []
+        },
+        "scores": {
+          "fitQuality": 26,
+          "geometricStability": 15,
+          "structuralConsistency": 14,
+          "topologyContinuity": 15,
+          "representationComplexity": 13,
+          "editabilityReplay": 9,
+          "total": 92
+        },
+        "decisionState": "selected",
+        "reason": "Native primitive union is deterministic and editable.",
+        "rejectionEvidence": []
+      }
+    ],
+    "decision": {
+      "state": "selected",
+      "selected": "PL036-silhouette-union",
+      "rejected": [],
+      "unresolved": [],
+      "nextMeasurement": []
+    },
+    "relationshipIds": []
+  },
+  {
+    "targetId": "PL-036-top-channel-program",
+    "generationLogic": "A measured compound center path expands to four channels; LINE and ARC are selected wherever their residual gates pass, and SPLINE is allowed only after explicit lower-order rejection.",
+    "candidates": [
+      {
+        "id": "PL-036-top-channel-program-compound",
+        "candidateType": "LINE_ARC_SPLINE_COMPOUND",
+        "parameters": {
+          "segmentAnalysisRef": "cases/PL-036/PL-036_segment_analysis_ra63.json",
+          "familyId": "PL-036-top-channel-program"
+        },
+        "metrics": {
+          "segmentCount": 9,
+          "typeCounts": {
+            "LINE": 4,
+            "ARC": 3,
+            "SPLINE": 2
+          },
+          "arcCentersMeasured": 3,
+          "splineLowerOrderRejections": 2,
+          "maxSelectedResidual": 9.3186,
+          "allSegmentsResolved": true
+        },
+        "gate": {
+          "passed": true,
+          "checks": [
+            {
+              "id": "segmentBreaksConfirmed",
+              "passed": true,
+              "reason": "Every center-path span has a selected primitive.",
+              "evidence": "9 measured spans."
+            },
+            {
+              "id": "arcCentersMeasured",
+              "passed": true,
+              "reason": "Every selected ARC stores center, radius and sweep.",
+              "evidence": "3 ARC centers measured."
+            },
+            {
+              "id": "splineEscalationEvidence",
+              "passed": true,
+              "reason": "Every selected SPLINE contains measured LINE/ARC rejection.",
+              "evidence": "2 SPLINE spans with lower-order rejection."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "Segment analysis is based on manually authored fit points, not pixel contours.",
+              "evidence": "RA6.2 baseFitPoints only."
+            }
+          ],
+          "failReasons": []
+        },
+        "scores": {
+          "fitQuality": 25,
+          "geometricStability": 13,
+          "structuralConsistency": 14,
+          "topologyContinuity": 13,
+          "representationComplexity": 13,
+          "editabilityReplay": 9,
+          "total": 87
+        },
+        "decisionState": "selected",
+        "reason": "Measured segment competition resolves the center path as native LINE/ARC with only evidence-justified residual SPLINE spans.",
+        "rejectionEvidence": []
+      },
+      {
+        "id": "PL-036-top-channel-program-single-spline",
+        "candidateType": "SPLINE_FIELD",
+        "parameters": {},
+        "metrics": {
+          "fitPointCount": 28,
+          "segmentStructureLost": true
+        },
+        "gate": {
+          "passed": false,
+          "checks": [
+            {
+              "id": "lowerOrderRejected",
+              "passed": false,
+              "reason": "A single Spline cannot replace spans already accepted as LINE or ARC.",
+              "evidence": "Segment analysis selected native primitives."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "Manual points are trace-independent.",
+              "evidence": "No contour import."
+            }
+          ],
+          "failReasons": [
+            "Native LINE/ARC spans already pass measured gates."
+          ]
+        },
+        "scores": {
+          "fitQuality": 24,
+          "geometricStability": 8,
+          "structuralConsistency": 8,
+          "topologyContinuity": 10,
+          "representationComplexity": 5,
+          "editabilityReplay": 6,
+          "total": 61
+        },
+        "decisionState": "rejected",
+        "reason": "A single global Spline discards measured centers, radii, directions and segment semantics.",
+        "rejectionEvidence": [
+          "Segment candidate analysis v1"
+        ]
+      }
+    ],
+    "decision": {
+      "state": "selected",
+      "selected": "PL-036-top-channel-program-compound",
+      "rejected": [
+        "PL-036-top-channel-program-single-spline"
+      ],
+      "unresolved": [],
+      "nextMeasurement": []
+    },
+    "relationshipIds": [
+      "PL-036-top-offset-family"
+    ]
+  },
+  {
+    "targetId": "PL-036-lower-channel-program",
+    "generationLogic": "A measured compound center path expands to four channels; LINE and ARC are selected wherever their residual gates pass, and SPLINE is allowed only after explicit lower-order rejection.",
+    "candidates": [
+      {
+        "id": "PL-036-lower-channel-program-compound",
+        "candidateType": "LINE_ARC_SPLINE_COMPOUND",
+        "parameters": {
+          "segmentAnalysisRef": "cases/PL-036/PL-036_segment_analysis_ra63.json",
+          "familyId": "PL-036-lower-channel-program"
+        },
+        "metrics": {
+          "segmentCount": 7,
+          "typeCounts": {
+            "LINE": 3,
+            "ARC": 2,
+            "SPLINE": 2
+          },
+          "arcCentersMeasured": 2,
+          "splineLowerOrderRejections": 2,
+          "maxSelectedResidual": 4.2295,
+          "allSegmentsResolved": true
+        },
+        "gate": {
+          "passed": true,
+          "checks": [
+            {
+              "id": "segmentBreaksConfirmed",
+              "passed": true,
+              "reason": "Every center-path span has a selected primitive.",
+              "evidence": "7 measured spans."
+            },
+            {
+              "id": "arcCentersMeasured",
+              "passed": true,
+              "reason": "Every selected ARC stores center, radius and sweep.",
+              "evidence": "2 ARC centers measured."
+            },
+            {
+              "id": "splineEscalationEvidence",
+              "passed": true,
+              "reason": "Every selected SPLINE contains measured LINE/ARC rejection.",
+              "evidence": "2 SPLINE spans with lower-order rejection."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "Segment analysis is based on manually authored fit points, not pixel contours.",
+              "evidence": "RA6.2 baseFitPoints only."
+            }
+          ],
+          "failReasons": []
+        },
+        "scores": {
+          "fitQuality": 25,
+          "geometricStability": 13,
+          "structuralConsistency": 14,
+          "topologyContinuity": 13,
+          "representationComplexity": 13,
+          "editabilityReplay": 9,
+          "total": 87
+        },
+        "decisionState": "selected",
+        "reason": "Measured segment competition resolves the center path as native LINE/ARC with only evidence-justified residual SPLINE spans.",
+        "rejectionEvidence": []
+      },
+      {
+        "id": "PL-036-lower-channel-program-single-spline",
+        "candidateType": "SPLINE_FIELD",
+        "parameters": {},
+        "metrics": {
+          "fitPointCount": 25,
+          "segmentStructureLost": true
+        },
+        "gate": {
+          "passed": false,
+          "checks": [
+            {
+              "id": "lowerOrderRejected",
+              "passed": false,
+              "reason": "A single Spline cannot replace spans already accepted as LINE or ARC.",
+              "evidence": "Segment analysis selected native primitives."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "Manual points are trace-independent.",
+              "evidence": "No contour import."
+            }
+          ],
+          "failReasons": [
+            "Native LINE/ARC spans already pass measured gates."
+          ]
+        },
+        "scores": {
+          "fitQuality": 24,
+          "geometricStability": 8,
+          "structuralConsistency": 8,
+          "topologyContinuity": 10,
+          "representationComplexity": 5,
+          "editabilityReplay": 6,
+          "total": 61
+        },
+        "decisionState": "rejected",
+        "reason": "A single global Spline discards measured centers, radii, directions and segment semantics.",
+        "rejectionEvidence": [
+          "Segment candidate analysis v1"
+        ]
+      }
+    ],
+    "decision": {
+      "state": "selected",
+      "selected": "PL-036-lower-channel-program-compound",
+      "rejected": [
+        "PL-036-lower-channel-program-single-spline"
+      ],
+      "unresolved": [],
+      "nextMeasurement": []
+    },
+    "relationshipIds": [
+      "PL-036-lower-offset-family"
+    ]
+  },
+  {
+    "targetId": "PL-036-offset-continuity-runtime",
+    "generationLogic": "Offset expansion must preserve continuous joins across mixed LINE/ARC/SPLINE segments without degrading native ARC geometry.",
+    "candidates": [
+      {
+        "id": "PL036-compound-offset-continuity",
+        "candidateType": "COMPOUND_OFFSET_SOLVER",
+        "parameters": {
+          "families": 2,
+          "offsetsPerFamily": 4
+        },
+        "metrics": {
+          "segmentDecisionsResolved": true,
+          "joinSolverImplemented": false,
+          "visualAcceptance": false
+        },
+        "gate": {
+          "passed": false,
+          "checks": [
+            {
+              "id": "segmentModelResolved",
+              "passed": true,
+              "reason": "Segment semantics are complete.",
+              "evidence": "16 selected segments."
+            },
+            {
+              "id": "joinContinuityImplemented",
+              "passed": false,
+              "reason": "Mixed primitive offsets require endpoint/tangent reconciliation.",
+              "evidence": "Current preview still uses inherited RA6.2 renderer."
+            },
+            {
+              "id": "visualAcceptance",
+              "passed": false,
+              "reason": "Formal promotion requires side-by-side acceptance.",
+              "evidence": "PL-036 preview is not accepted."
+            }
+          ],
+          "failReasons": [
+            "Compound offset continuity renderer not implemented.",
+            "PL-036 visual acceptance pending."
+          ]
+        },
+        "scores": {
+          "fitQuality": 20,
+          "geometricStability": 12,
+          "structuralConsistency": 14,
+          "topologyContinuity": 8,
+          "representationComplexity": 13,
+          "editabilityReplay": 8,
+          "total": 75
+        },
+        "decisionState": "unresolved",
+        "reason": "The semantic center paths are resolved, but Runtime offset continuity remains a verified implementation gap.",
+        "rejectionEvidence": []
+      }
+    ],
+    "decision": {
+      "state": "unresolved",
+      "selected": null,
+      "rejected": [],
+      "unresolved": [
+        "PL036-compound-offset-continuity"
+      ],
+      "nextMeasurement": [
+        "implement line/arc/spline offset join reconciliation",
+        "render four-channel compound paths",
+        "repeat overlay and local tangent-gap QA"
+      ]
+    },
+    "relationshipIds": [
+      "PL-036-top-offset-family",
+      "PL-036-lower-offset-family"
+    ]
+  }
+]

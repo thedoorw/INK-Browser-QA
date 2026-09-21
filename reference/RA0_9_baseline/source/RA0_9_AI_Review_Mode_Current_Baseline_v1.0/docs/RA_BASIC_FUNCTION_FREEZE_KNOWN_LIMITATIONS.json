@@ -1,0 +1,63 @@
+{
+  "kind": "ra-basic-function-freeze-known-limitations",
+  "version": "1.0-R1",
+  "generatedAt": "2026-07-31T10:44:00+08:00",
+  "raToolGaps": [],
+  "environmentUnverified": [
+    "Full browser HTTP navigation",
+    "External interactive iCAD application"
+  ],
+  "geometryBrainGaps": [
+    {
+      "caseId": "PL-036",
+      "classification": "GEOMETRY_BRAIN_BLOCKED",
+      "gap": "Central route continuity and crossing/occlusion/shared-boundary topology remain ambiguous.",
+      "futureRule": "Compete route graphs globally before local contour fitting; reject closures that create unexplained negative regions."
+    },
+    {
+      "caseId": "PL-094",
+      "classification": "GEOMETRY_BRAIN_BLOCKED",
+      "gap": "Curve-band center path, tangent continuity and center-hole topology remain unresolved.",
+      "futureRule": "Infer a center path and width field first, then test subtraction, compound-hole and occlusion-opening counterfactuals."
+    },
+    {
+      "caseId": "PL-104",
+      "classification": "GEOMETRY_BRAIN_PARTIAL",
+      "gap": "Mechanical symmetry dominates; controlled asymmetry and central twist/compression are under-inferred.",
+      "futureRule": "Score local deviations from a shared generator instead of forcing identical repeated lobes."
+    },
+    {
+      "caseId": "PL-133",
+      "classification": "GEOMETRY_BRAIN_PARTIAL",
+      "gap": "Occlusion cuts, stripe termination, top micro-form and negative-space cause are incomplete.",
+      "futureRule": "Represent stripe visibility intervals and compare gap/hole/occlusion/boolean candidates explicitly."
+    },
+    {
+      "caseId": "PL-034",
+      "classification": "GEOMETRY_BRAIN_PARTIAL",
+      "gap": "Four-lobe shared generator exists, but local curvature, thickness and fold hierarchy remain too regular.",
+      "futureRule": "Use shared parameters with bounded per-instance deviations and separate semantic surface role from geometry boundary."
+    }
+  ],
+  "unfreezeConditions": [
+    "A Geometry Brain produces legal semantics that the RA Schema cannot express.",
+    "A legal Recipe cannot compile or replay deterministically.",
+    "Save/Open or JSON roundtrip loses semantic relationships.",
+    "The iCAD Recipe v1.1 adapter exposes a real format gap.",
+    "Review Authority cannot prevent unauthorized promotion.",
+    "A new case proves a missing general-purpose primitive or topology construct."
+  ],
+  "notUnfreezeReasons": [
+    "A single reconstruction looks unlike its reference",
+    "F1 is low",
+    "The AI selected the wrong primitive or topology"
+  ],
+  "resolvedVerifierDefects": [
+    "Packaging Gate no longer scans a test-mutated product directory.",
+    "Python bytecode is disabled for subprocesses and runtime work occurs outside the immutable package snapshot.",
+    "Audit results are written only to a separate audit output location.",
+    "Compact manifest checks distinguish protected product files from regenerable audit output."
+  ],
+  "formalRelease": "BLOCKED_PENDING_MAIN_CHAT",
+  "ra1Created": false
+}

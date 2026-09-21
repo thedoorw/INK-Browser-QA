@@ -1,0 +1,13 @@
+{
+  "name": "iCAD Auto Drawing Recipe v1.1 SPLINE extension",
+  "baseline": "iCAD 3.2 R2 AutoCAD Raster Reference",
+  "changes": [
+    "Add spline to ICAD_AD_SUPPORTED_TYPES",
+    "Accept points/pts with at least three finite points",
+    "Map Recipe spline to native iCAD {type:spline, pts:[...]}",
+    "Export native spline as Recipe v1.1 spline",
+    "Do not degrade spline to polyline during import"
+  ],
+  "status": "SPEC_AND_TEST_FIXTURE",
+  "note": "Integrated iCAD HTML replacement is deferred until semantic cases confirm the required fit-point contract."
+}

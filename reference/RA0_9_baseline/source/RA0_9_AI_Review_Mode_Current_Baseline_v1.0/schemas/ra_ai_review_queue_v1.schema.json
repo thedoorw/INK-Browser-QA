@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_ai_review_queue_v1.schema.json",
+  "title": "RA AI Review Queue v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "version", "caseId", "authoringVersion", "items", "audit"],
+  "properties": {
+    "kind": {"const": "ra-ai-review-queue"},
+    "version": {"const": "1.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "authoringVersion": {"type": "string", "minLength": 1},
+    "items": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/reviewItem"}
+    },
+    "audit": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "targetIds", "at"],
+        "properties": {
+          "action": {"type": "string", "minLength": 1},
+          "targetIds": {"type": "array", "items": {"type": "string"}},
+          "at": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "notes"],
+      "properties": {
+        "passed": {"type": "boolean"},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "qa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runtime", "topology", "roundtrip", "hardFailures"],
+      "properties": {
+        "runtime": {"type": "boolean"},
+        "topology": {"type": "boolean"},
+        "roundtrip": {"type": "boolean"},
+        "hardFailures": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "reviewItem": {
+      "type": "object",
+      "required": [
+        "reviewId", "targetId", "targetKind", "state", "reviewer",
+        "geometryCheck", "structureCheck", "runtimeCheck", "evidenceIds",
+        "candidateIdsCompared", "decisionReason", "provenance",
+        "authoringVersion", "qa", "workingDraftDirty", "formalBlockers",
+        "createdAt", "reviewedAt", "history", "future"
+      ],
+      "properties": {
+        "reviewId": {"type": "string", "minLength": 1},
+        "targetId": {"type": "string", "minLength": 1},
+        "targetKind": {"type": "string", "minLength": 1},
+        "state": {
+          "enum": [
+            "AUTO_PROPOSED", "AI_REVIEWING", "AI_CONFIRMED", "AI_REJECTED",
+            "WORK_REVIEW_CONFIRMED", "MAIN_AI_REVIEW_REQUIRED", "MAIN_AI_CONFIRMED",
+            "UNRESOLVED", "FORMAL_BLOCKED", "FORMAL_READY", "FORMAL_COMPILED"
+          ]
+        },
+        "reviewer": {"type": ["string", "null"]},
+        "reviewAuthority": {"enum": ["WORK", "MAIN_CHAT", null]},
+        "mainAIReviewStatus": {
+          "enum": ["MAIN_AI_REVIEW_REQUIRED", "MAIN_AI_CONFIRMED", null]
+        },
+        "geometryCheck": {"$ref": "#/$defs/check"},
+        "structureCheck": {"$ref": "#/$defs/check"},
+        "runtimeCheck": {"$ref": "#/$defs/check"},
+        "evidenceIds": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "candidateIdsCompared": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "decisionReason": {"type": "string"},
+        "provenance": {"type": "object"},
+        "authoringVersion": {"type": "string", "minLength": 1},
+        "qa": {"$ref": "#/$defs/qa"},
+        "workingDraftDirty": {"type": "boolean"},
+        "formalBlockers": {"type": "array", "items": {"type": "string"}},
+        "createdAt": {"type": "string", "minLength": 1},
+        "reviewedAt": {"type": ["string", "null"]},
+        "history": {"type": "array"},
+        "future": {"type": "array"},
+        "missingEvidence": {"type": "array", "items": {"type": "string"}},
+        "compiler": {"type": "object"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"state": {"enum": ["AI_CONFIRMED", "WORK_REVIEW_CONFIRMED", "MAIN_AI_CONFIRMED", "FORMAL_BLOCKED", "FORMAL_READY", "FORMAL_COMPILED"]}}},
+          "then": {
+            "properties": {
+              "reviewer": {"type": "string", "minLength": 1},
+              "reviewedAt": {"type": "string", "minLength": 1},
+              "evidenceIds": {"minItems": 1},
+              "candidateIdsCompared": {"minItems": 1},
+              "decisionReason": {"minLength": 1}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"const": "WORK_REVIEW_CONFIRMED"}}},
+          "then": {
+            "required": ["reviewAuthority", "mainAIReviewStatus"],
+            "properties": {
+              "reviewAuthority": {"const": "WORK"},
+              "mainAIReviewStatus": {"const": "MAIN_AI_REVIEW_REQUIRED"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"const": "MAIN_AI_CONFIRMED"}}},
+          "then": {
+            "required": ["reviewAuthority", "mainAIReviewStatus"],
+            "properties": {
+              "reviewAuthority": {"const": "MAIN_CHAT"},
+              "mainAIReviewStatus": {"const": "MAIN_AI_CONFIRMED"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"state": {"enum": ["FORMAL_READY", "FORMAL_COMPILED"]}}},
+          "then": {
+            "properties": {
+              "geometryCheck": {"properties": {"passed": {"const": true}}},
+              "structureCheck": {"properties": {"passed": {"const": true}}},
+              "runtimeCheck": {"properties": {"passed": {"const": true}}},
+              "qa": {
+                "properties": {
+                  "runtime": {"const": true},
+                  "topology": {"const": true},
+                  "roundtrip": {"const": true},
+                  "hardFailures": {"maxItems": 0}
+                }
+              },
+              "workingDraftDirty": {"const": false},
+              "formalBlockers": {"maxItems": 0}
+            }
+          }
+        }
+      ]
+    }
+  }
+}

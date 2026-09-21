@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://icad.local/schemas/ra_workbench_state_v6.schema.json",
+  "title": "RA Workbench State v6",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "caseId", "semanticBoundaryResolution", "constraintParameters", "aiReviewQueue"],
+  "properties": {
+    "version": {"const": "6.0"},
+    "caseId": {"type": "string", "minLength": 1},
+    "semanticBoundaryResolution": {"type": ["object", "null"]},
+    "constraintParameters": {
+      "anyOf": [
+        {"type": "null"},
+        {"$ref": "ra_constraint_parameter_v1.schema.json"}
+      ]
+    },
+    "aiReviewQueue": {
+      "anyOf": [
+        {"type": "null"},
+        {"$ref": "ra_ai_review_queue_v1.schema.json"}
+      ]
+    }
+  }
+}

@@ -1,0 +1,261 @@
+[
+  {
+    "targetId": "PL-015-grid-squares",
+    "generationLogic": "A rectilinear modular grid selects five filled cells from shared x/y coordinates.",
+    "candidates": [
+      {
+        "id": "PL015-grid-semantic",
+        "candidateType": "RECTILINEAR_GRID",
+        "parameters": {
+          "generator": "rectilinearGrid"
+        },
+        "metrics": {
+          "axisAlignmentErrorDeg": 0.0,
+          "sharedCoordinateCount": 11,
+          "primitiveExpansionCount": 5,
+          "freeParameterCount": 11
+        },
+        "gate": {
+          "passed": true,
+          "checks": [
+            {
+              "id": "finiteParameters",
+              "passed": true,
+              "reason": "All grid coordinates must be finite.",
+              "evidence": "11 finite shared coordinates."
+            },
+            {
+              "id": "nativeRepresentation",
+              "passed": true,
+              "reason": "Regular grid must use shared grid parameters.",
+              "evidence": "rectilinearGrid generator present."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "Formal geometry cannot depend on tracing.",
+              "evidence": "No trace source in candidate."
+            }
+          ],
+          "failReasons": []
+        },
+        "scores": {
+          "fitQuality": 28,
+          "geometricStability": 15,
+          "structuralConsistency": 15,
+          "topologyContinuity": 14,
+          "representationComplexity": 14,
+          "editabilityReplay": 10,
+          "total": 96
+        },
+        "decisionState": "selected",
+        "reason": "Shared grid explains all selected cells with fewer independent coordinates.",
+        "rejectionEvidence": []
+      },
+      {
+        "id": "PL015-grid-independent",
+        "candidateType": "INDEPENDENT_RECTANGLES",
+        "parameters": {},
+        "metrics": {
+          "primitiveCount": 5,
+          "freeParameterCount": 20
+        },
+        "gate": {
+          "passed": true,
+          "checks": [
+            {
+              "id": "finiteParameters",
+              "passed": true,
+              "reason": "Rectangle coordinates are finite.",
+              "evidence": "Five finite rectangles."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "No trace dependency.",
+              "evidence": "Manual rectangles."
+            }
+          ],
+          "failReasons": []
+        },
+        "scores": {
+          "fitQuality": 28,
+          "geometricStability": 13,
+          "structuralConsistency": 7,
+          "topologyContinuity": 14,
+          "representationComplexity": 6,
+          "editabilityReplay": 6,
+          "total": 74
+        },
+        "decisionState": "rejected",
+        "reason": "Visually adequate but loses shared grid semantics and requires excess parameters.",
+        "rejectionEvidence": []
+      }
+    ],
+    "decision": {
+      "state": "selected",
+      "selected": "PL015-grid-semantic",
+      "rejected": [
+        "PL015-grid-independent"
+      ],
+      "unresolved": [],
+      "nextMeasurement": []
+    },
+    "relationshipIds": [
+      "PL-015-grid-alignment"
+    ]
+  },
+  {
+    "targetId": "PL-015-concentric-arc-field",
+    "generationLogic": "Four shared centers generate radius sequences of circles and inverse quadrant arcs.",
+    "candidates": [
+      {
+        "id": "PL015-arc-field",
+        "candidateType": "CONCENTRIC_ARC_FIELD",
+        "parameters": {
+          "generator": "concentricArcField",
+          "nativePrimitives": [
+            "CIRCLE",
+            "ARC"
+          ]
+        },
+        "metrics": {
+          "centerCount": 4,
+          "radiusCountPerCenter": 20,
+          "firstRadius": 11.0,
+          "radiusPitch": 11.35,
+          "radiusDeviationRatio": 0.0,
+          "primitiveExpansionCount": 160
+        },
+        "gate": {
+          "passed": true,
+          "checks": [
+            {
+              "id": "arcParametersPresent",
+              "passed": true,
+              "reason": "ARC candidates require center, radius and angle rules.",
+              "evidence": "Four centers, shared radius sequence and quadrant rules are present."
+            },
+            {
+              "id": "constantCurvatureTested",
+              "passed": true,
+              "reason": "Circular geometry requires an ARC/CIRCLE hypothesis.",
+              "evidence": "Native circles and inverse arcs selected."
+            },
+            {
+              "id": "traceIndependent",
+              "passed": true,
+              "reason": "Formal geometry cannot depend on tracing.",
+              "evidence": "Manual semantic parameters only."
+            },
+            {
+              "id": "deterministicExpansion",
+              "passed": true,
+              "reason": "Generator must replay deterministically.",
+              "evidence": "Shared count, pitch and formula are explicit."
+            }
+          ],
+          "failReasons": []
+        },
+        "scores": {
+          "fitQuality": 27,
+          "geometricStability": 15,
+          "structuralConsistency": 15,
+          "topologyContinuity": 14,
+          "representationComplexity": 15,
+          "editabilityReplay": 10,
+          "total": 96
+        },
+        "decisionState": "selected",
+        "reason": "Native CIRCLE/ARC field provides authentic centers, radii and deterministic editing.",
+        "rejectionEvidence": []
+      },
+      {
+        "id": "PL015-spline-field",
+        "candidateType": "SPLINE_FIELD",
+        "parameters": {},
+        "metrics": {
+          "estimatedControlPoints": 320,
+          "constantCurvatureExplained": false
+        },
+        "gate": {
+          "passed": false,
+          "checks": [
+            {
+              "id": "lowerOrderRejected",
+              "passed": false,
+              "reason": "Spline requires ARC/CIRCLE rejection evidence.",
+              "evidence": "ARC/CIRCLE hypothesis succeeds, so Spline escalation is prohibited."
+            }
+          ],
+          "failReasons": [
+            "Spline requires ARC/CIRCLE rejection evidence."
+          ]
+        },
+        "scores": {
+          "fitQuality": 27,
+          "geometricStability": 8,
+          "structuralConsistency": 6,
+          "topologyContinuity": 10,
+          "representationComplexity": 4,
+          "editabilityReplay": 5,
+          "total": 60
+        },
+        "decisionState": "rejected",
+        "reason": "Adds unnecessary freedom and removes explicit centers.",
+        "rejectionEvidence": []
+      },
+      {
+        "id": "PL015-trace-field",
+        "candidateType": "POLYLINE_TRACE",
+        "parameters": {},
+        "metrics": {
+          "traceDependency": 1.0,
+          "estimatedPointCount": 1054
+        },
+        "gate": {
+          "passed": false,
+          "checks": [
+            {
+              "id": "traceIndependent",
+              "passed": false,
+              "reason": "Formal Recipe cannot derive from vector trace.",
+              "evidence": "Candidate explicitly depends on traced contours."
+            }
+          ],
+          "failReasons": [
+            "Formal Recipe cannot derive from vector trace."
+          ]
+        },
+        "scores": {
+          "fitQuality": 29,
+          "geometricStability": 2,
+          "structuralConsistency": 1,
+          "topologyContinuity": 4,
+          "representationComplexity": 0,
+          "editabilityReplay": 0,
+          "total": 36
+        },
+        "decisionState": "rejected",
+        "reason": "High pixel fit cannot override semantic and editability failure.",
+        "rejectionEvidence": []
+      }
+    ],
+    "decision": {
+      "state": "selected",
+      "selected": "PL015-arc-field",
+      "rejected": [
+        "PL015-spline-field",
+        "PL015-trace-field"
+      ],
+      "unresolved": [],
+      "nextMeasurement": []
+    },
+    "relationshipIds": [
+      "PL-015-concentric-A",
+      "PL-015-concentric-B",
+      "PL-015-concentric-C",
+      "PL-015-concentric-D"
+    ]
+  }
+]

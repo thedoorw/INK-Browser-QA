@@ -1,0 +1,152 @@
+{
+  "kind": "ra0.9-ai-review-mode-visual-asset-provenance",
+  "version": "1.0",
+  "classification": "TEST_ONLY_NON_AUTHORITATIVE",
+  "sourceEvidencePackage": {
+    "filename": "RA0_9_RC4_Standard10_Review_and_Correction_Minimal_Package.zip",
+    "sha256": "213cde7a0227ce0ef8b495182519f1a94ef2e7f3297192534acaab2987a3e334",
+    "verification": "9/9 PASS",
+    "role": "Visual evidence source only; not a program parent baseline."
+  },
+  "extractionMethod": "Lossless pixel crop from authoritative Final Review Sheet; no redraw, generation, tracing, filtering, resampling, or geometry modification.",
+  "logicalCanvas": {
+    "width": 1002,
+    "height": 1421
+  },
+  "cases": {
+    "PL-015": {
+      "role": "Accepted",
+      "sourceReviewSheet": {
+        "filename": "PL-015_FINAL_REVIEW_SHEET.png",
+        "sha256": "6386adacd140926b594c85b254e1b2b503467efe6cac52271d6a7023213957d6",
+        "size": [
+          1400,
+          880
+        ]
+      },
+      "reference": {
+        "file": "visual_test_assets/PL-015/reference.png",
+        "sha256": "d301c95bf60225107c9f2a4767f720a2740f6c4e6e76c35b2b4fe38c4ec315cb",
+        "pixelSize": [
+          271,
+          383
+        ],
+        "cropBox": [
+          10,
+          200,
+          281,
+          583
+        ]
+      },
+      "runtime": {
+        "file": "visual_test_assets/PL-015/runtime.png",
+        "sha256": "a7c5cdd9085a36ac12bc616b5f930ca0269fd2c33c50ff5919c77accca417e35",
+        "pixelSize": [
+          271,
+          383
+        ],
+        "cropBox": [
+          566,
+          200,
+          837,
+          583
+        ],
+        "sourcePanel": "Final Runtime"
+      },
+      "caseData": {
+        "file": "visual_test_assets/PL-015/case.json",
+        "sha256": "d9c586cf522f5e5f9c155640db728ec35b598ad3d96f62ed3c76d2003dbc9a50",
+        "source": "Exact copy from Candidate ra65-cases"
+      },
+      "targets": {
+        "file": "visual_test_assets/PL-015/targets.json",
+        "sha256": "fe8a2c6a70d80a2ee9ddf4620916e790c603469ba65102daf86c293377dca54b",
+        "count": 2,
+        "source": "Exact copy from Candidate decisionModel.targets"
+      },
+      "historicalCrossCheckPanels": {
+        "overlayCropBox": [
+          844,
+          200,
+          1115,
+          583
+        ],
+        "differenceCropBox": [
+          1122,
+          200,
+          1393,
+          583
+        ],
+        "embeddedInDelivery": false,
+        "use": "Cross-check only; not displayed as the current run."
+      }
+    },
+    "PL-036": {
+      "role": "Diagnostic",
+      "sourceReviewSheet": {
+        "filename": "PL-036_FINAL_REVIEW_SHEET.png",
+        "sha256": "bee70ac2f4d54c710c4128714dcb7f761f260082400632958d2b5e3f40b33009",
+        "size": [
+          1400,
+          880
+        ]
+      },
+      "reference": {
+        "file": "visual_test_assets/PL-036/reference.png",
+        "sha256": "ed8fe355c7c9abe7815cf23ca226b8065bd55fca02f908f027a1919a838fef68",
+        "pixelSize": [
+          271,
+          383
+        ],
+        "cropBox": [
+          10,
+          200,
+          281,
+          583
+        ]
+      },
+      "runtime": {
+        "file": "visual_test_assets/PL-036/runtime.png",
+        "sha256": "3b41203f383e436b45a16ec075307c3d18c03ab52b775a2d43f9f4c448cb0dab",
+        "pixelSize": [
+          271,
+          383
+        ],
+        "cropBox": [
+          566,
+          200,
+          837,
+          583
+        ],
+        "sourcePanel": "Final Runtime"
+      },
+      "caseData": {
+        "file": "visual_test_assets/PL-036/case.json",
+        "sha256": "696edc8e3e20f6d99d1a838b44f4aa662075538ba3785c0d53f00426321e3b4a",
+        "source": "Exact copy from Candidate ra65-cases"
+      },
+      "targets": {
+        "file": "visual_test_assets/PL-036/targets.json",
+        "sha256": "eaf6302818a21ed3753308a6a5502272dca8b18881840d463fb7b77aa6287cdb",
+        "count": 4,
+        "source": "Exact copy from Candidate decisionModel.targets"
+      },
+      "historicalCrossCheckPanels": {
+        "overlayCropBox": [
+          844,
+          200,
+          1115,
+          583
+        ],
+        "differenceCropBox": [
+          1122,
+          200,
+          1393,
+          583
+        ],
+        "embeddedInDelivery": false,
+        "use": "Cross-check only; not displayed as the current run."
+      }
+    }
+  }
+}

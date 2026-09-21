@@ -1,0 +1,2 @@
+/* UI candidate compatibility stub.
+   No Standard Corpus engine is included in the frozen toolkit package. */
