@@ -1,17 +1,17 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-014 / DEVELOPMENT_AUTHORIZED`
+STATUS: `ACTIVE / INK-CLOUD-015 / DEVELOPMENT_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-014` |
-| TITLE | `Creative Workspace Minimum UX v0.1` |
+| CURRENT_TASK_ID | `INK-CLOUD-015` |
+| TITLE | `CHAT Multi-Step Creative Collaboration v0.1` |
 | AUTHORITY | `USER_CONTINUOUS_ADVANCE_AUTHORIZATION` |
-| DEV_WORK_BRANCH | `work/ink-cloud-014` |
+| DEV_WORK_BRANCH | `work/ink-cloud-015` |
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_WORKSPACE_UX_SCOPE` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_CHAT_COLLABORATION_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
@@ -20,39 +20,42 @@ STATUS: `ACTIVE / INK-CLOUD-014 / DEVELOPMENT_AUTHORIZED`
 
 ## Accepted baseline
 
-INK-CLOUD-013 is promoted with gate:
+INK-CLOUD-014 is promoted with gate:
 
-`INTEGRATED_CREATIVE_LOOP_VALIDATED`
+`CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
 
-Accepted technical chain:
+Accepted collaboration path:
 
 ```text
-Reference
-→ Extract
-→ editable Path
-→ Path Editing
-→ Expressive Stroke
-→ Multi-Contour Composition
-→ Repaint / Material
-→ CHAT Review + Structured Edit Tasks
+INK structured document
+→ CHAT inspect
+→ one bounded proposal
+→ explicit approval
+→ structured edit
+→ History
 → Revision
 ```
 
-Hard-benchmark baseline:
-
-```text
-HARD_BENCHMARK = EXECUTED
-EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
-STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
-```
+The minimum Creative Workspace now exposes the full accepted engine chain.
 
 ## Objective
 
-Turn the accepted engine chain into one minimally usable creative workspace without broad UI redesign.
+Advance CHAT from one bounded edit command to one reviewable multi-step creative plan while preserving user control and all existing editor authorities.
 
-The user must be able to move through the existing creative loop from a coherent workspace while preserving existing document/editor authorities.
+Target collaboration path:
 
-This task is UX integration, not a new drawing engine and not an agent-planning task.
+```text
+inspect structured state
+→ express creative intent / receive structured plan
+→ review ordered steps
+→ explicit user approval
+→ execute through existing bounded edit operations
+→ stop deterministically on stale/failed step
+→ inspect result
+→ Revision comparison / continue or revise plan
+```
+
+This task builds a local orchestration and plan contract. It does not require a remote AI service and does not authorize autonomous editing.
 
 ## Required reads
 
@@ -62,124 +65,159 @@ This task is UX integration, not a new drawing engine and not an agent-planning 
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-7. `research/INK_INTEGRATED_CREATIVE_LOOP_VALIDATION_REPORT_v0.1.md`
-8. existing workspace/UI/editor shell source as required
-9. accepted reports for INK-CLOUD-007 through 013 only as needed
+7. `research/INK_CHAT_BOUNDED_EDIT_LOOP_REPORT_v0.1.md`
+8. `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`
+9. existing CHAT bounded-edit, Revision, History and Creative Workspace source as required
 
 ## Product principle
 
-Expose the existing engine; do not duplicate it.
-
-The workspace should make these three properties visible and usable:
+CHAT may reason about a sequence; INK remains the execution authority.
 
 ```text
-STATE VISIBILITY
-+
-WORKFLOW CONTINUITY
-+
-CHAT ↔ CANVAS ↔ REVISION LOOP
+CHAT PLAN
+≠
+DIRECT DOCUMENT MUTATION
 ```
+
+Every executable step must resolve to an already-supported bounded INK operation or an explicitly added bounded operation using existing controllers.
 
 ## Scope
 
 Required:
 
-- create one minimal workspace path through the accepted creative loop;
-- expose reference/extraction context and overlay entry points already supported by the accepted extraction workspace;
-- expose selected object / Path identity and provenance where useful;
-- expose Path edit mode and appearance distinction without introducing a second editor;
-- expose composition and repaint/material entry points through existing commands/controllers;
-- expose CHAT state/proposal/approve/reject/execute through the accepted bounded-edit controller;
-- expose current Revision identity and capture/restore affordances through the accepted Revision controller;
-- provide deterministic stage/state diagnostics;
-- maintain coherent selection across stage transitions where existing contracts permit;
-- preserve History/Revision semantics;
-- preserve static-hosted/browser-local operation;
-- bounded CSS/layout/component work needed for this workspace is allowed.
-
-The UX may be compact and developer-oriented in v0.1. It does not need final visual polish.
+- define a versioned multi-step creative-plan schema;
+- preserve stable plan ID, source Revision ID, target references and ordered step IDs;
+- support step dependencies and deterministic sequence order;
+- validate every step before approval and revalidate immediately before execution;
+- expose plan summary, target summary and expected operations for user review;
+- require explicit approval before execution;
+- execute steps through the existing CHAT bounded-edit / editor authorities;
+- stop on stale Revision, stale target, failed precondition or failed operation;
+- never silently retarget or skip a failed step;
+- produce deterministic per-step and whole-plan result records;
+- bind plan execution to Revision identity and expose before/after Revision relation;
+- permit an optional external/AI adapter to propose a plan, but keep validation/execution browser-local;
+- expose the plan flow minimally in the existing Creative Workspace CHAT area;
+- preserve History and Revision semantics;
+- preserve static-hosted/browser-local execution.
 
 ## Phases
 
-### Phase A — workspace state model and shell
+### Phase A — Creative plan contract
 
-Define a minimal workspace view/state model over existing runtime state.
+Define a versioned plan schema, minimally including:
 
-Required visible context:
+- `planId`;
+- source document / page / Revision identity;
+- user-intent summary;
+- ordered `steps[]`;
+- stable `stepId`;
+- operation;
+- targets;
+- arguments;
+- optional dependency references;
+- plan status and diagnostics.
 
-- current document/page;
-- active stage or tool context;
-- current selection/object ID/type;
-- source/provenance summary where available;
-- current Revision ID;
-- pending CHAT proposal state.
+The plan is data, not an alternate document model.
 
-Do not create a second document/workflow state authority.
+Checkpoint commit required.
 
-### Phase B — Reference → Extract → Path continuity
+### Phase B — Validation + preconditions
 
-Wire the accepted Reference/Extract/overlay/Path flow into the workspace.
+Implement deterministic validation:
 
-Required:
+- schema/version;
+- supported operation;
+- target existence/type;
+- source Revision match;
+- dependency validity;
+- cycle/order rejection;
+- locked/hidden/unexposed target guards as already supported;
+- no execution during busy/invalid History state.
 
-- reference intake/selection entry;
-- extraction trigger through existing extraction authority;
-- overlay/review entry;
-- accepted editable Path handoff;
-- deterministic error/status display.
+Validation must not mutate the active document.
 
-No new extraction pipeline family.
+Checkpoint commit required.
 
-### Phase C — Edit → Compose → Repaint continuity
+### Phase C — Approval + local orchestration
 
-Expose existing:
-
-- anchor/handle/local Path edit entry;
-- expressive-stroke controls or minimal affordance;
-- composition/transform organization;
-- repaint/material controls.
-
-The workspace must call existing controllers/commands rather than mutate document structures directly.
-
-### Phase D — CHAT ↔ canvas bounded edit loop
-
-Expose:
+Implement:
 
 ```text
-inspect current state
-→ proposal
-→ user approve/reject
-→ execute
-→ visible result
+PROPOSED
+→ APPROVED
+→ EXECUTING
+→ COMPLETED | STOPPED | REJECTED
 ```
 
 Required:
 
-- proposal target/operation summary;
-- approval remains explicit;
-- stale target/Revision failures are visible;
-- no autonomous multi-step planner;
-- no conversation platform.
+- explicit user approval token/boundary;
+- no execution before approval;
+- ordered execution through existing bounded-edit/editor commands;
+- immediate revalidation before each step;
+- deterministic stop on first failure;
+- successful completed steps remain accurately recorded;
+- no silent continue after failure;
+- no autonomous approval.
 
-### Phase E — Revision capture / restore UX
+Do not create a second History engine.
 
-Expose:
+Checkpoint commit required.
 
-- current Revision identity;
-- capture checkpoint;
-- bounded before/after metadata summary;
-- restore/reopen;
-- explicit History reset/boundary behavior in diagnostics.
+### Phase D — Revision-aware result / continuation
 
-Failed restore must remain atomic.
+Bind execution to Revision:
 
-### Phase F — integrated workspace regression + report
+- record starting Revision;
+- expose changed/touched targets and step results;
+- capture or reference an ending Revision through the accepted Revision authority where appropriate;
+- expose before/after comparison metadata already supported;
+- allow a subsequent plan to explicitly base on the resulting Revision;
+- reject stale source-Revision plans.
 
-Exercise one deterministic UI/workspace integration path across all exposed stages.
+Do not create a second diff or Revision engine.
+
+Checkpoint commit required.
+
+### Phase E — Creative Workspace plan UX
+
+Extend the existing CHAT workspace area minimally to show:
+
+- intent/plan summary;
+- ordered step list;
+- target/operation for each step;
+- validation state;
+- Approve / Reject;
+- execution progress;
+- stopped-step diagnostics;
+- resulting Revision identity.
+
+This is not a broad UI redesign.
+
+Checkpoint commit required.
+
+### Phase F — regression evidence + report
+
+Exercise at least:
+
+- deterministic two-or-more-step plan;
+- validation causes zero mutation;
+- execute-before-approval rejection;
+- successful ordered execution;
+- stale Revision rejection;
+- stale target rejection;
+- mid-plan failure stops remaining steps;
+- no silent retarget/skip;
+- History remains single authority;
+- Revision before/after relation is preserved;
+- static/browser-local core works with no remote service;
+- `FORMAT_VERSION = 4`;
+- package untouched.
 
 Create:
 
-`research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`
+`research/INK_CHAT_MULTI_STEP_CREATIVE_COLLABORATION_REPORT_v0.1.md`
 
 Return:
 
@@ -188,18 +226,23 @@ Return:
 ## Acceptance gate
 
 ```text
-MINIMUM_WORKSPACE = IMPLEMENTED
-STATE_VISIBILITY = IMPLEMENTED
-REFERENCE_EXTRACT_PATH_UI = CONNECTED
-PATH_EDIT_UI = CONNECTED
-COMPOSE_REPAINT_UI = CONNECTED
-CHAT_APPROVAL_LOOP_UI = CONNECTED
-REVISION_CAPTURE_RESTORE_UI = CONNECTED
+MULTI_STEP_PLAN_SCHEMA = IMPLEMENTED
+PLAN_VALIDATION = IMPLEMENTED
+EXPLICIT_APPROVAL = PRESERVED
+ORDERED_BOUNDED_EXECUTION = IMPLEMENTED
+STEP_REVALIDATION = IMPLEMENTED
+STOP_ON_FAILURE = IMPLEMENTED
+STALE_REVISION_REJECTION = IMPLEMENTED
+STALE_TARGET_REJECTION = IMPLEMENTED
+PLAN_RESULT_RECORD = IMPLEMENTED
+REVISION_BINDING = IMPLEMENTED
+WORKSPACE_PLAN_UI = CONNECTED
 EXISTING_CONTROLLERS = REUSED
+HISTORY_AUTHORITY = PRESERVED
 STRUCTURED_DOCUMENT = PRESERVED
-HISTORY_REVISION_BOUNDARY = PRESERVED
 STATIC_BROWSER_LOCAL_CORE = PRESERVED
 REMOTE_SERVICE_REQUIRED = 0
+AUTONOMOUS_APPROVAL = 0
 FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
@@ -208,39 +251,41 @@ RUNTIME_QA = DEFERRED
 
 Gate:
 
-`CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
+`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
 
 ## Explicit exclusions
 
 Do not implement:
 
-- broad UI redesign or final visual system;
-- multi-step CHAT creative reasoning / autonomous agent planner;
-- comments/presence/multiplayer;
-- mandatory backend/auth/sync;
-- generic project dashboard;
-- plugin marketplace;
-- Portable INK packaging;
+- autonomous agent execution without user approval;
+- free-running recursive planner;
+- mandatory LLM/backend/API;
+- generic conversation storage;
+- multiplayer/presence/comments;
+- broad UI redesign;
+- new vector/document/History/Revision/renderer engine;
 - Structure-Aware Reconstruction redesign;
-- second document/vector/History/Revision/renderer engine;
-- FORMAT_VERSION bump.
+- Portable INK packaging;
+- package/release mutation;
+- `FORMAT_VERSION` bump.
 
 ## Hard STOP
 
 STOP if:
 
 1. `FORMAT_VERSION` change is required;
-2. existing core/controller contracts must be broken rather than reused/bounded-fixed;
-3. a second workflow/document/editor authority becomes necessary;
-4. remote service becomes mandatory for the core workspace;
-5. scope expands into multi-step agent planning or broad Cloud platform work;
-6. package/release mutation becomes necessary.
+2. existing CHAT/History/Revision/editor contracts must be broken rather than extended boundedly;
+3. a second execution/document/History/Revision authority becomes necessary;
+4. remote service becomes mandatory for plan semantics or execution;
+5. user approval can no longer remain explicit;
+6. scope expands into autonomous open-ended agent behavior or broad platform work;
+7. package/release mutation becomes necessary.
 
 ## QA
 
 GitHub Actions quota remains exhausted.
 
-Run all feasible source/static/unit/workspace integration checks.
+Run all feasible source/static/unit/serialization/workspace orchestration checks.
 
 Do not claim browser/runtime paths that were not executed.
 
@@ -250,9 +295,9 @@ Do not claim browser/runtime paths that were not executed.
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-014
-BRANCH = work/ink-cloud-014
-GATE = CREATIVE_WORKSPACE_MINIMUM_UX_WORKS
+TASK_ID = INK-CLOUD-015
+BRANCH = work/ink-cloud-015
+GATE = CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
