@@ -1,7 +1,7 @@
 {
-  "name": "INK v1.5.1 RC — AI-assisted Editable Art",
-  "short_name": "INK v1.5.1 RC",
-  "description": "INK 統一向量、手繪與影像創作平台，具可編輯 AI Plan、隔離 Preview、核准執行、重播與回滾。",
+  "name": "INK v1.6.5 RC — First Visible Web Platform",
+  "short_name": "INK v1.6.5 RC",
+  "description": "INK shared-core browser workspace for reference extraction, editable Paths, CHAT-assisted bounded edits and Revision.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

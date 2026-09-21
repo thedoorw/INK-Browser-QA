@@ -153,9 +153,38 @@ export class PlanRequest {
 }
 export class PlanResponse { constructor({ requestId, provider, model, raw, plan, toolCalls = [], usage = null } = {}) { this.format = 'INK-PLAN-RESPONSE'; this.version = CHAT_RUNTIME_VERSION; this.requestId = requestId; this.provider = provider; this.model = model; this.raw = raw; this.plan = plan; this.toolCalls = toolCalls; this.usage = usage; this.receivedAt = now(); } }
 
+export class ConversationRequest {
+  constructor({ sessionId, prompt, context, transcript = [], transmissionDecision = 'TEXT_SUMMARY' } = {}) {
+    if (!sessionId || !prompt || !context) throw new RuntimeError('CONVERSATION_REQUEST_INVALID', 'Session, prompt, and context are required.');
+    this.format = 'INK-CONVERSATION-REQUEST'; this.version = CHAT_RUNTIME_VERSION;
+    this.requestId = `chatmsg:${hashValue([sessionId, prompt, context.hash, now()])}`;
+    this.sessionId = sessionId; this.prompt = prompt; this.context = context;
+    this.transcript = clone(transcript).slice(-12); this.transmissionDecision = transmissionDecision;
+  }
+}
+export class ConversationResponse {
+  constructor({ requestId, provider, model, content, usage = null, source = 'MODEL' } = {}) {
+    this.format = 'INK-CONVERSATION-RESPONSE'; this.version = CHAT_RUNTIME_VERSION;
+    this.requestId = requestId; this.provider = provider; this.model = model;
+    this.content = String(content || ''); this.usage = usage; this.source = source; this.receivedAt = now();
+  }
+}
+
+const conversationContent = response => {
+  if (typeof response === 'string') return response;
+  if (typeof response?.content === 'string') return response.content;
+  if (Array.isArray(response?.content)) return response.content.map(item => item?.text || item?.content || '').filter(Boolean).join('\n');
+  if (typeof response?.output_text === 'string') return response.output_text;
+  if (typeof response?.text === 'string') return response.text;
+  if (typeof response?.message?.content === 'string') return response.message.content;
+  if (typeof response?.choices?.[0]?.message?.content === 'string') return response.choices[0].message.content;
+  throw new RuntimeError('CONVERSATION_RESPONSE_INVALID', 'Conversation provider did not return text content.');
+};
+
 export class ChatClientInterface {
   constructor(settings = {}) { this.settings = createConnectionSettings(settings); }
   async createPlan() { throw new RuntimeError('CLIENT_NOT_IMPLEMENTED', 'Chat client must implement createPlan().'); }
+  async createMessage() { throw new RuntimeError('CLIENT_NOT_IMPLEMENTED', 'Chat client must implement createMessage().'); }
   cancel() {}
   get external() { return Boolean(this.settings.endpoint) && !this.settings.localOnlyMode; }
 }
@@ -163,10 +192,18 @@ export class ChatClientInterface {
 export class ManualJSONClient extends ChatClientInterface {
   constructor({ valueProvider = null } = {}) { super({ provider: 'manual-json', localOnlyMode: true }); this.valueProvider = valueProvider; }
   async createPlan(request) { const value = await this.valueProvider?.(request); if (!value) throw new RuntimeError('USER_EDIT_REQUIRED', 'Paste a structured Plan response to continue.'); return { content: typeof value === 'string' ? value : JSON.stringify(value), toolCalls: [] }; }
+  async createMessage(request) {
+    const summary = request.context?.payload?.documentSummary || {};
+    const selection = request.context?.payload?.summary?.selection || [];
+    const title = summary.title || summary.documentId || 'current document';
+    const objectCount = summary.objects ?? summary.objectCount ?? 'unknown';
+    return { content: `LOCAL CONTEXT · ${title} · objects ${objectCount} · selection ${Array.isArray(selection) ? selection.length : 0}. No remote model is configured; discussion is context-only and cannot mutate the document.`, source: 'LOCAL_CONTEXT' };
+  }
 }
 export class RuntimeDeterministicTestClient extends ChatClientInterface {
   constructor({ planFactory } = {}) { super({ provider: 'deterministic-test', localOnlyMode: true }); this.planFactory = planFactory; }
   async createPlan(request) { return { content: JSON.stringify(await this.planFactory(request)), toolCalls: [], semanticMaturity: 'NOT A REAL CHAT SERVICE' }; }
+  async createMessage(request) { return { content: `DETERMINISTIC TEST · ${request.prompt}`, source: 'DETERMINISTIC_TEST', semanticMaturity: 'NOT A REAL CHAT SERVICE' }; }
 }
 
 export class StreamHandler {
@@ -181,7 +218,8 @@ export class StreamHandler {
 export class HTTPModelAdapter extends ChatClientInterface {
   constructor(settings, { credentialStore, fetchImpl = globalThis.fetch, streamHandler = new StreamHandler() } = {}) { super(settings); this.credentialStore = credentialStore; this.fetchImpl = fetchImpl; this.streamHandler = streamHandler; this.active = new Map(); }
   buildPayload(request) { return { model: this.settings.model, input: request.prompt, context: request.context.payload, response_schema: request.responseSchema, tools: request.metadata?.tools || [], images: request.images, stream: this.settings.streaming }; }
-  async createPlan(request, { onToken, signal } = {}) {
+  buildConversationPayload(request) { return { model: this.settings.model, input: request.prompt, context: request.context.payload, transcript: request.transcript, mode: 'conversation', stream: this.settings.streaming }; }
+  async requestRemote(request, payload, { onToken, signal } = {}) {
     if (this.settings.localOnlyMode) throw new RuntimeError('LOCAL_ONLY_NETWORK_BLOCKED', 'External requests are disabled in local-only mode.');
     if (!this.settings.endpoint) throw new RuntimeError('ENDPOINT_REQUIRED', 'A model endpoint is required.');
     const credential = this.settings.authenticationMethod === 'NONE' ? null : await this.credentialStore?.get(this.settings.credentialAlias);
@@ -192,17 +230,26 @@ export class HTTPModelAdapter extends ChatClientInterface {
       const headers = { 'content-type': 'application/json', accept: this.settings.streaming ? 'text/event-stream, application/json' : 'application/json', ...this.settings.requestHeaders };
       if (credential) headers.authorization = this.settings.authenticationMethod === 'API_KEY_HEADER' ? undefined : `Bearer ${credential}`;
       if (credential && this.settings.authenticationMethod === 'API_KEY_HEADER') headers['x-api-key'] = credential;
-      const response = await this.fetchImpl(this.settings.endpoint, { method: 'POST', headers: Object.fromEntries(Object.entries(headers).filter(([, value]) => value !== undefined)), body: JSON.stringify(this.buildPayload(request)), signal: controller.signal, credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store' });
+      const response = await this.fetchImpl(this.settings.endpoint, { method: 'POST', headers: Object.fromEntries(Object.entries(headers).filter(([, value]) => value !== undefined)), body: JSON.stringify(payload), signal: controller.signal, credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store' });
       if (!response.ok) throw Object.assign(new Error(`HTTP ${response.status}`), { status: response.status });
       if (this.settings.streaming && response.headers.get('content-type')?.includes('text/event-stream')) return { content: await this.streamHandler.read(response, { onToken, signal: controller.signal }), toolCalls: [] };
       return await response.json();
     } catch (error) { throw ErrorMapper.map(error, this.settings.provider); }
     finally { clearTimeout(timeout); signal?.removeEventListener?.('abort', abort); this.active.delete(requestId); }
   }
+  async createPlan(request, options = {}) { return await this.requestRemote(request, this.buildPayload(request), options); }
+  async createMessage(request, options = {}) {
+    const response = await this.requestRemote(request, this.buildConversationPayload(request), options);
+    return { content: conversationContent(response), usage: response?.usage || null, source: 'MODEL' };
+  }
   cancel(requestId) { const controller = this.active.get(requestId); if (!controller) return false; controller.abort('user'); return true; }
 }
 
 export class OpenAICompatibleAdapter extends HTTPModelAdapter {
+  buildConversationPayload(request) {
+    const transcript = (request.transcript || []).filter(item => ['user','assistant'].includes(item.role) && typeof item.content === 'string').map(item => ({ role: item.role, content: item.content }));
+    return { model: this.settings.model, messages: [{ role: 'system', content: 'Discuss the current INK artwork using the supplied document context. Do not mutate the document, do not claim execution, and never request direct DOM, Canvas, file-system, or credential access. When the user requests a change, describe it as a bounded proposal; actual execution requires the separate INK approval flow.' }, ...transcript, { role: 'user', content: request.prompt }], stream: this.settings.streaming, user_context: request.context.payload };
+  }
   buildPayload(request) {
     const content = [{ type: 'text', text: request.prompt }];
     for (const image of request.images || []) content.push({ type: 'image_url', image_url: { url: image.dataUrl, detail: image.detail || 'low' } });
@@ -212,6 +259,7 @@ export class OpenAICompatibleAdapter extends HTTPModelAdapter {
 }
 export class CustomEndpointAdapter extends HTTPModelAdapter {
   buildPayload(request) { return { version: CHAT_RUNTIME_VERSION, request: { id: request.requestId, sessionId: request.sessionId, prompt: request.prompt, context: request.context, images: request.images, tools: request.metadata?.tools || [], responseSchema: request.responseSchema } }; }
+  buildConversationPayload(request) { return { version: CHAT_RUNTIME_VERSION, request: { id: request.requestId, sessionId: request.sessionId, mode: 'conversation', prompt: request.prompt, context: request.context, transcript: request.transcript } }; }
 }
 
 export class ModelOutputValidator {
@@ -315,6 +363,23 @@ export class ChatSessionManager {
     const repaired = await this.validator.repair(response.content, async repair => { const repairRequest = new PlanRequest({ sessionId, prompt: `Repair this Plan. Errors: ${repair.errorSummary.join(', ')}. Return JSON only.`, context, transmissionDecision, metadata: { invalidOutput: repair.invalidOutput, tools: [] } }); const repairedResponse = await client.createPlan(repairRequest, { onToken }); return repairedResponse.content; });
     const plan = repaired.plan.format === 'INK-EDITABLE-PLAN' && repaired.plan.recipeDraft ? repaired.plan : this.layer.createPlanFromSteps(repaired.plan.userIntent || repaired.plan.summary, repaired.plan.orderedSteps, repaired.plan);
     const output = new PlanResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, raw: redactSecrets(response.content), plan, toolCalls: response.toolCalls, usage: response.usage }); session.messages.push({ role: 'user', content: prompt, contextHash: context.hash }, { role: 'assistant', planId: plan.planId, responseHash: hashValue(output) }); return output;
+  }
+  async requestConversation(sessionId, { prompt, contextOptions = {}, transmissionDecision = 'TEXT_SUMMARY', userConsent = false, onToken } = {}) {
+    const session = this.sessions.get(sessionId), client = this.clients.get(session?.client); if (!session || !client) throw new RuntimeError('SESSION_NOT_FOUND', 'Chat session is unavailable.');
+    const normalizedPrompt = String(prompt || '').trim(); if (!normalizedPrompt) throw new RuntimeError('CONVERSATION_PROMPT_REQUIRED', 'Conversation prompt is required.');
+    const context = this.contextBuilder.build(contextOptions);
+    const transcript = session.messages.filter(item => ['user','assistant'].includes(item.role) && typeof item.content === 'string').slice(-12);
+    const request = new ConversationRequest({ sessionId, prompt: normalizedPrompt, context, transcript, transmissionDecision });
+    const preview = buildTransmissionPreview({ settings: client.settings, request, decision: transmissionDecision });
+    if (client.external && !userConsent) return { status: 'TRANSMISSION_APPROVAL_REQUIRED', transmissionPreview: preview, request: redactSecrets(request) };
+    if (this.mode === 'STANDARD' && client.external) throw new RuntimeError('STANDARD_MODE_CONNECTION_BLOCKED', 'Standard mode never establishes external connections.');
+    if (['LOCAL_ONLY', 'SAFE'].includes(this.mode) && client.external) throw new RuntimeError('LOCAL_ONLY_NETWORK_BLOCKED', 'External requests are disabled in this mode.');
+    this.auditBridge.recordTransmission(preview, transmissionDecision);
+    let response, attempt = 0;
+    while (true) { try { response = await client.createMessage(request, { onToken }); break; } catch (error) { const mapped = ErrorMapper.map(error, client.settings.provider); if (!mapped.retryable || attempt >= client.settings.retryCount) throw mapped; attempt++; } }
+    const output = new ConversationResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, content: conversationContent(response), usage: response?.usage || null, source: response?.source || (client.external ? 'MODEL' : 'LOCAL_CONTEXT') });
+    session.messages.push({ role: 'user', content: normalizedPrompt, contextHash: context.hash }, { role: 'assistant', content: output.content, responseHash: hashValue(output), source: output.source });
+    return output;
   }
   end(sessionId, { clearCredentials = true } = {}) { const session = this.sessions.get(sessionId); if (!session) return false; this.clients.get(session.client)?.cancel?.(); this.sessions.delete(sessionId); if (clearCredentials) this.credentialStore?.clearAll(); return true; }
 }
