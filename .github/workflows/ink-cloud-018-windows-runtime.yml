@@ -142,7 +142,7 @@ jobs:
           $server = $null
           $browser = $null
           try {
-            $server = Start-Process powershell -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $env:INK_SOURCE_ROOT 'qa\runtime\start-ink-local.ps1'),'-NoBrowser') -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+            $server = Start-Process powershell -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $env:INK_SOURCE_ROOT 'qa\runtime\start-ink-local.ps1'),'-NoBrowser') -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
             $ready = $false
             for ($i=0;$i -lt 30;$i++) {
               Start-Sleep -Milliseconds 500
