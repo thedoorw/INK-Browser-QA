@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `ACTIVE / PHASE_B_COMPLETE`
+STATUS: `ACTIVE / PHASE_C_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `ACTIVE / PHASE_B_COMPLETE`
 | TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
 | BRANCH | `work/ink-cloud-017` |
 | BASE_MAIN | `38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e` |
-| TASK_STATUS | `ACTIVE / PHASE_B_COMPLETE` |
+| TASK_STATUS | `ACTIVE / PHASE_C_COMPLETE` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
@@ -33,76 +33,63 @@ sector extraction
 ## Checkpoints
 
 ### Phase A — Reconstruction contract audit
-
-Status: `COMPLETE`  
-Checkpoint: `0a56b3389ca4372028628ea488d58cc8560a8e50`
-
-Findings pinned:
-
-- benchmark collapsed `prototype.paths` to the single largest Path;
-- `reconstructRadial()` enforced Path-only input;
-- existing Group is the correct prototype-set owner;
-- existing Repeat/Transform and recursive SVG traversal already support a structured source;
-- Path-level extraction provenance is already exact and independently retained;
-- workspace renderer/export traversal has a bounded missing `repeat` branch to close in Phase C;
-- no Hard STOP condition.
+- Status: `COMPLETE`
+- Checkpoint: `0a56b3389ca4372028628ea488d58cc8560a8e50`
+- Pinned the benchmark largest-Path collapse, Path-only reconstruction guard,
+  Group ownership, existing Repeat/Transform capability, provenance contract and
+  bounded workspace traversal gap.
 
 ### Phase B — Multi-Path prototype-set reconstruction
+- Status: `COMPLETE`
+- Checkpoint: `f942f2b423908f97ef301e0f179531d37945c8d5`
+- Added deterministic Group-backed prototype sets and Path-array support while
+  retaining single-Path compatibility.
+- Preserves child Path IDs/metadata, linked Repeat identity and exact extraction
+  provenance; no flattening or second vector engine.
 
-Status: `COMPLETE / CHECKPOINT_COMMIT_CONTAINS_THIS_RECORD`
+### Phase C — Structured output + local correction closure
+- Status: `COMPLETE / CHECKPOINT_COMMIT_CONTAINS_THIS_RECORD`
+- Bounded workspace compatibility fix adds existing Repeat traversal to:
+  - canvas renderer;
+  - world-bounds traversal;
+  - container-style hit testing;
+  - workspace SVG export.
+- Reuses `repeatTransforms()`, `vectorObjectToSVG()` and recursive
+  `drawObject()`; no renderer authority is duplicated.
+- Focused multi-Path QA verifies:
+  - source prototype children remain editable Paths;
+  - source Path IDs remain stable;
+  - generated expanded child IDs are deterministic;
+  - a bounded child-anchor correction propagates through linked Repeat
+    instances while Repeat instance IDs remain stable;
+  - JSON/migration/integrity accepts Repeat-of-Group;
+  - SVG structured traversal emits all repeated Paths.
+- Added a workspace source-contract regression for renderer/bounds/hit/export
+  Repeat traversal.
 
-Implemented:
-
-- `createStructurePrototypeSet()` using existing `group`;
-- deterministic Path ID uniqueness validation;
-- common Path-level extraction provenance validation;
-- `reconstructRadial()` now accepts either one Path or a complete Path array;
-- single-Path callers remain compatible;
-- multi-Path reconstruction creates one linked Repeat whose source is the
-  structured Group;
-- Repeat metadata records source type, prototype-set ID, retained Path IDs/count
-  and provenance status;
-- no raster flattening, second geometry engine, FORMAT_VERSION change, backend,
-  package mutation or Direct Extraction route mutation.
-
-Focused QA added:
-
-- deterministic multi-Path Repeat rerun;
-- source child Path IDs retained;
-- Repeat instance identity retained after bounded prototype-child correction;
-- expanded generated child IDs deterministic;
-- SVG traversal reaches every repeated child Path;
-- JSON/migration/integrity roundtrip accepts Repeat-of-Group;
-- duplicate prototype Path IDs rejected.
-
-Files changed in Phase B checkpoint:
-
+Files changed through Phase C:
 - `product/source/src/extraction/structure.js`
+- `product/source/src/ink.js`
 - `qa/core/tests/unit/extraction-structure-v0.1.test.mjs`
+- `qa/core/tests/unit/extraction-structure-workspace-source-v0.1.test.mjs`
 - `ACTIVE/INK_DEV_PROGRESS.md`
 
-Checks actually executed so far:
-
-- exact GitHub source audit and contract reasoning from Phase A.
-
-Checks pending execution after bounded renderer/export closure:
-
+Checks pending executable validation:
 - changed-module syntax;
 - focused unit regression;
-- serialization/export closure;
+- serialization/export regression;
 - extraction/integrated regressions;
 - hard benchmark;
-- machine-readable comparison;
+- comparison evidence;
 - diff whitespace check.
 
 Browser/runtime QA remains `DEFERRED`.
 
 ## Planned phases
-
 - Phase A — Reconstruction contract audit — `COMPLETE`
 - Phase B — Multi-Path prototype-set reconstruction — `COMPLETE`
-- Phase C — Structured output + local correction closure — `NEXT`
-- Phase D — Overlay QA + hard benchmark rerun
+- Phase C — Structured output + local correction closure — `COMPLETE`
+- Phase D — Overlay QA + hard benchmark rerun — `NEXT`
 - Phase E — Comparative decision evidence
 - Phase F — report + DEV handoff
 
