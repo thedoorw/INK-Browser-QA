@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `REAL_CREATIVE_WORK_READY / NO_ACTIVE_DEV_WORK_ORDER`
+STATUS: `INK-CLOUD-018 / READY_FOR_DEV / FIRST_VISIBLE_WEB_PLATFORM`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `NONE` |
-| DEV_BRANCH | `NONE` |
-| DEV_BRANCH_HEAD | `N/A` |
-| DEV_HANDOFF | `N/A` |
-| MR_REVIEW | `INK-CLOUD-017 CLOSED / MR_PASS` |
+| CURRENT_TASK_ID | `INK-CLOUD-018` |
+| DEV_BRANCH | `work/ink-cloud-018` |
+| DEV_BRANCH_HEAD | `TO_BE_INITIALIZED_FROM_CURRENT_MAIN` |
+| DEV_HANDOFF | `NO / TASK_NOT_STARTED` |
+| MR_REVIEW | `NOT_STARTED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `USER_REAL_CREATIVE_CASE / NEED-DRIVEN DEVELOPMENT` |
+| NEXT_STAGE | `FIRST_VISIBLE_WEB_PLATFORM + ROSE_WINDOW_RUNTIME` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -911,3 +911,33 @@ Next action:
 `USER_REAL_CREATIVE_CASE`
 
 Real creative use should now drive the next bounded engineering Work Order only when a concrete workflow or capability gap is observed.
+
+
+## INK-CLOUD-018 preparation
+
+User direction:
+
+```text
+do not pursue Figma parity first
+→ put INK online as a visible web platform
+→ include visible CHAT + image import
+→ use Rose Window as the first runtime case
+→ inspect what current DEV capabilities actually deliver
+```
+
+Prepared task:
+
+`INK-CLOUD-018 — First Visible Web Platform + Rose Window Runtime v0.1`
+
+Target gate:
+
+`INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS`
+
+Important distinction:
+
+- `product/source/index.html` already provides the browser editor shell.
+- Creative Workspace and CHAT runtime already exist in shared source.
+- 018 is primarily visible web integration, conversational CHAT surface, runtime validation and deployment closure.
+- It is not a second editor and not a Figma-clone build.
+
+Runtime QA is required for this gate and may not be deferred at final closure.
