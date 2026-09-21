@@ -1,144 +1,105 @@
-# INK-CLOUD-018 PowerShell Runtime Runbook
+# INK-CLOUD-018 Windows Runtime Runbook
 
-Purpose: run the first visible INK Web platform on the user's Windows computer without GitHub Actions, Git, Node, Python or any external proxy.
+Purpose: execute INK browser/runtime QA on the user's existing Windows self-hosted runner because GitHub-hosted Actions quota is exhausted.
 
-## Architecture
+## Authoritative runtime path
+
+The user already has a configured GitHub self-hosted runner:
 
 ```text
-GitHub branch ZIP
-→ PowerShell download + Expand-Archive
-→ local static HTTP server on 127.0.0.1
-→ Chrome / Edge
-→ product/source/index.html
+C:\actions-runner-ink
+→ .\run.cmd
+→ Connected to GitHub
+→ Listening for Jobs
 ```
 
-Git is NOT required.
+This is the preferred 018 runtime path.
 
-GitHub Actions/self-hosted runner is NOT used for this runtime path.
+The runner executes on the user's Windows machine, so browser/runtime evidence comes from the real target environment rather than a GitHub-hosted runner.
 
-## Step 1 — download the exact 018 branch ZIP
+## Important distinction
 
-Open Windows PowerShell at any location and run:
+```text
+GitHub-hosted Actions quota = exhausted
+self-hosted Windows runner = available
+```
+
+Do not substitute Val Town or another external proxy.
+
+A manual PowerShell loopback-server path remains available only as a fallback if workflow dispatch is unavailable.
+
+## Step 1 — keep the runner online
+
+Open Windows PowerShell:
 
 ```powershell
-$zip = "$HOME\Downloads\INK-CLOUD-018.zip"
-$dest = "$HOME\INK-CLOUD-018"
-
-Remove-Item $dest -Recurse -Force -ErrorAction SilentlyContinue
-Invoke-WebRequest "https://github.com/thedoorw/INK-Browser-QA/archive/refs/heads/work/ink-cloud-018.zip" -OutFile $zip
-Expand-Archive $zip -DestinationPath $dest -Force
-
-$root = (Get-ChildItem $dest -Directory |
-  Where-Object { Test-Path (Join-Path $_.FullName 'qa\runtime\start-ink-local.ps1') } |
-  Select-Object -First 1).FullName
-
-Set-Location $root
-Get-Location
+cd C:\actions-runner-ink
+.\run.cmd
 ```
 
-Expected: the current folder is the extracted `work/ink-cloud-018` snapshot and contains:
+Expected:
 
-- `README.md`
-- `product/source/index.html`
+```text
+Connected to GitHub
+Listening for Jobs
+```
+
+Keep this window open.
+
+## Step 2 — DEV/MR prepares a bounded self-hosted runtime workflow
+
+The workflow must target the existing Windows self-hosted runner and must not use a GitHub-hosted image.
+
+Required runner selection should match the repository's registered runner labels, typically including:
+
+```yaml
+runs-on: [self-hosted, Windows]
+```
+
+If a repository-specific label exists, use it as well.
+
+The job should:
+
+1. check out the exact `work/ink-cloud-018` revision;
+2. start the INK static site locally on loopback;
+3. run HTTP/static preflight;
+4. execute browser/runtime QA using an installed Chrome/Edge-compatible browser where automation is available;
+5. record runtime evidence to branch evidence/report files or emit a deterministic handoff artifact for MR review;
+6. never commit secrets;
+7. stop after the bounded 018 QA scope.
+
+## Step 3 — manual PowerShell fallback
+
+If workflow dispatch itself is unavailable, use the branch scripts locally from an extracted/current source tree:
+
 - `qa/runtime/start-ink-local.ps1`
 - `qa/runtime/check-ink-local.ps1`
 
-No `git status` check is required.
-
-## Step 2 — start INK
-
-From that extracted root:
+Start:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\qa\runtime\start-ink-local.ps1
+```
+
+Preflight in another PowerShell:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1
 ```
 
 Default URL:
 
 `http://127.0.0.1:4173/`
 
-The script binds only to `127.0.0.1`.
-
-If port 4173 is busy:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\qa\runtime\start-ink-local.ps1 -Port 4174
-```
-
-Keep this PowerShell window open while testing.
-
-## Step 3 — preflight from a second PowerShell window
-
-Change to the same extracted root, then run:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1
-```
-
-For port 4174:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1 -BaseUrl http://127.0.0.1:4174
-```
-
-Expected final line:
-
-`PRECHECK = PASS`
-
-## Step 4 — browser smoke test
-
-Open the URL in Chrome or Edge and verify:
-
-1. INK shell renders.
-2. Canvas renders.
-3. no fatal module-load error is visible.
-4. Creative Workspace control is present and opens.
-5. image import dialog opens.
-6. no login is required.
-
-Do not proceed to Rose Window functional QA until these pass.
-
-## Step 5 — browser developer console checkpoint
-
-Open DevTools → Console.
-
-Record:
-
-- fatal red errors, if any;
-- Service Worker registration status;
-- page URL;
-- `window.INK_ARCHITECTURE` result if available.
-
-Useful console checks:
-
-```js
-location.href
-window.INK_ARCHITECTURE
-navigator.serviceWorker?.controller?.scriptURL
-```
-
-## Step 6 — Rose Window runtime QA
-
-After the 018 web integration is ready:
-
-1. import the 1086 × 1448 Rose Window;
-2. run Direct Extraction;
-3. verify editable Path result;
-4. change overlay opacity;
-5. inspect Path/node/provenance diagnostics;
-6. exercise optional Structure-Aware reconstruction;
-7. perform one bounded edit;
-8. capture Revision;
-9. restore Revision;
-10. open CHAT surface and bind current document context;
-11. verify mutation still requires explicit approval.
-
-## Evidence to return to MR
+## Runtime evidence required
 
 ```text
-POWERSHELL_VERSION =
+SELF_HOSTED_RUNNER = ONLINE
+RUNNER_VERSION =
+RUNNER_LABELS =
+EXACT_BRANCH_HEAD =
 LOCAL_URL =
-PRECHECK =
+HTTP_PREFLIGHT =
 BROWSER =
 INK_SHELL =
 CANVAS =
@@ -157,11 +118,11 @@ REVISION_CAPTURE_RESTORE =
 NOTES =
 ```
 
-## Security / deployment notes
+## Security / architecture rules
 
-- No API key belongs in the repository.
-- Local editor runtime does not require an external service.
+- No API key in repository.
+- No external proxy.
+- No second editor/document authority.
+- Browser-local INK core remains authoritative.
 - Remote AI remains optional.
-- The local server exposes only `product/source` on loopback.
-- This runbook does not mutate `package/ink-current`.
-- The ZIP is a disposable local runtime snapshot; Git is not required.
+- `package/ink-current` is not mutated by this runtime path.
