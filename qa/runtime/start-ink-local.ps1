@@ -1,9 +1,9 @@
-$ErrorActionPreference = 'Stop'
-
 param(
   [int]$Port = 4173,
   [switch]$NoBrowser
 )
+
+$ErrorActionPreference = 'Stop'
 
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $SiteRoot = (Resolve-Path (Join-Path $RepoRoot 'product\source')).Path
