@@ -966,3 +966,17 @@ Next action:
 `USER_POWERSHELL_PREFLIGHT`
 
 Do not use GitHub Actions, Val Town or another external proxy as a substitute.
+
+
+## Local runtime correction
+
+The Windows runtime path is ZIP-first and requires no Git installation.
+
+```text
+work/ink-cloud-018 ZIP
+→ PowerShell
+→ 127.0.0.1
+→ browser QA
+```
+
+Prior Git-based local instructions are superseded.
