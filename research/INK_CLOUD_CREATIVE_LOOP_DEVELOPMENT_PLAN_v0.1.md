@@ -1055,3 +1055,247 @@ CRDT = DEFERRED
 ```
 
 The priority is to make USER + CHAT capable of sustained, precise, revisable visual creation inside one authoritative INK workspace.
+
+
+## RA-first integration strategy for the AI Drawing Studio
+
+The Studio capability plan above is already the product roadmap. The RA baseline is the first available implementation-material pool, not a second product line and not a replacement for INK authority.
+
+Integration must compare three sources before each foundation stage is implemented:
+
+```text
+A. existing INK capability
+B. reusable RA module / contract
+C. mature external algorithm / runtime
+        ↓
+choose the smallest reliable combination
+        ↓
+bounded adapter
+        ↓
+authoritative INK model
+```
+
+The goal is to avoid both reimplementation and blind transplantation.
+
+### Integration rule
+
+For every candidate module:
+
+1. identify the exact INK gap;
+2. verify whether INK already owns part of the capability;
+3. inspect the corresponding RA implementation and tests;
+4. benchmark mature external alternatives when they provide stronger math/runtime behavior;
+5. decide `ADOPT / ADAPT / REFERENCE_ONLY / DEFER`;
+6. wrap accepted capability behind an INK-owned adapter;
+7. normalize results into INK Path / Document / Command / History / Revision;
+8. run portable/browser-local regression and real artwork acceptance;
+9. only then promote.
+
+No external module and no RA subsystem may become a second Document, Path, History, Revision, renderer or collaboration authority.
+
+### Foundation A — Vector Geometry Kernel integration
+
+RA material to reuse:
+
+- `geometry_measurement_engine.js` for measurement / fitting / geometric interpretation;
+- `compound_topology_engine.js` for topology concepts and already-proven bounded operations;
+- `constraint_parameter_engine.js` for semantic constraint records;
+- `generator_authoring_engine.js` for reusable generator concepts;
+- `dependency_recompute_engine.js` for dependency graph / local recompute concepts.
+
+External candidates to benchmark:
+
+- Paper.js for Bézier-aware path intersections, compound paths and Boolean operations;
+- Clipper2 for robust polygon clipping and offset/inflate/deflate;
+- Bezier.js for curve split/project/intersection/reduction/offset math.
+
+Selection principle:
+
+```text
+RA = semantic geometry / measurement / dependency intelligence
+external geometry libraries = robust low-level math where stronger
+INK = authoritative Path representation and edit transaction
+```
+
+Do not treat RA's constraint records as a completed general geometric constraint solver. A full solver is a separate demonstrated need and must be benchmarked before adoption.
+
+Gate:
+
+`STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED`
+
+### Foundation B — AI Document Bridge integration
+
+RA material to reuse:
+
+- `semantic_boundary_engine.js`;
+- `geometry_measurement_engine.js`;
+- `ai_review_queue_engine.js`;
+- stable IDs / relationship graph / selected-rejected-unresolved semantics.
+
+INK material that remains authoritative:
+
+- current document/context exposure;
+- CHAT bounded edit schema;
+- proposal → approval → execution boundary;
+- document/path identity;
+- History / Revision.
+
+Integration target:
+
+```text
+INK document
+→ grounded objects / regions / relationships
+→ CHAT-readable structured context
+→ validated semantic command
+→ explicit approval
+→ INK mutation
+```
+
+RA review states may inform the bridge state machine, but must be translated into the existing INK collaboration contract rather than imported as a parallel authority.
+
+Gate:
+
+`STUDIO_AI_DOCUMENT_BRIDGE_INTEGRATED`
+
+### Foundation C — Revision / Provenance integration
+
+RA material to reuse:
+
+- stable object IDs;
+- deterministic replay concepts;
+- source SHA / version identity;
+- accepted / rejected / unresolved candidate records;
+- review evidence / decision reason;
+- compiler/replay provenance concepts.
+
+INK material that remains authoritative:
+
+- current Revision snapshots and restore;
+- History;
+- document serialization;
+- CHAT revision binding.
+
+External reference:
+
+- W3C PROV concepts may inform Entity / Activity / Agent / Derivation relationships.
+
+Target provenance chain:
+
+```text
+Reference
+→ extraction activity
+→ INK Path / object
+→ user or CHAT operation
+→ revision
+→ variant / restore / comparison
+```
+
+Do not add CRDT or multiplayer provenance requirements during the single-user + CHAT phase.
+
+Gate:
+
+`STUDIO_REVISION_PROVENANCE_INTEGRATED`
+
+### Foundation D — Semantic Region / Selection integration
+
+RA material to reuse:
+
+- Compare / Region / Trace workspace concepts;
+- semantic boundary outer / hole / island;
+- split / merge candidates;
+- contains / inside / intersects / overlaps;
+- gap / bridge / crossing / occlusion relationships.
+
+External candidates:
+
+- existing OpenCV.js contour / hierarchy processing;
+- segmentation inference through ONNX Runtime Web only when semantic selection cannot be achieved reliably with current extraction tools.
+
+INK remains owner of selection, object identity and editable geometry.
+
+Gate:
+
+`STUDIO_SEMANTIC_REGION_GROUNDING_INTEGRATED`
+
+### Foundation E — Visual Compare / Variant integration
+
+RA material to reuse first:
+
+- side-by-side;
+- overlay;
+- wipe;
+- difference;
+- synchronized viewport;
+- evidence/review comparison workflow.
+
+Integrate these into INK Revision / Variant rather than preserving an RA case-workbench shell.
+
+Target:
+
+```text
+reference vs current
+revision A vs revision B
+variant A / B / C
+→ visual + structural comparison
+→ choose / restore / continue editing
+```
+
+Gate:
+
+`STUDIO_VISUAL_VARIANT_WORKFLOW_INTEGRATED`
+
+### Foundation F — Parametric creative structure
+
+After Foundations A–E are stable, evaluate RA:
+
+- shared parameters;
+- generators;
+- arrays / mirror / rotation / radius sequence;
+- dependency graph;
+- local recompute;
+- bounded per-instance deviations.
+
+These should extend existing INK Repeat / Transform / Group semantics, not create a second parametric scene model.
+
+A full geometric constraint solver is not pre-authorized. If real creative work proves it necessary, benchmark solver approaches separately with licensing, WASM/browser-local compatibility and integration cost included.
+
+Gate:
+
+`STUDIO_PARAMETRIC_CREATIVE_STRUCTURE_INTEGRATED`
+
+### External technology disposition
+
+The current default disposition is:
+
+```text
+OpenCV.js       = ADAPT / already compatible with browser-local processing
+Paper.js        = BENCHMARK for Bézier path Boolean/intersections
+Clipper2        = BENCHMARK for polygon Boolean/offset robustness
+Bezier.js       = BENCHMARK for local Bézier math
+VTracer         = KEEP for raster→vector boundary where useful
+ONNX Runtime Web= DEFER until a real model-backed selection gap exists
+CanvasKit       = DEFER until current INK renderer/material shows a demonstrated limitation
+W3C PROV        = REFERENCE model, not runtime dependency
+CRDT            = DEFER during single-user + CHAT phase
+```
+
+This disposition may change only from evidence, not from technology availability alone.
+
+### One-pass implementation discipline
+
+"Once" does not mean importing every promising library in one change. It means making the architecture decision once, then integrating through stable boundaries so individual engines can be replaced without rewriting INK.
+
+For each foundation:
+
+```text
+inventory
+→ comparison benchmark
+→ adapter contract
+→ one bounded implementation
+→ deterministic/static tests
+→ real browser runtime
+→ real artwork acceptance
+→ promotion
+```
+
+The first implementation Work Order after public-site acceptance should therefore begin with Foundation A and include the RA-vs-external benchmark inside the Work Order, rather than creating another research roadmap.
