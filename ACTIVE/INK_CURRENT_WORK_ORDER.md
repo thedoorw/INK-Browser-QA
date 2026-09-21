@@ -464,3 +464,34 @@ bounded GitHub workflow
 Do not use a GitHub-hosted runner. Do not use Val Town or another external proxy.
 
 The previously recorded ZIP-first local flow is retained only as manual fallback if workflow dispatch is unavailable.
+
+
+## Pre-runtime gate — VERIFIED
+
+The user's existing Windows self-hosted runner has successfully executed the 018 web preflight.
+
+Accepted evidence:
+
+```text
+RUN_ID = 35574792555
+RUNNER = DESKTOP-NSOQH69
+RUNNER_VERSION = 2.337.0
+LABELS = self-hosted / Windows / X64
+POWERSHELL = 5.1.19041.7725
+CHROME_DISCOVERY = PASS
+BOUNDED_EXACT_SHA_MATERIALIZATION = PASS
+LOOPBACK_HTTP = PASS
+ES_MODULE_MIME = PASS
+MANIFEST = PASS
+SERVICE_WORKER_ASSET = PASS
+INK_SHELL_RENDER = PASS
+CREATIVE_WORKSPACE_MOUNT = PASS
+```
+
+The local Windows runtime environment is no longer a blocker.
+
+The same task may now proceed to:
+
+`Phase B / Phase C / Phase D — visible web integration, conversational CHAT surface and Rose Window runtime case.`
+
+This is not a final 018 gate pass. The finished product integration still requires the full browser/runtime acceptance defined above.
