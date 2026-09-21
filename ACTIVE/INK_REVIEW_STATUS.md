@@ -49,3 +49,27 @@ PUBLIC_URL = https://thedoorw.github.io/INK/
 PAGES_ONE_TIME_ACTION = COMPLETE
 NEXT_ACTION = USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE
 ```
+
+
+## Public URL correction — GitHub Pages not live
+
+User browser evidence returned GitHub Pages 404 for:
+
+`https://thedoorw.github.io/INK/`
+
+Repository inventory confirms the current product repository is:
+
+`thedoorw/INK-Browser-QA`
+
+and no accessible repository named `thedoorw/INK` exists.
+
+Therefore the prior `PUBLIC_URL = READY` entry is superseded.
+
+```text
+PUBLIC_URL = NOT_YET_LIVE
+PAGES_STATUS = CONFIGURATION_REQUIRED
+INVALID_ASSUMED_URL = https://thedoorw.github.io/INK/
+CURRENT_REPO = thedoorw/INK-Browser-QA
+EXPECTED_REPO_PAGES_URL = https://thedoorw.github.io/INK-Browser-QA/
+NEXT_ACTION = CONFIGURE_GITHUB_PAGES_OR_CREATE_DEDICATED_INK_REPO
+```
