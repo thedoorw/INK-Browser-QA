@@ -1,0 +1,210 @@
+{
+  "schema": "INK-ROSE-WINDOW-HARD-BENCHMARK/1",
+  "testClass": "NON_CANONICAL_SUPPLEMENTARY_TEST",
+  "userAcceptedFor017OperationalCompletion": true,
+  "fixture": {
+    "path": "user-supplied:rose-window-primary(2).png",
+    "sha256": "af86d03e8947234a1cc301cd8c224520fc6065272f3f80d795b5a314953fdc25",
+    "width": 1086,
+    "height": 1448,
+    "colorType": "RGBA",
+    "canonicalStrictBinaryComparison": false
+  },
+  "setup": {
+    "threshold": 128,
+    "roi": {
+      "center": {
+        "x": 543,
+        "y": 638
+      },
+      "radius": 466
+    },
+    "gridStep": 4,
+    "candidateCounts": [
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      24
+    ]
+  },
+  "overlayQA": {
+    "roi": {
+      "center": {
+        "x": 543,
+        "y": 638
+      },
+      "radius": 466
+    },
+    "threshold": 128,
+    "gridStep": 4,
+    "sampleCoordinatesShared": true,
+    "rasterProxyOnly": true
+  },
+  "directExtraction": {
+    "paths": 1386,
+    "subpaths": 1426,
+    "holes": 40,
+    "nodes": 9339,
+    "geometrySha256": "40f6f8040001cac09b8e878acc462e5a1801b07f2414c786ec49805025f69e73",
+    "warnings": [
+      "Binary luminance/explicit mask boundary; not semantic segmentation.",
+      "500 degenerate traced contour(s) omitted."
+    ],
+    "rasterProxy": {
+      "samples": 42584,
+      "truePositive": 12514,
+      "falsePositive": 899,
+      "falseNegative": 1325,
+      "trueNegative": 27846,
+      "recall": 0.904256,
+      "precision": 0.932975,
+      "iou": 0.849098
+    },
+    "provenanceExact": true
+  },
+  "structureAware": {
+    "selectedCount": 6,
+    "selectedMaskIoU": 0.317206,
+    "candidates": [
+      {
+        "count": 6,
+        "maskIoU": 0.317206
+      },
+      {
+        "count": 12,
+        "maskIoU": 0.259456
+      },
+      {
+        "count": 14,
+        "maskIoU": 0.257667
+      },
+      {
+        "count": 10,
+        "maskIoU": 0.256417
+      },
+      {
+        "count": 16,
+        "maskIoU": 0.254013
+      },
+      {
+        "count": 18,
+        "maskIoU": 0.237382
+      },
+      {
+        "count": 20,
+        "maskIoU": 0.224357
+      },
+      {
+        "count": 24,
+        "maskIoU": 0.206283
+      },
+      {
+        "count": 8,
+        "maskIoU": 0.198411
+      }
+    ],
+    "prototype": {
+      "paths": 265,
+      "subpaths": 269,
+      "holes": 4,
+      "nodes": 1631
+    },
+    "prototypeWarnings": [
+      "Binary luminance/explicit mask boundary; not semantic segmentation.",
+      "73 degenerate traced contour(s) omitted."
+    ],
+    "retainedPrototype": {
+      "paths": 265,
+      "subpaths": 269,
+      "holes": 4,
+      "nodes": 1631
+    },
+    "prototypeSet": {
+      "sourceType": "group",
+      "sourceObjectId": "rose-window-structure-repeat:prototype-set",
+      "pathRetentionExact": true,
+      "retainedPathIdsExact": true
+    },
+    "effectiveExpandedNodes": 9786,
+    "linkedRepeatInstances": 6,
+    "repeatIdentity": {
+      "instanceIds": [
+        "repeat:rose-window-structure-repeat:0:0:instance:1:rose-window-structure-repeat-prototype-set",
+        "repeat:rose-window-structure-repeat:0:1:instance:1:rose-window-structure-repeat-prototype-set",
+        "repeat:rose-window-structure-repeat:0:2:instance:1:rose-window-structure-repeat-prototype-set",
+        "repeat:rose-window-structure-repeat:0:3:instance:1:rose-window-structure-repeat-prototype-set",
+        "repeat:rose-window-structure-repeat:0:4:instance:1:rose-window-structure-repeat-prototype-set",
+        "repeat:rose-window-structure-repeat:0:5:instance:1:rose-window-structure-repeat-prototype-set"
+      ],
+      "deterministicRerun": true,
+      "transformsExact": true
+    },
+    "rasterProxy": {
+      "samples": 42584,
+      "truePositive": 6992,
+      "falsePositive": 6740,
+      "falseNegative": 6847,
+      "trueNegative": 22005,
+      "recall": 0.505239,
+      "precision": 0.509176,
+      "iou": 0.339764
+    },
+    "provenanceExact": true
+  },
+  "comparison": {
+    "recallDelta": -0.399017,
+    "precisionDelta": -0.423799,
+    "iouDelta": -0.509334,
+    "falsePositiveDelta": 5841,
+    "falseNegativeDelta": 5522,
+    "uniqueEditableNodeDelta": -7708,
+    "effectiveExpandedNodeDelta": 447,
+    "correctionCostProxy": {
+      "definition": "Two-component bounded proxy only: sampledMismatch estimates missing/additional raster correction while uniqueEditableNodes estimates editable cleanup surface; no scalar weighting or automatic pipeline winner.",
+      "directExtraction": {
+        "sampledMismatch": 2224,
+        "uniqueEditableNodes": 9339,
+        "linkedEditReuse": 1
+      },
+      "structureAware": {
+        "sampledMismatch": 13587,
+        "uniqueEditableNodes": 1631,
+        "linkedEditReuse": 6
+      }
+    }
+  },
+  "deterministic": {
+    "direct": true,
+    "prototype": true,
+    "structure": true,
+    "resultSha256": "1eae7a22fe8d1eafbd01a353e59cd2b817ceaf9f246cc255154e9b903df38f1d"
+  },
+  "execution": {
+    "branchHeadUnderTest": "3000674329127956d20f6cb7f4a2fb88938152a7",
+    "harnessLogicSource": "qa/core/tests/rose-window-hard-benchmark-v0.1.mjs",
+    "harnessLogicSourceBlobSha": "7d0868e82d1a1d3ce588c8187ec076b36c8e88ec",
+    "fixtureIntakeCompatibilityOnly": [
+      "accepted USER-authorized supplementary SHA-256 instead of historical canonical SHA-256",
+      "accepted PNG color type 6 RGBA in addition to historical color type 2 RGB"
+    ],
+    "measurementContractChanged": false,
+    "executedTwice": true,
+    "secondRunJsonIdentical": true,
+    "rawRunnerOutputFileSha256": "4dbea7923a5e9a69f4e24804e8f546f2b1e0b5fe9867d7adc29d0eb4a85a4057"
+  },
+  "interpretation": {
+    "contourCountsAreThresholdDerived": true,
+    "missingAndAdditionalCountsUseSampledPixelProxy": true,
+    "semanticGroundTruthAvailable": false,
+    "strictComparisonToInkCloud013CanonicalBinary": false,
+    "decision": "DIRECT_EXTRACTION_CURRENT_BASELINE",
+    "structureStatus": "MULTI_PATH_TECHNICALLY_CLOSED_MR_DECISION_REQUIRED",
+    "benchmarkClassificationAgainstSameInputDirectExtraction": "NOT_IMPROVED",
+    "canonicalEvidenceOverwritten": false
+  }
+}
