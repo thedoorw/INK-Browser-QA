@@ -980,3 +980,21 @@ work/ink-cloud-018 ZIP
 ```
 
 Prior Git-based local instructions are superseded.
+
+
+## Self-hosted runner confirmed
+
+User machine runtime:
+
+```text
+C:\actions-runner-ink
+GitHub self-hosted runner 2.337.0
+Connected
+Listening for Jobs
+```
+
+Primary 018 runtime path:
+
+`SELF_HOSTED_WINDOWS_RUNNER`
+
+Manual ZIP/PowerShell path is fallback only.
