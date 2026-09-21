@@ -272,12 +272,19 @@ DEV branch：
 
 不要以 main 上的 progress 副本判斷目前 DEV 做到哪裡。
 
-### Runtime QA 狀態
+### Runtime QA 標準流程
 
-Self-hosted Windows runtime 的正式基線：
-`governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
+Runtime 的既有可執行基線：
 
-重要區分：
+`.github/workflows/ink-v0.1-runtime-baseline.yml`
+
+其中正式 Windows runner labels 為：
+
+```yaml
+runs-on: [self-hosted, Windows, X64]
+```
+
+GitHub-hosted Actions 與 Windows self-hosted runner 是兩個不同資源。
 
 ```text
 GitHub-hosted Actions quota exhausted
@@ -285,25 +292,47 @@ GitHub-hosted Actions quota exhausted
 self-hosted Windows runner unavailable
 ```
 
-若 `C:\actions-runner-ink\run.cmd` 已處於 `Connected to GitHub / Listening for Jobs`，應優先使用既有 `[self-hosted, Windows, X64]` runtime 路徑，不得僅因 GitHub-hosted Actions 額度耗盡就自動標記 Runtime QA 為 deferred。
-
-### Runtime QA 狀態
-
-目前 GitHub Actions quota 已用盡：
+因此 Runtime QA 的標準決策順序固定如下：
 
 ```text
-GITHUB_ACTIONS = QUOTA_EXHAUSTED
-RUNTIME_QA = DEFERRED
-SOURCE_STATIC_QA = REQUIRED
+1. 一般情況
+   → 可使用既定 GitHub Actions / Runtime workflow
+
+2. GitHub-hosted Actions 額度用盡
+   → 不直接標記 RUNTIME_QA_DEFERRED
+   → 改用既有 Windows self-hosted runner
+
+3. Windows self-hosted runner
+   C:\actions-runner-ink
+   → .\run.cmd
+   → 確認 Connected to GitHub
+   → 確認 Listening for Jobs
+   → workflow 指定 [self-hosted, Windows, X64]
+   → 執行 bounded browser/runtime QA
+   → 保存實際 runtime evidence
+
+4. 只有 self-hosted runner 也無法執行，
+   或 Work Order 明確允許延後時
+   → 才可標記 RUNTIME_QA_DEFERRED
 ```
 
-因此當前任務以 source/static/unit/serialization evidence 為主。
+目前這台 Windows runner 的已驗證基線：
 
-任何未做的 browser/runtime 驗證必須明確記為：
+```text
+RUNNER_PATH = C:\actions-runner-ink
+RUNNER_VERSION = 2.337.0
+RUNNER_LABELS = self-hosted / Windows / X64
+POWERSHELL = 5.1
+CHROME = AVAILABLE
+```
+
+對新的 Work Order，應沿用上述 self-hosted runtime 路徑；若產品目標已從舊 reconstructed/original runtime 改為目前 `product/source`，可以建立 task-specific bounded workflow，但不得重新發明另一套 runtime 基礎設施。
+
+只有實際未執行的 browser/runtime 驗證才標記：
 
 `RUNTIME_QA_DEFERRED`
 
-不得因此宣稱 Runtime-verified、certified 或完成 package promotion。
+不得把「GitHub-hosted quota exhausted」本身當成 deferred 的充分理由，也不得在沒有 runtime evidence 時宣稱 Runtime-verified、certified 或完成 package promotion。
 
 ---
 
