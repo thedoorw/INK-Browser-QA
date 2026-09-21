@@ -81,9 +81,30 @@ function proposalSummary(app, proposalId) {
   }
 }
 
+function planSummary(app, planId) {
+  if (!planId || !app?.chatCreativePlan?.getPlan) return null;
+  try {
+    const plan = app.chatCreativePlan.getPlan(planId);
+    if (!plan) return null;
+    return {
+      planId: plan.planId,
+      status: plan.status,
+      intentSummary: plan.intentSummary,
+      source: clone(plan.source),
+      steps: clone(plan.steps || []),
+      validation: clone(plan.validation || null),
+      stepResults: clone(plan.stepResults || []),
+      result: clone(plan.result || null)
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function buildCreativeWorkspaceState(app, {
   stage = 'reference',
   activeProposalId = null,
+  activePlanId = null,
   status = null
 } = {}) {
   const document = app?.doc || null;
@@ -118,7 +139,8 @@ export function buildCreativeWorkspaceState(app, {
       diagnostics: clone(app?.revisions?.diagnostics?.() || null)
     },
     chat: {
-      proposal: proposalSummary(app, activeProposalId)
+      proposal: proposalSummary(app, activeProposalId),
+      plan: planSummary(app, activePlanId)
     },
     history: {
       pending: Boolean(app?.history?.pending),
@@ -131,6 +153,7 @@ export function buildCreativeWorkspaceState(app, {
       expressiveStroke: Boolean(app?.pathStrokeAppearance),
       repaintMaterial: Boolean(app?.pathRepaintMaterial),
       chatBoundedEdit: Boolean(app?.chatBoundedEdit),
+      chatCreativePlan: Boolean(app?.chatCreativePlan),
       revisions: Boolean(app?.revisions)
     },
     status: status ? clone(status) : null,
@@ -165,6 +188,7 @@ export class CreativeWorkspaceController {
     this.app = app;
     this.stage = 'reference';
     this.activeProposalId = null;
+    this.activePlanId = null;
     this.status = { level: 'ready', code: 'WORKSPACE_READY', message: 'Creative workspace ready' };
     this.open = true;
     this.root = null;
@@ -175,6 +199,10 @@ export class CreativeWorkspaceController {
     this.lastChatInspection = null;
     this.lastChatResult = null;
     this.taskSequence = 0;
+    this.planSequence = 0;
+    this.draftPlanSteps = [];
+    this.planApprovalToken = null;
+    this.lastPlanResult = null;
     this.revisionItems = [];
     this.lastRevisionResult = null;
   }
@@ -271,6 +299,17 @@ export class CreativeWorkspaceController {
             <button type="button" data-workspace-action="chat-execute">Execute</button>
           </div>
           <output data-workspace-output="chat">No proposal.</output>
+          <hr>
+          <strong>Multi-step creative plan</strong>
+          <label class="creative-workspace-field"><span>Intent</span><input type="text" data-workspace-input="chat-plan-intent" value="Refine selected artwork"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-plan-add-step">Add current step</button><button type="button" data-workspace-action="chat-plan-clear">Clear steps</button></div>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="chat-plan-propose">Propose plan</button>
+          <div class="creative-workspace-action-grid">
+            <button type="button" data-workspace-action="chat-plan-approve">Approve plan</button>
+            <button type="button" data-workspace-action="chat-plan-reject">Reject plan</button>
+            <button type="button" data-workspace-action="chat-plan-execute">Execute plan</button>
+          </div>
+          <pre data-workspace-output="chat-plan">No plan. Add at least two ordered steps.</pre>
         </section>
         <section data-workspace-pane="revision" hidden>
           <strong>Revision capture / restore</strong>
@@ -317,6 +356,7 @@ export class CreativeWorkspaceController {
     if (['enter-path-edit','exit-path-edit','simplify-path','refine-path','apply-expressive-stroke','clear-expressive-stroke'].includes(action)) return this.runEditAction(action);
     if (['duplicate','group','frame','front','back','repaint','apply-material','clear-material'].includes(action)) return this.runComposeAction(action);
     if (['chat-inspect','chat-propose','chat-approve','chat-reject','chat-execute'].includes(action)) return this.runChatAction(action);
+    if (['chat-plan-add-step','chat-plan-clear','chat-plan-propose','chat-plan-approve','chat-plan-reject','chat-plan-execute'].includes(action)) return this.runChatPlanAction(action);
     if (['revision-capture','revision-list','revision-restore'].includes(action)) return this.runRevisionAction(action);
     return null;
   }
@@ -552,6 +592,103 @@ export class CreativeWorkspaceController {
     };
   }
 
+  createChatPlanStep() {
+    const task = this.createChatTask();
+    const stepId = `step-${++this.planSequence}`;
+    const prior = this.draftPlanSteps.at(-1)?.stepId;
+    return {
+      stepId,
+      operation: task.operation,
+      targets: clone(task.targets),
+      arguments: clone(task.arguments),
+      dependsOn: prior ? [prior] : []
+    };
+  }
+
+  createChatPlan() {
+    if (this.draftPlanSteps.length < 2) {
+      throw Object.assign(new Error('Add at least two ordered steps'), { code: 'CHAT_PLAN_STEPS_REQUIRED' });
+    }
+    const intentSummary = text(this.root?.querySelector('[data-workspace-input="chat-plan-intent"]')?.value);
+    if (!intentSummary) {
+      throw Object.assign(new Error('Plan intent is required'), { code: 'CHAT_PLAN_INTENT_REQUIRED' });
+    }
+    return {
+      schema: 'INK-CHAT-CREATIVE-PLAN',
+      version: 1,
+      intentSummary,
+      steps: clone(this.draftPlanSteps)
+    };
+  }
+
+  async runChatPlanAction(action) {
+    const adapter = this.app?.chatCreativePlanAdapter;
+    if (!adapter) {
+      this.setStatus('CHAT_PLAN_UNAVAILABLE', 'CHAT creative-plan controller unavailable', 'error');
+      return null;
+    }
+    try {
+      let response = null;
+      if (action === 'chat-plan-add-step') {
+        this.draftPlanSteps.push(this.createChatPlanStep());
+        this.setStatus('CHAT_PLAN_STEP_ADDED', `${this.draftPlanSteps.length} ordered step(s)`, 'pass');
+        this.refresh();
+        return clone(this.draftPlanSteps);
+      }
+      if (action === 'chat-plan-clear') {
+        this.draftPlanSteps = [];
+        this.planSequence = 0;
+        this.activePlanId = null;
+        this.planApprovalToken = null;
+        this.lastPlanResult = null;
+        this.setStatus('CHAT_PLAN_CLEARED', 'Plan draft cleared', 'info');
+        this.refresh();
+        return [];
+      }
+      if (action === 'chat-plan-propose') {
+        response = adapter.propose(this.createChatPlan());
+        if (response.ok) {
+          this.activePlanId = response.result.planId;
+          this.planApprovalToken = null;
+          this.lastPlanResult = null;
+        }
+      } else if (action === 'chat-plan-approve') {
+        if (!this.activePlanId) throw Object.assign(new Error('No active plan'), { code: 'CHAT_PLAN_REQUIRED' });
+        response = adapter.approve(this.activePlanId);
+        if (response.ok) this.planApprovalToken = response.result.approvalToken;
+      } else if (action === 'chat-plan-reject') {
+        if (!this.activePlanId) throw Object.assign(new Error('No active plan'), { code: 'CHAT_PLAN_REQUIRED' });
+        response = adapter.reject(this.activePlanId);
+        if (response.ok) this.planApprovalToken = null;
+      } else if (action === 'chat-plan-execute') {
+        if (!this.activePlanId) throw Object.assign(new Error('No active plan'), { code: 'CHAT_PLAN_REQUIRED' });
+        if (!this.planApprovalToken) throw Object.assign(new Error('Explicit plan approval required before execution'), { code: 'CHAT_PLAN_APPROVAL_REQUIRED' });
+        response = await adapter.execute(this.activePlanId, this.planApprovalToken);
+        if (response.ok) {
+          this.lastPlanResult = clone(response.result);
+          this.planApprovalToken = null;
+          if (response.result?.revision?.endingRevisionId) await this.refreshRevisionList();
+        }
+      }
+      if (!response?.ok) {
+        this.setStatus(response?.code || 'CHAT_PLAN_FAILED', response?.phase || 'CHAT plan failed', 'error');
+        this.refresh();
+        return response;
+      }
+      const level = response.result?.status === 'STOPPED' ? 'error' : 'pass';
+      this.setStatus(
+        response.result?.status === 'STOPPED' ? 'CHAT_PLAN_STOPPED' : 'CHAT_PLAN_UPDATED',
+        response.result?.status || action,
+        level
+      );
+      this.refresh();
+      return response;
+    } catch (error) {
+      this.setStatus(error?.code || 'CHAT_PLAN_FAILED', error?.message || 'CHAT plan failed', 'error');
+      return null;
+    }
+  }
+
   runChatAction(action) {
     const adapter = this.app?.chatBoundedEditAdapter;
     if (!adapter) {
@@ -623,6 +760,39 @@ export class CreativeWorkspaceController {
     if (approve) approve.disabled = state !== 'PROPOSED';
     if (reject) reject.disabled = !proposal || state === 'EXECUTED' || state === 'REJECTED';
     if (execute) execute.disabled = state !== 'APPROVED' || !this.approvalToken;
+
+    const plan = this.activePlanId ? this.app?.chatCreativePlan?.getPlan?.(this.activePlanId) : null;
+    const planOutput = this.root.querySelector('[data-workspace-output="chat-plan"]');
+    if (planOutput) {
+      const displaySteps = plan?.steps || this.draftPlanSteps;
+      const resultByStep = new Map((plan?.stepResults || []).map(item => [item.stepId, item]));
+      const lines = [];
+      if (plan) {
+        lines.push(`${plan.status} · ${plan.intentSummary} · source rev ${plan.source?.revisionId || 'none'}`);
+      } else {
+        lines.push(`DRAFT · ${displaySteps.length} step(s)`);
+      }
+      displaySteps.forEach((step, index) => {
+        const result = resultByStep.get(step.stepId);
+        const stepState = result?.state || (plan?.validation?.steps?.[index]?.valid ? 'VALID' : 'PENDING');
+        const targetIds = (step.targets || []).map(target => target.objectId).filter(Boolean).join(', ') || 'no target';
+        lines.push(`${index + 1}. ${stepState} · ${step.operation} · ${targetIds}`);
+      });
+      if (plan?.result?.status === 'STOPPED') {
+        lines.push(`STOPPED at ${plan.result.stoppedStepId || 'revision'} · ${plan.result.diagnostic?.code || plan.diagnostics?.[0]?.code || 'diagnostic'}`);
+      }
+      if (plan?.result?.revision) {
+        lines.push(`Revision ${plan.result.revision.startingRevisionId || 'none'} → ${plan.result.revision.endingRevisionId || 'none'}`);
+      }
+      planOutput.textContent = lines.join('\n');
+    }
+    const planState = plan?.status || null;
+    const approvePlan = this.root.querySelector('[data-workspace-action="chat-plan-approve"]');
+    const rejectPlan = this.root.querySelector('[data-workspace-action="chat-plan-reject"]');
+    const executePlan = this.root.querySelector('[data-workspace-action="chat-plan-execute"]');
+    if (approvePlan) approvePlan.disabled = planState !== 'PROPOSED';
+    if (rejectPlan) rejectPlan.disabled = !plan || !['PROPOSED','APPROVED'].includes(planState);
+    if (executePlan) executePlan.disabled = planState !== 'APPROVED' || !this.planApprovalToken;
   }
 
   async runRevisionAction(action) {
@@ -760,6 +930,7 @@ export class CreativeWorkspaceController {
     return buildCreativeWorkspaceState(this.app, {
       stage: this.stage,
       activeProposalId: this.activeProposalId,
+      activePlanId: this.activePlanId,
       status: this.status
     });
   }
@@ -774,7 +945,12 @@ export class CreativeWorkspaceController {
     setText(this.root, '[data-workspace-value="selection"]', selectionLabel(state.selection));
     setText(this.root, '[data-workspace-value="provenance"]', provenanceLabel(state.provenance));
     const proposal = state.chat.proposal;
-    setText(this.root, '[data-workspace-value="chat"]', proposal ? `${proposal.state} · ${proposal.operation}` : 'No proposal');
+    const plan = state.chat.plan;
+    setText(
+      this.root,
+      '[data-workspace-value="chat"]',
+      plan ? `${plan.status} · ${plan.steps.length} step(s)` : (proposal ? `${proposal.state} · ${proposal.operation}` : 'No proposal')
+    );
     setText(this.root, '[data-workspace-value="status"]', this.status?.code ? `${this.status.code} · ${this.status.message}` : 'Ready');
     this.root.dataset.stage = state.stage;
     this.root.dataset.historyPending = String(state.history.pending);

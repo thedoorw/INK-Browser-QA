@@ -1,0 +1,191 @@
+# INK-CLOUD-015 STATIC / ISOLATED QA EVIDENCE
+
+Task: INK-CLOUD-015
+Branch: work/ink-cloud-015
+Gate target: CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS
+Base main: 425c58c400bd08610574c0d5e8085e1cb55ec1f5
+Runtime QA: DEFERRED
+
+## Environment limitation
+
+A direct local checkout could not be established because the available execution environment could not resolve github.com.
+
+Therefore:
+
+- GitHub remained the only SSOT through the connected GitHub repository API;
+- exact committed branch source was fetched from work/ink-cloud-015;
+- feasible syntax/static checks and isolated JavaScript harnesses were executed against that exact fetched source;
+- reproducible Node test files were committed for later full-run execution;
+- no browser/runtime claim is made.
+
+GitHub Actions remain unavailable per Work Order quota state.
+
+## Exact-source isolated plan harness
+
+Result: 14 / 14 PASS
+
+PASS deterministic plan
+PASS validation zero mutation
+PASS execute-before-approval rejection
+PASS ordered multi-step execution
+PASS history authority reused
+PASS revision before-after captured
+PASS stale revision deterministic stop
+PASS stale revision zero mutation
+PASS stale target deterministic stop
+PASS no silent retarget or skip
+PASS mid-plan failure stops remaining
+PASS successful completed step retained
+PASS later step untouched
+PASS partial result revision captured
+
+The harness evaluated the exact committed body of:
+product/source/src/editor/chat-creative-plan.js
+
+Its imported bounded-edit/state dependencies were supplied by deterministic local stubs so the orchestration state machine, approval boundary, stop semantics and result records could be executed without a browser checkout.
+
+The first harness execution exposed one result-shape gap: stale state after approval was rejected before a plan STOPPED record existed. The implementation was corrected so approval-time full validation remains, while execution-time failures are handled by immediate per-step revalidation and deterministic STOPPED result creation. The harness was then rerun and passed.
+
+## Exact-source Creative Workspace orchestration harness
+
+Result: 7 / 7 PASS
+
+PASS workspace builds two ordered steps
+PASS workspace wires previous-step dependency
+PASS workspace proposes without approval token
+PASS workspace receives explicit plan approval token
+PASS workspace executes only with approval token
+PASS workspace consumes token after execution
+PASS workspace retains resulting Revision relation
+
+The harness evaluated the exact committed body of:
+product/source/src/editor/creative-workspace.js
+
+No DOM mount/browser rendering was claimed. The controller action path was exercised with a bounded fake root and explicit adapter calls.
+
+## Exact-source syntax / architecture checks
+
+Result: 21 / 21 PASS
+
+PASS syntax-compile product/source/src/editor/chat-creative-plan.js
+PASS syntax-compile product/source/src/editor/creative-workspace.js
+PASS syntax-compile product/source/src/ink.js
+PASS syntax-compile product/source/service-worker.js
+PASS syntax-compile product/source/src/config.js
+PASS plan schema versioned
+PASS explicit plan approval token
+PASS existing bounded edit reused
+PASS existing Revision authority reused
+PASS per-step immediate revalidation
+PASS stop result recorded
+PASS no remote runtime dependency
+PASS no eval or dynamic Function in product module
+PASS workspace plan controls connected
+PASS workspace shows target identity
+PASS editor barrel exports plan
+PASS runtime install order
+PASS service worker caches plan module
+PASS FORMAT_VERSION remains 4
+PASS regression core file covers required failure modes
+PASS source contract regression file present
+
+Runtime install ordering confirmed:
+
+Revision
+→ CHAT bounded edit
+→ CHAT creative plan
+→ Creative Workspace
+
+## Reproducible committed regression files
+
+- qa/core/tests/unit/chat-multi-step-creative-plan-v0.1.test.mjs
+- qa/core/tests/unit/chat-multi-step-creative-plan-source-v0.1.test.mjs
+- qa/core/tests/unit/chat-multi-step-creative-workspace-v0.1.test.mjs
+
+The committed tests cover:
+
+- deterministic two-or-more-step plan;
+- dependency order rejection;
+- validation zero mutation;
+- plan/result JSON round-trip serialization;
+- execute-before-approval rejection;
+- successful ordered execution;
+- stale Revision STOP;
+- stale target STOP;
+- no silent retarget / skip;
+- mid-plan failure and untouched remaining steps;
+- existing History undo/redo authority;
+- Revision before/after capture;
+- invalid/busy History rejection;
+- workspace step builder / approval / execute delegation;
+- browser-local source contract;
+- FORMAT_VERSION = 4.
+
+Full repository Node test runner: NOT EXECUTED in this connector-only environment.
+Reason: direct branch checkout unavailable due DNS resolution failure.
+
+## Scope / branch comparison
+
+Compared against authorized base:
+425c58c400bd08610574c0d5e8085e1cb55ec1f5
+
+Observed authorized mutation classes before final report/evidence closure:
+
+- branch-local ACTIVE/INK_DEV_PROGRESS.md;
+- product/source/src/editor/chat-creative-plan.js;
+- product/source/src/editor/creative-workspace.js;
+- product/source/src/editor/index.js;
+- product/source/src/ink.js;
+- product/source/service-worker.js;
+- INK-CLOUD-015 QA tests.
+
+No package path mutation was present.
+No document format/config version mutation was present.
+No migration/document model/History/Revision engine source replacement was present.
+
+Closure scope compare after product/QA/report implementation:
+
+- status: ahead;
+- ahead: 28;
+- behind: 0;
+- base: 425c58c400bd08610574c0d5e8085e1cb55ec1f5;
+- changed paths: 11;
+- package paths: 0;
+- format/config migration paths: 0;
+- History/Revision engine replacement paths: 0.
+
+The only changed path classes are branch-local DEV progress, bounded product source/wiring, INK-CLOUD-015 QA evidence/tests, and the required research report. Subsequent evidence/progress-only closure commits do not change this product scope classification.
+
+## Required gate evidence
+
+MULTI_STEP_PLAN_SCHEMA = PASS
+PLAN_VALIDATION = PASS
+EXPLICIT_APPROVAL = PASS
+ORDERED_BOUNDED_EXECUTION = PASS
+STEP_REVALIDATION = PASS
+STOP_ON_FAILURE = PASS
+STALE_REVISION_REJECTION = PASS
+STALE_TARGET_REJECTION = PASS
+PLAN_RESULT_RECORD = PASS
+REVISION_BINDING = PASS
+WORKSPACE_PLAN_UI = CONNECTED_SOURCE + ISOLATED_ACTION_HARNESS_PASS
+EXISTING_CONTROLLERS = REUSED
+HISTORY_AUTHORITY = PRESERVED
+STRUCTURED_DOCUMENT = PRESERVED
+STATIC_BROWSER_LOCAL_CORE = PRESERVED
+REMOTE_SERVICE_REQUIRED = 0
+AUTONOMOUS_PLAN_APPROVAL = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+
+## Not claimed
+
+- browser interaction/runtime verification;
+- service-worker browser lifecycle verification;
+- full repository Node runner;
+- GitHub Actions;
+- package build/regeneration;
+- main merge;
+- release/certification.

@@ -12,7 +12,7 @@ const APP_SHELL = [
   './src/input/input-arbiter.js', './src/input/pen-calibration.js', './src/input/stylus-test.js',
   './src/stroke/index.js', './src/stroke/edit.js',
   './src/spatial/index.js', './src/spatial/quadtree.js', './src/spatial/page-spatial-index.js',
-  './src/editor/index.js', './src/editor/selection.js', './src/editor/transform.js', './src/editor/path-edit.js', './src/editor/expressive-stroke.js', './src/editor/composition.js', './src/editor/repaint-material.js', './src/editor/chat-bounded-edit.js', './src/editor/creative-workspace.js',
+  './src/editor/index.js', './src/editor/selection.js', './src/editor/transform.js', './src/editor/path-edit.js', './src/editor/expressive-stroke.js', './src/editor/composition.js', './src/editor/repaint-material.js', './src/editor/chat-bounded-edit.js', './src/editor/chat-creative-plan.js', './src/editor/creative-workspace.js',
   './src/render/index.js', './src/render/natural-media-utils.js', './src/render/natural-media-run-utils.js',
   './src/render/paper-profile.js', './src/render/multi-channel-ink.js', './src/render/gpu-resource-budget.js',
   './src/render/tile-atlas.js', './src/render/live-canvas-tile-renderer.js', './src/render/pixel-compare.js', './src/render/tiled-export.js', './src/render/natural-media-controller.js', './src/render/interactive-benchmark.js',
