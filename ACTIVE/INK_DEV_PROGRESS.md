@@ -121,3 +121,19 @@ Checkpoint series:
 - `Cache CHAT creative-plan module in browser shell`
 
 `PHASE_E_COMPLETE / BEGIN_PHASE_F`
+
+
+## Phase F pretest bounded corrections
+
+Pre-regression inspection tightened three Work Order edges:
+
+- invalid/missing History authority is now rejected explicitly as `CHAT_PLAN_HISTORY_INVALID`;
+- per-step target validation runs before the document-fingerprint drift check so a removed/stale target yields the specific existing bounded-edit stale-target diagnostic rather than being masked by a generic fingerprint drift;
+- Creative Workspace step review now exposes concrete target object IDs, not only a target count.
+
+Checkpoint series:
+
+- `INK-CLOUD-015 Phase F tighten preconditions and stale-target diagnostics`
+- `INK-CLOUD-015 show plan target identities in workspace`
+
+`PHASE_F_REGRESSION_NEXT`
