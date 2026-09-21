@@ -6,3 +6,4 @@ export * from './expressive-stroke.js';
 export * from './composition.js';
 export * from './repaint-material.js';
 export * from './chat-bounded-edit.js';
+export * from './creative-workspace.js';

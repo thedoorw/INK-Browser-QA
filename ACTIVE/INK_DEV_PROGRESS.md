@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / READY_TO_START`
+STATUS: `INK-CLOUD-014 / PHASE_A_COMPLETE / PHASE_B_NEXT`
 
 | Field | Value |
 |---|---|
@@ -11,7 +11,7 @@ STATUS: `INK-CLOUD-014 / READY_TO_START`
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | GATE | `CREATIVE_WORKSPACE_MINIMUM_UX_WORKS` |
-| FORMAT_VERSION_CHANGE | `0 / REQUIRED_STOP_IF_NEEDED` |
+| FORMAT_VERSION_CHANGE | `0` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
 
@@ -24,19 +24,25 @@ STATUS: `INK-CLOUD-014 / READY_TO_START`
 5. Phase E — Revision capture / restore UX
 6. Phase F — integrated workspace regression + report
 
-## Core rules
+## Checkpoint — Phase A
 
-- GitHub is SSOT.
-- Work only on `work/ink-cloud-014`.
-- Expose existing controllers; do not duplicate document/editor authorities.
-- Keep static-hosting + browser-local core.
-- Do not start multi-step CHAT agent planning.
-- Do not redesign Structure-Aware Reconstruction.
-- Do not update package.
-- Do not merge main.
-- Keep `FORMAT_VERSION = 4`; if a bump is required, STOP.
-- `RUNTIME_QA = DEFERRED`; never claim unexecuted runtime QA passed.
+Implemented:
 
-## Start state
+- deterministic Creative Workspace view/state model;
+- visible document/page/context/selection/provenance/Revision/CHAT/History state;
+- compact floating workspace shell and stage navigation;
+- workspace state remains a view over existing document/editor authorities;
+- shared static/browser-local shell installation from `InkApp`;
+- service-worker shell registration for the new module.
 
-`READY_FOR_DEV_WORK / BEGIN_PHASE_A`
+Preserved:
+
+- `FORMAT_VERSION = 4`;
+- no package mutation;
+- no main merge;
+- no remote runtime dependency;
+- no second document, selection, History, CHAT or Revision authority.
+
+Next:
+
+`BEGIN_PHASE_B / REFERENCE_EXTRACT_PATH_CONTINUITY`
