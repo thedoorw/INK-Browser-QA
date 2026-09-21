@@ -17,6 +17,21 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   const pass = (name, details={}) => { evidence.checks.push({name,status:'PASS',...details}); logNode.textContent = JSON.stringify(evidence,null,2); };
   const assert = (condition, name, details={}) => { if (!condition) throw Object.assign(new Error(name),{qa:name,details}); pass(name,details); };
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const encodeBase64Utf8 = value => {
+    const bytes = new TextEncoder().encode(value);
+    let binary = '';
+    for (const byte of bytes) binary += String.fromCharCode(byte);
+    return btoa(binary);
+  };
+  async function reportEvidence() {
+    const response = await fetch('/__qa_result',{
+      method:'POST',
+      headers:{'Content-Type':'text/plain; charset=us-ascii'},
+      body:encodeBase64Utf8(JSON.stringify(evidence)),
+      cache:'no-store'
+    });
+    if (!response.ok) throw new Error(`QA result callback failed: ${response.status}`);
+  }
 
   async function ready() {
     for (let i=0;i<120;i++) {
@@ -140,13 +155,19 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     resultNode.dataset.state='PASS'; resultNode.textContent='PASS';
     logNode.textContent=JSON.stringify(evidence,null,2);
     document.documentElement.dataset.qa='PASS';
+    await reportEvidence();
   }
 
-  frame.addEventListener('load',()=>run().catch(error=>{
+  frame.addEventListener('load',()=>run().catch(async error=>{
     evidence.failures.push({message:error?.message||String(error),qa:error?.qa||null,details:error?.details||null,stack:error?.stack||null});
     resultNode.dataset.state='FAIL'; resultNode.textContent='FAIL';
     logNode.textContent=JSON.stringify(evidence,null,2);
     document.documentElement.dataset.qa='FAIL';
+    try {
+      await reportEvidence();
+    } catch (reportError) {
+      console.error('INK-CLOUD-018 QA result callback failed', reportError);
+    }
   }),{once:true});
 })();
 </script>
