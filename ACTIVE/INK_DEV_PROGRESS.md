@@ -271,3 +271,44 @@ The already-verified Windows self-hosted preflight workflow is path-triggered by
 Next:
 
 `PHASE_C_VISIBLE_CONVERSATIONAL_CHAT`
+
+
+## Phase C — visible conversational CHAT checkpoint
+
+Product checkpoint SHA:
+
+`a4d0951d5d67f472264e626bcd75b1509ac9015a`
+
+Implemented:
+
+- added `INK-CONVERSATION-REQUEST` / `INK-CONVERSATION-RESPONSE` over the accepted CHAT runtime;
+- added a visible transcript, natural-language prompt, runtime/provider status and current-document context inspection to Creative Workspace;
+- local/manual conversation remains available without any remote service;
+- external OpenAI-compatible / HTTP / custom endpoint conversation reuses the existing provider, endpoint and session-only credential contract;
+- external text/context transmission requires the existing explicit transmission approval path;
+- conversation execution snapshots the authoritative document before/after and rejects any out-of-band document mutation;
+- all actual artwork mutation remains delegated to existing bounded-edit / multi-step proposal → approval → execution controls;
+- History and Revision authorities are unchanged;
+- no model gets direct DOM, Canvas, file-system or credential mutation authority.
+
+Files changed:
+
+- `product/source/src/ai/chat-runtime.js`
+- `product/source/src/editor/creative-workspace.js`
+- `product/source/styles.css`
+
+Source checks actually executed:
+
+- exact branch source reread after write;
+- conversation runtime is additive to the existing plan runtime;
+- local client has no external endpoint requirement;
+- external request path keeps `credentials: omit` and session credential lookup;
+- structured edit execution still requires accepted local approval tokens;
+- `FORMAT_VERSION = 4` unchanged;
+- committed credential/secret = 0 by implementation path.
+
+Browser execution is reserved for the required Phase F self-hosted Windows run after the Rose Window and deployment preparation are integrated.
+
+Next:
+
+`PHASE_D_ROSE_WINDOW_VISIBLE_RUNTIME`
