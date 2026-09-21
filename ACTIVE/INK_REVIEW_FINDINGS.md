@@ -2,40 +2,47 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-015`
+TASK: `INK-CLOUD-016`
 
-REVIEWED_HEAD: `e59f156a2c61724e3c0ff68e15c3a1c0475b46ec`
+REVIEW_PAYLOAD_HEAD: `5997787da7d043f825e777dc8ea72a4227480b74`
 
 ## Decision
 
 `MR_PASS`
 
-No blocking source/contract finding remains for CHAT Multi-Step Creative Collaboration v0.1.
+No blocking source/contract finding remains for Portable Baseline Integration v0.1.
 
 ## Findings
 
-- Versioned multi-step creative-plan data is implemented without creating a second document model.
-- Plan validation is mutation-neutral and reuses the accepted CHAT bounded-edit validator.
-- Explicit user approval remains the plan execution boundary; no autonomous plan approval was added.
-- Ordered steps execute through existing bounded-edit/editor authorities and existing History.
-- Immediate per-step revalidation and deterministic STOP semantics cover stale Revision, stale target, precondition and operation failure.
-- Result records preserve completed steps, stopped-step diagnostics and remaining-step identity without silent retarget/skip.
-- Revision before/after binding reuses the accepted Revision authority.
-- Creative Workspace exposes a bounded plan builder/review/approve/execute flow.
-- Static-hosted/browser-local execution is preserved; remote AI remains an optional proposer only.
+- The portable/static entries still converge on the same authoritative `product/source/src/ink.js` shared core.
+- No `product/source/src/**` implementation changed in this task.
+- The bounded product changes are limited to `service-worker.js` and `manifest.webmanifest`.
+- The service-worker source shell is synchronized with the current JS/JSON source tree; the previously missing PWA icon references were removed.
+- Document persistence, single History authority, Revision, CHAT bounded edit, CHAT multi-step planning and Creative Workspace remain on the accepted shared authorities.
+- Mandatory remote dependency = 0.
+- Second editor/document/History/Revision core = 0.
 - `FORMAT_VERSION = 4`.
 - Package mutation = 0.
-
-## QA boundary
-
-DEV evidence records exact-source isolated harnesses and static/source checks as PASS. Full repository runner and real browser/runtime interaction were not executed.
-
-`RUNTIME_QA = DEFERRED`
+- Browser/service-worker runtime interaction was not executed and is not certified.
 
 ## Promotion
 
-Clean promotion completed through PR `#17`.
+Clean promotion completed through PR `#18`.
 
 Main promotion:
 
-`e32ac33a15b331771dcca7b33bb82988522d6e56`
+`6c332220a26c966193c128a0059724e8a644faa6`
+
+Gate accepted:
+
+`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
+
+## Next bounded-stage rationale
+
+The remaining high-value bounded technical gap is the structure-aware reconstruction limitation documented by the integrated rose-window benchmark: 265 sector Paths were reduced through a reconstruction boundary that could consume only one Path, producing only 3.19% recall. This is a concrete bounded engine gap and was explicitly deferred during workspace/collaboration work.
+
+Next stage:
+
+`INK-CLOUD-017 — Structure-Aware Reconstruction Multi-Path Closure v0.1`
+
+Direct extraction remains the current production baseline until a new benchmark proves otherwise.
