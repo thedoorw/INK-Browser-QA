@@ -2,42 +2,37 @@
 
 STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-013`
+TASK: `INK-CLOUD-014`
 
-REVIEWED_HEAD: `0b610a5e68cde3951190088d9e5130dde8948564`
+REVIEWED_HEAD: `26517eb78a38ac974f4658d9fb3eba80447633e8`
 
 ## Decision
 
 `MR_PASS`
 
-No blocking source/contract finding remains for Integrated Creative Loop Validation v0.1.
+No blocking source/contract finding remains for Creative Workspace Minimum UX v0.1.
 
 ## Findings
 
-- The accepted creative chain is exercised as one deterministic structured workflow.
-- Object/subpath/anchor identity and extraction provenance remain stable across stages.
-- Path remains editable after expressive stroke, composition, repaint/material, CHAT mutation and Revision restore.
-- Appearance-only changes preserve geometry fingerprints.
-- CHAT stale-target and stale-Revision protections remain deterministic.
-- Revision restore establishes the accepted History boundary and editing resumes through the existing History authority.
-- File-envelope/save-load integrity is exercised at extraction, post-CHAT and post-Revision checkpoints.
-- Rose-window hard benchmark was executed against the canonical fixture.
-- Direct Extraction is the current baseline; Structure-Aware Reconstruction remains a candidate requiring overlay/completeness improvement.
-- Two bounded defects were fixed: expressive-style re-synthesis on SVG export and degenerate ImageTracer contour intake.
-- No second Path/document/History/Revision/renderer authority was introduced.
+- One coherent workspace exposes Reference → Extract → Path Edit / Expressive Stroke → Compose / Repaint → CHAT bounded edit → Revision.
+- Workspace state is a view over the accepted runtime state rather than a second document/workflow authority.
+- Extraction, Path editing, expressive stroke, composition, repaint/material, CHAT bounded edit and Revision all delegate to existing controllers/commands.
+- CHAT execution still requires explicit approval; execute-before-approval is rejected.
+- Revision capture/restore and the accepted `RESET_TO_REVISION` History boundary remain visible and reused.
+- Live tool/selection/History state refresh and Revision comparison visibility were bounded-fixed during regression.
+- Static-hosted/browser-local operation is preserved; no mandatory remote service was introduced.
 - `FORMAT_VERSION = 4`.
 - Package mutation = 0.
 
 ## Non-blocking debt
 
-- Browser/runtime external USER-path QA remains deferred.
-- Structure-Aware Reconstruction currently sacrifices too much completeness and is not selected as the baseline.
-- Broader workspace UX is not yet implemented.
+- Browser/runtime interaction and visual layout QA remain deferred.
+- The current CHAT workspace remains single-task/bounded-edit only; multi-step creative collaboration is not yet implemented.
 
 ## Promotion
 
-Clean promotion completed through PR `#15`.
+Clean promotion completed through PR `#16`.
 
 Main promotion:
 
-`1780118ec1c92241851af68649626b7c0a095dd1`
+`b7824a0354e1497dbe5eaee0c04ac49cb46981ed`
