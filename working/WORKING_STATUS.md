@@ -672,3 +672,48 @@ Target gate:
 `CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
 
 Remote AI may propose plans only as an optional adapter. Plan validation and execution must remain static-hosted + browser-local.
+
+
+## INK-CLOUD-015 MR review and promotion
+
+Reviewed exact DEV HEAD:
+
+`e59f156a2c61724e3c0ff68e15c3a1c0475b46ec`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate accepted:
+
+`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
+
+Clean promotion:
+
+- branch: `promote/ink-cloud-015`
+- PR: `#17 / MERGED`
+- main promotion: `e32ac33a15b331771dcca7b33bb82988522d6e56`
+
+## INK-CLOUD-016 authorization
+
+The planned Portable INK checkpoint is now active.
+
+Current objective:
+
+```text
+accepted shared creative core
+→ portable/static dependency closure
+→ persistence + History + Revision compatibility
+→ CHAT local collaboration compatibility
+→ portable baseline readiness
+```
+
+Branch:
+
+`work/ink-cloud-016`
+
+Target gate:
+
+`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
+
+This is integration/readiness validation only. Package/release mutation remains prohibited.
