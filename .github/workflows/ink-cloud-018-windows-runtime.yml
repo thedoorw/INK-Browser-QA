@@ -177,13 +177,24 @@ jobs:
               'http://127.0.0.1:4173/__qa_runtime.html'
             )
             $browser = Start-Process $env:INK_CHROMIUM_PATH -ArgumentList $args -RedirectStandardOutput $browserOut -RedirectStandardError $browserErr -PassThru
+            # Windows PowerShell 5.1 can leave ExitCode unset on a Start-Process
+            # object unless the native process handle is materialized before the
+            # timed wait. Force the handle, then perform a final drain wait.
+            $null = $browser.Handle
             if (-not $browser.WaitForExit(240000)) {
               Stop-Process -Id $browser.Id -Force -ErrorAction SilentlyContinue
               throw 'Chromium runtime QA exceeded 240 seconds.'
             }
-            if ($browser.ExitCode -ne 0) {
+            $browser.WaitForExit()
+            $browser.Refresh()
+            $exitCode = $browser.ExitCode
+            if ($null -eq $exitCode) {
               Get-Content $browserErr -ErrorAction SilentlyContinue
-              throw "Chromium exited with code $($browser.ExitCode)."
+              throw 'Chromium completed but Windows PowerShell did not expose an exit code.'
+            }
+            if ([int]$exitCode -ne 0) {
+              Get-Content $browserErr -ErrorAction SilentlyContinue
+              throw "Chromium exited with code $exitCode."
             }
 
             $html = Get-Content $browserOut -Raw
