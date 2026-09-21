@@ -2,51 +2,43 @@
 
 STATUS: `MR_PASS_EVIDENCE / RUNTIME_QA_DEFERRED`
 
-TASK: `INK-CLOUD-013`
+TASK: `INK-CLOUD-014`
 
-REVIEWED_HEAD: `0b610a5e68cde3951190088d9e5130dde8948564`
+REVIEWED_HEAD: `26517eb78a38ac974f4658d9fb3eba80447633e8`
 
 ## Reviewed source
 
-- `product/source/src/extraction/adapters.js`
-- `product/source/src/vector/vector-core.js`
-- integrated creative-loop fixture and accepted-stage regression changes
+- `product/source/src/editor/creative-workspace.js`
+- `product/source/src/extraction/install.js`
+- `product/source/src/ink.js`
+- `product/source/service-worker.js`
+- workspace CSS/editor registration changes
 
 ## Reviewed QA / report
 
-- `qa/core/tests/unit/integrated-creative-loop-v0.1.test.mjs`
-- `qa/core/tests/rose-window-hard-benchmark-v0.1.mjs`
-- `qa/core/evidence/INK_CLOUD_013_STATIC_CHECKS.txt`
-- `qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`
-- `research/INK_INTEGRATED_CREATIVE_LOOP_VALIDATION_REPORT_v0.1.md`
-- `research/INK_ROSE_WINDOW_EXTRACTION_BENCHMARK_v0.1.md`
+- `qa/core/tests/unit/creative-workspace-minimum-ux-v0.1.test.mjs`
+- `qa/core/evidence/INK_CLOUD_014_WORKSPACE_QA.txt`
+- `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`
 - branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 
 ## Evidence retained
 
 Executed and recorded by DEV:
 
-- accepted-stage + integrated regression: `48 PASS / 0 FAIL`;
-- source/static/persistence contracts: `31 PASS / 0 FAIL`;
-- Phase D materially affected regression: `13 PASS / 0 FAIL`;
-- hard rose-window benchmark: PASS;
-- deterministic reruns: PASS;
-- exact provenance: PASS;
-- changed-source syntax and `git diff --check`: PASS;
+- exact GitHub source parse/evaluation harness: PASS;
+- deterministic workspace controller-delegation path: PASS;
+- CHAT execute-before-approval guard: PASS;
+- Revision restore History boundary: PASS;
+- source/static gate: 28/28 PASS before final bounded fix;
+- source/static gate: 25/25 PASS after final bounded fix;
+- Revision comparison display harness: PASS;
 - `FORMAT_VERSION = 4`;
 - package mutation = 0.
-
-Hard-benchmark decision:
-
-```text
-HARD_BENCHMARK = EXECUTED
-EXTRACTION_PIPELINE_SELECTED = DIRECT_EXTRACTION_CURRENT_BASELINE
-STRUCTURE_AWARE = CANDIDATE_REQUIRES_OVERLAY_QA
-```
 
 ## Explicitly not certified
 
 - browser USER-path/runtime interaction
+- visual layout QA in a real browser
 - hosted Actions
 
 `RUNTIME_QA = DEFERRED`
