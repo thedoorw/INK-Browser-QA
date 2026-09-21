@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-017 / MR_HOLD_BENCHMARK_CONTINUATION`
+STATUS: `ACTIVE / INK-CLOUD-017 / USER_AUTHORIZED_SUPPLEMENTARY_BENCHMARK_CONTINUATION`
 
 ## Control
 
@@ -365,3 +365,40 @@ Resume INK-CLOUD-017 only to:
 No new product feature, benchmark redefinition, package mutation, FORMAT_VERSION change, pipeline replacement or broader architecture change is authorized.
 
 If the exact canonical binary cannot be materialized in the execution environment, report the same environment blocker and STOP. Do not substitute a different image, downsampled fixture, synthetic fixture or external browser result for the canonical benchmark.
+
+
+## User override — supplementary rose-window execution accepted for 017 completion
+
+User direction supersedes the prior canonical-binary execution blocker for this task.
+
+The currently supplied rose-window image may be used to complete the remaining INK-CLOUD-017 execution evidence even though its file encoding/hash differs from the historical canonical binary.
+
+Known supplied fixture identity:
+
+```text
+dimensions = 1086 × 1448
+mode = RGBA
+sha256 = af86d03e8947234a1cc301cd8c224520fc6065272f3f80d795b5a314953fdc25
+```
+
+Execution classification:
+
+`NON_CANONICAL_SUPPLEMENTARY_TEST / USER_ACCEPTED_FOR_OPERATIONAL_017_COMPLETION`
+
+Rules:
+
+- run the existing 017 multi-Path Structure-Aware benchmark logic against this supplied same-size rose-window image;
+- preserve ROI, threshold, candidate radial counts, sampling grid, Direct Extraction route, and measurement definitions where technically applicable;
+- if the runner requires RGB input or exact historical SHA, make only the minimal fixture-intake compatibility change needed for this supplementary execution and document it explicitly;
+- record recall / precision / IoU, false positives / false negatives, retained paths / subpaths / holes / nodes, effective expanded nodes, Repeat identity, deterministic rerun and correction-cost proxy;
+- do not overwrite or relabel INK-CLOUD-013 canonical evidence;
+- do not claim that the new numbers are a strict same-binary comparison to INK-CLOUD-013;
+- do not change product architecture, Direct Extraction implementation, FORMAT_VERSION, or package/release artifacts.
+
+For INK-CLOUD-017 task closure, a successfully executed and internally consistent supplementary benchmark is now sufficient to satisfy the remaining operational execution requirement, provided all evidence is explicitly labeled non-canonical and MR finds no source/measurement defect.
+
+The historical canonical fixture remains preserved as reference evidence, but its hash mismatch is no longer a STOP condition for this task.
+
+Return:
+
+`DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
