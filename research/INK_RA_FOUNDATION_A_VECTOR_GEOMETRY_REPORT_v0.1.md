@@ -1,6 +1,6 @@
 # INK RA Foundation A — Vector Geometry Report v0.1
 
-STATUS: `PHASE_A_COMPLETE / PHASE_B_IN_PROGRESS`
+STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_IN_PROGRESS`
 
 ## Control
 
@@ -33,7 +33,30 @@ INK already owns the editable Path, compound/hole representation, polygon Boolea
 
 ## Phase B — RA module disposition
 
-Pending bounded execution.
+Executed:
+
+```text
+node qa/core/benchmarks/ink-ra-001/ra-module-verification.cjs
+PASS
+deterministicRunsEqual = true
+```
+
+The imported baseline's broader `qa/run_ra_basic_function_freeze_contract.js` also passed, including three equal deterministic replay hashes, stable IDs, save/open and JSON roundtrip.
+
+| RA module | Verification | Disposition | Reason |
+|---|---|---|---|
+| `geometry_measurement_engine.js` | line/circle fitting, sampled nearest index and repeated-result equality passed | `ADAPT` | The pure measurement/fitting functions are useful and authority-neutral. Normalize them behind an INK-owned measurement result; do not import RA candidate/review state. |
+| `compound_topology_engine.js` | G0/G1/G2 join analysis and simple two-line offset passed | `REFERENCE_ONLY` | Continuity vocabulary is useful, but offset is primitive-local and repair-oriented; it does not preserve closed Boolean topology, holes or difficult offset cleanup. RA review envelopes cannot become Path authority. |
+| `constraint_parameter_engine.js` | parallel residual, deterministic stable ID and explicit confirmation gate passed | `DEFER` | It is a bounded semantic constraint evaluator, not a general solver. Foundation A has no demonstrated requirement to persist RA constraints/shared parameters. |
+| `generator_authoring_engine.js` | deterministic four-instance rotation and unique primitive IDs passed | `REFERENCE_ONLY` | INK already owns Repeat/Transform identity. Importing RA generator documents would duplicate that authority; retain only concepts for a later parametric stage. |
+| `dependency_recompute_engine.js` | topological recompute, local invalidation, cycle rejection and undo/redo passed | `REFERENCE_ONLY` | INK already has a richer typed document dependency graph plus History/Revision. RA's graph and private history must not survive as a second authority. |
+
+### Verified limitations
+
+- RA nearest-point is nearest sampled point, not projection onto a cubic curve.
+- RA compound offset supports LINE/CIRCLE/ARC/CUBIC as independent primitives and continuity repair; it does not perform polygon cleanup, Boolean hole reconstruction or safe negative-collapse handling.
+- RA constraint records remain unresolved review candidates and do not implement a general geometric solver.
+- RA generator/dependency documents carry their own scene/history semantics and therefore cannot be transplanted into INK.
 
 ## Phase C — external benchmark evidence
 
