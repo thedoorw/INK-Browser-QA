@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-016 / PHASE_A_COMPLETE / PHASE_B_ACTIVE`
+STATUS: `INK-CLOUD-016 / PHASE_B_COMPLETE / PHASE_C_ACTIVE`
 
 | Field | Value |
 |---|---|
@@ -35,15 +35,45 @@ Findings:
 - no second editor/document/History/Revision authority found;
 - CHAT bounded edit and multi-step plan remain browser-local;
 - external model transports are optional adapters, not core requirements;
-- current service-worker shell is not closed over the evolved modular runtime;
-- `APP_SHELL` references two nonexistent icon files, causing `cache.addAll()` installation failure;
-- 91 current source JavaScript files are absent from the existing precache inventory, including directly reachable shared-core/extraction/FLORA dependencies.
+- service-worker module closure and missing-icon defects were confirmed.
+
+## Phase B — Static/portable load closure
+
+Status: `COMPLETE`
+
+Implementation checkpoint:
+
+`7811cd37619a8ec864aa7de2dc2f89183fa4aca2`
+
+Bounded corrections:
+
+- service-worker `SOURCE_SHELL` now covers the exact current `product/source/src` JS/JSON tree;
+- invalid `icons/ink-192.png` and `icons/ink-512.png` precache dependencies were removed;
+- `manifest.webmanifest` no longer advertises nonexistent icon files;
+- no editor/document/History/Revision implementation was forked or replaced.
+
+Exact branch connector-side static checks:
+
+```text
+service-worker syntax parses                  PASS
+manifest parses                              PASS
+manifest invalid icon refs removed           PASS
+SOURCE_SHELL exact source tree closure        PASS
+index.html → src/ink.js                       PASS
+index-standalone → compat → src/ink.js        PASS
+deterministic editor install sequence         PASS
+FORMAT_VERSION = 4                            PASS
+source shell missing entries                  0
+TOTAL                                         10 / 10 PASS
+```
 
 Disposition:
 
 ```text
-PORTABLE_DEPENDENCY_INVENTORY = COMPLETE
-STATIC_SHELL_GAP = CONFIRMED
+STATIC_MODULE_CLOSURE = VERIFIED
+SHARED_CORE_REUSED = VERIFIED
+MANDATORY_CLOUD_BOOTSTRAP = 0
+SECOND_EDITOR_CORE = 0
 HARD_STOP = NO
 ```
 
@@ -51,6 +81,6 @@ HARD_STOP = NO
 
 Proceeding with:
 
-`Phase B — Static/portable load closure`
+`Phase C — Persistence + collaboration compatibility`
 
-Bounded correction is authorized. Package/release artifacts remain untouched.
+Package/release artifacts remain untouched.
