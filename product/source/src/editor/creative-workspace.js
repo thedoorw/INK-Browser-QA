@@ -194,7 +194,9 @@ export class CreativeWorkspaceController {
     this.root = null;
     this.toggle = null;
     this.extractionAbort = null;
+    this.lastReference = null;
     this.lastExtraction = null;
+    this.lastStructure = null;
     this.approvalToken = null;
     this.lastChatInspection = null;
     this.lastChatResult = null;
@@ -256,9 +258,16 @@ export class CreativeWorkspaceController {
           <strong>Reference → Direct Extraction → editable Path</strong>
           <label class="creative-workspace-field"><span>Reference image</span><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp"></label>
           <label class="creative-workspace-field"><span>Threshold</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">Extract</button><button type="button" data-workspace-action="cancel-extract" disabled>Cancel</button></div>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">Direct Extraction</button><button type="button" data-workspace-action="cancel-extract" disabled>Cancel</button></div>
           <label class="creative-workspace-field"><span>Reference overlay</span><input type="range" data-workspace-input="overlay" min="0" max="1" step="0.1" value="0.5"></label>
           <output data-workspace-output="extraction">No extraction in this session.</output>
+          <details class="creative-structure-option">
+            <summary>Structure-Aware <span>OPTIONAL</span></summary>
+            <p>Direct Extraction remains the default. Radial reconstruction reuses the accepted multi-Path prototype + Repeat authority.</p>
+            <label class="creative-workspace-field"><span>Radial count</span><input type="number" data-workspace-input="structure-count" min="2" max="48" step="1" value="6"></label>
+            <button type="button" class="creative-workspace-primary" data-workspace-action="structure-reconstruct">Analyze + reconstruct</button>
+            <output data-workspace-output="structure">Not executed.</output>
+          </details>
         </section>
         <section data-workspace-pane="edit" hidden>
           <strong>Path Edit + Expressive Stroke</strong>
@@ -371,6 +380,7 @@ export class CreativeWorkspaceController {
   async handleAction(action) {
     if (action === 'extract') return this.runExtraction();
     if (action === 'cancel-extract') return this.cancelExtraction();
+    if (action === 'structure-reconstruct') return this.runStructure();
     if (['enter-path-edit','exit-path-edit','simplify-path','refine-path','apply-expressive-stroke','clear-expressive-stroke'].includes(action)) return this.runEditAction(action);
     if (['duplicate','group','frame','front','back','repaint','apply-material','clear-material'].includes(action)) return this.runComposeAction(action);
     if (['chat-conversation-inspect','chat-conversation-send','chat-conversation-clear','chat-conversation-transmit'].includes(action)) return this.runConversationAction(action);
@@ -410,6 +420,7 @@ export class CreativeWorkspaceController {
     this.setStatus('EXTRACTION_RUNNING', 'Extracting reference to editable Path', 'busy');
     try {
       const reference = await api.decode(file);
+      this.lastReference = reference;
       const result = await api.extract(
         { ...reference, parameters: { threshold } },
         { referenceSrc: reference.referenceSrc, signal: controller.signal }
@@ -418,8 +429,11 @@ export class CreativeWorkspaceController {
         referenceObjectId: result.referenceObjectId,
         batchId: result.batchId,
         pathIds: (result.paths || []).map(path => path.id),
-        diagnostics: clone(result.diagnostics || null)
+        diagnostics: clone(result.diagnostics || null),
+        provenance: clone(result.provenance || null),
+        source: clone(reference.source || null)
       };
+      this.lastStructure = null;
       const firstPath = result.paths?.[0];
       if (firstPath && typeof this.app.findObject === 'function' && typeof this.app.selectOnly === 'function') {
         const found = this.app.findObject({ objectId: firstPath.id });
@@ -433,6 +447,58 @@ export class CreativeWorkspaceController {
     } catch (error) {
       const code = error?.code || 'EXTRACTION_FAILED';
       this.setStatus(code, code === 'EXTRACTION_CANCELLED' ? 'Extraction cancelled' : (error?.message || 'Extraction failed'), code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
+      return null;
+    } finally {
+      this.extractionAbort = null;
+      this.refresh();
+    }
+  }
+
+  async runStructure() {
+    if (this.extractionAbort) return null;
+    const api = this.app?.extraction;
+    if (!api?.decode || !api?.structure) {
+      this.setStatus('STRUCTURE_AWARE_UNAVAILABLE', 'Structure-Aware controller unavailable', 'error');
+      return null;
+    }
+    const referenceObjectId = this.referenceObjectId();
+    if (!referenceObjectId) {
+      this.setStatus('STRUCTURE_AWARE_DIRECT_REFERENCE_REQUIRED', 'Run Direct Extraction first so Structure-Aware reuses the same visible reference', 'error');
+      return null;
+    }
+    const file = this.root?.querySelector('[data-workspace-input="reference-file"]')?.files?.[0];
+    const threshold = Number(this.root?.querySelector('[data-workspace-input="threshold"]')?.value ?? 128);
+    const count = Number(this.root?.querySelector('[data-workspace-input="structure-count"]')?.value ?? 6);
+    const controller = new AbortController();
+    this.extractionAbort = controller;
+    this.refresh();
+    this.setStatus('STRUCTURE_AWARE_RUNNING', 'Analyzing radial evidence and retaining complete sector Path set', 'busy');
+    try {
+      if (!this.lastReference) {
+        if (!file) throw Object.assign(new Error('Choose the same reference image used for Direct Extraction'), { code: 'STRUCTURE_AWARE_REFERENCE_FILE_REQUIRED' });
+        this.lastReference = await api.decode(file);
+      }
+      const result = await api.structure(
+        { ...this.lastReference, parameters: { threshold } },
+        { referenceObjectId, threshold, count, signal: controller.signal }
+      );
+      this.lastStructure = {
+        batchId: result.batchId,
+        repeatId: result.repeatId,
+        referenceObjectId: result.referenceObjectId,
+        radialCount: result.radialCount,
+        maskIoU: result.maskIoU,
+        prototypePathCount: result.prototypePaths?.length || 0,
+        prototypeDiagnostics: clone(result.prototypeDiagnostics || null),
+        source: clone(this.lastReference.source || null)
+      };
+      this.app.fitContent?.();
+      this.setStatus('STRUCTURE_AWARE_COMPLETE', `count ${result.radialCount} · ${this.lastStructure.prototypePathCount} prototype Paths · linked Repeat`, 'pass');
+      this.refresh();
+      return result;
+    } catch (error) {
+      const code = error?.code || 'STRUCTURE_AWARE_FAILED';
+      this.setStatus(code, error?.message || 'Structure-Aware reconstruction failed', code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
       return null;
     } finally {
       this.extractionAbort = null;
@@ -471,10 +537,19 @@ export class CreativeWorkspaceController {
     const output = this.root.querySelector('[data-workspace-output="extraction"]');
     if (output) {
       const diagnostics = this.lastExtraction?.diagnostics;
+      const source = this.lastExtraction?.source;
       output.textContent = this.lastExtraction
-        ? `${diagnostics?.paths ?? this.lastExtraction.pathIds.length} paths · ${diagnostics?.nodes ?? 0} nodes · ${this.lastExtraction.batchId}`
+        ? `DIRECT · ${diagnostics?.paths ?? this.lastExtraction.pathIds.length} paths · ${diagnostics?.nodes ?? 0} nodes · ${source?.name || 'reference'} · ${this.lastExtraction.batchId}`
         : (this.referenceObjectId() ? `Reference: ${this.referenceObjectId()}` : 'No extraction in this session.');
     }
+    const structure = this.root.querySelector('[data-workspace-output="structure"]');
+    if (structure) {
+      structure.textContent = this.lastStructure
+        ? `OPTIONAL · count ${this.lastStructure.radialCount} · prototype ${this.lastStructure.prototypePathCount} paths / ${this.lastStructure.prototypeDiagnostics?.nodes ?? 0} nodes · mask IoU ${Number(this.lastStructure.maskIoU ?? 0).toFixed(3)} · ${this.lastStructure.repeatId}`
+        : 'Not executed. Direct Extraction remains active.';
+    }
+    const structureButton = this.root.querySelector('[data-workspace-action="structure-reconstruct"]');
+    if (structureButton) structureButton.disabled = Boolean(this.extractionAbort) || !this.referenceObjectId();
   }
 
   selectedPath() {
@@ -1000,7 +1075,9 @@ export class CreativeWorkspaceController {
         const revisionId = text(this.root?.querySelector('[data-workspace-input="revision-id"]')?.value);
         if (!revisionId) throw Object.assign(new Error('Select a Revision'), { code: 'REVISION_REQUIRED' });
         const result = await revisions.restore(revisionId);
+        this.lastReference = null;
         this.lastExtraction = null;
+        this.lastStructure = null;
         this.lastRevisionResult = { action: 'restore', ...clone(result) };
         this.setStatus('REVISION_RESTORED', `${revisionId} · ${result.historyBoundary}`, 'pass');
         await this.refreshRevisionList();
