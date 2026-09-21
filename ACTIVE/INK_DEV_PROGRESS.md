@@ -4,37 +4,59 @@ STATUS: `AUTHORIZED / NOT_STARTED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
+| TASK_ID | `INK-CLOUD-018` |
+| TITLE | `First Visible Web Platform + Rose Window Runtime v0.1` |
+| BRANCH | `work/ink-cloud-018` |
+| BASE_MAIN | `f964ee758d8d3db31ad1054eb0de046de4e1b53d` |
 | TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
+| TARGET_GATE | `INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS` |
+| DEFAULT_EXTRACTION | `DIRECT_EXTRACTION` |
+| STRUCTURE_AWARE | `OPTIONAL` |
 | FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
+| PACKAGE_INK_CURRENT_MUTATION | `0 / PROHIBITED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
+| BROWSER_RUNTIME_QA | `REQUIRED_FOR_GATE` |
 
 ## Objective
 
-Close the known Structure-Aware single-Path reconstruction bottleneck:
+Turn the already implemented browser/editor/Creative Workspace/CHAT core into the first visible INK Web platform.
 
 ```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
+static web URL
+→ visible INK workspace
+→ reference image import
+→ Direct Extraction + editable Path + overlay
+→ optional Structure-Aware reconstruction
+→ visible natural-language CHAT surface
+→ bounded approval/execution
+→ Revision
+→ Rose Window first runtime case
 ```
 
-The authoritative scope and STOP rules are in:
+This task does not build Figma parity or multi-user collaboration.
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+## Existing baseline to reuse
+
+- `product/source/index.html`
+- `product/source/src/ink.js`
+- `product/source/src/editor/creative-workspace.js`
+- `product/source/src/ai/chat-runtime.js`
+- accepted extraction / Path / compose / repaint / Revision controllers
+- accepted Structure-Aware multi-Path implementation
+
+Do not create a second editor or document authority.
+
+## Planned phases
+
+- Phase A — existing-web audit + deployment closure plan
+- Phase B — first visible web shell
+- Phase C — visible conversational CHAT surface
+- Phase D — Rose Window first visible runtime case
+- Phase E — static deployment preparation
+- Phase F — real browser runtime QA
+- Phase G — report + DEV handoff
 
 ## Checkpoint rule
 
@@ -45,35 +67,26 @@ At every meaningful checkpoint:
 - record exact SHA;
 - record files changed;
 - record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
+- record browser/runtime evidence;
+- record anything not executed;
+- STOP on Work Order Hard STOP.
 
-Do not replace the Direct Extraction baseline during DEV execution.
-
-## Planned phases
-
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
+Final gate cannot close with browser runtime QA deferred.
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
+TASK_ID = INK-CLOUD-018
+BRANCH = work/ink-cloud-018
 FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
+GATE = INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS
+DEFAULT_EXTRACTION = DIRECT_EXTRACTION
+STRUCTURE_AWARE = OPTIONAL
 FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
+PACKAGE_INK_CURRENT_MUTATION = 0
 MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
+BROWSER_RUNTIME_QA = EXECUTED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
