@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `MR_PASS / PROMOTED / USER_PAGES_ACTION_REQUIRED`
+STATUS: `MR_PASS / PROMOTED / PUBLIC_URL_READY / USER_VISIBLE_ACCEPTANCE_NEXT`
 
 ## Control
 
@@ -548,3 +548,18 @@ Settings
 ```
 
 After the public URL is live, USER performs the first visible/manual Rose Window acceptance in the deployed INK Web platform.
+
+
+## Post-promotion public URL confirmation
+
+User-confirmed public INK Web URL:
+
+`https://thedoorw.github.io/INK/`
+
+```text
+PUBLIC_URL = https://thedoorw.github.io/INK/
+PAGES_ONE_TIME_ACTION = COMPLETE
+NEXT_ACTION = USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE
+```
+
+This supersedes the earlier provisional `USER_ONE_TIME_PAGES_ACTION_REQUIRED` state for the live deployment checkpoint.
