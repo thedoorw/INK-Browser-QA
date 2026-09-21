@@ -1,24 +1,22 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-018 / MR_PASS / PROMOTED / STAGING_LIVE / VISIBLE_ACCEPTANCE_PENDING`
+STATUS: `INK-RA-001 / AUTHORIZED / READY_FOR_DEV / FOUNDATION_A`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-018` |
-| DEV_BRANCH | `work/ink-cloud-018` |
-| DEV_BRANCH_HEAD | `662f56fb4ac28d5102871681f6ab2b5747a523fc` |
-| DEV_HANDOFF | `YES / COMPLETE` |
-| MR_REVIEW | `MR_PASS` |
-| MAIN_PROMOTION | `ed0b78a7fa3ac6db901863edd0246ee163c00ec4` |
-| PACKAGE_UPDATE | `NO MUTATION` |
-| STAGING_URL | `https://thedoorw.github.io/INK-Browser-QA/` |
-| STAGING_STATUS | `LIVE` |
-| NEXT_STAGE | `USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE` |
-| PRE_CLOUD_CORE_READY | `YES` |
-| SELF_HOSTED_WINDOWS_RUNTIME | `VERIFIED` |
-| RUNTIME_QA | `EXECUTED / PASS` |
-| NEXT_ENGINEERING_WORK_ORDER | `NOT_YET_AUTHORIZED` |
+| CURRENT_TASK_ID | `INK-RA-001` |
+| DEV_BRANCH | `work/ink-ra-001` |
+| DEV_HANDOFF | `NO / TASK_NOT_STARTED` |
+| MR_REVIEW | `NOT_STARTED` |
+| PRODUCT_SOURCE_MUTATION | `CONDITIONAL_AFTER_EVALUATION_GATE` |
+| UI_MUTATION | `PROHIBITED` |
+| PRODUCT_DISPLAY_VERSION_CHANGE | `DEFERRED_TO_INK_WEB_DISCUSSION` |
+| FORMAT_VERSION | `4 / PRESERVE` |
+| RA_BASELINE | `IMPORTED / READY_FOR_READ_ONLY_EVALUATION` |
+| INK_WEB_STAGING | `LIVE` |
+| INK_WEB_UI_REVIEW | `PENDING / USER_REPORTS_CLUTTER` |
+| NEXT_STAGE | `RA FOUNDATION A INVENTORY → BENCHMARK → ADAPTER` |
 
 ## Readiness assessment
 
@@ -1154,3 +1152,34 @@ Only after a concrete INK gap is selected:
 ```
 
 RA reference analysis may proceed in parallel because it does not mutate authoritative INK product behavior. RA product integration and a new INK feature stage must share the same Current Work Order gate and must not proceed as two independent DEV mutation streams.
+
+
+## INK-RA-001 activation checkpoint
+
+User direction:
+
+```text
+PREFER = ISSUE_BOUNDED_WORKPACKS
+RA = START_FIRST
+INK_WEB_UI = DISCUSS_SEPARATELY_AFTER_RA_START
+INK_WEB_CURRENT_OBSERVATION = INTERFACE_FEELS_CLUTTERED
+INK_WEB_VERSION_NUMBER = USER_WANTS_CHANGE / POLICY_NOT_YET_DECIDED
+```
+
+Authorized task:
+
+`INK-RA-001 — RA Foundation A / Vector Geometry Kernel Integration v0.1`
+
+Execution order:
+
+```text
+INK inventory
+→ RA verification
+→ Paper.js / Clipper2 / Bezier.js isolated benchmark
+→ ADOPT / ADAPT / REFERENCE_ONLY / DEFER matrix
+→ bounded INK-owned adapters
+→ deterministic + browser runtime validation
+→ MR review
+```
+
+The RA line may now execute on its own DEV branch. INK Web UI and product-version changes remain outside this Work Order and must not be mixed into the RA branch.
