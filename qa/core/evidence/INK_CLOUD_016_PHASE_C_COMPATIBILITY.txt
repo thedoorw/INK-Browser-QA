@@ -1,0 +1,30 @@
+INK-CLOUD-016 — Phase C Persistence + Collaboration Compatibility
+Branch: work/ink-cloud-016
+Runtime QA: DEFERRED
+
+Exact branch connector-side source/static verification:
+
+01 FORMAT_VERSION = 4                                      PASS
+02 default document uses FORMAT_VERSION                    PASS
+03 file envelope wrap/unwrap authority present             PASS
+04 InkStore is browser-local (IndexedDB/localStorage)      PASS
+05 single HistoryManager construction in src/ink.js        PASS
+06 Revision installed with the same InkStore               PASS
+07 Revision persistence delegates to InkStore              PASS
+08 Revision restore uses accepted document authority       PASS
+09 RESET_TO_REVISION History boundary retained             PASS
+10 CHAT bounded edit retains approval guard                PASS
+11 CHAT bounded edit retains existing History authority    PASS
+12 CHAT creative plan retains explicit approval            PASS
+13 CHAT creative plan delegates to bounded edit            PASS
+14 Creative Workspace remains local adapter/view           PASS
+
+Current branch product/source/src diff versus main: 0 files.
+
+Accepted regression evidence remains applicable because INK-CLOUD-016 has not
+mutated the structured document, persistence, History, Revision, CHAT bounded
+edit, CHAT creative-plan, or Creative Workspace source modules.
+
+Result: 14 PASS / 0 FAIL
+
+No browser/runtime interaction was executed or claimed.
