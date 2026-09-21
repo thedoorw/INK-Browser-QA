@@ -389,3 +389,27 @@ BROWSER_RUNTIME_QA = EXECUTED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## Local runtime override — GitHub Actions quota exhausted
+
+For INK-CLOUD-018, browser/runtime QA is to be executed from the user's Windows computer through PowerShell and a loopback HTTP server.
+
+Prepared branch artifacts:
+
+- `qa/runtime/start-ink-local.ps1`
+- `qa/runtime/check-ink-local.ps1`
+- `qa/runtime/INK_CLOUD_018_POWERSHELL_RUNTIME_RUNBOOK.md`
+- `research/INK_FIRST_VISIBLE_WEB_PLATFORM_PRE_RUNTIME_AUDIT_v0.1.md`
+
+Rules:
+
+```text
+GITHUB_ACTIONS = DO_NOT_USE
+EXTERNAL_PROXY = DO_NOT_USE
+LOCAL_POWERSHELL_RUNTIME = AUTHORIZED
+LOOPBACK = 127.0.0.1
+USER_MACHINE_BROWSER_QA = AUTHORITATIVE_FOR_018_RUNTIME_GATE
+```
+
+The next checkpoint is a local PowerShell preflight only. Product integration may continue after the local runtime path is confirmed operational.
