@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-015 / PHASE_C_COMPLETE`
+STATUS: `INK-CLOUD-015 / PHASE_D_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `INK-CLOUD-015 / PHASE_C_COMPLETE`
 | TITLE | `CHAT Multi-Step Creative Collaboration v0.1` |
 | BRANCH | `work/ink-cloud-015` |
 | BASE_MAIN | `425c58c400bd08610574c0d5e8085e1cb55ec1f5` |
-| TASK_STATUS | `PHASE_C_COMPLETE / PHASE_D_NEXT` |
+| TASK_STATUS | `PHASE_D_COMPLETE / PHASE_E_NEXT` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | GATE | `CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS` |
@@ -79,3 +79,20 @@ Implemented:
 Checkpoint: `INK-CLOUD-015 Phase C approval and local orchestration`
 
 `PHASE_C_COMPLETE / BEGIN_PHASE_D`
+
+
+## Phase D — Revision-aware result / continuation
+
+Implemented:
+
+- plan execution records its starting Revision identity;
+- a completed plan captures an ending Revision through the accepted `RevisionController`;
+- a mid-plan STOP after successful steps captures the partial resulting state when the source Revision is still current;
+- if source Revision changed externally, capture is skipped rather than silently rebasing;
+- plan result records before/after Revision IDs, capture/equivalence state and accepted Revision comparison metadata;
+- the resulting Revision becomes the explicit base for a later plan;
+- no second diff or Revision engine was introduced.
+
+Checkpoint: `INK-CLOUD-015 Phase D Revision-aware plan results`
+
+`PHASE_D_COMPLETE / BEGIN_PHASE_E`
