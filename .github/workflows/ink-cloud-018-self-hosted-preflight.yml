@@ -103,7 +103,7 @@ jobs:
           $stderr = Join-Path $env:RUNNER_TEMP 'ink-cloud-018-server.err.log'
           $server = $null
           try {
-            $server = Start-Process powershell -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $env:INK_SOURCE_ROOT 'qa\runtime\start-ink-local.ps1'),'-NoBrowser') -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+            $server = Start-Process powershell -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-File',(Join-Path $env:INK_SOURCE_ROOT 'qa\runtime\start-ink-local.ps1'),'-NoBrowser') -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
             $ready = $false
             for ($i = 0; $i -lt 20; $i++) {
               Start-Sleep -Milliseconds 500
