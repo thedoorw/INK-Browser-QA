@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `MR_PASS / INK-CLOUD-018 / PROMOTED / PUBLIC_URL_READY`
+STATUS: `MR_PASS / INK-CLOUD-018 / PROMOTED / STAGING_LIVE / VISIBLE_ACCEPTANCE_PENDING`
 
 | Field | Value |
 |---|---|
@@ -73,3 +73,17 @@ CURRENT_REPO = thedoorw/INK-Browser-QA
 EXPECTED_REPO_PAGES_URL = https://thedoorw.github.io/INK-Browser-QA/
 NEXT_ACTION = CONFIGURE_GITHUB_PAGES_OR_CREATE_DEDICATED_INK_REPO
 ```
+
+
+## Staging live verification
+
+```text
+STAGING_URL = https://thedoorw.github.io/INK-Browser-QA/
+FINAL_URL = https://thedoorw.github.io/INK-Browser-QA/product/source/
+PUBLIC_HTTP_ACCESS = PASS
+ROOT_REDIRECT = PASS
+INK_WEB_STAGING = LIVE
+USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE = PENDING
+```
+
+The dedicated future public target `https://thedoorw.github.io/INK/` remains deferred.
