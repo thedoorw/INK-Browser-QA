@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / PHASE_C_COMPLETE / PHASE_D_NEXT`
+STATUS: `INK-CLOUD-014 / PHASE_D_COMPLETE / PHASE_E_NEXT`
 
 | Field | Value |
 |---|---|
@@ -17,31 +17,30 @@ STATUS: `INK-CLOUD-014 / PHASE_C_COMPLETE / PHASE_D_NEXT`
 
 ## Completed checkpoints
 
-- Phase A commit `673f2730b3bfbaa27d031d4b63beb3a5f76eef84` — workspace view/state shell.
-- Phase B commit `69496072abd2be2119b0018ab1762d343810a36d` — Reference → Extract → editable Path continuity.
+- Phase A `673f2730b3bfbaa27d031d4b63beb3a5f76eef84` — workspace state/shell.
+- Phase B `69496072abd2be2119b0018ab1762d343810a36d` — Reference → Extract → Path.
+- Phase C `c0d4ab2f2099d80e967920693254bcaa8c071f0d` — Edit → Compose → Repaint.
 
-### Phase C — Edit → Compose → Repaint continuity
+### Phase D — CHAT ↔ canvas bounded edit loop
 
-Implemented through existing authorities:
+Implemented:
 
-- enter/exit Path edit mode;
-- simplify/refine entry points;
-- expressive stroke apply/remove while retaining Path geometry;
-- duplicate/group/frame/z-order composition commands;
-- repaint selected Paths;
-- material apply/remove;
-- workspace selection remains the existing `app.selection`;
-- all structural/appearance mutations remain History-backed existing commands/controllers.
+- current structured document inspection;
+- single bounded edit task construction from current canvas selection;
+- supported operation selection using the accepted `INK-CHAT-EDIT-TASK v1` contract;
+- proposal state visible in the same workspace;
+- explicit separate Approve / Reject controls;
+- execution is disabled until a valid local approval token exists;
+- approved execution delegates to the existing CHAT bounded-edit controller, which delegates to existing Path/repaint/transform authorities;
+- stale/invalid target diagnostics are surfaced without silent retargeting.
 
-No second Path editor, composition model, material engine or History engine was introduced.
+Explicitly not implemented:
 
-Preserved:
-
-- structured document identity/provenance;
-- `FORMAT_VERSION = 4`;
-- package/main unchanged;
-- browser-local core.
+- multi-step agent planning;
+- autonomous approval;
+- remote execution dependency;
+- second CHAT mutation engine.
 
 Next:
 
-`BEGIN_PHASE_D / CHAT_CANVAS_BOUNDED_EDIT_LOOP`
+`BEGIN_PHASE_E / REVISION_CAPTURE_RESTORE_UX`

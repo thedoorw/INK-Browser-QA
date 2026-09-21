@@ -1266,3 +1266,9 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 .creative-workspace-action-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
 .creative-workspace-action-grid button,.creative-workspace-primary{min-height:31px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:9px;font-weight:700}
 .creative-workspace-primary{width:100%;background:var(--accent-soft);color:var(--accent)}
+
+
+/* INK-CLOUD-014 Phase D controls */
+.creative-workspace-field select{min-width:0;height:30px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 7px;font-size:10px}
+.creative-workspace-inline{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.creative-workspace-inline input{width:100%}

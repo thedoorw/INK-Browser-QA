@@ -171,6 +171,10 @@ export class CreativeWorkspaceController {
     this.toggle = null;
     this.extractionAbort = null;
     this.lastExtraction = null;
+    this.approvalToken = null;
+    this.lastChatInspection = null;
+    this.lastChatResult = null;
+    this.taskSequence = 0;
   }
 
   mount() {
@@ -243,7 +247,29 @@ export class CreativeWorkspaceController {
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-material">Apply material</button><button type="button" data-workspace-action="clear-material">Clear material</button></div>
           <output data-workspace-output="compose">Composition commands preserve structured objects.</output>
         </section>
-        <section data-workspace-pane="chat" hidden><strong>CHAT bounded edit</strong><p>Proposal / approval controls are connected in Phase D.</p></section>
+        <section data-workspace-pane="chat" hidden>
+          <strong>CHAT bounded edit</strong>
+          <label class="creative-workspace-field"><span>Operation</span>
+            <select data-workspace-input="chat-operation">
+              <option value="path.repaint.v1">Repaint Path</option>
+              <option value="object.translate.v1">Translate object</option>
+              <option value="path.simplify.v1">Simplify Path</option>
+              <option value="path.refine.v1">Refine Path</option>
+              <option value="path.material.apply.v1">Apply material</option>
+              <option value="path.material.remove.v1">Remove material</option>
+            </select>
+          </label>
+          <label class="creative-workspace-field"><span>Color</span><input type="color" data-workspace-input="chat-color" value="#d7a78f"></label>
+          <label class="creative-workspace-field"><span>ΔX / ΔY</span><span class="creative-workspace-inline"><input type="number" data-workspace-input="chat-dx" value="12"><input type="number" data-workspace-input="chat-dy" value="0"></span></label>
+          <label class="creative-workspace-field"><span>Material ID</span><input type="text" data-workspace-input="chat-material-id" value="workspace-material"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-inspect">Inspect</button><button type="button" data-workspace-action="chat-propose">Propose</button></div>
+          <div class="creative-workspace-action-grid">
+            <button type="button" data-workspace-action="chat-approve">Approve</button>
+            <button type="button" data-workspace-action="chat-reject">Reject</button>
+            <button type="button" data-workspace-action="chat-execute">Execute</button>
+          </div>
+          <output data-workspace-output="chat">No proposal.</output>
+        </section>
         <section data-workspace-pane="revision" hidden><strong>Revision</strong><p>Capture / restore controls are connected in Phase E.</p></section>
       </div>
       <div class="creative-workspace-status" data-workspace-value="status" role="status">Creative workspace ready</div>
@@ -281,6 +307,7 @@ export class CreativeWorkspaceController {
     if (action === 'cancel-extract') return this.cancelExtraction();
     if (['enter-path-edit','exit-path-edit','simplify-path','refine-path','apply-expressive-stroke','clear-expressive-stroke'].includes(action)) return this.runEditAction(action);
     if (['duplicate','group','frame','front','back','repaint','apply-material','clear-material'].includes(action)) return this.runComposeAction(action);
+    if (['chat-inspect','chat-propose','chat-approve','chat-reject','chat-execute'].includes(action)) return this.runChatAction(action);
     return null;
   }
 
@@ -470,6 +497,124 @@ export class CreativeWorkspaceController {
     if (exit) exit.disabled = !this.app.pathEditing?.active;
   }
 
+  chatTargets() {
+    const page = this.app?.page?.();
+    const selected = typeof this.app?.selectedObjects === 'function' ? this.app.selectedObjects() : [];
+    return selected.map(item => ({
+      pageId: page?.id || null,
+      layerId: item.layer?.id || null,
+      objectId: item.object?.id || null
+    }));
+  }
+
+  createChatTask() {
+    const operation = this.root?.querySelector('[data-workspace-input="chat-operation"]')?.value || 'path.repaint.v1';
+    const targets = this.chatTargets();
+    if (!targets.length) throw Object.assign(new Error('Select one or more targets'), { code: 'CHAT_TARGET_REQUIRED' });
+    let args = {};
+    if (operation === 'path.repaint.v1') {
+      args = { fill: this.root?.querySelector('[data-workspace-input="chat-color"]')?.value || '#d7a78f' };
+    } else if (operation === 'object.translate.v1') {
+      args = {
+        dx: Number(this.root?.querySelector('[data-workspace-input="chat-dx"]')?.value || 0),
+        dy: Number(this.root?.querySelector('[data-workspace-input="chat-dy"]')?.value || 0)
+      };
+    } else if (operation === 'path.simplify.v1') {
+      args = { tolerance: 0.75, handleTolerance: 0.2, maxPasses: 256 };
+    } else if (operation === 'path.refine.v1') {
+      args = { maxControlLength: 48, maxAddedAnchors: 128 };
+    } else if (operation === 'path.material.apply.v1') {
+      const templateId = text(this.root?.querySelector('[data-workspace-input="chat-material-id"]')?.value);
+      if (!templateId) throw Object.assign(new Error('Material template ID required'), { code: 'MATERIAL_TEMPLATE_REQUIRED' });
+      args = {
+        templateId,
+        parameterOverrides: {},
+        fallback: { fill: this.root?.querySelector('[data-workspace-input="chat-color"]')?.value || '#d7a78f' }
+      };
+    }
+    return {
+      schema: 'INK-CHAT-EDIT-TASK',
+      version: 1,
+      taskId: `workspace-task-${++this.taskSequence}`,
+      operation,
+      targets,
+      arguments: args
+    };
+  }
+
+  runChatAction(action) {
+    const adapter = this.app?.chatBoundedEditAdapter;
+    if (!adapter) {
+      this.setStatus('CHAT_EDIT_UNAVAILABLE', 'CHAT bounded-edit controller unavailable', 'error');
+      return null;
+    }
+    try {
+      let response;
+      if (action === 'chat-inspect') {
+        response = adapter.inspect();
+        if (response.ok) this.lastChatInspection = response.result;
+      } else if (action === 'chat-propose') {
+        response = adapter.propose(this.createChatTask());
+        if (response.ok) {
+          this.activeProposalId = response.result.proposalId;
+          this.approvalToken = null;
+          this.lastChatResult = null;
+        }
+      } else if (action === 'chat-approve') {
+        if (!this.activeProposalId) throw Object.assign(new Error('No active proposal'), { code: 'PROPOSAL_REQUIRED' });
+        response = adapter.approve(this.activeProposalId);
+        if (response.ok) this.approvalToken = response.result.approvalToken;
+      } else if (action === 'chat-reject') {
+        if (!this.activeProposalId) throw Object.assign(new Error('No active proposal'), { code: 'PROPOSAL_REQUIRED' });
+        response = adapter.reject(this.activeProposalId);
+        if (response.ok) this.approvalToken = null;
+      } else if (action === 'chat-execute') {
+        if (!this.activeProposalId) throw Object.assign(new Error('No active proposal'), { code: 'PROPOSAL_REQUIRED' });
+        if (!this.approvalToken) throw Object.assign(new Error('Explicit approval required before execution'), { code: 'APPROVAL_REQUIRED' });
+        response = adapter.execute(this.activeProposalId, this.approvalToken);
+        if (response.ok) {
+          this.lastChatResult = response.result;
+          this.approvalToken = null;
+        }
+      }
+      if (!response?.ok) {
+        this.setStatus(response?.code || 'CHAT_EDIT_FAILED', response?.phase || 'CHAT edit failed', 'error');
+        this.refresh();
+        return response;
+      }
+      this.setStatus('CHAT_EDIT_UPDATED', action, 'pass');
+      this.refresh();
+      return response;
+    } catch (error) {
+      this.setStatus(error?.code || 'CHAT_EDIT_FAILED', error?.message || 'CHAT edit failed', 'error');
+      return null;
+    }
+  }
+
+  refreshChat() {
+    if (!this.root) return;
+    const proposal = this.activeProposalId ? this.app?.chatBoundedEdit?.getProposal?.(this.activeProposalId) : null;
+    const output = this.root.querySelector('[data-workspace-output="chat"]');
+    if (output) {
+      if (this.lastChatResult) {
+        output.textContent = `EXECUTED · ${this.lastChatResult.operation} · changed=${this.lastChatResult.changed} · ${this.lastChatResult.proposalId}`;
+      } else if (proposal) {
+        output.textContent = `${proposal.state} · ${proposal.task?.operation} · ${proposal.task?.targets?.length || 0} target(s) · rev ${proposal.revisionId || 'none'}`;
+      } else if (this.lastChatInspection) {
+        output.textContent = `INSPECTED · ${this.lastChatInspection.objects?.length || 0} objects · rev ${this.lastChatInspection.revision?.revisionId || 'none'}`;
+      } else {
+        output.textContent = 'No proposal.';
+      }
+    }
+    const state = proposal?.state || null;
+    const approve = this.root.querySelector('[data-workspace-action="chat-approve"]');
+    const reject = this.root.querySelector('[data-workspace-action="chat-reject"]');
+    const execute = this.root.querySelector('[data-workspace-action="chat-execute"]');
+    if (approve) approve.disabled = state !== 'PROPOSED';
+    if (reject) reject.disabled = !proposal || state === 'EXECUTED' || state === 'REJECTED';
+    if (execute) execute.disabled = state !== 'APPROVED' || !this.approvalToken;
+  }
+
   setOpen(open) {
     this.open = Boolean(open);
     this.root?.classList.toggle('open', this.open);
@@ -526,6 +671,7 @@ export class CreativeWorkspaceController {
     this.root.dataset.formatVersion = String(state.document?.formatVersion ?? '');
     this.refreshReference(state);
     this.refreshEditCompose(state);
+    this.refreshChat(state);
     return state;
   }
 }
