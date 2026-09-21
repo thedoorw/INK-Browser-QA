@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `PRE_RUNTIME_ENVIRONMENT_VERIFIED / READY_FOR_DEV_PRODUCT_INTEGRATION`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,16 +8,16 @@ STATUS: `PRE_RUNTIME_ENVIRONMENT_VERIFIED / READY_FOR_DEV_PRODUCT_INTEGRATION`
 | TITLE | `First Visible Web Platform + Rose Window Runtime v0.1` |
 | BRANCH | `work/ink-cloud-018` |
 | BASE_MAIN | `f964ee758d8d3db31ad1054eb0de046de4e1b53d` |
-| TASK_STATUS | `PRE_RUNTIME_ENVIRONMENT_VERIFIED / DEV_PRODUCT_INTEGRATION_READY` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| DEV_HANDOFF | `READY` |
+| MR_REVIEW | `REQUIRED` |
 | TARGET_GATE | `INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS` |
 | DEFAULT_EXTRACTION | `DIRECT_EXTRACTION` |
 | STRUCTURE_AWARE | `OPTIONAL` |
 | FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
 | PACKAGE_INK_CURRENT_MUTATION | `0 / PROHIBITED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| BROWSER_RUNTIME_QA | `REQUIRED_FOR_GATE` |
+| BROWSER_RUNTIME_QA | `EXECUTED / PASS` |
 
 ## Objective
 
@@ -473,3 +473,106 @@ PACKAGE_INK_CURRENT_MUTATION = 0
 MAIN_MERGE = 0
 NEXT = READ_EXACT_HARNESS_FAILURE → BOUNDED_FIX_OR_PASS → PHASE_G
 ```
+
+
+## Phase F — final runtime acceptance — PASS
+
+MR-confirmed authoritative runtime:
+
+```text
+WORKFLOW_RUN = 35586901099
+RESULT = SUCCESS
+TESTED_SHA = ed5ea6c6660da52f3b18cf4b7f66deb8ad0253a3
+RUNNER = self-hosted / Windows / X64
+BROWSER_RUNTIME_QA = EXECUTED
+```
+
+GitHub SSOT confirms the workflow job completed successfully, including:
+
+- exact bounded revision materialization;
+- static invariants;
+- Chrome discovery;
+- real Chromium Rose Window acceptance;
+- final runtime status publication.
+
+Runtime evidence:
+
+```text
+Rose Window real-browser acceptance = PASS
+Direct Extraction = PASS
+directPaths = 2504
+directNodes = 17930
+Reference / Overlay / Editable Path = PASS
+CHAT approval boundary = PASS
+Natural-language CHAT context = PASS
+Structure-Aware = PASS
+radialCount = 6
+prototypePaths = 232
+Revision capture / restore = PASS
+Project save = PASS
+Project reload integrity = PASS
+Fatal runtime errors = 0
+FORMAT_VERSION = 4
+```
+
+Final Phase F decision:
+
+```text
+PHASE_B = COMPLETE
+PHASE_C = COMPLETE
+PHASE_D = COMPLETE
+PHASE_E = COMPLETE
+PHASE_F = PASS
+BROWSER_RUNTIME_QA = EXECUTED
+PRODUCT_CORE_BOUNDED_FIX = NOT_REQUIRED
+```
+
+Preserved product boundary:
+
+```text
+DEFAULT_EXTRACTION = DIRECT_EXTRACTION
+STRUCTURE_AWARE = OPTIONAL
+PACKAGE_INK_CURRENT_MUTATION = 0
+MAIN_MERGE = 0
+```
+
+The earlier Phase F corrections were limited to the runtime workflow / harness evidence path. No additional product-core bounded fix was required for the successful acceptance run.
+
+## Phase G — report + DEV handoff
+
+Created:
+
+- `research/INK_FIRST_VISIBLE_WEB_PLATFORM_REPORT_v0.1.md`
+
+Report checkpoint:
+
+`3464a4a5cdebfe2b6d94b37238458acc634a87a9`
+
+Static deployment state:
+
+```text
+STATIC_DEPLOYMENT_PAYLOAD = READY
+PUBLIC_URL = USER_ONE_TIME_PAGES_ACTION_REQUIRED
+PAGES_SETTINGS_MUTATION_BY_DEV = 0
+```
+
+DEV did not enable or modify repository Pages settings.
+
+Final task state:
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-018
+BRANCH = work/ink-cloud-018
+GATE = INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS
+DEFAULT_EXTRACTION = DIRECT_EXTRACTION
+STRUCTURE_AWARE = OPTIONAL
+FORMAT_VERSION = 4
+PACKAGE_INK_CURRENT_MUTATION = 0
+MAIN_MERGE = 0
+BROWSER_RUNTIME_QA = EXECUTED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+No next Work Order has been started.
