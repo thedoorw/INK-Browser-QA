@@ -2,6 +2,7 @@ import { Matrix, uid } from '../core/index.js';
 import { findPageObject } from '../document/hierarchy.js';
 import { moveAnchor } from '../vector/vector-core.js';
 import { executeExtraction, normalizePaths, requireValue, checkAbort, sha256, validateRaster } from './core.js';
+import { radialEvidence, sectorMask, reconstructRadial } from './structure.js';
 const copy=value=>JSON.parse(JSON.stringify(value));
 
 export async function extractIntoDocument(app, request, adapter, { referenceSrc, matrix=Matrix.identity(), signal }={}) {
@@ -29,6 +30,73 @@ export async function extractIntoDocument(app, request, adapter, { referenceSrc,
   app.spatialDirty=true;app.refreshAll?.();
   return {...result,paths,referenceObjectId:referenceId,batchId};
 }
+export async function reconstructStructureIntoDocument(app, request, adapter, {
+  referenceObjectId = null,
+  matrix = Matrix.identity(),
+  count = null,
+  threshold = 128,
+  signal
+} = {}) {
+  const doc=app.doc,page=app.page(),layer=app.layer();
+  requireValue(!app.history.pending && !layer.locked && layer.visible!==false,'EXTRACTION_TARGET_UNAVAILABLE');
+  requireValue(Matrix.isInvertible(matrix),'EXTRACTION_SINGULAR_TRANSFORM');
+  requireValue(referenceObjectId && findPageObject(page,referenceObjectId)?.object?.metadata?.extractionReference,'EXTRACTION_STRUCTURE_REFERENCE_REQUIRED');
+  validateRaster(request?.raster);
+  const before=JSON.stringify(doc),pageId=page.id,layerId=layer.id;
+  const evidence=radialEvidence(request.raster,{threshold});
+  const selectedCount=Number.isInteger(count)?count:evidence.candidates[0]?.count;
+  requireValue(Number.isInteger(selectedCount)&&evidence.candidates.some(item=>item.count===selectedCount),'EXTRACTION_STRUCTURE_COUNT');
+  const mask=sectorMask(request.raster,request.source,evidence,{count:selectedCount,sector:0,threshold});
+  const prototypeResult=await executeExtraction({
+    ...request,
+    mask,
+    parameters:{...(request.parameters||{}),threshold,structureAware:true,radialCount:selectedCount,sector:0}
+  },adapter,{signal});
+  await new Promise(resolve=>setTimeout(resolve,0));checkAbort(signal);
+  requireValue(app.doc===doc && app.page().id===pageId && app.layer().id===layerId && JSON.stringify(doc)===before && !app.history.pending,'EXTRACTION_STALE_DOCUMENT');
+
+  const batchId=uid();
+  for(const path of prototypeResult.paths){
+    path.matrix=Matrix.multiply(matrix,path.matrix);
+    path.fill=null;path.stroke='#2f718f';path.strokeWidth=1;
+    path.metadata.extraction={...path.metadata.extraction,referenceObjectId,batchId,structureAware:true,radialCount:selectedCount,sector:0};
+  }
+  const repeat=reconstructRadial(prototypeResult.paths,evidence,{
+    count:selectedCount,
+    id:`${batchId}-structure-repeat`,
+    prototypeSetId:`${batchId}-structure-prototype`
+  });
+  repeat.metadata={
+    ...repeat.metadata,
+    extraction:{...(repeat.metadata?.extraction||{}),referenceObjectId,batchId,structureAware:true,radialCount:selectedCount},
+    structureAware:{
+      schema:'INK-STRUCTURE-AWARE-WORKSPACE/1',
+      radialCount:selectedCount,
+      prototypePathCount:prototypeResult.paths.length,
+      effectiveInstanceCount:selectedCount,
+      referenceObjectId,
+      source:copy(request.source)
+    }
+  };
+  const targets=[app.layerObjectsPath(layer)];requireValue(Array.isArray(targets[0]),'EXTRACTION_TARGET_PATH');
+  app.history.pushScoped('Structure-Aware radial reconstruction',targets,()=>layer.objects.push(repeat));
+  app.selection=[{layerId:layer.id,objectId:repeat.id}];
+  app.spatialDirty=true;app.refreshAll?.();
+  const candidate=evidence.candidates.find(item=>item.count===selectedCount);
+  return {
+    schema:'INK-STRUCTURE-AWARE-WORKSPACE/1',
+    batchId,
+    repeat,
+    repeatId:repeat.id,
+    referenceObjectId,
+    radialCount:selectedCount,
+    maskIoU:candidate?.maskIoU??null,
+    prototypePaths:prototypeResult.paths,
+    prototypeDiagnostics:copy(prototypeResult.diagnostics),
+    evidence:copy(evidence)
+  };
+}
+
 export function correctExtractionAnchor(app,{objectId,subpath=0,node=0,x,y,maxDistance=32}) {
   const found=findPageObject(app.page(),objectId);
   requireValue(found?.object.type==='path' && found.object.metadata?.extraction,'EXTRACTION_PATH_NOT_FOUND');
