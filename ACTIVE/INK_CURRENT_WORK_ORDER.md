@@ -1,17 +1,17 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `ACTIVE / INK-CLOUD-015 / DEVELOPMENT_AUTHORIZED`
+STATUS: `ACTIVE / INK-CLOUD-016 / DEVELOPMENT_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-CLOUD-015` |
-| TITLE | `CHAT Multi-Step Creative Collaboration v0.1` |
+| CURRENT_TASK_ID | `INK-CLOUD-016` |
+| TITLE | `Portable Baseline Integration v0.1` |
 | AUTHORITY | `USER_CONTINUOUS_ADVANCE_AUTHORIZATION` |
-| DEV_WORK_BRANCH | `work/ink-cloud-015` |
+| DEV_WORK_BRANCH | `work/ink-cloud-016` |
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_CHAT_COLLABORATION_SCOPE` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_WITHIN_PORTABLE_INTEGRATION_SCOPE` |
 | PACKAGE_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
@@ -20,42 +20,44 @@ STATUS: `ACTIVE / INK-CLOUD-015 / DEVELOPMENT_AUTHORIZED`
 
 ## Accepted baseline
 
-INK-CLOUD-014 is promoted with gate:
+INK-CLOUD-015 is promoted with gate:
 
-`CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
+`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
 
-Accepted collaboration path:
+Accepted shared-core chain:
 
 ```text
-INK structured document
-→ CHAT inspect
-→ one bounded proposal
-→ explicit approval
-→ structured edit
-→ History
+Reference
+→ Extract
+→ editable Path
+→ Path Edit / Expressive Stroke
+→ Multi-Contour Compose
+→ Repaint / Material
+→ CHAT bounded edit
+→ CHAT multi-step creative plan
 → Revision
+→ Creative Workspace
 ```
 
-The minimum Creative Workspace now exposes the full accepted engine chain.
+The first human-AI creative loop and its minimum workspace are now established on main.
 
 ## Objective
 
-Advance CHAT from one bounded edit command to one reviewable multi-step creative plan while preserving user control and all existing editor authorities.
+Perform the planned Portable INK checkpoint: verify that the evolved shared core remains compatible with a portable/static browser baseline and can still be integrated toward a single `INK.html` without creating Cloud-only dependencies in the editing core.
 
-Target collaboration path:
+This is an integration/readiness checkpoint, not package/release production.
+
+Target:
 
 ```text
-inspect structured state
-→ express creative intent / receive structured plan
-→ review ordered steps
-→ explicit user approval
-→ execute through existing bounded edit operations
-→ stop deterministically on stale/failed step
-→ inspect result
-→ Revision comparison / continue or revise plan
+accepted shared core
+→ portable/static entry compatibility
+→ module/dependency closure
+→ persistence + History + Revision integrity
+→ CHAT local orchestration integrity
+→ no mandatory Cloud/backend dependency
+→ portable baseline readiness evidence
 ```
-
-This task builds a local orchestration and plan contract. It does not require a remote AI service and does not authorize autonomous editing.
 
 ## Required reads
 
@@ -65,159 +67,122 @@ This task builds a local orchestration and plan contract. It does not require a 
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-7. `research/INK_CHAT_BOUNDED_EDIT_LOOP_REPORT_v0.1.md`
+7. `research/INK_INTEGRATED_CREATIVE_LOOP_VALIDATION_REPORT_v0.1.md` if present
 8. `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`
-9. existing CHAT bounded-edit, Revision, History and Creative Workspace source as required
+9. `research/INK_CHAT_MULTI_STEP_CREATIVE_COLLABORATION_REPORT_v0.1.md`
+10. current portable/static entry, service-worker, document persistence, History, Revision and editor install source as required
 
 ## Product principle
 
-CHAT may reason about a sequence; INK remains the execution authority.
+Portable INK and INK Cloud must consume the same authoritative editing core.
 
 ```text
-CHAT PLAN
+PORTABLE INTEGRATION
 ≠
-DIRECT DOCUMENT MUTATION
+FORKED EDITOR CORE
 ```
 
-Every executable step must resolve to an already-supported bounded INK operation or an explicitly added bounded operation using existing controllers.
+Cloud/session/remote services remain optional adapters.
 
 ## Scope
 
 Required:
 
-- define a versioned multi-step creative-plan schema;
-- preserve stable plan ID, source Revision ID, target references and ordered step IDs;
-- support step dependencies and deterministic sequence order;
-- validate every step before approval and revalidate immediately before execution;
-- expose plan summary, target summary and expected operations for user review;
-- require explicit approval before execution;
-- execute steps through the existing CHAT bounded-edit / editor authorities;
-- stop on stale Revision, stale target, failed precondition or failed operation;
-- never silently retarget or skip a failed step;
-- produce deterministic per-step and whole-plan result records;
-- bind plan execution to Revision identity and expose before/after Revision relation;
-- permit an optional external/AI adapter to propose a plan, but keep validation/execution browser-local;
-- expose the plan flow minimally in the existing Creative Workspace CHAT area;
-- preserve History and Revision semantics;
-- preserve static-hosted/browser-local execution.
+- inventory the current portable/static entry path and shared-core dependency graph;
+- verify all creative-loop modules can load under the portable/static browser-local runtime;
+- verify no mandatory backend/remote API dependency has entered core editing/collaboration;
+- verify document save/load, History and Revision contracts remain compatible;
+- verify CHAT bounded edit and multi-step plan orchestration remain browser-local;
+- identify any module-order, service-worker, import/export, asset-path or initialization gaps that block portable integration;
+- fix only bounded shared-core/static integration defects;
+- add deterministic source/static/integration harness coverage;
+- produce a portable-baseline integration report;
+- keep `FORMAT_VERSION = 4`;
+- do not regenerate or mutate release/package artifacts.
 
 ## Phases
 
-### Phase A — Creative plan contract
+### Phase A — Portable dependency inventory
 
-Define a versioned plan schema, minimally including:
+Map:
 
-- `planId`;
-- source document / page / Revision identity;
-- user-intent summary;
-- ordered `steps[]`;
-- stable `stepId`;
-- operation;
-- targets;
-- arguments;
-- optional dependency references;
-- plan status and diagnostics.
+- entry points;
+- shared editor/core modules;
+- service-worker/static shell dependencies;
+- persistence/Revision dependencies;
+- CHAT collaboration dependencies;
+- optional remote adapters.
 
-The plan is data, not an alternate document model.
+Classify each dependency as:
+
+`SHARED_CORE / STATIC_LOCAL / OPTIONAL_REMOTE / PACKAGE_ONLY`
 
 Checkpoint commit required.
 
-### Phase B — Validation + preconditions
+### Phase B — Static/portable load closure
 
-Implement deterministic validation:
-
-- schema/version;
-- supported operation;
-- target existence/type;
-- source Revision match;
-- dependency validity;
-- cycle/order rejection;
-- locked/hidden/unexposed target guards as already supported;
-- no execution during busy/invalid History state.
-
-Validation must not mutate the active document.
-
-Checkpoint commit required.
-
-### Phase C — Approval + local orchestration
-
-Implement:
-
-```text
-PROPOSED
-→ APPROVED
-→ EXECUTING
-→ COMPLETED | STOPPED | REJECTED
-```
+Verify source-level/module-level closure for the accepted creative-loop modules.
 
 Required:
 
-- explicit user approval token/boundary;
-- no execution before approval;
-- ordered execution through existing bounded-edit/editor commands;
-- immediate revalidation before each step;
-- deterministic stop on first failure;
-- successful completed steps remain accurately recorded;
-- no silent continue after failure;
-- no autonomous approval.
+- imports/exports resolve;
+- install order is deterministic;
+- no Cloud-only mandatory bootstrap;
+- no backend/auth/network requirement for core editing;
+- no duplicate editor/document authority.
 
-Do not create a second History engine.
+Bounded fixes allowed.
 
 Checkpoint commit required.
 
-### Phase D — Revision-aware result / continuation
+### Phase C — Persistence + collaboration compatibility
 
-Bind execution to Revision:
+Verify:
 
-- record starting Revision;
-- expose changed/touched targets and step results;
-- capture or reference an ending Revision through the accepted Revision authority where appropriate;
-- expose before/after comparison metadata already supported;
-- allow a subsequent plan to explicitly base on the resulting Revision;
-- reject stale source-Revision plans.
-
-Do not create a second diff or Revision engine.
+- structured document save/load;
+- History authority remains single;
+- Revision capture/restore remains compatible;
+- CHAT bounded edit still validates/executes locally;
+- CHAT multi-step plans still require explicit approval and execute locally;
+- current workspace is an adapter/view, not a portable-core dependency.
 
 Checkpoint commit required.
 
-### Phase E — Creative Workspace plan UX
+### Phase D — Portable integration harness
 
-Extend the existing CHAT workspace area minimally to show:
+Build deterministic checks for at least:
 
-- intent/plan summary;
-- ordered step list;
-- target/operation for each step;
-- validation state;
-- Approve / Reject;
-- execution progress;
-- stopped-step diagnostics;
-- resulting Revision identity.
+- static module closure;
+- editor install sequence;
+- document open/save round-trip surface;
+- History + Revision authority wiring;
+- CHAT bounded-edit presence;
+- CHAT creative-plan presence;
+- no mandatory remote runtime calls;
+- service-worker/static-shell references;
+- `FORMAT_VERSION = 4`.
 
-This is not a broad UI redesign.
+Do not claim real browser/runtime paths that are not executed.
 
 Checkpoint commit required.
 
-### Phase F — regression evidence + report
+### Phase E — Gap correction
 
-Exercise at least:
+If Phase A-D reveal bounded portable/static integration defects, correct them without:
 
-- deterministic two-or-more-step plan;
-- validation causes zero mutation;
-- execute-before-approval rejection;
-- successful ordered execution;
-- stale Revision rejection;
-- stale target rejection;
-- mid-plan failure stops remaining steps;
-- no silent retarget/skip;
-- History remains single authority;
-- Revision before/after relation is preserved;
-- static/browser-local core works with no remote service;
-- `FORMAT_VERSION = 4`;
-- package untouched.
+- package mutation;
+- format bump;
+- new backend;
+- second editor/document/History/Revision engine;
+- broad UI redesign.
+
+Checkpoint commit required if changes occur.
+
+### Phase F — report + DEV handoff
 
 Create:
 
-`research/INK_CHAT_MULTI_STEP_CREATIVE_COLLABORATION_REPORT_v0.1.md`
+`research/INK_PORTABLE_BASELINE_INTEGRATION_REPORT_v0.1.md`
 
 Return:
 
@@ -226,23 +191,16 @@ Return:
 ## Acceptance gate
 
 ```text
-MULTI_STEP_PLAN_SCHEMA = IMPLEMENTED
-PLAN_VALIDATION = IMPLEMENTED
-EXPLICIT_APPROVAL = PRESERVED
-ORDERED_BOUNDED_EXECUTION = IMPLEMENTED
-STEP_REVALIDATION = IMPLEMENTED
-STOP_ON_FAILURE = IMPLEMENTED
-STALE_REVISION_REJECTION = IMPLEMENTED
-STALE_TARGET_REJECTION = IMPLEMENTED
-PLAN_RESULT_RECORD = IMPLEMENTED
-REVISION_BINDING = IMPLEMENTED
-WORKSPACE_PLAN_UI = CONNECTED
-EXISTING_CONTROLLERS = REUSED
+PORTABLE_DEPENDENCY_INVENTORY = COMPLETE
+STATIC_MODULE_CLOSURE = VERIFIED
+SHARED_CORE_REUSED = VERIFIED
+DOCUMENT_PERSISTENCE_COMPATIBILITY = VERIFIED
 HISTORY_AUTHORITY = PRESERVED
-STRUCTURED_DOCUMENT = PRESERVED
-STATIC_BROWSER_LOCAL_CORE = PRESERVED
-REMOTE_SERVICE_REQUIRED = 0
-AUTONOMOUS_APPROVAL = 0
+REVISION_COMPATIBILITY = VERIFIED
+CHAT_BOUNDED_EDIT_LOCAL = VERIFIED
+CHAT_MULTI_STEP_LOCAL = VERIFIED
+MANDATORY_REMOTE_DEPENDENCY = 0
+SECOND_EDITOR_CORE = 0
 FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
@@ -251,22 +209,20 @@ RUNTIME_QA = DEFERRED
 
 Gate:
 
-`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
+`PORTABLE_SHARED_CORE_INTEGRITY_WORKS`
 
 ## Explicit exclusions
 
 Do not implement:
 
-- autonomous agent execution without user approval;
-- free-running recursive planner;
-- mandatory LLM/backend/API;
-- generic conversation storage;
+- package/release regeneration;
+- final single-file `INK.html` release build;
+- Cloud account/auth/sync;
 - multiplayer/presence/comments;
-- broad UI redesign;
-- new vector/document/History/Revision/renderer engine;
+- autonomous agent execution;
 - Structure-Aware Reconstruction redesign;
-- Portable INK packaging;
-- package/release mutation;
+- broad UI redesign;
+- new document/vector/History/Revision/renderer engine;
 - `FORMAT_VERSION` bump.
 
 ## Hard STOP
@@ -274,20 +230,19 @@ Do not implement:
 STOP if:
 
 1. `FORMAT_VERSION` change is required;
-2. existing CHAT/History/Revision/editor contracts must be broken rather than extended boundedly;
-3. a second execution/document/History/Revision authority becomes necessary;
-4. remote service becomes mandatory for plan semantics or execution;
-5. user approval can no longer remain explicit;
-6. scope expands into autonomous open-ended agent behavior or broad platform work;
-7. package/release mutation becomes necessary.
+2. portable support requires forking the editor/document core;
+3. mandatory backend/remote service is required for the accepted creative loop;
+4. package/release mutation becomes necessary;
+5. accepted persistence/History/Revision contracts must be broken;
+6. a broad architecture decision outside bounded integration is required.
 
 ## QA
 
 GitHub Actions quota remains exhausted.
 
-Run all feasible source/static/unit/serialization/workspace orchestration checks.
+Run all feasible source/static/unit/serialization/integration checks.
 
-Do not claim browser/runtime paths that were not executed.
+Never claim unexecuted browser/runtime paths pass.
 
 `RUNTIME_QA = DEFERRED`
 
@@ -295,9 +250,9 @@ Do not claim browser/runtime paths that were not executed.
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-015
-BRANCH = work/ink-cloud-015
-GATE = CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS
+TASK_ID = INK-CLOUD-016
+BRANCH = work/ink-cloud-016
+GATE = PORTABLE_SHARED_CORE_INTEGRITY_WORKS
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
