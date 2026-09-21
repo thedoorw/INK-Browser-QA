@@ -90,8 +90,9 @@ jobs:
 
           foreach ($file in $files) {
             $i++
-            $relative = $file.FullName.Substring($extractRoot.Length).TrimStart('\','/')
-            $relative = $relative -replace '\','/'
+            $relative = $file.FullName.Substring($extractRoot.Length)
+            $relative = $relative -replace '^[\\/]+',''
+            $relative = $relative -replace '\\','/'
             $targetPath = "reference/RA0_9_baseline/source/$relative"
 
             $fileBytes = [System.IO.File]::ReadAllBytes($file.FullName)
@@ -114,21 +115,22 @@ jobs:
           }
 
           $importedAt = (Get-Date).ToUniversalTime().ToString('yyyy-MM-ddTHH:mm:ssZ')
-          $manifest = @"
-# RA0.9 Baseline Import Manifest
-
-Status: `IMPORTED_REFERENCE_BASELINE`
-
-- Source ZIP: `$zipName`
-- ZIP SHA256: `$zipSha`
-- ZIP bytes: `$($zipInfo.Length)`
-- Extracted file count: `$($files.Count)`
-- Extracted bytes: `$extractedBytes`
-- Imported at UTC: `$importedAt`
-- Import workflow: `.github/workflows/ra0-9-baseline-import.yml`
-
-This baseline is reference material only and is not authoritative INK product source.
-"@
+          $manifestLines = @(
+            '# RA0.9 Baseline Import Manifest',
+            '',
+            'Status: IMPORTED_REFERENCE_BASELINE',
+            '',
+            "- Source ZIP: $zipName",
+            "- ZIP SHA256: $zipSha",
+            "- ZIP bytes: $($zipInfo.Length)",
+            "- Extracted file count: $($files.Count)",
+            "- Extracted bytes: $extractedBytes",
+            "- Imported at UTC: $importedAt",
+            '- Import workflow: .github/workflows/ra0-9-baseline-import.yml',
+            '',
+            'This baseline is reference material only and is not authoritative INK product source.'
+          )
+          $manifest = $manifestLines -join [Environment]::NewLine
 
           $manifestBytes = [System.Text.Encoding]::UTF8.GetBytes($manifest)
           $manifestBlob = Invoke-GitHubJson -Method POST -Uri "$api/git/blobs" -Body @{
@@ -143,7 +145,6 @@ This baseline is reference material only and is not authoritative INK product so
             sha = $manifestBlob.sha
           })
 
-          # Delete the uploaded ZIP in the same import commit.
           $treeEntries.Add([pscustomobject]@{
             path = $zipPathInRepo
             sha = $null
