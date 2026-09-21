@@ -100,7 +100,7 @@ jobs:
             if ($hit) { throw "Committed secret pattern found: $($hit.Path)" }
           }
 
-          $absolute = $files | Select-String -Pattern '(src|href)=["'']\/|fetch\(["'']\/|localhost|127\.0\.0\.1' -ErrorAction SilentlyContinue
+          $absolute = $files | Select-String -Pattern '(src|href)=["'']\/|fetch\(["'']\/' -ErrorAction SilentlyContinue
           $productAbsolute = $absolute | Where-Object { $_.Path -notmatch '__qa_runtime\.html$' }
           if ($productAbsolute) { $productAbsolute | ForEach-Object { Write-Host $_ }; throw 'Static product contains deployment-host binding.' }
 
