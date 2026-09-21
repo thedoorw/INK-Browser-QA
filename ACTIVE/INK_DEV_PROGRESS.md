@@ -8,7 +8,7 @@ STATUS: `INK-RA-001 / IN_PROGRESS`
 | BRANCH | `work/ink-ra-001` |
 | BRANCH_BASE | `94fbdb12753feecfe3dc7053677812c96cd2cf76` |
 | CHECKPOINT_INPUT_HEAD | `96c0082850884cd1eff393aff015695fc59c9749` |
-| CURRENT_PHASE | `PHASE_F / WINDOWS_RUNTIME_PENDING` |
+| CURRENT_PHASE | `PHASE_F / BLOCKED_WINDOWS_RUNNER_OFFLINE` |
 | PHASE_A | `COMPLETE` |
 | PHASE_B | `COMPLETE` |
 | PHASE_C | `COMPLETE` |
@@ -155,6 +155,14 @@ Local preflight:
 - isolated external benchmark → `PASS`;
 - workflow YAML parse → `PASS`.
 
-Blockers: `NONE`
+Runtime blocker:
 
-Next: push this runtime checkpoint and require a successful exact-SHA self-hosted Windows browser run before DEV handoff.
+- exact tested candidate SHA: `10449d705ea549ad94ae1191f67a1da1712f31ff`;
+- GitHub Actions run: `35623923480`;
+- job labels: `self-hosted / Windows / X64`;
+- job state: `queued`; `runner_name` is empty, so no matching online runner has accepted it;
+- historical target runner: `DESKTOP-NSOQH69` (same labels; prior successful repository run).
+
+No DEV handoff is declared while the required browser runtime gate is unexecuted. The queued run is intentionally left active.
+
+Next: bring the existing self-hosted Windows runner online; inspect run `35623923480`, repair only if it reports a product/workflow failure, then finalize Phase F and DEV handoff.
