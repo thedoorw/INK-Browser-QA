@@ -267,3 +267,313 @@ export function createChatCreativePlanProposal(app, rawPlan) {
     source
   });
 }
+
+
+function planRecord(plan, validation) {
+  return {
+    ...clone(plan),
+    validation: clone(validation),
+    approved: false,
+    approvalToken: null,
+    stepResults: [],
+    result: null
+  };
+}
+
+function requirePlan(controller, planId) {
+  const plan = controller.plans.get(String(planId || ''));
+  if (!plan) planFail('PLAN_NOT_FOUND', { planId: String(planId || '') });
+  return plan;
+}
+
+function assertExecutionFingerprint(app, expectedFingerprint) {
+  const current = chatCreativePlanSource(app);
+  if (current.documentFingerprint !== expectedFingerprint) {
+    planFail('STALE_DOCUMENT_FINGERPRINT', {
+      expected: expectedFingerprint,
+      actual: current.documentFingerprint
+    });
+  }
+  return current;
+}
+
+function assertExecutionIdentity(app, source) {
+  const current = chatCreativePlanSource(app);
+  if (current.documentId !== source.documentId) {
+    planFail('STALE_DOCUMENT', { expected: source.documentId, actual: current.documentId });
+  }
+  if (current.pageId !== source.pageId) {
+    planFail('STALE_PAGE', { expected: source.pageId, actual: current.pageId });
+  }
+  if (current.revisionId !== source.revisionId) {
+    planFail('STALE_REVISION', { expected: source.revisionId, actual: current.revisionId });
+  }
+  if (app?.history?.pending) planFail('HISTORY_BUSY');
+  return current;
+}
+
+function stoppedStepResult(step, stepIndex, diagnostic) {
+  return {
+    stepId: step.stepId,
+    stepIndex,
+    operation: step.operation,
+    state: 'STOPPED',
+    ok: false,
+    diagnostic: clone(diagnostic)
+  };
+}
+
+export class ChatCreativePlanController {
+  constructor(app) {
+    this.app = app;
+    this.plans = new Map();
+    this.approvalSequence = 0;
+  }
+
+  inspect() {
+    return buildChatStateSummary(this.app);
+  }
+
+  getPlan(planId) {
+    const plan = this.plans.get(String(planId || ''));
+    return plan ? clone(plan) : null;
+  }
+
+  propose(rawPlan) {
+    const { plan, validation } = createChatCreativePlanProposal(this.app, rawPlan);
+    if (this.plans.has(plan.planId)) planFail('PLAN_EXISTS', { planId: plan.planId });
+    const record = planRecord(plan, validation);
+    this.plans.set(record.planId, record);
+    return clone(record);
+  }
+
+  validate(planId) {
+    const record = requirePlan(this, planId);
+    if (record.status !== 'PROPOSED') {
+      planFail('PLAN_STATE_INVALID', { actual: record.status });
+    }
+    const { validation } = validateChatCreativePlanAgainstState(this.app, record, {
+      requireHistoryIdle: true,
+      source: record.source
+    });
+    record.validation = clone(validation);
+    this.plans.set(record.planId, record);
+    return clone(validation);
+  }
+
+  approve(planId) {
+    const record = requirePlan(this, planId);
+    if (record.status !== 'PROPOSED') {
+      planFail('PLAN_STATE_INVALID', { actual: record.status });
+    }
+    const { validation } = validateChatCreativePlanAgainstState(this.app, record, {
+      requireHistoryIdle: true,
+      source: record.source
+    });
+    const approvalToken = `INK-LOCAL-PLAN-APPROVAL:${record.planId}:${++this.approvalSequence}`;
+    record.validation = clone(validation);
+    record.status = 'APPROVED';
+    record.approved = true;
+    record.approvalToken = approvalToken;
+    record.diagnostics = [];
+    this.plans.set(record.planId, record);
+    return clone(record);
+  }
+
+  reject(planId) {
+    const record = requirePlan(this, planId);
+    if (!['PROPOSED', 'APPROVED'].includes(record.status)) {
+      planFail('PLAN_STATE_INVALID', { actual: record.status });
+    }
+    record.status = 'REJECTED';
+    record.approved = false;
+    record.approvalToken = null;
+    record.result = {
+      schema: CHAT_CREATIVE_PLAN_RESULT_SCHEMA,
+      version: CHAT_CREATIVE_PLAN_RESULT_VERSION,
+      ok: false,
+      planId: record.planId,
+      status: 'REJECTED',
+      stepResults: clone(record.stepResults),
+      stoppedStepId: null,
+      revision: {
+        startingRevisionId: record.source.revisionId,
+        endingRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null
+      }
+    };
+    this.plans.set(record.planId, record);
+    return clone(record);
+  }
+
+  assertApproved(planId, approvalToken) {
+    const record = requirePlan(this, planId);
+    if (record.status !== 'APPROVED' || !record.approved) {
+      planFail('APPROVAL_REQUIRED', { actual: record.status });
+    }
+    if (!approvalToken || approvalToken !== record.approvalToken) {
+      planFail('APPROVAL_TOKEN_INVALID');
+    }
+    validateChatCreativePlanAgainstState(this.app, record, {
+      requireHistoryIdle: true,
+      source: record.source
+    });
+    return record;
+  }
+
+  async execute(planId, approvalToken) {
+    const record = this.assertApproved(planId, approvalToken);
+    const bounded = this.app?.chatBoundedEdit;
+    if (!bounded?.propose || !bounded?.approve || !bounded?.execute) {
+      planFail('BOUNDED_EDIT_UNAVAILABLE');
+    }
+
+    const startingRevisionId = record.source.revisionId;
+    let expectedFingerprint = record.source.documentFingerprint;
+    const completedIds = new Set();
+
+    record.status = 'EXECUTING';
+    record.approved = false;
+    record.approvalToken = null;
+    record.stepResults = [];
+    record.diagnostics = [];
+    this.plans.set(record.planId, record);
+
+    for (let stepIndex = 0; stepIndex < record.steps.length; stepIndex += 1) {
+      const step = record.steps[stepIndex];
+      try {
+        for (const dependency of step.dependsOn) {
+          if (!completedIds.has(dependency)) {
+            planFail('DEPENDENCY_NOT_COMPLETED', {
+              stepId: step.stepId,
+              stepIndex,
+              dependency
+            });
+          }
+        }
+
+        assertExecutionIdentity(this.app, record.source);
+        assertExecutionFingerprint(this.app, expectedFingerprint);
+
+        const task = stepAsEditTask(record, step);
+        validateChatEditTaskAgainstState(this.app, task, {
+          expected: task.expected,
+          requireHistoryIdle: true
+        });
+
+        const proposal = bounded.propose(task);
+        const technicalApproval = bounded.approve(proposal.proposalId);
+        const boundedResult = bounded.execute(
+          proposal.proposalId,
+          technicalApproval.approvalToken
+        );
+
+        expectedFingerprint = boundedResult?.revision?.documentFingerprint
+          || chatCreativePlanSource(this.app).documentFingerprint;
+        completedIds.add(step.stepId);
+        record.stepResults.push({
+          stepId: step.stepId,
+          stepIndex,
+          operation: step.operation,
+          state: 'COMPLETED',
+          ok: true,
+          proposalId: proposal.proposalId,
+          changed: Boolean(boundedResult?.changed),
+          targets: clone(boundedResult?.targets || step.targets),
+          history: clone(boundedResult?.history || null),
+          revision: clone(boundedResult?.revision || null)
+        });
+        this.plans.set(record.planId, record);
+      } catch (error) {
+        const diagnostic = chatCreativePlanDiagnostic(error, 'execute-step');
+        const stopped = stoppedStepResult(step, stepIndex, diagnostic);
+        record.stepResults.push(stopped);
+        record.status = 'STOPPED';
+        record.diagnostics = [diagnostic];
+        record.result = {
+          schema: CHAT_CREATIVE_PLAN_RESULT_SCHEMA,
+          version: CHAT_CREATIVE_PLAN_RESULT_VERSION,
+          ok: false,
+          planId: record.planId,
+          status: 'STOPPED',
+          stepResults: clone(record.stepResults),
+          stoppedStepId: step.stepId,
+          stoppedStepIndex: stepIndex,
+          remainingStepIds: record.steps.slice(stepIndex + 1).map(item => item.stepId),
+          revision: {
+            startingRevisionId,
+            endingRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null
+          },
+          diagnostic
+        };
+        this.plans.set(record.planId, record);
+        return clone(record.result);
+      }
+    }
+
+    record.status = 'COMPLETED';
+    record.result = {
+      schema: CHAT_CREATIVE_PLAN_RESULT_SCHEMA,
+      version: CHAT_CREATIVE_PLAN_RESULT_VERSION,
+      ok: true,
+      planId: record.planId,
+      status: 'COMPLETED',
+      stepResults: clone(record.stepResults),
+      stoppedStepId: null,
+      remainingStepIds: [],
+      revision: {
+        startingRevisionId,
+        endingRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null,
+        documentFingerprint: expectedFingerprint
+      }
+    };
+    this.plans.set(record.planId, record);
+    return clone(record.result);
+  }
+}
+
+export function createChatCreativePlanAdapter(appOrController) {
+  const controller = appOrController instanceof ChatCreativePlanController
+    ? appOrController
+    : (appOrController?.chatCreativePlan || new ChatCreativePlanController(appOrController));
+
+  return Object.freeze({
+    inspect() {
+      try { return { ok: true, action: 'inspect', result: controller.inspect() }; }
+      catch (error) { return chatCreativePlanDiagnostic(error, 'inspect'); }
+    },
+    propose(plan) {
+      try { return { ok: true, action: 'propose', result: controller.propose(plan) }; }
+      catch (error) { return chatCreativePlanDiagnostic(error, 'propose'); }
+    },
+    validate(planId) {
+      try { return { ok: true, action: 'validate', result: controller.validate(planId) }; }
+      catch (error) { return chatCreativePlanDiagnostic(error, 'validate'); }
+    },
+    approve(planId) {
+      try { return { ok: true, action: 'approve', result: controller.approve(planId) }; }
+      catch (error) { return chatCreativePlanDiagnostic(error, 'approve'); }
+    },
+    reject(planId) {
+      try { return { ok: true, action: 'reject', result: controller.reject(planId) }; }
+      catch (error) { return chatCreativePlanDiagnostic(error, 'reject'); }
+    },
+    async execute(planId, approvalToken) {
+      try {
+        return {
+          ok: true,
+          action: 'execute',
+          result: await controller.execute(planId, approvalToken)
+        };
+      } catch (error) {
+        return chatCreativePlanDiagnostic(error, 'execute');
+      }
+    }
+  });
+}
+
+export function installChatCreativePlan(app) {
+  const controller = new ChatCreativePlanController(app);
+  app.chatCreativePlan = controller;
+  app.chatCreativePlanAdapter = createChatCreativePlanAdapter(controller);
+  return controller;
+}
