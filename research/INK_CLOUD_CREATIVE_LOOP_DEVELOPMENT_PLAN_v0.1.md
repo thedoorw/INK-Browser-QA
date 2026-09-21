@@ -808,3 +808,250 @@ Target gate:
 `INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS`
 
 No automatic next feature stage should be selected until the user has seen and used this first web platform.
+
+
+## AI Drawing Studio execution plan — single-user + CHAT collaboration
+
+The next product evolution target is not generic multiplayer collaboration. Phase 1 of the AI drawing studio is explicitly:
+
+```text
+PRIMARY_HUMAN_USER = ONE
+COLLABORATION_TEAM = USER + CHAT
+MULTI_USER_REALTIME_COLLABORATION = DEFERRED
+TEAM_ADMIN / PRESENCE / CURSORS / COMMENTS_PLATFORM = NOT_REQUIRED
+```
+
+The first studio milestone is therefore a single-user human-AI creative workspace in which CHAT acts as the collaboration team around the same authoritative INK document.
+
+This plan extends the already-validated creative loop rather than creating a second product roadmap.
+
+### Shared-core rule for studio evolution
+
+Capabilities that define drawing, geometry, document state, selection, history, revision or AI edit semantics must evolve in the shared INK core so both delivery forms can consume them:
+
+```text
+                         shared INK core
+                              │
+              ┌───────────────┴───────────────┐
+              │                               │
+      Portable / Web INK                 Cloud delivery
+      browser-local first                optional adapters
+```
+
+External technologies may provide algorithms or runtimes, but must not become a second document/vector/history authority.
+
+```text
+external algorithm/runtime
+→ bounded adapter
+→ normalize into INK model
+→ INK remains authoritative
+```
+
+Cloud-only services such as hosted persistence, remote AI providers, account/session infrastructure and future synchronization remain optional adapters. They must not be required for the core drawing studio workflow.
+
+### Execution sequence
+
+The next implementation stages should be selected from this sequence and converted one at a time into bounded Work Orders. Each stage requires a concrete implementation target, reusable technology evaluation where appropriate, static/browser runtime verification, and an acceptance gate.
+
+#### Stage A — Vector Geometry Kernel
+
+Purpose: strengthen the mathematical editing core beneath existing Path editing.
+
+Candidate reusable technologies:
+
+- Paper.js algorithms;
+- Clipper2;
+- Bezier.js or equivalent curve math.
+
+Bounded capability target:
+
+- path / curve intersections;
+- Boolean union / subtract / intersect / exclude;
+- offset / inflate / deflate where structurally safe;
+- split / project / nearest-point operations;
+- compound-path / winding / hole integrity;
+- deterministic normalization back into authoritative INK Path.
+
+Acceptance principle:
+
+```text
+external geometry operation
+→ normalized INK Path result
+→ History / save / load / runtime verified
+→ no second vector authority
+```
+
+#### Stage B — AI Document Bridge
+
+Purpose: allow CHAT to understand and address the current artwork precisely without direct document mutation.
+
+Build on the existing CHAT context and bounded-edit contract.
+
+Required direction:
+
+- stable document/object/path references;
+- object and region grounding;
+- selection-aware context;
+- structured document summaries;
+- semantic labels where confidence is sufficient;
+- natural-language intent → validated INK command;
+- explicit proposal / approval / execution boundary.
+
+Core contract:
+
+```text
+CHAT
+→ document context
+→ object / region / geometry grounding
+→ structured command
+→ schema validation
+→ user approval
+→ INK execution
+```
+
+CHAT must not directly rewrite document JSON or bypass INK command semantics.
+
+#### Stage C — Revision / Provenance Engine
+
+Purpose: evolve current revision recovery into traceable creative history.
+
+Required direction:
+
+- semantic operation log;
+- periodic snapshots;
+- stable revision identity;
+- before/after metadata;
+- source derivation;
+- user vs CHAT action attribution;
+- restore/reopen;
+- relationship from reference → extraction → path → edit → revision.
+
+Conceptual model:
+
+```text
+reference
+→ extraction activity
+→ path
+→ user / CHAT edit
+→ revision
+```
+
+JSON Patch and W3C PROV concepts may be used as references, but the authoritative model remains INK-specific.
+
+CRDT/multiplayer systems such as Yjs or Automerge are explicitly deferred until a real multi-user requirement exists.
+
+#### Stage D — Semantic Region / Selection Grounding
+
+Purpose: make local visual discussion and editing precise.
+
+Required direction:
+
+- point / box / path / group selection;
+- mask / semantic region boundary;
+- AI-suggested region with user confirmation;
+- stable selected-object identity;
+- selection history where needed;
+- commands that target regions without flattening geometry.
+
+This stage should reuse existing extraction and document structures rather than create an independent segmentation editor.
+
+#### Stage E — Visual Comparison + Variant Exploration
+
+Purpose: support actual creative exploration rather than one-way editing.
+
+Required direction:
+
+- current vs previous;
+- reference vs current;
+- Variant A / B / C;
+- side-by-side and overlay comparison;
+- structural difference metadata;
+- choose / restore / branch / merge where bounded;
+- variants remain editable INK documents, not flattened image outputs.
+
+#### Stage F — Style / Method / Creative Memory
+
+Purpose: retain reusable creative knowledge across work.
+
+Required direction:
+
+- shape vocabulary;
+- composition rules;
+- line behavior;
+- material treatment;
+- color logic;
+- accepted / rejected approaches;
+- project-level creative decisions;
+- reusable method records tied to real revisions and outcomes.
+
+This must grow from actual use evidence. It must not become a speculative ontology project.
+
+#### Stage G — Research → Creation Bridge
+
+Purpose: convert visual research into usable creative constraints and methods.
+
+Target flow:
+
+```text
+research / references
+→ extracted visual principles
+→ geometry / composition / palette / material constraints
+→ bounded creative operations
+→ editable INK artwork
+```
+
+This is a later studio capability and must depend on the preceding document, grounding, revision and comparison foundations.
+
+### Existing capability reuse
+
+The following are already part of the Creative Loop and should be strengthened in place rather than restarted as separate programs:
+
+- Reference processing;
+- Extract / segmentation;
+- Path vectorization;
+- Path editing;
+- Compose;
+- Repaint / Material;
+- CHAT structured edit;
+- Revision / History;
+- Structure-Aware reconstruction;
+- Portable / Web shared-core validation.
+
+Candidate mature technologies should be integrated only when they solve a demonstrated gap. The program should prefer composition of mature modules over reimplementing known algorithms.
+
+### Practical execution rule
+
+This document is the product/development plan. Do not create a new planning document for every studio concept.
+
+Implementation should proceed as:
+
+```text
+master development plan
+→ select next bounded studio gap
+→ Current Work Order
+→ DEV implementation
+→ source/static/runtime evidence
+→ MR review
+→ promotion
+→ real creative use
+→ next observed gap
+```
+
+Documentation growth is not itself progress. A new document is justified only when implementation requires a durable technical contract or evidence artifact that cannot be kept clearly inside the existing plan / Work Order / review structure.
+
+### Phase-1 studio boundary
+
+Until explicitly changed by the user:
+
+```text
+STUDIO_USER_MODEL = SINGLE_USER
+HUMAN_AI_TEAM = USER + CHAT
+MULTI_USER_COLLABORATION = DEFERRED
+REALTIME_PRESENCE = DEFERRED
+SHARED_CURSORS = DEFERRED
+COMMENT_PLATFORM = DEFERRED
+TEAM_ADMIN = DEFERRED
+CRDT = DEFERRED
+```
+
+The priority is to make USER + CHAT capable of sustained, precise, revisable visual creation inside one authoritative INK workspace.
