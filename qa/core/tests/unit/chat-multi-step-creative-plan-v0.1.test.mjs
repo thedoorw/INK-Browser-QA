@@ -134,6 +134,7 @@ test('creative-plan contract is deterministic and ordered dependencies reject fo
   const second = normalizeChatCreativePlan(raw);
   assert.equal(first.planId, second.planId);
   assert.deepEqual(first.steps, second.steps);
+  assert.deepEqual(JSON.parse(JSON.stringify(first)), first);
   assert.equal(first.steps.length, 2);
   assert.equal(first.source.revisionId, app.revisions.revisionIdFor(app.doc.id));
 
@@ -194,6 +195,7 @@ test('approved multi-step plan executes in order through existing bounded-edit a
   assert.notEqual(response.result.revision.endingRevisionId, startingRevisionId);
   assert.equal(app.revisions.revisionIdFor(app.doc.id), response.result.revision.endingRevisionId);
   assert.equal(response.result.revision.comparison.objectCounts.changed, 2);
+  assert.deepEqual(JSON.parse(JSON.stringify(response.result)), response.result);
   assert.equal(app.chatCreativePlan.history, undefined);
 
   assert.equal(app.history.undo(), true);
