@@ -258,3 +258,45 @@ Examples of optional enhancement layers:
 If an optional enhancement is unavailable, the INK Cloud core must degrade to a still-usable browser-local workflow rather than become non-functional.
 
 Any future Work Order that introduces a mandatory server/Actions/paid-cloud dependency for the core human-AI collaboration loop must STOP for architecture review.
+
+
+## Product display-version policy
+
+User-authoritative rule:
+
+```text
+PORTABLE_BASE_VERSION = v0.1
+CLOUD_WEB_BASE_VERSION = v0.1
+```
+
+Both delivery forms stay on base version `v0.1` until the USER explicitly authorizes a base-version change.
+
+Supplementary text may follow the base version to identify delivery form, maturity, build context or release state. Examples:
+
+```text
+INK v0.1 · Portable
+INK v0.1 · Web
+INK v0.1 · Web Preview
+INK v0.1 · Portable RC
+```
+
+The supplementary text is not a semantic version increment.
+
+The following do **not** justify changing the base version by themselves:
+
+- bug fixes;
+- bounded fixes;
+- UI corrections;
+- refactors;
+- QA closure;
+- runtime fixes;
+- deployment changes;
+- adapter substitutions;
+- documentation corrections;
+- ordinary feature completion inside the same user-defined product stage.
+
+Base-version changes require explicit USER decision. DEV and MR must not infer a version bump from the number of fixes, commits, Work Orders or internal milestones.
+
+Historical engineering/source identities such as `INK v1.6.5 RC` remain valid only as identities for the imported historical baseline from which the current project evolved. They must not be presented as the current product display version after this policy takes effect.
+
+This version policy is independent from document/schema `FORMAT_VERSION`. A product display version of `v0.1` does not imply changing `FORMAT_VERSION = 4`.
