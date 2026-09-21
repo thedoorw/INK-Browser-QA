@@ -1,75 +1,128 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-014` |
-| TITLE | `Creative Workspace Minimum UX v0.1` |
-| BRANCH | `work/ink-cloud-014` |
-| BASE_MAIN | `512426a20b4dcfd76fb6e90b38bfc9cd366e2833` |
-| TASK_STATUS | `DEV_HANDOFF` |
-| DEV_HANDOFF | `READY` |
-| MR_REVIEW | `REQUIRED` |
-| GATE | `CREATIVE_WORKSPACE_MINIMUM_UX_WORKS` |
-| FORMAT_VERSION | `4 / UNCHANGED` |
-| PACKAGE_MUTATION | `0` |
-| MAIN_MERGE | `0` |
-| REMOTE_SERVICE_REQUIRED | `0` |
+| CURRENT_TASK_ID | `INK-CLOUD-006` |
+| DEV_MODE | `LONG_SEQUENCE_WORKPACK` |
+| DEV_WORK_BRANCH | `work/ink-cloud-006` |
+| BASE_BRANCH_HEAD_AT_START | `d1f908825f8419f053753b93d13a1a4ee901de91` |
+| LATEST_DEV_COMMIT | `184c74195e976526713ad549b236e13c9dac9ad7` |
+| DEV_STATE | `DEV_HANDOFF` |
+| MR_GATE | `REQUIRED_AFTER_HANDOFF` |
+| FORMAT_VERSION_CHANGE | `0 / OPTIONAL_FORMAT_4_EXTENSIONS` |
+| GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
 | RUNTIME_QA | `DEFERRED` |
+| CLOUD_START_GATE | `BLOCKED` |
 
-## Checkpoints
+## Objective
 
-- Phase A `673f2730b3bfbaa27d031d4b63beb3a5f76eef84` — workspace state model + shell.
-- Phase B `69496072abd2be2119b0018ab1762d343810a36d` — Reference → Extract → editable Path continuity.
-- Phase C `c0d4ab2f2099d80e967920693254bcaa8c071f0d` — Path Edit / expressive stroke / Compose / Repaint.
-- Phase D `dd9f39a9282104080cce8117e6a9cdebf52d9ca8` — CHAT inspect/propose/approve/reject/execute loop.
-- Phase E `0e5fe1f5b525e3eef325e9d099d0a2884f1fdd4a` — Revision capture/restore UX.
-- Phase F bounded sync fix `29df784c5cbf3baca6ca6d66ecd2da5717637c11` — live tool/selection/History state refresh.
-- Phase F bounded Revision summary fix `a635d443eb0f5a28db311f7f94febcb6d8111e03` — existing comparison counts exposed.
+Complete the final pre-Cloud structural workpack defined in:
 
-## Phase F QA
+`ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-Executed:
+Focus:
 
-- exact GitHub source parse/evaluation harness: PASS;
-- deterministic workspace controller-delegation path: PASS;
-- CHAT pre-approval execution guard: PASS;
-- Revision restore History boundary: PASS;
-- source/static gate: `28/28 PASS` before final bounded fix;
-- source/static gate: `25/25 PASS` after final bounded fix;
-- Revision comparison display harness: PASS.
+- Layout / Constraints versioned structural schema;
+- transport-neutral file/revision persistence contract;
+- migration / integrity / save-load closure;
+- compatibility with accepted INK-CLOUD-002 through 005.
 
-Added:
+## Progress rule
 
-- `qa/core/tests/unit/creative-workspace-minimum-ux-v0.1.test.mjs`;
-- `qa/core/evidence/INK_CLOUD_014_WORKSPACE_QA.txt`;
-- `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`.
+At each meaningful checkpoint record:
 
-Not claimed:
+- exact SHA;
+- files changed;
+- schema decisions;
+- checks actually executed;
+- checks not executed;
+- known gaps.
 
-- browser/runtime interaction or visual QA;
-- GitHub Actions execution.
+If FORMAT_VERSION change is required:
 
-## Acceptance
+`STOP / MR_DECISION_REQUIRED`
+
+Do not independently change FORMAT_VERSION.
+
+## Completion
 
 ```text
-MINIMUM_WORKSPACE = IMPLEMENTED
-STATE_VISIBILITY = IMPLEMENTED
-REFERENCE_EXTRACT_PATH_UI = CONNECTED
-PATH_EDIT_UI = CONNECTED
-COMPOSE_REPAINT_UI = CONNECTED
-CHAT_APPROVAL_LOOP_UI = CONNECTED
-REVISION_CAPTURE_RESTORE_UI = CONNECTED
-EXISTING_CONTROLLERS = REUSED
-STRUCTURED_DOCUMENT = PRESERVED
-HISTORY_REVISION_BOUNDARY = PRESERVED
-STATIC_BROWSER_LOCAL_CORE = PRESERVED
-REMOTE_SERVICE_REQUIRED = 0
-FORMAT_VERSION = 4
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-006
+BRANCH = work/ink-cloud-006
+FINAL_HEAD = <exact SHA>
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0 OR MR_DECISION_REQUIRED
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
 RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
 ```
 
-`DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+## Checkpoint 1 — Layout and persistence schema
+
+Branch checkout started from GitHub `d1f908825f8419f053753b93d13a1a4ee901de91`. Read required control files, readiness assessment, accepted Component report, and required document/storage/assets/source tests.
+
+Implemented initial optional schemas:
+
+- `INK-LAYOUT-1` on Frame and `INK-LAYOUT-ITEM-1` on Frame children;
+- pure horizontal/vertical flow and resize-constraint evaluation plans;
+- existing-History commands for set/remove Frame and child metadata;
+- deterministic known-field normalization with unknown extension preservation;
+- `INK-FILE-ENVELOPE` v1.0 with stable file/revision identity, format/extension/migration declarations, document payload, asset reference mirror, timestamps and canonical fingerprint;
+- migration/integrity exports and diagnostics.
+
+Actually executed: source syntax checks for new modules and touched document modules PASS; `git diff --check` PASS. New layout/persistence suite initially 17/18 because one expected hug-height arithmetic value was incorrect (51 vs actual 46); expectation corrected from padding + intrinsic sizes + gap. Final rerun pending at this checkpoint. Browser Runtime QA remains DEFERRED.
+
+## Checkpoint 2 — semantic edge hardening
+
+Published schema checkpoint: `dc6c20ca71543773b791c571c51a423372b20d28`.
+
+Hardened deterministic evaluation and envelope behavior:
+
+- unknown future Frame layout schemas are preserved and reported as unsupported, never interpreted as v1;
+- unknown child schemas reject evaluation safely;
+- `fill` inside a `hug` axis uses intrinsic size with an explicit diagnostic, avoiding cyclic size authority;
+- cross-axis stretch is suppressed when that container axis is hug;
+- envelope input validates arrays/IDs/timestamps/format version;
+- revision creation retains existing future extension declarations while adding newly required native extensions;
+- feature detection now scans structural objects only, so workspace `cameras.layout` cannot falsely declare `ink.layout.v1`.
+
+Actually executed: new suite **20/20 PASS**; accepted Component/Frame/Group/Transform plus retained core suites via `run-component-foundation-checks.mjs`: **62/62 + 29/29 PASS**, 6 syntax checks and FORMAT_VERSION=4 PASS. Initial edge test exposed false `ink.layout.v1` detection from workspace camera naming; fixed by using `walkPageObjects()` and rerun. Runtime QA remains DEFERRED.
+
+## Checkpoint 3 — fail-closed persistence validation and combined evidence
+
+Published semantic hardening checkpoint: `04fab9e69a90ef5e90fd34a9030f6f2e389fb49a`.
+
+Closed malformed-input and verification edges:
+
+- envelope construction requires a stable document/file ID and parseable timestamps;
+- cyclic or otherwise non-serializable native payloads fail with bounded diagnostics instead of recursing or throwing during inspection;
+- extension and asset-reference inspection is exception-safe and remains fail closed;
+- added one command that executes accepted 002–005 compatibility, retained shared-core tests, the 006 contract suite, source syntax, format-version and network-boundary checks;
+- captured the exact command output in `qa/core/evidence/INK_CLOUD_006_NODE_CHECKS.txt`.
+
+Actually executed: combined runner **112/112 Node tests PASS** (62 accepted structural/Component + 29 retained shared-core + 21 Layout/persistence), **8/8 source syntax checks PASS**, `FORMAT_VERSION = 4` PASS, bounded new modules contain no network transport primitive, and `git diff --check` PASS. Runtime browser/Canvas/WebGL/pointer/IndexedDB and hosted Actions QA remain DEFERRED.
+
+Published implementation and executed-QA checkpoint: `184c74195e976526713ad549b236e13c9dac9ad7`.
+
+## Handoff
+
+The required closure report is `research/INK_LAYOUT_PERSISTENCE_CONTRACT_CLOSURE_REPORT_v0.1.md`. The final documentation-only handoff commit follows the exact implementation/QA checkpoint above. Because a Git commit cannot contain its own resulting SHA, its exact SHA is recorded in the DEV handoff response and is resolvable from the `work/ink-cloud-006` branch ref pinned for MR review.
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CLOUD-006
+BRANCH = work/ink-cloud-006
+IMPLEMENTATION_AND_QA_HEAD = 184c74195e976526713ad549b236e13c9dac9ad7
+PRODUCT_SOURCE_MUTATION = BOUNDED / REPORTED
+FORMAT_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+RUNTIME_QA = DEFERRED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
