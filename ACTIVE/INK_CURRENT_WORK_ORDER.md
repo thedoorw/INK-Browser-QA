@@ -495,3 +495,25 @@ The same task may now proceed to:
 `Phase B / Phase C / Phase D — visible web integration, conversational CHAT surface and Rose Window runtime case.`
 
 This is not a final 018 gate pass. The finished product integration still requires the full browser/runtime acceptance defined above.
+
+
+## Browser/runtime tool boundary — explicit
+
+For INK-CLOUD-018 browser/runtime validation:
+
+```text
+AUTHORITATIVE_RUNTIME = Windows self-hosted runner
+RUNNER_LABELS = [self-hosted, Windows, X64]
+```
+
+The following are NOT authorized as substitutes for runtime evidence:
+
+- TinyFish;
+- ChatGPT Cloud Browser / Work browser;
+- external proxy browser services;
+- Val Town browser/proxy workarounds;
+- any remote browser session that does not execute on the user's registered Windows self-hosted runner.
+
+These tools may not be used to claim Phase F runtime acceptance.
+
+If browser interaction is required, it must be executed through the existing self-hosted Windows workflow or an explicitly authorized user-operated local browser path.
