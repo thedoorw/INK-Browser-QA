@@ -414,3 +414,15 @@ Invariant checks:
 Next:
 
 `PHASE_F_SELF_HOSTED_WINDOWS_BROWSER_QA`
+
+
+## Runtime browser authority clarification
+
+```text
+TINYFISH = PROHIBITED_FOR_RUNTIME_EVIDENCE
+CHATGPT_CLOUD_BROWSER = PROHIBITED_FOR_RUNTIME_EVIDENCE
+EXTERNAL_BROWSER_PROXY = PROHIBITED_FOR_RUNTIME_EVIDENCE
+AUTHORITATIVE_BROWSER_RUNTIME = WINDOWS_SELF_HOSTED_RUNNER
+```
+
+Do not use TinyFish or another remote browser to replace Phase F execution on the registered Windows self-hosted runner.
