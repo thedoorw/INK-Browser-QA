@@ -137,3 +137,33 @@ Checkpoint series:
 - `INK-CLOUD-015 show plan target identities in workspace`
 
 `PHASE_F_REGRESSION_NEXT`
+
+
+## Phase F regression suite added
+
+Added reproducible unit/source coverage for:
+
+- deterministic 2+ step plan contract and dependency order rejection;
+- validation zero mutation;
+- execute-before-approval rejection;
+- ordered bounded execution through existing History;
+- Revision before/after capture relation;
+- stale Revision rejection;
+- stale target rejection with no retarget;
+- mid-plan failure STOP with remaining steps untouched;
+- invalid/busy History guard;
+- browser-local/no-remote source contract;
+- runtime export/install/cache wiring;
+- `FORMAT_VERSION = 4`.
+
+Tests:
+
+- `qa/core/tests/unit/chat-multi-step-creative-plan-v0.1.test.mjs`
+- `qa/core/tests/unit/chat-multi-step-creative-plan-source-v0.1.test.mjs`
+
+Checkpoint series:
+
+- `Add INK-CLOUD-015 multi-step plan regression tests`
+- `Add INK-CLOUD-015 source contract regression tests`
+
+`PHASE_F_EXECUTION_EVIDENCE_NEXT`
