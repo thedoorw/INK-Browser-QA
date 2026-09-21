@@ -32,7 +32,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-          $archive = Join-Path $env:SystemDrive 'i18.zip'
+          $archive = Join-Path $env:RUNNER_TEMP 'i18.zip'
           $extract = Join-Path $env:SystemDrive 'i18'
           Remove-Item $archive -Force -ErrorAction SilentlyContinue
           Remove-Item $extract -Recurse -Force -ErrorAction SilentlyContinue
