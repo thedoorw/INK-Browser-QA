@@ -138,11 +138,6 @@ jobs:
               sha: manifestBlob.data.sha
             });
 
-            tree.push({
-              path: incomingZip,
-              sha: null
-            });
-
             const newTree = await github.rest.git.createTree({
               owner,
               repo,
