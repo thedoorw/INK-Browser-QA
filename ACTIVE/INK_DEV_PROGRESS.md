@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-016 / PHASE_C_COMPLETE / PHASE_D_ACTIVE`
+STATUS: `INK-CLOUD-016 / PHASE_D_COMPLETE / PHASE_E_COMPLETE / PHASE_F_ACTIVE`
 
 | Field | Value |
 |---|---|
@@ -25,13 +25,14 @@ Checkpoint: `a976c92e0cb15712d0592c255c25972bf7d5614d`
 
 Evidence: `research/INK_PORTABLE_DEPENDENCY_INVENTORY_v0.1.md`
 
-Findings:
+Result:
 
-- both static entries converge on authoritative `src/ink.js`;
-- no second editor/document/History/Revision authority found;
-- CHAT bounded edit and multi-step plan remain browser-local;
-- external model transports are optional adapters, not core requirements;
-- service-worker module closure and missing-icon defects were confirmed.
+```text
+PORTABLE_DEPENDENCY_INVENTORY = COMPLETE
+SHARED_CORE_IDENTITY = PRESERVED
+MANDATORY_REMOTE_DEPENDENCY_FOUND = 0
+SECOND_EDITOR_CORE_FOUND = 0
+```
 
 ## Phase B — Static/portable load closure
 
@@ -53,31 +54,13 @@ Static verification: `10 / 10 PASS`.
 
 Status: `COMPLETE`
 
-Evidence checkpoint:
+Evidence checkpoint: `ec5007bbc28b6453af373171c84e8e312889e7de`
 
-`ec5007bbc28b6453af373171c84e8e312889e7de`
+Evidence: `qa/core/evidence/INK_CLOUD_016_PHASE_C_COMPATIBILITY.txt`
 
-Evidence:
+Verification: `14 / 14 PASS`.
 
-`qa/core/evidence/INK_CLOUD_016_PHASE_C_COMPATIBILITY.txt`
-
-Exact branch checks:
-
-```text
-document/file-envelope compatibility          PASS
-InkStore browser-local persistence            PASS
-single HistoryManager authority               PASS
-Revision same-store wiring                    PASS
-Revision restore + RESET_TO_REVISION          PASS
-CHAT bounded-edit approval + History reuse    PASS
-CHAT multi-step explicit approval             PASS
-CHAT multi-step bounded-edit delegation       PASS
-Creative Workspace adapter/view boundary      PASS
-product/source/src branch diff vs main        0 files
-TOTAL                                          14 / 14 PASS
-```
-
-Disposition:
+Result:
 
 ```text
 DOCUMENT_PERSISTENCE_COMPATIBILITY = VERIFIED
@@ -86,13 +69,54 @@ REVISION_COMPATIBILITY = VERIFIED
 CHAT_BOUNDED_EDIT_LOCAL = VERIFIED
 CHAT_MULTI_STEP_LOCAL = VERIFIED
 WORKSPACE_CORE_DEPENDENCY = 0
-HARD_STOP = NO
 ```
+
+## Phase D — Portable integration harness
+
+Status: `COMPLETE`
+
+Harness checkpoint:
+
+`de1c3e94fec8404ca2841452901ff288fc7f74b7`
+
+Evidence checkpoint:
+
+`f48619e9ecf3065e3814c1d67735906de88ea78d`
+
+Files:
+
+- `qa/core/tests/unit/portable-baseline-integration-v0.1.test.mjs`
+- `qa/core/evidence/INK_CLOUD_016_PORTABLE_INTEGRATION_HARNESS.txt`
+
+Executed evidence:
+
+```text
+SOURCE_SHELL ↔ src tree                         175 / 175 PASS
+STATIC ENTRY / INSTALL CHECKS                   10 / 10 PASS
+PERSISTENCE + COLLABORATION SOURCE CHECKS       14 / 14 PASS
+NODE 22 HARNESS SYNTAX                          PASS
+FULL NODE HARNESS EXECUTION                     DEFERRED
+BROWSER RUNTIME QA                              DEFERRED
+```
+
+The full Node harness was not claimed as executed because this DEV environment has connector access but no materialized branch checkout/network clone, and GitHub Actions is quota-exhausted. The harness is committed and directly runnable from a checkout.
+
+## Phase E — Bounded gap correction
+
+Status: `COMPLETE / NO FURTHER GAP`
+
+The only portable integration blockers found were the Phase B static-shell defects. After correction:
+
+- no additional shared-core code change is required;
+- no format bump is required;
+- no core fork is required;
+- no mandatory backend is required;
+- no package mutation is required.
+
+`HARD_STOP = NO`
 
 ## Current work
 
 Proceeding with:
 
-`Phase D — Portable integration harness`
-
-Package/release artifacts remain untouched.
+`Phase F — Portable Baseline Integration Report / DEV handoff`
