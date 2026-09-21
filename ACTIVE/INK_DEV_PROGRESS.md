@@ -13,7 +13,11 @@ STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 | MR_REVIEW | `REQUIRED` |
 | TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
 | TECHNICAL_CLOSURE | `COMPLETE` |
-| CANONICAL_BENCHMARK_RERUN | `DEFERRED_BY_CURRENT_EXECUTION_ENVIRONMENT` |
+| SUPPLEMENTARY_BENCHMARK | `EXECUTED_PASS` |
+| TEST_CLASS | `NON_CANONICAL_SUPPLEMENTARY_TEST` |
+| OVERLAY_QA | `EXECUTED` |
+| HARD_BENCHMARK_COMPARISON | `RECORDED` |
+| STRUCTURE_AWARE_BENCHMARK | `NOT_IMPROVED` |
 | DIRECT_EXTRACTION_BASELINE | `PRESERVED` |
 | PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
 | FORMAT_VERSION | `4 / UNCHANGED` |
@@ -21,23 +25,7 @@ STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 | MAIN_MERGE | `0` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Objective result
-
-The known single-Path bottleneck is closed:
-
-```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Group
-→ existing Repeat / Transform
-→ structured traversal
-→ deterministic identity
-→ bounded local correction compatibility
-```
-
-Direct Extraction remains the accepted baseline.
-
-## Checkpoints
+## Existing implementation checkpoints
 
 - Phase A — audit:
   `0a56b3389ca4372028628ea488d58cc8560a8e50`
@@ -49,102 +37,121 @@ Direct Extraction remains the accepted baseline.
   `1615eb51e10934c586b53764108d1b16796a7c60`
 - Phase E — comparative closure evidence:
   `32b73ca63ab6570832d3fbb3fac304359326a1a4`
-- Phase F — report + DEV handoff:
-  `THIS_COMMIT`
+- Phase F — prior report + DEV handoff:
+  `3000674329127956d20f6cb7f4a2fb88938152a7`
 
-## Implemented
+No prior multi-Path implementation was redone in this continuation.
 
-- `reconstructRadial()` accepts:
-  - the existing single Path contract;
-  - a deterministic complete Path array.
-- Multi-Path sources are represented by the existing `group` primitive.
-- Child Path IDs and extraction metadata remain intact.
-- Repeat source identity is deterministic.
-- Existing Repeat / Transform semantics are reused.
-- Existing structured SVG traversal is reused.
-- Workspace renderer, world bounds, hit testing and workspace SVG export now
-  traverse existing Repeat sources.
-- A bounded edit to a prototype child propagates through linked instances while
-  instance identity remains stable.
-- No raster flattening.
-- No second vector/document/History/Revision/renderer authority.
-- No FORMAT_VERSION change.
-- No package/release mutation.
-- No main merge.
+## USER-authorized supplementary fixture
+
+```text
+dimensions = 1086 × 1448
+mode = RGBA
+sha256 = af86d03e8947234a1cc301cd8c224520fc6065272f3f80d795b5a314953fdc25
+classification = NON_CANONICAL_SUPPLEMENTARY_TEST
+USER_ACCEPTED_FOR_017_OPERATIONAL_COMPLETION = YES
+```
+
+SHA / RGB-RGBA mismatch is not a STOP condition under the current main Work
+Order override.
+
+## Benchmark result
+
+Preserved measurement contract:
+
+```text
+threshold = 128
+ROI center = 543,638
+ROI radius = 466
+grid step = 4
+candidate counts = 6,8,10,12,14,16,18,20,24
+Direct Extraction route = unchanged
+```
+
+Direct Extraction:
+
+```text
+paths = 1386
+subpaths = 1426
+holes = 40
+nodes = 9339
+recall = 0.904256
+precision = 0.932975
+IoU = 0.849098
+FP = 899
+FN = 1325
+```
+
+Structure-Aware multi-Path:
+
+```text
+selected radial count = 6
+selected mask IoU = 0.317206
+prototype = 265 Paths / 269 subpaths / 4 holes / 1631 nodes
+retained = 265 Paths / 269 subpaths / 4 holes / 1631 nodes
+effective expanded nodes = 9786
+linked Repeat instances = 6
+recall = 0.505239
+precision = 0.509176
+IoU = 0.339764
+FP = 6740
+FN = 6847
+```
+
+Retention, provenance, Repeat identity and transforms all passed. Direct,
+prototype and structure reruns were deterministic.
+
+Result digest:
+
+`1eae7a22fe8d1eafbd01a353e59cd2b817ceaf9f246cc255154e9b903df38f1d`
+
+The whole supplementary benchmark was run twice and produced identical JSON.
+
+## Evidence
+
+Added:
+
+- `qa/core/evidence/INK_CLOUD_017_SUPPLEMENTARY_ROSE_WINDOW_BENCHMARK.json`
+
+Updated:
+
+- `qa/core/evidence/INK_CLOUD_017_COMPARISON_STATUS.json`
+- `research/INK_STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_REPORT_v0.1.md`
+- `ACTIVE/INK_DEV_PROGRESS.md`
+
+The INK-CLOUD-013 canonical evidence is unchanged.
 
 ## Executed checks
 
-Recorded in:
-
-- `qa/core/evidence/INK_CLOUD_017_STATIC_CHECKS.txt`
-- `qa/core/evidence/INK_CLOUD_017_COMPARISON_STATUS.json`
-
 PASS:
 
-- changed-module syntax;
-- focused exact-source multi-Path unit execution;
-- complete prototype-set retention contract;
-- stable child Path identities;
-- deterministic Repeat identities;
-- deterministic expanded child identities;
-- local correction propagation;
-- structured Repeat-of-Group SVG traversal;
-- JSON serialization roundtrip;
-- workspace renderer/bounds/hit/export source contract;
-- `FORMAT_VERSION = 4`;
-- Direct Extraction core/adapter unchanged by exact blob SHA;
-- vector/Repeat engine unchanged by exact blob SHA;
-- migration/integrity unchanged by exact blob SHA;
-- History/Revision unchanged by exact blob SHA;
-- integrated creative-loop test unchanged by exact blob SHA;
-- authorized branch scope only;
-- package/release mutation = 0;
-- main merge = 0.
+- supplied fixture dimensions / RGBA mode / SHA verification;
+- branch hard-benchmark logic with USER-authorized fixture-intake compatibility;
+- unchanged ROI / threshold / candidate counts / sample grid / Direct route;
+- multi-Path prototype retention exact;
+- provenance exact;
+- Repeat identity deterministic;
+- Repeat transforms exact;
+- direct/prototype/structure deterministic rerun;
+- complete benchmark second run JSON identical;
+- extraction core syntax;
+- extraction adapter syntax;
+- structure module syntax;
+- execution runner syntax.
 
-## Deferred / not claimed
+Not claimed:
 
-The canonical fixture remains authoritative in GitHub:
-
-`qa/fixtures/rose-window/rose-window-primary.png`
-
-SHA-256:
-
-`e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807`
-
-The deterministic runner is updated for the complete prototype set:
-
-`qa/core/tests/rose-window-hard-benchmark-v0.1.mjs`
-
-It preserves the original fixture SHA, ROI, threshold, candidate counts,
-sampling grid and Direct Extraction route.
-
-The current local execution environment cannot resolve `github.com`, and the
-canonical binary fixture is not present in the available local INK QA packages.
-Per explicit user instruction, no external browser service is used as a
-workaround.
-
-Therefore:
-
-```text
-ROSE_WINDOW_HARD_BENCHMARK_RERUN = NOT_EXECUTED_ENVIRONMENT
-OVERLAY_QA_HARNESS = READY
-NEW_STRUCTURE_AWARE_RASTER_METRICS = NOT_CLAIMED
-RUNTIME_QA = DEFERRED
-```
-
-The existing INK-CLOUD-013 benchmark remains the last executed canonical
-comparison until MR or another authorized environment runs the updated harness.
+- strict same-binary comparison to the historical INK-CLOUD-013 RGB fixture;
+- browser/runtime USER-path QA.
 
 ## Comparative decision evidence
 
 ```text
 STRUCTURE_AWARE_TECHNICALLY_CLOSED = YES
-STRUCTURE_AWARE_BENCHMARK = NOT_EVALUATED_CURRENT_ENVIRONMENT
+STRUCTURE_AWARE_BENCHMARK = NOT_IMPROVED
 DIRECT_EXTRACTION_BASELINE = PRESERVED
 PIPELINE_SELECTION = MR_DECISION_REQUIRED
 ```
-
-DEV does not replace the pipeline baseline.
 
 ## Handoff
 
@@ -153,8 +160,10 @@ TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-CLOUD-017
 BRANCH = work/ink-cloud-017
 TECHNICAL_CLOSURE = COMPLETE
+SUPPLEMENTARY_BENCHMARK = EXECUTED_PASS
+OVERLAY_QA = EXECUTED
+HARD_BENCHMARK_COMPARISON = RECORDED
 TARGET_GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-CANONICAL_BENCHMARK_RERUN = DEFERRED_BY_CURRENT_EXECUTION_ENVIRONMENT
 DIRECT_EXTRACTION_BASELINE = PRESERVED
 PIPELINE_SELECTION = MR_DECISION_REQUIRED
 FORMAT_VERSION = 4

@@ -9,17 +9,6 @@ Base main: `38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e`
 The Structure-Aware reconstruction single-Path bottleneck is technically closed
 without changing the accepted extraction stack.
 
-Previous boundary:
-
-```text
-sector extraction
-→ 265 Paths
-→ keep one largest Path
-→ Repeat
-```
-
-New boundary:
-
 ```text
 sector extraction
 → complete deterministic Path set
@@ -29,185 +18,149 @@ sector extraction
 → bounded child correction
 ```
 
-Direct Extraction remains the production baseline during DEV.
+Direct Extraction remains the production baseline pending MR review.
 
-## Reconstruction contract
+## Reconstruction closure
 
-`product/source/src/extraction/structure.js` now provides a deterministic
-prototype-set contract.
+`createStructurePrototypeSet()` retains the complete valid sector Path set in
+the existing INK Group primitive. `reconstructRadial()` accepts both the
+original single Path and the complete Path array, then delegates to the existing
+Repeat / Transform authority.
 
-`createStructurePrototypeSet()`:
+Verified properties:
 
-- requires one or more valid Paths;
-- rejects duplicate Path IDs;
-- requires common extraction provenance;
-- creates the prototype set using the existing INK `group` primitive;
-- preserves child Path IDs and Path-level extraction metadata;
-- records retained Path IDs/count and provenance status.
-
-`reconstructRadial()` retains the original single-Path contract and additionally
-accepts a complete Path array. A Path array is converted to the structured
-Group-backed prototype set and then passed through the existing
-`createRepeat()` authority.
-
-No raster flattening or second geometry engine was introduced.
-
-## Repeat / identity / correction closure
-
-Focused exact-source execution verified:
-
-- one linked radial Repeat owns the complete prototype set;
-- Repeat instance IDs remain stable across a bounded prototype-child edit;
-- expanded generated child IDs remain deterministic;
-- the child edit propagates through linked instances;
-- source Path IDs remain stable;
-- Repeat-of-Group SVG output recursively preserves the structured Paths.
-
-The existing Repeat identity implementation and vector engine were not modified.
-
-## Workspace traversal compatibility
-
-The multi-Path source exposed one bounded compatibility gap in
-`product/source/src/ink.js`: the main workspace did not directly traverse
-`repeat` objects even though the lower-level vector exporter already did.
-
-The bounded fix reuses existing authorities:
-
-- `repeatTransforms()`;
-- recursive `drawObject()`;
-- `vectorObjectToSVG()`.
-
-Repeat traversal is now covered by:
-
-- canvas rendering;
-- world bounds;
-- container-style hit testing;
-- workspace SVG export.
-
-No second renderer was added.
-
-## Serialization / authority preservation
-
-Executed verification includes JSON roundtrip of a Repeat whose source is a
-Group of editable Paths. It preserves:
-
-- prototype child Path IDs;
-- Repeat instance IDs;
-- complete structured source shape;
-- recursive SVG export after roundtrip.
-
-Exact GitHub blob comparison confirms no changes to:
-
-- Direct Extraction core;
-- extraction adapter;
-- vector/Repeat engine;
-- migration/integrity authority;
-- History;
-- Revision;
-- integrated creative-loop regression source.
-
-`FORMAT_VERSION = 4` remains unchanged.
-
-## Hard benchmark harness
-
-`qa/core/tests/rose-window-hard-benchmark-v0.1.mjs` was updated only to make
-the Structure-Aware comparison fair for the complete prototype set.
-
-Preserved:
-
-- canonical fixture identity;
-- fixture SHA-256;
-- ROI;
-- threshold;
-- candidate radial counts;
-- 4 px sampling grid;
-- Direct Extraction route.
-
-The updated Structure-Aware measurement records:
-
-- sector prototype total and retained total;
-- paths/subpaths/holes/nodes;
-- effective expanded nodes;
-- raster-proxy recall/precision/IoU;
-- false-positive / false-negative samples;
-- selected radial count and evidence score;
-- Repeat instance IDs and transform consistency;
-- exact provenance;
-- deterministic rerun;
-- a bounded two-component correction-cost proxy.
-
-Raster-proxy values remain explicitly non-semantic evidence.
-
-## Canonical benchmark execution status
-
-The canonical PNG is approximately 2.97 MB and is authoritative only in GitHub.
-The current local executor cannot resolve `github.com`; the available local INK
-ZIP packages do not contain the fixture.
-
-Per explicit user direction, external browser services are not a required QA
-path and are not used as a workaround.
-
-Therefore the updated canonical harness was not executed in this environment.
-
-```text
-ROSE_WINDOW_HARD_BENCHMARK_RERUN = NOT_EXECUTED_ENVIRONMENT
-OVERLAY_QA_HARNESS = READY
-NEW_STRUCTURE_AWARE_METRICS = NOT_CLAIMED
-RUNTIME_QA = DEFERRED
-```
-
-The last executed canonical comparison remains
-`qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json`.
-
-## QA evidence
-
-Machine-readable / text evidence:
-
-- `qa/core/evidence/INK_CLOUD_017_STATIC_CHECKS.txt`
-- `qa/core/evidence/INK_CLOUD_017_COMPARISON_STATUS.json`
-
-Executed PASS evidence:
-
-- changed-module syntax;
-- focused multi-Path exact-source unit execution;
-- deterministic Repeat identity;
-- bounded child-correction propagation;
-- structured SVG traversal;
+- complete prototype child Path retention;
+- stable child Path identities and extraction provenance;
+- deterministic Repeat instance identities;
+- structured SVG/render traversal;
 - JSON serialization roundtrip;
-- workspace traversal source contract;
-- base-main immutability of accepted Direct Extraction, Repeat, persistence,
-  History, Revision and integrated-loop authorities;
+- bounded prototype-child correction propagation;
+- no raster flattening;
+- no second vector/document/History/Revision/renderer authority;
 - `FORMAT_VERSION = 4`;
 - package mutation = 0;
 - main merge = 0.
 
-Browser/runtime USER-path QA and the canonical hard-benchmark rerun are not
-claimed PASS.
+## Supplementary benchmark execution
 
-## Comparative classification
+The USER-authorized supplied fixture was executed as:
+
+```text
+TEST_CLASS = NON_CANONICAL_SUPPLEMENTARY_TEST
+USER_ACCEPTED_FOR_017_OPERATIONAL_COMPLETION = YES
+dimensions = 1086 × 1448
+mode = RGBA
+sha256 = af86d03e8947234a1cc301cd8c224520fc6065272f3f80d795b5a314953fdc25
+```
+
+The benchmark logic came from
+`qa/core/tests/rose-window-hard-benchmark-v0.1.mjs`
+(blob `7d0868e82d1a1d3ce588c8187ec076b36c8e88ec`).
+
+Only fixture intake was adapted for execution: the USER-approved supplementary
+SHA was accepted and PNG color type 6 RGBA was decoded in addition to the
+historical color type 2 RGB. ROI, threshold, candidate counts, sampling grid,
+Direct Extraction route and metric definitions were unchanged.
+
+The run was executed twice. Both emitted JSON results were identical.
+
+## Executed evidence
+
+Machine-readable evidence:
+
+`qa/core/evidence/INK_CLOUD_017_SUPPLEMENTARY_ROSE_WINDOW_BENCHMARK.json`
+
+Setup:
+
+- threshold: `128`
+- ROI center: `543, 638`
+- ROI radius: `466`
+- grid step: `4`
+- candidate counts: `6, 8, 10, 12, 14, 16, 18, 20, 24`
+- samples: `42,584`
+
+### Same-input comparison
+
+| Metric | Direct Extraction | Structure-Aware multi-Path |
+|---|---:|---:|
+| Paths | 1386 | 265 retained / 265 prototype |
+| Subpaths | 1426 | 269 |
+| Holes | 40 | 4 |
+| Unique editable nodes | 9339 | 1631 |
+| Effective expanded nodes | 9339 | 9786 |
+| Recall | 0.904256 | 0.505239 |
+| Precision | 0.932975 | 0.509176 |
+| IoU | 0.849098 | 0.339764 |
+| False positive samples | 899 | 6740 |
+| False negative samples | 1325 | 6847 |
+
+Structure-Aware selected radial count `6` with rotational mask IoU
+`0.317206`. All `265` prototype Paths, `269` subpaths, `4` holes and
+`1631` nodes were retained. Six linked Repeat instances yield `9786`
+effective expanded nodes.
+
+Repeat identities and transforms were deterministic. Direct extraction,
+prototype extraction and reconstructed structure all passed rerun determinism.
+Result digest:
+
+`1eae7a22fe8d1eafbd01a353e59cd2b817ceaf9f246cc255154e9b903df38f1d`
+
+## Correction-cost proxy
+
+The bounded proxy remains two-component and is not collapsed into a pipeline
+score.
+
+```text
+Direct Extraction:
+  sampled mismatch = 2224
+  unique editable nodes = 9339
+  linked edit reuse = 1
+
+Structure-Aware:
+  sampled mismatch = 13587
+  unique editable nodes = 1631
+  linked edit reuse = 6
+```
+
+This shows the structural tradeoff directly: the multi-Path linked result uses
+far fewer unique editable nodes and six-way linked reuse, but its sampled
+raster mismatch is substantially larger on this supplied fixture.
+
+## Interpretation
+
+Against Direct Extraction on the same supplied input, Structure-Aware is not
+improved on recall, precision or IoU. Therefore:
 
 ```text
 STRUCTURE_AWARE_TECHNICALLY_CLOSED = YES
-STRUCTURE_AWARE_BENCHMARK = NOT_EVALUATED_CURRENT_ENVIRONMENT
+STRUCTURE_AWARE_BENCHMARK = NOT_IMPROVED
 DIRECT_EXTRACTION_BASELINE = PRESERVED
 PIPELINE_SELECTION = MR_DECISION_REQUIRED
 ```
 
-The task closes the structural defect. It does not authorize DEV to replace
-Direct Extraction.
+The new result materially closes the prior single-Path retention defect, but it
+does not justify automatic pipeline replacement.
 
-## Scope
+The historical INK-CLOUD-013 evidence remains untouched. Because the supplied
+file has a different binary SHA and RGBA encoding, this report does not claim a
+strict same-binary numerical comparison to the INK-CLOUD-013 canonical fixture.
 
-Changed product source is bounded to:
+## QA status
 
-- `product/source/src/extraction/structure.js`
-- `product/source/src/ink.js`
+Executed in this continuation:
 
-QA / evidence changes are bounded to the Structure-Aware unit/source tests,
-hard-benchmark harness and INK-CLOUD-017 evidence.
+- supplementary Rose Window benchmark: PASS;
+- overlay/sample comparison: EXECUTED;
+- full multi-Path prototype retention: PASS;
+- exact provenance: PASS;
+- Repeat transform consistency: PASS;
+- direct/prototype/structure deterministic rerun: PASS;
+- second complete benchmark run produced identical JSON: PASS;
+- changed extraction-module syntax checks: PASS;
+- supplementary runner syntax check: PASS;
+- fixture dimensions/mode/SHA verification: PASS.
 
-No package/release path, backend, account/sync system, document format,
-History/Revision engine, or second vector/render authority was introduced.
+Browser/runtime USER-path QA remains deferred.
 
 ## DEV handoff
 
@@ -216,6 +169,10 @@ TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-CLOUD-017
 BRANCH = work/ink-cloud-017
 TECHNICAL_CLOSURE = COMPLETE
+SUPPLEMENTARY_BENCHMARK = EXECUTED_PASS
+OVERLAY_QA = EXECUTED
+HARD_BENCHMARK_COMPARISON = RECORDED
+STRUCTURE_AWARE_BENCHMARK = NOT_IMPROVED
 TARGET_GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
 DIRECT_EXTRACTION_BASELINE = PRESERVED
 PIPELINE_SELECTION = MR_DECISION_REQUIRED
