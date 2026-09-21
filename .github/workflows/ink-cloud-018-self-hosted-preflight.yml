@@ -28,7 +28,7 @@ jobs:
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
 
     steps:
-      - name: Materialize exact revision without Git
+      - name: Materialize bounded runtime files without Git
         run: |
           $ErrorActionPreference = 'Stop'
           [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -43,13 +43,34 @@ jobs:
           try { $client.DownloadFile($url, $archive) } finally { $client.Dispose() }
           if (-not (Test-Path $archive) -or (Get-Item $archive).Length -lt 1024) { throw 'Exact revision ZIP download failed or is unexpectedly small.' }
           Add-Type -AssemblyName System.IO.Compression.FileSystem
-          [System.IO.Compression.ZipFile]::ExtractToDirectory($archive, $extract)
-          $root = Get-ChildItem $extract -Directory | Select-Object -First 1
-          if (-not $root) { throw 'Extracted revision root not found.' }
-          if (-not (Test-Path (Join-Path $root.FullName 'product\source\index.html'))) { throw 'INK source entry missing after materialization.' }
-          "INK_SOURCE_ROOT=$($root.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          $zip = [System.IO.Compression.ZipFile]::OpenRead($archive)
+          try {
+            $allowed = @('product/source/','qa/runtime/','qa/fixtures/rose-window/')
+            $count = 0
+            foreach ($entry in $zip.Entries) {
+              $slash = $entry.FullName.IndexOf('/')
+              if ($slash -lt 0 -or $slash -ge $entry.FullName.Length - 1) { continue }
+              $rel = $entry.FullName.Substring($slash + 1)
+              $matched = $false
+              foreach ($prefix in $allowed) { if ($rel.StartsWith($prefix, [StringComparison]::Ordinal)) { $matched = $true; break } }
+              if (-not $matched -or [string]::IsNullOrEmpty($entry.Name)) { continue }
+              $target = Join-Path $extract ($rel.Replace('/', '\'))
+              $parent = Split-Path $target -Parent
+              [System.IO.Directory]::CreateDirectory($parent) | Out-Null
+              $input = $entry.Open()
+              try {
+                $output = [System.IO.File]::Open($target, [System.IO.FileMode]::Create, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
+                try { $input.CopyTo($output) } finally { $output.Dispose() }
+              } finally { $input.Dispose() }
+              $count++
+            }
+          } finally { $zip.Dispose() }
+          if ($count -lt 50) { throw "Bounded runtime extraction returned only $count files." }
+          if (-not (Test-Path (Join-Path $extract 'product\source\index.html'))) { throw 'INK source entry missing after bounded materialization.' }
+          "INK_SOURCE_ROOT=$extract" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Host "Materialized exact SHA: $env:GITHUB_SHA"
-          Write-Host "Source root: $($root.FullName)"
+          Write-Host "Bounded runtime files: $count"
+          Write-Host "Source root: $extract"
       - name: Record exact environment
         run: |
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
