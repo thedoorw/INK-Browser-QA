@@ -1,0 +1,78 @@
+{
+  "schema": "INK-CLOUD-017-COMPARISON-STATUS/1",
+  "taskId": "INK-CLOUD-017",
+  "branch": "work/ink-cloud-017",
+  "baseMain": "38ae99eb391eb70c7e9ebe35b69ce3fdb210a28e",
+  "technicalClosure": {
+    "multiPathPrototypeSet": "IMPLEMENTED",
+    "singlePathBottleneck": "CLOSED",
+    "validSectorPathRetentionContract": "COMPLETE",
+    "existingRepeatTransform": "REUSED",
+    "editableStructuredOutput": "VERIFIED",
+    "repeatIdentity": "DETERMINISTIC",
+    "exactProvenanceContract": "PRESERVED",
+    "localCorrectionCompatibility": "VERIFIED",
+    "formatVersion": 4,
+    "packageMutation": 0,
+    "mainMerge": 0
+  },
+  "canonicalBenchmark": {
+    "fixturePath": "qa/fixtures/rose-window/rose-window-primary.png",
+    "fixtureSha256": "e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807",
+    "rerunStatus": "NOT_EXECUTED_IN_THIS_CONTINUATION",
+    "priorAuthoritativeEvidence": "qa/core/evidence/INK_CLOUD_013_ROSE_WINDOW_HARD_BENCHMARK.json",
+    "overwritten": false
+  },
+  "supplementaryBenchmark": {
+    "testClass": "NON_CANONICAL_SUPPLEMENTARY_TEST",
+    "userAcceptedFor017OperationalCompletion": true,
+    "fixtureSha256": "af86d03e8947234a1cc301cd8c224520fc6065272f3f80d795b5a314953fdc25",
+    "dimensions": [1086, 1448],
+    "colorType": "RGBA",
+    "harnessLogicSource": "qa/core/tests/rose-window-hard-benchmark-v0.1.mjs",
+    "harnessLogicSourceBlobSha": "7d0868e82d1a1d3ce588c8187ec076b36c8e88ec",
+    "executionStatus": "PASS",
+    "overlayQA": "EXECUTED",
+    "hardBenchmarkComparison": "RECORDED",
+    "measurementContractChanged": false,
+    "executedTwice": true,
+    "secondRunJsonIdentical": true,
+    "evidence": "qa/core/evidence/INK_CLOUD_017_SUPPLEMENTARY_ROSE_WINDOW_BENCHMARK.json",
+    "directExtraction": {
+      "paths": 1386,
+      "subpaths": 1426,
+      "holes": 40,
+      "nodes": 9339,
+      "recall": 0.904256,
+      "precision": 0.932975,
+      "iou": 0.849098,
+      "falsePositive": 899,
+      "falseNegative": 1325
+    },
+    "structureAware": {
+      "selectedCount": 6,
+      "selectedMaskIoU": 0.317206,
+      "prototype": {"paths":265,"subpaths":269,"holes":4,"nodes":1631},
+      "retainedPrototype": {"paths":265,"subpaths":269,"holes":4,"nodes":1631},
+      "effectiveExpandedNodes": 9786,
+      "linkedRepeatInstances": 6,
+      "recall": 0.505239,
+      "precision": 0.509176,
+      "iou": 0.339764,
+      "falsePositive": 6740,
+      "falseNegative": 6847,
+      "provenanceExact": true,
+      "repeatIdentityDeterministic": true,
+      "transformsExact": true
+    },
+    "resultSha256": "1eae7a22fe8d1eafbd01a353e59cd2b817ceaf9f246cc255154e9b903df38f1d",
+    "strictSameBinaryComparisonToInkCloud013": false
+  },
+  "decision": {
+    "structureAwareTechnicallyClosed": "YES",
+    "structureAwareBenchmark": "NOT_IMPROVED",
+    "directExtractionBaseline": "PRESERVED",
+    "pipelineSelection": "MR_DECISION_REQUIRED",
+    "runtimeQA": "DEFERRED"
+  }
+}
