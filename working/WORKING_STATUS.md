@@ -7,7 +7,7 @@ STATUS: `INK-CLOUD-018 / READY_FOR_DEV / FIRST_VISIBLE_WEB_PLATFORM`
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
 | CURRENT_TASK_ID | `INK-CLOUD-018` |
 | DEV_BRANCH | `work/ink-cloud-018` |
-| DEV_BRANCH_HEAD | `65ad8553f8ac81c8c12d14d4160cd9ccfb424e26` |
+| DEV_BRANCH_HEAD | `d4fb50a45941e477a6d2afdb52172b93b162d463` |
 | DEV_HANDOFF | `NO / TASK_NOT_STARTED` |
 | MR_REVIEW | `NOT_STARTED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
@@ -998,3 +998,42 @@ Primary 018 runtime path:
 `SELF_HOSTED_WINDOWS_RUNNER`
 
 Manual ZIP/PowerShell path is fallback only.
+
+
+## INK-CLOUD-018 self-hosted runtime verified
+
+Authoritative Windows runtime preflight:
+
+```text
+workflow run = 35574792555 / SUCCESS
+runner = DESKTOP-NSOQH69
+runner version = 2.337.0
+labels = self-hosted / Windows / X64
+PowerShell = 5.1.19041.7725
+browser = Google Chrome
+HTTP/module preflight = PASS
+INK shell Chromium render = PASS
+Creative Workspace mount = PASS
+```
+
+Exact tested SHA:
+
+`1b0740126ccf712a4c500681b625b78d5606b83d`
+
+Branch checkpoint recording the successful environment:
+
+`d4fb50a45941e477a6d2afdb52172b93b162d463`
+
+Current boundary:
+
+```text
+SELF_HOSTED_WINDOWS_RUNTIME = VERIFIED
+POWERSHELL_RUNTIME_PATH = VERIFIED
+GITHUB_HOSTED_ACTIONS = NOT_REQUIRED
+DEV_PRODUCT_INTEGRATION = READY
+FULL_018_RUNTIME_GATE = NOT_YET_CLOSED
+```
+
+Next stage inside the same Work Order:
+
+`DEV_PRODUCT_INTEGRATION`
