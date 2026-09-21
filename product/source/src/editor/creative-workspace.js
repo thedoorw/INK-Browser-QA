@@ -169,6 +169,8 @@ export class CreativeWorkspaceController {
     this.open = true;
     this.root = null;
     this.toggle = null;
+    this.extractionAbort = null;
+    this.lastExtraction = null;
   }
 
   mount() {
@@ -209,7 +211,14 @@ export class CreativeWorkspaceController {
         ${WORKSPACE_STAGES.map(([id, label]) => `<button type="button" data-workspace-stage="${id}" role="tab">${label}</button>`).join('')}
       </div>
       <div class="creative-workspace-body">
-        <section data-workspace-pane="reference"><strong>Reference → Extract → Path</strong><p>Reference / extraction controls are connected in Phase B.</p></section>
+        <section data-workspace-pane="reference">
+          <strong>Reference → Extract → Path</strong>
+          <label class="creative-workspace-field"><span>Reference image</span><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp"></label>
+          <label class="creative-workspace-field"><span>Threshold</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">Extract</button><button type="button" data-workspace-action="cancel-extract" disabled>Cancel</button></div>
+          <label class="creative-workspace-field"><span>Reference overlay</span><input type="range" data-workspace-input="overlay" min="0" max="1" step="0.1" value="0.5"></label>
+          <output data-workspace-output="extraction">No extraction in this session.</output>
+        </section>
         <section data-workspace-pane="edit" hidden><strong>Path Edit</strong><p>Path and appearance controls are connected in Phase C.</p></section>
         <section data-workspace-pane="compose" hidden><strong>Compose → Repaint</strong><p>Composition and repaint controls are connected in Phase C.</p></section>
         <section data-workspace-pane="chat" hidden><strong>CHAT bounded edit</strong><p>Proposal / approval controls are connected in Phase D.</p></section>
@@ -227,12 +236,125 @@ export class CreativeWorkspaceController {
         this.setOpen(false);
         return;
       }
+      const action = event.target.closest('[data-workspace-action]');
+      if (action && action.dataset.workspaceAction !== 'close') {
+        void this.handleAction(action.dataset.workspaceAction);
+        return;
+      }
       const tab = event.target.closest('[data-workspace-stage]');
       if (tab) this.setStage(tab.dataset.workspaceStage);
+    });
+    root.addEventListener('change', event => {
+      if (event.target.matches('[data-workspace-input="overlay"]')) {
+        this.changeOverlay(Number(event.target.value));
+      }
     });
     this.setStage(this.stage);
     this.refresh();
     return this;
+  }
+
+  async handleAction(action) {
+    if (action === 'extract') return this.runExtraction();
+    if (action === 'cancel-extract') return this.cancelExtraction();
+    return null;
+  }
+
+  referenceObjectId() {
+    if (this.lastExtraction?.referenceObjectId) return this.lastExtraction.referenceObjectId;
+    const selected = typeof this.app?.selectedObjects === 'function' ? this.app.selectedObjects() : [];
+    for (const item of selected) {
+      const id = item.object?.metadata?.extraction?.referenceObjectId;
+      if (id) return id;
+      if (item.object?.metadata?.extractionReference) return item.object.id;
+    }
+    return null;
+  }
+
+  async runExtraction() {
+    if (this.extractionAbort) return null;
+    const api = this.app?.extraction;
+    if (!api?.decode || !api?.extract) {
+      this.setStatus('EXTRACTION_UNAVAILABLE', 'Extraction controller unavailable', 'error');
+      return null;
+    }
+    const file = this.root?.querySelector('[data-workspace-input="reference-file"]')?.files?.[0];
+    const threshold = Number(this.root?.querySelector('[data-workspace-input="threshold"]')?.value ?? 128);
+    if (!file) {
+      this.setStatus('EXTRACTION_REFERENCE_REQUIRED', 'Choose a reference image', 'error');
+      return null;
+    }
+    const controller = new AbortController();
+    this.extractionAbort = controller;
+    this.refresh();
+    this.setStatus('EXTRACTION_RUNNING', 'Extracting reference to editable Path', 'busy');
+    try {
+      const reference = await api.decode(file);
+      const result = await api.extract(
+        { ...reference, parameters: { threshold } },
+        { referenceSrc: reference.referenceSrc, signal: controller.signal }
+      );
+      this.lastExtraction = {
+        referenceObjectId: result.referenceObjectId,
+        batchId: result.batchId,
+        pathIds: (result.paths || []).map(path => path.id),
+        diagnostics: clone(result.diagnostics || null)
+      };
+      const firstPath = result.paths?.[0];
+      if (firstPath && typeof this.app.findObject === 'function' && typeof this.app.selectOnly === 'function') {
+        const found = this.app.findObject({ objectId: firstPath.id });
+        if (found) this.app.selectOnly(found.layer.id, firstPath.id);
+      }
+      this.app.fitContent?.();
+      const paths = result.diagnostics?.paths ?? result.paths?.length ?? 0;
+      const nodes = result.diagnostics?.nodes ?? 0;
+      this.setStatus('EXTRACTION_COMPLETE', `${paths} paths · ${nodes} nodes · editable Path selected`, 'pass');
+      return result;
+    } catch (error) {
+      const code = error?.code || 'EXTRACTION_FAILED';
+      this.setStatus(code, code === 'EXTRACTION_CANCELLED' ? 'Extraction cancelled' : (error?.message || 'Extraction failed'), code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
+      return null;
+    } finally {
+      this.extractionAbort = null;
+      this.refresh();
+    }
+  }
+
+  cancelExtraction() {
+    if (!this.extractionAbort) return false;
+    this.extractionAbort.abort();
+    return true;
+  }
+
+  changeOverlay(opacity) {
+    const referenceObjectId = this.referenceObjectId();
+    if (!referenceObjectId || !Number.isFinite(opacity)) {
+      this.setStatus('EXTRACTION_OVERLAY_UNAVAILABLE', 'Select an extracted Path or run extraction first', 'error');
+      return false;
+    }
+    try {
+      this.app.extraction.overlay(referenceObjectId, opacity);
+      this.setStatus('EXTRACTION_OVERLAY_UPDATED', `Reference opacity ${Math.round(opacity * 100)}%`, 'pass');
+      return true;
+    } catch (error) {
+      this.setStatus(error?.code || 'EXTRACTION_OVERLAY_FAILED', error?.message || 'Overlay update failed', 'error');
+      return false;
+    }
+  }
+
+  refreshReference() {
+    if (!this.root) return;
+    const run = this.root.querySelector('[data-workspace-action="extract"]');
+    const cancel = this.root.querySelector('[data-workspace-action="cancel-extract"]');
+    if (run) run.disabled = Boolean(this.extractionAbort);
+    if (cancel) cancel.disabled = !this.extractionAbort;
+    const output = this.root.querySelector('[data-workspace-output="extraction"]');
+    if (output) {
+      const diagnostics = this.lastExtraction?.diagnostics;
+      output.textContent = this.lastExtraction
+        ? `${diagnostics?.paths ?? this.lastExtraction.pathIds.length} paths · ${diagnostics?.nodes ?? 0} nodes · ${this.lastExtraction.batchId}`
+        : (this.referenceObjectId() ? `Reference: ${this.referenceObjectId()}` : 'No extraction in this session.');
+    }
   }
 
   setOpen(open) {
@@ -289,6 +411,7 @@ export class CreativeWorkspaceController {
     this.root.dataset.stage = state.stage;
     this.root.dataset.historyPending = String(state.history.pending);
     this.root.dataset.formatVersion = String(state.document?.formatVersion ?? '');
+    this.refreshReference(state);
     return state;
   }
 }

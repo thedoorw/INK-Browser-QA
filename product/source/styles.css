@@ -1249,3 +1249,14 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .creative-workspace-panel,.app:not(.inspector-open) .creative-workspace-panel{z-index:110;left:8px;right:8px;top:calc(var(--topbar-h) + 8px);bottom:calc(80px + env(safe-area-inset-bottom));width:auto;max-height:none;border-radius:20px}
   .creative-workspace-toggle{display:grid}
 }
+
+
+/* INK-CLOUD-014 Phase B controls */
+.creative-workspace-field{display:grid;grid-template-columns:92px minmax(0,1fr);gap:8px;align-items:center;font-size:9px;color:var(--muted)}
+.creative-workspace-field input{min-width:0;height:30px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 7px;font-size:10px}
+.creative-workspace-field input[type="range"]{padding:0}
+.creative-workspace-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.creative-workspace-actions button{min-height:32px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:10px;font-weight:700}
+.creative-workspace-actions button:first-child{background:var(--accent-soft);color:var(--accent)}
+.creative-workspace-actions button:disabled{opacity:.45}
+.creative-workspace-body output{display:block;min-height:30px;padding:7px 8px;border-radius:8px;background:rgba(35,107,99,.06);font:650 9px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);overflow-wrap:anywhere}

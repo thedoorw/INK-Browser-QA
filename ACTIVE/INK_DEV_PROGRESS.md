@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / PHASE_A_COMPLETE / PHASE_B_NEXT`
+STATUS: `INK-CLOUD-014 / PHASE_B_COMPLETE / PHASE_C_NEXT`
 
 | Field | Value |
 |---|---|
@@ -15,34 +15,38 @@ STATUS: `INK-CLOUD-014 / PHASE_A_COMPLETE / PHASE_B_NEXT`
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | RUNTIME_QA | `DEFERRED` |
 
-## Authorized sequence
+## Completed checkpoints
 
-1. Phase A — workspace state model and shell
-2. Phase B — Reference → Extract → Path continuity
-3. Phase C — Edit → Compose → Repaint continuity
-4. Phase D — CHAT ↔ canvas bounded edit loop
-5. Phase E — Revision capture / restore UX
-6. Phase F — integrated workspace regression + report
+### Phase A — workspace state model and shell
 
-## Checkpoint — Phase A
+Commit: `673f2730b3bfbaa27d031d4b63beb3a5f76eef84`
+
+- deterministic view/state model;
+- visible document/page/context/selection/provenance/Revision/CHAT/History state;
+- compact stage shell;
+- no second document/editor authority.
+
+### Phase B — Reference → Extract → Path continuity
 
 Implemented:
 
-- deterministic Creative Workspace view/state model;
-- visible document/page/context/selection/provenance/Revision/CHAT/History state;
-- compact floating workspace shell and stage navigation;
-- workspace state remains a view over existing document/editor authorities;
-- shared static/browser-local shell installation from `InkApp`;
-- service-worker shell registration for the new module.
+- reference file intake from the Creative Workspace;
+- deterministic threshold entry and extraction trigger through existing extraction authority;
+- cancellable extraction via AbortController;
+- reference overlay through existing History-backed overlay operation;
+- extraction result diagnostics;
+- automatic handoff to the first accepted editable Path through existing selection authority;
+- extraction install is now controller/API-only, removing the duplicate legacy Core-panel entry point.
 
 Preserved:
 
+- accepted direct extraction baseline;
+- no new extraction pipeline;
+- source/provenance metadata;
 - `FORMAT_VERSION = 4`;
-- no package mutation;
-- no main merge;
-- no remote runtime dependency;
-- no second document, selection, History, CHAT or Revision authority.
+- package/main unchanged;
+- browser-local operation.
 
 Next:
 
-`BEGIN_PHASE_B / REFERENCE_EXTRACT_PATH_CONTINUITY`
+`BEGIN_PHASE_C / EDIT_COMPOSE_REPAINT_CONTINUITY`
