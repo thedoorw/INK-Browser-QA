@@ -135,8 +135,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     app.download=(blobValue,name)=>{savedBlob=blobValue;savedName=name;};
     await app.saveProject();
     app.download=originalDownload;
-    assert(savedBlob instanceof Blob && savedBlob.size>0,'PROJECT_SAVE_SERIALIZED',{name:savedName,size:savedBlob?.size});
-    const savedFile=new File([savedBlob],savedName||'rose-window.ink',{type:'application/json'});
+    const blobCtor=w.Blob;
+    const fileCtor=w.File;
+    assert(Boolean(savedBlob) && savedBlob instanceof blobCtor && savedBlob.size>0,'PROJECT_SAVE_SERIALIZED',{name:savedName,size:savedBlob?.size});
+    const savedFile=new fileCtor([savedBlob],savedName||'rose-window.ink',{type:'application/json'});
     await app.openProjectFile(savedFile);
     assert(w.INK_TEST.documentIntegrity()?.passed===true && app.doc.formatVersion===4,'PROJECT_RELOAD_INTEGRITY',{formatVersion:app.doc.formatVersion});
 
