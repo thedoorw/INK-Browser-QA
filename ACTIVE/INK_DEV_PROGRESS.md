@@ -7,10 +7,11 @@ STATUS: `INK-RA-001 / IN_PROGRESS`
 | TASK_ID | `INK-RA-001` |
 | BRANCH | `work/ink-ra-001` |
 | BRANCH_BASE | `94fbdb12753feecfe3dc7053677812c96cd2cf76` |
-| CHECKPOINT_INPUT_HEAD | `fd32316e5acee7f05eec5727f1eef5c3078f1896` |
-| CURRENT_PHASE | `PHASE_C / EXTERNAL_GEOMETRY_BENCHMARK` |
+| CHECKPOINT_INPUT_HEAD | `5589217d8c4413cc20ddd177eb5197e70cf6884b` |
+| CURRENT_PHASE | `PHASE_D / SELECTION_GATE` |
 | PHASE_A | `COMPLETE` |
 | PHASE_B | `COMPLETE` |
+| PHASE_C | `COMPLETE` |
 | DEV_HANDOFF | `NO` |
 | TARGET_GATE | `STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
@@ -63,3 +64,29 @@ dependency_recompute_engine = REFERENCE_ONLY
 Blockers: `NONE`
 
 Next: isolated Paper.js / Clipper2 / Bezier.js benchmark; no product wiring before Phase D.
+
+## Phase C checkpoint
+
+Files changed:
+
+- `qa/core/benchmarks/ink-ra-001/package.json`
+- `qa/core/benchmarks/ink-ra-001/package-lock.json`
+- `qa/core/benchmarks/ink-ra-001/external-geometry-benchmark.mjs`
+- `research/INK_RA_FOUNDATION_A_VECTOR_GEOMETRY_REPORT_v0.1.md`
+- `ACTIVE/INK_DEV_PROGRESS.md`
+
+Tests run:
+
+- isolated Paper.js `0.12.18`, Clipper2 TS `2.0.1-18`, Bezier.js `6.1.4` benchmark → `PASS`;
+- five repeated fixture sets → byte-structural equality `PASS`;
+- cubic, Boolean, hole, compound, positive/negative offset, near-tangent, split/project and Rose-derived fixtures → `PASS`.
+
+Important rejection:
+
+- `clipper2-js@1.2.4` was not selected because its negative square offset was malformed and its upstream README acknowledges failing polygon tests.
+
+Product dependencies introduced in Phase C: `0` (benchmark-only install boundary).
+
+Blockers: `NONE`
+
+Next: freeze the Phase D selection matrix before any product mutation.

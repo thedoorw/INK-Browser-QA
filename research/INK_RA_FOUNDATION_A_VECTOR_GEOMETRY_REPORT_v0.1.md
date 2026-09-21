@@ -1,6 +1,6 @@
 # INK RA Foundation A — Vector Geometry Report v0.1
 
-STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_IN_PROGRESS`
+STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_COMPLETE / PHASE_D_IN_PROGRESS`
 
 ## Control
 
@@ -60,7 +60,52 @@ The imported baseline's broader `qa/run_ra_basic_function_freeze_contract.js` al
 
 ## Phase C — external benchmark evidence
 
-Pending isolated benchmark.
+Harness:
+
+`qa/core/benchmarks/ink-ra-001/external-geometry-benchmark.mjs`
+
+Execution:
+
+```text
+cd qa/core/benchmarks/ink-ra-001
+npm ci --ignore-scripts
+npm run benchmark
+
+STATUS = PASS
+DETERMINISTIC_RUNS = 5
+REPEATED_RUN_EQUALITY = true
+AVERAGE_FIXTURE_SET = 20.307 ms (local Node run; informational)
+```
+
+### Candidate identity
+
+| Candidate | Version | Project/source | License | Browser-local/dependency observation |
+|---|---:|---|---|---|
+| Paper.js | `0.12.18` | `paperjs/paper.js` / npm `paper` | MIT | Browser-capable; minified full build about 240 KB, but exposes its own scene/Path authority. |
+| Clipper2 TypeScript port | `2.0.1-18` | `countertype/clipper2-ts`, derived from `AngusJohnson/Clipper2` | Boost Software License 1.0 | Pure ESM/browser-local; bundled module about 125 KB; integer/safe-number coordinate contract. Upstream reports 258 reference-oriented tests. |
+| Bezier.js | `6.1.4` | `Pomax/bezierjs` / npm `bezier-js` | MIT | Browser ESM; focused curve math, about 50 KB unbundled source / 21 KB generated browser bundle. |
+
+The older npm package `clipper2-js@1.2.4` was inspected but rejected from the accepted comparison: its own README says some polygon tests still fail, and a square `-10` offset produced a malformed polygon/area rather than the expected 80×80 result. The maintained `clipper2-ts` port passed the same fixture exactly.
+
+### Fixture evidence
+
+| Fixture | Paper.js | Clipper2 TS | Bezier.js | Result |
+|---|---|---|---|---|
+| Intersecting cubic Béziers | Paper curve intersection available | Not applicable without flattening | 3 deterministic intersection clusters after epsilon de-duplication | `PASS` |
+| Overlapping closed contours | union area 15000; intersection 5000 | union area 15000; intersection 5000 | Not applicable | `PASS` |
+| Subtract producing hole | net area 7500; two compound children | net area 7500; two signed contours | Not applicable | `PASS` |
+| Compound/hole preservation | compound child structure serializable | signed outer/hole contours retained for normalization | Not applicable | `PASS` |
+| Positive/negative offset | No built-in general offset selected | +10 square area 14400; -10 square area 6400 | Curve-local offset exists but not closed join cleanup | `PASS / CLIPPER2` |
+| Near-tangent intersection | Supported | Not applicable | exactly 1 intersection cluster at strict threshold | `PASS` |
+| Split/project/nearest | Scene-level APIs available | Not applicable | split join exact; project returned finite `t=0.418`, distance `10.852838` | `PASS` |
+| Rose-derived 12-petal radial geometry | Not needed | 12 input contours → 12 deterministic output contours | Not applicable | `PASS` |
+
+### Comparison conclusion
+
+- Paper.js is correct on the bounded Boolean fixtures but would add a broad parallel Path/scene system for operations INK already owns. Keep it benchmark/reference-only.
+- Clipper2 TS is materially stronger than current INK offset for polygon join/cleanup and preserves signed outer/hole contours. It is suitable only behind an INK-owned integer-scaling/normalization adapter.
+- Bezier.js closes the exact cubic split/project/nearest/intersection gap with the smallest authority surface. Returned intersection pairs require deterministic epsilon de-duplication.
+- All benchmark outputs are plain coordinates/parameters and can be normalized into existing INK Path without persisting external objects.
 
 ## Phase D — selection matrix
 
