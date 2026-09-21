@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-015 / PHASE_B_COMPLETE`
+STATUS: `INK-CLOUD-015 / PHASE_C_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `INK-CLOUD-015 / PHASE_B_COMPLETE`
 | TITLE | `CHAT Multi-Step Creative Collaboration v0.1` |
 | BRANCH | `work/ink-cloud-015` |
 | BASE_MAIN | `425c58c400bd08610574c0d5e8085e1cb55ec1f5` |
-| TASK_STATUS | `PHASE_B_COMPLETE / PHASE_C_NEXT` |
+| TASK_STATUS | `PHASE_C_COMPLETE / PHASE_D_NEXT` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | GATE | `CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS` |
@@ -62,3 +62,20 @@ Implemented deterministic, mutation-free plan validation:
 Checkpoint: `INK-CLOUD-015 Phase B plan validation and preconditions`
 
 `PHASE_B_COMPLETE / BEGIN_PHASE_C`
+
+
+## Phase C — Approval + local orchestration
+
+Implemented:
+
+- plan states `PROPOSED → APPROVED → EXECUTING → COMPLETED | STOPPED | REJECTED`;
+- explicit browser-local plan approval token; execute-before-approval is rejected;
+- plan approval is the human authority boundary; ordered steps then route through the existing CHAT bounded-edit controller and its accepted editor/History paths;
+- every step is revalidated immediately before execution;
+- execution tracks the exact expected document fingerprint after each successful step, so unaccounted state drift stops the plan;
+- first failure produces deterministic `STOPPED` result, records completed steps and leaves all remaining steps unexecuted;
+- no silent retarget, skip or autonomous plan approval.
+
+Checkpoint: `INK-CLOUD-015 Phase C approval and local orchestration`
+
+`PHASE_C_COMPLETE / BEGIN_PHASE_D`
