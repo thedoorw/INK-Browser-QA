@@ -438,3 +438,29 @@ Do not require:
 - GitHub Actions
 
 Use the exact branch ZIP for `work/ink-cloud-018`.
+
+
+## Windows runtime correction — existing self-hosted runner
+
+The user's existing Windows GitHub self-hosted runner is the preferred runtime execution path for INK-CLOUD-018.
+
+Confirmed by user-machine console:
+
+```text
+C:\actions-runner-ink
+runner version = 2.337.0
+Connected to GitHub
+Listening for Jobs
+```
+
+Authoritative execution model:
+
+```text
+bounded GitHub workflow
+→ self-hosted Windows runner
+→ PowerShell / local browser runtime
+```
+
+Do not use a GitHub-hosted runner. Do not use Val Town or another external proxy.
+
+The previously recorded ZIP-first local flow is retained only as manual fallback if workflow dispatch is unavailable.
