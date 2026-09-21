@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-013 / DEVELOPMENT_AUTHORIZED / ACTIVE`
+STATUS: `INK-CLOUD-015 / DEVELOPMENT_AUTHORIZED / ACTIVE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-013` |
-| DEV_BRANCH | `work/ink-cloud-013` |
+| CURRENT_TASK_ID | `INK-CLOUD-015` |
+| DEV_BRANCH | `work/ink-cloud-015` |
 | DEV_BRANCH_HEAD | `TO_BE_ESTABLISHED` |
 | DEV_HANDOFF | `NOT_YET` |
 | MR_REVIEW | `PENDING` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `DEV_WORK / INTEGRATED_CREATIVE_LOOP_VALIDATION` |
+| NEXT_STAGE | `DEV_WORK / CHAT_MULTI_STEP_CREATIVE_COLLABORATION` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -628,3 +628,47 @@ Target gate:
 `CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
 
 Broad UI redesign, multi-step agent planning, Structure-Aware Reconstruction redesign and Portable INK packaging remain out of scope.
+
+
+## INK-CLOUD-014 MR review and promotion
+
+Reviewed exact DEV HEAD:
+
+`26517eb78a38ac974f4658d9fb3eba80447633e8`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Gate accepted:
+
+`CREATIVE_WORKSPACE_MINIMUM_UX_WORKS`
+
+Clean promotion:
+
+- branch: `promote/ink-cloud-014`
+- PR: `#16 / MERGED`
+- main promotion: `b7824a0354e1497dbe5eaee0c04ac49cb46981ed`
+
+## INK-CLOUD-015 authorization
+
+Current objective:
+
+```text
+structured CHAT inspection
+→ multi-step creative plan
+→ explicit approval
+→ ordered bounded execution
+→ stop-on-failure
+→ Revision-aware result
+```
+
+Branch:
+
+`work/ink-cloud-015`
+
+Target gate:
+
+`CHAT_MULTI_STEP_CREATIVE_LOOP_WORKS`
+
+Remote AI may propose plans only as an optional adapter. Plan validation and execution must remain static-hosted + browser-local.
