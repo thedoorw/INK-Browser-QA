@@ -775,7 +775,8 @@ export class CreativeWorkspaceController {
       displaySteps.forEach((step, index) => {
         const result = resultByStep.get(step.stepId);
         const stepState = result?.state || (plan?.validation?.steps?.[index]?.valid ? 'VALID' : 'PENDING');
-        lines.push(`${index + 1}. ${stepState} · ${step.operation} · ${step.targets?.length || 0} target(s)`);
+        const targetIds = (step.targets || []).map(target => target.objectId).filter(Boolean).join(', ') || 'no target';
+        lines.push(`${index + 1}. ${stepState} · ${step.operation} · ${targetIds}`);
       });
       if (plan?.result?.status === 'STOPPED') {
         lines.push(`STOPPED at ${plan.result.stoppedStepId || 'revision'} · ${plan.result.diagnostic?.code || plan.diagnostics?.[0]?.code || 'diagnostic'}`);
