@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `READY_FOR_DEV / INK-CLOUD-018 / FIRST_VISIBLE_WEB_PLATFORM`
+STATUS: `MR_PASS / PROMOTED / USER_PAGES_ACTION_REQUIRED`
 
 ## Control
 
@@ -517,3 +517,34 @@ The following are NOT authorized as substitutes for runtime evidence:
 These tools may not be used to claim Phase F runtime acceptance.
 
 If browser interaction is required, it must be executed through the existing self-hosted Windows workflow or an explicitly authorized user-operated local browser path.
+
+
+## INK-CLOUD-018 final closure
+
+```text
+TASK = INK-CLOUD-018
+DECISION = MR_PASS
+GATE = INK_WEB_FIRST_VISIBLE_PLATFORM_WORKS
+BROWSER_RUNTIME_QA = EXECUTED / PASS
+PROMOTION_PR = #20 / MERGED
+MAIN_PROMOTION_SHA = ed0b78a7fa3ac6db901863edd0246ee163c00ec4
+DEFAULT_EXTRACTION = DIRECT_EXTRACTION
+STRUCTURE_AWARE = OPTIONAL
+FORMAT_VERSION = 4
+PACKAGE_INK_CURRENT_MUTATION = 0
+PUBLIC_URL = USER_ONE_TIME_PAGES_ACTION_REQUIRED
+```
+
+Next action is not a new engineering Work Order.
+
+The next action is the one-time GitHub Pages repository setting:
+
+```text
+Settings
+→ Pages
+→ Deploy from a branch
+→ main
+→ / (root)
+```
+
+After the public URL is live, USER performs the first visible/manual Rose Window acceptance in the deployed INK Web platform.
