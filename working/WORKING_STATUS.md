@@ -1,22 +1,24 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-018 / READY_FOR_DEV / FIRST_VISIBLE_WEB_PLATFORM`
+STATUS: `INK-CLOUD-018 / MR_PASS / PROMOTED / STAGING_LIVE / VISIBLE_ACCEPTANCE_PENDING`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
 | CURRENT_TASK_ID | `INK-CLOUD-018` |
 | DEV_BRANCH | `work/ink-cloud-018` |
-| DEV_BRANCH_HEAD | `d4fb50a45941e477a6d2afdb52172b93b162d463` |
-| DEV_HANDOFF | `NO / TASK_NOT_STARTED` |
-| MR_REVIEW | `NOT_STARTED` |
-| MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `FIRST_VISIBLE_WEB_PLATFORM + ROSE_WINDOW_RUNTIME` |
-| CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
+| DEV_BRANCH_HEAD | `662f56fb4ac28d5102871681f6ab2b5747a523fc` |
+| DEV_HANDOFF | `YES / COMPLETE` |
+| MR_REVIEW | `MR_PASS` |
+| MAIN_PROMOTION | `ed0b78a7fa3ac6db901863edd0246ee163c00ec4` |
+| PACKAGE_UPDATE | `NO MUTATION` |
+| STAGING_URL | `https://thedoorw.github.io/INK-Browser-QA/` |
+| STAGING_STATUS | `LIVE` |
+| NEXT_STAGE | `USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE` |
 | PRE_CLOUD_CORE_READY | `YES` |
-| GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
-| RUNTIME_QA | `DEFERRED` |
+| SELF_HOSTED_WINDOWS_RUNTIME | `VERIFIED` |
+| RUNTIME_QA | `EXECUTED / PASS` |
+| NEXT_ENGINEERING_WORK_ORDER | `NOT_YET_AUTHORIZED` |
 
 ## Readiness assessment
 
@@ -1108,3 +1110,47 @@ FINAL_PUBLIC_URL_TARGET = https://thedoorw.github.io/INK/
 Current immediate target:
 
 `https://thedoorw.github.io/INK-Browser-QA/`
+
+
+## Current two-track coordination checkpoint
+
+Two related tracks are active at different authority levels and must not be mixed.
+
+### Track A — INK Web / Cloud delivery
+
+```text
+018 product implementation = CLOSED / PROMOTED
+staging deployment = LIVE
+next action = USER_VISIBLE_ROSE_WINDOW_ACCEPTANCE
+new product Work Order = NOT YET AUTHORIZED
+```
+
+### Track B — RA reusable-module intake
+
+```text
+RA0.9 reference baseline = IMPORTED
+source files = 158
+extracted bytes = 19909084
+SHA256 = 525fdff89305135eedebde4fa039517040220724fdee8e557a3d5a2ad5add1d4
+incoming ZIP = CLEANED
+safe PowerShell import method = VERIFIED / RECORDED
+product integration = NOT YET STARTED
+```
+
+Coordination rule:
+
+```text
+INK Web track
+→ user-visible acceptance / defect discovery
+
+RA track
+→ read-only inventory + RA-vs-INK-vs-external comparison
+
+Only after a concrete INK gap is selected:
+→ one bounded Work Order
+→ adapter implementation
+→ runtime evidence
+→ MR review
+```
+
+RA reference analysis may proceed in parallel because it does not mutate authoritative INK product behavior. RA product integration and a new INK feature stage must share the same Current Work Order gate and must not proceed as two independent DEV mutation streams.
