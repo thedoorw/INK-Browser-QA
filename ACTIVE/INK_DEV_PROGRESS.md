@@ -426,3 +426,50 @@ AUTHORITATIVE_BROWSER_RUNTIME = WINDOWS_SELF_HOSTED_RUNNER
 ```
 
 Do not use TinyFish or another remote browser to replace Phase F execution on the registered Windows self-hosted runner.
+
+
+## Phase F — bounded runtime correction checkpoints
+
+The Phase F Windows self-hosted runtime is active and remains the only authoritative browser evidence path.
+
+Attempt 1:
+- run: `35582197019`
+- tested SHA: `08f40f72d574b28b9e44e93005cf65a97cf1783e`
+- materialization/static/Chrome/HTTP preflight: PASS
+- browser acceptance: FAIL
+- diagnosis: `--dump-dom` serialized the top-level harness before the asynchronous Rose Window test completed; this was a QA synchronization failure, not a product/core failure.
+
+Bounded correction:
+- commit: `17a006a5006d5ad51c0f8a753df83bd2154fee62`
+- restored asynchronous loopback evidence callback as the completion gate;
+- removed blank `Start-Process.ExitCode` from acceptance semantics;
+- retained a separate process-safe terminal Chromium `--dump-dom` + `data-qa="PASS"` marker after detailed evidence validation.
+
+Attempt 2:
+- run: `35583044331`
+- tested SHA: `17a006a5006d5ad51c0f8a753df83bd2154fee62`
+- materialization/static/Chrome/HTTP preflight: PASS
+- asynchronous evidence callback: RECEIVED
+- browser acceptance: FAIL with exactly one harness-reported failure;
+- existing workflow did not print the failure payload before throwing, so product diagnosis is not yet authorized.
+
+Diagnostic checkpoint:
+- commit: `c2b8bda60b6fe39631a3210793501fde895b2c81`
+- prints the exact structured callback evidence before failure gating;
+- publishes the first harness failure code into `INK-CLOUD-018/runtime` commit status;
+- triggers the same Windows self-hosted Phase F run with no product-core mutation.
+
+Current boundary:
+
+```text
+PHASE_B = COMPLETE
+PHASE_C = COMPLETE
+PHASE_D = COMPLETE
+PHASE_E = COMPLETE
+PHASE_F = IN_PROGRESS / SELF_HOSTED_WINDOWS_ONLY
+PRODUCT_CORE_BOUNDED_FIX = NOT_YET_JUSTIFIED_BY_EVIDENCE
+FORMAT_VERSION = 4
+PACKAGE_INK_CURRENT_MUTATION = 0
+MAIN_MERGE = 0
+NEXT = READ_EXACT_HARNESS_FAILURE → BOUNDED_FIX_OR_PASS → PHASE_G
+```
