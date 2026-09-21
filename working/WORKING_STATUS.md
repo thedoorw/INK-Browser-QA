@@ -1,18 +1,18 @@
 # INK WORKING STATUS
 
-STATUS: `INK-CLOUD-017 / SUPPLEMENTARY_BENCHMARK_AUTHORIZED / ACTIVE`
+STATUS: `REAL_CREATIVE_WORK_READY / NO_ACTIVE_DEV_WORK_ORDER`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| CURRENT_TASK_ID | `INK-CLOUD-017` |
-| DEV_BRANCH | `work/ink-cloud-017` |
-| DEV_BRANCH_HEAD | `3000674329127956d20f6cb7f4a2fb88938152a7` |
-| DEV_HANDOFF | `YES / REVIEWED` |
-| MR_REVIEW | `SOURCE_PASS / AWAITING_SUPPLEMENTARY_EXECUTION` |
+| CURRENT_TASK_ID | `NONE` |
+| DEV_BRANCH | `NONE` |
+| DEV_BRANCH_HEAD | `N/A` |
+| DEV_HANDOFF | `N/A` |
+| MR_REVIEW | `INK-CLOUD-017 CLOSED / MR_PASS` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | PACKAGE_UPDATE | `PROHIBITED` |
-| NEXT_STAGE | `SAME_TASK_CONTINUATION / USER_ACCEPTED_SUPPLEMENTARY_BENCHMARK` |
+| NEXT_STAGE | `USER_REAL_CREATIVE_CASE / NEED-DRIVEN DEVELOPMENT` |
 | CLOUD_START_GATE | `BOUNDED_EXTRACTION_DEVELOPMENT_AUTHORIZED` |
 | PRE_CLOUD_CORE_READY | `YES` |
 | GITHUB_ACTIONS | `QUOTA_EXHAUSTED` |
@@ -858,3 +858,56 @@ CANONICAL_HASH_MISMATCH = NON_BLOCKING_FOR_017
 ```
 
 The next action is to execute the existing multi-Path comparison, preserve explicit non-canonical labeling, return DEV_HANDOFF, then MR decides closure/promotion.
+
+
+## INK-CLOUD-017 final closure
+
+Reviewed DEV HEAD:
+
+`a0fe5833f0a3449c380c7adb5817b4c7cc4b5bd8`
+
+Decision:
+
+`MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+
+Promotion:
+
+- PR: `#19 / MERGED`
+- main promotion: `edb8f11c39e43043584a20ec648dace242574742`
+
+Gate accepted:
+
+`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
+
+Pipeline decision:
+
+```text
+DIRECT_EXTRACTION = DEFAULT
+STRUCTURE_AWARE = OPTIONAL_STRUCTURED_RECONSTRUCTION
+STRUCTURE_AWARE_BENCHMARK = NOT_IMPROVED
+```
+
+## Current program mode
+
+The planned first creative-loop buildout is complete enough to begin real creative work.
+
+```text
+Reference
+→ Extract
+→ editable Path
+→ Edit / Stroke
+→ Compose
+→ Repaint / Material
+→ CHAT bounded + multi-step collaboration
+→ Revision
+```
+
+Portable/shared-core integrity and Structure-Aware multi-Path reconstruction are also closed.
+
+No automatic engineering task is active.
+
+Next action:
+
+`USER_REAL_CREATIVE_CASE`
+
+Real creative use should now drive the next bounded engineering Work Order only when a concrete workflow or capability gap is observed.
