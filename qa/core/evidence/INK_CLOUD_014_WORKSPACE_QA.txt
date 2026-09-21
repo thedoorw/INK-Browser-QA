@@ -1,0 +1,86 @@
+INK-CLOUD-014 — Creative Workspace Minimum UX v0.1
+QA EVIDENCE
+Branch: work/ink-cloud-014
+Product source tested through commit: a635d443eb0f5a28db311f7f94febcb6d8111e03
+Runtime QA: DEFERRED
+
+EXECUTED CHECKS
+
+1. Exact GitHub source parse/evaluation harness
+   Result: PASS
+   Source:
+   product/source/src/editor/creative-workspace.js
+   Blob SHA after final product fix:
+   6f4895b20611a879f234d079609ccbfba818c55e
+
+2. Workspace state-model harness
+   Result: PASS
+   Verified:
+   - document/page identity
+   - stage/tool context
+   - selection object ID/type
+   - extraction provenance
+   - Revision identity
+   - FORMAT_VERSION = 4
+   - staticBrowserLocal = true
+   - remoteServiceRequired = false
+
+3. Deterministic controller-delegation workspace path
+   Result: PASS
+   Executed sequence:
+   Reference decode
+   -> extraction
+   -> accepted editable Path selection
+   -> Path edit entry
+   -> expressive stroke assignment
+   -> repaint
+   -> CHAT proposal
+   -> blocked execute before approval
+   -> explicit approval
+   -> CHAT execute
+   -> Revision capture
+   -> Revision restore
+
+   Explicit approval guard:
+   APPROVAL_REQUIRED = PASS
+
+   Restore boundary:
+   RESET_TO_REVISION = PASS
+
+4. Source/static gate before final product fix
+   Result: 28/28 PASS
+
+5. Source/static gate after final product fix
+   Result: 25/25 PASS
+   Verified:
+   - FORMAT_VERSION remains 4
+   - existing extraction engine reused
+   - existing Path edit / expressive stroke / composition / repaint controllers reused
+   - existing CHAT bounded-edit adapter reused
+   - existing Revision controller reused
+   - no direct workspace assignment to app.doc/app.selection
+   - no fetch/WebSocket/XMLHttpRequest/sendBeacon in workspace
+   - workspace module registered in editor barrel + service-worker app shell
+   - live tool/selection/History workspace refresh wiring present
+   - Revision comparison object counts exposed
+   - no package mutation
+   - no broad index/index-standalone rewrite
+
+6. Revision comparison display harness
+   Result: PASS
+   Example rendered bounded summary:
+   CAPTURED · rev-2 · objects 5→7 · +2 −0 Δ1 · touched 3
+
+REPRODUCIBLE TEST ADDED
+
+qa/core/tests/unit/creative-workspace-minimum-ux-v0.1.test.mjs
+
+The repository Node test is committed for MR/local rerun. The current execution environment did not have a network-accessible Git checkout of the branch, so the exact GitHub source was executed through the available JavaScript harness instead of claiming a Node/browser run that did not occur.
+
+DEFERRED
+
+- Browser interaction/rendering runtime QA
+- visual layout inspection in a real browser
+- GitHub Actions (quota exhausted per Work Order)
+
+No browser/runtime PASS is claimed.
