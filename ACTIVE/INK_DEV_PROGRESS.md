@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-016 / PHASE_B_COMPLETE / PHASE_C_ACTIVE`
+STATUS: `INK-CLOUD-016 / PHASE_C_COMPLETE / PHASE_D_ACTIVE`
 
 | Field | Value |
 |---|---|
@@ -21,13 +21,9 @@ STATUS: `INK-CLOUD-016 / PHASE_B_COMPLETE / PHASE_C_ACTIVE`
 
 Status: `COMPLETE`
 
-Checkpoint:
+Checkpoint: `a976c92e0cb15712d0592c255c25972bf7d5614d`
 
-`a976c92e0cb15712d0592c255c25972bf7d5614d`
-
-Evidence:
-
-`research/INK_PORTABLE_DEPENDENCY_INVENTORY_v0.1.md`
+Evidence: `research/INK_PORTABLE_DEPENDENCY_INVENTORY_v0.1.md`
 
 Findings:
 
@@ -41,39 +37,55 @@ Findings:
 
 Status: `COMPLETE`
 
-Implementation checkpoint:
+Implementation checkpoint: `7811cd37619a8ec864aa7de2dc2f89183fa4aca2`
 
-`7811cd37619a8ec864aa7de2dc2f89183fa4aca2`
+Checkpoint record: `a5b12652a943010e4652ff2e5499a3c278429506`
 
 Bounded corrections:
 
-- service-worker `SOURCE_SHELL` now covers the exact current `product/source/src` JS/JSON tree;
-- invalid `icons/ink-192.png` and `icons/ink-512.png` precache dependencies were removed;
-- `manifest.webmanifest` no longer advertises nonexistent icon files;
-- no editor/document/History/Revision implementation was forked or replaced.
+- service-worker `SOURCE_SHELL` covers the exact current `product/source/src` JS/JSON tree;
+- invalid icon precache/manifest dependencies removed;
+- no editor/document/History/Revision implementation forked or replaced.
 
-Exact branch connector-side static checks:
+Static verification: `10 / 10 PASS`.
+
+## Phase C — Persistence + collaboration compatibility
+
+Status: `COMPLETE`
+
+Evidence checkpoint:
+
+`ec5007bbc28b6453af373171c84e8e312889e7de`
+
+Evidence:
+
+`qa/core/evidence/INK_CLOUD_016_PHASE_C_COMPATIBILITY.txt`
+
+Exact branch checks:
 
 ```text
-service-worker syntax parses                  PASS
-manifest parses                              PASS
-manifest invalid icon refs removed           PASS
-SOURCE_SHELL exact source tree closure        PASS
-index.html → src/ink.js                       PASS
-index-standalone → compat → src/ink.js        PASS
-deterministic editor install sequence         PASS
-FORMAT_VERSION = 4                            PASS
-source shell missing entries                  0
-TOTAL                                         10 / 10 PASS
+document/file-envelope compatibility          PASS
+InkStore browser-local persistence            PASS
+single HistoryManager authority               PASS
+Revision same-store wiring                    PASS
+Revision restore + RESET_TO_REVISION          PASS
+CHAT bounded-edit approval + History reuse    PASS
+CHAT multi-step explicit approval             PASS
+CHAT multi-step bounded-edit delegation       PASS
+Creative Workspace adapter/view boundary      PASS
+product/source/src branch diff vs main        0 files
+TOTAL                                          14 / 14 PASS
 ```
 
 Disposition:
 
 ```text
-STATIC_MODULE_CLOSURE = VERIFIED
-SHARED_CORE_REUSED = VERIFIED
-MANDATORY_CLOUD_BOOTSTRAP = 0
-SECOND_EDITOR_CORE = 0
+DOCUMENT_PERSISTENCE_COMPATIBILITY = VERIFIED
+HISTORY_AUTHORITY = PRESERVED
+REVISION_COMPATIBILITY = VERIFIED
+CHAT_BOUNDED_EDIT_LOCAL = VERIFIED
+CHAT_MULTI_STEP_LOCAL = VERIFIED
+WORKSPACE_CORE_DEPENDENCY = 0
 HARD_STOP = NO
 ```
 
@@ -81,6 +93,6 @@ HARD_STOP = NO
 
 Proceeding with:
 
-`Phase C — Persistence + collaboration compatibility`
+`Phase D — Portable integration harness`
 
 Package/release artifacts remain untouched.
