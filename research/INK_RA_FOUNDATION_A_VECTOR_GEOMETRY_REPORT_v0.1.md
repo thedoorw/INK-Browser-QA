@@ -1,6 +1,6 @@
 # INK RA Foundation A — Vector Geometry Report v0.1
 
-STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_COMPLETE / PHASE_D_COMPLETE / PHASE_E_IN_PROGRESS`
+STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_COMPLETE / PHASE_D_COMPLETE / PHASE_E_COMPLETE / PHASE_F_IN_PROGRESS`
 
 ## Control
 
@@ -150,11 +150,63 @@ This architecture does not create a parallel vector authority; Phase E may conti
 
 ## Phase E — selected adapter architecture and product changes
 
-Pending.
+Implemented one INK-owned, UI-neutral shared-core boundary:
+
+`product/source/src/vector/geometry-kernel.js`
+
+Public bounded capabilities:
+
+- deterministic cubic segment intersection with sorted epsilon de-duplication;
+- nearest/project query over all INK Path cubic segments;
+- pure cubic split geometry result;
+- robust closed-polygon offset/inflate/deflate through scaled Clipper2 inputs;
+- explicit outer/hole orientation normalization and signed-result reclassification;
+- deterministic INK result IDs, subpath IDs and anchor IDs;
+- line/circle fitting adapted into `INK-GEOMETRY-FIT` values;
+- combined `INK-GEOMETRY-MEASUREMENT` over existing `pathMetrics()`;
+- `applyPathGeometryResult()` scoped History mutation boundary preserving the authoritative object ID.
+
+External source is vendored as replaceable low-level math only:
+
+- `product/source/src/vendor/bezier-js-6.1.4/{bezier.js,poly-bezier.js,utils.js,LICENSE.md}`;
+- `product/source/src/vendor/clipper2-ts-2.0.1/{clipper2.min.mjs,LICENSE.md}`.
+
+No external class instance is returned by the public adapter or stored in INK state. Offset output is created through existing `createPath()` / `createAnchor()` structures with `matrix = identity` after world-space normalization. Mutations use existing `HistoryManager.pushScoped()` and preserve the target Path ID/parent ownership.
+
+### Product files changed
+
+```text
+product/source/src/vector/geometry-kernel.js
+product/source/src/vendor/bezier-js-6.1.4/bezier.js
+product/source/src/vendor/bezier-js-6.1.4/poly-bezier.js
+product/source/src/vendor/bezier-js-6.1.4/utils.js
+product/source/src/vendor/bezier-js-6.1.4/LICENSE.md
+product/source/src/vendor/clipper2-ts-2.0.1/clipper2.min.mjs
+product/source/src/vendor/clipper2-ts-2.0.1/LICENSE.md
+```
+
+No existing product UI, display version, config version, document schema, renderer, Boolean implementation, Path authority, History or Revision file was modified.
+
+### Focused source execution
+
+```text
+node qa/core/tests/unit/vector-geometry-kernel-v0.1.test.mjs
+PASS
+
+cubic intersections = 3
+positive square offset area = 14400
+negative square offset area = 6400 (floating representation within machine epsilon)
+compound positive offset net area = 14000
+History undo/redo = PASS
+save/load JSON roundtrip = PASS
+document integrity = PASS
+FORMAT_VERSION = 4
+external authority in document = false
+```
 
 ## Phase F — closure validation
 
-Pending.
+In progress.
 
 ## Unresolved limitations
 

@@ -7,12 +7,13 @@ STATUS: `INK-RA-001 / IN_PROGRESS`
 | TASK_ID | `INK-RA-001` |
 | BRANCH | `work/ink-ra-001` |
 | BRANCH_BASE | `94fbdb12753feecfe3dc7053677812c96cd2cf76` |
-| CHECKPOINT_INPUT_HEAD | `692107b93a5b79d72e95fbda3cee4e3b458e0f03` |
-| CURRENT_PHASE | `PHASE_E / BOUNDED_ADAPTER_IMPLEMENTATION` |
+| CHECKPOINT_INPUT_HEAD | `7e060235504aace42333ba7c961298ddf5cc58f5` |
+| CURRENT_PHASE | `PHASE_F / CLOSURE_VALIDATION` |
 | PHASE_A | `COMPLETE` |
 | PHASE_B | `COMPLETE` |
 | PHASE_C | `COMPLETE` |
 | PHASE_D | `COMPLETE` |
+| PHASE_E | `COMPLETE` |
 | DEV_HANDOFF | `NO` |
 | TARGET_GATE | `STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
@@ -109,3 +110,31 @@ Permanent product dependency before gate: `0`
 Hard STOP encountered: `NO`
 
 Next: implement the frozen INK-owned adapter and its focused tests without UI change.
+
+## Phase E checkpoint
+
+Product files changed:
+
+- `product/source/src/vector/geometry-kernel.js`;
+- versioned Bezier.js `6.1.4` source + MIT license;
+- versioned Clipper2 TS `2.0.1-18` ESM bundle + BSL-1.0 license.
+
+QA file changed:
+
+- `qa/core/tests/unit/vector-geometry-kernel-v0.1.test.mjs`.
+
+Focused execution:
+
+- cubic intersections/project/split → `PASS`;
+- positive/negative and compound/hole offsets → `PASS`;
+- deterministic repeated result equality → `PASS`;
+- History undo/redo → `PASS`;
+- JSON save/load roundtrip + document integrity → `PASS`;
+- `FORMAT_VERSION = 4`;
+- external authority persisted in document = `false`.
+
+UI/display-version/package mutation: `0 / 0 / 0`
+
+Blockers: `NONE`
+
+Next: complete static/deterministic closure and self-hosted Windows real-browser QA with a complex geometry acceptance case.
