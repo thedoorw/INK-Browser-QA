@@ -175,6 +175,8 @@ export class CreativeWorkspaceController {
     this.lastChatInspection = null;
     this.lastChatResult = null;
     this.taskSequence = 0;
+    this.revisionItems = [];
+    this.lastRevisionResult = null;
   }
 
   mount() {
@@ -270,7 +272,14 @@ export class CreativeWorkspaceController {
           </div>
           <output data-workspace-output="chat">No proposal.</output>
         </section>
-        <section data-workspace-pane="revision" hidden><strong>Revision</strong><p>Capture / restore controls are connected in Phase E.</p></section>
+        <section data-workspace-pane="revision" hidden>
+          <strong>Revision capture / restore</strong>
+          <label class="creative-workspace-field"><span>Label</span><input type="text" data-workspace-input="revision-label" value="Workspace checkpoint"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="revision-capture">Capture</button><button type="button" data-workspace-action="revision-list">Refresh list</button></div>
+          <label class="creative-workspace-field"><span>Revision</span><select data-workspace-input="revision-id"><option value="">No revisions</option></select></label>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="revision-restore">Restore selected Revision</button>
+          <output data-workspace-output="revision">Current revision: none</output>
+        </section>
       </div>
       <div class="creative-workspace-status" data-workspace-value="status" role="status">Creative workspace ready</div>
     `;
@@ -308,6 +317,7 @@ export class CreativeWorkspaceController {
     if (['enter-path-edit','exit-path-edit','simplify-path','refine-path','apply-expressive-stroke','clear-expressive-stroke'].includes(action)) return this.runEditAction(action);
     if (['duplicate','group','frame','front','back','repaint','apply-material','clear-material'].includes(action)) return this.runComposeAction(action);
     if (['chat-inspect','chat-propose','chat-approve','chat-reject','chat-execute'].includes(action)) return this.runChatAction(action);
+    if (['revision-capture','revision-list','revision-restore'].includes(action)) return this.runRevisionAction(action);
     return null;
   }
 
@@ -615,6 +625,100 @@ export class CreativeWorkspaceController {
     if (execute) execute.disabled = state !== 'APPROVED' || !this.approvalToken;
   }
 
+  async runRevisionAction(action) {
+    const revisions = this.app?.revisions;
+    if (!revisions) {
+      this.setStatus('REVISION_UNAVAILABLE', 'Revision controller unavailable', 'error');
+      return null;
+    }
+    try {
+      if (action === 'revision-list') return await this.refreshRevisionList();
+      if (action === 'revision-capture') {
+        const label = text(this.root?.querySelector('[data-workspace-input="revision-label"]')?.value) || 'Workspace checkpoint';
+        const result = await revisions.capture({ reason: 'workspace', label });
+        this.lastRevisionResult = {
+          action: 'capture',
+          created: result.created,
+          equivalent: result.equivalent,
+          revisionId: result.record?.revisionId || null,
+          comparison: clone(result.comparison || null)
+        };
+        await this.refreshRevisionList();
+        this.setStatus(result.created ? 'REVISION_CAPTURED' : 'REVISION_EQUIVALENT', result.record?.revisionId || 'Equivalent to current Revision', 'pass');
+        this.refresh();
+        return result;
+      }
+      if (action === 'revision-restore') {
+        const revisionId = text(this.root?.querySelector('[data-workspace-input="revision-id"]')?.value);
+        if (!revisionId) throw Object.assign(new Error('Select a Revision'), { code: 'REVISION_REQUIRED' });
+        const result = await revisions.restore(revisionId);
+        this.lastExtraction = null;
+        this.lastRevisionResult = { action: 'restore', ...clone(result) };
+        this.setStatus('REVISION_RESTORED', `${revisionId} · ${result.historyBoundary}`, 'pass');
+        await this.refreshRevisionList();
+        this.refresh();
+        return result;
+      }
+      return null;
+    } catch (error) {
+      this.setStatus(error?.code || 'REVISION_FAILED', error?.message || 'Revision operation failed', 'error');
+      this.refresh();
+      return null;
+    }
+  }
+
+  async refreshRevisionList() {
+    if (!this.app?.revisions?.list) return [];
+    try {
+      this.revisionItems = await this.app.revisions.list(this.app.doc?.id);
+      const select = this.root?.querySelector('[data-workspace-input="revision-id"]');
+      if (select) {
+        const prior = select.value;
+        select.innerHTML = '';
+        if (!this.revisionItems.length) {
+          const option = document.createElement('option');
+          option.value = '';
+          option.textContent = 'No revisions';
+          select.append(option);
+        } else {
+          for (const item of [...this.revisionItems].sort((a, b) => b.sequence - a.sequence)) {
+            const option = document.createElement('option');
+            option.value = item.revisionId;
+            option.textContent = `#${item.sequence} · ${item.label || item.reason || 'Revision'} · ${item.revisionId}`;
+            select.append(option);
+          }
+          const current = this.app.revisions.revisionIdFor?.(this.app.doc?.id);
+          select.value = this.revisionItems.some(item => item.revisionId === prior)
+            ? prior
+            : (this.revisionItems.some(item => item.revisionId === current) ? current : this.revisionItems.at(-1)?.revisionId || '');
+        }
+      }
+      this.refreshRevision();
+      return clone(this.revisionItems);
+    } catch (error) {
+      this.setStatus(error?.code || 'REVISION_LIST_FAILED', error?.message || 'Revision list failed', 'error');
+      return [];
+    }
+  }
+
+  refreshRevision() {
+    if (!this.root) return;
+    const current = this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null;
+    const output = this.root.querySelector('[data-workspace-output="revision"]');
+    if (output) {
+      if (this.lastRevisionResult?.action === 'restore') {
+        output.textContent = `RESTORED · ${this.lastRevisionResult.revisionId} · ${this.lastRevisionResult.historyBoundary}`;
+      } else if (this.lastRevisionResult?.action === 'capture') {
+        output.textContent = `${this.lastRevisionResult.created ? 'CAPTURED' : 'EQUIVALENT'} · ${this.lastRevisionResult.revisionId || current || 'none'}`;
+      } else {
+        output.textContent = `Current revision: ${current || 'none'} · ${this.revisionItems.length} stored`;
+      }
+    }
+    const restore = this.root.querySelector('[data-workspace-action="revision-restore"]');
+    const selectedRevision = this.root.querySelector('[data-workspace-input="revision-id"]')?.value;
+    if (restore) restore.disabled = !selectedRevision;
+  }
+
   setOpen(open) {
     this.open = Boolean(open);
     this.root?.classList.toggle('open', this.open);
@@ -637,6 +741,7 @@ export class CreativeWorkspaceController {
       });
     }
     this.refresh();
+    if (stage === 'revision') void this.refreshRevisionList();
     return true;
   }
 
@@ -672,6 +777,7 @@ export class CreativeWorkspaceController {
     this.refreshReference(state);
     this.refreshEditCompose(state);
     this.refreshChat(state);
+    this.refreshRevision(state);
     return state;
   }
 }

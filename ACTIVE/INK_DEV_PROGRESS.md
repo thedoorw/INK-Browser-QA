@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / PHASE_D_COMPLETE / PHASE_E_NEXT`
+STATUS: `INK-CLOUD-014 / PHASE_E_COMPLETE / PHASE_F_NEXT`
 
 | Field | Value |
 |---|---|
@@ -20,27 +20,28 @@ STATUS: `INK-CLOUD-014 / PHASE_D_COMPLETE / PHASE_E_NEXT`
 - Phase A `673f2730b3bfbaa27d031d4b63beb3a5f76eef84` — workspace state/shell.
 - Phase B `69496072abd2be2119b0018ab1762d343810a36d` — Reference → Extract → Path.
 - Phase C `c0d4ab2f2099d80e967920693254bcaa8c071f0d` — Edit → Compose → Repaint.
+- Phase D `dd9f39a9282104080cce8117e6a9cdebf52d9ca8` — CHAT inspect/propose/approve/reject/execute.
 
-### Phase D — CHAT ↔ canvas bounded edit loop
+### Phase E — Revision capture / restore UX
 
 Implemented:
 
-- current structured document inspection;
-- single bounded edit task construction from current canvas selection;
-- supported operation selection using the accepted `INK-CHAT-EDIT-TASK v1` contract;
-- proposal state visible in the same workspace;
-- explicit separate Approve / Reject controls;
-- execution is disabled until a valid local approval token exists;
-- approved execution delegates to the existing CHAT bounded-edit controller, which delegates to existing Path/repaint/transform authorities;
-- stale/invalid target diagnostics are surfaced without silent retargeting.
+- capture labeled Revision from the current structured document;
+- visible current Revision identity and stored Revision list;
+- restore selected Revision through the accepted Revision controller;
+- restore result exposes the accepted `RESET_TO_REVISION` History boundary;
+- workspace refreshes against restored document state rather than caching document authority;
+- extraction session hints are cleared after restore to avoid stale reference UI state.
 
-Explicitly not implemented:
+Preserved:
 
-- multi-step agent planning;
-- autonomous approval;
-- remote execution dependency;
-- second CHAT mutation engine.
+- Revision controller owns snapshot identity/persistence/restore;
+- History is reset only by the existing Revision restore contract;
+- CHAT proposal bindings are not silently retargeted across Revision changes;
+- `FORMAT_VERSION = 4`;
+- package/main unchanged;
+- static/browser-local core.
 
 Next:
 
-`BEGIN_PHASE_E / REVISION_CAPTURE_RESTORE_UX`
+`BEGIN_PHASE_F / INTEGRATED_WORKSPACE_REGRESSION_AND_REPORT`
