@@ -323,6 +323,35 @@ function stoppedStepResult(step, stepIndex, diagnostic) {
   };
 }
 
+async function capturePlanRevision(app, record, startingRevisionId, status) {
+  const revisions = app?.revisions;
+  if (!revisions?.capture) planFail('REVISION_UNAVAILABLE');
+  const currentRevisionId = revisions.revisionIdFor?.(app?.doc?.id) ?? null;
+  if (currentRevisionId !== startingRevisionId) {
+    return {
+      startingRevisionId,
+      endingRevisionId: currentRevisionId,
+      created: false,
+      equivalent: false,
+      captureSkipped: 'source-revision-changed',
+      comparison: null
+    };
+  }
+  const captured = await revisions.capture({
+    parentRevisionId: startingRevisionId,
+    reason: status === 'COMPLETED' ? 'chat-plan-complete' : 'chat-plan-stopped',
+    label: `CHAT plan ${record.planId} · ${status.toLowerCase()}`
+  });
+  return {
+    startingRevisionId,
+    endingRevisionId: captured.record?.revisionId ?? currentRevisionId,
+    created: Boolean(captured.created),
+    equivalent: Boolean(captured.equivalent),
+    captureSkipped: null,
+    comparison: clone(captured.comparison || null)
+  };
+}
+
 export class ChatCreativePlanController {
   constructor(app) {
     this.app = app;
@@ -426,6 +455,7 @@ export class ChatCreativePlanController {
     if (!bounded?.propose || !bounded?.approve || !bounded?.execute) {
       planFail('BOUNDED_EDIT_UNAVAILABLE');
     }
+    if (!this.app?.revisions?.capture) planFail('REVISION_UNAVAILABLE');
 
     const startingRevisionId = record.source.revisionId;
     let expectedFingerprint = record.source.documentFingerprint;
@@ -489,6 +519,22 @@ export class ChatCreativePlanController {
         record.stepResults.push(stopped);
         record.status = 'STOPPED';
         record.diagnostics = [diagnostic];
+        let revision = {
+          startingRevisionId,
+          endingRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null,
+          created: false,
+          equivalent: false,
+          captureSkipped: 'no-completed-step',
+          comparison: null
+        };
+        if (record.stepResults.some(item => item.ok === true)) {
+          try {
+            revision = await capturePlanRevision(this.app, record, startingRevisionId, 'STOPPED');
+          } catch (revisionError) {
+            record.diagnostics.push(chatCreativePlanDiagnostic(revisionError, 'revision-capture'));
+            revision.captureSkipped = 'capture-failed';
+          }
+        }
         record.result = {
           schema: CHAT_CREATIVE_PLAN_RESULT_SCHEMA,
           version: CHAT_CREATIVE_PLAN_RESULT_VERSION,
@@ -499,15 +545,43 @@ export class ChatCreativePlanController {
           stoppedStepId: step.stepId,
           stoppedStepIndex: stepIndex,
           remainingStepIds: record.steps.slice(stepIndex + 1).map(item => item.stepId),
-          revision: {
-            startingRevisionId,
-            endingRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null
-          },
+          revision,
           diagnostic
         };
         this.plans.set(record.planId, record);
         return clone(record.result);
       }
+    }
+
+    let revision;
+    try {
+      revision = await capturePlanRevision(this.app, record, startingRevisionId, 'COMPLETED');
+    } catch (error) {
+      const diagnostic = chatCreativePlanDiagnostic(error, 'revision-capture');
+      record.status = 'STOPPED';
+      record.diagnostics = [diagnostic];
+      record.result = {
+        schema: CHAT_CREATIVE_PLAN_RESULT_SCHEMA,
+        version: CHAT_CREATIVE_PLAN_RESULT_VERSION,
+        ok: false,
+        planId: record.planId,
+        status: 'STOPPED',
+        stepResults: clone(record.stepResults),
+        stoppedStepId: null,
+        stoppedStepIndex: null,
+        remainingStepIds: [],
+        revision: {
+          startingRevisionId,
+          endingRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null,
+          created: false,
+          equivalent: false,
+          captureSkipped: 'capture-failed',
+          comparison: null
+        },
+        diagnostic
+      };
+      this.plans.set(record.planId, record);
+      return clone(record.result);
     }
 
     record.status = 'COMPLETED';
@@ -521,8 +595,7 @@ export class ChatCreativePlanController {
       stoppedStepId: null,
       remainingStepIds: [],
       revision: {
-        startingRevisionId,
-        endingRevisionId: this.app?.revisions?.revisionIdFor?.(this.app?.doc?.id) ?? null,
+        ...revision,
         documentFingerprint: expectedFingerprint
       }
     };
