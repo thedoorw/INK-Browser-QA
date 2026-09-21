@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CLOUD-014 / PHASE_E_COMPLETE / PHASE_F_NEXT`
+STATUS: `INK-CLOUD-014 / PHASE_F_IN_PROGRESS / LIVE_STATE_SYNC_FIXED`
 
 | Field | Value |
 |---|---|
@@ -20,28 +20,25 @@ STATUS: `INK-CLOUD-014 / PHASE_E_COMPLETE / PHASE_F_NEXT`
 - Phase A `673f2730b3bfbaa27d031d4b63beb3a5f76eef84` — workspace state/shell.
 - Phase B `69496072abd2be2119b0018ab1762d343810a36d` — Reference → Extract → Path.
 - Phase C `c0d4ab2f2099d80e967920693254bcaa8c071f0d` — Edit → Compose → Repaint.
-- Phase D `dd9f39a9282104080cce8117e6a9cdebf52d9ca8` — CHAT inspect/propose/approve/reject/execute.
+- Phase D `dd9f39a9282104080cce8117e6a9cdebf52d9ca8` — CHAT bounded proposal/approval/execute.
+- Phase E `0e5fe1f5b525e3eef325e9d099d0a2884f1fdd4a` — Revision capture/restore UX.
 
-### Phase E — Revision capture / restore UX
+## Phase F — integrated regression
 
-Implemented:
+Executed so far:
 
-- capture labeled Revision from the current structured document;
-- visible current Revision identity and stored Revision list;
-- restore selected Revision through the accepted Revision controller;
-- restore result exposes the accepted `RESET_TO_REVISION` History boundary;
-- workspace refreshes against restored document state rather than caching document authority;
-- extraction session hints are cleared after restore to avoid stale reference UI state.
+- exact GitHub source parse/evaluation harness: PASS;
+- workspace state model / provenance / Revision / FORMAT_VERSION=4 diagnostics: PASS;
+- deterministic controller-delegation path across extraction → Path edit → expressive stroke → repaint → CHAT proposal/approval/execute → Revision capture/restore: PASS;
+- explicit pre-approval execute guard: PASS (`APPROVAL_REQUIRED`).
 
-Preserved:
+Bounded fix from regression:
 
-- Revision controller owns snapshot identity/persistence/restore;
-- History is reset only by the existing Revision restore contract;
-- CHAT proposal bindings are not silently retargeted across Revision changes;
-- `FORMAT_VERSION = 4`;
-- package/main unchanged;
-- static/browser-local core.
+- workspace state refresh is now wired to normal tool, selection and History UI refresh paths, so visible state does not depend only on workspace-originated actions or full refresh.
 
-Next:
+Pending:
 
-`BEGIN_PHASE_F / INTEGRATED_WORKSPACE_REGRESSION_AND_REPORT`
+- final source/static assertions;
+- reproducible QA test/evidence files;
+- `research/INK_CREATIVE_WORKSPACE_MINIMUM_UX_REPORT_v0.1.md`;
+- final DEV handoff state.
