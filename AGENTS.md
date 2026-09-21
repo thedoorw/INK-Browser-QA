@@ -35,3 +35,12 @@ Legacy files such as `ACTIVE/INK_MAIN_REVIEW_BOARD.md` and `ACTIVE/INK_DEV_PROGR
 - 主程式 packaging 必須讀 `governance/INK_GitHub_Fast_Packaging_Standard.md`；預設採 exact Git blob/tree reuse → package branch → GitHub ZIP，不把 packaging 擴張成 PR merge、Actions、runner、Artifact 或 Runtime 工作。
 - 現階段 modular package 可直接重用 `product/source/` 產品樹；其 validation status 必須清楚標示，不得冒充 certified baseline。
 - 任何刪除必須有明確依據：無 Runtime 依賴、無 QA 證據價值、無研究價值、無治理/追溯價值。
+
+
+## Self-hosted runtime baseline
+
+Browser/runtime QA involving the user's Windows machine must first read:
+
+`governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
+
+Do not equate GitHub-hosted Actions quota exhaustion with self-hosted runtime unavailability. Reuse the existing `C:\actions-runner-ink` / `[self-hosted, Windows, X64]` path before inventing a new runtime route.
