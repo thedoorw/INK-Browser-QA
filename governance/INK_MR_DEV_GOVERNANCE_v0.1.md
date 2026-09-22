@@ -153,3 +153,68 @@ INK core
 ```
 
 The target is not a Penpot fork and not a dependency on Figma MCP availability.
+
+
+## Batched Runtime QA policy
+
+USER-authoritative development policy:
+
+```text
+DO NOT require full real-browser Runtime QA after every bounded Work Order.
+Accumulate several compatible bounded changes, then run one concentrated Runtime QA checkpoint.
+```
+
+Default cadence:
+
+```text
+2–4 bounded Work Orders
+→ default target = 3
+→ one concentrated Runtime QA batch
+```
+
+Every individual Work Order must still execute all practical non-runtime evidence before handoff:
+
+- source/static checks;
+- unit/deterministic checks;
+- serialization/migration checks when relevant;
+- lint/parse/import checks where available;
+- exact changed-file / binding inventory;
+- MR source review.
+
+A Work Order may be promoted with:
+
+`RUNTIME_QA = DEFERRED_TO_BATCH`
+
+only when MR judges that its risk is compatible with batching and the deferred runtime debt is explicitly recorded in `working/WORKING_STATUS.md`.
+
+Runtime must run immediately instead of batching when a Work Order changes or risks any of the following:
+
+- document schema / migration / persistence integrity;
+- renderer / WebGL / Canvas runtime;
+- service worker / cache update mechanism where publication correctness depends on it;
+- external dependency loading or browser module compatibility;
+- input/device behavior that cannot be validated statically;
+- destructive History / Revision semantics;
+- release / certification / package gate;
+- a user-reported runtime regression;
+- MR cannot establish adequate confidence from source/static evidence.
+
+A batch checkpoint should cover all accumulated deferred Work Orders in one browser session where practical.
+
+After a batch PASS:
+
+```text
+all listed deferred Work Orders
+→ RUNTIME_DEBT_CLEARED
+```
+
+After a batch FAIL:
+
+```text
+STOP new promotion where the failure may propagate
+→ isolate the first failing accumulated change
+→ bounded fix
+→ rerun the affected batch
+```
+
+Runtime batching is a development-efficiency policy. It does not permit false claims of runtime verification before the batch actually executes.
