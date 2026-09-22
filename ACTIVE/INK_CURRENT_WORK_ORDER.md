@@ -1,301 +1,237 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-WEB-UI-002 / MR_PASS / PROMOTED / CLOSED`
+STATUS: `INK-WEB-UI-003 / UR_AUTHORIZED / DEV_READY`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-WEB-UI-002` |
-| TITLE | `Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1` |
-| AUTHORITY | `USER_EXPLICIT / PACKAGE_WORK` |
-| DEV_WORK_BRANCH | `work/ink-web-ui-002` |
-| DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / REGRESSION_GUARD_ONLY` |
-| UI_MUTATION | `NO NEW VISUAL REDESIGN` |
-| WORKFLOW_MUTATION | `AUTHORIZED / RUNTIME_TRIGGER_AND_PROCESS_HYGIENE` |
+| CURRENT_TASK_ID | `INK-WEB-UI-003` |
+| TITLE | `Contextual Controls / Top Options v0.1` |
+| AUTHORITY | `UR_DELEGATED_UI_LANE` |
+| DEV_WORK_BRANCH | `work/ink-web-ui-003` |
+| BASE_MAIN | `73b54efe6d7db1f9fd15531603056c82e4c9de1e` |
+| DEV_MODE | `BOUNDED_UI_WORKPACK` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / UI_ONLY` |
+| UI_SHELL | `PORTABLE_WEB_SHARED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
-| MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED_TO_BATCH` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
+| PACKAGE_MUTATION | `PROHIBITED` |
+| CORE_MUTATION | `PROHIBITED` |
+| RUNTIME_QA | `DEFERRED_TO_UI_INTEGRATION_BATCH` |
 
-## Prior closure
+## Objective
 
-`INK-WEB-UI-001` is accepted and promoted.
+Complete the next bounded UI convergence stage:
 
 ```text
-REVIEWED_HANDOFF_HEAD = 8b8a59e08e4c31a1f317b5b4c57acf05cf160cc5
-TESTED_PRODUCT_SHA = 72ad6869f02bce293ae923755db0a154c9bff98b
-RUNTIME_RUN = 35679835724 / SUCCESS
-BROWSER_CHECKS = 40 / 40 PASS
-PROMOTION_PR = #22 / MERGED
-MAIN_MERGE = 29f06010fa539e5951d18d48b88045ab75ace84a
+current active tool / selection
+→ one quiet contextual options surface near the top
+→ high-frequency controls immediately reachable
+→ advanced/specialist controls remain on-demand
+→ canvas remains visually dominant
 ```
 
-The task-local auto-push Runtime workflow from the DEV branch was intentionally excluded from promotion.
-
-## Why this task exists
-
-Two follow-up risks were confirmed during UI-001:
-
-1. task-specific full Runtime was auto-triggering on ordinary DEV pushes and waking the user's self-hosted Windows runner;
-2. Portable and Web currently share the same shell by implementation discipline, but there is no explicit parity guard preventing later Web-only drift.
-
-This package closes both risks together.
+This is a UI exposure/re-layout task only. Existing command behavior and product semantics remain authoritative.
 
 ## Required reads
 
 1. `README.md`
 2. `AGENTS.md`
-3. this Work Order
+3. this branch-local Work Order
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
 7. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
-8. `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
-9. only the product / QA / workflow files required below
+8. current shared shell files required by the task
 
-## Product invariant
+## Current source facts to preserve
 
-```text
-UI_SHELL = SHARED
-Web      = INK v0.1 · Web
-Portable = INK v0.1 · Portable
-FORMAT_VERSION = 4
-```
+Current shell already contains:
 
-The following must remain shared unless explicitly delivery-specific:
+- compact left tool rail;
+- top application/document bar;
+- floating `#quickControls`;
+- floating `#selectionBar`;
+- right inspector Tool tab with drawing/eraser/shape/text controls;
+- shared Web/Portable entry shells;
+- Portable/Web parity guard.
 
-- top-level workspace regions;
-- left tool rail;
-- right panel dock;
-- Layers / History access;
-- Reference / Compose / CHAT / Revision access;
-- shared shell coordinator;
-- primary CSS behavior;
-- mark/favicon usage.
+Relevant existing command-bearing IDs and bindings must be preserved whenever practical.
 
-Allowed delivery-specific differences:
+## Required UI behavior
 
-- supplementary product label;
-- manifest identity;
-- service-worker/cache behavior;
-- adapter/persistence behavior.
+### A — Contextual top-options host
 
-## Long Sequence Workpack
+Create one shared contextual options surface logically below / adjacent to the application top bar.
 
-### Phase A — Runtime workflow audit
+Rules:
 
-Audit current self-hosted Windows runtime workflows and classify:
+- visible content follows the current tool or selection state;
+- the row must not become a second permanent dense toolbar;
+- show only high-frequency controls/actions;
+- specialist/advanced settings remain in an on-demand inspector/panel/popover;
+- canvas-first geometry must remain intact;
+- avoid overlapping canvas controls where the top options row can replace them.
 
-```text
-AUTO_PUSH_ACTIVE
-MANUAL_ONLY
-HISTORICAL_CLOSED_BRANCH
-UNSAFE_PROCESS_LAUNCH
-SAFE_BOUNDED
-```
+Gate: `CONTEXTUAL_OPTIONS_HOST_WORKS`
 
-At minimum inspect:
+### B — Drawing tools
 
-- `.github/workflows/ink-cloud-018-self-hosted-preflight.yml`
-- `.github/workflows/ink-cloud-018-windows-runtime.yml`
-- `.github/workflows/ink-ra-001-windows-runtime.yml`
-- `.github/workflows/ink-v0.1-runtime-baseline.yml`
-- any new runtime workflow introduced by this task
+For Pen / Pencil / Marker / Brush / Airbrush:
 
-Do not rewrite historical workflows merely for stylistic consistency. Change only what is required to establish the current project-wide batch Runtime path and to prevent ordinary DEV pushes from waking the runner.
+- expose current tool identity;
+- expose high-frequency Color / Size / Opacity;
+- retain existing brush preset access;
+- keep Smoothing / Pressure and brush-engine dynamics available without permanently occupying the top row;
+- do not change brush/render semantics.
 
-Checkpoint commit required.
+Prefer reuse of existing bound controls/state over introducing duplicate independent state.
 
-Gate: `RUNTIME_WORKFLOW_AUDIT_COMPLETE`
+Gate: `DRAW_CONTEXT_OPTIONS_WORK`
 
-### Phase B — Manual/batch Runtime trigger guard
+### C — Eraser / Shape / Text
 
-Create or adapt one current project-wide Runtime entry point for future batched browser QA.
+Eraser:
+- size plus existing eraser mode access.
 
-Requirements:
+Shape:
+- geometry type;
+- fill toggle;
+- existing shared color/stroke controls where applicable.
 
-- self-hosted Windows full Runtime must not trigger on ordinary `push`;
-- current active batch workflow uses `workflow_dispatch` only;
-- explicit `target_ref` or exact SHA input;
-- no automatic wake-up of the user's Windows runner on DEV commits;
-- no task-specific UI workflow copied forward from UI-001;
-- no background promise of Runtime verification when no batch was executed.
+Text:
+- font family;
+- font size;
+- existing color state.
 
-Recommended current workflow identity:
+Do not change object creation semantics.
 
-`.github/workflows/ink-runtime-batch-windows.yml`
+Gate: `TOOL_CONTEXT_OPTIONS_WORK`
 
-The workflow may reuse proven bounded materialization/runtime logic, but must comply with the current safety standard.
+### D — Selection context
 
-Checkpoint commit required.
+When a selection exists, the same contextual surface may expose the existing high-frequency selection actions:
 
-Gate: `RUNTIME_BATCH_TRIGGER_GUARD_WORKS`
+- duplicate;
+- group;
+- front;
+- horizontal center;
+- delete.
 
-### Phase C — Windows runner process hygiene
+Detailed object/path/stroke transforms and editing controls stay in the Object inspector. Do not alter selection, grouping, History, geometry, transform, or object semantics.
 
-The current batch path must not open extra visible PowerShell windows during normal execution.
+The existing floating `#selectionBar` may be removed, hidden, or absorbed only if the same command reachability is preserved.
 
-Hard rules:
+Gate: `SELECTION_CONTEXT_OPTIONS_WORK`
 
-- do not change PowerShell execution policy;
-- do not use `Set-ExecutionPolicy`;
-- do not use `-ExecutionPolicy Bypass`;
-- do not download and immediately execute remote PowerShell scripts;
-- do not add antivirus/security exclusions;
-- do not use a child `Start-Process powershell` pattern that opens another console window;
-- prefer checked-in Node/cmd helpers or same-process bounded shell operations;
-- if a local server process is needed, launch it non-interactively without creating a visible extra console.
+### E — Portable / Web shared shell
 
-The current workflow source itself must pass a static safety scan for the prohibited patterns above.
+Any structural UI change must be applied consistently to:
 
-Checkpoint commit required.
+- `product/source/index.html`
+- `product/source/index-standalone.html`
 
-Gate: `WINDOWS_RUNTIME_PROCESS_HYGIENE_WORKS`
+Shared CSS/coordinator changes must remain common where possible.
 
-### Phase D — Portable/Web shell parity guard
+Run the existing Portable/Web shell parity guard. If a new contextual-region invariant is introduced, extend the parity test so Web-only drift fails deterministically.
 
-Add a focused deterministic source/static test that compares the two active entry shells.
+Gate: `PORTABLE_WEB_CONTEXT_PARITY_WORKS`
 
-At minimum verify parity for:
+## Candidate files
 
-- shared top-level shell regions;
-- required command-bearing IDs;
-- tool-rail hooks;
-- `web-shell.js` loading;
-- panel dock availability;
-- Layers / History reachability;
-- Reference / Compose / CHAT / Revision reachability;
-- favicon link presence;
-- INK mark use;
-- shared stylesheet loading;
-- Creative Workspace presence/default containment.
+Expected UI-only scope may include:
 
-Allow only explicit delivery-specific differences:
+- `product/source/index.html`
+- `product/source/index-standalone.html`
+- `product/source/styles.css`
+- `product/source/web-shell.js`
+- only existing UI binding/source modules strictly necessary to preserve current controls
+- focused UI/parity unit/static tests
+- `research/INK_WEB_UI_003_CONTEXTUAL_CONTROLS_REPORT_v0.1.md`
 
-```text
-Web title / label
-Portable title / label
-manifest file
-Web service-worker behavior
-compat/modular boot adapter differences already required by delivery form
-```
+Do not touch unrelated Core modules.
 
-A future Web-only shell mutation that changes shared UI structure must fail the parity test.
+## Hard boundaries / STOP
 
-Recommended test:
+Immediately STOP and mark `INTEGRATION_REQUIRED` if implementation requires changing:
 
-`qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs`
+- Document authority / schema / migration;
+- History semantics;
+- Revision semantics;
+- Recipe or Geometry contracts;
+- renderer / WebGL / Canvas engine;
+- Core module contracts;
+- persistence semantics;
+- product base version;
+- package/certification;
+- another lane's owned implementation.
 
-Checkpoint commit required.
+Moving/re-hosting existing controls and adding UI-only presentation/wiring is allowed. Changing what the commands mean is not.
 
-Gate: `PORTABLE_WEB_SHELL_PARITY_GUARD_WORKS`
+## Source/static acceptance
 
-### Phase E — Source/static closure
+Before DEV_HANDOFF:
 
-Required:
-
-- parity test PASS;
-- runtime workflow trigger audit PASS;
-- active batch workflow is manual-only;
-- prohibited PowerShell/process patterns absent from the current batch workflow;
-- no product UI regression introduced;
+- parse/import/static checks for changed UI sources PASS;
+- existing shared Portable/Web parity test PASS;
+- focused contextual-options test/static contract PASS;
+- both Web and Portable contain the same shared contextual structure;
+- left tool rail remains compact;
+- right inspector remains reachable;
+- Layers / History / CHAT / Reference / Compose / Revision remain reachable;
+- existing command-bearing IDs are preserved or any necessary UI-only rewiring is explicitly documented;
+- no document/History/Revision/Core semantic files changed;
 - `FORMAT_VERSION = 4`;
+- product base version remains `v0.1`;
 - no package mutation;
-- no product base-version change;
-- runtime debt remains batched unless a high-risk trigger appears.
+- full browser Runtime not claimed unless actually executed.
 
 Final source gate:
 
-`INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE`
+`CONTEXTUAL_TOOL_OPTIONS_WORK`
 
-## Explicit deferrals
+## Evidence
 
-Do not expand into:
+Create/update:
 
-- new visual UI redesign;
-- contextual-control migration;
-- new CHAT semantics;
-- new Recipe semantics;
-- renderer changes;
-- document/schema changes;
-- package/release certification;
-- broad cleanup of every historical workflow.
-
-## Required evidence artifact
-
-Create/update exactly one report:
-
-`research/INK_UI_RUNTIME_GUARD_REPORT_v0.1.md`
+`research/INK_WEB_UI_003_CONTEXTUAL_CONTROLS_REPORT_v0.1.md`
 
 Include:
 
-- workflow audit matrix;
-- exact trigger change;
-- process-hygiene implementation;
-- parity-test contract;
-- tests/checks executed;
+- before/after control-placement inventory;
 - files changed;
-- known historical workflows intentionally left unchanged;
-- final source gate.
+- binding/ID preservation notes;
+- Portable/Web parity evidence;
+- tests/checks executed;
+- deferred Runtime statement;
+- any `INTEGRATION_REQUIRED` finding.
 
-## DEV progress discipline
+## DEV discipline
 
-Branch-local:
+At each meaningful checkpoint:
 
-`ACTIVE/INK_DEV_PROGRESS.md`
-
-Update each meaningful checkpoint.
+- commit;
+- update branch-local `ACTIVE/INK_DEV_PROGRESS.md`;
+- record exact HEAD;
+- record files changed;
+- record checks actually run;
+- do not merge `main`;
+- do not start UI-004.
 
 ## Completion / STOP
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-WEB-UI-002
-BRANCH = work/ink-web-ui-002
-GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE
+TASK_ID = INK-WEB-UI-003
+BRANCH = work/ink-web-ui-003
+GATE = CONTEXTUAL_TOOL_OPTIONS_WORK
 FORMAT_VERSION = 4 / PRESERVED
-RUNTIME_TRIGGER = MANUAL_BATCH_ONLY
-PORTABLE_WEB_PARITY_GUARD = PASS
+PRODUCT_BASE_VERSION = v0.1 / PRESERVED
+PORTABLE_WEB_PARITY = PASS
 PACKAGE_MUTATION = 0
-BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
-NEXT_ACTION = MR_REVIEW_REQUIRED
+CORE_MUTATION = 0
+RUNTIME_QA = DEFERRED_TO_UI_INTEGRATION_BATCH
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
-
-
-## Closure
-
-```text
-TASK = INK-WEB-UI-002
-DEV_HANDOFF_HEAD = e4b31816be2a24484c853e8defa5f388e9af150e
-MR = PASS
-SOURCE_GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE / PASS
-PROMOTION_PR = #23 / MERGED
-MAIN = 6f3a49e0dd1482cdcbd406ba88ec84e74be9138f
-RUNTIME_QA = DEFERRED_TO_BATCH
-NEXT = DUAL_TRACK_UI_CORE_GOVERNANCE_DISCUSSION
-```
-
-No next implementation Work Order is auto-opened.
-
-
-## UI lane delegation after closure
-
-Global task remains closed. No new global/Core/Integration Work Order is opened here.
-
-USER has delegated the pre-authorized UI sequence to UR:
-
-```text
-UI-003 → UI-004 → UI-005
-UR = delegated UI-lane authority
-MR command between UI tasks = NOT REQUIRED
-```
-
-UR may issue branch-local UI Work Orders and continue independently under the boundaries in:
-
-- `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
-- `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
-
-Cross-lane changes remain `INTEGRATION_REQUIRED`.
