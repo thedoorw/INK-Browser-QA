@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `AUTHORIZED / READY_FOR_DEV / RA_FOUNDATION_A`
+STATUS: `INK-RA-001 / CLOSED / MR_PASS / PROMOTED`
 
 ## Control
 
@@ -11,14 +11,14 @@ STATUS: `AUTHORIZED / READY_FOR_DEV / RA_FOUNDATION_A`
 | AUTHORITY | `USER_EXPLICIT_RA_FIRST / PACKAGE_WORK` |
 | DEV_WORK_BRANCH | `work/ink-ra-001` |
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED_ONLY_AFTER_EVALUATION_GATE` |
+| PRODUCT_SOURCE_MUTATION | `COMPLETED / PROMOTED` |
 | UI_MUTATION | `PROHIBITED` |
 | PRODUCT_DISPLAY_VERSION_CHANGE | `POLICY_DECIDED / MUTATION_OUT_OF_SCOPE` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | CORE_RUNTIME | `STATIC_HOSTING + BROWSER_LOCAL` |
-| RUNTIME_QA | `REQUIRED_FOR_FINAL_GATE` |
+| RUNTIME_QA | `35670775922 / SUCCESS` |
 
 ## Why this task exists
 
@@ -354,3 +354,33 @@ This corrects the prior habit of treating ordinary fixes or bounded milestones a
 Historical `v1.6.5 RC` references remain source/baseline identity only.
 
 This decision does not authorize version-string mutation inside `INK-RA-001`.
+
+
+## Closure — 2026-09-22
+
+```text
+DEV_HANDOFF_HEAD = 14578d3ddcba2b2fa4aedcd54eb24a31b3f955e5
+TESTED_PRODUCT_SHA = 6ec1ad1d7e35ba8a384fb44e184b7429e96f7c47
+RUNTIME_RUN = 35670775922 / SUCCESS
+MR_DECISION = MR_PASS
+PROMOTION_PR = #21 / MERGED
+MAIN_MERGE = 0f82c4aecbb24cd02981a68e0e1ba6b5d67bdeb3
+GATE = STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED / ACCEPTED
+```
+
+Accepted Foundation A result:
+
+- INK remains sole Path / Document / History / Revision authority.
+- Bezier.js is bounded cubic math only.
+- Clipper2 TS is bounded polygon offset math only.
+- RA geometry measurement concepts are adapted into INK-owned values.
+- Paper.js remains benchmark/reference only.
+- general constraint / parametric solver remains deferred.
+- `FORMAT_VERSION = 4`.
+- UI mutation = 0.
+- product display-version mutation = 0.
+- package mutation = 0.
+
+No next engineering Work Order is authorized by this closure.
+
+Next active product discussion returns to INK Web UI organization and the already-decided `v0.1` display-version policy.
