@@ -1458,3 +1458,304 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
     text-shadow:none;
   }
 }
+
+
+/* ==========================================================================
+   INK-WEB-UI-003 — contextual top options
+   Presentation-only: command-bearing nodes are re-hosted by web-shell.js.
+   ========================================================================== */
+:root{--contextual-h:36px}
+
+.contextual-options{
+  position:absolute;
+  z-index:79;
+  top:var(--topbar-h);
+  left:0;
+  right:0;
+  height:var(--contextual-h);
+  display:flex;
+  align-items:center;
+  min-width:0;
+  padding:0 6px;
+  border-bottom:1px solid var(--line);
+  background:var(--surface-solid);
+  box-shadow:0 1px 0 rgba(255,255,255,.5);
+  overflow:hidden;
+}
+.contextual-tool-identity{
+  height:100%;
+  min-width:86px;
+  max-width:150px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:0 8px 0 4px;
+  white-space:nowrap;
+  color:var(--ink);
+}
+.contextual-tool-identity svg{width:17px;height:17px;flex:0 0 auto}
+.contextual-tool-identity strong{overflow:hidden;text-overflow:ellipsis;font-size:10px;font-weight:700}
+.contextual-divider{width:1px;height:20px;flex:0 0 auto;background:var(--line);margin-right:6px}
+.contextual-control-host{
+  min-width:0;
+  flex:1;
+  height:100%;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:none;
+}
+.contextual-control-host::-webkit-scrollbar{display:none}
+.contextual-advanced-button{
+  height:26px;
+  min-width:46px;
+  flex:0 0 auto;
+  margin-left:6px;
+  padding:0 8px;
+  border:1px solid var(--line);
+  border-radius:4px;
+  background:rgba(255,255,255,.72);
+  color:var(--muted);
+  font-size:9px;
+  font-weight:650;
+}
+.contextual-advanced-button:hover{background:#fff;color:var(--accent);border-color:var(--line-strong)}
+
+.contextual-options #quickControls,
+.contextual-options #selectionBar,
+.contextual-options #eraserOptions,
+.contextual-options #shapeOptions,
+.contextual-options #textOptions{
+  display:none;
+  position:static;
+  inset:auto;
+  width:auto;
+  height:100%;
+  min-height:0;
+  max-width:none;
+  transform:none;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  animation:none;
+  overflow:visible;
+}
+.contextual-options[data-context-mode="draw"] #quickControls,
+.contextual-options[data-context-mode="eraser"] #quickControls,
+.contextual-options[data-context-mode="shape"] #quickControls,
+.contextual-options[data-context-mode="text"] #quickControls{display:flex}
+.contextual-options[data-context-mode="eraser"] #eraserOptions,
+.contextual-options[data-context-mode="shape"] #shapeOptions,
+.contextual-options[data-context-mode="text"] #textOptions{display:flex}
+.contextual-options[data-context-mode="selection"] #selectionBar{display:flex}
+
+.contextual-options #quickControls{
+  flex-direction:row;
+  align-items:center;
+  gap:5px;
+  flex:0 0 auto;
+}
+.context-inline-control{
+  height:28px;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:5px;
+  padding:0 6px;
+  border-right:1px solid var(--line);
+  background:transparent;
+}
+.context-control-label{font-size:9px;font-weight:650;color:var(--muted);white-space:nowrap}
+.contextual-options .quick-color-wrap{width:23px;height:23px;flex:0 0 23px}
+.contextual-options .quick-color{width:23px;height:23px;border-radius:4px}
+.contextual-options .quick-color span{width:14px;height:14px;border-radius:50%}
+.contextual-options .quick-slider{
+  width:auto;
+  height:28px;
+  flex-direction:row;
+  align-items:center;
+  gap:5px;
+  padding:0 6px;
+  border-radius:0;
+  background:transparent;
+}
+.contextual-options .quick-slider input{
+  writing-mode:horizontal-tb;
+  direction:ltr;
+  width:92px;
+  height:18px;
+  margin:0;
+}
+.contextual-options .quick-slider output{
+  min-width:26px;
+  text-align:right;
+  font-size:9px;
+  color:var(--muted);
+}
+.contextual-options[data-context-mode="eraser"] #quickControls [data-context-control="color"],
+.contextual-options[data-context-mode="eraser"] #quickControls [data-context-control="opacity"],
+.contextual-options[data-context-mode="shape"] #quickControls [data-context-control="size"],
+.contextual-options[data-context-mode="shape"] #quickControls [data-context-control="opacity"],
+.contextual-options[data-context-mode="text"] #quickControls [data-context-control="size"],
+.contextual-options[data-context-mode="text"] #quickControls [data-context-control="opacity"]{display:none}
+
+.contextual-options #eraserOptions,
+.contextual-options #shapeOptions,
+.contextual-options #textOptions{
+  align-items:center;
+  gap:6px;
+  flex:0 0 auto;
+}
+.contextual-options #eraserOptions .subpanel-title,
+.contextual-options #shapeOptions .subpanel-title{display:none}
+.contextual-options #eraserOptions .segmented{
+  display:flex;
+  width:auto;
+  padding:2px;
+  border-radius:4px;
+}
+.contextual-options #eraserOptions .segmented button{
+  min-width:44px;
+  min-height:23px;
+  height:23px;
+  padding:0 7px;
+  border-radius:3px;
+  font-size:9px;
+}
+.contextual-options #shapeOptions .shape-grid{
+  display:flex;
+  align-items:center;
+  gap:2px;
+}
+.contextual-options #shapeOptions .shape-grid button{
+  min-width:36px;
+  min-height:24px;
+  height:24px;
+  padding:0 6px;
+  border-radius:3px;
+  font-size:9px;
+}
+.contextual-options #shapeOptions .toggle-row{
+  min-height:26px;
+  height:26px;
+  padding:0 6px;
+  white-space:nowrap;
+}
+.contextual-options #textOptions .control-row{
+  min-height:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  border:0;
+  padding:0 5px;
+}
+.contextual-options #textOptions .control-row>span:first-child{font-size:9px}
+.contextual-options #textOptions select{
+  max-width:110px;
+  height:24px;
+  padding:0 5px;
+}
+.contextual-options #textOptions .range-row{grid-template-columns:auto 92px 28px}
+.contextual-options #textOptions #fontSize{width:92px}
+.contextual-options #textOptions #fontSizeOutput{min-width:26px;font-size:9px}
+
+.contextual-options #selectionBar{
+  align-items:center;
+  gap:2px;
+  flex:0 0 auto;
+}
+.contextual-options #selectionBar .selection-title,
+.contextual-options #selectionBar .selection-divider,
+.contextual-options #selectionBar::after{display:none}
+.contextual-options #selectionBar button{
+  min-width:42px;
+  height:26px;
+  padding:0 6px;
+  border-radius:3px;
+  font-size:9px;
+}
+.contextual-options #selectionBar button svg{width:15px;height:15px}
+
+.stage-wrap{top:calc(var(--topbar-h) + var(--contextual-h))}
+.tool-rail{top:calc(var(--topbar-h) + var(--contextual-h) + 8px)}
+.pages-panel{top:calc(var(--topbar-h) + var(--contextual-h) + 8px)}
+
+@media(min-width:761px){
+  .contextual-options{
+    background:linear-gradient(#3d3e40,#363739);
+    color:var(--chrome-text);
+    border-bottom-color:#1b1c1e;
+    box-shadow:inset 0 1px rgba(255,255,255,.04);
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+  }
+  .contextual-tool-identity{color:#dedfe1}
+  .contextual-divider,.context-inline-control{border-color:#242527}
+  .context-control-label,
+  .contextual-options .quick-slider output{color:#b6b8bb}
+  .contextual-advanced-button{
+    background:#414244;
+    border-color:#242527;
+    color:#c7c8ca;
+    border-radius:2px;
+  }
+  .contextual-advanced-button:hover{background:#535457;color:#fff;border-color:#606164}
+  .contextual-options #eraserOptions .segmented{background:#2d2e30;border-color:#1f2022}
+  .contextual-options #eraserOptions .segmented button{color:#c5c6c8}
+  .contextual-options #eraserOptions .segmented button.active{background:#4c4d50;color:#fff;box-shadow:none}
+  .contextual-options #shapeOptions .shape-grid button{
+    background:#414244;
+    border-color:#242527;
+    color:#c9cacc;
+  }
+  .contextual-options #shapeOptions .shape-grid button.active{background:#274a47;border-color:#39746e;color:#8bd0c9}
+  .contextual-options #shapeOptions .toggle-row{color:#c6c7c9}
+  .contextual-options #textOptions .control-row>span:first-child{color:#b8b9bb}
+  .contextual-options #textOptions select{
+    background:#2f3032;
+    color:#ddd;
+    border-color:#232426;
+    border-radius:2px;
+  }
+  .contextual-options #selectionBar button{color:#d0d1d3}
+  .contextual-options #selectionBar button:hover{background:#505154;color:#fff}
+  .contextual-options #selectionBar button.danger:hover{background:#5a3432;color:#ffd7d3}
+
+  .panel-dock,
+  .inspector,
+  .creative-workspace-panel,
+  .app:not(.inspector-open) .creative-workspace-panel{
+    top:calc(var(--topbar-h) + var(--contextual-h));
+  }
+  .floating-panel{top:calc(var(--topbar-h) + var(--contextual-h) + 8px)}
+}
+
+@media(max-width:1120px) and (min-width:761px){
+  .contextual-options .quick-slider input{width:66px}
+  .contextual-options #textOptions .range-row{grid-template-columns:auto 66px 28px}
+  .contextual-options #textOptions #fontSize{width:66px}
+  .contextual-options #selectionBar button span{display:none}
+  .contextual-options #selectionBar button{min-width:30px}
+}
+
+@media(max-width:760px){
+  :root{--contextual-h:44px}
+  .contextual-options{padding:0 5px}
+  .contextual-tool-identity{min-width:70px;padding-left:3px}
+  .contextual-tool-identity strong{font-size:9px}
+  .contextual-divider{margin-right:3px}
+  .contextual-control-host{gap:3px}
+  .contextual-options .quick-slider input{width:74px}
+  .contextual-options #selectionBar button span{display:none}
+  .contextual-options #selectionBar button{min-width:34px;height:32px}
+  .contextual-advanced-button{height:32px}
+  .stage-wrap,.app:not(.inspector-open) .stage-wrap{top:calc(var(--topbar-h) + var(--contextual-h))}
+  .pages-panel{top:calc(var(--topbar-h) + var(--contextual-h) + 8px)}
+  .panel-scrim{inset:calc(var(--topbar-h) + var(--contextual-h)) 0 0}
+}
