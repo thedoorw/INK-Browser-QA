@@ -1,14 +1,6 @@
 name: INK-CLOUD-018 Windows Browser Runtime QA
 
 on:
-  push:
-    branches:
-      - work/ink-cloud-018
-    paths:
-      - '.github/workflows/ink-cloud-018-windows-runtime.yml'
-      - 'product/source/**'
-      - 'qa/runtime/ink-cloud-018-browser-harness.html'
-      - 'qa/fixtures/rose-window/**'
   workflow_dispatch:
 
 permissions:
