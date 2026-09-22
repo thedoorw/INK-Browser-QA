@@ -25,7 +25,6 @@ const INTERNAL_ENTITY_TYPES = new Set([
   'chat-plan', 'chat-proposal', 'semantic-region'
 ]);
 const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
-const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
 
 export class RevisionProvenanceError extends Error {
   constructor(code, details = {}) {
@@ -710,7 +709,6 @@ function buildGraphLinks(events, baseUnresolved) {
   for (const ids of byTarget.values()) ids.sort();
 
   const unresolved = [...baseUnresolved];
-  const eventMap = new Map(events.map(event => [event.eventId, event]));
   const edges = new Map();
 
   const addEdge = (from, type, to) => {
@@ -807,7 +805,12 @@ function materialize(documentId, formatVersion, events, baseUnresolved, conflict
     }
   };
   payload.fingerprint = semanticGraphFingerprint(payload);
-  payload.bounds.outputBytes = bytes(payload);
+  payload.bounds.outputBytes = 0;
+  for (let pass = 0; pass < 4; pass += 1) {
+    const measured = bytes(payload);
+    if (measured === payload.bounds.outputBytes) break;
+    payload.bounds.outputBytes = measured;
+  }
   return payload;
 }
 
