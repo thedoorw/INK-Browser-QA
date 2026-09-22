@@ -13,7 +13,7 @@ STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED / UI_SHELL_ONLY` |
 | UI_MUTATION | `AUTHORIZED` |
-| PRODUCT_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
+| PRODUCT_DISPLAY_VERSION | `INK v0.1 · Web + INK v0.1 · Portable / REQUIRED` |
 | FAVICON | `USER_ORIGINAL_MARK / REQUIRED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
@@ -23,7 +23,7 @@ STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
 
 ## Product intent
 
-The first INK Web UI stage adopts a familiar Photoshop / Illustrator workspace grammar without copying Adobe branding, proprietary assets, or source code.
+The first shared INK UI stage for both Portable and Web adopts a familiar Photoshop / Illustrator workspace grammar without copying Adobe branding, proprietary assets, or source code.
 
 Core principle:
 
@@ -133,7 +133,7 @@ Gate: `UI_SHELL_INVENTORY_COMPLETE`
 
 ### Phase B — Photoshop-aligned canvas-first shell
 
-Reorganize the Web shell so the initial view is calm and canvas-first.
+Reorganize the shared Portable/Web shell so both delivery forms open into the same calm, canvas-first workspace.
 
 Required:
 
@@ -176,14 +176,15 @@ Checkpoint commit required.
 
 Gate: `COLLAPSIBLE_PANEL_DOCK_WORKS`
 
-### Phase D — Web identity v0.1 + INK mark + favicon + cache identity
+### Phase D — Portable/Web identity v0.1 + INK mark + favicon + cache identity
 
-Correct the current public Web identity in the same package.
+Correct both delivery-form identities in the same package.
 
-Required user-facing identity:
+Required user-facing identities:
 
 ```text
 INK v0.1 · Web
+INK v0.1 · Portable
 ```
 
 At minimum inspect and correct relevant historical `v1.6.5 RC` Web-facing strings in:
@@ -358,4 +359,22 @@ PACKAGE_MUTATION = 0
 BROWSER_RUNTIME_QA = EXECUTED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
+```
+
+
+## Shared-shell correction — USER clarification
+
+```text
+UI_SHELL = SHARED
+PORTABLE = SAME UI / SAME INTERACTION GRAMMAR
+WEB_CLOUD = SAME UI / SAME INTERACTION GRAMMAR
+```
+
+Keep `product/source/index.html` and `product/source/index-standalone.html` aligned for this redesign.
+
+Display identity:
+
+```text
+Web      = INK v0.1 · Web
+Portable = INK v0.1 · Portable
 ```
