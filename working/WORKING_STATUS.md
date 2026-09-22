@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK / UI_UR_ACTIVE / CORE-MOD-001_AUTHORIZED`
+STATUS: `DUAL_TRACK / UI_UR_ACTIVE / CORE-MOD-002_AUTHORIZED`
 
 | Field | Value |
 |---|---|
@@ -1521,3 +1521,21 @@ CORE-MOD-005 Parametric Creative Structure
 ```
 
 Prepared modules accumulate in the Integration Queue. MR will later select a compatible batch for product wiring + concentrated Runtime.
+
+
+## CORE-MOD-001 closure / CORE-MOD-002 activation
+
+```text
+CORE-MOD-001 = AI Document Bridge / MR_PASS / PROMOTED
+PR = #26
+MAIN = 618a594ae88aacbe847bbc7a1700bb8ed61ab14c
+INTEGRATION_QUEUE += AI_DOCUMENT_BRIDGE
+```
+
+Next Core module:
+
+```text
+CORE-MOD-002 = Semantic Region Grounding
+branch = work/ink-core-semantic-region-002
+runtime = DEFERRED_TO_INTEGRATION_BATCH
+```
