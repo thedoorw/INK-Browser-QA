@@ -4,76 +4,61 @@ STATUS: `AUTHORIZED / NOT_STARTED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
+| TASK_ID | `INK-WEB-UI-005` |
+| TITLE | `Responsive / Fullscreen / Final UI Regression v0.1` |
+| BRANCH | `work/ink-web-ui-005` |
+| BASE_MAIN | `d0488ddd8380b285b2744abd6b6983f451a6a702` |
 | TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
 | DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
+| UR_REVIEW | `PENDING_AFTER_HANDOFF` |
+| TARGET_GATE | `UI_LANE_SOURCE_COMPLETE` |
+| UI_SHELL | `PORTABLE_WEB_SHARED` |
+| FORMAT_VERSION | `4 / PRESERVE` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
-| MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
+| CORE_MUTATION | `0 / PROHIBITED` |
+| RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
 
 ## Objective
 
-Close the known Structure-Aware single-Path reconstruction bottleneck:
-
 ```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
+UI-003 + UI-004 accepted baseline
+→ responsive containment
+→ fullscreen consistency
+→ final UI source/static regression
+→ UI lane integration readiness
 ```
-
-The authoritative scope and STOP rules are in:
-
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
-
-## Checkpoint rule
-
-At every meaningful checkpoint:
-
-- commit;
-- update this branch-local file;
-- record exact SHA;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
-
-Do not replace the Direct Extraction baseline during DEV execution.
 
 ## Planned phases
 
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
+- Phase A — desktop/narrow containment inventory
+- Phase B — mobile/coarse-pointer containment
+- Phase C — fullscreen consistency
+- Phase D — final UI regression contract
+- Phase E — Portable/Web closure
+- Phase F — report + DEV_HANDOFF
+
+At each meaningful checkpoint commit and update this file.
+
+Cross-lane requirement:
+
+`INTEGRATION_REQUIRED → STOP → UR`
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
+TASK_ID = INK-WEB-UI-005
+BRANCH = work/ink-web-ui-005
 FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
+GATE = UI_LANE_SOURCE_COMPLETE
+PORTABLE_WEB_PARITY = PASS
 FORMAT_VERSION = 4
+PRODUCT_BASE_VERSION = v0.1
 PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-NEXT_ACTION = MR_REVIEW_REQUIRED
+CORE_MUTATION = 0
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+UI_LANE_READY_FOR_INTEGRATION = CANDIDATE
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
