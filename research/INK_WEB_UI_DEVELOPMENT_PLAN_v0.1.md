@@ -362,3 +362,62 @@ A Web-only shell mutation that is not explicitly delivery-specific must fail the
 Source/static checks required. Full browser Runtime remains part of the accumulated Runtime batch unless an immediate-runtime trigger is discovered.
 
 This package must not expand into contextual-control redesign or new product functionality.
+
+
+## UR delegated continuation — UI completion sequence
+
+USER direction delegates continuous UI-lane supervision to UR. MR does not issue a separate command between these bounded tasks.
+
+Pre-authorized sequence:
+
+```text
+INK-WEB-UI-003
+Contextual Controls / Top Options
+→ move dense permanent tool controls into contextual top options / compact property surfaces
+→ preserve existing commands and Core behavior
+
+INK-WEB-UI-004
+Panel Hierarchy / Spacing / CHAT Placement Polish
+→ reduce visual density
+→ normalize panel hierarchy, spacing and alignment
+→ refine CHAT / Reference / Compose / Revision placement without changing capability semantics
+
+INK-WEB-UI-005
+Responsive / Fullscreen / Final UI Regression
+→ desktop/narrow/mobile containment
+→ fullscreen
+→ shell consistency
+→ final UI source/static regression
+→ UI lane ready for Integration Runtime
+```
+
+UR authority for these tasks:
+
+```text
+issue bounded UI Work Order
+→ supervise UI DEV
+→ UI review
+→ UI_PASS / UI_REVISE
+→ clean promotion if UI-only
+→ continue immediately to next listed task
+```
+
+No per-task MR command is required.
+
+The sequence ends after `INK-WEB-UI-005`. UR then reports:
+
+`UI_LANE_READY_FOR_INTEGRATION`
+
+to MR.
+
+Any requirement to cross the UI/Core boundary becomes:
+
+`INTEGRATION_REQUIRED → STOP → MR`
+
+UI objective:
+
+```text
+finish the stable everyday interface quickly
+≈ 90% normal-use UI
+then enter maintenance mode
+```
