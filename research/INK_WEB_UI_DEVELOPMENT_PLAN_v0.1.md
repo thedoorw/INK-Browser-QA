@@ -9,7 +9,7 @@ STATUS: `ACTIVE_PLAN / USER_AUTHORIZED / INK-WEB-UI-001_READY`
 CHAT 能力則維持在底層完整。
 ```
 
-INK Web 第一階段不重新發明介面語言。工作區骨架以 Photoshop / Illustrator 類型的成熟桌面編輯器配置作為主要 reference：
+INK Portable / Web 第一階段共用同一套 shell，不重新發明兩套介面語言。工作區骨架以 Photoshop / Illustrator 類型的成熟桌面編輯器配置作為主要 reference：
 
 ```text
 top menu + contextual options
@@ -33,9 +33,21 @@ This is a layout / interaction reference, not a pixel copy, brand copy, code reu
 
 Current source already contains application menu strip, top bar, workspace switch, Undo / Redo, left-side tools, Layers, History, object inspector, fullscreen, Creative Workspace, Reference / Recipe / Path / Repeat / Mask, CHAT and Revision foundations.
 
-The first UI program should reorganize these capabilities rather than rewrite product logic.
+The first UI program should reorganize these capabilities once in the shared shell and keep both `index.html` and `index-standalone.html` aligned, rather than create separate Web and Portable UI forks.
 
-Current visible shell still contains historical `INK v1.6.5 RC` identity. Existing product policy defines the current display label as `INK v0.1 · Web`; the visible correction may be included in the first authorized UI workpack without changing document `FORMAT_VERSION = 4`.
+Current Portable/Web shells still contain historical `INK v1.6.5 RC` identity. Existing product policy defines the current display label as `INK v0.1 · Web`; the visible correction may be included in the first authorized UI workpack without changing document `FORMAT_VERSION = 4`.
+
+## Shared Portable/Web shell rule
+
+```text
+shared UI shell
+├─ Web/Cloud delivery → INK v0.1 · Web
+└─ Portable delivery  → INK v0.1 · Portable
+```
+
+The workspace structure, panel behavior, toolbar grammar and canvas hierarchy are shared. Delivery-specific differences should remain adapters, persistence/service behavior, and supplementary identity only.
+
+This UI program must not produce a Web-only interface fork.
 
 ## Target workspace model
 
