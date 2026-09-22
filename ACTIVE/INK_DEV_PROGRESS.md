@@ -97,3 +97,16 @@ STOP
 - Added Layout canvas pixel evidence: dark workbench sample versus bright real A4 center sample.
 - Narrow desktop containment remains part of the actual browser run.
 - Runtime batch has not yet been dispatched; no PASS claimed.
+
+
+## Runtime gate — BLOCKED
+
+TASK_STATUS = RUNTIME_BLOCKED
+BLOCKED_AT_HEAD = a9b69343bc1e2778fdb70e947f8ba928c56f823b
+RUNTIME_QA = NOT_EXECUTED
+STATIC_RUNTIME_INSTRUMENTATION = READY
+BLOCKER = Manual GitHub Actions dispatch could not be performed because the available browser session is not authenticated to GitHub; the required self-hosted workflow therefore did not start.
+UI_PASS = NOT_CLAIMED
+DEV_HANDOFF = NOT_YET
+
+Per Current Work Order: STOP. Runtime geometry evidence is mandatory before UI_PASS / DEV_HANDOFF.
