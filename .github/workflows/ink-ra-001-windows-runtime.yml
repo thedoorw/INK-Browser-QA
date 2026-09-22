@@ -39,18 +39,18 @@ jobs:
           mkdir "%EXTRACT%"
           curl.exe -fL "https://github.com/%GITHUB_REPOSITORY%/archive/%GITHUB_SHA%.zip" -o "%ARCHIVE%"
           if errorlevel 1 exit /b 1
-          powershell.exe -NoLogo -NoProfile -NonInteractive -Command "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory('%ARCHIVE%','%EXTRACT%')"
+          powershell.exe -NoLogo -NoProfile -NonInteractive -Command "$ErrorActionPreference='Stop'; Add-Type -AssemblyName System.IO.Compression.FileSystem; $archive='%ARCHIVE%'; $extract='%EXTRACT%'; $allowed=@('product/source/','qa/runtime/ink-ra-001-browser-harness.html','qa/fixtures/rose-window/','qa/core/tests/unit/vector-geometry-kernel-v0.1.test.mjs'); $zip=[System.IO.Compression.ZipFile]::OpenRead($archive); try { foreach($entry in $zip.Entries){ $slash=$entry.FullName.IndexOf('/'); if($slash -lt 0 -or $slash -ge $entry.FullName.Length-1){ continue }; $rel=$entry.FullName.Substring($slash+1); $matched=$false; foreach($prefix in $allowed){ if($rel.StartsWith($prefix,[StringComparison]::Ordinal)){ $matched=$true; break } }; if(-not $matched -or [string]::IsNullOrEmpty($entry.Name)){ continue }; $target=Join-Path $extract ($rel.Replace('/','\')); [IO.Directory]::CreateDirectory((Split-Path $target -Parent)) | Out-Null; $input=$entry.Open(); try { $output=[IO.File]::Open($target,[IO.FileMode]::Create,[IO.FileAccess]::Write,[IO.FileShare]::None); try { $input.CopyTo($output) } finally { $output.Dispose() } } finally { $input.Dispose() } } } finally { $zip.Dispose() }"
           if errorlevel 1 exit /b 1
-          for /d %%D in ("%EXTRACT%\*") do (
-            echo INK_SOURCE_ROOT=%%~fD>>"%GITHUB_ENV%"
-            echo INK_SITE_ROOT=%%~fD\product\source>>"%GITHUB_ENV%"
-            if not exist "%%~fD\product\source\index.html" exit /b 1
-            if not exist "%%~fD\qa\runtime\ink-ra-001-browser-harness.html" exit /b 1
-            if not exist "%%~fD\qa\fixtures\rose-window\rose-window-primary.png" exit /b 1
-            copy /y "%%~fD\qa\runtime\ink-ra-001-browser-harness.html" "%%~fD\product\source\__qa_geometry.html" >nul
-            copy /y "%%~fD\qa\fixtures\rose-window\rose-window-primary.png" "%%~fD\product\source\__qa_rose_window.png" >nul
-          )
+          if not exist "%EXTRACT%\product\source\index.html" exit /b 1
+          if not exist "%EXTRACT%\qa\runtime\ink-ra-001-browser-harness.html" exit /b 1
+          if not exist "%EXTRACT%\qa\fixtures\rose-window\rose-window-primary.png" exit /b 1
+          if not exist "%EXTRACT%\qa\core\tests\unit\vector-geometry-kernel-v0.1.test.mjs" exit /b 1
+          copy /y "%EXTRACT%\qa\runtime\ink-ra-001-browser-harness.html" "%EXTRACT%\product\source\__qa_geometry.html" >nul
+          copy /y "%EXTRACT%\qa\fixtures\rose-window\rose-window-primary.png" "%EXTRACT%\product\source\__qa_rose_window.png" >nul
+          echo INK_SOURCE_ROOT=%EXTRACT%>>"%GITHUB_ENV%"
+          echo INK_SITE_ROOT=%EXTRACT%\product\source>>"%GITHUB_ENV%"
           echo Exact SHA: %GITHUB_SHA%
+          echo Materialized bounded runtime tree only.
           endlocal
 
       - name: Static and deterministic source checks
