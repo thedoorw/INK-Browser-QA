@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CORE-INTEGRATION-001 / IN_PROGRESS`
+STATUS: `INK-CORE-INTEGRATION-001 / DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
@@ -8,66 +8,69 @@ STATUS: `INK-CORE-INTEGRATION-001 / IN_PROGRESS`
 | TITLE | `Grounded Creative Intelligence Context Integration v0.1` |
 | BRANCH | `work/ink-core-integration-001` |
 | BRANCH_BASE | `89770b215a0c3d0aef30e1c0565fcb8e2975a997` |
-| TASK_STATUS | `IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_D / DETERMINISTIC_SOURCE_QA` |
-| DEV_HANDOFF | `NO` |
-| MR_REVIEW | `PENDING_HANDOFF` |
-| TARGET_GATE | `INK_CORE_INTEGRATION_001_SOURCE_READY` |
-| UI_LAYOUT_MUTATION | `0 / PROHIBITED` |
-| DOCUMENT_SCHEMA_CHANGE | `0 / PROHIBITED` |
-| HISTORY_SEMANTICS_CHANGE | `0 / PROHIBITED` |
-| REVISION_SEMANTICS_CHANGE | `0 / PROHIBITED` |
-| GEOMETRY_AUTHORITY_CHANGE | `0 / PROHIBITED` |
-| RENDERER_MUTATION | `0 / PROHIBITED` |
-| CHAT_EXECUTION_SEMANTICS_CHANGE | `0 / PROHIBITED` |
-| FORMAT_VERSION | `4 / PRESERVE` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| CURRENT_PHASE | `COMPLETE / DEV_HANDOFF` |
+| DEV_HANDOFF | `YES` |
+| MR_REVIEW | `REQUIRED` |
+| GATE | `INK_CORE_INTEGRATION_001_SOURCE_READY / PASS` |
+| UI_LAYOUT_MUTATION | `0` |
+| DOCUMENT_SCHEMA_CHANGE | `0` |
+| HISTORY_SEMANTICS_CHANGE | `0` |
+| REVISION_SEMANTICS_CHANGE | `0` |
+| GEOMETRY_AUTHORITY_CHANGE | `0` |
+| RENDERER_MUTATION | `0` |
+| CHAT_EXECUTION_SEMANTICS_CHANGE | `0` |
+| FORMAT_VERSION | `4` |
+| PACKAGE_MUTATION | `0` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
 | RUNTIME_QA | `PENDING_MR_PROMOTION_AND_MANUAL_BATCH` |
+| NEXT_ACTION | `MR_REVIEW_REQUIRED` |
 
-## Checkpoints
+## Completed gates
 
 ```text
-Phase A — integration contract
 CREATIVE_INTELLIGENCE_CONTEXT_DEFINED = PASS
-
-Phase B — deterministic read-only integration service
-CREATIVE_INTELLIGENCE_CONTEXT_WORKS = PASS_SOURCE_IMPLEMENTATION
-
-Phase C — bounded CHAT context wiring
-CHAT_GROUNDED_CONTEXT_WIRED = PASS_SOURCE_IMPLEMENTATION
-
-Phase D — deterministic/source QA
-INK_CORE_INTEGRATION_001_SOURCE_READY = QA_AUTHORED_PENDING_EXECUTION
+CREATIVE_INTELLIGENCE_CONTEXT_WORKS = PASS
+CHAT_GROUNDED_CONTEXT_WIRED = PASS
+INK_CORE_INTEGRATION_001_SOURCE_READY = PASS
 ```
 
-Implemented so far:
+## Source QA
 
-- one INK-owned grounded creative-intelligence context contract;
-- composition of the five prepared Core modules without replacing their authority;
-- explicit-only visual compare and parametric structure evidence;
-- FORMAT_VERSION 4 rejection boundary;
-- read-only authority declaration;
-- deterministic aggregate fingerprint and output byte bounds;
-- existing CHAT disclosure-policy projection hook for protected/locked object filtering.
+```text
+SOURCE_SYNTAX_PARSE = PASS
+INTEGRATION_CONTRACT_EXECUTION = PASS
+DETERMINISTIC_REORDER = PASS
+EXPLICIT_ONLY_COMPARE_STRUCTURE = PASS
+DISCLOSURE_PROJECTION = PASS
+FORMAT_VERSION_4_GUARD = PASS
+CHAT_CONTEXT_ENABLED_DISABLED_FALLBACK = PASS
+CHAT_HISTORY_DISCLOSURE_BOUNDARY = PASS
+FORBIDDEN_SIDE_EFFECT_STATIC_SCAN = PASS
+```
 
-No Runtime batch is executed by DEV.
+Required report:
 
-CHAT wiring checkpoint:
+`research/INK_CORE_INTEGRATION_001_GROUNDED_CREATIVE_INTELLIGENCE_REPORT_v0.1.md`
 
-- `ContextBuilder` accepts advisory grounded context without changing command execution semantics;
-- existing protected/locked transmission filtering supplies the allowed-object projection;
-- grounded context can be disabled per request with `groundedContext: false`;
-- provider absence/failure falls back to the existing CHAT context path;
-- no external service is required by the integration provider.
+Runtime was not run by DEV.
 
-Source QA checkpoint:
+## Required completion record
 
-- deterministic integrated-context QA authored at `qa/core-integration-001-grounded-context.test.mjs`;
-- covers reorder normalization, selection, semantic regions, provenance, explicit-only compare/structure, unresolved evidence, provider immutability, disclosure projection, FORMAT_VERSION 4, CHAT enabled/disabled/fallback, and forbidden side-effect APIs;
-- Runtime remains deferred to the MR promotion/manual integration batch.
-
-Disclosure-policy correction:
-
-- `includeHistory=false` now explicitly supplies empty grounded history evidence;
-- grounded provenance therefore cannot bypass the existing CHAT history disclosure choice.
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CORE-INTEGRATION-001
+BRANCH = work/ink-core-integration-001
+GATE = INK_CORE_INTEGRATION_001_SOURCE_READY
+UI_LAYOUT_MUTATION = 0
+DOCUMENT_SCHEMA_CHANGE = 0
+HISTORY_SEMANTICS_CHANGE = 0
+REVISION_SEMANTICS_CHANGE = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+RENDERER_MUTATION = 0
+CHAT_EXECUTION_SEMANTICS_CHANGE = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = PENDING_MR_PROMOTION_AND_MANUAL_BATCH
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
