@@ -1327,3 +1327,75 @@ Current deferred runtime debt:
 Each bounded task still requires source/static/unit evidence and MR review.
 
 Run the batch earlier if a high-risk runtime trigger appears; otherwise accumulate compatible UI/editor work and execute one concentrated Windows Chrome Runtime checkpoint.
+
+## INK-WEB-UI-001 live DEV checkpoint — 2026-09-22
+
+Inspected branch:
+
+`work/ink-web-ui-001`
+
+Current HEAD:
+
+`72ad6869f02bce293ae923755db0a154c9bff98b`
+
+Branch topology against current main at inspection:
+
+```text
+ahead = 35
+behind = 7
+status = diverged
+```
+
+DEV progress:
+
+```text
+Phase A = PASS
+Phase B = PASS_SOURCE_STATIC
+Phase C = PASS_SOURCE_STATIC
+Phase D = PASS_SOURCE_STATIC
+Phase E = IN_PROGRESS
+DEV_HANDOFF = NO
+```
+
+Confirmed implemented in branch:
+
+- shared Portable/Web shell changes touch both `product/source/index.html` and `product/source/index-standalone.html`;
+- Web label = `INK v0.1 · Web`;
+- Portable label = `INK v0.1 · Portable`;
+- shared mark/favicon asset present;
+- right collapsible panel dock implemented;
+- Creative Workspace defaults collapsed;
+- `FORMAT_VERSION = 4` preserved.
+
+Runtime workflow issue confirmed:
+
+```text
+.github/workflows/ink-web-ui-001-runtime.yml
+push trigger = ACTIVE on work/ink-web-ui-001
+self-hosted Windows runner = auto-launched on DEV pushes
+visible PowerShell windows = caused by workflow shell / child PowerShell launches
+```
+
+Recent runtime evidence includes one successful Chrome run at exact SHA:
+
+`54a4927b67808f15bb9d21f48a77009204fe236b / run 35678601856 / SUCCESS`
+
+Later DEV pushes triggered additional runs, including failures/cancellations, because the push-triggered workflow is still active. This no longer matches the new batched Runtime policy.
+
+### Next planned package after UI-001 closure
+
+`INK-WEB-UI-002 — Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1`
+
+Planned bounded scope:
+
+```text
+1. remove automatic push-triggered full Runtime from UI work
+2. keep Runtime as manual/batch-dispatch only
+3. remove visible child-PowerShell launch behavior from the Runtime path
+4. enforce the project PowerShell safety standard
+5. add explicit Portable/Web shell parity checks
+6. prevent Web-only UI drift between index.html and index-standalone.html
+7. verify shared shell / delivery-specific labels remain the only intended UI identity difference
+```
+
+Do not open UI-002 as Current Work Order until UI-001 reaches DEV_HANDOFF and MR disposition.
