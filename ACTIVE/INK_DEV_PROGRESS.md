@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-WEB-UI-001 / READY_TO_START`
+STATUS: `INK-WEB-UI-001 / IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -8,8 +8,8 @@ STATUS: `INK-WEB-UI-001 / READY_TO_START`
 | TITLE | `Photoshop-Aligned Workspace Shell & Collapsible Panel Dock v0.1` |
 | BRANCH | `work/ink-web-ui-001` |
 | BRANCH_BASE | `e00ff4edd81ab659e62a87d700bcbb9fc6dd465d` |
-| TASK_STATUS | `AUTHORIZED / READY_TO_START` |
-| CURRENT_PHASE | `PHASE_A / SHELL_INVENTORY` |
+| TASK_STATUS | `IN_PROGRESS` |
+| CURRENT_PHASE | `PHASE_B / CANVAS_FIRST_SHELL` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
@@ -75,6 +75,32 @@ FORMAT_VERSION = 4
 FAVICON = user original mark
 PUBLIC_STAGING = unchanged until MR promotion to main
 ```
+
+
+## Checkpoint — Phase A
+
+```text
+GATE = UI_SHELL_INVENTORY_COMPLETE / PASS
+IMPLEMENTATION_HEAD = 894dc85da0e1cd6266663e67a4644d51afb463db
+FILES_CHANGED =
+  research/INK_WEB_UI_PHASE1_IMPLEMENTATION_REPORT_v0.1.md
+CHECKS =
+  exact shell DOM/hook inventory
+  Creative Workspace controller entry-point audit
+  keyboard shortcut regression map
+  responsive/mobile rule inventory
+  FORMAT_VERSION authority confirmed = 4
+BLOCKER = NONE
+NEXT = PHASE_B / CANVAS_FIRST_SHELL
+```
+
+Containment decision:
+
+- preserve existing command-bearing DOM IDs and data attributes;
+- reorganize presentation rather than duplicate document/editor state;
+- use existing Inspector and Creative Workspace controllers as right-panel content authorities;
+- use `#stageWrap` geometry + existing ResizeObserver for canvas recentering;
+- keep the new desktop dock presentation separate from existing mobile fallback.
 
 ## Completion
 
