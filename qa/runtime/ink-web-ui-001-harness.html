@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <title>INK-WEB-UI-001 Browser QA Harness</title>
+  <style>
+    html,body{margin:0;background:#111;color:#eee;font:13px/1.4 Consolas,monospace}
+    iframe{display:block;width:1280px;height:800px;border:0;background:#fff}
+    pre{white-space:pre-wrap;word-break:break-word;padding:12px}
+  </style>
+</head>
+<body data-qa-status="RUNNING">
+<iframe id="inkFrame" allow="fullscreen" src="../../product/source/index.html?fresh=1&ink-ui-qa=1"></iframe>
+<pre id="inkQaResult">INK_UI_QA_RUNNING</pre>
+<script>
+(() => {
+  const results = [];
+  const frame = document.querySelector('#inkFrame');
+  const output = document.querySelector('#inkQaResult');
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const serialize = value => {
+    try { return JSON.parse(JSON.stringify(value)); }
+    catch { return String(value); }
+  };
+  const record = (name, pass, detail = null) => {
+    results.push({ name, pass: Boolean(pass), detail: serialize(detail) });
+    return Boolean(pass);
+  };
+  const waitFor = async (predicate, timeout = 12000, step = 50) => {
+    const started = performance.now();
+    let lastError = null;
+    while (performance.now() - started < timeout) {
+      try {
+        const value = await predicate();
+        if (value) return value;
+      } catch (error) {
+        lastError = error;
+      }
+      await sleep(step);
+    }
+    throw lastError || new Error('timeout');
+  };
+  const visible = (doc, selector) => {
+    const el = doc.querySelector(selector);
+    if (!el) return false;
+    const style = getComputedStyle(el);
+    const rect = el.getBoundingClientRect();
+    return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
+  };
+  const dispatchKey = (win, key, init = {}) => {
+    win.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, ...init }));
+  };
+  const waitWorkerState = worker => new Promise(resolve => {
+    if (!worker || worker.state === 'installed' || worker.state === 'activated') return resolve(worker?.state || null);
+    const handler = () => {
+      if (worker.state === 'installed' || worker.state === 'activated' || worker.state === 'redundant') {
+        worker.removeEventListener('statechange', handler);
+        resolve(worker.state);
+      }
+    };
+    worker.addEventListener('statechange', handler);
+  });
+
+  async function run() {
+    try {
+      await waitFor(() => frame.contentWindow?.INK_TEST && frame.contentWindow?.INK_WEB_SHELL, 16000);
+      const win = frame.contentWindow;
+      const doc = frame.contentDocument;
+      const app = win.INK_APP;
+      const test = win.INK_TEST;
+      const shell = win.INK_WEB_SHELL;
+      await sleep(350);
+
+      const initialShell = shell.state();
+      const initialStageWidth = doc.querySelector('#stageWrap').getBoundingClientRect().width;
+      const initialChatController = app.chatBoundedEdit;
+      const initialRevisionController = app.revisions;
+
+      record('title identity is INK v0.1 · Web', doc.title === 'INK v0.1 · Web', doc.title);
+      record('FORMAT_VERSION remains 4', test.architecture().formatVersion === 4, test.architecture().formatVersion);
+      record('active runtime display version is 0.1', test.version === '0.1', test.version);
+      record('historical product identity absent from active shell', !/1\.6\.5|1\.5\.1 RC/.test(doc.documentElement.textContent + doc.title));
+      record('initial Web view is canvas-first', initialShell.collapsed && !app.creativeWorkspace?.open && !doc.querySelector('#app').classList.contains('inspector-open'), initialShell);
+      record('left tool rail remains visible', visible(doc, '.tool-rail') && doc.querySelectorAll('.tool-rail [data-tool], .tool-rail [data-tool-stack]').length >= 6);
+      record('right panel dock starts compact', visible(doc, '#panelDock') && initialShell.dockWidth >= 32 && initialShell.dockWidth <= 48, initialShell);
+      record('initial stage reserves only compact dock', initialStageWidth > frame.clientWidth - 64, { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
+
+      shell.open('layers');
+      await sleep(120);
+      const layersState = shell.state();
+      record('Layers opens as primary Inspector panel', layersState.activePanel === 'layers' && layersState.inspectorOpen && !layersState.creativeOpen, layersState);
+      record('expanded panel width bounded', layersState.panelWidth >= 240 && layersState.panelWidth <= 420, layersState.panelWidth);
+      record('canvas resizes for expanded panel', layersState.stageWidth < initialStageWidth - 180, { initialStageWidth, expandedStageWidth: layersState.stageWidth });
+
+      const layersBefore = test.summary().layers;
+      doc.querySelector('#addLayerBtn').click();
+      await sleep(80);
+      const afterAdd = test.summary().layers;
+      doc.querySelector('#duplicateLayerBtn').click();
+      await sleep(80);
+      const afterDuplicate = test.summary().layers;
+      doc.querySelector('#deleteLayerBtn').click();
+      await sleep(80);
+      const afterDelete = test.summary().layers;
+      record('Layers add operation works', afterAdd === layersBefore + 1, { layersBefore, afterAdd });
+      record('Layers duplicate operation works', afterDuplicate === layersBefore + 2, { afterDuplicate });
+      record('Layers delete operation works', afterDelete === layersBefore + 1, { afterDelete });
+
+      shell.open('history');
+      await sleep(100);
+      record('History directly reachable', shell.state().activePanel === 'history' && visible(doc, '#historyList'), shell.state());
+      const beforeUndo = test.summary();
+      doc.querySelector('#undoBtn').click();
+      await sleep(100);
+      const afterUndo = test.summary();
+      doc.querySelector('#redoBtn').click();
+      await sleep(100);
+      const afterRedo = test.summary();
+      record('History undo works', afterUndo.layers === layersBefore + 2 && afterUndo.redo >= 1, { beforeUndo, afterUndo });
+      record('History redo works', afterRedo.layers === layersBefore + 1, afterRedo);
+
+      for (const id of ['reference','compose','chat','revision']) {
+        shell.open(id);
+        await sleep(90);
+        record(id + ' dock entry reaches existing Creative Workspace stage', shell.state().activePanel === id && app.creativeWorkspace?.stage === id && app.creativeWorkspace?.open, shell.state());
+      }
+
+      shell.open('chat');
+      await sleep(80);
+      shell.close();
+      await sleep(80);
+      record('CHAT close preserves underlying controller', app.chatBoundedEdit === initialChatController && Boolean(app.chatBoundedEdit), { installed: Boolean(app.chatBoundedEdit) });
+      record('Revision close preserves underlying controller', app.revisions === initialRevisionController && Boolean(app.revisions), { installed: Boolean(app.revisions) });
+      record('panel collapse restores canvas width', shell.state().collapsed && shell.state().stageWidth > initialStageWidth - 10, shell.state());
+
+      const windowButton = Array.from(doc.querySelectorAll('.application-menus button')).find(button => button.textContent.trim() === '視窗');
+      windowButton?.click();
+      await sleep(50);
+      record('Window menu coherently exposes dock panels', visible(doc, '#panelWindowMenu') && doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 7);
+
+      const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
+      record('New/Open/Save/Export/Fullscreen command bindings remain wired', buttonsWired);
+      doc.querySelector('#exportBtn').click();
+      await sleep(60);
+      record('Export surface still opens', (() => {
+        const dialog = doc.querySelector('#exportDialog');
+        return Boolean(dialog && !dialog.hidden);
+      })());
+      const cancelExport = doc.querySelector('#cancelExportBtn');
+      if (cancelExport && !cancelExport.hidden) cancelExport.click();
+
+      const fullscreenDiag = test.fullscreen();
+      record('Fullscreen API remains supported and command surface wired', fullscreenDiag.supported && typeof doc.querySelector('#fullscreenToggle').onclick === 'function', fullscreenDiag);
+
+      dispatchKey(win, '2', { ctrlKey: true });
+      await sleep(80);
+      const shortcutLayout = test.workspace().activeSpace;
+      dispatchKey(win, '1', { ctrlKey: true });
+      await sleep(80);
+      const shortcutCreation = test.workspace().activeSpace;
+      dispatchKey(win, 'v');
+      await sleep(60);
+      const shortcutTool = test.summary().tool;
+      record('keyboard workspace shortcuts preserved', shortcutLayout === 'layout' && shortcutCreation === 'creation', { shortcutLayout, shortcutCreation });
+      record('keyboard tool shortcut sample preserved', shortcutTool === 'select', shortcutTool);
+
+      frame.style.width = '960px';
+      await sleep(260);
+      shell.close();
+      await sleep(100);
+      const desktopResize = shell.state();
+      record('desktop resize remains stable', frame.contentWindow.innerWidth <= 960 && desktopResize.stageWidth > 800 && visible(doc, '#panelDock'), { viewport: frame.contentWindow.innerWidth, shell: desktopResize });
+
+      frame.style.width = '720px';
+      await sleep(320);
+      const mobileMedia = win.matchMedia('(max-width:760px)').matches;
+      const mobileDockHidden = getComputedStyle(doc.querySelector('#panelDock')).display === 'none';
+      const mobileBottomDock = visible(doc, '.mobile-dock');
+      record('narrow/mobile fallback activates without desktop dock overlap', mobileMedia && mobileDockHidden && mobileBottomDock, { mobileMedia, mobileDockHidden, mobileBottomDock });
+      shell.open('layers');
+      await sleep(120);
+      const inspectorRect = doc.querySelector('#inspector').getBoundingClientRect();
+      record('mobile Inspector remains within viewport', inspectorRect.left >= 0 && inspectorRect.right <= win.innerWidth + 1 && inspectorRect.bottom <= win.innerHeight + 1, { viewport: [win.innerWidth, win.innerHeight], rect: inspectorRect.toJSON?.() || { left: inspectorRect.left, right: inspectorRect.right, top: inspectorRect.top, bottom: inspectorRect.bottom } });
+      shell.close();
+      frame.style.width = '1280px';
+      await sleep(250);
+
+      const favicon = doc.querySelector('link[rel="icon"]');
+      const faviconResponse = favicon ? await win.fetch(favicon.href, { cache: 'reload' }) : null;
+      const markStyle = getComputedStyle(doc.querySelector('.menu-app-mark>span')).backgroundImage;
+      record('favicon link resolves successfully in fresh context', Boolean(faviconResponse?.ok), { href: favicon?.href || null, status: faviconResponse?.status || null });
+      record('user INK mark is requested by visible shell CSS', /ink-mark\.svg/.test(markStyle), markStyle);
+
+      let swReady = false;
+      let swVersion = null;
+      let cacheKeys = [];
+      let legacyCacheRemoved = false;
+      try {
+        const registration = await Promise.race([
+          win.navigator.serviceWorker.ready,
+          new Promise((_, reject) => setTimeout(() => reject(new Error('service-worker-ready-timeout')), 12000))
+        ]);
+        swReady = Boolean(registration?.active);
+        const swResponse = await win.fetch(new URL('./service-worker.js?v=qa', win.location.href));
+        const swText = await swResponse.text();
+        swVersion = /RELEASE_VERSION\s*=\s*'([^']+)'/.exec(swText)?.[1] || null;
+        await waitFor(async () => {
+          cacheKeys = await win.caches.keys();
+          return cacheKeys.includes('ink-v0.1-Web-shell');
+        }, 12000, 150);
+
+        const legacy = await win.caches.open('ink-v1.6.5-RC-shell');
+        await legacy.put(new Request(new URL('./qa-legacy-probe', win.location.href)), new Response('legacy'));
+        const qaScript = new URL('./service-worker.js?qa-refresh=0.1', win.location.href).href;
+        const qaScope = new URL('./', win.location.href).pathname;
+        const updated = await win.navigator.serviceWorker.register(qaScript, { scope: qaScope });
+        let worker = updated.installing || updated.waiting;
+        if (worker?.state !== 'installed' && worker?.state !== 'activated') await waitWorkerState(worker);
+        worker = updated.waiting || worker;
+        if (worker?.state === 'installed') worker.postMessage({ type: 'INK_SKIP_WAITING' });
+        await waitFor(async () => {
+          cacheKeys = await win.caches.keys();
+          return !cacheKeys.includes('ink-v1.6.5-RC-shell') && cacheKeys.includes('ink-v0.1-Web-shell');
+        }, 12000, 200);
+        legacyCacheRemoved = !cacheKeys.includes('ink-v1.6.5-RC-shell');
+      } catch (error) {
+        results.push({ name: 'service-worker diagnostic detail', pass: false, detail: String(error?.stack || error) });
+      }
+      record('service worker activates in loopback Web runtime', swReady, { swReady });
+      record('service worker exposes v0.1 Web cache identity', swVersion === '0.1-Web' && cacheKeys.includes('ink-v0.1-Web-shell'), { swVersion, cacheKeys });
+      record('service-worker activation removes historical cache without storage reset', legacyCacheRemoved, { cacheKeys });
+
+      const integrity = test.documentIntegrity();
+      const health = test.runtimeHealth();
+      record('document integrity remains valid', integrity.passed === true, integrity);
+      record('no fatal runtime health failure', health.status !== 'fail', health);
+
+      const failed = results.filter(item => !item.pass);
+      const payload = {
+        schema: 'INK-WEB-UI-001-BROWSER-QA',
+        version: 1,
+        status: failed.length ? 'FAIL' : 'PASS',
+        product: 'INK v0.1 · Web',
+        formatVersion: test.architecture().formatVersion,
+        checks: results,
+        summary: { total: results.length, passed: results.length - failed.length, failed: failed.length }
+      };
+      document.body.dataset.qaStatus = payload.status;
+      output.textContent = 'INK_UI_QA_RESULT:' + JSON.stringify(payload);
+    } catch (error) {
+      const payload = {
+        schema: 'INK-WEB-UI-001-BROWSER-QA',
+        version: 1,
+        status: 'FAIL',
+        fatal: String(error?.stack || error),
+        checks: results
+      };
+      document.body.dataset.qaStatus = 'FAIL';
+      output.textContent = 'INK_UI_QA_RESULT:' + JSON.stringify(payload);
+    }
+  }
+
+  frame.addEventListener('load', () => { void run(); }, { once: true });
+})();
+</script>
+</body>
+</html>
