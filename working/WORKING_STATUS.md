@@ -2006,3 +2006,38 @@ central Runtime batching
 ```
 
 No next implementation Work Order has been authorized yet.
+
+
+## INK-RUNTIME-AUTOMATION-001 closure
+
+```text
+TASK = INK-RUNTIME-AUTOMATION-001
+TITLE = Central Runtime Queue & Auto Dispatch v0.1
+DEV_HANDOFF = c69f96e5a5a3ce310acab96af946675c96f96397
+PROMOTION_PR = #39 / MERGED
+PROMOTED_MAIN = d698df7c26b0365cb3e240a8fea685a454176c2c
+QUEUE_TRIGGER_COMMIT = df67e6156b89885711363cfd491adbbaf1307488
+AUTO_RUNTIME_RUN = 35748328916
+AUTO_RUNTIME_TESTED_SHA = d698df7c26b0365cb3e240a8fea685a454176c2c
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10704217135
+FINAL_GATE = INK_RUNTIME_AUTOMATION_001_RUNTIME_PASS
+```
+
+Central Runtime behavior now accepted:
+
+```text
+normal user SHA copy/paste = not required
+normal user workflow selection = not required
+manual fallback = blank input allowed
+ordinary batch target = 3
+allowed batch range = 2-4
+high-risk = may run early with explicit reason
+exact-SHA evidence = preserved
+external browser-agent dependency = none
+self-hosted Windows Chrome = authoritative Runtime path
+```
+
+MR can now accumulate compatible Runtime debt in `ACTIVE/INK_RUNTIME_QUEUE.json` and trigger the central Windows batch by changing queue state to READY. Ordinary product/main pushes do not wake the Windows Runtime.
