@@ -69,7 +69,7 @@ jobs:
               if ($slash -lt 0 -or $slash -ge $entry.FullName.Length - 1) { continue }
               $rel = $entry.FullName.Substring($slash + 1)
               $wanted = $rel.StartsWith('product/source/', [StringComparison]::Ordinal) -or
-                        $rel -eq 'qa/runtime/ink-web-ui-001-harness.html'
+                        $rel.StartsWith('qa/runtime/', [StringComparison]::Ordinal)
               if (-not $wanted -or [string]::IsNullOrEmpty($entry.Name)) { continue }
 
               $target = Join-Path $root ($rel.Replace('/', '\'))
@@ -144,52 +144,65 @@ jobs:
           if (-not $browser) { throw 'No Chrome/Edge runtime found on self-hosted Windows runner.' }
           Write-Host "Browser: $browser"
 
-          $pythonExe = $null
-          $pythonArgs = @()
-          if (Get-Command py -ErrorAction SilentlyContinue) {
-            $pythonExe = (Get-Command py).Source
-            $pythonArgs = @('-3')
-          } elseif (Get-Command python -ErrorAction SilentlyContinue) {
-            $pythonExe = (Get-Command python).Source
-          } elseif (Get-Command python3 -ErrorAction SilentlyContinue) {
-            $pythonExe = (Get-Command python3).Source
-          }
-          if (-not $pythonExe) { throw 'Python 3 is required for the bounded loopback server.' }
+          $qaSource = Join-Path $env:INK_RUNTIME_ROOT 'qa\runtime\ink-web-ui-001-harness.html'
+          $qaDir = Join-Path $env:INK_RUNTIME_ROOT 'product\source\_qa'
+          New-Item -ItemType Directory -Path $qaDir -Force | Out-Null
+          Copy-Item $qaSource (Join-Path $qaDir 'ink-web-ui-001-harness.html') -Force
 
-          $port = 8871
-          $serverArgs = @($pythonArgs + @('-m','http.server',"$port",'--bind','127.0.0.1'))
+          $stdout = Join-Path $evidence 'server.out.log'
+          $stderr = Join-Path $evidence 'server.err.log'
           $server = $null
           try {
-            $server = Start-Process -FilePath $pythonExe -ArgumentList $serverArgs -WorkingDirectory $env:INK_RUNTIME_ROOT -PassThru -WindowStyle Hidden
-            $url = "http://127.0.0.1:$port/qa/runtime/ink-web-ui-001-harness.html"
+            $serverScript = Join-Path $env:INK_RUNTIME_ROOT 'qa\runtime\start-ink-local.ps1'
+            $server = Start-Process powershell -ArgumentList @(
+              '-NoProfile','-ExecutionPolicy','Bypass','-File',$serverScript,'-NoBrowser'
+            ) -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
 
+            $url = 'http://127.0.0.1:4173/_qa/ink-web-ui-001-harness.html'
             $ready = $false
-            for ($i = 0; $i -lt 40; $i++) {
+            for ($i = 0; $i -lt 30; $i++) {
+              Start-Sleep -Milliseconds 500
+              if ($server.HasExited) { break }
               try {
-                $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 2
+                $response = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/' -UseBasicParsing -TimeoutSec 2
                 if ($response.StatusCode -eq 200) { $ready = $true; break }
               } catch {}
-              Start-Sleep -Milliseconds 250
             }
-            if (-not $ready) { throw 'Loopback HTTP server did not become ready.' }
+            if (-not $ready) {
+              Get-Content $stdout -ErrorAction SilentlyContinue
+              Get-Content $stderr -ErrorAction SilentlyContinue
+              throw 'INK verified loopback server did not become ready.'
+            }
             Write-Host "Loopback preflight: PASS"
 
+            Set-Location $env:INK_RUNTIME_ROOT
+            & powershell -NoProfile -ExecutionPolicy Bypass -File .\qa\runtime\check-ink-local.ps1
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
             $profile = Join-Path $env:RUNNER_TEMP "ink-web-ui-001-chrome-$env:GITHUB_RUN_ID"
+            Remove-Item $profile -Recurse -Force -ErrorAction SilentlyContinue
             New-Item -ItemType Directory -Path $profile -Force | Out-Null
             $args = @(
               '--headless=new',
               '--disable-gpu',
               '--no-first-run',
               '--no-default-browser-check',
+              '--disable-extensions',
               "--user-data-dir=$profile",
               '--virtual-time-budget=42000',
               '--dump-dom',
               $url
             )
-            $dump = (& $browser @args 2>&1 | Out-String)
+            $browserOutput = & $browser @args 2>&1
+            $exit = $LASTEXITCODE
+            $dump = $browserOutput | Out-String
             $dumpPath = Join-Path $evidence 'browser-dump.html'
             [System.IO.File]::WriteAllText($dumpPath, $dump, [System.Text.UTF8Encoding]::new($false))
 
+            if ($exit -ne 0) {
+              Write-Host $dump
+              throw "Browser exited with code $exit"
+            }
             if ($dump -notmatch 'data-qa-status="PASS"') {
               Write-Host $dump
               throw 'INK-WEB-UI-001 browser harness did not reach PASS.'
@@ -202,6 +215,7 @@ jobs:
               "RUNNER=$env:RUNNER_NAME",
               "BROWSER=$browser",
               "LOOPBACK_HTTP=PASS",
+              "HTTP_MIME_PREFLIGHT=PASS",
               "BROWSER_HARNESS=PASS",
               "FORMAT_VERSION=4",
               "PRODUCT_DISPLAY=INK v0.1 · Web"
