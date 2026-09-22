@@ -1539,3 +1539,28 @@ CORE-MOD-002 = Semantic Region Grounding
 branch = work/ink-core-semantic-region-002
 runtime = DEFERRED_TO_INTEGRATION_BATCH
 ```
+
+
+## Delegated UI lane closure — UI-003 → UI-005
+
+UR completed the pre-authorized UI convergence sequence.
+
+```text
+INK-WEB-UI-003 = UI_PASS / PROMOTED / PR #24
+UI-003 MAIN = 9adc2ef09141e4015fc9d4657fb5b3f932a39c41
+
+INK-WEB-UI-004 = UI_PASS / BOUNDED_CORRECTION / PROMOTED / PR #25
+UI-004 MAIN = d0488ddd8380b285b2744abd6b6983f451a6a702
+
+INK-WEB-UI-005 = UI_PASS / PROMOTED / PR #27
+UI-005 MAIN = 4c8c99368a90e9c924fd187ec735d51e21dbc5d8
+
+UI_LANE_SOURCE_COMPLETE = PASS
+UI_LANE_READY_FOR_INTEGRATION = YES
+UI_RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+UI_NEXT_MODE = MAINTENANCE
+```
+
+No Core / Document / History / Revision / Geometry / Renderer / CHAT execution semantics were changed by the delegated UI lane.
+
+Next cross-lane action belongs to MR Integration authority.
