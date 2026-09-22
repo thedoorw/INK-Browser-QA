@@ -15,6 +15,8 @@ STATUS: `INK-WEB-UI-001 / READY_TO_START`
 | TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
+| PORTABLE_DISPLAY_VERSION | `INK v0.1 · Portable / REQUIRED` |
+| UI_SHELL_SCOPE | `SHARED PORTABLE + WEB/CLOUD` |
 | FAVICON | `USER ORIGINAL MARK / REQUIRED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
@@ -43,7 +45,7 @@ SHA256:
 - Phase A — exact shell inventory + regression map
 - Phase B — Photoshop-aligned canvas-first shell
 - Phase C — collapsible panel dock
-- Phase D — v0.1 Web identity + INK mark + favicon + cache identity
+- Phase D — v0.1 Portable/Web identity + INK mark + favicon + cache identity
 - Phase E — regression + real-browser runtime closure
 
 ## Checkpoint rule
@@ -66,7 +68,9 @@ Do not infer approval to merge main, mutate package, change `FORMAT_VERSION`, br
 HUMAN_UI = quiet / compact / canvas-first
 CHAT_CAPABILITY = preserved below UI
 ADOBE_REFERENCE = interaction grammar only
-PRODUCT_DISPLAY_VERSION = INK v0.1 · Web
+WEB_DISPLAY_VERSION = INK v0.1 · Web
+PORTABLE_DISPLAY_VERSION = INK v0.1 · Portable
+UI_SHELL = shared Portable/Web
 FORMAT_VERSION = 4
 FAVICON = user original mark
 PUBLIC_STAGING = unchanged until MR promotion to main
@@ -89,3 +93,21 @@ BROWSER_RUNTIME_QA = EXECUTED
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## Scope correction
+
+USER clarified after package issuance:
+
+```text
+The Photoshop-aligned UI is shared by Portable and Web/Cloud.
+Do not implement it as a Web-only fork.
+```
+
+Required shell alignment:
+
+- `product/source/index.html`
+- `product/source/index-standalone.html`
+- shared CSS / UI behavior
+
+Only the supplementary delivery label differs.
