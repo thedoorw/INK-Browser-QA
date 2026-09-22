@@ -1,29 +1,30 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `CORE-MOD-003 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `CORE-MOD-004 / AUTHORIZED / READY_FOR_DEV`
 
 ## Prior closures
 
 ```text
 CORE-MOD-001 = AI Document Bridge / MR_PASS / PROMOTED / RUNTIME_DEBT_CLEARED
 CORE-MOD-002 = Semantic Region Grounding / MR_PASS / PROMOTED
-CORE-MOD-002 PROMOTION PR = #30
-CORE-MOD-002 MAIN = 05bd690f09a9c2cd81fe4a8744f7641805e5cfe2
+CORE-MOD-003 = Revision Provenance / MR_PASS / PROMOTED
+CORE-MOD-003 PROMOTION PR = #31
+CORE-MOD-003 MAIN = bffd922ce92bca8a21102d87087020b1286e2b42
 ```
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `CORE-MOD-003` |
-| TITLE | `Revision Provenance Module v0.1` |
+| CURRENT_TASK_ID | `CORE-MOD-004` |
+| TITLE | `Visual Compare + Variant Module v0.1` |
 | ROLE_OWNER | `MR / CORE MODULE LANE` |
-| DEV_WORK_BRANCH | `work/ink-core-revision-provenance-003` |
+| DEV_WORK_BRANCH | `work/ink-core-visual-compare-004` |
 | DEV_MODE | `BOUNDED_MODULE_PREPARATION` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED / MODULE_ONLY` |
 | UI_MUTATION | `PROHIBITED` |
 | REVISION_AUTHORITY_CHANGE | `PROHIBITED` |
-| HISTORY_SEMANTICS_CHANGE | `PROHIBITED` |
+| RESTORE_SEMANTICS_CHANGE | `PROHIBITED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
@@ -31,29 +32,28 @@ CORE-MOD-002 MAIN = 05bd690f09a9c2cd81fe4a8744f7641805e5cfe2
 
 ## Objective
 
-Prepare a pure provenance module that explains how an INK object, change, Revision, extraction result, Recipe result or CHAT operation was derived, while keeping existing Revision and History systems authoritative.
+Prepare a pure comparison/variant module that can compare references, current document state, revisions and bounded variants without creating a second editor, second Revision authority or UI workbench.
 
 Target:
 
 ```text
-reference / extraction / recipe / CHAT operation / revision evidence
-→ normalized provenance events
-→ object/change/revision lineage
-→ deterministic provenance graph
-→ bounded CHAT-readable provenance context
+reference/current/revision/variant inputs
+→ normalized comparison subjects
+→ visual/structural comparison model
+→ deterministic evidence
+→ choose/restore/continue metadata for later Integration
 ```
 
-This module records/normalizes evidence only. It does not replace existing Revision records, History transactions, or document mutation semantics.
+This task prepares comparison data and adapters only. It does not add a comparison UI and does not execute Revision restore.
 
 ## Existing authority to preserve
 
 - `product/source/src/document/revision.js`;
-- existing Revision record/index/restore semantics;
-- existing History implementation;
-- existing file-envelope integrity;
-- existing object IDs / document IDs / revision IDs;
-- existing extraction / Recipe / CHAT metadata already present in source records;
-- AI Document Bridge and Semantic Region Grounding as read-only consumers/producers;
+- current Revision comparison and restore semantics;
+- current Document / object identity;
+- existing renderer;
+- existing provenance module;
+- AI Document Bridge / Semantic Region modules;
 - FORMAT_VERSION = 4.
 
 ## Required reads
@@ -64,131 +64,142 @@ This module records/normalizes evidence only. It does not replace existing Revis
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `product/source/src/document/revision.js`
-7. `product/source/src/document/file-envelope.js`
-8. `product/source/src/history/*`
-9. `product/source/src/ai/document-bridge.js`
-10. relevant extraction / Recipe / CHAT modules only as needed
+7. `product/source/src/provenance/provenance-graph.js`
+8. `product/source/src/ai/document-bridge.js`
+9. existing document/object helpers only as needed
 
 ## Scope
 
-### Phase A — provenance contract inventory
+### Phase A — comparison contract inventory
 
-Inventory existing provenance-bearing fields from:
+Inventory existing Revision comparison, object fingerprints, document fingerprints, provenance refs and any current reference/current comparison data.
 
-- reference/import source metadata;
-- extraction metadata;
-- Recipe / step IDs;
-- CHAT proposal / plan / execution IDs;
-- Revision IDs / parent/base links;
-- object source IDs;
-- file-envelope / document identity;
-- semantic-region provenance refs.
+Define one INK-owned comparison contract supporting at minimum:
 
-Define one INK-owned provenance event/graph contract.
+- subject A / subject B identity;
+- subject kind: reference / current / revision / variant;
+- document / revision / object IDs where available;
+- structural added / removed / changed object sets;
+- shared object correspondence;
+- deterministic comparison fingerprint;
+- provenance refs where available;
+- explicit unsupported / unresolved comparison evidence;
+- bounded comparison output.
 
-At minimum include:
+Gate: `VISUAL_COMPARE_CONTRACT_DEFINED`
 
-- deterministic event ID;
-- event kind;
-- source entity;
-- target entity;
-- document ID;
-- revision ID when available;
-- parent/source event IDs;
-- operation / recipe / step / proposal / plan identity when available;
-- before/after fingerprints or object IDs where available;
-- timestamp as evidence only, excluded from deterministic identity where necessary;
-- unresolved provenance;
-- deterministic graph fingerprint.
+### Phase B — pure compare module
 
-Gate: `REVISION_PROVENANCE_CONTRACT_DEFINED`
+Recommended path:
 
-### Phase B — pure provenance module
+`product/source/src/compare/visual-compare.js`
 
-Recommended:
-
-`product/source/src/provenance/provenance-graph.js`
-
-Requirements:
+Required properties:
 
 - pure / non-mutating;
 - no DOM/network dependency;
 - JSON-compatible;
-- deterministic IDs/order/fingerprint;
-- normalize existing evidence; do not invent lineage;
-- unresolved/missing links remain explicit;
-- bounded event / edge output;
-- no modification of Revision record schema.
+- deterministic ordering/fingerprint;
+- no renderer ownership;
+- no pixel capture requirement;
+- structural comparison can reuse authoritative Revision comparison evidence;
+- optional visual descriptors may be represented as data only;
+- no guessed object correspondence beyond stable identity/evidence;
+- bounded output.
 
-Gate: `REVISION_PROVENANCE_GRAPH_WORKS`
-
-### Phase C — adapters
-
-Provide narrow read-only adapters for later Integration:
+Supported modes in the contract should include:
 
 ```text
-existing Revision records / comparison
-existing document/object metadata
-optional extraction / Recipe / CHAT evidence
-→ provenance graph
-
-provenance graph
-→ bounded AI Document Bridge-compatible context
+side-by-side
+overlay
+wipe
+difference
+structural
 ```
 
-Do not make provenance the active Revision store or History store.
+These are mode descriptors for later UI/renderer integration, not UI implementation.
 
-Gate: `REVISION_PROVENANCE_ADAPTER_READY`
+Gate: `VISUAL_COMPARE_PURE_MODULE_WORKS`
+
+### Phase C — variant model + adapters
+
+Provide a bounded variant descriptor for later Integration.
+
+At minimum:
+
+- variantId;
+- base subject;
+- derived subject;
+- label / reason;
+- source revision or provenance fingerprint where available;
+- comparison fingerprint;
+- decision state limited to neutral workflow states such as `UNRESOLVED / SELECTED / REJECTED`;
+- no automatic choice;
+- no restore execution.
+
+Provide narrow read-only adapters for:
+
+```text
+reference ↔ current
+revision ↔ revision
+current ↔ revision
+variant A ↔ variant B
+```
+
+Gate: `VISUAL_VARIANT_ADAPTER_READY`
 
 ### Phase D — deterministic evidence
 
 Tests must cover at minimum:
 
-- reference → extraction → object lineage;
-- Recipe / step lineage;
-- CHAT proposal/plan/execution lineage;
-- Revision parent/base lineage;
-- object added/changed/removed evidence from existing revision comparison;
-- equivalent reordered input → same graph/fingerprint;
-- unresolved/missing source links;
-- duplicate/conflicting evidence handling;
+- current vs revision;
+- revision vs revision;
+- reference/current identity handling;
+- variant descriptors;
+- added/removed/changed structural evidence;
+- stable correspondence by existing identity only;
+- reordered equivalent input → same output/fingerprint;
+- unresolved/unsupported evidence;
 - bounded output;
 - no source mutation;
-- existing Revision record inspection remains valid;
+- no Revision restore invocation;
+- no renderer/DOM/network dependency;
+- provenance refs preserved where available;
 - FORMAT_VERSION = 4.
 
-Gate: `CORE_MOD_003_MODULE_READY`
+Gate: `CORE_MOD_004_MODULE_READY`
 
 ## Hard boundaries
 
 Do not:
 
-- alter Revision schema or restore behavior;
-- change History semantics;
-- add timestamps to deterministic IDs in a way that breaks equivalence;
 - modify UI;
+- implement side-by-side/overlay/wipe visual rendering;
+- execute restore/select/reject actions against authoritative state;
+- change Revision schema or restore behavior;
+- change History semantics;
 - change Document schema;
 - change FORMAT_VERSION;
-- create a second revision store;
-- create a second History;
-- integrate Compare / Variant or Parametric modules in this task.
+- create a second renderer;
+- create a second Revision/variant document store;
+- integrate CORE-MOD-005 in this task.
 
 ## Required report
 
 Exactly one:
 
-`research/INK_CORE_MOD_003_REVISION_PROVENANCE_REPORT_v0.1.md`
+`research/INK_CORE_MOD_004_VISUAL_COMPARE_VARIANT_REPORT_v0.1.md`
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = CORE-MOD-003
-BRANCH = work/ink-core-revision-provenance-003
-GATE = CORE_MOD_003_MODULE_READY
+TASK_ID = CORE-MOD-004
+BRANCH = work/ink-core-visual-compare-004
+GATE = CORE_MOD_004_MODULE_READY
 UI_MUTATION = 0
 REVISION_AUTHORITY_CHANGE = 0
-HISTORY_SEMANTICS_CHANGE = 0
+RESTORE_SEMANTICS_CHANGE = 0
 FORMAT_VERSION = 4
 RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
