@@ -1284,3 +1284,22 @@ User-original mark source:
 SHA256:
 
 `08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8`
+
+
+## Shared UI shell clarification
+
+USER clarification:
+
+```text
+INK-WEB-UI-001 is not Web-only.
+Portable and Web/Cloud must receive the same interface redesign.
+```
+
+Delivery labels remain:
+
+```text
+INK v0.1 · Web
+INK v0.1 · Portable
+```
+
+The shell / panel / toolbar / canvas behavior is shared; delivery-specific adapters remain separate.
