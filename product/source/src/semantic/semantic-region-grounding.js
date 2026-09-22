@@ -14,7 +14,7 @@ const HARD_LIMITS = Object.freeze({ maxRegions: 512, maxPairs: 131072, maxEviden
 const SOURCE_EVIDENCE_RELATIONS = new Set(['adjacent', 'crossing', 'gap', 'bridge']);
 const SYMMETRIC_RELATIONS = new Set(['intersects', 'overlaps', 'adjacent', 'crossing', 'gap']);
 const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
-const finite = value => Number.isFinite(Number(value)) ? Number(value) : null;
+const finite = value => value == null || value === '' ? null : (Number.isFinite(Number(value)) ? Number(value) : null);
 const clone = value => value == null ? value : JSON.parse(JSON.stringify(value));
 const round = (value, digits = 9) => Number(Number(value).toFixed(digits));
 
