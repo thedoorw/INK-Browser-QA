@@ -41,7 +41,7 @@ Status: `GROUNDED_CREATIVE_DECISION_CONTRACT_DEFINED`
 - accepts a plan candidate only for `PLAN_PROPOSAL` disposition;
 - routes the candidate through the existing creative-plan validation and leaves it at `PROPOSED` with no approval token.
 
-Commit: `9259407`
+GitHub commit: `ad179fa1bfa0412af3155db1c6ecad19a344c39c`
 
 ## Checkpoint 2 — existing authority and user boundary
 
@@ -66,7 +66,7 @@ Task-specific QA:
 
 `qa/core-integration-004-grounded-plan-bridge.test.mjs`
 
-Commit: `1078d84`
+GitHub commit: `16af10180162ef3a4eb54ab00050fb8e36b0c926`
 
 ## Checkpoint 3 — source-ready handoff
 
