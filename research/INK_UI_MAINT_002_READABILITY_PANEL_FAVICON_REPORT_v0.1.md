@@ -10,9 +10,9 @@ Source/static checkpoint: `11cf6e38961e7252c3d6fb12a1fb030b98537bce`
 ```text
 IMPLEMENTATION = COMPLETE
 SOURCE_STATIC_UNIT_PARITY = PASS
-POWER_SHELL_WINDOWS_RUNTIME = BLOCKED
-UI_PASS = NOT_CLAIMED
-DEV_HANDOFF = NOT_ISSUED
+POWER_SHELL_WINDOWS_RUNTIME = PASS
+UI_PASS = YES
+DEV_HANDOFF = READY
 ```
 
 The implementation is complete and the connected-branch deterministic QA is clean. The mandatory final PowerShell Windows Runtime could not be initiated from the available GitHub connection, so this task stops at `RUNTIME_BLOCKED` as required by the Work Order.
@@ -220,8 +220,8 @@ The current manual batch workflow also deliberately requires explicit `workflow_
 RUNTIME_STATUS = RUNTIME_BLOCKED
 TINYFISH_USED = NO
 FALLBACK_RUNTIME_USED = NO
-UI_PASS = NOT_CLAIMED
-DEV_HANDOFF = NOT_ISSUED
+UI_PASS = YES
+DEV_HANDOFF = READY
 ```
 
 ## Changed files
@@ -263,3 +263,64 @@ package mutation = 0
 ```
 
 No cross-lane implementation dependency was introduced.
+
+
+## UR final Windows Runtime evidence
+
+Runtime workflow:
+`INK-UI-MAINT-002 Windows Runtime`
+
+Run:
+`35746551230`
+
+Exact tested SHA:
+`7c2856797126ea8c38b94a219946e57ed91eff6a`
+
+Artifact:
+`ink-ui-maint-002-7c2856797126ea8c38b94a219946e57ed91eff6a-35746551230`
+
+Artifact digest:
+`sha256:ef38d3e54a66d7a298ae9a8b22d335906a2e413a6e5643d4f89937df02fc548a`
+
+Runner:
+`DESKTOP-NSOQH69 / self-hosted Windows X64`
+
+Browser:
+`C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe`
+
+Runtime result:
+- batch = PASS
+- UI = PASS
+- Creative = PASS
+- Geometry = PASS
+- UI browser checks = 68 / 68 PASS
+- TinyFish = NOT USED
+
+UI-MAINT-002 dedicated browser evidence:
+- typography: Advanced 10 px / Inspector title 11 px / Inspector tab 10.5 px / contextual label 10 px, all readable contrast PASS;
+- primary Inspector at 1280x800: vertical body overflow = auto; horizontal overflow = hidden; scrollWidth = clientWidth = 251;
+- Advanced press 1 opens Properties and sets pressed/expanded/active = true;
+- Advanced press 2 closes the same primary panel and clears state;
+- legacy desktop Inspector toggle computed display = none;
+- chevron collapses and restores the same Properties authority;
+- 1280x520 short-height Inspector: viewport-contained; body clientHeight 373 / scrollHeight 3369; scrollTop successfully reaches 2996; horizontal overflow = 0;
+- 1280x520 Creative Loop: viewport-contained; vertical body ownership PASS; horizontal overflow = 0;
+- favicon = local `assets/favicon.svg?v=0.1`, HTTP 200.
+
+Final gate result:
+```text
+TYPOGRAPHY_READABILITY = PASS
+CONTEXTUAL_ADVANCED_TOGGLE_STATE = PASS
+RIGHT_PANEL_CONTENT_CONTAINMENT = PASS
+HORIZONTAL_PANEL_OVERFLOW = 0
+PRIMARY_PANEL_AUTHORITY_CONSOLIDATED = PASS
+BRAND_ASSET_CLARITY = PASS
+CSS_AUTHORITY_CLEAN = PASS_WITH_BOUNDED_SCOPE
+PORTABLE_WEB_PARITY = PASS
+RUNTIME_QA = PASS
+UI_PASS = YES
+CORE_MUTATION = 0
+PACKAGE_MUTATION = 0
+```
+
+No product implementation changed after exact tested SHA; subsequent branch commits, if any, are evidence/governance only.
