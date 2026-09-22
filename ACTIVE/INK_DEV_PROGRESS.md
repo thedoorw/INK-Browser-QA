@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-RA-001 / IN_PROGRESS`
+STATUS: `INK-RA-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 | Field | Value |
 |---|---|
@@ -8,13 +8,14 @@ STATUS: `INK-RA-001 / IN_PROGRESS`
 | BRANCH | `work/ink-ra-001` |
 | BRANCH_BASE | `94fbdb12753feecfe3dc7053677812c96cd2cf76` |
 | CHECKPOINT_INPUT_HEAD | `96c0082850884cd1eff393aff015695fc59c9749` |
-| CURRENT_PHASE | `PHASE_F / BLOCKED_WINDOWS_RUNNER_OFFLINE` |
+| CURRENT_PHASE | `PHASE_F / COMPLETE` |
 | PHASE_A | `COMPLETE` |
 | PHASE_B | `COMPLETE` |
 | PHASE_C | `COMPLETE` |
 | PHASE_D | `COMPLETE` |
 | PHASE_E | `COMPLETE` |
-| DEV_HANDOFF | `NO` |
+| PHASE_F | `COMPLETE` |
+| DEV_HANDOFF | `YES` |
 | TARGET_GATE | `STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | UI_MUTATION | `0` |
@@ -166,3 +167,54 @@ Runtime blocker:
 No DEV handoff is declared while the required browser runtime gate is unexecuted. The queued run is intentionally left active.
 
 Next: bring the existing self-hosted Windows runner online; inspect run `35623923480`, repair only if it reports a product/workflow failure, then finalize Phase F and DEV handoff.
+
+
+## Phase F closure
+
+Authoritative runtime:
+
+```text
+TESTED_SHA = 6ec1ad1d7e35ba8a384fb44e184b7429e96f7c47
+WORKFLOW_RUN = 35670775922
+RUNNER = DESKTOP-NSOQH69
+RESULT = SUCCESS
+```
+
+Passed:
+
+- bounded exact-SHA materialization without Git;
+- static FORMAT_VERSION invariant;
+- local Chrome discovery;
+- real Chromium ESM execution;
+- Rose Window fixture identity `1086 x 1448`;
+- cubic intersection count `3`;
+- finite cubic projection;
+- 12 input → 12 output Rose geometry;
+- deterministic repeated offset equality;
+- finite coordinates / hole classification / measurement;
+- `FORMAT_VERSION = 4`.
+
+Workflow repair history:
+
+- run `35623923480` failed in checkout fallback / PowerShell archive handling;
+- run `35670245734` failed on whole-repository Windows path length;
+- run `35670775922` passed after bounded-tree extraction.
+
+No product behavior was changed by the workflow repairs.
+
+## DEV handoff
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-RA-001
+BRANCH = work/ink-ra-001
+GATE = STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED / PASS
+FORMAT_VERSION = 4
+UI_MUTATION = 0
+PRODUCT_DISPLAY_VERSION_CHANGE = 0
+PACKAGE_MUTATION = 0
+BROWSER_RUNTIME_QA = EXECUTED / PASS
+RUNTIME_RUN = 35670775922
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
