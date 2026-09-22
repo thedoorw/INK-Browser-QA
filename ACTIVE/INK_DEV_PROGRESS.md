@@ -1,15 +1,15 @@
 # INK DEV PROGRESS
 
-STATUS: RUNTIME_BLOCKED / STOP
+STATUS: DEV_HANDOFF / RUNTIME_PASS
 
 TASK_ID: INK-UI-MAINT-002
 TITLE: Typography Readability / Panel Authority / Content Containment / Favicon v0.1
 BRANCH: work/ink-ui-maint-002
 BASE_MAIN: 19ce5f7d03a32600493a550ae2d2262340c229ee
-TASK_STATUS: RUNTIME_BLOCKED
-DEV_HANDOFF: NOT_YET
+TASK_STATUS: DEV_HANDOFF
+DEV_HANDOFF: READY
 UR_REVIEW: PENDING_AFTER_HANDOFF
-RUNTIME_QA: RUNTIME_BLOCKED / NOT_EXECUTED
+RUNTIME_QA: PASS
 PORTABLE_WEB_PARITY: REQUIRED
 FORMAT_VERSION: 4 / PRESERVE
 PRODUCT_BASE_VERSION: v0.1 / PRESERVE
@@ -60,9 +60,9 @@ Read on assigned branch:
 - [x] Web / Portable mirrored markup.
 - [x] Dedicated local favicon.
 - [x] Focused source/static/unit/parity checks — deterministic connected-branch assertions 11/11 PASS.
-- [ ] PowerShell Windows Runtime — BLOCKED: current GitHub connection cannot initiate a new exact-ref workflow_dispatch run.
+- [x] PowerShell Windows Runtime — PASS on exact tested SHA.
 - [x] Evidence report written: research/INK_UI_MAINT_002_READABILITY_PANEL_FAVICON_REPORT_v0.1.md
-- [ ] DEV_HANDOFF — NOT ISSUED because Runtime gate is blocked.
+- [x] DEV_HANDOFF — READY for UR clean promotion.
 
 ## Stop rule
 
@@ -148,3 +148,25 @@ NEXT_ACTION = STOP
 
 Evidence:
 `research/INK_UI_MAINT_002_READABILITY_PANEL_FAVICON_REPORT_v0.1.md`
+
+
+## UR Runtime closure
+
+```text
+RUNTIME_RUN = 35746551230
+RUNTIME_TESTED_SHA = 7c2856797126ea8c38b94a219946e57ed91eff6a
+UI_BROWSER = 68/68 PASS
+BATCH = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+TINYFISH_USED = NO
+TYPOGRAPHY_READABILITY = PASS
+CONTEXTUAL_ADVANCED_TOGGLE_STATE = PASS
+RIGHT_PANEL_CONTENT_CONTAINMENT = PASS
+PRIMARY_PANEL_AUTHORITY_CONSOLIDATED = PASS
+BRAND_ASSET_CLARITY = PASS
+PORTABLE_WEB_PARITY = PASS
+UI_PASS = YES
+TASK_STATUS = DEV_HANDOFF
+NEXT_ACTION = UR_CLEAN_PROMOTION
+```
