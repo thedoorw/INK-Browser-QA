@@ -107,6 +107,16 @@
     </div>
   </header>
 
+  <section id="contextualOptions" class="contextual-options glass-surface" aria-label="目前工具選項" data-context-mode="draw" data-context-tool="pen">
+    <div class="contextual-tool-identity" aria-live="polite">
+      <svg aria-hidden="true"><use id="contextualToolUse" href="#i-pen"/></svg>
+      <strong id="contextualToolName">鋼筆</strong>
+    </div>
+    <span class="contextual-divider" aria-hidden="true"></span>
+    <div id="contextualControlHost" class="contextual-control-host"></div>
+    <button id="contextualAdvancedBtn" class="contextual-advanced-button" type="button">進階</button>
+  </section>
+
   <aside id="pagesPanel" class="pages-panel elevated-panel" aria-label="頁面">
     <div class="panel-header">
       <div><span class="eyebrow">DOCUMENT</span><strong>頁面</strong></div>
@@ -158,10 +168,10 @@
       <div class="hint-keys"><kbd>B</kbd> 鋼筆 <kbd>I</kbd> 毛筆 <kbd>V</kbd> 選取</div>
     </div>
 
-    <section id="quickControls" class="quick-controls glass-surface" aria-label="快速筆刷控制">
-      <div class="quick-color-wrap"><button id="quickColor" class="quick-color" type="button" title="目前顏色" tabindex="-1" aria-hidden="true"><span></span></button><input id="quickColorInput" class="quick-color-input" type="color" value="#202020" aria-label="選擇目前顏色"></div>
-      <label class="quick-slider" title="筆刷寬度"><span class="quick-glyph thin"></span><input id="quickSizeInput" type="range" min="0.5" max="120" step="0.5" value="4"><output id="quickSizeOutput">4</output></label>
-      <label class="quick-slider" title="透明度"><span class="quick-glyph opacity">◐</span><input id="quickOpacityInput" type="range" min="1" max="100" step="1" value="100"><output id="quickOpacityOutput">100</output></label>
+    <section id="quickControls" class="quick-controls glass-surface" aria-label="快速工具控制">
+      <div class="context-inline-control" data-context-control="color"><span class="context-control-label">顏色</span><div class="quick-color-wrap"><button id="quickColor" class="quick-color" type="button" title="目前顏色" tabindex="-1" aria-hidden="true"><span></span></button><input id="quickColorInput" class="quick-color-input" type="color" value="#202020" aria-label="選擇目前顏色"></div></div>
+      <label class="quick-slider context-inline-control" data-context-control="size" title="工具大小"><span class="context-control-label">大小</span><input id="quickSizeInput" type="range" min="0.5" max="120" step="0.5" value="4"><output id="quickSizeOutput">4</output></label>
+      <label class="quick-slider context-inline-control" data-context-control="opacity" title="透明度"><span class="context-control-label">透明度</span><input id="quickOpacityInput" type="range" min="1" max="100" step="1" value="100"><output id="quickOpacityOutput">100</output></label>
     </section>
 
     <section id="selectionBar" class="selection-bar glass-surface" hidden>
