@@ -190,7 +190,7 @@ export class CreativeWorkspaceController {
     this.activeProposalId = null;
     this.activePlanId = null;
     this.status = { level: 'ready', code: 'WORKSPACE_READY', message: 'Creative workspace ready' };
-    this.open = true;
+    this.open = false;
     this.root = null;
     this.toggle = null;
     this.extractionAbort = null;
@@ -227,15 +227,16 @@ export class CreativeWorkspaceController {
     this.toggle.className = 'icon-button creative-workspace-toggle';
     this.toggle.title = 'Creative Workspace';
     this.toggle.setAttribute('aria-label', 'Creative Workspace');
-    this.toggle.setAttribute('aria-expanded', 'true');
+    this.toggle.setAttribute('aria-expanded', 'false');
     this.toggle.textContent = 'CW';
     const anchor = document.querySelector('#inspectorToggle');
     anchor?.parentElement?.insertBefore(this.toggle, anchor);
 
     const root = document.createElement('aside');
     root.id = 'creativeWorkspace';
-    root.className = 'creative-workspace-panel elevated-panel open';
+    root.className = 'creative-workspace-panel elevated-panel';
     root.setAttribute('aria-label', 'INK Creative Workspace');
+    root.setAttribute('aria-hidden', 'true');
     root.innerHTML = `
       <div class="creative-workspace-head">
         <div><span class="eyebrow">INK WEB · CREATIVE LOOP</span><strong>Creative Workspace</strong></div>
