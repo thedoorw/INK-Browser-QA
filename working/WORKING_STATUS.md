@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK / UI_UR_ACTIVE / CORE-MOD-002_AUTHORIZED`
+STATUS: `DUAL_TRACK / UI_LANE_COMPLETE / MR_INTEGRATION_RUNTIME_READY`
 
 | Field | Value |
 |---|---|
@@ -1564,3 +1564,63 @@ UI_NEXT_MODE = MAINTENANCE
 No Core / Document / History / Revision / Geometry / Renderer / CHAT execution semantics were changed by the delegated UI lane.
 
 Next cross-lane action belongs to MR Integration authority.
+
+
+## MR Integration / Runtime Batch checkpoint
+
+USER confirmed delegated UI sequence is complete.
+
+Authoritative UI closure already on main:
+
+```text
+UI-003 = UI_PASS / PROMOTED
+UI-004 = UI_PASS / PROMOTED
+UI-005 = UI_PASS / PROMOTED
+UI_LANE_SOURCE_COMPLETE = PASS
+UI_LANE_READY_FOR_INTEGRATION = YES
+```
+
+MR integration batch target:
+
+```text
+BATCH_ID = INK-INTEGRATION-RUNTIME-001
+TARGET_MAIN_SHA = cbc89271dc76b47e294a2bbf449615a3d03786e4
+WORKFLOW = .github/workflows/ink-runtime-batch-windows.yml
+TRIGGER = workflow_dispatch only
+TARGET_REF = cbc89271dc76b47e294a2bbf449615a3d03786e4
+```
+
+Deferred work covered by this batch:
+
+```text
+INK-WEB-UI-003
+INK-WEB-UI-004
+INK-WEB-UI-005
+CORE-MOD-001 / AI Document Bridge coexistence
+```
+
+The incomplete `CORE-MOD-002` branch is explicitly excluded from this Runtime target and remains isolated on:
+
+`work/ink-core-semantic-region-002`
+
+Required Runtime evidence:
+
+- current Web shell loads;
+- canvas-first default;
+- contextual top-options remain usable;
+- Layers / History / Reference / Compose / CHAT / Revision remain reachable;
+- panel collapse / canvas reflow;
+- desktop resize + narrow/mobile containment;
+- fullscreen command remains wired;
+- Creative Loop runtime remains functional;
+- geometry runtime remains functional;
+- FORMAT_VERSION = 4;
+- no fatal runtime health failure;
+- exact tested SHA recorded in artifact evidence;
+- no automatic push-triggered Windows Runtime.
+
+Status:
+
+`MR_RUNTIME_BATCH_READY / MANUAL_DISPATCH_REQUIRED`
+
+No Runtime PASS is claimed until the manual batch actually completes successfully.
