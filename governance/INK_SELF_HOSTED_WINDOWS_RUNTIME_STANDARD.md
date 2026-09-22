@@ -2,6 +2,26 @@
 
 STATUS: `ACTIVE / AUTHORITATIVE_RUNTIME_BASELINE`
 
+## Current manual/batch path — INK-WEB-UI-002
+
+Current entry: `.github/workflows/ink-runtime-batch-windows.yml`.
+Only explicit `workflow_dispatch` with `target_ref` may run this batch. Resolve the
+ref once; all product/helper/harness bytes come from that exact SHA. Ordinary DEV
+pushes must not wake the Windows Runtime runner. Default cadence is 2–4 compatible
+Work Orders (target 3), per MR/DEV governance; an explicit Work Order may defer.
+
+The new path uses actions/github-script's bundled Node, bounded Git blob reads,
+a checked-in Node HTTP/browser helper, and installed Chrome/Edge. It needs neither
+Git nor Node on PATH. The server lives in the helper process; browser children use
+`shell: false` and `windowsHide: true`. Preserve per-suite JSON, browser logs and
+resolved input hashes as evidence. Never infer Runtime PASS from static checks.
+
+No policy changes/bypass flags, security exclusions, remote PowerShell execution,
+or extra child PowerShell consoles are permitted in the current path. Historical
+workflow bodies below are retained evidence, not templates for new execution.
+The new batch path remains **source-verified only / DEFERRED_TO_BATCH** until MR
+schedules and observes a Windows run, including absence of visible extra windows.
+
 ## Purpose
 
 This document records the persistent Windows runtime path for INK browser/runtime QA.
@@ -58,7 +78,7 @@ When GitHub-hosted Actions quota is exhausted:
 - keep the user's runner window open at `Listening for Jobs`;
 - target the self-hosted labels explicitly.
 
-Runtime QA may be marked `DEFERRED` only when the required runtime cannot be executed through the available self-hosted path or another explicitly authorized local path.
+Runtime QA may be marked `DEFERRED_TO_BATCH` when the Current Work Order explicitly authorizes batching. Otherwise, unavailability must be established against the existing self-hosted path before declaring Runtime blocked.
 
 ## Existing historical workflow
 
@@ -105,13 +125,9 @@ A workflow may need a Git-free exact-revision materialization route if `actions/
 
 ### ExecutionPolicy
 
-GitHub runner PowerShell steps may require an explicit bypass shell:
-
-```yaml
-shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
-```
-
-Do not change the user's global ExecutionPolicy merely to run a bounded workflow.
+Do not change user-wide or machine-wide execution policy. Do not use bypass
+flags, including custom GitHub Actions PowerShell shell templates. The active
+batch uses Node actions/helpers and requires no PowerShell execution at all.
 
 ### Windows MAX_PATH
 

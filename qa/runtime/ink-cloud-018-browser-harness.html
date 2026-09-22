@@ -44,6 +44,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
 
   async function run() {
     const w=await ready(), app=w.INK_APP, cw=app.creativeWorkspace;
+    cw.setOpen(true); // UI-001 intentionally starts with the shared panel collapsed.
     assert(w.INK_ARCHITECTURE?.formatVersion===4,'FORMAT_VERSION_4',{value:w.INK_ARCHITECTURE?.formatVersion});
     assert(Boolean(w.document.querySelector('#stage')),'CANVAS_EDITOR_RENDERED');
     assert(Boolean(cw.root?.classList.contains('open')),'CREATIVE_WORKSPACE_VISIBLE');
