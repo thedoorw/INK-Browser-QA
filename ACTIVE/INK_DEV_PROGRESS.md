@@ -9,7 +9,7 @@ STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
 | BRANCH | `work/ink-web-ui-002` |
 | BRANCH_BASE | `d50c59ffb1c015b0776ac1864486869098be9181` |
 | TASK_STATUS | `AUTHORIZED / DEV_IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_C / PROCESS_HYGIENE` |
+| CURRENT_PHASE | `PHASE_D / PARITY_GUARD` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE` |
@@ -92,3 +92,16 @@ STOP
 - Batch runner helper is the next Phase C dependency; no dispatch authorized here.
 - Trigger source inspection: PASS; `RUNTIME_BATCH_TRIGGER_GUARD_WORKS`.
 - Browser Runtime: `DEFERRED_TO_BATCH`.
+
+## Phase C checkpoint
+
+- Previous GitHub checkpoint: `d8fcf29655a4e87603c1874d55a76f95f0929e9a`.
+- Added checked-in Node batch helper: same-process loopback server, random port,
+  isolated browser profiles, hidden shell-free Chrome/Edge spawn, bounded callback
+  wait, exact evidence validation, PID-scoped cleanup and artifact output.
+- Existing harness adapters: UI callback now includes full checks; creative harness
+  explicitly opens the intentionally collapsed panel; geometry adds JSON callback.
+- Updated current Windows standard to supersede the historical bypass example.
+- Node parse PASS; focused helper HTTP/evidence tests PASS (2/2).
+- Gate: `WINDOWS_RUNTIME_PROCESS_HYGIENE_WORKS / SOURCE_ONLY`.
+- Windows visible-window verification is still `DEFERRED_TO_BATCH`.

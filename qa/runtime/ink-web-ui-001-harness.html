@@ -80,7 +80,7 @@
       await fetch('/__qa_result', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(transport),
+        body: JSON.stringify({ ...transport, checks: payload.checks, fatalDetail: payload.fatal || null }),
         cache: 'no-store'
       });
     } catch {}

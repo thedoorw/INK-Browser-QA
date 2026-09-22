@@ -41,4 +41,19 @@ A four-worker API download is bounded to product source, three reviewed harnesse
 the Rose Window fixture and the checked-in batch helper. Evidence records both
 tested SHA and workflow SHA. Execution helper follows in Phase C.
 
-Phases C–E pending. Browser Runtime: `DEFERRED_TO_BATCH`.
+Phase C: the checked-in Node helper owns the loopback HTTP server in the same
+process. Chrome/Edge uses shell-free hidden child launch, a fresh profile per suite,
+240-second callback deadline, PID-only process-tree cleanup and profile cleanup.
+No PowerShell exists in the current workflow/helper. Windows standard's old bypass
+recommendation is superseded. Historical workflows are not executed.
+
+The batch runs the existing Web UI, creative-loop and geometry harnesses. QA-only
+adapters preserve full UI checks, open the collapsed creative panel explicitly,
+and transport geometry JSON. Per-suite logs/raw JSON plus aggregate result and
+revision/blob fingerprint go to a 30-day artifact; failures remain failures.
+Portable full browser delivery validation is not claimed by these Web harnesses.
+
+Executed: `node --check qa/runtime/run-ink-runtime-batch.mjs`; helper tests 2/2
+PASS (real local HTTP routes/MIME, traversal denial, malformed/duplicate callback,
+and fail-closed evidence validation). These are non-browser helper tests.
+Phases D–E pending. Browser Runtime: `DEFERRED_TO_BATCH`.
