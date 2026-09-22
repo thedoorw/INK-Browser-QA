@@ -1,12 +1,16 @@
-name: INK Manual Windows Runtime Batch
+name: INK Central Windows Runtime Batch
 
 on:
   workflow_dispatch:
     inputs:
       target_ref:
-        description: 'Reviewed branch or exact commit SHA to test (resolved once)'
-        required: true
+        description: 'Advanced/debug override; leave blank to test current main'
+        required: false
+        default: ''
         type: string
+  push:
+    branches: [main]
+    paths: [ACTIVE/INK_RUNTIME_QUEUE.json]
 
 permissions:
   contents: read
@@ -16,28 +20,127 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  controller:
+    name: Resolve and gate exact Runtime target
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run_runtime: ${{ steps.target.outputs.run_runtime }}
+      target_sha: ${{ steps.target.outputs.target_sha }}
+      requested_ref: ${{ steps.target.outputs.requested_ref }}
+      dispatch_source: ${{ steps.target.outputs.dispatch_source }}
+      queue_state: ${{ steps.target.outputs.queue_state }}
+    steps:
+      - name: Resolve manual or queued target once
+        id: target
+        uses: actions/github-script@v7
+        env:
+          INK_MANUAL_TARGET_REF: ${{ inputs.target_ref || '' }}
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const exactSha = /^[a-f0-9]{40}$/;
+            const manualRef = (process.env.INK_MANUAL_TARGET_REF || '').trim();
+            const emit = ({ run, sha = '', requested = '', source, state }) => {
+              core.setOutput('run_runtime', run ? 'true' : 'false');
+              core.setOutput('target_sha', sha);
+              core.setOutput('requested_ref', requested);
+              core.setOutput('dispatch_source', source);
+              core.setOutput('queue_state', state);
+            };
+
+            if (context.eventName === 'workflow_dispatch') {
+              if (/[\r\n\0]/.test(manualRef)) throw new Error('Invalid target_ref override');
+              let sha;
+              let requested;
+              let source;
+              if (manualRef) {
+                const { data: commit } = await github.rest.repos.getCommit({ owner, repo, ref: manualRef });
+                sha = commit.sha;
+                requested = manualRef;
+                source = 'manual-override';
+              } else {
+                const { data: branch } = await github.rest.repos.getBranch({ owner, repo, branch: 'main' });
+                sha = branch.commit.sha;
+                requested = 'main';
+                source = 'manual-main';
+              }
+              if (!exactSha.test(sha)) throw new Error('Manual target did not resolve to an exact SHA');
+              emit({ run: true, sha, requested, source, state: 'MANUAL' });
+              return;
+            }
+
+            if (context.eventName !== 'push' || context.ref !== 'refs/heads/main') {
+              throw new Error(`Unsupported Runtime controller event: ${context.eventName} ${context.ref}`);
+            }
+            const { data: file } = await github.rest.repos.getContent({ owner, repo, path: 'ACTIVE/INK_RUNTIME_QUEUE.json', ref: context.sha });
+            if (Array.isArray(file) || file.type !== 'file' || file.encoding !== 'base64') {
+              throw new Error('Runtime queue must be one base64-encoded file');
+            }
+            const queue = JSON.parse(Buffer.from(file.content, 'base64').toString('utf8'));
+            const states = new Set(['IDLE', 'ACCUMULATING', 'READY', 'RUNNING', 'PASS', 'FAIL']);
+            if (queue.schema !== 'ink-runtime-queue' || queue.version !== 1 || !states.has(queue.state)) {
+              throw new Error('Unsupported Runtime queue schema/version/state');
+            }
+            if (!Array.isArray(queue.pending_work_orders) || !Array.isArray(queue.covered_work_orders)) {
+              throw new Error('Runtime queue Work Order lists must be arrays');
+            }
+            if (new Set(queue.pending_work_orders).size !== queue.pending_work_orders.length ||
+                queue.pending_work_orders.some(id => typeof id !== 'string' || !id.trim())) {
+              throw new Error('Runtime queue pending Work Order IDs must be unique non-empty strings');
+            }
+            const policy = queue.batch_policy || {};
+            if (policy.default_target !== 3 || policy.allowed_min !== 2 || policy.allowed_max !== 4) {
+              throw new Error('Runtime queue batch policy must remain default 3, allowed 2-4');
+            }
+            const highRisk = queue.high_risk || {};
+            if (typeof highRisk.enabled !== 'boolean' ||
+                (highRisk.enabled && (typeof highRisk.reason !== 'string' || !highRisk.reason.trim()))) {
+              throw new Error('High-risk immediate Runtime requires an explicit reason');
+            }
+            if (queue.state !== 'READY') {
+              emit({ run: false, source: 'queue', state: queue.state });
+              core.notice(`Runtime queue state ${queue.state}; Windows job not started.`);
+              return;
+            }
+            if (!exactSha.test(queue.target_sha || '')) {
+              throw new Error('READY Runtime queue requires an exact 40-character target_sha');
+            }
+            const count = queue.pending_work_orders.length;
+            if (count > policy.allowed_max || (!highRisk.enabled && count < policy.allowed_min) ||
+                (highRisk.enabled && count < 1)) {
+              throw new Error('READY Runtime queue does not satisfy bounded batch/high-risk policy');
+            }
+            const { data: commit } = await github.rest.repos.getCommit({ owner, repo, ref: queue.target_sha });
+            if (commit.sha !== queue.target_sha) throw new Error('Queue target SHA did not resolve exactly');
+            emit({ run: true, sha: queue.target_sha, requested: queue.target_sha, source: 'queue', state: queue.state });
+
   runtime-batch:
-    if: github.event_name == 'workflow_dispatch'
+    name: Execute exact-SHA Windows browser batch
+    needs: controller
+    if: needs.controller.outputs.run_runtime == 'true'
     runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 25
     steps:
       # Git-free, bounded materialization; no shell or executable archive extraction.
-      - name: Materialize one exact revision
+      - name: Materialize pinned exact revision
         id: source
         uses: actions/github-script@v7
         env:
-          INK_TARGET_REF: ${{ inputs.target_ref }}
+          INK_TARGET_SHA: ${{ needs.controller.outputs.target_sha }}
+          INK_REQUESTED_REF: ${{ needs.controller.outputs.requested_ref }}
+          INK_DISPATCH_SOURCE: ${{ needs.controller.outputs.dispatch_source }}
+          INK_QUEUE_STATE: ${{ needs.controller.outputs.queue_state }}
         with:
           script: |
             const fs = require('node:fs/promises');
             const path = require('node:path');
             const crypto = require('node:crypto');
             const { owner, repo } = context.repo;
-            const ref = process.env.INK_TARGET_REF.trim();
-            if (!ref || /[\r\n\0]/.test(ref)) throw new Error('Explicit target_ref required');
-            const { data: commit } = await github.rest.repos.getCommit({ owner, repo, ref });
-            const sha = commit.sha;
-            if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Invalid resolved SHA');
+            const sha = process.env.INK_TARGET_SHA;
+            if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Pinned exact target SHA required');
+            const { data: commit } = await github.rest.repos.getCommit({ owner, repo, ref: sha });
+            if (commit.sha !== sha) throw new Error('Pinned target SHA changed during materialization');
             const { data: tree } = await github.rest.git.getTree({ owner, repo, tree_sha: commit.commit.tree.sha, recursive: '1' });
             if (tree.truncated) throw new Error('Refuse incomplete Git tree');
             const root = await fs.mkdtemp(path.join(process.env.RUNNER_TEMP, 'ink-batch-'));
@@ -76,8 +179,15 @@ jobs:
               }
             }));
             await fs.mkdir(path.join(root, 'evidence'));
-            await fs.writeFile(path.join(root, 'evidence', 'revision.json'), JSON.stringify({ requestedRef: ref, testedSha: sha, workflowSha: context.sha, files: files.filter(f => f.type === 'blob').map(f => ({ path: f.path, sha: f.sha })) }, null, 2));
-            await core.summary.addHeading('INK manual Runtime batch').addRaw(`Tested SHA: ${sha}\n\nWorkflow SHA: ${context.sha}\n\nRuntime result follows; materialization alone is not a PASS.\n`).write();
+            await fs.writeFile(path.join(root, 'evidence', 'revision.json'), JSON.stringify({
+              requestedRef: process.env.INK_REQUESTED_REF,
+              testedSha: sha,
+              workflowSha: context.sha,
+              dispatchSource: process.env.INK_DISPATCH_SOURCE,
+              queueState: process.env.INK_QUEUE_STATE,
+              files: files.filter(f => f.type === 'blob').map(f => ({ path: f.path, sha: f.sha }))
+            }, null, 2));
+            await core.summary.addHeading('INK central Runtime batch').addRaw(`Tested SHA: ${sha}\n\nWorkflow SHA: ${context.sha}\n\nDispatch: ${process.env.INK_DISPATCH_SOURCE}\n\nRuntime result follows; materialization alone is not a PASS.\n`).write();
 
       - name: Execute bounded browser batch
         uses: actions/github-script@v7
