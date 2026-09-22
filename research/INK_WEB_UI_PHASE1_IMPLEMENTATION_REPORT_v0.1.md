@@ -1,6 +1,6 @@
 # INK Web UI Phase 1 Implementation Report v0.1
 
-STATUS: `IN_PROGRESS / PHASE_A_COMPLETE`
+STATUS: `DEV_HANDOFF / COMPLETE`
 
 ## Control
 
@@ -169,7 +169,63 @@ Gate: `WEB_V0_1_IDENTITY_AND_FAVICON_WORK = PASS / SOURCE_STATIC`.
 
 ## Phase E — checks and browser runtime evidence
 
-Pending.
+Final Windows self-hosted runtime closure:
+
+```text
+RUN = 35679835724 / SUCCESS
+EXACT_TESTED_SHA = 72ad6869f02bce293ae923755db0a154c9bff98b
+RUNNER = DESKTOP-NSOQH69
+LABELS = self-hosted / Windows / X64
+BROWSER = Google Chrome
+SOURCE_AND_IDENTITY_GATE = PASS
+FOCUSED_PRESERVED_CAPABILITY_UNIT_REGRESSION = PASS
+LOOPBACK_HTTP = PASS
+HTTP_MIME_PREFLIGHT = PASS
+BROWSER_HARNESS = PASS
+BROWSER_CHECKS = 40 / 40 PASS
+FORMAT_VERSION = 4
+```
+
+Browser acceptance covered the actual `product/source/index.html` in a same-origin iframe under the repo's verified PowerShell loopback server. The harness exercised:
+
+- initial canvas-first state;
+- compact right dock;
+- Layers open/add/duplicate/delete;
+- History direct reachability plus Undo/Redo;
+- Reference / Compose / CHAT / Revision routing through the existing Creative Workspace controller;
+- CHAT and Revision controller preservation after panel collapse;
+- canvas resizing after panel expand/collapse;
+- Window-menu panel access;
+- New/Open/Save/Export/Fullscreen command bindings;
+- workspace/tool keyboard shortcut samples;
+- desktop resizing;
+- <=760px mobile fallback and Inspector containment;
+- favicon request success and visible INK mark asset use;
+- service-worker activation, `0.1-Web` cache identity and removal of a seeded historical cache without manual storage reset;
+- document integrity and runtime-health non-fatal status.
+
+Responsive observations:
+
+- at 1280px the canvas is dominant with only the compact dock reserved;
+- expanded panels reduce the stage width and the existing Renderer responds through the established resize path;
+- at 960px the desktop shell remains stable;
+- at 720px the desktop dock yields to the existing mobile bottom dock and the Inspector remains inside the viewport.
+
+Source/static/unit closure:
+
+- active Web and Portable identities verified;
+- `FORMAT_VERSION = 4` verified;
+- manifest JSON and favicon/mark metadata verified;
+- service-worker syntax/cache inventory verified;
+- shell controller entries verified;
+- preserved CHAT / multi-step creative workspace / Revision / singular-interaction History tests passed.
+
+Two historical static test files were not used as final regressions because their assertions were already stale against the authoritative task base before INK-WEB-UI-001: one omits the pre-existing `installChatCreativePlan` install step, and another requires an empty manifest icon list plus unversioned entry URLs. INK-WEB-UI-001 intentionally requires a favicon/manifest icon and `?v=0.1` cache-busting entry URLs. The affected concerns are instead covered by the current task source gate and real-browser harness.
+
+No document migration was required. No drawing/document/CHAT/History/Revision capability was intentionally removed.
+
+Gate: `INK_WEB_UI_PHASE1_SOURCE_COMPLETE = PASS`.
+Runtime gate: `WINDOWS_SELF_HOSTED_CHROME = PASS`.
 
 ## Known deferred UI work
 
@@ -179,4 +235,8 @@ Per Current Work Order: full contextual-control migration, broad CHAT redesign, 
 
 `UI_SHELL_INVENTORY_COMPLETE = PASS`
 
-Final gate remains pending Phase D–E.
+`INK_WEB_UI_PHASE1_SOURCE_COMPLETE = PASS`
+
+`WINDOWS_SELF_HOSTED_CHROME = PASS`
+
+Ready for `DEV_HANDOFF`; MR review is required before any main merge or public promotion.
