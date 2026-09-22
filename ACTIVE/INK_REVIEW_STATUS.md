@@ -1,83 +1,73 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-WEB-UI-001 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
+STATUS: `INK-WEB-UI-001 / MR_PASS / CLEAN_PROMOTION_REQUIRED`
 
 | Field | Value |
 |---|---|
 | TASK_ID | `INK-WEB-UI-001` |
 | DEV_BRANCH | `work/ink-web-ui-001` |
-| CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| TARGET_GATE | `INK_WEB_UI_PHASE1_SOURCE_COMPLETE` |
-| DEV_HANDOFF | `NO` |
-| MR_REVIEW | `NOT_STARTED` |
-| FORMAT_VERSION | `4 / PRESERVE` |
-| UI_MUTATION | `AUTHORIZED / BOUNDED` |
-| WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
-| FAVICON | `USER ORIGINAL MARK / REQUIRED` |
+| REVIEWED_HANDOFF_HEAD | `8b8a59e08e4c31a1f317b5b4c57acf05cf160cc5` |
+| TESTED_PRODUCT_SHA | `72ad6869f02bce293ae923755db0a154c9bff98b` |
+| TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
+| DEV_HANDOFF | `YES` |
+| MR_REVIEW | `MR_PASS` |
+| FORMAT_VERSION | `4 / PRESERVED` |
+| UI_MUTATION | `AUTHORIZED / ACCEPTED` |
+| WEB_DISPLAY_VERSION | `INK v0.1 · Web` |
+| PORTABLE_DISPLAY_VERSION | `INK v0.1 · Portable` |
+| FAVICON | `USER ORIGINAL MARK / PRESENT` |
 | PACKAGE_INK_CURRENT | `NO_MUTATION` |
-| BROWSER_RUNTIME_QA | `DEFERRED_TO_BATCH / TRACK_DEBT` |
+| BROWSER_RUNTIME_QA | `35679835724 / SUCCESS / 40 OF 40` |
 
-## Review boundary
+## MR findings
 
-MR will review:
+Accepted:
 
-- exact shell inventory and preservation of JS bindings;
-- Photoshop/Illustrator-aligned spatial hierarchy without visual cloning;
-- canvas-first initial state;
-- compact left tool rail;
-- right collapsible panel dock;
-- Layers / History / CHAT / Reference / Compose / Revision reachability;
-- no capability loss when panels collapse;
-- visible Web identity = `INK v0.1 · Web`;
-- removal of current-product historical `v1.6.5 RC` strings from active Web surfaces;
-- favicon/mark derived from the USER-provided original source;
-- service-worker/cache identity and update path;
-- fullscreen / save / open / export / shortcut regression;
-- desktop + narrow viewport runtime evidence;
-- final report `research/INK_WEB_UI_PHASE1_IMPLEMENTATION_REPORT_v0.1.md`.
+- canvas-first shared shell implemented;
+- Web and Portable entry shells both changed;
+- right collapsible dock implemented;
+- Layers / History / Reference / Compose / CHAT / Revision remain reachable;
+- Creative Workspace defaults collapsed without removing underlying controller capability;
+- Web identity = `INK v0.1 · Web`;
+- Portable identity = `INK v0.1 · Portable`;
+- user-original mark/favion integrated;
+- service-worker/cache identity moved to `0.1-Web`;
+- `FORMAT_VERSION = 4` preserved;
+- no package mutation;
+- exact tested SHA passed Windows self-hosted Chrome runtime with 40/40 browser checks.
 
-MR will reject:
-
-- Adobe code/assets/branding copy;
-- a second workspace/document/History/Revision authority;
-- UI-only command logic that CHAT cannot access through the existing core;
-- removal of existing creative-loop capability;
-- `FORMAT_VERSION` mutation;
-- inferred product version > `v0.1`;
-- broad contextual-control or CHAT redesign beyond the bounded package;
-- package/certification mutation.
-
-## Brand reference
+Runtime:
 
 ```text
-SOURCE = reference/brand/INK_MARK_SOURCE_W-300.jpg
-SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
-FINE_GRID_AT_FAVICON_SIZE = NOT_REQUIRED
-TEMPORARY_MARK = ACCEPTED
+RUN = 35679835724
+TESTED_SHA = 72ad6869f02bce293ae923755db0a154c9bff98b
+RUNNER = DESKTOP-NSOQH69
+RESULT = SUCCESS
+BROWSER_CHECKS = 40 / 40 PASS
 ```
 
-## Publication review
+Handoff HEAD is two documentation-only commits ahead of the tested product SHA.
 
-The work branch is not expected to alter the public staging site.
+## Promotion containment
 
-After MR_PASS and promotion to `main`, MR must verify the actual GitHub Pages staging surface and distinguish:
+The DEV branch is diverged from current main, so direct merge is prohibited.
 
-```text
-source merged
-Pages deployment complete
-service-worker/cache refreshed
-favicon browser cache refreshed
-```
+Clean promotion is required.
 
-before declaring public Web closure.
+The following branch-only file is explicitly EXCLUDED from promotion:
 
+`.github/workflows/ink-web-ui-001-runtime.yml`
 
-## Runtime review cadence
+Reason:
 
-For this task MR may issue source-level PASS and promotion with:
+- it still auto-triggers on push;
+- it wakes the user's self-hosted Windows runner on ordinary DEV commits;
+- it contains task-local PowerShell launch behavior that conflicts with the newly adopted batched Runtime policy and current PowerShell safety standard.
 
-`RUNTIME_QA = DEFERRED_TO_BATCH`
+The accepted product implementation does not depend on promoting that workflow file.
 
-provided all practical static/unit evidence passes and no immediate-runtime trigger is present.
+Branch-local `ACTIVE/INK_DEV_PROGRESS.md` and branch-local `ACTIVE/INK_CURRENT_WORK_ORDER.md` are also excluded from clean product promotion.
 
-The deferred runtime debt remains open until the concentrated batch checkpoint.
+Next bounded package will address:
+
+`INK-WEB-UI-002 — Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1`
