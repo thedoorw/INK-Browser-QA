@@ -9,7 +9,7 @@ STATUS: `INK-CORE-INTEGRATION-001 / IN_PROGRESS`
 | BRANCH | `work/ink-core-integration-001` |
 | BRANCH_BASE | `89770b215a0c3d0aef30e1c0565fcb8e2975a997` |
 | TASK_STATUS | `IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_C / CHAT_CONTEXT_WIRING` |
+| CURRENT_PHASE | `PHASE_D / DETERMINISTIC_SOURCE_QA` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_HANDOFF` |
 | TARGET_GATE | `INK_CORE_INTEGRATION_001_SOURCE_READY` |
@@ -38,7 +38,7 @@ Phase C — bounded CHAT context wiring
 CHAT_GROUNDED_CONTEXT_WIRED = PASS_SOURCE_IMPLEMENTATION
 
 Phase D — deterministic/source QA
-INK_CORE_INTEGRATION_001_SOURCE_READY = PENDING
+INK_CORE_INTEGRATION_001_SOURCE_READY = QA_AUTHORED_PENDING_EXECUTION
 ```
 
 Implemented so far:
@@ -60,3 +60,9 @@ CHAT wiring checkpoint:
 - grounded context can be disabled per request with `groundedContext: false`;
 - provider absence/failure falls back to the existing CHAT context path;
 - no external service is required by the integration provider.
+
+Source QA checkpoint:
+
+- deterministic integrated-context QA authored at `qa/core-integration-001-grounded-context.test.mjs`;
+- covers reorder normalization, selection, semantic regions, provenance, explicit-only compare/structure, unresolved evidence, provider immutability, disclosure projection, FORMAT_VERSION 4, CHAT enabled/disabled/fallback, and forbidden side-effect APIs;
+- Runtime remains deferred to the MR promotion/manual integration batch.

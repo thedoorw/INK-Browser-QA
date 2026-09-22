@@ -126,9 +126,11 @@ export class ContextBuilder {
     let groundedFingerprint = groundedContext === false ? 'disabled' : 'unavailable';
     if (state && groundedContext !== false && this.groundedContextProvider?.read) {
       try {
-        const allowedObjectIds = (state.objectIndex || [])
-          .map(item => item?.objectId)
-          .filter(id => typeof id === 'string')
+        const allowedObjectIds = [...new Set([
+          ...(state.objectIndex || []).map(item => item?.objectId),
+          ...(state.strokeIndex || []).map(item => item?.strokeId),
+          ...(state.regionIndex || []).map(item => item?.objectId)
+        ].filter(id => typeof id === 'string'))]
           .sort((a, b) => a.localeCompare(b));
         const grounded = this.groundedContextProvider.read({
           ...(groundedContextOptions && typeof groundedContextOptions === 'object' ? groundedContextOptions : {}),
