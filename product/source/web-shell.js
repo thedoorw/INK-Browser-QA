@@ -3,6 +3,7 @@
 
   const DESKTOP_QUERY = '(min-width: 761px)';
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
+  const DEFAULT_PRIMARY_PANEL_WIDTH = 252;
   const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
   const CONTEXT_CONTROL_IDS = Object.freeze(['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar']);
   const CONTEXT_TOOL_META = Object.freeze({
@@ -356,6 +357,15 @@
     if (!app || !state.root) return false;
     if (!state.runtimeBound) {
       state.runtimeBound = true;
+      try {
+        if (!localStorage.getItem('ink-inspector-width')) {
+          app.inspectorNormalWidth = DEFAULT_PRIMARY_PANEL_WIDTH;
+          state.root.style.setProperty('--inspector-w', DEFAULT_PRIMARY_PANEL_WIDTH + 'px');
+        }
+      } catch {
+        app.inspectorNormalWidth = DEFAULT_PRIMARY_PANEL_WIDTH;
+        state.root.style.setProperty('--inspector-w', DEFAULT_PRIMARY_PANEL_WIDTH + 'px');
+      }
       bindContextualOptions();
 
       // Fresh Web entry is deliberately canvas-first. Only the last selected
