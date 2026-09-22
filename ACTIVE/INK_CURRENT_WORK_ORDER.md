@@ -19,7 +19,7 @@ STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | CORE_RUNTIME | `STATIC_HOSTING + BROWSER_LOCAL` |
-| RUNTIME_QA | `REQUIRED_FOR_FINAL_GATE` |
+| RUNTIME_QA | `DEFERRED_TO_BATCH / SOURCE_STATIC_REQUIRED` |
 
 ## Product intent
 
@@ -221,9 +221,9 @@ Checkpoint commit required.
 
 Gate: `WEB_V0_1_IDENTITY_AND_FAVICON_WORK`
 
-### Phase E — Regression + real browser runtime closure
+### Phase E — Regression closure + batched Runtime QA registration
 
-Execute source/static checks and self-hosted Windows real-browser QA.
+Execute all source/static/unit/binding checks for this Work Order. Register real-browser QA for the next Runtime batch unless an immediate-runtime trigger is discovered.
 
 Required acceptance:
 
@@ -263,9 +263,11 @@ Chrome available
 
 Do not change PowerShell execution policy. Reuse the bounded exact-SHA materialization pattern that already works on this runner where practical.
 
-Final gate:
+Source-level gate:
 
-`INK_WEB_UI_PHASE1_COMPLETE`
+`INK_WEB_UI_PHASE1_SOURCE_COMPLETE`
+
+Full Runtime acceptance will be applied later at the concentrated batch checkpoint.
 
 ## Required evidence artifact
 
@@ -345,18 +347,18 @@ Update at every meaningful checkpoint with:
 
 ## Completion / STOP
 
-DEV may declare handoff only when the required real-browser gate has executed.
+DEV may hand off after source/static evidence closes and deferred Runtime debt is recorded.
 
 ```text
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-WEB-UI-001
 BRANCH = work/ink-web-ui-001
-GATE = INK_WEB_UI_PHASE1_COMPLETE
+GATE = INK_WEB_UI_PHASE1_SOURCE_COMPLETE
 FORMAT_VERSION = 4 / PRESERVED
 WEB_DISPLAY_VERSION = INK v0.1 · Web
 FAVICON = USER_ORIGINAL_MARK / PRESENT
 PACKAGE_MUTATION = 0
-BROWSER_RUNTIME_QA = EXECUTED
+BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
@@ -378,3 +380,15 @@ Display identity:
 Web      = INK v0.1 · Web
 Portable = INK v0.1 · Portable
 ```
+
+
+## Runtime batching override
+
+```text
+FULL_RUNTIME_EVERY_WORK_ORDER = NO
+DEFAULT_BATCH_TARGET = 3
+ALLOWED_RANGE = 2–4 compatible bounded Work Orders
+CURRENT = DEFERRED_TO_BATCH
+```
+
+All practical source/static/unit checks remain mandatory. Immediate Runtime is required only if a high-risk trigger appears.
