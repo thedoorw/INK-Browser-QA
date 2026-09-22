@@ -1296,3 +1296,165 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 .creative-structure-option>summary span{font:800 7px/1 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--muted);letter-spacing:.08em}
 .creative-structure-option[open]{padding-bottom:8px}.creative-structure-option[open]>summary{margin-bottom:6px;border-bottom:1px solid var(--line)}
 .creative-structure-option>p,.creative-structure-option>label,.creative-structure-option>button,.creative-structure-option>output{margin-left:8px;margin-right:8px}
+
+
+/* ==========================================================================
+   INK-WEB-UI-001 — Photoshop-aligned canvas-first shell + collapsible dock
+   Presentation-only: existing command-bearing DOM and editor authorities stay intact.
+   ========================================================================== */
+:root{
+  --panel-dock-w:40px;
+  --active-panel-w:0px;
+}
+
+@media(min-width:761px){
+  /* Keep the canvas as the dominant surface. The collapsed icon dock consumes
+     a narrow fixed edge; the active primary panel contributes its measured width. */
+  .stage-wrap{
+    right:var(--panel-dock-w);
+    transition:right .14s ease;
+  }
+  .app.panel-primary-open .stage-wrap{
+    right:calc(var(--panel-dock-w) + var(--active-panel-w));
+  }
+
+  .panel-dock{
+    position:absolute;
+    z-index:84;
+    top:var(--topbar-h);
+    right:0;
+    bottom:var(--status-h);
+    width:var(--panel-dock-w);
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    background:#303133;
+    border-left:1px solid #18191b;
+    box-shadow:inset 1px 0 rgba(255,255,255,.035);
+    overflow:hidden;
+  }
+  .panel-dock-group{display:grid;gap:1px;padding:3px}
+  .panel-dock-group.creative{margin-top:auto}
+  .panel-dock-separator{height:1px;margin:2px 5px;background:#1e1f21}
+  .panel-dock-button{
+    position:relative;
+    width:34px;
+    height:34px;
+    min-height:34px;
+    display:grid;
+    place-items:center;
+    border:1px solid transparent;
+    border-radius:2px;
+    color:#aeb0b3;
+    background:transparent;
+  }
+  .panel-dock-button svg{width:17px;height:17px;stroke-width:1.5}
+  .panel-dock-button:hover{background:#47484b;color:#fff;border-color:#55565a}
+  .panel-dock-button.active{
+    background:#263c3a;
+    color:#70c0b8;
+    border-color:#356b66;
+    box-shadow:inset 2px 0 0 #51aaa1;
+  }
+  .panel-dock-button:focus-visible{outline:1px solid #70c0b8;outline-offset:-1px}
+
+  /* Existing Inspector remains the content authority; only its shell position changes. */
+  .inspector{
+    right:var(--panel-dock-w);
+    top:var(--topbar-h);
+    bottom:var(--status-h);
+    border-radius:0;
+    border-top:0;
+    border-bottom:0;
+    border-right:0;
+    box-shadow:-3px 0 10px rgba(0,0,0,.22);
+  }
+  .app:not(.inspector-open) .inspector{
+    transform:translateX(calc(100% + var(--panel-dock-w) + 8px));
+  }
+  .inspector-edge-toggle{display:none!important}
+
+  /* Creative Workspace becomes the same primary right-side surface, not a
+     competing floating window. The controller and all stage commands are preserved. */
+  .creative-workspace-panel,
+  .app:not(.inspector-open) .creative-workspace-panel{
+    right:var(--panel-dock-w);
+    top:var(--topbar-h);
+    bottom:var(--status-h);
+    width:min(360px,34vw);
+    max-height:none;
+    border-radius:0;
+    border-top:0;
+    border-bottom:0;
+    border-right:0;
+    box-shadow:-3px 0 10px rgba(0,0,0,.22);
+  }
+  .creative-workspace-toggle{display:none!important}
+
+  /* Secondary floating panels stay clear of the collapsed dock and Inspector. */
+  .floating-panel{right:calc(var(--panel-dock-w) + var(--inspector-w) + 8px)}
+  .app:not(.inspector-open) .floating-panel{right:calc(var(--panel-dock-w) + 7px)}
+
+  /* Initial view should not present a large centered card. */
+  .empty-hint{
+    gap:0;
+    color:#77797c;
+    opacity:.62;
+  }
+  .empty-hint .empty-mark,
+  .empty-hint>span,
+  .empty-hint .hint-keys{display:none!important}
+  .empty-hint strong{
+    font-size:11px;
+    font-weight:500;
+    color:#85878a;
+    letter-spacing:.015em;
+  }
+
+  /* Keep the user mark visible in the compact application identity surfaces. */
+  .menu-app-mark>span,
+  .brand-mark{
+    background:#172d39 url("assets/ink-mark.svg") center/cover no-repeat;
+    color:transparent;
+    text-shadow:none;
+  }
+
+  .panel-window-menu{
+    position:absolute;
+    z-index:132;
+    width:178px;
+    padding:3px;
+    background:#38393b;
+    border:1px solid #191a1c;
+    box-shadow:0 5px 18px rgba(0,0,0,.38);
+  }
+  .panel-window-item{
+    width:100%;
+    min-height:29px;
+    display:grid;
+    grid-template-columns:24px minmax(0,1fr);
+    align-items:center;
+    gap:6px;
+    padding:0 7px;
+    border-radius:0;
+    color:#d5d6d8;
+    text-align:left;
+    font-size:10px;
+  }
+  .panel-window-item svg{width:15px;height:15px}
+  .panel-window-item:hover{background:#505155;color:#fff}
+  .panel-window-item.active{background:#294541;color:#74c6be}
+}
+
+/* The desktop Phase-1 dock is intentionally absent from the existing mobile
+   interaction model; mobile keeps the established bottom dock and sheets. */
+@media(max-width:760px){
+  .panel-dock,.panel-window-menu{display:none!important}
+  .app.panel-primary-open .stage-wrap{right:0}
+  .menu-app-mark>span,
+  .brand-mark{
+    background:#172d39 url("assets/ink-mark.svg") center/cover no-repeat;
+    color:transparent;
+    text-shadow:none;
+  }
+}
