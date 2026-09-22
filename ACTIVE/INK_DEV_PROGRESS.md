@@ -1,15 +1,15 @@
 # INK DEV PROGRESS
 
-STATUS: IMPLEMENTATION_COMPLETE / SOURCE_STATIC_UNIT_PARITY_PASS / RUNTIME_PENDING
+STATUS: RUNTIME_BLOCKED / STOP
 
 TASK_ID: INK-UI-MAINT-002
 TITLE: Typography Readability / Panel Authority / Content Containment / Favicon v0.1
 BRANCH: work/ink-ui-maint-002
 BASE_MAIN: 19ce5f7d03a32600493a550ae2d2262340c229ee
-TASK_STATUS: RUNTIME_PENDING
+TASK_STATUS: RUNTIME_BLOCKED
 DEV_HANDOFF: NOT_YET
 UR_REVIEW: PENDING_AFTER_HANDOFF
-RUNTIME_QA: REQUIRED_BEFORE_UI_PASS
+RUNTIME_QA: RUNTIME_BLOCKED / NOT_EXECUTED
 PORTABLE_WEB_PARITY: REQUIRED
 FORMAT_VERSION: 4 / PRESERVE
 PRODUCT_BASE_VERSION: v0.1 / PRESERVE
@@ -60,8 +60,9 @@ Read on assigned branch:
 - [x] Web / Portable mirrored markup.
 - [x] Dedicated local favicon.
 - [x] Focused source/static/unit/parity checks — deterministic connected-branch assertions 11/11 PASS.
-- [ ] PowerShell Windows Runtime — final stage only / pending execution.
-- [ ] Evidence report + DEV_HANDOFF — Runtime gate still open.
+- [ ] PowerShell Windows Runtime — BLOCKED: current GitHub connection cannot initiate a new exact-ref workflow_dispatch run.
+- [x] Evidence report written: research/INK_UI_MAINT_002_READABILITY_PANEL_FAVICON_REPORT_v0.1.md
+- [ ] DEV_HANDOFF — NOT ISSUED because Runtime gate is blocked.
 
 ## Stop rule
 
@@ -127,3 +128,23 @@ CORE / Renderer / History / Revision / Geometry mutation = 0
 FORMAT_VERSION = 4 / preserved
 product base version = v0.1 / preserved
 ```
+
+
+## Runtime block checkpoint
+
+```text
+RUNTIME_REQUIRED = YES
+RUNTIME_EXECUTED = NO
+BLOCK_REASON = available GitHub connection has no new workflow_dispatch action
+OLD_RUN_RERUN = REJECTED / would not test current exact task revision
+PUSH_TRIGGER_BYPASS = NOT_CREATED
+TINYFISH_USED = NO
+FALLBACK_RUNTIME_USED = NO
+UI_PASS = NOT_CLAIMED
+DEV_HANDOFF = NOT_ISSUED
+TASK_STATUS = RUNTIME_BLOCKED
+NEXT_ACTION = STOP
+```
+
+Evidence:
+`research/INK_UI_MAINT_002_READABILITY_PANEL_FAVICON_REPORT_v0.1.md`
