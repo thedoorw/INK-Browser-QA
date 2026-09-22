@@ -142,6 +142,34 @@
       record('right panel dock starts compact', visible(doc, '#panelDock') && initialShell.dockWidth >= 32 && initialShell.dockWidth <= 48, initialShell);
       record('initial stage reserves 40 px rail and 40 px dock', near(initialStageWidth, frame.clientWidth - 80, 2), { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
 
+      const parseRgb = value => (value.match(/\d+(?:\.\d+)?/g) || []).slice(0, 3).map(Number);
+      const typographyDiag = {
+        advanced: {
+          fontSize: parseFloat(getComputedStyle(doc.querySelector('#contextualAdvancedBtn')).fontSize),
+          color: getComputedStyle(doc.querySelector('#contextualAdvancedBtn')).color
+        },
+        inspectorTitle: {
+          fontSize: parseFloat(getComputedStyle(doc.querySelector('.inspector-head strong')).fontSize),
+          color: getComputedStyle(doc.querySelector('.inspector-head strong')).color
+        },
+        inspectorTab: {
+          fontSize: parseFloat(getComputedStyle(doc.querySelector('.inspector-tab')).fontSize),
+          color: getComputedStyle(doc.querySelector('.inspector-tab')).color
+        },
+        contextLabel: {
+          fontSize: parseFloat(getComputedStyle(doc.querySelector('.context-control-label')).fontSize),
+          color: getComputedStyle(doc.querySelector('.context-control-label')).color
+        }
+      };
+      const secondaryRgb = parseRgb(typographyDiag.contextLabel.color);
+      record('UI-MAINT-002 desktop typography readability lift is active',
+        typographyDiag.advanced.fontSize >= 10 &&
+        typographyDiag.inspectorTitle.fontSize >= 11 &&
+        typographyDiag.inspectorTab.fontSize >= 10 &&
+        typographyDiag.contextLabel.fontSize >= 10 &&
+        secondaryRgb.reduce((sum, value) => sum + value, 0) >= 480,
+        typographyDiag);
+
       shell.open('layers');
       await sleep(260);
       const layersState = shell.state();
@@ -154,6 +182,23 @@
       record('default primary panel is 252 ±8 px', layersState.panelWidth >= 244 && layersState.panelWidth <= 260, { shell: layersState, geometry: expandedGeometry });
       record('primary panel fits exactly between canvas and dock', near(expandedGeometry.stage?.right, expandedGeometry.panel?.left, 1) && near(expandedGeometry.panel?.right, expandedGeometry.dock?.left, 1), expandedGeometry);
       record('canvas resizes for expanded panel', layersState.stageWidth < initialStageWidth - 235, { initialStageWidth, expandedStageWidth: layersState.stageWidth });
+
+      const layerSection = doc.querySelector('.inspector-section.active');
+      const panelContainment1280 = {
+        inspector: rectOf(doc, '#inspector'),
+        section: rectOf(doc, '.inspector-section.active'),
+        inspectorOverflow: getComputedStyle(doc.querySelector('#inspector')).overflow,
+        overflowY: getComputedStyle(layerSection).overflowY,
+        overflowX: getComputedStyle(layerSection).overflowX,
+        clientWidth: layerSection.clientWidth,
+        scrollWidth: layerSection.scrollWidth
+      };
+      record('UI-MAINT-002 primary Inspector owns vertical scroll without horizontal overflow',
+        panelContainment1280.inspectorOverflow === 'hidden' &&
+        ['auto','scroll'].includes(panelContainment1280.overflowY) &&
+        panelContainment1280.overflowX === 'hidden' &&
+        panelContainment1280.scrollWidth <= panelContainment1280.clientWidth + 1,
+        panelContainment1280);
 
       const layersBefore = test.summary().layers;
       doc.querySelector('#addLayerBtn').click();
@@ -259,6 +304,118 @@
       record('Selection actions become the contextual surface', selectionContext.dataset.contextMode === 'selection' && visible(doc, '#selectionBar') && ['duplicate','group','front','alignCenter','delete'].every(action => doc.querySelector('[data-selection-action="' + action + '"]')), { mode: selectionContext.dataset.contextMode, count: test.summary().selection });
       app.clearSelection();
       await sleep(50);
+
+      // INK-UI-MAINT-002: Properties uses one synchronized authority.
+      dispatchKey(win, 'b');
+      await sleep(60);
+      shell.close();
+      await sleep(100);
+      const advanced = doc.querySelector('#contextualAdvancedBtn');
+      advanced.click();
+      await sleep(140);
+      const advancedOpen = {
+        shell: shell.state(),
+        pressed: advanced.getAttribute('aria-pressed'),
+        expanded: advanced.getAttribute('aria-expanded'),
+        active: advanced.classList.contains('active')
+      };
+      record('UI-MAINT-002 Advanced opens Properties and exposes active state',
+        advancedOpen.shell.activePanel === 'properties' &&
+        advancedOpen.pressed === 'true' &&
+        advancedOpen.expanded === 'true' &&
+        advancedOpen.active,
+        advancedOpen);
+      advanced.click();
+      await sleep(140);
+      const advancedClosed = {
+        shell: shell.state(),
+        pressed: advanced.getAttribute('aria-pressed'),
+        expanded: advanced.getAttribute('aria-expanded'),
+        active: advanced.classList.contains('active')
+      };
+      record('UI-MAINT-002 Advanced second press closes the same primary panel',
+        advancedClosed.shell.collapsed &&
+        advancedClosed.pressed === 'false' &&
+        advancedClosed.expanded === 'false' &&
+        !advancedClosed.active,
+        advancedClosed);
+
+      shell.open('properties');
+      await sleep(120);
+      const collapse = doc.querySelector('#inspectorEdgeToggle');
+      const legacyToggle = doc.querySelector('#inspectorToggle');
+      const legacyHidden = getComputedStyle(legacyToggle).display === 'none';
+      collapse.click();
+      await sleep(140);
+      const collapseClosed = shell.state();
+      collapse.click();
+      await sleep(140);
+      const collapseReopened = shell.state();
+      record('UI-MAINT-002 chevron is the single visible desktop collapse authority',
+        legacyHidden &&
+        collapseClosed.collapsed &&
+        collapseReopened.activePanel === 'properties' &&
+        collapse.getAttribute('aria-expanded') === 'true',
+        { legacyHidden, collapseClosed, collapseReopened, collapseExpanded: collapse.getAttribute('aria-expanded') });
+
+      // Short-height desktop: force a long Inspector surface and prove body-owned scrolling.
+      frame.style.height = '520px';
+      frame.style.width = '1280px';
+      await sleep(300);
+      shell.open('properties');
+      await sleep(100);
+      doc.querySelector('.inspector-tab[data-tab="studio"]')?.click();
+      await sleep(180);
+      const shortSection = doc.querySelector('.inspector-section.active');
+      const shortInspector = doc.querySelector('#inspector').getBoundingClientRect();
+      const shortBefore = shortSection.scrollTop;
+      shortSection.scrollTop = shortSection.scrollHeight;
+      await sleep(40);
+      const shortAfter = shortSection.scrollTop;
+      const shortDiag = {
+        viewport: [win.innerWidth, win.innerHeight],
+        inspector: shortInspector.toJSON?.() || { top: shortInspector.top, bottom: shortInspector.bottom, left: shortInspector.left, right: shortInspector.right },
+        overflowY: getComputedStyle(shortSection).overflowY,
+        overflowX: getComputedStyle(shortSection).overflowX,
+        clientHeight: shortSection.clientHeight,
+        scrollHeight: shortSection.scrollHeight,
+        clientWidth: shortSection.clientWidth,
+        scrollWidth: shortSection.scrollWidth,
+        scrollBefore: shortBefore,
+        scrollAfter: shortAfter
+      };
+      record('UI-MAINT-002 short-height Inspector keeps all content reachable by vertical scroll',
+        shortInspector.top >= 0 &&
+        shortInspector.bottom <= win.innerHeight + 1 &&
+        ['auto','scroll'].includes(shortDiag.overflowY) &&
+        shortDiag.overflowX === 'hidden' &&
+        shortDiag.scrollWidth <= shortDiag.clientWidth + 1 &&
+        shortDiag.scrollHeight > shortDiag.clientHeight &&
+        shortDiag.scrollAfter > shortDiag.scrollBefore,
+        shortDiag);
+
+      shell.open('chat');
+      await sleep(180);
+      const creativeBody = doc.querySelector('.creative-workspace-body');
+      const creativeRect = doc.querySelector('#creativeWorkspace').getBoundingClientRect();
+      const creativeDiag = {
+        viewport: [win.innerWidth, win.innerHeight],
+        panel: creativeRect.toJSON?.() || { top: creativeRect.top, bottom: creativeRect.bottom, left: creativeRect.left, right: creativeRect.right },
+        overflowY: getComputedStyle(creativeBody).overflowY,
+        overflowX: getComputedStyle(creativeBody).overflowX,
+        clientWidth: creativeBody.clientWidth,
+        scrollWidth: creativeBody.scrollWidth
+      };
+      record('UI-MAINT-002 short-height Creative Loop remains vertically contained without horizontal overflow',
+        creativeRect.top >= 0 &&
+        creativeRect.bottom <= win.innerHeight + 1 &&
+        ['auto','scroll'].includes(creativeDiag.overflowY) &&
+        creativeDiag.overflowX === 'hidden' &&
+        creativeDiag.scrollWidth <= creativeDiag.clientWidth + 1,
+        creativeDiag);
+      shell.close();
+      frame.style.height = '800px';
+      await sleep(260);
 
       frame.style.width = '960px';
       await sleep(260);
