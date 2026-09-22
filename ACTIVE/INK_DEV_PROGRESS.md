@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `CORE-MOD-002 / READY_TO_START`
+STATUS: `CORE-MOD-002 / IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -8,8 +8,8 @@ STATUS: `CORE-MOD-002 / READY_TO_START`
 | TITLE | `Semantic Region Grounding Module v0.1` |
 | BRANCH | `work/ink-core-semantic-region-002` |
 | BRANCH_BASE | `9a5d17c37934f367b1a2e7d4d6ed6f21f55a3ea3` |
-| TASK_STATUS | `AUTHORIZED / READY_TO_START` |
-| CURRENT_PHASE | `PHASE_A / CONTRACT_INVENTORY` |
+| TASK_STATUS | `AUTHORIZED / IN_PROGRESS` |
+| CURRENT_PHASE | `PHASE_B / PURE_GROUNDING_MODULE` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `CORE_MOD_002_MODULE_READY` |
@@ -20,12 +20,49 @@ STATUS: `CORE-MOD-002 / READY_TO_START`
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
 | RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
 
+## Phase A — contract inventory
+
+`PASS / SEMANTIC_REGION_CONTRACT_DEFINED`
+
+Existing authority reused:
+
+- Path / subpath identity and geometry remain authoritative.
+- nested world transforms come from existing hierarchy traversal.
+- bounds / area / centroid reuse existing vector `pathMetrics`.
+- containment/intersection/overlap classification reuses existing vector Boolean geometry and Geometry Kernel intersection calculations.
+- existing semantic model / relationship graph remains semantic evidence.
+- selection authority is not read as geometry authority and is not replaced.
+- Document / History / Revision remain unchanged.
+
+Output contract:
+
+```text
+INK Document active Page
+→ authoritative closed Path subpaths
+→ deterministic semantic-region descriptors
+   - regionId
+   - source Page / Layer / Object / subpath identity
+   - outer / hole / island role
+   - boundary fingerprint
+   - bounds / area / centroid
+   - object semantic role / confidence
+   - provenance
+→ deterministic relation graph
+   - contains / inside
+   - intersects / overlaps
+   - adjacency / crossing / gap / bridge only from explicit supported evidence
+   - unresolved evidence retained explicitly
+→ stable graph fingerprint
+```
+
+No new Path representation, no second geometry engine, no selection mutation.
+
 ## Planned phases
 
-- Phase A — contract inventory
-- Phase B — pure grounding module
-- Phase C — bridge boundary
-- Phase D — deterministic evidence
+- Phase A — contract inventory: `PASS`
+- Phase B — pure grounding module: `IN_PROGRESS`
+- Phase C — bridge boundary: `PENDING`
+- Phase D — deterministic evidence: `PENDING`
 
 ## Core rule
 
