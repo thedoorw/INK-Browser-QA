@@ -101,3 +101,27 @@ PRODUCT SOURCE CHANGE = 0
 Next gate is manual Runtime rerun against exact SHA `a364663bc3d03bfa184c708da8e42891e53fb563`.
 
 No deferred Runtime debt is cleared until the entire batch passes.
+
+
+## INK-INTEGRATION-RUNTIME-001 PASS
+
+```text
+RUN = 35695901551
+TARGET_SHA = a364663bc3d03bfa184c708da8e42891e53fb563
+RESULT = PASS
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10680910385
+```
+
+MR disposition:
+
+```text
+INK-WEB-UI-003 RUNTIME_DEBT = CLEARED
+INK-WEB-UI-004 RUNTIME_DEBT = CLEARED
+INK-WEB-UI-005 RUNTIME_DEBT = CLEARED
+CORE-MOD-001 RUNTIME_DEBT = CLEARED
+```
+
+The batch does not cover incomplete `CORE-MOD-002`.
