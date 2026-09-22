@@ -36,7 +36,7 @@ Status:
 - Phase A — comparison contract inventory = PASS
 - Phase B — pure compare module = PASS_SOURCE
 - Phase C — variant model + adapters = PASS_SOURCE
-- Phase D — deterministic evidence = IN_PROGRESS
+- Phase D — deterministic evidence = PASS_AUTHORED / ISOLATED_EXECUTION_PASS
 
 Implemented contract:
 
@@ -82,6 +82,40 @@ Executed local isolated checks before commit:
 - four adapter paths = PASS
 - unresolved document identity = PASS
 - bounded object evidence = PASS
+
+Repository QA commit:
+
+`24c51000a845865345b7070b7987578a8a80208d`
+
+QA file:
+
+- `qa/core-mod-004-visual-compare.test.mjs`
+
+Authored coverage includes:
+
+- current vs revision
+- revision vs revision
+- reference/current identity handling
+- descriptor-only unresolved reference evidence
+- variant descriptors + neutral decision metadata
+- added/removed/changed structural evidence
+- stable correspondence by existing object identity only
+- reordered equivalent subject evidence → identical output/fingerprint
+- unresolved document identity
+- bounded object/output evidence
+- no source mutation
+- no Revision restore invocation
+- no renderer/DOM/network dependency
+- provenance refs preservation
+- FORMAT_VERSION = 4
+- all four read-only adapter paths
+
+Execution note:
+
+- exact compare-module isolated deterministic harness = PASS
+- repository QA file = AUTHORED / COMMITTED
+- branch-native Node execution = NOT_EXECUTED in this session because the local execution environment cannot resolve github.com and no existing CI run/status was attached to the QA commit
+- browser Runtime = DEFERRED_TO_INTEGRATION_BATCH
 
 Runtime remains intentionally deferred.
 
