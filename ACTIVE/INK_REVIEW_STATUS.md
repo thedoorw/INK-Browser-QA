@@ -1,40 +1,43 @@
 # INK REVIEW STATUS
 
-STATUS: `CORE-MOD-005 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
+STATUS: `CORE-MOD-005 / MR_PASS / CLEAN_PROMOTION_REQUIRED`
 
-## Current task
+## Review fingerprint
 
 ```text
 TASK_ID = CORE-MOD-005
-TITLE = Parametric Creative Structure Module v0.1
 DEV_BRANCH = work/ink-core-parametric-structure-005
-TARGET_GATE = CORE_MOD_005_MODULE_READY
-DEV_HANDOFF = NO
-MR_REVIEW = NOT_STARTED
-FORMAT_VERSION = 4 / PRESERVE
+BASE_COMMIT = 3a9a32cfc6a3a40d4dfc2105908c068d007ce103
+REVIEWED_HEAD = e2747ae8dab1b52a4fe9900012f24bf9d18bc8fd
+BRANCH = 9 ahead / 1 behind / diverged
+```
+
+## Decision
+
+`MR_PASS / SOURCE_REVIEW_PASS / NODE_QA_PASS / RUNTIME_QA_DEFERRED`
+
+Verified Node QA:
+
+```text
+RUN = 35712532550
+JOB_ID = 106696291528
+TESTED_HEAD = 5b24e12f45f6fcc371680eee8f778a7eeb7652f0
+RESULT = SUCCESS
+OUTPUT = CORE-MOD-005 parametric-structure deterministic tests: PASS
+```
+
+## Accepted boundary
+
+```text
+UI_MUTATION = 0
+DOCUMENT_MUTATION = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+HISTORY_MUTATION = 0
+REVISION_MUTATION = 0
+RENDERER_MUTATION = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
 RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 ```
 
-## MR review boundary
-
-MR will verify:
-
-- module remains pure/non-mutating;
-- no UI mutation;
-- no authoritative document writes;
-- no Geometry / Path / Repeat / Transform authority replacement;
-- no History / Revision / renderer mutation;
-- deterministic stable structure/node identity;
-- bounded repetition/expansion;
-- unresolved refs are explicit rather than guessed;
-- deterministic QA executes successfully;
-- `FORMAT_VERSION = 4`;
-- no package mutation.
-
-Previous accepted Core module:
-
-```text
-CORE-MOD-004 = MR_PASS / PROMOTED
-PR = #32 / MERGED
-MAIN = 620f17965f096796a2374e1078432c484010b051
-```
+The DEV branch is diverged from main. Direct merge is not approved; clean promotion is required.
