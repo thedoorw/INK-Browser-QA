@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-WEB-UI-001 / MR_PASS / CLEAN_PROMOTION`
+STATUS: `INK-WEB-UI-002 / AUTHORIZED / READY_FOR_DEV`
 
 | Field | Value |
 |---|---|
@@ -1417,3 +1417,27 @@ Promotion excludes the task-local auto-push Runtime workflow and branch-local AC
 Next planned bounded package remains:
 
 `INK-WEB-UI-002 — Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1`
+
+
+## INK-WEB-UI-001 promotion closure
+
+```text
+PR = #22 / MERGED
+MAIN = 29f06010fa539e5951d18d48b88045ab75ace84a
+RUNTIME = 35679835724 / SUCCESS
+BROWSER = 40 / 40 PASS
+WORKFLOW_EXCLUSION = task-local auto-push runtime workflow
+```
+
+## INK-WEB-UI-002 authorization
+
+```text
+TASK = INK-WEB-UI-002
+BRANCH = work/ink-web-ui-002
+OBJECTIVE =
+  manual/batch-only self-hosted Runtime
+  + no visible child PowerShell window
+  + Portable/Web shell parity regression guard
+RUNTIME_QA = DEFERRED_TO_BATCH
+FORMAT_VERSION = 4
+```
