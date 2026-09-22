@@ -51,3 +51,27 @@ Excluded:
 Batch workflow remains manual-only. MR must review the exact workflow run and artifact before clearing Runtime debt.
 
 This checkpoint does not cancel the CORE-MOD-002 source task; it only keeps its unpromoted branch out of the current integration target.
+
+
+## INK-INTEGRATION-RUNTIME-001 first-run disposition
+
+```text
+RUN = 35691554160
+TARGET = cbc89271dc76b47e294a2bbf449615a3d03786e4
+RESULT = FAIL
+FIRST_FAILURE = web-shell state() ReferenceError: active is not defined
+ARTIFACT = preserved
+```
+
+MR isolated the failure to UI shell presentation state, not Core/Document/History/Revision.
+
+Bounded fix:
+
+```text
+PR #28 = MERGED
+FIX_MAIN = 448e98dd224ba25faf5ea37077abeb8e95ccc94d
+```
+
+Next gate is a manual Runtime rerun against exact SHA `448e98dd224ba25faf5ea37077abeb8e95ccc94d`.
+
+No Runtime debt is cleared until that rerun passes.
