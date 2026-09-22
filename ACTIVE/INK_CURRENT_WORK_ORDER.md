@@ -1,196 +1,294 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `CORE-MOD-003 / AUTHORIZED / READY_FOR_DEV`
-
-## Prior closures
-
-```text
-CORE-MOD-001 = AI Document Bridge / MR_PASS / PROMOTED / RUNTIME_DEBT_CLEARED
-CORE-MOD-002 = Semantic Region Grounding / MR_PASS / PROMOTED
-CORE-MOD-002 PROMOTION PR = #30
-CORE-MOD-002 MAIN = 05bd690f09a9c2cd81fe4a8744f7641805e5cfe2
-```
+STATUS: INK-UI-MAINT-001 / UR_AUTHORIZED / DEV_READY
 
 ## Control
 
-| Field | Value |
-|---|---|
-| CURRENT_TASK_ID | `CORE-MOD-003` |
-| TITLE | `Revision Provenance Module v0.1` |
-| ROLE_OWNER | `MR / CORE MODULE LANE` |
-| DEV_WORK_BRANCH | `work/ink-core-revision-provenance-003` |
-| DEV_MODE | `BOUNDED_MODULE_PREPARATION` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / MODULE_ONLY` |
-| UI_MUTATION | `PROHIBITED` |
-| REVISION_AUTHORITY_CHANGE | `PROHIBITED` |
-| HISTORY_SEMANTICS_CHANGE | `PROHIBITED` |
-| FORMAT_VERSION | `4 / PRESERVE` |
-| PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
-| MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
+CURRENT_TASK_ID: INK-UI-MAINT-001
+TITLE: Photoshop Shell Geometry / Pixel Alignment v0.1
+AUTHORITY: USER_DIRECT_UI_MAINTENANCE / UR
+DEV_WORK_BRANCH: work/ink-ui-maint-001
+BASE_MAIN: c0adc842c1d1b52c8cdf74303e087704b0047caa
+DEV_MODE: BOUNDED_UI_MAINTENANCE
+PRODUCT_SOURCE_MUTATION: AUTHORIZED / UI_ONLY
+FORMAT_VERSION: 4 / PRESERVE
+PRODUCT_BASE_VERSION: v0.1 / PRESERVE
+PACKAGE_MUTATION: PROHIBITED
+CORE_MUTATION: PROHIBITED
+RUNTIME_QA: REQUIRED_BEFORE_UI_PASS / USER_REPORTED_VISUAL_REGRESSION
 
-## Objective
+## User direction
 
-Prepare a pure provenance module that explains how an INK object, change, Revision, extraction result, Recipe result or CHAT operation was derived, while keeping existing Revision and History systems authoritative.
+Use the supplied Photoshop screenshots as a geometric reference for INK shell alignment.
+
+This is not a Photoshop feature clone and not a Core redesign.
 
 Target:
+Photoshop pixel geometry
+→ INK shell alignment
+→ tighter top chrome
+→ edge-attached left rail
+→ coherent right dock/panel geometry
+→ clearer dark workbench / page relationship
+→ preserve all INK commands and semantics
 
-```text
-reference / extraction / recipe / CHAT operation / revision evidence
-→ normalized provenance events
-→ object/change/revision lineage
-→ deterministic provenance graph
-→ bounded CHAT-readable provenance context
-```
+Favicon/logo repair is explicitly secondary and is out of scope for this workpack unless a broken path blocks the UI test.
 
-This module records/normalizes evidence only. It does not replace existing Revision records, History transactions, or document mutation semantics.
+## Authoritative Photoshop pixel reference
 
-## Existing authority to preserve
+Reference screenshots: 1280 × 1024.
 
-- `product/source/src/document/revision.js`;
-- existing Revision record/index/restore semantics;
-- existing History implementation;
-- existing file-envelope integrity;
-- existing object IDs / document IDs / revision IDs;
-- existing extraction / Recipe / CHAT metadata already present in source records;
-- AI Document Bridge and Semantic Region Grounding as read-only consumers/producers;
-- FORMAT_VERSION = 4.
+Measured desktop geometry:
 
-## Required reads
+| Region | Photoshop measured reference |
+|---|---:|
+| Menu row | y = 0–23 → 24 px |
+| Menu separator | y = 24 → 1 px |
+| Options row | y = 25–59 → 35 px |
+| Options/workspace separator | y = 60 → 1 px |
+| Workspace begins | y = 61 |
+| Single-column left toolbar | x = 0–39 → 40 px total |
+| Left toolbar content field | x = 1–37 |
+| Workspace begins after left rail | x = 40 |
+| Collapsed right dock | x = 1240–1279 → 40 px total |
+| Expanded right panel content | about 250 px |
+| Expanded right panel total edge region | about 252–253 px |
+| Empty workspace base | approximately #262626 |
+| Chrome fill family | approximately #535353 with #383838 separators |
 
-1. `README.md`
-2. `AGENTS.md`
-3. this Work Order
-4. `working/WORKING_STATUS.md`
-5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `product/source/src/document/revision.js`
-7. `product/source/src/document/file-envelope.js`
-8. `product/source/src/history/*`
-9. `product/source/src/ai/document-bridge.js`
-10. relevant extraction / Recipe / CHAT modules only as needed
+Do not copy Photoshop branding or exact color identity. Preserve INK accent color and product identity. Geometry and interaction grammar are the reference.
 
-## Scope
+## Current INK defects to correct
 
-### Phase A — provenance contract inventory
+Current source contains these conflicting geometry conditions:
 
-Inventory existing provenance-bearing fields from:
+--menu-h = 28px
+--options-h = 38px
+--topbar-h = 66px
+--contextual-h = 36px
+effective canvas start ≈ 102px
+Photoshop workspace start ≈ 61px
 
-- reference/import source metadata;
-- extraction metadata;
-- Recipe / step IDs;
-- CHAT proposal / plan / execution IDs;
-- Revision IDs / parent/base links;
-- object source IDs;
-- file-envelope / document identity;
-- semantic-region provenance refs.
+Also:
 
-Define one INK-owned provenance event/graph contract.
+--tool-w = 38px
+UI-001 attached the rail to left:0
+UI-004 later overrides .tool-rail to left:7px
+→ visible detached/floating rail regression
 
-At minimum include:
+And:
 
-- deterministic event ID;
-- event kind;
-- source entity;
-- target entity;
-- document ID;
-- revision ID when available;
-- parent/source event IDs;
-- operation / recipe / step / proposal / plan identity when available;
-- before/after fingerprints or object IDs where available;
-- timestamp as evidence only, excluded from deterministic identity where necessary;
-- unresolved provenance;
-- deterministic graph fingerprint.
+--inspector-w = 316px
+Photoshop expanded panel reference ≈ 252px
 
-Gate: `REVISION_PROVENANCE_CONTRACT_DEFINED`
+Creation-space renderer currently fills the full canvas with paper color. UI DEV must not alter Renderer semantics in this task.
 
-### Phase B — pure provenance module
+## Required scope
 
-Recommended:
+### A — collapse desktop shell from three visible rows to two
 
-`product/source/src/provenance/provenance-graph.js`
+Current desktop shell is visually:
+menu + document/app topbar + contextual options = about 102 px before canvas.
+
+Target desktop shell:
+menu row about 24 px + one Photoshop-style options/context row about 36 px = workspace origin about 60–61 px.
 
 Requirements:
+- preserve #contextualOptions, current command IDs and bindings;
+- contextual tool controls remain the active options surface;
+- compact document title / workspace switch / file controls must share the same second-row shell instead of consuming a third permanent row;
+- no duplicated command state;
+- no simulated mouse authority;
+- no extra permanent toolbar row;
+- Web / Portable structure must remain equivalent.
 
-- pure / non-mutating;
-- no DOM/network dependency;
-- JSON-compatible;
-- deterministic IDs/order/fingerprint;
-- normalize existing evidence; do not invent lineage;
-- unresolved/missing links remain explicit;
-- bounded event / edge output;
-- no modification of Revision record schema.
+Pixel gate at desktop:
+MENU_H = 24 ± 1 px
+OPTIONS_H = 36 ± 1 px
+WORKSPACE_TOP = 60–61 ± 1 px
 
-Gate: `REVISION_PROVENANCE_GRAPH_WORKS`
+Gate: PS_TOP_SHELL_GEOMETRY_ALIGNED
 
-### Phase C — adapters
+### B — left rail must be shell-attached
 
-Provide narrow read-only adapters for later Integration:
+Required:
+- final computed .tool-rail left edge = 0px;
+- width = 40px ± 1px;
+- top begins exactly at workspace origin;
+- no 6/7/8/10 px outer gap;
+- no floating border radius / card geometry on desktop;
+- compact single-column tool grammar;
+- tool icons remain reachable and current tool IDs/commands preserved;
+- later CSS blocks must not re-detach the rail.
 
-```text
-existing Revision records / comparison
-existing document/object metadata
-optional extraction / Recipe / CHAT evidence
-→ provenance graph
+Recommended compact rhythm:
+- button pitch approximately 26–28 px;
+- icon approximately 18–19 px;
+- 1 px separators / shell borders.
 
-provenance graph
-→ bounded AI Document Bridge-compatible context
-```
+Gate: LEFT_RAIL_PIXEL_ATTACHED
 
-Do not make provenance the active Revision store or History store.
+### C — right dock and primary panel geometry
 
-Gate: `REVISION_PROVENANCE_ADAPTER_READY`
+Required:
+- collapsed right dock remains edge-attached and 40px ± 1px;
+- no outside gap;
+- default Inspector / Creative primary width should move from 316 px toward Photoshop reference: 252px ± 8px at 1280 px desktop;
+- preserve resize behavior and minimum usability;
+- one primary right panel at a time;
+- panel header/tab/body alignment stays compact;
+- Reference / Compose / CHAT / Revision / Layers / History remain reachable.
 
-### Phase D — deterministic evidence
+Gate: RIGHT_DOCK_PANEL_GEOMETRY_ALIGNED
 
-Tests must cover at minimum:
+### D — document title / top-row visual weight
 
-- reference → extraction → object lineage;
-- Recipe / step lineage;
-- CHAT proposal/plan/execution lineage;
-- Revision parent/base lineage;
-- object added/changed/removed evidence from existing revision comparison;
-- equivalent reordered input → same graph/fingerprint;
-- unresolved/missing source links;
-- duplicate/conflicting evidence handling;
-- bounded output;
-- no source mutation;
-- existing Revision record inspection remains valid;
-- FORMAT_VERSION = 4.
+Required:
+- reduce default document-title visual width at 1280 desktop;
+- target max visual width approximately 220–240px;
+- title remains editable and command semantics unchanged;
+- workspace switch / file actions and contextual controls align to one shared baseline;
+- avoid a large isolated dark title block.
 
-Gate: `CORE_MOD_003_MODULE_READY`
+Gate: TOPBAR_VISUAL_WEIGHT_ALIGNED
+
+### E — workbench / page relationship
+
+Target visual grammar:
+dark workbench + clear white document/page when in Layout space + no impression that the whole application surface is one white sheet.
+
+Allowed UI work:
+- shell/stage CSS;
+- Layout-space presentation;
+- shadows/borders around the existing artboard;
+- removal of redundant CSS that forces white shell background where it is not authoritative.
+
+Hard boundary:
+- do not modify Renderer.render(), paper rendering, workspace coordinate semantics, artboard geometry, History, or document model;
+- do not fake an A4 page with an unrelated DOM rectangle that does not track the actual artboard.
+
+If Creation-space paper behavior prevents the requested Photoshop-like workbench without renderer changes:
+INTEGRATION_REQUIRED = CREATION_PASTEBOARD_RENDERER
+→ record exact finding
+→ do not cross the boundary.
+
+Layout-space must nevertheless present a clearly bounded white A4 page on a dark workbench.
+
+Gate: WORKBENCH_PAGE_RELATIONSHIP_POLISHED
+
+### F — pixel-grid cleanup
+
+Normalize the shell around the measured reference:
+- 1 px separators;
+- no accidental 7 px shell gaps;
+- compact control heights;
+- consistent icon boxes;
+- aligned text/input baselines;
+- right/left shell edges exactly attached;
+- remove obsolete later overrides that defeat accepted shell geometry.
+
+Do not perform a broad theme rewrite.
+
+Gate: SHELL_PIXEL_GRID_CLEAN
+
+### G — Web / Portable parity and regression guard
+
+Required:
+- index.html and index-standalone.html remain structurally equivalent except delivery-specific differences;
+- extend/add focused static test qa/core/tests/unit/photoshop-shell-geometry-v0.1.test.mjs;
+- test the final intended geometry contract, including no later detached-rail override;
+- retain UI-003/UI-004/UI-005 tests;
+- changed JS parses;
+- no duplicate command IDs.
+
+Gate: PS_SHELL_PARITY_REGRESSION_PASS
+
+## Runtime acceptance — required
+
+This is a user-reported visual/runtime regression. Static evidence alone is insufficient.
+
+At 100% browser zoom, capture actual computed geometry using getBoundingClientRect() at a desktop viewport close to 1280 CSS px width.
+
+Required Runtime evidence:
+menu height ≈ 24px
+options/context row ≈ 36px
+stage/workspace top ≈ 60–61px
+tool rail left = 0px
+tool rail width ≈ 40px
+panel dock right = 0px
+panel dock width ≈ 40px
+default primary panel width ≈ 252px ± 8px
+no overlap between top shell / rail / dock / canvas
+Layout space shows white A4 against dark workbench
+
+Also verify:
+- Pen/Pencil/Marker/Brush/Airbrush contextual controls;
+- Eraser / Shape / Text options;
+- Selection actions;
+- Layers / History;
+- Reference / Compose / CHAT / Revision;
+- fullscreen enter/exit;
+- narrow desktop containment.
+
+If Runtime cannot be executed:
+TASK_STATUS = RUNTIME_BLOCKED
+→ STOP
+→ do not claim UI_PASS.
 
 ## Hard boundaries
 
-Do not:
+Do not modify:
+- Document authority / schema / migration;
+- History semantics;
+- Revision semantics;
+- Recipe / Geometry;
+- Renderer / WebGL / Canvas engine;
+- Core module contracts;
+- CHAT proposal/approval/execution semantics;
+- persistence semantics;
+- package/certification;
+- product base version.
 
-- alter Revision schema or restore behavior;
-- change History semantics;
-- add timestamps to deterministic IDs in a way that breaks equivalence;
-- modify UI;
-- change Document schema;
-- change FORMAT_VERSION;
-- create a second revision store;
-- create a second History;
-- integrate Compare / Variant or Parametric modules in this task.
+If required:
+INTEGRATION_REQUIRED → STOP → UR/MR
 
-## Required report
+## Expected changed files
 
-Exactly one:
+Prefer a small UI-only payload:
+- product/source/styles.css
+- product/source/index.html
+- product/source/index-standalone.html
+- product/source/web-shell.js only if necessary for re-hosting without semantic duplication
+- focused QA
+- report
 
-`research/INK_CORE_MOD_003_REVISION_PROVENANCE_REPORT_v0.1.md`
+Do not touch Core semantic modules.
+
+## Evidence report
+
+Create exactly one:
+research/INK_UI_MAINT_001_PS_SHELL_ALIGNMENT_REPORT_v0.1.md
+
+Include:
+- measured before/after geometry;
+- exact computed Runtime rectangles;
+- screenshots or numeric Runtime evidence;
+- changed-file inventory;
+- command/ID preservation;
+- Web/Portable parity;
+- any INTEGRATION_REQUIRED finding.
 
 ## Completion
 
-```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = CORE-MOD-003
-BRANCH = work/ink-core-revision-provenance-003
-GATE = CORE_MOD_003_MODULE_READY
-UI_MUTATION = 0
-REVISION_AUTHORITY_CHANGE = 0
-HISTORY_SEMANTICS_CHANGE = 0
+TASK_ID = INK-UI-MAINT-001
+BRANCH = work/ink-ui-maint-001
+GATE = PS_SHELL_PIXEL_ALIGNMENT_WORKS
+RUNTIME_QA = PASS
+PORTABLE_WEB_PARITY = PASS
 FORMAT_VERSION = 4
-RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
-NEXT_ACTION = MR_REVIEW_REQUIRED
+PRODUCT_BASE_VERSION = v0.1
+PACKAGE_MUTATION = 0
+CORE_MUTATION = 0
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
-```
