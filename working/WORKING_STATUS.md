@@ -9,7 +9,7 @@ STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
 | DEV_BRANCH | `work/ink-web-ui-001` |
 | DEV_HANDOFF | `NO / READY_TO_START` |
 | MR_REVIEW | `PENDING_HANDOFF` |
-| TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
+| TARGET_GATE | `INK_WEB_UI_PHASE1_SOURCE_COMPLETE / RUNTIME_DEBT_TRACKED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
 | FAVICON | `USER ORIGINAL MARK / REQUIRED` |
@@ -1303,3 +1303,27 @@ INK v0.1 · Portable
 ```
 
 The shell / panel / toolbar / canvas behavior is shared; delivery-specific adapters remain separate.
+
+
+## Batched Runtime QA checkpoint
+
+USER decision:
+
+```text
+RUNTIME_STRATEGY = BATCHED
+DEFAULT_BATCH_TARGET = 3 bounded Work Orders
+ALLOWED_RANGE = 2–4
+FULL_RUNTIME_EVERY_WORK_ORDER = NO
+```
+
+Current deferred runtime debt:
+
+```text
+1. INK-WEB-UI-001
+   status = ACTIVE
+   runtime = DEFERRED_TO_BATCH
+```
+
+Each bounded task still requires source/static/unit evidence and MR review.
+
+Run the batch earlier if a high-risk runtime trigger appears; otherwise accumulate compatible UI/editor work and execute one concentrated Windows Chrome Runtime checkpoint.
