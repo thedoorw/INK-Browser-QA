@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `CORE-MOD-004 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `CORE-MOD-004 / MR_REVISE / QA_FIX_ONLY`
 
 ## Prior closures
 
@@ -205,3 +205,31 @@ RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## CORE-MOD-004 MR correction — 2026-09-22
+
+Reviewed exact DEV handoff:
+
+```text
+DEV_BRANCH = work/ink-core-visual-compare-004
+REVIEWED_HEAD = 1f21b9442357903131da7226df29f6efff0534c8
+DECISION = MR_REVISE
+SCOPE = QA_FIX_ONLY
+PRODUCT_MODULE_CHANGE = NOT_REQUESTED
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+```
+
+Blocking finding:
+
+`qa/core-mod-004-visual-compare.test.mjs` constructs a document fixture that does not satisfy the current authoritative `inspectDocument()` contract. The fixture artboard omits the current fixed-artboard fields and the page omits the required workspace contract. Therefore `createRevisionRecord(before, ...)` will fail with `revision-document-invalid` before the committed CORE-MOD-004 assertions can execute.
+
+Required bounded correction:
+
+1. update the QA fixture to the current FORMAT_VERSION 4 document contract, preferably by deriving from the authoritative default document helper or by supplying the exact required current fields;
+2. execute:
+   `node qa/core-mod-004-visual-compare.test.mjs`;
+3. record the actual PASS output in the existing CORE-MOD-004 report and branch-local DEV progress;
+4. return a new `DEV_HANDOFF` with exact HEAD.
+
+Do not change UI, Revision authority, restore semantics, renderer, document schema, FORMAT_VERSION, or broaden product-module scope while correcting this finding.

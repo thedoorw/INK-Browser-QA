@@ -1,95 +1,44 @@
 # INK REVIEW FINDINGS
 
-STATUS: `MR_PASS / SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED`
+STATUS: `CORE-MOD-004 / MR_REVISE`
 
-TASK: `INK-CLOUD-017`
+TASK: `CORE-MOD-004 — Visual Compare + Variant Module v0.1`
 
-REVIEW_PAYLOAD_HEAD: `a0fe5833f0a3449c380c7adb5817b4c7cc4b5bd8`
+REVIEW_PAYLOAD_HEAD: `1f21b9442357903131da7226df29f6efff0534c8`
 
 ## Decision
 
-`MR_PASS`
+`MR_REVISE / QA_FIX_ONLY`
 
-Gate accepted:
+## Accepted source-boundary observations
 
-`STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS`
+- new product code is confined to `product/source/src/compare/visual-compare.js`;
+- no UI path changed;
+- no Revision / History / renderer authority file changed;
+- comparison is read-only and does not invoke Revision restore;
+- mode support is descriptor-only;
+- variant decision state is metadata-only and does not auto-select;
+- `FORMAT_VERSION = 4` is preserved;
+- Runtime remains correctly deferred to the Integration batch.
 
-## Findings
+## Blocking finding
 
-- The single-Path reconstruction bottleneck is closed.
-- All 265 valid sector prototype Paths are retained in the tested multi-Path result.
-- Existing Group + Repeat / Transform authorities are reused.
-- Editable child Path identity, provenance, Repeat identity and transform determinism are preserved.
-- Bounded prototype-child correction propagates through linked instances.
-- Renderer/bounds/hit/SVG traversal support existing Repeat sources without a second renderer authority.
-- No second vector/document/History/Revision engine was introduced.
-- `FORMAT_VERSION = 4`.
-- Package mutation = 0.
-- Mandatory remote dependency = 0.
-- Browser/runtime USER-path QA remains deferred.
+The committed test fixture in `qa/core-mod-004-visual-compare.test.mjs` is stale relative to the current document contract.
 
-## Benchmark finding
-
-USER-authorized supplementary same-input comparison:
+The fixture currently provides an artboard with only:
 
 ```text
-Direct Extraction
-recall     = 0.904256
-precision  = 0.932975
-IoU        = 0.849098
-mismatch   = 2224
-nodes      = 9339
-
-Structure-Aware multi-Path
-recall     = 0.505239
-precision  = 0.509176
-IoU        = 0.339764
-mismatch   = 13587
-unique nodes = 1631
-linked reuse = 6
+widthMm / heightMm / ppi
 ```
 
-Structure-Aware materially improves on the old one-Path failure and preserves all prototype Paths, but it does not outperform Direct Extraction on the current hard image.
+and does not provide the current required page `workspace` contract. The authoritative `inspectDocument()` now requires a fixed artboard contract and valid creation/layout workspace cameras/viewports.
 
-## Pipeline decision
+Because the test calls `createRevisionRecord(before, ...)`, that function first calls `inspectDocument(before)`. The fixture therefore fails before the CORE-MOD-004 comparison assertions can run.
 
-```text
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-DIRECT_EXTRACTION = DEFAULT
-STRUCTURE_AWARE = OPTIONAL_STRUCTURED_RECONSTRUCTION
-STRUCTURE_AWARE_BENCHMARK = NOT_IMPROVED
-```
+DEV already disclosed that the repository-native Node QA was not executed. The authored test cannot be accepted as executable evidence in its present form.
 
-Structure-Aware remains valuable where radial/repeated geometry and linked editing matter, but it is not selected as the default extraction route.
+## Required bounded fix
 
-## Promotion
+Update only the QA fixture/evidence necessary to match the current FORMAT_VERSION 4 document contract, execute the committed Node test, record actual PASS evidence, and hand off again.
 
-Clean promotion completed through PR `#19`.
-
-Main promotion:
-
-`edb8f11c39e43043584a20ec648dace242574742`
-
-Branch-local `ACTIVE/INK_DEV_PROGRESS.md` was excluded from promotion.
-
-
-## INK-CLOUD-018 — MR_PASS
-
-No blocking findings.
-
-Accepted:
-- existing editor/shared core reused;
-- first visible Web shell works;
-- Direct Extraction remains default;
-- Structure-Aware remains optional;
-- conversational CHAT visible;
-- mutation approval boundary preserved;
-- Revision capture/restore verified;
-- project save/reload integrity verified;
-- no committed secret;
-- mandatory remote dependency for editor = 0;
-- FORMAT_VERSION = 4;
-- package mutation = 0;
-- Windows self-hosted real Chromium runtime = PASS.
-
-Earlier Phase F failures were QA harness/process synchronization issues and were corrected without requiring a product-core bounded fix.
+No product-module redesign is requested by this review.
