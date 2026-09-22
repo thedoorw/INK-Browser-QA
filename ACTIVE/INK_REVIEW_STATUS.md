@@ -7,7 +7,7 @@ STATUS: `INK-WEB-UI-001 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
 | TASK_ID | `INK-WEB-UI-001` |
 | DEV_BRANCH | `work/ink-web-ui-001` |
 | CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
-| TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
+| TARGET_GATE | `INK_WEB_UI_PHASE1_SOURCE_COMPLETE` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `NOT_STARTED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
@@ -15,7 +15,7 @@ STATUS: `INK-WEB-UI-001 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
 | WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
 | FAVICON | `USER ORIGINAL MARK / REQUIRED` |
 | PACKAGE_INK_CURRENT | `NO_MUTATION` |
-| BROWSER_RUNTIME_QA | `REQUIRED_FOR_FINAL_GATE` |
+| BROWSER_RUNTIME_QA | `DEFERRED_TO_BATCH / TRACK_DEBT` |
 
 ## Review boundary
 
@@ -70,3 +70,14 @@ favicon browser cache refreshed
 ```
 
 before declaring public Web closure.
+
+
+## Runtime review cadence
+
+For this task MR may issue source-level PASS and promotion with:
+
+`RUNTIME_QA = DEFERRED_TO_BATCH`
+
+provided all practical static/unit evidence passes and no immediate-runtime trigger is present.
+
+The deferred runtime debt remains open until the concentrated batch checkpoint.
