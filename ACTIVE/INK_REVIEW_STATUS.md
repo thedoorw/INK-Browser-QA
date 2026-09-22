@@ -1,52 +1,31 @@
 # INK REVIEW STATUS
 
-STATUS: `CORE-MOD-002 / MR_PASS / CLEAN_PROMOTION_REQUIRED`
+STATUS: `CORE-MOD-003 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
+
+## CORE-MOD-002 closure
+
+```text
+REVIEWED_HEAD = 930569cec19df06986f7fcb13f84c764b89c9fa1
+MR = PASS
+PR = #30 / MERGED
+MAIN = 05bd690f09a9c2cd81fe4a8744f7641805e5cfe2
+GATE = CORE_MOD_002_MODULE_READY
+RUNTIME_QA = DEFERRED_TO_NEXT_INTEGRATION_BATCH
+```
+
+## CORE-MOD-003 review target
 
 | Field | Value |
 |---|---|
-| TASK_ID | `CORE-MOD-002` |
-| DEV_BRANCH | `work/ink-core-semantic-region-002` |
-| REVIEWED_HEAD | `930569cec19df06986f7fcb13f84c764b89c9fa1` |
-| IMPLEMENTATION_EVIDENCE_HEAD | `e095a881bdd65efb3be13a75c04f783e8d341ee9` |
-| TARGET_GATE | `CORE_MOD_002_MODULE_READY` |
-| DEV_HANDOFF | `YES` |
-| MR_REVIEW | `MR_PASS` |
-| UI_MUTATION | `0` |
-| SELECTION_AUTHORITY_CHANGE | `0` |
-| FORMAT_VERSION | `4 / PRESERVED` |
+| TASK_ID | `CORE-MOD-003` |
+| DEV_BRANCH | `work/ink-core-revision-provenance-003` |
+| TARGET_GATE | `CORE_MOD_003_MODULE_READY` |
+| DEV_HANDOFF | `NO` |
+| MR_REVIEW | `NOT_STARTED` |
+| UI_MUTATION | `PROHIBITED` |
+| REVISION_AUTHORITY_CHANGE | `PROHIBITED` |
+| HISTORY_SEMANTICS_CHANGE | `PROHIBITED` |
+| FORMAT_VERSION | `4 / PRESERVE` |
 | RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
 
-## MR findings
-
-Accepted:
-
-- pure/non-mutating semantic-region grounding;
-- existing hierarchy, vector Boolean and Geometry Kernel reused;
-- no second Path, geometry, selection or semantic authority;
-- deterministic region IDs, ordering and graph fingerprint;
-- outer / hole / island grounding;
-- contains / inside / intersects / overlaps geometry evidence;
-- adjacent / crossing / gap / bridge remain evidence-only;
-- unresolved evidence remains explicit rather than guessed;
-- malformed structural geometry fails closed;
-- AI Document Bridge-compatible adapter shape;
-- focused deterministic test coverage authored;
-- isolated deterministic execution + syntax/static scan PASS;
-- branch-native unit command not triggered; no false claim is made;
-- FORMAT_VERSION remains 4.
-
-Runtime remains deferred because this package is an isolated module preparation task.
-
-## Promotion containment
-
-Clean promotion from current main.
-
-Include only:
-
-- `product/source/src/semantic/semantic-region-grounding.js`;
-- `qa/core-mod-002-semantic-region.test.mjs`;
-- `research/INK_CORE_MOD_002_SEMANTIC_REGION_REPORT_v0.1.md`.
-
-Exclude branch-local:
-
-- `ACTIVE/INK_DEV_PROGRESS.md`.
+MR will verify provenance normalization, deterministic lineage, bounded output, unresolved evidence handling, Revision/History authority preservation, non-mutation and adapter-only boundaries.
