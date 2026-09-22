@@ -1,79 +1,51 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: `CORE-MOD-002 / READY_TO_START`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
-| TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
-| DEV_HANDOFF | `NOT_YET` |
+| TASK_ID | `CORE-MOD-002` |
+| TITLE | `Semantic Region Grounding Module v0.1` |
+| BRANCH | `work/ink-core-semantic-region-002` |
+| BRANCH_BASE | `9a5d17c37934f367b1a2e7d4d6ed6f21f55a3ea3` |
+| TASK_STATUS | `AUTHORIZED / READY_TO_START` |
+| CURRENT_PHASE | `PHASE_A / CONTRACT_INVENTORY` |
+| DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
+| TARGET_GATE | `CORE_MOD_002_MODULE_READY` |
+| UI_MUTATION | `0 / PROHIBITED` |
+| SELECTION_AUTHORITY_CHANGE | `0 / PROHIBITED` |
+| FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
-
-## Objective
-
-Close the known Structure-Aware single-Path reconstruction bottleneck:
-
-```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
-```
-
-The authoritative scope and STOP rules are in:
-
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
-
-## Checkpoint rule
-
-At every meaningful checkpoint:
-
-- commit;
-- update this branch-local file;
-- record exact SHA;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
-
-Do not replace the Direct Extraction baseline during DEV execution.
+| RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
 
 ## Planned phases
 
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
+- Phase A — contract inventory
+- Phase B — pure grounding module
+- Phase C — bridge boundary
+- Phase D — deterministic evidence
+
+## Core rule
+
+```text
+ground / classify / relate
+not select / not mutate / not invent geometry
+```
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
+TASK_ID = CORE-MOD-002
+BRANCH = work/ink-core-semantic-region-002
 FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
+GATE = CORE_MOD_002_MODULE_READY
+UI_MUTATION = 0
+SELECTION_AUTHORITY_CHANGE = 0
 FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
