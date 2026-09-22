@@ -9,7 +9,7 @@ STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
 | BRANCH | `work/ink-web-ui-002` |
 | BRANCH_BASE | `d50c59ffb1c015b0776ac1864486869098be9181` |
 | TASK_STATUS | `AUTHORIZED / DEV_IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_D / PARITY_GUARD` |
+| CURRENT_PHASE | `PHASE_E / SOURCE_STATIC_CLOSURE` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE` |
@@ -105,3 +105,15 @@ STOP
 - Node parse PASS; focused helper HTTP/evidence tests PASS (2/2).
 - Gate: `WINDOWS_RUNTIME_PROCESS_HYGIENE_WORKS / SOURCE_ONLY`.
 - Windows visible-window verification is still `DEFERRED_TO_BATCH`.
+
+## Phase D checkpoint
+
+- Previous GitHub checkpoint: `4cc38cfbdbca172d382d0bacd806388a406379fb`.
+- Added strict whole-HTML parity test with a narrow field-by-field delivery allowlist.
+- Required command/region IDs, tool hooks, shared CSS/coordinator/favicon/mark,
+  dynamic dock routes, Creative Workspace installation/default containment checked.
+- Added current workflow trigger + active process safety regression guard.
+- Positive checks and negative mutation cases PASS (6/6 tests).
+- No product source changed; existing Web/Portable labels and FORMAT_VERSION preserved.
+- Gate: `PORTABLE_WEB_SHELL_PARITY_GUARD_WORKS`.
+- Next: final consolidated verification/report; Runtime remains deferred.

@@ -56,4 +56,23 @@ Portable full browser delivery validation is not claimed by these Web harnesses.
 Executed: `node --check qa/runtime/run-ink-runtime-batch.mjs`; helper tests 2/2
 PASS (real local HTTP routes/MIME, traversal denial, malformed/duplicate callback,
 and fail-closed evidence validation). These are non-browser helper tests.
-Phases D–E pending. Browser Runtime: `DEFERRED_TO_BATCH`.
+Phase D: strict parity compares the complete HTML after replacing only the exact
+application-name/title/menu-brand/brand/status labels, the one Web badge, the two
+manifest links and the modular-versus-compat boot tag. Nothing else is removed.
+This protects structure, attributes, command IDs, tool hooks, styles and scripts.
+Explicit assertions also cover required regions/IDs, duplicate IDs, shared dynamic
+dock targets, Layers/History and Reference/Compose/CHAT/Revision, shared CSS,
+favicon/mark, Creative Workspace installation and collapsed containment.
+
+Thirteen asymmetric HTML mutation cases are rejected, including changed hooks,
+missing shared loading, added Web-only style/script, changed region element and
+unauthorized identity. Workflow guard scans all current self-hosted definitions;
+only the exact historical main-only RA import trigger is excepted. Active batch
+source forbids policy/security/process patterns and requires every spawn to be
+shell-free and hidden. Push/PR/schedule/workflow-run and unsafe-launch mutation
+cases are rejected. Guard uses a fail-closed explicit trigger-block convention;
+full YAML syntax is checked separately at closure.
+
+Guard command: `node --test qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs qa/core/tests/unit/runtime-workflow-guard-v0.1.test.mjs`.
+Result: 6/6 PASS. These tests need only Node and do not wake a Windows runner.
+Phase E pending. Browser Runtime: `DEFERRED_TO_BATCH`.
