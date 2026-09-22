@@ -1,0 +1,19 @@
+name: MR INK-CORE-INTEGRATION-001 Node QA
+
+on:
+  push:
+    branches:
+      - mr/ink-core-integration-001-qa
+
+jobs:
+  node-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact QA branch
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run integration deterministic/source QA
+        run: node qa/core-integration-001-grounded-context.test.mjs
