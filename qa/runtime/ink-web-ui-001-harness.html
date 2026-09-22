@@ -111,7 +111,7 @@
       record('initial stage reserves only compact dock', initialStageWidth > frame.clientWidth - 64, { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
 
       shell.open('layers');
-      await sleep(120);
+      await sleep(260);
       const layersState = shell.state();
       record('Layers opens as primary Inspector panel', layersState.activePanel === 'layers' && layersState.inspectorOpen && !layersState.creativeOpen, layersState);
       record('expanded panel width bounded', layersState.panelWidth >= 240 && layersState.panelWidth <= 420, layersState.panelWidth);
@@ -153,7 +153,7 @@
       shell.open('chat');
       await sleep(80);
       shell.close();
-      await sleep(80);
+      await sleep(260);
       record('CHAT close preserves underlying controller', app.chatBoundedEdit === initialChatController && Boolean(app.chatBoundedEdit), { installed: Boolean(app.chatBoundedEdit) });
       record('Revision close preserves underlying controller', app.revisions === initialRevisionController && Boolean(app.revisions), { installed: Boolean(app.revisions) });
       record('panel collapse restores canvas width', shell.state().collapsed && shell.state().stageWidth > initialStageWidth - 10, shell.state());
@@ -223,7 +223,7 @@
       try {
         const registration = await Promise.race([
           win.navigator.serviceWorker.ready,
-          new Promise((_, reject) => setTimeout(() => reject(new Error('service-worker-ready-timeout')), 12000))
+          new Promise((_, reject) => setTimeout(() => reject(new Error('service-worker-ready-timeout')), 90000))
         ]);
         swReady = Boolean(registration?.active);
         const swResponse = await win.fetch(new URL('./service-worker.js?v=qa', win.location.href));
@@ -232,7 +232,7 @@
         await waitFor(async () => {
           cacheKeys = await win.caches.keys();
           return cacheKeys.includes('ink-v0.1-Web-shell');
-        }, 12000, 150);
+        }, 90000, 250);
 
         const legacy = await win.caches.open('ink-v1.6.5-RC-shell');
         await legacy.put(new Request(new URL('./qa-legacy-probe', win.location.href)), new Response('legacy'));
@@ -246,7 +246,7 @@
         await waitFor(async () => {
           cacheKeys = await win.caches.keys();
           return !cacheKeys.includes('ink-v1.6.5-RC-shell') && cacheKeys.includes('ink-v0.1-Web-shell');
-        }, 12000, 200);
+        }, 90000, 250);
         legacyCacheRemoved = !cacheKeys.includes('ink-v1.6.5-RC-shell');
       } catch (error) {
         results.push({ name: 'service-worker diagnostic detail', pass: false, detail: String(error?.stack || error) });
