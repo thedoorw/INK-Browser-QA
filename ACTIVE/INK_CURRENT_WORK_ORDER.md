@@ -1,175 +1,169 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `CORE-MOD-001 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `INK-WEB-UI-004 / UR_AUTHORIZED / DEV_READY`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `CORE-MOD-001` |
-| TITLE | `AI Document Bridge Module v0.1` |
-| ROLE_OWNER | `MR / CORE MODULE LANE` |
-| DEV_WORK_BRANCH | `work/ink-core-ai-bridge-001` |
-| DEV_MODE | `BOUNDED_MODULE_PREPARATION` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / MODULE_ONLY` |
-| UI_MUTATION | `PROHIBITED` |
-| INTEGRATION_TO_UI | `PROHIBITED_THIS_TASK` |
+| CURRENT_TASK_ID | `INK-WEB-UI-004` |
+| TITLE | `Panel Hierarchy / Spacing / CHAT Placement Polish v0.1` |
+| AUTHORITY | `UR_DELEGATED_UI_LANE` |
+| DEV_WORK_BRANCH | `work/ink-web-ui-004` |
+| BASE_MAIN | `9adc2ef09141e4015fc9d4657fb5b3f932a39c41` |
+| DEV_MODE | `BOUNDED_UI_WORKPACK` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / UI_ONLY` |
+| UI_SHELL | `PORTABLE_WEB_SHARED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
-| MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
+| PACKAGE_MUTATION | `PROHIBITED` |
+| CORE_MUTATION | `PROHIBITED` |
+| RUNTIME_QA | `DEFERRED_TO_UI_INTEGRATION_BATCH` |
 
 ## Objective
 
-Prepare a standalone AI Document Bridge module that converts the authoritative INK document into grounded, structured, CHAT-readable context without mutating the document.
-
-Target chain:
+Polish the accepted shell after UI-003 without redesigning the product:
 
 ```text
-INK Document
-→ object / region / relationship grounding
-→ bounded structured context
-→ CHAT-readable payload
+panel hierarchy
++ spacing / alignment
++ CHAT / Reference / Compose / Revision placement
+→ quieter everyday workspace
+→ canvas remains dominant
+→ capability semantics unchanged
 ```
 
-This task does **not** execute CHAT edits and does not wire new UI.
-
-## Existing authority to preserve
-
-Authoritative:
-
-- current Document model;
-- stable IDs;
-- existing semantic model / relationship graph;
-- existing CHAT bounded-edit approval semantics;
-- History;
-- Revision;
-- FORMAT_VERSION = 4.
-
-The bridge is a reader/translator, not a new authority.
+Target is practical 90% normal-use UI, not pixel-perfect polishing.
 
 ## Required reads
 
 1. `README.md`
 2. `AGENTS.md`
-3. this Work Order
+3. this branch-local Work Order
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+6. `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
 7. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
-8. relevant existing modules only:
-   - `product/source/src/ai/chat-runtime.js`
-   - `product/source/src/editor/chat-bounded-edit.js`
-   - `product/source/src/semantic/*`
-   - `product/source/src/document/*`
+8. UI-003 report and current shared shell source
 
-## Scope
+## Required scope
 
-### Phase A — Contract inventory
+### A — Panel hierarchy
 
-Inventory existing document/context/semantic/CHAT contracts.
+Normalize the right-side dock/panel grammar:
 
-Define one INK-owned bridge output contract, including at minimum:
+- one primary panel width at a time;
+- clear grouping between Properties / Layers / History and Reference / Compose / CHAT / Revision;
+- reduce redundant headings/chrome;
+- preserve existing panel IDs, commands and panel availability;
+- collapsed dock remains the quiet default;
+- active-panel/collapse behavior remains predictable.
 
-- document identity;
-- active page / layer identity;
-- selected object IDs;
-- object summaries;
-- geometry summary references where available;
-- semantic roles;
-- relationship edges;
-- revision identity when available;
-- protected properties / editability hints;
-- deterministic context fingerprint.
+Gate: `PANEL_HIERARCHY_POLISHED`
 
-Do not duplicate full document payload unnecessarily.
+### B — Spacing / hierarchy
 
-Gate: `AI_DOCUMENT_BRIDGE_CONTRACT_DEFINED`
+Tighten only high-value visual structure:
 
-### Phase B — Pure bridge module
+- toolbar/context row spacing;
+- panel header/body spacing;
+- dock icon spacing/alignment;
+- canvas edge clearance;
+- common control height/alignment;
+- typography hierarchy where inconsistent.
 
-Implement a pure module, recommended path:
+Do not perform a broad design-system rewrite or Photoshop skin copy.
 
-`product/source/src/ai/document-bridge.js`
+Gate: `UI_SPACING_HIERARCHY_POLISHED`
 
-Required properties:
+### C — CHAT / creative-loop placement
 
-- no DOM dependency;
-- no network dependency;
-- no mutation;
-- deterministic output from equivalent input;
-- plain JSON-compatible INK-owned values;
-- no external engine objects;
-- bounded output size strategy;
-- fail-closed handling of malformed input.
+Refine placement of:
 
-Gate: `AI_DOCUMENT_BRIDGE_PURE_MODULE_WORKS`
+- CHAT;
+- Reference;
+- Compose;
+- Revision.
 
-### Phase C — Adapter boundary
+Rules:
 
-Provide a narrow adapter that existing CHAT/runtime code can call later.
+- these remain right-dock/on-demand surfaces;
+- CHAT capability must not depend on panel visibility;
+- closing a panel must not terminate document/CHAT capability;
+- no separate CHAT-only state;
+- no simulated mouse interaction as command authority;
+- no change to CHAT proposal/approval/edit semantics.
 
-This task may expose functions/imports but must **not** change UI or make the new bridge the active production CHAT context source yet.
+Gate: `CHAT_PLACEMENT_POLISHED`
 
-Required separation:
+### D — Shared Portable / Web closure
 
-```text
-bridge = read / ground / summarize
-CHAT mutation = existing proposal/approval/execution path
-```
+Apply all shared shell changes consistently to Web and Portable.
 
-Gate: `AI_DOCUMENT_BRIDGE_ADAPTER_READY`
+Run/extend deterministic parity/static checks for any new shared UI invariant.
 
-### Phase D — deterministic evidence
+Gate: `UI004_PORTABLE_WEB_PARITY_WORKS`
 
-Add focused unit/deterministic tests covering at minimum:
+## Hard boundaries / STOP
 
-- same document → same fingerprint/output;
-- stable ordering;
-- nested Frame/Group objects;
-- semantic roles and relationship graph;
-- selected subset context;
-- bounded output behavior;
-- malformed input rejection;
-- no source mutation;
-- FORMAT_VERSION remains 4.
+STOP with `INTEGRATION_REQUIRED` if work requires changing:
 
-No browser Runtime required unless DEV discovers a real browser-only dependency.
+- Document authority / schema / migration;
+- History semantics;
+- Revision semantics;
+- Recipe / Geometry;
+- renderer / WebGL / Canvas engine;
+- Core module contracts;
+- CHAT proposal/approval/execution semantics;
+- persistence semantics;
+- product base version;
+- package/certification;
+- another lane's implementation.
 
-Gate: `CORE_MOD_001_MODULE_READY`
+UI-only layout, CSS, shared shell coordination and non-semantic panel presentation are allowed.
 
-## Hard boundaries
+## Acceptance
 
-Do not:
+Before DEV_HANDOFF:
 
-- modify UI;
-- add buttons/panels;
-- change CHAT approval semantics;
-- execute document mutations through the new bridge;
-- change History/Revision semantics;
-- change document schema;
-- change FORMAT_VERSION;
-- introduce remote AI dependency;
-- create a second semantic/document model;
-- integrate CORE-MOD-002 or later modules in this task.
+- panel/dock reachability preserved;
+- Layers / History / CHAT / Reference / Compose / Revision reachable;
+- UI-003 contextual options preserved;
+- canvas-first default preserved;
+- Portable/Web parity PASS;
+- changed JS parses;
+- focused UI/static tests PASS;
+- no Core semantic source changed;
+- `FORMAT_VERSION = 4`;
+- product base version `v0.1`;
+- package mutation = 0;
+- Runtime not claimed unless actually executed.
 
-## Required report
+Final gate:
 
-Exactly one:
+`PANEL_CHAT_UI_POLISH_WORKS`
 
-`research/INK_CORE_MOD_001_AI_DOCUMENT_BRIDGE_REPORT_v0.1.md`
+## Evidence
 
-## Completion
+Create/update exactly one report:
+
+`research/INK_WEB_UI_004_PANEL_CHAT_POLISH_REPORT_v0.1.md`
+
+Include changed-file inventory, before/after hierarchy, command/binding preservation, parity/static checks, deferred Runtime, and any integration finding.
+
+## Completion / STOP
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = CORE-MOD-001
-BRANCH = work/ink-core-ai-bridge-001
-GATE = CORE_MOD_001_MODULE_READY
-UI_MUTATION = 0
-DOCUMENT_SCHEMA_CHANGE = 0
-FORMAT_VERSION = 4
-RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
-NEXT_ACTION = MR_REVIEW_REQUIRED
+TASK_ID = INK-WEB-UI-004
+BRANCH = work/ink-web-ui-004
+GATE = PANEL_CHAT_UI_POLISH_WORKS
+FORMAT_VERSION = 4 / PRESERVED
+PRODUCT_BASE_VERSION = v0.1 / PRESERVED
+PORTABLE_WEB_PARITY = PASS
+PACKAGE_MUTATION = 0
+CORE_MUTATION = 0
+RUNTIME_QA = DEFERRED_TO_UI_INTEGRATION_BATCH
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
