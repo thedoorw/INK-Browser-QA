@@ -301,3 +301,64 @@ USER_DIRECTION = ACCEPTED
 CURRENT_WORK_ORDER = INK-WEB-UI-001
 IMPLEMENTATION = USER_AUTHORIZED
 ```
+
+## Next bounded package — INK-WEB-UI-002
+
+After `INK-WEB-UI-001` closes, the next planned package is:
+
+`INK-WEB-UI-002 — Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1`
+
+Purpose:
+
+The first UI package already implements the shared shell in both Web and Portable entry points, but two operational risks need a dedicated cleanup package:
+
+1. the task-specific Runtime workflow still auto-runs on every push and wakes the user's Windows self-hosted runner;
+2. Portable/Web shell parity currently depends on implementation discipline and needs an explicit regression guard.
+
+Required scope:
+
+### A — Runtime trigger guard
+
+- remove `push` as a trigger for full self-hosted browser Runtime;
+- retain explicit manual/batch dispatch only;
+- do not auto-wake the user's Windows runner for ordinary DEV commits;
+- align the workflow with the project-wide batched Runtime QA policy.
+
+### B — Windows runner process hygiene
+
+- remove any task-specific process-launch pattern that visibly opens extra PowerShell windows;
+- follow `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`;
+- do not change PowerShell execution policy;
+- do not use execution-policy bypass flags;
+- keep local runtime server/browser launch bounded and non-interactive.
+
+### C — Portable/Web parity guard
+
+Add a focused static parity check covering at minimum:
+
+- top-level shell regions;
+- dock entries;
+- tool rail structure;
+- required command-bearing IDs/data attributes;
+- Creative Workspace reachability;
+- Layers / History / CHAT / Reference / Compose / Revision reachability;
+- shared CSS / shell coordinator loading;
+- INK mark usage;
+- favicon presence.
+
+Allowed intentional differences:
+
+```text
+Web      = INK v0.1 · Web
+Portable = INK v0.1 · Portable
+
+delivery-specific manifest / cache / adapter behavior
+```
+
+A Web-only shell mutation that is not explicitly delivery-specific must fail the parity guard.
+
+### D — Closure
+
+Source/static checks required. Full browser Runtime remains part of the accumulated Runtime batch unless an immediate-runtime trigger is discovered.
+
+This package must not expand into contextual-control redesign or new product functionality.
