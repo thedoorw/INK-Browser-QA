@@ -632,7 +632,7 @@ export class ChatSessionManager {
       this.auditBridge.recordTransmission(continuationPreview, transmissionDecision);
       finalResponse = await client.createPlan(continuationRequest, { onToken });
       const secondRoundCalls = conversationToolCalls(finalResponse);
-      finalToolCalls = [...initialToolCalls, ...secondRoundCalls];
+      finalToolCalls = initialToolCalls;
       const secondRoundEvidence = secondRoundCalls.map(call => isGroundedToolCall(call) ? continuationLimitEvidence(call) : surfacedToolIntent(call));
       toolResults.push(...secondRoundEvidence);
       continuation = {
@@ -660,7 +660,9 @@ export class ChatSessionManager {
 
     let repaired;
     if (groundedCalls.length) {
-      repaired = { plan: this.validator.validate(finalResponse.content), attempts: 0 };
+      repaired = await this.validator.repair(finalResponse.content, async () => {
+        throw new RuntimeError('TOOL_CONTINUATION_LIMIT_REACHED', 'Plan repair would exceed the single automatic grounded continuation round.');
+      });
     } else {
       repaired = await this.validator.repair(finalResponse.content, async repair => { const repairRequest = new PlanRequest({ sessionId, prompt: `Repair this Plan. Errors: ${repair.errorSummary.join(', ')}. Return JSON only.`, context, transmissionDecision, metadata: { invalidOutput: repair.invalidOutput, tools: [] } }); const repairedResponse = await client.createPlan(repairRequest, { onToken }); return repairedResponse.content; });
     }
@@ -715,7 +717,7 @@ export class ChatSessionManager {
       this.auditBridge.recordTransmission(continuationPreview, transmissionDecision);
       finalResponse = await client.createMessage(continuationRequest, { onToken });
       const secondRoundCalls = conversationToolCalls(finalResponse);
-      finalToolCalls = [...initialToolCalls, ...secondRoundCalls];
+      finalToolCalls = initialToolCalls;
       const secondRoundEvidence = secondRoundCalls.map(call => isGroundedToolCall(call) ? continuationLimitEvidence(call) : surfacedToolIntent(call));
       toolResults.push(...secondRoundEvidence);
       continuation = {
