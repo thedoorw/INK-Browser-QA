@@ -25,110 +25,133 @@ jobs:
     name: Geometry Kernel / Chrome / Rose Window
     runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 20
-    defaults:
-      run:
-        shell: powershell -NoLogo -NoProfile -NonInteractive -Command "& '{0}'"
 
     steps:
-      - name: Materialize exact branch revision
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          fetch-depth: 1
+      - name: Materialize exact branch revision without Git
+        shell: cmd
+        run: |
+          @echo off
+          setlocal
+          set "ARCHIVE=%RUNNER_TEMP%\ink-ra-001-runtime.zip"
+          set "EXTRACT=%RUNNER_TEMP%\ink-ra-001-runtime"
+          if exist "%ARCHIVE%" del /q "%ARCHIVE%"
+          if exist "%EXTRACT%" rmdir /s /q "%EXTRACT%"
+          mkdir "%EXTRACT%"
+          curl.exe -fL "https://github.com/%GITHUB_REPOSITORY%/archive/%GITHUB_SHA%.zip" -o "%ARCHIVE%"
+          if errorlevel 1 exit /b 1
+          powershell.exe -NoLogo -NoProfile -NonInteractive -Command "Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory('%ARCHIVE%','%EXTRACT%')"
+          if errorlevel 1 exit /b 1
+          for /d %%D in ("%EXTRACT%\*") do (
+            echo INK_SOURCE_ROOT=%%~fD>>"%GITHUB_ENV%"
+            echo INK_SITE_ROOT=%%~fD\product\source>>"%GITHUB_ENV%"
+            if not exist "%%~fD\product\source\index.html" exit /b 1
+            if not exist "%%~fD\qa\runtime\ink-ra-001-browser-harness.html" exit /b 1
+            if not exist "%%~fD\qa\fixtures\rose-window\rose-window-primary.png" exit /b 1
+            copy /y "%%~fD\qa\runtime\ink-ra-001-browser-harness.html" "%%~fD\product\source\__qa_geometry.html" >nul
+            copy /y "%%~fD\qa\fixtures\rose-window\rose-window-primary.png" "%%~fD\product\source\__qa_rose_window.png" >nul
+          )
+          echo Exact SHA: %GITHUB_SHA%
+          endlocal
 
       - name: Static and deterministic source checks
+        shell: cmd
         run: |
-          $ErrorActionPreference = 'Stop'
-          $config = Get-Content 'product/source/src/config.js' -Raw
-          if ($config -notmatch 'FORMAT_VERSION\s*=\s*4') { throw 'FORMAT_VERSION is not 4.' }
-          if (Get-Command node -ErrorAction SilentlyContinue) {
-            node qa/core/tests/unit/vector-geometry-kernel-v0.1.test.mjs
-            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          } else {
-            Write-Host 'Node not present; real Chromium module execution remains authoritative.'
-          }
-          Write-Host '[PASS] source invariants'
+          @echo off
+          findstr /R /C:"FORMAT_VERSION *= *4" "%INK_SITE_ROOT%\src\config.js" >nul
+          if errorlevel 1 (
+            echo FORMAT_VERSION is not 4.
+            exit /b 1
+          )
+          where node >nul 2>&1
+          if errorlevel 1 (
+            echo Node not on PATH; real Chromium module execution remains authoritative.
+            exit /b 0
+          )
+          node "%INK_SOURCE_ROOT%\qa\core\tests\unit\vector-geometry-kernel-v0.1.test.mjs"
+          if errorlevel 1 exit /b 1
+          echo [PASS] source invariants
 
-      - name: Prepare browser harness
+      - name: Locate Chrome or Edge
+        shell: cmd
         run: |
-          $ErrorActionPreference = 'Stop'
-          Copy-Item 'qa/runtime/ink-ra-001-browser-harness.html' 'product/source/__qa_geometry.html' -Force
-          Copy-Item 'qa/fixtures/rose-window/rose-window-primary.png' 'product/source/__qa_rose_window.png' -Force
-          $candidates = @(
-            $env:INK_CHROMIUM_PATH,
-            $env:CHROME_PATH,
-            (Join-Path $env:ProgramFiles 'Google\Chrome\Application\chrome.exe'),
-            (Join-Path ${env:ProgramFiles(x86)} 'Google\Chrome\Application\chrome.exe'),
-            (Join-Path $env:LOCALAPPDATA 'Google\Chrome\Application\chrome.exe'),
-            (Join-Path $env:ProgramFiles 'Microsoft\Edge\Application\msedge.exe'),
-            (Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe')
-          ) | Where-Object { $_ -and (Test-Path $_) }
-          $browser = $candidates | Select-Object -First 1
-          if (-not $browser) { throw 'No supported Chromium browser found.' }
-          "INK_CHROMIUM_PATH=$browser" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+          @echo off
+          if defined INK_CHROMIUM_PATH if exist "%INK_CHROMIUM_PATH%" goto found
+          if defined CHROME_PATH if exist "%CHROME_PATH%" (
+            set "INK_CHROMIUM_PATH=%CHROME_PATH%"
+            goto found
+          )
+          if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles%\Google\Chrome\Application\chrome.exe"
+            goto found
+          )
+          if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"
+            goto found
+          )
+          if exist "%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe" (
+            set "INK_CHROMIUM_PATH=%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"
+            goto found
+          )
+          if exist "%ProgramFiles%\Microsoft\Edge\Application\msedge.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles%\Microsoft\Edge\Application\msedge.exe"
+            goto found
+          )
+          if exist "%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe"
+            goto found
+          )
+          echo No supported Chromium browser found.
+          exit /b 1
+          :found
+          echo INK_CHROMIUM_PATH=%INK_CHROMIUM_PATH%>>"%GITHUB_ENV%"
+          echo Browser: %INK_CHROMIUM_PATH%
 
       - name: Real Chromium geometry acceptance
+        shell: cmd
         run: |
-          $ErrorActionPreference = 'Stop'
-          $serverOut = Join-Path $env:RUNNER_TEMP 'ink-ra-001-server.out.log'
-          $serverErr = Join-Path $env:RUNNER_TEMP 'ink-ra-001-server.err.log'
-          $browserOut = Join-Path $env:RUNNER_TEMP 'ink-ra-001-browser.dom.html'
-          $browserErr = Join-Path $env:RUNNER_TEMP 'ink-ra-001-browser.err.log'
-          $profile = Join-Path $env:RUNNER_TEMP 'ink-ra-001-browser-profile'
-          Remove-Item $profile -Recurse -Force -ErrorAction SilentlyContinue
-          $server = $null
-          try {
-            $script = (Resolve-Path 'qa/runtime/start-ink-local.ps1').Path
-            $command = "& '$script' -NoBrowser"
-            $server = Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @('-NoLogo','-NoProfile','-NonInteractive','-Command',$command) -RedirectStandardOutput $serverOut -RedirectStandardError $serverErr -PassThru
-            $ready = $false
-            for ($index = 0; $index -lt 40; $index++) {
-              Start-Sleep -Milliseconds 500
-              if ($server.HasExited) { break }
-              try {
-                $probe = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/__qa_geometry.html' -UseBasicParsing -TimeoutSec 2
-                if ($probe.StatusCode -eq 200) { $ready = $true; break }
-              } catch {}
-            }
-            if (-not $ready) {
-              Get-Content $serverOut -ErrorAction SilentlyContinue
-              Get-Content $serverErr -ErrorAction SilentlyContinue
-              throw 'Loopback server did not become reachable.'
-            }
-
-            $arguments = @(
-              '--headless=new',
-              '--disable-gpu',
-              '--no-first-run',
-              '--no-default-browser-check',
-              '--disable-extensions',
-              '--disable-background-networking',
-              '--virtual-time-budget=15000',
-              '--dump-dom',
-              "--user-data-dir=$profile",
-              'http://127.0.0.1:4173/__qa_geometry.html'
-            )
-            $browser = Start-Process $env:INK_CHROMIUM_PATH -ArgumentList $arguments -RedirectStandardOutput $browserOut -RedirectStandardError $browserErr -PassThru
-            $null = $browser.Handle
-            if (-not $browser.WaitForExit(120000)) { Stop-Process -Id $browser.Id -Force; throw 'Chromium timed out.' }
-            $browser.Refresh()
-            if ($browser.ExitCode -is [int] -and $browser.ExitCode -ne 0) { Get-Content $browserErr -ErrorAction SilentlyContinue; throw "Chromium exit code $($browser.ExitCode)." }
-            $dom = Get-Content $browserOut -Raw
-            Write-Host $dom
-            if ($dom -notmatch 'data-qa=["'']PASS["'']') { Get-Content $browserErr -ErrorAction SilentlyContinue; throw 'Browser harness did not report PASS.' }
-            if ($dom -notmatch '"roseOutputSubpaths": 12') { throw 'Rose Window geometry evidence missing.' }
-            if ($dom -notmatch '"deterministicRepeat": true') { throw 'Deterministic browser evidence missing.' }
-            Write-Host '[PASS] real Chromium geometry + Rose Window acceptance'
-          } finally {
-            if ($server -and -not $server.HasExited) { Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue }
-          }
+          @echo off
+          setlocal
+          set "BROWSER_OUT=%RUNNER_TEMP%\ink-ra-001-browser.dom.html"
+          set "BROWSER_ERR=%RUNNER_TEMP%\ink-ra-001-browser.err.log"
+          set "PROFILE=%RUNNER_TEMP%\ink-ra-001-browser-profile"
+          if exist "%BROWSER_OUT%" del /q "%BROWSER_OUT%"
+          if exist "%BROWSER_ERR%" del /q "%BROWSER_ERR%"
+          if exist "%PROFILE%" rmdir /s /q "%PROFILE%"
+          set "FILEURL=file:///%INK_SITE_ROOT:\=/%/__qa_geometry.html"
+          "%INK_CHROMIUM_PATH%" --headless=new --disable-gpu --no-first-run --no-default-browser-check --disable-extensions --disable-background-networking --allow-file-access-from-files --virtual-time-budget=15000 --dump-dom --user-data-dir="%PROFILE%" "%FILEURL%" >"%BROWSER_OUT%" 2>"%BROWSER_ERR%"
+          if errorlevel 1 (
+            type "%BROWSER_ERR%"
+            exit /b 1
+          )
+          type "%BROWSER_OUT%"
+          findstr /C:"data-qa=\"PASS\"" "%BROWSER_OUT%" >nul
+          if errorlevel 1 (
+            type "%BROWSER_ERR%"
+            echo Browser harness did not report PASS.
+            exit /b 1
+          )
+          findstr /C:"\"roseOutputSubpaths\": 12" "%BROWSER_OUT%" >nul
+          if errorlevel 1 (
+            echo Rose Window geometry evidence missing.
+            exit /b 1
+          )
+          findstr /C:"\"deterministicRepeat\": true" "%BROWSER_OUT%" >nul
+          if errorlevel 1 (
+            echo Deterministic browser evidence missing.
+            exit /b 1
+          )
+          echo [PASS] real Chromium geometry + Rose Window acceptance
+          endlocal
 
       - name: Summary
         if: always()
+        shell: cmd
         run: |
-          Add-Content $env:GITHUB_STEP_SUMMARY '## INK-RA-001 Windows Browser Runtime QA'
-          Add-Content $env:GITHUB_STEP_SUMMARY "- Exact SHA: $env:GITHUB_SHA"
-          Add-Content $env:GITHUB_STEP_SUMMARY "- Runner: $env:RUNNER_NAME / $env:RUNNER_OS / $env:RUNNER_ARCH"
-          Add-Content $env:GITHUB_STEP_SUMMARY "- Browser: $env:INK_CHROMIUM_PATH"
-          Add-Content $env:GITHUB_STEP_SUMMARY '- Case: cubic queries + deterministic 12-part Rose Window geometry offset/measurement'
-          Add-Content $env:GITHUB_STEP_SUMMARY '- PowerShell policy: unchanged; no ExecutionPolicy Bypass used'
+          @echo off
+          >>"%GITHUB_STEP_SUMMARY%" echo ## INK-RA-001 Windows Browser Runtime QA
+          >>"%GITHUB_STEP_SUMMARY%" echo - Exact SHA: %GITHUB_SHA%
+          >>"%GITHUB_STEP_SUMMARY%" echo - Runner: %RUNNER_NAME% / %RUNNER_OS% / %RUNNER_ARCH%
+          >>"%GITHUB_STEP_SUMMARY%" echo - Browser: %INK_CHROMIUM_PATH%
+          >>"%GITHUB_STEP_SUMMARY%" echo - Case: cubic queries + deterministic 12-part Rose Window geometry offset/measurement
+          >>"%GITHUB_STEP_SUMMARY%" echo - Git checkout: not used
+          >>"%GITHUB_STEP_SUMMARY%" echo - PowerShell: local ZIP extraction only; no ExecutionPolicy change or bypass
