@@ -38,12 +38,12 @@ function parity(webHtml, portableHtml) {
 
 test('entire Portable/Web shell matches after exact delivery-only normalization', () => {
   parity(web, portable);
-  const requiredIds = ['app', 'stageWrap', 'stage', 'pagesToggle', 'pagesList', 'drawToolButton', 'drawToolUse', 'drawToolLabel', 'inspector', 'inspectorToggle', 'layersList', 'historyList', 'historyLimit', 'docTitle', 'projectInput', 'imageInput', 'fullscreenToggle'];
+  const requiredIds = ['app', 'stageWrap', 'stage', 'pagesToggle', 'pagesList', 'drawToolButton', 'drawToolUse', 'drawToolLabel', 'contextualOptions', 'contextualToolUse', 'contextualToolName', 'contextualControlHost', 'contextualAdvancedBtn', 'quickControls', 'quickColorInput', 'quickSizeInput', 'quickOpacityInput', 'selectionBar', 'inspector', 'inspectorToggle', 'layersList', 'historyList', 'historyLimit', 'docTitle', 'projectInput', 'imageInput', 'fullscreenToggle'];
   for (const html of [web, portable]) {
     const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
     assert.equal(new Set(ids).size, ids.length, 'Command/region IDs must be unique');
     for (const id of requiredIds) assert.ok(ids.includes(id), `Missing required hook: ${id}`);
-    for (const region of ['menu-strip', 'topbar', 'tool-rail', 'stage-wrap', 'inspector', 'statusbar', 'mobile-dock']) assert.match(html, new RegExp(`class="[^"\\n]*\\b${region}\\b`));
+    for (const region of ['menu-strip', 'topbar', 'contextual-options', 'tool-rail', 'stage-wrap', 'inspector', 'statusbar', 'mobile-dock']) assert.match(html, new RegExp(`class="[^"\\n]*\\b${region}\\b`));
     for (const tool of ['pen', 'eraser', 'select', 'lasso', 'shape', 'text', 'image', 'pan']) assert.ok(html.includes(`data-tool="${tool}"`));
     for (const tab of ['layers', 'history']) {
       assert.ok(html.includes(`data-tab="${tab}"`));
@@ -75,6 +75,28 @@ test('shared dynamic dock and Creative Workspace remain reachable and contained'
   assert.match(css, /\.brand-mark\s*\{[^}]*url\("assets\/ink-mark\.svg"\)/);
   assert.ok(existsSync(path.join(root, 'product/source/assets/ink-mark.svg')));
   assert.match(read('src/config.js'), /FORMAT_VERSION\s*=\s*4\b/);
+});
+
+test('shared contextual-options contract preserves one command surface across deliveries', () => {
+  for (const html of [web, portable]) {
+    for (const id of ['contextualOptions', 'contextualControlHost', 'contextualAdvancedBtn', 'quickControls', 'selectionBar', 'eraserOptions', 'shapeOptions', 'textOptions']) {
+      assert.equal(html.split(`id="${id}"`).length - 1, 1, `Expected exactly one contextual hook: ${id}`);
+    }
+    for (const control of ['color', 'size', 'opacity']) assert.ok(html.includes(`data-context-control="${control}"`));
+    for (const action of ['duplicate', 'group', 'front', 'alignCenter', 'delete']) assert.ok(html.includes(`data-selection-action="${action}"`));
+    assert.match(html, /id="contextualOptions"[^>]+data-context-mode="draw"[^>]+data-context-tool="pen"/);
+  }
+
+  const coordinator = read('web-shell.js');
+  assert.match(coordinator, /CONTEXT_CONTROL_IDS = Object\.freeze\(\['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar'\]\)/);
+  assert.match(coordinator, /host\.append\(node\)/);
+  assert.match(coordinator, /descriptor\.mode === 'selection'/);
+  assert.match(coordinator, /app\.toggleInspector\?\.\(true, app\.selection\?\.length \? 'object' : 'brush'\)/);
+  assert.match(coordinator, /\['draw', 'eraser', 'shape', 'text', 'selection'\]/);
+
+  const css = read('styles.css');
+  for (const mode of ['draw', 'eraser', 'shape', 'text', 'selection']) assert.match(css, new RegExp(`data-context-mode="${mode}"`));
+  assert.match(css, /\.stage-wrap\{top:calc\(var\(--topbar-h\) \+ var\(--contextual-h\)\)\}/);
 });
 
 test('Web-only mutations fail: structure, command hooks, tool hooks, styles, coordinator and brand', () => {
