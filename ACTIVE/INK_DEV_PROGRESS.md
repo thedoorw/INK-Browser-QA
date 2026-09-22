@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `IN_PROGRESS / PHASE_B_E_COMPLETE`
+STATUS: `DEV_HANDOFF / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,9 +8,9 @@ STATUS: `IN_PROGRESS / PHASE_B_E_COMPLETE`
 | TITLE | `Contextual Controls / Top Options v0.1` |
 | BRANCH | `work/ink-web-ui-003` |
 | BASE_MAIN | `73b54efe6d7db1f9fd15531603056c82e4c9de1e` |
-| TASK_STATUS | `IN_PROGRESS / PHASE_B_E_COMPLETE` |
-| DEV_HANDOFF | `NOT_YET` |
-| UR_REVIEW | `PENDING_AFTER_HANDOFF` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| DEV_HANDOFF | `YES` |
+| UR_REVIEW | `REQUIRED` |
 | TARGET_GATE | `CONTEXTUAL_TOOL_OPTIONS_WORK` |
 | UI_SHELL | `PORTABLE_WEB_SHARED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
@@ -128,20 +128,54 @@ Core semantic modules = unchanged
 Runtime: not executed; still `DEFERRED_TO_UI_INTEGRATION_BATCH`.
 Integration finding: none.
 
+### Phases F–G — parity / static closure / evidence
+
+Source + evidence fingerprint before terminal progress-only handoff commit:
+
+`08bfebb686047682de1c27f7baa0e6859483516b`
+
+Checks:
+
+- shared Web/Portable delivery-only normalized parity: PASS;
+- contextual command IDs / hooks unique and present in both shells: PASS;
+- `web-shell.js` parse: PASS;
+- checked parity test source parse: PASS;
+- checked contextual-options test source parse: PASS;
+- binding matrix against unchanged `src/ink.js`: PASS;
+- existing parity mutation-rejection contract: PASS;
+- `FORMAT_VERSION = 4`: PASS;
+- product base identity `v0.1`: PASS;
+- forbidden Core semantic mutation: none;
+- package mutation: none.
+
+Evidence report:
+
+`research/INK_WEB_UI_003_CONTEXTUAL_CONTROLS_REPORT_v0.1.md`
+
+Runtime browser QA was not executed and remains:
+
+`DEFERRED_TO_UI_INTEGRATION_BATCH`
+
+No `INTEGRATION_REQUIRED` condition was encountered.
+
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-WEB-UI-003
 BRANCH = work/ink-web-ui-003
-FINAL_HEAD = <exact SHA>
+FINAL_SOURCE_HEAD = 08bfebb686047682de1c27f7baa0e6859483516b
+TERMINAL_PROGRESS_COMMIT = THIS_HANDOFF_UPDATE
 GATE = CONTEXTUAL_TOOL_OPTIONS_WORK
 PORTABLE_WEB_PARITY = PASS
 FORMAT_VERSION = 4
 PRODUCT_BASE_VERSION = v0.1
 PACKAGE_MUTATION = 0
 CORE_MUTATION = 0
+INTEGRATION_REQUIRED = NO
 RUNTIME_QA = DEFERRED_TO_UI_INTEGRATION_BATCH
 NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
+
+UR must pin the resulting branch HEAD after this terminal progress-only commit before review.
