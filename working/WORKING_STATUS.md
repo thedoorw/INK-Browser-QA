@@ -1884,3 +1884,34 @@ REVISION_PROVENANCE
 VISUAL_COMPARE_VARIANT
 PARAMETRIC_CREATIVE_STRUCTURE
 ```
+
+
+## INK-CORE-INTEGRATION-001 closure
+
+```text
+TASK = INK-CORE-INTEGRATION-001
+TITLE = Grounded Creative Intelligence Context Integration v0.1
+DEV_HANDOFF = a1ab28164e2292e22db89819a311b1459bf37758
+SOURCE_QA = PASS / 35725230617
+PROMOTION_PR = #34 / MERGED
+PROMOTED_MAIN = b7d013da3a27d0fea0922d83e799c5c51652e53f
+WINDOWS_RUNTIME = PASS / 35725433978
+RUNTIME_TESTED_SHA = b7d013da3a27d0fea0922d83e799c5c51652e53f
+UI_SUITE = PASS
+CREATIVE_SUITE = PASS
+GEOMETRY_SUITE = PASS
+FORMAT_VERSION = 4
+```
+
+The Core Integration Queue prepared by CORE-MOD-001 through CORE-MOD-005 has been consumed into the grounded CHAT context path.
+
+Compatible deferred Runtime debt is cleared:
+
+```text
+CORE-MOD-002 = CLEARED
+CORE-MOD-003 = CLEARED
+CORE-MOD-004 = CLEARED
+CORE-MOD-005 = CLEARED
+```
+
+Next MR priority is no longer another pure Core preparation module. The next bounded integration should make the new grounded intelligence directly usable by CHAT through existing published/read-only collaboration semantics, without creating a second execution authority or broad UI redesign.
