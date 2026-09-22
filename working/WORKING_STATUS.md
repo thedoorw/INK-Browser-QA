@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `INK-WEB-UI-001 / MR_PASS / CLEAN_PROMOTION`
 
 | Field | Value |
 |---|---|
@@ -1399,3 +1399,21 @@ Planned bounded scope:
 ```
 
 Do not open UI-002 as Current Work Order until UI-001 reaches DEV_HANDOFF and MR disposition.
+
+
+## INK-WEB-UI-001 MR pass
+
+```text
+REVIEWED_HANDOFF_HEAD = 8b8a59e08e4c31a1f317b5b4c57acf05cf160cc5
+TESTED_PRODUCT_SHA = 72ad6869f02bce293ae923755db0a154c9bff98b
+RUNTIME_RUN = 35679835724 / SUCCESS
+BROWSER_CHECKS = 40 / 40 PASS
+MR = PASS
+PROMOTION = CLEAN / REQUIRED
+```
+
+Promotion excludes the task-local auto-push Runtime workflow and branch-local ACTIVE progress/work-order files.
+
+Next planned bounded package remains:
+
+`INK-WEB-UI-002 — Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1`
