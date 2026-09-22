@@ -127,7 +127,45 @@ Gate: `COLLAPSIBLE_PANEL_DOCK_WORKS = PASS / SOURCE_STATIC`.
 
 ## Phase D — identity / mark / favicon / cache
 
-Pending.
+Implemented through code HEAD `eb5ba73d4157329b6a658b9a0a3f64e7ad7f650f`.
+
+Identity:
+
+- modular Web shell: `INK v0.1 · Web`;
+- standalone/portable shell: `INK v0.1 · Portable`;
+- active modular `src/config.js`: `INK_VERSION = '0.1'`, `RELEASE_NAME = 'INK v0.1 · Web'`;
+- `FORMAT_VERSION = 4` preserved.
+
+Corrected active shell locations:
+
+- document titles;
+- application-name metadata;
+- compact menu identity / ARIA;
+- topbar brand identity / ARIA;
+- status-bar version badge;
+- active studio-core visible label;
+- Web manifest;
+- added Portable manifest.
+
+Brand / favicon:
+
+- authoritative source remains `reference/brand/INK_MARK_SOURCE_W-300.jpg`;
+- product asset added at `product/source/assets/ink-mark.svg`;
+- the SVG is a technical wrapper embedding the supplied JPG bytes, not a redraw or geometric reinterpretation;
+- desktop menu mark and mobile brand mark use this asset;
+- both HTML entry points contain favicon links;
+- both manifests register the mark as an `image/svg+xml`, `sizes=any` icon.
+
+Cache / update identity:
+
+- service-worker `RELEASE_VERSION` changed from historical `1.6.5-RC` to `0.1-Web`;
+- new shell asset, mark asset and Portable manifest are included in `APP_SHELL`;
+- HTML references CSS/runtime/shell with `?v=0.1` cache-busting URLs, allowing a previously controlled browser to request the new shell assets instead of requiring manual storage deletion;
+- activation still uses the existing update-manager / `INK_SKIP_WAITING` contract and existing cache cleanup logic.
+
+Static identity/cache check passed for JSON syntax, service-worker syntax, Web/Portable display strings, favicon links, manifest icon metadata, cache inventory, versioned shell URLs, active modular v0.1 identity, absence of historical active shell identities, and `FORMAT_VERSION = 4`.
+
+Gate: `WEB_V0_1_IDENTITY_AND_FAVICON_WORK = PASS / SOURCE_STATIC`.
 
 ## Phase E — checks and browser runtime evidence
 
