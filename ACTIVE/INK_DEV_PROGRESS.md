@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `CORE-MOD-003 / IN_PROGRESS`
+STATUS: `CORE-MOD-003 / DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
@@ -8,55 +8,45 @@ STATUS: `CORE-MOD-003 / IN_PROGRESS`
 | TITLE | `Revision Provenance Module v0.1` |
 | BRANCH | `work/ink-core-revision-provenance-003` |
 | BRANCH_BASE | `c0adc842c1d1b52c8cdf74303e087704b0047caa` |
-| TASK_STATUS | `AUTHORIZED / IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_B / PURE_PROVENANCE_GRAPH` |
-| DEV_HANDOFF | `NO` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `CORE_MOD_003_MODULE_READY` |
-| UI_MUTATION | `0 / PROHIBITED` |
-| REVISION_AUTHORITY_CHANGE | `0 / PROHIBITED` |
-| HISTORY_SEMANTICS_CHANGE | `0 / PROHIBITED` |
-| FORMAT_VERSION | `4 / PRESERVE` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| CURRENT_PHASE | `COMPLETE / STOP` |
+| DEV_HANDOFF | `YES` |
+| MR_REVIEW | `REQUIRED` |
+| TARGET_GATE | `CORE_MOD_003_MODULE_READY / PASS` |
+| UI_MUTATION | `0 / VERIFIED` |
+| REVISION_AUTHORITY_CHANGE | `0 / VERIFIED` |
+| HISTORY_SEMANTICS_CHANGE | `0 / VERIFIED` |
+| FORMAT_VERSION | `4 / PRESERVED` |
+| PACKAGE_MUTATION | `0 / VERIFIED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
 | RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
+| IMPLEMENTATION_EVIDENCE_HEAD | `c7e53562125afc0475ae4e304a4df207b1892c8e` |
 
 ## Phase A — provenance contract inventory
 
 `PASS / REVISION_PROVENANCE_CONTRACT_DEFINED`
 
-Authoritative evidence inventoried:
+Normalized evidence only from existing authorities:
 
-- file envelope: `fileId / revision / revisionId / integrity.fingerprint / savedAt`;
-- Revision record: `revisionId / parentRevisionId / baseRevisionId / documentFingerprint / createdAt`;
-- Revision comparison: before/after document fingerprints + added/changed/removed object IDs;
-- History: label / forward+inverse patches / objectIds (read-only evidence only; no History rewrite);
-- object metadata: `metadata.source`, `metadata.extraction`;
-- semantic provenance: `sourceRecipeId / sourceStepId`;
-- Recipe execution: `recipeId / executionId / states[].step/id/op/targetId / documentStateBefore / result.documentHash / replayDiff`;
-- CHAT bounded edit: `proposalId / taskId / operation / revisionId / stateFingerprint / target stateFingerprint / result revision fingerprints`;
-- AI plan: `planId / recipeDraft.recipeId / orderedSteps[].stepId`;
-- semantic-region graph: source Object ref + extraction/source/Recipe provenance.
+- file envelope;
+- Revision record/comparison;
+- History entries as read-only evidence;
+- object source/extraction metadata;
+- Recipe / Step / execution evidence;
+- CHAT plan/proposal/execution evidence;
+- Semantic Region provenance.
 
-INK-owned normalized event contract:
+No second Revision or History authority introduced.
 
-```text
-deterministic eventId (timestamp excluded)
-kind
-source entity
-target entity
-documentId
-revisionId when available
-parent/source event links when resolvable
-operation / recipeId / stepId / proposalId / planId / executionId
-objectIds
-before / after fingerprints when available
-timestamp = evidence only
-status + unresolved reasons
-evidence references
-```
+## Phase B — pure provenance graph
 
-Graph contract:
+`PASS / REVISION_PROVENANCE_GRAPH_WORKS`
+
+Implemented:
+
+`product/source/src/provenance/provenance-graph.js`
+
+Output:
 
 ```text
 entities[]
@@ -68,28 +58,136 @@ bounds
 fingerprint
 ```
 
-Rules:
-
-- existing Revision / History remain authoritative;
-- normalize explicit evidence only;
-- no inferred/guessed lineage;
-- missing internal links stay explicit under unresolved;
-- duplicate equivalent evidence deduplicates;
-- conflicting evidence keys remain explicit;
-- deterministic identity/fingerprint excludes timestamp evidence.
-
-## Planned phases
-
-- Phase A — provenance contract inventory: `PASS`
-- Phase B — pure provenance graph: `IN_PROGRESS`
-- Phase C — read-only adapters: `PENDING`
-- Phase D — deterministic evidence: `PENDING`
-
-## Core rule
+Properties:
 
 ```text
-normalize / trace / explain
-not mutate / not restore / not replace Revision or History
+pure / non-mutating
+JSON-compatible
+no DOM dependency
+no network dependency
+deterministic IDs/order/fingerprint
+timestamp excluded from deterministic identity
+explicit unresolved links
+explicit conflict preservation
+bounded output
+FORMAT_VERSION = 4
+```
+
+## Phase C — read-only adapters
+
+`PASS / REVISION_PROVENANCE_ADAPTER_READY`
+
+Providers remain optional and read-only:
+
+```text
+getDocument()
+getRevisionRecords()
+getRevisionComparisons()
+getFileEnvelopes()
+getHistoryEntries()
+getRecipeEvidence()
+getChatEvidence()
+getSemanticRegionGraphs()
+```
+
+`readBridgeContext()` emits bounded AI Document Bridge-compatible provenance context.
+
+No active product wiring in this Work Order.
+
+## Phase D — deterministic evidence
+
+`PASS / CORE_MOD_003_MODULE_READY`
+
+Repository test:
+
+`qa/core-mod-003-revision-provenance.test.mjs`
+
+Coverage:
+
+- reference → extraction → object;
+- Recipe / Step lineage;
+- CHAT plan / proposal / execution;
+- Revision parent/base;
+- Revision added / changed / removed;
+- reordered evidence determinism;
+- unresolved/missing links;
+- duplicate/conflicting evidence;
+- bounded output;
+- no source mutation;
+- existing Revision inspection;
+- Semantic Region provenance;
+- Bridge-compatible context;
+- timestamp-independent identity/fingerprint;
+- FORMAT_VERSION 4.
+
+Executed isolated exact-source harness:
+
+```text
+PRIMARY:
+  no mutation = PASS
+  reorder determinism = PASS
+  extraction = PASS
+  Recipe = PASS
+  CHAT = PASS
+  Revision lineage = PASS
+  added/changed/removed = PASS
+  FORMAT_VERSION = PASS
+  unsupported version reject = PASS
+
+SECONDARY:
+  unresolved = PASS
+  missing source = PASS
+  conflict preservation = PASS
+  bounds = PASS
+  timestamp-independent identity = PASS
+  timestamp-independent graph fingerprint = PASS
+```
+
+Static dependency scan:
+
+```text
+DOM/browser-global dependencies = NONE
+network dependencies = NONE
+```
+
+Branch-native `node qa/core-mod-003-revision-provenance.test.mjs` was not triggered by an available source-only workflow in this session.
+
+Required report:
+
+`research/INK_CORE_MOD_003_REVISION_PROVENANCE_REPORT_v0.1.md`
+
+## Checkpoints
+
+```text
+f06a2f5c2e88e44136f90f42e5f7c7ba2e0ae35c
+  provenance contract inventory
+
+deb374da345c4ccbed4eeb21f5c5f9b8daeb79df
+  pure provenance graph module
+
+abd72f800834717ca97e9c4c228312023c6af72a
+  deterministic test coverage
+
+c7e53562125afc0475ae4e304a4df207b1892c8e
+  required implementation report / evidence head
+```
+
+## Explicit non-changes
+
+```text
+UI_MUTATION = 0
+REVISION_AUTHORITY_CHANGE = 0
+REVISION_SCHEMA_CHANGE = 0
+REVISION_RESTORE_CHANGE = 0
+HISTORY_SEMANTICS_CHANGE = 0
+DOCUMENT_SCHEMA_CHANGE = 0
+CHAT_EXECUTION_CHANGE = 0
+RENDERER_CHANGE = 0
+FORMAT_VERSION_CHANGE = 0
+SECOND_REVISION_STORE = 0
+SECOND_HISTORY_STORE = 0
+PACKAGE_INK_CURRENT_MUTATION = 0
+MAIN_MERGE = 0
 ```
 
 ## Completion
@@ -98,7 +196,6 @@ not mutate / not restore / not replace Revision or History
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = CORE-MOD-003
 BRANCH = work/ink-core-revision-provenance-003
-FINAL_HEAD = <exact SHA>
 GATE = CORE_MOD_003_MODULE_READY
 UI_MUTATION = 0
 REVISION_AUTHORITY_CHANGE = 0
