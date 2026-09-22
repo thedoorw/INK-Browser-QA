@@ -19,7 +19,7 @@ STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
 | CORE_RUNTIME | `STATIC_HOSTING + BROWSER_LOCAL` |
-| RUNTIME_QA | `REQUIRED_FOR_FINAL_GATE` |
+| RUNTIME_QA | `DEFERRED_TO_BATCH / SOURCE_STATIC_REQUIRED` |
 
 ## Product intent
 
@@ -224,9 +224,9 @@ Checkpoint commit required.
 
 Gate: `WEB_V0_1_IDENTITY_AND_FAVICON_WORK`
 
-### Phase E — Regression + real browser runtime closure
+### Phase E — Regression closure + batched Runtime QA registration
 
-Execute source/static checks and self-hosted Windows real-browser QA.
+Execute all source/static/unit/binding checks for this Work Order. Register the real-browser portion for the next Runtime batch unless an immediate-runtime trigger is discovered.
 
 Required acceptance:
 
@@ -253,7 +253,7 @@ Required acceptance:
 - no document migration required;
 - no product drawing/document capability intentionally removed.
 
-Use the existing self-hosted Windows runtime standard:
+When the batch checkpoint is reached, use the existing self-hosted Windows runtime standard:
 
 `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
 
@@ -267,9 +267,19 @@ Chrome available
 
 Do not change PowerShell execution policy. Reuse the bounded exact-SHA materialization pattern that already works on this runner where practical.
 
-Final gate:
+Source-level gate for this Work Order:
+
+`INK_WEB_UI_PHASE1_SOURCE_COMPLETE`
+
+Runtime status at DEV handoff may be:
+
+`RUNTIME_QA = DEFERRED_TO_BATCH`
+
+The accumulated UI/runtime batch will later promote this to:
 
 `INK_WEB_UI_PHASE1_COMPLETE`
+
+after one concentrated real-browser PASS.
 
 ## Required evidence artifact
 
@@ -349,19 +359,19 @@ Update at every meaningful checkpoint with:
 
 ## Completion / STOP
 
-DEV may declare handoff only when the required real-browser gate has executed.
+DEV may declare handoff after all authorized source/static checks pass and the deferred Runtime debt is explicitly recorded. Full browser Runtime is no longer required on every Work Order.
 
 ```text
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-WEB-UI-001
 BRANCH = work/ink-web-ui-001
-GATE = INK_WEB_UI_PHASE1_COMPLETE
+GATE = INK_WEB_UI_PHASE1_SOURCE_COMPLETE
 FORMAT_VERSION = 4 / PRESERVED
 WEB_DISPLAY_VERSION = INK v0.1 · Web
 PORTABLE_DISPLAY_VERSION = INK v0.1 · Portable
 FAVICON = USER_ORIGINAL_MARK / PRESENT
 PACKAGE_MUTATION = 0
-BROWSER_RUNTIME_QA = EXECUTED
+BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
@@ -392,3 +402,25 @@ Portable = INK v0.1 · Portable
 ```
 
 The favicon / INK mark may be shared by both.
+
+
+## Runtime batching override — USER decision
+
+The USER changed the development cadence after this package was issued.
+
+Authoritative rule:
+
+```text
+FULL_RUNTIME_EVERY_WORK_ORDER = NO
+RUNTIME_BATCH_SIZE = 2–4 compatible bounded Work Orders
+DEFAULT_BATCH_TARGET = 3
+CURRENT_WORK_ORDER_RUNTIME = DEFERRED_TO_BATCH
+```
+
+INK-WEB-UI-001 must still perform all practical source/static/unit/binding checks.
+
+Immediate Runtime remains mandatory only if DEV or MR discovers a high-risk trigger defined in:
+
+`governance/INK_MR_DEV_GOVERNANCE_v0.1.md#batched-runtime-qa-policy`
+
+This Work Order's deferred Runtime debt must be carried forward in `working/WORKING_STATUS.md` until the batch checkpoint executes.
