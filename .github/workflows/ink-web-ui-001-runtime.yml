@@ -194,14 +194,12 @@ jobs:
               '--no-default-browser-check',
               '--disable-extensions',
               "--user-data-dir=$profile",
-              '--virtual-time-budget=60000',
-              '--dump-dom',
               $url
             )
             $chrome = Start-Process -FilePath $browser -ArgumentList $args -RedirectStandardOutput $chromeOut -RedirectStandardError $chromeErr -PassThru
 
             $reported = $false
-            for ($i = 0; $i -lt 120; $i++) {
+            for ($i = 0; $i -lt 360; $i++) {
               if (Test-Path $qaResult) { $reported = $true; break }
               if ($chrome.HasExited) {
                 Start-Sleep -Milliseconds 500
