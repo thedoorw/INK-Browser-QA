@@ -1372,7 +1372,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .app:not(.inspector-open) .inspector{
     transform:translateX(calc(100% + var(--panel-dock-w) + 8px));
   }
-  .inspector-edge-toggle{display:none!important}
+  #inspectorToggle.legacy-inspector-toggle{display:none!important}
 
   /* Creative Workspace becomes the same primary right-side surface, not a
      competing floating window. The controller and all stage commands are preserved. */
@@ -2364,3 +2364,177 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .topbar{overflow:visible}
   .topbar > .contextual-options{top:var(--topbar-h);left:0;right:0}
 }
+
+/* ==========================================================================
+   INK-UI-MAINT-002 — readability / single panel authority / containment
+   Desktop-only presentation authority; editor/runtime semantics unchanged.
+   ========================================================================== */
+@media(min-width:761px){
+  /* One visible open/close authority. Dock items select content; this chevron
+     alone collapses or restores the current primary right-side panel. */
+  #inspectorToggle.legacy-inspector-toggle{display:none!important}
+  #closeInspector,
+  .creative-workspace-head [data-workspace-action="close"]{display:none!important}
+  .inspector-edge-toggle.primary-panel-collapse,
+  .app.inspector-open .inspector-edge-toggle.primary-panel-collapse{
+    display:grid!important;
+    place-items:center;
+    position:absolute;
+    z-index:86;
+    top:calc(var(--topbar-h) + 5px);
+    right:var(--panel-dock-w);
+    width:18px;
+    height:25px;
+    padding:0;
+    border:1px solid #202123;
+    border-right:0;
+    border-radius:2px 0 0 2px;
+    background:#3b3c3e;
+    color:#aeb0b3;
+    box-shadow:-1px 1px 3px rgba(0,0,0,.22);
+    opacity:1;
+    pointer-events:auto;
+    transform:none;
+  }
+  .inspector-edge-toggle.primary-panel-collapse:hover{
+    color:#fff;
+    background:#505154;
+    transform:none;
+  }
+  .inspector-edge-toggle.primary-panel-collapse .edge-chevron{
+    width:12px;
+    height:12px;
+    transform:rotate(180deg);
+    transition:transform .14s ease;
+  }
+  .inspector-edge-toggle.primary-panel-collapse.active{
+    color:#79c8c0;
+    background:#30403e;
+  }
+  .inspector-edge-toggle.primary-panel-collapse.active .edge-chevron{transform:none}
+
+  /* Contextual Properties state mirrors the same primary-panel authority. */
+  .contextual-advanced-button{
+    min-width:48px;
+    font-size:10px;
+    color:#c8c9cb;
+  }
+  .contextual-advanced-button.active,
+  .contextual-advanced-button[aria-pressed="true"]{
+    color:#86d2ca;
+    background:#29413e;
+    border-color:#315d59;
+  }
+
+  /* Primary panels own all available desktop height. Headers/tabs remain fixed;
+     only body content scrolls, never the whole shell or the horizontal axis. */
+  .inspector,
+  .creative-workspace-panel,
+  .app:not(.inspector-open) .creative-workspace-panel{
+    min-height:0;
+    max-height:none;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .inspector-head,
+  .inspector-tabs,
+  .creative-workspace-head,
+  .creative-workspace-state,
+  .creative-workspace-tabs,
+  .creative-workspace-status{flex:0 0 auto}
+  .inspector-section.active,
+  .creative-workspace-body{
+    min-width:0;
+    min-height:0;
+    flex:1 1 auto;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+  }
+  .inspector-section > *,
+  .creative-workspace-body > *,
+  .creative-workspace-body section,
+  .creative-workspace-body section > *{
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+  .inspector-section .property-card,
+  .inspector-section .control-row,
+  .inspector-section .toggle-row,
+  .inspector-section .subpanel,
+  .creative-workspace-field,
+  .creative-workspace-actions,
+  .creative-workspace-action-grid,
+  .creative-workspace-inline,
+  .creative-chat-runtime,
+  .creative-chat-transcript,
+  .creative-structure-option{
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+  .inspector-section select,
+  .inspector-section input,
+  .inspector-section textarea,
+  .inspector-section output,
+  .creative-workspace-body select,
+  .creative-workspace-body input,
+  .creative-workspace-body textarea,
+  .creative-workspace-body output,
+  .creative-workspace-body pre{
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+  .creative-workspace-inline{minmax:0}
+
+  /* Bounded readability lift. Primary labels stay compact while secondary
+     values are brought out of the 7–8 px range and away from low contrast. */
+  .inspector-head strong,
+  .creative-workspace-head strong{font-size:11px}
+  .inspector-tab{font-size:10px}
+  .section-title strong{font-size:11px}
+  .section-title span{font-size:9.5px!important;color:#b0b2b5}
+  .inspector-section .control-row,
+  .inspector-section .toggle-row{font-size:10.5px}
+  .inspector-section .range-row output{font-size:9.5px}
+  .inspector-section .subpanel-title strong{font-size:10.5px}
+  .inspector-section .subpanel-title span{font-size:8.5px;color:#8dc9c3}
+  .layer-row .layer-meta{font-size:9px!important;color:#aeb0b3}
+  .context-control-label,
+  .contextual-options .quick-slider output{font-size:10px;color:#c1c3c5}
+  .panel-window-group-label{font-size:9px;color:#9b9da0}
+
+  .creative-workspace-state span{font-size:9px;color:#a1a3a6}
+  .creative-workspace-state strong{font-size:9.5px;color:#d0d1d3}
+  .creative-workspace-tabs button{font-size:10px}
+  .creative-workspace-body strong{font-size:11px}
+  .creative-workspace-body p{font-size:10px;color:#b9bbbe}
+  .creative-workspace-field{font-size:10px;color:#bfc1c3}
+  .creative-workspace-field input,
+  .creative-workspace-field select{font-size:10px}
+  .creative-workspace-actions button,
+  .creative-workspace-action-grid button,
+  .creative-workspace-primary{font-size:10px}
+  .creative-workspace-body output,
+  .creative-workspace-status{font-size:9.5px;color:#adb0b2}
+  .creative-chat-runtime span,
+  .creative-chat-runtime button{font-size:9.5px}
+  .creative-chat-message>strong{font-size:9.5px}
+  .creative-chat-message>p,
+  .creative-chat-empty{font-size:10px!important}
+  .creative-structure-option>summary{font-size:10px}
+  .creative-structure-option>summary span{font-size:8.5px;color:#aeb0b3}
+  .statusbar{font-size:9.5px}
+  .statusbar button,
+  .version-badge{font-size:9px}
+}
+
+@media(max-width:980px) and (min-width:761px){
+  .creative-workspace-field{grid-template-columns:72px minmax(0,1fr)}
+  .creative-workspace-state span{font-size:8.5px}
+  .creative-workspace-state strong{font-size:9px}
+}
+
