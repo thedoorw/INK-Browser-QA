@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-WEB-UI-002 / MR_PASS / CLEAN_PROMOTION_REQUIRED`
+STATUS: `INK-WEB-UI-002 / MR_PASS / PROMOTED / CLOSED`
 
 | Field | Value |
 |---|---|
@@ -56,3 +56,14 @@ Exclude branch-local:
 - DEV-authored `working/WORKING_STATUS.md`.
 
 After promotion, no new Work Order should auto-open until the dual-track UI/Core governance split is decided.
+
+
+## Promotion closure
+
+```text
+PR = #23 / MERGED
+MAIN = 6f3a49e0dd1482cdcbd406ba88ec84e74be9138f
+RUNTIME_BATCH_ENTRY = MANUAL_ONLY
+PORTABLE_WEB_PARITY_GUARD = ACTIVE
+NEXT_WORK_ORDER = NONE
+```
