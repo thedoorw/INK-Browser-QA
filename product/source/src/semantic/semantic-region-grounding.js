@@ -367,14 +367,17 @@ function evidenceInputs(document, options, limits) {
       if (!record(edge)) continue;
       const relation = normalizeRelation(edge.type);
       if (!SEMANTIC_REGION_RELATIONS.includes(relation)) continue;
-      items.push({ ...clone(edge), relation, source: 'semanticModel.relationshipGraph', sourceIndex: index });
+      const source = 'semanticModel.relationshipGraph';
+      items.push({ ...clone(edge), relation, source, sourceKey: stableHash({ source, edge }) });
     }
   }
   if (options.relationshipEvidence != null) {
     if (!Array.isArray(options.relationshipEvidence)) fail('RELATIONSHIP_EVIDENCE_INVALID');
     for (const [index, edge] of options.relationshipEvidence.entries()) {
       if (!record(edge)) fail('RELATIONSHIP_EVIDENCE_INVALID', { index });
-      items.push({ ...clone(edge), relation: normalizeRelation(edge.relation ?? edge.type), source: 'relationshipEvidence', sourceIndex: index });
+      const source = 'relationshipEvidence';
+      const relation = normalizeRelation(edge.relation ?? edge.type);
+      items.push({ ...clone(edge), relation, source, sourceKey: stableHash({ source, relation, edge }) });
     }
   }
   if (items.length > limits.maxEvidence) fail('EVIDENCE_LIMIT_EXCEEDED', { actual: items.length, maxEvidence: limits.maxEvidence });
@@ -397,7 +400,7 @@ function sourceRelationships(document, regions, options, limits, edges, unresolv
   for (const item of evidenceInputs(document, options, limits)) {
     const relation = normalizeRelation(item.relation);
     if (!SEMANTIC_REGION_RELATIONS.includes(relation)) {
-      unresolved.push({ relation, status: 'UNRESOLVED', reason: 'RELATION_UNSUPPORTED', source: item.source, sourceIndex: item.sourceIndex });
+      unresolved.push({ relation, status: 'UNRESOLVED', reason: 'RELATION_UNSUPPORTED', source: item.source, sourceKey: item.sourceKey });
       continue;
     }
     const from = resolveEvidenceEndpoint(item, 'from', regionIds, byObject);
@@ -413,15 +416,15 @@ function sourceRelationships(document, regions, options, limits, edges, unresolv
         fromCandidates: from.candidates || [],
         toCandidates: to.candidates || [],
         source: item.source,
-        sourceIndex: item.sourceIndex
+        sourceKey: item.sourceKey
       });
       continue;
     }
     if (SOURCE_EVIDENCE_RELATIONS.has(relation) && item.supported === false) {
-      unresolved.push({ fromRegionId: from.regionId, toRegionId: to.regionId, relation, status: 'UNRESOLVED', reason: 'SOURCE_EVIDENCE_NOT_SUPPORTED', source: item.source, sourceIndex: item.sourceIndex });
+      unresolved.push({ fromRegionId: from.regionId, toRegionId: to.regionId, relation, status: 'UNRESOLVED', reason: 'SOURCE_EVIDENCE_NOT_SUPPORTED', source: item.source, sourceKey: item.sourceKey });
       continue;
     }
-    const evidence = [{ kind: 'source-evidence', source: item.source, sourceIndex: item.sourceIndex, evidenceRef: item.evidenceRef ?? item.sourceRef ?? null }];
+    const evidence = [{ kind: 'source-evidence', source: item.source, sourceKey: item.sourceKey, evidenceRef: item.evidenceRef ?? item.sourceRef ?? null }];
     addEdge(edges, { from: from.regionId, type: relation, to: to.regionId, confidence: finite(item.confidence), evidence });
     if (SYMMETRIC_RELATIONS.has(relation)) addEdge(edges, { from: to.regionId, type: relation, to: from.regionId, confidence: finite(item.confidence), evidence });
     if (relation === 'contains') addEdge(edges, { from: to.regionId, type: 'inside', to: from.regionId, confidence: finite(item.confidence), evidence });
