@@ -1,175 +1,185 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `CORE-MOD-001 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `INK-WEB-UI-005 / UR_AUTHORIZED / DEV_READY`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `CORE-MOD-001` |
-| TITLE | `AI Document Bridge Module v0.1` |
-| ROLE_OWNER | `MR / CORE MODULE LANE` |
-| DEV_WORK_BRANCH | `work/ink-core-ai-bridge-001` |
-| DEV_MODE | `BOUNDED_MODULE_PREPARATION` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / MODULE_ONLY` |
-| UI_MUTATION | `PROHIBITED` |
-| INTEGRATION_TO_UI | `PROHIBITED_THIS_TASK` |
+| CURRENT_TASK_ID | `INK-WEB-UI-005` |
+| TITLE | `Responsive / Fullscreen / Final UI Regression v0.1` |
+| AUTHORITY | `UR_DELEGATED_UI_LANE` |
+| DEV_WORK_BRANCH | `work/ink-web-ui-005` |
+| BASE_MAIN | `d0488ddd8380b285b2744abd6b6983f451a6a702` |
+| DEV_MODE | `BOUNDED_UI_WORKPACK` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / UI_ONLY` |
+| UI_SHELL | `PORTABLE_WEB_SHARED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
-| MAIN_MERGE | `PROHIBITED_BY_DEV` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
+| PACKAGE_MUTATION | `PROHIBITED` |
+| CORE_MUTATION | `PROHIBITED` |
 | RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
 
 ## Objective
 
-Prepare a standalone AI Document Bridge module that converts the authoritative INK document into grounded, structured, CHAT-readable context without mutating the document.
-
-Target chain:
+Close the delegated UI sequence:
 
 ```text
-INK Document
-→ object / region / relationship grounding
-→ bounded structured context
-→ CHAT-readable payload
+accepted UI-003 contextual options
++ accepted UI-004 panel / CHAT polish
+→ desktop / narrow / mobile containment
+→ fullscreen consistency
+→ final shared-shell regression
+→ UI_LANE_READY_FOR_INTEGRATION
 ```
 
-This task does **not** execute CHAT edits and does not wire new UI.
-
-## Existing authority to preserve
-
-Authoritative:
-
-- current Document model;
-- stable IDs;
-- existing semantic model / relationship graph;
-- existing CHAT bounded-edit approval semantics;
-- History;
-- Revision;
-- FORMAT_VERSION = 4.
-
-The bridge is a reader/translator, not a new authority.
+This is the final bounded UI convergence package. Do not add new product features.
 
 ## Required reads
 
 1. `README.md`
 2. `AGENTS.md`
-3. this Work Order
+3. this branch-local Work Order
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
+6. `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
 7. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
-8. relevant existing modules only:
-   - `product/source/src/ai/chat-runtime.js`
-   - `product/source/src/editor/chat-bounded-edit.js`
-   - `product/source/src/semantic/*`
-   - `product/source/src/document/*`
+8. UI-003 and UI-004 reports
+9. current shared shell / responsive CSS / fullscreen bindings only as needed
 
-## Scope
+## Required scope
 
-### Phase A — Contract inventory
+### A — Desktop / narrow responsive containment
 
-Inventory existing document/context/semantic/CHAT contracts.
+Verify and correct UI-only containment for:
 
-Define one INK-owned bridge output contract, including at minimum:
+- wide desktop;
+- medium/narrow desktop;
+- dock + primary panel open;
+- contextual options overflow;
+- selection contextual actions;
+- Pages panel / floating panels;
+- canvas visible region.
 
-- document identity;
-- active page / layer identity;
-- selected object IDs;
-- object summaries;
-- geometry summary references where available;
-- semantic roles;
-- relationship edges;
-- revision identity when available;
-- protected properties / editability hints;
-- deterministic context fingerprint.
+Avoid adding a new responsive framework.
 
-Do not duplicate full document payload unnecessarily.
+Gate: `DESKTOP_NARROW_UI_CONTAINMENT_WORKS`
 
-Gate: `AI_DOCUMENT_BRIDGE_CONTRACT_DEFINED`
+### B — Mobile / coarse-pointer containment
 
-### Phase B — Pure bridge module
+Preserve current mobile interaction grammar while ensuring:
 
-Implement a pure module, recommended path:
+- contextual options remain reachable without covering the canvas incorrectly;
+- mobile dock / tool sheet remain reachable;
+- Inspector / Creative Workspace / Pages containment is coherent;
+- no desktop panel dock leaks into mobile;
+- no critical controls become permanently inaccessible.
 
-`product/source/src/ai/document-bridge.js`
+This is containment/regression closure, not a mobile redesign.
 
-Required properties:
+Gate: `MOBILE_UI_CONTAINMENT_WORKS`
 
-- no DOM dependency;
-- no network dependency;
-- no mutation;
-- deterministic output from equivalent input;
-- plain JSON-compatible INK-owned values;
-- no external engine objects;
-- bounded output size strategy;
-- fail-closed handling of malformed input.
+### C — Fullscreen consistency
 
-Gate: `AI_DOCUMENT_BRIDGE_PURE_MODULE_WORKS`
+Verify the existing fullscreen command and presentation remain compatible with:
 
-### Phase C — Adapter boundary
+- canvas-first shell;
+- contextual options;
+- panel dock;
+- Inspector;
+- Creative Workspace;
+- mobile/narrow fallback where applicable.
 
-Provide a narrow adapter that existing CHAT/runtime code can call later.
+Do not replace fullscreen semantics or browser API behavior.
 
-This task may expose functions/imports but must **not** change UI or make the new bridge the active production CHAT context source yet.
+Gate: `FULLSCREEN_UI_CONSISTENCY_WORKS`
 
-Required separation:
+### D — Final UI source/static regression
 
-```text
-bridge = read / ground / summarize
-CHAT mutation = existing proposal/approval/execution path
-```
+Create a focused final UI regression contract covering at minimum:
 
-Gate: `AI_DOCUMENT_BRIDGE_ADAPTER_READY`
+- Portable/Web parity;
+- shared contextual-options contract;
+- panel hierarchy/grouping;
+- CHAT/Reference/Compose/Revision reachability;
+- Layers / History reachability;
+- responsive media-query invariants;
+- fullscreen command binding remains present;
+- Web/Portable identity remains `v0.1`;
+- `FORMAT_VERSION = 4`;
+- no package mutation;
+- no Core semantic source mutation.
 
-### Phase D — deterministic evidence
+Gate: `FINAL_UI_STATIC_REGRESSION_PASS`
 
-Add focused unit/deterministic tests covering at minimum:
+## Hard boundaries / STOP
 
-- same document → same fingerprint/output;
-- stable ordering;
-- nested Frame/Group objects;
-- semantic roles and relationship graph;
-- selected subset context;
-- bounded output behavior;
-- malformed input rejection;
-- no source mutation;
-- FORMAT_VERSION remains 4.
+STOP with `INTEGRATION_REQUIRED` if work requires changing:
 
-No browser Runtime required unless DEV discovers a real browser-only dependency.
+- Document authority / schema / migration;
+- History semantics;
+- Revision semantics;
+- Recipe / Geometry;
+- renderer / WebGL / Canvas engine;
+- Core module contracts;
+- CHAT proposal/approval/execution semantics;
+- persistence semantics;
+- product base version;
+- package/certification;
+- another lane's implementation.
 
-Gate: `CORE_MOD_001_MODULE_READY`
+UI-only CSS, shell presentation/coordinator logic and focused UI QA are allowed.
 
-## Hard boundaries
+## Acceptance
 
-Do not:
+Before DEV_HANDOFF:
 
-- modify UI;
-- add buttons/panels;
-- change CHAT approval semantics;
-- execute document mutations through the new bridge;
-- change History/Revision semantics;
-- change document schema;
-- change FORMAT_VERSION;
-- introduce remote AI dependency;
-- create a second semantic/document model;
-- integrate CORE-MOD-002 or later modules in this task.
+- UI-003 and UI-004 accepted behavior preserved;
+- desktop/narrow/mobile containment source contracts PASS;
+- fullscreen binding/presentation contract PASS;
+- Portable/Web parity PASS;
+- changed JS parses;
+- focused final UI regression PASS;
+- no Core semantic source changed;
+- `FORMAT_VERSION = 4`;
+- product base version `v0.1`;
+- package mutation = 0;
+- browser Runtime not claimed unless actually executed.
 
-## Required report
+Final source gate:
 
-Exactly one:
+`UI_LANE_SOURCE_COMPLETE`
 
-`research/INK_CORE_MOD_001_AI_DOCUMENT_BRIDGE_REPORT_v0.1.md`
+## Evidence
 
-## Completion
+Create/update exactly one report:
+
+`research/INK_WEB_UI_005_RESPONSIVE_FINAL_REGRESSION_REPORT_v0.1.md`
+
+Include:
+
+- responsive/fullscreen findings;
+- changed files;
+- preserved bindings/semantics;
+- parity/static checks;
+- deferred Runtime debt;
+- any `INTEGRATION_REQUIRED` finding;
+- final UI-lane readiness statement.
+
+## Completion / STOP
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = CORE-MOD-001
-BRANCH = work/ink-core-ai-bridge-001
-GATE = CORE_MOD_001_MODULE_READY
-UI_MUTATION = 0
-DOCUMENT_SCHEMA_CHANGE = 0
-FORMAT_VERSION = 4
+TASK_ID = INK-WEB-UI-005
+BRANCH = work/ink-web-ui-005
+GATE = UI_LANE_SOURCE_COMPLETE
+FORMAT_VERSION = 4 / PRESERVED
+PRODUCT_BASE_VERSION = v0.1 / PRESERVED
+PORTABLE_WEB_PARITY = PASS
+PACKAGE_MUTATION = 0
+CORE_MUTATION = 0
 RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
-NEXT_ACTION = MR_REVIEW_REQUIRED
+UI_LANE_READY_FOR_INTEGRATION = CANDIDATE
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
