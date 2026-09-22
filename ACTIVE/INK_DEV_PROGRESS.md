@@ -12,7 +12,7 @@ STATUS: `INK-WEB-UI-001 / IN_PROGRESS`
 | CURRENT_PHASE | `PHASE_D / WEB_IDENTITY_AND_CACHE` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
+| TARGET_GATE | `INK_WEB_UI_PHASE1_SOURCE_COMPLETE` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
 | PORTABLE_DISPLAY_VERSION | `INK v0.1 · Portable / REQUIRED` |
@@ -20,7 +20,7 @@ STATUS: `INK-WEB-UI-001 / IN_PROGRESS`
 | FAVICON | `USER ORIGINAL MARK / REQUIRED` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `REQUIRED` |
+| RUNTIME_QA | `DEFERRED_TO_BATCH` |
 
 ## Authoritative source
 
@@ -46,7 +46,7 @@ SHA256:
 - Phase B — Photoshop-aligned canvas-first shell
 - Phase C — collapsible panel dock
 - Phase D — v0.1 Portable/Web identity + INK mark + favicon + cache identity
-- Phase E — regression + real-browser runtime closure
+- Phase E — regression closure + Runtime batch registration
 
 ## Checkpoint rule
 
@@ -139,13 +139,13 @@ TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-WEB-UI-001
 BRANCH = work/ink-web-ui-001
 FINAL_HEAD = <exact SHA>
-GATE = INK_WEB_UI_PHASE1_COMPLETE
+GATE = INK_WEB_UI_PHASE1_SOURCE_COMPLETE
 FORMAT_VERSION = 4 / PRESERVED
 WEB_DISPLAY_VERSION = INK v0.1 · Web
 FAVICON = PRESENT
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
-BROWSER_RUNTIME_QA = EXECUTED
+BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
@@ -167,3 +167,20 @@ Required shell alignment:
 - shared CSS / UI behavior
 
 Only the supplementary delivery label differs.
+
+
+## Runtime cadence update
+
+USER changed project cadence:
+
+```text
+Every Work Order:
+  source/static/unit checks = REQUIRED
+  full browser Runtime = NOT REQUIRED
+
+Runtime batch:
+  2–4 compatible Work Orders
+  default target = 3
+```
+
+This task is runtime-deferred unless a high-risk trigger appears.
