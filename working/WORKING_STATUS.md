@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK / UI_DELEGATED_TO_UR / CORE_MR_DISCUSSION`
+STATUS: `DUAL_TRACK / UI_UR_ACTIVE / CORE-MOD-001_AUTHORIZED`
 
 | Field | Value |
 |---|---|
@@ -1488,3 +1488,36 @@ UI-003 Contextual Controls / Top Options
 UR may issue, review, clean-promote and continue these UI-only tasks independently. Cross-lane or Core-authority changes STOP as `INTEGRATION_REQUIRED`.
 
 MR is now free to focus on Core Module lane design and later Integration.
+
+
+## Core Module lane activation
+
+MR-authorized first Core Module task:
+
+`CORE-MOD-001 — AI Document Bridge Module v0.1`
+
+Branch:
+
+`work/ink-core-ai-bridge-001`
+
+Purpose:
+
+```text
+authoritative INK document
+→ grounded structured context
+→ CHAT-readable pure module output
+→ MODULE_READY
+```
+
+No formal UI wiring, no document mutation and no Runtime in this module-preparation task.
+
+Core sequence after this task:
+
+```text
+CORE-MOD-002 Semantic Region Grounding
+CORE-MOD-003 Revision / Provenance
+CORE-MOD-004 Visual Compare / Variant
+CORE-MOD-005 Parametric Creative Structure
+```
+
+Prepared modules accumulate in the Integration Queue. MR will later select a compatible batch for product wiring + concentrated Runtime.
