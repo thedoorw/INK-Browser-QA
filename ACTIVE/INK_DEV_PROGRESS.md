@@ -1,12 +1,12 @@
 # INK DEV PROGRESS
 
-STATUS: IN_PROGRESS / BOUNDED_UI_IMPLEMENTATION
+STATUS: IMPLEMENTATION_COMPLETE / SOURCE_STATIC_UNIT_PARITY_PASS / RUNTIME_PENDING
 
 TASK_ID: INK-UI-MAINT-002
 TITLE: Typography Readability / Panel Authority / Content Containment / Favicon v0.1
 BRANCH: work/ink-ui-maint-002
 BASE_MAIN: 19ce5f7d03a32600493a550ae2d2262340c229ee
-TASK_STATUS: IN_PROGRESS
+TASK_STATUS: RUNTIME_PENDING
 DEV_HANDOFF: NOT_YET
 UR_REVIEW: PENDING_AFTER_HANDOFF
 RUNTIME_QA: REQUIRED_BEFORE_UI_PASS
@@ -54,14 +54,14 @@ Read on assigned branch:
 
 - [x] SSOT / branch / boundaries confirmed.
 - [x] Existing panel state and CSS authority localized.
-- [ ] Single primary-panel select + chevron collapse authority.
-- [ ] Contextual Properties two-way toggle + ARIA/visual synchronization.
-- [ ] Desktop containment and typography authority.
-- [ ] Web / Portable mirrored markup.
-- [ ] Dedicated local favicon.
-- [ ] Focused source/static/unit/parity checks.
-- [ ] PowerShell Windows Runtime — final stage only.
-- [ ] Evidence report + DEV_HANDOFF.
+- [x] Single primary-panel select + chevron collapse authority.
+- [x] Contextual Properties two-way toggle + ARIA/visual synchronization.
+- [x] Desktop containment and typography authority.
+- [x] Web / Portable mirrored markup.
+- [x] Dedicated local favicon.
+- [x] Focused source/static/unit/parity checks — deterministic connected-branch assertions 11/11 PASS.
+- [ ] PowerShell Windows Runtime — final stage only / pending execution.
+- [ ] Evidence report + DEV_HANDOFF — Runtime gate still open.
 
 ## Stop rule
 
@@ -82,3 +82,48 @@ RUNTIME_BLOCKED → STOP
 - If PowerShell Runtime cannot execute after implementation is complete:
   `TASK_STATUS = RUNTIME_BLOCKED → STOP`
 - Do not claim `DEV_HANDOFF` or `UI_PASS` without the required PowerShell Runtime evidence.
+
+
+## Source/static/unit/parity checkpoint
+
+Exact connected branch assertions:
+
+```text
+shared-shell-parity = PASS
+web-shell-parse = PASS
+shared-hook-uniqueness = PASS
+selection-first-authority = PASS
+desktop-duplicate-retirement = PASS
+advanced-two-way-state = PASS
+advanced-markup-parity = PASS
+panel-containment = PASS
+readability-lift = PASS
+favicon-contract = PASS
+version-boundaries = PASS
+TOTAL = 11 PASS / 0 FAIL
+```
+
+Focused deterministic unit contract:
+`qa/core/tests/unit/ui-maint-002-readability-panel-favicon-v0.1.test.mjs`
+
+The connected tool environment does not provide a checked-out branch for a literal local `node --test` invocation; equivalent deterministic assertions were executed directly against the exact GitHub branch files, matching the established UI-lane evidence pattern. No literal Node-run claim is made.
+
+## Boundary check
+
+Compare against authorized base `19ce5f7d03a32600493a550ae2d2262340c229ee`:
+
+```text
+ahead = 12
+behind = 0
+implementation files =
+  product/source/web-shell.js
+  product/source/styles.css
+  product/source/index.html
+  product/source/index-standalone.html
+  product/source/assets/favicon.svg
+QA =
+  qa/core/tests/unit/ui-maint-002-readability-panel-favicon-v0.1.test.mjs
+CORE / Renderer / History / Revision / Geometry mutation = 0
+FORMAT_VERSION = 4 / preserved
+product base version = v0.1 / preserved
+```
