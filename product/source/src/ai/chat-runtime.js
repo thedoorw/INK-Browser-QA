@@ -174,7 +174,7 @@ export class PlanRequest {
     this.format = 'INK-PLAN-REQUEST'; this.version = CHAT_RUNTIME_VERSION; this.requestId = `planreq:${hashValue([sessionId, prompt, context.hash, now()])}`; this.sessionId = sessionId; this.prompt = prompt; this.context = context; this.responseSchema = responseSchema; this.images = images; this.transmissionDecision = transmissionDecision; this.metadata = clone(metadata);
   }
 }
-export class PlanResponse { constructor({ requestId, provider, model, raw, plan, toolCalls = [], toolResults = [], usage = null } = {}) { this.format = 'INK-PLAN-RESPONSE'; this.version = CHAT_RUNTIME_VERSION; this.requestId = requestId; this.provider = provider; this.model = model; this.raw = raw; this.plan = plan; this.toolCalls = toolCalls; this.toolResults = toolResults; this.usage = usage; this.receivedAt = now(); } }
+export class PlanResponse { constructor({ requestId, provider, model, raw, plan, toolCalls = [], toolResults = [], usage = null, continuation = null, status = 'COMPLETED' } = {}) { this.format = 'INK-PLAN-RESPONSE'; this.version = CHAT_RUNTIME_VERSION; this.requestId = requestId; this.provider = provider; this.model = model; this.raw = raw; this.plan = plan; this.toolCalls = clone(toolCalls); this.toolResults = clone(toolResults); this.usage = usage; this.continuation = clone(continuation); this.status = status; this.receivedAt = now(); } }
 
 export class ConversationRequest {
   constructor({ sessionId, prompt, context, transcript = [], transmissionDecision = 'TEXT_SUMMARY', metadata = {} } = {}) {
@@ -186,10 +186,10 @@ export class ConversationRequest {
   }
 }
 export class ConversationResponse {
-  constructor({ requestId, provider, model, content, toolCalls = [], toolResults = [], usage = null, source = 'MODEL' } = {}) {
+  constructor({ requestId, provider, model, content, toolCalls = [], toolResults = [], usage = null, source = 'MODEL', continuation = null, status = 'COMPLETED' } = {}) {
     this.format = 'INK-CONVERSATION-RESPONSE'; this.version = CHAT_RUNTIME_VERSION;
     this.requestId = requestId; this.provider = provider; this.model = model;
-    this.content = String(content || ''); this.toolCalls = clone(toolCalls); this.toolResults = clone(toolResults); this.usage = usage; this.source = source; this.receivedAt = now();
+    this.content = String(content || ''); this.toolCalls = clone(toolCalls); this.toolResults = clone(toolResults); this.usage = usage; this.source = source; this.continuation = clone(continuation); this.status = status; this.receivedAt = now();
   }
 }
 
@@ -326,6 +326,8 @@ export class ModelOutputValidator {
 
 const LEGACY_TOOL_NAMES = Object.freeze(['get_capabilities', 'get_document_summary', 'get_layer_tree', 'get_editable_targets', 'get_target_details', 'get_palette', 'get_history_summary', 'create_plan', 'validate_plan', 'request_preview', 'get_preview_difference', 'request_approval', 'execute_approved_plan', 'rollback_execution', 'save_variant', 'export_document']);
 export const GROUNDED_TOOL_NAMES = Object.freeze(['get_grounded_creative_context', 'compare_visual_subjects', 'resolve_parametric_structure']);
+export const GROUNDED_CONTINUATION_MAX = 1;
+export const GROUNDED_TOOL_RESULT_MAX_BYTES = 32768;
 export const TOOL_NAMES = Object.freeze([...LEGACY_TOOL_NAMES, ...GROUNDED_TOOL_NAMES]);
 
 const LEGACY_TOOL_PARAMETERS = Object.freeze({
@@ -407,6 +409,109 @@ const groundedToolDiagnostic = (name, code, { status = 'REJECTED', required = []
   required: [...new Set(required.map(String))].slice(0, 8),
   authority: { documentWrite: false, historyWrite: false, revisionWrite: false, geometryWrite: false, renderer: false, execution: false }
 });
+
+const toolCallName = call => call?.name || call?.function?.name || null;
+const toolCallId = call => call?.id || call?.toolCallId || null;
+const isGroundedToolCall = call => GROUNDED_TOOL_NAMES.includes(toolCallName(call));
+
+function boundedToolResultEnvelope(envelope) {
+  const clean = redactSecrets(clone(envelope));
+  const serialized = JSON.stringify(clean);
+  const bytes = utf8Bytes(serialized);
+  if (bytes <= GROUNDED_TOOL_RESULT_MAX_BYTES) return clean;
+  const preview = serialized.slice(0, 8192);
+  return {
+    format: 'INK-TOOL-RESULT',
+    version: CHAT_RUNTIME_VERSION,
+    toolCallId: clean?.toolCallId || null,
+    name: clean?.name || null,
+    status: 'BOUNDED',
+    result: {
+      schema: 'INK-GROUNDED-TOOL-RESULT-BOUNDARY',
+      version: 1,
+      status: 'TRUNCATED',
+      code: 'TOOL_RESULT_BOUNDED',
+      originalBytes: bytes,
+      resultHash: hashValue(clean?.result ?? clean),
+      preview
+    }
+  };
+}
+
+function surfacedToolIntent(call, code = 'NORMAL_USER_GOVERNED_FLOW_REQUIRED') {
+  return {
+    format: 'INK-TOOL-RESULT',
+    version: CHAT_RUNTIME_VERSION,
+    toolCallId: toolCallId(call),
+    name: toolCallName(call),
+    status: 'NOT_AUTO_ROUTED',
+    result: {
+      schema: 'INK-TOOL-INTENT-EVIDENCE',
+      version: 1,
+      status: 'SURFACED_INTENT',
+      code,
+      requiredFlow: 'EXISTING_USER_GOVERNED_TOOL_FLOW',
+      authority: { automaticExecution: false, userGovernedFlowRequired: true }
+    }
+  };
+}
+
+function continuationLimitEvidence(call) {
+  return {
+    format: 'INK-TOOL-RESULT',
+    version: CHAT_RUNTIME_VERSION,
+    toolCallId: toolCallId(call),
+    name: toolCallName(call),
+    status: 'BLOCKED',
+    result: groundedToolDiagnostic(toolCallName(call), 'TOOL_CONTINUATION_LIMIT_REACHED', { status: 'BLOCKED' })
+  };
+}
+
+function buildGroundedContinuation({ request, groundedCalls, groundedResults, surfacedIntents = [] } = {}) {
+  return {
+    format: 'INK-GROUNDED-TOOL-CONTINUATION',
+    version: 1,
+    round: 1,
+    maxRounds: GROUNDED_CONTINUATION_MAX,
+    originalRequestId: request.requestId,
+    originalPrompt: request.prompt,
+    toolCalls: clone(groundedCalls).map(call => ({
+      id: toolCallId(call),
+      name: toolCallName(call),
+      arguments: redactSecrets(call?.arguments ?? call?.function?.arguments ?? {})
+    })),
+    toolResults: clone(groundedResults),
+    surfacedToolIntents: clone(surfacedIntents),
+    authority: {
+      automaticGroundedReadOnlyTools: true,
+      autonomousAgentLoop: false,
+      legacyMutationAutoExecution: false,
+      documentWrite: false,
+      historyWrite: false,
+      revisionWrite: false,
+      geometryWrite: false,
+      renderer: false,
+      executionAuthorityChange: false
+    }
+  };
+}
+
+function groundedContinuationPrompt(continuation) {
+  return [
+    'Continue the original user request exactly once using the supplied INK grounded tool evidence.',
+    'Do not request another automatic tool continuation.',
+    'Do not execute or imply execution of mutation/proposal tools.',
+    'If a non-grounded tool is needed, state that the normal existing INK user-governed flow is required.',
+    JSON.stringify(continuation)
+  ].join('\n');
+}
+
+function continuationFallbackContent(secondRoundCalls, surfacedIntents = []) {
+  if (secondRoundCalls.some(isGroundedToolCall)) return 'Grounded reasoning stopped after one automatic continuation round: TOOL_CONTINUATION_LIMIT_REACHED.';
+  if (secondRoundCalls.length || surfacedIntents.length) return 'Normal existing INK user-governed tool flow is required; no mutation or proposal tool was auto-routed.';
+  return 'Grounded reasoning continuation completed without additional text.';
+}
+
 
 export class ToolCallRouter {
   constructor({ layer, auditBridge, groundedContextProvider = null, maxCallsPerMinute = 120 } = {}) { this.layer = layer; this.auditBridge = auditBridge; this.groundedContextProvider = groundedContextProvider; this.maxCallsPerMinute = maxCallsPerMinute; this.calls = []; this.completed = new Map(); }
@@ -495,11 +600,73 @@ export class ChatSessionManager {
     this.auditBridge.recordTransmission(preview, transmissionDecision);
     let response, attempt = 0;
     while (true) { try { response = await client.createPlan(request, { onToken }); break; } catch (error) { const mapped = ErrorMapper.map(error, client.settings.provider); if (!mapped.retryable || attempt >= client.settings.retryCount) throw mapped; attempt++; } }
+
+    const initialToolCalls = conversationToolCalls(response);
+    const groundedCalls = initialToolCalls.filter(isGroundedToolCall);
+    const surfacedIntents = groundedCalls.length ? initialToolCalls.filter(call => !isGroundedToolCall(call)).map(call => surfacedToolIntent(call)) : [];
     const toolResults = [];
-    for (const call of response.toolCalls || []) toolResults.push(await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId }));
-    const repaired = await this.validator.repair(response.content, async repair => { const repairRequest = new PlanRequest({ sessionId, prompt: `Repair this Plan. Errors: ${repair.errorSummary.join(', ')}. Return JSON only.`, context, transmissionDecision, metadata: { invalidOutput: repair.invalidOutput, tools: [] } }); const repairedResponse = await client.createPlan(repairRequest, { onToken }); return repairedResponse.content; });
+    let finalResponse = response;
+    let finalToolCalls = initialToolCalls;
+    let continuation = null;
+
+    if (groundedCalls.length) {
+      const groundedResults = [];
+      for (const call of groundedCalls) {
+        const routed = await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId });
+        const bounded = boundedToolResultEnvelope(routed);
+        groundedResults.push(bounded);
+        toolResults.push(bounded);
+      }
+      toolResults.push(...surfacedIntents);
+      const continuationEvidence = buildGroundedContinuation({ request, groundedCalls, groundedResults, surfacedIntents });
+      const continuationRequest = new PlanRequest({
+        sessionId,
+        prompt: groundedContinuationPrompt(continuationEvidence),
+        context,
+        images: images.filter(Boolean),
+        transmissionDecision,
+        metadata: { tools: toolDefinitions(), groundedContinuation: continuationEvidence }
+      });
+      const continuationPreview = buildTransmissionPreview({ settings: client.settings, request: continuationRequest, image: images[0], decision: transmissionDecision });
+      if (client.external && !userConsent) return { status: 'TRANSMISSION_APPROVAL_REQUIRED', transmissionPreview: continuationPreview, request: redactSecrets(continuationRequest) };
+      this.auditBridge.recordTransmission(continuationPreview, transmissionDecision);
+      finalResponse = await client.createPlan(continuationRequest, { onToken });
+      const secondRoundCalls = conversationToolCalls(finalResponse);
+      finalToolCalls = [...initialToolCalls, ...secondRoundCalls];
+      const secondRoundEvidence = secondRoundCalls.map(call => isGroundedToolCall(call) ? continuationLimitEvidence(call) : surfacedToolIntent(call));
+      toolResults.push(...secondRoundEvidence);
+      continuation = {
+        format: 'INK-GROUNDED-TOOL-CONTINUATION-TRACE',
+        version: 1,
+        round: 1,
+        maxRounds: GROUNDED_CONTINUATION_MAX,
+        initialRequestId: request.requestId,
+        continuationRequestId: continuationRequest.requestId,
+        groundedToolCallIds: groundedCalls.map(toolCallId),
+        surfacedToolCallIds: surfacedIntents.map(item => item.toolCallId),
+        secondRoundToolCallIds: secondRoundCalls.map(toolCallId),
+        status: secondRoundCalls.some(isGroundedToolCall) ? 'TOOL_CONTINUATION_LIMIT_REACHED' : (secondRoundCalls.length ? 'USER_GOVERNED_FLOW_REQUIRED' : 'COMPLETED')
+      };
+      const finalText = typeof finalResponse?.content === 'string' ? finalResponse.content.trim() : '';
+      if (!finalText && secondRoundCalls.length) {
+        const raw = continuationFallbackContent(secondRoundCalls, surfacedIntents);
+        const output = new PlanResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, raw, plan: null, toolCalls: finalToolCalls, toolResults, usage: finalResponse?.usage || response?.usage || null, continuation, status: continuation.status });
+        session.messages.push({ role: 'user', content: prompt, contextHash: context.hash }, { role: 'assistant', content: raw, responseHash: hashValue(output), source: 'BOUNDED_CONTINUATION' });
+        return output;
+      }
+    } else {
+      for (const call of initialToolCalls) toolResults.push(await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId }));
+    }
+
+    let repaired;
+    if (groundedCalls.length) {
+      repaired = { plan: this.validator.validate(finalResponse.content), attempts: 0 };
+    } else {
+      repaired = await this.validator.repair(finalResponse.content, async repair => { const repairRequest = new PlanRequest({ sessionId, prompt: `Repair this Plan. Errors: ${repair.errorSummary.join(', ')}. Return JSON only.`, context, transmissionDecision, metadata: { invalidOutput: repair.invalidOutput, tools: [] } }); const repairedResponse = await client.createPlan(repairRequest, { onToken }); return repairedResponse.content; });
+    }
     const plan = repaired.plan.format === 'INK-EDITABLE-PLAN' && repaired.plan.recipeDraft ? repaired.plan : this.layer.createPlanFromSteps(repaired.plan.userIntent || repaired.plan.summary, repaired.plan.orderedSteps, repaired.plan);
-    const output = new PlanResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, raw: redactSecrets(response.content), plan, toolCalls: response.toolCalls, toolResults, usage: response.usage }); session.messages.push({ role: 'user', content: prompt, contextHash: context.hash }, { role: 'assistant', planId: plan.planId, responseHash: hashValue(output) }); return output;
+    const output = new PlanResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, raw: redactSecrets(finalResponse.content), plan, toolCalls: finalToolCalls, toolResults, usage: finalResponse?.usage || response?.usage || null, continuation });
+    session.messages.push({ role: 'user', content: prompt, contextHash: context.hash }, { role: 'assistant', planId: plan.planId, responseHash: hashValue(output) }); return output;
   }
   async requestConversation(sessionId, { prompt, contextOptions = {}, transmissionDecision = 'TEXT_SUMMARY', userConsent = false, onToken } = {}) {
     const session = this.sessions.get(sessionId), client = this.clients.get(session?.client); if (!session || !client) throw new RuntimeError('SESSION_NOT_FOUND', 'Chat session is unavailable.');
@@ -514,10 +681,65 @@ export class ChatSessionManager {
     this.auditBridge.recordTransmission(preview, transmissionDecision);
     let response, attempt = 0;
     while (true) { try { response = await client.createMessage(request, { onToken }); break; } catch (error) { const mapped = ErrorMapper.map(error, client.settings.provider); if (!mapped.retryable || attempt >= client.settings.retryCount) throw mapped; attempt++; } }
-    const toolCalls = conversationToolCalls(response);
+
+    const initialToolCalls = conversationToolCalls(response);
+    const groundedCalls = initialToolCalls.filter(isGroundedToolCall);
+    const surfacedIntents = groundedCalls.length ? initialToolCalls.filter(call => !isGroundedToolCall(call)).map(call => surfacedToolIntent(call)) : [];
     const toolResults = [];
-    for (const call of toolCalls) toolResults.push(await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId }));
-    const output = new ConversationResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, content: toolCalls.length && !response?.content ? '' : conversationContent(response), toolCalls, toolResults, usage: response?.usage || null, source: response?.source || (client.external ? 'MODEL' : 'LOCAL_CONTEXT') });
+    let finalResponse = response;
+    let finalToolCalls = initialToolCalls;
+    let continuation = null;
+
+    if (groundedCalls.length) {
+      const groundedResults = [];
+      for (const call of groundedCalls) {
+        const routed = await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId });
+        const bounded = boundedToolResultEnvelope(routed);
+        groundedResults.push(bounded);
+        toolResults.push(bounded);
+      }
+      toolResults.push(...surfacedIntents);
+      const continuationEvidence = buildGroundedContinuation({ request, groundedCalls, groundedResults, surfacedIntents });
+      const firstContent = (() => { try { return conversationContent(response); } catch { return ''; } })();
+      const continuationTranscript = [...transcript, { role: 'user', content: normalizedPrompt }, ...(firstContent ? [{ role: 'assistant', content: firstContent }] : [])].slice(-12);
+      const continuationRequest = new ConversationRequest({
+        sessionId,
+        prompt: groundedContinuationPrompt(continuationEvidence),
+        context,
+        transcript: continuationTranscript,
+        transmissionDecision,
+        metadata: { tools: toolDefinitions(), groundedContinuation: continuationEvidence }
+      });
+      const continuationPreview = buildTransmissionPreview({ settings: client.settings, request: continuationRequest, decision: transmissionDecision });
+      if (client.external && !userConsent) return { status: 'TRANSMISSION_APPROVAL_REQUIRED', transmissionPreview: continuationPreview, request: redactSecrets(continuationRequest) };
+      this.auditBridge.recordTransmission(continuationPreview, transmissionDecision);
+      finalResponse = await client.createMessage(continuationRequest, { onToken });
+      const secondRoundCalls = conversationToolCalls(finalResponse);
+      finalToolCalls = [...initialToolCalls, ...secondRoundCalls];
+      const secondRoundEvidence = secondRoundCalls.map(call => isGroundedToolCall(call) ? continuationLimitEvidence(call) : surfacedToolIntent(call));
+      toolResults.push(...secondRoundEvidence);
+      continuation = {
+        format: 'INK-GROUNDED-TOOL-CONTINUATION-TRACE',
+        version: 1,
+        round: 1,
+        maxRounds: GROUNDED_CONTINUATION_MAX,
+        initialRequestId: request.requestId,
+        continuationRequestId: continuationRequest.requestId,
+        groundedToolCallIds: groundedCalls.map(toolCallId),
+        surfacedToolCallIds: surfacedIntents.map(item => item.toolCallId),
+        secondRoundToolCallIds: secondRoundCalls.map(toolCallId),
+        status: secondRoundCalls.some(isGroundedToolCall) ? 'TOOL_CONTINUATION_LIMIT_REACHED' : (secondRoundCalls.length ? 'USER_GOVERNED_FLOW_REQUIRED' : 'COMPLETED')
+      };
+    } else {
+      for (const call of initialToolCalls) toolResults.push(await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId }));
+    }
+
+    const secondCalls = groundedCalls.length ? conversationToolCalls(finalResponse) : [];
+    let content;
+    try { content = conversationContent(finalResponse); }
+    catch { content = continuationFallbackContent(secondCalls, surfacedIntents); }
+    if (!String(content || '').trim() && groundedCalls.length) content = continuationFallbackContent(secondCalls, surfacedIntents);
+    const output = new ConversationResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, content, toolCalls: finalToolCalls, toolResults, usage: finalResponse?.usage || response?.usage || null, source: finalResponse?.source || response?.source || (client.external ? 'MODEL' : 'LOCAL_CONTEXT'), continuation, status: continuation?.status || 'COMPLETED' });
     session.messages.push({ role: 'user', content: normalizedPrompt, contextHash: context.hash }, { role: 'assistant', content: output.content, responseHash: hashValue(output), source: output.source });
     return output;
   }
