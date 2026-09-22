@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: `IN_PROGRESS / PHASE_A_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `AUTHORIZED / NOT_STARTED`
 | TITLE | `Panel Hierarchy / Spacing / CHAT Placement Polish v0.1` |
 | BRANCH | `work/ink-web-ui-004` |
 | BASE_MAIN | `9adc2ef09141e4015fc9d4657fb5b3f932a39c41` |
-| TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
+| TASK_STATUS | `IN_PROGRESS / PHASE_A_COMPLETE` |
 | DEV_HANDOFF | `NOT_YET` |
 | UR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `PANEL_CHAT_UI_POLISH_WORKS` |
@@ -43,6 +43,41 @@ At each meaningful checkpoint commit and update this file.
 Cross-lane requirement:
 
 `INTEGRATION_REQUIRED → STOP → UR`
+
+## Checkpoints
+
+### Phase A — hierarchy / density inventory
+
+Audited starting branch HEAD:
+
+`c5817a1cdd74f882133ecbd61437d51863792ff2`
+
+Observed UI facts:
+
+- `web-shell.js` already enforces one Inspector / Creative Workspace primary surface and a collapsed-by-default dock;
+- dock already contains two conceptual groups, but grouping is mostly implicit and Window menu is flat;
+- Creative Workspace remains a right-side primary panel, but its header/state/tabs retain older floating-workspace density;
+- Creative internal stage changes are not explicitly synchronized back into dock/presentation state by the shared shell;
+- CHAT / Reference / Compose / Revision already route through existing `creativeWorkspace.setStage()` / `setOpen()`; no CHAT semantic change is required;
+- UI-003 contextual row is shared and must remain unchanged except spacing harmony;
+- Inspector and Creative Workspace can be polished through shared shell coordination + CSS only.
+
+Implementation plan:
+
+```text
+explicit dock/menu grouping
++ presentation-only creative-stage synchronization
++ compact shared panel/chrome spacing
++ CHAT visual priority inside existing Creative Workspace
++ deterministic static contract
+```
+
+Expected product mutation: `product/source/web-shell.js` and `product/source/styles.css` only.
+No HTML fork and no Core / CHAT-controller semantic source change required.
+
+Checks not yet executed: focused static/parity closure.
+Runtime remains `DEFERRED_TO_UI_INTEGRATION_BATCH`.
+Integration finding: none.
 
 ## Completion
 
