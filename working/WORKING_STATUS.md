@@ -1659,3 +1659,47 @@ Required rerun:
 workflow = INK Manual Windows Runtime Batch
 target_ref = 448e98dd224ba25faf5ea37077abeb8e95ccc94d
 ```
+
+
+## INK-INTEGRATION-RUNTIME-001 second-run failure / harness fix
+
+Second manual Runtime batch:
+
+```text
+RUN = 35691982799
+TARGET_SHA = 448e98dd224ba25faf5ea37077abeb8e95ccc94d
+RESULT = FAIL
+UI_SUITE = PASS
+CREATIVE_SUITE = PRODUCT_BEHAVIOR_PASS / EVIDENCE_VALIDATOR_FAIL
+```
+
+Artifact inspection showed every creative behavior check passed, including extraction, path edit, CHAT approval/execution, structure-aware reconstruction, Revision restore, project reload, FORMAT_VERSION 4 and runtime health.
+
+Failure cause was QA evidence construction, not product behavior:
+
+```text
+pass(name, details)
+→ { name, status:'PASS', ...details }
+
+details.status = 200
+details.name = saved file name
+
+→ canonical status/name fields were overwritten
+→ batch validator rejected otherwise-passing evidence
+```
+
+Bounded harness fix:
+
+```text
+PR = #29 / MERGED
+FIX_MAIN = a364663bc3d03bfa184c708da8e42891e53fb563
+CHANGE = { name, ...details, status:'PASS' }
+REGRESSION_GUARD = runtime-batch-helper static assertion
+PRODUCT_BEHAVIOR_CHANGE = 0
+```
+
+Runtime debt remains uncleared until a third manual batch passes.
+
+Required rerun target:
+
+`a364663bc3d03bfa184c708da8e42891e53fb563`
