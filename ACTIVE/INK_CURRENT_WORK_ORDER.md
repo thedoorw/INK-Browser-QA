@@ -1,28 +1,29 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `CORE-MOD-002 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `CORE-MOD-003 / AUTHORIZED / READY_FOR_DEV`
 
-## Prior closure
+## Prior closures
 
 ```text
-CORE-MOD-001 = MR_PASS / PROMOTED
-PR = #26 / MERGED
-MAIN = 618a594ae88aacbe847bbc7a1700bb8ed61ab14c
-RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+CORE-MOD-001 = AI Document Bridge / MR_PASS / PROMOTED / RUNTIME_DEBT_CLEARED
+CORE-MOD-002 = Semantic Region Grounding / MR_PASS / PROMOTED
+CORE-MOD-002 PROMOTION PR = #30
+CORE-MOD-002 MAIN = 05bd690f09a9c2cd81fe4a8744f7641805e5cfe2
 ```
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `CORE-MOD-002` |
-| TITLE | `Semantic Region Grounding Module v0.1` |
+| CURRENT_TASK_ID | `CORE-MOD-003` |
+| TITLE | `Revision Provenance Module v0.1` |
 | ROLE_OWNER | `MR / CORE MODULE LANE` |
-| DEV_WORK_BRANCH | `work/ink-core-semantic-region-002` |
+| DEV_WORK_BRANCH | `work/ink-core-revision-provenance-003` |
 | DEV_MODE | `BOUNDED_MODULE_PREPARATION` |
 | PRODUCT_SOURCE_MUTATION | `AUTHORIZED / MODULE_ONLY` |
 | UI_MUTATION | `PROHIBITED` |
-| SELECTION_AUTHORITY_CHANGE | `PROHIBITED` |
+| REVISION_AUTHORITY_CHANGE | `PROHIBITED` |
+| HISTORY_SEMANTICS_CHANGE | `PROHIBITED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
@@ -30,23 +31,29 @@ RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 
 ## Objective
 
-Prepare a pure semantic-region grounding module that converts existing INK Path / Region / semantic evidence into deterministic region and relationship descriptors without creating a second selection or geometry authority.
+Prepare a pure provenance module that explains how an INK object, change, Revision, extraction result, Recipe result or CHAT operation was derived, while keeping existing Revision and History systems authoritative.
 
 Target:
 
 ```text
-INK Path / Region / object evidence
-→ region boundary / hole / island grounding
-→ contains / inside / intersects / overlaps / adjacency relations
-→ deterministic semantic-region graph
+reference / extraction / recipe / CHAT operation / revision evidence
+→ normalized provenance events
+→ object/change/revision lineage
+→ deterministic provenance graph
+→ bounded CHAT-readable provenance context
 ```
+
+This module records/normalizes evidence only. It does not replace existing Revision records, History transactions, or document mutation semantics.
 
 ## Existing authority to preserve
 
-- INK Path and Geometry Kernel;
-- existing semantic model / relationship graph;
-- existing selection authority;
-- existing Document / History / Revision;
+- `product/source/src/document/revision.js`;
+- existing Revision record/index/restore semantics;
+- existing History implementation;
+- existing file-envelope integrity;
+- existing object IDs / document IDs / revision IDs;
+- existing extraction / Recipe / CHAT metadata already present in source records;
+- AI Document Bridge and Semantic Region Grounding as read-only consumers/producers;
 - FORMAT_VERSION = 4.
 
 ## Required reads
@@ -56,103 +63,132 @@ INK Path / Region / object evidence
 3. this Work Order
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
-7. `product/source/src/semantic/*`
-8. `product/source/src/vector/geometry-kernel.js`
-9. relevant Region / extraction modules only as needed
+6. `product/source/src/document/revision.js`
+7. `product/source/src/document/file-envelope.js`
+8. `product/source/src/history/*`
+9. `product/source/src/ai/document-bridge.js`
+10. relevant extraction / Recipe / CHAT modules only as needed
 
 ## Scope
 
-### Phase A — contract inventory
+### Phase A — provenance contract inventory
 
-Define one INK-owned semantic-region output contract.
+Inventory existing provenance-bearing fields from:
 
-At minimum cover:
+- reference/import source metadata;
+- extraction metadata;
+- Recipe / step IDs;
+- CHAT proposal / plan / execution IDs;
+- Revision IDs / parent/base links;
+- object source IDs;
+- file-envelope / document identity;
+- semantic-region provenance refs.
 
-- source object/path identity;
-- outer boundary / hole / island role;
-- deterministic region IDs;
-- bounds / area / centroid references when available;
-- contains / inside;
-- intersects / overlaps;
-- adjacency / crossing / gap / bridge evidence only when supported by source evidence;
-- confidence / unresolved state;
-- source/provenance references;
-- deterministic fingerprint.
+Define one INK-owned provenance event/graph contract.
 
-Gate: `SEMANTIC_REGION_CONTRACT_DEFINED`
+At minimum include:
 
-### Phase B — pure grounding module
+- deterministic event ID;
+- event kind;
+- source entity;
+- target entity;
+- document ID;
+- revision ID when available;
+- parent/source event IDs;
+- operation / recipe / step / proposal / plan identity when available;
+- before/after fingerprints or object IDs where available;
+- timestamp as evidence only, excluded from deterministic identity where necessary;
+- unresolved provenance;
+- deterministic graph fingerprint.
+
+Gate: `REVISION_PROVENANCE_CONTRACT_DEFINED`
+
+### Phase B — pure provenance module
 
 Recommended:
 
-`product/source/src/semantic/semantic-region-grounding.js`
+`product/source/src/provenance/provenance-graph.js`
 
 Requirements:
 
 - pure / non-mutating;
 - no DOM/network dependency;
-- plain JSON-compatible values;
+- JSON-compatible;
 - deterministic IDs/order/fingerprint;
-- reuse existing geometry calculations rather than create a second geometry engine;
-- fail closed on malformed structural input;
-- unresolved relationships remain explicitly unresolved rather than guessed.
+- normalize existing evidence; do not invent lineage;
+- unresolved/missing links remain explicit;
+- bounded event / edge output;
+- no modification of Revision record schema.
 
-Gate: `SEMANTIC_REGION_GROUNDING_WORKS`
+Gate: `REVISION_PROVENANCE_GRAPH_WORKS`
 
-### Phase C — bridge boundary
+### Phase C — adapters
 
-Provide a narrow adapter that later Integration may consume from AI Document Bridge / selection / CHAT.
+Provide narrow read-only adapters for later Integration:
 
-This task must not make the module the active production selection source.
+```text
+existing Revision records / comparison
+existing document/object metadata
+optional extraction / Recipe / CHAT evidence
+→ provenance graph
 
-Gate: `SEMANTIC_REGION_ADAPTER_READY`
+provenance graph
+→ bounded AI Document Bridge-compatible context
+```
+
+Do not make provenance the active Revision store or History store.
+
+Gate: `REVISION_PROVENANCE_ADAPTER_READY`
 
 ### Phase D — deterministic evidence
 
 Tests must cover at minimum:
 
-- outer + hole + island;
-- nested/overlapping regions;
-- stable input-order normalization;
-- deterministic region IDs and fingerprint;
-- relationship classification;
-- unresolved evidence behavior;
-- malformed geometry rejection;
+- reference → extraction → object lineage;
+- Recipe / step lineage;
+- CHAT proposal/plan/execution lineage;
+- Revision parent/base lineage;
+- object added/changed/removed evidence from existing revision comparison;
+- equivalent reordered input → same graph/fingerprint;
+- unresolved/missing source links;
+- duplicate/conflicting evidence handling;
+- bounded output;
 - no source mutation;
-- FORMAT_VERSION = 4;
-- compatibility with existing AI Document Bridge consumption shape where practical.
+- existing Revision record inspection remains valid;
+- FORMAT_VERSION = 4.
 
-Gate: `CORE_MOD_002_MODULE_READY`
+Gate: `CORE_MOD_003_MODULE_READY`
 
 ## Hard boundaries
 
 Do not:
 
-- alter UI;
-- replace selection authority;
-- create a new Path representation;
-- add a second Boolean/geometry engine;
-- change Document / History / Revision semantics;
-- change schema or FORMAT_VERSION;
-- activate remote segmentation/ONNX;
-- integrate visual compare or parametric modules.
+- alter Revision schema or restore behavior;
+- change History semantics;
+- add timestamps to deterministic IDs in a way that breaks equivalence;
+- modify UI;
+- change Document schema;
+- change FORMAT_VERSION;
+- create a second revision store;
+- create a second History;
+- integrate Compare / Variant or Parametric modules in this task.
 
 ## Required report
 
 Exactly one:
 
-`research/INK_CORE_MOD_002_SEMANTIC_REGION_REPORT_v0.1.md`
+`research/INK_CORE_MOD_003_REVISION_PROVENANCE_REPORT_v0.1.md`
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = CORE-MOD-002
-BRANCH = work/ink-core-semantic-region-002
-GATE = CORE_MOD_002_MODULE_READY
+TASK_ID = CORE-MOD-003
+BRANCH = work/ink-core-revision-provenance-003
+GATE = CORE_MOD_003_MODULE_READY
 UI_MUTATION = 0
-SELECTION_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+HISTORY_SEMANTICS_CHANGE = 0
 FORMAT_VERSION = 4
 RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
