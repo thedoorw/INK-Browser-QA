@@ -1,0 +1,22 @@
+{
+  "schema": "ink-runtime-queue",
+  "version": 1,
+  "state": "IDLE",
+  "target_sha": null,
+  "pending_work_orders": [],
+  "covered_work_orders": [],
+  "high_risk": {
+    "enabled": false,
+    "reason": null
+  },
+  "batch_policy": {
+    "default_target": 3,
+    "allowed_min": 2,
+    "allowed_max": 4
+  },
+  "last_run": {
+    "run_id": null,
+    "tested_sha": null,
+    "result": null
+  }
+}
