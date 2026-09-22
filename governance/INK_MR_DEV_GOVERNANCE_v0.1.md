@@ -218,3 +218,66 @@ STOP new promotion where the failure may propagate
 ```
 
 Runtime batching is a development-efficiency policy. It does not permit false claims of runtime verification before the batch actually executes.
+
+
+## Delegated UI lane — UR
+
+USER-authoritative delegation:
+
+```text
+MR = MAIN REVIEW / overall product + Core + Integration authority
+UR = UI REVIEW / delegated UI-lane authority
+```
+
+MR defines only:
+
+1. the UI lane's large-direction sequence;
+2. branch-task boundaries;
+3. role boundaries.
+
+Within that pre-authorized UI sequence, UR does **not** wait for a new MR command between bounded UI tasks.
+
+UR may autonomously:
+
+- issue the next bounded UI workpack from the MR-approved UI sequence;
+- create/name the dedicated `work/ink-web-ui-*` branch;
+- write the branch-local Work Order and DEV progress baseline;
+- supervise UI DEV;
+- review DEV handoff;
+- issue `UI_PASS / UI_REVISE / UI_HOLD`;
+- clean-promote an accepted UI-only payload to current `main`;
+- continue directly to the next pre-authorized UI task;
+- record deferred UI Runtime debt.
+
+UR must STOP and escalate to MR as `INTEGRATION_REQUIRED` if a UI task needs to change:
+
+- Document authority or schema/migration;
+- History semantics;
+- Revision semantics;
+- renderer / WebGL / Canvas engine;
+- Recipe or Geometry core contracts;
+- Core module contracts;
+- destructive persistence behavior;
+- product base version;
+- package/certification;
+- another lane's owned implementation.
+
+UR does not need MR approval merely because `main` advanced. For a diverged UI branch, UR uses a clean promotion from current main and promotes only the reviewed UI payload.
+
+### UI lane task authority
+
+The main `ACTIVE/INK_CURRENT_WORK_ORDER.md` remains the global MR / Core / Integration bulletin.
+
+For delegated UI tasks, UR may create a branch-local `ACTIVE/INK_CURRENT_WORK_ORDER.md` on the dedicated UI branch. That branch-local Work Order is authoritative **only for that UI branch** and must remain inside the pre-authorized UI sequence.
+
+Branch-local UI Work Orders and DEV progress files are excluded from clean promotion unless MR governance explicitly requires otherwise.
+
+This delegation removes per-task MR orchestration while preserving one MAIN authority for cross-lane integration.
+
+### UI Runtime cadence
+
+UR may promote UI-only Work Orders with `RUNTIME_QA = DEFERRED_TO_BATCH` when source/static evidence is adequate and no immediate-runtime trigger exists.
+
+UR does not wait for MR between UI tasks because of deferred Runtime debt.
+
+The accumulated UI debt is handed to the Integration checkpoint. MR owns the cross-lane Runtime batch unless a future explicit delegation says otherwise.
