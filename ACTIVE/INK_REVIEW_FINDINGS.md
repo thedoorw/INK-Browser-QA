@@ -1,33 +1,53 @@
 # INK REVIEW FINDINGS
 
-STATUS: `CORE-MOD-005 / MR_PASS`
+STATUS: `INK-CORE-INTEGRATION-001 / MR_PASS / RUNTIME_PASS`
 
-TASK: `CORE-MOD-005 — Parametric Creative Structure Module v0.1`
+TASK: `INK-CORE-INTEGRATION-001 — Grounded Creative Intelligence Context Integration v0.1`
 
-REVIEW_PAYLOAD_HEAD: `e2747ae8dab1b52a4fe9900012f24bf9d18bc8fd`
-
-## Decision
-
-`MR_PASS / SOURCE_REVIEW_PASS / NODE_QA_PASS / RUNTIME_QA_DEFERRED`
+REVIEWED_HEAD: `a1ab28164e2292e22db89819a311b1459bf37758`
 
 ## Accepted findings
 
-- module is isolated to `product/source/src/structure/parametric-structure.js`;
-- no UI path changed;
-- no authoritative Document / Geometry / Path / Repeat / Transform / History / Revision / Renderer authority file changed;
-- resolver is pure/non-mutating and emits plans only;
-- generated-node IDs are deterministic;
-- bounded expansion and output limits are enforced;
-- unresolved refs remain explicit instead of fabricated;
-- `FORMAT_VERSION = 4` is preserved;
-- deterministic Node QA passed at tested SHA `5b24e12f45f6fcc371680eee8f778a7eeb7652f0`;
-- Runtime remains deferred to Integration batch.
+- five prepared Core modules are composed through one read-only integration context rather than duplicated;
+- the current INK Document remains authoritative;
+- grounded context is advisory and deterministic;
+- existing CHAT planning/conversation remains backward compatible when grounded context is disabled or unavailable;
+- disclosure projection remains governed by the existing CHAT context boundary;
+- Visual Compare and Parametric Structure remain explicit opt-in evidence;
+- preview / approval / execution / rollback authority is unchanged;
+- no UI layout, Document schema, History, Revision, Geometry or Renderer authority mutation was introduced;
+- `FORMAT_VERSION = 4` is preserved.
+
+## Source QA
+
+```text
+RUN = 35725230617
+JOB = 106737174265
+RESULT = SUCCESS
+```
 
 ## Promotion
 
 ```text
-PR = #33 / MERGED
-MAIN = 6132889470affeeb398b4a8151cef587fac22f1f
-INTEGRATION_QUEUE += PARAMETRIC_CREATIVE_STRUCTURE
-RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+PR = #34 / MERGED
+MAIN = b7d013da3a27d0fea0922d83e799c5c51652e53f
+```
+
+## Windows Runtime
+
+```text
+RUN = 35725433978
+JOB = 106737830914
+TESTED_SHA = b7d013da3a27d0fea0922d83e799c5c51652e53f
+RESULT = PASS
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+```
+
+Runtime evidence artifact:
+
+```text
+ARTIFACT_ID = 10693377440
+SHA256 = e0eaaebcacf4621592f12304c6adfc7772d7eb9c8ad7e28f40ded395c45406e8
 ```
