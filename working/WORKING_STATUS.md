@@ -1624,3 +1624,38 @@ Status:
 `MR_RUNTIME_BATCH_READY / MANUAL_DISPATCH_REQUIRED`
 
 No Runtime PASS is claimed until the manual batch actually completes successfully.
+
+
+## INK-INTEGRATION-RUNTIME-001 first-run failure / bounded fix
+
+First manual Runtime batch:
+
+```text
+RUN = 35691554160
+TARGET_SHA = cbc89271dc76b47e294a2bbf449615a3d03786e4
+RESULT = FAIL
+RUNNER = DESKTOP-NSOQH69
+FAILURE = UI harness fatal
+DETAIL = ReferenceError: active is not defined
+SOURCE = product/source/web-shell.js / INK_WEB_SHELL.state()
+```
+
+This is isolated to the UI-004 shell-state presentation code. Materialization, runner launch, Chrome launch, artifact preservation and cleanup all worked.
+
+Bounded fix:
+
+```text
+PR = #28 / MERGED
+FIX_MAIN = 448e98dd224ba25faf5ea37077abeb8e95ccc94d
+CHANGE = add local active = currentPanel() binding
+REGRESSION_GUARD = panel-chat-polish static assertion
+```
+
+Runtime debt remains uncleared.
+
+Required rerun:
+
+```text
+workflow = INK Manual Windows Runtime Batch
+target_ref = 448e98dd224ba25faf5ea37077abeb8e95ccc94d
+```
