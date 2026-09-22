@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `IN_PROGRESS / PHASE_A_COMPLETE`
+STATUS: `IN_PROGRESS / PHASE_B_E_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `IN_PROGRESS / PHASE_A_COMPLETE`
 | TITLE | `Contextual Controls / Top Options v0.1` |
 | BRANCH | `work/ink-web-ui-003` |
 | BASE_MAIN | `73b54efe6d7db1f9fd15531603056c82e4c9de1e` |
-| TASK_STATUS | `IN_PROGRESS / PHASE_A_COMPLETE` |
+| TASK_STATUS | `IN_PROGRESS / PHASE_B_E_COMPLETE` |
 | DEV_HANDOFF | `NOT_YET` |
 | UR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `CONTEXTUAL_TOOL_OPTIONS_WORK` |
@@ -91,6 +91,41 @@ Forbidden Core / Document / History / Revision / Recipe / Geometry / Renderer fi
 
 Checks executed: source inventory / binding trace by exact branch source inspection.
 Checks not executed yet: Node parity/context tests; full browser Runtime intentionally deferred.
+Integration finding: none.
+
+### Phases B–E — contextual host and requested tool contexts
+
+Implementation checkpoints:
+
+| Scope | Commit |
+|---|---|
+| Web contextual host + preserved quick-control IDs | `71c579f8f334e92127e861dbc58290801a39f38e` |
+| Portable host parity | `52db37db7f901d4d927d917540c4c9d563b981b2` |
+| Shared coordinator / node re-hosting / Inspector on-demand | `2fa4903a10f34e9df0ba3740d7e080043bb4f4f8` |
+| Contextual top-row presentation and canvas offsets | `08a6c45937a782eee3d0f3f74f1d122afbcc9099` |
+| Extended full-shell parity guard | `5c15c272e1d449ea837432b1ba51931388cd25a8` |
+| Focused contextual static-contract test | `8d02fc71fe46cd0c7c8a7db22406befecb48edc2` |
+
+Implemented visibility matrix:
+
+- Pen / Pencil / Marker / Brush / Airbrush → identity + Color / Size / Opacity;
+- Eraser → identity + Size + existing segment/object mode;
+- Shape → identity + type + fill + shared existing color;
+- Text → identity + font family + font size + shared existing color;
+- selection present → existing duplicate / group / front / horizontal-center / delete action bar;
+- advanced / preset / smoothing / pressure / media dynamics remain reachable through Inspector.
+
+Binding discipline:
+
+```text
+existing command-bearing nodes are moved, not cloned
+existing IDs are preserved
+existing data-selection-action / data-eraser-mode / data-shape hooks are preserved
+src/ink.js = unchanged
+Core semantic modules = unchanged
+```
+
+Runtime: not executed; still `DEFERRED_TO_UI_INTEGRATION_BATCH`.
 Integration finding: none.
 
 ## Completion
