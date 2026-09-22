@@ -9,7 +9,7 @@ STATUS: `INK-WEB-UI-001 / IN_PROGRESS`
 | BRANCH | `work/ink-web-ui-001` |
 | BRANCH_BASE | `e00ff4edd81ab659e62a87d700bcbb9fc6dd465d` |
 | TASK_STATUS | `IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_D / WEB_IDENTITY_AND_CACHE` |
+| CURRENT_PHASE | `PHASE_E / REGRESSION_AND_BROWSER_RUNTIME` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_WEB_UI_PHASE1_SOURCE_COMPLETE` |
@@ -130,6 +130,32 @@ CHECKS =
   FORMAT_VERSION = 4 / PASS
 BLOCKER = NONE
 NEXT = PHASE_D / WEB_IDENTITY_AND_CACHE
+```
+
+
+## Checkpoint — Phase D
+
+```text
+GATE = WEB_V0_1_IDENTITY_AND_FAVICON_WORK / PASS_SOURCE_STATIC
+IMPLEMENTATION_HEAD = eb5ba73d4157329b6a658b9a0a3f64e7ad7f650f
+EVIDENCE_HEAD = 44e3fe431ee461317f61a5f7fe1121d5a10097d6
+IDENTITIES =
+  INK v0.1 · Web
+  INK v0.1 · Portable
+MARK =
+  source: reference/brand/INK_MARK_SOURCE_W-300.jpg
+  product asset: product/source/assets/ink-mark.svg
+CACHE_IDENTITY = 0.1-Web
+FORMAT_VERSION = 4 / PRESERVED
+CHECKS =
+  Web/Portable identity strings / PASS
+  favicon links / PASS
+  manifest JSON + icon metadata / PASS
+  service-worker syntax + APP_SHELL additions / PASS
+  cache-busting shell URLs / PASS
+  no active old 1.6.5/1.5.1 identity in entry shells / PASS
+BLOCKER = NONE
+NEXT = PHASE_E / REGRESSION_AND_BROWSER_RUNTIME
 ```
 
 ## Completion
