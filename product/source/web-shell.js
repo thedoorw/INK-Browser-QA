@@ -20,13 +20,17 @@
     pan: { label: '移動畫布', icon: 'i-pan' }
   });
   const PANEL_DEFS = Object.freeze([
-    { id: 'properties', label: '屬性', icon: 'i-sliders', kind: 'inspector' },
-    { id: 'layers', label: '圖層', icon: 'i-layers', kind: 'inspector', tab: 'layers' },
-    { id: 'history', label: '歷史', icon: 'i-history', kind: 'inspector', tab: 'history' },
-    { id: 'reference', label: 'Reference', icon: 'i-image', kind: 'creative', stage: 'reference' },
-    { id: 'compose', label: 'Compose', icon: 'i-group', kind: 'creative', stage: 'compose' },
-    { id: 'chat', label: 'CHAT', icon: 'i-spark', kind: 'creative', stage: 'chat' },
-    { id: 'revision', label: 'Revision', icon: 'i-history', kind: 'creative', stage: 'revision' }
+    { id: 'properties', label: '屬性', icon: 'i-sliders', kind: 'inspector', group: 'editor' },
+    { id: 'layers', label: '圖層', icon: 'i-layers', kind: 'inspector', tab: 'layers', group: 'editor' },
+    { id: 'history', label: '歷史', icon: 'i-history', kind: 'inspector', tab: 'history', group: 'editor' },
+    { id: 'reference', label: 'Reference', icon: 'i-image', kind: 'creative', stage: 'reference', group: 'creative' },
+    { id: 'compose', label: 'Compose', icon: 'i-group', kind: 'creative', stage: 'compose', group: 'creative' },
+    { id: 'chat', label: 'CHAT', icon: 'i-spark', kind: 'creative', stage: 'chat', group: 'creative' },
+    { id: 'revision', label: 'Revision', icon: 'i-history', kind: 'creative', stage: 'revision', group: 'creative' }
+  ]);
+  const PANEL_GROUPS = Object.freeze([
+    { id: 'editor', label: 'Editor', items: PANEL_DEFS.filter(def => def.group === 'editor') },
+    { id: 'creative', label: 'Creative Loop', items: PANEL_DEFS.filter(def => def.group === 'creative') }
   ]);
 
   const state = {
@@ -150,12 +154,13 @@
     dock.id = 'panelDock';
     dock.className = 'panel-dock';
     dock.setAttribute('aria-label', '面板 Dock');
-    dock.innerHTML =
-      '<div class="panel-dock-group">' +
-      PANEL_DEFS.slice(0, 3).map(def => buttonMarkup(def)).join('') +
-      '</div><div class="panel-dock-separator"></div><div class="panel-dock-group creative">' +
-      PANEL_DEFS.slice(3).map(def => buttonMarkup(def)).join('') +
-      '</div>';
+    dock.innerHTML = PANEL_GROUPS.map((group, index) =>
+      (index ? '<div class="panel-dock-separator" aria-hidden="true"></div>' : '') +
+      '<div class="panel-dock-group ' + group.id + '" data-panel-group="' + group.id +
+      '" aria-label="' + group.label + '">' +
+      group.items.map(def => buttonMarkup(def)).join('') +
+      '</div>'
+    ).join('');
     dock.addEventListener('click', event => {
       const button = event.target.closest('[data-shell-panel]');
       if (!button) return;
@@ -176,7 +181,12 @@
     menu.className = 'panel-window-menu';
     menu.setAttribute('role', 'menu');
     menu.hidden = true;
-    menu.innerHTML = PANEL_DEFS.map(def => buttonMarkup(def, true)).join('');
+    menu.innerHTML = PANEL_GROUPS.map(group =>
+      '<div class="panel-window-group" data-panel-group="' + group.id + '">' +
+      '<div class="panel-window-group-label">' + group.label + '</div>' +
+      group.items.map(def => buttonMarkup(def, true)).join('') +
+      '</div>'
+    ).join('');
     menu.addEventListener('click', event => {
       const button = event.target.closest('[data-shell-panel]');
       if (!button) return;
@@ -288,6 +298,19 @@
     return null;
   }
 
+  function syncCreativePresentation() {
+    const app = runtime();
+    const creative = document.querySelector('#creativeWorkspace');
+    if (!app?.creativeWorkspace || !creative) return;
+    const stage = app.creativeWorkspace.stage || 'reference';
+    creative.dataset.shellStage = stage;
+    const def = PANEL_DEFS.find(item => item.kind === 'creative' && item.stage === stage);
+    const label = def?.label || (stage === 'edit' ? 'Edit' : 'Creative Workspace');
+    const title = creative.querySelector('.creative-workspace-head strong');
+    if (title) title.textContent = label;
+    creative.setAttribute('aria-label', 'INK ' + label);
+  }
+
   function syncLayout() {
     if (!state.root) return;
     const active = currentPanel();
@@ -306,7 +329,11 @@
       button.classList.toggle('active', pressed);
       button.setAttribute('aria-pressed', String(pressed));
     });
+    const creativeOpen = Boolean(runtime()?.creativeWorkspace?.open);
+    state.dock?.querySelector('[data-panel-group="editor"]')?.classList.toggle('group-active', Boolean(state.root.classList.contains('inspector-open')));
+    state.dock?.querySelector('[data-panel-group="creative"]')?.classList.toggle('group-active', creativeOpen);
     if (state.windowMenu && !state.windowMenu.hidden) positionWindowMenu();
+    syncCreativePresentation();
     syncContextualOptions();
   }
 
@@ -344,7 +371,12 @@
         syncSoon();
       });
       state.mutationObserver.observe(state.root, { attributes: true, attributeFilter: ['class', 'data-panel'] });
-      if (creativeRoot) state.mutationObserver.observe(creativeRoot, { attributes: true, attributeFilter: ['class', 'data-stage'] });
+      if (creativeRoot) {
+        state.mutationObserver.observe(creativeRoot, { attributes: true, attributeFilter: ['class', 'data-stage'] });
+        creativeRoot.addEventListener('click', event => {
+          if (event.target.closest('[data-workspace-stage]')) syncSoon();
+        });
+      }
 
       if ('ResizeObserver' in globalThis) {
         state.resizeObserver = new ResizeObserver(syncSoon);
@@ -408,10 +440,11 @@
         collapsed: !activePanelElement(),
         inspectorOpen: Boolean(state.root?.classList.contains('inspector-open')),
         creativeOpen: Boolean(runtime()?.creativeWorkspace?.open),
-        creativeStage: runtime()?.creativeWorkspace?.stage || null,
         panelWidth: panel ? Math.round(panel.getBoundingClientRect().width) : 0,
         stageWidth: Math.round(document.querySelector('#stageWrap')?.getBoundingClientRect().width || 0),
         dockWidth: Math.round(state.dock?.getBoundingClientRect().width || 0),
+        panelGroup: active && PANEL_DEFS.find(def => def.id === active)?.group || (runtime()?.creativeWorkspace?.open ? 'creative' : null),
+        creativeStage: runtime()?.creativeWorkspace?.stage || null,
         contextMode: state.contextualRoot?.dataset.contextMode || null,
         contextTool: state.contextualRoot?.dataset.contextTool || null
       };

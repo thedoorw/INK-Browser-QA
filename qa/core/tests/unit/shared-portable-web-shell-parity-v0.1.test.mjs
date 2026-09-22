@@ -59,8 +59,11 @@ test('shared dynamic dock and Creative Workspace remain reachable and contained'
   assert.match(coordinator, /dock\.id = 'panelDock'/);
   assert.match(coordinator, /appRoot\.append\(dock\)/);
   for (const [id, kind, target] of [['layers','inspector','tab'], ['history','inspector','tab'], ['reference','creative','stage'], ['compose','creative','stage'], ['chat','creative','stage'], ['revision','creative','stage']]) {
-    assert.match(coordinator, new RegExp(`\\{ id: '${id}'[^\\n]+kind: '${kind}', ${target}: '${id}' \\}`));
+    assert.match(coordinator, new RegExp(`\\{ id: '${id}'[^\\n]+kind: '${kind}', ${target}: '${id}'[^\\n]*\\}`));
   }
+  assert.match(coordinator, /PANEL_GROUPS = Object\.freeze/);
+  assert.match(coordinator, /data-panel-group=/);
+  assert.match(coordinator, /panel-window-group-label/);
   assert.match(coordinator, /data-shell-panel=/);
   assert.match(coordinator, /creativeWorkspace\?\.setOpen\?\.\(false\)/);
   const creative = read('src/editor/creative-workspace.js');
