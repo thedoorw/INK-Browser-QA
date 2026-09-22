@@ -279,3 +279,23 @@ NEXT = DUAL_TRACK_UI_CORE_GOVERNANCE_DISCUSSION
 ```
 
 No next implementation Work Order is auto-opened.
+
+
+## UI lane delegation after closure
+
+Global task remains closed. No new global/Core/Integration Work Order is opened here.
+
+USER has delegated the pre-authorized UI sequence to UR:
+
+```text
+UI-003 → UI-004 → UI-005
+UR = delegated UI-lane authority
+MR command between UI tasks = NOT REQUIRED
+```
+
+UR may issue branch-local UI Work Orders and continue independently under the boundaries in:
+
+- `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
+- `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
+
+Cross-lane changes remain `INTEGRATION_REQUIRED`.
