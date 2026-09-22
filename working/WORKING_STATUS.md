@@ -1209,3 +1209,35 @@ RUNTIME = 35670775922 / SUCCESS
 ```
 
 The next active discussion is the INK Web interface. No RA-002 or INK Web implementation Work Order has been opened automatically.
+
+
+## INK Web UI development planning
+
+User direction accepted:
+
+```text
+REFERENCE_SHELL = Photoshop / Illustrator workspace grammar
+CORE_PRINCIPLE = quiet human UI + complete CHAT capability underneath
+PLAN = research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md
+NEXT_PLANNED_WORK_ORDER = INK-WEB-UI-001
+IMPLEMENTATION = NOT YET AUTHORIZED
+```
+
+First planned package:
+
+`INK-WEB-UI-001 — Photoshop-Aligned Workspace Shell & Collapsible Panel Dock v0.1`
+
+Planned first package scope:
+
+```text
+current shell inventory
+→ canvas-first shell
+→ compact left tools
+→ right dock collapsed by default
+→ panel expand/collapse
+→ remove/redesign central INK empty-state card
+→ visible display label = INK v0.1 · Web
+→ browser/runtime closure
+```
+
+Full contextual-control migration and broader CHAT panel reorganization remain later plan phases unless the initial inventory proves they can be included safely.
