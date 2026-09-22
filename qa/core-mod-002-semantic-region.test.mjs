@@ -114,6 +114,7 @@ function expectCode(fn, code) {
   assert.equal(edgeExists(one, outerId, 'contains', innerId), true);
   assert.equal(edgeExists(one, innerId, 'inside', outerId), true);
   assert.equal(edgeExists(one, overlapId, 'overlaps'), true);
+  assert.equal(edgeExists(one, overlapId, 'intersects'), true);
   assert.equal(edgeExists(one, innerId, 'adjacent', rightId), true);
   assert.equal(edgeExists(one, rightId, 'adjacent', innerId), true);
 }
