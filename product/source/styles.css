@@ -2488,7 +2488,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
     max-width:100%;
     box-sizing:border-box;
   }
-  .creative-workspace-inline{minmax:0}
 
   /* Bounded readability lift. Primary labels stay compact while secondary
      values are brought out of the 7–8 px range and away from low contrast. */
