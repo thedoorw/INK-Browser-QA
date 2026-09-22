@@ -1931,3 +1931,30 @@ FORMAT_VERSION = 4
 ```
 
 This stage makes the completed grounded intelligence directly callable by CHAT while preserving the existing proposal → preview → approval → execution boundary.
+
+
+## INK-CORE-INTEGRATION-002 closure
+
+```text
+TASK = INK-CORE-INTEGRATION-002
+TITLE = Grounded Creative Tool Surface v0.1
+DEV_HANDOFF = 73a276431f58f393acf486af3135f45890ec44e4
+QA = PASS / 35728730503
+PROMOTION_PR = #36 / MERGED
+PROMOTED_MAIN = 4b03897d7ba984bcbe0898ab3ebaa0a5c2df7138
+RUNTIME_QA = DEFERRED_TO_NEXT_COMPATIBLE_BATCH
+FORMAT_VERSION = 4
+```
+
+Grounded creative capability is now exposed through the existing CHAT public tool surface.
+
+Current observed next gap:
+
+```text
+model requests tool
+→ INK executes bounded read-only tool
+→ structured tool result exists
+→ final model reasoning over tool result is not yet a bounded runtime loop
+```
+
+The next bounded integration should close that tool-result reasoning loop without expanding execution authority.
