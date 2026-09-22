@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: `DEV_IN_PROGRESS / PHASE_A_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `AUTHORIZED / NOT_STARTED`
 | TITLE | `Responsive / Fullscreen / Final UI Regression v0.1` |
 | BRANCH | `work/ink-web-ui-005` |
 | BASE_MAIN | `d0488ddd8380b285b2744abd6b6983f451a6a702` |
-| TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
+| TASK_STATUS | `DEV_IN_PROGRESS` |
 | DEV_HANDOFF | `NOT_YET` |
 | UR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `UI_LANE_SOURCE_COMPLETE` |
@@ -28,6 +28,22 @@ UI-003 + UI-004 accepted baseline
 → final UI source/static regression
 → UI lane integration readiness
 ```
+
+## Phase A — containment inventory
+
+Static inventory against the accepted UI-003/UI-004 baseline:
+
+- Desktop shared shell already measures the active primary panel into `--active-panel-w` and keeps the dock separate from the canvas.
+- Contextual controls already use one horizontally scrollable host and hide selection labels on narrower desktop widths.
+- Mobile correctly suppresses the desktop panel dock and retains the established bottom tool dock / sheets.
+- Existing fullscreen authority remains `#fullscreenToggle → InkApp.toggleFullscreen() → app.requestFullscreen()`; no fullscreen semantic change is required.
+- Bounded UI gaps selected for UI-005 correction:
+  1. clamp primary-panel width on medium/narrow desktop so the canvas cannot be squeezed below a useful visible region;
+  2. reduce mobile topbar collision pressure while preserving fullscreen / inspector access;
+  3. add dynamic-viewport containment for Inspector / Creative Workspace / Pages / mobile tool sheet on short/coarse-pointer screens;
+  4. preserve contextual-option horizontal reachability instead of wrapping or clipping command controls.
+
+`INTEGRATION_REQUIRED = NO`.
 
 ## Planned phases
 
