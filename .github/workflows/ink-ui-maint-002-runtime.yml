@@ -6,6 +6,7 @@ on:
       - work/ink-ui-maint-002
     paths:
       - '.github/workflows/ink-ui-maint-002-runtime.yml'
+      - 'qa/runtime/ink-web-ui-001-harness.html'
 
 permissions:
   contents: read
@@ -120,3 +121,5 @@ jobs:
             if (root && path.dirname(root) === path.resolve(process.env.RUNNER_TEMP) && path.basename(root).startsWith('ink-ui-maint-002-')) {
               await fs.rm(root, { recursive: true, force: true, maxRetries: 3 });
             }
+
+# UR runtime gate revision 2
