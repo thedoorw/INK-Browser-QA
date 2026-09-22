@@ -1759,3 +1759,336 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .pages-panel{top:calc(var(--topbar-h) + var(--contextual-h) + 8px)}
   .panel-scrim{inset:calc(var(--topbar-h) + var(--contextual-h)) 0 0}
 }
+
+
+/* ==========================================================================
+   INK-WEB-UI-004 — panel hierarchy / spacing / creative-loop placement polish
+   Presentation-only: panel controllers and command semantics remain unchanged.
+   ========================================================================== */
+:root{
+  --ui-panel-pad:8px;
+  --ui-control-h:30px;
+  --ui-panel-head-h:34px;
+}
+
+@media(min-width:761px){
+  /* Keep a single quiet panel edge: dock is always narrow; only one primary
+     Inspector or Creative Workspace surface contributes width at a time. */
+  .panel-dock{
+    width:var(--panel-dock-w);
+    padding:2px 0;
+  }
+  .panel-dock-group{
+    position:relative;
+    display:grid;
+    gap:0;
+    padding:2px 3px;
+  }
+  .panel-dock-group.creative{margin-top:auto}
+  .panel-dock-group.group-active::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:5px;
+    bottom:5px;
+    width:2px;
+    background:#4eaaa1;
+    opacity:.72;
+  }
+  .panel-dock-separator{
+    height:1px;
+    margin:3px 7px;
+    background:#202123;
+  }
+  .panel-dock-button{
+    width:34px;
+    height:32px;
+    min-height:32px;
+  }
+  .panel-dock-button svg{width:16px;height:16px}
+  .panel-dock-button.active{
+    background:#29413e;
+    border-color:#315d59;
+    box-shadow:none;
+  }
+
+  /* Window menu mirrors the same Editor / Creative Loop hierarchy. */
+  .panel-window-menu{width:184px;padding:3px 0}
+  .panel-window-group + .panel-window-group{
+    margin-top:3px;
+    padding-top:3px;
+    border-top:1px solid #232426;
+  }
+  .panel-window-group-label{
+    height:21px;
+    display:flex;
+    align-items:center;
+    padding:0 9px;
+    color:#85888b;
+    font-size:8px;
+    font-weight:750;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    pointer-events:none;
+  }
+  .panel-window-item{
+    min-height:28px;
+    padding:0 9px;
+  }
+
+  /* Inspector hierarchy: title -> compact tabs -> body. */
+  .inspector{
+    border-left:1px solid #1c1d1f;
+    box-shadow:-2px 0 8px rgba(0,0,0,.18);
+  }
+  .inspector-head{
+    height:var(--ui-panel-head-h);
+    min-height:var(--ui-panel-head-h);
+    padding:0 6px 0 9px;
+    background:#38393b;
+    border-bottom-color:#232426;
+  }
+  .inspector-head .eyebrow{display:none}
+  .inspector-head strong{font-size:10px;font-weight:650;color:#d8d9db}
+  .inspector-tabs{
+    height:31px;
+    padding:2px 4px;
+    background:#303133;
+    border-bottom-color:#222325;
+  }
+  .inspector-tab{
+    min-height:26px;
+    border-radius:2px;
+    gap:3px;
+    font-size:9px;
+  }
+  .inspector-tab svg{width:13px;height:13px}
+  .inspector-section{padding:var(--ui-panel-pad)}
+  .inspector-section .section-title{margin-bottom:6px}
+  .inspector-section .property-card{margin:5px 0}
+  .inspector-section .control-row{min-height:var(--ui-control-h)}
+  .inspector-section .toggle-row{min-height:28px}
+  .inspector-section .subpanel-title{min-height:26px}
+
+  /* Creative-loop panel uses the same primary-panel grammar as Inspector. */
+  .creative-workspace-panel,
+  .app:not(.inspector-open) .creative-workspace-panel{
+    width:clamp(304px,var(--inspector-w),360px);
+    border-left:1px solid #1c1d1f;
+    box-shadow:-2px 0 8px rgba(0,0,0,.18);
+    background:#343537;
+  }
+  .creative-workspace-head{
+    min-height:var(--ui-panel-head-h);
+    height:var(--ui-panel-head-h);
+    padding:0 6px 0 9px;
+    background:#38393b;
+    border-bottom:1px solid #232426;
+  }
+  .creative-workspace-head .eyebrow{display:none}
+  .creative-workspace-head strong{
+    font-size:10px;
+    font-weight:650;
+    color:#d8d9db;
+  }
+  .creative-workspace-head .mini-button{
+    width:23px;
+    height:23px;
+    min-height:23px;
+  }
+
+  /* State stays available, but becomes a concise status matrix rather than
+     a large preamble before every creative surface. */
+  .creative-workspace-state{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0;
+    padding:3px 4px;
+    background:#2d2e30;
+    border-bottom:1px solid #222325;
+  }
+  .creative-workspace-state>div{
+    padding:4px 5px;
+    background:transparent;
+    border-bottom:1px solid rgba(255,255,255,.035);
+  }
+  .creative-workspace-state .wide{grid-column:auto}
+  .creative-workspace-state span{
+    color:#85888b;
+    font-size:7px;
+    letter-spacing:.07em;
+  }
+  .creative-workspace-state strong{
+    color:#c7c8ca;
+    font-size:8px;
+    font-weight:600;
+    line-height:1.25;
+  }
+
+  .creative-workspace-tabs{
+    gap:0;
+    padding:2px 3px;
+    background:#303133;
+    border-bottom:1px solid #222325;
+  }
+  .creative-workspace-tabs button{
+    height:28px;
+    min-height:28px;
+    background:transparent;
+    color:#aeb0b3;
+    font-size:8px;
+    font-weight:650;
+    border-radius:2px;
+  }
+  .creative-workspace-tabs button:hover{background:#434447;color:#fff}
+  .creative-workspace-tabs button.active{
+    background:#29413e;
+    color:#7bc7c0;
+  }
+
+  .creative-workspace-body{
+    min-height:0;
+    flex:1;
+    padding:8px;
+    background:#343537;
+    scrollbar-color:#626467 #2f3032;
+  }
+  .creative-workspace-body section{gap:6px}
+  .creative-workspace-body strong{font-size:10px;color:#dedfe1}
+  .creative-workspace-body p{font-size:9px;color:#a8aaad}
+  .creative-workspace-field{
+    grid-template-columns:82px minmax(0,1fr);
+    gap:6px;
+    color:#aaacaf;
+    font-size:8px;
+  }
+  .creative-workspace-field input,
+  .creative-workspace-field select{
+    height:var(--ui-control-h);
+    border-radius:3px;
+    border-color:#222325;
+    background:#2d2e30;
+    color:#dedfe1;
+    font-size:9px;
+  }
+  .creative-workspace-actions{gap:4px}
+  .creative-workspace-actions button,
+  .creative-workspace-action-grid button,
+  .creative-workspace-primary{
+    min-height:var(--ui-control-h);
+    border-radius:3px;
+    border-color:#242527;
+    background:#414244;
+    color:#d7d8da;
+    font-size:9px;
+    font-weight:650;
+  }
+  .creative-workspace-actions button:first-child,
+  .creative-workspace-primary{
+    background:#29413e;
+    color:#7bc7c0;
+  }
+  .creative-workspace-body output{
+    min-height:28px;
+    padding:6px 7px;
+    border-radius:3px;
+    background:#2d3433;
+    color:#b8c5c3;
+    font-size:8px;
+  }
+  .creative-workspace-status{
+    min-height:23px;
+    padding:5px 8px;
+    border-top-color:#222325;
+    background:#303133;
+    color:#94979a;
+    font-size:8px;
+  }
+
+  /* CHAT is an on-demand creative stage, visually prioritized without
+     altering its conversation / proposal / approval authorities. */
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-workspace-body{
+    padding-top:7px;
+  }
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-chat-runtime{
+    padding:5px 6px;
+    border-radius:3px;
+    border-color:#242527;
+    background:#2e3736;
+  }
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-chat-runtime span{
+    color:#9eb4b1;
+  }
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-chat-runtime button{
+    min-height:25px;
+    border-radius:3px;
+    border-color:#242527;
+    background:#414244;
+    color:#d7d8da;
+  }
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-chat-transcript{
+    min-height:112px;
+    max-height:240px;
+    padding:7px;
+    border-radius:3px;
+    border-color:#242527;
+    background:#2d2e30;
+  }
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-chat-message>p,
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-chat-empty{
+    color:#d3d4d6!important;
+  }
+  .creative-workspace-panel[data-shell-stage="chat"] .creative-workspace-prompt textarea{
+    min-height:64px;
+    border-radius:3px;
+    border-color:#242527;
+    background:#2d2e30;
+    color:#dedfe1;
+  }
+  .creative-workspace-panel[data-shell-stage="chat"] hr{
+    width:100%;
+    margin:3px 0;
+    border:0;
+    border-top:1px solid #242527;
+  }
+
+  /* Context row / panel edge spacing align to the same compact rhythm. */
+  .contextual-options{padding-inline:5px}
+  .contextual-tool-identity{min-width:82px;padding-right:6px}
+  .contextual-control-host{gap:3px}
+  .context-inline-control{padding-inline:5px}
+  .contextual-advanced-button{margin-left:4px}
+
+  /* Keep the canvas clear of the compact left rail and right dock without
+     adding new floating chrome. */
+  .tool-rail{
+    left:7px;
+    top:calc(var(--topbar-h) + var(--contextual-h) + 7px);
+    bottom:calc(var(--status-h) + 7px);
+  }
+  .pages-panel{
+    left:58px;
+    top:calc(var(--topbar-h) + var(--contextual-h) + 7px);
+    bottom:calc(var(--status-h) + 7px);
+  }
+}
+
+@media(max-width:1120px) and (min-width:761px){
+  .creative-workspace-state{
+    grid-template-columns:1fr 1fr;
+  }
+  .creative-workspace-field{
+    grid-template-columns:74px minmax(0,1fr);
+  }
+}
+
+@media(max-width:760px){
+  /* UI-005 owns full responsive redesign; UI-004 only keeps current mobile
+     surfaces internally consistent with the new compact panel hierarchy. */
+  .creative-workspace-panel,
+  .app:not(.inspector-open) .creative-workspace-panel{
+    top:calc(var(--topbar-h) + var(--contextual-h) + 6px);
+  }
+  .creative-workspace-head{min-height:44px;padding-inline:10px}
+  .creative-workspace-state>div{padding:5px 7px}
+  .creative-workspace-body{padding:9px 10px}
+}
