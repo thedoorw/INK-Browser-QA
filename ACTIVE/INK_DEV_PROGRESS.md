@@ -1,79 +1,56 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: AUTHORIZED / NOT_STARTED
 
-| Field | Value |
-|---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
-| TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
-| MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
+TASK_ID: INK-UI-MAINT-002
+TITLE: Typography Readability / Panel Authority / Content Containment / Favicon v0.1
+BRANCH: work/ink-ui-maint-002
+BASE_MAIN: 19ce5f7d03a32600493a550ae2d2262340c229ee
+TASK_STATUS: AUTHORIZED / NOT_STARTED
+DEV_HANDOFF: NOT_YET
+UR_REVIEW: PENDING_AFTER_HANDOFF
+RUNTIME_QA: REQUIRED_BEFORE_UI_PASS
+PORTABLE_WEB_PARITY: REQUIRED
+FORMAT_VERSION: 4 / PRESERVE
+PRODUCT_BASE_VERSION: v0.1 / PRESERVE
+PACKAGE_MUTATION: 0 / PROHIBITED
+CORE_MUTATION: 0 / PROHIBITED
 
-## Objective
+## Priority
 
-Close the known Structure-Aware single-Path reconstruction bottleneck:
+P0:
+RIGHT_PANEL_CONTENT_CONTAINMENT
 
-```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
-```
+P1:
+PRIMARY_PANEL_AUTHORITY_CONSOLIDATED
+CONTEXTUAL_ADVANCED_TOGGLE_STATE
 
-The authoritative scope and STOP rules are in:
+P2:
+TYPOGRAPHY_READABILITY
+BRAND_ASSET_CLARITY
+CSS_AUTHORITY_CLEAN
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+## User-reported defects
 
-## Checkpoint rule
+1. Desktop text too small and too dim compared with Photoshop reference.
+2. “進階” is not a two-way toggle and has no active color/state.
+3. Right panel content is compressed/unreadable; panel containment is broken.
+4. Three controls effectively open the same Inspector system; consolidate to one authority.
+5. Favicon must be fixed now; simple light blue or light blue + white Y is acceptable.
 
-At every meaningful checkpoint:
-
-- commit;
-- update this branch-local file;
-- record exact SHA;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
-
-Do not replace the Direct Extraction baseline during DEV execution.
-
-## Planned phases
-
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
-
-## Completion
+## Authority model target
 
 ```text
-TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
-FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
-FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-NEXT_ACTION = MR_REVIEW_REQUIRED
-STOP
+Dock item = select primary panel content
+Chevron = collapse / expand primary panel
+進階 = contextual route to Properties in same authority
+Legacy top Inspector toggle = remove/retire on desktop
 ```
+
+## Stop rule
+
+Renderer / Document / History / Revision / Geometry / Core / CHAT execution / persistence / package change required:
+INTEGRATION_REQUIRED → STOP → MR
+
+Runtime unavailable:
+RUNTIME_BLOCKED → STOP
