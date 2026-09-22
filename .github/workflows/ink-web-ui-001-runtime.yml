@@ -39,7 +39,7 @@ jobs:
           Write-Host "Repository: $env:GITHUB_REPOSITORY"
           Write-Host "Exact SHA: $sha"
           Write-Host "Runner: $env:RUNNER_NAME / $env:RUNNER_OS / $env:RUNNER_ARCH"
-          node --version
+          Write-Host "PowerShell: $($PSVersionTable.PSVersion)"
 
       - name: Bounded exact-SHA materialization
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
@@ -123,7 +123,8 @@ jobs:
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
         run: |
           $ErrorActionPreference = 'Stop'
-          $evidence = Join-Path $env:INK_RUNTIME_ROOT '_evidence'
+          $evidence = Join-Path $env:RUNNER_TEMP "ink-web-ui-001-evidence-$env:GITHUB_RUN_ID"
+          if (Test-Path $evidence) { Remove-Item $evidence -Recurse -Force }
           New-Item -ItemType Directory -Path $evidence -Force | Out-Null
 
           $browserCandidates = @(
@@ -214,7 +215,8 @@ jobs:
           Add-Content $env:GITHUB_STEP_SUMMARY '## INK-WEB-UI-001 — Windows Chrome Runtime'
           Add-Content $env:GITHUB_STEP_SUMMARY "- Exact SHA: $env:INK_TEST_SHA"
           Add-Content $env:GITHUB_STEP_SUMMARY "- Runner: $env:RUNNER_NAME / $env:RUNNER_OS / $env:RUNNER_ARCH"
-          $summary = Join-Path $env:INK_RUNTIME_ROOT '_evidence\runtime-summary.txt'
+          $evidence = Join-Path $env:RUNNER_TEMP "ink-web-ui-001-evidence-$env:GITHUB_RUN_ID"
+          $summary = Join-Path $evidence 'runtime-summary.txt'
           if (Test-Path $summary) {
             Add-Content $env:GITHUB_STEP_SUMMARY '- Browser gate: **PASS**'
             Get-Content $summary | ForEach-Object { Add-Content $env:GITHUB_STEP_SUMMARY "- $_" }
@@ -227,6 +229,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ink-web-ui-001-runtime-${{ github.run_id }}
-          path: ${{ env.INK_RUNTIME_ROOT }}\_evidence\
+          path: ${{ runner.temp }}\ink-web-ui-001-evidence-${{ github.run_id }}\
           if-no-files-found: warn
           retention-days: 30
