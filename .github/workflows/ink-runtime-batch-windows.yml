@@ -51,6 +51,11 @@ jobs:
               'qa/runtime/ink-web-ui-001-harness.html',
               'qa/runtime/ink-cloud-018-browser-harness.html',
               'qa/runtime/ink-ra-001-browser-harness.html',
+              'qa/core/tests/unit/contextual-tool-options-v0.1.test.mjs',
+              'qa/core/tests/unit/panel-chat-polish-v0.1.test.mjs',
+              'qa/core/tests/unit/final-ui-responsive-regression-v0.1.test.mjs',
+              'qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs',
+              'qa/core/tests/unit/photoshop-shell-geometry-v0.1.test.mjs',
               'qa/fixtures/rose-window/rose-window-primary.png'
             ]);
             const files = tree.tree.filter(item => item.path.startsWith('product/source/') || exact.has(item.path));
@@ -86,6 +91,20 @@ jobs:
             const { spawn } = require('node:child_process');
             const path = require('node:path');
             const root = process.env.INK_BATCH_ROOT;
+            const staticTests = [
+              'contextual-tool-options-v0.1.test.mjs',
+              'panel-chat-polish-v0.1.test.mjs',
+              'final-ui-responsive-regression-v0.1.test.mjs',
+              'shared-portable-web-shell-parity-v0.1.test.mjs',
+              'photoshop-shell-geometry-v0.1.test.mjs'
+            ].map(file => path.join(root, 'qa/core/tests/unit', file));
+            await new Promise((resolve, reject) => {
+              const child = spawn(process.execPath, ['--test', ...staticTests], {
+                cwd: root, stdio: 'inherit', shell: false, windowsHide: true
+              });
+              child.once('error', reject);
+              child.once('exit', (code, signal) => code === 0 ? resolve() : reject(new Error(`Static UI tests failed: code=${code} signal=${signal}`)));
+            });
             await new Promise((resolve, reject) => {
               const child = spawn(process.execPath, [path.join(root, 'qa/runtime/run-ink-runtime-batch.mjs'), root], {
                 cwd: root, stdio: 'inherit', shell: false, windowsHide: true

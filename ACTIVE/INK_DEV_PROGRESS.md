@@ -86,3 +86,14 @@ STOP
 - Renderer / Document / History / Revision / Geometry / Core / CHAT semantics untouched.
 - Focused static guard added: `qa/core/tests/unit/photoshop-shell-geometry-v0.1.test.mjs`.
 - Runtime geometry validation still required before DEV_HANDOFF.
+
+
+## Checkpoint — Runtime geometry instrumentation
+
+- Existing manual self-hosted Windows batch extended to materialize and run the focused UI static suite before browser Runtime.
+- Browser harness now records numeric 1280px rectangles for menu, shared options/context row, stage, left rail, dock and document title.
+- Runtime checks require 24 / 36 / 60 shell geometry, 40 px edge rails, 252 ±8 px primary panel and no canvas/panel overlap.
+- Added contextual Runtime routes for Pen / Pencil / Marker / Brush / Airbrush / Eraser / Shape / Text plus Selection actions.
+- Added Layout canvas pixel evidence: dark workbench sample versus bright real A4 center sample.
+- Narrow desktop containment remains part of the actual browser run.
+- Runtime batch has not yet been dispatched; no PASS claimed.
