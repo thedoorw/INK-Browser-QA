@@ -1,7 +1,7 @@
 {
-  "name": "INK v1.6.5 RC — First Visible Web Platform",
-  "short_name": "INK v1.6.5 RC",
-  "description": "INK shared-core browser workspace for reference extraction, editable Paths, CHAT-assisted bounded edits and Revision.",
+  "name": "INK v0.1 · Web",
+  "short_name": "INK v0.1",
+  "description": "INK browser workspace for reference extraction, editable Paths, CHAT-assisted bounded edits and Revision.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -9,5 +9,12 @@
   "background_color": "#232426",
   "theme_color": "#2d2e30",
   "lang": "zh-Hant",
-  "icons": []
+  "icons": [
+    {
+      "src": "./assets/ink-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
