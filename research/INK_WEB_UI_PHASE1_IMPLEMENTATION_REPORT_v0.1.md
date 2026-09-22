@@ -74,11 +74,56 @@ Existing shortcuts sampled from `InkApp.onKeyDown()` and treated as regression-s
 
 ## Phase B — UI structural changes
 
-Pending.
+Implemented at code HEAD `81584872319f7b433e717f496770d33d971b9e9f`.
+
+- Existing command-bearing DOM IDs and data attributes remain intact in both modular and standalone shells.
+- Added `product/source/web-shell.js` as a presentation-only shell coordinator shared by both entry HTML files.
+- Left tool rail remains the existing tool authority; no drawing command was moved or rewritten.
+- Desktop canvas now reserves only the narrow collapsed dock width by default.
+- When a primary right panel is visible, the shell writes its measured width to `--active-panel-w`; `#stageWrap` changes available width and the existing Renderer ResizeObserver handles canvas resize.
+- Creative Workspace now defaults closed in modular source; the shell also closes it on fresh entry for standalone compatibility.
+- The former central rounded empty-state mark is hidden in the Phase-1 desktop shell, leaving only low-emphasis first-stroke guidance.
+- Existing menu strip and option/document bar remain separate chrome layers; broader contextual-control migration is deferred.
+- Existing mobile bottom dock/sheets remain the <=760px interaction model.
+
+Gate: `WEB_WORKSPACE_SHELL_ALIGNED = PASS / SOURCE_STATIC`.
 
 ## Phase C — panel-dock behavior
 
-Pending.
+Added a compact desktop icon dock with direct access to:
+
+- Properties;
+- Layers;
+- History;
+- Reference;
+- Compose;
+- CHAT;
+- Revision.
+
+Behavior:
+
+- fresh entry is collapsed;
+- clicking a dock item opens the existing Inspector or Creative Workspace authority;
+- clicking the active dock item collapses the primary panel;
+- Layers and History call existing Inspector tabs;
+- Reference / Compose / CHAT / Revision call existing Creative Workspace `setStage()` + `setOpen()`;
+- closing panels does not uninstall or replace underlying CHAT, Revision, History or document controllers;
+- only the last selected panel identity is persisted locally; open/closed state is deliberately not persisted so fresh entry remains canvas-first;
+- one-primary-panel coordination closes Creative Workspace when Inspector becomes primary and closes Inspector when Creative Workspace becomes primary;
+- the existing `視窗` application-menu entry now has a compact panel menu backed by the same shell commands;
+- `window.INK_WEB_SHELL` exposes bounded runtime diagnostics and open/toggle/close helpers for QA.
+
+Source/static contract check passed:
+
+- `web-shell.js` syntax parsed successfully;
+- required command DOM IDs remained present in modular and standalone HTML;
+- dock contains all seven authorized entry points;
+- measured-width stage layout contract present;
+- desktop/mobile breakpoint containment present;
+- Creative Workspace initial closed state present;
+- `FORMAT_VERSION = 4` preserved.
+
+Gate: `COLLAPSIBLE_PANEL_DOCK_WORKS = PASS / SOURCE_STATIC`.
 
 ## Phase D — identity / mark / favicon / cache
 
@@ -96,4 +141,4 @@ Per Current Work Order: full contextual-control migration, broad CHAT redesign, 
 
 `UI_SHELL_INVENTORY_COMPLETE = PASS`
 
-Final gate remains pending Phase B–E.
+Final gate remains pending Phase D–E.
