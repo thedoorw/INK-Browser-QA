@@ -69,7 +69,8 @@ jobs:
               if ($slash -lt 0 -or $slash -ge $entry.FullName.Length - 1) { continue }
               $rel = $entry.FullName.Substring($slash + 1)
               $wanted = $rel.StartsWith('product/source/', [StringComparison]::Ordinal) -or
-                        $rel.StartsWith('qa/runtime/', [StringComparison]::Ordinal)
+                        $rel.StartsWith('qa/runtime/', [StringComparison]::Ordinal) -or
+                        $rel.StartsWith('qa/core/', [StringComparison]::Ordinal)
               if (-not $wanted -or [string]::IsNullOrEmpty($entry.Name)) { continue }
 
               $target = Join-Path $root ($rel.Replace('/', '\'))
@@ -124,6 +125,40 @@ jobs:
           Assert-True ($manifest.name -eq 'INK v0.1 · Web') 'Web manifest identity'
           Assert-True ($portableManifest.name -eq 'INK v0.1 · Portable') 'Portable manifest identity'
           Assert-True ((Test-Path (Join-Path $source 'assets\ink-mark.svg'))) 'INK mark product asset exists'
+
+      - name: Focused source unit and binding regression
+        shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $runnerRoot = Split-Path (Split-Path $env:RUNNER_TEMP -Parent) -Parent
+          $node = @(
+            (Join-Path $runnerRoot 'externals\node24\bin\node.exe'),
+            (Join-Path $runnerRoot 'externals\node20\bin\node.exe')
+          ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $node) {
+            $node = Get-ChildItem (Join-Path $runnerRoot 'externals') -Filter node.exe -File -Recurse -ErrorAction SilentlyContinue |
+              Select-Object -ExpandProperty FullName -First 1
+          }
+          if (-not $node) { throw 'GitHub Actions bundled Node runtime was not found.' }
+          Write-Host "Unit Node: $node"
+          & $node --version
+
+          Set-Location $env:INK_RUNTIME_ROOT
+          $tests = @(
+            'qa/core/tests/unit/portable-baseline-integration-v0.1.test.mjs',
+            'qa/core/tests/unit/creative-workspace-minimum-ux-v0.1.test.mjs',
+            'qa/core/tests/unit/chat-bounded-edit-core-v0.1.test.mjs',
+            'qa/core/tests/unit/chat-multi-step-creative-workspace-v0.1.test.mjs',
+            'qa/core/tests/unit/revision-closure-core-v0.1.test.mjs',
+            'qa/core/tests/unit/revision-chat-binding-v0.1.test.mjs',
+            'qa/core/tests/unit/singular-interaction-history-guard-v0.1.test.mjs'
+          )
+          foreach ($test in $tests) {
+            if (-not (Test-Path $test)) { throw "Missing required focused unit test: $test" }
+          }
+          & $node --test @tests
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Write-Host 'FOCUSED_UNIT_BINDING_REGRESSION=PASS'
 
       - name: Windows Chrome real-browser gate
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
