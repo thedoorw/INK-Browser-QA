@@ -47,6 +47,17 @@
     const rect = el.getBoundingClientRect();
     return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
   };
+  const rectOf = (doc, selector) => {
+    const rect = doc.querySelector(selector)?.getBoundingClientRect();
+    return rect ? { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom, width: rect.width, height: rect.height } : null;
+  };
+  const near = (value, target, tolerance = 1) => Math.abs(value - target) <= tolerance;
+  const canvasPixel = (canvas, xCss, yCss) => {
+    const ctx = canvas.getContext('2d');
+    const sx = canvas.width / Math.max(1, canvas.clientWidth);
+    const sy = canvas.height / Math.max(1, canvas.clientHeight);
+    return Array.from(ctx.getImageData(Math.round(xCss * sx), Math.round(yCss * sy), 1, 1).data);
+  };
   const dispatchKey = (win, key, init = {}) => {
     win.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, ...init }));
   };
@@ -100,6 +111,27 @@
       const initialStageWidth = doc.querySelector('#stageWrap').getBoundingClientRect().width;
       const initialChatController = app.chatBoundedEdit;
       const initialRevisionController = app.revisions;
+      const geometry1280 = {
+        viewport: { width: win.innerWidth, height: win.innerHeight, dpr: win.devicePixelRatio },
+        menu: rectOf(doc, '.menu-strip'),
+        options: rectOf(doc, '.topbar'),
+        contextual: rectOf(doc, '#contextualOptions'),
+        stage: rectOf(doc, '#stageWrap'),
+        rail: rectOf(doc, '.tool-rail'),
+        dock: rectOf(doc, '#panelDock'),
+        docTitle: rectOf(doc, '#docTitle')
+      };
+
+      record('Photoshop shell viewport is 1280 CSS px', near(geometry1280.viewport.width, 1280, 1), geometry1280);
+      record('menu row is 24 px', near(geometry1280.menu?.height, 24, 1) && near(geometry1280.menu?.top, 0, 1), geometry1280.menu);
+      record('shared options row is 36 px at y=24', near(geometry1280.options?.height, 36, 1) && near(geometry1280.options?.top, 24, 1), geometry1280.options);
+      record('contextual controls occupy the same second row', near(geometry1280.contextual?.top, geometry1280.options?.top, 1) && near(geometry1280.contextual?.bottom, geometry1280.options?.bottom, 1), { options: geometry1280.options, contextual: geometry1280.contextual });
+      record('workspace origin is y=60', near(geometry1280.stage?.top, 60, 1) && near(geometry1280.rail?.top, 60, 1) && near(geometry1280.dock?.top, 60, 1), geometry1280);
+      record('left rail is edge-attached 40 px', near(geometry1280.rail?.left, 0, 1) && near(geometry1280.rail?.width, 40, 1), geometry1280.rail);
+      record('workspace begins immediately after left rail', near(geometry1280.stage?.left, geometry1280.rail?.right, 1), { stage: geometry1280.stage, rail: geometry1280.rail });
+      record('right dock is edge-attached 40 px', near(geometry1280.dock?.right, 1280, 1) && near(geometry1280.dock?.width, 40, 1), geometry1280.dock);
+      record('workspace ends immediately before compact dock', near(geometry1280.stage?.right, geometry1280.dock?.left, 1), { stage: geometry1280.stage, dock: geometry1280.dock });
+      record('document title is 220–240 px', geometry1280.docTitle?.width >= 220 && geometry1280.docTitle?.width <= 240, geometry1280.docTitle);
 
       record('title identity is INK v0.1 · Web', doc.title === 'INK v0.1 · Web', doc.title);
       record('FORMAT_VERSION remains 4', test.architecture().formatVersion === 4, test.architecture().formatVersion);
@@ -108,14 +140,20 @@
       record('initial Web view is canvas-first', initialShell.collapsed && !app.creativeWorkspace?.open && !doc.querySelector('#app').classList.contains('inspector-open'), initialShell);
       record('left tool rail remains visible', visible(doc, '.tool-rail') && doc.querySelectorAll('.tool-rail [data-tool], .tool-rail [data-tool-stack]').length >= 6);
       record('right panel dock starts compact', visible(doc, '#panelDock') && initialShell.dockWidth >= 32 && initialShell.dockWidth <= 48, initialShell);
-      record('initial stage reserves only compact dock', initialStageWidth > frame.clientWidth - 64, { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
+      record('initial stage reserves 40 px rail and 40 px dock', near(initialStageWidth, frame.clientWidth - 80, 2), { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
 
       shell.open('layers');
       await sleep(260);
       const layersState = shell.state();
       record('Layers opens as primary Inspector panel', layersState.activePanel === 'layers' && layersState.inspectorOpen && !layersState.creativeOpen, layersState);
-      record('expanded panel width bounded', layersState.panelWidth >= 240 && layersState.panelWidth <= 420, layersState.panelWidth);
-      record('canvas resizes for expanded panel', layersState.stageWidth < initialStageWidth - 180, { initialStageWidth, expandedStageWidth: layersState.stageWidth });
+      const expandedGeometry = {
+        stage: rectOf(doc, '#stageWrap'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock')
+      };
+      record('default primary panel is 252 ±8 px', layersState.panelWidth >= 244 && layersState.panelWidth <= 260, { shell: layersState, geometry: expandedGeometry });
+      record('primary panel fits exactly between canvas and dock', near(expandedGeometry.stage?.right, expandedGeometry.panel?.left, 1) && near(expandedGeometry.panel?.right, expandedGeometry.dock?.left, 1), expandedGeometry);
+      record('canvas resizes for expanded panel', layersState.stageWidth < initialStageWidth - 235, { initialStageWidth, expandedStageWidth: layersState.stageWidth });
 
       const layersBefore = test.summary().layers;
       doc.querySelector('#addLayerBtn').click();
@@ -187,14 +225,48 @@
       await sleep(60);
       const shortcutTool = test.summary().tool;
       record('keyboard workspace shortcuts preserved', shortcutLayout === 'layout' && shortcutCreation === 'creation', { shortcutLayout, shortcutCreation });
+
+      app.fitArtboard({ switchSpace: true });
+      await sleep(180);
+      const layoutCanvas = doc.querySelector('#stage');
+      const layoutStage = rectOf(doc, '#stageWrap');
+      const layoutPixels = {
+        corner: canvasPixel(layoutCanvas, 8, 8),
+        center: canvasPixel(layoutCanvas, layoutCanvas.clientWidth / 2, layoutCanvas.clientHeight / 2),
+        stageBackground: getComputedStyle(doc.querySelector('#stageWrap')).backgroundColor,
+        stage: layoutStage,
+        artboard: test.artboard()
+      };
+      const luminance = rgba => (rgba?.[0] || 0) + (rgba?.[1] || 0) + (rgba?.[2] || 0);
+      record('Layout shows dark workbench around real A4 paper', luminance(layoutPixels.corner) < 210 && luminance(layoutPixels.center) > 600 && /38, 38, 38/.test(layoutPixels.stageBackground), layoutPixels);
+      test.switchWorkspace('creation');
+      await sleep(60);
+
       record('keyboard tool shortcut sample preserved', shortcutTool === 'select', shortcutTool);
+
+      const contextMatrix = [];
+      for (const [key, tool, mode] of [['b','pen','draw'],['n','pencil','draw'],['m','marker','draw'],['i','brush','draw'],['a','airbrush','draw'],['e','eraser','eraser'],['s','shape','shape'],['t','text','text']]) {
+        dispatchKey(win, key);
+        await sleep(45);
+        const root = doc.querySelector('#contextualOptions');
+        contextMatrix.push({ key, tool: app.tool, contextTool: root.dataset.contextTool, mode: root.dataset.contextMode });
+        record('contextual tool route: ' + tool, app.tool === tool && root.dataset.contextTool === tool && root.dataset.contextMode === mode, contextMatrix.at(-1));
+      }
+      test.addDemo();
+      test.selectAll();
+      await sleep(80);
+      const selectionContext = doc.querySelector('#contextualOptions');
+      record('Selection actions become the contextual surface', selectionContext.dataset.contextMode === 'selection' && visible(doc, '#selectionBar') && ['duplicate','group','front','alignCenter','delete'].every(action => doc.querySelector('[data-selection-action="' + action + '"]')), { mode: selectionContext.dataset.contextMode, count: test.summary().selection });
+      app.clearSelection();
+      await sleep(50);
 
       frame.style.width = '960px';
       await sleep(260);
       shell.close();
       await sleep(100);
       const desktopResize = shell.state();
-      record('desktop resize remains stable', frame.contentWindow.innerWidth <= 960 && desktopResize.stageWidth > 800 && visible(doc, '#panelDock'), { viewport: frame.contentWindow.innerWidth, shell: desktopResize });
+      const narrowGeometry = { stage: rectOf(doc, '#stageWrap'), rail: rectOf(doc, '.tool-rail'), dock: rectOf(doc, '#panelDock'), topbar: rectOf(doc, '.topbar') };
+      record('narrow desktop containment remains stable', frame.contentWindow.innerWidth <= 960 && desktopResize.stageWidth > 800 && visible(doc, '#panelDock') && near(narrowGeometry.stage?.left, narrowGeometry.rail?.right, 1) && near(narrowGeometry.stage?.right, narrowGeometry.dock?.left, 1), { viewport: frame.contentWindow.innerWidth, shell: desktopResize, geometry: narrowGeometry });
 
       frame.style.width = '720px';
       await sleep(320);
