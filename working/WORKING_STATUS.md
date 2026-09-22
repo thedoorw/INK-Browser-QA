@@ -1,22 +1,22 @@
 # INK WORKING STATUS
 
-STATUS: `INK-WEB-UI-002 / CLOSED / DUAL_TRACK_DISCUSSION_NEXT`
+STATUS: `DUAL_TRACK / UI_DELEGATED_TO_UR / CORE_MR_DISCUSSION`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-WEB-UI-001` |
-| CURRENT_TASK_ID | `INK-WEB-UI-001` |
-| DEV_BRANCH | `work/ink-web-ui-001` |
-| DEV_HANDOFF | `NO / READY_TO_START` |
-| MR_REVIEW | `PENDING_HANDOFF` |
-| TARGET_GATE | `INK_WEB_UI_PHASE1_SOURCE_COMPLETE / RUNTIME_DEBT_TRACKED` |
+| CURRENT_WORK_ORDER | `GLOBAL CLOSED / UI DELEGATED` |
+| CURRENT_TASK_ID | `NONE GLOBAL / UR MAY ISSUE UI-003` |
+| DEV_BRANCH | `NONE GLOBAL` |
+| DEV_HANDOFF | `N/A GLOBAL` |
+| MR_REVIEW | `UI DELEGATED / CORE DISCUSSION` |
+| TARGET_GATE | `UI_LANE_READY_FOR_INTEGRATION` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
 | FAVICON | `USER ORIGINAL MARK / REQUIRED` |
 | INK_MARK_SOURCE | `reference/brand/INK_MARK_SOURCE_W-300.jpg` |
 | INK_WEB_STAGING | `LIVE / MAIN-BASED` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| NEXT_STAGE | `DEV IMPLEMENTATION` |
+| NEXT_STAGE | `UR: UI-003→005 / MR: CORE LANE DESIGN` |
 
 ## Readiness assessment
 
@@ -1465,3 +1465,26 @@ Discuss parallel UI + Core Module development next.
 Prefer two MR roles, each supervising one lane.
 Do not auto-open the next implementation Work Order until lane ownership and integration rules are decided.
 ```
+
+
+## UR continuous UI supervision
+
+USER decision:
+
+```text
+UR does not wait for MR between UI workpacks.
+MR remains MAIN but does not orchestrate each UI DEV window.
+```
+
+Delegated sequence:
+
+```text
+UI-003 Contextual Controls / Top Options
+→ UI-004 Panel / Spacing / CHAT Placement Polish
+→ UI-005 Responsive / Fullscreen / Final UI Regression
+→ UI_LANE_READY_FOR_INTEGRATION
+```
+
+UR may issue, review, clean-promote and continue these UI-only tasks independently. Cross-lane or Core-authority changes STOP as `INTEGRATION_REQUIRED`.
+
+MR is now free to focus on Core Module lane design and later Integration.
