@@ -1,40 +1,17 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CORE-INTEGRATION-002 / MR_PASS / PROMOTED / RUNTIME_DEFERRED`
-
-## Review fingerprint
+STATUS: `INK-CORE-INTEGRATION-003 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
 
 ```text
-TASK_ID = INK-CORE-INTEGRATION-002
-DEV_BRANCH = work/ink-core-integration-002
-BRANCH_BASE = dcc98ae58e8af3018b24bb3ceb3d3c0535902695
-REVIEWED_HEAD = 73a276431f58f393acf486af3135f45890ec44e4
-QA_TESTED_HEAD = 17e9de84aa0cf8d3c0f7445587ee3df831ae82b7
-QA_RUN = 35728730503
-QA_JOB = 106748707255
-QA_RESULT = PASS
-PROMOTION_PR = #36 / MERGED
-PROMOTED_MAIN_SHA = 4b03897d7ba984bcbe0898ab3ebaa0a5c2df7138
+TASK_ID = INK-CORE-INTEGRATION-003
+TITLE = Bounded Grounded Tool Reasoning Loop v0.1
+DEV_BRANCH = work/ink-core-integration-003
+TARGET_GATE = INK_CORE_INTEGRATION_003_SOURCE_READY
+AUTO_CONTINUATION_MAX = 1
+AUTONOMOUS_AGENT_LOOP = 0
+AUTO_LEGACY_MUTATION_TOOL_EXECUTION = 0
+FORMAT_VERSION = 4 / PRESERVE
+RUNTIME_QA = REQUIRED_AFTER_PROMOTION
 ```
 
-## Accepted boundary
-
-```text
-NEW_TOOLS =
-  get_grounded_creative_context
-  compare_visual_subjects
-  resolve_parametric_structure
-
-UI_LAYOUT_MUTATION = 0
-DOCUMENT_SCHEMA_CHANGE = 0
-HISTORY_SEMANTICS_CHANGE = 0
-REVISION_SEMANTICS_CHANGE = 0
-GEOMETRY_AUTHORITY_CHANGE = 0
-RENDERER_MUTATION = 0
-CHAT_EXECUTION_AUTHORITY_CHANGE = 0
-FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-RUNTIME_QA = DEFERRED_TO_NEXT_COMPATIBLE_BATCH
-```
-
-No high-risk Runtime trigger was observed. Promotion preserved concurrent main/UI-lane work through clean promotion.
+MR will verify one-round grounded tool continuation, no automatic legacy mutation-tool routing, no authority expansion, compatibility with Integration-001/002, and exact-SHA Windows Runtime after promotion.
