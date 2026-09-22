@@ -85,6 +85,16 @@
       <input id="docTitle" class="doc-title" value="未命名作品" aria-label="作品名稱">
     </div>
 
+    <section id="contextualOptions" class="contextual-options glass-surface" aria-label="目前工具選項" data-context-mode="draw" data-context-tool="pen">
+      <div class="contextual-tool-identity" aria-live="polite">
+        <svg aria-hidden="true"><use id="contextualToolUse" href="#i-pen"/></svg>
+        <strong id="contextualToolName">鋼筆</strong>
+      </div>
+      <span class="contextual-divider" aria-hidden="true"></span>
+      <div id="contextualControlHost" class="contextual-control-host"></div>
+      <button id="contextualAdvancedBtn" class="contextual-advanced-button" type="button">進階</button>
+    </section>
+
     <div class="topbar-center">
       <div id="workspaceSwitch" class="workspace-switch" role="group" aria-label="工作空間">
         <button type="button" data-space="creation" class="active" title="創作空間 Ctrl+1"><svg><use href="#i-infinite"/></svg><span>創作</span></button>
@@ -107,15 +117,7 @@
     </div>
   </header>
 
-  <section id="contextualOptions" class="contextual-options glass-surface" aria-label="目前工具選項" data-context-mode="draw" data-context-tool="pen">
-    <div class="contextual-tool-identity" aria-live="polite">
-      <svg aria-hidden="true"><use id="contextualToolUse" href="#i-pen"/></svg>
-      <strong id="contextualToolName">鋼筆</strong>
-    </div>
-    <span class="contextual-divider" aria-hidden="true"></span>
-    <div id="contextualControlHost" class="contextual-control-host"></div>
-    <button id="contextualAdvancedBtn" class="contextual-advanced-button" type="button">進階</button>
-  </section>
+
 
   <aside id="pagesPanel" class="pages-panel elevated-panel" aria-label="頁面">
     <div class="panel-header">

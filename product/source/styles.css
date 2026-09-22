@@ -2061,14 +2061,14 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   /* Keep the canvas clear of the compact left rail and right dock without
      adding new floating chrome. */
   .tool-rail{
-    left:7px;
-    top:calc(var(--topbar-h) + var(--contextual-h) + 7px);
-    bottom:calc(var(--status-h) + 7px);
+    left:0;
+    top:var(--topbar-h);
+    bottom:var(--status-h);
   }
   .pages-panel{
-    left:58px;
-    top:calc(var(--topbar-h) + var(--contextual-h) + 7px);
-    bottom:calc(var(--status-h) + 7px);
+    left:var(--tool-w);
+    top:var(--topbar-h);
+    bottom:var(--status-h);
   }
 }
 
@@ -2231,4 +2231,136 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .floating-panel{
     max-height:calc(100dvh - var(--topbar-h) - var(--contextual-h) - 8px);
   }
+}
+
+
+/* ==========================================================================
+   INK-UI-MAINT-001 — Photoshop shell geometry / pixel alignment
+   Desktop-only shell geometry. Command, document and renderer semantics unchanged.
+   ========================================================================== */
+@media(min-width:761px){
+  :root{
+    --menu-h:24px;
+    --options-h:36px;
+    --topbar-h:60px;
+    --contextual-h:0px;
+    --tool-w:40px;
+    --inspector-w:252px;
+  }
+  .menu-strip{height:var(--menu-h);border-bottom:1px solid #202123}
+  .menu-app-mark{padding-inline:5px 8px}
+  .application-menus button{padding-inline:7px}
+  .menu-workspace{border-left-color:#292a2c}
+  .topbar{
+    top:var(--menu-h);
+    height:var(--options-h);
+    grid-template-columns:auto minmax(250px,1fr) auto auto;
+    column-gap:0;
+    padding:0 4px;
+    overflow:visible;
+    border-bottom:1px solid #202123;
+    box-shadow:inset 0 1px rgba(255,255,255,.045);
+  }
+  .topbar-leading{gap:1px;height:100%;padding-right:3px}
+  .doc-title{
+    width:min(18.5vw,236px);
+    min-width:180px;
+    max-width:236px;
+    height:26px;
+    padding-inline:6px;
+    font-size:11px;
+  }
+  .topbar > .contextual-options{
+    position:relative;
+    z-index:auto;
+    inset:auto;
+    width:auto;
+    height:100%;
+    min-width:0;
+    padding:0 4px;
+    border:0;
+    border-left:1px solid #292a2c;
+    border-right:1px solid #292a2c;
+    background:transparent;
+    box-shadow:none;
+    overflow:hidden;
+  }
+  .contextual-tool-identity{min-width:72px;max-width:104px;padding:0 5px 0 3px}
+  .contextual-divider{height:18px;margin-right:3px}
+  .contextual-control-host{gap:2px}
+  .context-inline-control{height:26px;padding-inline:4px}
+  .contextual-options .quick-slider{height:26px;padding-inline:4px}
+  .contextual-options .quick-slider input{width:72px}
+  .contextual-advanced-button{height:26px;margin-left:3px;padding-inline:6px}
+  .topbar-center{gap:2px;height:100%;padding:0 3px}
+  .workspace-switch{height:26px;grid-template-columns:repeat(2,minmax(50px,1fr))}
+  .workspace-switch button{height:22px;padding-inline:6px}
+  .topbar .history-group{gap:0}
+  .topbar .history-group .icon-button{width:27px;height:27px}
+  .file-group{gap:1px;height:100%;padding-left:3px}
+  .quiet-button{height:27px;padding-inline:6px}
+  .primary-button{height:28px;min-height:28px;padding-inline:8px}
+  .file-group .icon-button{width:28px;height:28px}
+  .stage-wrap{top:var(--topbar-h);left:var(--tool-w);right:var(--panel-dock-w)}
+  .app.panel-primary-open .stage-wrap{right:calc(var(--panel-dock-w) + var(--active-panel-w))}
+  .tool-rail{
+    top:var(--topbar-h);
+    bottom:var(--status-h);
+    left:0;
+    width:var(--tool-w);
+    padding:2px 1px;
+    border:0;
+    border-right:1px solid #202123;
+    border-radius:0;
+    box-shadow:inset -1px 0 rgba(255,255,255,.03);
+  }
+  .tool-group{gap:0}
+  .tool-rail .tool-button{height:28px;border-radius:1px}
+  .tool-button .tool-icon{width:24px;height:24px}
+  .tool-button .tool-icon svg{width:19px;height:19px;stroke-width:1.45}
+  .tool-separator{height:1px;margin:2px 3px}
+  .brush-family-popover{left:var(--tool-w);top:var(--topbar-h)}
+  .panel-dock{
+    top:var(--topbar-h);
+    right:0;
+    bottom:var(--status-h);
+    width:var(--panel-dock-w);
+    border-left:1px solid #202123;
+  }
+  .panel-dock-group{padding:2px}
+  .panel-dock-button{width:35px;height:33px;min-height:33px}
+  .inspector{
+    top:var(--topbar-h);
+    right:var(--panel-dock-w);
+    bottom:var(--status-h);
+    width:var(--inspector-w);
+    min-width:244px;
+    max-width:360px;
+  }
+  .creative-workspace-panel,
+  .app:not(.inspector-open) .creative-workspace-panel{
+    top:var(--topbar-h);
+    right:var(--panel-dock-w);
+    bottom:var(--status-h);
+    width:clamp(244px,var(--inspector-w),360px);
+  }
+  .pages-panel{top:var(--topbar-h);left:var(--tool-w);bottom:var(--status-h)}
+  .floating-panel{top:calc(var(--topbar-h) + 1px)}
+  .app[data-space="layout"] .stage-wrap{background:#262626}
+  .app[data-space="layout"] .canvas-vignette{box-shadow:inset 0 0 32px rgba(0,0,0,.10)}
+}
+@media(max-width:1120px) and (min-width:761px){
+  .topbar{grid-template-columns:auto minmax(215px,1fr) auto auto}
+  .doc-title{width:min(21vw,220px);min-width:160px}
+  .contextual-tool-identity{min-width:62px;max-width:82px}
+  .contextual-options .quick-slider input{width:58px}
+}
+@media(max-width:900px) and (min-width:761px){
+  .topbar .history-group{display:none}
+  .contextual-tool-identity{min-width:52px}
+  .contextual-tool-identity strong{max-width:44px}
+}
+@media(max-width:760px){
+  .topbar{overflow:visible}
+  .topbar > .contextual-options{top:var(--topbar-h);left:0;right:0}
 }
