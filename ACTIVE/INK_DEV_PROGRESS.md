@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `CORE-MOD-004 / DEV_HANDOFF`
+STATUS: `CORE-MOD-004 / MR_REVISE_QA_FIX`
 
 | Field | Value |
 |---|---|
@@ -8,10 +8,10 @@ STATUS: `CORE-MOD-004 / DEV_HANDOFF`
 | TITLE | `Visual Compare + Variant Module v0.1` |
 | BRANCH | `work/ink-core-visual-compare-004` |
 | BRANCH_BASE | `cc59437719e7e81b7451e9a4aef02cdc03328978` |
-| TASK_STATUS | `DEV_HANDOFF` |
-| CURRENT_PHASE | `COMPLETE / MR_REVIEW_REQUIRED` |
-| DEV_HANDOFF | `YES` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
+| TASK_STATUS | `MR_REVISE / QA_FIX_IN_PROGRESS` |
+| CURRENT_PHASE | `QA_FIX_ONLY / FORMAT_VERSION_4_FIXTURE` |
+| DEV_HANDOFF | `NO / SUPERSEDED_BY_MR_REVISE` |
+| MR_REVIEW | `REVISE / QA_FIX_REQUIRED` |
 | TARGET_GATE | `CORE_MOD_004_MODULE_READY` |
 | UI_MUTATION | `0 / PROHIBITED` |
 | REVISION_AUTHORITY_CHANGE | `0 / PROHIBITED` |
@@ -197,3 +197,32 @@ RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR revise — QA fixture correction
+
+Scope:
+
+```text
+SCOPE = QA_FIX_ONLY
+PRODUCT_MODULE_CHANGE = 0
+TARGET = qa/core-mod-004-visual-compare.test.mjs
+CAUSE = FORMAT_VERSION 4 fixture contract drift
+```
+
+Fixture correction commit:
+
+`6f25d17f51ee9267f5cdd4fb22373aab750ede2f`
+
+Correction:
+
+- artboard.mode = fixed
+- artboard.bleedMm = 0
+- workspace.activeSpace
+- workspace.layoutViewport
+- workspace.cameras.creation
+- workspace.cameras.layout
+
+Next:
+
+`node qa/core-mod-004-visual-compare.test.mjs → PASS evidence → new DEV_HANDOFF`
