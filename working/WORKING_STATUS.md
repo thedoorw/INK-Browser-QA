@@ -1703,3 +1703,43 @@ Runtime debt remains uncleared until a third manual batch passes.
 Required rerun target:
 
 `a364663bc3d03bfa184c708da8e42891e53fb563`
+
+
+## INK-INTEGRATION-RUNTIME-001 PASS / Runtime debt cleared
+
+Third manual Runtime batch:
+
+```text
+RUN = 35695901551
+TARGET_SHA = a364663bc3d03bfa184c708da8e42891e53fb563
+RESULT = PASS
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10680910385
+```
+
+Validated in one concentrated Windows Chrome batch:
+
+- current Web shell and canvas-first default;
+- contextual controls;
+- Layers / History / Reference / Compose / CHAT / Revision;
+- panel collapse / canvas reflow;
+- desktop/narrow/mobile containment;
+- fullscreen command surface;
+- creative loop extraction/edit/CHAT/Revision/save-reload path;
+- geometry runtime;
+- `FORMAT_VERSION = 4`;
+- no fatal runtime health failure.
+
+Deferred Runtime debt cleared:
+
+```text
+INK-WEB-UI-003 = CLEARED
+INK-WEB-UI-004 = CLEARED
+INK-WEB-UI-005 = CLEARED
+CORE-MOD-001 = CLEARED
+```
+
+`CORE-MOD-002` remains an independent source task and is not covered by this batch.
