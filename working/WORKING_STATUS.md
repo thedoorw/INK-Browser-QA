@@ -2041,3 +2041,20 @@ self-hosted Windows Chrome = authoritative Runtime path
 ```
 
 MR can now accumulate compatible Runtime debt in `ACTIVE/INK_RUNTIME_QUEUE.json` and trigger the central Windows batch by changing queue state to READY. Ordinary product/main pushes do not wake the Windows Runtime.
+
+
+## INK-CORE-INTEGRATION-004 activation
+
+```text
+TASK = INK-CORE-INTEGRATION-004
+TITLE = Grounded Creative Decision & Plan Bridge v0.1
+BRANCH = work/ink-core-integration-004
+TARGET = grounded reasoning → existing editable creative-plan proposal
+AUTO_APPROVAL = 0
+AUTO_EXECUTION = 0
+EXECUTION_AUTHORITY_CHANGE = 0
+FORMAT_VERSION = 4
+RUNTIME = CENTRAL_QUEUE / ACCUMULATE BY DEFAULT
+```
+
+This stage connects grounded reasoning to the existing user-governed proposal → approval → execution → Revision path without creating a second plan or execution authority.
