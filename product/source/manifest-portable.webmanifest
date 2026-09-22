@@ -1,8 +1,8 @@
 {
-  "name": "INK v0.1 · Web",
+  "name": "INK v0.1 · Portable",
   "short_name": "INK v0.1",
-  "description": "INK browser workspace for reference extraction, editable Paths, CHAT-assisted bounded edits and Revision.",
-  "start_url": "./index.html",
+  "description": "INK portable browser workspace with local drawing, document, CHAT and Revision capabilities.",
+  "start_url": "./index-standalone.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
