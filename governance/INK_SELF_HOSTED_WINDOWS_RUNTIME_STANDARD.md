@@ -2,13 +2,22 @@
 
 STATUS: `ACTIVE / AUTHORITATIVE_RUNTIME_BASELINE`
 
-## Current manual/batch path — INK-WEB-UI-002
+## Current central queue/manual batch path — INK-RUNTIME-AUTOMATION-001
 
 Current entry: `.github/workflows/ink-runtime-batch-windows.yml`.
-Only explicit `workflow_dispatch` with `target_ref` may run this batch. Resolve the
-ref once; all product/helper/harness bytes come from that exact SHA. Ordinary DEV
-pushes must not wake the Windows Runtime runner. Default cadence is 2–4 compatible
-Work Orders (target 3), per MR/DEV governance; an explicit Work Order may defer.
+The workflow has two bounded entry paths:
+
+1. a change to `ACTIVE/INK_RUNTIME_QUEUE.json` on `main`, where a lightweight
+   controller starts the Windows job only when queue state is `READY`; and
+2. explicit `workflow_dispatch`, where blank `target_ref` resolves current `main`
+   once and the optional value remains an advanced/debug override.
+
+Both paths pin one exact SHA before Windows materialization. All
+product/helper/harness bytes come from that SHA, and the artifact records the
+tested SHA. Ordinary product or DEV pushes do not trigger the controller or wake
+the Windows Runtime runner. Default cadence is 2–4 compatible Work Orders
+(target 3); high-risk queue entries may become `READY` early with an explicit
+reason.
 
 The new path uses actions/github-script's bundled Node, bounded Git blob reads,
 a checked-in Node HTTP/browser helper, and installed Chrome/Edge. It needs neither
