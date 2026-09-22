@@ -101,9 +101,17 @@
     if (use) use.setAttribute('href', '#' + descriptor.icon);
     if (name) name.textContent = descriptor.label;
     if (advanced) {
-      advanced.hidden = !['draw', 'eraser', 'shape', 'text', 'selection'].includes(descriptor.mode);
+      const propertiesOpen = currentPanel() === 'properties';
+      const available = ['draw', 'eraser', 'shape', 'text', 'selection'].includes(descriptor.mode);
+      advanced.hidden = !available;
       advanced.textContent = descriptor.mode === 'selection' ? '物件' : '進階';
-      advanced.setAttribute('aria-label', descriptor.mode === 'selection' ? '開啟物件檢查器' : '開啟工具進階設定');
+      advanced.classList.toggle('active', propertiesOpen);
+      advanced.setAttribute('aria-pressed', String(propertiesOpen));
+      advanced.setAttribute('aria-expanded', String(propertiesOpen));
+      advanced.setAttribute('aria-controls', 'inspector');
+      const action = propertiesOpen ? '關閉屬性面板' : (descriptor.mode === 'selection' ? '開啟物件屬性' : '開啟工具進階設定');
+      advanced.setAttribute('aria-label', action);
+      advanced.title = action;
     }
   }
 
@@ -116,12 +124,12 @@
   }
 
   function openContextualAdvanced() {
-    const app = runtime();
-    if (!app) return false;
-    app.creativeWorkspace?.setOpen?.(false);
-    app.toggleInspector?.(true, app.selection?.length ? 'object' : 'brush');
-    syncSoon();
-    return true;
+    if (!runtime()) return false;
+    if (currentPanel() === 'properties') {
+      closePrimaryPanels();
+      return true;
+    }
+    return selectPanel('properties');
   }
 
   function bindContextualOptions() {
@@ -166,7 +174,7 @@
       const button = event.target.closest('[data-shell-panel]');
       if (!button) return;
       event.preventDefault();
-      togglePanel(button.dataset.shellPanel);
+      selectPanel(button.dataset.shellPanel);
     });
     appRoot.append(dock);
     state.dock = dock;
@@ -192,7 +200,7 @@
       const button = event.target.closest('[data-shell-panel]');
       if (!button) return;
       event.preventDefault();
-      togglePanel(button.dataset.shellPanel);
+      selectPanel(button.dataset.shellPanel);
       setWindowMenu(false);
     });
     appRoot.append(menu);
@@ -275,20 +283,33 @@
     return true;
   }
 
-  function togglePanel(id) {
+  function rememberPanel(id) {
+    state.lastPanel = id;
+    try { localStorage.setItem(LAST_PANEL_KEY, id); } catch {}
+  }
+
+  function selectPanel(id) {
     const def = PANEL_DEFS.find(item => item.id === id);
     if (!def || !runtime()) return false;
     if (isPanelOpen(id)) {
-      closePrimaryPanels();
+      rememberPanel(id);
+      syncSoon();
       return true;
     }
     const opened = def.kind === 'inspector' ? showInspector(def) : showCreative(def);
     if (opened) {
-      state.lastPanel = id;
-      try { localStorage.setItem(LAST_PANEL_KEY, id); } catch {}
+      rememberPanel(id);
       syncSoon();
     }
     return opened;
+  }
+
+  function togglePanel(id) {
+    if (isPanelOpen(id)) {
+      closePrimaryPanels();
+      return true;
+    }
+    return selectPanel(id);
   }
 
   function activePanelElement() {
@@ -297,6 +318,31 @@
     if (app.creativeWorkspace?.open) return document.querySelector('#creativeWorkspace');
     if (state.root?.classList.contains('inspector-open')) return document.querySelector('#inspector');
     return null;
+  }
+
+  function bindCollapseControl() {
+    const button = document.querySelector('#inspectorEdgeToggle');
+    if (!button) return false;
+    button.dataset.shellCollapseBound = 'true';
+    button.setAttribute('aria-controls', 'inspector creativeWorkspace');
+    button.onclick = event => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (currentPanel()) closePrimaryPanels();
+      else selectPanel(state.lastPanel || 'properties');
+    };
+    return true;
+  }
+
+  function syncCollapseControl(active) {
+    const button = document.querySelector('#inspectorEdgeToggle');
+    if (!button) return;
+    const expanded = Boolean(active);
+    button.classList.toggle('active', expanded);
+    button.setAttribute('aria-expanded', String(expanded));
+    const label = expanded ? '收合右側面板' : '展開右側面板';
+    button.setAttribute('aria-label', label);
+    button.title = label;
   }
 
   function syncCreativePresentation() {
@@ -325,6 +371,9 @@
     state.root.style.setProperty('--active-panel-w', width + 'px');
     state.root.classList.toggle('panel-primary-open', Boolean(desktop && panel && width));
     state.root.dataset.shellPanel = active || 'collapsed';
+    syncCollapseControl(active);
+    const legacyInspectorToggle = document.querySelector('#inspectorToggle');
+    legacyInspectorToggle?.setAttribute('aria-expanded', String(Boolean(state.root.classList.contains('inspector-open'))));
     document.querySelectorAll('[data-shell-panel]').forEach(button => {
       const pressed = button.dataset.shellPanel === active;
       button.classList.toggle('active', pressed);
@@ -367,6 +416,7 @@
         state.root.style.setProperty('--inspector-w', DEFAULT_PRIMARY_PANEL_WIDTH + 'px');
       }
       bindContextualOptions();
+      bindCollapseControl();
 
       // Fresh Web entry is deliberately canvas-first. Only the last selected
       // panel identity is persisted; open/closed state is not.
@@ -430,15 +480,8 @@
   globalThis.INK_WEB_SHELL = {
     version: '0.1',
     panels: PANEL_DEFS.map(def => def.id),
-    open(id) {
-      const def = PANEL_DEFS.find(item => item.id === id);
-      if (!def || !runtime()) return false;
-      if (def.kind === 'inspector') showInspector(def);
-      else showCreative(def);
-      state.lastPanel = id;
-      syncSoon();
-      return true;
-    },
+    open: selectPanel,
+    select: selectPanel,
     toggle: togglePanel,
     close: closePrimaryPanels,
     state() {
