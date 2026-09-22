@@ -1,0 +1,25 @@
+name: CORE-MOD-005 Node QA
+
+on:
+  push:
+    branches:
+      - work/ink-core-parametric-structure-005
+    paths:
+      - ".github/workflows/core-mod-005-node-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  node-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run CORE-MOD-005 deterministic Node QA
+        run: node qa/core-mod-005-parametric-structure.test.mjs
