@@ -1958,7 +1958,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .creative-workspace-field{
     grid-template-columns:82px minmax(0,1fr);
     gap:6px;
-    color:#aaa caf;
+    color:#aaacaf;
     font-size:8px;
   }
   .creative-workspace-field input,
