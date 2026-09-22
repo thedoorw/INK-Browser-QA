@@ -1,48 +1,47 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `INK-WEB-UI-002 / AUTHORIZED / READY_FOR_DEV`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-WEB-UI-001` |
-| TITLE | `Photoshop-Aligned Workspace Shell & Collapsible Panel Dock v0.1` |
+| CURRENT_TASK_ID | `INK-WEB-UI-002` |
+| TITLE | `Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1` |
 | AUTHORITY | `USER_EXPLICIT / PACKAGE_WORK` |
-| DEV_WORK_BRANCH | `work/ink-web-ui-001` |
+| DEV_WORK_BRANCH | `work/ink-web-ui-002` |
 | DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / UI_SHELL_ONLY` |
-| UI_MUTATION | `AUTHORIZED` |
-| PRODUCT_DISPLAY_VERSION | `INK v0.1 · Web + INK v0.1 · Portable / REQUIRED` |
-| FAVICON | `USER_ORIGINAL_MARK / REQUIRED` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / REGRESSION_GUARD_ONLY` |
+| UI_MUTATION | `NO NEW VISUAL REDESIGN` |
+| WORKFLOW_MUTATION | `AUTHORIZED / RUNTIME_TRIGGER_AND_PROCESS_HYGIENE` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| CORE_RUNTIME | `STATIC_HOSTING + BROWSER_LOCAL` |
-| RUNTIME_QA | `DEFERRED_TO_BATCH / SOURCE_STATIC_REQUIRED` |
+| RUNTIME_QA | `DEFERRED_TO_BATCH` |
 
-## Product intent
+## Prior closure
 
-The first shared INK UI stage for both Portable and Web adopts a familiar Photoshop / Illustrator workspace grammar without copying Adobe branding, proprietary assets, or source code.
-
-Core principle:
+`INK-WEB-UI-001` is accepted and promoted.
 
 ```text
-人類介面可以盡量安靜、簡潔；
-CHAT 能力則維持在底層完整。
+REVIEWED_HANDOFF_HEAD = 8b8a59e08e4c31a1f317b5b4c57acf05cf160cc5
+TESTED_PRODUCT_SHA = 72ad6869f02bce293ae923755db0a154c9bff98b
+RUNTIME_RUN = 35679835724 / SUCCESS
+BROWSER_CHECKS = 40 / 40 PASS
+PROMOTION_PR = #22 / MERGED
+MAIN_MERGE = 29f06010fa539e5951d18d48b88045ab75ace84a
 ```
 
-Target shell:
+The task-local auto-push Runtime workflow from the DEV branch was intentionally excluded from promotion.
 
-```text
-top menu + contextual options
-left compact tool rail
-center canvas
-right collapsible panel dock
-bottom low-noise status
-```
+## Why this task exists
 
-The canvas must become the visual subject. Existing drawing, document, CHAT, History, Revision and creative-loop capabilities must remain available below the UI whether panels are open or collapsed.
+Two follow-up risks were confirmed during UI-001:
+
+1. task-specific full Runtime was auto-triggering on ordinary DEV pushes and waking the user's self-hosted Windows runner;
+2. Portable and Web currently share the same shell by implementation discipline, but there is no explicit parity guard preventing later Web-only drift.
+
+This package closes both risks together.
 
 ## Required reads
 
@@ -52,295 +51,194 @@ The canvas must become the visual subject. Existing drawing, document, CHAT, His
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 6. `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
-7. `governance/INK_Product_Delivery_Model_v0.1.md`
-8. only the product / QA files required by the phases below
+7. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
+8. `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
+9. only the product / QA / workflow files required below
 
-## User-supplied INK mark
-
-Authoritative Phase-1 source asset:
-
-`reference/brand/INK_MARK_SOURCE_W-300.jpg`
-
-Identity:
+## Product invariant
 
 ```text
-SOURCE = USER ORIGINAL ARTWORK
-SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
-DIMENSIONS = 300 x 300
-VISUAL = blue geometric-grid field + white central three-arm mark
-USE = INK visible mark + Web favicon
-FINE_GRID_AT_FAVICON_SIZE = MAY BECOME ILLEGIBLE / ACCEPTED
-SIMPLIFIED_REDRAW = NOT REQUIRED
-STATUS = TEMPORARY_ACCEPTED / REPLACEABLE_LATER
+UI_SHELL = SHARED
+Web      = INK v0.1 · Web
+Portable = INK v0.1 · Portable
+FORMAT_VERSION = 4
 ```
 
-Technical format conversion is allowed only when needed for browser/manifest compatibility. Do not visually reinterpret the mark.
+The following must remain shared unless explicitly delivery-specific:
 
-## Reference behavior
+- top-level workspace regions;
+- left tool rail;
+- right panel dock;
+- Layers / History access;
+- Reference / Compose / CHAT / Revision access;
+- shared shell coordinator;
+- primary CSS behavior;
+- mark/favicon usage.
 
-Use Photoshop / Illustrator as interaction references for:
+Allowed delivery-specific differences:
 
-- compact left toolbar;
-- canvas-dominant central workspace;
-- right-side dock/panel grammar;
-- collapse to icons and expand on demand;
-- familiar panel visibility behavior;
-- contextual exposure of tool/selection controls.
-
-Do not attempt pixel duplication. INK remains its own product.
+- supplementary product label;
+- manifest identity;
+- service-worker/cache behavior;
+- adapter/persistence behavior.
 
 ## Long Sequence Workpack
 
-### Phase A — Exact shell inventory + regression map
+### Phase A — Runtime workflow audit
 
-Before visual mutation, inventory the current shell and its behavior.
-
-At minimum map:
-
-- `product/source/index.html`;
-- `product/source/index-standalone.html`;
-- `product/source/styles.css`;
-- relevant UI/event logic in `product/source/src/ink.js` and directly related modules;
-- menu strip;
-- topbar;
-- workspace switch;
-- pages panel;
-- left tool rail / current tool controls;
-- inspector;
-- Layers;
-- History;
-- Creative Workspace;
-- Reference / Compose / CHAT / Revision entry points;
-- fullscreen;
-- save/open/export;
-- keyboard shortcuts;
-- desktop resize;
-- current narrow/mobile rules;
-- all IDs/classes/data attributes used by JS bindings.
-
-Required output: concise inventory in branch-local DEV progress and final implementation report.
-
-Hard rule:
+Audit current self-hosted Windows runtime workflows and classify:
 
 ```text
-VISUAL_REORGANIZATION
-must not silently delete or orphan an existing command binding.
+AUTO_PUSH_ACTIVE
+MANUAL_ONLY
+HISTORICAL_CLOSED_BRANCH
+UNSAFE_PROCESS_LAUNCH
+SAFE_BOUNDED
 ```
+
+At minimum inspect:
+
+- `.github/workflows/ink-cloud-018-self-hosted-preflight.yml`
+- `.github/workflows/ink-cloud-018-windows-runtime.yml`
+- `.github/workflows/ink-ra-001-windows-runtime.yml`
+- `.github/workflows/ink-v0.1-runtime-baseline.yml`
+- any new runtime workflow introduced by this task
+
+Do not rewrite historical workflows merely for stylistic consistency. Change only what is required to establish the current project-wide batch Runtime path and to prevent ordinary DEV pushes from waking the runner.
 
 Checkpoint commit required.
 
-Gate: `UI_SHELL_INVENTORY_COMPLETE`
+Gate: `RUNTIME_WORKFLOW_AUDIT_COMPLETE`
 
-### Phase B — Photoshop-aligned canvas-first shell
+### Phase B — Manual/batch Runtime trigger guard
 
-Reorganize the shared Portable/Web shell so both delivery forms open into the same calm, canvas-first workspace.
+Create or adapt one current project-wide Runtime entry point for future batched browser QA.
+
+Requirements:
+
+- self-hosted Windows full Runtime must not trigger on ordinary `push`;
+- current active batch workflow uses `workflow_dispatch` only;
+- explicit `target_ref` or exact SHA input;
+- no automatic wake-up of the user's Windows runner on DEV commits;
+- no task-specific UI workflow copied forward from UI-001;
+- no background promise of Runtime verification when no batch was executed.
+
+Recommended current workflow identity:
+
+`.github/workflows/ink-runtime-batch-windows.yml`
+
+The workflow may reuse proven bounded materialization/runtime logic, but must comply with the current safety standard.
+
+Checkpoint commit required.
+
+Gate: `RUNTIME_BATCH_TRIGGER_GUARD_WORKS`
+
+### Phase C — Windows runner process hygiene
+
+The current batch path must not open extra visible PowerShell windows during normal execution.
+
+Hard rules:
+
+- do not change PowerShell execution policy;
+- do not use `Set-ExecutionPolicy`;
+- do not use `-ExecutionPolicy Bypass`;
+- do not download and immediately execute remote PowerShell scripts;
+- do not add antivirus/security exclusions;
+- do not use a child `Start-Process powershell` pattern that opens another console window;
+- prefer checked-in Node/cmd helpers or same-process bounded shell operations;
+- if a local server process is needed, launch it non-interactively without creating a visible extra console.
+
+The current workflow source itself must pass a static safety scan for the prohibited patterns above.
+
+Checkpoint commit required.
+
+Gate: `WINDOWS_RUNTIME_PROCESS_HYGIENE_WORKS`
+
+### Phase D — Portable/Web shell parity guard
+
+Add a focused deterministic source/static test that compares the two active entry shells.
+
+At minimum verify parity for:
+
+- shared top-level shell regions;
+- required command-bearing IDs;
+- tool-rail hooks;
+- `web-shell.js` loading;
+- panel dock availability;
+- Layers / History reachability;
+- Reference / Compose / CHAT / Revision reachability;
+- favicon link presence;
+- INK mark use;
+- shared stylesheet loading;
+- Creative Workspace presence/default containment.
+
+Allow only explicit delivery-specific differences:
+
+```text
+Web title / label
+Portable title / label
+manifest file
+Web service-worker behavior
+compat/modular boot adapter differences already required by delivery form
+```
+
+A future Web-only shell mutation that changes shared UI structure must fail the parity test.
+
+Recommended test:
+
+`qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs`
+
+Checkpoint commit required.
+
+Gate: `PORTABLE_WEB_SHELL_PARITY_GUARD_WORKS`
+
+### Phase E — Source/static closure
 
 Required:
 
-- compact left vertical tool rail;
-- canvas visually dominant;
-- right-side panels not permanently occupying a large width;
-- right dock collapsed by default to compact icons/controls;
-- remove or redesign the central rounded INK empty-state card;
-- preserve minimal empty-state guidance only where useful;
-- keep application/menu/document identity distinct from contextual controls;
-- preserve existing panel content and functional bindings where practical;
-- canvas center must respond to the actual visible dock width;
-- no large Creative Workspace form should dominate the initial screen.
-
-The first package does not require a complete redesign of every tool property control. If dense tool controls cannot be safely migrated within this package, preserve them behind the existing inspector/property surface rather than enlarging scope.
-
-Checkpoint commit required.
-
-Gate: `WEB_WORKSPACE_SHELL_ALIGNED`
-
-### Phase C — Collapsible panel dock
-
-Implement bounded Photoshop-like panel behavior.
-
-Required:
-
-- compact collapsed state;
-- summon panel from dock;
-- expand one primary panel group at a time;
-- clicking the active panel may collapse it;
-- Layers and History must remain directly reachable;
-- CHAT / Reference / Compose / Revision must remain reachable without permanent occupancy;
-- hidden/collapsed panel must not disable underlying capability;
-- panel width bounded;
-- local persistence of panel-open/collapsed state allowed if simple and safe;
-- Window/menu access should remain coherent for panels exposed there;
-- no second workspace/document state authority.
-
-Checkpoint commit required.
-
-Gate: `COLLAPSIBLE_PANEL_DOCK_WORKS`
-
-### Phase D — Portable/Web identity v0.1 + INK mark + favicon + cache identity
-
-Correct both delivery-form identities in the same package.
-
-Required user-facing identities:
-
-```text
-INK v0.1 · Web
-INK v0.1 · Portable
-```
-
-The two delivery forms share the same workspace shell and interaction behavior; only delivery-form identity/supplementary metadata differs.
-
-At minimum inspect and correct relevant historical `v1.6.5 RC` Web-facing strings in:
-
-- document title;
-- visible shell labels / ARIA product identity;
-- `manifest.webmanifest`;
-- PWA/service-worker release/cache identity where it controls update behavior;
-- active Web metadata in `product/source/index.html`;
-- active Portable/standalone metadata in `product/source/index-standalone.html`.
-
-Rules:
-
-- historical engineering/baseline records may retain `v1.6.5 RC`;
-- do not rewrite archival/reference history;
-- `FORMAT_VERSION = 4` remains unchanged;
-- base product version remains `v0.1`, not `v0.1.1` or another inferred bump.
-
-Brand asset:
-
-- add a product Web asset derived from `reference/brand/INK_MARK_SOURCE_W-300.jpg`;
-- use it as the compact INK mark in the Web shell where appropriate;
-- add favicon link(s);
-- register app/manifest icon metadata where technically appropriate;
-- preserving the supplied JPG appearance is preferred; simple format conversion/copy is allowed;
-- do not redraw merely because the fine grid becomes indistinct at small sizes.
-
-Cache/update behavior:
-
-- move Web shell cache/release identity away from historical `1.6.5-RC`;
-- a previously opened browser must be able to obtain the new shell without requiring manual browser-storage deletion;
-- favicon may require fresh-tab verification because browser favicon caching is independent.
-
-Checkpoint commit required.
-
-Gate: `WEB_V0_1_IDENTITY_AND_FAVICON_WORK`
-
-### Phase E — Regression closure + batched Runtime QA registration
-
-Execute all source/static/unit/binding checks for this Work Order. Register the real-browser portion for the next Runtime batch unless an immediate-runtime trigger is discovered.
-
-Required acceptance:
-
-- initial Web view is canvas-first;
-- left tools remain available;
-- right panel dock starts compact;
-- panel expand/collapse works;
-- Layers operations still work;
-- History operations still work;
-- CHAT surface can open/close without losing underlying CHAT/document capability;
-- Reference / Compose / Revision remain reachable;
-- fullscreen works;
-- save/open/export remain wired;
-- keyboard shortcuts sampled and preserved;
-- desktop resize works;
-- narrow/mobile fallback does not catastrophically overlap;
-- Web visible identity is `INK v0.1 · Web`;
-- Portable/standalone visible identity is `INK v0.1 · Portable`;
-- no active Web-facing historical `v1.6.5 RC` identity remains where it represents current product version;
-- favicon is requested successfully in a fresh browser context;
-- service-worker/cache update behavior is validated;
-- no fatal console/runtime error;
+- parity test PASS;
+- runtime workflow trigger audit PASS;
+- active batch workflow is manual-only;
+- prohibited PowerShell/process patterns absent from the current batch workflow;
+- no product UI regression introduced;
 - `FORMAT_VERSION = 4`;
-- no document migration required;
-- no product drawing/document capability intentionally removed.
+- no package mutation;
+- no product base-version change;
+- runtime debt remains batched unless a high-risk trigger appears.
 
-When the batch checkpoint is reached, use the existing self-hosted Windows runtime standard:
+Final source gate:
 
-`governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
-
-Runner:
-
-```text
-C:\actions-runner-ink
-[self-hosted, Windows, X64]
-Chrome available
-```
-
-Do not change PowerShell execution policy. Reuse the bounded exact-SHA materialization pattern that already works on this runner where practical.
-
-Source-level gate for this Work Order:
-
-`INK_WEB_UI_PHASE1_SOURCE_COMPLETE`
-
-Runtime status at DEV handoff may be:
-
-`RUNTIME_QA = DEFERRED_TO_BATCH`
-
-The accumulated UI/runtime batch will later promote this to:
-
-`INK_WEB_UI_PHASE1_COMPLETE`
-
-after one concentrated real-browser PASS.
-
-## Required evidence artifact
-
-Create/update exactly one task-level implementation report:
-
-`research/INK_WEB_UI_PHASE1_IMPLEMENTATION_REPORT_v0.1.md`
-
-It must contain:
-
-- exact shell inventory;
-- UI structural changes;
-- panel-dock behavior;
-- version-string locations corrected;
-- favicon/mark asset locations;
-- cache/service-worker identity change;
-- source/static checks;
-- browser runtime evidence;
-- responsive observations;
-- known deferred UI work;
-- final gate status.
-
-Do not create additional design/research documents unless a concrete technical contract cannot fit here or in the existing UI development plan.
+`INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE`
 
 ## Explicit deferrals
 
-Do not expand this package into:
+Do not expand into:
 
-- full Photoshop visual cloning;
-- complete contextual-control migration for every tool;
-- broad CHAT redesign;
-- new CHAT command vocabulary;
-- new drawing engine behavior;
+- new visual UI redesign;
+- contextual-control migration;
+- new CHAT semantics;
 - new Recipe semantics;
+- renderer changes;
 - document/schema changes;
-- general design-system rewrite;
-- new cloud backend;
-- CRDT/multiplayer;
-- package/certification work.
+- package/release certification;
+- broad cleanup of every historical workflow.
 
-These remain later work unless separately authorized.
+## Required evidence artifact
 
-## Publication rule
+Create/update exactly one report:
 
-```text
-work/ink-web-ui-001
-→ NOT public
+`research/INK_UI_RUNTIME_GUARD_REPORT_v0.1.md`
 
-DEV_HANDOFF
-→ MR review
+Include:
 
-MR_PASS
-→ clean promotion / merge to main
-
-main
-→ GitHub Pages republishes staging
-
-live staging
-→ MR verifies actual public Web + cache update
-```
-
-DEV must not merge main.
+- workflow audit matrix;
+- exact trigger change;
+- process-hygiene implementation;
+- parity-test contract;
+- tests/checks executed;
+- files changed;
+- known historical workflows intentionally left unchanged;
+- final source gate.
 
 ## DEV progress discipline
 
@@ -348,79 +246,20 @@ Branch-local:
 
 `ACTIVE/INK_DEV_PROGRESS.md`
 
-Update at every meaningful checkpoint with:
-
-- exact HEAD;
-- phase;
-- files changed;
-- checks/tests;
-- blocker;
-- next phase.
+Update each meaningful checkpoint.
 
 ## Completion / STOP
 
-DEV may declare handoff after all authorized source/static checks pass and the deferred Runtime debt is explicitly recorded. Full browser Runtime is no longer required on every Work Order.
-
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-WEB-UI-001
-BRANCH = work/ink-web-ui-001
-GATE = INK_WEB_UI_PHASE1_SOURCE_COMPLETE
+TASK_ID = INK-WEB-UI-002
+BRANCH = work/ink-web-ui-002
+GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE
 FORMAT_VERSION = 4 / PRESERVED
-WEB_DISPLAY_VERSION = INK v0.1 · Web
-PORTABLE_DISPLAY_VERSION = INK v0.1 · Portable
-FAVICON = USER_ORIGINAL_MARK / PRESENT
+RUNTIME_TRIGGER = MANUAL_BATCH_ONLY
+PORTABLE_WEB_PARITY_GUARD = PASS
 PACKAGE_MUTATION = 0
 BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
-
-
-## Shared-shell correction — USER clarification
-
-The USER clarified that this interface redesign is not Web-only.
-
-Authoritative rule:
-
-```text
-UI_SHELL = SHARED
-PORTABLE = SAME UI / SAME INTERACTION GRAMMAR
-WEB_CLOUD = SAME UI / SAME INTERACTION GRAMMAR
-DIFFERENCE = DELIVERY-SPECIFIC ADAPTERS + SUPPLEMENTARY PRODUCT LABELS ONLY
-```
-
-Therefore DEV must keep `product/source/index.html` and `product/source/index-standalone.html` aligned for the shell changes in this Work Order.
-
-Do not allow the Photoshop-aligned interface to become a Web-only fork.
-
-Display identity:
-
-```text
-Web      = INK v0.1 · Web
-Portable = INK v0.1 · Portable
-```
-
-The favicon / INK mark may be shared by both.
-
-
-## Runtime batching override — USER decision
-
-The USER changed the development cadence after this package was issued.
-
-Authoritative rule:
-
-```text
-FULL_RUNTIME_EVERY_WORK_ORDER = NO
-RUNTIME_BATCH_SIZE = 2–4 compatible bounded Work Orders
-DEFAULT_BATCH_TARGET = 3
-CURRENT_WORK_ORDER_RUNTIME = DEFERRED_TO_BATCH
-```
-
-INK-WEB-UI-001 must still perform all practical source/static/unit/binding checks.
-
-Immediate Runtime remains mandatory only if DEV or MR discovers a high-risk trigger defined in:
-
-`governance/INK_MR_DEV_GOVERNANCE_v0.1.md#batched-runtime-qa-policy`
-
-This Work Order's deferred Runtime debt must be carried forward in `working/WORKING_STATUS.md` until the batch checkpoint executes.
