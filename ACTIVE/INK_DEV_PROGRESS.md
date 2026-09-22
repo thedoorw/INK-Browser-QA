@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-WEB-UI-002 / READY_TO_START`
+STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -8,8 +8,8 @@ STATUS: `INK-WEB-UI-002 / READY_TO_START`
 | TITLE | `Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1` |
 | BRANCH | `work/ink-web-ui-002` |
 | BRANCH_BASE | `d50c59ffb1c015b0776ac1864486869098be9181` |
-| TASK_STATUS | `AUTHORIZED / READY_TO_START` |
-| CURRENT_PHASE | `PHASE_A / RUNTIME_WORKFLOW_AUDIT` |
+| TASK_STATUS | `AUTHORIZED / DEV_IN_PROGRESS` |
+| CURRENT_PHASE | `PHASE_B / MANUAL_BATCH_ENTRY` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE` |
@@ -70,3 +70,14 @@ BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+## Phase A checkpoint
+
+- Previous HEAD: `5ad06e68334a2afa1551f595177e7c72ab44a0ec`.
+- Read: README, AGENTS, 我說, ACTIVE entry/start/work order/progress, working status,
+  development handoff, MR/DEV governance, Windows runtime standard and UI plan.
+- Audited all six current workflow definitions, both HTML shells, shared coordinator,
+  Creative Workspace and existing browser harnesses.
+- Changed: this progress file and the single required report.
+- Gate: `RUNTIME_WORKFLOW_AUDIT_COMPLETE`.
+- Runtime not dispatched. Next: manual batch entry.
