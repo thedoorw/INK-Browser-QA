@@ -1441,3 +1441,38 @@ OBJECTIVE =
 RUNTIME_QA = DEFERRED_TO_BATCH
 FORMAT_VERSION = 4
 ```
+
+
+## INK-WEB-UI-002 DEV handoff / runtime debt
+
+```text
+TASK = INK-WEB-UI-002
+BRANCH = work/ink-web-ui-002
+SOURCE_CLOSURE_HEAD = 0656d4cb35888d82cba4ea955032a508ad1022df
+TASK_STATUS = DEV_HANDOFF
+SOURCE_GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE
+PARITY_GUARD = PASS
+TRIGGER_AND_PROCESS_SOURCE_GUARD = PASS
+NON_BROWSER_TESTS = 8 / 8 PASS
+PRODUCT_SOURCE_MUTATION = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+MAIN_MERGE = 0
+BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
+MR_REVIEW = REQUIRED / NOT_YET_PERFORMED
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+This is a DEV branch-local handoff, not MR acceptance or promotion. MR must pin
+the final branch HEAD including this documentation-only handoff commit; the source
+closure SHA above is evidence provenance, not the final review fingerprint.
+
+Current deferred debt contributed by this workpack: manual batch materialization
+on Windows, Node/browser startup, UI/creative/geometry browser suites, absence of
+extra visible consoles, artifact retention and cleanup. No full Runtime ran in
+this workpack. Use `ink-runtime-batch-windows.yml` only after explicit MR batch
+scheduling, with a reviewed target_ref/SHA.
+
+The two historical task Runtime push blocks are removed in this branch; older
+remote work-branch revisions remain unchanged. Main and package were not written.

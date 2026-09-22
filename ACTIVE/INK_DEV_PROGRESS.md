@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
+STATUS: `INK-WEB-UI-002 / DEV_HANDOFF / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,14 +8,14 @@ STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
 | TITLE | `Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1` |
 | BRANCH | `work/ink-web-ui-002` |
 | BRANCH_BASE | `d50c59ffb1c015b0776ac1864486869098be9181` |
-| TASK_STATUS | `AUTHORIZED / DEV_IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_E / PASS_SOURCE_STATIC` |
-| DEV_HANDOFF | `NO` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| CURRENT_PHASE | `ALL_PHASES_COMPLETE / SOURCE_STATIC` |
+| DEV_HANDOFF | `YES` |
+| MR_REVIEW | `MR_REVIEW_REQUIRED` |
 | TARGET_GATE | `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | UI_SHELL_SCOPE | `SHARED PORTABLE + WEB/CLOUD` |
-| RUNTIME_TRIGGER | `MANUAL_BATCH_ONLY / TARGET` |
+| RUNTIME_TRIGGER | `MANUAL_BATCH_ONLY` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
 | BROWSER_RUNTIME_QA | `DEFERRED_TO_BATCH` |
@@ -24,7 +24,7 @@ STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
 
 `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-## Planned phases
+## Completed phases
 
 - Phase A — Runtime workflow audit
 - Phase B — manual/batch Runtime trigger guard
@@ -59,7 +59,8 @@ Portable = INK v0.1 · Portable
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-WEB-UI-002
 BRANCH = work/ink-web-ui-002
-FINAL_HEAD = <exact SHA>
+SOURCE_CLOSURE_HEAD = 0656d4cb35888d82cba4ea955032a508ad1022df
+FINAL_HEAD = resolve work/ink-web-ui-002 at this documentation-only handoff commit
 GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE
 FORMAT_VERSION = 4 / PRESERVED
 RUNTIME_TRIGGER = MANUAL_BATCH_ONLY
@@ -130,3 +131,16 @@ STOP
 - Final source gate: `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE`.
 - Source closure complete; documentation-only DEV_HANDOFF follows.
 - No browser/Windows runtime dispatched or claimed.
+
+## Final handoff
+
+- Latest source/static closure commit: `0656d4cb35888d82cba4ea955032a508ad1022df`.
+- This final commit changes only progress, working-status and report documentation.
+- All five phases complete; 8/8 non-browser tests PASS and syntax/static gates PASS.
+- Exactly 14 changed files from initial DEV HEAD; product tree unchanged.
+- Report: `research/INK_UI_RUNTIME_GUARD_REPORT_v0.1.md`.
+- Runtime debt recorded in `working/WORKING_STATUS.md`; no Runtime dispatch.
+- MR must resolve and pin the exact final branch HEAD (including this commit),
+  rather than use SOURCE_CLOSURE_HEAD as the review fingerprint. A commit cannot
+  embed its own hash; the handoff response also supplies the exact final SHA.
+- `DEV_HANDOFF → STOP → MR_REVIEW_REQUIRED`. No next task started.

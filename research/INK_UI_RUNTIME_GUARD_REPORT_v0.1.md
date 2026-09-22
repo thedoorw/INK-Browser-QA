@@ -138,3 +138,11 @@ workpack supplies the deterministic shell parity guard only.
 
 Final source gate: **INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE**.
 Runtime: **DEFERRED_TO_BATCH**. Next: **MR_REVIEW_REQUIRED → STOP**.
+
+
+## Handoff fingerprint
+
+Source/static closure: `0656d4cb35888d82cba4ea955032a508ad1022df`.
+Final handoff changes only this report, DEV progress and working status. Resolve
+`work/ink-web-ui-002` to pin the final review commit including these documents.
+Task state: `DEV_HANDOFF / STOP / MR_REVIEW_REQUIRED`.
