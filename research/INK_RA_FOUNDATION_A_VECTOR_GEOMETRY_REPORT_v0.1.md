@@ -1,6 +1,6 @@
 # INK RA Foundation A — Vector Geometry Report v0.1
 
-STATUS: `PHASE_A_COMPLETE / PHASE_B_COMPLETE / PHASE_C_COMPLETE / PHASE_D_COMPLETE / PHASE_E_COMPLETE / PHASE_F_IN_PROGRESS`
+STATUS: `COMPLETE / DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 ## Control
 
@@ -217,25 +217,53 @@ workflow YAML validation = PASS
 
 The real-browser acceptance harness checks the exact Rose Window fixture identity (`1086 x 1448`), browser-local ESM loading, three cubic intersections, finite cubic projection, 12-part Rose-derived geometry, robust offset, measurement, finite coordinates and repeated-result equality.
 
-Windows runtime candidate:
+Windows runtime closure:
 
 ```text
-TESTED_SHA = 10449d705ea549ad94ae1191f67a1da1712f31ff
-WORKFLOW_RUN = 35623923480
+TESTED_SHA = 6ec1ad1d7e35ba8a384fb44e184b7429e96f7c47
+WORKFLOW_RUN = 35670775922
+RUNNER = DESKTOP-NSOQH69
 JOB_LABELS = self-hosted / Windows / X64
-STATUS = QUEUED / NO_RUNNER_ASSIGNED
-RUNNER_NAME = empty
+STATUS = SUCCESS
+MATERIALIZE_BOUNDED_TREE = PASS
+STATIC_INVARIANTS = PASS
+CHROMIUM_FOUND = PASS
+REAL_CHROMIUM_GEOMETRY_ACCEPTANCE = PASS
 ```
 
-The repository's historical runner `DESKTOP-NSOQH69` previously passed with the same labels, but it has not accepted this job. The run remains queued. This is an external runtime-availability blocker, not a test failure; Phase F and DEV handoff remain open until the exact-SHA run executes successfully.
+Browser evidence:
+
+```text
+roseFixture = 1086 x 1448
+cubicIntersections = 3
+projectionDistance = 10.852837542
+roseInputSubpaths = 12
+roseOutputSubpaths = 12
+roseArea = 134302.71400749884
+deterministicRepeat = true
+formatVersion = 4
+```
+
+The successful workflow deliberately avoided `actions/checkout` because Git is not on the runner PATH. It downloaded the exact-SHA archive, extracted only the bounded runtime tree with local .NET ZIP handling, used no execution-policy change or bypass, and executed the browser harness with local Chrome.
 
 ## Unresolved limitations
 
 - Offset support is intentionally bounded to closed polygonized INK subpaths; curve-exact joined offsets and open-path stroking are deferred.
 - Existing Boolean remains polygonized/refitted rather than curve-exact.
 - General constraints, parametric solvers and RA scene/history semantics remain deferred and are not imported.
-- Required self-hosted Windows real-browser execution is pending runner availability.
 
 ## Final gate
 
-`STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED = OPEN / BLOCKED_WINDOWS_RUNNER_OFFLINE`
+`STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED = PASS`
+
+
+## DEV handoff
+
+```text
+DEV_HANDOFF = YES
+TESTED_PRODUCT_SHA = 6ec1ad1d7e35ba8a384fb44e184b7429e96f7c47
+RUNTIME_RUN = 35670775922 / SUCCESS
+TARGET_GATE = STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED / PASS
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
