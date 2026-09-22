@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `DEV_IN_PROGRESS / PHASE_A_COMPLETE`
+STATUS: `DEV_IN_PROGRESS / PHASE_E_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -42,6 +42,29 @@ Static inventory against the accepted UI-003/UI-004 baseline:
   2. reduce mobile topbar collision pressure while preserving fullscreen / inspector access;
   3. add dynamic-viewport containment for Inspector / Creative Workspace / Pages / mobile tool sheet on short/coarse-pointer screens;
   4. preserve contextual-option horizontal reachability instead of wrapping or clipping command controls.
+
+`INTEGRATION_REQUIRED = NO`.
+
+## Phase B–E — responsive / fullscreen / regression closure
+
+Implementation checkpoints:
+
+- `7bb079f36963a8a5e3b79ed30d2a45012d0b1a69` — UI-only responsive/fullscreen containment in `product/source/styles.css`.
+- `20bfb14f584577c3407bedbeaf32906b90a1e0b6` — focused final UI static regression contract.
+
+Results:
+
+- `DESKTOP_NARROW_UI_CONTAINMENT_WORKS = PASS_SOURCE_STATIC`
+- `MOBILE_UI_CONTAINMENT_WORKS = PASS_SOURCE_STATIC`
+- `FULLSCREEN_UI_CONSISTENCY_WORKS = PASS_SOURCE_STATIC`
+- `FINAL_UI_STATIC_REGRESSION_PASS = PASS_SOURCE_STATIC`
+- Portable/Web delivery-only normalized shell parity = PASS.
+- Shared IDs / command hooks remain unique and present.
+- `web-shell.js` parses; no shell coordinator mutation was required.
+- Fullscreen command authority remains unchanged in `src/ink.js`.
+- `FORMAT_VERSION = 4`; Web / Portable display identity remains `v0.1`.
+- Branch diff contains no Document / History / Revision / Recipe / Geometry / Renderer / Core semantic source changes.
+- Literal browser Runtime and literal local `node --test` are not claimed; equivalent deterministic assertions were executed against exact connected branch source.
 
 `INTEGRATION_REQUIRED = NO`.
 
