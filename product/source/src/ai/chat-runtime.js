@@ -1,5 +1,7 @@
 import { AICommandError, AI_LAYER_VERSION, createCommand, hashValue } from './ai-core.js';
 import { createCreativeIntelligenceContextAdapter } from './creative-intelligence-context.js';
+import { compareVisualSubjects } from '../compare/visual-compare.js';
+import { resolveParametricStructure } from '../structure/parametric-structure.js';
 
 export const CHAT_RUNTIME_VERSION = '1.6.0';
 export const STARTUP_MODES = Object.freeze(['STANDARD', 'AI_ASSISTED', 'LOCAL_ONLY', 'SAFE', 'VALIDATION']);
@@ -172,22 +174,22 @@ export class PlanRequest {
     this.format = 'INK-PLAN-REQUEST'; this.version = CHAT_RUNTIME_VERSION; this.requestId = `planreq:${hashValue([sessionId, prompt, context.hash, now()])}`; this.sessionId = sessionId; this.prompt = prompt; this.context = context; this.responseSchema = responseSchema; this.images = images; this.transmissionDecision = transmissionDecision; this.metadata = clone(metadata);
   }
 }
-export class PlanResponse { constructor({ requestId, provider, model, raw, plan, toolCalls = [], usage = null } = {}) { this.format = 'INK-PLAN-RESPONSE'; this.version = CHAT_RUNTIME_VERSION; this.requestId = requestId; this.provider = provider; this.model = model; this.raw = raw; this.plan = plan; this.toolCalls = toolCalls; this.usage = usage; this.receivedAt = now(); } }
+export class PlanResponse { constructor({ requestId, provider, model, raw, plan, toolCalls = [], toolResults = [], usage = null } = {}) { this.format = 'INK-PLAN-RESPONSE'; this.version = CHAT_RUNTIME_VERSION; this.requestId = requestId; this.provider = provider; this.model = model; this.raw = raw; this.plan = plan; this.toolCalls = toolCalls; this.toolResults = toolResults; this.usage = usage; this.receivedAt = now(); } }
 
 export class ConversationRequest {
-  constructor({ sessionId, prompt, context, transcript = [], transmissionDecision = 'TEXT_SUMMARY' } = {}) {
+  constructor({ sessionId, prompt, context, transcript = [], transmissionDecision = 'TEXT_SUMMARY', metadata = {} } = {}) {
     if (!sessionId || !prompt || !context) throw new RuntimeError('CONVERSATION_REQUEST_INVALID', 'Session, prompt, and context are required.');
     this.format = 'INK-CONVERSATION-REQUEST'; this.version = CHAT_RUNTIME_VERSION;
     this.requestId = `chatmsg:${hashValue([sessionId, prompt, context.hash, now()])}`;
     this.sessionId = sessionId; this.prompt = prompt; this.context = context;
-    this.transcript = clone(transcript).slice(-12); this.transmissionDecision = transmissionDecision;
+    this.transcript = clone(transcript).slice(-12); this.transmissionDecision = transmissionDecision; this.metadata = clone(metadata);
   }
 }
 export class ConversationResponse {
-  constructor({ requestId, provider, model, content, usage = null, source = 'MODEL' } = {}) {
+  constructor({ requestId, provider, model, content, toolCalls = [], toolResults = [], usage = null, source = 'MODEL' } = {}) {
     this.format = 'INK-CONVERSATION-RESPONSE'; this.version = CHAT_RUNTIME_VERSION;
     this.requestId = requestId; this.provider = provider; this.model = model;
-    this.content = String(content || ''); this.usage = usage; this.source = source; this.receivedAt = now();
+    this.content = String(content || ''); this.toolCalls = clone(toolCalls); this.toolResults = clone(toolResults); this.usage = usage; this.source = source; this.receivedAt = now();
   }
 }
 
@@ -200,6 +202,13 @@ const conversationContent = response => {
   if (typeof response?.message?.content === 'string') return response.message.content;
   if (typeof response?.choices?.[0]?.message?.content === 'string') return response.choices[0].message.content;
   throw new RuntimeError('CONVERSATION_RESPONSE_INVALID', 'Conversation provider did not return text content.');
+};
+
+const conversationToolCalls = response => {
+  if (Array.isArray(response?.toolCalls)) return clone(response.toolCalls);
+  if (Array.isArray(response?.tool_calls)) return clone(response.tool_calls);
+  if (Array.isArray(response?.choices?.[0]?.message?.tool_calls)) return clone(response.choices[0].message.tool_calls);
+  return [];
 };
 
 export class ChatClientInterface {
@@ -239,7 +248,7 @@ export class StreamHandler {
 export class HTTPModelAdapter extends ChatClientInterface {
   constructor(settings, { credentialStore, fetchImpl = globalThis.fetch, streamHandler = new StreamHandler() } = {}) { super(settings); this.credentialStore = credentialStore; this.fetchImpl = fetchImpl; this.streamHandler = streamHandler; this.active = new Map(); }
   buildPayload(request) { return { model: this.settings.model, input: request.prompt, context: request.context.payload, response_schema: request.responseSchema, tools: request.metadata?.tools || [], images: request.images, stream: this.settings.streaming }; }
-  buildConversationPayload(request) { return { model: this.settings.model, input: request.prompt, context: request.context.payload, transcript: request.transcript, mode: 'conversation', stream: this.settings.streaming }; }
+  buildConversationPayload(request) { return { model: this.settings.model, input: request.prompt, context: request.context.payload, transcript: request.transcript, mode: 'conversation', tools: request.metadata?.tools || [], stream: this.settings.streaming }; }
   async requestRemote(request, payload, { onToken, signal } = {}) {
     if (this.settings.localOnlyMode) throw new RuntimeError('LOCAL_ONLY_NETWORK_BLOCKED', 'External requests are disabled in local-only mode.');
     if (!this.settings.endpoint) throw new RuntimeError('ENDPOINT_REQUIRED', 'A model endpoint is required.');
@@ -261,7 +270,10 @@ export class HTTPModelAdapter extends ChatClientInterface {
   async createPlan(request, options = {}) { return await this.requestRemote(request, this.buildPayload(request), options); }
   async createMessage(request, options = {}) {
     const response = await this.requestRemote(request, this.buildConversationPayload(request), options);
-    return { content: conversationContent(response), usage: response?.usage || null, source: 'MODEL' };
+    const toolCalls = conversationToolCalls(response);
+    let content = '';
+    if (!toolCalls.length || typeof response === 'string' || typeof response?.content === 'string' || typeof response?.output_text === 'string' || typeof response?.text === 'string' || typeof response?.message?.content === 'string' || typeof response?.choices?.[0]?.message?.content === 'string') content = conversationContent(response);
+    return { content, toolCalls, usage: response?.usage || null, source: 'MODEL' };
   }
   cancel(requestId) { const controller = this.active.get(requestId); if (!controller) return false; controller.abort('user'); return true; }
 }
@@ -269,7 +281,7 @@ export class HTTPModelAdapter extends ChatClientInterface {
 export class OpenAICompatibleAdapter extends HTTPModelAdapter {
   buildConversationPayload(request) {
     const transcript = (request.transcript || []).filter(item => ['user','assistant'].includes(item.role) && typeof item.content === 'string').map(item => ({ role: item.role, content: item.content }));
-    return { model: this.settings.model, messages: [{ role: 'system', content: 'Discuss the current INK artwork using the supplied document context. Do not mutate the document, do not claim execution, and never request direct DOM, Canvas, file-system, or credential access. When the user requests a change, describe it as a bounded proposal; actual execution requires the separate INK approval flow.' }, ...transcript, { role: 'user', content: request.prompt }], stream: this.settings.streaming, user_context: request.context.payload };
+    return { model: this.settings.model, messages: [{ role: 'system', content: 'Discuss the current INK artwork using the supplied document context. Do not mutate the document, do not claim execution, and never request direct DOM, Canvas, file-system, or credential access. When the user requests a change, describe it as a bounded proposal; actual execution requires the separate INK approval flow.' }, ...transcript, { role: 'user', content: request.prompt }], tools: request.metadata?.tools || [], tool_choice: 'auto', stream: this.settings.streaming, user_context: request.context.payload };
   }
   buildPayload(request) {
     const content = [{ type: 'text', text: request.prompt }];
@@ -280,7 +292,7 @@ export class OpenAICompatibleAdapter extends HTTPModelAdapter {
 }
 export class CustomEndpointAdapter extends HTTPModelAdapter {
   buildPayload(request) { return { version: CHAT_RUNTIME_VERSION, request: { id: request.requestId, sessionId: request.sessionId, prompt: request.prompt, context: request.context, images: request.images, tools: request.metadata?.tools || [], responseSchema: request.responseSchema } }; }
-  buildConversationPayload(request) { return { version: CHAT_RUNTIME_VERSION, request: { id: request.requestId, sessionId: request.sessionId, mode: 'conversation', prompt: request.prompt, context: request.context, transcript: request.transcript } }; }
+  buildConversationPayload(request) { return { version: CHAT_RUNTIME_VERSION, request: { id: request.requestId, sessionId: request.sessionId, mode: 'conversation', prompt: request.prompt, context: request.context, transcript: request.transcript, tools: request.metadata?.tools || [] } }; }
 }
 
 export class ModelOutputValidator {
@@ -312,11 +324,92 @@ export class ModelOutputValidator {
   }
 }
 
-export const TOOL_NAMES = Object.freeze(['get_capabilities', 'get_document_summary', 'get_layer_tree', 'get_editable_targets', 'get_target_details', 'get_palette', 'get_history_summary', 'create_plan', 'validate_plan', 'request_preview', 'get_preview_difference', 'request_approval', 'execute_approved_plan', 'rollback_execution', 'save_variant', 'export_document']);
-export function toolDefinitions() { return TOOL_NAMES.map(name => ({ type: 'function', function: { name, description: `INK public tool: ${name}`, parameters: { type: 'object', additionalProperties: false, properties: { id: { type: 'string' }, plan: { type: 'object' }, recipeId: { type: 'string' }, previewId: { type: 'string' }, approvalId: { type: 'string' }, executionId: { type: 'string' }, targets: { type: 'array', items: { type: 'string' } }, options: { type: 'object' } } } } })); }
+const LEGACY_TOOL_NAMES = Object.freeze(['get_capabilities', 'get_document_summary', 'get_layer_tree', 'get_editable_targets', 'get_target_details', 'get_palette', 'get_history_summary', 'create_plan', 'validate_plan', 'request_preview', 'get_preview_difference', 'request_approval', 'execute_approved_plan', 'rollback_execution', 'save_variant', 'export_document']);
+export const GROUNDED_TOOL_NAMES = Object.freeze(['get_grounded_creative_context', 'compare_visual_subjects', 'resolve_parametric_structure']);
+export const TOOL_NAMES = Object.freeze([...LEGACY_TOOL_NAMES, ...GROUNDED_TOOL_NAMES]);
+
+const LEGACY_TOOL_PARAMETERS = Object.freeze({
+  type: 'object',
+  additionalProperties: false,
+  properties: {
+    id: { type: 'string' },
+    plan: { type: 'object' },
+    recipeId: { type: 'string' },
+    previewId: { type: 'string' },
+    approvalId: { type: 'string' },
+    executionId: { type: 'string' },
+    targets: { type: 'array', items: { type: 'string' } },
+    options: { type: 'object' }
+  }
+});
+
+const GROUNDED_TOOL_DEFINITIONS = Object.freeze({
+  get_grounded_creative_context: {
+    name: 'get_grounded_creative_context',
+    description: 'Read the current bounded grounded creative-intelligence context. Read-only; does not mutate Document, History, Revision, Geometry, Renderer, or execution state.',
+    parameters: { type: 'object', additionalProperties: false, properties: {} }
+  },
+  compare_visual_subjects: {
+    name: 'compare_visual_subjects',
+    description: 'Compare two explicit visual subjects using the existing deterministic Visual Compare module. Read-only evidence only.',
+    parameters: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['subjectA', 'subjectB'],
+      properties: {
+        subjectA: { type: 'object' },
+        subjectB: { type: 'object' },
+        options: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            mode: { type: 'string', enum: ['side-by-side', 'overlay', 'wipe', 'difference', 'structural'] },
+            limits: { type: 'object' }
+          }
+        }
+      }
+    }
+  },
+  resolve_parametric_structure: {
+    name: 'resolve_parametric_structure',
+    description: 'Resolve an explicit parametric structure descriptor into a deterministic read-only plan. It never inserts nodes or executes geometry.',
+    parameters: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['descriptor'],
+      properties: {
+        descriptor: { type: 'object' },
+        options: {
+          type: 'object',
+          additionalProperties: false,
+          properties: { limits: { type: 'object' } }
+        }
+      }
+    }
+  }
+});
+
+export function toolDefinitions() {
+  return TOOL_NAMES.map(name => ({
+    type: 'function',
+    function: GROUNDED_TOOL_DEFINITIONS[name]
+      ? clone(GROUNDED_TOOL_DEFINITIONS[name])
+      : { name, description: `INK public tool: ${name}`, parameters: clone(LEGACY_TOOL_PARAMETERS) }
+  }));
+}
+
+const groundedToolDiagnostic = (name, code, { status = 'REJECTED', required = [] } = {}) => ({
+  schema: 'INK-GROUNDED-TOOL-DIAGNOSTIC',
+  version: 1,
+  tool: name,
+  status,
+  code: String(code || 'UNAVAILABLE').slice(0, 160),
+  required: [...new Set(required.map(String))].slice(0, 8),
+  authority: { documentWrite: false, historyWrite: false, revisionWrite: false, geometryWrite: false, renderer: false, execution: false }
+});
 
 export class ToolCallRouter {
-  constructor({ layer, auditBridge, maxCallsPerMinute = 120 } = {}) { this.layer = layer; this.auditBridge = auditBridge; this.maxCallsPerMinute = maxCallsPerMinute; this.calls = []; this.completed = new Map(); }
+  constructor({ layer, auditBridge, groundedContextProvider = null, maxCallsPerMinute = 120 } = {}) { this.layer = layer; this.auditBridge = auditBridge; this.groundedContextProvider = groundedContextProvider; this.maxCallsPerMinute = maxCallsPerMinute; this.calls = []; this.completed = new Map(); }
   async route(call, { permission = 'PROPOSE', scope = 'CURRENT_DOCUMENT', sessionId = 'chat' } = {}) {
     const id = call?.id || call?.toolCallId; if (!id || !idPattern.test(id)) throw new RuntimeError('TOOL_CALL_ID_INVALID', 'Tool call ID is invalid.');
     if (this.completed.has(id)) return clone(this.completed.get(id));
@@ -326,6 +419,7 @@ export class ToolCallRouter {
     const cutoff = Date.now() - 60000; this.calls = this.calls.filter(time => time > cutoff); if (this.calls.length >= this.maxCallsPerMinute) throw new RuntimeError('TOOL_RATE_LIMIT', 'Tool call rate limit exceeded.', {}, { retryable: true }); this.calls.push(Date.now());
     const mutating = ['request_preview', 'request_approval', 'execute_approved_plan', 'rollback_execution', 'save_variant', 'export_document'];
     if (mutating.includes(name) && permission === 'OBSERVE') throw new RuntimeError('PERMISSION_DENIED', 'Observe permission cannot request this tool.', { name, permission });
+    if (name === 'resolve_parametric_structure' && permission === 'OBSERVE') throw new RuntimeError('PERMISSION_DENIED', 'Parametric structure planning requires PROPOSE permission even though the returned plan is read-only.', { name, permission });
     if (name === 'execute_approved_plan' && permission !== 'EXECUTE') throw new RuntimeError('PERMISSION_DENIED', 'Execute tool requires explicit EXECUTE bridge.', { name, permission });
     let result;
     switch (name) {
@@ -336,6 +430,27 @@ export class ToolCallRouter {
       case 'get_target_details': result = this.layer.stateReader.read(this.layer.currentDocument(), { objectIds: args.targets, limit: 100 }); break;
       case 'get_palette': result = this.layer.stateReader.read(this.layer.currentDocument(), { sections: ['palette'] }); break;
       case 'get_history_summary': result = this.layer.stateReader.read(this.layer.currentDocument(), { sections: ['historySummary'] }); break;
+      case 'get_grounded_creative_context':
+        if (!this.groundedContextProvider?.read) result = groundedToolDiagnostic(name, 'GROUNDED_CONTEXT_PROVIDER_UNAVAILABLE', { status: 'UNAVAILABLE' });
+        else {
+          try { result = this.groundedContextProvider.read({ historyEntries: [] }); }
+          catch (error) { result = groundedToolDiagnostic(name, error?.code || 'GROUNDED_CONTEXT_UNAVAILABLE', { status: 'UNAVAILABLE' }); }
+        }
+        break;
+      case 'compare_visual_subjects':
+        if (!args?.subjectA || !args?.subjectB) result = groundedToolDiagnostic(name, 'EXPLICIT_COMPARISON_SUBJECTS_REQUIRED', { status: 'INPUT_REQUIRED', required: ['subjectA', 'subjectB'] });
+        else {
+          try { result = compareVisualSubjects(args.subjectA, args.subjectB, args.options || {}); }
+          catch (error) { result = groundedToolDiagnostic(name, error?.code || 'VISUAL_COMPARE_REJECTED'); }
+        }
+        break;
+      case 'resolve_parametric_structure':
+        if (!args?.descriptor) result = groundedToolDiagnostic(name, 'EXPLICIT_PARAMETRIC_DESCRIPTOR_REQUIRED', { status: 'INPUT_REQUIRED', required: ['descriptor'] });
+        else {
+          try { result = resolveParametricStructure(args.descriptor, args.options || {}); }
+          catch (error) { result = groundedToolDiagnostic(name, error?.code || 'PARAMETRIC_STRUCTURE_REJECTED'); }
+        }
+        break;
       case 'create_plan': result = this.layer.createPlanFromSteps(args.plan?.userIntent || args.plan?.summary || 'External CHAT Plan', args.plan?.orderedSteps || [], args.plan || {}); break;
       case 'validate_plan': result = this.layer.editPlan(args.plan?.planId || args.id, {}); break;
       case 'request_preview': result = this.layer.preview(args.recipeId, args.options); break;
@@ -380,17 +495,18 @@ export class ChatSessionManager {
     this.auditBridge.recordTransmission(preview, transmissionDecision);
     let response, attempt = 0;
     while (true) { try { response = await client.createPlan(request, { onToken }); break; } catch (error) { const mapped = ErrorMapper.map(error, client.settings.provider); if (!mapped.retryable || attempt >= client.settings.retryCount) throw mapped; attempt++; } }
-    for (const call of response.toolCalls || []) await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId });
+    const toolResults = [];
+    for (const call of response.toolCalls || []) toolResults.push(await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId }));
     const repaired = await this.validator.repair(response.content, async repair => { const repairRequest = new PlanRequest({ sessionId, prompt: `Repair this Plan. Errors: ${repair.errorSummary.join(', ')}. Return JSON only.`, context, transmissionDecision, metadata: { invalidOutput: repair.invalidOutput, tools: [] } }); const repairedResponse = await client.createPlan(repairRequest, { onToken }); return repairedResponse.content; });
     const plan = repaired.plan.format === 'INK-EDITABLE-PLAN' && repaired.plan.recipeDraft ? repaired.plan : this.layer.createPlanFromSteps(repaired.plan.userIntent || repaired.plan.summary, repaired.plan.orderedSteps, repaired.plan);
-    const output = new PlanResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, raw: redactSecrets(response.content), plan, toolCalls: response.toolCalls, usage: response.usage }); session.messages.push({ role: 'user', content: prompt, contextHash: context.hash }, { role: 'assistant', planId: plan.planId, responseHash: hashValue(output) }); return output;
+    const output = new PlanResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, raw: redactSecrets(response.content), plan, toolCalls: response.toolCalls, toolResults, usage: response.usage }); session.messages.push({ role: 'user', content: prompt, contextHash: context.hash }, { role: 'assistant', planId: plan.planId, responseHash: hashValue(output) }); return output;
   }
   async requestConversation(sessionId, { prompt, contextOptions = {}, transmissionDecision = 'TEXT_SUMMARY', userConsent = false, onToken } = {}) {
     const session = this.sessions.get(sessionId), client = this.clients.get(session?.client); if (!session || !client) throw new RuntimeError('SESSION_NOT_FOUND', 'Chat session is unavailable.');
     const normalizedPrompt = String(prompt || '').trim(); if (!normalizedPrompt) throw new RuntimeError('CONVERSATION_PROMPT_REQUIRED', 'Conversation prompt is required.');
     const context = this.contextBuilder.build(contextOptions);
     const transcript = session.messages.filter(item => ['user','assistant'].includes(item.role) && typeof item.content === 'string').slice(-12);
-    const request = new ConversationRequest({ sessionId, prompt: normalizedPrompt, context, transcript, transmissionDecision });
+    const request = new ConversationRequest({ sessionId, prompt: normalizedPrompt, context, transcript, transmissionDecision, metadata: { tools: toolDefinitions() } });
     const preview = buildTransmissionPreview({ settings: client.settings, request, decision: transmissionDecision });
     if (client.external && !userConsent) return { status: 'TRANSMISSION_APPROVAL_REQUIRED', transmissionPreview: preview, request: redactSecrets(request) };
     if (this.mode === 'STANDARD' && client.external) throw new RuntimeError('STANDARD_MODE_CONNECTION_BLOCKED', 'Standard mode never establishes external connections.');
@@ -398,7 +514,10 @@ export class ChatSessionManager {
     this.auditBridge.recordTransmission(preview, transmissionDecision);
     let response, attempt = 0;
     while (true) { try { response = await client.createMessage(request, { onToken }); break; } catch (error) { const mapped = ErrorMapper.map(error, client.settings.provider); if (!mapped.retryable || attempt >= client.settings.retryCount) throw mapped; attempt++; } }
-    const output = new ConversationResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, content: conversationContent(response), usage: response?.usage || null, source: response?.source || (client.external ? 'MODEL' : 'LOCAL_CONTEXT') });
+    const toolCalls = conversationToolCalls(response);
+    const toolResults = [];
+    for (const call of toolCalls) toolResults.push(await this.toolRouter.route(call, { permission: 'PROPOSE', sessionId }));
+    const output = new ConversationResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, content: toolCalls.length && !response?.content ? '' : conversationContent(response), toolCalls, toolResults, usage: response?.usage || null, source: response?.source || (client.external ? 'MODEL' : 'LOCAL_CONTEXT') });
     session.messages.push({ role: 'user', content: normalizedPrompt, contextHash: context.hash }, { role: 'assistant', content: output.content, responseHash: hashValue(output), source: output.source });
     return output;
   }
@@ -434,7 +553,7 @@ function defaultGroundedContextProvider(layer) {
 
 export function createChatRuntime(layer, { fetchImpl = globalThis.fetch, sessionStorage = globalThis.sessionStorage, crypto = globalThis.crypto, groundedContextProvider = undefined } = {}) {
   const resolvedGroundedContextProvider = groundedContextProvider === undefined ? defaultGroundedContextProvider(layer) : groundedContextProvider;
-  const credentialStore = new CredentialSecuritySystem({ sessionStorage, crypto }), capabilityProvider = new CapabilityProvider(layer), documentStateProvider = new DocumentStateProvider(layer), auditBridge = new AuditBridge(layer), contextBuilder = new ContextBuilder({ capabilityProvider, documentStateProvider, groundedContextProvider: resolvedGroundedContextProvider }), validator = new ModelOutputValidator({ layer }), toolRouter = new ToolCallRouter({ layer, auditBridge });
+  const credentialStore = new CredentialSecuritySystem({ sessionStorage, crypto }), capabilityProvider = new CapabilityProvider(layer), documentStateProvider = new DocumentStateProvider(layer), auditBridge = new AuditBridge(layer), contextBuilder = new ContextBuilder({ capabilityProvider, documentStateProvider, groundedContextProvider: resolvedGroundedContextProvider }), validator = new ModelOutputValidator({ layer }), toolRouter = new ToolCallRouter({ layer, auditBridge, groundedContextProvider: resolvedGroundedContextProvider });
   const manager = new ChatSessionManager({ layer, contextBuilder, validator, toolRouter, auditBridge, credentialStore });
   manager.register('manual-json', new ManualJSONClient());
   let configuredProvider = null;
