@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `IN_PROGRESS / PHASE_B_E_COMPLETE`
+STATUS: `DEV_HANDOFF / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,9 +8,9 @@ STATUS: `IN_PROGRESS / PHASE_B_E_COMPLETE`
 | TITLE | `Panel Hierarchy / Spacing / CHAT Placement Polish v0.1` |
 | BRANCH | `work/ink-web-ui-004` |
 | BASE_MAIN | `9adc2ef09141e4015fc9d4657fb5b3f932a39c41` |
-| TASK_STATUS | `IN_PROGRESS / PHASE_B_E_COMPLETE` |
-| DEV_HANDOFF | `NOT_YET` |
-| UR_REVIEW | `PENDING_AFTER_HANDOFF` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| DEV_HANDOFF | `YES` |
+| UR_REVIEW | `REQUIRED` |
 | TARGET_GATE | `PANEL_CHAT_UI_POLISH_WORKS` |
 | UI_SHELL | `PORTABLE_WEB_SHARED` |
 | FORMAT_VERSION | `4 / PRESERVE` |
@@ -132,20 +132,47 @@ Literal local `node --test` was not available because the execution container ca
 Runtime: `DEFERRED_TO_UI_INTEGRATION_BATCH`.
 Integration finding: none.
 
+### Phase F — report / DEV handoff
+
+Evidence report committed:
+
+`f8289a2fe25457d4e378d3e386a7d371e3a5327c`
+
+Report:
+
+`research/INK_WEB_UI_004_PANEL_CHAT_POLISH_REPORT_v0.1.md`
+
+Final pre-handoff conditions:
+
+- `PANEL_HIERARCHY_POLISHED = PASS`;
+- `UI_SPACING_HIERARCHY_POLISHED = PASS`;
+- `CHAT_PLACEMENT_POLISHED = PASS`;
+- `UI004_PORTABLE_WEB_PARITY_WORKS = PASS`;
+- Core semantic mutation = 0;
+- package mutation = 0;
+- `FORMAT_VERSION = 4`;
+- product base version = `v0.1`;
+- Runtime = `DEFERRED_TO_UI_INTEGRATION_BATCH`;
+- `INTEGRATION_REQUIRED = NO`.
+
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
 TASK_ID = INK-WEB-UI-004
 BRANCH = work/ink-web-ui-004
-FINAL_HEAD = <exact SHA>
+FINAL_SOURCE_HEAD = f8289a2fe25457d4e378d3e386a7d371e3a5327c
+TERMINAL_PROGRESS_COMMIT = THIS_HANDOFF_UPDATE
 GATE = PANEL_CHAT_UI_POLISH_WORKS
 PORTABLE_WEB_PARITY = PASS
 FORMAT_VERSION = 4
 PRODUCT_BASE_VERSION = v0.1
 PACKAGE_MUTATION = 0
 CORE_MUTATION = 0
+INTEGRATION_REQUIRED = NO
 RUNTIME_QA = DEFERRED_TO_UI_INTEGRATION_BATCH
 NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
+
+UR must pin the resulting branch HEAD after this terminal progress-only commit before review.
