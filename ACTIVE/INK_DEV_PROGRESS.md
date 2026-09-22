@@ -1,79 +1,72 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: `INK-WEB-UI-002 / READY_TO_START`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
-| TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
-| DEV_HANDOFF | `NOT_YET` |
+| TASK_ID | `INK-WEB-UI-002` |
+| TITLE | `Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1` |
+| BRANCH | `work/ink-web-ui-002` |
+| BRANCH_BASE | `d50c59ffb1c015b0776ac1864486869098be9181` |
+| TASK_STATUS | `AUTHORIZED / READY_TO_START` |
+| CURRENT_PHASE | `PHASE_A / RUNTIME_WORKFLOW_AUDIT` |
+| DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
+| TARGET_GATE | `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE` |
+| FORMAT_VERSION | `4 / PRESERVE` |
+| UI_SHELL_SCOPE | `SHARED PORTABLE + WEB/CLOUD` |
+| RUNTIME_TRIGGER | `MANUAL_BATCH_ONLY / TARGET` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
+| BROWSER_RUNTIME_QA | `DEFERRED_TO_BATCH` |
 
-## Objective
-
-Close the known Structure-Aware single-Path reconstruction bottleneck:
-
-```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
-```
-
-The authoritative scope and STOP rules are in:
+## Authoritative task
 
 `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-## Checkpoint rule
-
-At every meaningful checkpoint:
-
-- commit;
-- update this branch-local file;
-- record exact SHA;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
-
-Do not replace the Direct Extraction baseline during DEV execution.
-
 ## Planned phases
 
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
+- Phase A — Runtime workflow audit
+- Phase B — manual/batch Runtime trigger guard
+- Phase C — Windows runner process hygiene
+- Phase D — Portable/Web shell parity guard
+- Phase E — source/static closure
+
+## Hard rules
+
+```text
+ordinary DEV push must not wake self-hosted Windows full Runtime
+no visible child PowerShell console
+no ExecutionPolicy bypass
+no Set-ExecutionPolicy
+no AV/security exclusions
+Portable/Web shared shell must not drift
+FORMAT_VERSION = 4
+```
+
+## Previous accepted UI baseline
+
+```text
+INK-WEB-UI-001
+MAIN = 29f06010fa539e5951d18d48b88045ab75ace84a
+Web = INK v0.1 · Web
+Portable = INK v0.1 · Portable
+```
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
+TASK_ID = INK-WEB-UI-002
+BRANCH = work/ink-web-ui-002
 FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
-FORMAT_VERSION = 4
+GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE
+FORMAT_VERSION = 4 / PRESERVED
+RUNTIME_TRIGGER = MANUAL_BATCH_ONLY
+PORTABLE_WEB_PARITY_GUARD = PASS
 PACKAGE_MUTATION = 0
 MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
+BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
