@@ -281,3 +281,55 @@ UR may promote UI-only Work Orders with `RUNTIME_QA = DEFERRED_TO_BATCH` when so
 UR does not wait for MR between UI tasks because of deferred Runtime debt.
 
 The accumulated UI debt is handed to the Integration checkpoint. MR owns the cross-lane Runtime batch unless a future explicit delegation says otherwise.
+
+
+## Core Module lane — MR supervised
+
+MR owns the Core Module lane.
+
+Core modules are prepared as independently testable capability packages before formal UI exposure or cross-module integration.
+
+Required pattern:
+
+```text
+module contract
+→ isolated implementation
+→ deterministic/unit evidence
+→ adapter boundary
+→ MODULE_READY
+→ Integration Queue
+```
+
+Core module Work Orders may modify shared core source only inside their named module boundary.
+
+They must not:
+
+- create a second Document / History / Revision / Renderer authority;
+- add formal UI or change UI layout;
+- directly wire themselves into the production shell unless the Work Order explicitly says Integration;
+- mutate schema / FORMAT_VERSION without explicit MR authorization;
+- merge into another lane's branch.
+
+A module may be promoted to main while dormant or adapter-only if:
+
+- the source is inert until explicitly called;
+- tests prove deterministic behavior;
+- existing product behavior is unchanged;
+- no immediate-runtime trigger applies.
+
+Formal product wiring of multiple prepared modules happens under an Integration Work Order and may be followed by one Runtime batch.
+
+### Core module sequence
+
+Current MR-owned sequence:
+
+```text
+CORE-MOD-000  Vector Geometry Kernel baseline / already established
+CORE-MOD-001  AI Document Bridge
+CORE-MOD-002  Semantic Region Grounding
+CORE-MOD-003  Revision / Provenance
+CORE-MOD-004  Visual Compare / Variant
+CORE-MOD-005  Parametric Creative Structure
+```
+
+MR may revise the sequence only from evidence or a demonstrated dependency.
