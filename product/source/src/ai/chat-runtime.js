@@ -134,7 +134,8 @@ export class ContextBuilder {
           .sort((a, b) => a.localeCompare(b));
         const grounded = this.groundedContextProvider.read({
           ...(groundedContextOptions && typeof groundedContextOptions === 'object' ? groundedContextOptions : {}),
-          allowedObjectIds
+          allowedObjectIds,
+          ...(includeHistory ? {} : { historyEntries: [] })
         });
         sections.groundedCreativeIntelligence = grounded;
         groundedFingerprint = grounded?.contextFingerprint || 'available';

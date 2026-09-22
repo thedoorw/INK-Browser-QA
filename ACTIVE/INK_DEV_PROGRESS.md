@@ -66,3 +66,8 @@ Source QA checkpoint:
 - deterministic integrated-context QA authored at `qa/core-integration-001-grounded-context.test.mjs`;
 - covers reorder normalization, selection, semantic regions, provenance, explicit-only compare/structure, unresolved evidence, provider immutability, disclosure projection, FORMAT_VERSION 4, CHAT enabled/disabled/fallback, and forbidden side-effect APIs;
 - Runtime remains deferred to the MR promotion/manual integration batch.
+
+Disclosure-policy correction:
+
+- `includeHistory=false` now explicitly supplies empty grounded history evidence;
+- grounded provenance therefore cannot bypass the existing CHAT history disclosure choice.

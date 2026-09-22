@@ -231,6 +231,7 @@ function build(extra = {}, options = {}) {
     read: options => {
       groundedReads += 1;
       assert.deepEqual(options.allowedObjectIds, ['path:a', 'stroke:a']);
+      assert.deepEqual(options.historyEntries, [], 'history evidence must stay omitted unless includeHistory is enabled');
       return {
         schema: CREATIVE_INTELLIGENCE_CONTEXT_SCHEMA,
         version: 1,
