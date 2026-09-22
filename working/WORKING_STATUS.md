@@ -1765,3 +1765,32 @@ runtime = DEFERRED_TO_INTEGRATION_BATCH
 ```
 
 UI lane remains maintenance-only under UR.
+
+
+## CORE-MOD-003 closure / CORE-MOD-004 activation
+
+```text
+CORE-MOD-003 = Revision Provenance / MR_PASS / PROMOTED
+REVIEWED_HEAD = 66fb1cd1f584b0f648b5d9b7040706a940612dda
+PR = #31
+MAIN = bffd922ce92bca8a21102d87087020b1286e2b42
+INTEGRATION_QUEUE += REVISION_PROVENANCE
+RUNTIME_QA = DEFERRED_TO_NEXT_INTEGRATION_BATCH
+```
+
+Next Core module:
+
+```text
+CORE-MOD-004 = Visual Compare + Variant Module
+branch = work/ink-core-visual-compare-004
+purpose = prepare deterministic comparison/variant data without creating UI, renderer or Revision authority
+runtime = DEFERRED_TO_INTEGRATION_BATCH
+```
+
+Current Integration Queue:
+
+```text
+AI_DOCUMENT_BRIDGE
+SEMANTIC_REGION_GROUNDING
+REVISION_PROVENANCE
+```
