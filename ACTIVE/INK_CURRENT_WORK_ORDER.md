@@ -1,224 +1,277 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CORE-INTEGRATION-003 / AUTHORIZED / READY_FOR_DEV`
+STATUS: INK-UI-MAINT-002 / UR_AUTHORIZED / DEV_READY
 
-## Control
-
-| Field | Value |
-|---|---|
-| CURRENT_TASK_ID | `INK-CORE-INTEGRATION-003` |
-| TITLE | `Bounded Grounded Tool Reasoning Loop v0.1` |
-| ROLE_OWNER | `MR / CORE INTEGRATION` |
-| DEV_WORK_BRANCH | `work/ink-core-integration-003` |
-| DEV_MODE | `BOUNDED_INTEGRATION` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / CHAT ORCHESTRATION ONLY` |
-| UI_LAYOUT_MUTATION | `PROHIBITED` |
-| DOCUMENT_SCHEMA_CHANGE | `PROHIBITED` |
-| HISTORY_SEMANTICS_CHANGE | `PROHIBITED` |
-| REVISION_SEMANTICS_CHANGE | `PROHIBITED` |
-| GEOMETRY_AUTHORITY_CHANGE | `PROHIBITED` |
-| RENDERER_MUTATION | `PROHIBITED` |
-| CHAT_EXECUTION_AUTHORITY_CHANGE | `PROHIBITED` |
-| AUTONOMOUS_AGENT_LOOP | `PROHIBITED` |
-| FORMAT_VERSION | `4 / PRESERVE` |
-| PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
-| MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `REQUIRED_AFTER_MR_PASS_AND_PROMOTION` |
-
-## Upstream accepted baseline
-
-```text
-INK-CORE-INTEGRATION-001 = grounded creative-intelligence context / LIVE
-INK-CORE-INTEGRATION-002 = grounded creative tool surface / PROMOTED
-PROMOTED_MAIN = 4b03897d7ba984bcbe0898ab3ebaa0a5c2df7138
-```
+TASK_ID: INK-UI-MAINT-002
+TITLE: Typography Readability / Panel Authority / Content Containment / Favicon v0.1
+BRANCH: work/ink-ui-maint-002
+BASE_MAIN: 19ce5f7d03a32600493a550ae2d2262340c229ee
+AUTHORITY: USER_DIRECT_UI_MAINTENANCE / UR
+RUNTIME_QA: REQUIRED_BEFORE_UI_PASS
+FORMAT_VERSION: 4 / PRESERVE
+PRODUCT_BASE_VERSION: v0.1 / PRESERVE
+PACKAGE_MUTATION: 0 / PROHIBITED
+CORE_MUTATION: 0 / PROHIBITED
 
 ## Objective
 
-Close one bounded reasoning cycle:
+Resolve the user-visible UI defects discovered after INK-UI-MAINT-001 without changing Renderer, Document, History, Revision, Geometry, Core, CHAT execution semantics, persistence, packaging or product version.
 
-```text
-user prompt
-→ model requests grounded read-only tool
-→ INK executes approved grounded read-only tool locally
-→ structured tool result
-→ one bounded model continuation using that result
-→ final grounded response or editable Plan
-```
+Photoshop remains a geometry / typography / density benchmark only. Do not copy Adobe branding or feature inventory.
 
-This is not an autonomous agent loop. It is a single bounded tool continuation.
+Web and Portable must remain synchronized.
 
-## Allowed automatic tool set
+## Required scope
 
-Only these tools may participate in the automatic continuation loop:
+### A. Typography readability — HARD GATE
 
-```text
-get_grounded_creative_context
-compare_visual_subjects
-resolve_parametric_structure
-```
+Current problem:
+- multiple desktop chrome/panel labels are only 8–10 px;
+- secondary gray text is too dim against dark chrome;
+- hierarchy is visually weaker than the Photoshop reference at 100% zoom.
 
-No legacy mutation/proposal/approval/execution tool may be auto-executed as part of the continuation loop.
+Required:
+- review current desktop typography at 1280×1024 and 100% browser zoom;
+- increase small chrome/panel text where needed;
+- increase luminance/contrast of secondary text where needed;
+- preserve hierarchy: title > label > secondary/meta;
+- avoid global font-size inflation that causes overflow;
+- verify menu, top options, Inspector, tabs, control labels, panel labels, status text and Creative Loop surfaces;
+- maintain INK visual identity.
 
-## Required reads
+Gate:
+TYPOGRAPHY_READABILITY = PASS
 
-1. `README.md`
-2. `AGENTS.md`
-3. this Work Order
-4. `working/WORKING_STATUS.md`
-5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `product/source/src/ai/chat-runtime.js`
-7. `product/source/src/ai/creative-intelligence-context.js`
-8. `qa/core-integration-002-grounded-tool-surface.test.mjs`
-9. relevant provider adapters / request-response contracts
+### B. Contextual “進階” button is a real synchronized toggle — HARD GATE
 
-## Phase A — bounded continuation contract
+Current bug:
+`openContextualAdvanced()` always forces Inspector open.
+It is not a true toggle and does not expose active state.
 
-Define a transport-neutral continuation contract for grounded tools.
+Required:
+- second press must close the corresponding primary panel when that contextual Properties state is already open;
+- use one authoritative panel state, not a fake local state;
+- synchronize `aria-pressed`, `aria-expanded` if applicable, active class, visual color/state;
+- when another panel is active, pressing “進階” routes to current tool/object Properties;
+- closing the primary panel clears active state;
+- selection/object context must continue to route correctly.
 
-Requirements:
+Gate:
+CONTEXTUAL_ADVANCED_TOGGLE_STATE = PASS
 
-- exactly one automatic continuation round by default;
-- hard maximum = 1 continuation round in v0.1;
-- only grounded tool names are eligible;
-- tool call IDs and results remain stable and auditable;
-- tool result payload is bounded and JSON-compatible;
-- no hidden user approval;
-- no tool result may be treated as a document mutation result;
-- if provider asks for another tool after the continuation round, return bounded `TOOL_CONTINUATION_LIMIT_REACHED` evidence instead of recursing.
+### C. Right primary panel content containment — P0 HARD GATE
 
-Gate: `GROUNDED_CONTINUATION_CONTRACT_DEFINED`
+This is the highest-priority defect.
 
-## Phase B — provider-neutral orchestration
+Observed user failure:
+- right Inspector content is vertically compressed;
+- content becomes difficult or impossible to inspect;
+- horizontal overflow/scrolling is visible;
+- current desktop panel only has width-resize authority;
+- content containment is unreliable.
 
-Add orchestration in the existing CHAT runtime/session path.
+Required baseline behavior:
+- panel shell occupies the available desktop vertical range;
+- panel header and tabs remain stable;
+- active content body consumes the remaining height using flex/min-height:0;
+- body scrolls vertically when content exceeds available height;
+- no unintended horizontal scrollbar;
+- child cards/controls must not force panel width;
+- long content remains reachable;
+- 1280×1024, 1280×800, 960×800 and short desktop height must be tested;
+- inspector, Layers, History, object, AI/Studio if reachable, and Creative Loop primary surfaces must not clip controls.
 
-Required behavior:
+Height resize:
+- may be implemented if it improves the model, but is NOT a substitute for correct containment;
+- if added, it must be bounded and cannot break full-height default behavior.
 
-- first model response may contain grounded tool calls;
-- INK executes only eligible grounded tools;
-- collect structured tool results;
-- build a continuation request containing original context + tool calls + tool results;
-- call the same provider once more;
-- return final response/Plan plus traceable tool evidence;
-- local/manual deterministic client path must remain testable;
-- remote provider remains optional;
-- no direct Document / History / Revision / Geometry / Renderer write;
-- no direct DOM/file/credential access;
-- existing transmission approval policy remains authoritative for external continuation calls.
+Gate:
+RIGHT_PANEL_CONTENT_CONTAINMENT = PASS
+HORIZONTAL_PANEL_OVERFLOW = 0
 
-Gate: `GROUNDED_CONTINUATION_ORCHESTRATION_WORKS`
+### D. Single primary panel authority / remove duplicate entry controls — HARD GATE
 
-## Phase C — safety / authority boundary
+Current problem:
+three controls participate in opening essentially the same primary Inspector system:
+1. legacy top-right Inspector toggle;
+2. contextual “進階”;
+3. right Dock Properties.
 
-Automatic continuation must never execute:
+Required authority model:
+- right Dock = primary content selection authority;
+- one light-weight chevron/collapse control = whole primary panel open/close;
+- Dock Properties selects Properties content;
+- Layers / History / Reference / Compose / CHAT / Revision select their respective primary content;
+- remove or retire the redundant top-right legacy Inspector toggle from the desktop shell;
+- “進階” becomes a contextual route into the same primary panel authority, not a third independent toggle;
+- active states must synchronize across Dock, contextual button and collapse state;
+- no duplicate command authority or simulated clicks.
 
-```text
-create_plan
-request_preview
-request_approval
-execute_approved_plan
-rollback_execution
-save_variant
-export_document
-or any other legacy mutating/proposal tool
-```
+Target:
+PRIMARY_PANEL_AUTHORITY = SINGLE
+PANEL_COLLAPSE_CONTROL = CHEVRON
+DUPLICATE_PANEL_TOGGLES = 0
+DOCK_ICONS = CONTENT_SELECTION
+ADVANCED_BUTTON = CONTEXTUAL_PROPERTIES_ROUTE
 
-If any non-grounded tool is returned during the automatic reasoning phase:
+Gate:
+PRIMARY_PANEL_AUTHORITY_CONSOLIDATED = PASS
 
-- preserve it as surfaced tool intent/evidence;
-- do not route it automatically;
-- final response must indicate that normal existing user-governed flow is required.
+### E. Favicon / brand asset clarity — REQUIRED
 
-Existing explicit preview → approval → execution → rollback semantics remain unchanged.
+Current user-visible defect:
+favicon is broken / poorly rendered.
 
-Gate: `GROUNDED_REASONING_AUTHORITY_PRESERVED`
+Required:
+- favicon must resolve on GitHub Pages and Portable delivery;
+- use a simple, robust asset;
+- acceptable fallback: solid light-blue square;
+- preferred minimal mark: light-blue background + clean white Y;
+- decorative diamond grid is optional and should be omitted if it reduces clarity;
+- provide suitable small-size asset path(s), avoiding fractional blur;
+- do not depend on remote assets;
+- verify tab icon loads without 404 and is legible at browser tab size.
 
-## Phase D — deterministic/source QA
+Gate:
+BRAND_ASSET_CLARITY = PASS
+BROKEN_FAVICON = 0
 
-At minimum verify:
+## UI review checklist
 
-- grounded tool call → local tool result → one continuation → final response;
-- grounded compare result can inform final response;
-- parametric structure result can inform final response without document insertion;
-- continuation request contains traceable tool call/result identity;
-- max continuation round = 1;
-- second-round tool request does not recurse;
-- non-grounded tool request is not auto-routed;
-- existing explicit mutation permission gates remain unchanged;
-- external continuation still requires normal transmission consent/policy;
-- local-only mode performs no network call;
-- document/history/revision remain unchanged;
-- existing Integration-001 and Integration-002 QA remain PASS;
-- `FORMAT_VERSION = 4`.
+Use:
+`research/INK_UI_REVIEW_CHECKLIST_v0.1.md`
 
-Gate: `INK_CORE_INTEGRATION_003_SOURCE_READY`
+This task must explicitly check:
+- TYPOGRAPHY_READABILITY
+- TOP_OPTIONS_COMPOSITION
+- PIXEL_RHYTHM
+- RIGHT_PANEL_CONTENT_CONTAINMENT
+- PRIMARY_PANEL_AUTHORITY
+- BRAND_ASSET_CLARITY
+- CSS_AUTHORITY_CLEAN
+- PORTABLE_WEB_PARITY
+- RESPONSIVE_FULLSCREEN
+- RUNTIME_VISUAL_QA
 
-## Runtime gate
+## CSS authority cleanup
 
-This task changes CHAT orchestration semantics, so Runtime may not be deferred at final closure.
+While implementing this bounded fix:
+- remove or consolidate obsolete rules only where needed to prevent the same regression;
+- do not perform a broad theme rewrite;
+- final desktop authority must be clear;
+- no later rule may silently reintroduce old panel/topbar behavior.
 
-After MR source PASS and clean promotion:
+Gate:
+CSS_AUTHORITY_CLEAN = PASS_WITH_BOUNDED_SCOPE
 
-```text
-exact promoted main SHA
-→ self-hosted Windows Chrome Runtime
-→ existing UI / Creative / Geometry suites
-→ task-specific grounded continuation browser evidence
-```
+## Web / Portable parity
 
-At minimum Runtime must verify:
+Default rule:
+Web = Portable parity required.
 
-- existing CHAT conversation still works without tool calls;
-- one grounded tool-call continuation completes;
-- document remains unchanged during read-only reasoning;
-- existing bounded edit / approval / execution path still works;
-- no fatal runtime health error.
+Any HTML structure change must be mirrored in:
+- product/source/index.html
+- product/source/index-standalone.html
 
-Final gate:
+Shared CSS / shell behavior must remain shared.
 
-`INK_CORE_INTEGRATION_003_RUNTIME_PASS`
+Gate:
+PORTABLE_WEB_PARITY = PASS
+
+## Runtime acceptance
+
+Runtime is mandatory because these are user-reported visual/interaction defects.
+
+At minimum verify in real browser:
+- 1280×1024 at 100% zoom;
+- 1280×800;
+- 960×800;
+- one short-height desktop case;
+- Web shell;
+- Portable parity through static/runtime guards.
+
+Runtime must prove:
+- text is readable and no new overflow is introduced;
+- “進階” toggles and visual state synchronizes;
+- Dock Properties routes to the same Inspector authority;
+- redundant top-right Inspector toggle is gone/retired on desktop;
+- chevron collapses/expands the active primary panel;
+- all primary panel bodies vertically scroll correctly;
+- no unintended horizontal panel scrollbar;
+- content remains reachable at short heights;
+- favicon request succeeds;
+- Layout/Creation workspace behavior is not regressed;
+- fullscreen and narrow desktop remain contained.
+
+If Runtime cannot execute:
+TASK_STATUS = RUNTIME_BLOCKED
+STOP
 
 ## Hard boundaries
 
-Do not:
+DO NOT change:
+- Renderer / WebGL / Canvas engine;
+- Document authority, schema or migration;
+- History semantics;
+- Revision semantics;
+- Recipe / Geometry;
+- Core contracts;
+- CHAT proposal/approval/execution semantics;
+- persistence semantics;
+- package/certification;
+- product base version.
 
-- create autonomous recursive agents;
-- allow more than one automatic continuation round;
-- auto-route legacy mutation/proposal tools;
-- alter user approval/execution authority;
-- redesign UI;
-- alter Document / History / Revision / Geometry / Renderer authority;
-- make network mandatory;
-- change `FORMAT_VERSION`;
-- mutate `package/ink-current`;
-- begin another integration stage.
+If any required visual result needs one of those:
+INTEGRATION_REQUIRED → STOP → MR
 
-## Required report
+## Expected changed files
 
-Exactly one:
+Likely bounded UI payload:
+- product/source/styles.css
+- product/source/web-shell.js
+- product/source/index.html
+- product/source/index-standalone.html
+- local favicon asset(s) / favicon link markup
+- focused UI QA/runtime harness
+- evidence report
 
-`research/INK_CORE_INTEGRATION_003_BOUNDED_GROUNDED_TOOL_REASONING_LOOP_REPORT_v0.1.md`
+Avoid unrelated changes.
+
+## Evidence report
+
+Create exactly:
+`research/INK_UI_MAINT_002_READABILITY_PANEL_FAVICON_REPORT_v0.1.md`
+
+Must include:
+- before/after typography values;
+- panel containment model;
+- panel authority state diagram;
+- exact list of removed/replaced duplicate entry controls;
+- favicon asset/path verification;
+- Web/Portable parity evidence;
+- Runtime viewport cases and results;
+- changed-file inventory;
+- explicit boundary statement.
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CORE-INTEGRATION-003
-BRANCH = work/ink-core-integration-003
-GATE = INK_CORE_INTEGRATION_003_SOURCE_READY
-AUTONOMOUS_AGENT_LOOP = 0
-AUTO_CONTINUATION_MAX = 1
-AUTO_LEGACY_MUTATION_TOOL_EXECUTION = 0
-UI_LAYOUT_MUTATION = 0
-DOCUMENT_SCHEMA_CHANGE = 0
-HISTORY_SEMANTICS_CHANGE = 0
-REVISION_SEMANTICS_CHANGE = 0
-GEOMETRY_AUTHORITY_CHANGE = 0
-RENDERER_MUTATION = 0
-CHAT_EXECUTION_AUTHORITY_CHANGE = 0
+TASK_ID = INK-UI-MAINT-002
+BRANCH = work/ink-ui-maint-002
+FINAL_HEAD = <exact SHA>
+TYPOGRAPHY_READABILITY = PASS
+CONTEXTUAL_ADVANCED_TOGGLE_STATE = PASS
+RIGHT_PANEL_CONTENT_CONTAINMENT = PASS
+PRIMARY_PANEL_AUTHORITY_CONSOLIDATED = PASS
+BRAND_ASSET_CLARITY = PASS
+CSS_AUTHORITY_CLEAN = PASS_WITH_BOUNDED_SCOPE
+RUNTIME_QA = PASS
+PORTABLE_WEB_PARITY = PASS
 FORMAT_VERSION = 4
-RUNTIME_QA = PENDING_MR_PROMOTION_AND_WINDOWS_RUNTIME
-NEXT_ACTION = MR_REVIEW_REQUIRED
+PRODUCT_BASE_VERSION = v0.1
+PACKAGE_MUTATION = 0
+CORE_MUTATION = 0
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
