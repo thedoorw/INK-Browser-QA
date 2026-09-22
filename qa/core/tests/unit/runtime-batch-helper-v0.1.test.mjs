@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { startServer, validateEvidence } from '../../../runtime/run-ink-runtime-batch.mjs';
@@ -43,4 +43,11 @@ test('evidence validation fails closed on empty, partial or contradictory result
   assert.equal(validateEvidence('geometry', geometry), geometry);
   assert.throws(() => validateEvidence('geometry', { ...geometry, roseOutputSubpaths: 11 }));
   assert.throws(() => validateEvidence('geometry', { ...geometry, deterministicRepeat: false }));
+});
+
+
+test('creative harness evidence helpers cannot overwrite canonical name/status fields', async () => {
+  const harness = await readFile(new URL('../../../runtime/ink-cloud-018-browser-harness.html', import.meta.url), 'utf8');
+  assert.match(harness, /evidence\.checks\.push\(\{name,\.\.\.details,status:'PASS'\}\)/);
+  assert.doesNotMatch(harness, /\{name,status:'PASS',\.\.\.details\}/);
 });
