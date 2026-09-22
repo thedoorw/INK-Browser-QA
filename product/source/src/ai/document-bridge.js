@@ -159,8 +159,8 @@ function collectPageObjects(page) {
 
       const opacity = finite(object.opacity) ?? 1;
       const effectiveVisible = inherited.visible && object.visible !== false;
-      const effectiveLocked = inherited.locked || Boolean(object.locked) || Boolean(layer.locked);
-      const effectiveOpacity = Math.max(0, Math.min(1, inherited.opacity * Math.max(0, Math.min(1, opacity)) * (finite(layer.opacity) ?? 1)));
+      const effectiveLocked = inherited.locked || Boolean(object.locked);
+      const effectiveOpacity = Math.max(0, Math.min(1, inherited.opacity * Math.max(0, Math.min(1, opacity))));
       const groupAncestors = ancestors.filter(item => item.type === 'group');
       entries.push({
         object,
@@ -187,7 +187,11 @@ function collectPageObjects(page) {
     }
   };
 
-  for (const layer of page.layers) walk(layer.objects, layer);
+  for (const layer of page.layers) walk(layer.objects, layer, null, [], {
+    visible: layer.visible !== false,
+    locked: Boolean(layer.locked),
+    opacity: Math.max(0, Math.min(1, finite(layer.opacity) ?? 1))
+  });
   return entries;
 }
 
@@ -373,8 +377,13 @@ function finalize(payload, revisionId, maxBytes, requiredIds) {
     working.bounds.objects.truncated = working.bounds.objects.truncated || working.objects.length < working.bounds.objects.totalAvailable;
     const hashPayload = canonicalize({ ...working, contextFingerprint: undefined, bounds: { ...working.bounds, outputBytes: null } });
     working.contextFingerprint = fingerprint(hashPayload);
-    working.bounds.outputBytes = utf8Bytes(stableStringify(working));
-    return working.bounds.outputBytes;
+    working.bounds.outputBytes = 0;
+    for (let pass = 0; pass < 4; pass += 1) {
+      const measured = utf8Bytes(stableStringify(working));
+      if (measured === working.bounds.outputBytes) break;
+      working.bounds.outputBytes = measured;
+    }
+    return utf8Bytes(stableStringify(working));
   };
 
   let bytes = refresh();
