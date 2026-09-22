@@ -1,35 +1,48 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CORE-INTEGRATION-001 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
+STATUS: `INK-CORE-INTEGRATION-001 / MR_PASS_SOURCE / CLEAN_PROMOTION_REQUIRED`
 
-## Current task
+## Review fingerprint
 
 ```text
 TASK_ID = INK-CORE-INTEGRATION-001
-TITLE = Grounded Creative Intelligence Context Integration v0.1
 DEV_BRANCH = work/ink-core-integration-001
-TARGET_GATE = INK_CORE_INTEGRATION_001_SOURCE_READY
-DEV_HANDOFF = NO
-MR_REVIEW = NOT_STARTED
-FORMAT_VERSION = 4 / PRESERVE
-RUNTIME_QA = REQUIRED_AFTER_PROMOTION
+BASE_COMMIT = 89770b215a0c3d0aef30e1c0565fcb8e2975a997
+REVIEWED_HEAD = a1ab28164e2292e22db89819a311b1459bf37758
+BRANCH = 6 ahead / 0 behind
 ```
 
-## MR review boundary
+## MR executable QA
 
-MR will verify:
+MR created a task-local QA branch from the exact DEV handoff and added only a temporary GitHub Actions workflow.
 
-- five prepared modules are composed, not duplicated;
-- integration context remains read-only;
-- no UI layout mutation;
-- no Document / History / Revision / Geometry / Renderer authority mutation;
-- no CHAT execution-semantics mutation;
-- backward-compatible CHAT operation with integration context disabled;
-- grounded CHAT context works when enabled;
-- compare/parametric evidence are explicit opt-in inputs only;
-- deterministic bounded context/fingerprint;
-- local-only operation remains viable;
-- `FORMAT_VERSION = 4`;
-- no package mutation.
+```text
+QA_BRANCH_BASE = a1ab28164e2292e22db89819a311b1459bf37758
+QA_WORKFLOW_COMMIT = 8a5908cdcd7ae17056c520928a1b27722afcef4d
+RUN = 35725230617
+JOB_ID = 106737174265
+RESULT = SUCCESS
+STEP = Run integration deterministic/source QA / SUCCESS
+```
 
-After source MR_PASS, MR performs clean promotion then exact-SHA manual Windows Runtime batch.
+The workflow-only commit does not change the reviewed product payload.
+
+## Decision
+
+`MR_PASS_SOURCE / NODE_QA_PASS / RUNTIME_PENDING_PROMOTION`
+
+Verified boundaries:
+
+```text
+UI_LAYOUT_MUTATION = 0
+DOCUMENT_SCHEMA_CHANGE = 0
+HISTORY_SEMANTICS_CHANGE = 0
+REVISION_SEMANTICS_CHANGE = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+RENDERER_MUTATION = 0
+CHAT_EXECUTION_SEMANTICS_CHANGE = 0
+FORMAT_VERSION = 4
+PACKAGE_MUTATION = 0
+```
+
+Clean promotion is required so branch-local DEV progress remains outside main.
