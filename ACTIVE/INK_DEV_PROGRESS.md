@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-RUNTIME-AUTOMATION-001 / READY_FOR_DEV`
+STATUS: `INK-RUNTIME-AUTOMATION-001 / DEV_HANDOFF / STOP`
 
 | Field | Value |
 |---|---|
@@ -8,9 +8,9 @@ STATUS: `INK-RUNTIME-AUTOMATION-001 / READY_FOR_DEV`
 | TITLE | `Central Runtime Queue & Auto Dispatch v0.1` |
 | BRANCH | `work/ink-runtime-automation-001` |
 | BRANCH_BASE | `7ead914913dd05f4bcfac1a334769cd0c0a441f1` |
-| TASK_STATUS | `DEV_IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_D_EVIDENCE` |
-| LATEST_COMMIT | `226d13ce1140a2d6de3d6b5de2be5a3bd6c90245` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| CURRENT_PHASE | `SOURCE_COMPLETE / MR_REVIEW_REQUIRED` |
+| IMPLEMENTATION_EVIDENCE_HEAD | `1c7eb0c3521de0eb8e6401af49dab0b6945acec2` |
 | TARGET_GATE | `INK_RUNTIME_AUTOMATION_001_SOURCE_READY` |
 | PRODUCT_BEHAVIOR_MUTATION | `0 / PROHIBITED` |
 | EXTERNAL_BROWSER_AUTOMATION_DEPENDENCY | `0 / PROHIBITED` |
@@ -70,3 +70,57 @@ Static QA added at:
 
 Current checks: static assertions PASS; workflow YAML parse PASS; existing
 runtime helper syntax PASS. Real Windows Runtime remains pending MR promotion.
+
+## Final DEV handoff
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-RUNTIME-AUTOMATION-001
+BRANCH = work/ink-runtime-automation-001
+BASE_COMMIT = 7ead914913dd05f4bcfac1a334769cd0c0a441f1
+IMPLEMENTATION_EVIDENCE_HEAD = 1c7eb0c3521de0eb8e6401af49dab0b6945acec2
+GATE = INK_RUNTIME_AUTOMATION_001_SOURCE_READY
+PRODUCT_BEHAVIOR_MUTATION = 0
+EXTERNAL_BROWSER_AUTOMATION_DEPENDENCY = 0
+MANUAL_SHA_ENTRY_REQUIRED = 0
+DEFAULT_BATCH_TARGET = 3
+ALLOWED_BATCH_RANGE = 2-4
+FORMAT_VERSION = 4
+RUNTIME_QA = PENDING_MR_PROMOTION_AND_WINDOWS_RUNTIME
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+Changed files:
+
+```text
+.github/workflows/ink-runtime-batch-windows.yml
+ACTIVE/INK_DEV_PROGRESS.md
+ACTIVE/INK_RUNTIME_QUEUE.json
+governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md
+qa/runtime/ink-runtime-automation-001-static.test.mjs
+research/INK_RUNTIME_AUTOMATION_001_CENTRAL_QUEUE_AUTO_DISPATCH_REPORT_v0.1.md
+```
+
+Final source/static evidence:
+
+```text
+queue JSON parse = PASS
+workflow YAML parse = PASS
+embedded GitHub Script syntax = PASS
+controller scenario simulation = PASS
+  - blank manual main = PASS
+  - explicit override = PASS
+  - ACCUMULATING skip = PASS
+  - READY dispatch = PASS
+  - high-risk immediate READY = PASS
+  - malformed SHA rejection = PASS
+  - invalid batch-size rejection = PASS
+existing Runtime helper syntax = PASS
+product/source changed files = 0
+```
+
+Known gap: `actionlint` was unavailable in the DEV environment. YAML parsing,
+embedded-script parsing and deterministic controller simulations passed. The
+Work Order's required real Windows Chrome run is intentionally not claimed by
+DEV and remains an MR post-promotion acceptance gate.
