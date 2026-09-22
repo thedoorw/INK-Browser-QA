@@ -1,15 +1,15 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "d698df7c26b0365cb3e240a8fea685a454176c2c",
-  "pending_work_orders": [
+  "pending_work_orders": [],
+  "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001"
   ],
-  "covered_work_orders": [],
   "high_risk": {
-    "enabled": true,
-    "reason": "Acceptance test for the newly promoted central Runtime trigger and queue controller"
+    "enabled": false,
+    "reason": null
   },
   "batch_policy": {
     "default_target": 3,
@@ -17,8 +17,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": null,
-    "tested_sha": null,
-    "result": null
+    "run_id": 35748328916,
+    "tested_sha": "d698df7c26b0365cb3e240a8fea685a454176c2c",
+    "result": "PASS"
   }
 }
