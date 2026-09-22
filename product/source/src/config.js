@@ -1,3 +1,3 @@
-export const INK_VERSION = '1.6.5-RC';
+export const INK_VERSION = '0.1';
 export const FORMAT_VERSION = 4;
-export const RELEASE_NAME = 'Unified Web and Headless Runtime Release Candidate';
+export const RELEASE_NAME = 'INK v0.1 · Web';
