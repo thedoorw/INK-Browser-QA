@@ -1794,3 +1794,35 @@ AI_DOCUMENT_BRIDGE
 SEMANTIC_REGION_GROUNDING
 REVISION_PROVENANCE
 ```
+
+
+## CORE-MOD-004 closure / CORE-MOD-005 activation
+
+```text
+CORE-MOD-004 = Visual Compare + Variant / MR_PASS / PROMOTED
+REVIEWED_HEAD = dc4ae21e0457cbca1d67034fca778857a4bb87cd
+NODE_QA = PASS / run 35707165761
+PROMOTION_PR = #32 / MERGED
+MAIN = 620f17965f096796a2374e1078432c484010b051
+REPORT_EVIDENCE_SYNC = f26769cea10e680d3718ca9324036f6b3862cda6
+INTEGRATION_QUEUE += VISUAL_COMPARE_VARIANT
+RUNTIME_QA = DEFERRED_TO_NEXT_INTEGRATION_BATCH
+```
+
+Next Core module:
+
+```text
+CORE-MOD-005 = Parametric Creative Structure Module
+branch = work/ink-core-parametric-structure-005
+purpose = deterministic bounded structure planning without document/geometry/renderer authority changes
+runtime = DEFERRED_TO_INTEGRATION_BATCH
+```
+
+Current Integration Queue:
+
+```text
+AI_DOCUMENT_BRIDGE
+SEMANTIC_REGION_GROUNDING
+REVISION_PROVENANCE
+VISUAL_COMPARE_VARIANT
+```
