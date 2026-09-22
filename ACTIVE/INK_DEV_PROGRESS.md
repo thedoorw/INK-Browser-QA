@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CORE-INTEGRATION-001 / READY_FOR_DEV`
+STATUS: `INK-CORE-INTEGRATION-001 / IN_PROGRESS`
 
 | Field | Value |
 |---|---|
@@ -8,8 +8,8 @@ STATUS: `INK-CORE-INTEGRATION-001 / READY_FOR_DEV`
 | TITLE | `Grounded Creative Intelligence Context Integration v0.1` |
 | BRANCH | `work/ink-core-integration-001` |
 | BRANCH_BASE | `89770b215a0c3d0aef30e1c0565fcb8e2975a997` |
-| TASK_STATUS | `READY_FOR_DEV` |
-| CURRENT_PHASE | `NOT_STARTED` |
+| TASK_STATUS | `IN_PROGRESS` |
+| CURRENT_PHASE | `PHASE_B / READ_ONLY_INTEGRATION_SERVICE` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_HANDOFF` |
 | TARGET_GATE | `INK_CORE_INTEGRATION_001_SOURCE_READY` |
@@ -25,16 +25,30 @@ STATUS: `INK-CORE-INTEGRATION-001 / READY_FOR_DEV`
 | MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
 | RUNTIME_QA | `PENDING_MR_PROMOTION_AND_MANUAL_BATCH` |
 
-## Start sequence
+## Checkpoints
 
 ```text
-integration contract
-→ pure/read-only composite context
-→ bounded CHAT context wiring
-→ deterministic/source QA
-→ required report
-→ DEV_HANDOFF
-→ STOP
+Phase A — integration contract
+CREATIVE_INTELLIGENCE_CONTEXT_DEFINED = PASS
+
+Phase B — deterministic read-only integration service
+CREATIVE_INTELLIGENCE_CONTEXT_WORKS = PASS_SOURCE_IMPLEMENTATION
+
+Phase C — bounded CHAT context wiring
+CHAT_GROUNDED_CONTEXT_WIRED = PENDING
+
+Phase D — deterministic/source QA
+INK_CORE_INTEGRATION_001_SOURCE_READY = PENDING
 ```
 
-Do not run the final Windows Runtime batch from DEV. That batch is owned by MR after source review and clean promotion.
+Implemented so far:
+
+- one INK-owned grounded creative-intelligence context contract;
+- composition of the five prepared Core modules without replacing their authority;
+- explicit-only visual compare and parametric structure evidence;
+- FORMAT_VERSION 4 rejection boundary;
+- read-only authority declaration;
+- deterministic aggregate fingerprint and output byte bounds;
+- existing CHAT disclosure-policy projection hook for protected/locked object filtering.
+
+No Runtime batch is executed by DEV.
