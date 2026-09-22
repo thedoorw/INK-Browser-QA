@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `IN_PROGRESS / PHASE_A_COMPLETE`
+STATUS: `IN_PROGRESS / PHASE_B_E_COMPLETE`
 
 | Field | Value |
 |---|---|
@@ -8,7 +8,7 @@ STATUS: `IN_PROGRESS / PHASE_A_COMPLETE`
 | TITLE | `Panel Hierarchy / Spacing / CHAT Placement Polish v0.1` |
 | BRANCH | `work/ink-web-ui-004` |
 | BASE_MAIN | `9adc2ef09141e4015fc9d4657fb5b3f932a39c41` |
-| TASK_STATUS | `IN_PROGRESS / PHASE_A_COMPLETE` |
+| TASK_STATUS | `IN_PROGRESS / PHASE_B_E_COMPLETE` |
 | DEV_HANDOFF | `NOT_YET` |
 | UR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `PANEL_CHAT_UI_POLISH_WORKS` |
@@ -77,6 +77,59 @@ No HTML fork and no Core / CHAT-controller semantic source change required.
 
 Checks not yet executed: focused static/parity closure.
 Runtime remains `DEFERRED_TO_UI_INTEGRATION_BATCH`.
+Integration finding: none.
+
+### Phases B–E — hierarchy / spacing / CHAT placement / static closure
+
+Implementation checkpoints:
+
+| Scope | Commit |
+|---|---|
+| explicit dock + Window-menu grouping, creative-stage presentation sync | `bcb45ddc8157c38d4abd50eac71fc9a5701bc931` |
+| compact panel / spacing / CHAT visual hierarchy | `84bc4b2e69d55a703be577542295b02dd6f1918d` |
+| CSS token correction | `69d170a3bd6515d69ef460384a48a537bd7cede1` |
+| shared parity extension | `9f66f26101ee068c2e3431315e659a2e2a9d5177` |
+| focused panel/CHAT static contract | `4213a64110cb1eeebb9a3615d077ac1953ee0234` |
+
+Resulting hierarchy:
+
+- Editor dock group: Properties / Layers / History;
+- Creative Loop dock group: Reference / Compose / CHAT / Revision;
+- Window menu mirrors the same two groups;
+- one Inspector or Creative Workspace primary surface remains authoritative;
+- collapsed dock remains the default;
+- Creative Workspace title follows the visible stage as presentation only;
+- internal creative-stage clicks re-sync dock/header presentation;
+- CHAT transcript/prompt receive visual priority inside the existing CHAT pane;
+- UI-003 contextual options remain intact.
+
+Semantic preservation:
+
+```text
+creativeWorkspace.setStage / setOpen = reused
+CHAT conversation / proposal / approval / execution = unchanged
+src/editor/creative-workspace.js = unchanged
+src/ink.js = unchanged
+Document / History / Revision / Renderer / Recipe / Geometry = unchanged
+```
+
+Source/static evidence executed directly against exact connected branch source:
+
+- JavaScript parse: PASS;
+- all three focused/parity test sources parse: PASS;
+- strict Portable/Web normalized shell parity: PASS;
+- shared hook / duplicate-ID checks: PASS;
+- panel grouping / single-primary / controller-routing assertions: PASS;
+- CHAT semantic isolation assertions: PASS;
+- UI-003 preservation assertions: PASS;
+- UI-004 CSS contract / brace / token checks: PASS;
+- total equivalent assertions: 75 PASS / 0 FAIL;
+- `FORMAT_VERSION = 4`: PASS;
+- product base identity `v0.1`: PASS.
+
+Literal local `node --test` was not available because the execution container cannot resolve GitHub for checkout. No browser Runtime result is claimed.
+
+Runtime: `DEFERRED_TO_UI_INTEGRATION_BATCH`.
 Integration finding: none.
 
 ## Completion
