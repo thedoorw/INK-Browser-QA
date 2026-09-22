@@ -328,7 +328,10 @@ function expectCode(fn, code) {
   const a = buildRevisionProvenanceGraph(inputA);
   const b = buildRevisionProvenanceGraph(inputB);
   assert.equal(a.fingerprint, b.fingerprint, 'timestamp evidence must not change deterministic graph fingerprint');
-  assert.equal(event(a, 'recipe-execution')?.eventId === event(b, 'recipe-execution')?.eventId || true, true);
+  const timedA = a.events.find(item => item.kind === 'recipe-execution' && item.executionId === 'execution:time');
+  const timedB = b.events.find(item => item.kind === 'recipe-execution' && item.executionId === 'execution:time');
+  assert.ok(timedA && timedB, 'timestamp fixture execution must exist');
+  assert.equal(timedA.eventId, timedB.eventId, 'timestamp evidence must not change deterministic event identity');
 }
 
 {
