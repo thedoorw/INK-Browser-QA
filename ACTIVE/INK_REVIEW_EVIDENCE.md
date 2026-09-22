@@ -1,54 +1,65 @@
 # INK REVIEW EVIDENCE
 
-STATUS: `CORE-MOD-005 / MR_PASS_EVIDENCE`
+STATUS: `INK-CORE-INTEGRATION-001 / MR_PASS_EVIDENCE / RUNTIME_PASS`
 
-## Review fingerprint
+## Source review
 
 ```text
-TASK_ID = CORE-MOD-005
-DEV_BRANCH = work/ink-core-parametric-structure-005
-BASE_COMMIT = 3a9a32cfc6a3a40d4dfc2105908c068d007ce103
-REVIEWED_HEAD = e2747ae8dab1b52a4fe9900012f24bf9d18bc8fd
-BRANCH_AT_REVIEW = 9 ahead / 1 behind / diverged
+DEV_HANDOFF = a1ab28164e2292e22db89819a311b1459bf37758
+MR_QA_BRANCH_BASE = a1ab28164e2292e22db89819a311b1459bf37758
+MR_QA_WORKFLOW_COMMIT = 8a5908cdcd7ae17056c520928a1b27722afcef4d
+SOURCE_QA_RUN = 35725230617
+SOURCE_QA_JOB = 106737174265
+SOURCE_QA_RESULT = SUCCESS
 ```
 
-## Reviewed payload
+## Clean promotion
 
 ```text
-product/source/src/structure/parametric-structure.js
-qa/core-mod-005-parametric-structure.test.mjs
-research/INK_CORE_MOD_005_PARAMETRIC_CREATIVE_STRUCTURE_REPORT_v0.1.md
-ACTIVE/INK_DEV_PROGRESS.md = branch-local evidence only / excluded from promotion
+PROMOTION_BRANCH = promote/ink-core-integration-001
+PROMOTION_PR = #34 / MERGED
+PROMOTED_MAIN_SHA = b7d013da3a27d0fea0922d83e799c5c51652e53f
 ```
 
-## QA evidence
+Promotion payload:
 
 ```text
-RUN = 35712532550
-JOB_ID = 106696291528
-TESTED_HEAD = 5b24e12f45f6fcc371680eee8f778a7eeb7652f0
-RESULT = SUCCESS
-OUTPUT = CORE-MOD-005 parametric-structure deterministic tests: PASS
+product/source/src/ai/chat-runtime.js
+product/source/src/ai/creative-intelligence-context.js
+qa/core-integration-001-grounded-context.test.mjs
+research/INK_CORE_INTEGRATION_001_GROUNDED_CREATIVE_INTELLIGENCE_REPORT_v0.1.md
 ```
 
-## Boundary evidence
+Branch-local DEV progress and temporary MR QA workflow were excluded.
+
+## Exact-SHA Windows Runtime
 
 ```text
-UI_MUTATION = 0
-DOCUMENT_MUTATION = 0
-GEOMETRY_AUTHORITY_CHANGE = 0
-HISTORY_MUTATION = 0
-REVISION_MUTATION = 0
-RENDERER_MUTATION = 0
-FORMAT_VERSION_CHANGE = 0
-PACKAGE_MUTATION = 0
-RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+RUNTIME_WORKFLOW_ONLY_COMMIT = c93eee933766f975220bf7a3a4e1ca0ac2811d95
+RUNTIME_RUN = 35725433978
+RUNTIME_JOB = 106737830914
+RUNNER = DESKTOP-NSOQH69 / self-hosted Windows X64
+TESTED_PRODUCT_SHA = b7d013da3a27d0fea0922d83e799c5c51652e53f
+RESULT = PASS
+UI_SUITE = PASS
+CREATIVE_SUITE = PASS
+GEOMETRY_SUITE = PASS
 ```
 
-## Promotion evidence
+Runtime artifact:
 
 ```text
-PROMOTION_BRANCH = promote/core-mod-005
-PROMOTION_PR = #33 / MERGED
-MAIN = 6132889470affeeb398b4a8151cef587fac22f1f
+ARTIFACT_ID = 10693377440
+ARTIFACT_SHA256 = e0eaaebcacf4621592f12304c6adfc7772d7eb9c8ad7e28f40ded395c45406e8
+```
+
+The Creative browser harness exercises `creativeWorkspace.runConversationAction('chat-conversation-inspect')`, which calls the promoted `runtime.contextBuilder.build(...)` path. Source QA provides the direct grounded-context contract assertions; the browser batch provides live product/runtime compatibility evidence.
+
+## Runtime debt closure
+
+```text
+CORE-MOD-002 = RUNTIME_DEBT_CLEARED
+CORE-MOD-003 = RUNTIME_DEBT_CLEARED
+CORE-MOD-004 = RUNTIME_DEBT_CLEARED
+CORE-MOD-005 = RUNTIME_DEBT_CLEARED
 ```
