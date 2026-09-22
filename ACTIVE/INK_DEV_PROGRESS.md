@@ -54,3 +54,15 @@ INTEGRATION_REQUIRED → STOP → MR
 
 Runtime unavailable:
 RUNTIME_BLOCKED → STOP
+
+## Runtime execution policy
+
+- Complete the entire bounded implementation first.
+- Complete all source/static/unit/parity checks before Runtime.
+- Runtime is the final validation stage, not an iterative browser-debugging substitute.
+- Use the established local/self-hosted **PowerShell Windows Runtime** path.
+- **DO NOT use TinyFish** for Runtime, browsing, UI validation, screenshot capture, or fallback.
+- Do not substitute TinyFish if PowerShell Runtime is blocked.
+- If PowerShell Runtime cannot execute after implementation is complete:
+  `TASK_STATUS = RUNTIME_BLOCKED → STOP`
+- Do not claim `DEV_HANDOFF` or `UI_PASS` without the required PowerShell Runtime evidence.
