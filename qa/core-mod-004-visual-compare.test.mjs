@@ -46,7 +46,15 @@ function documentFixture() {
     pages: [{
       id: 'page:1',
       name: 'Page 1',
-      artboard: { widthMm: 210, heightMm: 297, ppi: 300 },
+      artboard: { mode: 'fixed', widthMm: 210, heightMm: 297, ppi: 300, bleedMm: 0 },
+      workspace: {
+        activeSpace: 'creation',
+        layoutViewport: { x: 0, y: 0, scale: 1, rotation: 0 },
+        cameras: {
+          creation: { x: 0, y: 0, scale: 1, rotation: 0 },
+          layout: { x: 0, y: 0, scale: 1, rotation: 0 }
+        }
+      },
       activeLayerId: 'layer:1',
       layers: [{
         id: 'layer:1',
