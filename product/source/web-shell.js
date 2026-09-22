@@ -3,6 +3,22 @@
 
   const DESKTOP_QUERY = '(min-width: 761px)';
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
+  const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
+  const CONTEXT_CONTROL_IDS = Object.freeze(['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar']);
+  const CONTEXT_TOOL_META = Object.freeze({
+    pen: { label: '鋼筆', icon: 'i-pen' },
+    pencil: { label: '鉛筆', icon: 'i-pencil' },
+    marker: { label: '麥克筆', icon: 'i-marker' },
+    brush: { label: '毛筆', icon: 'i-brush' },
+    airbrush: { label: '噴筆', icon: 'i-airbrush' },
+    eraser: { label: '橡皮擦', icon: 'i-eraser' },
+    select: { label: '選取', icon: 'i-select' },
+    lasso: { label: '套索', icon: 'i-lasso' },
+    shape: { label: '幾何', icon: 'i-shape' },
+    text: { label: '文字', icon: 'i-text' },
+    image: { label: '圖片', icon: 'i-image' },
+    pan: { label: '移動畫布', icon: 'i-pan' }
+  });
   const PANEL_DEFS = Object.freeze([
     { id: 'properties', label: '屬性', icon: 'i-sliders', kind: 'inspector' },
     { id: 'layers', label: '圖層', icon: 'i-layers', kind: 'inspector', tab: 'layers' },
@@ -22,6 +38,10 @@
     lastPanel: null,
     resizeObserver: null,
     mutationObserver: null,
+    contextObserver: null,
+    contextualRoot: null,
+    contextualHost: null,
+    contextRaf: 0,
     retryCount: 0
   };
 
@@ -38,6 +58,88 @@
       '" data-shell-panel="' + def.id + '" title="' + def.label +
       '" aria-label="' + def.label + '" aria-pressed="false">' +
       svgIcon(def.icon) + (menu ? '<span>' + def.label + '</span>' : '') + '</button>';
+  }
+
+  function mountContextualControls() {
+    const root = document.querySelector('#contextualOptions');
+    const host = document.querySelector('#contextualControlHost');
+    if (!root || !host) return false;
+    for (const id of CONTEXT_CONTROL_IDS) {
+      const node = document.getElementById(id);
+      if (node && node.parentElement !== host) host.append(node);
+    }
+    state.contextualRoot = root;
+    state.contextualHost = host;
+    return true;
+  }
+
+  function contextualDescriptor(app) {
+    const selected = Array.isArray(app?.selection) ? app.selection.length : 0;
+    if (selected > 0) return { mode: 'selection', tool: 'select', label: `選取 · ${selected} 個物件`, icon: 'i-select' };
+    const tool = app?.tool || 'pen';
+    const meta = CONTEXT_TOOL_META[tool] || { label: '工具', icon: 'i-sliders' };
+    if (DRAW_CONTEXT_TOOLS.has(tool)) return { mode: 'draw', tool, ...meta };
+    if (tool === 'eraser' || tool === 'shape' || tool === 'text') return { mode: tool, tool, ...meta };
+    return { mode: 'neutral', tool, ...meta };
+  }
+
+  function syncContextualOptions() {
+    const app = runtime();
+    const root = state.contextualRoot || document.querySelector('#contextualOptions');
+    if (!app || !root) return;
+    const descriptor = contextualDescriptor(app);
+    root.dataset.contextMode = descriptor.mode;
+    root.dataset.contextTool = descriptor.tool;
+    const use = document.querySelector('#contextualToolUse');
+    const name = document.querySelector('#contextualToolName');
+    const advanced = document.querySelector('#contextualAdvancedBtn');
+    if (use) use.setAttribute('href', '#' + descriptor.icon);
+    if (name) name.textContent = descriptor.label;
+    if (advanced) {
+      advanced.hidden = !['draw', 'eraser', 'shape', 'text', 'selection'].includes(descriptor.mode);
+      advanced.textContent = descriptor.mode === 'selection' ? '物件' : '進階';
+      advanced.setAttribute('aria-label', descriptor.mode === 'selection' ? '開啟物件檢查器' : '開啟工具進階設定');
+    }
+  }
+
+  function syncContextualSoon() {
+    if (state.contextRaf) cancelAnimationFrame(state.contextRaf);
+    state.contextRaf = requestAnimationFrame(() => {
+      state.contextRaf = 0;
+      syncContextualOptions();
+    });
+  }
+
+  function openContextualAdvanced() {
+    const app = runtime();
+    if (!app) return false;
+    app.creativeWorkspace?.setOpen?.(false);
+    app.toggleInspector?.(true, app.selection?.length ? 'object' : 'brush');
+    syncSoon();
+    return true;
+  }
+
+  function bindContextualOptions() {
+    if (!mountContextualControls()) return false;
+    const advanced = document.querySelector('#contextualAdvancedBtn');
+    if (advanced && advanced.dataset.contextBound !== 'true') {
+      advanced.dataset.contextBound = 'true';
+      advanced.addEventListener('click', openContextualAdvanced);
+    }
+    if (!state.contextObserver) {
+      state.contextObserver = new MutationObserver(syncContextualSoon);
+      const toolName = document.querySelector('#activeToolName');
+      const selectionBar = document.querySelector('#selectionBar');
+      if (toolName) state.contextObserver.observe(toolName, { childList: true, subtree: true });
+      if (selectionBar) state.contextObserver.observe(selectionBar, {
+        attributes: true,
+        attributeFilter: ['hidden', 'data-mode'],
+        childList: true,
+        subtree: true
+      });
+    }
+    syncContextualSoon();
+    return true;
   }
 
   function createDock() {
@@ -205,6 +307,7 @@
       button.setAttribute('aria-pressed', String(pressed));
     });
     if (state.windowMenu && !state.windowMenu.hidden) positionWindowMenu();
+    syncContextualOptions();
   }
 
   function syncSoon() {
@@ -226,6 +329,7 @@
     if (!app || !state.root) return false;
     if (!state.runtimeBound) {
       state.runtimeBound = true;
+      bindContextualOptions();
 
       // Fresh Web entry is deliberately canvas-first. Only the last selected
       // panel identity is persisted; open/closed state is not.
@@ -269,6 +373,7 @@
       if (PANEL_DEFS.some(def => def.id === last)) state.lastPanel = last;
     } catch {}
 
+    mountContextualControls();
     createDock();
     createWindowMenu();
 
@@ -306,7 +411,9 @@
         creativeStage: runtime()?.creativeWorkspace?.stage || null,
         panelWidth: panel ? Math.round(panel.getBoundingClientRect().width) : 0,
         stageWidth: Math.round(document.querySelector('#stageWrap')?.getBoundingClientRect().width || 0),
-        dockWidth: Math.round(state.dock?.getBoundingClientRect().width || 0)
+        dockWidth: Math.round(state.dock?.getBoundingClientRect().width || 0),
+        contextMode: state.contextualRoot?.dataset.contextMode || null,
+        contextTool: state.contextualRoot?.dataset.contextTool || null
       };
     }
   };
