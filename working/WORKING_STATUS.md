@@ -1915,3 +1915,19 @@ CORE-MOD-005 = CLEARED
 ```
 
 Next MR priority is no longer another pure Core preparation module. The next bounded integration should make the new grounded intelligence directly usable by CHAT through existing published/read-only collaboration semantics, without creating a second execution authority or broad UI redesign.
+
+
+## INK-CORE-INTEGRATION-002 activation
+
+```text
+TASK = INK-CORE-INTEGRATION-002
+TITLE = Grounded Creative Tool Surface v0.1
+AUTHORIZED_FROM_MAIN = 148087b904781b6cf69ca2e0097b7ed648c1cdee
+PURPOSE = expose grounded context / explicit compare / explicit parametric planning through existing CHAT tool contract
+NEW_DOCUMENT_MUTATION_AUTHORITY = 0
+NEW_EXECUTION_AUTHORITY = 0
+UI_LAYOUT_MUTATION = 0
+FORMAT_VERSION = 4
+```
+
+This stage makes the completed grounded intelligence directly callable by CHAT while preserving the existing proposal → preview → approval → execution boundary.
