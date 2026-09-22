@@ -21,7 +21,7 @@ permissions:
 
 concurrency:
   group: ink-web-ui-001-runtime
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   browser-runtime:
@@ -43,51 +43,57 @@ jobs:
 
       - name: Bounded exact-SHA materialization
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           $ErrorActionPreference = 'Stop'
-          $root = Join-Path $env:RUNNER_TEMP "ink-web-ui-001-$env:GITHUB_RUN_ID"
-          $zip = Join-Path $env:RUNNER_TEMP "ink-web-ui-001-$env:GITHUB_RUN_ID.zip"
-          if (Test-Path $root) { Remove-Item $root -Recurse -Force }
-          New-Item -ItemType Directory -Path $root -Force | Out-Null
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          $archive = Join-Path $env:RUNNER_TEMP 'ink-web-ui-001.zip'
+          $root = Join-Path $env:SystemDrive 'iui'
+          Remove-Item $archive -Force -ErrorAction SilentlyContinue
+          Remove-Item $root -Recurse -Force -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force -Path $root | Out-Null
 
-          $headers = @{
-            Authorization = "Bearer $env:GH_TOKEN"
-            Accept = 'application/vnd.github+json'
-            'X-GitHub-Api-Version' = '2022-11-28'
-            'User-Agent' = 'INK-WEB-UI-001-runtime'
+          $url = "https://codeload.github.com/thedoorw/INK-Browser-QA/zip/$env:INK_TEST_SHA"
+          $client = New-Object System.Net.WebClient
+          $client.Headers.Add('User-Agent','INK-WEB-UI-001-self-hosted-runner')
+          try { $client.DownloadFile($url, $archive) } finally { $client.Dispose() }
+          if (-not (Test-Path $archive) -or (Get-Item $archive).Length -lt 1024) {
+            throw 'Exact revision ZIP download failed or is unexpectedly small.'
           }
-          $uri = "https://api.github.com/repos/$env:GITHUB_REPOSITORY/zipball/$env:INK_TEST_SHA"
-          Invoke-WebRequest -Uri $uri -Headers $headers -OutFile $zip -UseBasicParsing
 
           Add-Type -AssemblyName System.IO.Compression.FileSystem
-          $archive = [System.IO.Compression.ZipFile]::OpenRead($zip)
+          $zip = [System.IO.Compression.ZipFile]::OpenRead($archive)
           $count = 0
           try {
-            foreach ($entry in $archive.Entries) {
-              $name = $entry.FullName.Replace('\','/')
-              $relative = $name -replace '^[^/]+/',''
-              $wanted = $relative.StartsWith('product/source/') -or $relative -eq 'qa/runtime/ink-web-ui-001-harness.html'
-              if (-not $wanted -or [string]::IsNullOrWhiteSpace($entry.Name)) { continue }
+            foreach ($entry in $zip.Entries) {
+              $slash = $entry.FullName.IndexOf('/')
+              if ($slash -lt 0 -or $slash -ge $entry.FullName.Length - 1) { continue }
+              $rel = $entry.FullName.Substring($slash + 1)
+              $wanted = $rel.StartsWith('product/source/', [StringComparison]::Ordinal) -or
+                        $rel -eq 'qa/runtime/ink-web-ui-001-harness.html'
+              if (-not $wanted -or [string]::IsNullOrEmpty($entry.Name)) { continue }
 
-              $dest = Join-Path $root ($relative.Replace('/','\'))
-              $parent = Split-Path $dest -Parent
-              New-Item -ItemType Directory -Path $parent -Force | Out-Null
-              [System.IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $dest, $true)
+              $target = Join-Path $root ($rel.Replace('/', '\'))
+              $parent = Split-Path $target -Parent
+              [System.IO.Directory]::CreateDirectory($parent) | Out-Null
+              $input = $entry.Open()
+              try {
+                $output = [System.IO.File]::Open($target, [System.IO.FileMode]::Create, [System.IO.FileAccess]::Write, [System.IO.FileShare]::None)
+                try { $input.CopyTo($output) } finally { $output.Dispose() }
+              } finally { $input.Dispose() }
               $count++
             }
           } finally {
-            $archive.Dispose()
+            $zip.Dispose()
           }
 
+          if ($count -lt 50) { throw "Bounded runtime extraction returned only $count files." }
           if (-not (Test-Path (Join-Path $root 'product\source\index.html'))) { throw 'Missing product/source/index.html' }
           if (-not (Test-Path (Join-Path $root 'qa\runtime\ink-web-ui-001-harness.html'))) { throw 'Missing UI QA harness' }
-          if ($count -lt 50) { throw "Bounded materialization unexpectedly small: $count files" }
 
           "INK_RUNTIME_ROOT=$root" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Host "Bounded files materialized: $count"
-          Write-Host "Runtime root: $root"
+          Write-Host "Materialized exact SHA: $env:INK_TEST_SHA"
+          Write-Host "Bounded runtime files: $count"
+          Write-Host "Source root: $root"
 
       - name: Source and identity gate
         shell: powershell -NoProfile -ExecutionPolicy Bypass -Command "& '{0}'"
