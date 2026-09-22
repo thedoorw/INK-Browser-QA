@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CORE-INTEGRATION-002 / MR_PASS_SOURCE / CLEAN_PROMOTION_REQUIRED`
+STATUS: `INK-CORE-INTEGRATION-002 / MR_PASS / PROMOTED / RUNTIME_DEFERRED`
 
 ## Review fingerprint
 
@@ -9,30 +9,22 @@ TASK_ID = INK-CORE-INTEGRATION-002
 DEV_BRANCH = work/ink-core-integration-002
 BRANCH_BASE = dcc98ae58e8af3018b24bb3ceb3d3c0535902695
 REVIEWED_HEAD = 73a276431f58f393acf486af3135f45890ec44e4
-BRANCH_TO_CURRENT_MAIN = 9 ahead / 11 behind / diverged
-```
-
-## QA evidence
-
-```text
 QA_TESTED_HEAD = 17e9de84aa0cf8d3c0f7445587ee3df831ae82b7
 QA_RUN = 35728730503
 QA_JOB = 106748707255
-RESULT = SUCCESS
-CHAT_RUNTIME_SYNTAX = PASS
-GROUNDED_TOOL_SURFACE_QA = PASS
-INTEGRATION_001_COMPATIBILITY_QA = PASS
+QA_RESULT = PASS
+PROMOTION_PR = #36 / MERGED
+PROMOTED_MAIN_SHA = 4b03897d7ba984bcbe0898ab3ebaa0a5c2df7138
 ```
 
-From QA-tested HEAD to final DEV_HANDOFF, only the temporary QA workflow removal, branch-local progress, and required report changed. Product source did not change.
-
-## Decision
-
-`MR_PASS_SOURCE / NODE_QA_PASS / RUNTIME_QA_DEFERRED_TO_NEXT_COMPATIBLE_BATCH`
-
-Verified boundaries:
+## Accepted boundary
 
 ```text
+NEW_TOOLS =
+  get_grounded_creative_context
+  compare_visual_subjects
+  resolve_parametric_structure
+
 UI_LAYOUT_MUTATION = 0
 DOCUMENT_SCHEMA_CHANGE = 0
 HISTORY_SEMANTICS_CHANGE = 0
@@ -42,6 +34,7 @@ RENDERER_MUTATION = 0
 CHAT_EXECUTION_AUTHORITY_CHANGE = 0
 FORMAT_VERSION = 4
 PACKAGE_MUTATION = 0
+RUNTIME_QA = DEFERRED_TO_NEXT_COMPATIBLE_BATCH
 ```
 
-Clean promotion is required because the DEV branch is behind current main. Current main did not independently modify `product/source/src/ai/chat-runtime.js` since the DEV branch base.
+No high-risk Runtime trigger was observed. Promotion preserved concurrent main/UI-lane work through clean promotion.
