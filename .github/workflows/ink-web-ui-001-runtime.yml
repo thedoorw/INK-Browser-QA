@@ -149,13 +149,18 @@ jobs:
           New-Item -ItemType Directory -Path $qaDir -Force | Out-Null
           Copy-Item $qaSource (Join-Path $qaDir 'ink-web-ui-001-harness.html') -Force
 
+          $qaResult = Join-Path $evidence 'browser-result.json'
           $stdout = Join-Path $evidence 'server.out.log'
           $stderr = Join-Path $evidence 'server.err.log'
+          $chromeOut = Join-Path $evidence 'chrome.out.log'
+          $chromeErr = Join-Path $evidence 'chrome.err.log'
           $server = $null
+          $chrome = $null
           try {
             $serverScript = Join-Path $env:INK_RUNTIME_ROOT 'qa\runtime\start-ink-local.ps1'
             $server = Start-Process powershell -ArgumentList @(
-              '-NoProfile','-ExecutionPolicy','Bypass','-File',$serverScript,'-NoBrowser'
+              '-NoProfile','-ExecutionPolicy','Bypass','-File',$serverScript,
+              '-NoBrowser','-QaResultPath',$qaResult
             ) -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
 
             $url = 'http://127.0.0.1:4173/_qa/ink-web-ui-001-harness.html'
@@ -189,25 +194,37 @@ jobs:
               '--no-default-browser-check',
               '--disable-extensions',
               "--user-data-dir=$profile",
-              '--virtual-time-budget=42000',
+              '--virtual-time-budget=60000',
               '--dump-dom',
               $url
             )
-            $browserOutput = & $browser @args 2>&1
-            $exit = $LASTEXITCODE
-            $dump = $browserOutput | Out-String
-            $dumpPath = Join-Path $evidence 'browser-dump.html'
-            [System.IO.File]::WriteAllText($dumpPath, $dump, [System.Text.UTF8Encoding]::new($false))
+            $chrome = Start-Process -FilePath $browser -ArgumentList $args -RedirectStandardOutput $chromeOut -RedirectStandardError $chromeErr -PassThru
 
-            if ($exit -ne 0) {
-              Write-Host $dump
-              throw "Browser exited with code $exit"
+            $reported = $false
+            for ($i = 0; $i -lt 120; $i++) {
+              if (Test-Path $qaResult) { $reported = $true; break }
+              if ($chrome.HasExited) {
+                Start-Sleep -Milliseconds 500
+                if (Test-Path $qaResult) { $reported = $true }
+                break
+              }
+              Start-Sleep -Milliseconds 500
             }
-            if ($dump -notmatch 'data-qa-status="PASS"') {
-              Write-Host $dump
-              throw 'INK-WEB-UI-001 browser harness did not reach PASS.'
+            if (-not $reported) {
+              Get-Content $chromeOut -ErrorAction SilentlyContinue
+              Get-Content $chromeErr -ErrorAction SilentlyContinue
+              throw 'Browser harness did not post a QA result.'
             }
-            if ($dump -notmatch 'INK_UI_QA_RESULT:') { throw 'Browser QA result payload missing.' }
+
+            $result = Get-Content $qaResult -Raw | ConvertFrom-Json
+            Write-Host "Browser harness status: $($result.status)"
+            Write-Host "Checks: total=$($result.summary.total) passed=$($result.summary.passed) failed=$($result.summary.failed)"
+            if ($result.status -ne 'PASS') {
+              throw "INK-WEB-UI-001 browser harness reported $($result.status)."
+            }
+            if ([int]$result.formatVersion -ne 4) {
+              throw "Browser harness reported unexpected FORMAT_VERSION $($result.formatVersion)."
+            }
 
             $summary = @(
               "INK-WEB-UI-001 Windows Chrome Runtime",
@@ -217,12 +234,18 @@ jobs:
               "LOOPBACK_HTTP=PASS",
               "HTTP_MIME_PREFLIGHT=PASS",
               "BROWSER_HARNESS=PASS",
+              "CHECKS_TOTAL=$($result.summary.total)",
+              "CHECKS_PASSED=$($result.summary.passed)",
+              "CHECKS_FAILED=$($result.summary.failed)",
               "FORMAT_VERSION=4",
               "PRODUCT_DISPLAY=INK v0.1 · Web"
             ) -join [Environment]::NewLine
             [System.IO.File]::WriteAllText((Join-Path $evidence 'runtime-summary.txt'), $summary, [System.Text.UTF8Encoding]::new($false))
             Write-Host $summary
           } finally {
+            if ($chrome -and -not $chrome.HasExited) {
+              Stop-Process -Id $chrome.Id -Force -ErrorAction SilentlyContinue
+            }
             if ($server -and -not $server.HasExited) {
               Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue
             }
