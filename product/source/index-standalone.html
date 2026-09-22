@@ -8,7 +8,7 @@
   <meta name="description" content="INK — editable drawing with infinite creation space and print layout space">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'">
   <link rel="manifest" href="manifest-portable.webmanifest?v=0.1">
-  <link rel="icon" href="assets/ink-mark.svg?v=0.1" type="image/svg+xml" sizes="any">
+  <link rel="icon" href="assets/favicon.svg?v=0.1" type="image/svg+xml" sizes="32x32">
   <title>INK v0.1 · Portable</title>
   <link rel="stylesheet" href="styles.css?v=0.1">
 </head>
@@ -92,7 +92,7 @@
       </div>
       <span class="contextual-divider" aria-hidden="true"></span>
       <div id="contextualControlHost" class="contextual-control-host"></div>
-      <button id="contextualAdvancedBtn" class="contextual-advanced-button" type="button">進階</button>
+      <button id="contextualAdvancedBtn" class="contextual-advanced-button" type="button" aria-pressed="false" aria-expanded="false" aria-controls="inspector">進階</button>
     </section>
 
     <div class="topbar-center">
@@ -112,7 +112,7 @@
       <button id="saveBtn" class="quiet-button desktop-file">儲存</button>
       <button id="exportBtn" class="primary-button"><svg><use href="#i-export"/></svg><span>匯出</span></button>
       <button id="fullscreenToggle" class="icon-button" title="進入全螢幕 Ctrl+Shift+F" aria-label="進入全螢幕" aria-pressed="false"><svg><use href="#i-expand"/></svg></button>
-      <button id="inspectorToggle" class="icon-button" title="開啟檢查器" aria-label="開啟檢查器" aria-expanded="false"><svg><use href="#i-sliders"/></svg></button>
+      <button id="inspectorToggle" class="icon-button legacy-inspector-toggle" title="開啟檢查器" aria-label="開啟檢查器" aria-expanded="false"><svg><use href="#i-sliders"/></svg></button>
       <button id="settingsToggle" class="icon-button" title="畫布設定" aria-label="畫布設定"><svg><use href="#i-settings"/></svg></button>
     </div>
   </header>
@@ -198,8 +198,8 @@
 
   <div id="panelScrim" class="panel-scrim" hidden></div>
 
-  <button id="inspectorEdgeToggle" class="inspector-edge-toggle glass-surface" title="開啟檢查器" aria-label="開啟檢查器" aria-expanded="false">
-    <svg><use href="#i-sliders"/></svg><span>屬性</span><svg class="edge-chevron"><use href="#i-chevron"/></svg>
+  <button id="inspectorEdgeToggle" class="inspector-edge-toggle primary-panel-collapse" type="button" title="展開右側面板" aria-label="展開右側面板" aria-controls="inspector creativeWorkspace" aria-expanded="false">
+    <svg class="edge-chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
   </button>
 
   <aside id="inspector" class="inspector elevated-panel" aria-hidden="true">
