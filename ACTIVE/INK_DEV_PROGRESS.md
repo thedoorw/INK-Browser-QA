@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CORE-INTEGRATION-004 / IMPLEMENTING`
+STATUS: `INK-CORE-INTEGRATION-004 / DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
@@ -8,8 +8,8 @@ STATUS: `INK-CORE-INTEGRATION-004 / IMPLEMENTING`
 | TITLE | `Grounded Creative Decision & Plan Bridge v0.1` |
 | BRANCH | `work/ink-core-integration-004` |
 | BRANCH_BASE | `d026cc4a48bc140b4d9aa713e8c96faac6aaea5e` |
-| TASK_STATUS | `IMPLEMENTING` |
-| CURRENT_PHASE | `PHASE_D / DETERMINISTIC_SOURCE_QA` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| CURRENT_PHASE | `COMPLETE / STOP` |
 | TARGET_GATE | `INK_CORE_INTEGRATION_004_SOURCE_READY` |
 | AUTO_APPROVAL | `0 / PROHIBITED` |
 | AUTO_EXECUTION | `0 / PROHIBITED` |
@@ -65,3 +65,48 @@ USER_GOVERNED_PLAN_BOUNDARY_PRESERVED
 Task-specific QA:
 
 `qa/core-integration-004-grounded-plan-bridge.test.mjs`
+
+Commit: `1078d84`
+
+## Checkpoint 3 — source-ready handoff
+
+Gate: `INK_CORE_INTEGRATION_004_SOURCE_READY`
+
+Passing QA:
+
+```text
+Integration-001 grounded context = PASS
+Integration-002 grounded tool surface = PASS
+Integration-003 bounded grounded reasoning = PASS
+Integration-004 grounded decision / plan bridge = PASS
+existing creative-plan / bounded-edit unit + source checks = 21 / 21 PASS
+FORMAT_VERSION = 4
+```
+
+Required report:
+
+`research/INK_CORE_INTEGRATION_004_GROUNDED_CREATIVE_DECISION_PLAN_BRIDGE_REPORT_v0.1.md`
+
+Runtime was not executed by DEV and remains queued under the authorized central Runtime policy.
+
+## DEV handoff
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CORE-INTEGRATION-004
+BRANCH = work/ink-core-integration-004
+GATE = INK_CORE_INTEGRATION_004_SOURCE_READY
+AUTO_APPROVAL = 0
+AUTO_EXECUTION = 0
+UI_LAYOUT_MUTATION = 0
+DOCUMENT_SCHEMA_CHANGE = 0
+HISTORY_SEMANTICS_CHANGE = 0
+REVISION_SEMANTICS_CHANGE = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+RENDERER_MUTATION = 0
+CHAT_EXECUTION_AUTHORITY_CHANGE = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED_TO_CENTRAL_RUNTIME_QUEUE
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```

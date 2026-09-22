@@ -367,6 +367,34 @@ function runtimeLayer(app) {
   assert.equal(app.chatCreativePlan.approvalSequence, 0);
   assert.deepEqual(app.counters, { approve: 0, execute: 0, revisionCapture: 0 });
   assert.equal(JSON.stringify({ doc: app.doc, history: app.history, revisions: app.revisions.records }), before);
+
+  const proposalCount = app.chatCreativePlan.plans.size;
+  const discussionClient = new SequenceClient([
+    { content: '', toolCalls: [{ id: 'grounded-context-discuss', name: 'get_grounded_creative_context', arguments: {} }] },
+    request => {
+      const identity = request.metadata.groundedContinuation;
+      return {
+        content: JSON.stringify(decision(app, {
+          decisionType: 'DISCUSSION_ONLY',
+          sourceRequest: { requestId: identity.originalRequestId, sessionId: identity.sessionId },
+          toolEvidence: [{ toolCallId: 'grounded-context-discuss', tool: 'get_grounded_creative_context' }],
+          targets: [],
+          planCandidate: null,
+          unresolvedEvidence: [{ code: 'DISCUSSION_ONLY' }]
+        })),
+        source: 'DETERMINISTIC_TEST'
+      };
+    }
+  ]);
+  manager.register('discussion-sequence', discussionClient);
+  const discussionSession = manager.start({ client: 'discussion-sequence' });
+  const discussionResponse = await manager.requestConversation(discussionSession.sessionId, {
+    prompt: 'Discuss the grounded evidence without editing.',
+    transmissionDecision: 'LOCAL_ONLY'
+  });
+  assert.equal(discussionResponse.planProposal.status, 'DISCUSSION_ONLY');
+  assert.equal(discussionResponse.planProposal.proposal, null);
+  assert.equal(app.chatCreativePlan.plans.size, proposalCount, 'discussion-only response must not create a plan');
 }
 
 assert.equal(FORMAT_VERSION, 4);
