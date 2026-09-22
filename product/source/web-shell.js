@@ -432,6 +432,7 @@
     toggle: togglePanel,
     close: closePrimaryPanels,
     state() {
+      const active = currentPanel();
       const panel = activePanelElement();
       return {
         version: '0.1',

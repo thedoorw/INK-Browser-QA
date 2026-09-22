@@ -76,8 +76,10 @@ test('UI-003 contextual surface and version contracts remain intact', () => {
 });
 
 
-test('shell state exposes creative stage exactly once', () => {
-  const stateBlock = shell.match(/state\(\) \{[\s\S]*?return \{([\s\S]*?)\n      \};/);
+test('shell state exposes creative stage exactly once and resolves active panel locally', () => {
+  const stateBlock = shell.match(/state\(\) \{([\s\S]*?)return \{([\s\S]*?)\n      \};/);
   assert.ok(stateBlock, 'Expected INK_WEB_SHELL.state() return payload');
-  assert.equal((stateBlock[1].match(/creativeStage:/g) || []).length, 1);
+  assert.match(stateBlock[1], /const active = currentPanel\(\);/);
+  assert.equal((stateBlock[2].match(/creativeStage:/g) || []).length, 1);
+  assert.match(stateBlock[2], /panelGroup: active && PANEL_DEFS\.find\(def => def\.id === active\)/);
 });
