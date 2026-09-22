@@ -1,21 +1,22 @@
 # INK WORKING STATUS
 
-STATUS: `INK-RA-001 / MR_PASS / PROMOTED / CLOSED / INK_WEB_UI_DISCUSSION_NEXT`
+STATUS: `INK-WEB-UI-001 / AUTHORIZED / READY_FOR_DEV`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-RA-001 / CLOSED` |
-| CURRENT_TASK_ID | `NONE` |
-| RA_FOUNDATION_A | `PROMOTED / ACCEPTED` |
-| MR_REVIEW | `MR_PASS` |
-| MAIN_PROMOTION | `0f82c4aecbb24cd02981a68e0e1ba6b5d67bdeb3` |
-| RUNTIME_QA | `35670775922 / SUCCESS` |
-| FORMAT_VERSION | `4 / PRESERVED` |
-| PRODUCT_DISPLAY_VERSION_POLICY | `PORTABLE v0.1 / WEB v0.1 / USER_EXPLICIT_CHANGE_ONLY` |
-| INK_WEB_STAGING | `LIVE` |
-| INK_WEB_UI_REVIEW | `ACTIVE DISCUSSION / USER REPORTS CLUTTER` |
-| NEXT_STAGE | `INK WEB UI ORGANIZATION DISCUSSION` |
-| NEXT_ENGINEERING_WORK_ORDER | `NOT YET AUTHORIZED` |
+| CURRENT_WORK_ORDER | `INK-WEB-UI-001` |
+| CURRENT_TASK_ID | `INK-WEB-UI-001` |
+| DEV_BRANCH | `work/ink-web-ui-001` |
+| DEV_HANDOFF | `NO / READY_TO_START` |
+| MR_REVIEW | `PENDING_HANDOFF` |
+| TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
+| FORMAT_VERSION | `4 / PRESERVE` |
+| WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
+| FAVICON | `USER ORIGINAL MARK / REQUIRED` |
+| INK_MARK_SOURCE | `reference/brand/INK_MARK_SOURCE_W-300.jpg` |
+| INK_WEB_STAGING | `LIVE / MAIN-BASED` |
+| PACKAGE_INK_CURRENT | `NO MUTATION` |
+| NEXT_STAGE | `DEV IMPLEMENTATION` |
 
 ## Readiness assessment
 
@@ -1261,3 +1262,25 @@ work branch = not live
 promotion / merge to main = Pages update
 browser service-worker/cache = must be verified separately
 ```
+
+
+## INK-WEB-UI-001 authorization
+
+User authorized the first Photoshop-aligned INK Web UI package.
+
+```text
+TASK = INK-WEB-UI-001
+BRANCH = work/ink-web-ui-001
+SCOPE = shell inventory → canvas-first shell → collapsible panel dock → v0.1 Web identity → user-original favicon → browser QA
+DISPLAY_VERSION = INK v0.1 · Web
+FORMAT_VERSION = 4 / PRESERVE
+PUBLICATION = work branch not live; main promotion updates Pages
+```
+
+User-original mark source:
+
+`reference/brand/INK_MARK_SOURCE_W-300.jpg`
+
+SHA256:
+
+`08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8`
