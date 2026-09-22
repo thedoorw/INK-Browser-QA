@@ -75,3 +75,29 @@ FIX_MAIN = 448e98dd224ba25faf5ea37077abeb8e95ccc94d
 Next gate is a manual Runtime rerun against exact SHA `448e98dd224ba25faf5ea37077abeb8e95ccc94d`.
 
 No Runtime debt is cleared until that rerun passes.
+
+
+## INK-INTEGRATION-RUNTIME-001 second-run disposition
+
+```text
+RUN = 35691982799
+TARGET = 448e98dd224ba25faf5ea37077abeb8e95ccc94d
+RESULT = FAIL
+UI = PASS
+CREATIVE PRODUCT CHECKS = PASS
+FAILURE CLASS = QA HARNESS EVIDENCE FIELD COLLISION
+```
+
+The creative artifact demonstrated actual product runtime success; the batch failed because harness detail fields overwrote canonical `name/status` fields.
+
+Bounded QA-only fix:
+
+```text
+PR #29 = MERGED
+FIX_MAIN = a364663bc3d03bfa184c708da8e42891e53fb563
+PRODUCT SOURCE CHANGE = 0
+```
+
+Next gate is manual Runtime rerun against exact SHA `a364663bc3d03bfa184c708da8e42891e53fb563`.
+
+No deferred Runtime debt is cleared until the entire batch passes.
