@@ -1,79 +1,74 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: AUTHORIZED / NOT_STARTED
 
-| Field | Value |
-|---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
-| TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
-| MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
+TASK_ID: INK-UI-MAINT-001
+TITLE: Photoshop Shell Geometry / Pixel Alignment v0.1
+BRANCH: work/ink-ui-maint-001
+BASE_MAIN: c0adc842c1d1b52c8cdf74303e087704b0047caa
+TASK_STATUS: AUTHORIZED / NOT_STARTED
+DEV_HANDOFF: NOT_YET
+UR_REVIEW: PENDING_AFTER_HANDOFF
+TARGET_GATE: PS_SHELL_PIXEL_ALIGNMENT_WORKS
+FORMAT_VERSION: 4 / PRESERVE
+PRODUCT_BASE_VERSION: v0.1 / PRESERVE
+PACKAGE_MUTATION: 0 / PROHIBITED
+CORE_MUTATION: 0 / PROHIBITED
+RUNTIME_QA: REQUIRED_BEFORE_UI_PASS
 
-## Objective
+## Priority order
 
-Close the known Structure-Aware single-Path reconstruction bottleneck:
+1. Collapse desktop top chrome to Photoshop-like 2-row geometry.
+2. Restore left rail to left:0, width about 40 px.
+3. Keep right dock at 40 px; reduce default primary panel toward about 252 px.
+4. Reduce document-title dominance and align top controls.
+5. Improve dark workbench / real Layout A4 page relationship.
+6. Pixel-grid cleanup.
+7. Parity/static + mandatory visual Runtime evidence.
 
-```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
-```
+## Photoshop reference
 
-The authoritative scope and STOP rules are in:
+1280×1024 screenshot:
+menu = 24 px
+separator = 1 px
+options = 35 px
+separator = 1 px
+workspace y = 61
+left single rail = 40 px
+right collapsed dock = 40 px
+expanded right panel ≈ 252 px
+workspace base ≈ #262626
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+## Known current regression
 
-## Checkpoint rule
+UI-001: tool rail left:0
+UI-004 later override: tool rail left:7px
+→ detached rail
 
-At every meaningful checkpoint:
+Current top chrome:
+28 + 38 + 36 contextual ≈ 102 px
+target ≈ 60–61 px
 
-- commit;
-- update this branch-local file;
-- record exact SHA;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
+## Stop rule
 
-Do not replace the Direct Extraction baseline during DEV execution.
+Renderer / Document / History / Revision / Geometry / Core / CHAT execution change required:
+INTEGRATION_REQUIRED → STOP
 
-## Planned phases
-
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
+If visual Runtime cannot be executed:
+RUNTIME_BLOCKED → STOP
 
 ## Completion
 
-```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
+TASK_ID = INK-UI-MAINT-001
+BRANCH = work/ink-ui-maint-001
 FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
+GATE = PS_SHELL_PIXEL_ALIGNMENT_WORKS
+RUNTIME_QA = PASS
+PORTABLE_WEB_PARITY = PASS
 FORMAT_VERSION = 4
+PRODUCT_BASE_VERSION = v0.1
 PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-NEXT_ACTION = MR_REVIEW_REQUIRED
+CORE_MUTATION = 0
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
-```
