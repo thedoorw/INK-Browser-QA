@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `CORE-MOD-005 / IN_PROGRESS`
+STATUS: `CORE-MOD-005 / DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
@@ -8,10 +8,10 @@ STATUS: `CORE-MOD-005 / IN_PROGRESS`
 | TITLE | `Parametric Creative Structure Module v0.1` |
 | BRANCH | `work/ink-core-parametric-structure-005` |
 | BRANCH_BASE | `3a9a32cfc6a3a40d4dfc2105908c068d007ce103` |
-| TASK_STATUS | `IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_C_COMPLETE` |
-| DEV_HANDOFF | `NO` |
-| MR_REVIEW | `PENDING_HANDOFF` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| CURRENT_PHASE | `COMPLETE` |
+| DEV_HANDOFF | `YES` |
+| MR_REVIEW | `REQUIRED` |
 | TARGET_GATE | `CORE_MOD_005_MODULE_READY` |
 | UI_MUTATION | `0 / PROHIBITED` |
 | DOCUMENT_MUTATION | `0 / PROHIBITED` |
@@ -24,20 +24,20 @@ STATUS: `CORE-MOD-005 / IN_PROGRESS`
 
 ## Phase A — contract inventory
 
-Gate: `PARAMETRIC_STRUCTURE_CONTRACT_DEFINED`
+Gate: `PARAMETRIC_STRUCTURE_CONTRACT_DEFINED / PASS`
 
-Inventory completed against the current branch:
+Inventory used:
 
-- stable deterministic identity/fingerprint authority: `product/source/src/core/stable-id.js`;
-- affine transform authority: `product/source/src/core/math.js` / `Matrix`;
-- Repeat identity precedent: `product/source/src/repeat/repeat-identity.js`;
-- hierarchy/read-only world-matrix precedent: `product/source/src/document/hierarchy.js`;
-- semantic-region evidence precedent: `product/source/src/semantic/semantic-region-grounding.js`;
-- provenance reference precedent: `product/source/src/provenance/provenance-graph.js`;
-- deterministic bounded pure-module precedent: `product/source/src/compare/visual-compare.js`;
-- document format authority remains `product/source/src/config.js` with `FORMAT_VERSION = 4`.
+- `product/source/src/core/stable-id.js`;
+- `product/source/src/core/math.js` / `Matrix`;
+- `product/source/src/repeat/repeat-identity.js`;
+- `product/source/src/document/hierarchy.js`;
+- `product/source/src/semantic/semantic-region-grounding.js`;
+- `product/source/src/provenance/provenance-graph.js`;
+- `product/source/src/compare/visual-compare.js`;
+- `product/source/src/config.js`.
 
-Contract decision:
+Contract:
 
 ```text
 INK-PARAMETRIC-STRUCTURE v1 descriptor
@@ -49,39 +49,110 @@ INK-PARAMETRIC-STRUCTURE v1 descriptor
 → deterministic canonical plan + fingerprint
 ```
 
-No document object insertion, renderer call, History/Revision write, or production-shell integration is authorized.
+Checkpoint commit: `8c21e34f1cfde2c577c0753f71058e59d437a86c`
 
 ## Phase B — pure resolver
 
-Gate: `PARAMETRIC_STRUCTURE_RESOLVER_WORKS`
+Gate: `PARAMETRIC_STRUCTURE_RESOLVER_WORKS / PASS`
 
 Implemented:
 
-- `product/source/src/structure/parametric-structure.js`;
-- deterministic descriptor normalization;
-- explicit parameters / constraints / resolved values;
-- bounded node-template expansion;
-- deterministic generated-node IDs from structure identity + template position + source evidence;
-- transform normalization through existing `Matrix` authority;
-- canonical ordering and fingerprint;
-- unresolved / unsupported parameter evidence;
-- no DOM/network/renderer/document/history/revision writes.
+`product/source/src/structure/parametric-structure.js`
 
-Commit: `e67edfc3bd8ebc1cb86745e9a666e5b3de7d29d3`
+Provides deterministic descriptor normalization, explicit parameters/constraints, bounded expansion, generated-node stable IDs, transform normalization through existing Matrix authority, relationship evidence, canonical ordering/fingerprint, and explicit unresolved/unsupported evidence.
+
+No DOM/network dependency, renderer authority, document writes, or History/Revision writes.
+
+Implementation commit: `e67edfc3bd8ebc1cb86745e9a666e5b3de7d29d3`
 
 ## Phase C — read-only adapter / evidence
 
-Gate: `PARAMETRIC_STRUCTURE_ADAPTER_READY`
+Gate: `PARAMETRIC_STRUCTURE_ADAPTER_READY / PASS`
 
-Implemented in the same module:
+The module provides optional read-only providers:
 
-- optional read-only `getObject` provider;
-- optional read-only `getSemanticRegion` provider;
-- optional read-only `getProvenanceRef` provider;
-- explicit unresolved evidence when supplied refs cannot be resolved;
-- source evidence copied into the plan; authoritative source objects are not mutated;
-- no formal cross-module product wiring.
+- `getObject`;
+- `getSemanticRegion`;
+- `getProvenanceRef`.
 
-## Next
+Source evidence is cloned/summarized. Missing supplied refs remain explicit unresolved evidence. No formal cross-module product wiring is included.
 
-`Phase D — deterministic QA`
+Checkpoint commit: `070c2b6562efb6ef7287278e88a066b55130940f`
+
+## Phase D — deterministic QA
+
+Gate: `CORE_MOD_005_MODULE_READY / PASS_SOURCE_UNIT`
+
+Test:
+
+`qa/core-mod-005-parametric-structure.test.mjs`
+
+Coverage:
+
+- same descriptor + same parameters → same output/fingerprint;
+- reordered equivalent input → same normalized output/fingerprint;
+- deterministic generated-node IDs;
+- bounded repeat/count handling;
+- transform normalization;
+- invalid/unsupported parameter evidence;
+- unresolved source refs;
+- provenance refs preserved;
+- no source/provider mutation;
+- no document/history/revision mutation;
+- no renderer/DOM/network dependency;
+- `FORMAT_VERSION = 4`.
+
+Source-only Node QA:
+
+```text
+RUN = 35712532550
+TESTED_HEAD = 5b24e12f45f6fcc371680eee8f778a7eeb7652f0
+RESULT = SUCCESS
+NODE = 22
+```
+
+The temporary workflow was removed after the successful run:
+
+`8f59332c14aa206145b8c927934d92cf37a1dc00`
+
+Required report:
+
+`research/INK_CORE_MOD_005_PARAMETRIC_CREATIVE_STRUCTURE_REPORT_v0.1.md`
+
+Report commit:
+
+`324bc48721de7ca030d742cb1847700d64e95ec2`
+
+## Final implementation diff from task-start HEAD
+
+Task-start HEAD:
+
+`0b28070ed9d277218d2c845a33a03fe5beb1f0f3`
+
+Net task files:
+
+```text
+ACTIVE/INK_DEV_PROGRESS.md
+product/source/src/structure/parametric-structure.js
+qa/core-mod-005-parametric-structure.test.mjs
+research/INK_CORE_MOD_005_PARAMETRIC_CREATIVE_STRUCTURE_REPORT_v0.1.md
+```
+
+Temporary QA workflow has no net diff.
+
+## DEV_HANDOFF
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = CORE-MOD-005
+BRANCH = work/ink-core-parametric-structure-005
+GATE = CORE_MOD_005_MODULE_READY
+UI_MUTATION = 0
+DOCUMENT_MUTATION = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+RENDERER_MUTATION = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
