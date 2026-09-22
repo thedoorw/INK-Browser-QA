@@ -1,55 +1,53 @@
 # INK REVIEW EVIDENCE
 
-STATUS: `INK-CORE-INTEGRATION-002 / MR_PASS_EVIDENCE`
+STATUS: `INK-CORE-INTEGRATION-003 / MR_PASS_EVIDENCE / CLOSED`
 
 ## Source review
 
 ```text
-DEV_HANDOFF = 73a276431f58f393acf486af3135f45890ec44e4
-QA_TESTED_HEAD = 17e9de84aa0cf8d3c0f7445587ee3df831ae82b7
-QA_RUN = 35728730503
-QA_JOB = 106748707255
-QA_RESULT = SUCCESS
+DEV_HANDOFF = 5ad5a8088191e15f3845ce4ead74fffc4c29c691
+BRANCH_BASE = 19ce5f7d03a32600493a550ae2d2262340c229ee
+TOPOLOGY = ahead 8 / behind 0
+CHANGED_PATHS = 4
+SOURCE_QA_RUN = 35731547730
+SOURCE_QA_JOB = 106758086676
+SOURCE_QA_TESTED_SHA = 92f4bc2dd6cb74b1881a75186a40dad4409326fa
+SOURCE_QA_RESULT = SUCCESS
 ```
 
-QA-tested HEAD → final DEV_HANDOFF changed only:
-
-```text
-temporary QA workflow removal
-branch-local ACTIVE/INK_DEV_PROGRESS.md
-required report
-```
-
-Product source did not change after the successful QA run.
-
-## Divergence / clean promotion
-
-At review the DEV branch was:
-
-```text
-9 ahead / 11 behind current main / diverged
-```
-
-Current main's `product/source/src/ai/chat-runtime.js` blob was unchanged from the DEV branch base, so reviewed source could be clean-promoted without overwriting concurrent UI-lane changes.
-
-Promotion payload:
+Promotion payload was limited to:
 
 ```text
 product/source/src/ai/chat-runtime.js
-qa/core-integration-002-grounded-tool-surface.test.mjs
-research/INK_CORE_INTEGRATION_002_GROUNDED_CREATIVE_TOOL_SURFACE_REPORT_v0.1.md
+qa/core-integration-003-bounded-grounded-reasoning.test.mjs
+research/INK_CORE_INTEGRATION_003_BOUNDED_GROUNDED_TOOL_REASONING_LOOP_REPORT_v0.1.md
 ```
+
+Branch-local `ACTIVE/INK_DEV_PROGRESS.md` was excluded.
+
+## Promotion
 
 ```text
-PROMOTION_PR = #36 / MERGED
-PROMOTED_MAIN_SHA = 4b03897d7ba984bcbe0898ab3ebaa0a5c2df7138
+PROMOTION_PR = #37 / MERGED
+PROMOTED_MAIN_SHA = 262ea581ac7c7c9c56fdb4948264bdf114bdff52
 ```
 
-Branch-local progress and temporary workflow were excluded.
-
-## Runtime disposition
+## Exact-SHA Windows Runtime
 
 ```text
-HIGH_RISK_TRIGGER = NOT_OBSERVED
-RUNTIME_QA = DEFERRED_TO_NEXT_COMPATIBLE_BATCH
+WORKFLOW = INK Manual Windows Runtime Batch
+RUN = 35737071779
+JOB = 106776957691
+REQUESTED_REF = 262ea581ac7c7c9c56fdb4948264bdf114bdff52
+TESTED_SHA = 262ea581ac7c7c9c56fdb4948264bdf114bdff52
+WORKFLOW_SHA = 262ea581ac7c7c9c56fdb4948264bdf114bdff52
+RUNNER = DESKTOP-NSOQH69
+UI_SUITE = PASS
+CREATIVE_SUITE = PASS
+GEOMETRY_SUITE = PASS
+BATCH_RESULT = PASS
+ARTIFACT_ID = 10697873377
+ARTIFACT_DIGEST = sha256:9d8404792887ab0bb2f82174cd0ae0d7c93898bb4d965d0235ff315a96aa6eb3
 ```
+
+Final runtime gate satisfied: `INK_CORE_INTEGRATION_003_RUNTIME_PASS`.
