@@ -9,7 +9,7 @@ STATUS: `INK-WEB-UI-001 / IN_PROGRESS`
 | BRANCH | `work/ink-web-ui-001` |
 | BRANCH_BASE | `e00ff4edd81ab659e62a87d700bcbb9fc6dd465d` |
 | TASK_STATUS | `IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_B / CANVAS_FIRST_SHELL` |
+| CURRENT_PHASE | `PHASE_D / WEB_IDENTITY_AND_CACHE` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
@@ -101,6 +101,36 @@ Containment decision:
 - use existing Inspector and Creative Workspace controllers as right-panel content authorities;
 - use `#stageWrap` geometry + existing ResizeObserver for canvas recentering;
 - keep the new desktop dock presentation separate from existing mobile fallback.
+
+
+## Checkpoint — Phase B + C
+
+```text
+GATES =
+  WEB_WORKSPACE_SHELL_ALIGNED / PASS_SOURCE_STATIC
+  COLLAPSIBLE_PANEL_DOCK_WORKS / PASS_SOURCE_STATIC
+IMPLEMENTATION_HEAD = 81584872319f7b433e717f496770d33d971b9e9f
+EVIDENCE_HEAD = 36b10460495402172fe944a6988e3395124b4f65
+FILES_CHANGED =
+  product/source/assets/ink-mark.svg
+  product/source/web-shell.js
+  product/source/styles.css
+  product/source/src/editor/creative-workspace.js
+  product/source/index.html
+  product/source/index-standalone.html
+  research/INK_WEB_UI_PHASE1_IMPLEMENTATION_REPORT_v0.1.md
+CHECKS =
+  web-shell syntax / PASS
+  command DOM identity preservation / PASS
+  dock entry contract / PASS
+  single-primary-panel contract / PASS
+  measured canvas-width contract / PASS
+  mobile breakpoint containment / PASS
+  Creative Workspace default collapsed / PASS
+  FORMAT_VERSION = 4 / PASS
+BLOCKER = NONE
+NEXT = PHASE_D / WEB_IDENTITY_AND_CACHE
+```
 
 ## Completion
 
