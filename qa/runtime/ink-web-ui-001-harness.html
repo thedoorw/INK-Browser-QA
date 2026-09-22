@@ -61,6 +61,31 @@
     worker.addEventListener('statechange', handler);
   });
 
+  async function publishResult(payload) {
+    document.body.dataset.qaStatus = payload.status;
+    output.textContent = 'INK_UI_QA_RESULT:' + JSON.stringify(payload);
+    const transport = {
+      schema: 'INK-WEB-UI-001-BROWSER-QA-TRANSPORT',
+      version: 1,
+      status: payload.status,
+      formatVersion: Number(payload.formatVersion || 0),
+      summary: payload.summary || {
+        total: Array.isArray(payload.checks) ? payload.checks.length : 0,
+        passed: 0,
+        failed: Array.isArray(payload.checks) ? payload.checks.length : 1
+      },
+      fatal: payload.fatal ? 'BROWSER_HARNESS_FATAL' : null
+    };
+    try {
+      await fetch('/__qa_result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(transport),
+        cache: 'no-store'
+      });
+    } catch {}
+  }
+
   async function run() {
     try {
       await waitFor(() => frame.contentWindow?.INK_TEST && frame.contentWindow?.INK_WEB_SHELL, 16000);
@@ -245,8 +270,7 @@
         checks: results,
         summary: { total: results.length, passed: results.length - failed.length, failed: failed.length }
       };
-      document.body.dataset.qaStatus = payload.status;
-      output.textContent = 'INK_UI_QA_RESULT:' + JSON.stringify(payload);
+      await publishResult(payload);
     } catch (error) {
       const payload = {
         schema: 'INK-WEB-UI-001-BROWSER-QA',
@@ -255,12 +279,12 @@
         fatal: String(error?.stack || error),
         checks: results
       };
-      document.body.dataset.qaStatus = 'FAIL';
-      output.textContent = 'INK_UI_QA_RESULT:' + JSON.stringify(payload);
+      await publishResult(payload);
     }
   }
 
-  frame.addEventListener('load', () => { void run(); }, { once: true });
+  if (frame.contentDocument?.readyState === 'complete') void run();
+  else frame.addEventListener('load', () => { void run(); }, { once: true });
 })();
 </script>
 </body>
