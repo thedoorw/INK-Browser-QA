@@ -1241,3 +1241,23 @@ current shell inventory
 ```
 
 Full contextual-control migration and broader CHAT panel reorganization remain later plan phases unless the initial inventory proves they can be included safely.
+
+
+### UI Phase 1 identity additions
+
+User added two requirements to the upcoming `INK-WEB-UI-001` package:
+
+```text
+WEB_DISPLAY_VERSION = INK v0.1 · Web
+FAVICON = REQUIRED
+```
+
+The version correction covers user-facing shell metadata and Web cache identity, but does not change document `FORMAT_VERSION = 4`.
+
+Publication behavior:
+
+```text
+work branch = not live
+promotion / merge to main = Pages update
+browser service-worker/cache = must be verified separately
+```
