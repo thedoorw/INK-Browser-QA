@@ -358,3 +358,37 @@ RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 Next:
 
 `DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP`
+
+
+## 17. MR-verified QA correction closure — 2026-09-22
+
+This section supersedes the earlier execution-limit note in Section 12.
+
+The FORMAT_VERSION 4 fixture was corrected after MR review and the specified repository-native Node QA was executed successfully.
+
+```text
+FIX_COMMIT = 6f25d17f51ee9267f5cdd4fb22373aab750ede2f
+TESTED_HEAD = 2eed11c9367dba7aabdf8a571020ad9403fb8e2a
+COMMAND = node qa/core-mod-004-visual-compare.test.mjs
+GITHUB_ACTIONS_RUN = 35707165761
+JOB_ID = 106678771381
+JOB = node-qa
+RESULT = SUCCESS
+OUTPUT = CORE-MOD-004 visual-compare deterministic tests: PASS
+FORMAT_VERSION = 4 / PRESERVED
+PRODUCT_MODULE_CHANGE = 0
+```
+
+MR re-review pinned final DEV handoff:
+
+`dc4ae21e0457cbca1d67034fca778857a4bb87cd`
+
+Final disposition:
+
+```text
+CORE_MOD_004_MODULE_READY = PASS
+MR = PASS
+PROMOTION_PR = #32 / MERGED
+MAIN = 620f17965f096796a2374e1078432c484010b051
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+```
