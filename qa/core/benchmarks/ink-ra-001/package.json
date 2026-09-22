@@ -1,0 +1,13 @@
+{
+  "name": "ink-ra-001-external-geometry-benchmark",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "benchmark": "node external-geometry-benchmark.mjs"
+  },
+  "dependencies": {
+    "bezier-js": "6.1.4",
+    "clipper2-ts": "2.0.1-18",
+    "paper": "0.12.18"
+  }
+}

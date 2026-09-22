@@ -1,0 +1,157 @@
+name: INK-RA-001 Windows Browser Runtime QA
+
+on:
+  push:
+    branches:
+      - work/ink-ra-001
+    paths:
+      - '.github/workflows/ink-ra-001-windows-runtime.yml'
+      - 'product/source/src/vector/geometry-kernel.js'
+      - 'product/source/src/vendor/bezier-js-6.1.4/**'
+      - 'product/source/src/vendor/clipper2-ts-2.0.1/**'
+      - 'qa/core/tests/unit/vector-geometry-kernel-v0.1.test.mjs'
+      - 'qa/runtime/ink-ra-001-browser-harness.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-ra-001-windows-browser-runtime
+  cancel-in-progress: true
+
+jobs:
+  geometry-runtime:
+    name: Geometry Kernel / Chrome / Rose Window
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 20
+
+    steps:
+      - name: Materialize exact branch revision without Git
+        shell: cmd
+        run: |
+          @echo off
+          setlocal
+          set "ARCHIVE=%RUNNER_TEMP%\ink-ra-001-runtime.zip"
+          set "EXTRACT=%RUNNER_TEMP%\ink-ra-001-runtime"
+          if exist "%ARCHIVE%" del /q "%ARCHIVE%"
+          if exist "%EXTRACT%" rmdir /s /q "%EXTRACT%"
+          mkdir "%EXTRACT%"
+          curl.exe -fL "https://github.com/%GITHUB_REPOSITORY%/archive/%GITHUB_SHA%.zip" -o "%ARCHIVE%"
+          if errorlevel 1 exit /b 1
+          powershell.exe -NoLogo -NoProfile -NonInteractive -Command "$ErrorActionPreference='Stop'; Add-Type -AssemblyName System.IO.Compression.FileSystem; $archive='%ARCHIVE%'; $extract='%EXTRACT%'; $allowed=@('product/source/','qa/runtime/ink-ra-001-browser-harness.html','qa/fixtures/rose-window/','qa/core/tests/unit/vector-geometry-kernel-v0.1.test.mjs'); $zip=[System.IO.Compression.ZipFile]::OpenRead($archive); try { foreach($entry in $zip.Entries){ $slash=$entry.FullName.IndexOf('/'); if($slash -lt 0 -or $slash -ge $entry.FullName.Length-1){ continue }; $rel=$entry.FullName.Substring($slash+1); $matched=$false; foreach($prefix in $allowed){ if($rel.StartsWith($prefix,[StringComparison]::Ordinal)){ $matched=$true; break } }; if(-not $matched -or [string]::IsNullOrEmpty($entry.Name)){ continue }; $target=Join-Path $extract ($rel.Replace('/','\')); [IO.Directory]::CreateDirectory((Split-Path $target -Parent)) | Out-Null; $input=$entry.Open(); try { $output=[IO.File]::Open($target,[IO.FileMode]::Create,[IO.FileAccess]::Write,[IO.FileShare]::None); try { $input.CopyTo($output) } finally { $output.Dispose() } } finally { $input.Dispose() } } } finally { $zip.Dispose() }"
+          if errorlevel 1 exit /b 1
+          if not exist "%EXTRACT%\product\source\index.html" exit /b 1
+          if not exist "%EXTRACT%\qa\runtime\ink-ra-001-browser-harness.html" exit /b 1
+          if not exist "%EXTRACT%\qa\fixtures\rose-window\rose-window-primary.png" exit /b 1
+          if not exist "%EXTRACT%\qa\core\tests\unit\vector-geometry-kernel-v0.1.test.mjs" exit /b 1
+          copy /y "%EXTRACT%\qa\runtime\ink-ra-001-browser-harness.html" "%EXTRACT%\product\source\__qa_geometry.html" >nul
+          copy /y "%EXTRACT%\qa\fixtures\rose-window\rose-window-primary.png" "%EXTRACT%\product\source\__qa_rose_window.png" >nul
+          echo INK_SOURCE_ROOT=%EXTRACT%>>"%GITHUB_ENV%"
+          echo INK_SITE_ROOT=%EXTRACT%\product\source>>"%GITHUB_ENV%"
+          echo Exact SHA: %GITHUB_SHA%
+          echo Materialized bounded runtime tree only.
+          endlocal
+
+      - name: Static and deterministic source checks
+        shell: cmd
+        run: |
+          @echo off
+          findstr /R /C:"FORMAT_VERSION *= *4" "%INK_SITE_ROOT%\src\config.js" >nul
+          if errorlevel 1 (
+            echo FORMAT_VERSION is not 4.
+            exit /b 1
+          )
+          where node >nul 2>&1
+          if errorlevel 1 (
+            echo Node not on PATH; real Chromium module execution remains authoritative.
+            exit /b 0
+          )
+          node "%INK_SOURCE_ROOT%\qa\core\tests\unit\vector-geometry-kernel-v0.1.test.mjs"
+          if errorlevel 1 exit /b 1
+          echo [PASS] source invariants
+
+      - name: Locate Chrome or Edge
+        shell: cmd
+        run: |
+          @echo off
+          if defined INK_CHROMIUM_PATH if exist "%INK_CHROMIUM_PATH%" goto found
+          if defined CHROME_PATH if exist "%CHROME_PATH%" (
+            set "INK_CHROMIUM_PATH=%CHROME_PATH%"
+            goto found
+          )
+          if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles%\Google\Chrome\Application\chrome.exe"
+            goto found
+          )
+          if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"
+            goto found
+          )
+          if exist "%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe" (
+            set "INK_CHROMIUM_PATH=%LOCALAPPDATA%\Google\Chrome\Application\chrome.exe"
+            goto found
+          )
+          if exist "%ProgramFiles%\Microsoft\Edge\Application\msedge.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles%\Microsoft\Edge\Application\msedge.exe"
+            goto found
+          )
+          if exist "%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe" (
+            set "INK_CHROMIUM_PATH=%ProgramFiles(x86)%\Microsoft\Edge\Application\msedge.exe"
+            goto found
+          )
+          echo No supported Chromium browser found.
+          exit /b 1
+          :found
+          echo INK_CHROMIUM_PATH=%INK_CHROMIUM_PATH%>>"%GITHUB_ENV%"
+          echo Browser: %INK_CHROMIUM_PATH%
+
+      - name: Real Chromium geometry acceptance
+        shell: cmd
+        run: |
+          @echo off
+          setlocal
+          set "BROWSER_OUT=%RUNNER_TEMP%\ink-ra-001-browser.dom.html"
+          set "BROWSER_ERR=%RUNNER_TEMP%\ink-ra-001-browser.err.log"
+          set "PROFILE=%RUNNER_TEMP%\ink-ra-001-browser-profile"
+          if exist "%BROWSER_OUT%" del /q "%BROWSER_OUT%"
+          if exist "%BROWSER_ERR%" del /q "%BROWSER_ERR%"
+          if exist "%PROFILE%" rmdir /s /q "%PROFILE%"
+          set "FILEURL=file:///%INK_SITE_ROOT:\=/%/__qa_geometry.html"
+          "%INK_CHROMIUM_PATH%" --headless=new --disable-gpu --no-first-run --no-default-browser-check --disable-extensions --disable-background-networking --allow-file-access-from-files --virtual-time-budget=15000 --dump-dom --user-data-dir="%PROFILE%" "%FILEURL%" >"%BROWSER_OUT%" 2>"%BROWSER_ERR%"
+          if errorlevel 1 (
+            type "%BROWSER_ERR%"
+            exit /b 1
+          )
+          type "%BROWSER_OUT%"
+          findstr /C:"data-qa=\"PASS\"" "%BROWSER_OUT%" >nul
+          if errorlevel 1 (
+            type "%BROWSER_ERR%"
+            echo Browser harness did not report PASS.
+            exit /b 1
+          )
+          findstr /C:"\"roseOutputSubpaths\": 12" "%BROWSER_OUT%" >nul
+          if errorlevel 1 (
+            echo Rose Window geometry evidence missing.
+            exit /b 1
+          )
+          findstr /C:"\"deterministicRepeat\": true" "%BROWSER_OUT%" >nul
+          if errorlevel 1 (
+            echo Deterministic browser evidence missing.
+            exit /b 1
+          )
+          echo [PASS] real Chromium geometry + Rose Window acceptance
+          endlocal
+
+      - name: Summary
+        if: always()
+        shell: cmd
+        run: |
+          @echo off
+          >>"%GITHUB_STEP_SUMMARY%" echo ## INK-RA-001 Windows Browser Runtime QA
+          >>"%GITHUB_STEP_SUMMARY%" echo - Exact SHA: %GITHUB_SHA%
+          >>"%GITHUB_STEP_SUMMARY%" echo - Runner: %RUNNER_NAME% / %RUNNER_OS% / %RUNNER_ARCH%
+          >>"%GITHUB_STEP_SUMMARY%" echo - Browser: %INK_CHROMIUM_PATH%
+          >>"%GITHUB_STEP_SUMMARY%" echo - Case: cubic queries + deterministic 12-part Rose Window geometry offset/measurement
+          >>"%GITHUB_STEP_SUMMARY%" echo - Git checkout: not used
+          >>"%GITHUB_STEP_SUMMARY%" echo - PowerShell: local ZIP extraction only; no ExecutionPolicy change or bypass
