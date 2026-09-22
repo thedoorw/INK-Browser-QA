@@ -1,47 +1,52 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-WEB-UI-002 / MR_PASS / PROMOTED / CLOSED`
+STATUS: `CORE-MOD-001 / AUTHORIZED / READY_FOR_DEV`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| CURRENT_TASK_ID | `INK-WEB-UI-002` |
-| TITLE | `Shared Portable/Web Shell Sync + Runtime Trigger Guard v0.1` |
-| AUTHORITY | `USER_EXPLICIT / PACKAGE_WORK` |
-| DEV_WORK_BRANCH | `work/ink-web-ui-002` |
-| DEV_MODE | `BOUNDED_LONG_SEQUENCE` |
-| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / REGRESSION_GUARD_ONLY` |
-| UI_MUTATION | `NO NEW VISUAL REDESIGN` |
-| WORKFLOW_MUTATION | `AUTHORIZED / RUNTIME_TRIGGER_AND_PROCESS_HYGIENE` |
+| CURRENT_TASK_ID | `CORE-MOD-001` |
+| TITLE | `AI Document Bridge Module v0.1` |
+| ROLE_OWNER | `MR / CORE MODULE LANE` |
+| DEV_WORK_BRANCH | `work/ink-core-ai-bridge-001` |
+| DEV_MODE | `BOUNDED_MODULE_PREPARATION` |
+| PRODUCT_SOURCE_MUTATION | `AUTHORIZED / MODULE_ONLY` |
+| UI_MUTATION | `PROHIBITED` |
+| INTEGRATION_TO_UI | `PROHIBITED_THIS_TASK` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PACKAGE_INK_CURRENT_MUTATION | `PROHIBITED` |
 | MAIN_MERGE | `PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED_TO_BATCH` |
+| RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
 
-## Prior closure
+## Objective
 
-`INK-WEB-UI-001` is accepted and promoted.
+Prepare a standalone AI Document Bridge module that converts the authoritative INK document into grounded, structured, CHAT-readable context without mutating the document.
+
+Target chain:
 
 ```text
-REVIEWED_HANDOFF_HEAD = 8b8a59e08e4c31a1f317b5b4c57acf05cf160cc5
-TESTED_PRODUCT_SHA = 72ad6869f02bce293ae923755db0a154c9bff98b
-RUNTIME_RUN = 35679835724 / SUCCESS
-BROWSER_CHECKS = 40 / 40 PASS
-PROMOTION_PR = #22 / MERGED
-MAIN_MERGE = 29f06010fa539e5951d18d48b88045ab75ace84a
+INK Document
+→ object / region / relationship grounding
+→ bounded structured context
+→ CHAT-readable payload
 ```
 
-The task-local auto-push Runtime workflow from the DEV branch was intentionally excluded from promotion.
+This task does **not** execute CHAT edits and does not wire new UI.
 
-## Why this task exists
+## Existing authority to preserve
 
-Two follow-up risks were confirmed during UI-001:
+Authoritative:
 
-1. task-specific full Runtime was auto-triggering on ordinary DEV pushes and waking the user's self-hosted Windows runner;
-2. Portable and Web currently share the same shell by implementation discipline, but there is no explicit parity guard preventing later Web-only drift.
+- current Document model;
+- stable IDs;
+- existing semantic model / relationship graph;
+- existing CHAT bounded-edit approval semantics;
+- History;
+- Revision;
+- FORMAT_VERSION = 4.
 
-This package closes both risks together.
+The bridge is a reader/translator, not a new authority.
 
 ## Required reads
 
@@ -50,252 +55,121 @@ This package closes both risks together.
 3. this Work Order
 4. `working/WORKING_STATUS.md`
 5. branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-6. `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
+6. `research/INK_CLOUD_CREATIVE_LOOP_DEVELOPMENT_PLAN_v0.1.md`
 7. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
-8. `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
-9. only the product / QA / workflow files required below
+8. relevant existing modules only:
+   - `product/source/src/ai/chat-runtime.js`
+   - `product/source/src/editor/chat-bounded-edit.js`
+   - `product/source/src/semantic/*`
+   - `product/source/src/document/*`
 
-## Product invariant
+## Scope
 
-```text
-UI_SHELL = SHARED
-Web      = INK v0.1 · Web
-Portable = INK v0.1 · Portable
-FORMAT_VERSION = 4
-```
+### Phase A — Contract inventory
 
-The following must remain shared unless explicitly delivery-specific:
+Inventory existing document/context/semantic/CHAT contracts.
 
-- top-level workspace regions;
-- left tool rail;
-- right panel dock;
-- Layers / History access;
-- Reference / Compose / CHAT / Revision access;
-- shared shell coordinator;
-- primary CSS behavior;
-- mark/favicon usage.
+Define one INK-owned bridge output contract, including at minimum:
 
-Allowed delivery-specific differences:
+- document identity;
+- active page / layer identity;
+- selected object IDs;
+- object summaries;
+- geometry summary references where available;
+- semantic roles;
+- relationship edges;
+- revision identity when available;
+- protected properties / editability hints;
+- deterministic context fingerprint.
 
-- supplementary product label;
-- manifest identity;
-- service-worker/cache behavior;
-- adapter/persistence behavior.
+Do not duplicate full document payload unnecessarily.
 
-## Long Sequence Workpack
+Gate: `AI_DOCUMENT_BRIDGE_CONTRACT_DEFINED`
 
-### Phase A — Runtime workflow audit
+### Phase B — Pure bridge module
 
-Audit current self-hosted Windows runtime workflows and classify:
+Implement a pure module, recommended path:
 
-```text
-AUTO_PUSH_ACTIVE
-MANUAL_ONLY
-HISTORICAL_CLOSED_BRANCH
-UNSAFE_PROCESS_LAUNCH
-SAFE_BOUNDED
-```
+`product/source/src/ai/document-bridge.js`
 
-At minimum inspect:
+Required properties:
 
-- `.github/workflows/ink-cloud-018-self-hosted-preflight.yml`
-- `.github/workflows/ink-cloud-018-windows-runtime.yml`
-- `.github/workflows/ink-ra-001-windows-runtime.yml`
-- `.github/workflows/ink-v0.1-runtime-baseline.yml`
-- any new runtime workflow introduced by this task
+- no DOM dependency;
+- no network dependency;
+- no mutation;
+- deterministic output from equivalent input;
+- plain JSON-compatible INK-owned values;
+- no external engine objects;
+- bounded output size strategy;
+- fail-closed handling of malformed input.
 
-Do not rewrite historical workflows merely for stylistic consistency. Change only what is required to establish the current project-wide batch Runtime path and to prevent ordinary DEV pushes from waking the runner.
+Gate: `AI_DOCUMENT_BRIDGE_PURE_MODULE_WORKS`
 
-Checkpoint commit required.
+### Phase C — Adapter boundary
 
-Gate: `RUNTIME_WORKFLOW_AUDIT_COMPLETE`
+Provide a narrow adapter that existing CHAT/runtime code can call later.
 
-### Phase B — Manual/batch Runtime trigger guard
+This task may expose functions/imports but must **not** change UI or make the new bridge the active production CHAT context source yet.
 
-Create or adapt one current project-wide Runtime entry point for future batched browser QA.
-
-Requirements:
-
-- self-hosted Windows full Runtime must not trigger on ordinary `push`;
-- current active batch workflow uses `workflow_dispatch` only;
-- explicit `target_ref` or exact SHA input;
-- no automatic wake-up of the user's Windows runner on DEV commits;
-- no task-specific UI workflow copied forward from UI-001;
-- no background promise of Runtime verification when no batch was executed.
-
-Recommended current workflow identity:
-
-`.github/workflows/ink-runtime-batch-windows.yml`
-
-The workflow may reuse proven bounded materialization/runtime logic, but must comply with the current safety standard.
-
-Checkpoint commit required.
-
-Gate: `RUNTIME_BATCH_TRIGGER_GUARD_WORKS`
-
-### Phase C — Windows runner process hygiene
-
-The current batch path must not open extra visible PowerShell windows during normal execution.
-
-Hard rules:
-
-- do not change PowerShell execution policy;
-- do not use `Set-ExecutionPolicy`;
-- do not use `-ExecutionPolicy Bypass`;
-- do not download and immediately execute remote PowerShell scripts;
-- do not add antivirus/security exclusions;
-- do not use a child `Start-Process powershell` pattern that opens another console window;
-- prefer checked-in Node/cmd helpers or same-process bounded shell operations;
-- if a local server process is needed, launch it non-interactively without creating a visible extra console.
-
-The current workflow source itself must pass a static safety scan for the prohibited patterns above.
-
-Checkpoint commit required.
-
-Gate: `WINDOWS_RUNTIME_PROCESS_HYGIENE_WORKS`
-
-### Phase D — Portable/Web shell parity guard
-
-Add a focused deterministic source/static test that compares the two active entry shells.
-
-At minimum verify parity for:
-
-- shared top-level shell regions;
-- required command-bearing IDs;
-- tool-rail hooks;
-- `web-shell.js` loading;
-- panel dock availability;
-- Layers / History reachability;
-- Reference / Compose / CHAT / Revision reachability;
-- favicon link presence;
-- INK mark use;
-- shared stylesheet loading;
-- Creative Workspace presence/default containment.
-
-Allow only explicit delivery-specific differences:
+Required separation:
 
 ```text
-Web title / label
-Portable title / label
-manifest file
-Web service-worker behavior
-compat/modular boot adapter differences already required by delivery form
+bridge = read / ground / summarize
+CHAT mutation = existing proposal/approval/execution path
 ```
 
-A future Web-only shell mutation that changes shared UI structure must fail the parity test.
+Gate: `AI_DOCUMENT_BRIDGE_ADAPTER_READY`
 
-Recommended test:
+### Phase D — deterministic evidence
 
-`qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs`
+Add focused unit/deterministic tests covering at minimum:
 
-Checkpoint commit required.
+- same document → same fingerprint/output;
+- stable ordering;
+- nested Frame/Group objects;
+- semantic roles and relationship graph;
+- selected subset context;
+- bounded output behavior;
+- malformed input rejection;
+- no source mutation;
+- FORMAT_VERSION remains 4.
 
-Gate: `PORTABLE_WEB_SHELL_PARITY_GUARD_WORKS`
+No browser Runtime required unless DEV discovers a real browser-only dependency.
 
-### Phase E — Source/static closure
+Gate: `CORE_MOD_001_MODULE_READY`
 
-Required:
+## Hard boundaries
 
-- parity test PASS;
-- runtime workflow trigger audit PASS;
-- active batch workflow is manual-only;
-- prohibited PowerShell/process patterns absent from the current batch workflow;
-- no product UI regression introduced;
-- `FORMAT_VERSION = 4`;
-- no package mutation;
-- no product base-version change;
-- runtime debt remains batched unless a high-risk trigger appears.
+Do not:
 
-Final source gate:
+- modify UI;
+- add buttons/panels;
+- change CHAT approval semantics;
+- execute document mutations through the new bridge;
+- change History/Revision semantics;
+- change document schema;
+- change FORMAT_VERSION;
+- introduce remote AI dependency;
+- create a second semantic/document model;
+- integrate CORE-MOD-002 or later modules in this task.
 
-`INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE`
+## Required report
 
-## Explicit deferrals
+Exactly one:
 
-Do not expand into:
+`research/INK_CORE_MOD_001_AI_DOCUMENT_BRIDGE_REPORT_v0.1.md`
 
-- new visual UI redesign;
-- contextual-control migration;
-- new CHAT semantics;
-- new Recipe semantics;
-- renderer changes;
-- document/schema changes;
-- package/release certification;
-- broad cleanup of every historical workflow.
-
-## Required evidence artifact
-
-Create/update exactly one report:
-
-`research/INK_UI_RUNTIME_GUARD_REPORT_v0.1.md`
-
-Include:
-
-- workflow audit matrix;
-- exact trigger change;
-- process-hygiene implementation;
-- parity-test contract;
-- tests/checks executed;
-- files changed;
-- known historical workflows intentionally left unchanged;
-- final source gate.
-
-## DEV progress discipline
-
-Branch-local:
-
-`ACTIVE/INK_DEV_PROGRESS.md`
-
-Update each meaningful checkpoint.
-
-## Completion / STOP
+## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-WEB-UI-002
-BRANCH = work/ink-web-ui-002
-GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE
-FORMAT_VERSION = 4 / PRESERVED
-RUNTIME_TRIGGER = MANUAL_BATCH_ONLY
-PORTABLE_WEB_PARITY_GUARD = PASS
-PACKAGE_MUTATION = 0
-BROWSER_RUNTIME_QA = DEFERRED_TO_BATCH
+TASK_ID = CORE-MOD-001
+BRANCH = work/ink-core-ai-bridge-001
+GATE = CORE_MOD_001_MODULE_READY
+UI_MUTATION = 0
+DOCUMENT_SCHEMA_CHANGE = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
-
-
-## Closure
-
-```text
-TASK = INK-WEB-UI-002
-DEV_HANDOFF_HEAD = e4b31816be2a24484c853e8defa5f388e9af150e
-MR = PASS
-SOURCE_GATE = INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE / PASS
-PROMOTION_PR = #23 / MERGED
-MAIN = 6f3a49e0dd1482cdcbd406ba88ec84e74be9138f
-RUNTIME_QA = DEFERRED_TO_BATCH
-NEXT = DUAL_TRACK_UI_CORE_GOVERNANCE_DISCUSSION
-```
-
-No next implementation Work Order is auto-opened.
-
-
-## UI lane delegation after closure
-
-Global task remains closed. No new global/Core/Integration Work Order is opened here.
-
-USER has delegated the pre-authorized UI sequence to UR:
-
-```text
-UI-003 → UI-004 → UI-005
-UR = delegated UI-lane authority
-MR command between UI tasks = NOT REQUIRED
-```
-
-UR may issue branch-local UI Work Orders and continue independently under the boundaries in:
-
-- `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
-- `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
-
-Cross-lane changes remain `INTEGRATION_REQUIRED`.
