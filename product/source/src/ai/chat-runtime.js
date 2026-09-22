@@ -1,4 +1,5 @@
 import { AICommandError, AI_LAYER_VERSION, createCommand, hashValue } from './ai-core.js';
+import { createCreativeIntelligenceContextAdapter } from './creative-intelligence-context.js';
 
 export const CHAT_RUNTIME_VERSION = '1.6.0';
 export const STARTUP_MODES = Object.freeze(['STANDARD', 'AI_ASSISTED', 'LOCAL_ONLY', 'SAFE', 'VALIDATION']);
@@ -116,19 +117,39 @@ export class DocumentStateProvider {
 }
 
 export class ContextBuilder {
-  constructor({ capabilityProvider, documentStateProvider, previewProvider = null, defaultTokenBudget = 16000 } = {}) { this.capabilityProvider = capabilityProvider; this.documentStateProvider = documentStateProvider; this.previewProvider = previewProvider; this.defaultTokenBudget = defaultTokenBudget; this.cache = new Map(); }
-  build({ level = 'DOCUMENT_SUMMARY', targets = [], layerIds = [], region = null, includeHistory = false, includeImage = false, tokenBudget = this.defaultTokenBudget, userApprovedDetailed = false, documentVersion = null } = {}) {
+  constructor({ capabilityProvider, documentStateProvider, groundedContextProvider = null, previewProvider = null, defaultTokenBudget = 16000 } = {}) { this.capabilityProvider = capabilityProvider; this.documentStateProvider = documentStateProvider; this.groundedContextProvider = groundedContextProvider; this.previewProvider = previewProvider; this.defaultTokenBudget = defaultTokenBudget; this.cache = new Map(); }
+  build({ level = 'DOCUMENT_SUMMARY', targets = [], layerIds = [], region = null, includeHistory = false, includeImage = false, tokenBudget = this.defaultTokenBudget, userApprovedDetailed = false, documentVersion = null, groundedContext = true, groundedContextOptions = {} } = {}) {
     if (!CONTEXT_LEVELS.includes(level)) throw new RuntimeError('INVALID_CONTEXT_LEVEL', 'Unknown context level.', { level });
     if (level === 'DETAILED_CONTEXT' && !userApprovedDetailed) throw new RuntimeError('DETAILED_CONTEXT_APPROVAL_REQUIRED', 'Detailed context requires explicit user approval.');
     const capabilities = this.capabilityProvider.get(), state = level === 'CAPABILITY_ONLY' ? null : this.documentStateProvider.get({ limit: level === 'DETAILED_CONTEXT' ? 2000 : 500 });
     const sections = { constraints: { permission: 'PROPOSE', noDirectDOM: true, noDirectCanvas: true, noDirectFileWrite: true, previewBeforeExecute: true }, capabilities };
+    let groundedFingerprint = groundedContext === false ? 'disabled' : 'unavailable';
+    if (state && groundedContext !== false && this.groundedContextProvider?.read) {
+      try {
+        const allowedObjectIds = [...new Set([
+          ...(state.objectIndex || []).map(item => item?.objectId),
+          ...(state.strokeIndex || []).map(item => item?.strokeId),
+          ...(state.regionIndex || []).map(item => item?.objectId)
+        ].filter(id => typeof id === 'string'))]
+          .sort((a, b) => a.localeCompare(b));
+        const grounded = this.groundedContextProvider.read({
+          ...(groundedContextOptions && typeof groundedContextOptions === 'object' ? groundedContextOptions : {}),
+          allowedObjectIds,
+          ...(includeHistory ? {} : { historyEntries: [] })
+        });
+        sections.groundedCreativeIntelligence = grounded;
+        groundedFingerprint = grounded?.contextFingerprint || 'available';
+      } catch (error) {
+        groundedFingerprint = `unavailable:${error?.code || 'GROUNDED_CONTEXT_UNAVAILABLE'}`;
+      }
+    }
     if (state) sections.documentSummary = state.documentSummary;
     if (level !== 'CAPABILITY_ONLY' && state) sections.summary = { layerTree: state.layerTree, selection: state.selection, semanticRegions: state.semanticRegions, palette: state.palette, historySummary: includeHistory ? state.historySummary : { entries: [], omitted: 'history not selected' } };
     if (['TARGET_CONTEXT', 'DETAILED_CONTEXT'].includes(level) && state) {
       const wanted = new Set(targets); sections.targetContext = { targets: [...state.objectIndex, ...state.strokeIndex, ...state.regionIndex].filter(item => !wanted.size || wanted.has(item.objectId || item.strokeId || item.regionId)), layerTree: state.layerTree.filter(layer => !layerIds.length || layerIds.includes(layer.layerId)), region, preview: includeImage ? this.previewProvider?.({ targets, layerIds, region, maximumDimension: 768 }) || null : null };
     }
     if (level === 'DETAILED_CONTEXT' && state) sections.details = { objectIndex: state.objectIndex, strokeIndex: state.strokeIndex, regionIndex: state.regionIndex, recipes: state.historySummary?.recipes || [] };
-    const cleaned = sanitizeProtected(sections), sourceVersion = documentVersion || state?.documentHash || 'capability-only', cacheKey = hashValue({ level, targets, layerIds, region, includeHistory, includeImage, tokenBudget, sourceVersion });
+    const cleaned = sanitizeProtected(sections), sourceVersion = documentVersion || state?.documentHash || 'capability-only', cacheKey = hashValue({ level, targets, layerIds, region, includeHistory, includeImage, tokenBudget, sourceVersion, groundedFingerprint });
     if (this.cache.has(cacheKey)) return clone(this.cache.get(cacheKey));
     const { value, disclosure } = this.#fit(cleaned, tokenBudget), context = { format: 'INK-CHAT-CONTEXT', version: CHAT_RUNTIME_VERSION, level, sourceVersion, hash: hashValue(value), tokenBudget, estimatedTokens: estimateTokens(value), retained: disclosure.retained, omitted: disclosure.omitted, omissionReasons: disclosure.reasons, confidenceImpact: disclosure.confidenceImpact, payload: value };
     this.cache.set(cacheKey, clone(context)); return context;
@@ -137,7 +158,7 @@ export class ContextBuilder {
   #fit(value, budget) {
     const required = ['constraints', 'capabilities'], retained = Object.keys(value), omitted = [], reasons = [];
     let fitted = clone(value);
-    const order = ['details', 'targetContext.preview', 'summary.historySummary', 'summary.palette', 'summary.layerTree'];
+    const order = ['details', 'targetContext.preview', 'groundedCreativeIntelligence', 'summary.historySummary', 'summary.palette', 'summary.layerTree'];
     const drop = path => { const parts = path.split('.'); let node = fitted; for (let i = 0; i < parts.length - 1; i++) node = node?.[parts[i]]; if (node && parts.at(-1) in node) { delete node[parts.at(-1)]; omitted.push(path); reasons.push(`${path}: token budget`); } };
     for (const path of order) { if (estimateTokens(fitted) <= budget) break; drop(path); }
     if (estimateTokens(fitted) > budget) throw new RuntimeError('CONTEXT_BUDGET_TOO_SMALL', 'Token budget cannot contain required capabilities and safety constraints.', { budget, required, estimatedTokens: estimateTokens(fitted) });
@@ -384,10 +405,38 @@ export class ChatSessionManager {
   end(sessionId, { clearCredentials = true } = {}) { const session = this.sessions.get(sessionId); if (!session) return false; this.clients.get(session.client)?.cancel?.(); this.sessions.delete(sessionId); if (clearCredentials) this.credentialStore?.clearAll(); return true; }
 }
 
-export function createChatRuntime(layer, { fetchImpl = globalThis.fetch, sessionStorage = globalThis.sessionStorage, crypto = globalThis.crypto } = {}) {
-  const credentialStore = new CredentialSecuritySystem({ sessionStorage, crypto }), capabilityProvider = new CapabilityProvider(layer), documentStateProvider = new DocumentStateProvider(layer), auditBridge = new AuditBridge(layer), contextBuilder = new ContextBuilder({ capabilityProvider, documentStateProvider }), validator = new ModelOutputValidator({ layer }), toolRouter = new ToolCallRouter({ layer, auditBridge });
+function defaultGroundedContextProvider(layer) {
+  const app = layer?.app;
+  if (!app || typeof layer?.currentDocument !== 'function') return null;
+  return createCreativeIntelligenceContextAdapter({
+    getDocument: () => layer.currentDocument(),
+    getSelectedObjectIds: () => (Array.isArray(app.selection) ? app.selection : [])
+      .map(item => item?.objectId)
+      .filter(id => typeof id === 'string'),
+    getRevisionId: () => app.revisions?.revisionIdFor?.(layer.currentDocument()?.id) ?? null,
+    getRevisionRecords: () => {
+      const documentId = layer.currentDocument()?.id;
+      const records = app.revisions?.records;
+      if (!records || typeof records.values !== 'function') return [];
+      return [...records.values()].filter(record => record?.documentId === documentId);
+    },
+    getHistoryEntries: () => [
+      ...(Array.isArray(app.history?.undoStack) ? app.history.undoStack : []),
+      ...(Array.isArray(app.history?.redoStack) ? app.history.redoStack : [])
+    ].map(entry => ({
+      label: typeof entry?.label === 'string' && entry.label.trim() ? entry.label : 'History change',
+      objectIds: Array.isArray(entry?.objectIds) ? entry.objectIds.filter(id => typeof id === 'string') : [],
+      patchCount: Number.isFinite(Number(entry?.patchCount)) ? Number(entry.patchCount) : 0,
+      storedBytes: Number.isFinite(Number(entry?.storedBytes)) ? Number(entry.storedBytes) : 0
+    }))
+  });
+}
+
+export function createChatRuntime(layer, { fetchImpl = globalThis.fetch, sessionStorage = globalThis.sessionStorage, crypto = globalThis.crypto, groundedContextProvider = undefined } = {}) {
+  const resolvedGroundedContextProvider = groundedContextProvider === undefined ? defaultGroundedContextProvider(layer) : groundedContextProvider;
+  const credentialStore = new CredentialSecuritySystem({ sessionStorage, crypto }), capabilityProvider = new CapabilityProvider(layer), documentStateProvider = new DocumentStateProvider(layer), auditBridge = new AuditBridge(layer), contextBuilder = new ContextBuilder({ capabilityProvider, documentStateProvider, groundedContextProvider: resolvedGroundedContextProvider }), validator = new ModelOutputValidator({ layer }), toolRouter = new ToolCallRouter({ layer, auditBridge });
   const manager = new ChatSessionManager({ layer, contextBuilder, validator, toolRouter, auditBridge, credentialStore });
   manager.register('manual-json', new ManualJSONClient());
   let configuredProvider = null;
-  return { version: CHAT_RUNTIME_VERSION, manager, credentialStore, capabilityProvider, documentStateProvider, contextBuilder, validator, toolRouter, auditBridge, approvalBridge: new ApprovalBridge(layer), executionBridge: new ExecutionBridge(layer), clients: { HTTPModelAdapter, OpenAICompatibleAdapter, CustomEndpointAdapter, RuntimeDeterministicTestClient, ManualJSONClient }, configure(name, settings) { const normalized = createConnectionSettings(settings); if (configuredProvider && configuredProvider !== normalized.provider) credentialStore.clearAll(); configuredProvider = normalized.provider; const Adapter = normalized.provider === 'openai-compatible' ? OpenAICompatibleAdapter : normalized.provider === 'custom-endpoint' ? CustomEndpointAdapter : HTTPModelAdapter; const client = new Adapter(normalized, { credentialStore, fetchImpl }); manager.register(name, client); return redactSecrets(client.settings); } };
+  return { version: CHAT_RUNTIME_VERSION, manager, credentialStore, capabilityProvider, documentStateProvider, groundedContextProvider: resolvedGroundedContextProvider, contextBuilder, validator, toolRouter, auditBridge, approvalBridge: new ApprovalBridge(layer), executionBridge: new ExecutionBridge(layer), clients: { HTTPModelAdapter, OpenAICompatibleAdapter, CustomEndpointAdapter, RuntimeDeterministicTestClient, ManualJSONClient }, configure(name, settings) { const normalized = createConnectionSettings(settings); if (configuredProvider && configuredProvider !== normalized.provider) credentialStore.clearAll(); configuredProvider = normalized.provider; const Adapter = normalized.provider === 'openai-compatible' ? OpenAICompatibleAdapter : normalized.provider === 'custom-endpoint' ? CustomEndpointAdapter : HTTPModelAdapter; const client = new Adapter(normalized, { credentialStore, fetchImpl }); manager.register(name, client); return redactSecrets(client.settings); } };
 }
