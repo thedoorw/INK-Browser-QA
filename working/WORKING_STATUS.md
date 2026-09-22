@@ -1958,3 +1958,18 @@ model requests tool
 ```
 
 The next bounded integration should close that tool-result reasoning loop without expanding execution authority.
+
+
+## INK-CORE-INTEGRATION-003 activation
+
+```text
+TASK = INK-CORE-INTEGRATION-003
+TITLE = Bounded Grounded Tool Reasoning Loop v0.1
+AUTHORIZED_FROM_MAIN = e67e5ba69d5dfd4db971682b90663f84a040be38
+TARGET = tool call → local grounded result → one model continuation → final grounded response/Plan
+AUTO_CONTINUATION_MAX = 1
+AUTONOMOUS_AGENT_LOOP = 0
+AUTO_LEGACY_MUTATION_TOOL_EXECUTION = 0
+RUNTIME_AFTER_PROMOTION = REQUIRED
+FORMAT_VERSION = 4
+```
