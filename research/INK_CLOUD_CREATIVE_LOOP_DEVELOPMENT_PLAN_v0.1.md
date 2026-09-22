@@ -1299,3 +1299,45 @@ inventory
 ```
 
 The first implementation Work Order after public-site acceptance should therefore begin with Foundation A and include the RA-vs-external benchmark inside the Work Order, rather than creating another research roadmap.
+
+
+## Core Module preparation sequence
+
+The existing Foundation A vector geometry work is treated as the current Core Module baseline rather than reopened.
+
+MR-authorized preparation order:
+
+```text
+CORE-MOD-000 / Geometry Kernel
+status = BASELINE_AVAILABLE
+
+CORE-MOD-001 / AI Document Bridge
+INK document
+→ grounded structured context
+→ CHAT-readable module output
+→ no mutation
+
+CORE-MOD-002 / Semantic Region Grounding
+Path / region / relationships
+→ semantic boundary + region graph
+→ no second selection authority
+
+CORE-MOD-003 / Revision + Provenance
+reference / extraction / operation / revision
+→ deterministic provenance records
+→ existing Revision remains authoritative
+
+CORE-MOD-004 / Visual Compare + Variant
+reference/current/revision/variant
+→ comparison model + evidence
+→ no standalone workbench
+
+CORE-MOD-005 / Parametric Creative Structure
+Repeat / Transform / dependency graph
+→ generators + local recompute
+→ no second scene model
+```
+
+Each module closes at `MODULE_READY`, not at final product integration.
+
+Prepared modules enter an Integration Queue. MR later issues a bounded Integration Work Order to wire compatible modules into the shared INK skeleton and run a concentrated Runtime batch.
