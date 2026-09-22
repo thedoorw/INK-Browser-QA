@@ -144,7 +144,9 @@ Gate: `UI_SHELL_INVENTORY_COMPLETE`
 - remove/redesign central INK empty-state card;
 - separate application/menu row from contextual options;
 - preserve existing panel contents;
-- correct visible display label to `INK v0.1 · Web`;
+- correct all user-facing Web product identity from historical `v1.6.5 RC` to `INK v0.1 · Web`;
+- synchronize Web metadata/title/manifest and cache identity so the browser does not continue presenting the historical version;
+- add an INK Web favicon (prefer a small INK-owned SVG mark, no Adobe asset reuse), link it from the document head, and register it in Web app metadata where appropriate;
 - preserve existing element identity / command bindings where practical.
 
 Gate: `WEB_WORKSPACE_SHELL_ALIGNED`
@@ -178,7 +180,7 @@ Gate: `CHAT_CAPABILITY_UI_INDEPENDENT`
 
 ### UI Phase F — Runtime + responsive closure
 
-Required QA: staging load, canvas-first initial view, panel collapse/expand, Layers, History, CHAT panel open/close, Reference / Compose / Revision access, fullscreen, desktop resize, narrow viewport fallback, save/open/export, shortcuts, no fatal console/runtime errors, `FORMAT_VERSION = 4`, no migration.
+Required QA: staging load, canvas-first initial view, panel collapse/expand, Layers, History, CHAT panel open/close, Reference / Compose / Revision access, fullscreen, desktop resize, narrow viewport fallback, save/open/export, shortcuts, favicon visible, user-facing identity = `INK v0.1 · Web`, no stale historical `v1.6.5 RC` Web label, service-worker/cache refresh behavior, no fatal console/runtime errors, `FORMAT_VERSION = 4`, no migration.
 
 Use the existing self-hosted Windows Chrome path and task-specific bounded browser QA.
 
@@ -210,6 +212,33 @@ Open INK Web
 → panel can collapse again
 → no drawing/document capability is lost
 ```
+
+## Web publication rule
+
+Current staging is served from the repository's GitHub Pages content rooted at the promoted main tree.
+
+Therefore:
+
+```text
+work/* branch changes
+→ NOT live
+
+MR-approved promotion / merge to main
+→ GitHub Pages republishes
+→ live Web staging updates after the Pages deployment finishes
+```
+
+The browser may still temporarily show older assets because INK uses a service worker and cache storage. UI work must therefore treat Web publication and client cache refresh as separate concerns.
+
+For `INK-WEB-UI-001`:
+
+- do not expect work-branch commits to alter the public staging URL;
+- after promotion to `main`, verify the live staging URL rather than only source files;
+- update the Web cache/release identity away from the historical `1.6.5-RC` namespace as part of the v0.1 Web identity correction;
+- ensure a previously opened INK tab can receive the updated shell without requiring users to manually clear browser storage;
+- favicon caching is browser-specific, so acceptance should verify a fresh tab/session as well as a normal reload.
+
+This publication rule does not change document `FORMAT_VERSION = 4`.
 
 ## Hard boundaries
 
