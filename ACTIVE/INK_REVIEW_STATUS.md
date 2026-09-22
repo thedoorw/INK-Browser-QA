@@ -1,99 +1,72 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-RA-001 / MR_PASS / PROMOTED / CLOSED`
+STATUS: `INK-WEB-UI-001 / DEV_READY / MR_REVIEW_PENDING_HANDOFF`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-RA-001` |
-| DEV_BRANCH | `work/ink-ra-001` |
-| REVIEWED_HANDOFF_HEAD | `14578d3ddcba2b2fa4aedcd54eb24a31b3f955e5` |
-| TESTED_PRODUCT_SHA | `6ec1ad1d7e35ba8a384fb44e184b7429e96f7c47` |
-| TARGET_GATE | `STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED` |
-| DEV_HANDOFF | `YES` |
-| MR_REVIEW | `MR_PASS` |
-| FORMAT_VERSION | `4 / PRESERVED` |
-| UI_MUTATION | `0` |
-| PRODUCT_DISPLAY_VERSION_CHANGE | `0` |
+| TASK_ID | `INK-WEB-UI-001` |
+| DEV_BRANCH | `work/ink-web-ui-001` |
+| CURRENT_WORK_ORDER | `ACTIVE/INK_CURRENT_WORK_ORDER.md` |
+| TARGET_GATE | `INK_WEB_UI_PHASE1_COMPLETE` |
+| DEV_HANDOFF | `NO` |
+| MR_REVIEW | `NOT_STARTED` |
+| FORMAT_VERSION | `4 / PRESERVE` |
+| UI_MUTATION | `AUTHORIZED / BOUNDED` |
+| WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
+| FAVICON | `USER ORIGINAL MARK / REQUIRED` |
 | PACKAGE_INK_CURRENT | `NO_MUTATION` |
-| BROWSER_RUNTIME_QA | `35670775922 / SUCCESS` |
+| BROWSER_RUNTIME_QA | `REQUIRED_FOR_FINAL_GATE` |
 
-## MR findings
+## Review boundary
 
-Accepted architecture:
+MR will review:
 
-```text
-INK Path / Document / History / Revision = sole authority
-Bezier.js 6.1.4 = bounded cubic math adapter
-Clipper2 TS 2.0.1-18 = bounded polygon offset adapter
-RA geometry measurement concepts = adapted into INK-owned values
-Paper.js = benchmark/reference only
-general constraints / parametric solver = deferred
-```
+- exact shell inventory and preservation of JS bindings;
+- Photoshop/Illustrator-aligned spatial hierarchy without visual cloning;
+- canvas-first initial state;
+- compact left tool rail;
+- right collapsible panel dock;
+- Layers / History / CHAT / Reference / Compose / Revision reachability;
+- no capability loss when panels collapse;
+- visible Web identity = `INK v0.1 · Web`;
+- removal of current-product historical `v1.6.5 RC` strings from active Web surfaces;
+- favicon/mark derived from the USER-provided original source;
+- service-worker/cache identity and update path;
+- fullscreen / save / open / export / shortcut regression;
+- desktop + narrow viewport runtime evidence;
+- final report `research/INK_WEB_UI_PHASE1_IMPLEMENTATION_REPORT_v0.1.md`.
 
-Review checks:
+MR will reject:
 
-- branch handoff delta after tested SHA contains documentation only;
-- no UI file changed;
-- no display-version string changed;
-- no FORMAT_VERSION change;
-- no second document/path/history/revision authority introduced;
-- external objects are not persisted into INK document state;
-- History undo/redo and JSON roundtrip tests pass;
-- compound outer/hole offset fixture passes;
-- deterministic repeated results pass;
-- vendored Bezier.js MIT license is present;
-- vendored Clipper2 TS Boost Software License 1.0 text is present;
-- real Chrome browser execution on `DESKTOP-NSOQH69` passed;
-- Rose Window runtime fixture remained `1086 x 1448`;
-- 12 input geometry subpaths remained 12 output subpaths;
-- browser evidence reported `deterministicRepeat = true`;
-- browser evidence reported `formatVersion = 4`.
+- Adobe code/assets/branding copy;
+- a second workspace/document/History/Revision authority;
+- UI-only command logic that CHAT cannot access through the existing core;
+- removal of existing creative-loop capability;
+- `FORMAT_VERSION` mutation;
+- inferred product version > `v0.1`;
+- broad contextual-control or CHAT redesign beyond the bounded package;
+- package/certification mutation.
 
-Runtime closure:
+## Brand reference
 
 ```text
-RUN = 35670775922
-RESULT = SUCCESS
-CUBIC_INTERSECTIONS = 3
-ROSE_INPUT_SUBPATHS = 12
-ROSE_OUTPUT_SUBPATHS = 12
-DETERMINISTIC_REPEAT = true
-FORMAT_VERSION = 4
+SOURCE = reference/brand/INK_MARK_SOURCE_W-300.jpg
+SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+FINE_GRID_AT_FAVICON_SIZE = NOT_REQUIRED
+TEMPORARY_MARK = ACCEPTED
 ```
 
-The two preceding failed runs were workflow/environment failures only:
-- checkout fallback / PowerShell archive handling;
-- whole-repository Windows path-length extraction.
+## Publication review
 
-Their bounded workflow repair did not alter product geometry behavior.
+The work branch is not expected to alter the public staging site.
 
-## Decision
-
-`MR_PASS`
-
-`STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED = ACCEPTED`
-
-Clean promotion from current `main` is authorized. The branch is intentionally not merged directly because it diverged from later main governance/status commits.
-
-## Parallel INK Web status
+After MR_PASS and promotion to `main`, MR must verify the actual GitHub Pages staging surface and distinguish:
 
 ```text
-STAGING = LIVE
-URL = https://thedoorw.github.io/INK-Browser-QA/
-USER_UI_OBSERVATION = TOO_CLUTTERED
-PRODUCT_BASE_VERSION = v0.1 / Portable + Web
-WEB_UI_MUTATION = SEPARATE NEXT DISCUSSION
+source merged
+Pages deployment complete
+service-worker/cache refreshed
+favicon browser cache refreshed
 ```
 
-
-## Promotion closure
-
-```text
-PROMOTION_BRANCH = promote/ink-ra-001
-PROMOTION_PR = #21 / MERGED
-PROMOTION_COMMIT = 73922fc86fb050f83da48804b03a9e0be4edb2c2
-MAIN_MERGE = 0f82c4aecbb24cd02981a68e0e1ba6b5d67bdeb3
-FINAL_GATE = STUDIO_VECTOR_GEOMETRY_KERNEL_INTEGRATED / ACCEPTED
-```
-
-Branch-local `ACTIVE/INK_DEV_PROGRESS.md` was intentionally excluded from the clean promotion.
+before declaring public Web closure.
