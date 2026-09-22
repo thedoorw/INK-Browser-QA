@@ -1973,3 +1973,36 @@ AUTO_LEGACY_MUTATION_TOOL_EXECUTION = 0
 RUNTIME_AFTER_PROMOTION = REQUIRED
 FORMAT_VERSION = 4
 ```
+
+
+## INK-CORE-INTEGRATION-003 closure
+
+```text
+TASK = INK-CORE-INTEGRATION-003
+TITLE = Bounded Grounded Tool Reasoning Loop v0.1
+DEV_HANDOFF = 5ad5a8088191e15f3845ce4ead74fffc4c29c691
+SOURCE_QA = PASS / 35731547730
+PROMOTION_PR = #37 / MERGED
+PROMOTED_MAIN = 262ea581ac7c7c9c56fdb4948264bdf114bdff52
+WINDOWS_RUNTIME = PASS / 35737071779
+RUNTIME_JOB = 106776957691
+RUNTIME_TESTED_SHA = 262ea581ac7c7c9c56fdb4948264bdf114bdff52
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10697873377
+FORMAT_VERSION = 4
+FINAL_GATE = INK_CORE_INTEGRATION_003_RUNTIME_PASS
+```
+
+Grounded CHAT now supports one bounded read-only tool continuation without autonomous recursion or legacy mutation-tool auto-routing.
+
+Current process-improvement discussion:
+
+```text
+central Runtime batching
++ automatic exact-main SHA capture
++ reduce manual workflow selection / SHA entry
+```
+
+No next implementation Work Order has been authorized yet.
