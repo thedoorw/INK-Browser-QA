@@ -146,7 +146,7 @@ Gate: `UI_SHELL_INVENTORY_COMPLETE`
 - preserve existing panel contents;
 - correct all user-facing Web product identity from historical `v1.6.5 RC` to `INK v0.1 · Web`;
 - synchronize Web metadata/title/manifest and cache identity so the browser does not continue presenting the historical version;
-- add an INK Web favicon (prefer a small INK-owned SVG mark, no Adobe asset reuse), link it from the document head, and register it in Web app metadata where appropriate;
+- use the USER-provided original INK mark (blue geometric-grid background + white central three-arm symbol) as the initial INK Web logo/favicon source; the fine grid does not need to remain legible at favicon size and no simplified redraw is required for Phase 1; this asset may be temporary and replaceable later; link the favicon from the document head and register it in Web app metadata where appropriate;
 - preserve existing element identity / command bindings where practical.
 
 Gate: `WEB_WORKSPACE_SHELL_ALIGNED`
@@ -212,6 +212,21 @@ Open INK Web
 → panel can collapse again
 → no drawing/document capability is lost
 ```
+
+## Logo / favicon source decision
+
+USER-authoritative source for Phase 1:
+
+```text
+SOURCE = user-provided original artwork
+VISUAL = blue geometric-grid field + white central three-arm mark
+USE = INK mark + Web favicon
+FAVICON_FINE_GRID_LEGIBILITY = NOT_REQUIRED
+PHASE_1_SIMPLIFIED_REDRAW = NOT_REQUIRED
+STATUS = TEMPORARY_ACCEPTED / REPLACEABLE_LATER
+```
+
+Do not reinterpret, simplify, or redesign the mark merely because small favicon sizes reduce grid visibility. Phase 1 should preserve the supplied artwork as the visual source unless a technical format conversion is required.
 
 ## Web publication rule
 
