@@ -9,7 +9,7 @@ STATUS: `INK-CORE-INTEGRATION-001 / IN_PROGRESS`
 | BRANCH | `work/ink-core-integration-001` |
 | BRANCH_BASE | `89770b215a0c3d0aef30e1c0565fcb8e2975a997` |
 | TASK_STATUS | `IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_B / READ_ONLY_INTEGRATION_SERVICE` |
+| CURRENT_PHASE | `PHASE_C / CHAT_CONTEXT_WIRING` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_HANDOFF` |
 | TARGET_GATE | `INK_CORE_INTEGRATION_001_SOURCE_READY` |
@@ -35,7 +35,7 @@ Phase B — deterministic read-only integration service
 CREATIVE_INTELLIGENCE_CONTEXT_WORKS = PASS_SOURCE_IMPLEMENTATION
 
 Phase C — bounded CHAT context wiring
-CHAT_GROUNDED_CONTEXT_WIRED = PENDING
+CHAT_GROUNDED_CONTEXT_WIRED = PASS_SOURCE_IMPLEMENTATION
 
 Phase D — deterministic/source QA
 INK_CORE_INTEGRATION_001_SOURCE_READY = PENDING
@@ -52,3 +52,11 @@ Implemented so far:
 - existing CHAT disclosure-policy projection hook for protected/locked object filtering.
 
 No Runtime batch is executed by DEV.
+
+CHAT wiring checkpoint:
+
+- `ContextBuilder` accepts advisory grounded context without changing command execution semantics;
+- existing protected/locked transmission filtering supplies the allowed-object projection;
+- grounded context can be disabled per request with `groundedContext: false`;
+- provider absence/failure falls back to the existing CHAT context path;
+- no external service is required by the integration provider.
