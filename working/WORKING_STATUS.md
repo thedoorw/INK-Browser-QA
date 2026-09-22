@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK / UI_LANE_COMPLETE / MR_INTEGRATION_RUNTIME_READY`
+STATUS: `DUAL_TRACK / UI_MAINTENANCE / CORE-MOD-003_AUTHORIZED`
 
 | Field | Value |
 |---|---|
@@ -1743,3 +1743,25 @@ CORE-MOD-001 = CLEARED
 ```
 
 `CORE-MOD-002` remains an independent source task and is not covered by this batch.
+
+
+## CORE-MOD-002 closure / CORE-MOD-003 activation
+
+```text
+CORE-MOD-002 = Semantic Region Grounding / MR_PASS / PROMOTED
+PR = #30
+MAIN = 05bd690f09a9c2cd81fe4a8744f7641805e5cfe2
+INTEGRATION_QUEUE += SEMANTIC_REGION_GROUNDING
+RUNTIME_QA = DEFERRED_TO_NEXT_INTEGRATION_BATCH
+```
+
+Next Core module:
+
+```text
+CORE-MOD-003 = Revision Provenance Module
+branch = work/ink-core-revision-provenance-003
+purpose = normalize lineage without replacing Revision / History authority
+runtime = DEFERRED_TO_INTEGRATION_BATCH
+```
+
+UI lane remains maintenance-only under UR.
