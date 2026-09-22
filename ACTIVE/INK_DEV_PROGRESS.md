@@ -4,76 +4,60 @@ STATUS: `AUTHORIZED / NOT_STARTED`
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
+| TASK_ID | `INK-WEB-UI-004` |
+| TITLE | `Panel Hierarchy / Spacing / CHAT Placement Polish v0.1` |
+| BRANCH | `work/ink-web-ui-004` |
+| BASE_MAIN | `9adc2ef09141e4015fc9d4657fb5b3f932a39c41` |
 | TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
 | DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
+| UR_REVIEW | `PENDING_AFTER_HANDOFF` |
+| TARGET_GATE | `PANEL_CHAT_UI_POLISH_WORKS` |
+| UI_SHELL | `PORTABLE_WEB_SHARED` |
+| FORMAT_VERSION | `4 / PRESERVE` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_MUTATION | `0 / PROHIBITED` |
-| MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
+| CORE_MUTATION | `0 / PROHIBITED` |
+| RUNTIME_QA | `DEFERRED_TO_UI_INTEGRATION_BATCH` |
 
 ## Objective
 
-Close the known Structure-Aware single-Path reconstruction bottleneck:
-
 ```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
+accepted shell + contextual options
+→ panel hierarchy / spacing cleanup
+→ CHAT / Reference / Compose / Revision placement polish
+→ quieter everyday interface
+→ no semantic change
 ```
-
-The authoritative scope and STOP rules are in:
-
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
-
-## Checkpoint rule
-
-At every meaningful checkpoint:
-
-- commit;
-- update this branch-local file;
-- record exact SHA;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
-
-Do not replace the Direct Extraction baseline during DEV execution.
 
 ## Planned phases
 
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
+- Phase A — hierarchy / density inventory
+- Phase B — dock and panel hierarchy polish
+- Phase C — spacing / alignment normalization
+- Phase D — CHAT / creative-loop placement polish
+- Phase E — Portable/Web parity + static closure
+- Phase F — report + DEV_HANDOFF
+
+At each meaningful checkpoint commit and update this file.
+
+Cross-lane requirement:
+
+`INTEGRATION_REQUIRED → STOP → UR`
 
 ## Completion
 
 ```text
 TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
+TASK_ID = INK-WEB-UI-004
+BRANCH = work/ink-web-ui-004
 FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
+GATE = PANEL_CHAT_UI_POLISH_WORKS
+PORTABLE_WEB_PARITY = PASS
 FORMAT_VERSION = 4
+PRODUCT_BASE_VERSION = v0.1
 PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-NEXT_ACTION = MR_REVIEW_REQUIRED
+CORE_MUTATION = 0
+RUNTIME_QA = DEFERRED_TO_UI_INTEGRATION_BATCH
+NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
 ```
