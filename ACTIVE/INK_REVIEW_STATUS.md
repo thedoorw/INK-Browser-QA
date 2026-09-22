@@ -27,3 +27,27 @@ GATE = CORE_MOD_001_MODULE_READY
 | RUNTIME_QA | `DEFERRED_TO_INTEGRATION_BATCH` |
 
 MR will verify deterministic region grounding, relationship evidence, no guessed semantics, geometry reuse, non-mutation, and no alternate selection authority.
+
+
+## Parallel MR Integration checkpoint
+
+UI lane has reached `UI_LANE_READY_FOR_INTEGRATION`.
+
+Runtime batch prepared against exact main:
+
+`cbc89271dc76b47e294a2bbf449615a3d03786e4`
+
+Included deferred debt:
+
+- UI-003
+- UI-004
+- UI-005
+- CORE-MOD-001 coexistence/regression
+
+Excluded:
+
+- CORE-MOD-002 incomplete branch
+
+Batch workflow remains manual-only. MR must review the exact workflow run and artifact before clearing Runtime debt.
+
+This checkpoint does not cancel the CORE-MOD-002 source task; it only keeps its unpromoted branch out of the current integration target.
