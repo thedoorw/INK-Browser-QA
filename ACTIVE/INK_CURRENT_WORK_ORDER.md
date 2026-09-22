@@ -203,6 +203,15 @@ Required:
 
 Gate: PS_SHELL_PARITY_REGRESSION_PASS
 
+## Tooling restriction — user directive
+
+TINYFISH = PROHIBITED
+
+- Do not launch, invoke, connect, or rely on TinyFish for this task.
+- Do not use TinyFish as a substitute for GitHub Actions, browser Runtime, or local verification.
+- Authoritative Runtime path remains the existing local Windows / manual browser batch path defined by MR governance.
+- If that Runtime path is unavailable, record RUNTIME_BLOCKED and STOP. Do not fall back to TinyFish.
+
 ## Runtime acceptance — required
 
 This is a user-reported visual/runtime regression. Static evidence alone is insufficient.
