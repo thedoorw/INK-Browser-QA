@@ -9,7 +9,7 @@ STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
 | BRANCH | `work/ink-web-ui-002` |
 | BRANCH_BASE | `d50c59ffb1c015b0776ac1864486869098be9181` |
 | TASK_STATUS | `AUTHORIZED / DEV_IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_E / SOURCE_STATIC_CLOSURE` |
+| CURRENT_PHASE | `PHASE_E / PASS_SOURCE_STATIC` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE` |
@@ -117,3 +117,16 @@ STOP
 - No product source changed; existing Web/Portable labels and FORMAT_VERSION preserved.
 - Gate: `PORTABLE_WEB_SHELL_PARITY_GUARD_WORKS`.
 - Next: final consolidated verification/report; Runtime remains deferred.
+
+## Phase E source/static checkpoint
+
+- Previous GitHub checkpoint: `4aafe483b70ed3c6c27bbd99aa221fb0258be844`.
+- Combined guard/helper suite: 8/8 PASS.
+- Seven workflow YAML definitions parse with unique keys (PyYAML BaseLoader).
+- Three inline action scripts, helper and all three harness scripts parse.
+- Geometry callback restricted to HTTP so historical file delivery remains usable.
+- `git diff --check`: PASS; `product/source` diff from starting HEAD: empty.
+- FORMAT_VERSION=4; Web/Portable v0.1 identity unchanged.
+- Final source gate: `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE`.
+- Source closure complete; documentation-only DEV_HANDOFF follows.
+- No browser/Windows runtime dispatched or claimed.

@@ -79,7 +79,7 @@
       result.textContent = JSON.stringify({ status: 'FAIL', message: error?.message || String(error), stack: error?.stack || null }, null, 2);
       document.documentElement.dataset.qa = 'FAIL';
     }
-    await fetch('/__qa_result', {
+    if (location.protocol.startsWith('http')) await fetch('/__qa_result', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: result.textContent, cache: 'no-store'
     });

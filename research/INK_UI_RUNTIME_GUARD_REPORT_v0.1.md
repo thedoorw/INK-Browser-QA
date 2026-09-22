@@ -75,4 +75,66 @@ full YAML syntax is checked separately at closure.
 
 Guard command: `node --test qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs qa/core/tests/unit/runtime-workflow-guard-v0.1.test.mjs`.
 Result: 6/6 PASS. These tests need only Node and do not wake a Windows runner.
-Phase E pending. Browser Runtime: `DEFERRED_TO_BATCH`.
+## Phase E — final source/static evidence
+
+| Check | Result |
+|---|---|
+| Combined parity + workflow + helper unit tests | 8/8 PASS |
+| All seven current workflow YAML files / duplicate keys | PASS (PyYAML BaseLoader) |
+| Three inline action JavaScript scripts | PASS (Node async-function compilation) |
+| Node helper and three browser harness scripts | PASS (`node --check`) |
+| Whitespace/error diff check | PASS (`git diff --check`) |
+| Product source tree against starting HEAD | Identical / zero product mutation |
+| FORMAT_VERSION | 4 / unchanged |
+| Product display labels | INK v0.1 · Web / INK v0.1 · Portable / unchanged |
+| Runtime dispatch | Not performed |
+| Browser and Windows process observation | DEFERRED_TO_BATCH |
+
+Reproduction (Node v24.19.0 used for local source/helper checks):
+
+```sh
+node --test qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs qa/core/tests/unit/runtime-workflow-guard-v0.1.test.mjs qa/core/tests/unit/runtime-batch-helper-v0.1.test.mjs
+node --check qa/runtime/run-ink-runtime-batch.mjs
+git diff --check 5ad06e68334a2afa1551f595177e7c72ab44a0ec
+git diff --exit-code 5ad06e68334a2afa1551f595177e7c72ab44a0ec -- product/source
+```
+
+The geometry callback is HTTP-only to retain the historical file:// harness path.
+No package branch or main write was performed. Observed refs at closure:
+main `d50c59ffb1c015b0776ac1864486869098be9181`;
+package `efd9b1ededa3e0629ebe58d7462b3a62bac66915`.
+
+## Changed files
+
+- `.github/workflows/ink-cloud-018-windows-runtime.yml` — remove push block only.
+- `.github/workflows/ink-ra-001-windows-runtime.yml` — remove push block only.
+- `.github/workflows/ink-runtime-batch-windows.yml` — current manual entry.
+- `qa/runtime/run-ink-runtime-batch.mjs` — bounded Node execution/evidence helper.
+- `qa/runtime/ink-web-ui-001-harness.html` — full callback checks.
+- `qa/runtime/ink-cloud-018-browser-harness.html` — explicitly open creative panel.
+- `qa/runtime/ink-ra-001-browser-harness.html` — HTTP-only result callback.
+- `qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs` — parity guard.
+- `qa/core/tests/unit/runtime-workflow-guard-v0.1.test.mjs` — trigger/process guard.
+- `qa/core/tests/unit/runtime-batch-helper-v0.1.test.mjs` — HTTP/evidence checks.
+- `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md` — current safe path.
+- `ACTIVE/INK_DEV_PROGRESS.md` — checkpoint trail and handoff.
+- `working/WORKING_STATUS.md` — handoff and explicit runtime debt.
+- This report — the sole task report.
+
+## Retained historical boundaries / remaining batch debt
+
+Preflight, reconstructed baseline, RA import and staging unpack workflow files are
+unchanged. CLOUD-018 and RA-001 execution bodies are retained; only their push
+blocks change. Historical bypass/child-process code is not endorsed or run.
+UI-001's unpromoted branch-local workflow is not copied, and old remote work
+branches are not rewritten. This source change governs this branch and its later
+MR-approved promotion, not a retroactive change to every historical branch.
+
+MR's future manual batch must verify actual Windows API materialization, bundled
+Node helper startup, all three Chrome harnesses, artifact retention/cleanup and
+absence of extra consoles. No automatic Runtime verification is promised. Full
+Portable file/compat runtime is outside the current Web harness coverage; this
+workpack supplies the deterministic shell parity guard only.
+
+Final source gate: **INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE**.
+Runtime: **DEFERRED_TO_BATCH**. Next: **MR_REVIEW_REQUIRED → STOP**.
