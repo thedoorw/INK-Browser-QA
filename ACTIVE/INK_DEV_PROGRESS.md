@@ -9,7 +9,7 @@ STATUS: `INK-WEB-UI-002 / DEV_IN_PROGRESS`
 | BRANCH | `work/ink-web-ui-002` |
 | BRANCH_BASE | `d50c59ffb1c015b0776ac1864486869098be9181` |
 | TASK_STATUS | `AUTHORIZED / DEV_IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_B / MANUAL_BATCH_ENTRY` |
+| CURRENT_PHASE | `PHASE_C / PROCESS_HYGIENE` |
 | DEV_HANDOFF | `NO` |
 | MR_REVIEW | `PENDING_AFTER_HANDOFF` |
 | TARGET_GATE | `INK_UI_RUNTIME_GUARD_SOURCE_COMPLETE` |
@@ -81,3 +81,14 @@ STOP
 - Changed: this progress file and the single required report.
 - Gate: `RUNTIME_WORKFLOW_AUDIT_COMPLETE`.
 - Runtime not dispatched. Next: manual batch entry.
+
+## Phase B checkpoint
+
+- Previous checkpoint: `eab7ce427a399cfce6dc46fa86f82be32a852701` (Phase A).
+- Removed only push blocks from CLOUD-018 and RA-001 runtime definitions.
+- Added `ink-runtime-batch-windows.yml`: workflow_dispatch only, required target_ref,
+  resolve once to exact SHA, bounded Git-blob materialization with hash checks,
+  no Git installation or PowerShell requirement.
+- Batch runner helper is the next Phase C dependency; no dispatch authorized here.
+- Trigger source inspection: PASS; `RUNTIME_BATCH_TRIGGER_GUARD_WORKS`.
+- Browser Runtime: `DEFERRED_TO_BATCH`.

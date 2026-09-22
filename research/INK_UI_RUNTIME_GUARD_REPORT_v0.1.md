@@ -33,4 +33,12 @@ Phase A gate: `RUNTIME_WORKFLOW_AUDIT_COMPLETE`.
 
 ## Implementation and evidence
 
-Pending Phases B–E. Browser Runtime: `DEFERRED_TO_BATCH`.
+Phase B: removed `on.push` blocks only from CLOUD-018 and RA-001 runtime YAML.
+New `ink-runtime-batch-windows.yml` accepts only `workflow_dispatch`, requires
+`target_ref`, resolves once to SHA, and verifies each bounded input against its
+Git blob SHA. No checkout, Git binary, PowerShell or extraction subprocess.
+A four-worker API download is bounded to product source, three reviewed harnesses,
+the Rose Window fixture and the checked-in batch helper. Evidence records both
+tested SHA and workflow SHA. Execution helper follows in Phase C.
+
+Phases C–E pending. Browser Runtime: `DEFERRED_TO_BATCH`.

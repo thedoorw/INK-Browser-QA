@@ -1,16 +1,6 @@
 name: INK-RA-001 Windows Browser Runtime QA
 
 on:
-  push:
-    branches:
-      - work/ink-ra-001
-    paths:
-      - '.github/workflows/ink-ra-001-windows-runtime.yml'
-      - 'product/source/src/vector/geometry-kernel.js'
-      - 'product/source/src/vendor/bezier-js-6.1.4/**'
-      - 'product/source/src/vendor/clipper2-ts-2.0.1/**'
-      - 'qa/core/tests/unit/vector-geometry-kernel-v0.1.test.mjs'
-      - 'qa/runtime/ink-ra-001-browser-harness.html'
   workflow_dispatch:
 
 permissions:
