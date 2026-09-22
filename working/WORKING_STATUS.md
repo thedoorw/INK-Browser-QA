@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-WEB-UI-002 / AUTHORIZED / READY_FOR_DEV`
+STATUS: `INK-WEB-UI-002 / CLOSED / DUAL_TRACK_DISCUSSION_NEXT`
 
 | Field | Value |
 |---|---|
@@ -1440,4 +1440,28 @@ OBJECTIVE =
   + Portable/Web shell parity regression guard
 RUNTIME_QA = DEFERRED_TO_BATCH
 FORMAT_VERSION = 4
+```
+
+
+## INK-WEB-UI-002 promotion closure
+
+```text
+DEV = COMPLETE
+MR = PASS
+PR = #23 / MERGED
+MAIN = 6f3a49e0dd1482cdcbd406ba88ec84e74be9138f
+FULL_RUNTIME_AUTO_PUSH = DISABLED
+CURRENT_RUNTIME_BATCH = MANUAL_ONLY
+PORTABLE_WEB_PARITY_GUARD = ACTIVE
+FORMAT_VERSION = 4
+```
+
+## Dual-track discussion hold
+
+User direction:
+
+```text
+Discuss parallel UI + Core Module development next.
+Prefer two MR roles, each supervising one lane.
+Do not auto-open the next implementation Work Order until lane ownership and integration rules are decided.
 ```
