@@ -72,3 +72,17 @@ PACKAGE_MUTATION = 0
 CORE_MUTATION = 0
 NEXT_ACTION = UR_REVIEW_REQUIRED
 STOP
+
+
+## Checkpoint — shell geometry implementation
+
+- Desktop shell reduced to a two-row topology: 24 px menu + 36 px shared options/context row.
+- Existing `#contextualOptions` moved into the second-row topbar in both Web and Portable; command IDs/bindings preserved.
+- Left rail final desktop geometry: `left:0`, `40px`, workspace begins at `x=40`.
+- Right dock remains edge-attached at `40px`.
+- Fresh primary panel default aligned to `252px`; saved user-resized widths remain authoritative.
+- Document title bounded at `236px` (responsive down to 220px / 160px on narrower desktop).
+- Layout workbench shell is dark; existing Renderer remains the authority for the real bounded A4 paper/shadow.
+- Renderer / Document / History / Revision / Geometry / Core / CHAT semantics untouched.
+- Focused static guard added: `qa/core/tests/unit/photoshop-shell-geometry-v0.1.test.mjs`.
+- Runtime geometry validation still required before DEV_HANDOFF.
