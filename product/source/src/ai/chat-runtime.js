@@ -1,5 +1,9 @@
 import { AICommandError, AI_LAYER_VERSION, createCommand, hashValue } from './ai-core.js';
 import { createCreativeIntelligenceContextAdapter } from './creative-intelligence-context.js';
+import {
+  createGroundedCreativePlanProposal,
+  extractGroundedCreativeDecision
+} from './grounded-creative-decision.js';
 import { compareVisualSubjects } from '../compare/visual-compare.js';
 import { resolveParametricStructure } from '../structure/parametric-structure.js';
 
@@ -186,10 +190,10 @@ export class ConversationRequest {
   }
 }
 export class ConversationResponse {
-  constructor({ requestId, provider, model, content, toolCalls = [], toolResults = [], usage = null, source = 'MODEL', continuation = null, status = 'COMPLETED' } = {}) {
+  constructor({ requestId, provider, model, content, toolCalls = [], toolResults = [], usage = null, source = 'MODEL', continuation = null, groundedDecision = null, planProposal = null, status = 'COMPLETED' } = {}) {
     this.format = 'INK-CONVERSATION-RESPONSE'; this.version = CHAT_RUNTIME_VERSION;
     this.requestId = requestId; this.provider = provider; this.model = model;
-    this.content = String(content || ''); this.toolCalls = clone(toolCalls); this.toolResults = clone(toolResults); this.usage = usage; this.source = source; this.continuation = clone(continuation); this.status = status; this.receivedAt = now();
+    this.content = String(content || ''); this.toolCalls = clone(toolCalls); this.toolResults = clone(toolResults); this.usage = usage; this.source = source; this.continuation = clone(continuation); this.groundedDecision = clone(groundedDecision); this.planProposal = clone(planProposal); this.status = status; this.receivedAt = now();
   }
 }
 
@@ -474,6 +478,7 @@ function buildGroundedContinuation({ request, groundedCalls, groundedResults, su
     round: 1,
     maxRounds: GROUNDED_CONTINUATION_MAX,
     originalRequestId: request.requestId,
+    sessionId: request.sessionId,
     originalPrompt: request.prompt,
     toolCalls: clone(groundedCalls).map(call => ({
       id: toolCallId(call),
@@ -502,8 +507,19 @@ function groundedContinuationPrompt(continuation) {
     'Do not request another automatic tool continuation.',
     'Do not execute or imply execution of mutation/proposal tools.',
     'If a non-grounded tool is needed, state that the normal existing INK user-governed flow is required.',
+    'If the final decision should become an editable plan proposal, return one JSON object with schema INK-GROUNDED-CREATIVE-DECISION, version 1, decisionType PLAN_PROPOSAL, sourceRequest using the supplied originalRequestId and sessionId, groundedContextFingerprint, cited toolEvidence, explicit targets, bounded rationale/assumptions, planCandidate using the existing INK-CHAT-CREATIVE-PLAN contract, and explicit unresolvedEvidence/unsupportedEvidence arrays. Do not approve or execute it.',
     JSON.stringify(continuation)
   ].join('\n');
+}
+
+function trustedGroundedContextFingerprint(context, toolResults) {
+  const fromContext = context?.payload?.groundedCreativeIntelligence?.contextFingerprint;
+  if (typeof fromContext === 'string' && fromContext) return fromContext;
+  for (const envelope of toolResults || []) {
+    const fingerprint = envelope?.result?.contextFingerprint;
+    if (typeof fingerprint === 'string' && fingerprint) return fingerprint;
+  }
+  return null;
 }
 
 function continuationFallbackContent(secondRoundCalls, surfacedIntents = []) {
@@ -741,7 +757,20 @@ export class ChatSessionManager {
     try { content = conversationContent(finalResponse); }
     catch { content = continuationFallbackContent(secondCalls, surfacedIntents); }
     if (!String(content || '').trim() && groundedCalls.length) content = continuationFallbackContent(secondCalls, surfacedIntents);
-    const output = new ConversationResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, content, toolCalls: finalToolCalls, toolResults, usage: finalResponse?.usage || response?.usage || null, source: finalResponse?.source || response?.source || (client.external ? 'MODEL' : 'LOCAL_CONTEXT'), continuation, status: continuation?.status || 'COMPLETED' });
+    let groundedDecision = null;
+    let planProposal = null;
+    if (groundedCalls.length) {
+      const rawDecision = extractGroundedCreativeDecision(finalResponse);
+      if (rawDecision) {
+        planProposal = createGroundedCreativePlanProposal(this.layer?.app, rawDecision, {
+          expectedRequest: { requestId: request.requestId, sessionId },
+          trustedGroundedContextFingerprint: trustedGroundedContextFingerprint(context, toolResults),
+          trustedToolResults: toolResults
+        });
+        groundedDecision = planProposal.decision;
+      }
+    }
+    const output = new ConversationResponse({ requestId: request.requestId, provider: client.settings.provider, model: client.settings.model, content, toolCalls: finalToolCalls, toolResults, usage: finalResponse?.usage || response?.usage || null, source: finalResponse?.source || response?.source || (client.external ? 'MODEL' : 'LOCAL_CONTEXT'), continuation, groundedDecision, planProposal, status: continuation?.status || 'COMPLETED' });
     session.messages.push({ role: 'user', content: normalizedPrompt, contextHash: context.hash }, { role: 'assistant', content: output.content, responseHash: hashValue(output), source: output.source });
     return output;
   }
