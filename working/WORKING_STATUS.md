@@ -1857,3 +1857,30 @@ Next authority:
 `MR_INTEGRATION_PLANNING_REQUIRED`
 
 No new Core module task is implied. Formal product wiring and the next concentrated Runtime checkpoint require a new bounded Integration Work Order.
+
+
+## INK-CORE-INTEGRATION-001 activation
+
+Core Module preparation sequence is complete. MR now authorizes the first formal cross-module product integration.
+
+```text
+TASK = INK-CORE-INTEGRATION-001
+TITLE = Grounded Creative Intelligence Context Integration v0.1
+BRANCH = work/ink-core-integration-001
+BASE_MAIN_AT_AUTHORIZATION = 3d32af04b7f042c7ea2f01136aa47c785f91968a
+TARGET = five prepared Core modules → one read-only grounded CHAT context
+UI_LAYOUT_MUTATION = 0
+CHAT_EXECUTION_SEMANTICS_CHANGE = 0
+FORMAT_VERSION = 4
+RUNTIME = REQUIRED_AFTER_MR_PASS_AND_CLEAN_PROMOTION
+```
+
+Integration Queue consumed by this stage:
+
+```text
+AI_DOCUMENT_BRIDGE
+SEMANTIC_REGION_GROUNDING
+REVISION_PROVENANCE
+VISUAL_COMPARE_VARIANT
+PARAMETRIC_CREATIVE_STRUCTURE
+```
