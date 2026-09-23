@@ -345,3 +345,129 @@ function createMockApp() {
 }
 
 console.log('INK-CHAT-VALIDATION-001 Phase A source/unit QA: PASS');
+
+
+/* Phase B — Reference → editable Color regions + boundary Line paths */
+{
+  const adaptersSource = await source('product/source/src/extraction/adapters.js');
+  const workspaceSource = await source('product/source/src/extraction/workspace.js');
+  const installSource = await source('product/source/src/extraction/install.js');
+  const handoffSource = await source('product/source/src/ai/chat-reference-handoff.js');
+
+  assert.match(adaptersSource, /mode==='color-regions'/);
+  assert.match(adaptersSource, /tracer\.imagedataToTracedata\(raster,options\)/);
+  assert.match(workspaceSource, /decodeReferenceFile\(file\)/);
+  assert.match(workspaceSource, /executeExtraction\([\s\S]*mode:'color-regions'/);
+  assert.match(workspaceSource, /const colorLayer=defaultLayer\('Color'\),lineLayer=defaultLayer\('Line'\)/);
+  assert.match(workspaceSource, /const linePaths=colorPaths\.map/);
+  assert.match(workspaceSource, /out\.fill=null;[\s\S]*out\.stroke=lineStroke/);
+  assert.match(workspaceSource, /app\.history\.pushScoped\('Reference → Color \+ Line layers'/);
+  assert.match(installSource, /decomposeReference:/);
+  assert.match(handoffSource, /decomposeReference\(referenceObjectId, options = \{\}\)/);
+  assert.match(handoffSource, /commands:\[CHAT_REFERENCE_DECOMPOSITION_OPERATION\]/);
+  assert.doesNotMatch(workspaceSource, /centerline/i);
+  assert.doesNotMatch(workspaceSource, /semantic labeling/i);
+}
+
+{
+  const history = {
+    undoStack: [], redoStack: [], pending: null, limit: 30,
+    timeline() {
+      return {
+        entries: [...this.undoStack, ...[...this.redoStack].reverse()],
+        applied: this.undoStack.length,
+        limit: this.limit
+      };
+    }
+  };
+  const audits = [];
+  const app = {
+    doc: { id: 'doc-phase-b' },
+    history,
+    layer: () => ({ id: 'source-layer' }),
+    revisions: { revisionIdFor: () => 'revision-before' },
+    extraction: {
+      decode: async () => null,
+      importReference: () => null,
+      async decomposeReference(referenceObjectId) {
+        history.undoStack.push({
+          label: 'Reference → Color + Line layers',
+          objectIds: ['color-1', 'color-2', 'line-1', 'line-2'],
+          patchCount: 1,
+          captureMode: 'scoped'
+        });
+        return {
+          historyLabel: 'Reference → Color + Line layers',
+          documentId: 'doc-phase-b',
+          referenceObjectId,
+          source: {
+            name: 'flower.png',
+            mimeType: 'image/png',
+            sha256: 'a'.repeat(64),
+            width: 10,
+            height: 10,
+            sizeBytes: 100
+          },
+          colorLayerId: 'color-layer',
+          lineLayerId: 'line-layer',
+          colorObjectIds: ['color-1', 'color-2'],
+          lineObjectIds: ['line-1', 'line-2'],
+          colorCount: 2,
+          lineCount: 2,
+          palette: [
+            { color: '#f0505a', regions: 1 },
+            { color: '#328c5a', regions: 1 }
+          ]
+        };
+      }
+    }
+  };
+
+  const adapter = createChatReferenceHandoffAdapter(app, {
+    auditLog: {
+      add: record => ({
+        format: 'INK-AI-AUDIT',
+        auditId: `audit-${audits.push(record)}`
+      })
+    },
+    groundedContextProvider: {
+      read: () => ({
+        modules: {
+          provenance: {
+            status: 'AVAILABLE',
+            fingerprint: 'fp',
+            context: {
+              events: [
+                { eventId: 'p1', kind: 'object-source', target: { type: 'object', id: 'color-1' } },
+                { eventId: 'p2', kind: 'object-source', target: { type: 'object', id: 'line-1' } }
+              ]
+            }
+          }
+        }
+      })
+    }
+  });
+
+  const receipt = await adapter.decomposeReference('reference-1', {
+    numberOfColors: 8,
+    lineStroke: '#202020',
+    lineStrokeWidth: 1
+  });
+
+  assert.equal(receipt.status, 'COMPLETED');
+  assert.equal(receipt.operation, 'reference.decompose.line-color');
+  assert.equal(receipt.sourceReferenceObjectId, 'reference-1');
+  assert.equal(receipt.colorLayerId, 'color-layer');
+  assert.equal(receipt.lineLayerId, 'line-layer');
+  assert.equal(receipt.colorCount, 2);
+  assert.equal(receipt.lineCount, 2);
+  assert.equal(receipt.history.commit.valid, true);
+  assert.equal(receipt.history.commit.newestMatches, true);
+  assert.equal(receipt.revision.before, receipt.revision.after);
+  assert.ok(receipt.audit.auditId);
+  assert.equal(audits[0].commands[0], 'reference.decompose.line-color');
+  assert.equal(receipt.provenance.status, 'AVAILABLE');
+  assert.deepEqual(receipt.provenance.eventIds, ['p1', 'p2']);
+}
+
+console.log('INK-CHAT-VALIDATION-001 Phase B line-color focused QA: PASS');
