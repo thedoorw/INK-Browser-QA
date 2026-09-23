@@ -347,3 +347,84 @@ STOP
 ```
 
 MR will rerun exact-SHA Windows Runtime only after this bounded revision returns to STOP. The private user attachment test remains after Runtime PASS.
+
+
+## MR Runtime checkpoint — cross-realm revision d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
+
+```text
+DEV_HEAD = d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
+SOURCE_REVIEW = PASS
+CROSS_REALM_SOURCE_BOUNDARY = ACCEPTED_PENDING_RUNTIME
+RUNTIME_RUN = 35840153267
+RUNTIME_ATTEMPT_1_UI = PASS
+RUNTIME_ATTEMPT_1_CREATIVE = FAIL / HARNESS_TIMEOUT_240S
+RUNTIME_ATTEMPT_2_UI = PASS
+RUNTIME_ATTEMPT_2_CREATIVE = FAIL / HARNESS_TIMEOUT_240S
+RUNTIME_ARTIFACT_1 = 10741705027
+RUNTIME_ARTIFACT_1_DIGEST = sha256:cc54fbdcef2e61a7f79ba9236e1ce176c96538a2e97b9e73430abd6ba8fe1a24
+RUNTIME_ARTIFACT_2 = 10741761282
+RUNTIME_ARTIFACT_2_DIGEST = sha256:d34314b87aadfa3fe0ecbcb160e2b3ddcfc0fcb1bc33acbad73c91697a604b5b
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = HELD
+MR_DECISION = REVISE
+```
+
+### Accepted in source review
+
+The bounded revision correctly removes realm-local `instanceof Blob/File` as the only external binary acceptance test.
+
+The reviewed implementation now:
+
+- platform-brand checks external Blob/File input;
+- constructs a realm-local File before the existing decoder;
+- retains source name / MIME / lastModified where available;
+- preserves arbitrary-object rejection;
+- leaves decoder / History / Audit / Provenance / Revision authority unchanged;
+- does not start Phase B.
+
+### Runtime blocker — handoff liveness not yet proven
+
+Both exact-SHA Windows runs reached:
+
+```text
+UI = PASS
+→ Creative suite starts
+→ no Creative evidence callback
+→ 240 second harness timeout
+```
+
+The same timeout reproduced twice on the same exact product SHA.
+
+The previous rejected SHA failed quickly at the CHAT handoff assertion. After the cross-realm revision, the browser no longer returns a specific handoff assertion failure; instead the Creative harness becomes non-terminating before it can publish evidence.
+
+Therefore the cross-realm path cannot yet be accepted as Runtime PASS.
+
+Do **not** solve this by only increasing the 240-second harness timeout.
+
+### Bounded revision authorized — cross-realm runtime liveness
+
+Scope remains Phase A only.
+
+Required:
+
+1. Bound the new cross-realm handoff operation itself with a short browser QA timeout/checkpoint.
+2. Expose enough browser-only diagnostic evidence to distinguish:
+   - external binary accepted;
+   - normalization completed;
+   - decoder entered;
+   - decoder completed;
+   - authoritative Reference import committed;
+   - receipt returned.
+3. If the stall is between normalization and decoder completion, normalize by fully materializing external Blob bytes into local bytes / a local File before the existing decoder, rather than retaining any problematic cross-realm backing object.
+4. Preserve invalid arbitrary-object rejection.
+5. Preserve existing History / Audit / Provenance / Revision authority.
+6. Existing manual Reference flow must remain unchanged.
+7. No Phase B, no new engine, no FORMAT_VERSION change.
+8. No GitHub-hosted DEV workflow.
+
+DEV completion remains:
+
+```text
+DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
+```
+
+MR will rerun the exact reviewed SHA after the bounded liveness revision. The private real-user image test remains gated on Creative Runtime PASS.
