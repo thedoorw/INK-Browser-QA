@@ -99,6 +99,23 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       'CHAT_REFERENCE_HANDOFF_CROSS_REALM_BINARY_CONFIRMED',
       {parentBlob:blob instanceof Blob,iframeBlob:blob instanceof w.Blob}
     );
+    const handoffLiveness=[];
+    const livenessCheckNames={
+      'normalization returned':'CHAT_REFERENCE_HANDOFF_LIVENESS_NORMALIZATION_RETURNED',
+      'decoder entered':'CHAT_REFERENCE_HANDOFF_LIVENESS_DECODER_ENTERED',
+      'decoder returned':'CHAT_REFERENCE_HANDOFF_LIVENESS_DECODER_RETURNED',
+      'Reference import committed':'CHAT_REFERENCE_HANDOFF_LIVENESS_REFERENCE_IMPORT_COMMITTED'
+    };
+    const recordHandoffLiveness=(stage,details={})=>{
+      handoffLiveness.push({stage,atMs:Math.round(performance.now()),...details});
+      const checkName=livenessCheckNames[stage];
+      if(checkName) pass(checkName,{stage,sequence:handoffLiveness.map(item=>item.stage),...details});
+    };
+    recordHandoffLiveness('cross-realm input confirmed',{
+      parentBlob:blob instanceof Blob,
+      iframeBlob:blob instanceof w.Blob
+    });
+    pass('CHAT_REFERENCE_HANDOFF_LIVENESS_INPUT_CONFIRMED',{sequence:handoffLiveness.map(item=>item.stage)});
     const invalidHistoryBefore=app.history.undoStack.length;
     const invalidReceipt=await w.INK_CHAT_HANDOFF.importReference({
       name:'spoof.png',
@@ -139,13 +156,37 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       };
       return originalDecode(file);
     };
+    const handoffTimeoutMs=15000;
+    pass('CHAT_REFERENCE_HANDOFF_LIVENESS_SHORT_TIMEOUT_BOUND',{timeoutMs:handoffTimeoutMs});
     let handoffReceipt;
     try {
-      handoffReceipt=await w.INK_CHAT_HANDOFF.importReference(blob,{
+      const handoffPromise=w.INK_CHAT_HANDOFF.importReference(blob,{
         name:'chat-reference-fixture.png',
         type:'image/png',
         actor:{type:'chat',id:'runtime-chat',channel:'CHAT_ATTACHMENT_HANDOFF'},
-        intent:'INK-CHAT-VALIDATION-001 Phase A automated fixture handoff'
+        intent:'INK-CHAT-VALIDATION-001 Phase A automated fixture handoff',
+        checkpoint:event=>recordHandoffLiveness(event?.stage||'unknown',event||{})
+      });
+      handoffReceipt=await Promise.race([
+        handoffPromise,
+        wait(handoffTimeoutMs).then(()=>{
+          throw Object.assign(new Error('CHAT Reference handoff liveness timeout'),{
+            qa:'CHAT_REFERENCE_HANDOFF_LIVENESS_TIMEOUT',
+            details:{
+              timeoutMs:handoffTimeoutMs,
+              sequence:handoffLiveness.map(item=>item.stage),
+              checkpoints:handoffLiveness
+            }
+          });
+        })
+      ]);
+      recordHandoffLiveness('receipt returned',{
+        status:handoffReceipt?.status||null,
+        referenceObjectId:handoffReceipt?.referenceObjectId||null
+      });
+      pass('CHAT_REFERENCE_HANDOFF_LIVENESS_RECEIPT_RETURNED',{
+        status:handoffReceipt?.status||null,
+        sequence:handoffLiveness.map(item=>item.stage)
       });
     } finally {
       app.extraction.decode=originalDecode;
@@ -159,6 +200,13 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       'CHAT_REFERENCE_HANDOFF_NORMALIZED_LOCAL_FILE',
       {decoderInput}
     );
+    assert(
+      handoffLiveness.map(item=>item.stage).join(' → ')===
+        'cross-realm input confirmed → normalization returned → decoder entered → decoder returned → Reference import committed → receipt returned',
+      'CHAT_REFERENCE_HANDOFF_LIVENESS_SEQUENCE_COMPLETE',
+      {sequence:handoffLiveness.map(item=>item.stage),checkpoints:handoffLiveness}
+    );
+    evidence.metrics.chatReferenceHandoffLiveness=handoffLiveness;
     assert(handoffReceipt?.status==='COMPLETED','CHAT_REFERENCE_HANDOFF_COMPLETED',{receipt:handoffReceipt});
     assert((input?.files?.length||0)===0,'CHAT_REFERENCE_HANDOFF_FILE_INPUT_UNTOUCHED_AFTER');
     assert(handoffReceipt.operation==='reference.import' && handoffReceipt.sourceChannel==='CHAT_ATTACHMENT_HANDOFF','CHAT_REFERENCE_HANDOFF_OPERATION_RECORDED',{operation:handoffReceipt.operation,sourceChannel:handoffReceipt.sourceChannel});
