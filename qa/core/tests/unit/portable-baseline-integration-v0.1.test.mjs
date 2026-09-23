@@ -107,6 +107,10 @@ test('portable static shell is an exact local closure of product/source/src', ()
     assert.equal(existsSync(resolve(sourceRoot, path.replace(/^\.\//, ''))), true, path);
   }
   assert.doesNotMatch(serviceWorker, /icons\/ink-(?:192|512)\.png/);
+  assert.match(serviceWorker, /const PRODUCT_VERSION = '0\.1'/);
+  assert.match(serviceWorker, /const CACHE_PREFIX = 'ink-build-'/);
+  assert.match(serviceWorker, /searchParams\.get\('build'\)/);
+  assert.doesNotMatch(serviceWorker, /const RELEASE_VERSION = '0\.1-Web'/);
 
   const manifest = JSON.parse(readSource('manifest.webmanifest'));
   assert.deepEqual(manifest.icons, []);
