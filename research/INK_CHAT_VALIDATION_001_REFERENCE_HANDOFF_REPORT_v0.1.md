@@ -154,20 +154,48 @@ installStudioCore
 
 ## History contract
 
+MR revision corrected the original raw-count assumption.
+
+The adapter now reads accepted public History semantics through `history.timeline()` and `history.limit` (with bounded compatibility fallback only when those public values are unavailable).
+
 Successful CHAT Reference handoff requires:
 
 ```text
-History undo count after = History undo count before + 1
+expected applied count = min(before.applied + 1, history.limit)
 History pending = false
+redo cleared by the committed mutation
+newest retained applied entry label = Reference import · CHAT attachment
+newest retained applied entry objectIds contains this Reference object ID
 ```
 
-The normal entry label is:
+Therefore, when History is already saturated:
 
-`Reference import · CHAT attachment`
+```text
+before.applied = limit
+Reference import commits
+oldest retained entry is evicted
+after.applied = limit
+newest retained entry = this Reference import
+receipt status = COMPLETED
+```
 
-The adapter treats a different History result as a contract failure.
+The receipt now includes `history.commit` with:
 
-No separate operation ledger was introduced.
+- `valid`;
+- `saturatedBefore`;
+- `expectedApplied`;
+- `actualApplied`;
+- `limit`;
+- `newestMatches`;
+- `redoCleared`.
+
+A post-commit receipt-validation error can no longer be returned as an ordinary `FAILED` operation. If the authoritative import already returned a committed Reference identity but receipt validation subsequently fails, the adapter returns:
+
+`COMMITTED_WITH_ERROR`
+
+and preserves the committed document/History evidence in the receipt.
+
+No History authority or separate operation ledger was introduced.
 
 ## Provenance contract
 
@@ -276,6 +304,10 @@ Coverage includes:
 - audit identity;
 - provenance identity;
 - structured failed receipt for invalid Blob handoff;
+- saturated History at the accepted minimum limit (20);
+- retained-count saturation with oldest-entry eviction;
+- newest retained entry identity for the imported Reference;
+- post-commit validation mismatch → `COMMITTED_WITH_ERROR`, never ordinary `FAILED`;
 - source-contract guard against direct document replacement;
 - authoritative History wiring guard.
 
@@ -285,6 +317,8 @@ DEV verification against the exact branch source:
 CHAT_HANDOFF_STATIC_CONTRACT = PASS
 CHAT_HANDOFF_MODULE_SYNTAX = PASS
 ADAPTER_UNIT_BEHAVIOR = PASS
+HISTORY_SATURATION_BEHAVIOR = PASS
+POST_COMMIT_RECEIPT_CORRECTNESS = PASS
 CHANGED_SOURCE_SYNTAX = PASS
 BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
 BATCH_REQUIRED_CHECK_CONTRACT = PASS
@@ -313,7 +347,7 @@ New browser assertions require:
 - resulting Reference object is inspectable;
 - actor/channel/operation metadata is retained;
 - MIME/SHA-256/dimensions are retained;
-- History increases exactly by one;
+- History advances according to bounded timeline/limit semantics and the newest retained entry is this Reference import;
 - Revision identity does not change automatically;
 - `replaceDocument` is not invoked by handoff;
 - existing AI audit record is inspectable;
@@ -323,6 +357,32 @@ New browser assertions require:
 - existing Direct Extraction continues afterward.
 
 The batch runner lists the Phase A checks in the existing `creativeRequired` contract, so the authoritative Runtime batch cannot PASS while omitting Phase A evidence.
+
+## MR_REVISE bounded correction
+
+Reviewed blocker:
+
+```text
+History at configured limit
+→ successful Reference import commits
+→ oldest entry evicted
+→ retained count stays at limit
+→ old adapter expected raw undoCount + 1
+→ receipt incorrectly reported FAILED
+```
+
+Bounded correction only:
+
+1. `historySnapshot` now captures public timeline `applied / entries / limit` semantics.
+2. `historyCommitValidation` calculates `min(before.applied + 1, after.limit)`.
+3. The newest retained applied History entry must match both:
+   - label `Reference import · CHAT attachment`;
+   - the returned Reference object ID.
+4. Saturation is explicitly represented by `history.commit.saturatedBefore`.
+5. A validation error after the authoritative import has already committed returns `COMMITTED_WITH_ERROR`, never ordinary `FAILED`.
+6. The browser harness no longer encodes the rejected unconditional raw-count `+1` assumption.
+
+No other Phase A architecture changed and Phase B remains not started.
 
 ## Evidence status
 
