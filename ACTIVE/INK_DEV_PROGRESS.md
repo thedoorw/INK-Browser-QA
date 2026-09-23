@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / DEV_HANDOFF / MR_REVIEW_REQUIRED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_REVISE / POST_COMMIT_SELECTION_FIX_AUTHORIZED`
 
 ## Task
 
@@ -524,3 +524,40 @@ USER_IMAGE_COMMITTED = 0
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR Runtime revision — post-commit selection bounds
+
+```text
+REVIEWED_HEAD = 31a427d807f7497b7e64d159607380c056829d67
+RUNTIME_RUN = 35863528804
+FINAL_TRACE_TUNING = PASS / ACCEPTED
+PREVIOUS_TRACE_TIMEOUT = RESOLVED
+UI = PASS
+CREATIVE = FAIL
+ERROR = INK_AI_DOCUMENT_BRIDGE_SELECTION_BOUNDS_EXCEEDED
+DOCUMENT_BRIDGE_DEFAULT_MAX_OBJECTS = 96
+SCOPE = POST_COMMIT_SELECTION / RECEIPT COMPATIBILITY ONLY
+```
+
+Runtime now reaches and commits the Phase B decomposition. The failure is downstream:
+
+```text
+app.selection = all generated Line Paths
+→ grounded provenance read
+→ AI Document Bridge selection > 96
+→ receipt path throws
+```
+
+Required bounded fix:
+
+- do not select all generated Line Paths after decomposition;
+- leave all generated objects intact in Color/Line layers;
+- set a bounded post-operation selection (prefer one representative Line Path);
+- keep receipt provenance, History, Audit and Revision behavior unchanged;
+- QA must cover a generated result larger than the Document Bridge selection bound and prove receipt COMPLETED;
+- preserve 64k / 320 / colorquantcycles=1 tuning;
+- do not tune tracer again unless this fix still fails Runtime;
+- no UI redesign / semantic labeling / centerline / Phase C / new engine.
+
+Return `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
