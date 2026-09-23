@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-TECH-DEBT-001 / DEV_AUTHORIZED`
+STATUS: `INK-TECH-DEBT-001 / MR_REVISE / BOUNDED_SOURCE_REVISION`
 
 ## Control
 
@@ -292,3 +292,108 @@ DEV_AUTHORIZED
 ```
 
 DEV must STOP after handoff. No clean promotion and no next task without MR disposition.
+
+
+## MR source review checkpoint — 2026-09-23
+
+```text
+REVIEWED_SOURCE_HEAD = ed38789bd1aa6dd12235ee57bbceb5195b965ad0
+BRANCH_HANDOFF_HEAD = fad5fc806e24d67a5720b7a9af29ba1ae5ca8903
+SOURCE_TO_HANDOFF_DELTA = governance/progress docs only
+SOURCE_REVIEW = FAIL / MR_REVISE
+RUNTIME = HELD / NOT AUTHORIZED YET
+FORMAT_VERSION = 4 / PRESERVED
+PRODUCT_BASE_VERSION = v0.1 / PRESERVED
+```
+
+### Blocker A — build identity is circular through stale-controlled app code
+
+Current source does:
+
+```text
+src/config.js BUILD_ID
+→ InkApp constructs service-worker.js?build=<BUILD_ID>
+→ Service Worker derives BUILD_ID from its own query string
+```
+
+But the app source/config that supplies that query is itself controlled by the previous Service Worker and uses stable asset URLs such as `?v=0.1`.
+
+A previously controlled client can therefore:
+
+```text
+old worker/cache A
+→ receive new navigation HTML
+→ still receive old cached ink.js/config A
+→ register service-worker.js?build=A
+→ new worker derives A
+→ old/new worker can reuse the same build-A cache namespace
+```
+
+That does not establish a deployment-authoritative immutable build identity and can produce cache mutation/version-skew during upgrade.
+
+#### Required bounded fix
+
+Choose a minimal architecture where the next Service Worker obtains the new build identity independently of application code that the previous worker may serve stale.
+
+Acceptance:
+
+1. new deployment B cannot derive identity A from stale app/config;
+2. build B never opens/writes build A shell/runtime cache names;
+3. an already-controlled build-A client remains coherent until B is activated;
+4. after B activation/reload, the client is coherently on B;
+5. Service Worker update checks bypass stale HTTP/script caching where required;
+6. add deterministic previous-build → next-build upgrade evidence.
+
+Do not redesign the PWA beyond this bounded update correctness fix.
+
+### Blocker B — Web / Portable manual duplication remains
+
+`index.html` and `index-standalone.html` remain full duplicated shell documents. A normalized parity test detects drift but does not remove the manual dual-maintenance debt named by this Work Order.
+
+Required:
+
+- establish one authoritative shell source/template/generator with deterministic Web and Portable outputs; or
+- provide an equivalently bounded mechanism that removes manual two-file shell editing.
+
+Generated delivery HTML files may remain committed. No new framework is authorized.
+
+### Revision C — downloaded diagnostics still omit build identity
+
+`downloadExternalDiagnosticBundle()` calls `buildExternalDiagnosticBundle(...)` without `buildId: BUILD_ID`.
+
+Current user-downloaded diagnostic bundles can therefore report:
+
+```text
+buildId = null
+```
+
+Required:
+
+- pass the active build identity through the normal product diagnostic download path;
+- add a guard covering the product call path, not only the QA bridge.
+
+### Revision D — foundation guard must not freeze incidental debt counts
+
+The new foundation test currently pins incidental values including exact CSS `:root` count, exact `!important` count, and a task-specific build string.
+
+Required:
+
+- retain semantic authority/closure assertions;
+- avoid tests that require historical debt counts to remain exactly unchanged;
+- for CSS debt, prefer authority uniqueness / absence of superseded layers and, where useful, a non-regression ceiling rather than exact preservation;
+- build identity tests must validate the build mechanism/relationship, not permanently codify one task ID.
+
+## Revised gate
+
+```text
+MR_REVISE
+→ bounded source revision on work/ink-tech-debt-001
+→ DEV_HANDOFF / STOP
+→ MR exact source review
+→ repository unit/static execution
+→ exact-SHA self-hosted Windows Chrome Runtime
+→ MR_PASS / further MR_REVISE
+```
+
+UI-006 Phase C–I remains HOLD.
+CHAT Validation Phase C remains NOT_STARTED.
