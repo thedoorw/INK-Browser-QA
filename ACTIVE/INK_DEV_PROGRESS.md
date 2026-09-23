@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED`
+STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
 
 ## Task
 
@@ -319,3 +319,29 @@ REVISION_SCOPE = HISTORY_SATURATION_RECEIPT_CORRECTNESS
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR Runtime revision — cross-realm binary handoff
+
+```text
+REVIEWED_HEAD = 2d324df22dd58ebf3579ba175422839abd92bd04
+RUNTIME_RUN = 35836852283
+RUNTIME_RESULT = FAIL
+UI_RERUN = PASS
+CREATIVE_BLOCKER = CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED
+SCOPE = CROSS_REALM_BINARY_HANDOFF ONLY
+```
+
+The actual browser Runtime calls `w.INK_CHAT_HANDOFF.importReference(blob,...)` where `blob` was created in the parent harness realm and the INK API executes in the iframe realm.
+
+Current `instanceof Blob/File` checks reject that valid cross-realm binary.
+
+Required bounded revision:
+- accept valid realm-external Blob/File-like input safely;
+- normalize it to a local browser File;
+- keep MIME/size/existing decoder validation authoritative;
+- keep arbitrary non-binary objects rejected;
+- add cross-realm browser evidence;
+- preserve History/Audit/Provenance/Revision behavior;
+- no Phase B;
+- return `DEV_HANDOFF / STOP`.
