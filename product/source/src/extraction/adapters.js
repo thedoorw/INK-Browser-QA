@@ -28,8 +28,8 @@ function filterTraceLayers(trace,{includeLayer=()=>true}={}) {
   return omitted;
 }
 
-export const COLOR_TRACE_MAX_PIXELS=160_000;
-export const COLOR_TRACE_MAX_DIMENSION=512;
+export const COLOR_TRACE_MAX_PIXELS=64_000;
+export const COLOR_TRACE_MAX_DIMENSION=320;
 
 export function boundedColorTraceRaster(source,{
   maxPixels=COLOR_TRACE_MAX_PIXELS,
@@ -77,7 +77,7 @@ export function imageTracerAdapter(tracer) {
       const maxDimension=Number(input.parameters?.traceMaxDimension??COLOR_TRACE_MAX_DIMENSION);
       const options={
         ltres:1,qtres:1,pathomit:Math.max(0,Number(input.parameters?.pathOmit??8)||0),linefilter:true,
-        colorsampling:2,colorquantcycles:3,numberofcolors:numberOfColors,scale:1,roundcoords:3,layering:0
+        colorsampling:2,colorquantcycles:1,numberofcolors:numberOfColors,scale:1,roundcoords:3,layering:0
       };
       const work=boundedColorTraceRaster(input.raster,{maxPixels,maxDimension});
       const trace=tracer.imagedataToTracedata({width:work.width,height:work.height,data:work.data},options);

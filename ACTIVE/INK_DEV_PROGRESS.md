@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_REVISE / BOUNDED_TUNING_AUTHORIZED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_REVISE / FINAL_TRACE_TUNING_IN_PROGRESS`
 
 ## Task
 
@@ -368,3 +368,32 @@ Required final tuning pass:
 - no new diagnostics framework, no semantic labeling, no centerline, no Phase C, no new extraction engine.
 
 Return `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
+
+
+## DEV final tuning checkpoint — source budget reduction
+
+Latest MR_REVISE baseline:
+
+`1ad65b932835ef754b7d42291f7e70cdcd048925`
+
+Authorized final delta only:
+
+```text
+COLOR_TRACE_MAX_PIXELS = 64,000
+COLOR_TRACE_MAX_DIMENSION = 320
+COLOR_QUANTIZATION_CYCLES = 1
+SOURCE_COORDINATE_REMAP = PRESERVED
+BOUNDED_PALETTE_COUNT = PRESERVED
+GLOBAL_RUNTIME_TIMEOUT = 240s / UNCHANGED
+```
+
+Source changes are limited to the existing ImageTracerJS color-regions adapter and the existing Phase B decomposition request. No new engine, diagnostics framework, semantic labeling, centerline tracing, UI redesign, or Phase C work was introduced.
+
+Current state:
+
+```text
+FINAL_TRACE_TUNING_SOURCE = IMPLEMENTED
+FOCUSED_QA_UPDATE = NEXT
+BROWSER_ASSERTION_UPDATE = NEXT
+TASK_STATUS = DEV_IN_PROGRESS
+```
