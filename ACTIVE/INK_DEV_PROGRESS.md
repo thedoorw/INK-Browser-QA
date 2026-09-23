@@ -1,19 +1,19 @@
 # INK DEV PROGRESS
 
-STATUS: IN_PROGRESS / CHECKPOINT_1_AUTHORITY
+STATUS: RUNTIME_BLOCKED / STOP
 
 TASK_ID: INK-UI-DEBT-001
 TITLE: Shell / Panel Authority Consolidation v0.1
 BRANCH: work/ink-ui-debt-001
 BASE_MAIN: 4c1834fdb1b93c843e15455f6468e39bceef8ef1
 
-TASK_STATUS: IN_PROGRESS
-DEV_HANDOFF: NOT_YET
-UR_REVIEW: PENDING_AFTER_HANDOFF
+TASK_STATUS: RUNTIME_BLOCKED
+DEV_HANDOFF: NOT_REACHED
+UR_REVIEW: BLOCKED_PENDING_RUNTIME
 
-RUNTIME_QA: REQUIRED / NOT_RUN
+RUNTIME_QA: BLOCKED / POWERSHELL_EXECUTION_POLICY
 TINYFISH_USED: NO
-PORTABLE_WEB_PARITY: REQUIRED
+PORTABLE_WEB_PARITY: PASS
 
 ## Checkpoint 1 — primary authority + navigation de-duplication
 
@@ -145,3 +145,34 @@ Two failures were stale test contracts:
 2. parity mutation still targeted obsolete `assets/ink-mark.svg` favicon after accepted migration to `assets/favicon.svg`.
 
 No product implementation change is required for these two failures.
+
+
+## Final attempted Runtime gate — RUNTIME_BLOCKED
+
+Run: `35806396592`
+Tested SHA: `0207b647ecf41d872abd7ba37ab27bdd541999ff`
+Runner: `DESKTOP-NSOQH69` / self-hosted Windows / X64 / runner 2.337.0
+
+Pre-runtime gates:
+- exact bounded materialization: PASS;
+- source/static: PASS;
+- focused unit/parity: 39 / 39 PASS;
+- Web / Portable parity: PASS.
+
+PowerShell Runtime:
+- GitHub entered the PowerShell Runtime step only after all pre-runtime gates passed;
+- Windows PowerShell refused to load the generated Actions temporary `.ps1` because script execution is disabled by Execution Policy;
+- failure occurred before the Runtime body executed;
+- loopback server was not started by this step;
+- Chromium UI harness was not executed;
+- therefore no Runtime visual/browser PASS can be claimed.
+
+Governance:
+- do not change machine/user Execution Policy;
+- do not use `ExecutionPolicy Bypass`;
+- TinyFish was not used.
+
+Required terminal state:
+`RUNTIME_BLOCKED → STOP`
+
+No `DEV_HANDOFF` is issued.
