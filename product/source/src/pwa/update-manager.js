@@ -1,7 +1,8 @@
 export class ServiceWorkerUpdateManager {
-  constructor({ scriptURL = './service-worker.js', scope = './', onStatusChange = null } = {}) {
+  constructor({ scriptURL = './service-worker.js', scope = './', buildId = null, onStatusChange = null } = {}) {
     this.scriptURL = scriptURL;
     this.scope = scope;
+    this.buildId = buildId;
     this.onStatusChange = onStatusChange;
     this.registration = null;
     this.waiting = null;
@@ -83,6 +84,8 @@ export class ServiceWorkerUpdateManager {
       updateReady: Boolean(this.registration?.waiting || this.waiting),
       controllerChanged: this.controllerChanged,
       error: this.error,
+      buildId: this.buildId,
+      registrationScriptURL: this.registration?.active?.scriptURL || this.registration?.waiting?.scriptURL || this.registration?.installing?.scriptURL || this.scriptURL,
       ...extra
     };
   }
