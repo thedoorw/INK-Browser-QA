@@ -492,12 +492,16 @@
 
       const favicon = doc.querySelector('link[rel="icon"]');
       const faviconResponse = favicon ? await win.fetch(favicon.href, { cache: 'reload' }) : null;
-      const markStyle = getComputedStyle(doc.querySelector('.menu-app-mark>span')).backgroundImage;
+      const mark = doc.querySelector('.menu-app-mark>.brand-source-mark');
+      const markResponse = mark ? await win.fetch(mark.src, { cache: 'reload' }) : null;
       record('favicon link resolves successfully in fresh context', Boolean(faviconResponse?.ok), { href: favicon?.href || null, status: faviconResponse?.status || null });
-      record('user INK mark is requested by visible shell CSS', /ink-mark\.svg/.test(markStyle), markStyle);
+      record('original INK mark is the visible shell source', Boolean(markResponse?.ok) && /INK_MARK_SOURCE_W-300\.jpg/.test(mark?.src || ''), { src: mark?.src || null, status: markResponse?.status || null });
 
+      const buildId = win.INK_ARCHITECTURE?.buildId || test.updateStatus?.().buildId || null;
+      const shellCacheName = buildId ? `ink-build-${buildId}-shell` : null;
       let swReady = false;
-      let swVersion = null;
+      let swProductVersion = null;
+      let swScriptURL = null;
       let cacheKeys = [];
       let legacyCacheRemoved = false;
       try {
@@ -506,17 +510,18 @@
           new Promise((_, reject) => setTimeout(() => reject(new Error('service-worker-ready-timeout')), 90000))
         ]);
         swReady = Boolean(registration?.active);
-        const swResponse = await win.fetch(new URL('./service-worker.js?v=qa', win.location.href));
+        swScriptURL = registration?.active?.scriptURL || null;
+        const swResponse = await win.fetch(new URL(`./service-worker.js?build=${encodeURIComponent(buildId || '')}`, win.location.href));
         const swText = await swResponse.text();
-        swVersion = /RELEASE_VERSION\s*=\s*'([^']+)'/.exec(swText)?.[1] || null;
+        swProductVersion = /PRODUCT_VERSION\s*=\s*'([^']+)'/.exec(swText)?.[1] || null;
         await waitFor(async () => {
           cacheKeys = await win.caches.keys();
-          return cacheKeys.includes('ink-v0.1-Web-shell');
+          return Boolean(shellCacheName) && cacheKeys.includes(shellCacheName);
         }, 90000, 250);
 
         const legacy = await win.caches.open('ink-v1.6.5-RC-shell');
         await legacy.put(new Request(new URL('./qa-legacy-probe', win.location.href)), new Response('legacy'));
-        const qaScript = new URL('./service-worker.js?qa-refresh=0.1', win.location.href).href;
+        const qaScript = new URL(`./service-worker.js?build=${encodeURIComponent(buildId || '')}&qa-refresh=1`, win.location.href).href;
         const qaScope = new URL('./', win.location.href).pathname;
         const updated = await win.navigator.serviceWorker.register(qaScript, { scope: qaScope });
         let worker = updated.installing || updated.waiting;
@@ -525,14 +530,14 @@
         if (worker?.state === 'installed') worker.postMessage({ type: 'INK_SKIP_WAITING' });
         await waitFor(async () => {
           cacheKeys = await win.caches.keys();
-          return !cacheKeys.includes('ink-v1.6.5-RC-shell') && cacheKeys.includes('ink-v0.1-Web-shell');
+          return !cacheKeys.includes('ink-v1.6.5-RC-shell') && Boolean(shellCacheName) && cacheKeys.includes(shellCacheName);
         }, 90000, 250);
         legacyCacheRemoved = !cacheKeys.includes('ink-v1.6.5-RC-shell');
       } catch (error) {
         results.push({ name: 'service-worker diagnostic detail', pass: false, detail: String(error?.stack || error) });
       }
-      record('service worker activates in loopback Web runtime', swReady, { swReady });
-      record('service worker exposes v0.1 Web cache identity', swVersion === '0.1-Web' && cacheKeys.includes('ink-v0.1-Web-shell'), { swVersion, cacheKeys });
+      record('service worker activates in loopback Web runtime', swReady, { swReady, swScriptURL });
+      record('service worker exposes product v0.1 with build-keyed cache identity', swProductVersion === '0.1' && Boolean(shellCacheName) && cacheKeys.includes(shellCacheName), { swProductVersion, buildId, shellCacheName, cacheKeys });
       record('service-worker activation removes historical cache without storage reset', legacyCacheRemoved, { cacheKeys });
 
       const integrity = test.documentIntegrity();
