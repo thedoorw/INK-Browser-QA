@@ -2290,3 +2290,166 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .contextual-tool-identity{min-width:52px}
   .contextual-tool-identity strong{max-width:44px}
 }
+
+
+/* ==========================================================================
+   INK-WEB-UI-006 Phase B — LIGHT SHELL / ORIGINAL BRAND SOURCE
+   UI-only override. Geometry, command identity, document/history/revision
+   semantics and renderer contracts are intentionally unchanged.
+   ========================================================================== */
+.brand-source-mark{
+  display:block;
+  width:25px;
+  height:25px;
+  object-fit:contain;
+  flex:0 0 auto;
+}
+@media(max-width:760px){
+  .brand .brand-source-mark{width:28px;height:28px}
+}
+@media(min-width:761px){
+  :root{
+    --chrome-0:#e7e7e7;
+    --chrome-1:#efefef;
+    --chrome-2:#f5f5f5;
+    --chrome-3:#fafafa;
+    --chrome-4:#e6e6e6;
+    --chrome-text:#262626;
+    --chrome-muted:#656565;
+    --chrome-faint:#898989;
+    --chrome-line:#d0d0d0;
+    --chrome-line-soft:#c4c4c4;
+  }
+
+  html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
+
+  .menu-strip{
+    background:#f7f7f7;
+    color:#2a2a2a;
+    border-bottom-color:#d1d1d1;
+    box-shadow:none;
+  }
+  .menu-app-mark{
+    border-right-color:#d7d7d7;
+    color:#303030;
+  }
+  .menu-app-mark>.brand-source-mark{
+    width:18px;
+    height:18px;
+    border-radius:2px;
+  }
+  .menu-app-mark small{color:#858585}
+  .application-menus button{color:#333}
+  .application-menus button:hover,
+  .application-menus button:focus-visible{background:#e8e8e8;color:#111}
+  .menu-workspace{border-left-color:#d7d7d7;color:#686868}
+  .menu-workspace button{color:#666;border-left-color:#d7d7d7}
+  .menu-workspace button:hover{background:#e8e8e8;color:#111}
+
+  .topbar{
+    background:#f2f2f2;
+    color:#2f2f2f;
+    border-bottom-color:#cecece;
+    box-shadow:none;
+  }
+  .topbar .top-divider,
+  .topbar > .contextual-options{border-color:#d6d6d6}
+  .doc-title{
+    color:#2d2d2d;
+    background:#fff;
+    border-color:#d2d2d2;
+    box-shadow:none;
+  }
+  .doc-title:hover{background:#fff;border-color:#bebebe}
+  .doc-title:focus{background:#fff;border-color:#6aa9a3;box-shadow:0 0 0 1px rgba(47,129,121,.18)}
+  .icon-button,.mini-button{color:#565656}
+  .icon-button:hover:not(:disabled),.mini-button:hover{background:#fff;color:#202020;box-shadow:inset 0 0 0 1px #d2d2d2}
+  .icon-button:active:not(:disabled),.mini-button:active{background:#e3e3e3}
+  .quiet-button{color:#4a4a4a}
+  .quiet-button:hover{background:#fff;color:#181818;box-shadow:inset 0 0 0 1px #d2d2d2}
+  .pill-group{background:transparent}
+  .contextual-tool-identity{color:#373737}
+  .contextual-divider{background:#d6d6d6}
+  .context-control-label,
+  .contextual-options .quick-slider output{color:#626262}
+  .context-inline-control{color:#444}
+  .context-inline-control:hover{background:#fff}
+  .contextual-advanced-button{color:#565656;border-color:#cfcfcf;background:#f8f8f8}
+  .contextual-advanced-button:hover{background:#fff;color:#222}
+  .contextual-advanced-button.active,
+  .contextual-advanced-button[aria-pressed="true"]{color:#226a63;background:#e4f0ee;border-color:#a9cbc7}
+
+  .workspace-switch{background:#e7e7e7;border-color:#d1d1d1}
+  .workspace-switch button{color:#5a5a5a}
+  .workspace-switch button:hover{background:#f8f8f8;color:#222}
+  .workspace-switch button.active{background:#fff;color:#286f68;box-shadow:inset 0 0 0 1px #cfcfcf}
+
+  .tool-rail{
+    background:#f7f7f7;
+    border-right-color:#d0d0d0;
+    box-shadow:none;
+  }
+  .tool-button{color:#555}
+  .tool-button:hover{color:#202020;background:#ececec}
+  .tool-button.active{color:#286f68;background:#e1efed;box-shadow:inset 0 0 0 1px #c5ddda}
+  .tool-separator{background:#d5d5d5}
+
+  .panel-dock{
+    background:#f7f7f7;
+    border-left-color:#d0d0d0;
+    box-shadow:none;
+  }
+  .panel-dock-separator{background:#d5d5d5}
+  .panel-dock-button{color:#595959}
+  .panel-dock-button:hover{background:#e9e9e9;color:#202020}
+  .panel-dock-button.active{background:#e1efed;color:#286f68;border-color:#bdd8d4}
+  .panel-dock-group.group-active::before{background:#3d948b}
+
+  .inspector,
+  .creative-workspace-panel{
+    background:#f7f7f7;
+    color:#303030;
+    border-left-color:#d0d0d0;
+    box-shadow:-2px 0 7px rgba(0,0,0,.07);
+  }
+  .inspector-resizer::after{background:#c1c1c1}
+  .inspector-head,
+  .creative-workspace-head{background:#f2f2f2;border-bottom-color:#d5d5d5}
+  .inspector-head strong,
+  .creative-workspace-head strong{color:#303030}
+  .properties-subnav{background:#ececec;border-bottom-color:#d2d2d2}
+  .properties-subnav .inspector-tab{color:#666;border-right-color:#d3d3d3}
+  .properties-subnav .inspector-tab:hover{background:#f8f8f8;color:#222}
+  .properties-subnav .inspector-tab.active{background:#fff;color:#286f68;box-shadow:inset 0 -2px 0 #4d9b94}
+  .section-title span{color:#717171!important}
+  .layer-row .layer-meta{color:#6d6d6d!important}
+  .panel-window-group-label{color:#777}
+  .creative-workspace-state span{color:#717171}
+  .creative-workspace-state strong{color:#363636}
+  .creative-workspace-body p{color:#5f5f5f}
+  .creative-workspace-field{color:#555}
+  .creative-workspace-body output,
+  .creative-workspace-status{color:#6e6e6e}
+  .creative-structure-option>summary span{color:#757575}
+
+  .inspector-edge-toggle.primary-panel-collapse,
+  .app.inspector-open .inspector-edge-toggle.primary-panel-collapse{
+    background:#f7f7f7;
+    color:#626262;
+    border-color:#d0d0d0;
+    box-shadow:-1px 1px 3px rgba(0,0,0,.08);
+  }
+  .inspector-edge-toggle.primary-panel-collapse:hover,
+  .inspector-edge-toggle.primary-panel-collapse:focus-visible{color:#202020;background:#fff}
+  .inspector-edge-toggle.primary-panel-collapse.active{color:#286f68;background:#e5f0ee}
+
+  .statusbar{
+    background:#f5f5f5;
+    color:#656565;
+    border-top-color:#d1d1d1;
+  }
+  .statusbar button{color:#606060}
+  .statusbar button:hover{background:#fff;color:#202020}
+
+  .app[data-space="layout"] .stage-wrap{background:#dedede}
+}
