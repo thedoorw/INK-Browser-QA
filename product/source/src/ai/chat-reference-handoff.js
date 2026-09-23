@@ -8,31 +8,62 @@ function fail(code, message = code, details = {}) {
   throw Object.assign(new Error(message), { code, details });
 }
 
-function isBlob(value) {
-  return typeof Blob !== 'undefined' && value instanceof Blob;
+function localBlobDescriptor(value) {
+  if (!value || typeof Blob === 'undefined') return null;
+  const sizeGetter = Object.getOwnPropertyDescriptor(Blob.prototype, 'size')?.get;
+  const typeGetter = Object.getOwnPropertyDescriptor(Blob.prototype, 'type')?.get;
+  if (typeof sizeGetter !== 'function' || typeof typeGetter !== 'function' || typeof Blob.prototype.slice !== 'function') return null;
+  try {
+    const size = sizeGetter.call(value);
+    const type = typeGetter.call(value);
+    const blob = Blob.prototype.slice.call(value, 0, size, type);
+    return { blob, size, type };
+  } catch {
+    return null;
+  }
 }
 
-function isFile(value) {
+function fileDescriptor(value) {
+  if (!value || typeof File === 'undefined') return null;
+  const nameGetter = Object.getOwnPropertyDescriptor(File.prototype, 'name')?.get;
+  const modifiedGetter = Object.getOwnPropertyDescriptor(File.prototype, 'lastModified')?.get;
+  if (typeof nameGetter !== 'function' || typeof modifiedGetter !== 'function') return null;
+  try {
+    return {
+      name: nameGetter.call(value),
+      lastModified: modifiedGetter.call(value)
+    };
+  } catch {
+    return null;
+  }
+}
+
+function isLocalFile(value) {
   return typeof File !== 'undefined' && value instanceof File;
 }
 
 export function normalizeChatAttachment(input, options = {}) {
   const direct = input?.file ?? input;
-  if (isFile(direct)) return direct;
-
-  const blob = isBlob(direct) ? direct : input?.blob;
-  if (!isBlob(blob)) fail('CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED', 'CHAT handoff requires a File or Blob');
-
-  const name = String(options.name || input?.name || '').trim();
-  const type = String(options.type || options.mimeType || input?.type || blob.type || '').trim();
-  if (!name) fail('CHAT_REFERENCE_HANDOFF_NAME_REQUIRED', 'Blob handoff requires an explicit file name');
-  if (!type) fail('CHAT_REFERENCE_HANDOFF_TYPE_REQUIRED', 'Blob handoff requires an explicit MIME type');
+  if (isLocalFile(direct)) return direct;
   if (typeof File === 'undefined') fail('CHAT_REFERENCE_HANDOFF_FILE_API_UNAVAILABLE', 'Browser File API is required');
 
-  return new File([blob], name, {
-    type,
-    lastModified: Number(options.lastModified || input?.lastModified || Date.now())
-  });
+  const directBinary = localBlobDescriptor(direct);
+  const nestedBinary = directBinary ? null : localBlobDescriptor(input?.blob);
+  const binary = directBinary || nestedBinary;
+  const binarySource = directBinary ? direct : input?.blob;
+  if (!binary) fail('CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED', 'CHAT handoff requires a File or Blob');
+
+  const sourceFile = fileDescriptor(binarySource);
+  const name = String(options.name || sourceFile?.name || input?.name || '').trim();
+  const type = String(options.type || options.mimeType || input?.type || binary.type || '').trim();
+  if (!name) fail('CHAT_REFERENCE_HANDOFF_NAME_REQUIRED', 'Blob handoff requires an explicit file name');
+  if (!type) fail('CHAT_REFERENCE_HANDOFF_TYPE_REQUIRED', 'Blob handoff requires an explicit MIME type');
+
+  const requestedLastModified = options.lastModified ?? sourceFile?.lastModified ?? input?.lastModified;
+  const lastModifiedNumber = Number(requestedLastModified);
+  const lastModified = Number.isFinite(lastModifiedNumber) ? lastModifiedNumber : Date.now();
+
+  return new File([binary.blob], name, { type, lastModified });
 }
 
 function historySnapshot(app) {
