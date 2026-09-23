@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
+STATUS: `INK-CHAT-VALIDATION-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 ## Task
 
@@ -19,6 +19,13 @@ CROSS_REALM_FOCUSED_QA_CHECKPOINT = 7a254943f96a54873423d49a4b1243b483d7106a
 CROSS_REALM_BROWSER_QA_CHECKPOINT = 48c8b0fbbebe722ede91354f7450ef5d445b498a
 CROSS_REALM_RUNTIME_CONTRACT_CHECKPOINT = ebe34f03952ff7f4c2e0dd7c943fa3b67fb37280
 CROSS_REALM_REPORT_CHECKPOINT = 287eaea49af3f38df7194263e084123b20a7cbc0
+MR_LIVENESS_REVIEWED_HEAD = d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
+MR_LIVENESS_RUNTIME_RUN = 35840153267
+LOCAL_BYTE_MATERIALIZATION_CHECKPOINT = 9a7e02dc3070adc3ec07c0f68f16a8017bf91789
+LIVENESS_FOCUSED_QA_CHECKPOINT = f3ce464503a58906ed719a0c1748d80d1e8c8081
+LIVENESS_BROWSER_QA_CHECKPOINT = d82c0a20f4e4337f215f6ec34b52ceeb2248fe16
+LIVENESS_RUNTIME_CONTRACT_CHECKPOINT = 91badfa19ecbff765e6e8a6be68a2c9e9bc272c1
+LIVENESS_REPORT_CHECKPOINT = 57f537b69f82474c48918c2b66a65cdd0668f7f6
 TASK_STATUS = DEV_HANDOFF
 CURRENT_PHASE = HANDOFF / STOP
 PRODUCT_SCOPE = BOUNDED
@@ -472,3 +479,112 @@ Required bounded revision:
 8. Do not start Phase B.
 
 Return to `DEV_HANDOFF / STOP`.
+
+
+## DEV bounded revision completion — cross-realm handoff liveness
+
+MR baseline:
+
+```text
+REVIEWED_HEAD = d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
+RUNTIME_RUN = 35840153267
+ATTEMPT_1 = UI PASS / CREATIVE TIMEOUT 240S
+ATTEMPT_2 = UI PASS / CREATIVE TIMEOUT 240S
+SCOPE = CROSS_REALM_HANDOFF_LIVENESS_ONLY
+```
+
+Prior Runtime evidence did not contain an internal handoff checkpoint, so it could only prove that the handoff promise did not return before the outer timeout. It could not retrospectively identify a finer stage.
+
+Source-side blocking boundary removed:
+
+```text
+OLD
+external Blob
+→ local slice Blob
+→ local File([Blob-backed part])
+→ decoder consumption
+
+NEW
+external Blob/File platform brand
+→ await full arrayBuffer materialization
+→ local Uint8Array copy
+→ local File([local bytes])
+→ existing decoder
+```
+
+This removes any cross-realm Blob backing before decoder entry.
+
+Browser QA now records:
+
+```text
+cross-realm input confirmed
+→ normalization returned
+→ decoder entered
+→ decoder returned
+→ Reference import committed
+→ receipt returned
+```
+
+The handoff itself is bounded to 15 seconds. On timeout, the creative harness reports the completed checkpoint sequence immediately; the global 240-second timeout was not increased.
+
+Revision checkpoints:
+
+1. `9a7e02dc3070adc3ec07c0f68f16a8017bf91789` — fully materialize cross-realm binary into local bytes before local File construction; add adapter checkpoint emission.
+2. `f3ce464503a58906ed719a0c1748d80d1e8c8081` — update focused QA for async byte normalization and checkpoint ordering.
+3. `d82c0a20f4e4337f215f6ec34b52ceeb2248fe16` — add 15-second browser handoff timeout and six-stage liveness evidence.
+4. `91badfa19ecbff765e6e8a6be68a2c9e9bc272c1` — require liveness checks in authoritative Runtime batch.
+5. `57f537b69f82474c48918c2b66a65cdd0668f7f6` — update Phase A report.
+
+Exact-source DEV verification:
+
+```text
+HANDOFF_MODULE_SYNTAX = PASS
+FOCUSED_TEST_SYNTAX = PASS
+BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
+RUNTIME_BATCH_SYNTAX = PASS
+LOCAL_BYTE_MATERIALIZATION = PASS
+DECODER_RECEIVED_LOCAL_FILE = PASS
+CHECKPOINT_ORDER = PASS
+ARBITRARY_OBJECT_REJECTION = PASS
+HISTORY_COMMIT_VALID = PASS
+REVISION_IDENTITY_UNCHANGED = PASS
+SHORT_OPERATION_TIMEOUT = 15000ms
+GLOBAL_RUNTIME_TIMEOUT_INCREASE = 0
+```
+
+Preserved:
+
+```text
+INVALID_ARBITRARY_OBJECT_REJECTION = PRESERVED
+EXISTING_DECODER = PRESERVED
+HISTORY_AUTHORITY_CHANGE = 0
+AUDIT_AUTHORITY_CHANGE = 0
+PROVENANCE_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+DOCUMENT_AUTHORITY_CHANGE = 0
+PHASE_B = NOT_STARTED
+NEW_DRAWING_ENGINE = 0
+GITHUB_HOSTED_ACTIONS_USED = 0
+SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
+FORMAT_VERSION = 4
+```
+
+Runtime handoff state:
+
+```text
+CROSS_REALM_LIVENESS_BROWSER_QA_READY = PASS
+MR_EXACT_SHA_RUNTIME_RERUN = PENDING
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = HELD
+DEV_RUNTIME_PASS_CLAIM = 0
+```
+
+Final state:
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CHAT-VALIDATION-001
+PHASE = A_REFERENCE_HANDOFF
+REVISION_SCOPE = CROSS_REALM_HANDOFF_LIVENESS
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
