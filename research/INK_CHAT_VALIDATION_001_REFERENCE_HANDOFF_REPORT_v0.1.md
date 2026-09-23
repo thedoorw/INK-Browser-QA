@@ -663,3 +663,36 @@ MR_USER_ATTACHMENT_REAL_IMAGE_TEST = HELD_UNTIL_CREATIVE_RUNTIME_PASS
 ```
 
 The next MR exact-SHA Runtime run will provide the first browser-grounded proof of the full six-stage sequence.
+
+
+## MR final acceptance — Phase A closed
+
+```text
+EXACT_RUNTIME_TESTED_SHA = ababe86e049355f6464cdabfceacfe2c32992be1
+RUNTIME_RUN = 35847254857
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+RUNTIME_ARTIFACT = 10744043307
+RUNTIME_DIGEST = sha256:1f5e42a8823279f9f0fd1d6d20b016a5fb83d806ed091b84b566f6eefeb16544
+
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = PASS
+FILE = 1.jpg
+MIME = image/jpeg
+SIZE_BYTES = 28354
+DIMENSIONS = 564x703
+SHA256 = e5b9623bb58f107331f4e9db8f265031baf56dafba77745c63be8bd2c3b18de5
+CROSS_REALM_NORMALIZATION = PASS
+DECODE_COMPATIBILITY = PASS
+REFERENCE_IMPORT_COMPATIBILITY = PASS
+HISTORY_OPERATION_LABEL = Reference import · CHAT attachment
+RECEIPT = COMPLETED
+USER_IMAGE_PUBLIC_COMMIT = 0
+
+PR = #46 / MERGED
+PROMOTED_MAIN = d398d4bd89b5d22919a1e6dda310e7831114be1
+PROMOTED_PRODUCT_QA_EQUIVALENT_TO_TESTED_SHA = YES
+PHASE_A = CLOSED
+```
+
+The exact product/QA SHA passed the authoritative Windows browser Runtime. The private user JPEG separately passed the reviewed handoff/decoder compatibility path and was not published. Promotion changed only governance/status files relative to the tested SHA.
