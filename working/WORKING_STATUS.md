@@ -2177,3 +2177,28 @@ No source fetch/scrape, auto-memory write, auto-approval, auto-execution or user
 With CORE-MOD-006 Creative Memory and CORE-MOD-007 Research → Creation both MODULE_READY, the currently planned high-level Creative Intelligence foundation is complete at module-preparation level.
 
 The next engineering step should be a bounded Integration Work Order that product-wires compatible modules and then consumes central Runtime batching; no such task is authorized by this closure alone.
+
+
+## INK-CORE-INTEGRATION-005 activation
+
+```text
+TASK = INK-CORE-INTEGRATION-005
+TITLE = Creative Intelligence Memory + Research Integration v0.1
+BRANCH = work/ink-core-integration-005
+TARGET =
+  Grounded CHAT
+  + Creative Memory advisory
+  + Research → Creation advisory
+  → bounded reasoning
+  → grounded decision
+  → existing editable Plan
+CREATIVE_MEMORY_AUTO_WRITE = 0
+RESEARCH_REMOTE_FETCH = 0
+AUTO_APPROVAL = 0
+AUTO_EXECUTION = 0
+CONTINUATION_MAX = 1
+FORMAT_VERSION = 4
+RUNTIME = CENTRAL_QUEUE_AFTER_PROMOTION
+```
+
+This is the product-integration stage for CORE-MOD-006 and CORE-MOD-007. It must reuse the existing grounded CHAT and user-governed plan/execution boundaries.
