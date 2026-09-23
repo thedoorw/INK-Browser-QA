@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
+STATUS: `INK-CHAT-VALIDATION-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 ## Task
 
@@ -13,6 +13,12 @@ IMPLEMENTATION_QA_CHECKPOINT = 7bd33b705345b3c0f691b925ed8614311a0f7797
 REPORT_CHECKPOINT = 6b4cbd8da8887f750562242b2641e231df4d0d1c
 MR_REVISION_BASELINE = 3c1910694e356e6ceca1cef6b454dca34bd2726c
 HISTORY_RECEIPT_REVISION_CHECKPOINT = 6b4cbd8da8887f750562242b2641e231df4d0d1c
+MR_RUNTIME_REVIEWED_HEAD = 2d324df22dd58ebf3579ba175422839abd92bd04
+CROSS_REALM_SOURCE_CHECKPOINT = 6f31ce236d8efc79e41c0f504382e4c57de89331
+CROSS_REALM_FOCUSED_QA_CHECKPOINT = 7a254943f96a54873423d49a4b1243b483d7106a
+CROSS_REALM_BROWSER_QA_CHECKPOINT = 48c8b0fbbebe722ede91354f7450ef5d445b498a
+CROSS_REALM_RUNTIME_CONTRACT_CHECKPOINT = ebe34f03952ff7f4c2e0dd7c943fa3b67fb37280
+CROSS_REALM_REPORT_CHECKPOINT = 287eaea49af3f38df7194263e084123b20a7cbc0
 TASK_STATUS = DEV_HANDOFF
 CURRENT_PHASE = HANDOFF / STOP
 PRODUCT_SCOPE = BOUNDED
@@ -345,3 +351,90 @@ Required bounded revision:
 - preserve History/Audit/Provenance/Revision behavior;
 - no Phase B;
 - return `DEV_HANDOFF / STOP`.
+
+
+## DEV bounded revision completion — cross-realm binary handoff
+
+MR Runtime reviewed head:
+
+`2d324df22dd58ebf3579ba175422839abd92bd04`
+
+Runtime blocker:
+
+```text
+parent realm Blob
+→ iframe INK_CHAT_HANDOFF
+→ realm-local instanceof Blob/File fails
+→ valid binary rejected
+```
+
+Bounded correction:
+
+```text
+true external Blob/File platform object
+→ local Blob.prototype brand check
+→ local Blob slice
+→ local browser File
+→ existing decodeReferenceFile
+→ existing Reference import
+→ existing History / Audit / Provenance / Revision authority
+```
+
+Security boundary preserved:
+
+- no generic duck typing;
+- no trust in `Symbol.toStringTag`;
+- arbitrary object with Blob-like fields remains rejected;
+- MIME / size / image decoding remains in existing decoder;
+- no document replacement;
+- no History authority change;
+- no Revision authority change.
+
+Revision checkpoints:
+
+1. `6f31ce236d8efc79e41c0f504382e4c57de89331` — realm-safe binary platform-brand normalization into local File.
+2. `7a254943f96a54873423d49a4b1243b483d7106a` — focused QA for external branded Blob/File and spoof rejection.
+3. `48c8b0fbbebe722ede91354f7450ef5d445b498a` — explicit parent→iframe cross-realm browser evidence and decoder-local-File assertion.
+4. `ebe34f03952ff7f4c2e0dd7c943fa3b67fb37280` — require cross-realm evidence in authoritative Runtime batch.
+5. `287eaea49af3f38df7194263e084123b20a7cbc0` — update Phase A report.
+
+DEV verification:
+
+```text
+CROSS_REALM_BINARY_SOURCE_CONTRACT = PASS
+HANDOFF_MODULE_SYNTAX = PASS
+BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
+BATCH_REQUIRED_CHECK_CONTRACT = PASS
+BRANDED_BINARY_NORMALIZATION_BEHAVIOR = PASS
+ARBITRARY_OBJECT_REJECTION_BEHAVIOR = PASS
+HISTORY_AUTHORITY_CHANGE = 0
+AUDIT_AUTHORITY_CHANGE = 0
+PROVENANCE_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+PHASE_B = NOT_STARTED
+NEW_DRAWING_ENGINE = 0
+USER_IMAGE_COMMITTED = 0
+GITHUB_HOSTED_ACTIONS_USED = 0
+SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
+FORMAT_VERSION = 4
+```
+
+Browser Runtime status:
+
+```text
+CROSS_REALM_BROWSER_QA_READY = PASS
+AUTOMATED_FIXTURE_RUNTIME = MR_EXACT_SHA_RERUN_PENDING
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = HELD_UNTIL_RUNTIME_PASS
+DEV_RUNTIME_PASS_CLAIM = 0
+```
+
+Final state:
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CHAT-VALIDATION-001
+PHASE = A_REFERENCE_HANDOFF
+REVISION_SCOPE = CROSS_REALM_BINARY_HANDOFF
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
