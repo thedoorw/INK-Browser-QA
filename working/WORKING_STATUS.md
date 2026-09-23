@@ -2305,3 +2305,24 @@ UI_LANE = PAUSED
 ```
 
 The product wiring is not rejected. Closure is blocked only because the new workstation capability surfaces have not yet been exercised in the authoritative browser Runtime.
+
+
+## INK-CORE-INTEGRATION-006 final closure
+
+```text
+TASK = INK-CORE-INTEGRATION-006
+DEV_HANDOFF = 4694b618687d7813ce1c00cda434a31c757e8dde
+PR = #45 / MERGED
+PROMOTED_MAIN = 72840033d9c139df9a71c4ca48189100cf8986cd
+RUNTIME = 35817291661 / PASS
+TESTED_SHA = 72840033d9c139df9a71c4ca48189100cf8986cd
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+CAPABILITY_MATRIX = ACCEPTED
+UI_LANE = RESUME_ALLOWED
+FORMAT_VERSION = 4
+```
+
+The original UI hold is released. Future UI refinement must use the accepted Workstation UI × Capability Matrix as its functional placement baseline and must not detach visible controls from their accepted engine/CHAT/History/Revision authorities.
