@@ -154,7 +154,9 @@ export async function decomposeReferenceIntoLayers(app, referenceObjectId, adapt
     parameters:{
       mode:'color-regions',
       numberOfColors:Number(numberOfColors),
-      pathOmit:Number(pathOmit)
+      pathOmit:Number(pathOmit),
+      traceMaxPixels:160_000,
+      traceMaxDimension:512
     }
   },adapter,{signal});
   await new Promise(resolve=>setTimeout(resolve,0)); checkAbort(signal);
