@@ -2261,3 +2261,29 @@ FORMAT_VERSION = 4
 ```
 
 This is the installation/exposure stage for already-completed capabilities. It is not a new core-engine program and must not recreate functionality inside UI code.
+
+
+## UI lane pause during INK-CORE-INTEGRATION-006
+
+```text
+USER_DECISION = PAUSE ORIGINAL UI LINE
+UI_LANE = HOLD
+STRUCTURAL_UI_CHANGES = 0
+PANEL_HIERARCHY_CHANGES = 0
+CAPABILITY_PLACEMENT_CHANGES_OUTSIDE_006 = 0
+BOUNDED_NON_STRUCTURAL_BUGFIX = ALLOWED
+RESUME_AFTER =
+  INK-CORE-INTEGRATION-006 MR review
+  + accepted INK_WORKSTATION_UI_CAPABILITY_MATRIX_v0.1
+```
+
+Reason:
+
+```text
+completed capability inventory
+→ authoritative workstation placement
+→ UI-function wiring
+→ then resume visual/UI refinement
+```
+
+This prevents the UI maintenance lane from optimizing or rearranging surfaces before capability ownership and placement are stabilized.
