@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED`
+STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
 
 ## Task
 
@@ -188,3 +188,28 @@ FORMAT_VERSION = 4
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR bounded revision — 17a281a4c6568534e1f12649fe6d3f3257caa967
+
+```text
+MR_DECISION = REVISE
+RUNTIME = DO_NOT_RUN YET
+SCOPE = HISTORY RECEIPT CORRECTNESS ONLY
+```
+
+Finding:
+
+The current adapter requires `historyAfter.undoCount = historyBefore.undoCount + 1`.
+Accepted History is bounded and evicts its oldest entry when full, so a valid Reference import at History saturation is incorrectly returned as FAILED after the mutation has already committed.
+
+Required:
+
+- make validation History-limit-aware;
+- prove newest retained entry is the import from this operation;
+- add saturated-History focused QA;
+- prevent post-commit receipt status from contradicting committed document state;
+- preserve all current Phase A authority boundaries;
+- return to `DEV_HANDOFF / STOP`.
+
+Do not start Phase B.
