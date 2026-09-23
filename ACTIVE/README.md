@@ -15,15 +15,16 @@ DEV new-window instruction:
 
 Current state:
 
-`INK-CLOUD-003 → DEV_AUTHORIZED → work/ink-cloud-003`
+`INK-TECH-DEBT-001 → DEV_AUTHORIZED → work/ink-tech-debt-001`
 
 Accepted previous baseline:
-`INK-CLOUD-002 → SOURCE_REVIEW_PASS / RUNTIME_QA_DEFERRED → promoted to main at 7c03793ce7d289d0a1ecf1fafe3602aa9eedff13`
+`INK-CHAT-VALIDATION-001 Phase B → MR_PASS / PROMOTED / CLOSED`
 
-Current structural-core target:
-`Container / Ownership / Structural Semantics Foundation v0.1`
+Current target:
+`Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1`
 
-Cloud Start Gate remains blocked.
+UI coordination:
+`INK-WEB-UI-006 Phase A+B preserve / Phase C–I HOLD until technical-debt closure.`
 
 Legacy/detail files are retained:
 - `ACTIVE/INK_MAIN_REVIEW_BOARD.md`
