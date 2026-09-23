@@ -3,9 +3,7 @@
   "version": 1,
   "state": "PASS",
   "target_sha": "40a7e5e86e7b08c316210240be8527b020c5ecce",
-  "pending_work_orders": [
-    "INK-CHAT-VALIDATION-001"
-  ],
+  "pending_work_orders": [],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -15,7 +13,7 @@
   ],
   "high_risk": {
     "enabled": false,
-    "reason": "Phase B exact-SHA Windows browser Runtime passed; promotion authorized."
+    "reason": "Phase B closed and promoted; no pending Runtime target."
   },
   "batch_policy": {
     "default_target": 3,
