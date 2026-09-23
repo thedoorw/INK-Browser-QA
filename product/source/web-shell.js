@@ -539,6 +539,6 @@
     }
   };
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install, { once: true });
-  else install();
+  if (document.querySelector('#app')) install();
+  else document.addEventListener('DOMContentLoaded', install, { once: true });
 })();
