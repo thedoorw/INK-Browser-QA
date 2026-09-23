@@ -5,7 +5,7 @@ on:
     branches:
       - promote/ink-ui-debt-001
     paths:
-      - '.github/workflows/ink-ui-debt-001-branch-runtime.yml'
+      - '.github/workflows/ink-ui-debt-001-promotion-runtime.yml'
 
 permissions:
   contents: read
