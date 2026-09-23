@@ -223,7 +223,7 @@ export async function decomposeReferenceIntoLayers(app, referenceObjectId, adapt
     page.layers.push(colorLayer,lineLayer);
     page.activeLayerId=lineLayer.id;
   });
-  app.selection=linePaths.map(object=>({layerId:lineLayer.id,objectId:object.id}));
+  app.selection=linePaths.length?[{layerId:lineLayer.id,objectId:linePaths[0].id}]:[];
   app.spatialDirty=true; app.refreshAll?.();
 
   return {
