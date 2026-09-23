@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CORE-INTEGRATION-005 / DEV_IN_PROGRESS`
+STATUS: `INK-CORE-INTEGRATION-005 / DEV_HANDOFF`
 
 | Field | Value |
 |---|---|
@@ -8,8 +8,8 @@ STATUS: `INK-CORE-INTEGRATION-005 / DEV_IN_PROGRESS`
 | TITLE | `Creative Intelligence Memory + Research Integration v0.1` |
 | BRANCH | `work/ink-core-integration-005` |
 | BRANCH_BASE | `1e9d5f4df798eba97d21db551b71055230c61532` |
-| TASK_STATUS | `DEV_IN_PROGRESS` |
-| CURRENT_PHASE | `PHASE_C_D / CHAT_TOOL_AND_REASONING_INTEGRATION` |
+| TASK_STATUS | `DEV_HANDOFF` |
+| CURRENT_PHASE | `COMPLETE / STOP` |
 | TARGET_GATE | `INK_CORE_INTEGRATION_005_SOURCE_READY` |
 | CREATIVE_MEMORY_AUTO_WRITE | `0 / PROHIBITED` |
 | RESEARCH_REMOTE_FETCH | `0 / PROHIBITED` |
@@ -76,3 +76,63 @@ HIGH_LEVEL_INTELLIGENCE_REASONING_LOOP_WORKS
 - `createChatRuntime()` may receive optional module providers while preserving the old no-provider path.
 
 GitHub commit: `eda6f5771677fc4eb6e5ceb5251656b88e695281`
+
+
+## Checkpoint 3 — source QA + plan-boundary preservation
+
+Status:
+
+```text
+HIGH_LEVEL_INTELLIGENCE_PLAN_BOUNDARY_PRESERVED
+INK_CORE_INTEGRATION_005_SOURCE_READY
+```
+
+Task-specific QA:
+
+`qa/core-integration-005-creative-intelligence.test.mjs`
+
+Branch-only Source QA:
+
+- successful run: `35810111857`;
+- validated commit: `c28b9e4625931c9d2f7b53f1f352c7009281d1e4`;
+- Integration-001 / 002 / 003 / 004 / 005 = PASS;
+- CORE-MOD-006 Creative Memory = PASS;
+- CORE-MOD-007 Research → Creation = PASS;
+- existing creative-plan / bounded-edit unit + source checks = `21 / 21 PASS`;
+- `FORMAT_VERSION = 4`.
+
+The first task-local run exposed a QA-fixture error: the fixture supplied one creative-plan step while the existing authoritative plan contract requires at least two. The fixture was corrected without relaxing product constraints, and the complete suite then passed.
+
+Required report:
+
+`research/INK_CORE_INTEGRATION_005_CREATIVE_INTELLIGENCE_MEMORY_RESEARCH_REPORT_v0.1.md`
+
+Report commit: `3b9dd8e15857bf8c4d61c60c53855cf52119e597`
+
+Runtime was not executed by DEV.
+
+## DEV handoff
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CORE-INTEGRATION-005
+BRANCH = work/ink-core-integration-005
+GATE = INK_CORE_INTEGRATION_005_SOURCE_READY
+CREATIVE_MEMORY_AUTO_WRITE = 0
+RESEARCH_REMOTE_FETCH = 0
+AUTO_APPROVAL = 0
+AUTO_EXECUTION = 0
+AUTONOMOUS_RECURSION = 0
+CONTINUATION_MAX = 1
+UI_MUTATION = 0
+DOCUMENT_AUTHORITY_CHANGE = 0
+HISTORY_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+RENDERER_AUTHORITY_CHANGE = 0
+CHAT_EXECUTION_AUTHORITY_CHANGE = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED_TO_CENTRAL_RUNTIME_QUEUE
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
