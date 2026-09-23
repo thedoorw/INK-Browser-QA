@@ -858,7 +858,7 @@ function installRuntimeQaBridge(app){
     runtimeHealth(){return app.health.diagnostics();},
     releaseHealth(){return app.runReleaseHealthCheck();},
     updateStatus(){return app.updates.diagnostics();},
-    externalDiagnostics(){return buildExternalDiagnosticBundle({app,target:window,recorder:app.externalValidation,version:INK_VERSION,formatVersion:FORMAT_VERSION});},
+    externalDiagnostics(){return buildExternalDiagnosticBundle({app,target:window,recorder:app.externalValidation,version:INK_VERSION,buildId:BUILD_ID,formatVersion:FORMAT_VERSION});},
     createTileAtlas(width=4096,height=3072,scale=1){app.tileAtlas?.clear?.();app.tileAtlas=new PersistentTileAtlas({bounds:{x:0,y:0,w:width,h:height},scale,tileSize:1024,overlap:32,budgetBytes:32*1024*1024});return app.tileAtlas.diagnostics();},
     tileAtlas(){return app.tileAtlas?.diagnostics?.()||null;},
     frameSelection(options={}){const frame=app.frameSelection(options);return frame?{id:frame.id,width:frame.width,height:frame.height,children:frame.children.map(child=>child.id)}:null;},
