@@ -2058,3 +2058,22 @@ RUNTIME = CENTRAL_QUEUE / ACCUMULATE BY DEFAULT
 ```
 
 This stage connects grounded reasoning to the existing user-governed proposal → approval → execution → Revision path without creating a second plan or execution authority.
+
+
+## INK-CORE-INTEGRATION-004 closure
+
+```text
+TASK = INK-CORE-INTEGRATION-004
+TITLE = Grounded Creative Decision & Plan Bridge v0.1
+DEV_HANDOFF = 43cf492e870ea615fb1b1b07be4d73c54eca7bac
+SOURCE_QA = PASS / run 35800653674
+PROMOTION_PR = #40 / MERGED
+PROMOTED_MAIN = 061688b75ca49455ebff6b3fd22805ef9ec8091e
+RUNTIME_QUEUE = ACCUMULATING
+RUNTIME_PENDING += INK-CORE-INTEGRATION-004
+FORMAT_VERSION = 4
+```
+
+Grounded CHAT can now turn a grounded reasoning result into the existing editable creative-plan path while stopping at the existing user approval boundary.
+
+No immediate Windows Runtime was required. The task is waiting in the central Runtime Queue for a compatible batch.
