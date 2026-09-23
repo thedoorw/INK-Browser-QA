@@ -2472,3 +2472,19 @@ DECISION = MR_REVISE
 PRIVATE_USER_1_JPG = HELD
 NEXT = reduce ImageTracerJS validation trace budget only → DEV_HANDOFF / STOP → MR Runtime
 ```
+
+
+## INK-CHAT-VALIDATION-001 Phase B final-tuning Runtime checkpoint
+
+```text
+TESTED_SHA = 31a427d807f7497b7e64d159607380c056829d67
+RUN = 35863528804
+FINAL_TRACE_TUNING = ACCEPTED
+PREVIOUS_240S_TIMEOUT = RESOLVED
+UI = PASS
+CREATIVE = FAIL / AI_DOCUMENT_BRIDGE_SELECTION_BOUNDS_EXCEEDED
+CAUSE = decomposition selects all generated Line Paths (>96) before grounded provenance read
+DECISION = MR_REVISE
+PRIVATE_USER_1_JPG = HELD
+NEXT = bounded post-operation selection/receipt fix only → DEV_HANDOFF / STOP → MR Runtime
+```
