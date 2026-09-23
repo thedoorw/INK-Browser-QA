@@ -497,7 +497,7 @@ export function createChatReferenceHandoffAdapter(app, {
   });
 }
 
-export function installChatReferenceHandoffexport function installChatReferenceHandoff(app, {
+export function installChatReferenceHandoff(app, {
   auditLog = globalThis.INK_AI?.layer?.audit || null,
   groundedContextProvider = globalThis.INK_AI?.runtime?.groundedContextProvider || null
 } = {}) {
