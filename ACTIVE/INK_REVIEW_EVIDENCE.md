@@ -1,56 +1,58 @@
 # INK REVIEW EVIDENCE
 
-STATUS: `CORE-MOD-007 / MR_PASS_EVIDENCE / MODULE_READY`
+STATUS: `INK-CORE-INTEGRATION-005 / MR_PASS_EVIDENCE / CLOSED`
 
-## Source review
-
-```text
-DEV_HANDOFF = a2e26998ac5bfebf40d7a69c3ac0352ed04797e5
-BRANCH_BASE = be7b47ce94b91b5866a7c8c4ca2081bc0e000952
-TOPOLOGY = ahead 7 / behind 0
-CHANGED_PATHS = 4
-```
-
-## GitHub-hosted QA
+## Source evidence
 
 ```text
-WORKFLOW = CORE-MOD-007 Source QA
-RUN = 35806448801
-JOB = 107008277448
-TRIGGER_SHA = e9a8c9ebda4c75860ca4d967d754faa9f14cbf24
-SOURCE_CHECKPOINT = b838474feefb7c6eb6c234e6cb86c40be8b3a2cc
-RESULT = SUCCESS
+DEV_HANDOFF = 02a5ac20206bd82d83068dd1e0b07d1c3dc267b1
+BRANCH_BASE = 1e9d5f4df798eba97d21db551b71055230c61532
+SOURCE_QA_RUN = 35810111857
+SOURCE_QA_JOB = 107019569622
+SOURCE_QA_TESTED_SHA = c28b9e4625931c9d2f7b53f1f352c7009281d1e4
+SOURCE_QA_RESULT = SUCCESS
+POST_QA_PRODUCT_DELTA = NONE
 ```
 
-The task-local source-QA workflow was removed before handoff.
-
-Source/test content did not change after the source checkpoint.
-
-## Promotion payload
+## Promotion
 
 ```text
-product/source/src/research/research-creation-bridge.js
-qa/core-mod-007-research-creation.test.mjs
-research/INK_CORE_MOD_007_RESEARCH_CREATION_BRIDGE_REPORT_v0.1.md
+PROMOTION_PR = #43 / MERGED
+PROMOTED_MAIN_SHA = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
 ```
+
+Promotion payload:
+- `product/source/src/ai/chat-runtime.js`
+- `product/source/src/ai/creative-intelligence-context.js`
+- `qa/core-integration-005-creative-intelligence.test.mjs`
+- `research/INK_CORE_INTEGRATION_005_CREATIVE_INTELLIGENCE_MEMORY_RESEARCH_REPORT_v0.1.md`
 
 Excluded:
 - branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 - task-local source-QA workflow
 
-Promotion report-only correction:
-- `EXPLICIT_USER_RESEARCH_NOTE` → `USER_RESEARCH_NOTE`
+## Central Runtime
 
 ```text
-PROMOTION_PR = #42 / MERGED
-PROMOTED_MAIN_SHA = b480cb851c74e8439b94543253735a3d1fecf1ac
+QUEUE_READY_COMMIT = b3d1d860cc3e898abcc9454531d7ffad0ae0f82b
+RUN = 35811427341
+CONTROLLER_JOB = 107023660922 / PASS
+WINDOWS_JOB = 107023680473 / PASS
+TESTED_SHA = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
+WORKFLOW_SHA = b3d1d860cc3e898abcc9454531d7ffad0ae0f82b
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10730145736
+ARTIFACT_DIGEST = sha256:32727c1dc07eb9ce95d91cf386e302d4d7dead9392389e379148c580e4628c1f
 ```
 
-## Runtime
+Queue closure:
+- pending work orders = none;
+- covered work orders include `INK-CORE-INTEGRATION-004` and `INK-CORE-INTEGRATION-005`;
+- last run = 35811427341 / exact tested SHA / PASS.
 
-```text
-MODULE_STATE = MODULE_READY
-PRODUCT_INTEGRATED = NO
-RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
-CENTRAL_RUNTIME_QUEUE_CHANGE = NONE
-```
+Evidence scope:
+- Integration-005 high-level advisory semantics: source/Node QA.
+- browser-level product integration/regression: central Windows Runtime.
