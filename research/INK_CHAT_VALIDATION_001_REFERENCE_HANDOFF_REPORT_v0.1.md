@@ -18,6 +18,22 @@ GITHUB_HOSTED_ACTIONS_USED = 0
 LINE_COLOR_SEPARATION = NOT_STARTED / OUT_OF_SCOPE
 ```
 
+## Governance baseline note
+
+The DEV branch was initialized from merge base `734deaf86db59e34683ab85314f582bff7d9ed97` before the three current governance-only commits on `main`.
+
+Therefore the branch-local `ACTIVE/INK_CURRENT_WORK_ORDER.md` still shows the prior closed Integration-006 order. The authoritative current Work Order is `main:ACTIVE/INK_CURRENT_WORK_ORDER.md`:
+
+`INK-CHAT-VALIDATION-001 / AUTHORIZED / PHASE_A_REFERENCE_HANDOFF`
+
+The three `main` commits missing from the DEV branch change only:
+
+- `ACTIVE/INK_CURRENT_WORK_ORDER.md`
+- `ACTIVE/INK_REVIEW_STATUS.md`
+- `working/WORKING_STATUS.md`
+
+No product/QA source is missing from the DEV baseline. DEV did not copy or rewrite Work Order authority into the feature branch; MR should reconcile governance during review/promotion.
+
 ## Phase A result
 
 Implemented the bounded collaboration boundary:
