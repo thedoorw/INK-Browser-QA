@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / DEV_HANDOFF / MR_REVIEW_REQUIRED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_REVISE / BOUNDED_TUNING_AUTHORIZED`
 
 ## Task
 
@@ -341,3 +341,30 @@ GITHUB_HOSTED_DEV_WORKFLOW = 0
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR Runtime revision — validation-grade trace budget
+
+```text
+REVIEWED_HEAD = 1ad65b932835ef754b7d42291f7e70cdcd048925
+RUNTIME_RUN = 35860798446
+SOURCE_REVIEW = PASS
+UI = PASS
+CREATIVE = HARNESS_TIMEOUT_240S
+CURRENT_TRACE_BOUND = 160000 px / 512
+SCOPE = COLOR_REGIONS_TRACER_TUNING_ONLY
+```
+
+The bounded-raster and source-coordinate-remap architecture is accepted. Do not replace it.
+
+Required final tuning pass:
+
+- reduce `color-regions` work raster to an initial maximum of 64,000 pixels and 320 px on either side;
+- use the minimum practical deterministic color quantization cycles, preferably 1;
+- retain bounded palette count;
+- retain all existing Phase B Color/Line/layer/History/Audit/Provenance assertions;
+- meet the existing browser assertion that the Phase B operation completes in <30 seconds;
+- do not increase the 240-second global Runtime timeout;
+- no new diagnostics framework, no semantic labeling, no centerline, no Phase C, no new extraction engine.
+
+Return `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`.
