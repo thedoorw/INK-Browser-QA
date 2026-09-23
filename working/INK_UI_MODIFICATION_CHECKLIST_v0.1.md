@@ -86,7 +86,7 @@ REFERENCE: `research/INK_IDEAL_UI_STANDARD_v0.1.md`
 
 ## H. Canvas / workspace
 
-- [x] No dark→white startup flash. *(source-level Phase B: light meta/manifest + inline startup shell; UR runtime visual confirmation pending)*
+- [ ] First visible INK application frame is already the final shell state; no temporary dark, neutral, color-matched, splash, or placeholder app frame is rendered first.
 - [ ] Initial workspace state is visually deterministic.
 - [ ] Creation/Layout primary home is defined.
 - [ ] Duplicate workspace toggles are removed or explicitly secondary.
