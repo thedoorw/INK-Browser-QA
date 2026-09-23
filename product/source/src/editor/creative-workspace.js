@@ -205,6 +205,11 @@ export class CreativeWorkspaceController {
     this.draftPlanSteps = [];
     this.planApprovalToken = null;
     this.lastPlanResult = null;
+    this.groundedToolSequence = 0;
+    this.lastGroundedContext = null;
+    this.lastCreativeMemoryContext = null;
+    this.lastResearchCreationContext = null;
+    this.lastRevisionComparison = null;
     this.conversationMessages = [];
     this.conversationSessionId = null;
     this.conversationClient = null;
@@ -269,6 +274,12 @@ export class CreativeWorkspaceController {
             <button type="button" class="creative-workspace-primary" data-workspace-action="structure-reconstruct">Analyze + reconstruct</button>
             <output data-workspace-output="structure">Not executed.</output>
           </details>
+          <details class="creative-structure-option workstation-capability-card">
+            <summary>Research → Creation <span>READ ONLY</span></summary>
+            <p>Local evidence, derived visual principles, and creative constraints. No remote fetch and no automatic Creative Memory write.</p>
+            <button type="button" data-workspace-action="research-context-refresh">Refresh research context</button>
+            <output data-workspace-output="research-context">Research advisory not inspected.</output>
+          </details>
         </section>
         <section data-workspace-pane="edit" hidden>
           <strong>Path Edit + Expressive Stroke</strong>
@@ -293,6 +304,11 @@ export class CreativeWorkspaceController {
           <label class="creative-workspace-field"><span>Material ID</span><input type="text" data-workspace-input="material-id" value="workspace-material"></label>
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-material">Apply material</button><button type="button" data-workspace-action="clear-material">Clear material</button></div>
           <output data-workspace-output="compose">Composition commands preserve structured objects.</output>
+          <details class="creative-structure-option workstation-capability-card">
+            <summary>Parametric Structure <span>EXISTING AUTHORITY</span></summary>
+            <p>Selected Repeat status is shown here. Repeat/Transform mutation remains on the existing Core controls; CHAT accepts explicit deterministic structure descriptors.</p>
+            <output data-workspace-output="parametric-context">Select a Repeat to inspect deterministic structure state.</output>
+          </details>
         </section>
         <section data-workspace-pane="chat" hidden>
           <strong>Natural-language CHAT</strong>
@@ -305,6 +321,12 @@ export class CreativeWorkspaceController {
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-conversation-send">Send</button><button type="button" data-workspace-action="chat-conversation-clear">Clear</button></div>
           <button type="button" class="creative-workspace-primary" data-workspace-action="chat-conversation-transmit" hidden>Approve external transmission</button>
           <output data-workspace-output="chat-context">Context not inspected.</output>
+          <details class="creative-structure-option workstation-capability-card" open>
+            <summary>Grounded Core context <span>READ ONLY</span></summary>
+            <div class="creative-workspace-actions"><button type="button" data-workspace-action="grounded-context-refresh">Grounded context</button><button type="button" data-workspace-action="creative-memory-refresh">Creative Memory</button><button type="button" data-workspace-action="research-context-refresh">Research</button></div>
+            <output data-workspace-output="grounded-context">Grounded context not inspected.</output>
+            <output data-workspace-output="creative-memory-context">Creative Memory advisory not inspected.</output>
+          </details>
           <hr>
           <strong>Bounded mutation</strong>
           <label class="creative-workspace-field"><span>Operation</span>
@@ -345,7 +367,10 @@ export class CreativeWorkspaceController {
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="revision-capture">Capture</button><button type="button" data-workspace-action="revision-list">Refresh list</button></div>
           <label class="creative-workspace-field"><span>Revision</span><select data-workspace-input="revision-id"><option value="">No revisions</option></select></label>
           <button type="button" class="creative-workspace-primary" data-workspace-action="revision-restore">Restore selected Revision</button>
+          <div class="creative-workspace-actions"><select data-workspace-input="revision-compare-mode" aria-label="Revision comparison mode"><option value="structural">Structural</option><option value="side-by-side">Side by side</option><option value="overlay">Overlay</option><option value="wipe">Wipe</option><option value="difference">Difference</option></select><button type="button" data-workspace-action="revision-compare">Compare with current</button></div>
           <output data-workspace-output="revision">Current revision: none</output>
+          <output data-workspace-output="revision-compare">Comparison not executed.</output>
+          <output data-workspace-output="revision-provenance">Provenance not inspected.</output>
         </section>
       </div>
       <div class="creative-workspace-status" data-workspace-value="status" role="status">Creative workspace ready</div>
@@ -373,12 +398,73 @@ export class CreativeWorkspaceController {
         this.changeOverlay(Number(event.target.value));
       }
     });
+    this.mountSelectionCapabilityCard();
     this.setStage(this.stage);
     this.refresh();
     return this;
   }
 
+  mountSelectionCapabilityCard() {
+    const selectionControls = document.querySelector('#selectionControls');
+    if (!selectionControls || document.querySelector('#workstationSelectionCapabilities')) return;
+    const card = document.createElement('div');
+    card.id = 'workstationSelectionCapabilities';
+    card.className = 'property-card workstation-capability-card';
+    card.innerHTML = '<div class="subpanel-title"><strong>Grounded selection</strong><span>AI / CORE · READ ONLY</span></div><p data-workstation-output="selection-capability">Select an object to inspect Document Bridge and Semantic Region grounding.</p><button type="button" class="wide-button compact-button" data-workstation-action="grounded-selection-refresh">Inspect grounded selection</button>';
+    selectionControls.append(card);
+    card.querySelector('[data-workstation-action="grounded-selection-refresh"]')?.addEventListener('click', () => {
+      void this.runCapabilityAction('grounded-context-refresh');
+    });
+  }
+
+  async callGroundedTool(name, args = {}) {
+    const runtime = this.conversationRuntime();
+    const router = runtime?.toolRouter;
+    if (!router?.route) throw Object.assign(new Error('Grounded CHAT tool router unavailable'), { code: 'GROUNDED_TOOL_ROUTER_UNAVAILABLE' });
+    const response = await router.route({
+      id: `workspace-${name}-${++this.groundedToolSequence}`,
+      name,
+      arguments: clone(args)
+    }, { permission: 'OBSERVE', scope: 'CURRENT_DOCUMENT', sessionId: 'creative-workspace' });
+    return clone(response?.result ?? response ?? null);
+  }
+
+  async runCapabilityAction(action) {
+    try {
+      if (action === 'grounded-context-refresh') {
+        this.lastGroundedContext = await this.callGroundedTool('get_grounded_creative_context');
+        this.setStatus('GROUNDED_CONTEXT_REFRESHED', 'Document / Semantic / Provenance context refreshed', 'pass');
+      } else if (action === 'creative-memory-refresh') {
+        this.lastCreativeMemoryContext = await this.callGroundedTool('get_creative_memory_context');
+        this.setStatus('CREATIVE_MEMORY_REFRESHED', 'Creative Memory advisory refreshed; no write performed', 'pass');
+      } else if (action === 'research-context-refresh') {
+        this.lastResearchCreationContext = await this.callGroundedTool('get_research_creation_context');
+        this.setStatus('RESEARCH_CONTEXT_REFRESHED', 'Local Research → Creation advisory refreshed; no network request performed', 'pass');
+      } else if (action === 'revision-compare') {
+        const revisionId = text(this.root?.querySelector('[data-workspace-input="revision-id"]')?.value);
+        if (!revisionId) throw Object.assign(new Error('Select a Revision'), { code: 'REVISION_REQUIRED' });
+        const revisionRecord = await this.app?.revisions?.loadRecord?.(revisionId);
+        if (!revisionRecord) throw Object.assign(new Error('Revision record unavailable'), { code: 'REVISION_RECORD_UNAVAILABLE' });
+        const mode = this.root?.querySelector('[data-workspace-input="revision-compare-mode"]')?.value || 'structural';
+        this.lastRevisionComparison = await this.callGroundedTool('compare_visual_subjects', {
+          subjectA: { kind: 'revision', revisionRecord, label: revisionRecord.label || revisionId },
+          subjectB: { kind: 'current', document: this.app?.doc, label: 'Current' },
+          options: { mode }
+        });
+        if (!this.lastGroundedContext) this.lastGroundedContext = await this.callGroundedTool('get_grounded_creative_context');
+        this.setStatus('REVISION_COMPARISON_REFRESHED', `${mode} · metadata/structural evidence only`, 'pass');
+      }
+      this.refresh();
+      return true;
+    } catch (error) {
+      this.setStatus(error?.code || 'WORKSTATION_CAPABILITY_FAILED', error?.message || 'Capability read failed', 'error');
+      this.refresh();
+      return null;
+    }
+  }
+
   async handleAction(action) {
+    if (['grounded-context-refresh','creative-memory-refresh','research-context-refresh','revision-compare'].includes(action)) return this.runCapabilityAction(action);
     if (action === 'extract') return this.runExtraction();
     if (action === 'cancel-extract') return this.cancelExtraction();
     if (action === 'structure-reconstruct') return this.runStructure();
@@ -635,6 +721,16 @@ export class CreativeWorkspaceController {
     if (composeOutput) {
       const selectedTypes = state.selection.items.map(item => item.type).join(', ') || 'none';
       composeOutput.textContent = `${state.selection.count} selected · ${selectedTypes} · History ${state.history.undoCount}/${state.history.redoCount}`;
+    }
+    const parametricOutput = this.root.querySelector('[data-workspace-output="parametric-context"]');
+    if (parametricOutput) {
+      const repeat = (typeof this.app?.selectedObjects === 'function' ? this.app.selectedObjects() : []).find(item => item.object?.type === 'repeat')?.object;
+      if (!repeat) {
+        parametricOutput.textContent = 'Select a Repeat to inspect deterministic structure state. Explicit descriptors are available to CHAT through resolve_parametric_structure.';
+      } else {
+        const instanceCount = Array.isArray(repeat.instances) ? repeat.instances.length : Number(repeat.count || 0);
+        parametricOutput.textContent = `Repeat · ${repeat.mode || 'radial'} · ${instanceCount} instance(s) · ${repeat.linked === false ? 'expanded/unlinked' : 'linked'} · source ${repeat.sourceObjectId || repeat.source?.id || 'unknown'}`;
+      }
     }
     const enter = this.root.querySelector('[data-workspace-action="enter-path-edit"]');
     const exit = this.root.querySelector('[data-workspace-action="exit-path-edit"]');
@@ -991,6 +1087,54 @@ export class CreativeWorkspaceController {
     }
   }
 
+  refreshCapabilityReadouts(state = this.state()) {
+    const grounded = this.lastGroundedContext;
+    const groundedOutput = this.root?.querySelector('[data-workspace-output="grounded-context"]');
+    if (groundedOutput) {
+      if (!grounded) groundedOutput.textContent = 'Grounded tools ready · inspect to read Document Bridge / Semantic Regions / Provenance.';
+      else {
+        const modules = grounded.modules || {};
+        const semanticCount = modules.semanticRegions?.context?.regions?.length
+          ?? modules.semanticRegions?.context?.semanticRegions?.length
+          ?? 0;
+        const provenanceEvents = modules.provenance?.context?.events?.length ?? 0;
+        groundedOutput.textContent = `Document ${modules.documentBridge?.status || 'UNAVAILABLE'} · Semantic ${modules.semanticRegions?.status || 'UNAVAILABLE'} (${semanticCount}) · Provenance ${modules.provenance?.status || 'UNAVAILABLE'} (${provenanceEvents} events)`;
+      }
+    }
+
+    const selectionOutput = document.querySelector('[data-workstation-output="selection-capability"]');
+    if (selectionOutput) {
+      if (!state.selection.count) selectionOutput.textContent = 'Select an object to inspect Document Bridge and Semantic Region grounding.';
+      else if (!grounded) selectionOutput.textContent = `${selectionLabel(state.selection)} · grounded context not inspected`;
+      else {
+        const selectedIds = grounded.modules?.documentBridge?.context?.selection?.objectIds
+          || grounded.modules?.documentBridge?.context?.selection?.selectedObjectIds
+          || state.selection.items.map(item => item.objectId);
+        selectionOutput.textContent = `Document Bridge AVAILABLE · ${selectedIds.length || state.selection.count} selected · Semantic ${grounded.modules?.semanticRegions?.status || 'UNAVAILABLE'} · read-only`;
+      }
+    }
+
+    const memoryOutput = this.root?.querySelector('[data-workspace-output="creative-memory-context"]');
+    if (memoryOutput) {
+      const memory = this.lastCreativeMemoryContext;
+      if (!memory) memoryOutput.textContent = 'Creative Memory provider ready · advisory not inspected.';
+      else if (memory.status === 'UNAVAILABLE') memoryOutput.textContent = 'Creative Memory · UNAVAILABLE';
+      else {
+        const selected = memory.selectedRecords?.length || 0;
+        const approaches = memory.approaches || {};
+        memoryOutput.textContent = `Creative Memory · ${selected} selected · accepted ${approaches.accepted?.count ?? 0} · rejected ${approaches.rejected?.count ?? 0} · unresolved ${approaches.unresolved?.count ?? 0} · READ ONLY`;
+      }
+    }
+
+    const researchOutput = this.root?.querySelector('[data-workspace-output="research-context"]');
+    if (researchOutput) {
+      const research = this.lastResearchCreationContext;
+      if (!research) researchOutput.textContent = 'Research advisory provider ready · no remote fetch.';
+      else if (research.status === 'UNAVAILABLE') researchOutput.textContent = 'Research → Creation · UNAVAILABLE';
+      else researchOutput.textContent = `Evidence ${research.selectedResearchEvidence?.length || 0} · Principles ${research.derivedPrinciples?.length || 0} · Constraints ${research.derivedCreativeConstraints?.length || 0} · unresolved ${research.unresolvedEvidence?.length || 0} · READ ONLY`;
+    }
+  }
+
   refreshChat() {
     if (!this.root) return;
     this.refreshConversation();
@@ -1146,8 +1290,28 @@ export class CreativeWorkspaceController {
       }
     }
     const restore = this.root.querySelector('[data-workspace-action="revision-restore"]');
+    const compare = this.root.querySelector('[data-workspace-action="revision-compare"]');
     const selectedRevision = this.root.querySelector('[data-workspace-input="revision-id"]')?.value;
     if (restore) restore.disabled = !selectedRevision;
+    if (compare) compare.disabled = !selectedRevision;
+
+    const compareOutput = this.root.querySelector('[data-workspace-output="revision-compare"]');
+    if (compareOutput) {
+      const evidence = this.lastRevisionComparison;
+      if (!evidence) compareOutput.textContent = 'Comparison not executed.';
+      else if (evidence.status === 'UNAVAILABLE') compareOutput.textContent = 'Visual Compare · UNAVAILABLE';
+      else {
+        const structural = evidence.structural || {};
+        const counts = structural.objectCounts;
+        compareOutput.textContent = `${evidence.mode?.requested || 'structural'} · ${structural.status || 'UNRESOLVED'} · ${structural.equivalent === true ? 'equivalent' : structural.equivalent === false ? 'changed' : 'unknown'}${counts ? ` · +${counts.added} −${counts.removed} Δ${counts.changed}` : ''} · renderer ${evidence.mode?.renderingExecuted ? 'used' : 'not used'}`;
+      }
+    }
+    const provenanceOutput = this.root.querySelector('[data-workspace-output="revision-provenance"]');
+    if (provenanceOutput) {
+      const provenance = this.lastGroundedContext?.modules?.provenance;
+      if (!provenance) provenanceOutput.textContent = 'Provenance not inspected.';
+      else provenanceOutput.textContent = `Provenance ${provenance.status} · ${provenance.context?.events?.length || 0} event(s) · ${provenance.context?.edges?.length || 0} edge(s) · read-only`;
+    }
   }
 
   setOpen(open) {
@@ -1213,6 +1377,7 @@ export class CreativeWorkspaceController {
     this.root.dataset.formatVersion = String(state.document?.formatVersion ?? '');
     this.refreshReference(state);
     this.refreshEditCompose(state);
+    this.refreshCapabilityReadouts(state);
     this.refreshChat(state);
     this.refreshRevision(state);
     return state;
