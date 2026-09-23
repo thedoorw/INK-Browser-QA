@@ -113,7 +113,10 @@ test('portable static shell is an exact local closure of product/source/src', ()
   assert.doesNotMatch(serviceWorker, /const RELEASE_VERSION = '0\.1-Web'/);
 
   const manifest = JSON.parse(readSource('manifest.webmanifest'));
-  assert.deepEqual(manifest.icons, []);
+  assert.equal(manifest.icons?.length, 1);
+  assert.equal(manifest.icons?.[0]?.src, './assets/ink-mark.svg');
+  assert.ok(serviceWorker.includes("'./assets/ink-mark.svg'"));
+  assert.ok(serviceWorker.includes("'./assets/INK_MARK_SOURCE_W-300.jpg'"));
 });
 
 test('all local static ES module references resolve to files in the shared source tree', () => {
