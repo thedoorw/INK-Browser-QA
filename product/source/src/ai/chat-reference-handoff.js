@@ -1,6 +1,9 @@
 export const CHAT_REFERENCE_HANDOFF_SCHEMA = 'INK-CHAT-REFERENCE-HANDOFF/1';
 export const CHAT_REFERENCE_HANDOFF_CHANNEL = 'CHAT_ATTACHMENT_HANDOFF';
 export const CHAT_REFERENCE_HANDOFF_OPERATION = 'reference.import';
+export const CHAT_REFERENCE_DECOMPOSITION_SCHEMA = 'INK-CHAT-REFERENCE-DECOMPOSITION/1';
+export const CHAT_REFERENCE_DECOMPOSITION_CHANNEL = 'CHAT_REFERENCE_DECOMPOSITION';
+export const CHAT_REFERENCE_DECOMPOSITION_OPERATION = 'reference.decompose.line-color';
 
 const clone = value => value == null ? value : structuredClone(value);
 
@@ -136,20 +139,36 @@ function revisionIdentity(app) {
   return app?.revisions?.revisionIdFor?.(app?.doc?.id) ?? null;
 }
 
-function provenanceIdentity(provider, referenceObjectId) {
-  if (!provider?.read || !referenceObjectId) return null;
+function provenanceIdentity(provider, objectIds) {
+  const ids=new Set((Array.isArray(objectIds)?objectIds:[objectIds]).filter(Boolean));
+  if (!provider?.read || !ids.size) return null;
   const context = provider.read();
   const provenance = context?.modules?.provenance;
   const events = provenance?.context?.events || [];
   const matched = events.filter(event =>
-    event?.target?.type === 'object' && event.target.id === referenceObjectId
-    || Array.isArray(event?.objectIds) && event.objectIds.includes(referenceObjectId)
+    event?.target?.type === 'object' && ids.has(event.target.id)
+    || Array.isArray(event?.objectIds) && event.objectIds.some(id=>ids.has(id))
   );
   return {
     status: provenance?.status || 'UNAVAILABLE',
     fingerprint: provenance?.fingerprint || null,
     eventIds: matched.map(event => event.eventId).filter(Boolean),
     eventKinds: matched.map(event => event.kind).filter(Boolean)
+  };
+}
+
+function historyLabelValidation(before, after, label) {
+  const expectedApplied=Math.min(before.applied+1,after.limit);
+  const newestMatches=after.lastEntry?.label===label;
+  const redoCleared=after.redoCount===0;
+  return {
+    valid:!after.pending&&after.applied===expectedApplied&&newestMatches&&redoCleared,
+    saturatedBefore:before.applied>=before.limit,
+    expectedApplied,
+    actualApplied:after.applied,
+    limit:after.limit,
+    newestMatches,
+    redoCleared
   };
 }
 
@@ -338,21 +357,158 @@ export function createChatReferenceHandoffAdapter(app, {
           error: { code: error?.code || 'CHAT_REFERENCE_HANDOFF_FAILED', message: error?.message || String(error) }
         };
       }
+    },
+    async decomposeReference(referenceObjectId, options = {}) {
+      const intent=String(options.intent||'Decompose existing INK Reference into editable Color regions and boundary Line paths');
+      const actor=clone(options.actor||{type:'chat',id:'chat',channel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL});
+      const historyBefore=historySnapshot(app);
+      const revisionBefore=revisionIdentity(app);
+      let decomposed=null;
+      try {
+        if(typeof app?.extraction?.decomposeReference!=='function') {
+          fail('CHAT_REFERENCE_DECOMPOSITION_AUTHORITY_UNAVAILABLE','Authoritative Reference decomposition authority is unavailable');
+        }
+        decomposed=await app.extraction.decomposeReference(referenceObjectId,{
+          numberOfColors:options.numberOfColors,
+          pathOmit:options.pathOmit,
+          lineStroke:options.lineStroke,
+          lineStrokeWidth:options.lineStrokeWidth,
+          actor,
+          sourceChannel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL,
+          signal:options.signal
+        });
+        const historyAfter=historySnapshot(app);
+        const revisionAfter=revisionIdentity(app);
+        const historyCommit=historyLabelValidation(historyBefore,historyAfter,decomposed.historyLabel);
+        if(!historyCommit.valid) {
+          fail('CHAT_REFERENCE_DECOMPOSITION_HISTORY_CONTRACT','Reference decomposition History receipt does not match the committed authoritative entry',{
+            historyBefore,historyAfter,historyCommit,referenceObjectId
+          });
+        }
+        const generatedIds=[...(decomposed.colorObjectIds||[]),...(decomposed.lineObjectIds||[])];
+        const audit=addAudit(auditLog,{
+          actor,
+          modelClient:'CHAT_REFERENCE_DECOMPOSITION',
+          promptSummary:intent,
+          permissionLevel:'EXECUTE',
+          targetIds:[referenceObjectId,...generatedIds],
+          commands:[CHAT_REFERENCE_DECOMPOSITION_OPERATION],
+          parameters:{
+            sourceReferenceObjectId:referenceObjectId,
+            sourceSha256:decomposed.source?.sha256||null,
+            numberOfColors:options.numberOfColors??8,
+            lineStroke:options.lineStroke||'#202020',
+            lineStrokeWidth:options.lineStrokeWidth??1,
+            sourceChannel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL
+          },
+          executionResult:{
+            status:'COMPLETED',
+            documentId:decomposed.documentId,
+            colorLayerId:decomposed.colorLayerId,
+            lineLayerId:decomposed.lineLayerId,
+            colorCount:decomposed.colorCount,
+            lineCount:decomposed.lineCount
+          },
+          securityEvents:['AUTHORITATIVE_HISTORY_PATH','EXISTING_IMAGETRACERJS'],
+          auditMetadata:{
+            schema:CHAT_REFERENCE_DECOMPOSITION_SCHEMA,
+            operation:CHAT_REFERENCE_DECOMPOSITION_OPERATION,
+            sourceChannel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL
+          }
+        });
+        return {
+          schema:CHAT_REFERENCE_DECOMPOSITION_SCHEMA,
+          version:1,
+          operation:CHAT_REFERENCE_DECOMPOSITION_OPERATION,
+          intent,
+          actor,
+          sourceChannel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL,
+          documentId:decomposed.documentId,
+          sourceReferenceObjectId:referenceObjectId,
+          source:clone(decomposed.source),
+          colorLayerId:decomposed.colorLayerId,
+          lineLayerId:decomposed.lineLayerId,
+          colorObjectIds:clone(decomposed.colorObjectIds),
+          lineObjectIds:clone(decomposed.lineObjectIds),
+          colorCount:decomposed.colorCount,
+          lineCount:decomposed.lineCount,
+          palette:clone(decomposed.palette),
+          history:{before:historyBefore,after:historyAfter,commit:historyCommit},
+          revision:{before:revisionBefore,after:revisionAfter},
+          audit:audit?{auditId:audit.auditId,format:audit.format}:null,
+          provenance:provenanceIdentity(groundedContextProvider,generatedIds),
+          status:'COMPLETED',
+          error:null
+        };
+      } catch(error) {
+        const historyAfter=historySnapshot(app);
+        const revisionAfter=revisionIdentity(app);
+        const committed=Boolean(decomposed);
+        const historyCommit=committed?historyLabelValidation(historyBefore,historyAfter,decomposed.historyLabel):null;
+        const generatedIds=committed?[...(decomposed.colorObjectIds||[]),...(decomposed.lineObjectIds||[])]:[];
+        const failureAudit=addAudit(auditLog,{
+          actor,
+          modelClient:'CHAT_REFERENCE_DECOMPOSITION',
+          promptSummary:intent,
+          permissionLevel:'EXECUTE',
+          targetIds:[referenceObjectId,...generatedIds],
+          commands:[CHAT_REFERENCE_DECOMPOSITION_OPERATION],
+          parameters:{sourceReferenceObjectId:referenceObjectId,sourceChannel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL},
+          executionResult:committed?{
+            status:'COMMITTED_WITH_ERROR',
+            documentId:decomposed.documentId,
+            colorLayerId:decomposed.colorLayerId,
+            lineLayerId:decomposed.lineLayerId
+          }:{status:'FAILED'},
+          error:{code:error?.code||'CHAT_REFERENCE_DECOMPOSITION_FAILED',message:error?.message||String(error)},
+          securityEvents:['AUTHORITATIVE_HISTORY_PATH'],
+          auditMetadata:{
+            schema:CHAT_REFERENCE_DECOMPOSITION_SCHEMA,
+            operation:CHAT_REFERENCE_DECOMPOSITION_OPERATION,
+            sourceChannel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL
+          }
+        });
+        return {
+          schema:CHAT_REFERENCE_DECOMPOSITION_SCHEMA,
+          version:1,
+          operation:CHAT_REFERENCE_DECOMPOSITION_OPERATION,
+          intent,
+          actor,
+          sourceChannel:CHAT_REFERENCE_DECOMPOSITION_CHANNEL,
+          documentId:decomposed?.documentId||app?.doc?.id||null,
+          sourceReferenceObjectId:referenceObjectId||null,
+          source:clone(decomposed?.source||null),
+          colorLayerId:decomposed?.colorLayerId||null,
+          lineLayerId:decomposed?.lineLayerId||null,
+          colorObjectIds:clone(decomposed?.colorObjectIds||[]),
+          lineObjectIds:clone(decomposed?.lineObjectIds||[]),
+          colorCount:decomposed?.colorCount||0,
+          lineCount:decomposed?.lineCount||0,
+          palette:clone(decomposed?.palette||[]),
+          history:{before:historyBefore,after:historyAfter,commit:historyCommit},
+          revision:{before:revisionBefore,after:revisionAfter},
+          audit:failureAudit?{auditId:failureAudit.auditId,format:failureAudit.format}:null,
+          provenance:committed?provenanceIdentity(groundedContextProvider,generatedIds):null,
+          status:committed?'COMMITTED_WITH_ERROR':'FAILED',
+          error:{code:error?.code||'CHAT_REFERENCE_DECOMPOSITION_FAILED',message:error?.message||String(error)}
+        };
+      }
     }
   });
 }
 
-export function installChatReferenceHandoff(app, {
+export function installChatReferenceHandoffexport function installChatReferenceHandoff(app, {
   auditLog = globalThis.INK_AI?.layer?.audit || null,
   groundedContextProvider = globalThis.INK_AI?.runtime?.groundedContextProvider || null
 } = {}) {
-  if (app?.chatReferenceHandoff?.importReference) return app.chatReferenceHandoff;
+  if (app?.chatReferenceHandoff?.importReference && app?.chatReferenceHandoff?.decomposeReference) return app.chatReferenceHandoff;
   const adapter = createChatReferenceHandoffAdapter(app, { auditLog, groundedContextProvider });
   app.chatReferenceHandoff = adapter;
   globalThis.INK_CHAT_HANDOFF = Object.freeze({
     version: 1,
     schema: CHAT_REFERENCE_HANDOFF_SCHEMA,
-    importReference: (input, options) => adapter.importReference(input, options)
+    importReference: (input, options) => adapter.importReference(input, options),
+    decomposeReference: (referenceObjectId, options) => adapter.decomposeReference(referenceObjectId, options)
   });
   return adapter;
 }
