@@ -4,6 +4,88 @@ import { moveAnchor } from '../vector/vector-core.js';
 import { executeExtraction, normalizePaths, requireValue, checkAbort, sha256, validateRaster } from './core.js';
 import { radialEvidence, sectorMask, reconstructRadial } from './structure.js';
 const copy=value=>JSON.parse(JSON.stringify(value));
+export const REFERENCE_IMPORT_SCHEMA='INK-REFERENCE-IMPORT/1';
+const REFERENCE_MIME_TYPES=new Set(['image/png','image/jpeg','image/webp']);
+
+function referenceImportSourceType(sourceChannel) {
+  return sourceChannel==='CHAT_ATTACHMENT_HANDOFF'?'chat-attachment':'reference';
+}
+
+export function importReferenceIntoDocument(app, decoded, {
+  matrix=Matrix.identity(),
+  actor={type:'user',id:'local'},
+  sourceChannel='REFERENCE_IMPORT',
+  operation='reference.import'
+}={}) {
+  const doc=app?.doc,page=app?.page?.(),layer=app?.layer?.();
+  const source=decoded?.source,raster=decoded?.raster,referenceSrc=decoded?.referenceSrc;
+  requireValue(doc&&page&&layer&&!app.history?.pending&&!layer.locked&&layer.visible!==false,'REFERENCE_IMPORT_TARGET_UNAVAILABLE');
+  requireValue(Matrix.isInvertible(matrix),'REFERENCE_IMPORT_SINGULAR_TRANSFORM');
+  validateRaster(raster);
+  requireValue(source&&typeof source.name==='string'&&source.name.trim()&&/^[a-f0-9]{64}$/.test(source.sha256||''),'REFERENCE_IMPORT_SOURCE_IDENTITY');
+  requireValue(REFERENCE_MIME_TYPES.has(source.mimeType),'REFERENCE_IMPORT_MIME_TYPE');
+  requireValue(Number(source.width)===raster.width&&Number(source.height)===raster.height,'REFERENCE_IMPORT_DIMENSIONS');
+  requireValue(typeof referenceSrc==='string'&&referenceSrc.startsWith(`data:${source.mimeType};base64,`),'REFERENCE_IMPORT_EMBEDDED_REFERENCE_REQUIRED');
+  requireValue(actor&&typeof actor==='object'&&!Array.isArray(actor)&&typeof actor.type==='string','REFERENCE_IMPORT_ACTOR_REQUIRED');
+  requireValue(typeof sourceChannel==='string'&&sourceChannel.trim()&&typeof operation==='string'&&operation.trim(),'REFERENCE_IMPORT_OPERATION_REQUIRED');
+
+  const referenceObjectId=`${uid()}-reference`;
+  const provenanceSource={type:referenceImportSourceType(sourceChannel),id:source.sha256,name:source.name};
+  const referenceImport={
+    schema:REFERENCE_IMPORT_SCHEMA,
+    operation,
+    actor:copy(actor),
+    sourceChannel,
+    source:copy(source),
+    width:raster.width,
+    height:raster.height
+  };
+  const image={
+    id:referenceObjectId,
+    type:'image',
+    name:source.name,
+    src:referenceSrc,
+    w:raster.width,
+    h:raster.height,
+    matrix:[...matrix],
+    opacity:0.5,
+    locked:true,
+    metadata:{
+      source:provenanceSource,
+      referenceImport,
+      extractionReference:{
+        schema:REFERENCE_IMPORT_SCHEMA,
+        source:copy(source),
+        width:raster.width,
+        height:raster.height,
+        actor:copy(actor),
+        sourceChannel,
+        operation
+      }
+    }
+  };
+  const target=app.layerObjectsPath?.(layer);
+  requireValue(Array.isArray(target),'REFERENCE_IMPORT_TARGET_PATH');
+  const label=sourceChannel==='CHAT_ATTACHMENT_HANDOFF'?'Reference import · CHAT attachment':'Reference import';
+  app.history.pushScoped(label,[target],()=>layer.objects.push(image));
+  app.selection=[{layerId:layer.id,objectId:referenceObjectId}];
+  app.spatialDirty=true;
+  app.refreshAll?.();
+  return {
+    schema:REFERENCE_IMPORT_SCHEMA,
+    operation,
+    actor:copy(actor),
+    sourceChannel,
+    documentId:doc.id,
+    pageId:page.id,
+    layerId:layer.id,
+    referenceObjectId,
+    source:copy(source),
+    width:raster.width,
+    height:raster.height,
+    historyLabel:label
+  };
+}
 
 export async function extractIntoDocument(app, request, adapter, { referenceSrc, matrix=Matrix.identity(), signal }={}) {
   const doc=app.doc,page=app.page(),layer=app.layer();
@@ -113,11 +195,12 @@ export function setReferenceOverlay(app,referenceObjectId,opacity) {
   app.refreshAll?.();
 }
 export async function decodeReferenceFile(file) {
-  requireValue(file && ['image/png','image/jpeg','image/webp'].includes(file.type) && file.size<=16_000_000,'EXTRACTION_IMAGE_FILE');
-  const bytes=new Uint8Array(await file.arrayBuffer()),source={name:file.name,sha256:await sha256(bytes)};
+  requireValue(file && REFERENCE_MIME_TYPES.has(file.type) && file.size<=16_000_000,'EXTRACTION_IMAGE_FILE');
+  const bytes=new Uint8Array(await file.arrayBuffer()),sha=await sha256(bytes);
   const bitmap=await createImageBitmap(file);
   try {
     requireValue(bitmap.width*bitmap.height<=4_000_000,'EXTRACTION_RASTER_SIZE');
+    const source={name:file.name,mimeType:file.type,sizeBytes:file.size,sha256:sha,width:bitmap.width,height:bitmap.height};
     const canvas=document.createElement('canvas');canvas.width=bitmap.width;canvas.height=bitmap.height;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(bitmap,0,0);
     const raster=ctx.getImageData(0,0,bitmap.width,bitmap.height);validateRaster(raster);
