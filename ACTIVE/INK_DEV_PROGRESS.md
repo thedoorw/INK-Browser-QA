@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED`
+STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
 
 ## Task
 
@@ -438,3 +438,37 @@ REVISION_SCOPE = CROSS_REALM_BINARY_HANDOFF
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR Runtime revision — cross-realm liveness timeout
+
+```text
+REVIEWED_HEAD = d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
+SOURCE_REVIEW = PASS
+RUNTIME_RUN = 35840153267
+ATTEMPT_1 = UI PASS / CREATIVE TIMEOUT 240S
+ATTEMPT_2 = UI PASS / CREATIVE TIMEOUT 240S
+RUNTIME_PASS = 0
+SCOPE = CROSS_REALM_HANDOFF_LIVENESS_ONLY
+```
+
+The source correction is bounded and acceptable, but the authoritative browser Runtime never publishes Creative evidence after entering the new cross-realm path.
+
+Required bounded revision:
+
+1. Add a short per-operation timeout/checkpoint around the cross-realm CHAT Reference handoff.
+2. Record browser QA markers for:
+   - cross-realm input confirmed;
+   - normalization returned;
+   - decoder entered;
+   - decoder returned;
+   - Reference import committed;
+   - receipt returned.
+3. Fix the identified stall.
+4. If the stall is caused by a local File retaining a cross-realm Blob backing, fully materialize external Blob bytes first and construct the local File from local byte data.
+5. Keep arbitrary spoof rejection.
+6. Preserve History / Audit / Provenance / Revision authority.
+7. Do not increase the global Runtime timeout as the fix.
+8. Do not start Phase B.
+
+Return to `DEV_HANDOFF / STOP`.
