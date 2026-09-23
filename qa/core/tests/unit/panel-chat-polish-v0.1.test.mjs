@@ -63,7 +63,7 @@ test('panel spacing and CHAT visual priority remain presentation-only', () => {
   assert.match(css, /\.creative-workspace-panel\[data-shell-stage="chat"\] \.creative-chat-transcript/);
   assert.match(css, /\.creative-workspace-panel\[data-shell-stage="chat"\] \.creative-workspace-prompt textarea/);
   assert.match(css, /\.contextual-options\{padding-inline:5px\}/);
-  assert.match(css, /INK-UI-MAINT-001 — Photoshop shell geometry[\s\S]*?\.tool-rail\{[\s\S]*?top:var\(--topbar-h\);[\s\S]*?left:0;/);
+  assert.match(css, /INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY[\s\S]*?\.tool-rail\{[\s\S]*?top:var\(--topbar-h\);[\s\S]*?left:0;/);
   assert.doesNotMatch(css, /\.tool-rail\{\s*left:7px;/);
   assert.doesNotMatch(css, /display:\s*none[^}]*creative-chat-transcript/);
 });

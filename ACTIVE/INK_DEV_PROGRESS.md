@@ -76,3 +76,24 @@ CSS static guard:
 Next:
 - architecture-aware unit/parity guards;
 - pre-runtime source/static/unit/parity execution.
+
+
+## Checkpoint 3 — architecture-aware regression guards
+
+Added / updated:
+- new `ui-debt-001-shell-panel-authority-v0.1.test.mjs`;
+- parity guard now rejects internal Layers / History duplicate tabs while requiring their direct Dock content surfaces;
+- parity favicon expectation updated to accepted dedicated `assets/favicon.svg`;
+- MAINT-002 guard now targets consolidated UI-DEBT-001 authority and verifies Creative Workspace closed/open display semantics;
+- responsive guard updated to accepted 244–340 px medium creative-panel bound;
+- panel hierarchy guard now keys off consolidated shell authority.
+
+The new guard fails on:
+- restored open panel at fresh entry;
+- legacy competing Chevron / close onclick ownership;
+- duplicated Layers / History Inspector navigation;
+- missing direct Dock routes;
+- Creative Workspace visible without `.open`;
+- Chevron returning to Dock-side `right:0`;
+- obsolete repeat(4) / horizontal-overflow Inspector tab geometry;
+- broken Web / Portable parity, favicon, version or FORMAT_VERSION.
