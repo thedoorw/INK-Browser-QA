@@ -1,0 +1,32 @@
+name: INK Core Integration 004 Source QA
+
+on:
+  push:
+    branches:
+      - work/ink-core-integration-004
+    paths:
+      - ".github/workflows/ink-core-integration-004-source-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  source-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run Integration 004 source QA
+        run: |
+          node qa/core-integration-001-grounded-context.test.mjs
+          node qa/core-integration-002-grounded-tool-surface.test.mjs
+          node qa/core-integration-003-bounded-grounded-reasoning.test.mjs
+          node qa/core-integration-004-grounded-plan-bridge.test.mjs
+          node --test \
+            qa/core/tests/unit/chat-multi-step-creative-plan-v0.1.test.mjs \
+            qa/core/tests/unit/chat-multi-step-creative-plan-source-v0.1.test.mjs \
+            qa/core/tests/unit/chat-bounded-edit-core-v0.1.test.mjs \
+            qa/core/tests/unit/chat-bounded-edit-source-v0.1.test.mjs
