@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / AUTHORIZED / PHASE_A_REFERENCE_HANDOFF`
+STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / PHASE_A_REFERENCE_HANDOFF`
 
 ## Control
 
@@ -213,3 +213,65 @@ After DEV handoff, MR will:
 4. test the actual user attachment without publishing it;
 5. decide PASS / REVISE / HOLD;
 6. only then authorize Line/Color separation Phase B.
+
+
+## MR review checkpoint — exact DEV HEAD 17a281a4c6568534e1f12649fe6d3f3257caa967
+
+```text
+DEV_HEAD = 17a281a4c6568534e1f12649fe6d3f3257caa967
+SOURCE_REVIEW = REVISE
+ARCHITECTURE_DIRECTION = ACCEPTED
+PROGRAMMATIC_HANDOFF = IMPLEMENTED
+AUTHORITATIVE_REFERENCE_IMPORT = IMPLEMENTED
+HISTORY_PATH = EXISTING AUTHORITY
+PROVENANCE_PATH = EXISTING AUTHORITY
+AUDIT_PATH = EXISTING AUTHORITY
+RUNTIME = NOT_RUN / SOURCE_BLOCKER_FIRST
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = NOT_RUN / AFTER REVISION
+```
+
+### Blocking finding
+
+The adapter validates success with:
+
+```text
+historyAfter.undoCount === historyBefore.undoCount + 1
+```
+
+but the accepted `HistoryManager` has a bounded limit (20 / 30 / 50) and evicts the oldest entry when the limit is exceeded.
+
+Therefore, when History is already full:
+
+```text
+Reference import
+→ History commit succeeds
+→ oldest History entry is evicted
+→ undoCount remains at the configured limit
+→ adapter reports CHAT_REFERENCE_HANDOFF_HISTORY_CONTRACT
+→ receipt status becomes FAILED
+→ imported Reference object remains in the document
+```
+
+This is not acceptable for the collaboration baseline because a successful document mutation can be recorded as a failed CHAT operation.
+
+### Bounded revision authorized
+
+Do not redesign Phase A.
+
+Required delta only:
+
+1. Make History success validation limit-aware and authority-based.
+   - Prefer public `history.timeline()` / `history.limit` semantics over assuming raw stack count always grows.
+   - At saturation, a committed import may keep the same undo count while replacing the oldest retained entry.
+2. Prove that the newest History entry is the Reference import created by this operation.
+3. Add focused QA for a saturated History stack.
+4. Ensure a post-commit validation failure cannot produce an ordinary `FAILED` receipt while silently leaving a successful Reference mutation behind.
+5. Preserve:
+   - one authoritative Reference import mutation;
+   - no auto Revision;
+   - existing Audit/Provenance;
+   - manual Reference flow;
+   - FORMAT_VERSION 4;
+   - no GitHub-hosted DEV workflow.
+
+DEV completion remains `DEV_HANDOFF → STOP → MR review`.
