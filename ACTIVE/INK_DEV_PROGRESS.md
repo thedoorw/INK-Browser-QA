@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-TECH-DEBT-001 / DEV_IN_PROGRESS / BASELINE_VERIFIED`
+STATUS: `INK-TECH-DEBT-001 / DEV_IN_PROGRESS / SOURCE_CLEANUP_COMPLETE`
 
 ## Control
 
@@ -136,4 +136,37 @@ CHECKS =
 KNOWN_GAPS =
   six authorized cleanup items not yet implemented
   authoritative Runtime intentionally not run before DEV_HANDOFF + MR source review
+```
+
+
+## Checkpoint 2 — Authorized cleanup implemented
+
+```text
+COMMIT = 7370354c9537067cab7ca9338553c5eb2c52f33d
+MILESTONE = SIX_SCOPE_SOURCE_CLEANUP_COMPLETE / STATIC_AUDIT_PASS
+FILES_CHANGED = see final handoff manifest
+CHECKS =
+  source tree JS+JSON = 189
+  service-worker SOURCE_SHELL = 189
+  offline missing = 0
+  offline extra = 0
+  service-worker syntax = PASS
+  Web / Portable normalized shell parity = PASS
+  bootstrap retry polling = 0
+  runtime ready contract = ink:runtime-ready
+  temporary startup substitute = 0
+  production QA bridge = explicit opt-in only (ink-qa=1 or __INK_ENABLE_TEST_BRIDGE__)
+  browser QA harnesses = explicit opt-in
+  CSS shell authority markers = 1
+  CSS braces = balanced
+  CSS :root blocks = 14
+  CSS !important count = 220
+  synthetic brand CSS refs = 0
+  product version = v0.1 preserved
+  FORMAT_VERSION = 4 preserved
+  diagnostics module inventory = explicitly PARTIAL
+  cache identity = build-keyed / display-version independent
+KNOWN_GAPS =
+  repository unit/static test commands not yet executed for this checkpoint
+  authoritative exact-SHA Chrome Runtime remains MR-gated after DEV_HANDOFF + source review
 ```
