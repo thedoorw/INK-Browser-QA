@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
+STATUS: `INK-CHAT-VALIDATION-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 ## Task
 
@@ -10,7 +10,9 @@ PHASE = A_REFERENCE_HANDOFF
 BRANCH = work/ink-chat-validation-001
 BRANCH_BASE = 1603a20e1da89708bad80c64fb39a6649fcf0473
 IMPLEMENTATION_QA_CHECKPOINT = 7bd33b705345b3c0f691b925ed8614311a0f7797
-REPORT_CHECKPOINT = 6992c696cb1add7af20bf0a439b1621b723a718d
+REPORT_CHECKPOINT = 6b4cbd8da8887f750562242b2641e231df4d0d1c
+MR_REVISION_BASELINE = 3c1910694e356e6ceca1cef6b454dca34bd2726c
+HISTORY_RECEIPT_REVISION_CHECKPOINT = 6b4cbd8da8887f750562242b2641e231df4d0d1c
 TASK_STATUS = DEV_HANDOFF
 CURRENT_PHASE = HANDOFF / STOP
 PRODUCT_SCOPE = BOUNDED
@@ -135,7 +137,10 @@ FOCUSED_TEST_FILE_SYNTAX = PASS
 BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
 BATCH_REQUIRED_CHECK_CONTRACT = PASS
 PROGRAMMATIC_FILE_INPUT_BYPASS_GUARD = PASS
-HISTORY_EXACTLY_ONE_GUARD = PASS
+HISTORY_LIMIT_AWARE_COMMIT_GUARD = PASS
+HISTORY_SATURATION_BEHAVIOR = PASS
+NEWEST_HISTORY_ENTRY_IDENTITY = PASS
+POST_COMMIT_RECEIPT_CORRECTNESS = PASS
 NO_AUTO_REVISION_GUARD = PASS
 NO_DOCUMENT_REPLACEMENT_GUARD = PASS
 AUDIT_PROVENANCE_RECEIPT_GUARD = PASS
@@ -153,6 +158,7 @@ The authoritative browser path was extended, not replaced:
 
 ```text
 CHAT_REFERENCE_HANDOFF_BROWSER_RUNTIME_READY = PASS
+MR_REVISE_SOURCE_FIX = COMPLETE
 AUTOMATED_FIXTURE_RUNTIME = MR_EXECUTION_PENDING
 MR_USER_ATTACHMENT_REAL_IMAGE_TEST = MR_EXECUTION_PENDING
 SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
@@ -213,3 +219,103 @@ Required:
 - return to `DEV_HANDOFF / STOP`.
 
 Do not start Phase B.
+
+
+## DEV bounded revision completion — History saturation / receipt correctness
+
+MR revision baseline:
+
+`3c1910694e356e6ceca1cef6b454dca34bd2726c`
+
+Revision checkpoints:
+
+1. `310989367b2ccd1b6a0974f50d15132aa5ceec9c` — make receipt validation use `history.timeline()` / `history.limit`, prove newest retained import entry, and distinguish committed post-validation error.
+2. `09ec2a72ab2bb8ecb2de3886ee8368f65a18e240` — add saturated-History and `COMMITTED_WITH_ERROR` focused QA.
+3. `2b99f20cfe7c7a11d6636cf16ccb026b6cb8fd09` — remove unconditional raw-count `+1` assumption from existing browser harness assertion.
+4. `6b4cbd8da8887f750562242b2641e231df4d0d1c` — update Phase A report with MR correction evidence.
+
+Corrected History rule:
+
+```text
+expected applied = min(before.applied + 1, history.limit)
++
+newest retained applied entry label = Reference import · CHAT attachment
++
+newest retained applied entry objectIds contains returned Reference object ID
++
+pending = false
++
+redo cleared
+```
+
+Verified saturation case:
+
+```text
+before applied = 20
+limit = 20
+import commits
+oldest retained entry evicted
+after applied = 20
+newest retained entry = imported Reference
+receipt = COMPLETED
+history.commit.valid = true
+```
+
+Verified post-commit validation mismatch:
+
+```text
+authoritative Reference mutation already committed
+receipt validation mismatch detected
+receipt = COMMITTED_WITH_ERROR
+receipt != FAILED
+committed History evidence remains inspectable
+```
+
+Exact fetched-source DEV checks:
+
+```text
+HISTORY_LIMIT_AWARE_STATIC_CONTRACT = PASS
+HISTORY_SATURATION_BEHAVIOR = PASS
+POST_COMMIT_RECEIPT_CORRECTNESS = PASS
+NEWEST_RETAINED_ENTRY_IDENTITY = PASS
+NO_REJECTED_RAW_COUNT_ASSUMPTION = PASS
+HANDOFF_MODULE_SYNTAX = PASS
+FOCUSED_TEST_SYNTAX = PASS
+BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
+```
+
+MR revision delta before this handoff record:
+
+```text
+product/source/src/ai/chat-reference-handoff.js
+qa/chat-validation-001-reference-handoff.test.mjs
+qa/runtime/ink-cloud-018-browser-harness.html
+research/INK_CHAT_VALIDATION_001_REFERENCE_HANDOFF_REPORT_v0.1.md
+```
+
+Preserved:
+
+```text
+PHASE_B = NOT_STARTED
+LINE_COLOR_SEPARATION = 0
+HISTORY_AUTHORITY_CHANGE = 0
+DOCUMENT_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+NEW_DRAWING_ENGINE = 0
+CHAT_BYPASS = 0
+USER_IMAGE_COMMITTED = 0
+GITHUB_HOSTED_ACTIONS_USED = 0
+FORMAT_VERSION = 4
+SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
+```
+
+Final state:
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CHAT-VALIDATION-001
+PHASE = A_REFERENCE_HANDOFF
+REVISION_SCOPE = HISTORY_SATURATION_RECEIPT_CORRECTNESS
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
