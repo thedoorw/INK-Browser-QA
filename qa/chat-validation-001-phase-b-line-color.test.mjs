@@ -3,7 +3,8 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-import { imageTracerAdapter } from '../product/source/src/extraction/adapters.js';
+import { imageTracerAdapter, boundedColorTraceRaster, COLOR_TRACE_MAX_PIXELS, COLOR_TRACE_MAX_DIMENSION } from '../product/source/src/extraction/adapters.js';
+import { executeExtraction } from '../product/source/src/extraction/core.js';
 import {
   CHAT_REFERENCE_DECOMPOSITION_OPERATION,
   createChatReferenceHandoffAdapter
@@ -13,6 +14,24 @@ const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const source=async relative=>readFile(path.join(root,relative),'utf8');
 
 {
+  const sourceWidth=1200,sourceHeight=800;
+  const raster={width:sourceWidth,height:sourceHeight,data:new Uint8ClampedArray(sourceWidth*sourceHeight*4)};
+  for(let y=0;y<sourceHeight;y++)for(let x=0;x<sourceWidth;x++){
+    const o=(y*sourceWidth+x)*4;
+    raster.data[o]=x<sourceWidth/2?240:50;
+    raster.data[o+1]=x<sourceWidth/2?80:140;
+    raster.data[o+2]=x<sourceWidth/2?90:90;
+    raster.data[o+3]=255;
+  }
+
+  const directWork=boundedColorTraceRaster(raster);
+  assert.ok(directWork.pixels<=COLOR_TRACE_MAX_PIXELS);
+  assert.ok(directWork.width<=COLOR_TRACE_MAX_DIMENSION);
+  assert.ok(directWork.height<=COLOR_TRACE_MAX_DIMENSION);
+  assert.equal(directWork.downsampled,true);
+  assert.ok(Math.abs(directWork.width*directWork.scaleX-sourceWidth)<1e-9);
+  assert.ok(Math.abs(directWork.height*directWork.scaleY-sourceHeight)<1e-9);
+
   let tracedInput=null,tracedOptions=null;
   const tracer={
     imagedataToTracedata(input,options){
@@ -20,23 +39,38 @@ const source=async relative=>readFile(path.join(root,relative),'utf8');
       return {
         palette:[{r:240,g:80,b:90,a:255},{r:50,g:140,b:90,a:255}],
         layers:[
-          [{segments:[{x1:0,y1:0,x2:4,y2:0},{x1:4,y1:0,x2:4,y2:4},{x1:4,y1:4,x2:0,y2:4},{x1:0,y1:4,x2:0,y2:0}],holechildren:[]}],
-          [{segments:[{x1:1,y1:1,x2:3,y2:1},{x1:3,y1:1,x2:3,y2:3},{x1:3,y1:3,x2:1,y2:3},{x1:1,y1:3,x2:1,y2:1}],holechildren:[]}]
+          [{segments:[{x1:0,y1:0,x2:input.width,y2:0},{x1:input.width,y1:0,x2:input.width,y2:input.height},{x1:input.width,y1:input.height,x2:0,y2:input.height},{x1:0,y1:input.height,x2:0,y2:0}],holechildren:[]}],
+          []
         ]
       };
     },
     getsvgstring(){
-      return '<svg><path fill="#f0505a" d="M0 0L4 0L4 4L0 4Z"/><path fill="#328c5a" d="M1 1L3 1L3 3L1 3Z"/></svg>';
+      return '<svg><path fill="#f0505a" d="M0 0L'+tracedInput.width+' 0L'+tracedInput.width+' '+tracedInput.height+'L0 '+tracedInput.height+'Z"/></svg>';
     }
   };
+
   const adapter=imageTracerAdapter(tracer);
-  const raster={width:2,height:1,data:new Uint8ClampedArray([240,80,90,255,50,140,90,255])};
-  const result=await adapter.extract({raster,parameters:{mode:'color-regions',numberOfColors:6,pathOmit:2}});
+  const adapterResult=await adapter.extract({raster,parameters:{mode:'color-regions',numberOfColors:6,pathOmit:2}});
   assert.equal(tracedOptions.numberofcolors,6);
   assert.equal(tracedOptions.colorsampling,2);
-  assert.deepEqual([...tracedInput.data],[...raster.data]);
-  assert.match(result.svg,/#f0505a/);
-  assert.match(result.warnings[0],/Quantized color-region trace/);
+  assert.ok(tracedInput.width*tracedInput.height<=COLOR_TRACE_MAX_PIXELS);
+  assert.ok(tracedInput.width<=COLOR_TRACE_MAX_DIMENSION);
+  assert.ok(tracedInput.height<=COLOR_TRACE_MAX_DIMENSION);
+  assert.equal(adapterResult.traceRaster.downsampled,true);
+  assert.ok(Math.abs(tracedInput.width*adapterResult.coordinateScale.x-sourceWidth)<1e-9);
+  assert.ok(Math.abs(tracedInput.height*adapterResult.coordinateScale.y-sourceHeight)<1e-9);
+  assert.match(adapterResult.warnings[0],/deterministic bounded work raster/);
+
+  const extracted=await executeExtraction({
+    raster,
+    source:{name:'large-reference.png',sha256:'a'.repeat(64)},
+    parameters:{mode:'color-regions',numberOfColors:6,pathOmit:2}
+  },adapter);
+  assert.equal(extracted.paths.length,1);
+  assert.ok(Math.abs(extracted.paths[0].matrix[0]-extracted.diagnostics.coordinateScale.x)<1e-9);
+  assert.ok(Math.abs(extracted.paths[0].matrix[3]-extracted.diagnostics.coordinateScale.y)<1e-9);
+  assert.ok(Math.abs(extracted.diagnostics.traceRaster.width*extracted.paths[0].matrix[0]-sourceWidth)<1e-6);
+  assert.ok(Math.abs(extracted.diagnostics.traceRaster.height*extracted.paths[0].matrix[3]-sourceHeight)<1e-6);
 }
 
 function mockApp(){
@@ -101,11 +135,18 @@ function mockApp(){
 
 {
   const adapters=await source('product/source/src/extraction/adapters.js');
+  const core=await source('product/source/src/extraction/core.js');
   const workspace=await source('product/source/src/extraction/workspace.js');
   const install=await source('product/source/src/extraction/install.js');
   const handoff=await source('product/source/src/ai/chat-reference-handoff.js');
   assert.match(adapters,/mode==='color-regions'/);
-  assert.match(adapters,/tracer\.imagedataToTracedata\(raster,options\)/);
+  assert.match(adapters,/boundedColorTraceRaster\(input\.raster/);
+  assert.match(adapters,/imagedataToTracedata\(\{width:work\.width,height:work\.height,data:work\.data\},options\)/);
+  assert.match(adapters,/COLOR_TRACE_MAX_PIXELS=160_000/);
+  assert.match(adapters,/COLOR_TRACE_MAX_DIMENSION=512/);
+  assert.doesNotMatch(adapters,/new Uint8ClampedArray\(input\.raster\.data\)/);
+  assert.match(core,/Matrix\.scale\(scaleX,scaleY\)/);
+  assert.match(core,/Matrix\.multiply\(sourceScale,path\.matrix\)/);
   assert.match(workspace,/decodeReferenceFile\(file\)/);
   assert.match(workspace,/executeExtraction\([\s\S]*mode:'color-regions'/);
   assert.match(workspace,/const colorLayer=defaultLayer\('Color'\),lineLayer=defaultLayer\('Line'\)/);
