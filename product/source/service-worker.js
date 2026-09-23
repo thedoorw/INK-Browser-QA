@@ -6,7 +6,7 @@ const RUNTIME_CACHE = `ink-v${RELEASE_VERSION}-runtime`;
 // Keep this inventory synchronized with product/source/src; INK-CLOUD-016
 // adds a deterministic source/static harness that fails on drift.
 const SOURCE_SHELL = Object.freeze([
-  "./src/ai/ai-core.js", "./src/ai/chat-runtime.js", "./src/ai/conversation-flower-contract.js", "./src/ai/install-ai.js",
+  "./src/ai/ai-core.js", "./src/ai/chat-runtime.js", "./src/ai/conversation-flower-contract.js", "./src/ai/grounded-creative-decision.js", "./src/ai/install-ai.js",
   "./src/ai/intent/flower-vocabulary-v1.json", "./src/ai/intent/intent-parser.js", "./src/ai/intent/intent-schema.js", "./src/ai/intent/intent-to-plan.js",
   "./src/ai/intent/intent-validator.js", "./src/ai/plan-analyzers.js", "./src/assets/asset-error.js", "./src/assets/asset-manifest.js",
   "./src/assets/asset-migration.js", "./src/assets/index.js", "./src/composition/composition-constraints.js", "./src/config.js",
