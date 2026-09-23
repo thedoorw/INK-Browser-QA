@@ -227,6 +227,70 @@ These differences do not make them separate products and must not create a diver
 
 Because the Cloud delivery is expected to be the more frequently used form for convenience and CHAT collaboration, product discussion may naturally focus on Cloud usage without changing the rule that core/editor improvements belong to shared INK and should remain available to both delivery forms.
 
+
+## 3B. CHAT complete-use and operation-record rule
+
+User-authoritative collaboration rule:
+
+```text
+CHAT_COLLABORATION_BASELINE = CHAT_CAN_FULLY_USE_INK
+CHAT_OPERATION_PATH = AUTHORITATIVE_INK_COMMANDS_ONLY
+CHAT_OPERATION_RECORD = REQUIRED
+CHAT_BYPASS_OF_INK_AUTHORITY = PROHIBITED
+```
+
+The minimum condition for true USER + CHAT collaboration is not merely that CHAT can inspect, discuss, or propose changes.
+
+CHAT must be able to use the actual INK workstation capabilities through the same authoritative command / engine paths that the human-facing UI uses, and every meaningful CHAT-initiated operation must leave a traceable operation record.
+
+Required collaboration model:
+
+```text
+USER / CHAT intent
+→ authoritative INK command or tool path
+→ validation / proposal where required
+→ user approval where required
+→ INK execution
+→ History / operation record
+→ Revision / provenance linkage where applicable
+→ inspectable result
+```
+
+At minimum, the operation record must make it possible to determine:
+
+- what CHAT attempted to do;
+- which document/object/region was targeted;
+- which authoritative INK command/tool was used;
+- whether the action was read-only, proposed, approved, rejected, executed, failed, rolled back or restored;
+- what parameters were used;
+- what History entry was created where applicable;
+- what Revision/provenance relationship was created where applicable;
+- what the resulting document state or result identity was.
+
+CHAT must not achieve an edit by directly rewriting document JSON, bypassing History, bypassing Revision, or using a parallel hidden editor authority.
+
+The next collaboration-validation stage must therefore prove not only that CHAT can read INK, but that CHAT can complete an end-to-end INK workflow while producing an auditable operation trail.
+
+Target validation flow:
+
+```text
+CHAT
+→ Reference
+→ Extract
+→ Path
+→ Edit
+→ Compose
+→ Repaint
+→ Compare / Review
+→ Revision
+→ further bounded correction
+→ final inspectable artwork state
++
+complete operation record
+```
+
+This is the minimum product condition for calling INK a real human-AI collaborative drawing workstation.
+
 ## 4. 現階段：先穩定會影響文件格式與結構的 shared core
 
 目前不是正式 Cloud implementation 階段。
