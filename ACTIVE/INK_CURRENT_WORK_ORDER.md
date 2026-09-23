@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-TECH-DEBT-001 / MR_REVISE / QA_HARNESS_ONLY_INCOMPLETE`
+STATUS: `INK-TECH-DEBT-001 / MR_PASS / CLEAN_PROMOTED / CLOSED`
 
 ## Control
 
@@ -426,3 +426,38 @@ Required remaining edits, and only these semantics:
 The Service Worker identity harness changes in `51d9ca0d4326720c5a9970f3872c99eb2808db2c` are accepted.
 
 Runtime rerun remains held until both stale assertions are corrected.
+
+
+## MR final closure — 2026-09-24
+
+```text
+RUNTIME_TESTED_SHA = 3e22c2f501e100674952650f333024d5b817d86f
+RUNTIME_RUN = 35887731569
+RUNNER = DESKTOP-NSOQH69
+UI = PASS / 72 of 72
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT = 10763861596
+ARTIFACT_DIGEST = sha256:498b2fcd3087fa56c185b79bb4cd7a8d946416e514737c25320ebef6c4ea4c59
+
+CHAT_PHASE_B_REGRESSION = PASS
+COLOR_REGIONS = 1471
+BOUNDARY_LINES = 1471
+POST_COMMIT_SELECTION = 1 representative Line Path
+CHAT_RECEIPT = COMPLETED
+HISTORY = PASS
+PROVENANCE = PASS
+REVISION = UNCHANGED
+
+CLEAN_PROMOTION = 7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1
+PROMOTED_PRODUCT_QA_BLOBS = 23 / 23 exact match to Runtime-tested SHA
+FORMAT_VERSION = 4 / PRESERVED
+PRODUCT_VERSION = v0.1 / PRESERVED
+PACKAGE_MUTATION = 0
+```
+
+Disposition:
+- Work Order closed.
+- UI-006 B3 technical prerequisite is resolved.
+- UI-006 Phase C–I remains HOLD until separately authorized.
+- CHAT Validation Phase C remains NOT_STARTED and unauthorized.

@@ -1,6 +1,6 @@
 # INK REVIEW EVIDENCE
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_PASS_EVIDENCE / PROMOTED / CLOSED`
+STATUS: `INK-TECH-DEBT-001 / MR_PASS_EVIDENCE / CLEAN_PROMOTED / CLOSED`
 
 ## Exact reviewed source
 
@@ -84,3 +84,28 @@ Evidence scope:
 - exact browser execution and regression proof: repository fixture at `40a7e5e8...`;
 - private `1.jpg`: input/decode and final trace-budget compatibility, without public commit;
 - no duplicate post-merge Runtime required because all eight promoted product/QA blobs are identical to the exact Runtime-tested blobs.
+
+
+## INK-TECH-DEBT-001 authoritative evidence
+
+```text
+RUNTIME_RUN = 35887731569
+TESTED_SHA = 3e22c2f501e100674952650f333024d5b817d86f
+RUNNER = DESKTOP-NSOQH69
+UI = PASS / 72 of 72
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10763861596
+ARTIFACT_DIGEST = sha256:498b2fcd3087fa56c185b79bb4cd7a8d946416e514737c25320ebef6c4ea4c59
+PROMOTED_MAIN = 7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1
+PROMOTED_PRODUCT_QA_EQUIVALENT_TO_TESTED_SHA = YES
+MATCHED_BLOBS = 23 / 23
+CHAT_PHASE_B_COLOR = 1471
+CHAT_PHASE_B_LINE = 1471
+CHAT_PHASE_B_SELECTION = 1 representative Line Path
+CHAT_RECEIPT = COMPLETED
+FORMAT_VERSION = 4
+PRODUCT_VERSION = v0.1
+```
+
+No duplicate post-promotion Runtime is required because every promoted product/QA blob is byte-identical to the exact Runtime-tested tree.

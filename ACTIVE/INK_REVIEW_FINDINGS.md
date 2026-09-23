@@ -1,6 +1,6 @@
 # INK REVIEW FINDINGS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_PASS / PROMOTED / CLOSED`
+STATUS: `INK-TECH-DEBT-001 / MR_PASS / CLEAN_PROMOTED / CLOSED`
 
 TASK: `INK-CHAT-VALIDATION-001 — Phase B Reference → Line + Color Layers`
 
@@ -71,3 +71,17 @@ PHASE_C = NOT_STARTED
 ```
 
 No further ImageTracerJS tuning is required for Phase B.
+
+
+## INK-TECH-DEBT-001 closure findings
+
+- exact Service Worker/source closure restored;
+- worker-owned immutable build identity replaces visible-version cache identity;
+- explicit runtime-ready startup contract replaces normal polling;
+- test-only runtime control surface moved behind explicit QA opt-in;
+- Web/Portable shell has one editable template/generator authority;
+- accepted light-shell rules consolidated into the single desktop shell authority;
+- active diagnostics/build metadata corrected;
+- Runtime run `35887731569` passed UI, Creative and Geometry;
+- CHAT Phase B decomposition remains intact at 1471 Color + 1471 Line with bounded single-Line post-commit selection and `COMPLETED` receipt;
+- clean promotion main `7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1` matches all 23 tested product/QA blobs.

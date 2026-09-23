@@ -15,16 +15,16 @@ DEV new-window instruction:
 
 Current state:
 
-`INK-TECH-DEBT-001 → DEV_AUTHORIZED → work/ink-tech-debt-001`
+`INK-TECH-DEBT-001 → MR_PASS / CLEAN_PROMOTED / CLOSED`
 
 Accepted previous baseline:
 `INK-CHAT-VALIDATION-001 Phase B → MR_PASS / PROMOTED / CLOSED`
 
 Current target:
-`Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1`
+`Technical-debt closure complete; foundation stabilized before further UI / CHAT expansion.`
 
 UI coordination:
-`INK-WEB-UI-006 Phase A+B preserve / Phase C–I HOLD until technical-debt closure.`
+`INK-WEB-UI-006 Phase A/B1/B2 preserved; B3 resolved by INK-TECH-DEBT-001. Phase C–I remains HOLD pending next authorization. CHAT Phase C remains NOT_STARTED.`
 
 Legacy/detail files are retained:
 - `ACTIVE/INK_MAIN_REVIEW_BOARD.md`

@@ -1,164 +1,55 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-TECH-DEBT-001 / PRODUCT_SOURCE_PASS / QA_HARNESS_PASS / EXACT_SHA_RUNTIME_QUEUED`
+STATUS: `INK-TECH-DEBT-001 / MR_PASS / CLEAN_PROMOTED / CLOSED`
 
 ```text
 TASK_ID = INK-TECH-DEBT-001
-PRODUCT_SOURCE_REVIEW = PASS
-REVIEWED_REMOTE_HEAD = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
-RUNTIME_RUN = 35885929148
-RUNTIME_TESTED_SHA = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+RUNTIME_TESTED_SHA = 3e22c2f501e100674952650f333024d5b817d86f
+RUNTIME_RUN = 35887731569
 RUNNER = DESKTOP-NSOQH69
-RUNTIME = FAIL
-UI = 69/71 / FAIL
-CREATIVE = NOT_REACHED
-GEOMETRY = NOT_REACHED
-ARTIFACT = 10763165329
-ARTIFACT_DIGEST = sha256:d47a862b58636bbe932201475d9d67bc8e7083c466158e1873ab9dff64b4b934
-DECISION = MR_REVISE / QA_HARNESS_ONLY
-PRODUCT_SOURCE_CHANGE_REQUIRED = NO
+BROWSER = Chrome
+UI = PASS / 72 of 72
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10763861596
+ARTIFACT_DIGEST = sha256:498b2fcd3087fa56c185b79bb4cd7a8d946416e514737c25320ebef6c4ea4c59
+CLEAN_PROMOTED_MAIN = 7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1
+PROMOTED_PRODUCT_QA_EQUIVALENT_TO_TESTED_SHA = YES
+MATCHED_BLOBS = 23 / 23
+FORMAT_VERSION = 4 / PRESERVED
+PRODUCT_VERSION = v0.1 / PRESERVED
 ```
 
-## Runtime finding
+## Accepted closure
 
-The UI suite failed on two assertions that encode the superseded dark-shell visual contract rather than the accepted UI-006 B1 light-shell contract.
+- Service Worker offline source closure is exact.
+- Build/cache identity is independent from the visible v0.1 label and worker-owned.
+- Bootstrap uses one explicit runtime-ready contract; normal retry polling is removed.
+- Production QA surface is opt-in rather than embedded as the permanent production control surface.
+- Web / Portable shell maintenance has one authoritative template/generator.
+- Accepted light-shell CSS is consolidated without a new late override authority.
+- active diagnostics/version metadata is current or explicitly partial.
+- no Document / History / Revision / Renderer authority change occurred.
 
-### 1 — typography assertion is color-mode stale
-
-Observed:
+## CHAT Phase B regression
 
 ```text
-contextualAdvanced = 10px
-inspectorTitle = 11px
-inspectorTab = 10px
-contextLabel = 10px
-contextLabel color = rgb(98,98,98)
+Reference → editable Color + Line → separate layers = PASS
+COLOR_REGIONS = 1471
+BOUNDARY_LINES = 1471
+POST_COMMIT_SELECTION = 1 representative Line Path
+CHAT_RECEIPT = COMPLETED
+HISTORY = PASS
+PROVENANCE = PASS
+REVISION = UNCHANGED
 ```
 
-All required font-size floors pass.
-
-The failure is only the legacy assertion:
+## Next-state boundary
 
 ```text
-R + G + B >= 480
+INK-TECH-DEBT-001 = CLOSED
+UI-006 B3 = RESOLVED
+UI-006 Phase C–I = HOLD pending separate authorization
+CHAT Validation Phase C = NOT_STARTED
+automatic next-stage start = NO
 ```
-
-That rule expected bright secondary text on a dark shell. The accepted shell is light, where darker text is correct.
-
-Required harness revision:
-
-- retain the functional font-size floors;
-- replace absolute text brightness with contrast/readability against the actual light shell surface;
-- do not recolor the product merely to satisfy the stale dark-shell test.
-
-### 2 — layout assertion hard-codes the superseded wrapper color
-
-Observed rendered pixels:
-
-```text
-canvas workbench corner = [43,44,46]
-A4 paper center = [254,253,248]
-stage-wrap background = rgb(222,222,222)
-```
-
-The actual rendered canvas still clearly separates dark workbench from real A4 paper.
-
-The failure is only the extra legacy requirement:
-
-```text
-stage-wrap background == rgb(38,38,38)
-```
-
-UI-006 B1 already accepted a light workstation shell. The wrapper may therefore be light while the actual layout renderer still provides dark-workbench / light-paper separation.
-
-Required harness revision:
-
-- test the rendered workbench/paper visual separation;
-- do not require the CSS wrapper itself to remain dark;
-- preserve the accepted light-shell contract.
-
-## Scope of revision
-
-```text
-ALLOWED =
-  qa/runtime/ink-web-ui-001-harness.html
-  task-specific QA assertions only if needed
-
-PRODUCT_SOURCE = HOLD / NO CHANGE
-SERVICE_WORKER = HOLD / NO CHANGE
-BOOTSTRAP = HOLD / NO CHANGE
-CSS = HOLD / NO CHANGE
-DOCUMENT/HISTORY/REVISION/RENDERER = NO CHANGE
-CHAT PHASE C = NOT_STARTED
-UI-006 PHASE C-I = HOLD
-```
-
-After the harness-only revision:
-
-```text
-DEV_HANDOFF / STOP
-→ MR source/harness review
-→ exact-SHA Runtime rerun
-→ UI
-→ Creative
-→ Geometry
-→ MR final disposition
-```
-
-The handoff-local `dee7beee...` identifier remains non-authoritative because it is not a resolvable remote commit. Use the actual remote branch HEAD as the next exact Runtime fingerprint.
-
-
-## MR harness re-review — 51d9ca0d4326720c5a9970f3872c99eb2808db2c
-
-```text
-REMOTE_HEAD = 51d9ca0d4326720c5a9970f3872c99eb2808db2c
-DELTA_FROM_PREVIOUS_RUNTIME_SHA = 1 commit
-FILES_CHANGED =
-  qa/runtime/ink-web-ui-001-harness.html
-  qa/core/tests/unit/ink-tech-debt-001-foundation.test.mjs
-PRODUCT_SOURCE_CHANGED = NO
-HARNESS_REVIEW = MR_REVISE
-RUNTIME = HELD / DO NOT RERUN YET
-```
-
-Accepted in this commit:
-- harness now reads worker-owned identity through `INK_GET_VERSION`;
-- harness no longer re-registers `service-worker.js?build=...` or `qa-refresh`;
-- `registration.update()` and `updateViaCache === 'none'` are checked;
-- product source remains untouched.
-
-Still unresolved from the prior MR runtime finding:
-1. Typography assertion still requires `R + G + B >= 480`, which is the obsolete bright-text-on-dark-shell rule.
-2. Layout assertion still requires `stage-wrap background == rgb(38,38,38)`, which is the obsolete dark wrapper rule.
-
-These exact predicates caused Runtime 35885929148 to stop at UI 69/71. They must be replaced with the already-authorized light-shell-compatible readability/contrast and rendered workbench-vs-paper separation checks before a rerun.
-
-```text
-NEXT =
-  harness-only correction on same branch
-  → DEV_HANDOFF / STOP
-  → MR re-review
-  → exact-SHA Runtime rerun
-```
-
-
-## MR harness re-review — 3e22c2f501e100674952650f333024d5b817d86f
-
-```text
-REMOTE_HEAD = 3e22c2f501e100674952650f333024d5b817d86f
-DELTA_FROM_51d9ca0 = qa/runtime/ink-web-ui-001-harness.html only
-PRODUCT_SOURCE_CHANGED = NO
-TYPOGRAPHY_STALE_ASSERTION = CLOSED
-A4_WRAPPER_COLOR_STALE_ASSERTION = CLOSED
-HARNESS_REVIEW = PASS
-RUNTIME = QUEUED / EXACT SHA
-```
-
-Accepted QA semantics:
-- existing font-size floors remain;
-- text readability is measured against the actual rendered background using relative luminance / contrast;
-- A4 validation compares rendered canvas workbench and paper pixels;
-- no fixed `.stage-wrap` dark color is required.
-
-Runtime target:
-`3e22c2f501e100674952650f333024d5b817d86f`
