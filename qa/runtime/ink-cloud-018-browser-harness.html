@@ -17,6 +17,14 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   const pass = (name, details={}) => { evidence.checks.push({name,...details,status:'PASS'}); logNode.textContent = JSON.stringify(evidence,null,2); };
   const assert = (condition, name, details={}) => { if (!condition) throw Object.assign(new Error(name),{qa:name,details}); pass(name,details); };
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+  const waitFor = async (predicate, timeout = 8000, step = 40) => {
+    const started = performance.now();
+    while (performance.now() - started < timeout) {
+      if (await predicate()) return true;
+      await wait(step);
+    }
+    throw new Error('Runtime condition timeout');
+  };
   const encodeBase64Utf8 = value => {
     const bytes = new TextEncoder().encode(value);
     let binary = '';
@@ -43,14 +51,41 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   }
 
   async function run() {
-    const w=await ready(), app=w.INK_APP, cw=app.creativeWorkspace;
-    cw.setOpen(true); // UI-001 intentionally starts with the shared panel collapsed.
+    const w=await ready(), app=w.INK_APP, cw=app.creativeWorkspace, shell=w.INK_WEB_SHELL, doc=w.document;
+    assert(Boolean(shell?.open && shell?.state),'WORKSTATION_SHELL_AVAILABLE');
+    const panelStates=[];
+    const openPanel=async id=>{
+      shell.open(id);
+      await wait(90);
+      const state=shell.state();
+      const properties=id==='properties';
+      const valid=state.activePanel===id && (properties
+        ? state.inspectorOpen && !state.creativeOpen
+        : state.creativeOpen && !state.inspectorOpen && cw.stage===id);
+      const detail={id,stage:cw.stage,...state};
+      panelStates.push(detail);
+      assert(valid,`WORKSTATION_PANEL_${id.toUpperCase()}_AUTHORITY`,detail);
+      return state;
+    };
+    const readOnlySnapshot=()=>JSON.stringify({
+      document:app.doc,
+      history:{undo:app.history?.undoStack?.length||0,redo:app.history?.redoStack?.length||0,pending:Boolean(app.history?.pending)},
+      revision:app.revisions?.revisionIdFor?.(app.doc?.id)??null
+    });
+    const assertReadOnly=(before,name,details={})=>assert(readOnlySnapshot()===before,name,details);
+    await openPanel('reference'); // UI-001 intentionally starts collapsed; use the accepted shell authority to enter the workspace.
     assert(w.INK_ARCHITECTURE?.formatVersion===4,'FORMAT_VERSION_4',{value:w.INK_ARCHITECTURE?.formatVersion});
     assert(Boolean(w.document.querySelector('#stage')),'CANVAS_EDITOR_RENDERED');
     assert(Boolean(cw.root?.classList.contains('open')),'CREATIVE_WORKSPACE_VISIBLE');
     assert(Boolean(cw.root?.querySelector('[data-workspace-input="reference-file"]')),'REFERENCE_IMPORT_VISIBLE');
     assert(Boolean(cw.root?.querySelector('[data-workspace-input="chat-prompt"]')),'CHAT_PROMPT_VISIBLE');
     assert(Boolean(cw.root?.querySelector('[data-workspace-action="structure-reconstruct"]')),'STRUCTURE_AWARE_OPTION_VISIBLE');
+
+    await openPanel('properties');
+    const emptySelectionText=doc.querySelector('[data-workstation-output="selection-capability"]')?.textContent||'';
+    assert(/Select an object to inspect Document Bridge and Semantic Region grounding/.test(emptySelectionText),'WORKSTATION_PROPERTIES_UNAVAILABLE_STATE_EXPLICIT',{text:emptySelectionText});
+    await openPanel('reference');
+    assert(Boolean(cw.root?.querySelector('[data-workspace-action="research-context-refresh"]') && cw.root?.querySelector('[data-workspace-output="research-context"]')),'WORKSTATION_REFERENCE_RESEARCH_ENTRY_VISIBLE');
 
     const fixtureResponse=await fetch('/__qa_rose_window.png',{cache:'no-store'});
     assert(fixtureResponse.ok,'ROSE_WINDOW_FIXTURE_HTTP',{status:fixtureResponse.status});
@@ -59,7 +94,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const input=cw.root.querySelector('[data-workspace-input="reference-file"]');
     const transfer=new DataTransfer(); transfer.items.add(file); input.files=transfer.files;
 
-    cw.setStage('reference');
+    await openPanel('reference');
     const direct=await cw.runExtraction();
     assert(Boolean(direct),'DIRECT_EXTRACTION_EXECUTED');
     evidence.metrics.directPaths=direct?.diagnostics?.paths;
@@ -78,14 +113,57 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     assert(Boolean(enter),'PATH_EDIT_ENTERED',{objectId:firstPath.id});
     app.exitPathEdit();
     app.selectOnly(foundPath.layer.id,firstPath.id);
+    cw.refresh();
 
-    cw.setStage('revision');
+    const beforePropertiesRead=readOnlySnapshot();
+    await openPanel('properties');
+    const propertiesButton=doc.querySelector('[data-workstation-action="grounded-selection-refresh"]');
+    assert(Boolean(propertiesButton),'WORKSTATION_PROPERTIES_GROUNDED_ENTRY_VISIBLE');
+    propertiesButton.click();
+    await waitFor(()=>cw.status?.code==='GROUNDED_CONTEXT_REFRESHED');
+    const propertiesText=doc.querySelector('[data-workstation-output="selection-capability"]')?.textContent||'';
+    assert(Boolean(cw.lastGroundedContext) && /Document Bridge AVAILABLE/.test(propertiesText) && /Semantic/.test(propertiesText) && /read-only/i.test(propertiesText),'WORKSTATION_PROPERTIES_GROUNDED_READOUT',{text:propertiesText});
+    assertReadOnly(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY');
+
+    const beforeReferenceResearch=readOnlySnapshot();
+    await openPanel('reference');
+    cw.root.querySelector('[data-workspace-action="research-context-refresh"]').click();
+    await waitFor(()=>cw.status?.code==='RESEARCH_CONTEXT_REFRESHED');
+    const referenceResearchText=cw.root.querySelector('[data-workspace-output="research-context"]')?.textContent||'';
+    assert(Boolean(cw.lastResearchCreationContext) && /Evidence \d+/.test(referenceResearchText) && /Principles \d+/.test(referenceResearchText) && /Constraints \d+/.test(referenceResearchText) && /READ ONLY/.test(referenceResearchText),'WORKSTATION_REFERENCE_RESEARCH_READOUT',{text:referenceResearchText});
+    assertReadOnly(beforeReferenceResearch,'WORKSTATION_REFERENCE_RESEARCH_READ_ONLY');
+
+    await openPanel('compose');
+    const emptyParametricText=cw.root.querySelector('[data-workspace-output="parametric-context"]')?.textContent||'';
+    assert(/Select a Repeat to inspect deterministic structure state/.test(emptyParametricText),'WORKSTATION_COMPOSE_UNAVAILABLE_STATE_EXPLICIT',{text:emptyParametricText});
+
+    await openPanel('revision');
+    assert(cw.root.querySelector('[data-workspace-action="revision-compare"]')?.disabled===true,'WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT');
     cw.root.querySelector('[data-workspace-input="revision-label"]').value='Rose Window direct baseline';
     const baselineCapture=await cw.runRevisionAction('revision-capture');
     const baselineRevision=baselineCapture?.record?.revisionId || app.revisions.revisionIdFor?.(app.doc.id);
     assert(Boolean(baselineRevision),'REVISION_BASELINE_CAPTURED',{revisionId:baselineRevision});
 
-    cw.setStage('chat');
+    await openPanel('chat');
+    const beforeChatAdvisory=readOnlySnapshot();
+    const groundedButton=cw.root.querySelector('[data-workspace-action="grounded-context-refresh"]');
+    const memoryButton=cw.root.querySelector('[data-workspace-action="creative-memory-refresh"]');
+    const researchButton=cw.root.querySelector('[data-workspace-action="research-context-refresh"]');
+    assert(Boolean(groundedButton && memoryButton && researchButton),'WORKSTATION_CHAT_ADVISORY_ENTRIES_VISIBLE');
+    groundedButton.click();
+    await waitFor(()=>cw.status?.code==='GROUNDED_CONTEXT_REFRESHED');
+    memoryButton.click();
+    await waitFor(()=>cw.status?.code==='CREATIVE_MEMORY_REFRESHED');
+    researchButton.click();
+    await waitFor(()=>cw.status?.code==='RESEARCH_CONTEXT_REFRESHED');
+    const groundedText=cw.root.querySelector('[data-workspace-output="grounded-context"]')?.textContent||'';
+    const memoryText=cw.root.querySelector('[data-workspace-output="creative-memory-context"]')?.textContent||'';
+    const chatResearchText=cw.root.querySelector('[data-workspace-output="research-context"]')?.textContent||'';
+    assert(/Document /.test(groundedText) && /Semantic /.test(groundedText) && /Provenance /.test(groundedText),'WORKSTATION_CHAT_GROUNDED_READOUT',{text:groundedText});
+    assert(/Creative Memory/.test(memoryText) && /READ ONLY/.test(memoryText),'WORKSTATION_CHAT_MEMORY_READOUT',{text:memoryText});
+    assert(/Evidence \d+/.test(chatResearchText) && /READ ONLY/.test(chatResearchText),'WORKSTATION_CHAT_RESEARCH_READOUT',{text:chatResearchText});
+    assertReadOnly(beforeChatAdvisory,'WORKSTATION_CHAT_ADVISORY_READ_ONLY');
+
     const inspected=cw.runChatAction('chat-inspect');
     assert(inspected?.ok===true,'BOUNDED_CHAT_INSPECTED');
     cw.root.querySelector('[data-workspace-input="chat-operation"]').value='path.repaint.v1';
@@ -109,7 +187,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     assert(Boolean(conversation?.content),'CHAT_NATURAL_LANGUAGE_RESPONSE',{source:conversation?.source,provider:conversation?.provider});
     assert(JSON.stringify(app.doc)===conversationBefore,'CHAT_DISCUSSION_NON_MUTATING');
 
-    cw.setStage('reference');
+    await openPanel('reference');
     cw.root.querySelector('[data-workspace-input="structure-count"]').value='6';
     const structured=await cw.runStructure();
     assert(Boolean(structured),'STRUCTURE_AWARE_EXECUTED');
@@ -119,7 +197,15 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     evidence.metrics.structureMaskIoU=structured?.maskIoU;
     assert(structured?.radialCount===6 && (structured?.prototypePaths?.length||0)>0,'STRUCTURE_AWARE_VISIBLE_RESULT',{radialCount:structured?.radialCount,prototypePaths:structured?.prototypePaths?.length,repeatId:structured?.repeatId});
 
-    cw.setStage('revision');
+    const repeatFound=structured?.repeatId?app.findObject({objectId:structured.repeatId}):null;
+    assert(repeatFound?.object?.type==='repeat','WORKSTATION_REPEAT_RESULT_AVAILABLE',{repeatId:structured?.repeatId,type:repeatFound?.object?.type});
+    app.selectOnly(repeatFound.layer.id,repeatFound.object.id);
+    cw.refresh();
+    await openPanel('compose');
+    const parametricText=cw.root.querySelector('[data-workspace-output="parametric-context"]')?.textContent||'';
+    assert(/Repeat ·/.test(parametricText) && /instance\(s\)/.test(parametricText) && /(linked|expanded\/unlinked)/.test(parametricText),'WORKSTATION_COMPOSE_PARAMETRIC_STATUS',{text:parametricText});
+
+    await openPanel('revision');
     cw.root.querySelector('[data-workspace-input="revision-label"]').value='Rose Window structure checkpoint';
     const structureCapture=await cw.runRevisionAction('revision-capture');
     const structureRevision=structureCapture?.record?.revisionId || app.revisions.revisionIdFor?.(app.doc.id);
@@ -127,6 +213,17 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
 
     const revisionSelect=cw.root.querySelector('[data-workspace-input="revision-id"]');
     revisionSelect.value=baselineRevision;
+    cw.refreshRevision();
+    const beforeRevisionCompare=readOnlySnapshot();
+    const compareButton=cw.root.querySelector('[data-workspace-action="revision-compare"]');
+    assert(compareButton?.disabled===false,'WORKSTATION_REVISION_COMPARE_ENTRY_ENABLED',{revisionId:baselineRevision});
+    compareButton.click();
+    await waitFor(()=>cw.status?.code==='REVISION_COMPARISON_REFRESHED');
+    const compareText=cw.root.querySelector('[data-workspace-output="revision-compare"]')?.textContent||'';
+    const provenanceText=cw.root.querySelector('[data-workspace-output="revision-provenance"]')?.textContent||'';
+    assert(Boolean(cw.lastRevisionComparison) && /structural/.test(compareText) && /renderer not used/.test(compareText),'WORKSTATION_REVISION_STRUCTURAL_COMPARE',{text:compareText});
+    assert(/Provenance /.test(provenanceText) && /read-only/.test(provenanceText),'WORKSTATION_REVISION_PROVENANCE_VISIBLE',{text:provenanceText});
+    assertReadOnly(beforeRevisionCompare,'WORKSTATION_REVISION_COMPARE_READ_ONLY');
     const restored=await cw.runRevisionAction('revision-restore');
     assert(Boolean(restored) && cw.lastRevisionResult?.action==='restore','REVISION_RESTORE_EXECUTED',{revisionId:baselineRevision});
     assert(w.INK_TEST.documentIntegrity()?.passed===true,'DOCUMENT_INTEGRITY_AFTER_RESTORE');
@@ -155,6 +252,8 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     evidence.metrics.runtimeHealth=health;
     const fatalCount=Number(health?.errors?.fatal || health?.fatalErrors || health?.fatal || 0);
     assert(!Number.isFinite(fatalCount) || fatalCount===0,'NO_FATAL_RUNTIME_HEALTH_ERRORS',{fatalCount});
+    const coveredPanels=new Set(panelStates.map(item=>item.id));
+    assert(['properties','reference','compose','chat','revision'].every(id=>coveredPanels.has(id)),'WORKSTATION_SINGLE_PANEL_AUTHORITY',{panelStates});
 
     evidence.final={
       formatVersion:app.doc.formatVersion,
