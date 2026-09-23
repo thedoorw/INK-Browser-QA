@@ -36,19 +36,51 @@ export function normalizeChatAttachment(input, options = {}) {
 }
 
 function historySnapshot(app) {
-  const undo = Array.isArray(app?.history?.undoStack) ? app.history.undoStack : [];
-  const redo = Array.isArray(app?.history?.redoStack) ? app.history.redoStack : [];
-  const last = undo.at(-1) || null;
+  const history = app?.history;
+  const undo = Array.isArray(history?.undoStack) ? history.undoStack : [];
+  const redo = Array.isArray(history?.redoStack) ? history.redoStack : [];
+  let timeline = null;
+  try { timeline = typeof history?.timeline === 'function' ? history.timeline() : null; } catch {}
+  const entries = Array.isArray(timeline?.entries) ? timeline.entries : [...undo, ...[...redo].reverse()];
+  const applied = Number.isInteger(timeline?.applied) ? timeline.applied : undo.length;
+  const limit = Number.isInteger(timeline?.limit)
+    ? timeline.limit
+    : Number.isInteger(history?.limit) ? history.limit : Math.max(applied, entries.length);
+  const last = applied > 0 ? entries[applied - 1] || null : null;
   return {
     undoCount: undo.length,
     redoCount: redo.length,
-    pending: Boolean(app?.history?.pending),
+    applied,
+    retainedCount: entries.length,
+    limit,
+    pending: Boolean(history?.pending),
     lastEntry: last ? {
       label: last.label || null,
       objectIds: clone(last.objectIds || []),
       patchCount: Number(last.patchCount || 0),
       captureMode: last.captureMode || null
     } : null
+  };
+}
+
+function historyCommitValidation(before, after, referenceObjectId) {
+  const expectedApplied = Math.min(before.applied + 1, after.limit);
+  const newestMatches = after.lastEntry?.label === 'Reference import · CHAT attachment'
+    && Array.isArray(after.lastEntry?.objectIds)
+    && after.lastEntry.objectIds.includes(referenceObjectId);
+  const redoCleared = after.redoCount === 0;
+  const valid = !after.pending
+    && after.applied === expectedApplied
+    && newestMatches
+    && redoCleared;
+  return {
+    valid,
+    saturatedBefore: before.applied >= before.limit,
+    expectedApplied,
+    actualApplied: after.applied,
+    limit: after.limit,
+    newestMatches,
+    redoCleared
   };
 }
 
@@ -110,10 +142,13 @@ export function createChatReferenceHandoffAdapter(app, {
 
         const historyAfter = historySnapshot(app);
         const revisionAfter = revisionIdentity(app);
-        if (historyAfter.undoCount !== historyBefore.undoCount + 1 || historyAfter.pending) {
-          fail('CHAT_REFERENCE_HANDOFF_HISTORY_CONTRACT', 'Reference import did not create exactly one committed History entry', {
+        const historyCommit = historyCommitValidation(historyBefore, historyAfter, imported.referenceObjectId);
+        if (!historyCommit.valid) {
+          fail('CHAT_REFERENCE_HANDOFF_HISTORY_CONTRACT', 'Reference import History receipt does not match the committed authoritative entry', {
             historyBefore,
-            historyAfter
+            historyAfter,
+            historyCommit,
+            referenceObjectId: imported.referenceObjectId
           });
         }
 
@@ -165,7 +200,7 @@ export function createChatReferenceHandoffAdapter(app, {
             height: decoded.source.height,
             sizeBytes: decoded.source.sizeBytes
           },
-          history: { before: historyBefore, after: historyAfter },
+          history: { before: historyBefore, after: historyAfter, commit: historyCommit },
           revision: { before: revisionBefore, after: revisionAfter },
           audit: audit ? { auditId: audit.auditId, format: audit.format } : null,
           provenance,
@@ -175,6 +210,11 @@ export function createChatReferenceHandoffAdapter(app, {
       } catch (error) {
         const historyAfter = historySnapshot(app);
         const revisionAfter = revisionIdentity(app);
+        const committed = Boolean(imported);
+        const historyCommit = committed
+          ? historyCommitValidation(historyBefore, historyAfter, imported.referenceObjectId)
+          : null;
+        const receiptStatus = committed ? 'COMMITTED_WITH_ERROR' : 'FAILED';
         const failureAudit = addAudit(auditLog, {
           actor,
           modelClient: 'CHAT_ATTACHMENT_HANDOFF',
@@ -188,7 +228,7 @@ export function createChatReferenceHandoffAdapter(app, {
             sourceChannel: CHAT_REFERENCE_HANDOFF_CHANNEL
           },
           executionResult: imported ? {
-            status: 'FAILED_AFTER_IMPORT',
+            status: 'COMMITTED_WITH_ERROR',
             documentId: imported.documentId,
             layerId: imported.layerId,
             referenceObjectId: imported.referenceObjectId
@@ -219,11 +259,11 @@ export function createChatReferenceHandoffAdapter(app, {
             height: decoded.source.height,
             sizeBytes: decoded.source.sizeBytes
           } : null,
-          history: { before: historyBefore, after: historyAfter },
+          history: { before: historyBefore, after: historyAfter, commit: historyCommit },
           revision: { before: revisionBefore, after: revisionAfter },
           audit: failureAudit ? { auditId: failureAudit.auditId, format: failureAudit.format } : null,
           provenance: imported ? provenanceIdentity(groundedContextProvider, imported.referenceObjectId) : null,
-          status: 'FAILED',
+          status: receiptStatus,
           error: { code: error?.code || 'CHAT_REFERENCE_HANDOFF_FAILED', message: error?.message || String(error) }
         };
       }
