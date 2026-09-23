@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "31a427d807f7497b7e64d159607380c056829d67",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
@@ -15,7 +15,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Final Phase B ImageTracerJS workload tuning exact-SHA verification: 64k pixels / 320 px / colorquantcycles 1."
+    "reason": "Phase B trace timeout resolved; Runtime now fails post-commit because decomposition selects more objects than AI Document Bridge selection bounds before CHAT receipt provenance read."
   },
   "batch_policy": {
     "default_target": 3,
@@ -23,8 +23,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35860798446,
-    "tested_sha": "1ad65b932835ef754b7d42291f7e70cdcd048925",
-    "result": "FAIL"
+    "run_id": 35863528804,
+    "tested_sha": "31a427d807f7497b7e64d159607380c056829d67",
+    "result": "FAIL_POST_COMMIT_SELECTION_BOUNDS"
   }
 }
