@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "1ad65b932835ef754b7d42291f7e70cdcd048925",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
@@ -15,7 +15,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Phase B bounded color-regions trace performance revision requires exact-SHA Windows browser verification before private user 1.jpg acceptance."
+    "reason": "Phase B bounded raster revision still times out Creative; final validation-grade ImageTracerJS workload tuning required."
   },
   "batch_policy": {
     "default_target": 3,
@@ -23,8 +23,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35854909964,
-    "tested_sha": "79af1c96a55635f6b8471e1ee02edade9fb25dac",
+    "run_id": 35860798446,
+    "tested_sha": "1ad65b932835ef754b7d42291f7e70cdcd048925",
     "result": "FAIL"
   }
 }
