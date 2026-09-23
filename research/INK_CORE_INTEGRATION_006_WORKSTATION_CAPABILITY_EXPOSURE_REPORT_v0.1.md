@@ -1,6 +1,6 @@
 # INK CORE INTEGRATION 006 — Workstation Capability Exposure Report v0.1
 
-STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / RUNTIME_HARNESS_READY`
 
 ## Control
 
@@ -14,7 +14,10 @@ NEW_ENGINE_FEATURES = 0
 FORMAT_VERSION = 4 / PRESERVED
 TINYFISH_USED = 0
 GITHUB_ACTIONS_USED = 0
-RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH / USER_DIRECTIVE
+RUNTIME_HARNESS_CHECKPOINT = df28902a2b2c61626a4d5a11821f36561f305253
+RUNTIME_HARNESS_READY = PASS
+SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
+WORKSTATION_CAPABILITY_RUNTIME_PASS = PENDING_MR_SELF_HOSTED_WINDOWS_RUNTIME
 ```
 
 ## Before / after capability summary
@@ -202,29 +205,51 @@ The focused QA also guards:
 
 These are not replaced by fake controls.
 
-## Runtime debt
+## Runtime harness closure revision
 
-The Work Order originally names a Windows Chrome Runtime gate. The user explicitly changed this workpack to:
+MR revision authorized only the smallest authoritative browser-harness delta. Product wiring remained unchanged.
 
-`DEFERRED_TO_INTEGRATION_BATCH`
+Authoritative path retained:
 
-Therefore no Runtime PASS is claimed.
+`qa/runtime/run-ink-runtime-batch.mjs`
+→ existing `creative` browser suite
+→ `qa/runtime/ink-cloud-018-browser-harness.html`
 
-The future concentrated Runtime batch must cover:
-- existing panel open/close;
-- selection → Properties grounded route;
-- one existing Geometry mutation;
-- Document/Semantic visibility;
-- Compose Repeat/Parametric status;
-- Revision structural compare + provenance;
-- Creative Memory read-only route;
-- Research read-only route;
-- CHAT proposal/approval boundary;
-- History/Revision effects for a mutation;
-- Web shell integrity;
-- narrow desktop containment;
-- Web/Portable parity;
-- exact tested SHA and regression evidence.
+No second Runtime infrastructure path was created.
+
+The browser suite now explicitly exercises the actual workstation entry surfaces:
+
+- **Properties** — no-selection state, then `Inspect grounded selection` → Document Bridge / Semantic readout.
+- **Reference** — `Refresh research context` → Research → Creation read-only advisory.
+- **Compose** — no-Repeat state, then selected accepted Repeat → deterministic Parametric Structure status.
+- **CHAT** — Grounded Context / Creative Memory / Research buttons and read-only advisory outputs.
+- **Revision** — unavailable compare state before a Revision exists, then selected Revision → structural compare + provenance.
+- **Panel authority** — every route is entered through `INK_WEB_SHELL.open(...)`; Properties remains the Inspector route while Reference / Compose / CHAT / Revision remain the single Creative Workspace primary route.
+- **Read-only boundary** — grounded/research/memory/compare actions snapshot Document + History + current Revision and require exact equality after each advisory action.
+
+The batch runner now requires the Integration-006 checks from the existing `creativeRequired` contract, so a browser run cannot PASS by omitting the new route assertions.
+
+Harness checkpoints:
+
+- `19d66952deb8d0537ac720b60ea9da1e2b031f1e` — browser capability-entry assertions.
+- `df28902a2b2c61626a4d5a11821f36561f305253` — batch runner requires those assertions.
+
+DEV closure verification against the MR-authorized revision baseline `1c51a817dd3b472f97f5d8c558fadd5aa01ec0f5`:
+
+```text
+BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
+BATCH_RUNNER_SOURCE_SYNTAX = PASS
+REQUIRED_CHECK_CONTRACT = PASS
+ACTION_ENTRY_COVERAGE = PASS
+AUTHORIZED_DELTA_FILES = 2 / qa/runtime only
+PRODUCT_WIRING_CHANGED = 0
+GITHUB_ACTIONS_USED = 0
+GITHUB_HOSTED_ACTIONS_USED = 0
+SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
+RUNTIME_HARNESS_READY = PASS
+```
+
+The authoritative self-hosted Windows Chrome/Edge Runtime was intentionally **not** executed by DEV. MR owns the exact-SHA promoted Runtime run. Therefore the final browser Runtime gate is not claimed as PASS at this DEV handoff.
 
 ## Gates
 
@@ -235,7 +260,7 @@ COMPLETED_CAPABILITIES_VISIBLE_AND_WIRED = PASS
 CHAT_UI_AUTHORITY_RELATIONSHIP_CORRECT = PASS
 WORKSTATION_HISTORY_REVISION_RELATIONSHIP_CORRECT = PASS
 WORKSTATION_WEB_PORTABLE_PARITY_PASS = PASS
-WORKSTATION_CAPABILITY_RUNTIME_PASS = DEFERRED_TO_INTEGRATION_BATCH / NOT CLAIMED
+WORKSTATION_CAPABILITY_RUNTIME_PASS = PENDING_MR_SELF_HOSTED_WINDOWS_RUNTIME
 ```
 
 ## DEV handoff
