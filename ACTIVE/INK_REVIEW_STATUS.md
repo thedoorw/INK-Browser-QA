@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-TECH-DEBT-001 / PRODUCT_SOURCE_PASS / QA_HARNESS_REVISE / RUNTIME_RERUN_REQUIRED`
+STATUS: `INK-TECH-DEBT-001 / PRODUCT_SOURCE_PASS / QA_HARNESS_REVISE_INCOMPLETE / RUNTIME_HELD`
 
 ```text
 TASK_ID = INK-TECH-DEBT-001
@@ -106,3 +106,37 @@ DEV_HANDOFF / STOP
 ```
 
 The handoff-local `dee7beee...` identifier remains non-authoritative because it is not a resolvable remote commit. Use the actual remote branch HEAD as the next exact Runtime fingerprint.
+
+
+## MR harness re-review — 51d9ca0d4326720c5a9970f3872c99eb2808db2c
+
+```text
+REMOTE_HEAD = 51d9ca0d4326720c5a9970f3872c99eb2808db2c
+DELTA_FROM_PREVIOUS_RUNTIME_SHA = 1 commit
+FILES_CHANGED =
+  qa/runtime/ink-web-ui-001-harness.html
+  qa/core/tests/unit/ink-tech-debt-001-foundation.test.mjs
+PRODUCT_SOURCE_CHANGED = NO
+HARNESS_REVIEW = MR_REVISE
+RUNTIME = HELD / DO NOT RERUN YET
+```
+
+Accepted in this commit:
+- harness now reads worker-owned identity through `INK_GET_VERSION`;
+- harness no longer re-registers `service-worker.js?build=...` or `qa-refresh`;
+- `registration.update()` and `updateViaCache === 'none'` are checked;
+- product source remains untouched.
+
+Still unresolved from the prior MR runtime finding:
+1. Typography assertion still requires `R + G + B >= 480`, which is the obsolete bright-text-on-dark-shell rule.
+2. Layout assertion still requires `stage-wrap background == rgb(38,38,38)`, which is the obsolete dark wrapper rule.
+
+These exact predicates caused Runtime 35885929148 to stop at UI 69/71. They must be replaced with the already-authorized light-shell-compatible readability/contrast and rendered workbench-vs-paper separation checks before a rerun.
+
+```text
+NEXT =
+  harness-only correction on same branch
+  → DEV_HANDOFF / STOP
+  → MR re-review
+  → exact-SHA Runtime rerun
+```
