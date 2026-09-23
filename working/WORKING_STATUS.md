@@ -2287,3 +2287,21 @@ completed capability inventory
 ```
 
 This prevents the UI maintenance lane from optimizing or rearranging surfaces before capability ownership and placement are stabilized.
+
+
+## INK-CORE-INTEGRATION-006 MR checkpoint
+
+```text
+DEV_HANDOFF = 08a719c0f8bfe903944eba95f43265a247d3e3ec
+SOURCE_REVIEW = PASS
+STATIC_QA_REVIEW = PASS
+PRODUCT_WIRING = ACCEPTED_PENDING_RUNTIME
+RUNTIME_HARNESS = INSUFFICIENT
+MR = REVISE
+NEXT_DELTA = BROWSER_RUNTIME_HARNESS_ONLY_PREFERRED
+GITHUB_HOSTED_ACTIONS = 0
+SELF_HOSTED_RUNTIME = MR_OWNED_AFTER_PROMOTION
+UI_LANE = PAUSED
+```
+
+The product wiring is not rejected. Closure is blocked only because the new workstation capability surfaces have not yet been exercised in the authoritative browser Runtime.
