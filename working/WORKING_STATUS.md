@@ -2326,3 +2326,25 @@ FORMAT_VERSION = 4
 ```
 
 The original UI hold is released. Future UI refinement must use the accepted Workstation UI × Capability Matrix as its functional placement baseline and must not detach visible controls from their accepted engine/CHAT/History/Revision authorities.
+
+
+## INK-CHAT-VALIDATION-001 activation
+
+```text
+TASK = INK-CHAT-VALIDATION-001
+PHASE = A_REFERENCE_HANDOFF
+BRANCH = work/ink-chat-validation-001
+GOAL =
+  CHAT attachment
+  → authoritative INK Reference import
+  → History / provenance / audit
+  → inspectable operation receipt
+CURRENT_GAP =
+  decoder exists
+  + human file input exists
+  + programmatic CHAT handoff not yet accepted
+REAL_USER_IMAGE_TEST = MR REQUIRED / PRIVATE / NOT COMMITTED
+NEXT = DEV_HANDOFF → MR REVIEW → exact-SHA Runtime → real attachment test
+```
+
+This is the first execution test of the rule that CHAT must truly operate INK rather than merely discuss it.
