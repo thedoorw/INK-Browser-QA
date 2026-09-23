@@ -32,6 +32,8 @@ assert.ok(workspace.includes('resolve_parametric_structure'), 'Compose must expo
 assert.ok(workspace.includes('Document Bridge'), 'Properties/CHAT must expose document grounding');
 assert.ok(workspace.includes('Semantic'), 'Properties/CHAT must expose semantic grounding');
 assert.ok(workspace.includes('Provenance'), 'Revision/CHAT must expose provenance');
+assert.ok(workspace.includes("const mode = 'structural';"), 'Revision compare must stay on accepted structural evidence');
+assert.equal(workspace.includes('revision-compare-mode'), false, 'Revision compare must not expose unrendered overlay/difference modes');
 
 assert.ok(installAI.includes('createCreativeMemoryAdapter'));
 assert.ok(installAI.includes('createResearchCreationBridgeAdapter'));

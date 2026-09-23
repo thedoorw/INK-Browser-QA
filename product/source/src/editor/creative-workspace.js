@@ -367,7 +367,7 @@ export class CreativeWorkspaceController {
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="revision-capture">Capture</button><button type="button" data-workspace-action="revision-list">Refresh list</button></div>
           <label class="creative-workspace-field"><span>Revision</span><select data-workspace-input="revision-id"><option value="">No revisions</option></select></label>
           <button type="button" class="creative-workspace-primary" data-workspace-action="revision-restore">Restore selected Revision</button>
-          <div class="creative-workspace-actions"><select data-workspace-input="revision-compare-mode" aria-label="Revision comparison mode"><option value="structural">Structural</option><option value="side-by-side">Side by side</option><option value="overlay">Overlay</option><option value="wipe">Wipe</option><option value="difference">Difference</option></select><button type="button" data-workspace-action="revision-compare">Compare with current</button></div>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="revision-compare">Compare structure with current</button>
           <output data-workspace-output="revision">Current revision: none</output>
           <output data-workspace-output="revision-compare">Comparison not executed.</output>
           <output data-workspace-output="revision-provenance">Provenance not inspected.</output>
@@ -445,7 +445,7 @@ export class CreativeWorkspaceController {
         if (!revisionId) throw Object.assign(new Error('Select a Revision'), { code: 'REVISION_REQUIRED' });
         const revisionRecord = await this.app?.revisions?.loadRecord?.(revisionId);
         if (!revisionRecord) throw Object.assign(new Error('Revision record unavailable'), { code: 'REVISION_RECORD_UNAVAILABLE' });
-        const mode = this.root?.querySelector('[data-workspace-input="revision-compare-mode"]')?.value || 'structural';
+        const mode = 'structural';
         this.lastRevisionComparison = await this.callGroundedTool('compare_visual_subjects', {
           subjectA: { kind: 'revision', revisionRecord, label: revisionRecord.label || revisionId },
           subjectB: { kind: 'current', document: this.app?.doc, label: 'Current' },
