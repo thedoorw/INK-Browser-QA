@@ -126,3 +126,12 @@ test('CSS and active metadata expose one current authority', () => {
   assert.doesNotMatch(compat, /v1\.6|RC/);
   assert.match(ink, /inventory:'partial-runtime-capability-tags',complete:false/);
 });
+
+test('browser QA checks worker-owned identity without rewriting the registration', () => {
+  const harness = readFileSync(resolve(repoRoot, 'qa/runtime/ink-web-ui-001-harness.html'), 'utf8');
+  assert.match(harness, /registration\.active\.postMessage\(\{ type: 'INK_GET_VERSION' \}\)/);
+  assert.match(harness, /workerBuildId === appBuildId/);
+  assert.match(harness, /await registration\.update\(\)/);
+  assert.match(harness, /swUpdateViaCache === 'none'/);
+  assert.doesNotMatch(harness, /qa-refresh|service-worker\.js\?build=|serviceWorker\.register\(/);
+});

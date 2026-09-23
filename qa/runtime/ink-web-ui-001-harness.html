@@ -61,17 +61,6 @@
   const dispatchKey = (win, key, init = {}) => {
     win.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, ...init }));
   };
-  const waitWorkerState = worker => new Promise(resolve => {
-    if (!worker || worker.state === 'installed' || worker.state === 'activated') return resolve(worker?.state || null);
-    const handler = () => {
-      if (worker.state === 'installed' || worker.state === 'activated' || worker.state === 'redundant') {
-        worker.removeEventListener('statechange', handler);
-        resolve(worker.state);
-      }
-    };
-    worker.addEventListener('statechange', handler);
-  });
-
   async function publishResult(payload) {
     document.body.dataset.qaStatus = payload.status;
     output.textContent = 'INK_UI_QA_RESULT:' + JSON.stringify(payload);
@@ -497,11 +486,13 @@
       record('favicon link resolves successfully in fresh context', Boolean(faviconResponse?.ok), { href: favicon?.href || null, status: faviconResponse?.status || null });
       record('original INK mark is the visible shell source', Boolean(markResponse?.ok) && /INK_MARK_SOURCE_W-300\.jpg/.test(mark?.src || ''), { src: mark?.src || null, status: markResponse?.status || null });
 
-      const buildId = win.INK_ARCHITECTURE?.buildId || test.updateStatus?.().buildId || null;
-      const shellCacheName = buildId ? `ink-build-${buildId}-shell` : null;
+      const appBuildId = win.INK_ARCHITECTURE?.buildId || test.updateStatus?.().buildId || null;
+      let workerBuildId = null;
       let swReady = false;
       let swProductVersion = null;
       let swScriptURL = null;
+      let swUpdateViaCache = null;
+      let swUpdateChecked = false;
       let cacheKeys = [];
       let legacyCacheRemoved = false;
       try {
@@ -511,34 +502,44 @@
         ]);
         swReady = Boolean(registration?.active);
         swScriptURL = registration?.active?.scriptURL || null;
-        const swResponse = await win.fetch(new URL(`./service-worker.js?build=${encodeURIComponent(buildId || '')}`, win.location.href));
-        const swText = await swResponse.text();
-        swProductVersion = /PRODUCT_VERSION\s*=\s*'([^']+)'/.exec(swText)?.[1] || null;
+        swUpdateViaCache = registration?.updateViaCache || null;
+        const workerVersion = await new Promise((resolve, reject) => {
+          const timer = setTimeout(() => {
+            win.navigator.serviceWorker.removeEventListener('message', onMessage);
+            reject(new Error('worker-version-timeout'));
+          }, 10000);
+          const onMessage = event => {
+            if (event.data?.type !== 'INK_VERSION') return;
+            clearTimeout(timer);
+            win.navigator.serviceWorker.removeEventListener('message', onMessage);
+            resolve(event.data);
+          };
+          win.navigator.serviceWorker.addEventListener('message', onMessage);
+          registration.active.postMessage({ type: 'INK_GET_VERSION' });
+        });
+        workerBuildId = workerVersion.buildId || null;
+        swProductVersion = workerVersion.version || null;
+        const shellCacheName = workerBuildId ? `ink-build-${workerBuildId}-shell` : null;
         await waitFor(async () => {
           cacheKeys = await win.caches.keys();
           return Boolean(shellCacheName) && cacheKeys.includes(shellCacheName);
         }, 90000, 250);
-
-        const legacy = await win.caches.open('ink-v1.6.5-RC-shell');
-        await legacy.put(new Request(new URL('./qa-legacy-probe', win.location.href)), new Response('legacy'));
-        const qaScript = new URL(`./service-worker.js?build=${encodeURIComponent(buildId || '')}&qa-refresh=1`, win.location.href).href;
-        const qaScope = new URL('./', win.location.href).pathname;
-        const updated = await win.navigator.serviceWorker.register(qaScript, { scope: qaScope });
-        let worker = updated.installing || updated.waiting;
-        if (worker?.state !== 'installed' && worker?.state !== 'activated') await waitWorkerState(worker);
-        worker = updated.waiting || worker;
-        if (worker?.state === 'installed') worker.postMessage({ type: 'INK_SKIP_WAITING' });
-        await waitFor(async () => {
-          cacheKeys = await win.caches.keys();
-          return !cacheKeys.includes('ink-v1.6.5-RC-shell') && Boolean(shellCacheName) && cacheKeys.includes(shellCacheName);
-        }, 90000, 250);
-        legacyCacheRemoved = !cacheKeys.includes('ink-v1.6.5-RC-shell');
+        await registration.update();
+        swUpdateChecked = true;
+        cacheKeys = await win.caches.keys();
+        legacyCacheRemoved = !cacheKeys.some(key => key.startsWith('ink-v'));
       } catch (error) {
         results.push({ name: 'service-worker diagnostic detail', pass: false, detail: String(error?.stack || error) });
       }
       record('service worker activates in loopback Web runtime', swReady, { swReady, swScriptURL });
-      record('service worker exposes product v0.1 with build-keyed cache identity', swProductVersion === '0.1' && Boolean(shellCacheName) && cacheKeys.includes(shellCacheName), { swProductVersion, buildId, shellCacheName, cacheKeys });
-      record('service-worker activation removes historical cache without storage reset', legacyCacheRemoved, { cacheKeys });
+      record('service worker owns build identity independent of stale app query',
+        swProductVersion === '0.1' && Boolean(workerBuildId) && workerBuildId === appBuildId &&
+        cacheKeys.includes(`ink-build-${workerBuildId}-shell`) &&
+        new URL(swScriptURL || win.location.href).search === '',
+        { swProductVersion, appBuildId, workerBuildId, swScriptURL, cacheKeys });
+      record('service worker update check bypasses script HTTP cache', swUpdateViaCache === 'none' && swUpdateChecked,
+        { swUpdateViaCache, swUpdateChecked });
+      record('service-worker activation removed historical cache without storage reset', legacyCacheRemoved, { cacheKeys });
 
       const integrity = test.documentIntegrity();
       const health = test.runtimeHealth();
