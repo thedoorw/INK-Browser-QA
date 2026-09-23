@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — UI DEV HANDOFF
 
-STATUS: UR_REVIEW / STATIC_PASS / RUNTIME_HOLD
+STATUS: UI_PASS / PHASE_A_B
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
@@ -163,3 +163,32 @@ Required runtime gate:
 `UI_HOLD`
 
 No Phase C authorization yet.
+
+
+## UR runtime gate — Phase A + B
+
+Runtime visual gate was executed by UR in a local Chromium shell harness using the Phase B branch values and the original Y-mark asset.
+
+Observed computed/runtime values:
+- body startup/final neutral: `rgb(244, 244, 244)`
+- app shell: `rgb(231, 231, 231)`
+- canvas/paper: `rgb(255, 254, 249)`
+- menu / toolbar / panel surfaces: `rgb(247, 247, 247)`
+- top-left original JPG rendered at 18×18 px from the original 300×300 source
+- favicon type remains `image/jpeg` and points to the same original Y-mark source
+
+Visual review:
+- light chrome direction is coherent
+- canvas/paper remains distinguishable from chrome
+- original Y-mark remains recognizable at top-left without redraw
+- no dark startup color remains in the startup shell path
+- Phase B does not introduce a Core/schema/renderer boundary change
+
+Reference note:
+- Photoshop references remain the workstation-structure baseline.
+- Figma-like lightness is accepted for shell direction only; later phases still need density/spacing/typography alignment.
+
+UR result:
+`UI_PASS`
+
+Phase A + B are accepted.
