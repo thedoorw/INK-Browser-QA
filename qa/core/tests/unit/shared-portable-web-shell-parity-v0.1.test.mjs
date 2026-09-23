@@ -91,6 +91,18 @@ test('shared dynamic dock and Creative Workspace remain reachable and contained'
   }
 });
 
+test('runtime QA bridge is explicit, opt-in and outside production src', () => {
+  const ink = read('src/ink.js');
+  const qaBridge = read('qa/runtime-test-bridge.js');
+  assert.match(ink, /searchParams\.get\('ink-qa'\)==='1'/);
+  assert.match(ink, /import\('\.\.\/qa\/runtime-test-bridge\.js'\)/);
+  assert.doesNotMatch(ink, /window\.INK_TEST\s*=/);
+  assert.doesNotMatch(ink, /fresh\(\)\{app\.replaceDocument/);
+  assert.match(qaBridge, /target\.INK_TEST = bridge/);
+  assert.match(qaBridge, /export function installRuntimeQaBridge/);
+  assert.match(ink, /INK_QA_BRIDGE_READY=loadRuntimeQaBridge\(app\)\.finally\(\(\)=>signalRuntimeReady\(app\)\)/);
+});
+
 test('shared contextual-options contract preserves one command surface across deliveries', () => {
   for (const html of [web, portable]) {
     for (const id of ['contextualOptions', 'contextualControlHost', 'contextualAdvancedBtn', 'quickControls', 'selectionBar', 'eraserOptions', 'shapeOptions', 'textOptions']) {
