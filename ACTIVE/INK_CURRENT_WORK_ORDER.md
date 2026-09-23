@@ -321,3 +321,51 @@ FORMAT_VERSION = 4
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## Cross-lane hold — UI line
+
+USER direction:
+
+```text
+UI_LANE = PAUSED
+REASON = INK-CORE-INTEGRATION-006 is establishing authoritative workstation capability placement and UI-function mapping
+STRUCTURAL_UI_WORK = HOLD
+UI_REDESIGN = HOLD
+PANEL_HIERARCHY_CHANGE = HOLD
+BUGFIX_ONLY = ALLOWED IF BOUNDED AND NON-STRUCTURAL
+RESUME_GATE = INK-CORE-INTEGRATION-006 MR closure + accepted UI × Capability Matrix
+```
+
+Until the resume gate, no independent UI workpack may redefine panel hierarchy, capability placement, contextual-control ownership, or workstation navigation.
+
+
+## MR revision — Runtime harness closure required
+
+Review of DEV handoff `08a719c0f8bfe903944eba95f43265a247d3e3ec`:
+
+```text
+SOURCE_DIFF = PASS
+SOURCE_STATIC_QA = PASS
+PRODUCT_WIRING_SCOPE = ACCEPTED
+WORKSTATION_CAPABILITY_RUNTIME_PASS = NOT YET MET
+MR_DECISION = REVISE
+```
+
+Bounded continuation only:
+
+1. preserve current product wiring unless browser evidence finds a real defect;
+2. extend the existing authoritative browser Runtime harness with Integration-006 assertions;
+3. explicitly exercise Properties / Reference / Compose / CHAT / Revision capability routes;
+4. verify read-only/unavailable states and single-panel authority;
+5. do not create a GitHub-hosted task workflow;
+6. do not run GitHub-hosted Actions for this revision;
+7. DEV does not need to execute the self-hosted Runtime itself;
+8. return new DEV_HANDOFF → STOP;
+9. MR will run the promoted exact SHA through the existing self-hosted Windows Runtime.
+
+No new engine features are authorized.
+
+Gate remains:
+
+`WORKSTATION_CAPABILITY_RUNTIME_PASS`
