@@ -33,6 +33,7 @@
     { id: 'editor', label: 'Editor', items: PANEL_DEFS.filter(def => def.group === 'editor') },
     { id: 'creative', label: 'Creative Loop', items: PANEL_DEFS.filter(def => def.group === 'creative') }
   ]);
+  const PRIMARY_PANEL_STATES = Object.freeze(['collapsed', ...PANEL_DEFS.map(def => def.id)]);
 
   const state = {
     root: null,
@@ -40,6 +41,7 @@
     windowMenu: null,
     windowButton: null,
     runtimeBound: false,
+    activePanel: 'collapsed',
     lastPanel: null,
     resizeObserver: null,
     mutationObserver: null,
@@ -52,6 +54,10 @@
 
   function runtime() {
     return globalThis.INK_APP || null;
+  }
+
+  function isDesktop() {
+    return globalThis.matchMedia?.(DESKTOP_QUERY)?.matches ?? true;
   }
 
   function svgIcon(id) {
@@ -236,7 +242,7 @@
     if (open) positionWindowMenu();
   }
 
-  function currentPanel() {
+  function observedPanel() {
     const app = runtime();
     if (!app || !state.root) return null;
     const creative = app.creativeWorkspace;
@@ -252,24 +258,31 @@
     return null;
   }
 
+  function currentPanel() {
+    if (isDesktop()) return state.activePanel === 'collapsed' ? null : state.activePanel;
+    return observedPanel();
+  }
+
   function isPanelOpen(id) {
     return currentPanel() === id;
   }
 
   function closePrimaryPanels() {
     const app = runtime();
-    if (!app) return;
+    if (!app) return false;
+    state.activePanel = 'collapsed';
     app.creativeWorkspace?.setOpen?.(false);
     app.toggleInspector?.(false);
     syncSoon();
+    return true;
   }
 
   function showInspector(def) {
     const app = runtime();
     if (!app) return false;
     app.creativeWorkspace?.setOpen?.(false);
-    const tab = def.tab || (app.selection?.length ? 'object' : 'brush');
-    app.toggleInspector?.(true, tab);
+    if (def.id === 'properties') app.toggleInspector?.(true, app.selection?.length ? 'object' : 'brush');
+    else app.toggleInspector?.(true, def.tab);
     return true;
   }
 
@@ -298,6 +311,7 @@
     }
     const opened = def.kind === 'inspector' ? showInspector(def) : showCreative(def);
     if (opened) {
+      state.activePanel = id;
       rememberPanel(id);
       syncSoon();
     }
@@ -323,14 +337,28 @@
   function bindCollapseControl() {
     const button = document.querySelector('#inspectorEdgeToggle');
     if (!button) return false;
+    if (button.dataset.shellCollapseBound === 'true') return true;
     button.dataset.shellCollapseBound = 'true';
     button.setAttribute('aria-controls', 'inspector creativeWorkspace');
-    button.onclick = event => {
+    button.addEventListener('click', event => {
       event.preventDefault();
       event.stopPropagation();
       if (currentPanel()) closePrimaryPanels();
       else selectPanel(state.lastPanel || 'properties');
-    };
+    });
+    return true;
+  }
+
+  function bindInspectorCloseControl() {
+    const button = document.querySelector('#closeInspector');
+    if (!button) return false;
+    if (button.dataset.shellCloseBound === 'true') return true;
+    button.dataset.shellCloseBound = 'true';
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      closePrimaryPanels();
+    });
     return true;
   }
 
@@ -397,7 +425,10 @@
     const inspectorOpen = state.root.classList.contains('inspector-open');
     const creativeOpen = Boolean(app.creativeWorkspace?.open);
     if (!(inspectorOpen && creativeOpen)) return;
-    if (source === 'creative') app.toggleInspector?.(false);
+    const active = currentPanel();
+    if (active && PANEL_DEFS.find(def => def.id === active)?.kind === 'creative') app.toggleInspector?.(false);
+    else if (active && PANEL_DEFS.find(def => def.id === active)?.kind === 'inspector') app.creativeWorkspace?.setOpen?.(false);
+    else if (source === 'creative') app.toggleInspector?.(false);
     else app.creativeWorkspace?.setOpen?.(false);
   }
 
@@ -417,9 +448,11 @@
       }
       bindContextualOptions();
       bindCollapseControl();
+      bindInspectorCloseControl();
 
-      // Fresh Web entry is deliberately canvas-first. Only the last selected
-      // panel identity is persisted; open/closed state is not.
+      // Fresh entry is deliberately canvas-first. Only the last selected panel
+      // identity is persisted; open/closed state is never restored.
+      state.activePanel = 'collapsed';
       app.creativeWorkspace?.setOpen?.(false);
       app.toggleInspector?.(false);
 
@@ -479,6 +512,7 @@
 
   globalThis.INK_WEB_SHELL = {
     version: '0.1',
+    states: PRIMARY_PANEL_STATES,
     panels: PANEL_DEFS.map(def => def.id),
     open: selectPanel,
     select: selectPanel,
@@ -489,6 +523,8 @@
       const panel = activePanelElement();
       return {
         version: '0.1',
+        authority: 'single',
+        primaryState: state.activePanel,
         activePanel: currentPanel(),
         lastPanel: state.lastPanel,
         collapsed: !activePanelElement(),

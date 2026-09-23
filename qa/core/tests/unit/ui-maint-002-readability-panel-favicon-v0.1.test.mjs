@@ -61,9 +61,12 @@ test('contextual Advanced is a synchronized two-way Properties toggle', () => {
 });
 
 test('Inspector and Creative Loop bodies own vertical scroll without horizontal overflow', () => {
-  assert.match(css, /INK-UI-MAINT-002 — readability \/ single panel authority \/ containment/);
+  assert.match(css, /INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY/);
   assert.match(css, /\.inspector-section\.active,[\s\S]*?\.creative-workspace-body\{[\s\S]*?min-height:0;[\s\S]*?overflow-y:auto;[\s\S]*?overflow-x:hidden/);
-  assert.match(css, /\.inspector,[\s\S]*?\.creative-workspace-panel,[\s\S]*?overflow:hidden;[\s\S]*?display:flex;[\s\S]*?flex-direction:column/);
+  assert.match(css, /\.inspector\{[\s\S]*?overflow:hidden;[\s\S]*?display:flex;[\s\S]*?flex-direction:column/);
+  assert.match(css, /\.creative-workspace-panel\{[\s\S]*?overflow:hidden;[\s\S]*?flex-direction:column/);
+  assert.match(css, /\.creative-workspace-panel:not\(\.open\)\{display:none\}/);
+  assert.match(css, /\.creative-workspace-panel\.open\{display:flex\}/);
   assert.match(css, /\.creative-workspace-body pre\{[\s\S]*?min-width:0;[\s\S]*?max-width:100%/);
 });
 

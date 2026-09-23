@@ -41,7 +41,7 @@ test('medium desktop constrains primary panels while preserving canvas compensat
   assert.match(css, /INK-WEB-UI-005 — responsive \/ fullscreen \/ final containment closure/);
   assert.match(css, /@media\(max-width:980px\) and \(min-width:761px\)/);
   assert.match(css, /\.inspector\{[\s\S]*?width:min\(var\(--inspector-w\),38vw\);[\s\S]*?max-width:360px/);
-  assert.match(css, /\.creative-workspace-panel,[\s\S]*?width:clamp\(280px,38vw,340px\)/);
+  assert.match(css, /\.creative-workspace-panel\{width:clamp\(244px,38vw,340px\)/);
   assert.match(css, /\.app\.panel-primary-open \.stage-wrap\{[\s\S]*?--active-panel-w|--active-panel-w/);
   assert.match(shell, /getBoundingClientRect\(\)/);
   assert.match(shell, /--active-panel-w/);
