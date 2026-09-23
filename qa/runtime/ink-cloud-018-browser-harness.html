@@ -90,9 +90,94 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const fixtureResponse=await fetch('/__qa_rose_window.png',{cache:'no-store'});
     assert(fixtureResponse.ok,'ROSE_WINDOW_FIXTURE_HTTP',{status:fixtureResponse.status});
     const blob=await fixtureResponse.blob();
-    const file=new File([blob],'rose-window-primary.png',{type:'image/png'});
     const input=cw.root.querySelector('[data-workspace-input="reference-file"]');
+
+    assert(Boolean(w.INK_CHAT_HANDOFF?.importReference),'CHAT_REFERENCE_HANDOFF_API_VISIBLE');
+    assert((input?.files?.length||0)===0,'CHAT_REFERENCE_HANDOFF_FILE_INPUT_UNTOUCHED_BEFORE');
+    const handoffHistoryBefore=app.history.undoStack.length;
+    const handoffRevisionBefore=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
+    const formalDocumentBeforeHandoff=app.doc;
+    const originalReplaceDocument=app.replaceDocument.bind(app);
+    let handoffReplaceDocumentCalls=0;
+    app.replaceDocument=(...args)=>{handoffReplaceDocumentCalls++;return originalReplaceDocument(...args);};
+    let handoffReceipt;
+    try {
+      handoffReceipt=await w.INK_CHAT_HANDOFF.importReference(blob,{
+        name:'chat-reference-fixture.png',
+        type:'image/png',
+        actor:{type:'chat',id:'runtime-chat',channel:'CHAT_ATTACHMENT_HANDOFF'},
+        intent:'INK-CHAT-VALIDATION-001 Phase A automated fixture handoff'
+      });
+    } finally {
+      app.replaceDocument=originalReplaceDocument;
+    }
+    assert(handoffReceipt?.status==='COMPLETED','CHAT_REFERENCE_HANDOFF_COMPLETED',{receipt:handoffReceipt});
+    assert((input?.files?.length||0)===0,'CHAT_REFERENCE_HANDOFF_FILE_INPUT_UNTOUCHED_AFTER');
+    assert(handoffReceipt.operation==='reference.import' && handoffReceipt.sourceChannel==='CHAT_ATTACHMENT_HANDOFF','CHAT_REFERENCE_HANDOFF_OPERATION_RECORDED',{operation:handoffReceipt.operation,sourceChannel:handoffReceipt.sourceChannel});
+    const handoffFound=app.findObject({objectId:handoffReceipt.referenceObjectId});
+    assert(handoffFound?.object?.type==='image','CHAT_REFERENCE_HANDOFF_REFERENCE_OBJECT_VISIBLE',{referenceObjectId:handoffReceipt.referenceObjectId});
+    const handoffMeta=handoffFound?.object?.metadata?.referenceImport;
+    assert(
+      handoffMeta?.actor?.type==='chat' &&
+      handoffMeta?.sourceChannel==='CHAT_ATTACHMENT_HANDOFF' &&
+      handoffMeta?.operation==='reference.import',
+      'CHAT_REFERENCE_HANDOFF_ACTOR_CHANNEL_METADATA',
+      {metadata:handoffMeta}
+    );
+    assert(
+      /^[a-f0-9]{64}$/.test(handoffReceipt.source?.sha256||'') &&
+      handoffReceipt.source.sha256===handoffMeta?.source?.sha256 &&
+      handoffReceipt.source.mimeType==='image/png' &&
+      handoffReceipt.source.mimeType===handoffMeta?.source?.mimeType &&
+      handoffReceipt.source.width===handoffFound.object.w &&
+      handoffReceipt.source.height===handoffFound.object.h,
+      'CHAT_REFERENCE_HANDOFF_SOURCE_IDENTITY_RETAINED',
+      {source:handoffReceipt.source,width:handoffFound?.object?.w,height:handoffFound?.object?.h}
+    );
+    assert(
+      app.history.undoStack.length===handoffHistoryBefore+1 &&
+      handoffReceipt.history?.before?.undoCount===handoffHistoryBefore &&
+      handoffReceipt.history?.after?.undoCount===handoffHistoryBefore+1 &&
+      app.history.undoStack.at(-1)?.label==='Reference import · CHAT attachment',
+      'CHAT_REFERENCE_HANDOFF_HISTORY_EXACTLY_ONE',
+      {before:handoffHistoryBefore,after:app.history.undoStack.length,last:app.history.undoStack.at(-1)?.label}
+    );
+    const handoffRevisionAfter=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
+    assert(
+      handoffReceipt.revision?.before===handoffRevisionBefore &&
+      handoffReceipt.revision?.after===handoffRevisionAfter &&
+      handoffRevisionAfter===handoffRevisionBefore,
+      'CHAT_REFERENCE_HANDOFF_NO_AUTO_REVISION',
+      {before:handoffRevisionBefore,after:handoffRevisionAfter}
+    );
+    assert(app.doc===formalDocumentBeforeHandoff && handoffReplaceDocumentCalls===0,'CHAT_REFERENCE_HANDOFF_NO_DOCUMENT_REPLACEMENT',{replaceDocumentCalls:handoffReplaceDocumentCalls});
+    const handoffAudit=handoffReceipt.audit?.auditId?w.INK_AI?.layer?.audit?.find?.(handoffReceipt.audit.auditId):null;
+    assert(
+      Boolean(handoffAudit) &&
+      handoffAudit.commands?.includes('reference.import') &&
+      handoffAudit.permissionLevel==='EXECUTE',
+      'CHAT_REFERENCE_HANDOFF_AUDIT_INSPECTABLE',
+      {auditId:handoffReceipt.audit?.auditId,commands:handoffAudit?.commands}
+    );
+    assert(
+      handoffReceipt.provenance?.status==='AVAILABLE' &&
+      (handoffReceipt.provenance?.eventIds?.length||0)>0 &&
+      handoffReceipt.provenance?.eventKinds?.includes('object-source'),
+      'CHAT_REFERENCE_HANDOFF_PROVENANCE_INSPECTABLE',
+      {provenance:handoffReceipt.provenance}
+    );
+    assert(
+      handoffReceipt.documentId===app.doc.id &&
+      handoffReceipt.targetLayerId===handoffFound.layer.id &&
+      handoffReceipt.referenceObjectId===handoffFound.object.id &&
+      handoffReceipt.audit?.auditId,
+      'CHAT_REFERENCE_HANDOFF_RECEIPT_INSPECTABLE',
+      {documentId:handoffReceipt.documentId,layerId:handoffReceipt.targetLayerId,referenceObjectId:handoffReceipt.referenceObjectId,auditId:handoffReceipt.audit?.auditId}
+    );
+
+    const file=new File([blob],'rose-window-primary.png',{type:'image/png'});
     const transfer=new DataTransfer(); transfer.items.add(file); input.files=transfer.files;
+    assert(input.files.length===1,'MANUAL_REFERENCE_FILE_INPUT_STILL_AVAILABLE');
 
     await openPanel('reference');
     const direct=await cw.runExtraction();
