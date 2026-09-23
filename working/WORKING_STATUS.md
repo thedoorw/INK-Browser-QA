@@ -2441,3 +2441,18 @@ IMAGE_MODEL = 0
 USER_IMAGE_PUBLIC_COMMIT = 0
 NEXT = DEV_HANDOFF → MR source review → exact-SHA Runtime → private 1.jpg acceptance
 ```
+
+
+## INK-CHAT-VALIDATION-001 Phase B Runtime checkpoint
+
+```text
+DEV_HEAD = 79af1c96a55635f6b8471e1ee02edade9fb25dac
+SOURCE_REVIEW = PASS
+RUNTIME = 35854909964
+UI = PASS
+CREATIVE = TIMEOUT_240S
+BLOCKER = unbounded synchronous full-raster color-region trace
+DECISION = MR_REVISE
+PRIVATE_USER_IMAGE = HELD
+NEXT = bounded trace workload fix → DEV_HANDOFF / STOP → MR Runtime rerun
+```
