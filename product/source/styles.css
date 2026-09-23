@@ -45,7 +45,6 @@ svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-wi
 .file-group{justify-content:flex-end}
 .history-group{justify-self:center}
 .brand{display:flex;align-items:baseline;gap:7px;margin:0 5px 0 3px;letter-spacing:.08em}
-.brand-mark{width:25px;height:25px;display:grid;place-items:center;border-radius:8px;background:var(--ink);color:#fff;font-family:Georgia,serif;font-weight:700;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
 .brand strong{font-size:17px;letter-spacing:.15em}
 .brand .version{font-size:9px;color:var(--muted);letter-spacing:.04em}
 .top-divider{width:1px;height:24px;background:var(--line);margin:0 4px}
@@ -275,7 +274,6 @@ select:focus,input:focus{outline-color:rgba(30,98,90,.35)}
   .mobile-only{display:grid!important}.desktop-only{display:none!important}.mobile-dock{display:flex}
   .topbar{grid-template-columns:minmax(0,1fr) auto;height:var(--topbar-h);padding:0 8px 0 7px}
   .topbar-leading{min-width:0}
-  .brand-mark{width:28px;height:28px}
   .brand strong,.brand .version,.top-divider,#pagesToggle{display:none}
   .doc-title{width:min(47vw,250px);padding:0 7px;font-size:13px}
   .history-group{display:none}
@@ -480,7 +478,6 @@ svg{width:18px;height:18px;stroke-width:1.55}
 .topbar{grid-template-columns:minmax(250px,1fr) auto minmax(310px,1fr);padding:0 7px;border-bottom-color:var(--line-strong);box-shadow:0 1px 0 rgba(255,255,255,.5)}
 .topbar-leading,.file-group,.history-group{gap:2px}
 .brand{gap:5px;margin:0 4px 0 2px;letter-spacing:.04em}
-.brand-mark{width:22px;height:22px;border-radius:4px;font-size:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
 .brand strong{font-size:14px;letter-spacing:.13em;font-weight:700}
 .brand .version{font-size:8px;letter-spacing:.035em}
 .top-divider{height:20px;margin:0 4px}
@@ -671,7 +668,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 @media(max-width:760px){
   :root{--topbar-h:48px;--status-h:0px}
   .topbar{grid-template-columns:minmax(0,1fr) auto;padding:0 6px}
-  .brand-mark{width:24px;height:24px}
   .brand strong{font-size:13px}
   .doc-title{height:32px;font-size:11px}
   .file-group .primary-button{width:34px;height:34px;border-radius:4px}
@@ -741,7 +737,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
     user-select:none;
   }
   .menu-app-mark{height:100%;display:flex;align-items:center;gap:5px;padding:0 9px 0 6px;border-right:1px solid var(--chrome-line);white-space:nowrap}
-  .menu-app-mark>span{width:18px;height:18px;display:grid;place-items:center;border-radius:2px;background:#172d39;color:#59b8d5;font:700 11px Georgia,serif;box-shadow:inset 0 0 0 1px rgba(89,184,213,.28)}
   .menu-app-mark strong{font-size:10px;letter-spacing:.12em;font-weight:700}
   .menu-app-mark small{font-size:8px;color:var(--chrome-faint);font-variant-numeric:tabular-nums}
   .application-menus{display:flex;align-items:stretch;height:100%;min-width:0;overflow:hidden}
@@ -925,7 +920,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .workspace-switch button svg{width:13px;height:13px}
   .file-group{z-index:2}
   .doc-title{color:#e0e1e3!important;background:#2c2d2f!important;border-color:#1f2022!important}
-  .brand-mark{background:#172d39!important;color:#59b8d5!important;border-radius:2px!important;box-shadow:inset 0 0 0 1px rgba(89,184,213,.28)!important}
   .file-group .primary-button{background:#2f8179!important;color:#fff!important;border-color:#1f5f59!important;box-shadow:none!important}
   .file-group .icon-button{color:#d6d7d9!important;border-radius:3px!important}
   .file-group .icon-button:hover,.file-group .icon-button:active{background:#505154!important;color:#fff!important}
@@ -1340,11 +1334,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 
   /* Keep the user mark visible in the compact application identity surfaces. */
   .menu-app-mark>span,
-  .brand-mark{
-    background:#172d39 url("assets/ink-mark.svg") center/cover no-repeat;
-    color:transparent;
-    text-shadow:none;
-  }
 
   .panel-window-menu{
     position:absolute;
@@ -1379,11 +1368,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .panel-dock,.panel-window-menu{display:none!important}
   .app.panel-primary-open .stage-wrap{right:0}
   .menu-app-mark>span,
-  .brand-mark{
-    background:#172d39 url("assets/ink-mark.svg") center/cover no-repeat;
-    color:transparent;
-    text-shadow:none;
-  }
 }
 
 
@@ -2432,4 +2416,7 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
   .topbar .history-group{display:none}
   .contextual-tool-identity{min-width:52px}
   .contextual-tool-identity strong{max-width:44px}
-}
+}.brand-source-mark{display:block;width:25px;height:25px;object-fit:contain;flex:0 0 auto}
+@media(max-width:760px){.brand .brand-source-mark{width:28px;height:28px}}
+
+
