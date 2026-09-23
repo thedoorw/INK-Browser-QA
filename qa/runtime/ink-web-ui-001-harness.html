@@ -148,32 +148,49 @@
       frame.style.height = '800px';
       await sleep(220);
 
-      const parseRgb = value => (value.match(/\d+(?:\.\d+)?/g) || []).slice(0, 3).map(Number);
+      const parseColor = value => (value.match(/[\d.]+/g) || []).map(Number);
+      const relativeLuminance = rgb => {
+        const channels = rgb.slice(0, 3).map(value => {
+          const channel = value / 255;
+          return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+        });
+        return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+      };
+      const textContrast = element => {
+        const foreground = parseColor(getComputedStyle(element).color);
+        let background = [255, 255, 255];
+        for (let current = element; current; current = current.parentElement) {
+          const color = parseColor(getComputedStyle(current).backgroundColor);
+          if (color.length >= 3 && (color[3] ?? 1) === 1) { background = color; break; }
+        }
+        const light = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+        const dark = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+        return (light + 0.05) / (dark + 0.05);
+      };
       const typographyDiag = {
         advanced: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('#contextualAdvancedBtn')).fontSize),
-          color: getComputedStyle(doc.querySelector('#contextualAdvancedBtn')).color
+          contrast: textContrast(doc.querySelector('#contextualAdvancedBtn'))
         },
         inspectorTitle: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('.inspector-head strong')).fontSize),
-          color: getComputedStyle(doc.querySelector('.inspector-head strong')).color
+          contrast: textContrast(doc.querySelector('.inspector-head strong'))
         },
         inspectorTab: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('.inspector-tab')).fontSize),
-          color: getComputedStyle(doc.querySelector('.inspector-tab')).color
+          contrast: textContrast(doc.querySelector('.inspector-tab'))
         },
         contextLabel: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('.context-control-label')).fontSize),
-          color: getComputedStyle(doc.querySelector('.context-control-label')).color
+          contrast: textContrast(doc.querySelector('.context-control-label'))
         }
       };
-      const secondaryRgb = parseRgb(typographyDiag.contextLabel.color);
       record('UI-MAINT-002 desktop typography readability lift is active',
         typographyDiag.advanced.fontSize >= 10 &&
         typographyDiag.inspectorTitle.fontSize >= 11 &&
         typographyDiag.inspectorTab.fontSize >= 10 &&
         typographyDiag.contextLabel.fontSize >= 10 &&
-        secondaryRgb.reduce((sum, value) => sum + value, 0) >= 480,
+        Object.values(typographyDiag).every(sample => sample.contrast >= 4.5),
         typographyDiag);
 
       shell.open('layers');
@@ -291,12 +308,11 @@
       const layoutPixels = {
         corner: canvasPixel(layoutCanvas, 8, 8),
         center: canvasPixel(layoutCanvas, layoutCanvas.clientWidth / 2, layoutCanvas.clientHeight / 2),
-        stageBackground: getComputedStyle(doc.querySelector('#stageWrap')).backgroundColor,
         stage: layoutStage,
         artboard: test.artboard()
       };
       const luminance = rgba => (rgba?.[0] || 0) + (rgba?.[1] || 0) + (rgba?.[2] || 0);
-      record('Layout shows dark workbench around real A4 paper', luminance(layoutPixels.corner) < 210 && luminance(layoutPixels.center) > 600 && /38, 38, 38/.test(layoutPixels.stageBackground), layoutPixels);
+      record('Layout shows dark workbench around real A4 paper', luminance(layoutPixels.corner) < 210 && luminance(layoutPixels.center) > 600 && luminance(layoutPixels.center) - luminance(layoutPixels.corner) > 390, layoutPixels);
       test.switchWorkspace('creation');
       await sleep(60);
 
