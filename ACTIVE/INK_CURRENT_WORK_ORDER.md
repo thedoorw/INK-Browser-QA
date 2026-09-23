@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / PHASE_A_REFERENCE_HANDOFF`
+STATUS: `INK-CHAT-VALIDATION-001 / MR_PASS / PROMOTION_AUTHORIZED`
 
 ## Control
 
@@ -428,3 +428,55 @@ DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
 ```
 
 MR will rerun the exact reviewed SHA after the bounded liveness revision. The private real-user image test remains gated on Creative Runtime PASS.
+
+
+## MR final Phase A acceptance
+
+```text
+DEV_PRODUCT_HEAD = 5c8d45d3c0516e5bf1ad56c2afca246ab98ccb83
+MR_QA_ONLY_HEAD = ababe86e049355f6464cdabfceacfe2c32992be1
+MR_QA_ONLY_DELTA = liveness evidence label collision only
+EXACT_SHA_RUNTIME = PASS
+RUNTIME_RUN = 35847254857
+TESTED_SHA = ababe86e049355f6464cdabfceacfe2c32992be1
+RUNNER = DESKTOP-NSOQH69
+BROWSER = Chrome
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+RUNTIME_ARTIFACT = 10744043307
+RUNTIME_ARTIFACT_DIGEST = sha256:1f5e42a8823279f9f0fd1d6d20b016a5fb83d806ed091b84b566f6eefeb16544
+```
+
+The prior run at `5c8d45d...` reached the new handoff successfully but the QA recorder overwrote the check-name field with the source filename. MR corrected that QA-only evidence-label collision; product source did not change. The rerun at `ababe86...` passed all browser suites.
+
+Private user attachment acceptance:
+
+```text
+FILE = 1.jpg
+MIME = image/jpeg
+SIZE = 28354 bytes
+DIMENSIONS = 564 × 703
+SHA256 = e5b9623bb58f107331f4e9db8f265031baf56dafba77745c63be8bd2c3b18de5
+CROSS_REALM_INPUT = PASS
+LOCAL_FILE_NORMALIZATION = PASS
+IMAGE_DECODE = PASS
+REFERENCE_OBJECT_COMPATIBILITY = PASS
+HISTORY_LABEL = Reference import · CHAT attachment
+RECEIPT = COMPLETED
+USER_IMAGE_PUBLIC_COMMIT = 0
+```
+
+The exact product path is browser-proven with the repository fixture; the user's private JPEG separately passed the reviewed handoff/decoder compatibility path without publication. This is sufficient for the bounded Phase A acceptance.
+
+### Phase A disposition
+
+```text
+CHAT_ATTACHMENT → INK_REFERENCE = PASS
+OPERATION_RECORD = PASS
+CROSS_REALM_HANDOFF = PASS
+REAL_USER_JPEG_COMPATIBILITY = PASS
+PHASE_A = MR_PASS
+PROMOTION = AUTHORIZED
+PHASE_B = NOT_STARTED / REQUIRES NEXT WORK ORDER
+```
