@@ -813,8 +813,9 @@ function bootInk(){
   if(window.INK_APP)return window.INK_APP;
   const app=new InkApp();
   window.INK_APP=app;
-  if(qaBridgeRequested())void loadRuntimeQaBridge(app);
-  signalRuntimeReady(app);
+  if(qaBridgeRequested()){
+    window.INK_QA_BRIDGE_READY=loadRuntimeQaBridge(app).finally(()=>signalRuntimeReady(app));
+  }else signalRuntimeReady(app);
   return app;
 }
 
