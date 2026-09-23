@@ -1,37 +1,65 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK / CHAT_PHASE_B_CLOSED / UI-006_B3_UI_REVISE`
+STATUS: `GLOBAL_TECH_DEBT_ACTIVE / UI-006_PHASE_C_TO_I_HOLD`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `GLOBAL CHAT WORK ORDER CLOSED / UI-006 BRANCH-LOCAL ACTIVE` |
-| CURRENT_TASK_ID | `NONE GLOBAL / UI: INK-WEB-UI-006` |
-| DEV_BRANCH | `UI: work/ink-web-ui-standard-001` |
-| DEV_HANDOFF | `CHAT PHASE_B CLOSED / UI-006 ACTIVE` |
-| MR_REVIEW | `CHAT PHASE_B MR_PASS + PROMOTED / UI DELEGATED TO UR` |
-| TARGET_GATE | `UI-006 B3 STARTUP TECH-DEBT CLOSURE → CONTINUE PHASED UI WORK` |
+| CURRENT_WORK_ORDER | `INK-TECH-DEBT-001 — Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1` |
+| CURRENT_TASK_ID | `INK-TECH-DEBT-001` |
+| DEV_BRANCH | `work/ink-tech-debt-001` |
+| DEV_HANDOFF | `NOT YET / DEV_AUTHORIZED` |
+| MR_REVIEW | `PENDING DEV_HANDOFF` |
+| TARGET_GATE | `TECH-DEBT CLEANUP → EXACT-SHA WINDOWS RUNTIME → MR PASS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
-| FAVICON | `USER ORIGINAL MARK / REQUIRED` |
-| INK_MARK_SOURCE | `reference/brand/INK_MARK_SOURCE_W-300.jpg` |
-| INK_WEB_STAGING | `LIVE / MAIN-BASED` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| NEXT_STAGE | `UR: resolve UI-006 B3 → continue C-I / MR: no further Phase B action` |
+| RUNTIME_QA | `REQUIRED / NOT DEFERRED` |
+| UI-006 | `Phase A+B preserved / Phase C–I HOLD` |
+| NEXT_STAGE | `DEV executes only INK-TECH-DEBT-001 → HANDOFF → STOP` |
 
-## Latest MR/UI synchronization
+## Latest MR synchronization
 
 ```text
-INK-CHAT-VALIDATION-001 PHASE_B = MR_PASS / PROMOTED / CLOSED
-TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
-RUNTIME = 35865777424 / PASS
+INK-CHAT-VALIDATION-001 PHASE_B
+= MR_PASS / PROMOTED / CLOSED
 PROMOTED_MAIN = cd911dc240452ed2bc74e9be41549116b088374b
 PHASE_C = NOT_STARTED
 
-INK-WEB-UI-006 = BRANCH-LOCAL / UI_ONLY
+INK-WEB-UI-006
+= BRANCH-LOCAL
 UI_BRANCH = work/ink-web-ui-standard-001
-UI_STATUS = PHASE_A_PASS_B3_UI_REVISE
-MR_CORE_BOUNDARY = PRESERVE
+PHASE_A = PASS
+PHASE_B1/B2 = PRESERVE
+PHASE_B3 = startup debt transferred into global technical-debt cleanup
+PHASE_C-I = HOLD
+
+INK-TECH-DEBT-001
+= DEV_AUTHORIZED
+SCOPE =
+  Service Worker/offline closure
+  cache/build identity
+  bootstrap readiness authority
+  production QA-hook boundary
+  shared shell/CSS authority cleanup
+  stale active metadata
+DOCUMENT/HISTORY/REVISION/RENDERER AUTHORITY = PRESERVE
+RUNTIME = EXACT-SHA SELF-HOSTED WINDOWS CHROME / REQUIRED
 ```
+
+## Technical-debt evidence baseline
+
+```text
+product/source/src JS+JSON = 189
+service-worker SOURCE_SHELL = 176
+OFFLINE_CLOSURE_MISSING = 13
+
+web-shell normal startup = INK_APP retry polling / 50ms × max 40
+styles.css = ~2293 lines / 14 :root / 222 !important
+src/ink.js embeds large window.INK_TEST production hook surface
+Web + Portable entry = 621 lines each / 7 intentional differences
+```
+
+The task is bounded cleanup. File size alone does not authorize broad Core refactoring.
 
 ## Readiness assessment
 
