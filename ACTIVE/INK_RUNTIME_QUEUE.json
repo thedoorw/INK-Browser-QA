@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "40a7e5e86e7b08c316210240be8527b020c5ecce",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "ae9a8d0d9c41b7063d87d03c0b84811ac04e0656",
+  "pending_work_orders": [
+    "INK-TECH-DEBT-001"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -12,8 +14,8 @@
     "INK-CHAT-VALIDATION-001"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": "Phase B closed and promoted; no pending Runtime target."
+    "enabled": true,
+    "reason": "INK-TECH-DEBT-001 changes Service Worker/cache update behavior and startup/bootstrap authority; immediate exact-SHA Runtime is required by governance."
   },
   "batch_policy": {
     "default_target": 3,
