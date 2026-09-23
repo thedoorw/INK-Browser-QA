@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 ## Task
 
@@ -200,3 +200,144 @@ Required:
 - do not increase global Runtime timeout as the fix;
 - do not add semantic labeling / centerline / Phase C / UI redesign;
 - return `DEV_HANDOFF / STOP`.
+
+
+## DEV bounded revision completion — color-regions trace runtime performance
+
+MR reviewed baseline:
+
+`79af1c96a55635f6b8471e1ee02edade9fb25dac`
+
+MR Runtime blocker:
+
+```text
+RUNTIME_RUN = 35854909964
+UI = PASS
+CREATIVE = HARNESS_TIMEOUT_240S
+BLOCKER = full-resolution synchronous ImageTracerJS color-regions trace
+REVISION_SCOPE = COLOR_REGIONS_TRACE_RUNTIME_PERFORMANCE ONLY
+```
+
+Bounded correction:
+
+```text
+original Reference raster
+→ deterministic center-sample work raster
+→ max 160,000 pixels
+→ max 512 px on either side
+→ existing synchronous ImageTracerJS color-regions trace
+→ work-space editable Paths
+→ coordinateScale = source size / work size
+→ existing extraction core applies source-scale Path matrix
+→ original Reference pixel coordinate space
+→ same Color geometry cloned to boundary Line paths
+```
+
+The full-resolution raster is no longer copied directly into synchronous ImageTracerJS for `color-regions`.
+
+The bounded work raster uses deterministic center-sample nearest-neighbor selection. No random sampling or adaptive time-based behavior is used.
+
+Product checkpoints:
+
+1. `2e21dbb087621d81fbc899cb28225315add5f887` — deterministic bounded color trace raster in existing ImageTracerJS adapter.
+2. `61b80da68f0572f626a96fcf5b17e21d2a53ae52` — map traced Path geometry from work raster coordinates back to original source coordinates in existing extraction core.
+3. `044c1cf4fadc91a36c75d530fd8000e0f8561b04` — record fixed trace workload bounds in Phase B request/provenance.
+4. `475c9372c0bdcc13559d12ebbfc8be880425c3e1` — expose trace diagnostics through existing CHAT receipt.
+5. `119c4a82c1f4f28ca4edee59fe0c7fccb6206b9f` — browser assertions for practical runtime and source-coordinate mapping.
+6. `5c7a38630b80d8736799d165b757071ddb42a9bc` — require performance/mapping evidence in authoritative Runtime batch.
+7. `32d9efe25da60b7575edb40c932608c640a2b499` — focused QA for large-raster downsample and Path matrix remap.
+8. `7832947f4756d11bab79dd5ee8564468495986a6` — browser QA verifies actual Reference dimensions imply the recorded downsample decision.
+
+Exact-source behavior probe:
+
+```text
+SOURCE_RASTER = 1200 x 800 = 960,000 px
+TRACE_RASTER = 489 x 326 = 159,414 px
+TRACE_MAX_PIXELS = 160,000
+TRACE_MAX_DIMENSION = 512
+DOWNSAMPLED = true
+COORDINATE_SCALE_X = 2.4539877300613497
+COORDINATE_SCALE_Y = 2.4539877300613497
+TRACE_WIDTH * SCALE_X = 1200
+TRACE_HEIGHT * SCALE_Y = 800
+PATH_MATRIX_SCALE_MATCH = PASS
+```
+
+Module-aware syntax verification:
+
+```text
+EXTRACTION_ADAPTER_SYNTAX = PASS
+EXTRACTION_CORE_SYNTAX = PASS
+EXTRACTION_WORKSPACE_SYNTAX = PASS
+CHAT_HANDOFF_SYNTAX = PASS
+PHASE_B_FOCUSED_QA_SYNTAX = PASS
+BROWSER_HARNESS_SYNTAX = PASS
+RUNTIME_BATCH_SYNTAX = PASS
+```
+
+Browser QA now requires the existing Phase B assertions plus:
+
+```text
+CHAT_REFERENCE_DECOMPOSITION_BOUNDED_TRACE_RUNTIME
+  elapsedMs < 30000
+  trace pixels <= 160000
+  trace width/height <= 512
+
+CHAT_REFERENCE_DECOMPOSITION_SOURCE_COORDINATE_MAPPING
+  source dimensions retained
+  downsample decision matches actual source dimensions
+  work width * scaleX = source width
+  work height * scaleY = source height
+```
+
+All pre-existing Phase B browser assertions remain required, including editable Color paths, editable boundary Line paths, same-geometry alignment, Reference identity/source SHA, separate layers, History, Audit, Provenance, and unchanged Revision identity.
+
+Preserved scope:
+
+```text
+FULL_RESOLUTION_RASTER_DIRECT_TO_COLOR_TRACER = 0
+COLOR_PATHS = EDITABLE / FILLED
+LINE_PATHS = EDITABLE / BOUNDARY / SAME_GEOMETRY_SOURCE
+REFERENCE_IDENTITY = PRESERVED
+SOURCE_SHA = PRESERVED
+COLOR_LINE_LAYER_SEPARATION = PRESERVED
+HISTORY_AUTHORITY_CHANGE = 0
+AUDIT_AUTHORITY_CHANGE = 0
+PROVENANCE_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+SEMANTIC_LABELING = 0
+CENTERLINE_TRACING = 0
+UI_REDESIGN = 0
+PHASE_C = NOT_STARTED
+NEW_EXTRACTION_ENGINE = 0
+GLOBAL_240S_TIMEOUT_INCREASE = 0
+FORMAT_VERSION = 4
+GITHUB_HOSTED_DEV_WORKFLOW = 0
+SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
+```
+
+Runtime status:
+
+```text
+PHASE_B_BOUNDED_TRACE_BROWSER_QA_READY = PASS
+DEV_RUNTIME_PASS_CLAIM = 0
+MR_EXACT_SHA_RUNTIME_RERUN = PENDING
+MR_PRIVATE_USER_1_JPG_ACCEPTANCE = HELD UNTIL RUNTIME PASS
+```
+
+## DEV completion — performance revision
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CHAT-VALIDATION-001
+PHASE = B_LINE_COLOR_DECOMPOSITION
+REVISION_SCOPE = COLOR_REGIONS_TRACE_RUNTIME_PERFORMANCE
+PRODUCT_SCOPE = BOUNDED
+PHASE_A = CLOSED
+PHASE_C = NOT_STARTED
+FORMAT_VERSION = 4
+USER_IMAGE_COMMITTED = 0
+GITHUB_HOSTED_DEV_WORKFLOW = 0
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
