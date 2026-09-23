@@ -6,12 +6,12 @@ REFERENCE: `research/INK_IDEAL_UI_STANDARD_v0.1.md`
 
 ## A. Inventory / architecture
 
-- [ ] Every visible control is mapped to a command/capability.
-- [ ] Every capability has one Primary Home.
-- [ ] Duplicate entries are marked contextual shortcut / keyboard shortcut / responsive alternative.
-- [ ] Everyday editor controls are separated from specialist/Core/diagnostic controls.
-- [ ] No UI change modifies document/history/revision/Core authority.
-- [ ] Any Core-boundary need is returned as `INTEGRATION_REQUIRED → MR`.
+- [x] Every visible control is mapped to a command/capability.
+- [x] Every capability has one Primary Home.
+- [x] Duplicate entries are marked contextual shortcut / keyboard shortcut / responsive alternative.
+- [x] Everyday editor controls are separated from specialist/Core/diagnostic controls.
+- [x] No UI change modifies document/history/revision/Core authority.
+- [x] Any Core-boundary need is returned as `INTEGRATION_REQUIRED → MR`.
 
 ## B. Top Menu / top bars
 
@@ -86,7 +86,7 @@ REFERENCE: `research/INK_IDEAL_UI_STANDARD_v0.1.md`
 
 ## H. Canvas / workspace
 
-- [ ] No dark→white startup flash.
+- [x] No dark→white startup flash. *(source-level Phase B: light meta/manifest + inline startup shell; UR runtime visual confirmation pending)*
 - [ ] Initial workspace state is visually deterministic.
 - [ ] Creation/Layout primary home is defined.
 - [ ] Duplicate workspace toggles are removed or explicitly secondary.
@@ -132,6 +132,8 @@ REFERENCE: `research/INK_IDEAL_UI_STANDARD_v0.1.md`
 - [ ] No clipped menu, popover, dialog or panel.
 
 ## L. Runtime visual QA
+
+Phase A/B DEV note: source/static checks are complete; screenshot/runtime comparison remains an UR gate because this DEV execution context has no runnable browser surface for the branch.
 
 Compare after implementation against:
 - [ ] current INK before screenshot
