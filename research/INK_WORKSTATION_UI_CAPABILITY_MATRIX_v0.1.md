@@ -61,3 +61,32 @@ It does not authorize a second panel authority, second Document/History/Revision
 ## Gate
 
 `WORKSTATION_CAPABILITY_MATRIX_COMPLETE = PASS`
+
+
+## Post-implementation disposition
+
+Validated product / QA checkpoint: `c5c979104ce42df866f7a14f9a5b8ae646efd14e`
+
+| Capability | Integration-006 disposition | Final workstation placement |
+|---|---|---|
+| Vector Geometry Kernel / Foundation A | `EXPOSED_CORRECTLY` for accepted user commands; low-level cubic query/offset/fitting primitives remain `OUT_OF_SCOPE` as direct controls because Foundation A froze them as a UI-neutral shared-core boundary | Properties → Object/Core: existing Path Edit, Boolean, Repeat; no duplicate geometry UI |
+| AI Document Bridge | `EXPOSED_CORRECTLY` | Properties selected-object grounded readout + CHAT grounded context |
+| Semantic Region Grounding | `EXPOSED_CORRECTLY` | Properties selected-object grounded readout + CHAT grounded context |
+| Revision / Provenance | `EXPOSED_CORRECTLY` | Revision provenance readout; existing capture/list/restore authority unchanged |
+| Visual Compare / Variant | `PARTIAL_WIRING` by accepted authority boundary | Revision exposes current-vs-revision **structural** compare. Unrendered overlay/difference modes are intentionally not exposed here. Existing AI Plan Preview remains the visual preview surface. No new variant store/browser was invented. |
+| Parametric Creative Structure | `EXPOSED_CORRECTLY` for accepted workstation state | Compose shows selected Repeat deterministic state; existing Core Repeat controls remain mutation authority; explicit descriptor resolution remains the existing CHAT `resolve_parametric_structure` PROPOSE path |
+| Creative Memory | `EXPOSED_CORRECTLY` read-only | CHAT advisory readout through existing grounded tool router; no write UI |
+| Research → Creation | `EXPOSED_CORRECTLY` read-only | Reference + CHAT advisory readout; no remote fetch/scrape |
+| Grounded CHAT / Creative Decision / Plan | `EXPOSED_CORRECTLY` | CHAT shows grounded advisory state while bounded proposal → approval → execution remains unchanged |
+
+### Runtime status
+
+Source/static/parity validation is complete for this workpack.
+
+`WORKSTATION_CAPABILITY_RUNTIME_PASS` is **not claimed** here.
+
+Per user directive:
+
+`RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH`
+
+The concentrated Runtime batch must exercise the Work Order Phase G checklist against the exact promoted/reviewed SHA.
