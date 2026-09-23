@@ -177,6 +177,56 @@ Penpot目前只作為成熟 editor architecture / interaction 參考；INK 不�
 
 ---
 
+
+## 3A. INK naming and synchronized-delivery rule
+
+User-authoritative product rule:
+
+```text
+DEFAULT_PRODUCT_NAME = INK
+PORTABLE_WEB_AND_CLOUD = ONE_SHARED_PRODUCT
+CORE_CAPABILITIES = SYNCHRONIZED
+PRIMARY_WORKSTATION_UI = SYNCHRONIZED
+DISCUSSION_DEFAULT = SAY "INK" WITHOUT FORCING DELIVERY QUALIFIERS
+```
+
+From this point forward, ordinary product discussion does not need to distinguish between Portable/Web INK and INK Cloud unless the distinction materially affects delivery behavior.
+
+When the user says `INK`, interpret it as the shared product built on the same authoritative editor/document/core capability set.
+
+Default development rule:
+
+```text
+shared editor capability changes
+→ update shared INK core/editor domain
+→ Portable/Web and Cloud consume the same accepted capability
+```
+
+The two delivery forms must stay synchronized for:
+
+- document model;
+- vector / geometry / path editing;
+- selection / transform / composition;
+- paint / material behavior;
+- History / Revision;
+- CHAT collaboration contracts;
+- Creative Intelligence capabilities;
+- primary workstation interaction model and principal UI structure.
+
+Allowed delivery-specific differences are limited to adapter/service concerns such as:
+
+- local/offline vs remote persistence;
+- account/session;
+- sync;
+- collaboration transport;
+- presence;
+- optional hosted services;
+- packaging/archive concerns.
+
+These differences do not make them separate products and must not create a divergent editor core or a second workstation architecture.
+
+Because the Cloud delivery is expected to be the more frequently used form for convenience and CHAT collaboration, product discussion may naturally focus on Cloud usage without changing the rule that core/editor improvements belong to shared INK and should remain available to both delivery forms.
+
 ## 4. 現階段：先穩定會影響文件格式與結構的 shared core
 
 目前不是正式 Cloud implementation 階段。
