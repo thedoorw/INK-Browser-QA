@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   precheck-and-runtime:
-    if: ${{ github.event.head_commit.message == 'UI debt: run branch-only pre-runtime and runtime' }}
+    if: "${{ github.event.head_commit.message == 'UI debt: run branch-only pre-runtime and runtime' }}"
     name: Pre-runtime gates then Windows UI Runtime
     runs-on: [self-hosted, Windows, X64]
     timeout-minutes: 35
