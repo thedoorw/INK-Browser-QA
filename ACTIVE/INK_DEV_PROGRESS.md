@@ -10,7 +10,7 @@ PHASE = A_REFERENCE_HANDOFF
 BRANCH = work/ink-chat-validation-001
 BRANCH_BASE = 1603a20e1da89708bad80c64fb39a6649fcf0473
 IMPLEMENTATION_QA_CHECKPOINT = 7bd33b705345b3c0f691b925ed8614311a0f7797
-REPORT_CHECKPOINT = 21cffcd59f391e37a57da8fd0f822d3d960b812a
+REPORT_CHECKPOINT = d892afad0b75d6d839ac29ea30ac780603ad9b6f
 TASK_STATUS = DEV_HANDOFF
 CURRENT_PHASE = HANDOFF / STOP
 PRODUCT_SCOPE = BOUNDED
@@ -112,7 +112,7 @@ Not changed:
 6. `a0c59430bb88ac95abd46804e83bd455eb1a80dc` — bound focused QA to adapter/source contract.
 7. `c149339f34e84d97a40efa88123b9f42d00a5638` — extend existing creative browser harness with programmatic CHAT handoff.
 8. `7bd33b705345b3c0f691b925ed8614311a0f7797` — require Phase A browser evidence in existing Runtime batch.
-9. `21cffcd59f391e37a57da8fd0f822d3d960b812a` — Phase A report.
+9. `21cffcd59f391e37a57da8fd0f822d3d960b812a` — Phase A report.\n10. `d892afad0b75d6d839ac29ea30ac780603ad9b6f` — finalize report at DEV_HANDOFF / MR_REVIEW_REQUIRED.
 
 ## DEV verification
 
