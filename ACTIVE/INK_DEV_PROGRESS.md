@@ -397,3 +397,43 @@ FOCUSED_QA_UPDATE = NEXT
 BROWSER_ASSERTION_UPDATE = NEXT
 TASK_STATUS = DEV_IN_PROGRESS
 ```
+
+
+## DEV final tuning checkpoint — QA / browser contract
+
+Source checkpoint:
+
+`f0939f5f0ebccedf30131b39b7c9038491dd2154`
+
+Focused QA now explicitly requires:
+
+```text
+COLOR_TRACE_MAX_PIXELS = 64,000
+COLOR_TRACE_MAX_DIMENSION = 320
+COLOR_QUANTIZATION_CYCLES = 1
+COLOR_PALETTE_BOUND = EXISTING numberOfColors 2..16
+SOURCE_COORDINATE_REMAP = REQUIRED
+FULL_SOURCE_RASTER_DIRECT_TRACE = PROHIBITED
+```
+
+Existing browser Phase B acceptance remains the same operation and now requires:
+
+```text
+phaseBElapsedMs < 30,000
+trace pixels <= 64,000
+trace width <= 320
+trace height <= 320
+source-coordinate remap exact within existing tolerance
+```
+
+The authoritative batch timeout contract remains `240000 ms`; no global timeout increase was made.
+
+Current state:
+
+```text
+FINAL_TRACE_TUNING_SOURCE = COMPLETE
+FINAL_TRACE_TUNING_QA = COMPLETE
+BROWSER_OPERATION_LT_30S_ASSERTION = PRESERVED / TIGHTENED_WORKLOAD
+MR_EXACT_SHA_RUNTIME = REQUIRED FOR FINAL RUNTIME PROOF
+TASK_STATUS = DEV_IN_PROGRESS
+```

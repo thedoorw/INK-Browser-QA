@@ -302,15 +302,15 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const phaseBScale=phaseBReceipt?.diagnostics?.coordinateScale;
     assert(
       phaseBElapsedMs<30000 &&
-      Number.isInteger(phaseBTrace?.pixels) && phaseBTrace.pixels<=160000 &&
-      phaseBTrace.width<=512 && phaseBTrace.height<=512,
+      Number.isInteger(phaseBTrace?.pixels) && phaseBTrace.pixels<=64000 &&
+      phaseBTrace.width<=320 && phaseBTrace.height<=320,
       'CHAT_REFERENCE_DECOMPOSITION_BOUNDED_TRACE_RUNTIME',
       {elapsedMs:phaseBElapsedMs,traceRaster:phaseBTrace}
     );
     const phaseBShouldDownsample=
-      phaseBReceipt.source.width*phaseBReceipt.source.height>160000 ||
-      phaseBReceipt.source.width>512 ||
-      phaseBReceipt.source.height>512;
+      phaseBReceipt.source.width*phaseBReceipt.source.height>64000 ||
+      phaseBReceipt.source.width>320 ||
+      phaseBReceipt.source.height>320;
     assert(
       phaseBTrace?.sourceWidth===phaseBReceipt.source?.width &&
       phaseBTrace?.sourceHeight===phaseBReceipt.source?.height &&

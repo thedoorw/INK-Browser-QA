@@ -25,6 +25,8 @@ const source=async relative=>readFile(path.join(root,relative),'utf8');
   }
 
   const directWork=boundedColorTraceRaster(raster);
+  assert.equal(COLOR_TRACE_MAX_PIXELS,64_000);
+  assert.equal(COLOR_TRACE_MAX_DIMENSION,320);
   assert.ok(directWork.pixels<=COLOR_TRACE_MAX_PIXELS);
   assert.ok(directWork.width<=COLOR_TRACE_MAX_DIMENSION);
   assert.ok(directWork.height<=COLOR_TRACE_MAX_DIMENSION);
@@ -53,6 +55,7 @@ const source=async relative=>readFile(path.join(root,relative),'utf8');
   const adapterResult=await adapter.extract({raster,parameters:{mode:'color-regions',numberOfColors:6,pathOmit:2}});
   assert.equal(tracedOptions.numberofcolors,6);
   assert.equal(tracedOptions.colorsampling,2);
+  assert.equal(tracedOptions.colorquantcycles,1);
   assert.ok(tracedInput.width*tracedInput.height<=COLOR_TRACE_MAX_PIXELS);
   assert.ok(tracedInput.width<=COLOR_TRACE_MAX_DIMENSION);
   assert.ok(tracedInput.height<=COLOR_TRACE_MAX_DIMENSION);
@@ -139,16 +142,21 @@ function mockApp(){
   const workspace=await source('product/source/src/extraction/workspace.js');
   const install=await source('product/source/src/extraction/install.js');
   const handoff=await source('product/source/src/ai/chat-reference-handoff.js');
+  const browserHarness=await source('qa/runtime/ink-cloud-018-browser-harness.html');
+  const runtimeBatch=await source('qa/runtime/run-ink-runtime-batch.mjs');
   assert.match(adapters,/mode==='color-regions'/);
   assert.match(adapters,/boundedColorTraceRaster\(input\.raster/);
   assert.match(adapters,/imagedataToTracedata\(\{width:work\.width,height:work\.height,data:work\.data\},options\)/);
-  assert.match(adapters,/COLOR_TRACE_MAX_PIXELS=160_000/);
-  assert.match(adapters,/COLOR_TRACE_MAX_DIMENSION=512/);
+  assert.match(adapters,/COLOR_TRACE_MAX_PIXELS=64_000/);
+  assert.match(adapters,/COLOR_TRACE_MAX_DIMENSION=320/);
+  assert.match(adapters,/colorsampling:2,colorquantcycles:1,numberofcolors:numberOfColors/);
+  assert.doesNotMatch(adapters,/colorsampling:2,colorquantcycles:[2-9]/);
   assert.doesNotMatch(adapters,/new Uint8ClampedArray\(input\.raster\.data\)/);
   assert.match(core,/Matrix\.scale\(scaleX,scaleY\)/);
   assert.match(core,/Matrix\.multiply\(sourceScale,path\.matrix\)/);
   assert.match(workspace,/decodeReferenceFile\(file\)/);
   assert.match(workspace,/executeExtraction\([\s\S]*mode:'color-regions'/);
+  assert.match(workspace,/traceMaxPixels:64_000,[\s\S]*traceMaxDimension:320/);
   assert.match(workspace,/const colorLayer=defaultLayer\('Color'\),lineLayer=defaultLayer\('Line'\)/);
   assert.match(workspace,/const linePaths=colorPaths\.map/);
   assert.match(workspace,/out\.fill=null;[\s\S]*out\.stroke=lineStroke/);
@@ -158,6 +166,11 @@ function mockApp(){
   assert.match(handoff,/commands:\[CHAT_REFERENCE_DECOMPOSITION_OPERATION\]/);
   assert.doesNotMatch(workspace,/centerline/i);
   assert.doesNotMatch(workspace,/semantic labeling/i);
+  assert.match(browserHarness,/phaseBElapsedMs<30000/);
+  assert.match(browserHarness,/phaseBTrace\.pixels<=64000/);
+  assert.match(browserHarness,/phaseBTrace\.width<=320 && phaseBTrace\.height<=320/);
+  assert.match(runtimeBatch,/Harness timeout \(240 seconds\)/);
+  assert.match(runtimeBatch,/240000/);
 }
 
 console.log('INK-CHAT-VALIDATION-001 Phase B line-color focused QA: PASS');
