@@ -44,7 +44,7 @@ function createMockApp() {
 
 {
   const blob = new Blob([new Uint8Array([1, 2, 3])], { type: 'image/png' });
-  const normalized = normalizeChatAttachment(blob, { name: 'attachment.png', type: 'image/png', lastModified: 1 });
+  const normalized = await normalizeChatAttachment(blob, { name: 'attachment.png', type: 'image/png', lastModified: 1 });
   assert.equal(normalized.name, 'attachment.png');
   assert.equal(normalized.type, 'image/png');
   assert.equal(normalized.size, 3);
@@ -54,7 +54,7 @@ function createMockApp() {
   const foreignBlob = new Blob([new Uint8Array([4, 5, 6])], { type: 'image/png' });
   Object.setPrototypeOf(foreignBlob, Object.prototype);
   assert.equal(foreignBlob instanceof Blob, false);
-  const normalized = normalizeChatAttachment(foreignBlob, { name: 'cross-realm.png', type: 'image/png', lastModified: 2 });
+  const normalized = await normalizeChatAttachment(foreignBlob, { name: 'cross-realm.png', type: 'image/png', lastModified: 2 });
   assert.equal(normalized instanceof File, true);
   assert.equal(normalized.name, 'cross-realm.png');
   assert.equal(normalized.type, 'image/png');
@@ -66,7 +66,7 @@ function createMockApp() {
   const foreignFile = new File([new Uint8Array([7, 8])], 'foreign-file.png', { type: 'image/png', lastModified: 33 });
   Object.setPrototypeOf(foreignFile, Object.prototype);
   assert.equal(foreignFile instanceof File, false);
-  const normalized = normalizeChatAttachment(foreignFile);
+  const normalized = await normalizeChatAttachment(foreignFile);
   assert.equal(normalized instanceof File, true);
   assert.equal(normalized.name, 'foreign-file.png');
   assert.equal(normalized.type, 'image/png');
@@ -83,8 +83,8 @@ function createMockApp() {
     slice() { return this; },
     [Symbol.toStringTag]: 'Blob'
   };
-  assert.throws(
-    () => normalizeChatAttachment(spoof, { name: 'spoof.png', type: 'image/png' }),
+  await assert.rejects(
+    normalizeChatAttachment(spoof, { name: 'spoof.png', type: 'image/png' }),
     error => error?.code === 'CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED'
   );
 }
@@ -158,11 +158,13 @@ function createMockApp() {
 
   const adapter = createChatReferenceHandoffAdapter(app, { auditLog, groundedContextProvider });
   const blob = new Blob([new Uint8Array([137, 80, 78, 71])], { type: 'image/png' });
+  const checkpoints = [];
   const receipt = await adapter.importReference(blob, {
     name: 'attachment.png',
     type: 'image/png',
     actor: { type: 'chat', id: 'unit-chat' },
-    intent: 'Use this attachment as the INK reference'
+    intent: 'Use this attachment as the INK reference',
+    checkpoint: event => checkpoints.push(event.stage)
   });
 
   assert.equal(receipt.status, 'COMPLETED');
@@ -185,6 +187,12 @@ function createMockApp() {
   assert.equal(decodeCalls, 1);
   assert.equal(importCalls, 1);
   assert.equal(audits[0].commands[0], CHAT_REFERENCE_HANDOFF_OPERATION);
+  assert.deepEqual(checkpoints, [
+    'normalization returned',
+    'decoder entered',
+    'decoder returned',
+    'Reference import committed'
+  ]);
 }
 
 {
@@ -319,9 +327,13 @@ function createMockApp() {
   assert.match(workspaceSource, /width:bitmap\.width,height:bitmap\.height/);
   assert.match(installSource, /importReference:\s*\(decoded, options\) => importReferenceIntoDocument/);
   assert.match(handoffSource, /app\.extraction\.decode\(file\)/);
-  assert.match(handoffSource, /Blob\.prototype\.slice\.call\(value/);
+  assert.match(handoffSource, /Blob\.prototype\.arrayBuffer/);
   assert.match(handoffSource, /Object\.getOwnPropertyDescriptor\(Blob\.prototype, 'size'\)/);
   assert.match(handoffSource, /Object\.getOwnPropertyDescriptor\(File\.prototype, 'name'\)/);
+  assert.match(handoffSource, /new Uint8Array\(view\)/);
+  assert.match(handoffSource, /await normalizeChatAttachment\(input, options\)/);
+  assert.match(handoffSource, /emitCheckpoint\('decoder entered'\)/);
+  assert.match(handoffSource, /emitCheckpoint\('Reference import committed'/);
   assert.match(handoffSource, /app\.extraction\.importReference\(decoded/);
   assert.match(handoffSource, /history\.timeline/);
   assert.match(handoffSource, /Math\.min\(before\.applied \+ 1, after\.limit\)/);
