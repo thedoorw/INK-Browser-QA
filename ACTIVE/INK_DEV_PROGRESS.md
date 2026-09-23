@@ -241,3 +241,22 @@ CHECKS = node --test on four focused foundation, portable, parity, and panel tes
 FIX = update two stale script-URL assertions to match current ?v=0.1 entry URLs
 KNOWN_GAPS = authoritative exact-SHA Windows Chrome Runtime remains MR-gated
 ```
+
+## Checkpoint 5 — MR_REVISE bounded corrections / handoff
+
+```text
+SOURCE_CHECKPOINT = dee7beee1938d042775538359f4881f429690e20
+MILESTONE = FOUR_REVISIONS_IMPLEMENTED / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP
+FILES_CHANGED = service-worker.js; src/config.js; src/ink.js;
+  src/pwa/update-manager.js; shell.template.html; generate-shell.mjs;
+  foundation, portable-integration and worker-upgrade unit tests;
+  ACTIVE/INK_DEV_PROGRESS.md; working/INK_TECH_DEBT_001_DEV_HANDOFF.md
+CHECKS = focused 24/24 PASS; worker parse PASS; generated HTML --check PASS;
+  source offline closure PASS; Web/Portable generated outputs byte-identical to prior delivery PASS
+BUILD_UPGRADE = worker-owned build ID; A and B separate caches; A remains
+  coherent while B waits; B coherent after activation/reload (deterministic simulation)
+DIAGNOSTICS = product download passes active BUILD_ID
+KNOWN_GAPS = broad legacy unit invocation has unrelated missing qa/core/src imports;
+  authoritative exact-SHA Windows Chrome Runtime remains MR-gated
+NEXT_ACTION = MR source review; DEV STOP; merge/package/next stage NOT AUTHORIZED
+```

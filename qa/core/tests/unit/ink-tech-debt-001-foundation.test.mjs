@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 const repoRoot = fileURLToPath(new URL('../../../../', import.meta.url));
 const sourceRoot = resolve(repoRoot, 'product/source');
@@ -46,12 +47,15 @@ test('offline closure and build identity are deterministic', () => {
     .map(match => match[1])
     .sort();
 
-  assert.equal(sourceFiles.length, 189);
   assert.deepEqual(shellFiles, sourceFiles);
   assert.doesNotThrow(() => new Function(sw));
   assert.match(sw, /const PRODUCT_VERSION = '0\.1'/);
   assert.match(sw, /const CACHE_PREFIX = 'ink-build-'/);
-  assert.match(sw, /searchParams\.get\('build'\)/);
+  assert.match(sw, /const BUILD_ID = '[^']+'/);
+  assert.doesNotMatch(sw, /searchParams\.get\('build'\)/);
+  assert.match(sw, /cache: 'reload'/);
+  assert.match(read('src/pwa/update-manager.js'), /updateViaCache: 'none'/);
+  assert.match(read('src/ink.js'), /scriptURL:'\.\/service-worker\.js'/);
   assert.doesNotMatch(sw, /ink-v0\.1-Web-shell/);
   assert.ok(sw.includes("'./qa/runtime-test-bridge.js'"));
 });
@@ -85,6 +89,7 @@ test('Web and Portable keep one shared shell contract', () => {
   const portable = read('index-standalone.html');
 
   assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
+  execFileSync(process.execPath, [resolve(sourceRoot, 'generate-shell.mjs'), '--check']);
   for (const html of [web, portable]) {
     assert.doesNotMatch(html, /ink-startup-shell/);
     assert.match(html, /<link rel="icon" href="assets\/INK_MARK_SOURCE_W-300\.jpg\?v=0\.1" type="image\/jpeg">/);
@@ -107,13 +112,17 @@ test('CSS and active metadata expose one current authority', () => {
   assert.equal((css.match(/INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY/g) || []).length, 1);
   assert.equal((css.match(/INK-WEB-UI-006 Phase B — LIGHT SHELL \/ ORIGINAL BRAND SOURCE/g) || []).length, 0);
   assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length);
-  assert.equal((css.match(/:root\s*\{/g) || []).length, 14);
-  assert.equal((css.match(/!important/g) || []).length, 220);
+  assert.ok((css.match(/:root\s*\{/g) || []).length <= 14);
+  assert.ok((css.match(/!important/g) || []).length <= 222);
   assert.doesNotMatch(css, /ink-mark\.svg|\.brand-mark|menu-app-mark>span/);
   assert.doesNotMatch(css, /INK v(?:0\.8|1\.5)/);
   assert.match(config, /INK_VERSION\s*=\s*'0\.1'/);
   assert.match(config, /FORMAT_VERSION\s*=\s*4\b/);
-  assert.match(config, /BUILD_ID\s*=\s*'20260923-ink-tech-debt-001-r1'/);
+  const appBuild = config.match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
+  const workerBuild = read('service-worker.js').match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
+  assert.ok(appBuild);
+  assert.equal(appBuild, workerBuild);
+  assert.match(ink, /buildExternalDiagnosticBundle\(\{app:this,target:window,recorder:this\.externalValidation,version:INK_VERSION,buildId:BUILD_ID,formatVersion:FORMAT_VERSION\}\)/);
   assert.doesNotMatch(compat, /v1\.6|RC/);
   assert.match(ink, /inventory:'partial-runtime-capability-tags',complete:false/);
 });

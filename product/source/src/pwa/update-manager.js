@@ -23,7 +23,7 @@ export class ServiceWorkerUpdateManager {
     if (!this.supported()) { this.state = 'unsupported'; return this.emit(); }
     this.state = 'registering'; this.emit();
     try {
-      this.registration = await navigator.serviceWorker.register(this.scriptURL, { scope: this.scope });
+      this.registration = await navigator.serviceWorker.register(this.scriptURL, { scope: this.scope, updateViaCache: 'none' });
       this.waiting = this.registration.waiting || null;
       this.registration.addEventListener?.('updatefound', () => this.trackInstalling(this.registration.installing));
       navigator.serviceWorker.addEventListener?.('controllerchange', () => {

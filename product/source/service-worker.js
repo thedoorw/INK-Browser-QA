@@ -1,8 +1,7 @@
 const PRODUCT_VERSION = '0.1';
-const BUILD_ID = (() => {
-  const raw = new URL(self.location.href).searchParams.get('build') || 'unversioned';
-  return raw.replace(/[^a-zA-Z0-9._-]+/g, '-').slice(0, 80) || 'unversioned';
-})();
+// Deployment identity belongs to the worker script, never to the controlled app.
+// Change this token for every published source change, independent of product v0.1.
+const BUILD_ID = '20260923-ink-tech-debt-001-r2';
 const CACHE_PREFIX = 'ink-build-';
 const SHELL_CACHE = `${CACHE_PREFIX}${BUILD_ID}-shell`;
 const RUNTIME_CACHE = `${CACHE_PREFIX}${BUILD_ID}-runtime`;
@@ -218,7 +217,9 @@ const APP_SHELL = Object.freeze([
 ]);
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.addAll(APP_SHELL)));
+  event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.addAll(
+    APP_SHELL.map(path => new Request(path, { cache: 'reload' }))
+  )));
 });
 
 function isOwnedInkCache(key) {
@@ -240,7 +241,13 @@ self.addEventListener('message', event => {
   if (message.type === 'INK_CLEAR_RUNTIME_CACHE') event.waitUntil(caches.delete(RUNTIME_CACHE));
 });
 
-async function networkFirstNavigation(request) {
+async function buildConsistentNavigation(request) {
+  // A waiting build must not mix new HTML with this worker's older modules.
+  const shell = await caches.open(SHELL_CACHE);
+  const pathname = new URL(request.url).pathname;
+  const entry = pathname.endsWith('/index-standalone.html') ? './index-standalone.html' : './index.html';
+  const cached = await shell.match(request) || await shell.match(entry);
+  if (cached) return cached;
   try {
     const response = await fetch(request);
     if (response?.ok) {
@@ -254,7 +261,11 @@ async function networkFirstNavigation(request) {
 }
 
 async function staleWhileRevalidate(request) {
-  const cached = await caches.match(request) || await caches.match(request, { ignoreSearch: true });
+  const shell = await caches.open(SHELL_CACHE);
+  const runtime = await caches.open(RUNTIME_CACHE);
+  const cached = await shell.match(request) || await shell.match(request, { ignoreSearch: true })
+    || await runtime.match(request);
+  if (cached) return cached;
   const fetchPromise = fetch(request).then(async response => {
     if (response?.ok && response.type !== 'opaque') {
       const cache = await caches.open(RUNTIME_CACHE);
@@ -270,7 +281,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (url.origin !== self.location.origin) return;
   if (event.request.mode === 'navigate') {
-    event.respondWith(networkFirstNavigation(event.request));
+    event.respondWith(buildConsistentNavigation(event.request));
     return;
   }
   event.respondWith(staleWhileRevalidate(event.request));
