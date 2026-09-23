@@ -142,6 +142,23 @@
       record('right panel dock starts compact', visible(doc, '#panelDock') && initialShell.dockWidth >= 32 && initialShell.dockWidth <= 48, initialShell);
       record('initial stage reserves 40 px rail and 40 px dock', near(initialStageWidth, frame.clientWidth - 80, 2), { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
 
+      frame.style.height = '1024px';
+      await sleep(220);
+      const geometry1280x1024 = {
+        viewport: [win.innerWidth, win.innerHeight],
+        stage: rectOf(doc, '#stageWrap'),
+        dock: rectOf(doc, '#panelDock'),
+        status: rectOf(doc, '.statusbar')
+      };
+      record('UI-DEBT-001 1280x1024 collapsed shell remains fully contained',
+        near(win.innerWidth, 1280, 1) &&
+        near(win.innerHeight, 1024, 1) &&
+        near(geometry1280x1024.stage?.right, geometry1280x1024.dock?.left, 1) &&
+        geometry1280x1024.stage?.bottom <= geometry1280x1024.status?.top + 1,
+        geometry1280x1024);
+      frame.style.height = '800px';
+      await sleep(220);
+
       const parseRgb = value => (value.match(/\d+(?:\.\d+)?/g) || []).slice(0, 3).map(Number);
       const typographyDiag = {
         advanced: {
@@ -230,7 +247,14 @@
       for (const id of ['reference','compose','chat','revision']) {
         shell.open(id);
         await sleep(90);
-        record(id + ' dock entry reaches existing Creative Workspace stage', shell.state().activePanel === id && app.creativeWorkspace?.stage === id && app.creativeWorkspace?.open, shell.state());
+        const routeState = shell.state();
+        record(id + ' dock entry reaches existing Creative Workspace stage',
+          routeState.activePanel === id &&
+          routeState.creativeOpen &&
+          !routeState.inspectorOpen &&
+          app.creativeWorkspace?.stage === id &&
+          app.creativeWorkspace?.open,
+          routeState);
       }
 
       shell.open('chat');
@@ -344,19 +368,46 @@
       await sleep(120);
       const collapse = doc.querySelector('#inspectorEdgeToggle');
       const legacyToggle = doc.querySelector('#inspectorToggle');
+      const propertiesDock = doc.querySelector('#panelDock [data-shell-panel="properties"]');
       const legacyHidden = getComputedStyle(legacyToggle).display === 'none';
+      const propertiesGeometry = {
+        chevron: rectOf(doc, '#inspectorEdgeToggle'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock'),
+        properties: rectOf(doc, '#panelDock [data-shell-panel="properties"]')
+      };
+      record('UI-DEBT-001 Chevron sits on canvas / panel boundary without Dock occlusion',
+        propertiesGeometry.chevron?.right <= propertiesGeometry.panel?.left + 1 &&
+        propertiesGeometry.chevron?.right < propertiesGeometry.dock?.left &&
+        propertiesGeometry.properties?.left >= propertiesGeometry.dock?.left &&
+        propertiesGeometry.properties?.right <= propertiesGeometry.dock?.right + 1,
+        propertiesGeometry);
+
       collapse.click();
       await sleep(140);
       const collapseClosed = shell.state();
+      propertiesDock?.click();
+      await sleep(140);
+      const dockPropertiesOpened = shell.state();
+      record('UI-DEBT-001 Dock Properties remains fully clickable after collapse',
+        dockPropertiesOpened.activePanel === 'properties' &&
+        dockPropertiesOpened.inspectorOpen &&
+        !dockPropertiesOpened.creativeOpen,
+        { state: dockPropertiesOpened, geometry: propertiesGeometry });
+
+      collapse.click();
+      await sleep(140);
+      const collapseClosedAgain = shell.state();
       collapse.click();
       await sleep(140);
       const collapseReopened = shell.state();
-      record('UI-MAINT-002 chevron is the single visible desktop collapse authority',
+      record('UI-DEBT-001 chevron is the single visible desktop collapse authority',
         legacyHidden &&
         collapseClosed.collapsed &&
+        collapseClosedAgain.collapsed &&
         collapseReopened.activePanel === 'properties' &&
         collapse.getAttribute('aria-expanded') === 'true',
-        { legacyHidden, collapseClosed, collapseReopened, collapseExpanded: collapse.getAttribute('aria-expanded') });
+        { legacyHidden, collapseClosed, dockPropertiesOpened, collapseClosedAgain, collapseReopened, collapseExpanded: collapse.getAttribute('aria-expanded') });
 
       // Short-height desktop: force a long Inspector surface and prove body-owned scrolling.
       frame.style.height = '520px';

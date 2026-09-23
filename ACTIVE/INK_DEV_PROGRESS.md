@@ -101,3 +101,29 @@ The new guard fails on:
 
 ### Pre-runtime guard maintenance
 - updated Photoshop shell geometry regression to target the consolidated `INK-UI-DEBT-001` authority marker instead of requiring the removed MAINT-001 late override.
+
+
+## Runtime harness hardening before final execution
+
+Updated the existing authoritative `qa/runtime/ink-web-ui-001-harness.html` rather than creating a second UI runtime authority.
+
+Added explicit gates for:
+- 1280x1024 collapsed shell containment;
+- Chevron canvas/panel-boundary geometry;
+- zero Dock overlap / Properties hit-area occlusion;
+- real Dock Properties click after collapse;
+- Chevron reopen of last selected Properties;
+- Inspector/Creative mutual exclusion on every Creative Loop route.
+
+Existing harness already covers:
+- fresh load collapsed/canvas-first;
+- 1280x800;
+- 960x800;
+- short desktop height;
+- Layers / History direct routing;
+- Reference / Compose / CHAT / Revision routing;
+- Advanced open/active/second-press collapse;
+- panel body vertical scroll / horizontal containment;
+- collapsed stage width restoration;
+- favicon HTTP resolution;
+- service worker / document integrity / fatal runtime health.
