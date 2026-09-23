@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "79af1c96a55635f6b8471e1ee02edade9fb25dac",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
@@ -15,7 +15,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Phase B adds authoritative Reference → editable Color/Line layer decomposition and requires exact-SHA browser validation before private user-image acceptance."
+    "reason": "Phase B exact-SHA Runtime timed out in Creative during synchronous color-region tracing; bounded performance revision required."
   },
   "batch_policy": {
     "default_target": 3,
@@ -23,8 +23,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35847254857,
-    "tested_sha": "ababe86e049355f6464cdabfceacfe2c32992be1",
-    "result": "PASS"
+    "run_id": 35854909964,
+    "tested_sha": "79af1c96a55635f6b8471e1ee02edade9fb25dac",
+    "result": "FAIL"
   }
 }
