@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
@@ -14,7 +14,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "First real CHAT→INK attachment handoff gate; cross-realm binary correction requires exact-SHA browser verification before private user-attachment acceptance."
+    "reason": "First CHAT→INK attachment handoff gate remains blocked: cross-realm revision exact-SHA Creative Runtime timed out twice and produced no Creative evidence."
   },
   "batch_policy": {
     "default_target": 3,
@@ -22,8 +22,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35836852283,
-    "tested_sha": "2d324df22dd58ebf3579ba175422839abd92bd04",
+    "run_id": 35840153267,
+    "tested_sha": "d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1",
     "result": "FAIL"
   }
 }
