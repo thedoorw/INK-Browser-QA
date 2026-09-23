@@ -1,11 +1,12 @@
 import tracer from '../vendor/imagetracer-1.2.6.js';
 import { imageTracerAdapter } from './adapters.js';
-import { extractIntoDocument, reconstructStructureIntoDocument, decodeReferenceFile, correctExtractionAnchor, setReferenceOverlay } from './workspace.js';
+import { extractIntoDocument, importReferenceIntoDocument, reconstructStructureIntoDocument, decodeReferenceFile, correctExtractionAnchor, setReferenceOverlay } from './workspace.js';
 
 export function installExtraction(app) {
   const adapter = imageTracerAdapter(tracer);
   app.extraction = {
     decode: file => decodeReferenceFile(file),
+    importReference: (decoded, options) => importReferenceIntoDocument(app, decoded, options),
     extract: (request, options) => extractIntoDocument(app, request, adapter, options),
     structure: (request, options) => reconstructStructureIntoDocument(app, request, adapter, options),
     correct: edit => correctExtractionAnchor(app, edit),
