@@ -112,7 +112,7 @@ test('Web-only mutations fail: structure, command hooks, tool hooks, styles, coo
     html => html.replace('data-content="layers"', 'data-content="other"'),
     html => html.replace('web-shell.js?v=0.1', 'other-shell.js?v=0.1'),
     html => html.replace('styles.css?v=0.1', 'web-only.css?v=0.1'),
-    html => html.replace('assets/ink-mark.svg?v=0.1', 'other-mark.svg?v=0.1'),
+    html => html.replace('assets/favicon.svg?v=0.1', 'other-favicon.svg?v=0.1'),
     html => html.replace('<main id="stageWrap"', '<aside id="stageWrap"'),
     html => html.replace('</head>', '<style>.tool-rail{display:none}</style></head>'),
     html => html.replace('</body>', '<script src="web-only.js"></script></body>'),

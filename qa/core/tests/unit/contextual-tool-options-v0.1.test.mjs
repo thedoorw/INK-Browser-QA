@@ -53,7 +53,8 @@ test('context matrix exposes only the requested high-frequency surface', () => {
   assert.match(css, /data-context-mode="shape"[\s\S]+data-context-control="size"/);
   assert.match(css, /data-context-mode="text"[\s\S]+data-context-control="opacity"/);
   assert.match(shell, /app\.selection\?\.length \? 'object' : 'brush'/);
-  assert.match(shell, /advanced\.hidden = !\['draw', 'eraser', 'shape', 'text', 'selection'\]\.includes/);
+  assert.match(shell, /const available = \['draw', 'eraser', 'shape', 'text', 'selection'\]\.includes\(descriptor\.mode\)/);
+  assert.match(shell, /advanced\.hidden = !available/);
 });
 
 test('contextual geometry is shared while format and delivery identity stay unchanged', () => {

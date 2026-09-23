@@ -127,3 +127,21 @@ Existing harness already covers:
 - collapsed stage width restoration;
 - favicon HTTP resolution;
 - service worker / document integrity / fatal runtime health.
+
+
+## Pre-runtime attempt 1 — stopped before Runtime
+
+Run: `35806247844`
+Tested SHA: `cecd5e4006c431192e65ae259864072d0d4c4417`
+
+Result:
+- exact bounded materialization: PASS;
+- source/static gate: PASS;
+- focused unit/parity: 37 / 39 PASS;
+- PowerShell Runtime: SKIPPED by gate, as required.
+
+Two failures were stale test contracts:
+1. contextual-tool-options expected the old direct `advanced.hidden = ![...].includes(...)` spelling; current equivalent authority uses `const available` then `advanced.hidden = !available`;
+2. parity mutation still targeted obsolete `assets/ink-mark.svg` favicon after accepted migration to `assets/favicon.svg`.
+
+No product implementation change is required for these two failures.
