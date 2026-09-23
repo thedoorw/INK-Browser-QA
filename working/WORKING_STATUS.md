@@ -2348,3 +2348,16 @@ NEXT = DEV_HANDOFF → MR REVIEW → exact-SHA Runtime → real attachment test
 ```
 
 This is the first execution test of the rule that CHAT must truly operate INK rather than merely discuss it.
+
+
+## INK-CHAT-VALIDATION-001 MR source review checkpoint
+
+```text
+REVIEWED_HEAD = 17a281a4c6568534e1f12649fe6d3f3257caa967
+RESULT = MR_REVISE
+ACCEPTED = architecture / handoff / Reference authority / Audit / Provenance
+BLOCKER = History saturation can produce FAILED receipt after successful mutation
+RUNTIME = HELD
+REAL_IMAGE_TEST = HELD
+NEXT = bounded History receipt fix → DEV_HANDOFF / STOP → MR re-review
+```
