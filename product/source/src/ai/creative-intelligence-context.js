@@ -5,6 +5,8 @@ import { compareVisualSubjects } from '../compare/visual-compare.js';
 import { resolveParametricStructure } from '../structure/parametric-structure.js';
 import { walkPageObjects } from '../document/hierarchy.js';
 import { stableHash, stableStringify } from '../core/stable-id.js';
+import { CREATIVE_MEMORY_ADVISORY_SCHEMA } from '../memory/creative-memory.js';
+import { RESEARCH_CREATION_ADVISORY_SCHEMA } from '../research/research-creation-bridge.js';
 
 export const CREATIVE_INTELLIGENCE_CONTEXT_SCHEMA = 'INK-GROUNDED-CREATIVE-INTELLIGENCE-CONTEXT';
 export const CREATIVE_INTELLIGENCE_CONTEXT_VERSION = 1;
@@ -16,6 +18,13 @@ const DEFAULT_DOCUMENT_BRIDGE_LIMITS = Object.freeze({ maxObjects: 64, maxRelati
 const DEFAULT_SEMANTIC_LIMITS = Object.freeze({ maxRegions: 96, maxPairs: 4096, maxEvidence: 256 });
 const DEFAULT_PROVENANCE_LIMITS = Object.freeze({ maxEvents: 128, maxEdges: 256, maxUnresolved: 128, maxConflicts: 64, maxBytes: 72 * 1024 });
 const DEFAULT_PROVENANCE_BRIDGE_LIMITS = Object.freeze({ maxEvents: 64, maxEdges: 128 });
+const DEFAULT_CREATIVE_MEMORY_INTEGRATION_OPTIONS = Object.freeze({ maxRecords: 16, maxBytes: 32 * 1024 });
+const DEFAULT_RESEARCH_CREATION_INTEGRATION_OPTIONS = Object.freeze({
+  maxEvidence: 16,
+  maxPrinciples: 16,
+  maxConstraints: 16,
+  maxBytes: 48 * 1024
+});
 
 const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
@@ -237,6 +246,54 @@ function safeModule(module, operation, unresolved) {
   }
 }
 
+function validateAdvisoryContext(raw, { module, schema } = {}) {
+  if (!record(raw)) fail('ADVISORY_CONTEXT_INVALID', { module });
+  if (raw.schema !== schema) fail('ADVISORY_CONTEXT_SCHEMA_UNSUPPORTED', { module, schema: raw.schema ?? null });
+  if (Number(raw.formatVersion) !== CREATIVE_INTELLIGENCE_FORMAT_VERSION) {
+    fail('ADVISORY_CONTEXT_FORMAT_VERSION_UNSUPPORTED', {
+      module,
+      actual: raw.formatVersion ?? null,
+      expected: CREATIVE_INTELLIGENCE_FORMAT_VERSION
+    });
+  }
+  if (typeof raw.contextFingerprint !== 'string' || !raw.contextFingerprint.trim()) {
+    fail('ADVISORY_CONTEXT_FINGERPRINT_REQUIRED', { module });
+  }
+  const authority = raw.authority;
+  if (!record(authority) ||
+      authority.documentWrite !== false ||
+      authority.historyWrite !== false ||
+      authority.revisionWrite !== false ||
+      authority.geometryWrite !== false ||
+      authority.renderer !== false ||
+      authority.execution !== false ||
+      authority.networkRequired !== false) {
+    fail('ADVISORY_CONTEXT_AUTHORITY_INVALID', { module });
+  }
+  if (module === 'research-creation' && authority.creativeMemoryAutoWrite !== false) {
+    fail('ADVISORY_CONTEXT_AUTO_WRITE_INVALID', { module });
+  }
+  return clone(raw);
+}
+
+function advisoryModule(raw, config, projection, unresolved) {
+  if (raw == null) return null;
+  const result = safeModule(config.module, () => validateAdvisoryContext(raw, config), unresolved);
+  if (!result.value) return null;
+  const context = scrubHiddenObjectRefs(result.value, projection);
+  unresolved.push(...moduleUnresolved(config.module, result.value.unresolvedEvidence || []));
+  return {
+    status: 'AVAILABLE',
+    fingerprint: result.value.contextFingerprint,
+    authority: clone(result.value.authority),
+    context
+  };
+}
+
+function providerIssue(module, error) {
+  return { module, code: typeof error?.code === 'string' ? error.code : 'ADVISORY_PROVIDER_UNAVAILABLE' };
+}
+
 function finalize(payload, limits) {
   const unresolved = [...new Map((payload.unresolved || []).map(item => [stableHash(item), canonical(item)])).values()]
     .sort((a, b) => stableStringify(a).localeCompare(stableStringify(b)));
@@ -283,6 +340,9 @@ export function buildCreativeIntelligenceContext(input = {}, options = {}) {
   const limits = normalizeLimits(options.limits || {});
   const projection = normalizeProjection(document, options.allowedObjectIds ?? input.allowedObjectIds);
   const unresolved = [];
+  for (const issue of Array.isArray(input.advisoryProviderIssues) ? input.advisoryProviderIssues : []) {
+    if (record(issue) && typeof issue.module === 'string' && typeof issue.code === 'string') unresolved.push(canonical(issue));
+  }
 
   const documentBridgeOptions = {
     ...clone(options.documentBridge || {}),
@@ -374,6 +434,15 @@ export function buildCreativeIntelligenceContext(input = {}, options = {}) {
     }
   }
 
+  const creativeMemory = advisoryModule(input.creativeMemory, {
+    module: 'creative-memory',
+    schema: CREATIVE_MEMORY_ADVISORY_SCHEMA
+  }, projection, unresolved);
+  const researchCreation = advisoryModule(input.researchCreation, {
+    module: 'research-creation',
+    schema: RESEARCH_CREATION_ADVISORY_SCHEMA
+  }, projection, unresolved);
+
   let parametricStructure = null;
   if (input.parametricDescriptor != null) {
     const structureResult = safeModule('parametric-structure', () =>
@@ -428,7 +497,9 @@ export function buildCreativeIntelligenceContext(input = {}, options = {}) {
         status: 'AVAILABLE',
         fingerprint: parametricStructure.structureFingerprint,
         evidence: parametricStructure
-      } : { status: input.parametricDescriptor == null ? 'NOT_REQUESTED' : 'UNAVAILABLE', fingerprint: null, evidence: null }
+      } : { status: input.parametricDescriptor == null ? 'NOT_REQUESTED' : 'UNAVAILABLE', fingerprint: null, evidence: null },
+      ...(creativeMemory ? { creativeMemory } : {}),
+      ...(researchCreation ? { researchCreation } : {})
     },
     transmission: {
       policy: projection ? 'EXISTING_CHAT_DISCLOSURE_POLICY' : 'UNPROJECTED_LOCAL_CONTEXT',
@@ -449,7 +520,9 @@ export function createCreativeIntelligenceContextAdapter({
   getHistoryEntries = null,
   getRecipeEvidence = null,
   getChatEvidence = null,
-  getSemanticRegionGraphs = null
+  getSemanticRegionGraphs = null,
+  creativeMemoryProvider = null,
+  researchCreationProvider = null
 } = {}) {
   if (typeof getDocument !== 'function') fail('ADAPTER_DOCUMENT_PROVIDER_REQUIRED');
   for (const [name, provider] of Object.entries({
@@ -466,10 +539,51 @@ export function createCreativeIntelligenceContextAdapter({
   })) {
     if (provider != null && typeof provider !== 'function') fail('ADAPTER_PROVIDER_INVALID', { provider: name });
   }
+  if (creativeMemoryProvider != null && typeof creativeMemoryProvider?.readAdvisoryContext !== 'function') {
+    fail('ADAPTER_PROVIDER_INVALID', { provider: 'creativeMemoryProvider' });
+  }
+  if (researchCreationProvider != null && typeof researchCreationProvider?.advisory !== 'function') {
+    fail('ADAPTER_PROVIDER_INVALID', { provider: 'researchCreationProvider' });
+  }
+
+  const readCreativeMemory = ({ query = {}, options = {} } = {}) => {
+    if (!creativeMemoryProvider) return null;
+    return clone(creativeMemoryProvider.readAdvisoryContext(clone(query), clone(options)));
+  };
+  const readResearchCreation = ({ selection = {}, options = {} } = {}) => {
+    if (!researchCreationProvider) return null;
+    return clone(researchCreationProvider.advisory(clone(selection), clone(options)));
+  };
 
   return Object.freeze({
+    readCreativeMemory,
+    readResearchCreation,
     read(options = {}) {
       if (!record(options)) fail('OPTIONS_INVALID');
+      const advisoryProviderIssues = [];
+      let creativeMemory = own(options, 'creativeMemory') ? clone(options.creativeMemory) : null;
+      let researchCreation = own(options, 'researchCreation') ? clone(options.researchCreation) : null;
+      if (!own(options, 'creativeMemory') && creativeMemoryProvider) {
+        try {
+          creativeMemory = readCreativeMemory({
+            query: clone(options.creativeMemoryQuery || {}),
+            options: { ...DEFAULT_CREATIVE_MEMORY_INTEGRATION_OPTIONS, ...(clone(options.creativeMemoryOptions) || {}) }
+          });
+        } catch (error) {
+          advisoryProviderIssues.push(providerIssue('creative-memory', error));
+        }
+      }
+      if (!own(options, 'researchCreation') && researchCreationProvider) {
+        try {
+          researchCreation = readResearchCreation({
+            selection: clone(options.researchCreationSelection || {}),
+            options: { ...DEFAULT_RESEARCH_CREATION_INTEGRATION_OPTIONS, ...(clone(options.researchCreationOptions) || {}) }
+          });
+        } catch (error) {
+          advisoryProviderIssues.push(providerIssue('research-creation', error));
+        }
+      }
+
       const input = {
         document: getDocument(),
         selectedObjectIds: own(options, 'selectedObjectIds') ? clone(options.selectedObjectIds) : clone(getSelectedObjectIds?.() || []),
@@ -483,7 +597,10 @@ export function createCreativeIntelligenceContextAdapter({
         chatEvidence: own(options, 'chatEvidence') ? clone(options.chatEvidence) : clone(getChatEvidence?.() || []),
         semanticRegionGraphs: own(options, 'semanticRegionGraphs') ? clone(options.semanticRegionGraphs) : clone(getSemanticRegionGraphs?.() || []),
         comparison: own(options, 'comparison') ? clone(options.comparison) : null,
-        parametricDescriptor: own(options, 'parametricDescriptor') ? clone(options.parametricDescriptor) : null
+        parametricDescriptor: own(options, 'parametricDescriptor') ? clone(options.parametricDescriptor) : null,
+        creativeMemory,
+        researchCreation,
+        advisoryProviderIssues
       };
       const builderOptions = {
         ...(clone(options.builderOptions) || {}),
