@@ -321,3 +321,20 @@ FORMAT_VERSION = 4
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## Cross-lane hold — UI line
+
+USER direction:
+
+```text
+UI_LANE = PAUSED
+REASON = INK-CORE-INTEGRATION-006 is establishing authoritative workstation capability placement and UI-function mapping
+STRUCTURAL_UI_WORK = HOLD
+UI_REDESIGN = HOLD
+PANEL_HIERARCHY_CHANGE = HOLD
+BUGFIX_ONLY = ALLOWED IF BOUNDED AND NON-STRUCTURAL
+RESUME_GATE = INK-CORE-INTEGRATION-006 MR closure + accepted UI × Capability Matrix
+```
+
+Until the resume gate, no independent UI workpack may redefine panel hierarchy, capability placement, contextual-control ownership, or workstation navigation.
