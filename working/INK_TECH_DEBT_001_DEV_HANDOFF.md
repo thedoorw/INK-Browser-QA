@@ -171,6 +171,23 @@ The focused assertions above were executed against the exact GitHub branch
 source. MR should include repository unit execution in source review if its
 checkout/runner is available.
 
+### Continuation verification
+
+The repository was checked out and the four focused unit files were run locally:
+
+```text
+node --test qa/core/tests/unit/ink-tech-debt-001-foundation.test.mjs \
+  qa/core/tests/unit/portable-baseline-integration-v0.1.test.mjs \
+  qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs \
+  qa/core/tests/unit/ui-debt-001-shell-panel-authority-v0.1.test.mjs
+result = 23/23 PASS
+test correction commit = f6b12a5278300ef60a21dd3b437852f6a4731803
+```
+
+The earlier `NOT EXECUTED` note records the original handoff environment.
+The continuation run found and corrected two outdated script-URL assertions;
+no additional product source changed. MR must pin the new branch HEAD for Runtime.
+
 ## Runtime gate
 
 Not executed by DEV.

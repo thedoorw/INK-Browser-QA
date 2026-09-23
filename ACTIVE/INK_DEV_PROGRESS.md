@@ -230,3 +230,14 @@ DEV = STOP
 MERGE = NOT AUTHORIZED
 NEXT_STAGE = NOT AUTHORIZED
 ```
+
+## Checkpoint 4 — Continued handoff verification
+
+```text
+COMMIT = f6b12a5278300ef60a21dd3b437852f6a4731803
+MILESTONE = FOCUSED_UNIT_RUN_PASS / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP
+FILES_CHANGED = qa/core/tests/unit/portable-baseline-integration-v0.1.test.mjs
+CHECKS = node --test on four focused foundation, portable, parity, and panel test files: 23/23 PASS
+FIX = update two stale script-URL assertions to match current ?v=0.1 entry URLs
+KNOWN_GAPS = authoritative exact-SHA Windows Chrome Runtime remains MR-gated
+```

@@ -143,8 +143,8 @@ test('portable entries converge on one authoritative shared runtime with determi
   const compat = readSource('dist/ink.compat.js');
   const ink = readSource('src/ink.js');
 
-  assert.match(index, /<script type="module" src="src\/ink\.js"><\/script>/);
-  assert.match(standalone, /<script src="dist\/ink\.compat\.js"><\/script>/);
+  assert.match(index, /<script type="module" src="src\/ink\.js\?v=0\.1"><\/script>/);
+  assert.match(standalone, /<script src="dist\/ink\.compat\.js\?v=0\.1"><\/script>/);
   assert.match(compat, /import\(['"]\.\.\/src\/ink\.js['"]\)/);
 
   const sequence = [
