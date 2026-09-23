@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / PHASE_B_LINE_COLOR_DECOMPOSITION`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_PASS / PROMOTION_AUTHORIZED`
 
 ## Control
 
@@ -340,4 +340,64 @@ Return:
 
 ```text
 DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
+```
+
+
+## MR Phase B final acceptance
+
+```text
+DEV_HEAD = 40a7e5e86e7b08c316210240be8527b020c5ecce
+SOURCE_REVIEW = PASS
+BOUNDED_SELECTION_REVISION = PASS
+RUNTIME_RUN = 35865777424
+TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
+RUNNER = DESKTOP-NSOQH69
+BROWSER = Chrome
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+RUNTIME_ARTIFACT = 10751389785
+RUNTIME_DIGEST = sha256:b7e97974e1acd0fd3447353c83caf80bb40efefef47875daba107f0387a81784
+```
+
+Authoritative browser evidence proves:
+
+```text
+Reference → Color regions → Line boundaries → separate layers = PASS
+TRACE_BUDGET = 64,000 px / 320 px
+COLOR_QUANTIZATION_CYCLES = 1
+PHASE_B_ELAPSED_MS = 2214.1
+COLOR_REGIONS = 1471
+BOUNDARY_LINES = 1471
+POST_COMMIT_SELECTION = BOUNDED / PASS
+CHAT_RECEIPT = COMPLETED
+HISTORY = PASS
+AUDIT = PASS
+PROVENANCE = PASS
+REVISION = UNCHANGED / PASS
+```
+
+Private user image acceptance:
+
+```text
+FILE = 1.jpg
+MIME = image/jpeg
+SIZE_BYTES = 28354
+DIMENSIONS = 564x703
+SHA256 = e5b9623bb58f107331f4e9db8f265031baf56dafba77745c63be8bd2c3b18de5
+FINAL_TRACE_WORK_RASTER = 226x282 / 63732 px
+TRACE_BUDGET_COMPATIBILITY = PASS
+MULTI_COLOR_DECOMPOSITION_COMPATIBILITY = PASS
+USER_IMAGE_PUBLIC_COMMIT = 0
+```
+
+The exact product path is browser-proven on the repository runtime fixture. The private user JPEG is within the accepted decode and final trace-budget envelope and shows multiple stable color regions under the same bounded 8-color decomposition class. No additional private-file transport hardening is required for Phase B closure.
+
+### Phase B disposition
+
+```text
+PHASE_B = MR_PASS
+PROMOTION = AUTHORIZED
+PHASE_C = NOT_STARTED
+NO_FURTHER_TRACER_TUNING = REQUIRED
 ```
