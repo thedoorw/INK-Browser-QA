@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `INK-TECH-DEBT-001_SOURCE_PASS / EXACT_SHA_RUNTIME_QUEUED / UI-006_PHASE_C_TO_I_HOLD`
+STATUS: `INK-TECH-DEBT-001_QA_HARNESS_REVISE / PRODUCT_SOURCE_PASS / UI-006_PHASE_C_TO_I_HOLD`
 
 | Field | Value |
 |---|---|
@@ -8,14 +8,14 @@ STATUS: `INK-TECH-DEBT-001_SOURCE_PASS / EXACT_SHA_RUNTIME_QUEUED / UI-006_PHASE
 | CURRENT_TASK_ID | `INK-TECH-DEBT-001` |
 | DEV_BRANCH | `work/ink-tech-debt-001` |
 | DEV_HANDOFF | `RECEIVED / SOURCE_HEAD ed38789bd1aa6dd12235ee57bbceb5195b965ad0` |
-| MR_REVIEW | `SOURCE_REVIEW_PASS / RUNTIME_PENDING` |
-| TARGET_GATE | `EXACT-SHA WINDOWS RUNTIME → MR PASS / MR REVISE` |
+| MR_REVIEW | `PRODUCT SOURCE PASS / QA HARNESS REVISE` |
+| TARGET_GATE | `HARNESS-ONLY FIX → EXACT-SHA RUNTIME RERUN → MR FINAL` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `QUEUED / HIGH_RISK IMMEDIATE / TARGET ae9a8d0d9c41b7063d87d03c0b84811ac04e0656` |
+| RUNTIME_QA | `35885929148 FAIL / UI 69 of 71 / stale dark-shell assertions` |
 | UI-006 | `Phase A+B preserved / Phase C–I HOLD` |
-| NEXT_STAGE | `Runtime evidence → MR disposition` |
+| NEXT_STAGE | `DEV harness-only revision → HANDOFF → Runtime rerun` |
 
 ## Latest MR synchronization
 
@@ -103,6 +103,25 @@ HIGH_RISK_IMMEDIATE = YES / Service Worker + cache + bootstrap
 PROMOTION = HELD
 DIRECT_MERGE = NO / BRANCH DIVERGED
 ```
+
+
+
+## INK-TECH-DEBT-001 Runtime checkpoint — 35885929148
+
+```text
+TESTED_SHA = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+RUNNER = DESKTOP-NSOQH69
+UI = FAIL / 69 of 71
+CREATIVE = NOT_REACHED
+GEOMETRY = NOT_REACHED
+CAUSE = 2 stale dark-shell UI assertions
+PRODUCT_SOURCE_REGRESSION = NOT ESTABLISHED
+MR = REVISE / QA_HARNESS_ONLY
+ARTIFACT = 10763165329
+DIGEST = sha256:d47a862b58636bbe932201475d9d67bc8e7083c466158e1873ab9dff64b4b934
+```
+
+Observed renderer still produces dark workbench pixels around light A4 paper; the obsolete assertion was the CSS wrapper color. Typography size floors also pass; the obsolete assertion was absolute bright-text RGB intended for the former dark chrome.
 
 ## Readiness assessment
 
