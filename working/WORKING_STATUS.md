@@ -2202,3 +2202,38 @@ RUNTIME = CENTRAL_QUEUE_AFTER_PROMOTION
 ```
 
 This is the product-integration stage for CORE-MOD-006 and CORE-MOD-007. It must reuse the existing grounded CHAT and user-governed plan/execution boundaries.
+
+
+## INK-CORE-INTEGRATION-005 closure
+
+```text
+TASK = INK-CORE-INTEGRATION-005
+TITLE = Creative Intelligence Memory + Research Integration v0.1
+DEV_HANDOFF = 02a5ac20206bd82d83068dd1e0b07d1c3dc267b1
+SOURCE_QA = PASS / 35810111857
+PROMOTION_PR = #43 / MERGED
+PROMOTED_MAIN = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
+CENTRAL_RUNTIME = PASS / 35811427341
+RUNTIME_TESTED_SHA = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
+RUNTIME_COVERED = INK-CORE-INTEGRATION-004 + INK-CORE-INTEGRATION-005
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+FORMAT_VERSION = 4
+```
+
+High-level Creative Intelligence is now product-wired into the existing grounded CHAT path:
+
+```text
+Creative Memory advisory
++ Research → Creation advisory
+→ grounded CHAT reasoning
+→ grounded decision
+→ existing editable plan
+→ user approval
+→ execution / Revision
+```
+
+No memory auto-write, remote research fetch, autonomous recursion, auto-approval or auto-execution was introduced.
+
+The current central browser harness provides integration/regression evidence; Integration-005-specific advisory semantics are covered by exact source/Node QA.
