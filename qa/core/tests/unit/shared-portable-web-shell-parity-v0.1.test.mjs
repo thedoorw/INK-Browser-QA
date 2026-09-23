@@ -46,11 +46,13 @@ test('entire Portable/Web shell matches after exact delivery-only normalization'
     for (const region of ['menu-strip', 'topbar', 'contextual-options', 'tool-rail', 'stage-wrap', 'inspector', 'statusbar', 'mobile-dock']) assert.match(html, new RegExp(`class="[^"\\n]*\\b${region}\\b`));
     for (const tool of ['pen', 'eraser', 'select', 'lasso', 'shape', 'text', 'image', 'pan']) assert.ok(html.includes(`data-tool="${tool}"`));
     for (const tab of ['layers', 'history']) {
-      assert.ok(html.includes(`data-tab="${tab}"`));
-      assert.ok(html.includes(`data-content="${tab}"`));
+      assert.ok(!html.includes(`data-tab="${tab}"`), `${tab} must not be duplicated inside Properties sub-navigation`);
+      assert.ok(html.includes(`data-content="${tab}"`), `${tab} content remains available for direct Dock routing`);
     }
+    for (const tab of ['brush', 'object', 'ai', 'studio']) assert.ok(html.includes(`data-tab="${tab}"`));
+    assert.ok(html.includes('data-panel-subnav="properties"'));
     assert.ok(html.includes('data-tool-stack="draw"'));
-    for (const tag of ['<link rel="stylesheet" href="styles.css?v=0.1">', '<script src="web-shell.js?v=0.1" defer></script>', '<link rel="icon" href="assets/ink-mark.svg?v=0.1" type="image/svg+xml" sizes="any">']) assert.equal(html.split(tag).length - 1, 1);
+    for (const tag of ['<link rel="stylesheet" href="styles.css?v=0.1">', '<script src="web-shell.js?v=0.1" defer></script>', '<link rel="icon" href="assets/favicon.svg?v=0.1" type="image/svg+xml" sizes="32x32">']) assert.equal(html.split(tag).length - 1, 1);
   }
 });
 
@@ -110,7 +112,7 @@ test('Web-only mutations fail: structure, command hooks, tool hooks, styles, coo
     html => html.replace('data-content="layers"', 'data-content="other"'),
     html => html.replace('web-shell.js?v=0.1', 'other-shell.js?v=0.1'),
     html => html.replace('styles.css?v=0.1', 'web-only.css?v=0.1'),
-    html => html.replace('assets/ink-mark.svg?v=0.1', 'other-mark.svg?v=0.1'),
+    html => html.replace('assets/favicon.svg?v=0.1', 'other-favicon.svg?v=0.1'),
     html => html.replace('<main id="stageWrap"', '<aside id="stageWrap"'),
     html => html.replace('</head>', '<style>.tool-rail{display:none}</style></head>'),
     html => html.replace('</body>', '<script src="web-only.js"></script></body>'),
