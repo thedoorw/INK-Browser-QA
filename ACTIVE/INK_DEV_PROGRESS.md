@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-TECH-DEBT-001 / DEV_AUTHORIZED / NOT_STARTED`
+STATUS: `INK-TECH-DEBT-001 / DEV_IN_PROGRESS / BASELINE_VERIFIED`
 
 ## Control
 
@@ -113,4 +113,27 @@ Then:
 TASK_STATUS = DEV_HANDOFF
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
+```
+
+
+## Checkpoint 1 — Baseline verification
+
+```text
+COMMIT = be8285927d133cef994c5e8eef11034c0a74a4f7
+MILESTONE = READ_COMPLETE / BASELINE_VERIFIED / DEV_IN_PROGRESS
+FILES_CHANGED = ACTIVE/INK_DEV_PROGRESS.md only
+CHECKS =
+  required authority/governance files read
+  product/source/src JS+JSON = 189
+  service-worker SOURCE_SHELL = 176
+  missing offline closure entries = 13
+  extra offline closure entries = 0
+  web-shell retry polling = confirmed / 50 ms / max 40
+  production window.INK_TEST = confirmed embedded in src/ink.js
+  CSS accepted desktop authority = INK-UI-DEBT-001 single region confirmed
+  FORMAT_VERSION = 4 confirmed
+  product display version = v0.1 confirmed
+KNOWN_GAPS =
+  six authorized cleanup items not yet implemented
+  authoritative Runtime intentionally not run before DEV_HANDOFF + MR source review
 ```
