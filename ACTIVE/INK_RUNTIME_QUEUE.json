@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "1ad65b932835ef754b7d42291f7e70cdcd048925",
+  "state": "READY",
+  "target_sha": "31a427d807f7497b7e64d159607380c056829d67",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
   ],
@@ -15,7 +15,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Phase B bounded raster revision still times out Creative; final validation-grade ImageTracerJS workload tuning required."
+    "reason": "Final Phase B ImageTracerJS workload tuning exact-SHA verification: 64k pixels / 320 px / colorquantcycles 1."
   },
   "batch_policy": {
     "default_target": 3,
