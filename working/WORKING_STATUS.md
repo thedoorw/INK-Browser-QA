@@ -2393,3 +2393,20 @@ DECISION = MR_REVISE
 REAL_USER_IMAGE_TEST = HELD
 NEXT = bounded handoff liveness diagnostics/fix → DEV_HANDOFF / STOP → MR Runtime rerun
 ```
+
+
+## INK-CHAT-VALIDATION-001 Phase A MR PASS
+
+```text
+TESTED_SHA = ababe86e049355f6464cdabfceacfe2c32992be1
+RUNTIME = 35847254857 / PASS
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+PRIVATE_USER_JPEG = PASS
+PHASE_A = MR_PASS
+PROMOTION = AUTHORIZED
+PHASE_B = NOT_STARTED
+```
+
+The upload/reference gate is closed. Do not extend Phase A with additional edge-case hardening; subsequent work returns to the creative loop.
