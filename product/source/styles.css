@@ -1331,10 +1331,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
     color:#85878a;
     letter-spacing:.015em;
   }
-
-  /* Keep the user mark visible in the compact application identity surfaces. */
-  .menu-app-mark>span,
-
   .panel-window-menu{
     position:absolute;
     z-index:132;
@@ -1367,7 +1363,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 @media(max-width:760px){
   .panel-dock,.panel-window-menu{display:none!important}
   .app.panel-primary-open .stage-wrap{right:0}
-  .menu-app-mark>span,
 }
 
 
