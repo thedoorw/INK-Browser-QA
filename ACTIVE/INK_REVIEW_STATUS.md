@@ -14,3 +14,12 @@ TINYFISH = PROHIBITED
 FORMAT_VERSION = 4 / PRESERVE
 RUNTIME_QA = REQUIRED
 ```
+
+
+## Cross-lane review condition
+
+```text
+UI_LANE = PAUSED
+UI_STRUCTURAL_WORK = HOLD
+RESUME_GATE = INK-CORE-INTEGRATION-006 MR closure + accepted capability matrix
+```
