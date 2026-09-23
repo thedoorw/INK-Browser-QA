@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "31a427d807f7497b7e64d159607380c056829d67",
+  "state": "READY",
+  "target_sha": "40a7e5e86e7b08c316210240be8527b020c5ecce",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
   ],
@@ -15,7 +15,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Phase B trace timeout resolved; Runtime now fails post-commit because decomposition selects more objects than AI Document Bridge selection bounds before CHAT receipt provenance read."
+    "reason": "Phase B final bounded post-commit selection/receipt compatibility verification after resolving AI Document Bridge selection overflow."
   },
   "batch_policy": {
     "default_target": 3,
