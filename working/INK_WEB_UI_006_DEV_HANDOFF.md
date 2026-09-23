@@ -244,3 +244,17 @@ Overall current result:
 `UI_REVISE`
 
 Phase C remains unauthorized until B3 passes.
+
+
+## UR clarification — B3 is technical-debt removal
+
+B3 must not be closed by recoloring or masking the temporary startup frame.
+
+The technical debt is the duplicate startup visual path itself.
+
+DEV must remove that debt so INK has one authoritative shell state from first visible paint through stable runtime.
+
+Acceptance:
+`ONE SHELL STATE / NO STARTUP VISUAL SUBSTITUTE / NO FLASH DEBT`
+
+A same-color temporary frame is still debt and does not pass.
