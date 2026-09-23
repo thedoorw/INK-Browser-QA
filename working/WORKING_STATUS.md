@@ -2122,3 +2122,26 @@ Creative Memory now exists as a deterministic advisory core module for reusable 
 It does not infer user personality and does not execute edits.
 
 The next higher-level roadmap item remains the Research → Creation Bridge, but no implementation Work Order is authorized by this closure alone.
+
+
+## CORE-MOD-007 activation
+
+```text
+TASK = CORE-MOD-007
+TITLE = Research → Creation Bridge Module v0.1
+BRANCH = work/ink-core-research-creation-007
+TARGET =
+  research/reference evidence
+  → visual principles
+  → creative constraints / methods
+  → Creative Memory / Parametric / CHAT-compatible advisory output
+MODULE_ONLY = YES
+RESEARCH_SOURCE_AUTHORITY = EVIDENCE_ONLY
+CREATIVE_MEMORY_AUTO_WRITE = 0
+AUTO_EXECUTION = 0
+NETWORK_REQUIRED = 0
+FORMAT_VERSION = 4
+RUNTIME = DEFERRED_TO_INTEGRATION_BATCH
+```
+
+This stage completes the currently planned high-level creative-intelligence foundation at module level. Product wiring remains a later Integration Work Order.
