@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-TECH-DEBT-001 / MR_REVISE / QA_HARNESS_ONLY`
+STATUS: `INK-TECH-DEBT-001 / MR_REVISE / QA_HARNESS_ONLY_INCOMPLETE`
 
 ## Control
 
@@ -412,3 +412,17 @@ DECISION = MR_REVISE / QA_HARNESS_ONLY
 ```
 
 Only the two superseded dark-shell assertions described in `ACTIVE/INK_REVIEW_STATUS.md` may be revised. Product source is frozen unless the rerun reveals an actual product regression.
+
+
+## MR harness re-review — 51d9ca0
+
+The QA-only scope is respected, but the two assertions that caused Runtime `35885929148` to fail are still present.
+
+Required remaining edits, and only these semantics:
+
+- replace absolute secondary-text brightness `R+G+B >= 480` with a readability/contrast check compatible with the accepted light shell while retaining the existing font-size floors;
+- remove the hard-coded `stage-wrap == rgb(38,38,38)` requirement and validate the actual rendered dark-workbench / light-A4-paper separation instead.
+
+The Service Worker identity harness changes in `51d9ca0d4326720c5a9970f3872c99eb2808db2c` are accepted.
+
+Runtime rerun remains held until both stale assertions are corrected.
