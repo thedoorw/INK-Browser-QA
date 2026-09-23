@@ -13,6 +13,11 @@ IMPLEMENTATION_QA_CHECKPOINT = 7bd33b705345b3c0f691b925ed8614311a0f7797
 MR_RUNTIME_REVISION_BASELINE = 2d324df22dd58ebf3579ba175422839abd92bd04
 CROSS_REALM_SOURCE_CHECKPOINT = 6f31ce236d8efc79e41c0f504382e4c57de89331
 CROSS_REALM_QA_CHECKPOINT = ebe34f03952ff7f4c2e0dd7c943fa3b67fb37280
+MR_LIVENESS_REVIEWED_HEAD = d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
+MR_LIVENESS_RUNTIME_RUN = 35840153267
+LOCAL_BYTE_MATERIALIZATION_CHECKPOINT = 9a7e02dc3070adc3ec07c0f68f16a8017bf91789
+LIVENESS_BROWSER_QA_CHECKPOINT = d82c0a20f4e4337f215f6ec34b52ceeb2248fe16
+LIVENESS_RUNTIME_CONTRACT_CHECKPOINT = 91badfa19ecbff765e6e8a6be68a2c9e9bc272c1
 FORMAT_VERSION = 4 / PRESERVED
 NEW_DRAWING_ENGINE = 0
 CHAT_BYPASS = 0
@@ -519,3 +524,142 @@ DEV_RUNTIME_PASS_CLAIM = 0
 ```
 
 Phase B remains out of scope and not started.
+
+
+## MR Runtime correction — cross-realm handoff liveness
+
+MR exact-SHA Runtime baseline:
+
+```text
+REVIEWED_HEAD = d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
+RUNTIME_RUN = 35840153267
+ATTEMPT_1 = UI PASS / CREATIVE HARNESS_TIMEOUT_240S
+ATTEMPT_2 = UI PASS / CREATIVE HARNESS_TIMEOUT_240S
+CREATIVE_EVIDENCE_CALLBACK = NOT_PRODUCED
+```
+
+The old harness had no checkpoint inside the handoff promise, so the prior artifacts can prove only:
+
+```text
+cross-realm handoff call entered
+→ no receipt/evidence callback within 240 seconds
+```
+
+They cannot retrospectively distinguish whether the wait was in normalization, decoder entry, decoder completion, or post-decode import.
+
+Source analysis identified the new cross-realm normalization as the only new blocking boundary before the accepted decoder. The previous revision constructed:
+
+```text
+external Blob
+→ Blob.prototype.slice.call(external)
+→ new local File([slicedBlob])
+```
+
+This removed realm-local `instanceof` dependence but still allowed the File to be constructed from a Blob-backed part instead of a fully materialized local byte buffer. That backing is now removed.
+
+### Liveness correction
+
+Cross-realm Blob/File normalization now performs:
+
+```text
+platform-brand validation
+→ Blob.prototype.arrayBuffer.call(external binary)
+→ await complete byte materialization
+→ copy into local Uint8Array
+→ new INK-realm File([local bytes])
+→ existing decodeReferenceFile
+```
+
+The byte count after materialization must exactly match the platform-reported Blob size. A read failure or size mismatch returns a bounded handoff error before decoder entry.
+
+Same-realm File input remains accepted directly. Arbitrary objects are still rejected by platform-brand checks; no `Symbol.toStringTag` or generic Blob duck typing is trusted.
+
+### Browser liveness checkpoints
+
+The existing creative browser harness now has a 15-second timeout around the **handoff operation only**. The global 240-second Runtime timeout was not raised or used as the fix.
+
+The browser records this exact sequence:
+
+```text
+cross-realm input confirmed
+→ normalization returned
+→ decoder entered
+→ decoder returned
+→ Reference import committed
+→ receipt returned
+```
+
+Required QA evidence:
+
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_SHORT_TIMEOUT_BOUND`
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_INPUT_CONFIRMED`
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_NORMALIZATION_RETURNED`
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_DECODER_ENTERED`
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_DECODER_RETURNED`
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_REFERENCE_IMPORT_COMMITTED`
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_RECEIPT_RETURNED`
+- `CHAT_REFERENCE_HANDOFF_LIVENESS_SEQUENCE_COMPLETE`
+
+If the operation stalls, the harness fails within 15 seconds and returns the completed checkpoint sequence in the failure details, rather than waiting for the outer 240-second timeout.
+
+### Exact-source DEV verification
+
+The fetched branch source was evaluated with a bounded Blob/File platform-brand simulation where a valid Blob's prototype was detached so ordinary `instanceof Blob` was false.
+
+Observed:
+
+```text
+EXTERNAL_INSTANCEOF_LOCAL_BLOB = false
+NORMALIZED_LOCAL_FILE = true
+LOCAL_FILE_BYTES = PRESERVED
+SOURCE_NAME_TYPE_LASTMODIFIED = PRESERVED
+DECODER_RECEIVED_LOCAL_FILE = true
+CHECKPOINT_ORDER =
+  normalization returned
+  → decoder entered
+  → decoder returned
+  → Reference import committed
+RECEIPT_STATUS = COMPLETED
+HISTORY_COMMIT_VALID = true
+REVISION_IDENTITY_UNCHANGED = true
+ARBITRARY_OBJECT_REJECTION = CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED
+```
+
+Static / syntax verification:
+
+```text
+HANDOFF_MODULE_SYNTAX = PASS
+FOCUSED_QA_SYNTAX = PASS
+BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
+RUNTIME_BATCH_SYNTAX = PASS
+LOCAL_BYTE_MATERIALIZATION_CONTRACT = PASS
+SHORT_OPERATION_TIMEOUT_CONTRACT = PASS
+LIVENESS_REQUIRED_CHECK_CONTRACT = PASS
+GLOBAL_240S_TIMEOUT_INCREASE = 0
+```
+
+Authority boundaries preserved:
+
+```text
+EXISTING_DECODER = PRESERVED
+HISTORY_AUTHORITY_CHANGE = 0
+AUDIT_AUTHORITY_CHANGE = 0
+PROVENANCE_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+DOCUMENT_AUTHORITY_CHANGE = 0
+PHASE_B = NOT_STARTED
+NEW_DRAWING_ENGINE = 0
+GITHUB_HOSTED_DEV_WORKFLOW = 0
+FORMAT_VERSION = 4
+```
+
+Runtime status at DEV handoff:
+
+```text
+CROSS_REALM_LIVENESS_BROWSER_QA_READY = PASS
+DEV_SELF_HOSTED_RUNTIME_EXECUTED = 0
+MR_EXACT_SHA_RUNTIME_RERUN = PENDING
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = HELD_UNTIL_CREATIVE_RUNTIME_PASS
+```
+
+The next MR exact-SHA Runtime run will provide the first browser-grounded proof of the full six-stage sequence.
