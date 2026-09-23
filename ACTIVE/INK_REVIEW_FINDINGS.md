@@ -1,55 +1,52 @@
 # INK REVIEW FINDINGS
 
-STATUS: `INK-RUNTIME-AUTOMATION-001 / MR_PASS / CLOSED`
+STATUS: `INK-CORE-INTEGRATION-004 / MR_PASS / PROMOTED`
 
-TASK: `INK-RUNTIME-AUTOMATION-001 — Central Runtime Queue & Auto Dispatch v0.1`
+TASK: `INK-CORE-INTEGRATION-004 — Grounded Creative Decision & Plan Bridge v0.1`
 
-REVIEWED_HEAD: `c69f96e5a5a3ce310acab96af946675c96f96397`
+REVIEWED_HEAD: `43cf492e870ea615fb1b1b07be4d73c54eca7bac`
 
 ## Accepted findings
 
-- central queue contract is governance/runtime metadata only;
-- manual fallback no longer requires SHA input;
-- blank manual dispatch resolves current main once and pins exact SHA;
-- explicit ref/SHA override remains available for advanced/debug use;
-- only `ACTIVE/INK_RUNTIME_QUEUE.json` changes on main invoke the automatic controller;
-- non-READY queue states do not start the Windows runner;
-- READY state validates exact SHA and bounded batch policy;
-- default batch target is 3, allowed range 2–4;
-- high-risk one-item run requires an explicit reason;
-- exact-SHA materialization/evidence is preserved;
-- full Runtime is not triggered by every main/product-source push;
-- no TinyFish or external browser-agent dependency;
-- no product behavior, UI layout, document schema, History, Revision, Geometry, Renderer or FORMAT_VERSION mutation;
-- `windowsHide: true` and existing self-hosted Windows Chrome path remain intact.
+- bounded deterministic grounded-decision envelope added;
+- tool-result evidence and grounded-context fingerprint are verified before plan creation;
+- only `PLAN_PROPOSAL` may carry a plan candidate;
+- existing `INK-CHAT-CREATIVE-PLAN` and bounded-edit validators remain authoritative;
+- stale document/page/revision/fingerprint, hidden/unknown targets, ungrounded targets and unsupported operations are rejected;
+- proposal creation ends at `PROPOSED`;
+- no approval token is created;
+- no automatic approval or execution occurs;
+- no Document / History / Revision mutation occurs during bridge creation;
+- discussion-only results create no plan;
+- no UI / Document schema / History / Revision / Geometry / Renderer authority change;
+- `FORMAT_VERSION = 4`.
+
+## Reproducible source QA
+
+Temporary branch-only QA trigger:
+
+```text
+TESTED_SHA = 698d9b192e9f83c8e6cb34a4c8b23f66ebed8415
+RUN = 35800653674
+RESULT = SUCCESS
+```
+
+The temporary workflow was removed afterward. Product/source content remained identical to the reviewed DEV handoff.
 
 ## Promotion
 
 ```text
-PR = #39 / MERGED
-PROMOTED_MAIN = d698df7c26b0365cb3e240a8fea685a454176c2c
+PR = #40 / MERGED
+PROMOTED_MAIN = 061688b75ca49455ebff6b3fd22805ef9ec8091e
 ```
 
-## Automatic Runtime acceptance
-
-MR changed only the central queue to READY. No user SHA entry or workflow selection was required.
+## Runtime disposition
 
 ```text
-QUEUE_TRIGGER_COMMIT = df67e6156b89885711363cfd491adbbaf1307488
-WORKFLOW = INK Central Windows Runtime Batch
-RUN = 35748328916
-CONTROLLER_JOB = 106815588070 / PASS
-WINDOWS_JOB = 106815628721 / PASS
-DISPATCH_SOURCE = queue
-TESTED_SHA = d698df7c26b0365cb3e240a8fea685a454176c2c
-RUNNER = DESKTOP-NSOQH69
-UI = PASS
-CREATIVE = PASS
-GEOMETRY = PASS
-ARTIFACT_ID = 10704217135
-RESULT = PASS
+QUEUE_STATE = ACCUMULATING
+PENDING = INK-CORE-INTEGRATION-004
+TARGET_SHA = 061688b75ca49455ebff6b3fd22805ef9ec8091e
+DEFAULT_BATCH_TARGET = 3
 ```
 
-Final gate: `INK_RUNTIME_AUTOMATION_001_RUNTIME_PASS`.
-
-Non-blocking maintenance note: GitHub emitted Node 20 deprecation warnings for current action versions while forcing Node 24; no Runtime failure occurred.
+No immediate Windows Runtime was required by MR review.
