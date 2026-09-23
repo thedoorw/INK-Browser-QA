@@ -6,6 +6,9 @@ on:
       - work/ink-core-integration-005
     paths:
       - ".github/workflows/ink-core-integration-005-source-qa.yml"
+      - "product/source/src/ai/creative-intelligence-context.js"
+      - "product/source/src/ai/chat-runtime.js"
+      - "qa/core-integration-005-creative-intelligence.test.mjs"
 
 permissions:
   contents: read
