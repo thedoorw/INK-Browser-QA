@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-TECH-DEBT-001 / MR_REVISE / BOUNDED_SOURCE_REVISION`
+STATUS: `INK-TECH-DEBT-001 / MR_REVISE / QA_HARNESS_ONLY`
 
 ## Control
 
@@ -397,3 +397,18 @@ MR_REVISE
 
 UI-006 Phase C–I remains HOLD.
 CHAT Validation Phase C remains NOT_STARTED.
+
+
+## MR Runtime checkpoint — 35885929148
+
+```text
+PRODUCT_SOURCE_REVIEW = PASS
+TESTED_SHA = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+RUNNER = DESKTOP-NSOQH69
+UI = FAIL / 69/71
+CREATIVE = NOT_REACHED
+GEOMETRY = NOT_REACHED
+DECISION = MR_REVISE / QA_HARNESS_ONLY
+```
+
+Only the two superseded dark-shell assertions described in `ACTIVE/INK_REVIEW_STATUS.md` may be revised. Product source is frozen unless the rerun reveals an actual product regression.
