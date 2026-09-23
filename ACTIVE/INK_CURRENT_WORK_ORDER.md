@@ -227,3 +227,59 @@ Return:
 ```text
 DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
 ```
+
+
+## MR Phase B Runtime checkpoint — 1ad65b932835ef754b7d42291f7e70cdcd048925
+
+```text
+SOURCE_REVIEW = PASS
+DEV_HEAD = 1ad65b932835ef754b7d42291f7e70cdcd048925
+RUNTIME_RUN = 35860798446
+TESTED_SHA = 1ad65b932835ef754b7d42291f7e70cdcd048925
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = FAIL / HARNESS_TIMEOUT_240S
+GEOMETRY = NOT_REACHED
+ARTIFACT = 10750058548
+ARTIFACT_DIGEST = sha256:cf43a094bbe926e7bf61158da7b3d4e6f765d211ee6143ad23f1c7a88caf8261
+PRIVATE_USER_1_JPG = HELD
+DECISION = MR_REVISE
+```
+
+### Finding
+
+The first performance revision is structurally correct:
+
+```text
+full source raster
+→ deterministic bounded work raster
+→ ImageTracerJS color-regions
+→ source-coordinate matrix remap
+```
+
+and preserves editable Color/Line geometry and the accepted authorities.
+
+However, the authoritative Windows browser Runtime still does not complete the Creative suite within 240 seconds. The current upper bound of 160,000 trace pixels / 512 px dimension is therefore not a practical bound for this validation path.
+
+Do not add more architecture or diagnostics. This is now a tuning correction only.
+
+### Bounded revision — validation-grade trace budget
+
+1. Keep the existing deterministic work-raster + source-coordinate remap design.
+2. Reduce the synchronous ImageTracerJS color-regions workload substantially; target an initial upper bound no greater than:
+   - 64,000 work pixels;
+   - 320 px on either side.
+3. Reduce color quantization cycles to the minimum practical deterministic setting (prefer 1) while keeping the requested palette count bounded.
+4. Preserve editable filled Color Paths and aligned boundary Line Paths.
+5. Preserve Reference identity, source SHA, separate Color/Line layers, History, Audit, Provenance, and FORMAT_VERSION 4.
+6. Browser Phase B operation must complete under the existing 30-second Phase B assertion.
+7. Do not increase the global 240-second Runtime timeout.
+8. Do not add semantic labeling, centerline tracing, UI redesign, Phase C, or a new extraction engine.
+
+This is the final Phase B performance-tuning pass before MR decides whether ImageTracerJS is adequate for this first validation slice.
+
+Return:
+
+```text
+DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
+```
