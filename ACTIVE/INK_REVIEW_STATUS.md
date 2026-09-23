@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-TECH-DEBT-001 / PRODUCT_SOURCE_PASS / QA_HARNESS_REVISE_INCOMPLETE / RUNTIME_HELD`
+STATUS: `INK-TECH-DEBT-001 / PRODUCT_SOURCE_PASS / QA_HARNESS_PASS / EXACT_SHA_RUNTIME_QUEUED`
 
 ```text
 TASK_ID = INK-TECH-DEBT-001
@@ -140,3 +140,25 @@ NEXT =
   → MR re-review
   → exact-SHA Runtime rerun
 ```
+
+
+## MR harness re-review — 3e22c2f501e100674952650f333024d5b817d86f
+
+```text
+REMOTE_HEAD = 3e22c2f501e100674952650f333024d5b817d86f
+DELTA_FROM_51d9ca0 = qa/runtime/ink-web-ui-001-harness.html only
+PRODUCT_SOURCE_CHANGED = NO
+TYPOGRAPHY_STALE_ASSERTION = CLOSED
+A4_WRAPPER_COLOR_STALE_ASSERTION = CLOSED
+HARNESS_REVIEW = PASS
+RUNTIME = QUEUED / EXACT SHA
+```
+
+Accepted QA semantics:
+- existing font-size floors remain;
+- text readability is measured against the actual rendered background using relative luminance / contrast;
+- A4 validation compares rendered canvas workbench and paper pixels;
+- no fixed `.stage-wrap` dark color is required.
+
+Runtime target:
+`3e22c2f501e100674952650f333024d5b817d86f`
