@@ -329,7 +329,7 @@ export class ModelOutputValidator {
 }
 
 const LEGACY_TOOL_NAMES = Object.freeze(['get_capabilities', 'get_document_summary', 'get_layer_tree', 'get_editable_targets', 'get_target_details', 'get_palette', 'get_history_summary', 'create_plan', 'validate_plan', 'request_preview', 'get_preview_difference', 'request_approval', 'execute_approved_plan', 'rollback_execution', 'save_variant', 'export_document']);
-export const GROUNDED_TOOL_NAMES = Object.freeze(['get_grounded_creative_context', 'compare_visual_subjects', 'resolve_parametric_structure']);
+export const GROUNDED_TOOL_NAMES = Object.freeze(['get_grounded_creative_context', 'get_creative_memory_context', 'get_research_creation_context', 'compare_visual_subjects', 'resolve_parametric_structure']);
 export const GROUNDED_CONTINUATION_MAX = 1;
 export const GROUNDED_TOOL_RESULT_MAX_BYTES = 32768;
 export const TOOL_NAMES = Object.freeze([...LEGACY_TOOL_NAMES, ...GROUNDED_TOOL_NAMES]);
@@ -354,6 +354,38 @@ const GROUNDED_TOOL_DEFINITIONS = Object.freeze({
     name: 'get_grounded_creative_context',
     description: 'Read the current bounded grounded creative-intelligence context. Read-only; does not mutate Document, History, Revision, Geometry, Renderer, or execution state.',
     parameters: { type: 'object', additionalProperties: false, properties: {} }
+  },
+  get_creative_memory_context: {
+    name: 'get_creative_memory_context',
+    description: 'Read selected Creative Memory advisory context through the existing grounded provider. Read-only; no memory write or document mutation.',
+    parameters: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        query: { type: 'object' },
+        options: { type: 'object' }
+      }
+    }
+  },
+  get_research_creation_context: {
+    name: 'get_research_creation_context',
+    description: 'Read selected local Research to Creation advisory evidence through the existing grounded provider. Read-only; no remote fetch, scrape, memory write, or document mutation.',
+    parameters: {
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        selection: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            evidenceIds: { type: 'array', items: { type: 'string' } },
+            principleIds: { type: 'array', items: { type: 'string' } },
+            constraintIds: { type: 'array', items: { type: 'string' } }
+          }
+        },
+        options: { type: 'object' }
+      }
+    }
   },
   compare_visual_subjects: {
     name: 'compare_visual_subjects',
@@ -556,6 +588,34 @@ export class ToolCallRouter {
         else {
           try { result = this.groundedContextProvider.read({ historyEntries: [] }); }
           catch (error) { result = groundedToolDiagnostic(name, error?.code || 'GROUNDED_CONTEXT_UNAVAILABLE', { status: 'UNAVAILABLE' }); }
+        }
+        break;
+      case 'get_creative_memory_context':
+        if (!this.groundedContextProvider?.readCreativeMemory) result = groundedToolDiagnostic(name, 'CREATIVE_MEMORY_PROVIDER_UNAVAILABLE', { status: 'UNAVAILABLE' });
+        else {
+          try {
+            result = this.groundedContextProvider.readCreativeMemory({
+              query: clone(args?.query || {}),
+              options: clone(args?.options || {})
+            });
+            if (!result) result = groundedToolDiagnostic(name, 'CREATIVE_MEMORY_PROVIDER_UNAVAILABLE', { status: 'UNAVAILABLE' });
+          } catch (error) {
+            result = groundedToolDiagnostic(name, error?.code || 'CREATIVE_MEMORY_CONTEXT_UNAVAILABLE', { status: 'UNAVAILABLE' });
+          }
+        }
+        break;
+      case 'get_research_creation_context':
+        if (!this.groundedContextProvider?.readResearchCreation) result = groundedToolDiagnostic(name, 'RESEARCH_CREATION_PROVIDER_UNAVAILABLE', { status: 'UNAVAILABLE' });
+        else {
+          try {
+            result = this.groundedContextProvider.readResearchCreation({
+              selection: clone(args?.selection || {}),
+              options: clone(args?.options || {})
+            });
+            if (!result) result = groundedToolDiagnostic(name, 'RESEARCH_CREATION_PROVIDER_UNAVAILABLE', { status: 'UNAVAILABLE' });
+          } catch (error) {
+            result = groundedToolDiagnostic(name, error?.code || 'RESEARCH_CREATION_CONTEXT_UNAVAILABLE', { status: 'UNAVAILABLE' });
+          }
         }
         break;
       case 'compare_visual_subjects':
@@ -777,7 +837,7 @@ export class ChatSessionManager {
   end(sessionId, { clearCredentials = true } = {}) { const session = this.sessions.get(sessionId); if (!session) return false; this.clients.get(session.client)?.cancel?.(); this.sessions.delete(sessionId); if (clearCredentials) this.credentialStore?.clearAll(); return true; }
 }
 
-function defaultGroundedContextProvider(layer) {
+function defaultGroundedContextProvider(layer, { creativeMemoryProvider = null, researchCreationProvider = null } = {}) {
   const app = layer?.app;
   if (!app || typeof layer?.currentDocument !== 'function') return null;
   return createCreativeIntelligenceContextAdapter({
@@ -792,6 +852,8 @@ function defaultGroundedContextProvider(layer) {
       if (!records || typeof records.values !== 'function') return [];
       return [...records.values()].filter(record => record?.documentId === documentId);
     },
+    creativeMemoryProvider,
+    researchCreationProvider,
     getHistoryEntries: () => [
       ...(Array.isArray(app.history?.undoStack) ? app.history.undoStack : []),
       ...(Array.isArray(app.history?.redoStack) ? app.history.redoStack : [])
@@ -804,8 +866,17 @@ function defaultGroundedContextProvider(layer) {
   });
 }
 
-export function createChatRuntime(layer, { fetchImpl = globalThis.fetch, sessionStorage = globalThis.sessionStorage, crypto = globalThis.crypto, groundedContextProvider = undefined } = {}) {
-  const resolvedGroundedContextProvider = groundedContextProvider === undefined ? defaultGroundedContextProvider(layer) : groundedContextProvider;
+export function createChatRuntime(layer, {
+  fetchImpl = globalThis.fetch,
+  sessionStorage = globalThis.sessionStorage,
+  crypto = globalThis.crypto,
+  groundedContextProvider = undefined,
+  creativeMemoryProvider = null,
+  researchCreationProvider = null
+} = {}) {
+  const resolvedGroundedContextProvider = groundedContextProvider === undefined
+    ? defaultGroundedContextProvider(layer, { creativeMemoryProvider, researchCreationProvider })
+    : groundedContextProvider;
   const credentialStore = new CredentialSecuritySystem({ sessionStorage, crypto }), capabilityProvider = new CapabilityProvider(layer), documentStateProvider = new DocumentStateProvider(layer), auditBridge = new AuditBridge(layer), contextBuilder = new ContextBuilder({ capabilityProvider, documentStateProvider, groundedContextProvider: resolvedGroundedContextProvider }), validator = new ModelOutputValidator({ layer }), toolRouter = new ToolCallRouter({ layer, auditBridge, groundedContextProvider: resolvedGroundedContextProvider });
   const manager = new ChatSessionManager({ layer, contextBuilder, validator, toolRouter, auditBridge, credentialStore });
   manager.register('manual-json', new ManualJSONClient());
