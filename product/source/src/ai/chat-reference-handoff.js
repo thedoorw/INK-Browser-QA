@@ -12,15 +12,31 @@ function localBlobDescriptor(value) {
   if (!value || typeof Blob === 'undefined') return null;
   const sizeGetter = Object.getOwnPropertyDescriptor(Blob.prototype, 'size')?.get;
   const typeGetter = Object.getOwnPropertyDescriptor(Blob.prototype, 'type')?.get;
-  if (typeof sizeGetter !== 'function' || typeof typeGetter !== 'function' || typeof Blob.prototype.slice !== 'function') return null;
+  if (typeof sizeGetter !== 'function' || typeof typeGetter !== 'function') return null;
   try {
-    const size = sizeGetter.call(value);
-    const type = typeGetter.call(value);
-    const blob = Blob.prototype.slice.call(value, 0, size, type);
-    return { blob, size, type };
+    return {
+      size: sizeGetter.call(value),
+      type: typeGetter.call(value)
+    };
   } catch {
     return null;
   }
+}
+
+async function materializeLocalBytes(value, expectedSize) {
+  const arrayBuffer = typeof Blob !== 'undefined' ? Blob.prototype.arrayBuffer : null;
+  if (typeof arrayBuffer !== 'function') fail('CHAT_REFERENCE_HANDOFF_BINARY_READ_UNAVAILABLE', 'Browser Blob byte reader is required');
+  let buffer;
+  try {
+    buffer = await arrayBuffer.call(value);
+  } catch {
+    fail('CHAT_REFERENCE_HANDOFF_BINARY_READ_FAILED', 'CHAT handoff binary could not be materialized');
+  }
+  const view = new Uint8Array(buffer);
+  if (view.byteLength !== expectedSize) {
+    fail('CHAT_REFERENCE_HANDOFF_BINARY_SIZE_MISMATCH', 'CHAT handoff binary size changed during materialization');
+  }
+  return new Uint8Array(view);
 }
 
 function fileDescriptor(value) {
@@ -42,7 +58,7 @@ function isLocalFile(value) {
   return typeof File !== 'undefined' && value instanceof File;
 }
 
-export function normalizeChatAttachment(input, options = {}) {
+export async function normalizeChatAttachment(input, options = {}) {
   const direct = input?.file ?? input;
   if (isLocalFile(direct)) return direct;
   if (typeof File === 'undefined') fail('CHAT_REFERENCE_HANDOFF_FILE_API_UNAVAILABLE', 'Browser File API is required');
@@ -62,8 +78,9 @@ export function normalizeChatAttachment(input, options = {}) {
   const requestedLastModified = options.lastModified ?? sourceFile?.lastModified ?? input?.lastModified;
   const lastModifiedNumber = Number(requestedLastModified);
   const lastModified = Number.isFinite(lastModifiedNumber) ? lastModifiedNumber : Date.now();
+  const bytes = await materializeLocalBytes(binarySource, binary.size);
 
-  return new File([binary.blob], name, { type, lastModified });
+  return new File([bytes], name, { type, lastModified });
 }
 
 function historySnapshot(app) {
@@ -161,14 +178,37 @@ export function createChatReferenceHandoffAdapter(app, {
       let imported = null;
       let audit = null;
 
+      const checkpoint = typeof options.checkpoint === 'function' ? options.checkpoint : null;
+      const emitCheckpoint = (stage, details = {}) => {
+        if (!checkpoint) return;
+        try { checkpoint({ stage, ...clone(details) }); } catch {}
+      };
+
       try {
-        file = normalizeChatAttachment(input, options);
+        file = await normalizeChatAttachment(input, options);
+        emitCheckpoint('normalization returned', {
+          localFile: isLocalFile(file),
+          name: file?.name || null,
+          type: file?.type || null,
+          size: file?.size ?? null
+        });
+        emitCheckpoint('decoder entered');
         decoded = await app.extraction.decode(file);
+        emitCheckpoint('decoder returned', {
+          sourceName: decoded?.source?.name || null,
+          mimeType: decoded?.source?.mimeType || null,
+          sizeBytes: decoded?.source?.sizeBytes ?? null
+        });
         imported = app.extraction.importReference(decoded, {
           actor,
           sourceChannel: CHAT_REFERENCE_HANDOFF_CHANNEL,
           operation: CHAT_REFERENCE_HANDOFF_OPERATION,
           matrix: options.matrix
+        });
+        emitCheckpoint('Reference import committed', {
+          referenceObjectId: imported?.referenceObjectId || null,
+          documentId: imported?.documentId || null,
+          layerId: imported?.layerId || null
         });
 
         const historyAfter = historySnapshot(app);
