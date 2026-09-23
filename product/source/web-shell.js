@@ -2,6 +2,7 @@
   'use strict';
 
   const DESKTOP_QUERY = '(min-width: 761px)';
+  const RUNTIME_READY_EVENT = 'ink:runtime-ready';
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
   const DEFAULT_PRIMARY_PANEL_WIDTH = 252;
   const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
@@ -48,8 +49,7 @@
     contextObserver: null,
     contextualRoot: null,
     contextualHost: null,
-    contextRaf: 0,
-    retryCount: 0
+    contextRaf: 0
   };
 
   function runtime() {
@@ -502,16 +502,14 @@
     createDock();
     createWindowMenu();
 
-    const tryBind = () => {
-      if (bindRuntime()) return;
-      state.retryCount += 1;
-      if (state.retryCount < 40) setTimeout(tryBind, 50);
-    };
-    tryBind();
+    const onRuntimeReady = () => bindRuntime();
+    globalThis.addEventListener(RUNTIME_READY_EVENT, onRuntimeReady, { once: true });
+    if (bindRuntime()) globalThis.removeEventListener(RUNTIME_READY_EVENT, onRuntimeReady);
   }
 
   globalThis.INK_WEB_SHELL = {
     version: '0.1',
+    runtimeReadyEvent: RUNTIME_READY_EVENT,
     states: PRIMARY_PANEL_STATES,
     panels: PANEL_DEFS.map(def => def.id),
     open: selectPanel,
@@ -541,6 +539,6 @@
     }
   };
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install, { once: true });
-  else install();
+  if (document.querySelector('#app')) install();
+  else document.addEventListener('DOMContentLoaded', install, { once: true });
 })();
