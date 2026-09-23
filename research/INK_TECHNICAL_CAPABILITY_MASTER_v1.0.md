@@ -580,3 +580,47 @@ ORIGINAL_EIGHT_TARGETS = IMPLEMENTED_AT_ACCEPTED_PHASE_1_SCOPE
 WORKSTATION_CAPABILITY_BASELINE = VERIFIED
 NEXT_PHASE = REAL CHAT-USES-INK-CLOUD VALIDATION + UI PLANNING / REFINEMENT
 ```
+
+# 8. Next mandatory collaboration gate — CHAT fully uses INK
+
+Phase-1 core technology completion does not by itself prove full human-AI collaboration.
+
+The next mandatory validation gate is:
+
+```text
+CHAT_FULL_INK_OPERATION = REQUIRED
+CHAT_OPERATION_RECORD = REQUIRED
+CHAT_AUTHORITY_BYPASS = 0
+```
+
+Acceptance requires one end-to-end creative case in which CHAT uses the actual INK workstation/command authorities to perform the supported workflow and leaves a complete auditable operation trail.
+
+Required path:
+
+```text
+Reference
+→ Extract
+→ Path
+→ Edit
+→ Compose
+→ Repaint
+→ Compare / Review
+→ Revision
+→ bounded correction
+→ final artwork state
+```
+
+For every meaningful CHAT action, evidence must identify:
+
+- intent / requested operation;
+- target document/object/region;
+- authoritative INK tool/command path;
+- parameters;
+- read-only / proposed / approved / rejected / executed / failed / rollback / restore state;
+- History effect where applicable;
+- Revision/provenance effect where applicable;
+- resulting state/result identity.
+
+The collaboration gate passes only if CHAT and human-facing UI converge on the same authoritative INK execution paths and the resulting operation trail is inspectable after the fact.
+
+This is the minimum condition for INK to be treated as a true USER + CHAT collaborative drawing workstation rather than an editor with an advisory chat layer.
