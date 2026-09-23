@@ -1,4 +1,5 @@
 // Extraction is an input adapter; INK remains the geometry/History authority.
+import { Matrix } from '../core/index.js';
 import { createPath, importSVGPaths, pointInRing, flattenSubpath } from '../vector/vector-core.js';
 export const EXTRACTION_SCHEMA = 'INK-EXTRACTION/1';
 export const LIMITS = Object.freeze({ pixels: 4_000_000, paths: 20000, nodes: 200000, svgBytes: 8_000_000 });
@@ -83,9 +84,18 @@ export async function executeExtraction(request, adapter, { signal } = {}) {
       path.subpaths.forEach((s,i) => { s.role = rings.filter((r,j) => j !== i && pointInRing(rings[i][0],r)).length % 2 ? 'hole' : 'outer'; });
     }
   }
+  if(result.coordinateScale){
+    const scaleX=Number(result.coordinateScale.x),scaleY=Number(result.coordinateScale.y);
+    requireValue(Number.isFinite(scaleX)&&scaleX>0&&Number.isFinite(scaleY)&&scaleY>0,'EXTRACTION_COORDINATE_SCALE');
+    const sourceScale=Matrix.scale(scaleX,scaleY);
+    for(const path of raw)path.matrix=Matrix.multiply(sourceScale,path.matrix);
+    provenance.traceRaster=result.traceRaster?copy(result.traceRaster):null;
+    provenance.coordinateScale={x:scaleX,y:scaleY};
+  }
   const { paths, nodes } = normalizePaths(raw, prefix, provenance);
   return { schema: EXTRACTION_SCHEMA, id: prefix, provenance, paths,
     diagnostics: { adapter: adapter.id, paths: paths.length, nodes, subpaths: paths.reduce((n,p)=>n+p.subpaths.length,0),
       holes: paths.reduce((n,p)=>n+p.subpaths.filter(s=>s.role==='hole').length,0), geometrySha256: await sha256(JSON.stringify(paths)),
-      elapsedMs: performance.now()-start, warnings: copy(result.warnings || []) } };
+      elapsedMs: performance.now()-start, traceRaster:result.traceRaster?copy(result.traceRaster):null,
+      coordinateScale:result.coordinateScale?copy(result.coordinateScale):null, warnings: copy(result.warnings || []) } };
 }
