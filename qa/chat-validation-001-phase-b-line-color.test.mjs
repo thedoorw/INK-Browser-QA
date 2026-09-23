@@ -179,10 +179,9 @@ function bridgePath(id,{fill=null,stroke=null}={}) {
   );
 
   const app=mockApp();
-  const page=defaultDocument().pages[0];
   app.doc=defaultDocument();
   app.doc.id='doc-phase-b-large-receipt';
-  app.doc.pages[0]=page;
+  const page=app.doc.pages[0];
   app.selection=[];
   app.page=()=>app.doc.pages[0];
   app.extraction.decomposeReference=async referenceObjectId=>{
