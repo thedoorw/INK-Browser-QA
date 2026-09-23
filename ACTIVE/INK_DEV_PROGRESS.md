@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: CORE-MOD-007 / IN_PROGRESS
+STATUS: CORE-MOD-007 / DEV_HANDOFF
 
 | Field | Value |
 |---|---|
@@ -8,48 +8,104 @@ STATUS: CORE-MOD-007 / IN_PROGRESS
 | TITLE | Research → Creation Bridge Module v0.1 |
 | BRANCH | work/ink-core-research-creation-007 |
 | BRANCH_BASE | be7b47ce94b91b5866a7c8c4ca2081bc0e000952 |
-| TASK_STATUS | IN_PROGRESS |
-| CURRENT_PHASE | PHASE_F_SOURCE_QA_COMPLETE / REPORT_PENDING |
-| TARGET_GATE | CORE_MOD_007_SOURCE_READY |
-| MODULE_STATE_TARGET | MODULE_READY |
+| TASK_STATUS | DEV_HANDOFF |
+| CURRENT_PHASE | COMPLETE |
+| GATE | CORE_MOD_007_SOURCE_READY |
+| MODULE_STATE | MODULE_READY |
 | RESEARCH_SOURCE_AUTHORITY | EVIDENCE_ONLY |
-| CREATIVE_MEMORY_AUTO_WRITE | 0 / PROHIBITED |
-| AUTO_EXECUTION | 0 / PROHIBITED |
-| NETWORK_REQUIRED | 0 / PROHIBITED |
-| FORMAT_VERSION | 4 / PRESERVE |
+| CREATIVE_MEMORY_AUTO_WRITE | 0 |
+| AUTO_APPROVAL | 0 |
+| AUTO_EXECUTION | 0 |
+| UI_MUTATION | 0 |
+| DOCUMENT_AUTHORITY_CHANGE | 0 |
+| HISTORY_AUTHORITY_CHANGE | 0 |
+| REVISION_AUTHORITY_CHANGE | 0 |
+| GEOMETRY_AUTHORITY_CHANGE | 0 |
+| RENDERER_AUTHORITY_CHANGE | 0 |
+| CHAT_EXECUTION_AUTHORITY_CHANGE | 0 |
+| NETWORK_REQUIRED | 0 |
+| USER_PROFILE_INFERENCE | 0 |
+| FORMAT_VERSION | 4 |
 | RUNTIME_QA | DEFERRED_TO_INTEGRATION_BATCH |
+| NEXT_ACTION | MR_REVIEW_REQUIRED |
 
-## Checkpoint — implementation + deterministic QA
+## Completion
 
-~~~
+```
 PHASE_A_RESEARCH_EVIDENCE_CONTRACT = PASS
 PHASE_B_PRINCIPLE_EXTRACTION_CONTRACT = PASS
 PHASE_C_CREATIVE_CONSTRAINT_BRIDGE = PASS
 PHASE_D_CREATIVE_MEMORY_INTEROP = PASS
 PHASE_E_CHAT_READABLE_ADVISORY_CONTEXT = PASS
 PHASE_F_DETERMINISTIC_SOURCE_QA = PASS
-~~~
+REQUIRED_REPORT = PASS
+```
 
 Implemented:
-- product/source/src/research/research-creation-bridge.js
-- qa/core-mod-007-research-creation.test.mjs
-- bounded research evidence classes with stable IDs/fingerprints
-- explicit evidence-backed principle normalization; unsupported source refs reject
-- principle → advisory creative constraint traceability
-- explicit-only Creative Memory promotion candidates; auto-write disabled
-- Parametric / Creative Memory / grounded CHAT compatible advisory metadata
-- bounded ADVISORY_READ_ONLY research-creation context
+
+- `product/source/src/research/research-creation-bridge.js`
+- `qa/core-mod-007-research-creation.test.mjs`
+- `research/INK_CORE_MOD_007_RESEARCH_CREATION_BRIDGE_REPORT_v0.1.md`
+- bounded deterministic research evidence contract
+- evidence-backed visual principle normalization
+- advisory principle → creative constraint bridge
+- explicit-only Creative Memory promotion candidates
+- deterministic Creative Memory candidate compatibility
+- Parametric / Creative Memory / grounded CHAT advisory compatibility metadata
+- bounded `ADVISORY_READ_ONLY` context with traceability
 - unresolved/conflicting evidence preservation
-- no UI, document/history/revision/geometry/renderer/execution authority change
-- no network, dynamic execution, user-profile/personality inference or source-document copying
+- no UI or execution integration
+- no network, dynamic execution, user-profile/personality inference or full-source research copying
 
-Source QA:
-~~~
-node --check product/source/src/research/research-creation-bridge.js = PASS
-node --experimental-default-type=module qa/core-mod-007-research-creation.test.mjs = PASS
-~~~
+QA evidence:
 
-Remaining:
-- required implementation report
-- remove task-local source-QA workflow
-- DEV_HANDOFF → STOP
+```
+LOCAL_NODE_CHECK = PASS
+LOCAL_DETERMINISTIC_TEST = PASS
+GITHUB_ACTIONS_RUN = 35806448801 / success
+GITHUB_ACTIONS_JOB = 107008277448 / success
+WORKFLOW_TRIGGER_COMMIT = e9a8c9ebda4c75860ca4d967d754faa9f14cbf24
+SOURCE_CHECKPOINT = b838474feefb7c6eb6c234e6cb86c40be8b3a2cc
+SOURCE_BLOB_PARITY = PASS
+TEST_BLOB_PARITY = PASS
+```
+
+Exact source blobs:
+
+```
+research-creation-bridge.js = 74cfd23bc77be74d97561c83e8d6380c826b59bb
+core-mod-007-research-creation.test.mjs = 3df25fd647a0126d311095b62b5915d76d955c5f
+```
+
+Authority/runtime boundary:
+
+```
+RESEARCH_SOURCE_AUTHORITY = EVIDENCE_ONLY
+CREATIVE_MEMORY_AUTO_WRITE = 0
+AUTO_APPROVAL = 0
+AUTO_EXECUTION = 0
+UI_MUTATION = 0
+DOCUMENT_AUTHORITY_CHANGE = 0
+HISTORY_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+RENDERER_AUTHORITY_CHANGE = 0
+CHAT_EXECUTION_AUTHORITY_CHANGE = 0
+NETWORK_REQUIRED = 0
+USER_PROFILE_INFERENCE = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+PACKAGE_INK_CURRENT_MUTATION = 0
+MAIN_MERGE = 0
+CENTRAL_RUNTIME_QUEUE_MUTATION = 0
+```
+
+Task-local source-QA workflow removed before handoff.
+
+```
+TASK_STATUS = DEV_HANDOFF
+GATE = CORE_MOD_007_SOURCE_READY
+MODULE_STATE = MODULE_READY
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
