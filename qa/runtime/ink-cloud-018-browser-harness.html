@@ -307,13 +307,18 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       'CHAT_REFERENCE_DECOMPOSITION_BOUNDED_TRACE_RUNTIME',
       {elapsedMs:phaseBElapsedMs,traceRaster:phaseBTrace}
     );
+    const phaseBShouldDownsample=
+      phaseBReceipt.source.width*phaseBReceipt.source.height>160000 ||
+      phaseBReceipt.source.width>512 ||
+      phaseBReceipt.source.height>512;
     assert(
       phaseBTrace?.sourceWidth===phaseBReceipt.source?.width &&
       phaseBTrace?.sourceHeight===phaseBReceipt.source?.height &&
+      phaseBTrace?.downsampled===phaseBShouldDownsample &&
       Math.abs((phaseBTrace.width*phaseBScale?.x)-phaseBReceipt.source.width)<1e-6 &&
       Math.abs((phaseBTrace.height*phaseBScale?.y)-phaseBReceipt.source.height)<1e-6,
       'CHAT_REFERENCE_DECOMPOSITION_SOURCE_COORDINATE_MAPPING',
-      {traceRaster:phaseBTrace,coordinateScale:phaseBScale,source:phaseBReceipt.source}
+      {traceRaster:phaseBTrace,coordinateScale:phaseBScale,source:phaseBReceipt.source,shouldDownsample:phaseBShouldDownsample}
     );
     assert(phaseBReceipt?.status==='COMPLETED','CHAT_REFERENCE_DECOMPOSITION_COMPLETED',{receipt:phaseBReceipt});
     assert(
