@@ -1,61 +1,108 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-TECH-DEBT-001 / SOURCE_REVIEW_PASS / EXACT_SHA_RUNTIME_QUEUED`
+STATUS: `INK-TECH-DEBT-001 / PRODUCT_SOURCE_PASS / QA_HARNESS_REVISE / RUNTIME_RERUN_REQUIRED`
 
 ```text
 TASK_ID = INK-TECH-DEBT-001
-REVIEWED_BRANCH_HEAD = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
-REVIEWED_SOURCE = exact remote branch tree
-SOURCE_REVIEW = PASS
-FOUR_MR_REVISE_ITEMS = CLOSED AT SOURCE LEVEL
-RUNTIME_TARGET = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
-RUNTIME_QUEUE = READY / HIGH_RISK_IMMEDIATE
-RUNTIME_QUEUE_TRIGGER_COMMIT = 24a1e09e523ecd190765ae2defabf62f1e3ea94c
-FORMAT_VERSION = 4 / PRESERVED
-PRODUCT_VERSION = v0.1 / PRESERVED
-UI-006_PHASE_C_TO_I = HOLD
-CHAT_VALIDATION_PHASE_C = NOT_STARTED
-PROMOTION = NOT AUTHORIZED UNTIL RUNTIME PASS
+PRODUCT_SOURCE_REVIEW = PASS
+REVIEWED_REMOTE_HEAD = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+RUNTIME_RUN = 35885929148
+RUNTIME_TESTED_SHA = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+RUNNER = DESKTOP-NSOQH69
+RUNTIME = FAIL
+UI = 69/71 / FAIL
+CREATIVE = NOT_REACHED
+GEOMETRY = NOT_REACHED
+ARTIFACT = 10763165329
+ARTIFACT_DIGEST = sha256:d47a862b58636bbe932201475d9d67bc8e7083c466158e1873ab9dff64b4b934
+DECISION = MR_REVISE / QA_HARNESS_ONLY
+PRODUCT_SOURCE_CHANGE_REQUIRED = NO
 ```
 
-## Source review closure
+## Runtime finding
 
-The four previous MR_REVISE findings are closed at source level:
+The UI suite failed on two assertions that encode the superseded dark-shell visual contract rather than the accepted UI-006 B1 light-shell contract.
 
-1. Service Worker build identity is worker-owned and no longer derived from stale-controlled app query state.
-2. Web / Portable delivery HTML is generated from one authoritative `shell.template.html` through `generate-shell.mjs`.
-3. Normal product diagnostic download now passes the active `BUILD_ID`.
-4. Foundation tests use semantic/non-regression assertions instead of freezing incidental exact debt counts or a task-specific build ID.
+### 1 — typography assertion is color-mode stale
 
-Additional source checks accepted:
-
-- Service Worker source closure matches the shared source tree.
-- Worker install fetch uses reload semantics.
-- registration uses stable worker URL with `updateViaCache: 'none'`.
-- previous-build → next-build cache isolation has deterministic test coverage.
-- bootstrap remains one ready-event contract with no normal retry polling.
-- product QA bridge remains opt-in.
-- UI-006 Phase C–I remains untouched.
-- Document / History / Revision / Renderer authority remains unchanged.
-
-## Fingerprint correction
-
-The handoff text references local source checkpoint `dee7beee...`, but that SHA is not resolvable in remote GitHub. It is not accepted as an MR fingerprint.
-
-The authoritative review/runtime fingerprint is:
-
-`ae9a8d0d9c41b7063d87d03c0b84811ac04e0656`
-
-## Runtime gate
+Observed:
 
 ```text
-SOURCE_REVIEW_PASS
-→ exact-SHA self-hosted Windows Runtime
-→ UI / Creative / Geometry
-→ Service Worker/update path
-→ Web / Portable startup compatibility
-→ CHAT Phase B regression
-→ MR_PASS / MR_REVISE
+contextualAdvanced = 10px
+inspectorTitle = 11px
+inspectorTab = 10px
+contextLabel = 10px
+contextLabel color = rgb(98,98,98)
 ```
 
-Branch is diverged from current main; after Runtime PASS, promotion must be clean/reconciled rather than a blind direct merge.
+All required font-size floors pass.
+
+The failure is only the legacy assertion:
+
+```text
+R + G + B >= 480
+```
+
+That rule expected bright secondary text on a dark shell. The accepted shell is light, where darker text is correct.
+
+Required harness revision:
+
+- retain the functional font-size floors;
+- replace absolute text brightness with contrast/readability against the actual light shell surface;
+- do not recolor the product merely to satisfy the stale dark-shell test.
+
+### 2 — layout assertion hard-codes the superseded wrapper color
+
+Observed rendered pixels:
+
+```text
+canvas workbench corner = [43,44,46]
+A4 paper center = [254,253,248]
+stage-wrap background = rgb(222,222,222)
+```
+
+The actual rendered canvas still clearly separates dark workbench from real A4 paper.
+
+The failure is only the extra legacy requirement:
+
+```text
+stage-wrap background == rgb(38,38,38)
+```
+
+UI-006 B1 already accepted a light workstation shell. The wrapper may therefore be light while the actual layout renderer still provides dark-workbench / light-paper separation.
+
+Required harness revision:
+
+- test the rendered workbench/paper visual separation;
+- do not require the CSS wrapper itself to remain dark;
+- preserve the accepted light-shell contract.
+
+## Scope of revision
+
+```text
+ALLOWED =
+  qa/runtime/ink-web-ui-001-harness.html
+  task-specific QA assertions only if needed
+
+PRODUCT_SOURCE = HOLD / NO CHANGE
+SERVICE_WORKER = HOLD / NO CHANGE
+BOOTSTRAP = HOLD / NO CHANGE
+CSS = HOLD / NO CHANGE
+DOCUMENT/HISTORY/REVISION/RENDERER = NO CHANGE
+CHAT PHASE C = NOT_STARTED
+UI-006 PHASE C-I = HOLD
+```
+
+After the harness-only revision:
+
+```text
+DEV_HANDOFF / STOP
+→ MR source/harness review
+→ exact-SHA Runtime rerun
+→ UI
+→ Creative
+→ Geometry
+→ MR final disposition
+```
+
+The handoff-local `dee7beee...` identifier remains non-authoritative because it is not a resolvable remote commit. Use the actual remote branch HEAD as the next exact Runtime fingerprint.
