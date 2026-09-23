@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "40a7e5e86e7b08c316210240be8527b020c5ecce",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
@@ -14,8 +14,8 @@
     "INK-CHAT-VALIDATION-001"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "Phase B final bounded post-commit selection/receipt compatibility verification after resolving AI Document Bridge selection overflow."
+    "enabled": false,
+    "reason": "Phase B exact-SHA Windows browser Runtime passed; promotion authorized."
   },
   "batch_policy": {
     "default_target": 3,
@@ -23,8 +23,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35863528804,
-    "tested_sha": "31a427d807f7497b7e64d159607380c056829d67",
-    "result": "FAIL_POST_COMMIT_SELECTION_BOUNDS"
+    "run_id": 35865777424,
+    "tested_sha": "40a7e5e86e7b08c316210240be8527b020c5ecce",
+    "result": "PASS"
   }
 }
