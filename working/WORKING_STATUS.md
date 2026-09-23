@@ -1,21 +1,21 @@
 # INK WORKING STATUS
 
-STATUS: `GLOBAL_TECH_DEBT_ACTIVE / UI-006_PHASE_C_TO_I_HOLD`
+STATUS: `INK-TECH-DEBT-001_MR_REVISE / RUNTIME_HELD / UI-006_PHASE_C_TO_I_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-TECH-DEBT-001 — Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1` |
 | CURRENT_TASK_ID | `INK-TECH-DEBT-001` |
 | DEV_BRANCH | `work/ink-tech-debt-001` |
-| DEV_HANDOFF | `NOT YET / DEV_AUTHORIZED` |
-| MR_REVIEW | `PENDING DEV_HANDOFF` |
-| TARGET_GATE | `TECH-DEBT CLEANUP → EXACT-SHA WINDOWS RUNTIME → MR PASS` |
+| DEV_HANDOFF | `RECEIVED / SOURCE_HEAD ed38789bd1aa6dd12235ee57bbceb5195b965ad0` |
+| MR_REVIEW | `MR_REVISE / SOURCE REVIEW FAILED` |
+| TARGET_GATE | `BOUNDED SOURCE REVISION → MR RE-REVIEW → EXACT-SHA WINDOWS RUNTIME` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `REQUIRED / NOT DEFERRED` |
+| RUNTIME_QA | `REQUIRED / CURRENTLY HELD UNTIL SOURCE PASS` |
 | UI-006 | `Phase A+B preserved / Phase C–I HOLD` |
-| NEXT_STAGE | `DEV executes only INK-TECH-DEBT-001 → HANDOFF → STOP` |
+| NEXT_STAGE | `DEV bounded revision on same branch → HANDOFF → STOP` |
 
 ## Latest MR synchronization
 
@@ -60,6 +60,33 @@ Web + Portable entry = 621 lines each / 7 intentional differences
 ```
 
 The task is bounded cleanup. File size alone does not authorize broad Core refactoring.
+
+
+
+## INK-TECH-DEBT-001 MR source review
+
+```text
+REVIEWED_SOURCE_HEAD = ed38789bd1aa6dd12235ee57bbceb5195b965ad0
+HANDOFF_BRANCH_HEAD = fad5fc806e24d67a5720b7a9af29ba1ae5ca8903
+SOURCE_TO_HANDOFF_DELTA = docs/progress only
+DECISION = MR_REVISE
+RUNTIME = HELD
+
+P0 =
+  build identity depends on stale-controlled app config
+  → previous client can register new worker under old build identity
+  → cache namespace reuse/version skew risk
+
+P1 =
+  Web/Portable HTML manual duplication not actually removed
+  product diagnostic download omits BUILD_ID
+  foundation test freezes incidental debt counts
+
+NEXT =
+  same branch bounded fix
+  → DEV_HANDOFF / STOP
+  → MR source re-review
+```
 
 ## Readiness assessment
 
