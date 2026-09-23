@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / DEV_HANDOFF / MR_REVIEW_REQUIRED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_REVISE / BOUNDED_REVISION_AUTHORIZED`
 
 ## Task
 
@@ -179,3 +179,24 @@ USER_IMAGE_COMMITTED = 0
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR Runtime revision — bounded color trace
+
+```text
+REVIEWED_HEAD = 79af1c96a55635f6b8471e1ee02edade9fb25dac
+SOURCE_REVIEW = PASS
+RUNTIME_RUN = 35854909964
+UI = PASS
+CREATIVE = HARNESS_TIMEOUT_240S
+BLOCKER = full-raster synchronous ImageTracerJS color-regions trace
+SCOPE = PERFORMANCE BOUND ONLY
+```
+
+Required:
+- bound color-regions trace workload before synchronous ImageTracerJS;
+- if downsampling is used, map output geometry back to original Reference coordinates;
+- preserve editable Color/Line paths, alignment, layers, History/Audit/Provenance;
+- do not increase global Runtime timeout as the fix;
+- do not add semantic labeling / centerline / Phase C / UI redesign;
+- return `DEV_HANDOFF / STOP`.
