@@ -399,6 +399,12 @@ assert.equal(GROUNDED_CONTINUATION_MAX, 1);
             targets: [target],
             arguments: { fill: '#b63c36' },
             dependsOn: []
+          }, {
+            stepId: 'move-a',
+            operation: 'object.translate.v1',
+            targets: [target],
+            arguments: { dx: 4, dy: -2 },
+            dependsOn: ['repaint-a']
           }]
         },
         unresolvedEvidence: [],
