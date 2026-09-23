@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "d698df7c26b0365cb3e240a8fea685a454176c2c",
-  "pending_work_orders": [],
+  "state": "ACCUMULATING",
+  "target_sha": "061688b75ca49455ebff6b3fd22805ef9ec8091e",
+  "pending_work_orders": [
+    "INK-CORE-INTEGRATION-004"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001"
   ],
