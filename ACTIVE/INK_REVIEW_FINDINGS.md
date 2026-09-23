@@ -1,52 +1,61 @@
 # INK REVIEW FINDINGS
 
-STATUS: `CORE-MOD-007 / MR_PASS / PROMOTED`
+STATUS: `INK-CORE-INTEGRATION-005 / MR_PASS / CLOSED`
 
-TASK: `CORE-MOD-007 — Research → Creation Bridge Module v0.1`
+TASK: `INK-CORE-INTEGRATION-005 — Creative Intelligence Memory + Research Integration v0.1`
 
-REVIEWED_HEAD: `a2e26998ac5bfebf40d7a69c3ac0352ed04797e5`
+REVIEWED_HEAD: `02a5ac20206bd82d83068dd1e0b07d1c3dc267b1`
 
 ## Accepted findings
 
-- deterministic browser-local Research → Creation module added;
-- research inputs remain evidence-only and are not execution authority;
-- evidence normalizes into traceable visual principles;
-- unsupported, unresolved and conflicting evidence remains explicit;
-- principles translate into advisory creative constraints only;
-- execution-shaped payload fields are rejected;
-- Creative Memory interoperability requires explicit promotion;
-- Creative Memory candidates are deterministic and never auto-written;
-- advisory context is read-only, bounded and fingerprinted;
-- no UI, network, backend, Document, History, Revision, Geometry, Renderer or CHAT execution authority was added;
-- no user-profile/personality inference was added;
+- Creative Memory and Research → Creation advisory contexts are integrated into the existing grounded creative-intelligence root;
+- existing no-provider behavior remains compatible;
+- high-level advisory fingerprints and authority metadata are preserved;
+- read-only tools `get_creative_memory_context` and `get_research_creation_context` reuse the existing ToolCallRouter;
+- no memory write/add/replace tool and no research fetch/scrape tool exists;
+- `GROUNDED_CONTINUATION_MAX = 1` remains unchanged;
+- advisory-assisted reasoning may only reach the existing `PROPOSED` plan boundary;
+- no approval token, auto approval, auto execution or pre-approval Document/History/Revision mutation;
+- no new UI, Document, History, Revision, Geometry, Renderer or CHAT execution authority;
 - `FORMAT_VERSION = 4`.
 
 ## Source QA
 
 ```text
-RUN = 35806448801
-JOB = 107008277448
-TRIGGER_SHA = e9a8c9ebda4c75860ca4d967d754faa9f14cbf24
-SOURCE_CHECKPOINT = b838474feefb7c6eb6c234e6cb86c40be8b3a2cc
+RUN = 35810111857
+JOB = 107019569622
+TESTED_SHA = c28b9e4625931c9d2f7b53f1f352c7009281d1e4
 RESULT = SUCCESS
 ```
 
-Source checkpoint → final handoff changed only task-local workflow removal, progress and report.
+Passed:
+- Integration-001 / 002 / 003 / 004 / 005;
+- CORE-MOD-006 / 007;
+- existing creative-plan / bounded-edit checks = 21 / 21.
+
+Final handoff after QA changed only branch-local progress and report.
 
 ## Promotion
 
 ```text
-PR = #42 / MERGED
-PROMOTED_MAIN = b480cb851c74e8439b94543253735a3d1fecf1ac
+PR = #43 / MERGED
+PROMOTED_MAIN = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
 ```
 
-MR corrected one documentation-only enum typo during promotion:
+Task-local source-QA workflow was excluded from promotion.
+
+## Central Runtime batch
 
 ```text
-EXPLICIT_USER_RESEARCH_NOTE
-→ USER_RESEARCH_NOTE
+QUEUE_BATCH = INK-CORE-INTEGRATION-004 + INK-CORE-INTEGRATION-005
+RUN = 35811427341
+RESULT = PASS
+RUNNER = DESKTOP-NSOQH69
+TESTED_SHA = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10730145736
 ```
 
-Product source and QA were unchanged by that correction.
-
-Runtime remains deferred until a later integration Work Order.
+The current central browser harness does not contain a dedicated Integration-005 advisory assertion. Therefore the dedicated advisory behavior is supported by the exact source/Node QA, while the Windows batch confirms browser-level integration/regression of the promoted product.
