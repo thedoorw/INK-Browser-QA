@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — UI System Realignment Work Order
 
-STATUS: UR_ISSUED / UI_ONLY / PHASE_A_B
+STATUS: PHASE_A_B_UI_PASS / UI_ONLY
 OWNER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
 BASELINE:
@@ -337,9 +337,9 @@ UR returns exactly one:
 
 ## Current issued package
 
-UI DEV is authorized to implement **Phase A + Phase B only** under `working/INK_WEB_UI_006_DEV_HANDOFF.md`.
+Phase A + B have passed UR review and runtime visual gating.
 
-Later phases remain UR-held until review of the Phase A/B handback.
+Later phases remain UR-held until separately issued.
 
 ---
 
