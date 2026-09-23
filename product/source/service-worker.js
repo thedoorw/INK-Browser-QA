@@ -209,6 +209,7 @@ const APP_SHELL = Object.freeze([
   './styles.css',
   './web-shell.js',
   './assets/INK_MARK_SOURCE_W-300.jpg',
+  './assets/ink-mark.svg',
   './dist/ink.compat.js',
   './manifest.webmanifest',
   './manifest-portable.webmanifest',
