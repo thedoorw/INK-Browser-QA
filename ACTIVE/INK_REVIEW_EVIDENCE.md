@@ -1,24 +1,24 @@
 # INK REVIEW EVIDENCE
 
-STATUS: `CORE-MOD-006 / MR_PASS_EVIDENCE / MODULE_READY`
+STATUS: `CORE-MOD-007 / MR_PASS_EVIDENCE / MODULE_READY`
 
 ## Source review
 
 ```text
-DEV_HANDOFF = 589ba3624be9221a57056846c240ae0330361ef9
-BRANCH_BASE = 930d419833cffc5964d805d5c08585239467c8e5
-TOPOLOGY = ahead 4 / behind 0
+DEV_HANDOFF = a2e26998ac5bfebf40d7a69c3ac0352ed04797e5
+BRANCH_BASE = be7b47ce94b91b5866a7c8c4ca2081bc0e000952
+TOPOLOGY = ahead 7 / behind 0
 CHANGED_PATHS = 4
 ```
 
 ## GitHub-hosted QA
 
 ```text
-WORKFLOW = CORE-MOD-006 Source QA
-RUN = 35804446985
-JOB = 107001979416
-TRIGGER_SHA = c4decbe5b25215b34d1e0ca385a0905fbd8a8fc8
-SOURCE_CHECKPOINT = 00f161ef203815ce1fb8fd3d6dd8211a6cf3060f
+WORKFLOW = CORE-MOD-007 Source QA
+RUN = 35806448801
+JOB = 107008277448
+TRIGGER_SHA = e9a8c9ebda4c75860ca4d967d754faa9f14cbf24
+SOURCE_CHECKPOINT = b838474feefb7c6eb6c234e6cb86c40be8b3a2cc
 RESULT = SUCCESS
 ```
 
@@ -29,18 +29,21 @@ Source/test content did not change after the source checkpoint.
 ## Promotion payload
 
 ```text
-product/source/src/memory/creative-memory.js
-qa/core-mod-006-creative-memory.test.mjs
-research/INK_CORE_MOD_006_CREATIVE_MEMORY_REPORT_v0.1.md
+product/source/src/research/research-creation-bridge.js
+qa/core-mod-007-research-creation.test.mjs
+research/INK_CORE_MOD_007_RESEARCH_CREATION_BRIDGE_REPORT_v0.1.md
 ```
 
 Excluded:
 - branch-local `ACTIVE/INK_DEV_PROGRESS.md`
 - task-local source-QA workflow
 
+Promotion report-only correction:
+- `EXPLICIT_USER_RESEARCH_NOTE` → `USER_RESEARCH_NOTE`
+
 ```text
-PROMOTION_PR = #41 / MERGED
-PROMOTED_MAIN_SHA = 58652d6c04b16ac78f6561503257dba274ce9267
+PROMOTION_PR = #42 / MERGED
+PROMOTED_MAIN_SHA = b480cb851c74e8439b94543253735a3d1fecf1ac
 ```
 
 ## Runtime
