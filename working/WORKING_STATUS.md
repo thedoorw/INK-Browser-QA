@@ -2424,3 +2424,20 @@ CHAT_ATTACHMENT → INK_REFERENCE = ACCEPTED
 PHASE_A = CLOSED
 PHASE_B = NOT_STARTED
 ```
+
+
+## INK-CHAT-VALIDATION-001 Phase B activation
+
+```text
+PHASE_A = CLOSED
+PHASE_B = ACTIVE
+BRANCH = work/ink-chat-validation-001-phase-b
+GOAL = existing Reference → editable Color regions + boundary Line paths → separate layers
+COLOR = editable vector fills / bounded quantization
+LINE = editable boundary Paths / no centerline requirement
+REFERENCE = retained
+SEMANTIC_PART_LABELING = OUT_OF_SCOPE
+IMAGE_MODEL = 0
+USER_IMAGE_PUBLIC_COMMIT = 0
+NEXT = DEV_HANDOFF → MR source review → exact-SHA Runtime → private 1.jpg acceptance
+```
