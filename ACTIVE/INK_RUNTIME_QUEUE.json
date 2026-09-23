@@ -2,7 +2,7 @@
   "schema": "ink-runtime-queue",
   "version": 1,
   "state": "READY",
-  "target_sha": "5c8d45d3c0516e5bf1ad56c2afca246ab98ccb83",
+  "target_sha": "ababe86e049355f6464cdabfceacfe2c32992be1",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
   ],
@@ -14,7 +14,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Final bounded Phase A cross-realm handoff liveness verification before closing reference upload and moving to real-image acceptance."
+    "reason": "QA-only rerun after MR corrected a liveness evidence label collision; product source is unchanged from the reviewed Phase A implementation."
   },
   "batch_policy": {
     "default_target": 3,
@@ -22,8 +22,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35840153267,
-    "tested_sha": "d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1",
-    "result": "FAIL"
+    "run_id": 35846792813,
+    "tested_sha": "5c8d45d3c0516e5bf1ad56c2afca246ab98ccb83",
+    "result": "FAIL_QA_LABEL"
   }
 }
