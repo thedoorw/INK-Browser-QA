@@ -275,3 +275,75 @@ Required delta only:
    - no GitHub-hosted DEV workflow.
 
 DEV completion remains `DEV_HANDOFF → STOP → MR review`.
+
+
+## MR Runtime checkpoint — exact DEV HEAD 2d324df22dd58ebf3579ba175422839abd92bd04
+
+```text
+SOURCE_REVIEW_AFTER_HISTORY_FIX = PASS
+RUNTIME_RUN = 35836852283
+RUNTIME_ATTEMPT_1_UI = FAIL / contextual eraser sync only
+RUNTIME_ATTEMPT_2_UI = PASS
+RUNTIME_ATTEMPT_2_CREATIVE = FAIL
+RUNTIME_TESTED_SHA = 2d324df22dd58ebf3579ba175422839abd92bd04
+RUNTIME_RUNNER = DESKTOP-NSOQH69
+RUNTIME_BROWSER = Chrome
+RUNTIME_ARTIFACT = 10739822384
+RUNTIME_ARTIFACT_DIGEST = sha256:756449c50b82eb6c107f0c835b65d6b3d99a15ab1774635cf1b01ceb7f258967
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = NOT_RUN
+MR_DECISION = REVISE
+```
+
+### Runtime blocker — cross-realm CHAT attachment
+
+The accepted browser Runtime exposed a direct Phase A defect.
+
+The creative harness calls the INK iframe boundary with a Blob created in the parent harness realm:
+
+```text
+parent window Blob
+→ iframe INK_CHAT_HANDOFF.importReference(...)
+```
+
+Current `normalizeChatAttachment()` recognizes binary input only with realm-local:
+
+```js
+value instanceof Blob
+value instanceof File
+```
+
+A valid Blob from another browser realm therefore fails identity checks and returns:
+
+```text
+CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED
+```
+
+This is directly relevant to the product boundary because CHAT / host / iframe / bridge delivery may cross JavaScript realms.
+
+### Bounded revision authorized
+
+Do not redesign Phase A and do not start Phase B.
+
+Required delta:
+
+1. Make CHAT binary normalization realm-safe.
+2. Accept valid File/Blob-like binary inputs from another browser realm without trusting arbitrary objects.
+3. Normalize the accepted external binary into a local browser File before calling the existing decoder.
+4. Preserve all current MIME / size / decoder / History / Audit / Provenance authorities.
+5. Keep invalid non-binary objects rejected.
+6. Add focused source/unit QA plus explicit browser cross-realm evidence.
+7. Existing manual Reference input and same-realm File/Blob behavior must remain intact.
+8. FORMAT_VERSION remains 4; no new drawing engine, no direct Document mutation, no GitHub-hosted DEV workflow.
+
+DEV completion:
+
+```text
+TASK_STATUS = DEV_HANDOFF
+TASK_ID = INK-CHAT-VALIDATION-001
+PHASE = A_REFERENCE_HANDOFF
+REVISION_SCOPE = CROSS_REALM_BINARY_HANDOFF
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
+
+MR will rerun exact-SHA Windows Runtime only after this bounded revision returns to STOP. The private user attachment test remains after Runtime PASS.
