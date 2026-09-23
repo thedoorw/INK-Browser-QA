@@ -5,6 +5,9 @@ import path from 'node:path';
 
 import { imageTracerAdapter, boundedColorTraceRaster, COLOR_TRACE_MAX_PIXELS, COLOR_TRACE_MAX_DIMENSION } from '../product/source/src/extraction/adapters.js';
 import { executeExtraction } from '../product/source/src/extraction/core.js';
+import { buildAIDocumentBridge } from '../product/source/src/ai/document-bridge.js';
+import { defaultDocument } from '../product/source/src/document/index.js';
+import { createPath } from '../product/source/src/vector/vector-core.js';
 import {
   CHAT_REFERENCE_DECOMPOSITION_OPERATION,
   createChatReferenceHandoffAdapter
@@ -136,6 +139,112 @@ function mockApp(){
   assert.deepEqual(receipt.provenance.eventIds,['p1','p2']);
 }
 
+
+function bridgePath(id,{fill=null,stroke=null}={}) {
+  return createPath({
+    id,
+    name:id,
+    fill,
+    stroke,
+    strokeWidth:stroke?1:0,
+    subpaths:[{
+      id:`${id}:s0`,
+      role:'outer',
+      closed:true,
+      anchors:[
+        {id:`${id}:a0`,x:0,y:0},
+        {id:`${id}:a1`,x:10,y:0},
+        {id:`${id}:a2`,x:10,y:10},
+        {id:`${id}:a3`,x:0,y:10}
+      ]
+    }],
+    metadata:{source:{type:'reference',id:'a'.repeat(64),name:'flower.png'}}
+  });
+}
+
+{
+  const colorObjects=Array.from({length:97},(_,index)=>bridgePath(`color-large-${index}`,{fill:index%2?'#f0505a':'#328c5a'}));
+  const lineObjects=Array.from({length:97},(_,index)=>bridgePath(`line-large-${index}`,{stroke:'#202020'}));
+
+  const probe=defaultDocument();
+  probe.id='doc-phase-b-selection-probe';
+  probe.pages[0].layers.push(
+    {id:'color-layer-probe',name:'Color',visible:true,locked:false,opacity:1,objects:colorObjects},
+    {id:'line-layer-probe',name:'Line',visible:true,locked:false,opacity:1,objects:lineObjects}
+  );
+  assert.throws(
+    ()=>buildAIDocumentBridge(probe,{selectedObjectIds:lineObjects.map(object=>object.id)}),
+    error=>error?.code==='AI_DOCUMENT_BRIDGE_SELECTION_BOUNDS_EXCEEDED',
+    'Document Bridge must reject an unbounded 97-object selection at the default 96-object limit'
+  );
+
+  const app=mockApp();
+  const page=defaultDocument().pages[0];
+  app.doc=defaultDocument();
+  app.doc.id='doc-phase-b-large-receipt';
+  app.doc.pages[0]=page;
+  app.selection=[];
+  app.page=()=>app.doc.pages[0];
+  app.extraction.decomposeReference=async referenceObjectId=>{
+    const colorLayer={id:'color-layer-large',name:'Color',visible:true,locked:false,opacity:1,objects:colorObjects};
+    const lineLayer={id:'line-layer-large',name:'Line',visible:true,locked:false,opacity:1,objects:lineObjects};
+    app.page().layers.push(colorLayer,lineLayer);
+    app.page().activeLayerId=lineLayer.id;
+    app.selection=[{layerId:lineLayer.id,objectId:lineObjects[0].id}];
+    app.history.undoStack.push({
+      label:'Reference → Color + Line layers',
+      objectIds:[...colorObjects.map(object=>object.id),...lineObjects.map(object=>object.id)],
+      patchCount:1,
+      captureMode:'scoped'
+    });
+    return {
+      operation:CHAT_REFERENCE_DECOMPOSITION_OPERATION,
+      historyLabel:'Reference → Color + Line layers',
+      documentId:app.doc.id,
+      referenceObjectId,
+      source:{name:'flower.png',mimeType:'image/png',sha256:'a'.repeat(64),width:10,height:10,sizeBytes:100},
+      colorLayerId:colorLayer.id,
+      lineLayerId:lineLayer.id,
+      colorObjectIds:colorObjects.map(object=>object.id),
+      lineObjectIds:lineObjects.map(object=>object.id),
+      colorCount:colorObjects.length,
+      lineCount:lineObjects.length,
+      palette:[{color:'#f0505a',regions:49},{color:'#328c5a',regions:48}]
+    };
+  };
+
+  const provider={
+    read(){
+      const bridge=buildAIDocumentBridge(app.doc,{
+        selectedObjectIds:(app.selection||[]).map(item=>item.objectId)
+      });
+      return {
+        modules:{
+          documentBridge:{status:'AVAILABLE',context:bridge},
+          provenance:{
+            status:'AVAILABLE',
+            fingerprint:'fp-large',
+            context:{events:[{eventId:'p-large',kind:'object-source',target:{type:'object',id:lineObjects[0].id}}]}
+          }
+        }
+      };
+    }
+  };
+  const adapter=createChatReferenceHandoffAdapter(app,{
+    auditLog:{add:()=>({format:'INK-AI-AUDIT',auditId:'audit-large'})},
+    groundedContextProvider:provider
+  });
+  const receipt=await adapter.decomposeReference('reference-large');
+  assert.equal(lineObjects.length>96,true);
+  assert.equal(app.selection.length,1);
+  assert.equal(app.selection[0].objectId,lineObjects[0].id);
+  assert.equal(provider.read().modules.documentBridge.context.selection.objectIds.length,1);
+  assert.equal(receipt.status,'COMPLETED');
+  assert.equal(receipt.lineCount,97);
+  assert.equal(receipt.colorCount,97);
+  assert.equal(receipt.provenance.status,'AVAILABLE');
+}
+
 {
   const adapters=await source('product/source/src/extraction/adapters.js');
   const core=await source('product/source/src/extraction/core.js');
@@ -161,6 +270,8 @@ function mockApp(){
   assert.match(workspace,/const linePaths=colorPaths\.map/);
   assert.match(workspace,/out\.fill=null;[\s\S]*out\.stroke=lineStroke/);
   assert.match(workspace,/app\.history\.pushScoped\('Reference → Color \+ Line layers'/);
+  assert.match(workspace,/app\.selection=linePaths\.length\?\[\{layerId:lineLayer\.id,objectId:linePaths\[0\]\.id\}\]:\[\]/);
+  assert.doesNotMatch(workspace,/app\.selection=linePaths\.map/);
   assert.match(install,/decomposeReference:/);
   assert.match(handoff,/decomposeReference\(referenceObjectId, options = \{\}\)/);
   assert.match(handoff,/commands:\[CHAT_REFERENCE_DECOMPOSITION_OPERATION\]/);
@@ -169,6 +280,7 @@ function mockApp(){
   assert.match(browserHarness,/phaseBElapsedMs<30000/);
   assert.match(browserHarness,/phaseBTrace\.pixels<=64000/);
   assert.match(browserHarness,/phaseBTrace\.width<=320 && phaseBTrace\.height<=320/);
+  assert.match(browserHarness,/CHAT_REFERENCE_DECOMPOSITION_BOUNDED_POST_COMMIT_SELECTION/);
   assert.match(runtimeBatch,/Harness timeout \(240 seconds\)/);
   assert.match(runtimeBatch,/240000/);
 }

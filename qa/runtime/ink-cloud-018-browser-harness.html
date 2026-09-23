@@ -366,6 +366,15 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {count:lineObjects.length,stroke:lineObjects[0]?.stroke,strokeWidth:lineObjects[0]?.strokeWidth}
     );
     assert(
+      lineObjects.length>96 &&
+      (app.selection?.length||0)===1 &&
+      app.selection?.[0]?.layerId===lineLayer?.id &&
+      app.selection?.[0]?.objectId===lineObjects[0]?.id &&
+      phaseBReceipt?.status==='COMPLETED',
+      'CHAT_REFERENCE_DECOMPOSITION_BOUNDED_POST_COMMIT_SELECTION',
+      {generatedLinePaths:lineObjects.length,documentBridgeDefaultMaxObjects:96,selection:app.selection,receiptStatus:phaseBReceipt?.status}
+    );
+    assert(
       colorObjects.every((object,index)=>{
         const line=lineObjects[index];
         return line?.metadata?.decomposition?.sourceColorObjectId===object.id &&
