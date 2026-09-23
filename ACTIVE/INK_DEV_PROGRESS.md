@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: CORE-MOD-006 / IN_PROGRESS
+STATUS: CORE-MOD-006 / DEV_HANDOFF
 
 | Field | Value |
 |---|---|
@@ -8,44 +8,69 @@ STATUS: CORE-MOD-006 / IN_PROGRESS
 | TITLE | Style / Method / Creative Memory Module v0.1 |
 | BRANCH | work/ink-core-creative-memory-006 |
 | BRANCH_BASE | 930d419833cffc5964d805d5c08585239467c8e5 |
-| TASK_STATUS | IN_PROGRESS |
-| CURRENT_PHASE | PHASE_D_COMPLETE / PHASE_E_SOURCE_QA |
-| TARGET_GATE | CORE_MOD_006_SOURCE_READY |
-| MODULE_STATE_TARGET | MODULE_READY |
-| USER_PROFILE_INFERENCE | 0 / PROHIBITED |
-| NETWORK_REQUIRED | 0 / PROHIBITED |
-| FORMAT_VERSION | 4 / PRESERVE |
+| TASK_STATUS | DEV_HANDOFF |
+| CURRENT_PHASE | COMPLETE |
+| GATE | CORE_MOD_006_SOURCE_READY |
+| MODULE_STATE | MODULE_READY |
+| USER_PROFILE_INFERENCE | 0 |
+| NETWORK_REQUIRED | 0 |
+| FORMAT_VERSION | 4 |
 | RUNTIME_QA | DEFERRED_TO_INTEGRATION_BATCH |
+| NEXT_ACTION | MR_REVIEW_REQUIRED |
 
-## Checkpoint — implementation + deterministic QA
+## Completion
 
-~~~
+```
 PHASE_A_MEMORY_RECORD_CONTRACT = PASS
 PHASE_B_COLLECTION_QUERY = PASS
 PHASE_C_EVIDENCE_BINDING = PASS
 PHASE_D_ADVISORY_CONTEXT = PASS
-PHASE_E_SOURCE_QA = PASS
-~~~
+PHASE_E_DETERMINISTIC_SOURCE_QA = PASS
+REQUIRED_REPORT = PASS
+```
 
 Implemented:
-- product/source/src/memory/creative-memory.js
-- qa/core-mod-006-creative-memory.test.mjs
-- deterministic record IDs/fingerprints from source identity, not wall-clock time
-- bounded collection add/deduplicate/explicit-replace behavior
-- deterministic query/filter/compare/serialization
-- Revision / Provenance / Grounded Decision read-only evidence binding
-- explicit unresolved/missing evidence
-- bounded CHAT-readable ADVISORY_READ_ONLY context
-- no UI, document/history/revision/geometry/renderer/execution authority change
-- no network, dynamic execution, user profile or personality inference
 
-Source QA:
-~~~
-node --check product/source/src/memory/creative-memory.js = PASS
-node --experimental-default-type=module qa/core-mod-006-creative-memory.test.mjs = PASS
-~~~
+- `product/source/src/memory/creative-memory.js`
+- `qa/core-mod-006-creative-memory.test.mjs`
+- `research/INK_CORE_MOD_006_CREATIVE_MEMORY_REPORT_v0.1.md`
 
-Remaining:
-- required implementation report
-- remove task-local source-QA workflow
-- DEV_HANDOFF → STOP
+QA evidence:
+
+```
+LOCAL_NODE_CHECK = PASS
+LOCAL_DETERMINISTIC_TEST = PASS
+GITHUB_ACTIONS_RUN = 35804446985 / success
+GITHUB_ACTIONS_JOB = 107001979416 / success
+SOURCE_CHECKPOINT = 00f161ef203815ce1fb8fd3d6dd8211a6cf3060f
+SOURCE_BLOB_PARITY = PASS
+TEST_BLOB_PARITY = PASS
+```
+
+Authority/runtime boundary:
+
+```
+UI_MUTATION = 0
+DOCUMENT_AUTHORITY_CHANGE = 0
+HISTORY_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+GEOMETRY_AUTHORITY_CHANGE = 0
+RENDERER_AUTHORITY_CHANGE = 0
+CHAT_EXECUTION_AUTHORITY_CHANGE = 0
+NETWORK_REQUIRED = 0
+USER_PROFILE_INFERENCE = 0
+FORMAT_VERSION = 4
+RUNTIME_QA = DEFERRED_TO_INTEGRATION_BATCH
+PACKAGE_INK_CURRENT_MUTATION = 0
+MAIN_MERGE = 0
+```
+
+Task-local source-QA workflow removed before handoff.
+
+```
+TASK_STATUS = DEV_HANDOFF
+GATE = CORE_MOD_006_SOURCE_READY
+MODULE_STATE = MODULE_READY
+NEXT_ACTION = MR_REVIEW_REQUIRED
+STOP
+```
