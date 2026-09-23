@@ -1,79 +1,50 @@
 # INK DEV PROGRESS
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: AUTHORIZED / NOT_STARTED
 
-| Field | Value |
-|---|---|
-| TASK_ID | `INK-CLOUD-017` |
-| TITLE | `Structure-Aware Reconstruction Multi-Path Closure v0.1` |
-| BRANCH | `work/ink-cloud-017` |
-| BASE_MAIN | `AUTHORIZATION_HEAD_AT_BRANCH_CREATION` |
-| TASK_STATUS | `AUTHORIZED / NOT_STARTED` |
-| DEV_HANDOFF | `NOT_YET` |
-| MR_REVIEW | `PENDING_AFTER_HANDOFF` |
-| TARGET_GATE | `STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS` |
-| DIRECT_EXTRACTION_BASELINE | `PRESERVE` |
-| PIPELINE_SELECTION | `MR_DECISION_REQUIRED` |
-| FORMAT_VERSION | `4 / NO_CHANGE_EXPECTED` |
-| PACKAGE_MUTATION | `0 / PROHIBITED` |
-| MAIN_MERGE | `0 / PROHIBITED_BY_DEV` |
-| RUNTIME_QA | `DEFERRED` |
+TASK_ID: INK-UI-DEBT-001
+TITLE: Shell / Panel Authority Consolidation v0.1
+BRANCH: work/ink-ui-debt-001
+BASE_MAIN: 4c1834fdb1b93c843e15455f6468e39bceef8ef1
 
-## Objective
+TASK_STATUS: AUTHORIZED / NOT_STARTED
+DEV_HANDOFF: NOT_YET
+UR_REVIEW: PENDING_AFTER_HANDOFF
 
-Close the known Structure-Aware single-Path reconstruction bottleneck:
+RUNTIME_QA: REQUIRED
+TINYFISH_USED: NO
+PORTABLE_WEB_PARITY: REQUIRED
 
-```text
-sector extraction
-→ complete multi-Path prototype set
-→ existing Repeat / Transform
-→ overlay QA
-→ bounded local correction
-→ hard-benchmark comparison
-```
+## Priority
 
-The authoritative scope and STOP rules are in:
+P0:
+- single primary-panel authority;
+- fresh-entry collapsed;
+- reliable open/close;
+- remove competing Chevron handler;
+- remove Dock occlusion.
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+P1:
+- duplicate navigation removal;
+- Inspector/header geometry cleanup;
+- CSS shell authority consolidation.
 
-## Checkpoint rule
+P2:
+- Advanced shared-state cleanup;
+- architecture-aware tests;
+- preserve favicon.
 
-At every meaningful checkpoint:
+## Explicit non-goal
 
-- commit;
-- update this branch-local file;
-- record exact SHA;
-- record files changed;
-- record checks actually executed;
-- record checks not executed;
-- record benchmark/evidence deltas;
-- stop on any Work Order Hard STOP condition.
+Do not add new UI features.
+Do not perform cosmetic theme redesign.
+Do not expand Core scope.
 
-Do not replace the Direct Extraction baseline during DEV execution.
+## Runtime policy
 
-## Planned phases
+Complete implementation + source/static/unit/parity checks first.
+Run PowerShell Windows Runtime only after the full bounded cleanup is complete.
+TinyFish is prohibited.
 
-- Phase A — Reconstruction contract audit
-- Phase B — Multi-Path prototype-set reconstruction
-- Phase C — Structured output + local correction closure
-- Phase D — Overlay QA + hard benchmark rerun
-- Phase E — Comparative decision evidence
-- Phase F — report + DEV handoff
-
-## Completion
-
-```text
-TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CLOUD-017
-BRANCH = work/ink-cloud-017
-FINAL_HEAD = <exact SHA>
-GATE = STRUCTURE_AWARE_MULTI_PATH_RECONSTRUCTION_WORKS
-DIRECT_EXTRACTION_BASELINE = PRESERVED
-PIPELINE_SELECTION = MR_DECISION_REQUIRED
-FORMAT_VERSION = 4
-PACKAGE_MUTATION = 0
-MAIN_MERGE = 0
-RUNTIME_QA = DEFERRED
-NEXT_ACTION = MR_REVIEW_REQUIRED
-STOP
-```
+Runtime blocked:
+`RUNTIME_BLOCKED → STOP`
