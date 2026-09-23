@@ -163,6 +163,7 @@ export async function buildExternalDiagnosticBundle({
   target = globalThis,
   recorder = null,
   version = null,
+  buildId = null,
   formatVersion = null,
   notes = []
 } = {}) {
@@ -175,6 +176,7 @@ export async function buildExternalDiagnosticBundle({
     capturedAt: nowISO(),
     product: 'INK',
     version,
+    buildId,
     formatVersion,
     capabilities,
     storage: { estimate: storageEstimate, persistent },
