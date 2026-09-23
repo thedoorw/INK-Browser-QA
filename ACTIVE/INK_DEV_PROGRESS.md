@@ -50,3 +50,29 @@ TinyFish is prohibited.
 
 Runtime blocked rule:
 `RUNTIME_BLOCKED → STOP`
+
+
+## Checkpoint 2 — CSS authority consolidation
+
+Implemented:
+- replaced former MAINT-001 / MAINT-002 tail overrides with one `INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY` region;
+- moved accepted desktop topbar / stage / dock / Inspector / Creative Workspace / Chevron / Properties-subnav geometry into that authority;
+- removed global `right:0!important` Chevron override and obsolete open-state translation;
+- removed obsolete fixed Inspector tab grid and desktop horizontal-tab overflow;
+- neutralized older Phase-1 / Phase-4 competing primary-panel placement / width rules;
+- corrected Creative Workspace closed-state presentation: desktop display now requires `.open`;
+- Chevron now uses `right:calc(var(--panel-dock-w) + var(--active-panel-w))`, placing it at canvas / primary-panel boundary rather than over Dock;
+- Properties sub-navigation is one explicit 31 px row and hidden for direct Dock Layers / History;
+- body regions own vertical scroll and suppress horizontal overflow;
+- 1120 / 980 / 900 desktop breakpoints are explicit intentional deltas after base authority;
+- mobile shell rules remain outside the desktop authority.
+
+CSS static guard:
+- brace balance: PASS
+- legacy Chevron right:0!important: ABSENT
+- obsolete repeat(4) Inspector-tab grid: ABSENT
+- global Inspector-tab horizontal overflow: ABSENT
+
+Next:
+- architecture-aware unit/parity guards;
+- pre-runtime source/static/unit/parity execution.
