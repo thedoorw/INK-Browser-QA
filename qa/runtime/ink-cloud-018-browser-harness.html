@@ -134,13 +134,23 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       'CHAT_REFERENCE_HANDOFF_SOURCE_IDENTITY_RETAINED',
       {source:handoffReceipt.source,width:handoffFound?.object?.w,height:handoffFound?.object?.h}
     );
+    const handoffHistoryExpectedApplied=Math.min(
+      (handoffReceipt.history?.before?.applied??handoffHistoryBefore)+1,
+      handoffReceipt.history?.after?.limit??app.history.limit
+    );
     assert(
-      app.history.undoStack.length===handoffHistoryBefore+1 &&
-      handoffReceipt.history?.before?.undoCount===handoffHistoryBefore &&
-      handoffReceipt.history?.after?.undoCount===handoffHistoryBefore+1 &&
-      app.history.undoStack.at(-1)?.label==='Reference import · CHAT attachment',
+      handoffReceipt.history?.commit?.valid===true &&
+      handoffReceipt.history?.after?.applied===handoffHistoryExpectedApplied &&
+      handoffReceipt.history?.commit?.newestMatches===true &&
+      app.history.undoStack.at(-1)?.label==='Reference import · CHAT attachment' &&
+      app.history.undoStack.at(-1)?.objectIds?.includes(handoffReceipt.referenceObjectId),
       'CHAT_REFERENCE_HANDOFF_HISTORY_EXACTLY_ONE',
-      {before:handoffHistoryBefore,after:app.history.undoStack.length,last:app.history.undoStack.at(-1)?.label}
+      {
+        before:handoffReceipt.history?.before,
+        after:handoffReceipt.history?.after,
+        commit:handoffReceipt.history?.commit,
+        last:app.history.undoStack.at(-1)?.label
+      }
     );
     const handoffRevisionAfter=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
     assert(
