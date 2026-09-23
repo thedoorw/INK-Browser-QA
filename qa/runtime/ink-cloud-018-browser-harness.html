@@ -94,12 +94,51 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
 
     assert(Boolean(w.INK_CHAT_HANDOFF?.importReference),'CHAT_REFERENCE_HANDOFF_API_VISIBLE');
     assert((input?.files?.length||0)===0,'CHAT_REFERENCE_HANDOFF_FILE_INPUT_UNTOUCHED_BEFORE');
+    assert(
+      blob instanceof Blob && !(blob instanceof w.Blob),
+      'CHAT_REFERENCE_HANDOFF_CROSS_REALM_BINARY_CONFIRMED',
+      {parentBlob:blob instanceof Blob,iframeBlob:blob instanceof w.Blob}
+    );
+    const invalidHistoryBefore=app.history.undoStack.length;
+    const invalidReceipt=await w.INK_CHAT_HANDOFF.importReference({
+      name:'spoof.png',
+      type:'image/png',
+      size:3,
+      arrayBuffer:async()=>new Uint8Array([1,2,3]).buffer,
+      slice(){return this;},
+      [Symbol.toStringTag]:'Blob'
+    },{
+      name:'spoof.png',
+      type:'image/png',
+      actor:{type:'chat',id:'runtime-chat',channel:'CHAT_ATTACHMENT_HANDOFF'},
+      intent:'Reject arbitrary non-binary object'
+    });
+    assert(
+      invalidReceipt?.status==='FAILED' &&
+      invalidReceipt?.error?.code==='CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED' &&
+      app.history.undoStack.length===invalidHistoryBefore,
+      'CHAT_REFERENCE_HANDOFF_INVALID_OBJECT_REJECTED',
+      {receipt:invalidReceipt,historyBefore:invalidHistoryBefore,historyAfter:app.history.undoStack.length}
+    );
+
     const handoffHistoryBefore=app.history.undoStack.length;
     const handoffRevisionBefore=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
     const formalDocumentBeforeHandoff=app.doc;
     const originalReplaceDocument=app.replaceDocument.bind(app);
+    const originalDecode=app.extraction.decode;
     let handoffReplaceDocumentCalls=0;
+    let decoderInput=null;
     app.replaceDocument=(...args)=>{handoffReplaceDocumentCalls++;return originalReplaceDocument(...args);};
+    app.extraction.decode=async file=>{
+      decoderInput={
+        localFile:file instanceof w.File,
+        localBlob:file instanceof w.Blob,
+        name:file?.name||null,
+        type:file?.type||null,
+        size:file?.size??null
+      };
+      return originalDecode(file);
+    };
     let handoffReceipt;
     try {
       handoffReceipt=await w.INK_CHAT_HANDOFF.importReference(blob,{
@@ -109,8 +148,17 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         intent:'INK-CHAT-VALIDATION-001 Phase A automated fixture handoff'
       });
     } finally {
+      app.extraction.decode=originalDecode;
       app.replaceDocument=originalReplaceDocument;
     }
+    assert(
+      decoderInput?.localFile===true &&
+      decoderInput?.localBlob===true &&
+      decoderInput?.name==='chat-reference-fixture.png' &&
+      decoderInput?.type==='image/png',
+      'CHAT_REFERENCE_HANDOFF_NORMALIZED_LOCAL_FILE',
+      {decoderInput}
+    );
     assert(handoffReceipt?.status==='COMPLETED','CHAT_REFERENCE_HANDOFF_COMPLETED',{receipt:handoffReceipt});
     assert((input?.files?.length||0)===0,'CHAT_REFERENCE_HANDOFF_FILE_INPUT_UNTOUCHED_AFTER');
     assert(handoffReceipt.operation==='reference.import' && handoffReceipt.sourceChannel==='CHAT_ATTACHMENT_HANDOFF','CHAT_REFERENCE_HANDOFF_OPERATION_RECORDED',{operation:handoffReceipt.operation,sourceChannel:handoffReceipt.sourceChannel});
