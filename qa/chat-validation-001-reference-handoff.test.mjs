@@ -51,6 +51,45 @@ function createMockApp() {
 }
 
 {
+  const foreignBlob = new Blob([new Uint8Array([4, 5, 6])], { type: 'image/png' });
+  Object.setPrototypeOf(foreignBlob, Object.prototype);
+  assert.equal(foreignBlob instanceof Blob, false);
+  const normalized = normalizeChatAttachment(foreignBlob, { name: 'cross-realm.png', type: 'image/png', lastModified: 2 });
+  assert.equal(normalized instanceof File, true);
+  assert.equal(normalized.name, 'cross-realm.png');
+  assert.equal(normalized.type, 'image/png');
+  assert.equal(normalized.size, 3);
+  assert.deepEqual([...new Uint8Array(await normalized.arrayBuffer())], [4, 5, 6]);
+}
+
+{
+  const foreignFile = new File([new Uint8Array([7, 8])], 'foreign-file.png', { type: 'image/png', lastModified: 33 });
+  Object.setPrototypeOf(foreignFile, Object.prototype);
+  assert.equal(foreignFile instanceof File, false);
+  const normalized = normalizeChatAttachment(foreignFile);
+  assert.equal(normalized instanceof File, true);
+  assert.equal(normalized.name, 'foreign-file.png');
+  assert.equal(normalized.type, 'image/png');
+  assert.equal(normalized.lastModified, 33);
+  assert.deepEqual([...new Uint8Array(await normalized.arrayBuffer())], [7, 8]);
+}
+
+{
+  const spoof = {
+    name: 'spoof.png',
+    type: 'image/png',
+    size: 3,
+    arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer,
+    slice() { return this; },
+    [Symbol.toStringTag]: 'Blob'
+  };
+  assert.throws(
+    () => normalizeChatAttachment(spoof, { name: 'spoof.png', type: 'image/png' }),
+    error => error?.code === 'CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED'
+  );
+}
+
+{
   const app = createMockApp();
   const decoded = {
     source: {
@@ -280,6 +319,9 @@ function createMockApp() {
   assert.match(workspaceSource, /width:bitmap\.width,height:bitmap\.height/);
   assert.match(installSource, /importReference:\s*\(decoded, options\) => importReferenceIntoDocument/);
   assert.match(handoffSource, /app\.extraction\.decode\(file\)/);
+  assert.match(handoffSource, /Blob\.prototype\.slice\.call\(value/);
+  assert.match(handoffSource, /Object\.getOwnPropertyDescriptor\(Blob\.prototype, 'size'\)/);
+  assert.match(handoffSource, /Object\.getOwnPropertyDescriptor\(File\.prototype, 'name'\)/);
   assert.match(handoffSource, /app\.extraction\.importReference\(decoded/);
   assert.match(handoffSource, /history\.timeline/);
   assert.match(handoffSource, /Math\.min\(before\.applied \+ 1, after\.limit\)/);
