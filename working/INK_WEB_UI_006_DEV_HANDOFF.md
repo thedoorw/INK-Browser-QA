@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — UI DEV HANDOFF
 
-STATUS: UR_ISSUED
+STATUS: DEV_HANDOFF / UR_REVIEW
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
@@ -79,5 +79,48 @@ Return:
 - favicon evidence
 - note confirming no Core/schema/FORMAT_VERSION changes
 
+## DEV completion — Phase A + B
+
+### Phase A
+- Added `working/INK_WEB_UI_006_PHASE_A_COMMAND_MAP.md`.
+- Mapped 349 fixed HTML controls plus 14 runtime shell panel entries = 363 fixed UI command/control entries.
+- Classified Primary Home / Contextual Shortcut / Keyboard Shortcut / Responsive Alternative / Specialist-Diagnostic.
+- Added explicit duplicate-resolution table for all A2-required groups.
+- Boundary result: no Core semantic integration required.
+
+### Phase B
+- Desktop shell moved from dark chrome to a light neutral workstation shell while retaining workspace/paper separation.
+- Copied the original Y-mark blob byte-for-byte from `reference/brand/INK_MARK_SOURCE_W-300.jpg` to `product/source/assets/INK_MARK_SOURCE_W-300.jpg`.
+- Web and Portable top-left marks reference that original JPG directly; no redraw/simplification/cleanup/stylization.
+- Browser favicon now references the same original JPG directly.
+- Web and Portable theme/startup colors changed from dark to light neutral; an inline startup background is present before the external stylesheet to prevent the old dark pre-style frame.
+- PWA manifest startup/theme colors aligned to the same light direction.
+
+### Changed files
+- `product/source/assets/INK_MARK_SOURCE_W-300.jpg`
+- `product/source/index.html`
+- `product/source/index-standalone.html`
+- `product/source/styles.css`
+- `product/source/manifest.webmanifest`
+- `product/source/manifest-portable.webmanifest`
+- `working/INK_WEB_UI_006_PHASE_A_COMMAND_MAP.md`
+- `working/INK_UI_MODIFICATION_CHECKLIST_v0.1.md`
+- `working/INK_WEB_UI_006_DEV_HANDOFF.md`
+
+### Static evidence
+- Original brand source blob SHA: `a1cae552c47fbc658500ba74735ab383b136c3a9`
+- Product brand asset blob SHA: `a1cae552c47fbc658500ba74735ab383b136c3a9`
+- Web/Portable source parity confirmed for direct brand reference, light theme meta and startup shell.
+- CSS brace balance: 0.
+- Compare from Phase A/B start commit `02f038f37a4a8d2a5ecc90e652250ce513843f76` shows UI/docs/assets only; no Core/schema/renderer/FORMAT_VERSION files changed.
+
+### Runtime evidence note
+The required runtime screenshots could not be captured in this GitHub-only DEV execution context because the branch has no runnable browser surface available here. No screenshot evidence is fabricated. UR must perform the runtime visual gate for:
+- normal desktop
+- startup/final state
+- Y-mark top-left
+- favicon
+- Photoshop-reference comparison
+
 Handoff status on completion:
-`DEV_HANDOFF → UR_REVIEW`
+`DEV_HANDOFF → UR_REVIEW → STOP`
