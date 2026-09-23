@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_PASS / PROMOTION_AUTHORIZED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_PASS / PROMOTED / CLOSED`
 
 ## Control
 
@@ -401,3 +401,24 @@ PROMOTION = AUTHORIZED
 PHASE_C = NOT_STARTED
 NO_FURTHER_TRACER_TUNING = REQUIRED
 ```
+
+
+## Phase B promotion closure — PR #48
+
+```text
+PR = #48 / MERGED
+PROMOTED_MAIN = cd911dc240452ed2bc74e9be41549116b088374b
+EXACT_RUNTIME_TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
+RUNTIME = 35865777424 / PASS
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+RUNTIME_ARTIFACT = 10751389785
+RUNTIME_DIGEST = sha256:b7e97974e1acd0fd3447353c83caf80bb40efefef47875daba107f0387a81784
+PROMOTED_PHASE_B_PRODUCT_QA_BLOBS = EXACT_MATCH_TO_TESTED_SHA
+PRIVATE_USER_1_JPG = PASS / INPUT + TRACE-BUDGET COMPATIBILITY
+PHASE_B = CLOSED
+PHASE_C = NOT_STARTED
+```
+
+The clean promotion branch was based on current main to avoid governance-file conflicts. All eight Phase B product/QA blobs promoted to main are byte-identical to the exact SHA exercised by the authoritative Windows browser Runtime. No duplicate post-merge Runtime is required.
