@@ -28,6 +28,43 @@ function filterTraceLayers(trace,{includeLayer=()=>true}={}) {
   return omitted;
 }
 
+export const COLOR_TRACE_MAX_PIXELS=160_000;
+export const COLOR_TRACE_MAX_DIMENSION=512;
+
+export function boundedColorTraceRaster(source,{
+  maxPixels=COLOR_TRACE_MAX_PIXELS,
+  maxDimension=COLOR_TRACE_MAX_DIMENSION
+}={}) {
+  requireValue(source&&Number.isInteger(source.width)&&source.width>0&&Number.isInteger(source.height)&&source.height>0,'EXTRACTION_COLOR_RASTER_SIZE');
+  requireValue(source.data?.length===source.width*source.height*4,'EXTRACTION_COLOR_RGBA_REQUIRED');
+  requireValue(Number.isInteger(maxPixels)&&maxPixels>=16_384&&maxPixels<=COLOR_TRACE_MAX_PIXELS,'EXTRACTION_COLOR_TRACE_PIXEL_BOUND');
+  requireValue(Number.isInteger(maxDimension)&&maxDimension>=128&&maxDimension<=COLOR_TRACE_MAX_DIMENSION,'EXTRACTION_COLOR_TRACE_DIMENSION_BOUND');
+  const sourcePixels=source.width*source.height;
+  const scale=Math.min(1,maxDimension/source.width,maxDimension/source.height,Math.sqrt(maxPixels/sourcePixels));
+  const width=Math.max(1,Math.floor(source.width*scale));
+  const height=Math.max(1,Math.floor(source.height*scale));
+  requireValue(width*height<=maxPixels&&width<=maxDimension&&height<=maxDimension,'EXTRACTION_COLOR_TRACE_BOUND_FAILED');
+  const data=new Uint8ClampedArray(width*height*4);
+  for(let y=0;y<height;y++){
+    const sy=Math.min(source.height-1,Math.floor((y+.5)*source.height/height));
+    for(let x=0;x<width;x++){
+      const sx=Math.min(source.width-1,Math.floor((x+.5)*source.width/width));
+      const src=(sy*source.width+sx)*4,dst=(y*width+x)*4;
+      data[dst]=source.data[src];
+      data[dst+1]=source.data[src+1];
+      data[dst+2]=source.data[src+2];
+      data[dst+3]=source.data[src+3];
+    }
+  }
+  return {
+    width,height,data,
+    sourceWidth:source.width,sourceHeight:source.height,sourcePixels,
+    pixels:width*height,
+    scaleX:source.width/width,scaleY:source.height/height,
+    downsampled:width!==source.width||height!==source.height
+  };
+}
+
 export function imageTracerAdapter(tracer) {
   return { id:'imagetracerjs',version:'1.2.6',async extract(input) {
     requireValue(typeof tracer?.imagedataToTracedata === 'function','EXTRACTION_IMAGETRACER_UNAVAILABLE');
@@ -36,16 +73,24 @@ export function imageTracerAdapter(tracer) {
     if(colorRegions){
       const numberOfColors=Number(input.parameters?.numberOfColors??8);
       requireValue(Number.isInteger(numberOfColors)&&numberOfColors>=2&&numberOfColors<=16,'EXTRACTION_COLOR_COUNT');
+      const maxPixels=Number(input.parameters?.traceMaxPixels??COLOR_TRACE_MAX_PIXELS);
+      const maxDimension=Number(input.parameters?.traceMaxDimension??COLOR_TRACE_MAX_DIMENSION);
       const options={
         ltres:1,qtres:1,pathomit:Math.max(0,Number(input.parameters?.pathOmit??8)||0),linefilter:true,
         colorsampling:2,colorquantcycles:3,numberofcolors:numberOfColors,scale:1,roundcoords:3,layering:0
       };
-      const raster={width:input.raster.width,height:input.raster.height,data:new Uint8ClampedArray(input.raster.data)};
-      const trace=tracer.imagedataToTracedata(raster,options);
+      const work=boundedColorTraceRaster(input.raster,{maxPixels,maxDimension});
+      const trace=tracer.imagedataToTracedata({width:work.width,height:work.height,data:work.data},options);
       const omitted=filterTraceLayers(trace);
       return {
         svg:tracer.getsvgstring(trace,options),
-        warnings:['Quantized color-region trace; no semantic labeling or centerline tracing.',...(omitted?[`${omitted} degenerate traced contour(s) omitted.`]:[])]
+        coordinateScale:{x:work.scaleX,y:work.scaleY},
+        traceRaster:{
+          width:work.width,height:work.height,pixels:work.pixels,
+          sourceWidth:work.sourceWidth,sourceHeight:work.sourceHeight,sourcePixels:work.sourcePixels,
+          downsampled:work.downsampled,maxPixels,maxDimension
+        },
+        warnings:['Quantized color-region trace on deterministic bounded work raster; no semantic labeling or centerline tracing.',...(omitted?[String(omitted)+' degenerate traced contour(s) omitted.']:[])]
       };
     }
     const options={ltres:1,qtres:1,pathomit:8,linefilter:true,colorsampling:0,colorquantcycles:1,numberofcolors:2,
