@@ -1,21 +1,21 @@
 # INK WORKING STATUS
 
-STATUS: `GLOBAL_TECH_DEBT_ACTIVE / UI-006_PHASE_C_TO_I_HOLD`
+STATUS: `INK-TECH-DEBT-001_DEV_HANDOFF / MR_REVIEW_REQUIRED / UI-006_PHASE_C_TO_I_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-TECH-DEBT-001 — Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1` |
 | CURRENT_TASK_ID | `INK-TECH-DEBT-001` |
 | DEV_BRANCH | `work/ink-tech-debt-001` |
-| DEV_HANDOFF | `NOT YET / DEV_AUTHORIZED` |
-| MR_REVIEW | `PENDING DEV_HANDOFF` |
+| DEV_HANDOFF | `COMPLETE / SOURCE_HEAD ed38789bd1aa6dd12235ee57bbceb5195b965ad0` |
+| MR_REVIEW | `REQUIRED / SOURCE REVIEW FIRST` |
 | TARGET_GATE | `TECH-DEBT CLEANUP → EXACT-SHA WINDOWS RUNTIME → MR PASS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
 | RUNTIME_QA | `REQUIRED / NOT DEFERRED` |
 | UI-006 | `Phase A+B preserved / Phase C–I HOLD` |
-| NEXT_STAGE | `DEV executes only INK-TECH-DEBT-001 → HANDOFF → STOP` |
+| NEXT_STAGE | `MR source review → exact-SHA Windows Runtime → MR disposition` |
 
 ## Latest MR synchronization
 
@@ -34,7 +34,9 @@ PHASE_B3 = startup debt transferred into global technical-debt cleanup
 PHASE_C-I = HOLD
 
 INK-TECH-DEBT-001
-= DEV_AUTHORIZED
+= DEV_HANDOFF / MR_REVIEW_REQUIRED
+SOURCE_HEAD = ed38789bd1aa6dd12235ee57bbceb5195b965ad0
+HANDOFF = working/INK_TECH_DEBT_001_DEV_HANDOFF.md
 SCOPE =
   Service Worker/offline closure
   cache/build identity
