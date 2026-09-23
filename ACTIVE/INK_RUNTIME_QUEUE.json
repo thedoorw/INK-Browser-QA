@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "ae9a8d0d9c41b7063d87d03c0b84811ac04e0656",
   "pending_work_orders": [
     "INK-TECH-DEBT-001"
@@ -15,7 +15,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "INK-TECH-DEBT-001 changes Service Worker/cache update behavior and startup/bootstrap authority; immediate exact-SHA Runtime is required by governance."
+    "reason": "Exact-SHA Runtime 35885929148 failed in two stale dark-shell UI harness assertions; product source review remains PASS. Harness-only revision and rerun required."
   },
   "batch_policy": {
     "default_target": 3,
@@ -23,8 +23,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35865777424,
-    "tested_sha": "40a7e5e86e7b08c316210240be8527b020c5ecce",
-    "result": "PASS"
+    "run_id": 35885929148,
+    "tested_sha": "ae9a8d0d9c41b7063d87d03c0b84811ac04e0656",
+    "result": "FAIL"
   }
 }
