@@ -12,12 +12,14 @@ const installAI = read('../product/source/src/ai/install-ai.js');
 const shell = read('../product/source/web-shell.js');
 const web = read('../product/source/index.html');
 const portable = read('../product/source/index-standalone.html');
+const compat = read('../product/source/dist/ink.compat.js');
 
 assert.equal(FORMAT_VERSION, 4, 'FORMAT_VERSION must remain 4');
 
 for (const panel of ['properties','layers','history','reference','compose','chat','revision']) {
-  assert.ok(shell.includes(`${panel}:`), `single-panel authority must retain ${panel}`);
+  assert.ok(shell.includes(`{ id: '${panel}'`), `single-panel authority must retain ${panel}`);
 }
+assert.ok(shell.includes("PRIMARY_PANEL_STATES = Object.freeze(['collapsed', ...PANEL_DEFS.map(def => def.id)])"), 'single primary-panel state must remain authoritative');
 assert.equal(shell.includes('workstation-capability-panel'), false, 'must not add a second panel category');
 
 for (const action of ['grounded-context-refresh','creative-memory-refresh','research-context-refresh','revision-compare']) {
@@ -61,9 +63,9 @@ assert.equal(grounded.modules.researchCreation.context.selectedResearchEvidence.
 assert.equal(grounded.modules.researchCreation.context.authority.networkRequired, false);
 assert.equal(grounded.modules.researchCreation.context.authority.creativeMemoryAutoWrite, false);
 
-const scriptPattern = /<script type="module" src="\.\/src\/ink\.js"><\/script>/;
-assert.ok(scriptPattern.test(web), 'Web must load shared source entry');
-assert.ok(scriptPattern.test(portable), 'Portable must load shared source entry');
-assert.ok(web.includes('web-shell.js') && portable.includes('web-shell.js'), 'Web/Portable must share shell authority');
+assert.match(web, /<script type="module" src="src\/ink\.js\?v=0\.1"><\/script>/, 'Web must load the authoritative shared source entry');
+assert.match(portable, /<script src="dist\/ink\.compat\.js\?v=0\.1"><\/script>/, 'Portable must use the compatibility bootstrap');
+assert.match(compat, /import\(['"]\.\.\/src\/ink\.js['"]\)/, 'Portable compatibility bootstrap must converge on the authoritative shared source entry');
+for (const html of [web, portable]) assert.equal((html.match(/<script src="web-shell\.js\?v=0\.1" defer><\/script>/g) || []).length, 1, 'Web/Portable must share exactly one shell authority');
 
 console.log('INK-CORE-INTEGRATION-006 workstation capability exposure tests: PASS');
