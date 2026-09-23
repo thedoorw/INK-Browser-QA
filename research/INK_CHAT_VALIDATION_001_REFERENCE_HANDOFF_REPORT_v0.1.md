@@ -10,6 +10,9 @@ PHASE = A_REFERENCE_HANDOFF
 BRANCH = work/ink-chat-validation-001
 BRANCH_BASE = 1603a20e1da89708bad80c64fb39a6649fcf0473
 IMPLEMENTATION_QA_CHECKPOINT = 7bd33b705345b3c0f691b925ed8614311a0f7797
+MR_RUNTIME_REVISION_BASELINE = 2d324df22dd58ebf3579ba175422839abd92bd04
+CROSS_REALM_SOURCE_CHECKPOINT = 6f31ce236d8efc79e41c0f504382e4c57de89331
+CROSS_REALM_QA_CHECKPOINT = ebe34f03952ff7f4c2e0dd7c943fa3b67fb37280
 FORMAT_VERSION = 4 / PRESERVED
 NEW_DRAWING_ENGINE = 0
 CHAT_BYPASS = 0
@@ -450,3 +453,69 @@ FORMAT_VERSION = 4
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
 ```
+
+
+## MR Runtime correction — cross-realm binary handoff
+
+Reviewed Runtime blocker:
+
+```text
+parent browser realm Blob
+→ iframe INK_CHAT_HANDOFF.importReference(...)
+→ realm-local instanceof Blob/File returned false
+→ CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED
+```
+
+Bounded correction only:
+
+1. The handoff adapter now validates external binary with the local browser `Blob` platform brand by invoking accepted `Blob.prototype` getters and `Blob.prototype.slice.call(...)`.
+2. A valid realm-external Blob/File is copied into a realm-local Blob view and then normalized into a local browser `File`.
+3. External File identity is read through local `File.prototype` brand-checked getters, so source name and `lastModified` survive without trusting arbitrary object properties.
+4. MIME and size remain authoritative in the existing `decodeReferenceFile(file)` path.
+5. No `Object.prototype.toString` / `Symbol.toStringTag` trust or generic duck-typing acceptance was added.
+6. Arbitrary objects that merely expose `name/type/size/arrayBuffer/slice` remain rejected with `CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED`.
+7. History / Audit / Provenance / Revision behavior is unchanged.
+
+Focused QA now includes:
+- valid binary with realm-local `instanceof` intentionally broken while retaining true Blob platform brand;
+- File metadata preservation under the same condition;
+- spoofed Blob-like arbitrary object rejection.
+
+The authoritative creative browser harness now explicitly proves:
+- the fixture Blob belongs to the parent realm and is not `instanceof iframeWindow.Blob`;
+- the handoff decoder receives an iframe-local `File` / `Blob`;
+- arbitrary non-binary object rejection remains non-mutating;
+- the existing Phase A receipt / History / Revision / Audit / Provenance / manual Reference assertions continue in the same suite.
+
+The existing Runtime batch requires these new checks:
+- `CHAT_REFERENCE_HANDOFF_CROSS_REALM_BINARY_CONFIRMED`
+- `CHAT_REFERENCE_HANDOFF_NORMALIZED_LOCAL_FILE`
+- `CHAT_REFERENCE_HANDOFF_INVALID_OBJECT_REJECTED`
+
+DEV verification:
+
+```text
+CROSS_REALM_BINARY_SOURCE_CONTRACT = PASS
+HANDOFF_MODULE_SYNTAX = PASS
+BROWSER_HARNESS_SCRIPT_SYNTAX = PASS
+BATCH_REQUIRED_CHECK_CONTRACT = PASS
+BRANDED_BINARY_NORMALIZATION_BEHAVIOR = PASS
+ARBITRARY_OBJECT_REJECTION_BEHAVIOR = PASS
+PRODUCT_FILES_CHANGED_IN_THIS_REVISION = 1
+NEW_DRAWING_ENGINE = 0
+PHASE_B = NOT_STARTED
+FORMAT_VERSION = 4
+SELF_HOSTED_RUNTIME_EXECUTED_BY_DEV = 0
+```
+
+The local behavior probe used a genuine Blob/File with its prototype detached so realm-local `instanceof` returned false while the native Blob/File internal brand remained valid. Normalization preserved bytes and File metadata; a `Symbol.toStringTag='Blob'` spoof object was rejected.
+
+Final browser Runtime remains MR-owned:
+
+```text
+AUTOMATED_FIXTURE_RUNTIME = MR_EXACT_SHA_RERUN_PENDING
+MR_USER_ATTACHMENT_REAL_IMAGE_TEST = HELD_UNTIL_RUNTIME_PASS
+DEV_RUNTIME_PASS_CLAIM = 0
+```
+
+Phase B remains out of scope and not started.
