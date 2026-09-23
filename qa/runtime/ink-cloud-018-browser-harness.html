@@ -288,6 +288,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const phaseBHistoryBefore=app.history.undoStack.length;
     const phaseBRevisionBefore=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
     const phaseBReferenceBefore=app.findObject({objectId:handoffReceipt.referenceObjectId});
+    const phaseBStarted=performance.now();
     const phaseBReceipt=await w.INK_CHAT_HANDOFF.decomposeReference(handoffReceipt.referenceObjectId,{
       numberOfColors:8,
       pathOmit:8,
@@ -296,6 +297,24 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       actor:{type:'chat',id:'runtime-chat',channel:'CHAT_REFERENCE_DECOMPOSITION'},
       intent:'INK-CHAT-VALIDATION-001 Phase B Reference to editable Color and Line layers'
     });
+    const phaseBElapsedMs=performance.now()-phaseBStarted;
+    const phaseBTrace=phaseBReceipt?.diagnostics?.traceRaster;
+    const phaseBScale=phaseBReceipt?.diagnostics?.coordinateScale;
+    assert(
+      phaseBElapsedMs<30000 &&
+      Number.isInteger(phaseBTrace?.pixels) && phaseBTrace.pixels<=160000 &&
+      phaseBTrace.width<=512 && phaseBTrace.height<=512,
+      'CHAT_REFERENCE_DECOMPOSITION_BOUNDED_TRACE_RUNTIME',
+      {elapsedMs:phaseBElapsedMs,traceRaster:phaseBTrace}
+    );
+    assert(
+      phaseBTrace?.sourceWidth===phaseBReceipt.source?.width &&
+      phaseBTrace?.sourceHeight===phaseBReceipt.source?.height &&
+      Math.abs((phaseBTrace.width*phaseBScale?.x)-phaseBReceipt.source.width)<1e-6 &&
+      Math.abs((phaseBTrace.height*phaseBScale?.y)-phaseBReceipt.source.height)<1e-6,
+      'CHAT_REFERENCE_DECOMPOSITION_SOURCE_COORDINATE_MAPPING',
+      {traceRaster:phaseBTrace,coordinateScale:phaseBScale,source:phaseBReceipt.source}
+    );
     assert(phaseBReceipt?.status==='COMPLETED','CHAT_REFERENCE_DECOMPOSITION_COMPLETED',{receipt:phaseBReceipt});
     assert(
       phaseBReceipt.operation==='reference.decompose.line-color' &&
@@ -401,6 +420,9 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     evidence.metrics.phaseBColorRegions=colorObjects.length;
     evidence.metrics.phaseBBoundaryLines=lineObjects.length;
     evidence.metrics.phaseBPalette=phaseBReceipt.palette;
+    evidence.metrics.phaseBElapsedMs=phaseBElapsedMs;
+    evidence.metrics.phaseBTraceRaster=phaseBTrace;
+    evidence.metrics.phaseBCoordinateScale=phaseBScale;
 
     const file=new File([blob],'rose-window-primary.png',{type:'image/png'});
     const transfer=new DataTransfer(); transfer.items.add(file); input.files=transfer.files;
