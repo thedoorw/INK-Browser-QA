@@ -2145,3 +2145,35 @@ RUNTIME = DEFERRED_TO_INTEGRATION_BATCH
 ```
 
 This stage completes the currently planned high-level creative-intelligence foundation at module level. Product wiring remains a later Integration Work Order.
+
+
+## CORE-MOD-007 closure
+
+```text
+TASK = CORE-MOD-007
+TITLE = Research → Creation Bridge Module v0.1
+DEV_HANDOFF = a2e26998ac5bfebf40d7a69c3ac0352ed04797e5
+SOURCE_QA = PASS / 35806448801
+PROMOTION_PR = #42 / MERGED
+PROMOTED_MAIN = b480cb851c74e8439b94543253735a3d1fecf1ac
+MODULE_STATE = MODULE_READY
+PRODUCT_INTEGRATED = NO
+RUNTIME = DEFERRED_TO_INTEGRATION_BATCH
+FORMAT_VERSION = 4
+```
+
+Research → Creation now exists as a deterministic advisory core module:
+
+```text
+research/reference evidence
+→ visual principles
+→ creative constraints/methods
+→ explicit Creative Memory promotion candidates
+→ CHAT-readable advisory context
+```
+
+No source fetch/scrape, auto-memory write, auto-approval, auto-execution or user-profile inference is present.
+
+With CORE-MOD-006 Creative Memory and CORE-MOD-007 Research → Creation both MODULE_READY, the currently planned high-level Creative Intelligence foundation is complete at module-preparation level.
+
+The next engineering step should be a bounded Integration Work Order that product-wires compatible modules and then consumes central Runtime batching; no such task is authorized by this closure alone.
