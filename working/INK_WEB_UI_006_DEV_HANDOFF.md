@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — UI DEV HANDOFF
 
-STATUS: UI_PASS / PHASE_A_B
+STATUS: UI_REVISE / PHASE_B3_STARTUP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
@@ -192,3 +192,55 @@ UR result:
 `UI_PASS`
 
 Phase A + B are accepted.
+
+
+## UR correction — Startup acceptance criterion
+
+The previous runtime PASS was too permissive.
+
+The requirement is NOT:
+- hide a dark transient frame by changing it to a similar light color, or
+- show a temporary neutral startup frame before the final workstation appears.
+
+The requirement IS:
+- the first painted INK application frame must already be the final shell state for the visible regions available at that moment;
+- there must be no intentionally rendered temporary app frame that is later replaced only because external CSS/JS finishes loading;
+- startup color similarity alone is not sufficient evidence.
+
+### B3 revision required
+
+Revise startup handling so that:
+1. the initial painted shell uses the same authoritative visual tokens/geometry as the final shell, not a substitute one-color frame;
+2. there is no dark→light, neutral→final, or temporary-shell→final visual swap;
+3. do not solve this by inserting a branded splash/loading screen;
+4. do not solve this by merely hiding the app and revealing it later unless the browser has not yet painted an application frame; the goal is direct first-paint consistency;
+5. keep this UI-only.
+
+Preferred implementation direction:
+- inline only the minimum critical shell CSS necessary for the first paint, derived from the same final UI tokens;
+- load the normal stylesheet without producing a visible state change in the shell;
+- preserve the actual canvas/workspace hierarchy from the first visible app frame.
+
+### Required runtime proof
+
+Use frame-by-frame startup evidence, not only a final screenshot:
+- navigation start / first paint
+- stylesheet loaded
+- app initialized
+- final stable frame
+
+The visible app shell must not change between those checkpoints except for actual content/state initialization that is not shell styling.
+
+### Revised UR result
+
+Phase A: `UI_PASS`
+
+Phase B:
+- B1 Light shell: `PASS`
+- B2 Original Y-mark direct scale: `PASS`
+- B3 Startup first-paint consistency: `UI_REVISE`
+
+Overall current result:
+`UI_REVISE`
+
+Phase C remains unauthorized until B3 passes.
