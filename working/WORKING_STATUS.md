@@ -2077,3 +2077,26 @@ FORMAT_VERSION = 4
 Grounded CHAT can now turn a grounded reasoning result into the existing editable creative-plan path while stopping at the existing user approval boundary.
 
 No immediate Windows Runtime was required. The task is waiting in the central Runtime Queue for a compatible batch.
+
+
+## CORE-MOD-006 activation
+
+~~~
+TASK = CORE-MOD-006
+TITLE = Style / Method / Creative Memory Module v0.1
+BRANCH = work/ink-core-creative-memory-006
+TARGET =
+  Revision / provenance / grounded decision evidence
+  → deterministic reusable creative-method memory
+  → query / compare
+  → CHAT-readable advisory context
+MODULE_ONLY = YES
+USER_PROFILE_INFERENCE = 0
+NETWORK_REQUIRED = 0
+FORMAT_VERSION = 4
+RUNTIME = DEFERRED_TO_INTEGRATION_BATCH
+~~~
+
+This is the first higher-level creative-intelligence module after Grounded Creative Decision & Plan Bridge.
+
+Research→Creation remains explicitly deferred.
