@@ -283,3 +283,61 @@ Return:
 ```text
 DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
 ```
+
+
+## MR Phase B Runtime checkpoint — 31a427d807f7497b7e64d159607380c056829d67
+
+```text
+SOURCE_REVIEW = PASS
+FINAL_TRACE_TUNING = ACCEPTED
+DEV_HEAD = 31a427d807f7497b7e64d159607380c056829d67
+RUNTIME_RUN = 35863528804
+TESTED_SHA = 31a427d807f7497b7e64d159607380c056829d67
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = FAIL / EXPLICIT_POST_COMMIT_ERROR
+PREVIOUS_240S_TRACE_TIMEOUT = NOT_REPRODUCED
+GEOMETRY = NOT_REACHED
+ARTIFACT = 10751735046
+ARTIFACT_DIGEST = sha256:20717ed4ba4920f547ef7a7633620c98b43d107f701968464d724250069a9178
+PRIVATE_USER_1_JPG = HELD
+DECISION = MR_REVISE
+```
+
+### Runtime finding
+
+The final trace tuning solved the previous liveness blocker. Runtime no longer stalls in ImageTracerJS for 240 seconds.
+
+The new failure occurs after the authoritative decomposition has already committed Color/Line layers:
+
+```text
+Reference decomposition commit
+→ app.selection = all generated Line paths
+→ CHAT receipt provenanceIdentity()
+→ grounded context / AI Document Bridge
+→ selected object count > maxObjects (96)
+→ INK_AI_DOCUMENT_BRIDGE_SELECTION_BOUNDS_EXCEEDED
+```
+
+This is not another trace-performance problem and does not justify more tracer tuning.
+
+### Bounded revision — post-commit selection / receipt compatibility only
+
+1. Do not select every generated Line object after decomposition when the result can exceed Document Bridge selection bounds.
+2. Prefer a bounded post-operation selection state, e.g. one representative generated Line Path (or another existing bounded selection behavior).
+3. Preserve all generated Color/Line objects in their layers; this change is selection state only, not output reduction.
+4. Keep the existing CHAT receipt provenance path; it must return normally after the committed operation.
+5. Preserve History/Audit/Provenance/Revision authority and the accepted 64k / 320 / colorquantcycles=1 trace tuning.
+6. Add focused/browser QA proving:
+   - generated result may exceed 96 objects;
+   - post-operation selection remains within Document Bridge bounds;
+   - receipt returns COMPLETED rather than throwing after commit;
+   - all existing Phase B assertions still pass.
+7. No more ImageTracerJS performance tuning unless this bounded fix still fails runtime.
+8. No UI redesign, semantic labeling, centerline, Phase C, new engine, or timeout increase.
+
+Return:
+
+```text
+DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
+```
