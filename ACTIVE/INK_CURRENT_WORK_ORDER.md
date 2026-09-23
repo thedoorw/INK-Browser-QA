@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / MR_PASS / PROMOTION_AUTHORIZED`
+STATUS: `INK-CHAT-VALIDATION-001 / MR_PASS / PROMOTED / PHASE_A_CLOSED`
 
 ## Control
 
@@ -480,3 +480,21 @@ PHASE_A = MR_PASS
 PROMOTION = AUTHORIZED
 PHASE_B = NOT_STARTED / REQUIRES NEXT WORK ORDER
 ```
+
+
+## Promotion closure — PR #46
+
+```text
+PR = #46 / MERGED
+PROMOTED_MAIN = d398d4bd89b5d22919a1e6dda310e7831114be1
+EXACT_RUNTIME_TESTED_SHA = ababe86e049355f6464cdabfceacfe2c32992be1
+PROMOTION_DELTA_FROM_TESTED_SHA = GOVERNANCE_FILES_ONLY
+PRODUCT_SOURCE_DELTA = 0
+QA_RUNTIME_DELTA = 0
+RUNTIME = 35847254857 / PASS
+PRIVATE_USER_JPEG = PASS
+PHASE_A = CLOSED
+PHASE_B = NOT_AUTHORIZED
+```
+
+The promoted main contains the exact tested product and Runtime QA content. The only differences from the tested SHA are governance/status files, so no duplicate post-merge browser run is required.
