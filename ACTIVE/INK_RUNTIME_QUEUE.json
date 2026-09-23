@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "72840033d9c139df9a71c4ca48189100cf8986cd",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "2d324df22dd58ebf3579ba175422839abd92bd04",
+  "pending_work_orders": [
+    "INK-CHAT-VALIDATION-001"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -11,8 +13,8 @@
     "INK-CORE-INTEGRATION-006"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": null
+    "enabled": true,
+    "reason": "First real CHAT→INK attachment handoff gate; user attachment acceptance depends on exact-SHA browser verification before Phase B."
   },
   "batch_policy": {
     "default_target": 3,
