@@ -208,6 +208,7 @@ const APP_SHELL = Object.freeze([
   './index-standalone.html',
   './styles.css',
   './web-shell.js',
+  './qa/runtime-test-bridge.js',
   './assets/INK_MARK_SOURCE_W-300.jpg',
   './assets/ink-mark.svg',
   './dist/ink.compat.js',
