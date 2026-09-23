@@ -2237,3 +2237,27 @@ Creative Memory advisory
 No memory auto-write, remote research fetch, autonomous recursion, auto-approval or auto-execution was introduced.
 
 The current central browser harness provides integration/regression evidence; Integration-005-specific advisory semantics are covered by exact source/Node QA.
+
+
+## INK-CORE-INTEGRATION-006 activation
+
+```text
+TASK = INK-CORE-INTEGRATION-006
+TITLE = Workstation Capability Exposure & UI-Function Mapping v0.1
+BRANCH = work/ink-core-integration-006
+PURPOSE =
+  completed Core / RA / Creative Intelligence capabilities
+  → authoritative UI × Capability Matrix
+  → visible workstation placement
+  → correct UI command wiring
+  → CHAT relationship
+  → History / Revision relationship
+  → browser Runtime verification
+UI_AUTHORITY = existing single panel system
+NEW_ENGINE_FEATURES = 0
+WEB_PORTABLE_PARITY = REQUIRED
+TINYFISH = 0
+FORMAT_VERSION = 4
+```
+
+This is the installation/exposure stage for already-completed capabilities. It is not a new core-engine program and must not recreate functionality inside UI code.
