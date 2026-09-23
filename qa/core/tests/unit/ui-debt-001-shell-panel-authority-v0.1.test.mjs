@@ -89,7 +89,7 @@ test('Advanced follows Properties authority and other Dock choices clear its act
 
 test('Web Portable favicon version and format contracts are preserved', () => {
   assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
-  for (const html of [web, portable]) assert.match(html, /<link rel="icon" href="assets\/favicon\.svg\?v=0\.1" type="image\/svg\+xml" sizes="32x32">/);
+  for (const html of [web, portable]) assert.match(html, /<link rel="icon" href="assets\/INK_MARK_SOURCE_W-300\.jpg\?v=0\.1" type="image\/jpeg">/);
   assert.match(config, /FORMAT_VERSION\s*=\s*4\b/);
   assert.match(web, /INK v0\.1 · Web/);
   assert.match(portable, /INK v0\.1 · Portable/);
