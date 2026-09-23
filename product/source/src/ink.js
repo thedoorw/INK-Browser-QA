@@ -795,7 +795,7 @@ function qaBridgeRequested(){
 
 async function loadRuntimeQaBridge(app){
   try {
-    const module=await import('./qa/runtime-test-bridge.js');
+    const module=await import('../qa/runtime-test-bridge.js');
     return module.installRuntimeQaBridge(app);
   } catch(error) {
     console.error('INK_QA_BRIDGE_LOAD_FAILED',error);
