@@ -78,19 +78,27 @@ Rules:
 - Judge only after runtime inspection.
 - If small-size readability fails, record as a later optional Phase 2; do not silently alter the mark.
 
-### B3. Startup first-paint consistency
-The first painted INK application frame must already use the final shell visual state.
+### B3. Startup technical-debt removal
+This item is a technical-debt cleanup, not a cosmetic color adjustment.
+
+The debt to remove is the existence of a separate temporary startup visual state before the final INK workstation shell.
 
 Not acceptable:
 - dark → light flash
 - neutral temporary frame → final frame
 - color-matched placeholder frame used only to conceal loading
 - splash/loading screen substituted for the workstation shell
+- any workaround that preserves two separate startup/final shell states but makes them visually similar
 
 Required:
-- first visible application paint and final stable shell share the same authoritative shell styling/tokens/geometry
-- critical first-paint CSS may be inlined only when it is the same shell styling, not a temporary substitute
+- remove the separate temporary startup-shell state from the architecture
+- the first visible INK application frame must already be the authoritative final shell state
+- first paint and final stable shell must use the same authoritative styling/tokens/geometry path
+- if critical CSS is needed for first paint, it must be the same final shell CSS contract, not a second substitute implementation
 - runtime proof must inspect startup frame progression, not only the final screenshot
+
+Acceptance criterion:
+`ONE SHELL STATE / NO STARTUP VISUAL SUBSTITUTE / NO FLASH DEBT`
 
 ---
 
