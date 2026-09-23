@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-TECH-DEBT-001 / DEV_IN_PROGRESS / SOURCE_CLEANUP_COMPLETE`
+STATUS: `INK-TECH-DEBT-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 ## Control
 
@@ -13,7 +13,7 @@ STATUS: `INK-TECH-DEBT-001 / DEV_IN_PROGRESS / SOURCE_CLEANUP_COMPLETE`
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | RUNTIME_QA | `REQUIRED AFTER DEV_HANDOFF + MR SOURCE REVIEW` |
-| NEXT | `DEV_READ → IMPLEMENT BOUNDED CLEANUP → DEV_HANDOFF → STOP` |
+| NEXT | `MR source review → exact-SHA self-hosted Windows Chrome Runtime` |
 
 ## Read first
 
@@ -169,4 +169,64 @@ CHECKS =
 KNOWN_GAPS =
   repository unit/static test commands not yet executed for this checkpoint
   authoritative exact-SHA Chrome Runtime remains MR-gated after DEV_HANDOFF + source review
+```
+
+
+## Checkpoint 3 — DEV handoff
+
+```text
+EXACT_SOURCE_HEAD = ed38789bd1aa6dd12235ee57bbceb5195b965ad0
+HANDOFF_DOC_COMMIT = 733de8769f220da851b660f9e435e89c0249c28d
+MILESTONE = DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP
+HANDOFF = working/INK_TECH_DEBT_001_DEV_HANDOFF.md
+
+FINAL SOURCE/STATIC EVIDENCE =
+  focused foundation assertions = 20/20 PASS
+  product/source/src JS+JSON = 189
+  service-worker SOURCE_SHELL = 189
+  offline missing = 0
+  offline extra = 0
+  service-worker syntax = PASS
+  Web / Portable normalized parity = PASS
+  bootstrap retry polling = 0
+  runtime ready contract = ink:runtime-ready
+  temporary startup substitute = 0
+  production src embedded INK_TEST surface = 0
+  QA bridge = product/source/qa/runtime-test-bridge.js / explicit opt-in
+  CSS desktop authority markers = 1
+  UI-006 late override authorities = 0
+  CSS :root blocks = 14
+  CSS !important = 220
+  synthetic brand CSS refs = 0
+  stale active RC/CSS labels = 0
+  FORMAT_VERSION = 4
+  product version = v0.1
+
+UNIT RUNNER =
+  focused repository guards added/updated
+  node --test = NOT EXECUTED in chat environment
+  reason = no repository checkout path; container cannot resolve github.com;
+           branch workflow auto-run unavailable
+  false PASS claim = NO
+
+HARD BOUNDARIES =
+  Document = unchanged
+  History = unchanged
+  Revision = unchanged
+  Renderer authority = unchanged
+  ImageTracer = unchanged
+  CHAT Phase A/B = unchanged
+  CHAT Phase C = unchanged
+  UI-006 Phase C-I = unchanged
+  package = unchanged
+
+RUNTIME =
+  NOT RUN BY DEV
+  REQUIRED NEXT = MR source review → exact-SHA self-hosted Windows Chrome Runtime
+
+TASK_STATUS = DEV_HANDOFF
+NEXT_ACTION = MR_REVIEW_REQUIRED
+DEV = STOP
+MERGE = NOT AUTHORIZED
+NEXT_STAGE = NOT AUTHORIZED
 ```
