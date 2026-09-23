@@ -109,7 +109,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const recordHandoffLiveness=(stage,details={})=>{
       handoffLiveness.push({stage,atMs:Math.round(performance.now()),...details});
       const checkName=livenessCheckNames[stage];
-      if(checkName) pass(checkName,{stage,sequence:handoffLiveness.map(item=>item.stage),...details});
+      if(checkName){
+        const {name:sourceName,...safeDetails}=details;
+        pass(checkName,{stage,sequence:handoffLiveness.map(item=>item.stage),...safeDetails,...(sourceName?{sourceName}:{})});
+      }
     };
     recordHandoffLiveness('cross-realm input confirmed',{
       parentBlob:blob instanceof Blob,
