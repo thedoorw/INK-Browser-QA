@@ -1,0 +1,298 @@
+name: INK-UI-DEBT-001 Branch Runtime
+
+on:
+  push:
+    branches: [work/ink-ui-debt-001]
+    paths:
+      - '.github/workflows/ink-ui-debt-001-branch-runtime.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-ui-debt-001-branch-runtime
+  cancel-in-progress: false
+
+jobs:
+  precheck-and-runtime:
+    if: github.event.head_commit.message == 'UI debt: run branch-only pre-runtime and runtime'
+    name: Pre-runtime gates then Windows UI Runtime
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 35
+
+    steps:
+      - name: Materialize exact branch revision without Git
+        id: source
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const crypto = require('node:crypto');
+            const { owner, repo } = context.repo;
+            const sha = context.sha;
+            if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Exact GITHUB_SHA required');
+            const { data: commit } = await github.rest.repos.getCommit({ owner, repo, ref: sha });
+            if (commit.sha !== sha) throw new Error('Exact revision resolution drifted');
+            const { data: tree } = await github.rest.git.getTree({ owner, repo, tree_sha: commit.commit.tree.sha, recursive: '1' });
+            if (tree.truncated) throw new Error('Refuse truncated tree');
+
+            const testFiles = new Set([
+              'qa/core/tests/unit/ui-debt-001-shell-panel-authority-v0.1.test.mjs',
+              'qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs',
+              'qa/core/tests/unit/ui-maint-002-readability-panel-favicon-v0.1.test.mjs',
+              'qa/core/tests/unit/final-ui-responsive-regression-v0.1.test.mjs',
+              'qa/core/tests/unit/panel-chat-polish-v0.1.test.mjs',
+              'qa/core/tests/unit/photoshop-shell-geometry-v0.1.test.mjs',
+              'qa/core/tests/unit/contextual-tool-options-v0.1.test.mjs',
+              'qa/runtime/ink-web-ui-001-harness.html',
+              'qa/runtime/start-ink-local.ps1',
+              'qa/runtime/check-ink-local.ps1'
+            ]);
+            const files = tree.tree.filter(item => item.path.startsWith('product/source/') || testFiles.has(item.path));
+            const present = new Set(files.map(item => item.path));
+            for (const required of testFiles) if (!present.has(required)) throw new Error(`Missing required pre-runtime input: ${required}`);
+            for (const required of ['product/source/index.html','product/source/index-standalone.html','product/source/styles.css','product/source/web-shell.js','product/source/src/ink.js']) {
+              if (!present.has(required)) throw new Error(`Missing product input: ${required}`);
+            }
+
+            const root = await fs.mkdtemp(path.join(process.env.RUNNER_TEMP, 'ink-ui-debt-001-'));
+            core.exportVariable('INK_UI_DEBT_ROOT', root);
+            core.exportVariable('INK_UI_DEBT_SITE', path.join(root, 'product/source'));
+            core.exportVariable('INK_TESTED_SHA', sha);
+            core.setOutput('root', root);
+            core.setOutput('sha', sha);
+
+            let cursor = 0;
+            await Promise.all(Array.from({ length: 4 }, async () => {
+              while (cursor < files.length) {
+                const item = files[cursor++];
+                if (item.type === 'tree') continue;
+                if (item.type !== 'blob' || !['100644','100755'].includes(item.mode)) throw new Error(`Invalid source item: ${item.path}`);
+                const { data } = await github.rest.git.getBlob({ owner, repo, file_sha: item.sha });
+                if (data.encoding !== 'base64') throw new Error(`Unsupported blob encoding: ${item.path}`);
+                const bytes = Buffer.from(data.content, 'base64');
+                const objectHash = crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+                if (objectHash !== item.sha) throw new Error(`Blob integrity failure: ${item.path}`);
+                const dest = path.join(root, item.path);
+                await fs.mkdir(path.dirname(dest), { recursive: true });
+                await fs.writeFile(dest, bytes);
+              }
+            }));
+            await fs.mkdir(path.join(root, 'evidence'), { recursive: true });
+            await fs.writeFile(path.join(root, 'evidence', 'revision.json'), JSON.stringify({
+              task: 'INK-UI-DEBT-001',
+              testedSha: sha,
+              branch: context.ref,
+              sourceFiles: files.filter(item => item.type === 'blob').length
+            }, null, 2));
+            core.notice(`Materialized exact INK-UI-DEBT-001 SHA ${sha}`);
+
+      - name: Source static unit parity gates
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const assert = require('node:assert/strict');
+            const { spawn } = require('node:child_process');
+            const root = process.env.INK_UI_DEBT_ROOT;
+            const site = process.env.INK_UI_DEBT_SITE;
+            const read = file => fs.readFile(path.join(site, file), 'utf8');
+
+            const [shell, ink, css, web, portable, config] = await Promise.all([
+              read('web-shell.js'), read('src/ink.js'), read('styles.css'),
+              read('index.html'), read('index-standalone.html'), read('src/config.js')
+            ]);
+            assert.doesNotThrow(() => new Function(shell));
+            assert.match(config, /FORMAT_VERSION\s*=\s*4\b/);
+            assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length);
+            assert.equal((css.match(/INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY/g) || []).length, 1);
+            assert.doesNotMatch(css, /\.inspector-edge-toggle\{right:0!important/);
+            assert.doesNotMatch(css, /\.inspector-tabs\{grid-template-columns:repeat\(4,1fr\)!important\}/);
+            assert.doesNotMatch(ink, /\$\('#inspectorEdgeToggle'\)\.onclick/);
+            assert.doesNotMatch(ink, /\$\('#closeInspector'\)\.onclick/);
+            assert.match(shell, /activePanel: 'collapsed'/);
+            assert.match(shell, /PRIMARY_PANEL_STATES/);
+            assert.match(web, /assets\/favicon\.svg\?v=0\.1/);
+            assert.match(portable, /assets\/favicon\.svg\?v=0\.1/);
+
+            const tests = [
+              'qa/core/tests/unit/ui-debt-001-shell-panel-authority-v0.1.test.mjs',
+              'qa/core/tests/unit/shared-portable-web-shell-parity-v0.1.test.mjs',
+              'qa/core/tests/unit/ui-maint-002-readability-panel-favicon-v0.1.test.mjs',
+              'qa/core/tests/unit/final-ui-responsive-regression-v0.1.test.mjs',
+              'qa/core/tests/unit/panel-chat-polish-v0.1.test.mjs',
+              'qa/core/tests/unit/photoshop-shell-geometry-v0.1.test.mjs',
+              'qa/core/tests/unit/contextual-tool-options-v0.1.test.mjs'
+            ];
+            const run = await new Promise((resolve, reject) => {
+              const child = spawn(process.execPath, ['--test', ...tests], { cwd: root, shell: false, windowsHide: true });
+              let stdout = '', stderr = '';
+              child.stdout.on('data', chunk => stdout += chunk);
+              child.stderr.on('data', chunk => stderr += chunk);
+              child.once('error', reject);
+              child.once('exit', code => resolve({ code, stdout, stderr }));
+            });
+            await fs.writeFile(path.join(root, 'evidence', 'pre-runtime-tests.txt'), run.stdout + '\n' + run.stderr);
+            await fs.writeFile(path.join(root, 'evidence', 'pre-runtime.json'), JSON.stringify({
+              task: 'INK-UI-DEBT-001',
+              testedSha: process.env.INK_TESTED_SHA,
+              sourceStatic: 'PASS',
+              testFiles: tests,
+              exitCode: run.code
+            }, null, 2));
+            core.info(run.stdout);
+            if (run.stderr) core.info(run.stderr);
+            if (run.code !== 0) throw new Error(`Pre-runtime Node test suite failed with exit code ${run.code}`);
+            core.notice('SOURCE_STATIC_UNIT_PARITY = PASS');
+
+      - name: PowerShell Windows browser Runtime
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $root = $env:INK_UI_DEBT_ROOT
+          $site = $env:INK_UI_DEBT_SITE
+          $evidence = Join-Path $root 'evidence'
+          $harness = Join-Path $root 'qa\runtime\ink-web-ui-001-harness.html'
+          $runtimeHarness = Join-Path $site '__qa_ui_debt_001.html'
+          $qaResult = Join-Path $evidence 'runtime-ui.json'
+          $stdout = Join-Path $evidence 'server.out.log'
+          $stderr = Join-Path $evidence 'server.err.log'
+          $browserOut = Join-Path $evidence 'browser.out.log'
+          $browserErr = Join-Path $evidence 'browser.err.log'
+          Copy-Item $harness $runtimeHarness -Force
+          Remove-Item $qaResult,$stdout,$stderr,$browserOut,$browserErr -Force -ErrorAction SilentlyContinue
+
+          $candidates = @(
+            $env:INK_CHROMIUM_PATH,
+            $env:CHROME_PATH,
+            (Join-Path $env:ProgramFiles 'Google\Chrome\Application\chrome.exe'),
+            (Join-Path ${env:ProgramFiles(x86)} 'Google\Chrome\Application\chrome.exe'),
+            (Join-Path $env:LOCALAPPDATA 'Google\Chrome\Application\chrome.exe'),
+            (Join-Path $env:ProgramFiles 'Microsoft\Edge\Application\msedge.exe'),
+            (Join-Path ${env:ProgramFiles(x86)} 'Microsoft\Edge\Application\msedge.exe')
+          ) | Where-Object { $_ -and (Test-Path $_) }
+          $browserPath = $candidates | Select-Object -First 1
+          if (-not $browserPath) { throw 'RUNTIME_BLOCKED: no Chrome/Edge found on self-hosted Windows runner' }
+
+          $server = $null
+          $browser = $null
+          try {
+            $serverScript = Join-Path $root 'qa\runtime\start-ink-local.ps1'
+            $server = Start-Process powershell.exe -WindowStyle Hidden -ArgumentList @(
+              '-NoProfile','-File',$serverScript,'-NoBrowser','-QaResultPath',$qaResult
+            ) -RedirectStandardOutput $stdout -RedirectStandardError $stderr -PassThru
+
+            $ready = $false
+            for ($i=0; $i -lt 30; $i++) {
+              Start-Sleep -Milliseconds 500
+              if ($server.HasExited) { break }
+              try {
+                $probe = Invoke-WebRequest -Uri 'http://127.0.0.1:4173/' -UseBasicParsing -TimeoutSec 2
+                if ($probe.StatusCode -eq 200) { $ready = $true; break }
+              } catch {}
+            }
+            if (-not $ready) {
+              Get-Content $stdout -ErrorAction SilentlyContinue
+              Get-Content $stderr -ErrorAction SilentlyContinue
+              throw 'RUNTIME_BLOCKED: loopback server unavailable'
+            }
+
+            & powershell.exe -NoProfile -File (Join-Path $root 'qa\runtime\check-ink-local.ps1')
+            if ($LASTEXITCODE -ne 0) { throw "RUNTIME_BLOCKED: HTTP preflight exit $LASTEXITCODE" }
+
+            $profile = Join-Path $env:RUNNER_TEMP 'ink-ui-debt-001-profile'
+            Remove-Item $profile -Recurse -Force -ErrorAction SilentlyContinue
+            $args = @(
+              '--headless=new',
+              '--disable-gpu',
+              '--no-first-run',
+              '--no-default-browser-check',
+              '--disable-extensions',
+              '--disable-background-timer-throttling',
+              '--disable-background-networking',
+              "--user-data-dir=$profile",
+              'http://127.0.0.1:4173/__qa_ui_debt_001.html'
+            )
+            $browser = Start-Process $browserPath -ArgumentList $args -RedirectStandardOutput $browserOut -RedirectStandardError $browserErr -PassThru
+            $reported = $false
+            for ($i=0; $i -lt 540; $i++) {
+              if (Test-Path $qaResult) { $reported = $true; break }
+              if ($browser.HasExited) { break }
+              Start-Sleep -Milliseconds 500
+            }
+            if (-not $reported) {
+              Get-Content $browserOut -ErrorAction SilentlyContinue
+              Get-Content $browserErr -ErrorAction SilentlyContinue
+              throw 'RUNTIME_BLOCKED: UI harness did not report terminal evidence'
+            }
+
+            $result = Get-Content $qaResult -Raw | ConvertFrom-Json
+            if ($result.schema -ne 'INK-WEB-UI-001-BROWSER-QA-TRANSPORT') { throw "Runtime evidence schema mismatch: $($result.schema)" }
+            if ($result.status -ne 'PASS' -or [int]$result.summary.failed -ne 0) { throw "Runtime UI evidence failed: status=$($result.status) failed=$($result.summary.failed)" }
+
+            $required = @(
+              'initial Web view is canvas-first',
+              'UI-DEBT-001 1280x1024 collapsed shell remains fully contained',
+              'Layers opens as primary Inspector panel',
+              'History directly reachable',
+              'reference dock entry reaches existing Creative Workspace stage',
+              'compose dock entry reaches existing Creative Workspace stage',
+              'chat dock entry reaches existing Creative Workspace stage',
+              'revision dock entry reaches existing Creative Workspace stage',
+              'UI-MAINT-002 Advanced opens Properties and exposes active state',
+              'UI-MAINT-002 Advanced second press closes the same primary panel',
+              'UI-DEBT-001 Chevron sits on canvas / panel boundary without Dock occlusion',
+              'UI-DEBT-001 Dock Properties remains fully clickable after collapse',
+              'UI-DEBT-001 chevron is the single visible desktop collapse authority',
+              'UI-MAINT-002 short-height Inspector keeps all content reachable by vertical scroll',
+              'narrow desktop containment remains stable',
+              'favicon link resolves successfully in fresh context',
+              'document integrity remains valid',
+              'no fatal runtime health failure'
+            )
+            foreach ($name in $required) {
+              $check = $result.checks | Where-Object { $_.name -eq $name } | Select-Object -First 1
+              if (-not $check -or -not $check.pass) { throw "Missing/failed required Runtime gate: $name" }
+            }
+
+            @{
+              task = 'INK-UI-DEBT-001'
+              testedSha = $env:INK_TESTED_SHA
+              browser = $browserPath
+              powershell = [string]$PSVersionTable.PSVersion
+              runtime = 'PASS'
+              checks = $result.summary.total
+              requiredGates = $required.Count
+            } | ConvertTo-Json | Set-Content (Join-Path $evidence 'runtime-summary.json') -Encoding UTF8
+            Write-Host 'RUNTIME_QA = PASS'
+          } finally {
+            if ($browser -and -not $browser.HasExited) {
+              & "$env:SystemRoot\System32\taskkill.exe" /PID $browser.Id /T /F 2>$null | Out-Null
+            }
+            if ($server -and -not $server.HasExited) {
+              Stop-Process -Id $server.Id -Force -ErrorAction SilentlyContinue
+            }
+          }
+
+      - name: Upload INK-UI-DEBT-001 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-ui-debt-001-${{ steps.source.outputs.sha }}-${{ github.run_id }}
+          path: ${{ steps.source.outputs.root }}/evidence/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Remove temporary materialization
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const root = process.env.INK_UI_DEBT_ROOT;
+            if (root && path.dirname(root) === path.resolve(process.env.RUNNER_TEMP) && path.basename(root).startsWith('ink-ui-debt-001-')) {
+              await fs.rm(root, { recursive: true, force: true, maxRetries: 3 });
+            }
