@@ -97,3 +97,7 @@ The new guard fails on:
 - Chevron returning to Dock-side `right:0`;
 - obsolete repeat(4) / horizontal-overflow Inspector tab geometry;
 - broken Web / Portable parity, favicon, version or FORMAT_VERSION.
+
+
+### Pre-runtime guard maintenance
+- updated Photoshop shell geometry regression to target the consolidated `INK-UI-DEBT-001` authority marker instead of requiring the removed MAINT-001 late override.

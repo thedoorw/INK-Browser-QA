@@ -35,10 +35,10 @@ test('desktop shell collapses contextual controls into the second chrome row', (
 
 test('left rail, canvas, right dock and primary panel share one pixel grid', () => {
   assert.doesNotMatch(css, /\.tool-rail\{\s*left:7px;/);
-  assert.match(css, /INK-UI-MAINT-001[\s\S]*?\.stage-wrap\{[\s\S]*?left:var\(--tool-w\);[\s\S]*?right:var\(--panel-dock-w\)/);
-  assert.match(css, /INK-UI-MAINT-001[\s\S]*?\.tool-rail\{[\s\S]*?left:0;[\s\S]*?width:var\(--tool-w\)/);
-  assert.match(css, /INK-UI-MAINT-001[\s\S]*?\.panel-dock\{[\s\S]*?right:0;[\s\S]*?width:var\(--panel-dock-w\)/);
-  assert.match(css, /INK-UI-MAINT-001[\s\S]*?\.inspector\{[\s\S]*?width:var\(--inspector-w\);[\s\S]*?min-width:244px/);
+  assert.match(css, /INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY[\s\S]*?\.stage-wrap\{[\s\S]*?left:var\(--tool-w\);[\s\S]*?right:var\(--panel-dock-w\)/);
+  assert.match(css, /INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY[\s\S]*?\.tool-rail\{[\s\S]*?left:0;[\s\S]*?width:var\(--tool-w\)/);
+  assert.match(css, /INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY[\s\S]*?\.panel-dock\{[\s\S]*?right:0;[\s\S]*?width:var\(--panel-dock-w\)/);
+  assert.match(css, /INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY[\s\S]*?\.inspector\{[\s\S]*?width:var\(--inspector-w\);[\s\S]*?min-width:244px/);
   assert.match(css, /\.doc-title\{[\s\S]*?max-width:236px/);
 });
 
