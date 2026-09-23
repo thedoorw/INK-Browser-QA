@@ -1,0 +1,103 @@
+name: CORE-MOD-007 Source QA
+
+on:
+  push:
+    branches:
+      - work/ink-core-research-creation-007
+
+permissions:
+  contents: write
+
+jobs:
+  materialize-and-test:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/ink-core-research-creation-007
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Materialize exact source and QA
+        shell: bash
+        env:
+          SOURCE_B64: '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'
+          TEST_B64: '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'
+        run: |
+          mkdir -p product/source/src/research qa
+          printf '%s' "$SOURCE_B64" | base64 -d | gzip -d > product/source/src/research/research-creation-bridge.js
+          printf '%s' "$TEST_B64" | base64 -d | gzip -d > qa/core-mod-007-research-creation.test.mjs
+          cat > ACTIVE/INK_DEV_PROGRESS.md <<'PROGRESS_EOF'
+          # INK DEV PROGRESS
+
+          STATUS: CORE-MOD-007 / IN_PROGRESS
+
+          | Field | Value |
+          |---|---|
+          | TASK_ID | CORE-MOD-007 |
+          | TITLE | Research → Creation Bridge Module v0.1 |
+          | BRANCH | work/ink-core-research-creation-007 |
+          | BRANCH_BASE | be7b47ce94b91b5866a7c8c4ca2081bc0e000952 |
+          | TASK_STATUS | IN_PROGRESS |
+          | CURRENT_PHASE | PHASE_F_SOURCE_QA_COMPLETE / REPORT_PENDING |
+          | TARGET_GATE | CORE_MOD_007_SOURCE_READY |
+          | MODULE_STATE_TARGET | MODULE_READY |
+          | RESEARCH_SOURCE_AUTHORITY | EVIDENCE_ONLY |
+          | CREATIVE_MEMORY_AUTO_WRITE | 0 / PROHIBITED |
+          | AUTO_EXECUTION | 0 / PROHIBITED |
+          | NETWORK_REQUIRED | 0 / PROHIBITED |
+          | FORMAT_VERSION | 4 / PRESERVE |
+          | RUNTIME_QA | DEFERRED_TO_INTEGRATION_BATCH |
+
+          ## Checkpoint — implementation + deterministic QA
+
+          ~~~
+          PHASE_A_RESEARCH_EVIDENCE_CONTRACT = PASS
+          PHASE_B_PRINCIPLE_EXTRACTION_CONTRACT = PASS
+          PHASE_C_CREATIVE_CONSTRAINT_BRIDGE = PASS
+          PHASE_D_CREATIVE_MEMORY_INTEROP = PASS
+          PHASE_E_CHAT_READABLE_ADVISORY_CONTEXT = PASS
+          PHASE_F_DETERMINISTIC_SOURCE_QA = PASS
+          ~~~
+
+          Implemented:
+          - product/source/src/research/research-creation-bridge.js
+          - qa/core-mod-007-research-creation.test.mjs
+          - bounded research evidence classes with stable IDs/fingerprints
+          - explicit evidence-backed principle normalization; unsupported source refs reject
+          - principle → advisory creative constraint traceability
+          - explicit-only Creative Memory promotion candidates; auto-write disabled
+          - Parametric / Creative Memory / grounded CHAT compatible advisory metadata
+          - bounded ADVISORY_READ_ONLY research-creation context
+          - unresolved/conflicting evidence preservation
+          - no UI, document/history/revision/geometry/renderer/execution authority change
+          - no network, dynamic execution, user-profile/personality inference or source-document copying
+
+          Source QA:
+          ~~~
+          node --check product/source/src/research/research-creation-bridge.js = PASS
+          node --experimental-default-type=module qa/core-mod-007-research-creation.test.mjs = PASS
+          ~~~
+
+          Remaining:
+          - required implementation report
+          - remove task-local source-QA workflow
+          - DEV_HANDOFF → STOP
+          PROGRESS_EOF
+      - name: Deterministic source QA
+        run: |
+          node --check product/source/src/research/research-creation-bridge.js
+          node --experimental-default-type=module qa/core-mod-007-research-creation.test.mjs
+      - name: Commit source checkpoint
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add product/source/src/research/research-creation-bridge.js qa/core-mod-007-research-creation.test.mjs ACTIVE/INK_DEV_PROGRESS.md
+          if git diff --cached --quiet; then
+            echo "No source changes to commit."
+          else
+            git commit -m "CORE-MOD-007: implement research creation bridge and QA"
+            git push origin HEAD:work/ink-core-research-creation-007
+          fi
