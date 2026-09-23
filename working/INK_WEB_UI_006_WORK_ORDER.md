@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — UI System Realignment Work Order
 
-STATUS: PHASE_A_B_UI_PASS / UI_ONLY
+STATUS: PHASE_A_PASS_B3_UI_REVISE / UI_ONLY
 OWNER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
 BASELINE:
@@ -78,9 +78,19 @@ Rules:
 - Judge only after runtime inspection.
 - If small-size readability fails, record as a later optional Phase 2; do not silently alter the mark.
 
-### B3. Startup visual consistency
-Remove misleading dark→white startup flash.
-Loading/startup must visually match the expected final workspace or show a deliberate neutral loading state.
+### B3. Startup first-paint consistency
+The first painted INK application frame must already use the final shell visual state.
+
+Not acceptable:
+- dark → light flash
+- neutral temporary frame → final frame
+- color-matched placeholder frame used only to conceal loading
+- splash/loading screen substituted for the workstation shell
+
+Required:
+- first visible application paint and final stable shell share the same authoritative shell styling/tokens/geometry
+- critical first-paint CSS may be inlined only when it is the same shell styling, not a temporary substitute
+- runtime proof must inspect startup frame progression, not only the final screenshot
 
 ---
 
@@ -337,9 +347,9 @@ UR returns exactly one:
 
 ## Current issued package
 
-Phase A + B have passed UR review and runtime visual gating.
+Phase A is accepted. Phase B1/B2 are accepted. Phase B3 startup first-paint consistency is under `UI_REVISE`.
 
-Later phases remain UR-held until separately issued.
+Phase C and later remain UR-held until B3 passes.
 
 ---
 
