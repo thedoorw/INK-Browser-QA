@@ -2361,3 +2361,18 @@ RUNTIME = HELD
 REAL_IMAGE_TEST = HELD
 NEXT = bounded History receipt fix → DEV_HANDOFF / STOP → MR re-review
 ```
+
+
+## INK-CHAT-VALIDATION-001 Runtime checkpoint
+
+```text
+TESTED_SHA = 2d324df22dd58ebf3579ba175422839abd92bd04
+RUNTIME_RUN = 35836852283
+ATTEMPT_1 = UI FAIL / transient contextual eraser sync
+ATTEMPT_2_UI = PASS
+ATTEMPT_2_CREATIVE = FAIL
+BLOCKER = cross-realm Blob rejected by realm-local instanceof check
+DECISION = MR_REVISE
+REAL_USER_IMAGE_TEST = HELD
+NEXT = bounded cross-realm handoff fix → DEV_HANDOFF / STOP → MR exact-SHA Runtime
+```
