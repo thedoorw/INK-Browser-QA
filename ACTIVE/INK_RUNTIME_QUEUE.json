@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "ababe86e049355f6464cdabfceacfe2c32992be1",
   "pending_work_orders": [
     "INK-CHAT-VALIDATION-001"
@@ -13,8 +13,8 @@
     "INK-CORE-INTEGRATION-006"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "QA-only rerun after MR corrected a liveness evidence label collision; product source is unchanged from the reviewed Phase A implementation."
+    "enabled": false,
+    "reason": "Phase A exact-SHA Runtime passed; promotion authorized."
   },
   "batch_policy": {
     "default_target": 3,
@@ -22,8 +22,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35846792813,
-    "tested_sha": "5c8d45d3c0516e5bf1ad56c2afca246ab98ccb83",
-    "result": "FAIL_QA_LABEL"
+    "run_id": 35847254857,
+    "tested_sha": "ababe86e049355f6464cdabfceacfe2c32992be1",
+    "result": "PASS"
   }
 }
