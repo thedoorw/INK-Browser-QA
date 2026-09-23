@@ -1,424 +1,294 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_B / MR_PASS / PROMOTED / CLOSED`
+STATUS: `INK-TECH-DEBT-001 / DEV_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CHAT-VALIDATION-001` |
-| PHASE | `B — REFERENCE → LINE + COLOR LAYERS` |
-| TITLE | `CHAT Reference Decomposition Validation v0.1` |
-| DEV_BRANCH | `work/ink-chat-validation-001-phase-b` |
+| TASK_ID | `INK-TECH-DEBT-001` |
+| TITLE | `Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1` |
+| DEV_BRANCH | `work/ink-tech-debt-001` |
+| BASELINE | `current main after CHAT Validation Phase B closure` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| NEW_DRAWING_ENGINE | `PROHIBITED` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | DOCUMENT_AUTHORITY_CHANGE | `PROHIBITED` |
 | HISTORY_AUTHORITY_CHANGE | `PROHIBITED` |
 | REVISION_AUTHORITY_CHANGE | `PROHIBITED` |
-| USER_REFERENCE_FILE_PUBLIC_COMMIT | `PROHIBITED` |
-| GITHUB_HOSTED_DEV_WORKFLOW | `PROHIBITED` |
+| RENDERER_AUTHORITY_CHANGE | `PROHIBITED` |
+| NEW_ENGINE_FEATURES | `0` |
+| PACKAGE_MUTATION | `0` |
+| UI-006_PHASE_C_TO_I | `PAUSED UNTIL THIS WORK ORDER CLOSES` |
+| RUNTIME_QA | `REQUIRED / EXACT-SHA / SELF-HOSTED WINDOWS CHROME` |
 
-## Product intent
+## Purpose
 
-Phase A is closed. Do not reopen upload / cross-realm hardening.
+Clear confirmed accumulated technical debt in the INK application foundation before UI-006 continues into broader UI restructuring.
 
-Phase B proves the next real creative step:
+This is a cleanup / authority-consolidation task, not a feature program.
 
-```text
-existing INK Reference
-→ deterministic decomposition
-→ editable Color regions
-→ editable boundary Line paths
-→ separate Color / Line layers
-→ normal History / Audit / Provenance record
-→ inspectable result
-```
-
-The first acceptance target is the user's current flat-color flower reference.
-
-## Required result
-
-Starting from an already imported Reference object, produce:
+Current evidence shows:
 
 ```text
-Line layer
-  editable Path objects
-  fill = none
-  stroke = visible
-  boundary-line semantics
+product/source/src JS/JSON files = 189
+service-worker SOURCE_SHELL entries = 176
+offline closure drift = 13 missing files
 
-Color layer
-  editable closed Path objects
-  fill = extracted / quantized source color
-  stroke = none
+web-shell bootstrap
+→ polls for globalThis.INK_APP
+→ 50 ms retry
+→ up to 40 retries
 
-Reference
-  remains available as the source image
+styles.css
+→ ~2293 lines
+→ 14 :root blocks
+→ 222 !important declarations
+→ historical UI layers + current UI-006 override layer
+
+src/ink.js
+→ production bootstrap + large embedded window.INK_TEST surface
+
+Web / Portable HTML
+→ 621 lines each
+→ only 7 intentional delivery differences
 ```
 
-Required layer order for the fresh validation document:
+These observations define the cleanup target; they do not authorize unrelated refactors.
+
+## Required work
+
+### A — Offline / Service Worker closure
+
+Restore exact static-source closure.
+
+Required:
+
+1. `service-worker.js` source inventory must match the authoritative local `product/source/src` JS/JSON runtime closure.
+2. The existing portable integration guard must pass again.
+3. Do not remove newly integrated Core / CHAT / Creative Intelligence modules merely to make the list smaller.
+4. No network dependency may become mandatory for Portable operation.
+
+Known missing baseline includes:
 
 ```text
-Line
-Color
-Reference / existing source layer
+chat-reference-handoff
+creative-intelligence-context
+document-bridge
+visual-compare
+creative-memory
+provenance-graph
+research-creation-bridge
+semantic-region-grounding
+parametric-structure
+geometry-kernel
+Bezier.js local modules
 ```
 
-If moving/renaming the Reference layer would require unsafe assumptions about unrelated objects, leave the Reference in its existing layer and create only the two required sibling layers. Do not move unrelated content.
+DEV must derive the final closure from the actual source tree rather than blindly trusting this list.
 
-## Extraction strategy
+### B — Cache identity / update correctness
 
-Use the smallest mature path already present in INK.
+Separate the visible product label from runtime cache/build identity.
 
-Preferred implementation:
+Current product label remains:
 
 ```text
-Reference raster
-→ existing ImageTracerJS / existing vector import machinery
-→ bounded deterministic color quantization / color-region trace
-→ editable filled Paths
-→ derive aligned boundary-line Paths from the same region geometry
+INK v0.1 · Web
+INK v0.1 · Portable
 ```
 
-Rules:
+But cache invalidation must not depend on the display version staying numerically unchanged.
 
-- reuse existing decoder, ImageTracerJS/vendor, Path import and Path model where practical;
-- no remote model, no network acquisition, no IMAGE model;
-- do not build a new segmentation platform;
-- do not require semantic labels such as petal / leaf / stamen in this phase;
-- do not implement centerline skeleton tracing;
-- Line means visible region-boundary line art;
-- color fidelity may be quantized, but regions must remain editable vectors;
-- Line and Color geometry should remain aligned by deriving them from the same accepted region geometry whenever possible.
+Required:
 
-## Authoritative operation
+- establish one deterministic cache/build identity mechanism suitable for static GitHub Pages deployment;
+- preserve controlled Service Worker update behavior;
+- eliminate the assumption that every future product change can continue sharing one permanent `0.1-Web` cache identity;
+- preserve rollback/debuggability.
 
-CHAT must be able to invoke a bounded operation against an existing Reference object.
+Do not bump the user-facing base version.
 
-Acceptable shape:
+### C — Bootstrap / startup authority
+
+Replace polling-based shell/runtime coordination with one explicit readiness contract.
+
+Current debt:
 
 ```text
-referenceObjectId
-→ authoritative decomposition operation
-→ History mutation
-→ Color layer + Line layer
-→ source/provenance linkage
-→ receipt
+ink.js boots independently
+→ creates globalThis.INK_APP
+
+web-shell.js boots independently
+→ polls INK_APP every 50 ms
+→ retries up to 40 times
 ```
 
-Do not directly rewrite document JSON from the CHAT boundary.
-
-The receipt must include at minimum:
-
-- source Reference object ID;
-- source SHA where available;
-- Color layer ID;
-- Line layer ID;
-- generated Color object IDs/count;
-- generated Line object IDs/count;
-- extracted/quantized palette summary;
-- History before/after;
-- Audit identity where available;
-- Provenance/source linkage;
-- status/error.
-
-No automatic Revision is required.
-
-## Acceptance
-
-Phase B passes when browser Runtime proves:
-
-1. existing Reference object is used as source;
-2. at least one editable Line Path is produced;
-3. multiple editable filled Color regions are produced for a multi-color fixture;
-4. Line objects have no fill and have visible stroke;
-5. Color objects have fill and no stroke;
-6. Line and Color are on separate named layers;
-7. source/reference identity is retained;
-8. operation creates normal History evidence;
-9. CHAT receipt is inspectable;
-10. existing manual Reference / extraction flow still works;
-11. UI / Creative / Geometry regression suites pass.
-
-MR private acceptance will then use the user's `1.jpg` without committing it.
-
-## Scope stop
-
-Do not add:
-
-- semantic object recognition;
-- SAM/model acquisition;
-- perfect botanical part labeling;
-- centerline extraction;
-- manual correction UI redesign;
-- preview return to CHAT;
-- Phase C composition;
-- new document schema;
-- new layer authority;
-- broader UI redesign.
-
-This phase is only:
+Target:
 
 ```text
-Reference → editable Color + Line → separate layers
+one authoritative runtime bootstrap
+→ explicit Runtime ready signal / contract
+→ shell binds once
+→ no retry polling as normal startup architecture
 ```
 
-## DEV completion
+Requirements:
+
+- first visible application shell must be the authoritative shell;
+- no temporary substitute screen;
+- no dark → light or placeholder → final-shell flash architecture;
+- Web and Portable must share the same startup contract;
+- preserve the existing single primary-panel authority from `INK-UI-DEBT-001`.
+
+This closes the technical prerequisite behind UI-006 Phase B3. It must not redesign Phase C–I UI.
+
+### D — Production QA hook boundary
+
+Audit the embedded production `window.INK_TEST` surface.
+
+Goal:
 
 ```text
-TASK_STATUS = DEV_HANDOFF
-TASK_ID = INK-CHAT-VALIDATION-001
-PHASE = B_LINE_COLOR_DECOMPOSITION
-PRODUCT_SCOPE = BOUNDED
-PHASE_A = CLOSED / DO_NOT REOPEN
-PHASE_C = NOT_STARTED
-FORMAT_VERSION = 4
-USER_IMAGE_COMMITTED = 0
-NEXT_ACTION = MR_REVIEW_REQUIRED
-STOP
+production Runtime
+≠ permanent home for large test-only control surface
 ```
 
+DEV must:
 
-## MR Phase B Runtime checkpoint — 79af1c96a55635f6b8471e1ee02edade9fb25dac
+- identify which hooks are required by authoritative browser Runtime QA;
+- move test-only orchestration out of the production bootstrap where this can be done without weakening QA;
+- keep only a minimal explicit diagnostic/test bridge if browser harnesses genuinely require it;
+- preserve all existing Runtime coverage.
+
+Do not delete QA capability merely to reduce file size.
+
+### E — Shared shell source / CSS authority cleanup
+
+This is consolidation, not visual redesign.
+
+Required:
+
+1. Preserve Web / Portable intentional differences only:
+   - display label;
+   - manifest;
+   - delivery bootstrap where still technically necessary.
+2. Reduce manual duplicated shell maintenance where safely possible.
+3. Consolidate accepted desktop shell / UI-006 light-shell rules so new UI work does not continue as an ever-growing override stack.
+4. Remove or neutralize only demonstrably superseded CSS authorities.
+5. Preserve current accepted `INK-UI-DEBT-001` panel authority and the UI-006 Phase A/B visual decisions.
+6. Do not implement UI-006 Phase C, D, E, F, G, H or I in this branch.
+
+A smaller file is not itself an acceptance criterion. Authority clarity and regression safety are.
+
+### F — Stale version / diagnostics metadata
+
+Remove or correct stale engineering identity that can mislead debugging, including obsolete RC labels in active runtime/bootstrap surfaces.
+
+Required:
+
+- visible product remains v0.1;
+- document `FORMAT_VERSION` remains 4;
+- historical archived evidence is not rewritten;
+- active diagnostics must accurately describe current capability/module state or clearly state that they are partial.
+
+## Explicitly out of scope
+
+Do not:
+
+- redesign Document schema;
+- alter History semantics;
+- alter Revision semantics;
+- replace renderer / Canvas / WebGL authority;
+- retune ImageTracerJS;
+- reopen CHAT Validation Phase A/B;
+- start CHAT Validation Phase C;
+- implement new drawing features;
+- redesign the UI beyond cleanup needed for single authority;
+- introduce a new framework;
+- change product base version;
+- mutate `package/ink-current`;
+- delete historical research / QA evidence.
+
+Large files such as `ink.js`, `chat-runtime.js`, and `creative-workspace.js` are not authorized for broad decomposition merely because they are large. Refactor only the bounded debt named above.
+
+## UI lane coordination
+
+During this Work Order:
 
 ```text
-SOURCE_REVIEW = PASS
-DEV_HEAD = 79af1c96a55635f6b8471e1ee02edade9fb25dac
-RUNTIME_RUN = 35854909964
-TESTED_SHA = 79af1c96a55635f6b8471e1ee02edade9fb25dac
-RUNNER = DESKTOP-NSOQH69
-UI = PASS
-CREATIVE = FAIL / HARNESS_TIMEOUT_240S
-GEOMETRY = NOT_REACHED
-ARTIFACT = 10747521014
-ARTIFACT_DIGEST = sha256:7569e8327cd411d998ea72bde1fa0915c18d1b37084e4e6c4070c465979283a8
-PRIVATE_USER_1_JPG = HELD
-DECISION = MR_REVISE
+INK-WEB-UI-006
+Phase A = preserve
+Phase B1/B2 = preserve
+Phase B3 = superseded by / coordinated through this bootstrap cleanup
+Phase C–I = HOLD
 ```
 
-### Runtime blocker
+UR / UI DEV may inspect and report, but must not independently mutate the same startup / shell / CSS authority while `INK-TECH-DEBT-001` is active.
 
-Phase B currently sends the full decoded source raster directly into synchronous ImageTracerJS color-region tracing:
+After MR closure, UI-006 must resume from current main using clean promotion / reconciliation, not by blindly merging its diverged branch.
+
+## DEV evidence required
+
+Before handoff, record:
+
+- exact branch HEAD;
+- complete changed-file list;
+- source/static/unit checks;
+- actual source-tree vs Service Worker closure count;
+- Web / Portable parity evidence;
+- bootstrap authority evidence showing normal startup has no retry polling;
+- cache/update identity evidence;
+- production QA-hook boundary evidence;
+- CSS authority inventory before/after;
+- stale metadata corrections;
+- confirmation that FORMAT_VERSION = 4;
+- confirmation that product base version = v0.1;
+- confirmation that Document / History / Revision / Renderer contracts were not changed.
+
+Update branch-local:
+
+`ACTIVE/INK_DEV_PROGRESS.md`
+
+at meaningful checkpoints.
+
+## Runtime gate
+
+Because this Work Order changes Service Worker/cache and startup/bootstrap behavior, Runtime may not be deferred.
+
+After DEV_HANDOFF and MR source review:
 
 ```text
-full Reference raster
-→ imagedataToTracedata(...)
-→ color quantization / path trace
+exact DEV HEAD
+→ self-hosted Windows Chrome Runtime
+→ Web shell startup
+→ Service Worker/update path
+→ UI suite
+→ Creative suite
+→ Geometry suite
+→ Web / Portable startup compatibility
 ```
 
-The decoder accepts images up to the existing raster limit, while the new color-region path has no smaller workload bound before the synchronous tracer call. In the authoritative browser Runtime the Creative suite did not return evidence within 240 seconds.
+Required final evidence:
 
-This is a practical execution blocker, not a request for more upload hardening.
+- exact tested SHA;
+- runner identity;
+- Runtime run ID;
+- UI = PASS;
+- Creative = PASS;
+- Geometry = PASS;
+- no startup authority race;
+- no stale-cache publication failure;
+- no regression to existing CHAT Phase B capability.
 
-### Bounded revision
-
-Do not redesign Phase B.
-
-1. Make `color-regions` tracing computationally bounded before entering synchronous ImageTracerJS.
-2. Prefer a bounded trace raster / deterministic downsample if needed, then map generated vector geometry back into original Reference coordinate space.
-3. Preserve source SHA, Reference identity, editable Path output, Color/Line alignment, separate layers, History/Audit/Provenance, and FORMAT_VERSION 4.
-4. Do not lower quality by flattening the result to raster.
-5. Do not merely increase the global 240-second Runtime timeout.
-6. No semantic labeling, centerline tracing, UI redesign, Phase C, or new extraction engine.
-7. Browser QA only needs to prove the Phase B operation returns in a practical bounded time and all existing Phase B assertions still pass.
-
-Return:
+## Gate
 
 ```text
-DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
+DEV_AUTHORIZED
+→ DEV_IN_PROGRESS
+→ DEV_HANDOFF
+→ MR_REVIEW_REQUIRED
+→ exact-SHA Runtime
+→ MR_PASS / MR_REVISE
 ```
 
-
-## MR Phase B Runtime checkpoint — 1ad65b932835ef754b7d42291f7e70cdcd048925
-
-```text
-SOURCE_REVIEW = PASS
-DEV_HEAD = 1ad65b932835ef754b7d42291f7e70cdcd048925
-RUNTIME_RUN = 35860798446
-TESTED_SHA = 1ad65b932835ef754b7d42291f7e70cdcd048925
-RUNNER = DESKTOP-NSOQH69
-UI = PASS
-CREATIVE = FAIL / HARNESS_TIMEOUT_240S
-GEOMETRY = NOT_REACHED
-ARTIFACT = 10750058548
-ARTIFACT_DIGEST = sha256:cf43a094bbe926e7bf61158da7b3d4e6f765d211ee6143ad23f1c7a88caf8261
-PRIVATE_USER_1_JPG = HELD
-DECISION = MR_REVISE
-```
-
-### Finding
-
-The first performance revision is structurally correct:
-
-```text
-full source raster
-→ deterministic bounded work raster
-→ ImageTracerJS color-regions
-→ source-coordinate matrix remap
-```
-
-and preserves editable Color/Line geometry and the accepted authorities.
-
-However, the authoritative Windows browser Runtime still does not complete the Creative suite within 240 seconds. The current upper bound of 160,000 trace pixels / 512 px dimension is therefore not a practical bound for this validation path.
-
-Do not add more architecture or diagnostics. This is now a tuning correction only.
-
-### Bounded revision — validation-grade trace budget
-
-1. Keep the existing deterministic work-raster + source-coordinate remap design.
-2. Reduce the synchronous ImageTracerJS color-regions workload substantially; target an initial upper bound no greater than:
-   - 64,000 work pixels;
-   - 320 px on either side.
-3. Reduce color quantization cycles to the minimum practical deterministic setting (prefer 1) while keeping the requested palette count bounded.
-4. Preserve editable filled Color Paths and aligned boundary Line Paths.
-5. Preserve Reference identity, source SHA, separate Color/Line layers, History, Audit, Provenance, and FORMAT_VERSION 4.
-6. Browser Phase B operation must complete under the existing 30-second Phase B assertion.
-7. Do not increase the global 240-second Runtime timeout.
-8. Do not add semantic labeling, centerline tracing, UI redesign, Phase C, or a new extraction engine.
-
-This is the final Phase B performance-tuning pass before MR decides whether ImageTracerJS is adequate for this first validation slice.
-
-Return:
-
-```text
-DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
-```
-
-
-## MR Phase B Runtime checkpoint — 31a427d807f7497b7e64d159607380c056829d67
-
-```text
-SOURCE_REVIEW = PASS
-FINAL_TRACE_TUNING = ACCEPTED
-DEV_HEAD = 31a427d807f7497b7e64d159607380c056829d67
-RUNTIME_RUN = 35863528804
-TESTED_SHA = 31a427d807f7497b7e64d159607380c056829d67
-RUNNER = DESKTOP-NSOQH69
-UI = PASS
-CREATIVE = FAIL / EXPLICIT_POST_COMMIT_ERROR
-PREVIOUS_240S_TRACE_TIMEOUT = NOT_REPRODUCED
-GEOMETRY = NOT_REACHED
-ARTIFACT = 10751735046
-ARTIFACT_DIGEST = sha256:20717ed4ba4920f547ef7a7633620c98b43d107f701968464d724250069a9178
-PRIVATE_USER_1_JPG = HELD
-DECISION = MR_REVISE
-```
-
-### Runtime finding
-
-The final trace tuning solved the previous liveness blocker. Runtime no longer stalls in ImageTracerJS for 240 seconds.
-
-The new failure occurs after the authoritative decomposition has already committed Color/Line layers:
-
-```text
-Reference decomposition commit
-→ app.selection = all generated Line paths
-→ CHAT receipt provenanceIdentity()
-→ grounded context / AI Document Bridge
-→ selected object count > maxObjects (96)
-→ INK_AI_DOCUMENT_BRIDGE_SELECTION_BOUNDS_EXCEEDED
-```
-
-This is not another trace-performance problem and does not justify more tracer tuning.
-
-### Bounded revision — post-commit selection / receipt compatibility only
-
-1. Do not select every generated Line object after decomposition when the result can exceed Document Bridge selection bounds.
-2. Prefer a bounded post-operation selection state, e.g. one representative generated Line Path (or another existing bounded selection behavior).
-3. Preserve all generated Color/Line objects in their layers; this change is selection state only, not output reduction.
-4. Keep the existing CHAT receipt provenance path; it must return normally after the committed operation.
-5. Preserve History/Audit/Provenance/Revision authority and the accepted 64k / 320 / colorquantcycles=1 trace tuning.
-6. Add focused/browser QA proving:
-   - generated result may exceed 96 objects;
-   - post-operation selection remains within Document Bridge bounds;
-   - receipt returns COMPLETED rather than throwing after commit;
-   - all existing Phase B assertions still pass.
-7. No more ImageTracerJS performance tuning unless this bounded fix still fails runtime.
-8. No UI redesign, semantic labeling, centerline, Phase C, new engine, or timeout increase.
-
-Return:
-
-```text
-DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
-```
-
-
-## MR Phase B final acceptance
-
-```text
-DEV_HEAD = 40a7e5e86e7b08c316210240be8527b020c5ecce
-SOURCE_REVIEW = PASS
-BOUNDED_SELECTION_REVISION = PASS
-RUNTIME_RUN = 35865777424
-TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
-RUNNER = DESKTOP-NSOQH69
-BROWSER = Chrome
-UI = PASS
-CREATIVE = PASS
-GEOMETRY = PASS
-RUNTIME_ARTIFACT = 10751389785
-RUNTIME_DIGEST = sha256:b7e97974e1acd0fd3447353c83caf80bb40efefef47875daba107f0387a81784
-```
-
-Authoritative browser evidence proves:
-
-```text
-Reference → Color regions → Line boundaries → separate layers = PASS
-TRACE_BUDGET = 64,000 px / 320 px
-COLOR_QUANTIZATION_CYCLES = 1
-PHASE_B_ELAPSED_MS = 2214.1
-COLOR_REGIONS = 1471
-BOUNDARY_LINES = 1471
-POST_COMMIT_SELECTION = BOUNDED / PASS
-CHAT_RECEIPT = COMPLETED
-HISTORY = PASS
-AUDIT = PASS
-PROVENANCE = PASS
-REVISION = UNCHANGED / PASS
-```
-
-Private user image acceptance:
-
-```text
-FILE = 1.jpg
-MIME = image/jpeg
-SIZE_BYTES = 28354
-DIMENSIONS = 564x703
-SHA256 = e5b9623bb58f107331f4e9db8f265031baf56dafba77745c63be8bd2c3b18de5
-FINAL_TRACE_WORK_RASTER = 226x282 / 63732 px
-TRACE_BUDGET_COMPATIBILITY = PASS
-MULTI_COLOR_DECOMPOSITION_COMPATIBILITY = PASS
-USER_IMAGE_PUBLIC_COMMIT = 0
-```
-
-The exact product path is browser-proven on the repository runtime fixture. The private user JPEG is within the accepted decode and final trace-budget envelope and shows multiple stable color regions under the same bounded 8-color decomposition class. No additional private-file transport hardening is required for Phase B closure.
-
-### Phase B disposition
-
-```text
-PHASE_B = MR_PASS
-PROMOTION = AUTHORIZED
-PHASE_C = NOT_STARTED
-NO_FURTHER_TRACER_TUNING = REQUIRED
-```
-
-
-## Phase B promotion closure — PR #48
-
-```text
-PR = #48 / MERGED
-PROMOTED_MAIN = cd911dc240452ed2bc74e9be41549116b088374b
-EXACT_RUNTIME_TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
-RUNTIME = 35865777424 / PASS
-UI = PASS
-CREATIVE = PASS
-GEOMETRY = PASS
-RUNTIME_ARTIFACT = 10751389785
-RUNTIME_DIGEST = sha256:b7e97974e1acd0fd3447353c83caf80bb40efefef47875daba107f0387a81784
-PROMOTED_PHASE_B_PRODUCT_QA_BLOBS = EXACT_MATCH_TO_TESTED_SHA
-PRIVATE_USER_1_JPG = PASS / INPUT + TRACE-BUDGET COMPATIBILITY
-PHASE_B = CLOSED
-PHASE_C = NOT_STARTED
-```
-
-The clean promotion branch was based on current main to avoid governance-file conflicts. All eight Phase B product/QA blobs promoted to main are byte-identical to the exact SHA exercised by the authoritative Windows browser Runtime. No duplicate post-merge Runtime is required.
+DEV must STOP after handoff. No clean promotion and no next task without MR disposition.
