@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — UI DEV HANDOFF
 
-STATUS: DEV_HANDOFF / UR_REVIEW
+STATUS: UR_REVIEW / STATIC_PASS / RUNTIME_HOLD
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
@@ -124,3 +124,42 @@ The required runtime screenshots could not be captured in this GitHub-only DEV e
 
 Handoff status on completion:
 `DEV_HANDOFF → UR_REVIEW → STOP`
+
+
+## UR review — Phase A + B
+
+### Static review result
+- Phase A inventory present and complete enough for the issued scope.
+- Required duplicate-resolution groups are explicitly mapped.
+- Phase B changes are bounded to UI/docs/assets from the issued package start commit.
+- No Core/schema/renderer/FORMAT_VERSION files changed.
+- Original Y-mark asset is referenced directly by Web and Portable top-left marks.
+- Browser `<link rel="icon">` points directly to the original JPG source asset.
+- Startup shell/theme values are changed to light values before the external stylesheet.
+- Light-shell CSS is isolated as a Phase B override.
+
+### Main-branch drift check
+Current branch is behind `main` by 10 commits, but those main-only commits modify only:
+- `ACTIVE/INK_CURRENT_WORK_ORDER.md`
+- `ACTIVE/INK_REVIEW_STATUS.md`
+- `ACTIVE/INK_RUNTIME_QUEUE.json`
+- `working/WORKING_STATUS.md`
+
+No current product-source overlap was found in that drift check.
+
+### Hold reason
+Required runtime evidence is still missing. Per the UR gate, Phase A/B cannot receive `UI_PASS` until the visible result is inspected in runtime.
+
+Required runtime gate:
+- normal desktop
+- startup → final state
+- light chrome
+- top-left Y-mark
+- browser favicon
+- workspace/paper separation
+- visual comparison against the supplied Photoshop references
+
+### UR result
+`UI_HOLD`
+
+No Phase C authorization yet.
