@@ -18,6 +18,13 @@ const DEFAULT_DOCUMENT_BRIDGE_LIMITS = Object.freeze({ maxObjects: 64, maxRelati
 const DEFAULT_SEMANTIC_LIMITS = Object.freeze({ maxRegions: 96, maxPairs: 4096, maxEvidence: 256 });
 const DEFAULT_PROVENANCE_LIMITS = Object.freeze({ maxEvents: 128, maxEdges: 256, maxUnresolved: 128, maxConflicts: 64, maxBytes: 72 * 1024 });
 const DEFAULT_PROVENANCE_BRIDGE_LIMITS = Object.freeze({ maxEvents: 64, maxEdges: 128 });
+const DEFAULT_CREATIVE_MEMORY_INTEGRATION_OPTIONS = Object.freeze({ maxRecords: 16, maxBytes: 32 * 1024 });
+const DEFAULT_RESEARCH_CREATION_INTEGRATION_OPTIONS = Object.freeze({
+  maxEvidence: 16,
+  maxPrinciples: 16,
+  maxConstraints: 16,
+  maxBytes: 48 * 1024
+});
 
 const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const own = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
@@ -560,7 +567,7 @@ export function createCreativeIntelligenceContextAdapter({
         try {
           creativeMemory = readCreativeMemory({
             query: clone(options.creativeMemoryQuery || {}),
-            options: clone(options.creativeMemoryOptions || {})
+            options: { ...DEFAULT_CREATIVE_MEMORY_INTEGRATION_OPTIONS, ...(clone(options.creativeMemoryOptions) || {}) }
           });
         } catch (error) {
           advisoryProviderIssues.push(providerIssue('creative-memory', error));
@@ -570,7 +577,7 @@ export function createCreativeIntelligenceContextAdapter({
         try {
           researchCreation = readResearchCreation({
             selection: clone(options.researchCreationSelection || {}),
-            options: clone(options.researchCreationOptions || {})
+            options: { ...DEFAULT_RESEARCH_CREATION_INTEGRATION_OPTIONS, ...(clone(options.researchCreationOptions) || {}) }
           });
         } catch (error) {
           advisoryProviderIssues.push(providerIssue('research-creation', error));
