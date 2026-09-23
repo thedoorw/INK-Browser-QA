@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / AUTHORIZED / PHASE_B_LINE_COLOR_DECOMPOSITION`
+STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / PHASE_B_LINE_COLOR_DECOMPOSITION`
 
 ## Control
 
@@ -176,4 +176,54 @@ FORMAT_VERSION = 4
 USER_IMAGE_COMMITTED = 0
 NEXT_ACTION = MR_REVIEW_REQUIRED
 STOP
+```
+
+
+## MR Phase B Runtime checkpoint — 79af1c96a55635f6b8471e1ee02edade9fb25dac
+
+```text
+SOURCE_REVIEW = PASS
+DEV_HEAD = 79af1c96a55635f6b8471e1ee02edade9fb25dac
+RUNTIME_RUN = 35854909964
+TESTED_SHA = 79af1c96a55635f6b8471e1ee02edade9fb25dac
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = FAIL / HARNESS_TIMEOUT_240S
+GEOMETRY = NOT_REACHED
+ARTIFACT = 10747521014
+ARTIFACT_DIGEST = sha256:7569e8327cd411d998ea72bde1fa0915c18d1b37084e4e6c4070c465979283a8
+PRIVATE_USER_1_JPG = HELD
+DECISION = MR_REVISE
+```
+
+### Runtime blocker
+
+Phase B currently sends the full decoded source raster directly into synchronous ImageTracerJS color-region tracing:
+
+```text
+full Reference raster
+→ imagedataToTracedata(...)
+→ color quantization / path trace
+```
+
+The decoder accepts images up to the existing raster limit, while the new color-region path has no smaller workload bound before the synchronous tracer call. In the authoritative browser Runtime the Creative suite did not return evidence within 240 seconds.
+
+This is a practical execution blocker, not a request for more upload hardening.
+
+### Bounded revision
+
+Do not redesign Phase B.
+
+1. Make `color-regions` tracing computationally bounded before entering synchronous ImageTracerJS.
+2. Prefer a bounded trace raster / deterministic downsample if needed, then map generated vector geometry back into original Reference coordinate space.
+3. Preserve source SHA, Reference identity, editable Path output, Color/Line alignment, separate layers, History/Audit/Provenance, and FORMAT_VERSION 4.
+4. Do not lower quality by flattening the result to raster.
+5. Do not merely increase the global 240-second Runtime timeout.
+6. No semantic labeling, centerline tracing, UI redesign, Phase C, or new extraction engine.
+7. Browser QA only needs to prove the Phase B operation returns in a practical bounded time and all existing Phase B assertions still pass.
+
+Return:
+
+```text
+DEV_HANDOFF → MR_REVIEW_REQUIRED → STOP
 ```
