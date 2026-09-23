@@ -6,45 +6,32 @@ STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / PHASE_A_REFERENCE_HANDOFF`
 TASK_ID = INK-CHAT-VALIDATION-001
 PHASE = A_REFERENCE_HANDOFF
 DEV_BRANCH = work/ink-chat-validation-001
-REVIEWED_DEV_HEAD = 2d324df22dd58ebf3579ba175422839abd92bd04
+REVIEWED_DEV_HEAD = d908c6f1973f6fbf2ead80d33dbfe9abf5d47ea1
 HISTORY_SATURATION_FIX = ACCEPTED
-SOURCE_REVIEW = PASS_FOR_HISTORY_REVISION
-RUNTIME_RUN = 35836852283
-RUNTIME_TESTED_SHA = 2d324df22dd58ebf3579ba175422839abd92bd04
-RUNTIME_ATTEMPT_1_UI = FAIL / TRANSIENT CONTEXT SYNC
+CROSS_REALM_SOURCE_FIX = ACCEPTED_PENDING_RUNTIME
+SOURCE_REVIEW = PASS
+RUNTIME_RUN = 35840153267
+RUNTIME_ATTEMPT_1_UI = PASS
+RUNTIME_ATTEMPT_1_CREATIVE = FAIL / HARNESS_TIMEOUT_240S
 RUNTIME_ATTEMPT_2_UI = PASS
-RUNTIME_ATTEMPT_2_CREATIVE = FAIL
-RUNTIME_BLOCKER = CROSS_REALM_BLOB_REJECTED
-RUNTIME_ARTIFACT = 10739822384
-RUNTIME_ARTIFACT_DIGEST = sha256:756449c50b82eb6c107f0c835b65d6b3d99a15ab1774635cf1b01ceb7f258967
-MR_REAL_IMAGE_TEST = HELD_UNTIL_RUNTIME_PASS
+RUNTIME_ATTEMPT_2_CREATIVE = FAIL / HARNESS_TIMEOUT_240S
+RUNTIME_EVIDENCE_CALLBACK = NOT_PRODUCED
+MR_REAL_IMAGE_TEST = HELD_UNTIL_CREATIVE_RUNTIME_PASS
 FORMAT_VERSION = 4
 DECISION = MR_REVISE
 ```
 
-Accepted from the prior MR_REVISE:
-- History saturation is now limit-aware;
-- newest retained History entry identity is checked;
-- a committed mutation is not mislabeled as ordinary FAILED;
-- Phase A authority boundaries remain preserved.
+Source review confirms the cross-realm binary revision is bounded and preserves accepted authority.
 
-New browser Runtime finding:
+Runtime does not yet prove it. The exact reviewed SHA reproduced the same Creative harness timeout twice after UI PASS.
 
-```text
-parent/harness realm Blob
-→ iframe INK_CHAT_HANDOFF
-→ instanceof Blob fails across realm
-→ CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED
-→ Reference import does not execute
-```
+Disposition:
 
-This is a Phase A product-boundary defect, not an unrelated UI failure. The first Runtime attempt had one transient UI contextual-sync failure; rerunning the same exact SHA produced UI PASS and then reached the Creative suite, where the cross-realm binary defect reproduced deterministically.
+`MR_REVISE`
 
-Required bounded correction:
-1. realm-safe external File/Blob-like acceptance;
-2. normalization into local File before existing decoder;
-3. invalid arbitrary object rejection preserved;
-4. explicit cross-realm browser QA;
-5. no Phase B work.
-
-No private real-user attachment PASS may be claimed before exact-SHA Runtime passes.
+Next delta is diagnostic + liveness only:
+- short timeout around the new cross-realm handoff;
+- browser checkpoints for normalization / decoder entry / decoder return / Reference commit / receipt return;
+- correct the actual stall, using a full local byte copy before local File construction if the decoder boundary is where the stall occurs;
+- do not merely increase the global 240-second timeout;
+- do not enter Phase B.
