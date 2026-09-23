@@ -2100,3 +2100,25 @@ RUNTIME = DEFERRED_TO_INTEGRATION_BATCH
 This is the first higher-level creative-intelligence module after Grounded Creative Decision & Plan Bridge.
 
 Research→Creation remains explicitly deferred.
+
+
+## CORE-MOD-006 closure
+
+```text
+TASK = CORE-MOD-006
+TITLE = Style / Method / Creative Memory Module v0.1
+DEV_HANDOFF = 589ba3624be9221a57056846c240ae0330361ef9
+SOURCE_QA = PASS / 35804446985
+PROMOTION_PR = #41 / MERGED
+PROMOTED_MAIN = 58652d6c04b16ac78f6561503257dba274ce9267
+MODULE_STATE = MODULE_READY
+PRODUCT_INTEGRATED = NO
+RUNTIME = DEFERRED_TO_INTEGRATION_BATCH
+FORMAT_VERSION = 4
+```
+
+Creative Memory now exists as a deterministic advisory core module for reusable shape, composition, line, material, color, method, decision and approach-result knowledge.
+
+It does not infer user personality and does not execute edits.
+
+The next higher-level roadmap item remains the Research → Creation Bridge, but no implementation Work Order is authorized by this closure alone.
