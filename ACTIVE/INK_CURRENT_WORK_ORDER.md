@@ -320,3 +320,25 @@ INK Core
 ```
 
 UI-006 remains a separate lane and is not stopped by this hold.
+
+
+## User hold — Connector architecture first
+
+```text
+USER_DECISION = PAUSE DRAWING VALIDATION
+PHASE_C_SOURCE_REVIEW = PASS / RETAIN
+PHASE_C_RUNTIME = HOLD
+PRIVATE_REAL_IMAGE_ACCEPTANCE = HOLD
+PHASE_D_TO_F = NOT_AUTHORIZED / HOLD
+UI_LANE = UNAFFECTED / CONTINUES SEPARATELY
+
+NEW_PRIORITY =
+  study mature CHAT ↔ Figma / Penpot operating workflows
+  → map shared capabilities against INK
+  → define an INK programmable/public API + CHAT connector
+  → reuse existing INK authorities
+  → resume creative validation only after connector architecture is reviewed
+```
+
+Do not queue Phase C Runtime or advance Phase D–F while this hold is active.
+Existing Phase C DEV evidence and source-review disposition remain valid as historical evidence.
