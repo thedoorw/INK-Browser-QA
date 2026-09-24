@@ -75,6 +75,38 @@ const editTaskSchema = (operationSchema, argumentSchema, maxTargets = 64) => obj
 
 const genericEditArguments = { type: 'object', properties: {}, additionalProperties: true, description: 'Operation-specific arguments; inspect the operation descriptor for exact fields.' };
 
+const creativePlanSourceSchema = obj({
+  documentId: str('Source document id.'),
+  pageId: str('Source page id.'),
+  revisionId: { description: 'Source Revision id or null when the document has no captured Revision.' },
+  documentFingerprint: str('Exact source document fingerprint.')
+}, ['documentId', 'pageId', 'documentFingerprint'], 'Exact Chat Creative Plan source identity.');
+
+const creativePlanStepSchema = obj({
+  stepId: str('Stable plan step id.'),
+  taskId: str('Optional compatibility task id; the existing plan authority derives its own bounded task identity.'),
+  operation: { type: 'string', enum: CHAT_EDIT_OPERATIONS, description: 'Existing bounded-edit operation.' },
+  targets: targetArraySchema,
+  arguments: genericEditArguments,
+  dependsOn: arr(str('Earlier step id dependency.'), 'Earlier step dependencies.', { maxItems: 32 })
+}, ['stepId', 'operation', 'targets', 'arguments'], 'One existing bounded-edit step in a Chat Creative Plan.');
+
+const creativePlanSchema = obj({
+  schema: { type: 'string', const: 'INK-CHAT-CREATIVE-PLAN', default: 'INK-CHAT-CREATIVE-PLAN', description: 'Existing Chat Creative Plan schema.' },
+  version: { type: 'integer', const: 1, default: 1, description: 'Existing Chat Creative Plan version.' },
+  planId: str('Optional stable plan id; when omitted the existing authority derives it deterministically.'),
+  source: creativePlanSourceSchema,
+  intentSummary: str('Bounded human-readable plan intent summary.'),
+  steps: arr(creativePlanStepSchema, 'Ordered bounded-edit steps.', { minItems: 2, maxItems: 32 })
+}, ['intentSummary', 'steps'], 'Existing INK-CHAT-CREATIVE-PLAN / 1 proposal. Source may be omitted so the existing authority can bind current state.');
+
+const useInkSchema = obj({
+  action: { type: 'string', enum: ['inspect', 'propose', 'approve', 'execute', 'cancel'], description: 'Programmable composition action.' },
+  plan: creativePlanSchema,
+  planId: str('Existing Chat Creative Plan id.'),
+  approvalToken: str('Explicit plan approval token returned by the existing plan authority.')
+}, ['action'], 'Declarative use_ink request. Action-specific fields are validated by the existing Chat Creative Plan authority.');
+
 const editSchemas = {
   'path.repaint.v1': editTaskSchema(
     { type: 'string', const: 'path.repaint.v1', description: 'Repaint Path appearance.' },
@@ -322,6 +354,36 @@ const primary = [
     inputSchema: obj({ idOrToolName: str('Capability id or registered named tool name.') }, ['idOrToolName'], 'Capability description request.'),
     targetTypes: ['None'], ...policy(false, 'NONE', 'NONE', 'NONE'), resultContract: resultContract(),
     examples: [{ idOrToolName: 'preview.capture' }], toolPrimary: true
+  }),
+  descriptor({
+    id: 'composition.programmable', title: 'Programmable native composition', description: 'Declarative CHAT-native plan bridge over the existing Chat Creative Plan and bounded-edit authorities.',
+    availability: true, routingClass: 'PROPOSAL_REQUIRED', namedTool: 'use_ink', publicMethod: 'composition.propose', role: 'PROPOSAL',
+    authoritativeRoute: 'app.inkPublicApi.composition.* → app.chatCreativePlan → existing bounded-edit authority → History → Revision',
+    inputSchema: useInkSchema,
+    targetTypes: ['Document', 'Page', 'Object', 'Path'],
+    constraints: [
+      'Declarative plan actions only; arbitrary JavaScript, arbitrary method dispatch, callbacks, and direct Document JSON writes are prohibited.',
+      'propose is Document/History/Revision mutation-neutral and does not approve or execute.',
+      'execute requires the explicit approval token issued by the existing Chat Creative Plan authority.',
+      'Every plan step remains subject to the existing bounded-edit allowlist and state validation.',
+      'History and partial/final Revision behavior are inherited from the existing Chat Creative Plan authority.',
+      'Visual verification remains a separate get_ink_preview action; use_ink does not auto-capture Preview.'
+    ],
+    ...policy(true, 'PLAN_PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'EXISTING_CHAT_CREATIVE_PLAN', 'EXISTING_PARTIAL_OR_FINAL_CAPTURE', true, false, 'Call get_ink_preview separately when visual verification is needed.'),
+    resultContract: resultContract({ statuses: ['PROPOSED', 'APPROVED', 'COMPLETED', 'STOPPED', 'REJECTED', 'FAILED'], changesRefs: true }),
+    examples: [{
+      action: 'propose',
+      plan: {
+        schema: 'INK-CHAT-CREATIVE-PLAN',
+        version: 1,
+        intentSummary: 'Repaint one path and then translate another object.',
+        steps: [
+          { stepId: 'repaint', operation: 'path.repaint.v1', targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { fill: '#ffffff' }, dependsOn: [] },
+          { stepId: 'move', operation: 'object.translate.v1', targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'object-2' }], arguments: { dx: 8, dy: 0 }, dependsOn: ['repaint'] }
+        ]
+      }
+    }],
+    toolPrimary: true
   })
 ];
 
@@ -365,13 +427,6 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
 });
 
 const unavailable = [
-  descriptor({
-    id: 'composition.programmable', title: 'Programmable native composition', description: 'Future programmable native composition capability; not implemented by Connector-003.',
-    availability: false, availabilityReason: 'CONNECTOR_004_NOT_IMPLEMENTED', routingClass: 'PROGRAMMABLE_FUTURE', namedTool: null, publicMethod: null, role: 'UNAVAILABLE',
-    authoritativeRoute: 'UNAVAILABLE', inputSchema: obj({}, [], 'Unavailable capability.'), targetTypes: ['None'],
-    constraints: ['Discovery only. Programmable native composition is unavailable.'],
-    ...policy(false, 'UNAVAILABLE', 'NONE', 'NONE'), resultContract: resultContract({ statuses: ['FAILED'] }), examples: [], toolPrimary: false
-  }),
   descriptor({
     id: 'external.transport', title: 'External connector transport', description: 'Future external transport capability; not implemented by Connector-003.',
     availability: false, availabilityReason: 'EXTERNAL_TRANSPORT_NOT_IMPLEMENTED', routingClass: 'UNAVAILABLE', namedTool: null, publicMethod: null, role: 'UNAVAILABLE',

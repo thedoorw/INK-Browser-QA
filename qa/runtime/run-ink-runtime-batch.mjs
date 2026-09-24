@@ -17,6 +17,11 @@ const creativeRequired = [
   'CANVAS_EDITOR_RENDERED', 'CREATIVE_WORKSPACE_VISIBLE', 'REFERENCE_IMPORT_VISIBLE',
   'DIRECT_EXTRACTION_EXECUTED', 'EDITABLE_PATH_RESULT_VISIBLE', 'REFERENCE_OVERLAY_CONTROLLABLE',
   'PATH_EDIT_ENTERED', 'MUTATION_BLOCKED_BEFORE_APPROVAL', 'BOUNDED_EDIT_EXECUTED',
+  'USE_INK_TOOL_AVAILABLE', 'USE_INK_PROPOSE_MUTATION_NEUTRAL',
+  'USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL', 'USE_INK_APPROVAL_TOKEN_ISSUED',
+  'USE_INK_TWO_STEP_EXECUTION_ORDERED', 'USE_INK_HISTORY_RECORDED',
+  'USE_INK_FINAL_REVISION_CAPTURED', 'USE_INK_UNSUPPORTED_ACTION_REJECTED',
+  'USE_INK_FORBIDDEN_OPERATION_REJECTED', 'USE_INK_NO_AUTO_PREVIEW',
   'CHAT_DOCUMENT_CONTEXT_BOUND', 'CHAT_NATURAL_LANGUAGE_RESPONSE', 'CHAT_DISCUSSION_NON_MUTATING',
   'STRUCTURE_AWARE_EXECUTED', 'REVISION_RESTORE_EXECUTED', 'PROJECT_RELOAD_INTEGRITY',
   'WORKSTATION_PROPERTIES_UNAVAILABLE_STATE_EXPLICIT', 'WORKSTATION_PROPERTIES_GROUNDED_READOUT',
@@ -178,7 +183,7 @@ export async function runBatch(root) {
         const failure = new Promise((_, reject) => {
           child.once('error', reject);
           child.once('exit', (code, signal) => reject(new Error(`Browser exited before evidence: ${code}/${signal}`)));
-          timer = setTimeout(() => reject(new Error('Harness timeout (240 seconds)')), 240000);
+          timer = setTimeout(() => reject(new Error('Harness timeout (360 seconds)')), 360000);
         });
         const evidence = await Promise.race([result, failure]);
         await writeFile(path.join(evidenceDir, `${suite.id}.json`), JSON.stringify(evidence, null, 2));
