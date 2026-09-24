@@ -1,3 +1,18 @@
+## Smart closed-loop Runtime revise — 2026-09-24
+
+```text
+RUN = 36003623197
+TESTED_SHA = 2b3c2f79147b6122f5ac78ed47d19c9878522386
+UI = PASS
+CREATIVE = QA_BRIDGE_TIMEOUT
+GEOMETRY = NOT_REACHED
+PRODUCT_DEFECT = NOT_ESTABLISHED
+MR = REVISE / QA_BRIDGE_ONLY
+PRODUCT_SOURCE = FROZEN
+```
+
+Creative browser reached discovery → import → History/provenance → decomposition → 1471 Color + 1471 Line stable refs. It timed out while dynamically injecting the QA-only realm-local output resolver, before the first preview call.
+
 ## Smart closed-loop proof authorization — 2026-09-24
 
 ```text
@@ -119,15 +134,15 @@ FORMAT_VERSION = 4
 
 # INK WORKING STATUS
 
-STATUS: `SMART_CLOSED_LOOP_001_ACTIVE / UI_VISUAL_LANE_PENDING`
+STATUS: `SMART_CLOSED_LOOP_001_MR_REVISE_QA_BRIDGE / UI_VISUAL_LANE_PENDING`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CLOSED-LOOP-001 / smart Reference→Color+Line→CHAT proof` |
 | CURRENT_TASK_ID | `INK-CHAT-CLOSED-LOOP-001` |
 | DEV_BRANCH | `work/ink-chat-closed-loop-001` |
-| DEV_HANDOFF | `NOT_YET / DEV_START` |
-| MR_REVIEW | `AUTHORIZED / waiting DEV_HANDOFF` |
+| DEV_HANDOFF | `REVISION_AUTHORIZED / QA_BRIDGE_ONLY` |
+| MR_REVIEW | `SOURCE PASS / Runtime QA-bridge revise` |
 | TARGET_GATE | `SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
