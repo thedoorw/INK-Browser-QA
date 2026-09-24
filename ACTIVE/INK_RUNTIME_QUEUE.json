@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "5ad4a271b37a1dca9236239be8bb867bff320b7c",
+  "pending_work_orders": [
+    "INK-WEB-UI-006-PHASE-I"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -19,8 +21,8 @@
     "INK-WEB-UI-006-PHASE-H"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": "INK-WEB-UI-006 Phase H corrected exact-SHA Windows self-hosted Runtime passed."
+    "enabled": true,
+    "reason": "INK-WEB-UI-006 Phase I final exact-SHA Windows self-hosted Runtime gate before final visual comparison and certification."
   },
   "batch_policy": {
     "default_target": 3,
