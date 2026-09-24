@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase G DEV HANDOFF
 
-STATUS: AUTHORIZED / UI_ONLY / PHASE_G / DEV_START
+STATUS: DEV_HANDOFF / STATIC_PASS / RUNTIME_DISPATCH_PENDING / UI_ONLY / PHASE_G / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-g`
@@ -241,3 +241,115 @@ Completion state:
 `DEV_HANDOFF → UR_REVIEW → STOP`
 
 Do not begin Phase H automatically.
+
+
+---
+
+## DEV completion — 2026-09-24
+
+Implemented only Phase G — Typography System.
+
+### Exact product / QA checkpoint
+
+`718eff8c31a82a8ffd82bbf3d2b83f38b2aa993b`
+
+Later Phase G commits are handoff/evidence/progress documentation only unless otherwise noted by final branch compare.
+
+### Changed product / QA files
+
+- `product/source/styles.css`
+- `qa/runtime/ink-web-ui-001-harness.html`
+
+No `product/source/src/**` file changed.
+
+No shell template or generated shell file changed.
+
+### Typography token map
+
+```text
+UI-XS  = 9px   / metadata + compact badges
+UI-SM  = 9.5px / secondary labels + compact state
+UI-MD  = 10px  / normal workstation controls
+UI-LG  = 11px  / panel/application headings
+BRAND  = 10px  / INK brand text only
+
+WEIGHT_REGULAR = 400
+WEIGHT_CONTROL = 500
+WEIGHT_HEADING = 650
+WEIGHT_META = 700
+LINE_CONTROL = 1.2
+LINE_COPY = 1.45
+```
+
+### Baseline scattered size inventory
+
+Accepted Phase F stylesheet literal sizes before normalization:
+
+`6 / 7 / 8 / 8.5 / 9 / 9.5 / 10 / 10.5 / 11 / 12 / 13 / 14 / 16 / 17px`
+
+Phase G preserves historical/fallback blocks but adds one final application-UI presentation authority so effective readable workstation typography resolves through the named tokens above.
+
+### Intentional exceptions
+
+- application menu commands and document title use `UI-LG` to retain accepted prominence;
+- low-priority contextual identity may step down to `UI-XS` on narrow/mobile;
+- icon/decorative glyph dimensions are not treated as readable typography;
+- artwork Text/document typography is out of scope and unchanged.
+
+### Verification
+
+PASS:
+
+- CSS brace balance;
+- exact named token values;
+- no literal Phase G font size below 9px;
+- interactive-control metadata-scale leak guard;
+- UI Runtime harness inline-script parse;
+- six Phase G Runtime assertions added;
+- accepted Phase F baseline compare is ahead-only;
+- product/QA delta limited to `styles.css` + UI Runtime harness;
+- `product/source/src/**` unchanged.
+
+Runtime-harness coverage added for:
+
+- tokenized typography authority;
+- control minimum;
+- metadata minimum;
+- panel title/tab hierarchy;
+- CJK / Latin / numeric consistency;
+- narrow-desktop typography containment.
+
+Full evidence:
+
+`working/INK_WEB_UI_006_PHASE_G_EVIDENCE.md`
+
+### Shell generator
+
+`N/A / SHELL_UNTOUCHED`
+
+`shell.template.html`, `index.html`, and `index-standalone.html` were not changed by Phase G.
+
+### Runtime
+
+The available DEV GitHub connector does not expose workflow dispatch.
+
+No Runtime PASS is claimed.
+
+UR must run the authoritative Windows self-hosted Runtime against the final exact DEV revision before promotion.
+
+### Boundary confirmation
+
+- artwork Text semantics unchanged
+- Document unchanged
+- History unchanged
+- Revision unchanged
+- Geometry/Core unchanged
+- CHAT semantics unchanged
+- Service Worker/bootstrap/build identity unchanged
+- product version remains `v0.1`
+- `FORMAT_VERSION = 4` unchanged
+- Phase H not started
+
+Completion state:
+
+`DEV_HANDOFF → UR_REVIEW → STOP`
