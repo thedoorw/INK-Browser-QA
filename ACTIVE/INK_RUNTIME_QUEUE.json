@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "bae2353fdd057f5334a219bcdfcda67cc9090c46",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "033d9ffe9c3b58c257a87380d7db26dc22628eea",
+  "pending_work_orders": [
+    "INK-CHAT-SMART-CLOSED-LOOP-001"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -24,8 +26,8 @@
     "INK-CHAT-CONNECTOR-004"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": ""
+    "enabled": true,
+    "reason": "QA-only acceptance: prove the original CHAT attachment → Reference → Color+Line → use_ink → History/Revision → get_ink_preview visual closed loop with before/after PNG evidence."
   },
   "batch_policy": {
     "default_target": 3,
