@@ -1,3 +1,111 @@
+## Connector-004 MR exact-HEAD review — 2026-09-24
+
+```text
+TASK = INK-CHAT-CONNECTOR-004
+REVIEW_HEAD = adb994650c62ea7e917cb15af574545ab0d72d9a
+
+SOURCE_REVIEW = PASS
+SCOPE_REVIEW = PASS
+AUTHORITY_REUSE = PASS
+SECURITY_BOUNDARY = PASS
+FORMAT_VERSION = 4 / PRESERVED
+
+EXACT_SHA_RUNTIME_RUN = 35968312192
+RUNTIME_TESTED_SHA = adb994650c62ea7e917cb15af574545ab0d72d9a
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+RUNTIME_ARTIFACT_ID = 10795510287
+
+CONNECTOR_004_BROWSER_FEATURE_COVERAGE = FAIL / MISSING
+MR = REVISE
+PROMOTION = BLOCKED
+```
+
+### Source findings
+
+Accepted at source level:
+
+- `use_ink` is appended exactly once as Named Tool 19;
+- Connector-003 tools 1–18 remain the ordered prefix;
+- `composition.programmable` is available and maps to `use_ink / composition.propose`;
+- `external.transport` remains unavailable;
+- `composition.inspect/propose/approve/execute/cancel` delegate to the existing `app.chatCreativePlan`;
+- no second plan store / History / Revision / Document authority was added;
+- the existing Chat Creative Plan and bounded-edit source blobs remain unchanged;
+- the v0.1 operation vocabulary remains exactly six existing bounded operations;
+- Boolean / Repeat / Group / Frame / Component / Layout exposure remains zero;
+- no eval / Function constructor / arbitrary app-method dispatch / external transport / direct Document JSON replacement;
+- Preview remains explicit and separate.
+
+Regression-test edits to Connector-001/002/003 preserve their prefix/security contracts while accepting the authorized appended `use_ink`.
+
+### Runtime finding
+
+The exact-SHA Windows regression batch itself passed:
+
+```text
+INK_TESTED_SHA = adb994650c62ea7e917cb15af574545ab0d72d9a
+status = PASS
+ui = PASS
+creative = PASS
+geometry = PASS
+browser = Chrome
+```
+
+However, the exact tested creative browser harness contains:
+
+```text
+use_ink = 0 occurrences
+composition.propose = 0 occurrences
+INK_USE_INK = 0 occurrences
+chatCreativePlan = 0 occurrences
+```
+
+and the central Runtime required-check list has no Connector-004 check.
+
+Therefore run `35968312192` proves **regression safety only**. It does not prove the new programmable bridge works in the real browser Runtime and cannot satisfy:
+
+`INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS`.
+
+### Bounded MR revision
+
+Same branch:
+
+`work/ink-chat-connector-004`
+
+Product source is frozen unless the new browser evidence exposes a real source defect.
+
+Authorized revision paths:
+
+```text
+qa/runtime/ink-cloud-018-browser-harness.html
+qa/runtime/run-ink-runtime-batch.mjs
+qa/ink-chat-connector-004-use-ink-programmable-bridge.test.mjs   (only if needed)
+research/INK_CHAT_CONNECTOR_004_USE_INK_PROGRAMMABLE_BRIDGE_REPORT_v0.1.md
+ACTIVE/INK_DEV_PROGRESS.md
+working/WORKING_STATUS.md
+working/INK_CHAT_CONNECTOR_004_DEV_HANDOFF.md
+```
+
+Required browser evidence must at minimum prove:
+
+1. `app.inkPublicApi` exposes Named Tool 19 `use_ink`;
+2. `use_ink(propose)` creates the existing Chat Creative Plan proposal without Document/History/Revision mutation;
+3. execute-before-approval is rejected without mutation;
+4. explicit `approve` returns the existing plan approval token;
+5. approved two-step plan executes through existing bounded operations in deterministic order;
+6. History evidence is produced by the existing authority;
+7. final Revision evidence is produced by the existing Chat Creative Plan authority;
+8. an unsupported `use_ink` action or forbidden plan operation is rejected deterministically;
+9. the Runtime runner requires these Connector-004 markers so a missing bridge test cannot still PASS;
+10. no automatic Preview is introduced.
+
+Then:
+
+`DEV_HANDOFF → STOP → MR source re-check → exact-SHA Runtime rerun`.
+
+
 ## Connector-004 review target — 2026-09-24
 
 ```text
@@ -24,7 +132,7 @@ Review focus:
 
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-004 / USE_INK_PROGRAMMABLE_BRIDGE / DEV_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-004 / MR_REVISE / BROWSER_FEATURE_COVERAGE_REQUIRED`
 
 ## Connector-003 promotion closure — 2026-09-24
 
