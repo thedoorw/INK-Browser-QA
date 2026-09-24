@@ -4,12 +4,12 @@ STATUS: `CONNECTOR_DEV_ACTIVE / DRAWING_VALIDATION_HOLD / UI_SEPARATE`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-001 / Public Creative API facade` |
+| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-001 / Agent Connector Foundation` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-001` |
 | DEV_BRANCH | `work/ink-chat-connector-001` |
 | DEV_HANDOFF | `CONNECTOR = NOT_STARTED / Phase C = preserved HOLD` |
 | MR_REVIEW | `Connector-001 = DEV_AUTHORIZED / Phase C = HOLD_BY_USER` |
-| TARGET_GATE | `INK_PUBLIC_CREATIVE_API_FOUNDATION_WORKS` |
+| TARGET_GATE | `INK_AGENT_CONNECTOR_FOUNDATION_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
@@ -17,14 +17,18 @@ STATUS: `CONNECTOR_DEV_ACTIVE / DRAWING_VALIDATION_HOLD / UI_SEPARATE`
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `DEV Connector-001 → DEV_HANDOFF / STOP → MR review` |
+| NEXT_STAGE | `DEV revised Connector-001 → DEV_HANDOFF / STOP → MR review` |
 
 ## Connector-001 authorization
 
 ```text
 TASK = INK-CHAT-CONNECTOR-001
 BRANCH = work/ink-chat-connector-001
-PURPOSE = one stable Public Creative API over existing INK authorities
+PURPOSE =
+  Public Creative API
+  + Adobe-style named tools
+  + normalized INK_AGENT_RESULT
+  over existing INK authorities
 
 CONNECTION_POINTS =
   Document / Selection / Inspect
@@ -33,11 +37,15 @@ CONNECTION_POINTS =
   History
   Revision
 
+ROUTING_MODEL =
+  named tool first
+  → future use_ink only when needed
+
 NOT_IN_SCOPE =
   use_ink execution sandbox
   MCP/plugin transport
-  screenshot transport
-  asset transport
+  preview/screenshot transport
+  external asset transport
   new drawing behavior
 ```
 
@@ -45,6 +53,12 @@ Research baseline:
 `research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md`
 
 Drawing validation remains on user hold.
+
+```text
+ADOBE_PATTERN = specialized tools + result handles + visual verification
+FIGMA_PENPOT_PATTERN = programmable native-object access
+INK_TARGET = BOTH / SAME PUBLIC AUTHORITY
+```
 
 ## Dual-track coordination synchronization — 2026-09-24
 
