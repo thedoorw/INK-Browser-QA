@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-WEB-UI-006 / PHASE_C_D / DEV_IN_PROGRESS`
+STATUS: `INK-WEB-UI-006 / PHASE_C_D / DEV_HANDOFF / STOP`
 
 ## Task
 
@@ -10,34 +10,65 @@ PHASE = C_D
 ROLE = UI DEV
 BRANCH = work/ink-web-ui-standard-001
 BASELINE = main @ 042b4f9f7528b14df6d10593b61f65565b3779ac
-RECONCILIATION = CLEAN / MAIN PRODUCT+QA AUTHORITY + UI BRANCH DOCS
-PHASE_E_PLUS = NOT_AUTHORIZED
+CLEAN_RECONCILIATION = 49bbb2a28ebfcf7d39fca26cd35b738ed5beec94
+IMPLEMENTATION_SOURCE_CHECKPOINT = 7ce6aa86b6881045be3f120655e7becea8e4c937
+PHASE_E_PLUS = NOT_STARTED / NOT_AUTHORIZED
 DOCUMENT_AUTHORITY_CHANGE = 0
 HISTORY_AUTHORITY_CHANGE = 0
 REVISION_AUTHORITY_CHANGE = 0
 RENDERER_AUTHORITY_CHANGE = 0
-FORMAT_VERSION = 4 / PRESERVE
+SERVICE_WORKER_CHANGE = 0
+FORMAT_VERSION = 4 / PRESERVED
+NEXT_ACTION = UR_REVIEW
 ```
 
-## Authorized scope
+## Completion
 
-- Phase C — top cleanup only.
-- Phase D — left toolbar one/two-column layout only.
-- UI preference may use localStorage.
-- Must preserve tool order, shortcuts, Draw family and Core semantics.
-- Must preserve technical-debt cleanup from `INK-TECH-DEBT-001`.
-- `node product/source/generate-shell.mjs --check` must pass.
-- STOP after `DEV_HANDOFF → UR_REVIEW`.
+Phase C:
+- File menu is desktop Primary Home for New/Open/Save/Export.
+- Contextual Options preserved.
+- Undo/Redo compact shortcut preserved.
+- desktop workspace duplicate removed from visible top chrome.
+- desktop top stack = 56 px.
 
-## Baseline reconciliation
+Phase D:
+- one-column default.
+- two-column user-selectable.
+- tool order/shortcuts/Draw family unchanged.
+- two-column is layout-only.
+- UI preference uses `ink.web.ui.toolbar-columns.v0.1`.
 
-The previous UI branch pre-dated the accepted technical-debt cleanup. This branch is reconciled explicitly to current `main` product/QA authority rather than carrying forward its old duplicated HTML/CSS/bootstrap implementation.
+## Regression evidence
 
-Preserved branch-local UI documents:
-- `research/INK_IDEAL_UI_STANDARD_v0.1.md`
-- `working/INK_UI_MODIFICATION_CHECKLIST_v0.1.md`
-- `working/INK_WEB_UI_006_WORK_ORDER.md`
-- `working/INK_WEB_UI_006_DEV_HANDOFF.md`
-- `working/INK_WEB_UI_006_PHASE_A_COMMAND_MAP.md`
+```text
+GENERATED_WEB_EQUALS_TEMPLATE = PASS
+GENERATED_PORTABLE_EQUALS_TEMPLATE = PASS
+GENERATE_SHELL_SOURCE_CHANGED = 0
+SERVICE_WORKER_SOURCE_CHANGED = 0
+CSS_DESKTOP_AUTHORITY_COUNT = 1
+CSS_OLD_PHASE_B_OVERRIDE_COUNT = 0
+CSS_BRACE_BALANCE = 0
+CSS_ROOT_COUNT = 14 / <=14
+CSS_IMPORTANT_COUNT = 220 / <=222
+BOOTSTRAP_READY_EVENT = PASS
+BOOTSTRAP_RETRY_POLLING = ABSENT
+FORMAT_VERSION = 4
+PHASE_CD_TEST_SYNTAX = PASS
+GEOMETRY_TEST_SYNTAX = PASS
+RUNTIME_HARNESS_SCRIPT_SYNTAX = PASS
+```
 
-No Phase C/D product edits have been made at this checkpoint.
+`qa/core/tests/unit/ink-web-ui-006-phase-cd.test.mjs` invokes
+`node product/source/generate-shell.mjs --check` in repository execution.
+
+This connector execution environment has no local repository checkout and exposes no workflow-dispatch action; therefore no DEV Runtime PASS is claimed. The exact generator equality predicate was verified against committed GitHub content.
+
+## Gate
+
+```text
+DEV_HANDOFF
+→ UR_REVIEW
+→ STOP
+```
+
+Phase E is not started.
