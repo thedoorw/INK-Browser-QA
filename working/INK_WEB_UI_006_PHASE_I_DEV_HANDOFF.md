@@ -240,3 +240,36 @@ Authoritative exact-SHA Windows Runtime must test:
 `5ad4a271b37a1dca9236239be8bb867bff320b7c`
 
 After Runtime PASS, UR will perform the user-requested Photoshop / Figma / INK final visual comparison before issuing FINAL_CERTIFIED or a bounded polish decision.
+
+
+---
+
+## UR final Runtime gate — 2026-09-24
+
+Authoritative Windows self-hosted Runtime:
+
+- run: `35954873725`
+- attempt: `1`
+- tested SHA: `5ad4a271b37a1dca9236239be8bb867bff320b7c`
+- runner: `DESKTOP-NSOQH69`
+- browser: Google Chrome
+- overall: `PASS`
+- UI: `PASS`
+- Creative: `PASS`
+- Geometry: `PASS`
+- artifact: `10789638247`
+- artifact digest: `sha256:1abef6759597176cde9548ce03fdfed2b662364a9b3254a433fe63bdba0696f8`
+
+The final Runtime tested the exact Phase I candidate. No product or QA source delta exists between the accepted Phase H implementation and this Phase I candidate.
+
+Phase I Runtime result:
+
+`FINAL_RUNTIME_PASS`
+
+Remaining UR action before FINAL_CERTIFIED:
+- user-requested Photoshop / Figma / INK final visual and structural comparison;
+- bounded polish decision only if that comparison finds a visible inconsistency.
+
+Current state:
+
+`PHASE_I / STATIC_PASS / FINAL_RUNTIME_PASS / VISUAL_COMPARISON_REQUIRED`
