@@ -1,4 +1,4 @@
-# INK CHAT Connector — Figma / Penpot Capability Map v0.1
+# INK CHAT Connector — Figma / Penpot / Adobe Capability Map v0.1
 
 STATUS: `RESEARCH_BASELINE / NO_IMPLEMENTATION_AUTHORIZATION`
 
@@ -1283,3 +1283,552 @@ External exposure belongs to the later `use_ink` / MCP transport stage.
 ```
 
 The facade is considered correct only if every mutation still passes through the same controller that the existing INK product already trusts.
+
+
+---
+
+## 15. Adobe for ChatGPT — third mature connector reference
+
+### 15.1 Why Adobe changes the INK connector plan
+
+Adobe's current ChatGPT integration is not primarily a generic editable-canvas scripting API like Figma `use_figma` or Penpot `execute_code`.
+
+Its mature pattern is:
+
+```text
+CHAT intent
+→ capability/tool routing
+→ asset handle / URL
+→ specialized Adobe operation
+→ structured result / output asset
+→ model inline preview
+→ targeted follow-up operation
+→ final preview / export / open in Adobe app
+```
+
+The installed Adobe connector in this CHAT session exposes more than 70 specialized tools across asset handling, Photoshop/Lightroom-style image operations, Illustrator vectorization/export, Adobe Express design templates, Acrobat, InDesign, Premiere/video, Fonts, Stock and Firefly.
+
+Official Adobe documentation also describes the unified Adobe plugin for ChatGPT as replacing the older Photoshop-only plugin and combining Photoshop, Premiere, Firefly, Express, Acrobat and other Adobe capabilities under one connector.
+
+This gives INK a second connector pattern worth borrowing:
+
+```text
+Figma / Penpot lesson
+= generic programmable native-object access
+
+Adobe lesson
+= high-level capability routing + asset/result handles + visual verification
+```
+
+INK should combine both.
+
+### 15.2 CHAT-visible Adobe capability families relevant to INK
+
+#### Asset / project input
+
+```text
+asset_openai_file_upload
+asset_add_file
+asset_search
+asset_get_presigned_urls
+```
+
+Pattern:
+
+```text
+user/chat asset
+→ stable Adobe asset identity / presigned URL
+→ processing tool
+```
+
+INK lesson:
+
+Do not make every connector call depend on raw bytes or live DOM references.
+Use stable INK document/object/reference identities and JSON-safe result handles.
+
+#### Model-side visual inspection
+
+```text
+asset_inline_preview
+```
+
+Adobe explicitly separates:
+
+```text
+preview for CHAT/model inspection
+≠
+preview shown only to user
+```
+
+This is important for INK.
+
+Target distinction:
+
+```text
+get_ink_preview
+= visual evidence returned to CHAT for reasoning
+
+user-facing canvas
+= normal INK renderer/workstation
+```
+
+#### User-facing result preview
+
+```text
+asset_preview_file
+```
+
+INK equivalent should later allow the connector to surface the exact rendered result/thumbnail without inventing a second renderer.
+
+#### Region / object targeting
+
+Adobe provides:
+
+```text
+image_select_subject
+image_select_by_prompt
+image_invert_selection
+```
+
+and then routes the returned mask into another operation.
+
+Pattern:
+
+```text
+identify target
+→ produce explicit target artifact/mask
+→ apply operation to that target
+```
+
+INK already has stronger native object identity for vector/editable work plus Semantic Region Grounding.
+
+INK lesson:
+
+```text
+natural-language target
+→ grounded stable object IDs / semantic region IDs
+→ explicit operation
+```
+
+Do not let a natural-language edit mutate an unidentified region directly.
+
+#### Deterministic image operations
+
+Installed Adobe tools include:
+
+```text
+image_apply_adjustments
+image_apply_auto_tone
+image_apply_preset
+image_crop_and_resize
+image_crop_to_bounds
+image_remove_background
+image_fill_area
+image_apply_gaussian_blur
+image_apply_color_overlay
+image_apply_monochromatic_tint
+image_add_grain
+image_add_noise
+...
+```
+
+Adobe routing guidance explicitly prefers dedicated non-generative operations when they can satisfy the request.
+
+INK lesson:
+
+Prefer a named authoritative INK capability over arbitrary execution whenever one exists.
+
+Example:
+
+```text
+request = repaint this path
+
+preferred:
+ink tool → path.repaint.v1
+
+not preferred:
+arbitrary use_ink script that rewrites appearance fields
+```
+
+#### Vectorization / Illustrator bridge
+
+```text
+image_vectorize
+```
+
+converts PNG/JPEG to SVG editable vector paths.
+
+```text
+document_render_vector
+```
+
+renders/exports Illustrator files to raster/vector formats.
+
+This confirms that CHAT already uses a mature concept:
+
+```text
+raster input
+→ vector conversion
+→ editable vector asset
+→ output/preview
+```
+
+However the current Adobe connector tool surface does **not** expose a generic Illustrator layer/node API equivalent to Figma SceneNode or Penpot Shape operations.
+
+Therefore Adobe is not currently the strongest host for arbitrary post-vectorization layer graph manipulation from CHAT.
+
+#### Adobe Express mature-output workflow
+
+The installed Adobe Express workflow is:
+
+```text
+search_design
+→ user chooses template
+→ fill_text / replace_image / change_background_color / animate
+→ preview
+→ download_design / open in Express
+```
+
+Important lesson:
+
+Mature results are accelerated by starting from reusable templates rather than rebuilding visual design from primitives.
+
+This reinforces the planned INK Creative Library Search:
+
+```text
+components
+materials
+recipes
+parametric structures
+templates/compositions
+future tokens/styles
+```
+
+### 15.3 Adobe closed loop for the Reference → Color + Line problem
+
+The exact INK target remains:
+
+```text
+Reference
+→ editable Color regions
+→ editable Line boundaries
+→ separate native layers
+→ CHAT inspection
+→ targeted correction
+→ preview
+→ History / Revision / provenance
+```
+
+#### Adobe-native route that is available now
+
+```text
+1. CHAT stages or finds the reference asset
+   asset_openai_file_upload / asset_search
+
+2. CHAT visually inspects source
+   asset_inline_preview
+
+3. Raster → vector
+   image_vectorize
+   → editable SVG asset
+
+4. CHAT can preview the vectorized result
+   asset_inline_preview / asset_preview_file
+
+5. CHAT can perform separate raster-oriented targeted edits
+   select_subject / select_by_prompt
+   → mask
+   → adjustment/effect/fill
+   → preview again
+
+6. Vector/Illustrator result can be rendered/exported
+   document_render_vector where an Illustrator document is available
+```
+
+#### Current Adobe limitation for this exact INK workflow
+
+The current Adobe ChatGPT tool surface does not expose a generic Illustrator vector-node/layer editing interface that lets CHAT deterministically:
+
+```text
+take vectorized SVG
+→ enumerate every color-region path
+→ create a Color layer
+→ duplicate the exact same path geometry
+→ remove fill
+→ assign Line stroke
+→ preserve one-to-one path IDs
+→ continue arbitrary node-level editing
+```
+
+Adobe's selection/mask workflow is useful for targeted **raster** operations, but a mask is not equivalent to INK's editable native Color/Line Path structure.
+
+Therefore:
+
+```text
+Adobe image_vectorize
+= excellent reference for raster → vector asset conversion
+
+INK Phase B decomposition
+= better fit for deterministic Color + Line editable-layer production
+```
+
+Do not replace the accepted INK decomposition with Adobe vectorization.
+
+### 15.4 What to borrow from Adobe for the INK closed loop
+
+Add these workflow rules:
+
+```text
+A. capability router
+   choose the narrowest authoritative tool first
+
+B. explicit target handle
+   object IDs / region IDs / reference IDs before mutation
+
+C. asset/result envelope
+   each operation returns identity + result metadata + receipt
+
+D. visual inspection channel
+   CHAT gets an actual rendered preview, not only structural metadata
+
+E. verify after subjective/creative operations
+   before/after preview when interpretation matters
+
+F. reusable-template/library first
+   reuse mature structures instead of reconstructing every work from primitives
+
+G. native-app authority
+   high-level connector never becomes a second editor engine
+```
+
+---
+
+## 16. Revised combined connector architecture — Figma + Penpot + Adobe
+
+### 16.1 Two complementary operation layers
+
+The previous plan centered too heavily on `use_ink`.
+
+Revised architecture:
+
+```text
+USER / CHAT intent
+        ↓
+INK Skill / Capability Router
+        ↓
+ ┌──────────────────────────────┐
+ │ Layer A — INK Named Tools    │  ← Adobe pattern
+ │ narrow, reliable workflows   │
+ └──────────────────────────────┘
+        ↓ when sufficient
+
+ OR
+
+        ↓ when composition/general access is required
+ ┌──────────────────────────────┐
+ │ Layer B — use_ink            │  ← Figma/Penpot pattern
+ │ programmable native objects  │
+ └──────────────────────────────┘
+        ↓
+INK Public Creative API
+        ↓
+existing INK authorities
+        ↓
+Document / Path / Layout / Components
+Reference / History / Revision / Grounding
+        ↓
+INK Renderer
+        ↓
+get_ink_preview
+        ↓
+CHAT visual verification
+```
+
+### 16.2 Layer A — Adobe-style named INK tools
+
+Initial named tool vocabulary:
+
+```text
+get_ink_capabilities
+get_ink_context
+get_ink_selection
+inspect_ink_objects
+
+import_ink_reference
+decompose_ink_reference
+
+propose_ink_edit
+approve_ink_edit
+execute_ink_edit
+
+get_ink_history
+undo_ink
+redo_ink
+
+get_ink_revisions
+capture_ink_revision
+restore_ink_revision
+
+get_ink_preview
+export_ink_asset
+```
+
+Later high-value tools:
+
+```text
+ground_ink_target
+search_ink_creative_library
+apply_ink_material
+resolve_ink_parametric_structure
+compare_ink_revision
+```
+
+These tools are not separate engines. They are stable high-level wrappers over the same Public Creative API.
+
+### 16.3 Layer B — Figma/Penpot-style `use_ink`
+
+Use only when:
+
+- a multi-object composition needs several native operations;
+- a named tool does not cover the task;
+- CHAT needs a general inspect/create/compose script;
+- a reusable Skill explicitly calls for a coherent batch.
+
+Hard rule:
+
+```text
+If a named authoritative tool exists,
+use_ink must call that Public API method,
+not bypass it by mutating document fields.
+```
+
+### 16.4 Shared result envelope
+
+Borrowing Adobe's asset/result pattern, every public connector operation should converge on one JSON-safe envelope:
+
+```text
+INK_AGENT_RESULT
+{
+  schema
+  version
+  action
+  status
+
+  documentId
+  pageId
+  revisionId
+
+  targetRefs[]
+  createdRefs[]
+  changedRefs[]
+
+  historyReceipt
+  revisionReceipt
+  provenanceReceipt
+
+  outputHandles[]
+  diagnostics[]
+}
+```
+
+No live mutable object references.
+
+For visual operations, later add:
+
+```text
+previewHandle
+renderFingerprint
+bounds
+mimeType
+```
+
+### 16.5 Capability routing rule
+
+CHAT Skill logic:
+
+```text
+1. inspect capability registry
+2. resolve target IDs/regions
+3. choose narrow named tool if available
+4. otherwise use_ink for native composition
+5. preserve proposal/approval boundary where required
+6. obtain structural result receipt
+7. obtain preview when visual interpretation matters
+8. inspect preview
+9. apply bounded correction
+10. capture Revision only when explicitly appropriate
+```
+
+### 16.6 Revised connector development order
+
+```text
+Connector-001
+Public Creative API
++ capability registry
++ normalized INK_AGENT_RESULT
++ named-tool facade foundation
+
+Connector-002
+Visual feedback
+get_ink_preview + metadata/render fingerprint
+
+Connector-003
+use_ink programmable execution bridge
+
+Connector-004
+INK Skill / capability router
+Figma + Penpot + Adobe workflow grammar
+
+Connector-005
+Creative Library Search
+components / materials / recipes / structures / templates
+
+Connector-006
+Full creative closed loop
+Reference → Color + Line → CHAT → correction → preview → Revision
+```
+
+The main change from the previous plan is:
+
+```text
+visual feedback moves before arbitrary use_ink
+and
+named workflow tools become first-class
+```
+
+Reason:
+
+Adobe demonstrates that CHAT can complete many creative tasks more reliably through a small number of well-defined operations plus before/after visual verification, without exposing the entire application's internal object model for every action.
+
+---
+
+## 17. Adobe-informed connection-point acceptance principle
+
+INK will be considered well connected to CHAT only when both styles work:
+
+### Style 1 — short reliable command
+
+```text
+"把這張參考圖拆成 Color + Line"
+→ decompose_ink_reference
+→ result receipt
+→ get_ink_preview
+→ CHAT verifies
+```
+
+### Style 2 — complex native composition
+
+```text
+"把這三組 Path 做成放射重複，
+再把第二組移到最上層並改材質"
+→ use_ink
+→ Public Creative API
+→ existing Repeat / order / material authorities
+→ result receipt
+→ get_ink_preview
+→ CHAT verifies
+```
+
+Target:
+
+`CHAT_CAN_ROUTE_AND_OPERATE_INK_LIKE_A_MATURE_CREATIVE_CONNECTOR`
