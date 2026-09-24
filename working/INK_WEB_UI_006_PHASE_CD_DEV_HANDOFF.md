@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase C + D DEV HANDOFF
 
-STATUS: DEV_IN_PROGRESS / UI_ONLY / PHASE_C_D
+STATUS: DEV_HANDOFF / UI_ONLY / PHASE_C_D / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-cd`
@@ -272,3 +272,48 @@ Completion state:
 `DEV_HANDOFF → UR_REVIEW → STOP`
 
 Do not begin Phase E or later phases automatically.
+
+
+---
+
+## DEV completion — 2026-09-24
+
+Implemented:
+- Phase C top-area cleanup only;
+- Phase D desktop single / dual-column toolbar only;
+- Phase E not started.
+
+Command routing:
+- `檔案` menu items proxy the existing `newBtn/openBtn/saveBtn/exportBtn` command endpoints.
+- No second file/document implementation was added.
+
+Toolbar layout:
+- single column is the desktop default;
+- dual column is UI-only and persists through `ink.web.ui.toolbar-layout.v0.1`;
+- mobile keeps the existing responsive toolbar authority;
+- no tool identity/order/shortcut/selection semantics changed.
+
+Verification:
+- shell generator parity: PASS;
+- Web / Portable generated parity: PASS;
+- `web-shell.js` syntax: PASS;
+- UI runtime harness syntax: PASS;
+- Phase C/D task-specific runtime assertions added: PASS;
+- `FORMAT_VERSION = 4`: PASS;
+- Core `src/ink.js` unchanged from baseline main: PASS;
+- prohibited implementation surfaces untouched: PASS.
+
+Runtime:
+- exact-SHA Windows Runtime was not dispatched from this DEV connection because the available GitHub connector does not expose `workflow_dispatch`;
+- no Runtime PASS is claimed;
+- see `working/INK_WEB_UI_006_PHASE_CD_EVIDENCE.md` for the exact boundary and prepared assertions.
+
+Boundary confirmation:
+- Core semantics unchanged;
+- Service Worker / bootstrap / build/cache identity unchanged;
+- Document / History / Revision / Renderer unchanged;
+- Phase E not started.
+
+Completion state:
+
+`DEV_HANDOFF → UR_REVIEW → STOP`
