@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "04ba565c80551fe364174b3964a3ebaa850454a5",
   "pending_work_orders": [
     "INK-WEB-UI-006-PHASE-H"
@@ -21,7 +21,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "INK-WEB-UI-006 Phase H requires an immediate exact-SHA Windows self-hosted Runtime gate before Phase I can begin."
+    "reason": "INK-WEB-UI-006 Phase H exact-SHA Windows Runtime failed: Creative Loop panels violate the stage/panel/dock boundary invariant. DEV revision required before Phase I."
   },
   "batch_policy": {
     "default_target": 3,
@@ -29,8 +29,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35951192558,
-    "tested_sha": "d95d8f80fb57920d8bba2f07557d084a11305ecd",
-    "result": "PASS"
+    "run_id": 35951970300,
+    "tested_sha": "04ba565c80551fe364174b3964a3ebaa850454a5",
+    "result": "FAIL"
   }
 }
