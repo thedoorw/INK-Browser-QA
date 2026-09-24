@@ -1,3 +1,21 @@
+## Connector-004 final closure — 2026-09-24
+
+```text
+MR = PASS
+RUNTIME = 35990559349 / PASS
+TESTED_SHA = bae2353fdd057f5334a219bcdfcda67cc9090c46
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+USE_INK = 10 / 10 browser markers PASS
+PROMOTION_PR = #51 / MERGED
+PROMOTED_MAIN = 9af585df4667e37b9676cd73b9fd0b1db9a52530
+PROMOTION_EQUIVALENCE = 10 / 10 exact
+CONNECTOR_004 = CLOSED
+NEXT_CONNECTOR = NOT_AUTHORIZED
+UI_VISUAL_LANE = separate / pending
+```
+
 ## UI-006 main integration checkpoint — 2026-09-24
 
 ```text
@@ -65,24 +83,24 @@ FORMAT_VERSION = 4
 
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_004_QA_TIMEOUT_REVISED / MR_RUNTIME_RERUN_QUEUED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_004_CLOSED / UI_VISUAL_LANE_PENDING / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-004 / use_ink programmable bridge` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
 | DEV_BRANCH | `work/ink-chat-connector-004` |
-| DEV_HANDOFF | `Connector-004 revision = READY / STOP` |
-| MR_REVIEW | `source PASS / browser revision PASS / first feature Runtime hit harness timeout; QA-only rerun queued` |
+| DEV_HANDOFF | `Connector-004 = CLOSED / PROMOTED` |
+| MR_REVIEW | `Connector-004 MR_PASS / Runtime PASS / promoted` |
 | TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `run 35970456976 = UI PASS / creative 240s harness timeout; next exact target 448eef0f... with 360s timeout` |
+| RUNTIME_QA | `run 35990559349 = UI PASS / Creative PASS / Geometry PASS / USE_INK 10/10 PASS` |
 | UI-006 | `A–I payload integrated to main via PR #49 / deployed / visual screenshot gate pending` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Complete deployed-main UI visual gate first; then resume Connector-004 Runtime classification` |
+| NEXT_STAGE | `Connector-004 closed; return to separate UI visual audit when USER chooses` |
 
 ## Connector-003 promotion closure
 
