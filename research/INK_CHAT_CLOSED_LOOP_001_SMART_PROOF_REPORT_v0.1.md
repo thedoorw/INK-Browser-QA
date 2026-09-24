@@ -45,7 +45,7 @@ No direct Document JSON writes, alternative renderer, DOM screenshot, IMAGE mode
 
 `RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT`
 
-A fixed, checked-in module snippet runs only inside the QA iframe to reach that realm's existing `resolveInkOutputPayload` registry. Its temporary resolver is removed after materialization. This is not a product hook or arbitrary-code API.
+A deterministic same-origin external QA module is served only by the loopback Runtime route `/__qa_smart_loop_resolver.js` and loaded into the INK iframe realm through `script.src`. The route contains one fixed binding only: `resolveInkOutputPayload(window.INK_APP, handleId)`. No dynamic inline module text is used. After the after-preview is materialized, the temporary QA global and script node are both removed. This is not a product hook or arbitrary-code API.
 
 The existing loopback QA server accepts exactly `before` and `after` PNG slots, only for the Creative suite. Payloads are bounded to 4 MiB and 960 px per dimension. It checks PNG structure, refuses duplicate/unknown slots, writes fixed filenames and returns SHA256/byte receipts. Browser MATERIALIZED markers are emitted only after the write acknowledgment.
 
@@ -100,3 +100,20 @@ Per Work Order I: exact-HEAD source review → Windows self-hosted UI/Creative/G
 `SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP = NOT_YET_ACCEPTED`
 
 `DEV_HANDOFF → STOP → MR REVIEW`
+
+
+## MR_REVISE — QA bridge-only resolver loader
+
+Revision baseline: `2b3c2f79147b6122f5ac78ed47d19c9878522386`.
+
+Bounded revision:
+
+- product source remains frozen and unchanged;
+- removed the dynamic inline `script.textContent` module loader from the browser harness;
+- added one deterministic Creative-suite-only same-origin QA route: `/__qa_smart_loop_resolver.js`;
+- the route provides only the temporary binding that calls `resolveInkOutputPayload(window.INK_APP, handleId)`;
+- the INK iframe loads it with `script.src`, so the resolver executes in the correct realm;
+- after `smart-loop-after.png` materialization, the temporary QA global is deleted and the module node is removed;
+- no product transport, external transport, MCP, WebSocket, postMessage, eval / Function, alternate renderer, UI, native operation or FORMAT_VERSION change was introduced.
+
+Focused revision QA in `qa/ink-chat-closed-loop-001-smart-proof.test.mjs` now checks the fixed route body, JavaScript content type, external loader usage, absence of inline resolver code, cleanup marker and prohibited bridge primitives. DEV does not claim browser Runtime PASS; the exact-SHA Windows Runtime remains the MR gate.
