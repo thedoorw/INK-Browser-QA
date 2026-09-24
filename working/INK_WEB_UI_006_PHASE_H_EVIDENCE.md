@@ -1,11 +1,12 @@
 # INK-WEB-UI-006 — Phase H Evidence
 
-STATUS: `DEV_EVIDENCE_COMPLETE / UR_RUNTIME_REVIEW_REQUIRED`
+STATUS: `DEV_REVISION_EVIDENCE_COMPLETE / UR_RUNTIME_RERUN_REQUIRED`
 TASK: `INK-WEB-UI-006 / PHASE_H`
 BRANCH: `work/ink-web-ui-006-h`
 BASELINE_PHASE_G_ACCEPTED_BRANCH_HEAD: `8322170ae746ca9af2325cb2783d604e3a9cea6c`
 PHASE_H_STYLE_CHECKPOINT: `0957ecbd083a0910b2c96404c65c257de18bb797`
-PHASE_H_PRODUCT_QA_CHECKPOINT: `04ba565c80551fe364174b3964a3ebaa850454a5`
+PHASE_H_INITIAL_PRODUCT_QA_CHECKPOINT: `04ba565c80551fe364174b3964a3ebaa850454a5`
+PHASE_H_CORRECTED_PRODUCT_QA_CHECKPOINT: `1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
 FORMAT_VERSION: `4 / PRESERVED`
 PRODUCT_VERSION: `v0.1 / PRESERVED`
 PHASE_I: `NOT_STARTED`
@@ -179,3 +180,136 @@ PHASE_I = NOT_STARTED
 ## DEV state
 
 `DEV_HANDOFF → UR_REVIEW → STOP`
+
+
+---
+
+## DEV bounded Runtime correction — Creative Workspace desktop geometry
+
+UR Runtime failure:
+
+```text
+RUN = 35951970300
+TESTED_SHA = 04ba565c80551fe364174b3964a3ebaa850454a5
+UI = FAIL
+FAILING_ASSERTION =
+  UI-006 Phase H every primary right panel preserves one coherent canvas boundary
+FAILING_PANELS =
+  Reference / Compose / CHAT / Revision
+```
+
+Observed failing geometry at 1280px:
+
+```text
+stage.right = 880
+creative.left = 906
+creative.right = 1266
+dock.left = 1240
+
+canvas → creative gap = 26px
+creative → dock overlap = 26px
+```
+
+### Root cause
+
+Legacy pre-Panel-Dock presentation remained active:
+
+```css
+.app:not(.inspector-open) .creative-workspace-panel {
+  right: 14px;
+  width: min(360px, calc(100vw - 112px));
+}
+```
+
+That selector is more specific than the consolidated desktop `.creative-workspace-panel` rule. Creative Loop closes Inspector by design, so the legacy selector won exactly for Reference / Compose / CHAT / Revision.
+
+### Correction
+
+Inside the current consolidated desktop shell authority, the same legacy selector is now explicitly rebound to current shell geometry:
+
+```css
+.app:not(.inspector-open) .creative-workspace-panel {
+  right: var(--panel-dock-w);
+  width: clamp(244px, var(--inspector-w), 360px);
+}
+```
+
+No JavaScript/controller change was required.
+
+Corrected product/QA checkpoint:
+
+`1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
+
+QA harness content is unchanged by this correction; the original failing all-eight-panels assertion remains intact and must pass rather than being weakened.
+
+### Boundary invariant after correction
+
+The desktop cascade now gives both Inspector-family and Creative-family primary panels the same shell contract:
+
+```text
+stage.left = left toolbar.right
+stage.right = active primary panel.left
+active primary panel.right = Panel Dock.left
+active primary panel width = shell-measured primary width
+```
+
+For Creative Loop specifically:
+
+```text
+creative.right offset = panel-dock width
+creative width = current primary-panel width clamp
+shell --active-panel-w = measured creative width
+stage right offset = panel-dock width + measured creative width
+therefore:
+  stage.right == creative.left
+  creative.right == dock.left
+```
+
+The all-eight route QA remains:
+
+- Properties
+- Layers
+- History
+- Reference
+- Compose
+- CHAT
+- Revision
+- Specialist
+
+Static authority is now consistent across all eight routes. Exact browser confirmation remains the unchanged Runtime assertion on the corrected SHA.
+
+### Static re-check after correction
+
+```text
+CSS_BRACE_BALANCE = PASS / 1587 OPEN / 1587 CLOSE
+LEGACY_SELECTOR_FOUND = YES
+DESKTOP_OVERRIDE_AFTER_LEGACY = PASS
+DESKTOP_OVERRIDE_RIGHT = var(--panel-dock-w) / PASS
+DESKTOP_OVERRIDE_WIDTH = clamp(244px,var(--inspector-w),360px) / PASS
+ALL_EIGHT_PANEL_RUNTIME_ASSERTION = PRESERVED
+HARNESS_JAVASCRIPT_SYNTAX = PASS
+WEB_SHELL_JS_CHANGED = NO
+QA_ASSERTION_WEAKENED = NO
+PRODUCT_SOURCE_SRC_CHANGE = 0
+MOBILE_RULES_CHANGED = NO
+PHASE_I = NOT_STARTED
+```
+
+### Preservation
+
+```text
+Document = unchanged
+artwork Text semantics = unchanged
+History = unchanged
+Revision = unchanged
+Renderer = unchanged
+Geometry/Core = unchanged
+CHAT semantics = unchanged
+Service Worker/bootstrap/build identity = unchanged
+product version = v0.1 / preserved
+FORMAT_VERSION = 4 / preserved
+```
+
+Runtime state:
+
+`CORRECTED_EXACT_SHA_WINDOWS_RUNTIME = UR_RERUN_REQUIRED / NOT_CLAIMED_BY_DEV`
