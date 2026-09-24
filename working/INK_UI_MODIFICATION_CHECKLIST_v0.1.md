@@ -15,26 +15,26 @@ REFERENCE: `research/INK_IDEAL_UI_STANDARD_v0.1.md`
 
 ## B. Top Menu / top bars
 
-- [ ] New/Open/Save are moved to File primary home.
-- [ ] Export is File primary home; permanent top presence is justified or removed.
-- [ ] Top bar contains no low-frequency file-management clutter.
-- [ ] Contextual Options change according to active tool/selection.
-- [ ] Deep settings are not duplicated as equal-status top controls.
+- [x] New/Open/Save are moved to File primary home.
+- [x] Export is File primary home; permanent top presence is justified or removed.
+- [x] Top bar contains no low-frequency file-management clutter.
+- [x] Contextual Options change according to active tool/selection.
+- [x] Deep settings are not duplicated as equal-status top controls.
 - [ ] Top stack is visually compared with Photoshop reference (~60px screenshot reference).
 - [ ] No overlap at desktop and narrow widths.
-- [ ] Undo/Redo location is reviewed against Edit/shortcut/top-density logic.
+- [x] Undo/Redo location is reviewed against Edit/shortcut/top-density logic.
 
 ## C. Left Toolbar
 
-- [ ] Tool family order is stable.
-- [ ] Draw family remains a flyout/stack.
-- [ ] Single-column mode works.
-- [ ] Two-column mode works.
-- [ ] Column switch does not change shortcuts or command identity.
-- [ ] Two-column mode reduces height without adding unrelated controls.
+- [x] Tool family order is stable.
+- [x] Draw family remains a flyout/stack.
+- [x] Single-column mode works.
+- [x] Two-column mode works.
+- [x] Column switch does not change shortcuts or command identity.
+- [x] Two-column mode reduces height without adding unrelated controls.
 - [ ] Toolbar collapse/expand control is discoverable but quiet.
 - [ ] Toolbar visual weight is balanced against right dock.
-- [ ] Canvas gains space correctly when toolbar state changes.
+- [x] Canvas gains space correctly when toolbar state changes.
 
 ## D. Right Panel Dock
 
