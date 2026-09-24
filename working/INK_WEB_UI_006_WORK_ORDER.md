@@ -353,6 +353,65 @@ UR returns exactly one:
 
 ---
 
+## Dual-track coordination boundary — UI + CHAT
+
+When UI-006 and CHAT Validation run in parallel, the lanes remain separate in authority even when they touch the same workstation surface.
+
+```text
+UI lane
+= Presentation / Placement / Responsive / Interaction shell
+
+CHAT lane
+= Grounding / Reasoning / Creative command flow / Validation
+
+Core authority
+= FROZEN unless separately authorized
+```
+
+Rules:
+
+1. **UI may reorganize presentation, not capability semantics.**
+   - UI may move, group, collapse, resize, deduplicate or restyle controls and panels.
+   - UI must not redefine Document / History / Revision / Geometry / execution authority.
+
+2. **CHAT may validate and extend the accepted creative command flow, not invent a second editor authority.**
+   - Grounding, reasoning, proposal, plan and validation remain inside the existing CHAT path.
+   - Existing proposal → approval → execution boundaries remain authoritative.
+
+3. **Shared-surface files require responsibility separation.**
+   - If both lanes touch `creative-workspace.js`, CHAT shell, panel routing or another shared surface:
+     - UI owns presentation and interaction shell.
+     - CHAT owns state meaning, grounded behavior and command-flow semantics.
+   - Neither lane may overwrite the other lane's accepted authority merely to simplify implementation.
+
+4. **Core STOP boundary.**
+   Any requested change to:
+   - Document authority or schema;
+   - History semantics;
+   - Revision semantics;
+   - Geometry authority;
+   - persistence / `FORMAT_VERSION`;
+   - approval or execution authority;
+   requires:
+   `STOP → MR → separate Core / Integration Work Order`.
+
+5. **Branch and promotion isolation.**
+   - UI and CHAT use separate task branches and separate review gates.
+   - Do not merge one development branch into the other.
+   - Promotion must reconcile each reviewed payload against current `main`.
+
+6. **Independent gates, then integration regression.**
+   Each lane first passes its own gate. Before both accepted payloads are treated as one workstation baseline, run a combined regression covering:
+   - UI layout / responsive behavior;
+   - CHAT Phase capability;
+   - Creative;
+   - Geometry;
+   - History / Revision authority unchanged.
+
+This section defines coordination only. It does **not** expand the currently issued phase authorization.
+
+---
+
 ## Current issued package
 
 Phase A + B are accepted; Phase B3 prerequisite was closed by the promoted `INK-TECH-DEBT-001` cleanup on current `main`.
