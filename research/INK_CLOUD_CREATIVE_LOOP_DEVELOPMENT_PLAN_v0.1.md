@@ -1341,3 +1341,139 @@ Repeat / Transform / dependency graph
 Each module closes at `MODULE_READY`, not at final product integration.
 
 Prepared modules enter an Integration Queue. MR later issues a bounded Integration Work Order to wire compatible modules into the shared INK skeleton and run a concentrated Runtime batch.
+
+
+## 2026-09-24 pivot — INK Agent Connectivity
+
+STATUS: `PLANNING / DRAWING_VALIDATION_HOLD`
+
+The user paused further drawing-validation execution after
+`INK-CHAT-VALIDATION-001 Phase C` reached MR source PASS.
+
+The next architecture target is a general programmable connection comparable in
+workflow to mature Figma and Penpot agent integrations.
+
+### Reference pattern
+
+Figma:
+
+```text
+agent
+→ general write-to-canvas execution
+→ Plugin API
+→ native editable nodes
++ reusable task skills
+```
+
+Penpot:
+
+```text
+agent
+→ MCP
+→ overview / API discovery / generic execution
+→ Plugin API
+→ native editable shapes
+```
+
+### Proposed INK architecture
+
+```text
+ChatGPT / agent
+→ INK MCP or plugin transport
+→ INK Agent Tools
+→ INK Public Agent API
+→ existing INK controllers
+→ Document / History / Revision / Renderer
+```
+
+The public Agent API is a facade over accepted INK authorities. It must not create
+a second editor or bypass existing controller/History paths.
+
+### Minimal Agent Tools
+
+```text
+ink_overview
+ink_api_info
+ink_execute
+ink_capture
+ink_import_asset
+ink_export
+```
+
+`ink_overview` returns bounded document/page/layer/selection/object state.
+
+`ink_api_info` exposes supported public operations on demand.
+
+`ink_execute` runs bounded programs against only the INK Public Agent API so an
+agent can compose multiple existing operations without needing one MCP tool per
+creative command.
+
+`ink_capture` provides visual feedback for current canvas/selection.
+
+Asset import/export remain separate from mutation authority.
+
+### Initial skills
+
+```text
+ink-use
+ink-reference-to-vector
+ink-compose-artwork
+ink-edit-selection
+ink-revise-artwork
+ink-design-system
+```
+
+Skills hold workflow knowledge, not mutation authority.
+
+### Reuse mature external editors
+
+Do not rebuild Figma/Penpot capabilities merely for parity.
+
+```text
+Figma / Penpot
+= mature layout, components, tokens, fast agent-generated structure
+
+INK
+= personal image laboratory, extraction, geometry, material,
+  custom visual operations, provenance and creative grammar
+```
+
+Preferred interoperability:
+
+```text
+idea / reference
+→ Figma or Penpot when mature structural composition helps
+→ editable SVG / structured exchange
+→ INK custom processing
+→ CHAT coordinates both through skills
+→ final editable output
+```
+
+### ChatGPT connection target
+
+```text
+INK browser runtime
+↔ INK MCP / plugin adapter
+↔ ChatGPT plugin/app
+↔ INK skills
+```
+
+Transport remains replaceable; the INK Public Agent API is the stable contract.
+
+### Planning gates before drawing tests resume
+
+1. inventory accepted INK controllers and map them to a public Agent API;
+2. define safe inspect/result/error schemas;
+3. define bounded generic execution;
+4. define capture/visual feedback;
+5. define MCP/plugin transport separately from Core;
+6. draft `ink-use` from Figma/Penpot operating patterns;
+7. prototype one complete creative command through the generic bridge;
+8. reassess which previous Phase C–F tests are still necessary.
+
+```text
+INK-CHAT-VALIDATION-001 Phase C Runtime = HOLD
+private-image acceptance = HOLD
+Phase D–F = HOLD
+NEXT = AGENT CONNECTIVITY ARCHITECTURE / RESEARCH
+```
