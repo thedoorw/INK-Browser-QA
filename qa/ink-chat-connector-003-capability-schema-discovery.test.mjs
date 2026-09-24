@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 import { FORMAT_VERSION } from '../product/source/src/config.js';
+import { normalizeChatEditTask } from '../product/source/src/editor/chat-bounded-edit.js';
 import {
   INK_CAPABILITY_DESCRIPTOR_SCHEMA,
   INK_CAPABILITY_DESCRIPTOR_VERSION,
@@ -257,6 +258,93 @@ test('policy/result metadata keeps proposal approval, Preview semantics, History
     assert.equal(typeof item.availabilityReason, 'string');
     assert.ok(item.availabilityReason.length > 0);
   }
+});
+
+test('MR revise: descriptor bounds and constraints match existing edit/preview authority rejection contracts', async () => {
+  const repaint = resolveInkCapabilityDescriptor('path.repaint.v1');
+  const translate = resolveInkCapabilityDescriptor('object.translate.v1');
+  const refine = resolveInkCapabilityDescriptor('path.refine.v1');
+  const preview = resolveInkCapabilityDescriptor('preview.capture');
+
+  assert.equal(refine.inputSchema.properties.arguments.properties.maxControlLength.minimum, Number.EPSILON);
+  assert.ok(preview.inputSchema.properties.scale.minimum > 0);
+  assert.ok(preview.inputSchema.properties.ppi.minimum > 0);
+  assert.ok(repaint.constraints.some(item => /ARGUMENTS_EMPTY/.test(item)));
+  assert.ok(translate.constraints.some(item => /NO_OP/.test(item)));
+
+  const target = [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }];
+  assert.throws(
+    () => normalizeChatEditTask({ taskId: 'repaint-empty', operation: 'path.repaint.v1', targets: target, arguments: {} }),
+    error => error?.code === 'CHAT_EDIT_ARGUMENTS_EMPTY'
+  );
+  assert.throws(
+    () => normalizeChatEditTask({ taskId: 'translate-zero', operation: 'object.translate.v1', targets: target, arguments: { dx: 0, dy: 0 } }),
+    error => error?.code === 'CHAT_EDIT_NO_OP'
+  );
+  assert.throws(
+    () => normalizeChatEditTask({ taskId: 'refine-zero', operation: 'path.refine.v1', targets: target, arguments: { maxControlLength: 0 } }),
+    error => error?.code === 'CHAT_EDIT_ARGUMENT_INVALID'
+  );
+
+  const visualSource = await readFile(path.join(root, 'product/source/src/agent/visual-feedback.js'), 'utf8');
+  assert.match(visualSource, /requested\s*<=\s*0\)\s*fail\('INK_PREVIEW_SCALE_INVALID'/);
+  assert.match(visualSource, /requestedPpi\s*<=\s*0\)\s*fail\('INK_PREVIEW_PPI_INVALID'/);
+});
+
+test('MR revise: descriptor input objects are accepted directly by mapped Public API methods without breaking legacy shapes', async () => {
+  const calls = {};
+  const app = {
+    doc: { id: 'doc-1', activePageId: 'page-1', pages: [{ id: 'page-1', layers: [] }] },
+    selection: [],
+    chatReferenceHandoff: {
+      async decomposeReference(referenceObjectId, options) {
+        calls.reference = { referenceObjectId, options };
+        return { status: 'COMPLETED', sourceReferenceObjectId: referenceObjectId, colorObjectIds: [], lineObjectIds: [] };
+      }
+    },
+    chatBoundedEditAdapter: {
+      approve(proposalId) {
+        calls.approve = proposalId;
+        return { ok: true, result: { state: 'APPROVED' } };
+      },
+      execute(proposalId, approvalToken) {
+        calls.execute = { proposalId, approvalToken };
+        return { ok: true, result: { state: 'EXECUTED', changed: false } };
+      }
+    },
+    revisions: {
+      revisionIdFor() { return null; },
+      async list(documentId) { calls.list = documentId; return []; },
+      async capture(options) { calls.capture = options; return { created: false, revisionId: null, documentId: 'doc-1' }; },
+      async restore(revisionId, options) { calls.restore = { revisionId, options }; return { restored: true, revisionId, documentId: 'doc-1' }; }
+    }
+  };
+  const api = createInkPublicCreativeApi(app);
+
+  await api.reference.decompose({ referenceObjectId: 'reference-1', options: { numberOfColors: 8 } });
+  api.edit.approve({ proposalId: 'proposal-1' });
+  api.edit.execute({ proposalId: 'proposal-1', approvalToken: 'token-1' });
+  await api.revision.list({ documentId: 'doc-1' });
+  await api.revision.capture({ reason: 'chat-checkpoint', label: 'CHAT checkpoint' });
+  await api.revision.restore({ revisionId: 'revision-1', options: { reason: 'restore-check' } });
+  const inspected = api.asset.inspect({ handleId: 'missing-handle' });
+  const released = api.asset.release({ handleId: 'missing-handle' });
+  const described = api.capability.describe({ idOrToolName: 'preview.capture' });
+
+  assert.deepEqual(calls.reference, { referenceObjectId: 'reference-1', options: { numberOfColors: 8 } });
+  assert.equal(calls.approve, 'proposal-1');
+  assert.deepEqual(calls.execute, { proposalId: 'proposal-1', approvalToken: 'token-1' });
+  assert.equal(calls.list, 'doc-1');
+  assert.deepEqual(calls.capture, { reason: 'chat-checkpoint', label: 'CHAT checkpoint' });
+  assert.deepEqual(calls.restore, { revisionId: 'revision-1', options: { reason: 'restore-check' } });
+  assert.equal(inspected.status, 'COMPLETED');
+  assert.equal(released.status, 'NO_OP');
+  assert.equal(described.status, 'COMPLETED');
+
+  const captureDescriptor = resolveInkCapabilityDescriptor('revision.capture');
+  assert.deepEqual(captureDescriptor.inputSchema.required, []);
+  assert.equal(Object.hasOwn(captureDescriptor.inputSchema.properties, 'options'), false);
+  assert.deepEqual(captureDescriptor.examples[0], { reason: 'chat-checkpoint', label: 'CHAT checkpoint' });
 });
 
 test('Connector-003 source boundary adds discovery metadata only and preserves FORMAT_VERSION 4', async () => {
