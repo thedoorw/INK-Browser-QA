@@ -128,3 +128,23 @@ Result: **PASS for the authorized QA-bridge revision scope**.
 - Windows Runtime: NOT_RERUN_BY_DEV.
 - Current gate: `DEV_HANDOFF → STOP`.
 
+## MR_REVISE / QA_ORDER_ISOLATION_ONLY
+
+- Runtime evidence: run `36014703794`, tested SHA `b57a3471ceaaba915a296aa1fe46680ee3e44134`, runner `DESKTOP-NSOQH69`.
+- Smart loop: `18 / 18 PASS`; smart proof accepted.
+- First post-proof failure: `WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT`.
+- MR classification: `QA_STATE_ORDER_CONTAMINATION`; product Runtime fail not established; product source frozen.
+- QA-only correction:
+  - moved the real unavailable-state assertion before smart-loop Revision creation;
+  - removed only the later invalid unavailable-state assumption;
+  - preserved the later Revision panel open + baseline capture path;
+  - preserved structure capture / compare / restore coverage;
+  - preserved the smart-loop block byte-for-byte.
+- Code checkpoints:
+  - `9b00d832fa5e081233d7b8b6509cbc8428399172` — harness order isolation;
+  - `213f96aea61fbfadd4e47d1213746d2ad29ce645` — focused ordering contract.
+- Focused connector-side ordering QA: PASS.
+- Product source / smart-loop logic / Revision system changes: 0.
+- Windows Runtime rerun: NOT_RUN_BY_DEV.
+- Current gate: `DEV_HANDOFF → STOP`.
+
