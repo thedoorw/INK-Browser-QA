@@ -87,6 +87,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     await openPanel('reference');
     assert(Boolean(cw.root?.querySelector('[data-workspace-action="research-context-refresh"]') && cw.root?.querySelector('[data-workspace-output="research-context"]')),'WORKSTATION_REFERENCE_RESEARCH_ENTRY_VISIBLE');
 
+    await openPanel('revision');
+    assert(cw.root.querySelector('[data-workspace-action="revision-compare"]')?.disabled===true,'WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT');
+    await openPanel('reference');
+
     // INK-CHAT-CLOSED-LOOP-001: one connector-first chain, before unrelated regression edits.
     const smartApi=app.inkPublicApi;
     const smartDiscovery=await smartApi.tools.invoke('get_ink_capabilities');
@@ -662,7 +666,6 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     assert(/Select a Repeat to inspect deterministic structure state/.test(emptyParametricText),'WORKSTATION_COMPOSE_UNAVAILABLE_STATE_EXPLICIT',{text:emptyParametricText});
 
     await openPanel('revision');
-    assert(cw.root.querySelector('[data-workspace-action="revision-compare"]')?.disabled===true,'WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT');
     cw.root.querySelector('[data-workspace-input="revision-label"]').value='Rose Window direct baseline';
     const baselineCapture=await cw.runRevisionAction('revision-capture');
     const baselineRevision=baselineCapture?.record?.revisionId || app.revisions.revisionIdFor?.(app.doc.id);
