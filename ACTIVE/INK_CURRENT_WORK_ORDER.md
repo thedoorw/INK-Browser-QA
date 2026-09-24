@@ -1,348 +1,296 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / HOLD_BY_USER`
+STATUS: `INK-CHAT-CONNECTOR-001 / PUBLIC_CREATIVE_API / MR_ISSUED / DEV_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CHAT-VALIDATION-001` |
-| PHASE | `C_COLOR_LINE_BOUNDED_EDIT` |
-| TITLE | `CHAT bounded edit on Phase B Color + Line output` |
-| DEV_BRANCH | `work/ink-chat-validation-001-phase-c` |
-| BASELINE | `current main after Phase B closure + INK-TECH-DEBT-001 closure + dual-track governance sync` |
-| PREVIOUS_GATE | `REFERENCE → COLOR + LINE = ACCEPTED` |
-| TARGET_GATE | `CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS` |
+| TASK_ID | `INK-CHAT-CONNECTOR-001` |
+| PHASE | `PUBLIC_CREATIVE_API_FACADE` |
+| TITLE | `Figma/Penpot-compatible INK Public Creative API foundation` |
+| DEV_BRANCH | `work/ink-chat-connector-001` |
+| BASELINE | `main after connector research + UI lane independent progress` |
+| RESEARCH_BASELINE | `research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md` |
+| PREVIOUS_CHAT_GATE | `INK-CHAT-VALIDATION-001 Phase C = MR_SOURCE_PASS / HOLD_BY_USER` |
+| TARGET_GATE | `INK_PUBLIC_CREATIVE_API_FOUNDATION_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_VERSION | `v0.1 / PRESERVE` |
 | IMAGE_MODEL | `0` |
-| USER_IMAGE_PUBLIC_COMMIT | `0` |
-| UI_LANE | `PARALLEL / SEPARATE AUTHORITY` |
+| UI_LANE | `SEPARATE / DO NOT MUTATE UI WORK ORDER` |
+
+## User direction
+
+The user requested that the two connector questions and their analysis be preserved, then that CHAT ↔ INK connection points be planned and development begin.
+
+The research record is authoritative for intent:
+
+`research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md`
+
+Drawing validation remains paused:
+
+```text
+PHASE_C_RUNTIME = HOLD
+PHASE_D_TO_F = HOLD / NOT_AUTHORIZED
+```
+
+This Work Order replaces isolated drawing-validation development as the current CHAT engineering priority.
 
 ## Purpose
 
-Phase B proved:
+Create one stable public creative API facade over existing INK authorities so future CHAT/MCP/plugin tooling does not need a custom adapter for every operation.
+
+Target architecture:
 
 ```text
-CHAT attachment
-→ authoritative Reference
-→ editable Color regions
-+ editable boundary Line Paths
-→ separate layers
+CHAT / future MCP / future plugin
+            ↓
+         use_ink
+            ↓
+   INK Public Creative API
+            ↓
+ existing INK authorities only
+            ↓
+ Document / Reference / Path / History / Revision
 ```
 
-Phase C must prove that CHAT can now operate those generated editable structures through the already accepted bounded-edit authority.
+This task builds only the **Public Creative API foundation**.
 
-This is a validation/integration task, not a new drawing engine.
+It does not build `use_ink`, external MCP transport, screenshot transport, asset upload transport, or new drawing behavior.
 
-Target path:
+## Required connection points
+
+### A — Document / selection / object inspection
+
+Expose JSON-safe read-only methods backed by existing grounded state:
 
 ```text
-Phase B generated Color / Line Path
-→ grounded stable object reference
-→ CHAT edit proposal
-→ explicit approval
-→ existing path.repaint.v1 execution
-→ existing History
-→ deterministic result
+capabilities()
+context(options)
+selection()
+inspect(objectIds / refs)
 ```
 
-## Required validation
+Required authority:
 
-### C1 — Color Path bounded repaint
-
-Using an existing Phase B Color-layer Path:
-
-1. resolve one valid generated Color Path by stable page/layer/object identity;
-2. propose a `path.repaint.v1` fill change;
-3. verify proposal causes zero document mutation;
-4. explicitly approve;
-5. execute through the existing CHAT bounded-edit controller;
-6. verify only the intended Color Path appearance changes.
-
-Required invariants:
-
-- Color layer identity preserved;
-- Color object count preserved;
-- Path geometry preserved;
-- Reference object preserved;
-- unrelated Color/Line objects unchanged;
-- no automatic Revision creation;
-- existing History receives the authoritative mutation;
-- Undo restores the exact prior appearance;
-- Redo reapplies the exact accepted appearance.
-
-### C2 — Line Path bounded repaint
-
-Using an existing Phase B Line-layer Path:
-
-1. resolve one valid generated Line Path by stable page/layer/object identity;
-2. propose a `path.repaint.v1` stroke change;
-3. verify proposal causes zero document mutation;
-4. explicitly approve;
-5. execute through the existing CHAT bounded-edit controller;
-6. verify only the intended Line Path appearance changes.
-
-Required invariants:
-
-- Line layer identity preserved;
-- Line object count preserved;
-- Path geometry preserved;
-- Color layer unchanged;
-- Reference object preserved;
-- no automatic Revision creation;
-- existing History / Undo / Redo remain authoritative.
-
-### C3 — approval and stale-state guard
-
-At minimum verify:
-
-- execution without approval is rejected;
-- proposal/approval alone do not mutate;
-- if target state changes after proposal, stale execution is rejected;
-- rejection does not partially mutate the document.
-
-Do not weaken the accepted approval-token or fingerprint contract merely to make the test pass.
-
-### C4 — private real-image acceptance
-
-Repeat the bounded Phase C path on the same private real-user image class accepted in Phase B.
+- existing `buildAIDocumentBridge` / grounded document state;
+- existing stable page/layer/object IDs;
+- existing selection state.
 
 Rules:
 
-- private image bytes remain outside Git;
-- no public fixture derived from the user's image;
-- Phase B trace parameters are not retuned in this task;
-- choose representative visible Color and Line targets from the generated result and record their stable IDs / before-after appearance evidence;
-- demonstrate one visible Color edit and one visible Line edit through the authoritative CHAT bounded-edit route.
+- do not return live mutable Document/Object references;
+- callers must not be able to mutate `app.doc` by changing returned values;
+- bounded output rules remain enforced.
 
-## Existing authority to reuse
+### B — Reference decomposition
 
-Phase C should reuse, not replace:
-
-- Phase B `CHAT_REFERENCE_DECOMPOSITION` output and stable generated object IDs;
-- `app.chatBoundedEdit` / existing bounded edit adapter;
-- `path.repaint.v1`;
-- existing `PathRepaintMaterialController`;
-- existing History / Undo / Redo;
-- existing grounded document/object state.
-
-No second mutation engine, second History, second Revision or second document model is authorized.
-
-## Explicitly out of scope
-
-Do not:
-
-- retune ImageTracerJS;
-- alter Phase B decomposition semantics;
-- add semantic part labeling or object recognition;
-- add a new repaint engine;
-- add new arbitrary edit operations;
-- auto-approve or auto-execute CHAT proposals;
-- change Document schema;
-- change History semantics;
-- change Revision semantics;
-- change Geometry authority;
-- change persistence or `FORMAT_VERSION`;
-- change Service Worker/cache/bootstrap architecture;
-- mutate the UI-006 branch;
-- use IMAGE generation/model behavior;
-- commit the private user image.
-
-If any of those becomes necessary:
-
-`STOP → MR → separate Core / Integration Work Order`.
-
-## UI parallel-lane boundary
-
-UI-006 and Phase C may proceed in parallel.
+Expose the existing decomposition path through the facade:
 
 ```text
-UI owns
-= presentation / placement / responsive / interaction shell
-
-CHAT Phase C owns
-= grounded target / proposal / approval / bounded edit validation
+reference.decompose(referenceObjectId, options)
 ```
 
-If both lanes touch a shared source file, preserve this split. Do not merge the UI development branch into the CHAT development branch or vice versa.
+Required authority:
+
+`app.chatReferenceHandoff` / existing `CHAT_REFERENCE_DECOMPOSITION`
+
+Preserve:
+
+- current bounded ImageTracerJS behavior;
+- current Reference → Color + Line semantics;
+- History receipt;
+- Revision behavior;
+- audit/provenance;
+- stable generated IDs.
+
+Do not retune or rewrite Phase B decomposition.
+
+### C — Bounded edit
+
+Expose only the already accepted proposal/approval/execution path:
+
+```text
+edit.propose(task)
+edit.approve(proposalId)
+edit.execute(proposalId, approvalToken)
+```
+
+Required authority:
+
+`app.chatBoundedEditAdapter`
+
+Do not add direct convenience writes that bypass proposal/approval.
+
+Existing operation registry remains authoritative:
+
+```text
+path.repaint.v1
+path.material.apply.v1
+path.material.remove.v1
+object.translate.v1
+path.simplify.v1
+path.refine.v1
+```
+
+### D — History
+
+Expose the existing History authority:
+
+```text
+history.inspect()
+history.undo()
+history.redo()
+```
+
+Required authority:
+
+`app.history`
+
+No second history stack or connector-owned undo model.
+
+### E — Revision
+
+Expose existing Revision authority:
+
+```text
+revision.list()
+revision.capture(options)
+revision.restore(revisionId)
+revision.current()
+```
+
+Required authority:
+
+`app.revisions`
+
+No second revision store and no automatic revision capture after every edit.
+
+## Capability registry
+
+The facade must expose a deterministic JSON-safe capability registry that identifies:
+
+- method/family name;
+- read vs write/proposal behavior;
+- authoritative INK route;
+- whether explicit approval is required;
+- whether History is expected;
+- whether Revision is expected;
+- current availability.
+
+This registry will later drive `get_ink_capabilities` and the INK Skill.
+
+## Installation boundary
+
+Install the facade on the existing `InkApp` instance using a single product module.
+
+Recommended shape:
+
+```text
+product/source/src/agent/
+  index.js
+  public-creative-api.js
+```
+
+Recommended app surface:
+
+```text
+app.inkPublicApi
+```
+
+Naming may be adjusted if repository conventions clearly require it, but there must be one facade and one authority.
+
+Do **not** expose a new unrestricted global API on `window` in this task.
+External transport belongs to Connector-002.
+
+## Result contract
+
+Every facade result must be JSON-safe.
+
+Writes/proposals must preserve the underlying authoritative receipt and return enough identity to inspect what happened.
+
+No returned object may be a live mutable reference into the INK document.
 
 ## Required QA
 
-Source/static:
+Add focused tests covering at minimum:
 
-- Phase B regression remains PASS;
-- accepted CHAT bounded-edit unit/static guards remain PASS;
-- new Phase C focused QA covers Color edit, Line edit, approval boundary, stale-state rejection and Undo/Redo;
-- Web / Portable parity remains valid where applicable;
-- `FORMAT_VERSION = 4`.
+1. capability registry deterministic and JSON-safe;
+2. context/selection/inspect return clones/summaries, not live mutable references;
+3. Reference decomposition delegates to the existing reference-handoff authority;
+4. bounded edit delegates to existing propose → approve → execute authority;
+5. execution without existing approval remains rejected by the underlying authority;
+6. History inspect/undo/redo use the existing HistoryManager;
+7. Revision list/capture/restore use the existing RevisionController;
+8. no direct document JSON mutation path exists in the facade;
+9. no second History / Revision / Geometry / decomposition engine;
+10. `FORMAT_VERSION = 4`;
+11. Web / Portable shared source remains one implementation.
 
-Runtime:
+Regression:
+
+- Phase B decomposition focused QA remains PASS;
+- accepted CHAT bounded-edit core QA remains PASS;
+- current document/history/revision core tests remain PASS.
+
+## Explicit non-goals
+
+Do not implement in this Work Order:
+
+- `use_ink` arbitrary/general code execution;
+- `eval`, `Function`, arbitrary JS sandboxing;
+- MCP server;
+- ChatGPT plugin packaging;
+- WebSocket/postMessage bridge;
+- screenshot or canvas-image transport;
+- asset upload/import transport;
+- new trace/decomposition algorithm;
+- Figma/Penpot adapters;
+- new drawing operation;
+- new token/design-system engine;
+- new Creative Library;
+- UI redesign;
+- Service Worker/bootstrap/cache changes;
+- Document schema or FORMAT_VERSION changes;
+- automatic approval;
+- automatic Revision capture.
+
+Any need for these:
+
+`STOP → MR → next Connector Work Order`
+
+## Planned sequence after this task — not authorized by this Work Order
 
 ```text
-exact Phase C DEV HEAD
-→ self-hosted Windows Chrome
-→ UI suite
-→ Creative suite
-→ Geometry suite
-→ Phase B regression
-→ Phase C Color bounded edit
-→ Phase C Line bounded edit
-→ private real-image acceptance
+Connector-002
+= use_ink execution bridge over the accepted Public Creative API
+
+Connector-003
+= get_ink_metadata + get_ink_screenshot feedback channel
+
+Connector-004
+= INK Skill / Figma-Penpot-to-INK workflow grammar
+
+Connector-005
+= Creative Library Search
+
+Connector-006
+= resume full Reference → Color + Line → CHAT closed-loop creative validation
 ```
-
-Required evidence:
-
-- exact tested SHA;
-- Runtime run ID;
-- runner identity;
-- selected Color target ID and before/after appearance;
-- selected Line target ID and before/after appearance;
-- proposal = zero mutation;
-- approval = zero mutation;
-- execution = intended target only;
-- History / Undo / Redo = PASS;
-- Revision = unchanged unless an existing explicit capture is separately invoked;
-- private image public commit = 0.
 
 ## Gate
 
 ```text
 DEV_AUTHORIZED
+→ implementation + focused QA
 → DEV_HANDOFF / STOP
-→ MR source review
-→ exact-SHA Runtime
-→ private real-image acceptance
+→ MR exact-HEAD source review
+→ regression
 → MR_PASS / MR_REVISE
 ```
 
-Acceptance gate:
+No Windows browser Runtime is required unless implementation changes browser integration outside the bounded facade installation path. MR decides Runtime necessity after source review.
 
-`CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS`
+Acceptance:
 
-## Registered next validation sequence — not authorized
-
-If Phase C passes, the provisional validation order is:
-
-```text
-Phase D
-= CHAT bounded Path geometry correction
-  using existing simplify / refine / translate authorities
-
-Phase E
-= multi-step Color + Line creative plan
-  + explicit approval
-  + existing Revision capture / compare
-
-Phase F
-= end-to-end private-image collaboration
-  attachment → Reference → Color/Line → CHAT edits → History/Revision
-```
-
-Phase D–F are planning only. Do not start them from this Work Order.
-
-
-## MR source review — Phase C
-
-```text
-REVIEWED_DEV_HEAD = cd3b4dee28a7a47e2298569138f5dbd73af5cc14
-BRANCH = work/ink-chat-validation-001-phase-c
-SOURCE_REVIEW = PASS
-PRODUCT_SOURCE_MUTATION = 0
-QA_SCOPE = FOCUSED_ONLY
-BRANCH_TO_MAIN_AT_REVIEW = ahead 6 / behind 1
-BEHIND_MAIN_COMMIT = 7ec71731b0a72f4178e6078a60bb427de30d5170
-BEHIND_MAIN_SCOPE = UI Runtime queue only / no Phase C source conflict
-
-COLOR_PATH = existing path.repaint.v1 authority
-LINE_PATH = existing path.repaint.v1 authority
-PROPOSAL_APPROVAL_BOUNDARY = PRESERVED
-HISTORY = EXISTING AUTHORITY
-REVISION = UNCHANGED
-DOCUMENT = UNCHANGED
-GEOMETRY = UNCHANGED
-FORMAT_VERSION = 4 / PRESERVED
-```
-
-MR verified that the browser harness continues directly from actual Phase B
-`colorObjectIds / lineObjectIds` and executes through
-`chatBoundedEditAdapter.propose → approve → execute`.
-No direct product-object mutation is used for the accepted Color/Line edit path.
-
-The stale-state test intentionally perturbs target state only to prove fingerprint
-rejection, then restores the test state. It does not introduce product mutation authority.
-
-Execution gate remains open:
-
-```text
-MR_SOURCE_PASS
-→ exact DEV HEAD Runtime
-→ Phase B regression
-→ Phase C browser checks
-→ private real-image acceptance
-→ MR_PASS / MR_REVISE
-```
-
-The central Runtime queue is currently occupied by the separately authorized
-UI-006 Phase C+D exact-SHA run. Do not overwrite that queue while the run is active.
-
-
-## User pivot — pause drawing validation
-
-Date: `2026-09-24`
-
-```text
-DRAWING_VALIDATION = HOLD_BY_USER
-PHASE_C_SOURCE_REVIEW = PASS / PRESERVE
-PHASE_C_RUNTIME = DO_NOT_START
-PRIVATE_REAL_IMAGE_ACCEPTANCE = HOLD
-PHASE_D_TO_F = HOLD / NOT_AUTHORIZED
-
-NEW_PLANNING_PRIORITY =
-  INK → CHAT programmable connection
-  modeled after mature Figma / Penpot agent workflows
-```
-
-The Phase C DEV branch and MR source-pass evidence remain preserved.
-
-Do not continue one-operation-at-a-time drawing validation until the new
-agent-connectivity architecture is reviewed.
-
-Planning target:
-
-```text
-INK Core
-→ stable INK Agent API
-→ generic programmable execution bridge
-→ MCP / ChatGPT plugin transport
-→ reusable INK skills
-→ inspect / create / edit / validate workflows
-```
-
-UI-006 remains a separate lane and is not stopped by this hold.
-
-
-## User hold — Connector architecture first
-
-```text
-USER_DECISION = PAUSE DRAWING VALIDATION
-PHASE_C_SOURCE_REVIEW = PASS / RETAIN
-PHASE_C_RUNTIME = HOLD
-PRIVATE_REAL_IMAGE_ACCEPTANCE = HOLD
-PHASE_D_TO_F = NOT_AUTHORIZED / HOLD
-UI_LANE = UNAFFECTED / CONTINUES SEPARATELY
-
-NEW_PRIORITY =
-  study mature CHAT ↔ Figma / Penpot operating workflows
-  → map shared capabilities against INK
-  → define an INK programmable/public API + CHAT connector
-  → reuse existing INK authorities
-  → resume creative validation only after connector architecture is reviewed
-```
-
-Research baseline:
-
-`research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md`
-
-Do not queue Phase C Runtime or advance Phase D–F while this hold is active.
-Existing Phase C DEV evidence and source-review disposition remain valid as historical evidence.
+`INK_PUBLIC_CREATIVE_API_FOUNDATION_WORKS`
