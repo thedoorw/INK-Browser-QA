@@ -79,6 +79,18 @@ function safeScale(baseWidth, baseHeight, requestedScale, maxDimension) {
   return Math.max(1e-6, Math.min(requested, dimensionScale, pixelScale));
 }
 
+function safeContentScale(baseWidth, baseHeight, requestedScale, maxDimension) {
+  const width = Math.max(1e-6, finite(baseWidth, 'baseWidth'));
+  const height = Math.max(1e-6, finite(baseHeight, 'baseHeight'));
+  let scale = safeScale(width, height, requestedScale, maxDimension);
+  if (Math.ceil(width * scale) <= maxDimension && Math.ceil(height * scale) <= maxDimension) return scale;
+
+  const roundingGuard = Math.max(Number.EPSILON * maxDimension * 4, Number.MIN_VALUE);
+  const guardedDimensionScale = (maxDimension - roundingGuard) / Math.max(width, height);
+  scale = Math.max(1e-6, Math.min(scale, guardedDimensionScale));
+  return scale;
+}
+
 function plannedPixelSize(scope, plan) {
   if (scope === 'artboard') return { width: plan.geometry.width, height: plan.geometry.height };
   if (scope === 'viewport') {
@@ -88,8 +100,8 @@ function plannedPixelSize(scope, plan) {
     };
   }
   return {
-    width: Math.max(1, Math.ceil(plan.bounds.w * plan.scale)),
-    height: Math.max(1, Math.ceil(plan.bounds.h * plan.scale))
+    width: Math.max(1, Math.ceil((plan.baseWidth ?? plan.bounds.w) * plan.scale)),
+    height: Math.max(1, Math.ceil((plan.baseHeight ?? plan.bounds.h) * plan.scale))
   };
 }
 
@@ -192,14 +204,17 @@ function previewPlan(app, options = {}) {
   if (typeof app.renderer.contentBounds !== 'function') fail('INK_PREVIEW_CONTENT_AUTHORITY_UNAVAILABLE');
   const content = app.renderer.contentBounds() || { x: -200, y: -150, w: 400, h: 300 };
   const pad = 24;
-  const bounds = normalizeBounds({
+  const rawBounds = {
     x: finite(content.x, 'content.x') - pad,
     y: finite(content.y, 'content.y') - pad,
     w: finite(content.w, 'content.w') + pad * 2,
     h: finite(content.h, 'content.h') + pad * 2
-  });
-  const scale = safeScale(bounds.w, bounds.h, options.scale, maxDimension);
-  const plan = { scope, maxDimension, background, bounds, scale };
+  };
+  const bounds = normalizeBounds(rawBounds);
+  const baseWidth = rawBounds.w;
+  const baseHeight = rawBounds.h;
+  const scale = safeContentScale(baseWidth, baseHeight, options.scale, maxDimension);
+  const plan = { scope, maxDimension, background, bounds, baseWidth, baseHeight, scale };
   const pixelSize = plannedPixelSize(scope, plan);
   assertPixelBounds(pixelSize, maxDimension);
   return {
