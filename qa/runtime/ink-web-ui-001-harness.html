@@ -131,6 +131,45 @@
       record('right panel dock starts compact', visible(doc, '#panelDock') && initialShell.dockWidth >= 32 && initialShell.dockWidth <= 48, initialShell);
       record('initial stage reserves 40 px rail and 40 px dock', near(initialStageWidth, frame.clientWidth - 80, 2), { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
 
+      const frozenToolOrder = Array.from(doc.querySelectorAll('.tool-rail [data-tool-stack], .tool-rail [data-tool]'))
+        .map(button => button.dataset.toolStack || button.dataset.tool);
+      record('UI-006 Phase D preserves frozen tool order',
+        JSON.stringify(frozenToolOrder) === JSON.stringify(['draw','eraser','select','lasso','shape','text','image','pan']),
+        frozenToolOrder);
+      const toolbarLayoutToggle = doc.querySelector('#toolbarLayoutToggle');
+      record('UI-006 Phase D defaults to single-column desktop toolbar',
+        initialShell.toolbarLayout === 'single' &&
+        initialShell.toolbarLayoutPreference === 'single' &&
+        !doc.querySelector('#app').classList.contains('toolbar-layout-dual') &&
+        toolbarLayoutToggle?.getAttribute('aria-pressed') === 'false',
+        { shell: initialShell, rail: geometry1280.rail });
+      toolbarLayoutToggle?.click();
+      await sleep(140);
+      const dualShell = shell.state();
+      const dualRail = rectOf(doc, '.tool-rail');
+      const dualStage = rectOf(doc, '#stageWrap');
+      record('UI-006 Phase D dual-column layout expands only the rail and preserves canvas adjacency',
+        dualShell.toolbarLayout === 'dual' &&
+        dualShell.toolbarLayoutPreference === 'dual' &&
+        near(dualRail?.width, 68, 1) &&
+        near(dualStage?.left, dualRail?.right, 1) &&
+        dualShell.stageWidth < initialStageWidth - 20 &&
+        localStorage.getItem('ink.web.ui.toolbar-layout.v0.1') === 'dual',
+        { shell: dualShell, rail: dualRail, stage: dualStage });
+      const dualToolOrder = Array.from(doc.querySelectorAll('.tool-rail [data-tool-stack], .tool-rail [data-tool]'))
+        .map(button => button.dataset.toolStack || button.dataset.tool);
+      record('UI-006 Phase D dual-column mode exposes no extra tools',
+        JSON.stringify(dualToolOrder) === JSON.stringify(frozenToolOrder),
+        dualToolOrder);
+      toolbarLayoutToggle?.click();
+      await sleep(140);
+      const restoredSingle = shell.state();
+      record('UI-006 Phase D single-dual switch restores stage geometry',
+        restoredSingle.toolbarLayout === 'single' &&
+        near(restoredSingle.stageWidth, initialStageWidth, 2) &&
+        localStorage.getItem('ink.web.ui.toolbar-layout.v0.1') === 'single',
+        { initialStageWidth, restored: restoredSingle });
+
       frame.style.height = '1024px';
       await sleep(220);
       const geometry1280x1024 = {
@@ -206,6 +245,22 @@
       record('primary panel fits exactly between canvas and dock', near(expandedGeometry.stage?.right, expandedGeometry.panel?.left, 1) && near(expandedGeometry.panel?.right, expandedGeometry.dock?.left, 1), expandedGeometry);
       record('canvas resizes for expanded panel', layersState.stageWidth < initialStageWidth - 235, { initialStageWidth, expandedStageWidth: layersState.stageWidth });
 
+      const inspectorResizer = doc.querySelector('#inspectorResizer');
+      inspectorResizer?.dispatchEvent(new win.PointerEvent('pointerdown', { bubbles: true, clientX: 1018 }));
+      win.dispatchEvent(new win.PointerEvent('pointermove', { bubbles: true, clientX: 940 }));
+      win.dispatchEvent(new win.PointerEvent('pointerup', { bubbles: true, clientX: 940 }));
+      await sleep(120);
+      const resizedPanel = shell.state();
+      record('UI-006 Phase E active Inspector remains resizable and canvas follows its width',
+        resizedPanel.panelWidth >= 320 &&
+        resizedPanel.panelWidth <= 340 &&
+        resizedPanel.stageWidth < layersState.stageWidth - 60,
+        { before: layersState, after: resizedPanel });
+      inspectorResizer?.dispatchEvent(new win.PointerEvent('pointerdown', { bubbles: true, clientX: 940 }));
+      win.dispatchEvent(new win.PointerEvent('pointermove', { bubbles: true, clientX: 1018 }));
+      win.dispatchEvent(new win.PointerEvent('pointerup', { bubbles: true, clientX: 1018 }));
+      await sleep(120);
+
       const layerSection = doc.querySelector('.inspector-section.active');
       const panelContainment1280 = {
         inspector: rectOf(doc, '#inspector'),
@@ -250,6 +305,48 @@
       record('History undo works', afterUndo.layers === layersBefore + 2 && afterUndo.redo >= 1, { beforeUndo, afterUndo });
       record('History redo works', afterRedo.layers === layersBefore + 1, afterRedo);
 
+      shell.open('properties');
+      await sleep(120);
+      const propertyTabs = Array.from(doc.querySelectorAll('.properties-subtab'));
+      const specialistTabs = Array.from(doc.querySelectorAll('.specialist-subtab'));
+      record('UI-006 Phase E Properties shows only normal property families on desktop',
+        shell.state().activePanel === 'properties' &&
+        propertyTabs.every(tab => visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')) &&
+        specialistTabs.every(tab => !visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')) &&
+        !visible(doc, '#runGPUValidationBtn') &&
+        !visible(doc, '#programAssetPick'),
+        { shell: shell.state(), propertyTabs: propertyTabs.map(tab => tab.dataset.tab), specialistTabs: specialistTabs.map(tab => tab.dataset.tab) });
+      doc.querySelector('.inspector-tab[data-tab="geometry"]')?.click();
+      await sleep(100);
+      record('UI-006 Phase E Path Boolean and Repeat remain under Properties without duplicate endpoints',
+        doc.querySelector('#app').dataset.panel === 'geometry' &&
+        visible(doc, '#booleanUnion') &&
+        visible(doc, '#repeatRadial') &&
+        doc.querySelectorAll('#booleanUnion').length === 1 &&
+        doc.querySelectorAll('#repeatRadial').length === 1,
+        { panel: doc.querySelector('#app').dataset.panel });
+
+      shell.open('specialist');
+      await sleep(120);
+      const specialistState = shell.state();
+      record('UI-006 Phase E Specialist uses the existing Inspector as one primary panel',
+        specialistState.activePanel === 'specialist' &&
+        specialistState.inspectorOpen &&
+        !specialistState.creativeOpen &&
+        specialistState.panelGroup === 'specialist' &&
+        specialistTabs.every(tab => visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')) &&
+        propertyTabs.every(tab => !visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')),
+        specialistState);
+      doc.querySelector('.inspector-tab[data-tab="studio"]')?.click();
+      await sleep(100);
+      record('UI-006 Phase E engineering and diagnostic endpoints remain reachable only from Specialist',
+        doc.querySelector('#app').dataset.panel === 'studio' &&
+        visible(doc, '#programAssetPick') &&
+        visible(doc, '#runGPUValidationBtn') &&
+        doc.querySelectorAll('#programAssetPick').length === 1 &&
+        doc.querySelectorAll('#runGPUValidationBtn').length === 1,
+        { panel: doc.querySelector('#app').dataset.panel });
+
       for (const id of ['reference','compose','chat','revision']) {
         shell.open(id);
         await sleep(90);
@@ -263,6 +360,22 @@
           routeState);
       }
 
+      shell.close();
+      await sleep(100);
+      const lastPanelCollapse = shell.state();
+      doc.querySelector('#inspectorEdgeToggle')?.click();
+      await sleep(140);
+      const lastPanelRestored = shell.state();
+      record('UI-006 Phase E collapse remembers and restores the last active primary panel',
+        lastPanelCollapse.collapsed &&
+        lastPanelCollapse.lastPanel === 'revision' &&
+        lastPanelRestored.activePanel === 'revision' &&
+        lastPanelRestored.creativeOpen &&
+        !lastPanelRestored.inspectorOpen,
+        { collapsed: lastPanelCollapse, restored: lastPanelRestored });
+      doc.querySelector('#inspectorEdgeToggle')?.click();
+      await sleep(100);
+
       shell.open('chat');
       await sleep(80);
       shell.close();
@@ -274,18 +387,61 @@
       const windowButton = Array.from(doc.querySelectorAll('.application-menus button')).find(button => button.textContent.trim() === '視窗');
       windowButton?.click();
       await sleep(50);
-      record('Window menu coherently exposes dock panels', visible(doc, '#panelWindowMenu') && doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 7);
+      record('Window menu coherently exposes Editor, Creative Loop and Specialist dock panels',
+        visible(doc, '#panelWindowMenu') &&
+        doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 8 &&
+        doc.querySelectorAll('#panelWindowMenu [data-panel-group]').length === 3);
+      record('UI-006 Phase F Panel Dock is Primary Home and Window menu is a secondary route',
+        doc.querySelector('#panelDock')?.dataset.uiRoute === 'PRIMARY_HOME' &&
+        doc.querySelector('#panelDock')?.dataset.uiHome === 'panels' &&
+        doc.querySelector('#panelWindowMenu')?.dataset.uiRoute === 'SECONDARY_ROUTE' &&
+        doc.querySelector('#inspectorEdgeToggle')?.dataset.uiRoute === 'COLLAPSE_RESTORE_ONLY',
+        {
+          dock: doc.querySelector('#panelDock')?.dataset.uiRoute,
+          window: doc.querySelector('#panelWindowMenu')?.dataset.uiRoute,
+          edge: doc.querySelector('#inspectorEdgeToggle')?.dataset.uiRoute
+        });
 
       const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
       record('New/Open/Save/Export/Fullscreen command bindings remain wired', buttonsWired);
-      doc.querySelector('#exportBtn').click();
+      const permanentFileCopiesHidden = ['newBtn','openBtn','saveBtn','exportBtn']
+        .every(id => getComputedStyle(doc.querySelector('#' + id)).display === 'none');
+      record('UI-006 Phase C removes equal-status permanent desktop file commands', permanentFileCopiesHidden);
+
+      const fileMenuButton = doc.querySelector('#fileMenuToggle');
+      fileMenuButton?.click();
       await sleep(60);
-      record('Export surface still opens', (() => {
+      const fileMenuItems = Array.from(doc.querySelectorAll('#fileMenu [data-file-command]'));
+      record('UI-006 Phase C File menu is the primary desktop home for New/Open/Save/Export',
+        visible(doc, '#fileMenu') &&
+        JSON.stringify(fileMenuItems.map(item => item.dataset.fileCommand)) === JSON.stringify(['new','open','save','export']),
+        fileMenuItems.map(item => ({ command: item.dataset.fileCommand, label: item.textContent.trim() })));
+      record('UI-006 Phase F File routes are explicitly Primary Home vs Responsive Alternative',
+        doc.querySelector('#fileMenu')?.dataset.uiRoute === 'PRIMARY_HOME' &&
+        ['newBtn','openBtn','saveBtn','exportBtn'].every(id =>
+          doc.querySelector('#' + id)?.dataset.uiRoute === 'RESPONSIVE_ALTERNATIVE'),
+        {
+          primary: doc.querySelector('#fileMenu')?.dataset.uiRoute,
+          responsive: ['newBtn','openBtn','saveBtn','exportBtn'].map(id => [id, doc.querySelector('#' + id)?.dataset.uiRoute])
+        });
+      record('UI-006 Phase F workspace and tool selection have one declared Primary Home',
+        doc.querySelector('#workspaceSwitch')?.dataset.uiRoute === 'PRIMARY_HOME' &&
+        doc.querySelector('.menu-workspace')?.dataset.uiRoute === 'SECONDARY_SHORTCUT' &&
+        doc.querySelector('.tool-rail')?.dataset.uiRoute === 'PRIMARY_HOME' &&
+        doc.querySelector('.tool-rail')?.dataset.uiHome === 'tool-selection',
+        {
+          workspace: doc.querySelector('#workspaceSwitch')?.dataset.uiRoute,
+          workspaceMenu: doc.querySelector('.menu-workspace')?.dataset.uiRoute,
+          tools: doc.querySelector('.tool-rail')?.dataset.uiRoute
+        });
+      doc.querySelector('#fileMenu [data-file-command="export"]')?.click();
+      await sleep(60);
+      record('UI-006 Phase C File menu proxies the existing Export command endpoint', (() => {
         const dialog = doc.querySelector('#exportDialog');
-        return Boolean(dialog && !dialog.hidden);
+        return Boolean(dialog && !dialog.hidden && typeof doc.querySelector('#exportBtn')?.onclick === 'function');
       })());
-      const cancelExport = doc.querySelector('#cancelExportBtn');
-      if (cancelExport && !cancelExport.hidden) cancelExport.click();
+      doc.querySelector('#closeExport')?.click();
+      await sleep(40);
 
       const fullscreenDiag = test.fullscreen();
       record('Fullscreen API remains supported and command surface wired', fullscreenDiag.supported && typeof doc.querySelector('#fullscreenToggle').onclick === 'function', fullscreenDiag);
@@ -331,6 +487,125 @@
       await sleep(80);
       const selectionContext = doc.querySelector('#contextualOptions');
       record('Selection actions become the contextual surface', selectionContext.dataset.contextMode === 'selection' && visible(doc, '#selectionBar') && ['duplicate','group','front','alignCenter','delete'].every(action => doc.querySelector('[data-selection-action="' + action + '"]')), { mode: selectionContext.dataset.contextMode, count: test.summary().selection });
+      const selectionProxyIds = ['duplicateSelectionBtn','groupSelectionBtn','frontSelectionBtn','deleteSelectionBtn'];
+      record('UI-006 Phase F removes the equal-status Properties selection action strip while preserving handlers',
+        doc.querySelector('#selectionBar')?.dataset.uiRoute === 'CONTEXTUAL_SHORTCUT' &&
+        doc.querySelector('.selection-command-proxies')?.hidden === true &&
+        selectionProxyIds.every(id => typeof doc.querySelector('#' + id)?.onclick === 'function') &&
+        ['ungroupSelectionBtn','backSelectionBtn'].every(id => Boolean(doc.querySelector('#' + id)) && !doc.querySelector('#' + id).hidden) &&
+        doc.querySelector('.object-deep-actions')?.dataset.uiRoute === 'DEEP_SECONDARY',
+        {
+          contextual: doc.querySelector('#selectionBar')?.dataset.uiRoute,
+          hiddenProxyContainer: doc.querySelector('.selection-command-proxies')?.hidden,
+          hiddenProxyIds: selectionProxyIds,
+          deeper: ['ungroupSelectionBtn','backSelectionBtn']
+        });
+      record('UI-006 Phase F immediate contextual controls and deep Properties controls are explicitly separated',
+        doc.querySelector('#contextualOptions')?.dataset.uiRoute === 'PRIMARY_HOME' &&
+        doc.querySelector('#quickControls')?.dataset.uiRoute === 'PRIMARY_HOME' &&
+        ['brush','object','geometry'].every(tab =>
+          doc.querySelector('.inspector-section[data-content="' + tab + '"]')?.dataset.uiRoute === 'DEEP_SETTINGS') &&
+        doc.querySelector('.align-card')?.dataset.uiRoute === 'DEEP_SETTINGS',
+        {
+          contextual: doc.querySelector('#contextualOptions')?.dataset.uiRoute,
+          quick: doc.querySelector('#quickControls')?.dataset.uiRoute,
+          properties: ['brush','object','geometry'].map(tab => [tab, doc.querySelector('.inspector-section[data-content="' + tab + '"]')?.dataset.uiRoute])
+        });
+      const domIds = Array.from(doc.querySelectorAll('[id]')).map(node => node.id);
+      record('UI-006 Phase F introduces no duplicate DOM command IDs',
+        new Set(domIds).size === domIds.length,
+        { ids: domIds.length, unique: new Set(domIds).size });
+
+      const typographyRootStyle = win.getComputedStyle(doc.documentElement);
+      const typographyTokens = {
+        xs: typographyRootStyle.getPropertyValue('--ui-type-xs').trim(),
+        sm: typographyRootStyle.getPropertyValue('--ui-type-sm').trim(),
+        md: typographyRootStyle.getPropertyValue('--ui-type-md').trim(),
+        lg: typographyRootStyle.getPropertyValue('--ui-type-lg').trim(),
+        brand: typographyRootStyle.getPropertyValue('--ui-type-brand').trim()
+      };
+      record('UI-006 Phase G exposes one named typography token authority',
+        typographyTokens.xs === '9px' &&
+        typographyTokens.sm === '9.5px' &&
+        typographyTokens.md === '10px' &&
+        typographyTokens.lg === '11px' &&
+        typographyTokens.brand === '10px',
+        typographyTokens);
+
+      const fontPx = node => node ? Number.parseFloat(win.getComputedStyle(node).fontSize) : NaN;
+      const controlTypographySamples = [
+        doc.querySelector('.application-menus > button'),
+        doc.querySelector('#contextualAdvancedBtn'),
+        doc.querySelector('.properties-subnav .inspector-tab'),
+        doc.querySelector('.inspector-section .control-row'),
+        doc.querySelector('.creative-workspace-tabs button')
+      ].filter(Boolean);
+      const controlTypography = controlTypographySamples.map(node => ({
+        node: node.id || node.className || node.tagName,
+        size: fontPx(node),
+        weight: win.getComputedStyle(node).fontWeight
+      }));
+      record('UI-006 Phase G normal interactive/control text stays at or above UI-MD',
+        controlTypography.length >= 4 &&
+        controlTypography.every(item => item.size >= Number.parseFloat(typographyTokens.md)),
+        controlTypography);
+
+      const metadataTypographySamples = [
+        doc.querySelector('.panel-window-group-label'),
+        doc.querySelector('.section-title span'),
+        doc.querySelector('.version-badge'),
+        doc.querySelector('kbd'),
+        doc.querySelector('.tool-button .tool-label')
+      ].filter(Boolean);
+      const metadataTypography = metadataTypographySamples.map(node => ({
+        node: node.className || node.tagName,
+        size: fontPx(node)
+      }));
+      record('UI-006 Phase G metadata-only text never falls below UI-XS',
+        metadataTypography.length >= 3 &&
+        metadataTypography.every(item => item.size >= Number.parseFloat(typographyTokens.xs)),
+        metadataTypography);
+
+      const panelTitleSizes = [
+        doc.querySelector('#inspector .inspector-head strong'),
+        doc.querySelector('#creativeWorkspace .creative-workspace-head strong')
+      ].filter(Boolean).map(fontPx);
+      const panelTabSizes = [
+        doc.querySelector('.properties-subnav .inspector-tab'),
+        doc.querySelector('.creative-workspace-tabs button')
+      ].filter(Boolean).map(fontPx);
+      record('UI-006 Phase G panel titles and tabs share the common hierarchy',
+        panelTitleSizes.length === 2 &&
+        panelTabSizes.length === 2 &&
+        panelTitleSizes.every(size => near(size, Number.parseFloat(typographyTokens.lg), 0.01)) &&
+        panelTabSizes.every(size => near(size, Number.parseFloat(typographyTokens.md), 0.01)),
+        { panelTitleSizes, panelTabSizes, tokens: typographyTokens });
+
+      const typographyProbe = doc.createElement('div');
+      typographyProbe.className = 'context-control-label';
+      typographyProbe.style.cssText = 'position:absolute;left:-9999px;top:-9999px;visibility:hidden;white-space:nowrap;';
+      for (const [script, value] of [['cjk','圖層'], ['latin','Layer'], ['numeric','100']]) {
+        const span = doc.createElement('span');
+        span.dataset.script = script;
+        span.textContent = value;
+        typographyProbe.appendChild(span);
+      }
+      doc.querySelector('#app')?.appendChild(typographyProbe);
+      const scriptTypography = Array.from(typographyProbe.querySelectorAll('span')).map(node => {
+        const style = win.getComputedStyle(node);
+        return { script: node.dataset.script, size: style.fontSize, family: style.fontFamily };
+      });
+      typographyProbe.remove();
+      record('UI-006 Phase G CJK Latin and numeric UI text share size and font-stack authority',
+        scriptTypography.length === 3 &&
+        new Set(scriptTypography.map(item => item.size)).size === 1 &&
+        new Set(scriptTypography.map(item => item.family)).size === 1 &&
+        scriptTypography.every(item =>
+          item.family.includes('Inter') &&
+          item.family.includes('Noto Sans TC') &&
+          item.family.includes('Microsoft JhengHei')),
+        scriptTypography);
+
       app.clearSelection();
       await sleep(50);
 
@@ -418,7 +693,7 @@
       frame.style.height = '520px';
       frame.style.width = '1280px';
       await sleep(300);
-      shell.open('properties');
+      shell.open('specialist');
       await sleep(100);
       doc.querySelector('.inspector-tab[data-tab="studio"]')?.click();
       await sleep(180);
@@ -473,6 +748,115 @@
       frame.style.height = '800px';
       await sleep(260);
 
+      // UI-006 Phase H: every accepted primary panel must consume only its
+      // measured right-side width and keep one coherent canvas boundary.
+      const phaseHPanelIds = ['properties','layers','history','reference','compose','chat','revision','specialist'];
+      const phaseHPanelGeometry = [];
+      let phaseHPanelGeometryPass = true;
+      for (const panelId of phaseHPanelIds) {
+        shell.open(panelId);
+        await sleep(120);
+        const panelState = shell.state();
+        const panelSelector = panelState.inspectorOpen ? '#inspector' : '#creativeWorkspace';
+        const geometry = {
+          id: panelId,
+          state: panelState,
+          stage: rectOf(doc, '#stageWrap'),
+          rail: rectOf(doc, '.tool-rail'),
+          panel: rectOf(doc, panelSelector),
+          dock: rectOf(doc, '#panelDock')
+        };
+        const coherent =
+          panelState.activePanel === panelId &&
+          geometry.stage &&
+          geometry.rail &&
+          geometry.panel &&
+          geometry.dock &&
+          near(geometry.stage.left, geometry.rail.right, 1) &&
+          near(geometry.stage.right, geometry.panel.left, 2) &&
+          near(geometry.panel.right, geometry.dock.left, 2) &&
+          geometry.stage.width > 520;
+        geometry.pass = Boolean(coherent);
+        phaseHPanelGeometryPass = phaseHPanelGeometryPass && Boolean(coherent);
+        phaseHPanelGeometry.push(geometry);
+      }
+      record('UI-006 Phase H every primary right panel preserves one coherent canvas boundary',
+        phaseHPanelGeometryPass,
+        phaseHPanelGeometry);
+
+      // Exercise the existing Inspector resizer. ResizeObserver + shell layout
+      // must update --active-panel-w so the stage contracts by the same delta.
+      shell.open('properties');
+      await sleep(140);
+      const resizeHandle = doc.querySelector('#inspectorResizer');
+      const resizeBefore = {
+        shell: shell.state(),
+        stage: rectOf(doc, '#stageWrap'),
+        panel: rectOf(doc, '#inspector')
+      };
+      const targetPanelWidth = Math.min(340, Math.max(300, resizeBefore.shell.panelWidth + 64));
+      if (resizeHandle && typeof win.PointerEvent === 'function') {
+        const pointerId = 91;
+        resizeHandle.dispatchEvent(new win.PointerEvent('pointerdown', {
+          bubbles: true, cancelable: true, pointerId, clientX: resizeBefore.panel.left + 2, clientY: resizeBefore.panel.top + 40
+        }));
+        win.dispatchEvent(new win.PointerEvent('pointermove', {
+          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth - 10, clientY: resizeBefore.panel.top + 40
+        }));
+        win.dispatchEvent(new win.PointerEvent('pointerup', {
+          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth - 10, clientY: resizeBefore.panel.top + 40
+        }));
+      }
+      await sleep(180);
+      const resizeAfter = {
+        shell: shell.state(),
+        stage: rectOf(doc, '#stageWrap'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock')
+      };
+      const resizeDelta = resizeAfter.shell.panelWidth - resizeBefore.shell.panelWidth;
+      record('UI-006 Phase H Inspector resize updates canvas geometry through the existing shell authority',
+        typeof win.PointerEvent === 'function' &&
+        resizeDelta >= 35 &&
+        resizeBefore.stage.width - resizeAfter.stage.width >= resizeDelta - 3 &&
+        near(resizeAfter.stage.right, resizeAfter.panel.left, 2) &&
+        near(resizeAfter.panel.right, resizeAfter.dock.left, 2),
+        { before: resizeBefore, after: resizeAfter, resizeDelta, targetPanelWidth });
+
+      // Restore the accepted default width after the bounded resize exercise.
+      doc.querySelector('#app').style.setProperty('--inspector-w', '252px');
+      app.inspectorNormalWidth = 252;
+      app.inspectorWide = false;
+      try { win.localStorage.setItem('ink-inspector-width', '252'); } catch {}
+      await sleep(160);
+
+      // Fullscreen API semantics live in INK_APP and are tested separately for
+      // support/binding. Here Phase H verifies the presentation class produced
+      // by that API keeps shell geometry contained while a panel is open.
+      doc.querySelector('#app').classList.add('fullscreen-active');
+      await sleep(100);
+      const fullscreenPresentation = {
+        viewport: { width: win.innerWidth, height: win.innerHeight },
+        app: rectOf(doc, '#app'),
+        stage: rectOf(doc, '#stageWrap'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock'),
+        rootScroll: { width: doc.documentElement.scrollWidth, height: doc.documentElement.scrollHeight }
+      };
+      record('UI-006 Phase H fullscreen presentation keeps chrome, panel and canvas contained',
+        near(fullscreenPresentation.app?.left, 0, 1) &&
+        near(fullscreenPresentation.app?.top, 0, 1) &&
+        near(fullscreenPresentation.app?.width, win.innerWidth, 1) &&
+        near(fullscreenPresentation.app?.height, win.innerHeight, 1) &&
+        near(fullscreenPresentation.stage?.right, fullscreenPresentation.panel?.left, 2) &&
+        near(fullscreenPresentation.panel?.right, fullscreenPresentation.dock?.left, 2) &&
+        fullscreenPresentation.rootScroll.width <= win.innerWidth + 1 &&
+        fullscreenPresentation.rootScroll.height <= win.innerHeight + 1,
+        fullscreenPresentation);
+      doc.querySelector('#app').classList.remove('fullscreen-active');
+      shell.close();
+      await sleep(140);
+
       frame.style.width = '960px';
       await sleep(260);
       shell.close();
@@ -480,6 +864,59 @@
       const desktopResize = shell.state();
       const narrowGeometry = { stage: rectOf(doc, '#stageWrap'), rail: rectOf(doc, '.tool-rail'), dock: rectOf(doc, '#panelDock'), topbar: rectOf(doc, '.topbar') };
       record('narrow desktop containment remains stable', frame.contentWindow.innerWidth <= 960 && desktopResize.stageWidth > 800 && visible(doc, '#panelDock') && near(narrowGeometry.stage?.left, narrowGeometry.rail?.right, 1) && near(narrowGeometry.stage?.right, narrowGeometry.dock?.left, 1), { viewport: frame.contentWindow.innerWidth, shell: desktopResize, geometry: narrowGeometry });
+      const narrowTypography = {
+        topbar: { client: doc.querySelector('.topbar')?.clientWidth || 0, scroll: doc.querySelector('.topbar')?.scrollWidth || 0 },
+        propertiesTabs: { client: doc.querySelector('.properties-subnav')?.clientWidth || 0, scroll: doc.querySelector('.properties-subnav')?.scrollWidth || 0 },
+        status: { client: doc.querySelector('.statusbar')?.clientWidth || 0, scroll: doc.querySelector('.statusbar')?.scrollWidth || 0 }
+      };
+      record('UI-006 Phase G narrow desktop typography does not overflow persistent chrome',
+        narrowTypography.topbar.scroll <= narrowTypography.topbar.client + 1 &&
+        narrowTypography.propertiesTabs.scroll <= narrowTypography.propertiesTabs.client + 1 &&
+        narrowTypography.status.scroll <= narrowTypography.status.client + 1,
+        narrowTypography);
+
+      shell.open('properties');
+      await sleep(140);
+      const narrowOpenState = shell.state();
+      const narrowOpenGeometry = {
+        stage: rectOf(doc, '#stageWrap'),
+        rail: rectOf(doc, '.tool-rail'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock')
+      };
+      record('UI-006 Phase H narrow desktop keeps a meaningful canvas with the primary panel open',
+        narrowOpenState.activePanel === 'properties' &&
+        narrowOpenState.stageWidth >= 560 &&
+        near(narrowOpenGeometry.stage?.left, narrowOpenGeometry.rail?.right, 1) &&
+        near(narrowOpenGeometry.stage?.right, narrowOpenGeometry.panel?.left, 2) &&
+        near(narrowOpenGeometry.panel?.right, narrowOpenGeometry.dock?.left, 2),
+        { shell: narrowOpenState, geometry: narrowOpenGeometry });
+
+      const narrowStatus = {
+        autosaveDisplay: getComputedStyle(doc.querySelector('#autosaveStatus')).display,
+        artboardDisplay: getComputedStyle(doc.querySelector('#statusArtboard')).display,
+        selectionDisplay: getComputedStyle(doc.querySelector('#selectionModeStatus')).display,
+        client: doc.querySelector('.statusbar')?.clientWidth || 0,
+        scroll: doc.querySelector('.statusbar')?.scrollWidth || 0,
+        rotateVisible: visible(doc, '#rotateResetBtn'),
+        fitVisible: visible(doc, '#fitBtn'),
+        zoomOutVisible: visible(doc, '#zoomOutBtn'),
+        zoomTextVisible: visible(doc, '#zoomText'),
+        zoomInVisible: visible(doc, '#zoomInBtn')
+      };
+      record('UI-006 Phase H narrow desktop compresses secondary status before viewport controls',
+        narrowStatus.autosaveDisplay === 'none' &&
+        narrowStatus.artboardDisplay === 'none' &&
+        narrowStatus.selectionDisplay === 'none' &&
+        narrowStatus.scroll <= narrowStatus.client + 1 &&
+        narrowStatus.rotateVisible &&
+        narrowStatus.fitVisible &&
+        narrowStatus.zoomOutVisible &&
+        narrowStatus.zoomTextVisible &&
+        narrowStatus.zoomInVisible,
+        narrowStatus);
+      shell.close();
+      await sleep(100);
 
       frame.style.width = '720px';
       await sleep(320);
@@ -487,10 +924,54 @@
       const mobileDockHidden = getComputedStyle(doc.querySelector('#panelDock')).display === 'none';
       const mobileBottomDock = visible(doc, '.mobile-dock');
       record('narrow/mobile fallback activates without desktop dock overlap', mobileMedia && mobileDockHidden && mobileBottomDock, { mobileMedia, mobileDockHidden, mobileBottomDock });
+      record('UI-006 Phase F responsive File alternative remains available on mobile',
+        visible(doc, '#exportBtn') &&
+        doc.querySelector('#exportBtn')?.dataset.uiRoute === 'RESPONSIVE_ALTERNATIVE' &&
+        getComputedStyle(doc.querySelector('#newBtn')).display === 'none' &&
+        getComputedStyle(doc.querySelector('#openBtn')).display === 'none' &&
+        getComputedStyle(doc.querySelector('#saveBtn')).display === 'none',
+        {
+          exportVisible: visible(doc, '#exportBtn'),
+          exportRoute: doc.querySelector('#exportBtn')?.dataset.uiRoute,
+          hiddenDesktopCopies: ['newBtn','openBtn','saveBtn'].map(id => [id, getComputedStyle(doc.querySelector('#' + id)).display])
+        });
+      record('UI-006 Phase D desktop toolbar layout does not override mobile UI',
+        shell.state().toolbarLayout === 'single' &&
+        !doc.querySelector('#app').classList.contains('toolbar-layout-dual') &&
+        getComputedStyle(doc.querySelector('.tool-rail')).display === 'none',
+        shell.state());
+      const compactEssentials = {
+        exportVisible: visible(doc, '#exportBtn'),
+        inspectorVisible: visible(doc, '#inspectorToggle'),
+        moreToolsVisible: visible(doc, '#mobileToolsToggle'),
+        mobileDockVisible: visible(doc, '.mobile-dock'),
+        panelDockDisplay: getComputedStyle(doc.querySelector('#panelDock')).display,
+        rootScrollWidth: doc.documentElement.scrollWidth,
+        bodyScrollWidth: doc.body.scrollWidth,
+        labelSizes: Array.from(doc.querySelectorAll('.mobile-dock .tool-label')).map(node => parseFloat(getComputedStyle(node).fontSize) || 0)
+      };
+      record('UI-006 Phase H compact mode keeps essential responsive alternatives reachable without desktop chrome leakage',
+        compactEssentials.exportVisible &&
+        compactEssentials.inspectorVisible &&
+        compactEssentials.moreToolsVisible &&
+        compactEssentials.mobileDockVisible &&
+        compactEssentials.panelDockDisplay === 'none' &&
+        compactEssentials.rootScrollWidth <= win.innerWidth + 1 &&
+        compactEssentials.bodyScrollWidth <= win.innerWidth + 1 &&
+        compactEssentials.labelSizes.length >= 4 &&
+        compactEssentials.labelSizes.every(size => size >= 10),
+        compactEssentials);
       shell.open('layers');
       await sleep(120);
       const inspectorRect = doc.querySelector('#inspector').getBoundingClientRect();
       record('mobile Inspector remains within viewport', inspectorRect.left >= 0 && inspectorRect.right <= win.innerWidth + 1 && inspectorRect.bottom <= win.innerHeight + 1, { viewport: [win.innerWidth, win.innerHeight], rect: inspectorRect.toJSON?.() || { left: inspectorRect.left, right: inspectorRect.right, top: inspectorRect.top, bottom: inspectorRect.bottom } });
+      const compactStage = rectOf(doc, '#stageWrap');
+      record('UI-006 Phase H mobile Inspector overlays rather than permanently shrinking the compact canvas',
+        compactStage &&
+        near(compactStage.left, 0, 1) &&
+        near(compactStage.right, win.innerWidth, 1) &&
+        doc.documentElement.scrollWidth <= win.innerWidth + 1,
+        { stage: compactStage, viewport: [win.innerWidth, win.innerHeight], scrollWidth: doc.documentElement.scrollWidth });
       shell.close();
       frame.style.width = '1280px';
       await sleep(250);
