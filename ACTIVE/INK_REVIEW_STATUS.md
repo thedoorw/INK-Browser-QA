@@ -1,26 +1,49 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-001 / PUBLIC_CREATIVE_API / DEV_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-001 / AGENT_CONNECTOR_FOUNDATION / DEV_AUTHORIZED`
 
 ## Current connector development
 
 ```text
 TASK = INK-CHAT-CONNECTOR-001
-PHASE = PUBLIC_CREATIVE_API_FACADE
+PHASE = PUBLIC_API_NAMED_TOOLS_RESULT_ENVELOPE
 BRANCH = work/ink-chat-connector-001
-TARGET_GATE = INK_PUBLIC_CREATIVE_API_FOUNDATION_WORKS
-RESEARCH = research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md
+TARGET_GATE = INK_AGENT_CONNECTOR_FOUNDATION_WORKS
+RESEARCH = research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md / Adobe added
 ```
 
 Review focus:
 
-- one public facade only;
+- one Public Creative API facade only;
+- Adobe-style named tools are wrappers, not a second authority;
+- normalized INK_AGENT_RESULT is JSON-safe and preserves underlying receipts;
 - no live mutable document references;
 - reuse Document Bridge / Reference Handoff / Bounded Edit / History / Revision;
-- no second editor authority;
+- capability routing metadata distinguishes named tools from future use_ink;
 - no arbitrary execution bridge yet;
-- no screenshot transport yet;
+- no preview/screenshot transport yet;
 - FORMAT_VERSION 4 preserved.
+
+## Adobe-informed revision
+
+```text
+ADOBE_CONNECTOR_REFERENCE = ADDED
+PATTERN =
+  specialized capability routing
+  + target/asset/result handles
+  + model-side visual verification
+  + template/library reuse
+
+CONNECTOR_001 =
+  Public Creative API
+  + Named Tool registry
+  + INK_AGENT_RESULT envelope
+
+CONNECTOR_002 = visual preview feedback
+CONNECTOR_003 = use_ink
+```
+
+No Adobe tool becomes an INK product dependency.
 
 ## Preserved previous CHAT validation
 
