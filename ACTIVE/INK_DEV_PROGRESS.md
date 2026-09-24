@@ -102,3 +102,29 @@ Result: **PASS for the authorized QA-bridge revision scope**.
 - Focused connector-side QA: PASS; source/test syntax compile PASS; renderer formula alignment PASS.
 - Browser Runtime rerun: NOT_RUN_BY_DEV.
 - Current gate: `DEV_HANDOFF → STOP`.
+
+## MR_REVISE / QA_ASSERTION_ONLY — SMART_LOOP_HISTORY_RECORDED
+
+- Runtime diagnostic: run `36012548161`, tested SHA `20262d942c7a4d1a5ca03898856a2d7ddff9f5d6`, runner `DESKTOP-NSOQH69`.
+- First fail: `SMART_LOOP_HISTORY_RECORDED`.
+- MR classification: `QA_ASSERTION_SEMANTICS_MISMATCH`; `PRODUCT_RUNTIME_FAIL = NOT ESTABLISHED`; product source frozen.
+- Removed the invalid requirement that repaint History `entry.objectIds` include the target Path ID.
+- Revised acceptance:
+  - exactly 2 smart execution History receipt steps;
+  - each step increments undo count by exactly 1 and reports `CHAT repaint Path`;
+  - `get_ink_history.status === COMPLETED`;
+  - final two History entries are scoped `CHAT repaint Path` entries with `patchCount > 0`;
+  - returned History has at least two applied/retained entries.
+- Focused QA now explicitly prevents `objectIds` from becoming part of the smart History proof again.
+- Code checkpoints:
+  - `43ceec0af6b8acfd60e1f21b7cd1b756eda37174` — harness assertion correction;
+  - `3901d2bd5cae0aba029170ca7cc943ec0df7fd86` — focused QA lock.
+- Focused connector-side QA: PASS.
+- Diff from Runtime tested SHA through code checkpoint: only the two authorized QA files.
+- Frozen product blobs unchanged:
+  - `visual-feedback.js` = `f24dbe4f231bdc8c1acb9c197e59485815f8dc22`;
+  - `public-creative-api.js` = `72111d866584c7c414cd0e4f061953038e23596a`;
+  - `capability-registry.js` = `acb56063c3c8a26bcc0b92c9088786b77620bdf6`.
+- Windows Runtime: NOT_RERUN_BY_DEV.
+- Current gate: `DEV_HANDOFF → STOP`.
+
