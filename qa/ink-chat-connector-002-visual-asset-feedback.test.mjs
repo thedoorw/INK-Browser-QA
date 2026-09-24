@@ -161,15 +161,16 @@ test('Connector-002 three-tool surface remains exact while later Connector stage
   assert.equal(names[18], 'use_ink');
   assert.equal(names.length, 19);
 
-  const capabilities = api.capabilities().result.capabilities;
+  const capabilities = ['preview.capture', 'asset.inspect', 'asset.release']
+    .map(id => api.capability.describe(id).result);
   for (const id of ['preview.capture', 'asset.inspect', 'asset.release']) {
     const capability = capabilities.find(item => item.id === id);
     assert.ok(capability, 'missing capability ' + id);
     assert.equal(capability.availability, true);
     assert.equal(typeof capability.authoritativeRoute, 'string');
-    assert.equal(typeof capability.historyExpectation, 'string');
-    assert.equal(typeof capability.revisionExpectation, 'string');
-    assert.equal(capability.resultEnvelope, 'INK_AGENT_RESULT');
+    assert.equal(typeof capability.historyPolicy.mode, 'string');
+    assert.equal(typeof capability.revisionPolicy.mode, 'string');
+    assert.equal(capability.resultContract.resultEnvelope, 'INK_AGENT_RESULT');
   }
   assert.equal(capabilities.find(item => item.id === 'preview.capture').routingClass, 'NAMED_TOOL');
   assert.equal(capabilities.find(item => item.id === 'asset.inspect').routingClass, 'READ_ONLY');
