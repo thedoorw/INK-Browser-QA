@@ -337,3 +337,22 @@ FORMAT_VERSION = 4
 
 Final exact-SHA browser Runtime is MR stage and is not claimed by DEV.
 
+
+
+## Runtime evidence — run 35970456976
+
+The Windows self-hosted runner accepted the queued exact-SHA job and executed the product.
+
+```text
+TESTED_SHA = a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = HARNESS_TIMEOUT / 240 seconds
+GEOMETRY = NOT_REACHED
+ARTIFACT = 10797414297
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+```
+
+The previous regression Runtime on the same product source completed the browser batch in approximately 219 seconds. Connector-004 added browser feature coverage to the already long creative harness, leaving insufficient margin under the fixed 240-second per-suite ceiling. MR therefore classifies this run as a QA harness time-budget failure, not a demonstrated product Runtime failure.
+
+Bounded revision: increase the Runtime harness per-suite timeout from 240 to 360 seconds only; preserve product source and rerun the revised exact SHA.
