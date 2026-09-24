@@ -346,3 +346,135 @@ revision-aware round trips
 ```
 
 CHAT 應成為所有自製工具共用的視覺與資產交換層，使主程式介面、匯入圖、匯出圖、編輯結果與 QA evidence 都能在不同工具與 CHAT 視窗之間可檢查、可追蹤、可繼續工作。
+
+
+## 14. Failure State Separation / Transport Reliability
+
+Visual / Asset round-trip 不得把「圖片沒有顯示」直接判定為 asset 生成失敗。
+
+每一次跨工具／CHAT 傳遞至少拆成四個獨立狀態：
+
+```text
+1. ASSET_GENERATION
+   Asset 生成成功／失敗
+
+2. ASSET_MATERIALIZATION
+   Asset 已成功寫出、保存或轉成可傳遞的檔案／handle
+
+3. CHAT_ATTACHMENT_UPLOAD
+   Asset 已成功進入 CHAT attachment / upload transport
+
+4. INLINE_PREVIEW_RENDER
+   CHAT UI 已成功顯示 inline preview
+```
+
+這四層必須可以分別觀察與回報。
+
+標準狀態語義：
+
+```text
+ASSET_GENERATED
+ASSET_MATERIALIZED
+ATTACHMENT_AVAILABLE
+INLINE_PREVIEW_AVAILABLE
+```
+
+失敗時，應保留前面已成功的層級，不得把後段 transport / render failure 回寫成上游 asset failure。
+
+例如：
+
+```text
+ASSET_GENERATION = PASS
+ASSET_MATERIALIZATION = PASS
+CHAT_ATTACHMENT_UPLOAD = PASS
+INLINE_PREVIEW_RENDER = FAIL
+```
+
+應判定為：
+
+```text
+ASSET_OK / TRANSPORT_OR_PREVIEW_FAILURE
+```
+
+而不是：
+
+```text
+SCREENSHOT_FAILED
+```
+
+### Real observed case — INK UI screenshot
+
+2026-09-24 的 INK UI-006 visual closure 出現一個實際案例：
+
+```text
+Windows Runtime
+→ ink-ui-latest-1280x1024.png generated successfully
+→ Runtime artifact successfully created
+→ PNG successfully materialized into CHAT environment
+→ CHAT inline preview transport/status lookup failed
+→ user saw an empty/grey preview region
+```
+
+Canonical incident description:
+
+```text
+Runtime screenshot generated successfully
+→ CHAT inline preview transport failed
+```
+
+此案例證明：
+
+```text
+「圖片沒有顯示」
+≠
+「截圖沒有生成」
+```
+
+未來任何工具若遇到相同情況，診斷順序固定為：
+
+```text
+check asset generation
+→ check materialization / file existence
+→ check attachment/upload transport
+→ check inline preview rendering
+```
+
+只有第一層失敗時，才可宣告 screenshot / asset generation failure。
+
+### Reliability requirement
+
+未來 Visual / Asset transport receipt 應盡量包含：
+
+```text
+generation.status
+materialization.status
+attachment.status
+preview.status
+
+asset_id / output_handle
+materialized_file
+mime_type
+byte_size
+source_tool
+source_revision
+transport_error_code
+preview_error_code
+```
+
+若 inline preview 失敗，但 asset 已存在，CHAT 應優先提供：
+- asset/file link；
+- output handle；
+- artifact reference；
+- retry preview；
+
+而不是要求重新生成 asset。
+
+此 Failure State Separation 應適用於：
+- screenshots;
+- imported images;
+- exported artwork;
+- SVG;
+- generated previews;
+- Runtime evidence;
+- Tool A → CHAT → Tool B asset transport.
+
