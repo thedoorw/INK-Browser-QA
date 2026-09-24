@@ -64,7 +64,17 @@
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
     <div class="menu-app-mark" aria-label="INK v0.1 · Portable"><img class="brand-source-mark" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong>INK</strong><small>0.1</small></div>
     <nav class="application-menus" aria-label="主選單">
-      <button type="button">檔案</button><button type="button">編輯</button><button type="button">檢視</button><button type="button">選取</button><button type="button">物件</button><button type="button">圖層</button><button type="button">筆刷</button><button type="button">視窗</button><button type="button">說明</button>
+      <div class="application-menu application-file-menu">
+        <button id="fileMenuToggle" type="button" aria-haspopup="menu" aria-expanded="false">檔案</button>
+        <div id="fileMenu" class="application-command-menu" role="menu" aria-label="檔案" hidden>
+          <button type="button" role="menuitem" data-file-command="new"><span>新增</span><kbd>Ctrl+N</kbd></button>
+          <button type="button" role="menuitem" data-file-command="open"><span>開啟</span><kbd>Ctrl+O</kbd></button>
+          <button type="button" role="menuitem" data-file-command="save"><span>儲存</span><kbd>Ctrl+S</kbd></button>
+          <span class="application-menu-separator" aria-hidden="true"></span>
+          <button type="button" role="menuitem" data-file-command="export"><span>匯出</span></button>
+        </div>
+      </div>
+      <button type="button">編輯</button><button type="button">檢視</button><button type="button">選取</button><button type="button">物件</button><button type="button">圖層</button><button type="button">筆刷</button><button type="button">視窗</button><button type="button">說明</button>
     </nav>
     <div class="menu-workspace" aria-label="工作區狀態"><span>繪畫與向量</span><button id="workspaceMenuToggle" type="button" title="工作區清單" aria-haspopup="menu" aria-expanded="false">▾</button>
       <div id="workspaceMenu" class="workspace-menu" role="menu" hidden>
@@ -110,7 +120,7 @@
       <button id="newBtn" class="quiet-button desktop-file">新增</button>
       <button id="openBtn" class="quiet-button desktop-file">開啟</button>
       <button id="saveBtn" class="quiet-button desktop-file">儲存</button>
-      <button id="exportBtn" class="primary-button"><svg><use href="#i-export"/></svg><span>匯出</span></button>
+      <button id="exportBtn" class="primary-button mobile-file-export"><svg><use href="#i-export"/></svg><span>匯出</span></button>
       <button id="fullscreenToggle" class="icon-button" title="進入全螢幕 Ctrl+Shift+F" aria-label="進入全螢幕" aria-pressed="false"><svg><use href="#i-expand"/></svg></button>
       <button id="inspectorToggle" class="icon-button legacy-inspector-toggle" title="開啟檢查器" aria-label="開啟檢查器" aria-expanded="false"><svg><use href="#i-sliders"/></svg></button>
       <button id="settingsToggle" class="icon-button" title="畫布設定" aria-label="畫布設定"><svg><use href="#i-settings"/></svg></button>
@@ -145,6 +155,11 @@
       <button class="tool-button" data-tool="text" title="文字（T）"><span class="tool-icon"><svg><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
       <button class="tool-button" data-tool="image" title="圖片"><span class="tool-icon"><svg><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
       <button class="tool-button" data-tool="pan" title="移動畫布（H／空白鍵）"><span class="tool-icon"><svg><use href="#i-pan"/></svg></span><span class="tool-label">移動</span></button>
+    </div>
+    <div class="tool-layout-controls" aria-label="工具列版面">
+      <button id="toolbarLayoutToggle" class="tool-layout-toggle" type="button" title="切換為雙欄工具列" aria-label="切換為雙欄工具列" aria-pressed="false">
+        <svg aria-hidden="true"><use href="#i-layout"/></svg>
+      </button>
     </div>
   </nav>
 

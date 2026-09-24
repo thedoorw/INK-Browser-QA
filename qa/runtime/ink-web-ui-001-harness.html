@@ -131,6 +131,45 @@
       record('right panel dock starts compact', visible(doc, '#panelDock') && initialShell.dockWidth >= 32 && initialShell.dockWidth <= 48, initialShell);
       record('initial stage reserves 40 px rail and 40 px dock', near(initialStageWidth, frame.clientWidth - 80, 2), { frameWidth: frame.clientWidth, stageWidth: initialStageWidth, dockWidth: initialShell.dockWidth });
 
+      const frozenToolOrder = Array.from(doc.querySelectorAll('.tool-rail [data-tool-stack], .tool-rail [data-tool]'))
+        .map(button => button.dataset.toolStack || button.dataset.tool);
+      record('UI-006 Phase D preserves frozen tool order',
+        JSON.stringify(frozenToolOrder) === JSON.stringify(['draw','eraser','select','lasso','shape','text','image','pan']),
+        frozenToolOrder);
+      const toolbarLayoutToggle = doc.querySelector('#toolbarLayoutToggle');
+      record('UI-006 Phase D defaults to single-column desktop toolbar',
+        initialShell.toolbarLayout === 'single' &&
+        initialShell.toolbarLayoutPreference === 'single' &&
+        !doc.querySelector('#app').classList.contains('toolbar-layout-dual') &&
+        toolbarLayoutToggle?.getAttribute('aria-pressed') === 'false',
+        { shell: initialShell, rail: geometry1280.rail });
+      toolbarLayoutToggle?.click();
+      await sleep(140);
+      const dualShell = shell.state();
+      const dualRail = rectOf(doc, '.tool-rail');
+      const dualStage = rectOf(doc, '#stageWrap');
+      record('UI-006 Phase D dual-column layout expands only the rail and preserves canvas adjacency',
+        dualShell.toolbarLayout === 'dual' &&
+        dualShell.toolbarLayoutPreference === 'dual' &&
+        near(dualRail?.width, 68, 1) &&
+        near(dualStage?.left, dualRail?.right, 1) &&
+        dualShell.stageWidth < initialStageWidth - 20 &&
+        localStorage.getItem('ink.web.ui.toolbar-layout.v0.1') === 'dual',
+        { shell: dualShell, rail: dualRail, stage: dualStage });
+      const dualToolOrder = Array.from(doc.querySelectorAll('.tool-rail [data-tool-stack], .tool-rail [data-tool]'))
+        .map(button => button.dataset.toolStack || button.dataset.tool);
+      record('UI-006 Phase D dual-column mode exposes no extra tools',
+        JSON.stringify(dualToolOrder) === JSON.stringify(frozenToolOrder),
+        dualToolOrder);
+      toolbarLayoutToggle?.click();
+      await sleep(140);
+      const restoredSingle = shell.state();
+      record('UI-006 Phase D single-dual switch restores stage geometry',
+        restoredSingle.toolbarLayout === 'single' &&
+        near(restoredSingle.stageWidth, initialStageWidth, 2) &&
+        localStorage.getItem('ink.web.ui.toolbar-layout.v0.1') === 'single',
+        { initialStageWidth, restored: restoredSingle });
+
       frame.style.height = '1024px';
       await sleep(220);
       const geometry1280x1024 = {
@@ -278,14 +317,26 @@
 
       const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
       record('New/Open/Save/Export/Fullscreen command bindings remain wired', buttonsWired);
-      doc.querySelector('#exportBtn').click();
+      const permanentFileCopiesHidden = ['newBtn','openBtn','saveBtn','exportBtn']
+        .every(id => getComputedStyle(doc.querySelector('#' + id)).display === 'none');
+      record('UI-006 Phase C removes equal-status permanent desktop file commands', permanentFileCopiesHidden);
+
+      const fileMenuButton = doc.querySelector('#fileMenuToggle');
+      fileMenuButton?.click();
       await sleep(60);
-      record('Export surface still opens', (() => {
+      const fileMenuItems = Array.from(doc.querySelectorAll('#fileMenu [data-file-command]'));
+      record('UI-006 Phase C File menu is the primary desktop home for New/Open/Save/Export',
+        visible(doc, '#fileMenu') &&
+        JSON.stringify(fileMenuItems.map(item => item.dataset.fileCommand)) === JSON.stringify(['new','open','save','export']),
+        fileMenuItems.map(item => ({ command: item.dataset.fileCommand, label: item.textContent.trim() })));
+      doc.querySelector('#fileMenu [data-file-command="export"]')?.click();
+      await sleep(60);
+      record('UI-006 Phase C File menu proxies the existing Export command endpoint', (() => {
         const dialog = doc.querySelector('#exportDialog');
-        return Boolean(dialog && !dialog.hidden);
+        return Boolean(dialog && !dialog.hidden && typeof doc.querySelector('#exportBtn')?.onclick === 'function');
       })());
-      const cancelExport = doc.querySelector('#cancelExportBtn');
-      if (cancelExport && !cancelExport.hidden) cancelExport.click();
+      doc.querySelector('#closeExport')?.click();
+      await sleep(40);
 
       const fullscreenDiag = test.fullscreen();
       record('Fullscreen API remains supported and command surface wired', fullscreenDiag.supported && typeof doc.querySelector('#fullscreenToggle').onclick === 'function', fullscreenDiag);
@@ -487,6 +538,11 @@
       const mobileDockHidden = getComputedStyle(doc.querySelector('#panelDock')).display === 'none';
       const mobileBottomDock = visible(doc, '.mobile-dock');
       record('narrow/mobile fallback activates without desktop dock overlap', mobileMedia && mobileDockHidden && mobileBottomDock, { mobileMedia, mobileDockHidden, mobileBottomDock });
+      record('UI-006 Phase D desktop toolbar layout does not override mobile UI',
+        shell.state().toolbarLayout === 'single' &&
+        !doc.querySelector('#app').classList.contains('toolbar-layout-dual') &&
+        getComputedStyle(doc.querySelector('.tool-rail')).display === 'none',
+        shell.state());
       shell.open('layers');
       await sleep(120);
       const inspectorRect = doc.querySelector('#inspector').getBoundingClientRect();

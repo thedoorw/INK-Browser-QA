@@ -4,7 +4,14 @@
   const DESKTOP_QUERY = '(min-width: 761px)';
   const RUNTIME_READY_EVENT = 'ink:runtime-ready';
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
+  const TOOLBAR_LAYOUT_KEY = 'ink.web.ui.toolbar-layout.v0.1';
   const DEFAULT_PRIMARY_PANEL_WIDTH = 252;
+  const FILE_COMMAND_TARGETS = Object.freeze({
+    new: 'newBtn',
+    open: 'openBtn',
+    save: 'saveBtn',
+    export: 'exportBtn'
+  });
   const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
   const CONTEXT_CONTROL_IDS = Object.freeze(['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar']);
   const CONTEXT_TOOL_META = Object.freeze({
@@ -41,6 +48,9 @@
     dock: null,
     windowMenu: null,
     windowButton: null,
+    fileMenu: null,
+    fileButton: null,
+    toolbarLayout: 'single',
     runtimeBound: false,
     activePanel: 'collapsed',
     lastPanel: null,
@@ -69,6 +79,86 @@
       '" data-shell-panel="' + def.id + '" title="' + def.label +
       '" aria-label="' + def.label + '" aria-pressed="false">' +
       svgIcon(def.icon) + (menu ? '<span>' + def.label + '</span>' : '') + '</button>';
+  }
+
+  function setFileMenu(open) {
+    if (!state.fileMenu || !state.fileButton) return;
+    const next = Boolean(open);
+    if (next && state.windowMenu && !state.windowMenu.hidden) setWindowMenu(false);
+    state.fileMenu.hidden = !next;
+    state.fileButton.setAttribute('aria-expanded', String(next));
+  }
+
+  function bindFileMenu() {
+    const menu = document.querySelector('#fileMenu');
+    const button = document.querySelector('#fileMenuToggle');
+    if (!menu || !button) return false;
+    state.fileMenu = menu;
+    state.fileButton = button;
+    if (button.dataset.shellFileBound === 'true') return true;
+    button.dataset.shellFileBound = 'true';
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      setFileMenu(menu.hidden);
+    });
+    menu.addEventListener('click', event => {
+      const item = event.target.closest('[data-file-command]');
+      if (!item) return;
+      event.preventDefault();
+      const targetId = FILE_COMMAND_TARGETS[item.dataset.fileCommand];
+      const target = targetId ? document.getElementById(targetId) : null;
+      setFileMenu(false);
+      target?.click();
+    });
+    document.addEventListener('click', event => {
+      if (!menu.hidden && !event.target.closest('#fileMenu') && event.target !== button) setFileMenu(false);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !menu.hidden) {
+        setFileMenu(false);
+        button.focus();
+      }
+    });
+    return true;
+  }
+
+  function applyToolbarLayout(layout, { persist = false } = {}) {
+    const normalized = layout === 'dual' ? 'dual' : 'single';
+    state.toolbarLayout = normalized;
+    const effective = isDesktop() ? normalized : 'single';
+    state.root?.classList.toggle('toolbar-layout-dual', effective === 'dual');
+    if (state.root) state.root.dataset.toolbarLayout = effective;
+    const button = document.querySelector('#toolbarLayoutToggle');
+    if (button) {
+      const dual = effective === 'dual';
+      button.setAttribute('aria-pressed', String(dual));
+      button.setAttribute('aria-label', dual ? '切換為單欄工具列' : '切換為雙欄工具列');
+      button.title = dual ? '切換為單欄工具列' : '切換為雙欄工具列';
+    }
+    if (persist) {
+      try { localStorage.setItem(TOOLBAR_LAYOUT_KEY, normalized); } catch {}
+    }
+    syncSoon();
+  }
+
+  function bindToolbarLayout() {
+    const button = document.querySelector('#toolbarLayoutToggle');
+    if (!button) return false;
+    let stored = 'single';
+    try { stored = localStorage.getItem(TOOLBAR_LAYOUT_KEY) || 'single'; } catch {}
+    applyToolbarLayout(stored);
+    if (button.dataset.shellToolbarLayoutBound !== 'true') {
+      button.dataset.shellToolbarLayoutBound = 'true';
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!isDesktop()) return;
+        applyToolbarLayout(state.toolbarLayout === 'dual' ? 'single' : 'dual', { persist: true });
+      });
+      globalThis.matchMedia?.(DESKTOP_QUERY)?.addEventListener?.('change', () => applyToolbarLayout(state.toolbarLayout));
+    }
+    return true;
   }
 
   function mountContextualControls() {
@@ -237,6 +327,7 @@
 
   function setWindowMenu(open) {
     if (!state.windowMenu) return;
+    if (open) setFileMenu(false);
     state.windowMenu.hidden = !open;
     state.windowButton?.setAttribute('aria-expanded', String(open));
     if (open) positionWindowMenu();
@@ -499,6 +590,8 @@
     } catch {}
 
     mountContextualControls();
+    bindFileMenu();
+    bindToolbarLayout();
     createDock();
     createWindowMenu();
 
@@ -534,7 +627,9 @@
         panelGroup: active && PANEL_DEFS.find(def => def.id === active)?.group || (runtime()?.creativeWorkspace?.open ? 'creative' : null),
         creativeStage: runtime()?.creativeWorkspace?.stage || null,
         contextMode: state.contextualRoot?.dataset.contextMode || null,
-        contextTool: state.contextualRoot?.dataset.contextTool || null
+        contextTool: state.contextualRoot?.dataset.contextTool || null,
+        toolbarLayout: state.root?.dataset.toolbarLayout || 'single',
+        toolbarLayoutPreference: state.toolbarLayout
       };
     }
   };

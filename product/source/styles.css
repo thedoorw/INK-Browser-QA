@@ -739,9 +739,9 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .menu-app-mark{height:100%;display:flex;align-items:center;gap:5px;padding:0 9px 0 6px;border-right:1px solid var(--chrome-line);white-space:nowrap}
   .menu-app-mark strong{font-size:10px;letter-spacing:.12em;font-weight:700}
   .menu-app-mark small{font-size:8px;color:var(--chrome-faint);font-variant-numeric:tabular-nums}
-  .application-menus{display:flex;align-items:stretch;height:100%;min-width:0;overflow:hidden}
-  .application-menus button{height:100%;padding:0 8px;color:#d5d6d8;font-size:11px;font-weight:400;border-radius:0;white-space:nowrap}
-  .application-menus button:hover,.application-menus button:focus-visible{background:#505155;color:#fff;outline:0}
+  .application-menus{display:flex;align-items:stretch;height:100%;min-width:0;overflow:visible}
+  .application-menus > button,.application-menu > button{height:100%;padding:0 8px;color:#d5d6d8;font-size:11px;font-weight:400;border-radius:0;white-space:nowrap}
+  .application-menus > button:hover,.application-menus > button:focus-visible,.application-menu > button:hover,.application-menu > button:focus-visible{background:#505155;color:#fff;outline:0}
   .menu-workspace{margin-left:auto;height:100%;display:flex;align-items:center;border-left:1px solid var(--chrome-line);color:var(--chrome-muted);font-size:9px}
   .menu-workspace span{padding:0 7px 0 10px;letter-spacing:.02em}
   .menu-workspace button{height:100%;width:25px;color:var(--chrome-muted);border-left:1px solid rgba(0,0,0,.18);border-radius:0}
@@ -853,7 +853,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 @media(max-width:1120px) and (min-width:761px){
-  .application-menus button{padding:0 6px;font-size:10px}
+  .application-menus > button,.application-menu > button{padding:0 6px;font-size:10px}
   .menu-workspace span{display:none}
   .topbar{grid-template-columns:minmax(210px,1fr) auto minmax(310px,1fr)}
   .doc-title{width:min(22vw,250px)}
@@ -968,6 +968,15 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 /* ========================================================================== 
    Field-test repair pass — workspace controls
    ========================================================================== */
+
+/* Functional application menus */
+.application-menu{position:relative;height:100%;display:flex;align-items:stretch}
+.application-command-menu{position:absolute;left:0;top:100%;z-index:145;width:196px;padding:4px;background:#363739;border:1px solid #191a1c;box-shadow:0 8px 24px rgba(0,0,0,.44);color:#dedfe1}
+.application-command-menu[hidden]{display:none!important}
+.application-command-menu button{width:100%;height:30px;padding:0 8px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;text-align:left;color:#d7d8da;border:0;border-radius:1px;background:transparent;font-size:11px}
+.application-command-menu button:hover,.application-command-menu button:focus-visible{background:#4a4b4e;color:#fff;outline:none}
+.application-command-menu kbd{font:9px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;color:#9fa1a5;background:transparent;border:0;box-shadow:none;padding:0}
+.application-menu-separator{display:block;height:1px;margin:4px 5px;background:#242527}
 
 /* Functional workspace menu */
 .menu-workspace{position:relative}
@@ -2149,7 +2158,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
         --chrome-line-soft:#c4c4c4;}
   .menu-strip{height:var(--menu-h);border-bottom:1px solid #202123}
   .menu-app-mark{padding-inline:5px 8px}
-  .application-menus button{padding-inline:7px}
+  .application-menus > button,.application-menu > button{padding-inline:7px}
   .menu-workspace{border-left-color:#292a2c}
   .topbar{top:var(--menu-h);height:var(--options-h);grid-template-columns:auto minmax(250px,1fr) auto auto;column-gap:0;padding:0 4px;overflow:visible;border-bottom:1px solid #202123;box-shadow:inset 0 1px rgba(255,255,255,.045)}
   .topbar-leading{gap:1px;height:100%;padding-right:3px}
@@ -2169,6 +2178,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .topbar .history-group{gap:0}
   .topbar .history-group .icon-button{width:27px;height:27px}
   .file-group{gap:1px;height:100%;padding-left:3px}
+  .file-group .desktop-file,.file-group .mobile-file-export{display:none}
   .quiet-button{height:27px;padding-inline:6px}
   .primary-button{height:28px;min-height:28px;padding-inline:8px}
   .file-group .icon-button{width:28px;height:28px}
@@ -2177,12 +2187,20 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .app.panel-primary-open .stage-wrap{right:calc(var(--panel-dock-w) + var(--active-panel-w))}
   .app[data-space="layout"] .stage-wrap{background:#262626}
   .app[data-space="layout"] .canvas-vignette{box-shadow:inset 0 0 32px rgba(0,0,0,.10)}
-  .tool-rail{top:var(--topbar-h);bottom:var(--status-h);left:0;width:var(--tool-w);padding:2px 1px;border:0;border-right:1px solid #202123;border-radius:0;box-shadow:inset -1px 0 rgba(255,255,255,.03)}
+  .tool-rail{top:var(--topbar-h);bottom:var(--status-h);left:0;width:var(--tool-w);padding:2px 1px;border:0;border-right:1px solid #202123;border-radius:0;box-shadow:inset -1px 0 rgba(255,255,255,.03);display:flex;flex-direction:column;overflow:hidden}
   .tool-group{gap:0}
   .tool-rail .tool-button{height:28px;border-radius:1px}
   .tool-button .tool-icon{width:24px;height:24px}
   .tool-button .tool-icon svg{width:19px;height:19px;stroke-width:1.45}
   .tool-separator{height:1px;margin:2px 3px}
+  .app.toolbar-layout-dual{--tool-w:68px}
+  .app.toolbar-layout-dual .tool-group{display:grid;grid-template-columns:repeat(2,31px);justify-content:center;align-content:start}
+  .app.toolbar-layout-dual .tool-rail .tool-button{width:31px}
+  .tool-layout-controls{margin-top:auto;padding:4px 3px 2px;border-top:1px solid #202123;display:flex;justify-content:center;flex:0 0 auto}
+  .tool-layout-toggle{width:30px;height:26px;display:grid;place-items:center;border-radius:1px;color:#aeb0b3;background:transparent}
+  .tool-layout-toggle svg{width:15px;height:15px}
+  .tool-layout-toggle:hover,.tool-layout-toggle:focus-visible{background:#505154;color:#fff;outline:0}
+  .tool-layout-toggle[aria-pressed="true"]{color:#79c8c0;background:#30403e}
   .brush-family-popover{left:var(--tool-w);top:var(--topbar-h)}
 
   .panel-dock{position:absolute;z-index:84;top:var(--topbar-h);right:0;bottom:var(--status-h);width:var(--panel-dock-w);padding:2px 0;display:flex;flex-direction:column;align-items:stretch;overflow:hidden;background:#303133;border-left:1px solid #202123;box-shadow:inset 1px 0 rgba(255,255,255,.035)}
@@ -2280,9 +2298,16 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
     border-radius:2px;
   }
   .menu-app-mark small{color:#858585}
-  .application-menus button{color:#333}
-  .application-menus button:hover,
-  .application-menus button:focus-visible{background:#e8e8e8;color:#111}
+  .application-menus > button,.application-menu > button{color:#333}
+  .application-menus > button:hover,
+  .application-menus > button:focus-visible,
+  .application-menu > button:hover,
+  .application-menu > button:focus-visible{background:#e8e8e8;color:#111}
+  .application-command-menu{background:#fff;border-color:#cfcfcf;color:#333;box-shadow:0 6px 18px rgba(0,0,0,.16)}
+  .application-command-menu button{color:#333}
+  .application-command-menu button:hover,.application-command-menu button:focus-visible{background:#e8e8e8;color:#111}
+  .application-command-menu kbd{color:#777}
+  .application-menu-separator{background:#ddd}
   .menu-workspace{border-left-color:#d7d7d7;color:#686868}
   .menu-workspace button{color:#666;border-left-color:#d7d7d7}
   .menu-workspace button:hover{background:#e8e8e8;color:#111}
@@ -2334,6 +2359,10 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
   .tool-button:hover{color:#202020;background:#ececec}
   .tool-button.active{color:#286f68;background:#e1efed;box-shadow:inset 0 0 0 1px #c5ddda}
   .tool-separator{background:#d5d5d5}
+  .tool-layout-controls{border-top-color:#d5d5d5}
+  .tool-layout-toggle{color:#666}
+  .tool-layout-toggle:hover,.tool-layout-toggle:focus-visible{background:#e9e9e9;color:#202020}
+  .tool-layout-toggle[aria-pressed="true"]{background:#e1efed;color:#286f68}
 
   .panel-dock{
     background:#f7f7f7;
