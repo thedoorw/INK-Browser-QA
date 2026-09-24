@@ -2218,6 +2218,11 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .inspector-resizer::after{left:3px;top:0;width:1px;height:100%;border-radius:0;background:#17181a}
 
   .creative-workspace-panel{z-index:79;right:var(--panel-dock-w);top:var(--topbar-h);bottom:var(--status-h);width:clamp(244px,var(--inspector-w),360px);min-height:0;max-height:none;overflow:hidden;flex-direction:column;border-radius:0;border-top:0;border-bottom:0;border-right:0;border-left:1px solid #1c1d1f;background:#343537;box-shadow:-2px 0 8px rgba(0,0,0,.18)}
+  /* Phase H Runtime correction: the legacy Creative Workspace selector has
+     higher specificity and otherwise re-applies right:14px / legacy width
+     whenever Inspector is closed. Keep the consolidated desktop shell as the
+     sole geometry authority without altering mobile rules. */
+  .app:not(.inspector-open) .creative-workspace-panel{right:var(--panel-dock-w);width:clamp(244px,var(--inspector-w),360px)}
   .creative-workspace-panel:not(.open){display:none}
   .creative-workspace-panel.open{display:flex}
   .creative-workspace-toggle{display:none!important}
