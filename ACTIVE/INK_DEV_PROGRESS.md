@@ -52,3 +52,21 @@ Verified against revision checkpoint `5637d54e308b994d30d1de59ee67c90557487a30`:
 - new loader/resolver implementation contains no WebSocket, postMessage, eval or Function path.
 
 No automatic workflow run was associated with that checkpoint. Browser Runtime remains unexecuted by DEV and is not claimed PASS.
+
+
+### Final QA-bridge verification
+
+Final code checkpoint: `7d8dbb20dd452d78fd9da029206ed9e97a8b8b12`.
+
+Result: **PASS for the authorized QA-bridge revision scope**.
+
+- exact revision diff: six QA/report/handoff/progress files only;
+- frozen product blobs unchanged:
+  - `public-creative-api.js` = `72111d866584c7c414cd0e4f061953038e23596a`;
+  - `capability-registry.js` = `acb56063c3c8a26bcc0b92c9088786b77620bdf6`;
+- external resolver route / iframe loader / cleanup contract: PASS;
+- resolver route is Creative-suite-only and calls `resolveInkOutputPayload(window.INK_APP, handleId)` only;
+- newly added route-regex literals received a direct Node parse/match smoke check: PASS;
+- browser Runtime was not run by DEV and remains the MR exact-SHA gate.
+
+`DEV_HANDOFF → STOP`.
