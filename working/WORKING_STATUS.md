@@ -1,23 +1,77 @@
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_001_MR_PASS / DRAWING_VALIDATION_HOLD / UI_SEPARATE`
+STATUS: `CONNECTOR_002_DEV_ACTIVE / DRAWING_VALIDATION_HOLD / UI_PHASE_H_REVISION_SEPARATE`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-001 / Agent Connector Foundation` |
-| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-001` |
-| DEV_BRANCH | `work/ink-chat-connector-001` |
-| DEV_HANDOFF | `Connector-001 = RECEIVED / STOP` |
-| MR_REVIEW | `Connector-001 = MR_PASS` |
-| TARGET_GATE | `INK_AGENT_CONNECTOR_FOUNDATION_WORKS` |
+| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-002 / Visual Asset Feedback` |
+| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-002` |
+| DEV_BRANCH | `work/ink-chat-connector-002` |
+| DEV_HANDOFF | `Connector-002 = NOT_STARTED / Connector-001 = CLOSED` |
+| MR_REVIEW | `Connector-002 = DEV_AUTHORIZED / Connector-001 = MR_PASS + promoted` |
+| TARGET_GATE | `INK_VISUAL_ASSET_FEEDBACK_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `Connector-001 run 35951192558 / exact SHA d95d8f80... / UI+Creative+Geometry PASS` |
+| RUNTIME_QA | `Connector-002 final Runtime deferred to MR; UI Phase H FAIL lane remains separate` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Promotion decision only; Connector-002 NOT_AUTHORIZED` |
+| NEXT_STAGE | `Connector-002 DEV → focused QA → DEV_HANDOFF / STOP → MR review` |
+
+## Connector-002 authorization
+
+```text
+TASK = INK-CHAT-CONNECTOR-002
+BRANCH = work/ink-chat-connector-002
+
+PURPOSE =
+  Preview
+  + INK_OUTPUT_HANDLE
+  + internal ephemeral payload registry
+  + handle inspect/release
+
+PUBLIC_API =
+  preview.capture
+  asset.inspect
+  asset.release
+
+NAMED_TOOLS =
+  get_ink_preview
+  inspect_ink_output
+  release_ink_output
+
+NAMED_TOOL_TOTAL_AFTER_002 = 17
+
+AUTHORITATIVE_RENDER_ROUTE =
+  existing InkApp render/export path only
+
+PREVIEW_SCOPE =
+  artboard
+  viewport
+  content
+
+RAW_BINARY_IN_AGENT_RESULT = PROHIBITED
+PERSISTENT_ASSET_LIBRARY = 0
+EXTERNAL_TRANSPORT = 0
+USE_INK = 0
+CAPABILITY_DISCOVERY = RESERVED_FOR_CONNECTOR_003
+```
+
+Connector-001 promotion:
+
+```text
+PROMOTION_COMMIT = efd48a429d9998b4871aebf7bd1e47a576d41a95
+CONNECTOR_001 = CLOSED / MR_PASS / PROMOTED
+```
+
+UI coordination:
+
+```text
+UI-006 Phase H = Runtime FAIL / separate revision lane
+Connector DEV must not modify UI to mask inherited Runtime failure
+Connector final browser gate waits for MR reconciliation
+```
 
 ## Connector-001 final acceptance
 
