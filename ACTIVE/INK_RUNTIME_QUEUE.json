@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "718eff8c31a82a8ffd82bbf3d2b83f38b2aa993b",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "d95d8f80fb57920d8bba2f07557d084a11305ecd",
+  "pending_work_orders": [
+    "INK-CHAT-CONNECTOR-001"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -17,8 +19,8 @@
     "INK-WEB-UI-006-PHASE-G"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": "INK-WEB-UI-006 Phase G exact-SHA Windows self-hosted Runtime passed."
+    "enabled": true,
+    "reason": "INK-CHAT-CONNECTOR-001 installs the new Public Creative API facade into the InkApp constructor; run one immediate exact-SHA browser regression before final MR acceptance."
   },
   "batch_policy": {
     "default_target": 3,
