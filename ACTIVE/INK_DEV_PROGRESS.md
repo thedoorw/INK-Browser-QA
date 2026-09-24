@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-CONNECTOR-002 / VISUAL_ASSET_FEEDBACK / AUTHORIZED / DEV_NOT_STARTED`
+STATUS: `INK-CHAT-CONNECTOR-002 / VISUAL_ASSET_FEEDBACK / DEV_HANDOFF_READY`
 
 ```text
 TASK_ID = INK-CHAT-CONNECTOR-002
@@ -10,15 +10,56 @@ BRANCH_BASE = 9d20eca90b826bf60c23602c6e74ac081251e776
 CONNECTOR_001_PROMOTION = efd48a429d9998b4871aebf7bd1e47a576d41a95
 TARGET_GATE = INK_VISUAL_ASSET_FEEDBACK_WORKS
 
-PUBLIC_API_BASE = app.inkPublicApi / Connector-001
-EXISTING_NAMED_TOOLS = 14
-TARGET_NAMED_TOOLS = 17
+PRODUCT_SOURCE =
+  product/source/src/agent/output-handle-registry.js
+  product/source/src/agent/visual-feedback.js
+  product/source/src/agent/public-creative-api.js
 
-PREVIEW_CAPTURE = NOT_STARTED
-INK_OUTPUT_HANDLE = NOT_STARTED
-EPHEMERAL_OUTPUT_REGISTRY = NOT_STARTED
-ASSET_INSPECT = NOT_STARTED
-ASSET_RELEASE = NOT_STARTED
+QA =
+  qa/ink-chat-connector-002-visual-asset-feedback.test.mjs
+  qa/ink-chat-connector-001-agent-foundation.test.mjs
+
+EVIDENCE =
+  research/INK_CHAT_CONNECTOR_002_VISUAL_ASSET_FEEDBACK_REPORT_v0.1.md
+
+PREVIEW_CAPTURE = IMPLEMENTED / PASS
+INK_OUTPUT_HANDLE = v1 / IMPLEMENTED / JSON_SAFE / CONTENT_ADDRESSED
+EPHEMERAL_OUTPUT_REGISTRY = IMPLEMENTED / 8 entries / 32 MiB / bounded eviction
+ASSET_INSPECT = IMPLEMENTED / stale + availability
+ASSET_RELEASE = IMPLEMENTED / ephemeral payload only
+
+PUBLIC_API = app.inkPublicApi / preserved single facade
+PREVIEW_PUBLIC_METHOD = preview.capture
+PREVIEW_NAMED_TOOL = get_ink_preview
+ASSET_INSPECT_TOOL = inspect_ink_output
+ASSET_RELEASE_TOOL = release_ink_output
+
+EXISTING_NAMED_TOOLS = 14 / PRESERVED AS EXACT PREFIX
+FINAL_NAMED_TOOLS = 17
+
+AUTHORITATIVE_RENDER_ROUTE = app.renderExportCanvas + existing Renderer
+PREVIEW_SCOPES = artboard / viewport / content
+DEFAULT_MAX_DIMENSION = 1200
+HARD_MAX_DIMENSION = 1600
+HARD_MAX_PIXELS = 2560000
+EXISTING_TILED_EXPORT_THRESHOLD = 6000000
+RAW_BINARY_PUBLIC_RESULT = 0
+
+DOCUMENT_ID_BINDING = YES
+PAGE_ID_BINDING = YES
+REVISION_ID_BINDING = YES / nullable
+DOCUMENT_FINGERPRINT_BINDING = YES
+RENDER_FINGERPRINT_BINDING = YES / encoded PNG bytes included
+OBJECT_REF_BINDING = YES / grounded / semantic only
+
+FOCUSED_SOURCE_SYNTAX = PASS
+FOCUSED_ISOLATED_EXECUTION = PASS
+CONNECTOR_001_COMPAT = PASS / 14-tool prefix preserved
+DOCUMENT_BRIDGE_REGRESSION = BASELINE_PRESERVED
+BOUNDED_EDIT_REGRESSION = BASELINE_PRESERVED
+HISTORY_REGRESSION = BASELINE_PRESERVED
+REVISION_REGRESSION = BASELINE_PRESERVED
+RENDER_EXPORT_REGRESSION = SOURCE BASELINE PRESERVED + focused authority/threshold PASS
 
 USE_INK = 0 / NOT_AUTHORIZED
 CAPABILITY_DISCOVERY = 0 / RESERVED_FOR_CONNECTOR_003
@@ -31,44 +72,27 @@ NEW_TRACE = 0
 DOCUMENT_AUTHORITY_CHANGE = 0
 HISTORY_AUTHORITY_CHANGE = 0
 REVISION_AUTHORITY_CHANGE = 0
-FORMAT_VERSION = 4 / PRESERVE
-IMAGE_MODEL = 0
+UI_CHANGE = 0
+FORMAT_VERSION = 4 / PRESERVED
 
-UI_PHASE_H_BASELINE = RUNTIME_FAIL / SEPARATE_REVISION_LANE
-CONNECTOR_DEV_MUST_NOT_FIX_UI = 1
-FINAL_BROWSER_RUNTIME = MR_COORDINATED_AFTER_HANDOFF
+FULL_REPOSITORY_NODE_TEST = NOT_CLAIMED / connector-only DEV environment
+CONNECTOR_BROWSER_RUNTIME = MR_COORDINATED_AFTER_HANDOFF
+UI_PHASE_H_RUNTIME_FAILURE = INHERITED / SEPARATE / NOT MODIFIED
 ```
 
-## Implementation order
+## Exact implementation checkpoints
 
-1. add bounded internal output-handle registry;
-2. define deterministic JSON-safe `INK_OUTPUT_HANDLE v1`;
-3. add preview capture using existing `app.renderExportCanvas`;
-4. bind Document/Page/Revision/Document fingerprint/render fingerprint;
-5. add `asset.inspect` stale/availability reporting;
-6. add `asset.release`;
-7. extend `INK_AGENT_RESULT.outputHandles[]`;
-8. add 3 named tools and capability metadata;
-9. keep all 14 Connector-001 tools compatible;
-10. run focused QA + required source/unit regressions;
-11. update evidence/handoff;
-12. `DEV_HANDOFF → STOP`.
+```text
+OUTPUT_REGISTRY_COMMIT = 76fdf7ab4b081562fa43b538c1ffdb6e333f49b2
+VISUAL_FEEDBACK_COMMIT = 428798082b1858ac7a35509171b3270f3bf97d9e
+PUBLIC_API_WIRING_COMMIT = ee4c206cfc70e9c7016b55b25f36a5591e9715d8
+CONNECTOR_001_QA_COMPAT_COMMIT = 799076bef85cc405892bf52ca3df5721e7cd5ec3
+FOCUSED_QA_COMMIT = 19d23b6ce89ce6108f2296f725007ab73caeef31
+EVIDENCE_REPORT_COMMIT = ac1f5d7e55091945e7b2c13d093d510b7e25eaba
+```
 
-## Hard boundaries
+## Gate
 
-Do not add:
+`DEV_HANDOFF → STOP → MR exact-HEAD source review`
 
-- second renderer or DOM screenshot;
-- user-facing export/download behavior;
-- raw Blob/Canvas/data URL/ObjectURL in agent results;
-- persistent/cloud asset storage;
-- external connector/MCP transport;
-- `use_ink`;
-- capability schema discovery;
-- selection/object crop preview;
-- Document/History/Revision/Geometry authority changes;
-- UI fixes for the inherited UI-006 Phase H failure;
-- Service Worker/bootstrap/cache changes;
-- FORMAT_VERSION changes.
-
-If required: `STOP → MR`.
+No next task is authorized from this progress file.
