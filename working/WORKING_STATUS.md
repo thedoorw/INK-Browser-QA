@@ -1,3 +1,18 @@
+## UI-006 main integration checkpoint — 2026-09-24
+
+```text
+PR = #49 / MERGED
+MAIN = 9852f7ef67fd530c683cf1257406494e31c3b51d
+PAGES = 35979527212 / BUILD PASS / DEPLOY PASS
+UI-006 accepted payload = IN MAIN
+FAVICON = assets/favicon.svg
+VISIBLE MARK = preserved existing INK mark
+
+VISUAL_GATE = HOLD_FOR_DEPLOYED_SCREENSHOT
+RUNTIME = HOLD
+CONNECTOR_004 = remains current Work Order / not promoted
+```
+
 ## Connector-004 MR revise checkpoint
 
 ```text
@@ -64,10 +79,10 @@ STATUS: `CONNECTOR_004_QA_TIMEOUT_REVISED / MR_RUNTIME_RERUN_QUEUED / DRAWING_VA
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
 | RUNTIME_QA | `run 35970456976 = UI PASS / creative 240s harness timeout; next exact target 448eef0f... with 360s timeout` |
-| UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
+| UI-006 | `A–I payload integrated to main via PR #49 / deployed / visual screenshot gate pending` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Execute QA-only timeout revision exact-SHA Runtime; classify Connector-004 feature result` |
+| NEXT_STAGE | `Complete deployed-main UI visual gate first; then resume Connector-004 Runtime classification` |
 
 ## Connector-003 promotion closure
 
