@@ -15,6 +15,77 @@ This document is a capability and connector architecture baseline. It does not a
 
 ---
 
+
+## User questions that initiated this connector direction
+
+### Question set 1 — make INK connect like Figma / Penpot
+
+User request:
+
+> 將 INK 的連接方式設計得和 Figma 一樣，搜尋並規畫把 INK 加入 CHAT 最熟練的操作方式，盡量省略從頭調校的時間；利用 Figma 或 Penpot 已成熟的工作流，列出 CHAT 已熟悉的 Figma / Penpot 功能與操作方式，並與 INK 相同能力並列，讓 CHAT 能無縫接軌快速熟練 INK。
+
+Analysis retained from the discussion:
+
+- Do not teach CHAT a third bespoke editor language if the same design concepts already exist in Figma / Penpot.
+- Reuse the mature mental model:
+  `File / Page / Object / Frame / Path / Component / Instance / Layout / History`.
+- Copy the **connector grammar**, not the Figma UI.
+- Figma's general execution pattern is `use_figma → Plugin API`.
+- Penpot's general execution pattern is `execute_code → Plugin API`.
+- INK should expose one equivalent stable execution surface:
+  `use_ink → INK Public Creative API`.
+- Existing INK controllers must remain authoritative. The connector must not become a second Document, History, Revision, Geometry, or drawing engine.
+- The biggest productivity gain will come from:
+  inspect → stable IDs → reuse native modules → edit → return IDs → screenshot → targeted correction.
+- A later searchable INK Creative Library should expose components, materials, recipes, parametric structures and future tokens so CHAT can compose mature work rather than rebuild everything from primitives.
+
+### Question set 2 — rebuild the Reference → Color + Line → CHAT loop using mature workflows
+
+User request:
+
+> 針對原本要進行的「參考圖拆解輪廓與顏色分圖層，並回到 CHAT 的閉環測試」，列出如果用 Figma 與 Penpot 會如何作業完成，再對照 INK 的功能組合，建立成一個工作流，判斷是否更有效率。
+
+Analysis retained from the discussion:
+
+- Define the workflow independently of any editor:
+  Reference → color-region vectorization → Color Paths → same-geometry Line boundaries → separate Reference / Color / Line structure → stable IDs → CHAT structural + visual readback → native corrections → History / Revision / provenance.
+- Figma is a mature host for the resulting editable vectors, but fully agent-controlled decomposition should not depend on its separate AI Vectorize UI command.
+- Penpot is also a mature host through `execute_code` and native Path/SVG objects, but its documented MCP/Plugin API does not supply a dedicated deterministic raster-vectorization primitive.
+- INK already owns the specialized decomposition that both hosts otherwise need externally:
+  bounded raster → ImageTracerJS color-regions → Color Paths → duplicate geometry as Line Paths → History + receipt + provenance.
+- Therefore **do not replace or redo Phase B decomposition**.
+- Borrow Figma/Penpot's agent-operation grammar and keep INK's decomposition engine.
+- The missing closed-loop pieces are primarily:
+  `use_ink` + connector metadata/query + visual screenshot feedback.
+- Resume creative validation only when CHAT can execute the whole user-facing loop rather than isolated one-command tests.
+
+### Combined design decision
+
+```text
+KEEP:
+  INK Reference decomposition
+  INK Document / Path / Geometry
+  INK History / Revision / Provenance
+  INK Grounding / Research / Memory
+
+BORROW:
+  Figma / Penpot agent workflow grammar
+  inspect-first operation
+  stable node IDs
+  general programmable execution
+  structure + screenshot feedback
+  reusable design-library discovery
+
+BUILD:
+  INK Public Creative API
+  → use_ink
+  → get_ink_metadata / get_ink_screenshot
+  → INK Skill
+  → Creative Library Search
+```
+
+---
+
 ## 1. Main conclusion
 
 The strongest shared pattern is not "copy Figma UI".
