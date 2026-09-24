@@ -1,15 +1,36 @@
+## Connector-004 authorization
+
+```text
+BRANCH = work/ink-chat-connector-004
+
+use_ink
+→ app.inkPublicApi.composition.*
+→ app.chatCreativePlan
+→ app.chatBoundedEditAdapter
+→ History
+→ Revision
+
+NAMED_TOOL_TARGET = 19
+composition.programmable = AVAILABLE
+external.transport = UNAVAILABLE
+
+NEW_BOOLEAN_REPEAT_GROUP_FRAME_COMPONENT_LAYOUT_EXPOSURE = 0
+ARBITRARY_CODE_EXECUTION = 0
+FORMAT_VERSION = 4
+```
+
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_003_CLOSED / MR_PASS / PROMOTED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_004_DEV_ACTIVE / CONNECTOR_003_CLOSED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-003 / Capability Schema Discovery` |
-| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-003` |
-| DEV_BRANCH | `work/ink-chat-connector-003` |
-| DEV_HANDOFF | `Connector-003 = CLOSED` |
-| MR_REVIEW | `Connector-003 = MR_PASS / promoted` |
-| TARGET_GATE | `INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS` |
+| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-004 / use_ink programmable bridge` |
+| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
+| DEV_BRANCH | `work/ink-chat-connector-004` |
+| DEV_HANDOFF | `Connector-004 = NOT_STARTED / Connector-003 = CLOSED` |
+| MR_REVIEW | `Connector-004 = DEV_AUTHORIZED` |
+| TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
@@ -17,7 +38,7 @@ STATUS: `CONNECTOR_003_CLOSED / MR_PASS / PROMOTED / DRAWING_VALIDATION_HOLD`
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `No next Connector authorized; Connector-004 remains HOLD` |
+| NEXT_STAGE | `Connector-004 DEV → focused QA → DEV_HANDOFF / STOP → MR review` |
 
 ## Connector-003 promotion closure
 
