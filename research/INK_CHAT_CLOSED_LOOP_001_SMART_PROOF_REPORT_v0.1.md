@@ -223,3 +223,52 @@ Verified:
 DEV did not rerun browser Runtime.
 
 `DEV_HANDOFF → STOP`.
+
+## MR_REVISE / QA_ASSERTION_ONLY — SMART_LOOP_HISTORY_RECORDED semantics
+
+Runtime diagnostic input:
+
+```text
+RUN = 36012548161
+TESTED_SHA = 20262d942c7a4d1a5ca03898856a2d7ddff9f5d6
+RUNNER = DESKTOP-NSOQH69
+FIRST_FAIL = SMART_LOOP_HISTORY_RECORDED
+PRODUCT_RUNTIME_FAIL = NOT ESTABLISHED
+CLASSIFICATION = QA_ASSERTION_SEMANTICS_MISMATCH
+PRODUCT_SOURCE = FROZEN
+```
+
+The failing QA assertion incorrectly required each repaint History entry `objectIds` array to contain the repaint target Path ID. That is not a valid History-recording requirement for scalar `fill` / `stroke` patches because the existing History object-ID summary only derives IDs from patch identity fields, while a valid scoped repaint entry may therefore have `objectIds = []`.
+
+Bounded QA correction:
+
+- `smartExecuted.historyReceipt.steps.length === 2`;
+- each step requires integer `beforeUndoCount`, `afterUndoCount === beforeUndoCount + 1`, and `latestLabel === "CHAT repaint Path"`;
+- `get_ink_history` must return `COMPLETED`;
+- the final two History entries must both have `captureMode === "scoped"`, `label === "CHAT repaint Path"`, and `patchCount > 0`;
+- `applied >= 2` and `retainedCount >= 2` additionally prove those entries are retained in the returned timeline;
+- the smart History proof no longer inspects `entry.objectIds`.
+
+Focused QA contract was extended in `qa/ink-chat-closed-loop-001-smart-proof.test.mjs` to lock these semantics and explicitly reject reintroduction of an `objectIds` requirement in the smart History proof block.
+
+Implementation checkpoints:
+
+- History assertion correction: `43ceec0af6b8acfd60e1f21b7cd1b756eda37174`
+- Focused QA lock: `3901d2bd5cae0aba029170ca7cc943ec0df7fd86`
+
+Focused connector-side QA: **PASS**.
+
+Verified against Runtime tested SHA `20262d942c7a4d1a5ca03898856a2d7ddff9f5d6`:
+
+- pre-documentation diff contains only the two authorized QA files;
+- History proof block satisfies all revised receipt/timeline assertions;
+- History proof block contains no `objectIds` dependency;
+- frozen product blobs are unchanged:
+  - `visual-feedback.js` = `f24dbe4f231bdc8c1acb9c197e59485815f8dc22`;
+  - `public-creative-api.js` = `72111d866584c7c414cd0e4f061953038e23596a`;
+  - `capability-registry.js` = `acb56063c3c8a26bcc0b92c9088786b77620bdf6`.
+
+DEV did not rerun Windows Runtime. Real `smart-loop-before.png`, `smart-loop-after.png`, and `smart-loop.json` remain MR-owned exact-HEAD Runtime evidence.
+
+`DEV_HANDOFF → STOP`.
+
