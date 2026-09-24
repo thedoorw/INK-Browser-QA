@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 import { FORMAT_VERSION } from '../product/source/src/config.js';
+import { defaultDocument } from '../product/source/src/document/index.js';
 import { normalizeChatEditTask } from '../product/source/src/editor/chat-bounded-edit.js';
 import {
   INK_CAPABILITY_DESCRIPTOR_SCHEMA,
@@ -293,8 +294,10 @@ test('MR revise: descriptor bounds and constraints match existing edit/preview a
 
 test('MR revise: descriptor input objects are accepted directly by mapped Public API methods without breaking legacy shapes', async () => {
   const calls = {};
+  const doc = defaultDocument();
+  doc.id = 'doc-1';
   const app = {
-    doc: { id: 'doc-1', activePageId: 'page-1', pages: [{ id: 'page-1', layers: [] }] },
+    doc,
     selection: [],
     chatReferenceHandoff: {
       async decomposeReference(referenceObjectId, options) {
@@ -321,6 +324,7 @@ test('MR revise: descriptor input objects are accepted directly by mapped Public
   };
   const api = createInkPublicCreativeApi(app);
 
+  const inspectedObject = api.inspect({ objectIds: ['missing-object'] });
   await api.reference.decompose({ referenceObjectId: 'reference-1', options: { numberOfColors: 8 } });
   api.edit.approve({ proposalId: 'proposal-1' });
   api.edit.execute({ proposalId: 'proposal-1', approvalToken: 'token-1' });
@@ -331,6 +335,8 @@ test('MR revise: descriptor input objects are accepted directly by mapped Public
   const released = api.asset.release({ handleId: 'missing-handle' });
   const described = api.capability.describe({ idOrToolName: 'preview.capture' });
 
+  assert.equal(inspectedObject.status, 'FAILED');
+  assert.equal(inspectedObject.diagnostics[0].code, 'AI_DOCUMENT_BRIDGE_FOCUS_TARGET_MISSING');
   assert.deepEqual(calls.reference, { referenceObjectId: 'reference-1', options: { numberOfColors: 8 } });
   assert.equal(calls.approve, 'proposal-1');
   assert.deepEqual(calls.execute, { proposalId: 'proposal-1', approvalToken: 'token-1' });
