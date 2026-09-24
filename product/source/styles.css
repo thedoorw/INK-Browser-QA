@@ -2708,3 +2708,130 @@ kbd,
     font-size:var(--ui-type-md);
   }
 }
+
+/* ========================================================================== 
+   INK-WEB-UI-006 — Phase H canvas / status / responsive
+   Presentation-only. Preserve accepted editor/document/render authorities.
+   ========================================================================== */
+@media(min-width:761px){
+  /* Canvas remains the dominant working region. The shell-owned left rail,
+     primary panel width and right dock are the only horizontal offsets. */
+  .stage-wrap{
+    min-width:0;
+    contain:layout paint;
+  }
+
+  /* Keep persistent status/view controls compact. Secondary status is allowed
+     to compress before view controls become unreadable or force page overflow. */
+  .statusbar{
+    overflow:hidden;
+    padding-inline:8px;
+    gap:8px;
+  }
+  .statusbar > .status-cluster{
+    min-width:0;
+    white-space:nowrap;
+  }
+  .statusbar > .status-cluster:not(.view-controls){
+    flex:1 1 auto;
+    gap:10px;
+    overflow:hidden;
+  }
+  .statusbar > .view-controls{
+    flex:0 0 auto;
+    gap:3px;
+    margin-left:auto;
+  }
+  .statusbar > .view-controls button{
+    min-width:24px;
+    height:22px;
+    padding-inline:6px;
+  }
+  #zoomText{
+    display:inline-block;
+    min-width:38px;
+    text-align:center;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* Narrow desktop may compress secondary identity, but command homes remain
+     unchanged and contextual controls stay inside the top shell. */
+  .topbar,
+  .topbar-leading,
+  .topbar-center,
+  .file-group,
+  .contextual-options,
+  .contextual-control-host{
+    min-width:0;
+  }
+  .contextual-control-host{
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+  }
+  .contextual-control-host::-webkit-scrollbar{display:none}
+
+  /* Existing Fullscreen API/class remains authoritative; only viewport
+     containment is normalized for app-root fullscreen. */
+  .app.fullscreen-active,
+  .app:fullscreen{
+    inset:0;
+    width:100%;
+    height:100%;
+    max-width:none;
+    max-height:none;
+    overflow:hidden;
+  }
+  .app.fullscreen-active .stage-wrap,
+  .app:fullscreen .stage-wrap{
+    contain:layout paint size;
+  }
+}
+
+@media(max-width:1120px) and (min-width:761px){
+  #autosaveStatus{display:none}
+}
+
+@media(max-width:980px) and (min-width:761px){
+  #statusArtboard,
+  #selectionModeStatus{display:none}
+  .statusbar > .status-cluster:not(.view-controls){gap:8px}
+}
+
+@media(max-width:860px) and (min-width:761px){
+  #statusObjects{display:none}
+  .doc-title{
+    min-width:132px;
+    width:min(19vw,168px);
+  }
+  .contextual-tool-identity{
+    min-width:48px;
+    max-width:66px;
+  }
+  .contextual-tool-identity strong{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+}
+
+@media(max-width:760px){
+  /* Mobile keeps the existing responsive alternatives. Desktop-only chrome
+     remains out of the compact canvas and essential labels keep Phase G size. */
+  .stage-wrap{
+    min-width:0;
+    max-width:100vw;
+  }
+  .mobile-dock,
+  .mobile-tool-sheet,
+  .inspector,
+  .pages-panel,
+  .floating-panel{
+    box-sizing:border-box;
+  }
+  .mobile-dock .tool-label,
+  .dock-action .tool-label{
+    white-space:nowrap;
+  }
+}
+
