@@ -291,6 +291,130 @@ complete operation record
 
 This is the minimum product condition for calling INK a real human-AI collaborative drawing workstation.
 
+## 3C. CHAT-first tool development principle
+
+User-authoritative development principle:
+
+```text
+CHAT_FIRST_TOOL_DEVELOPMENT = REQUIRED
+CHAT_OPERABILITY = FIRST_CLASS_PRODUCT_REQUIREMENT
+MATURE_WORKFLOW_REUSE = PREFERRED
+EXTERNAL_TOOL_ORCHESTRATION = ALLOWED_AND_ENCOURAGED
+BESPOKE_RETRAINING_FROM_ZERO = AVOID_WHEN_A_MATURE_PATTERN_EXISTS
+INK_RETURN_TO_EDITABLE_STRUCTURE = REQUIRED_WHEN_INK_IS_THE_DESTINATION
+```
+
+INK is not designed as a drawing application that later receives a CHAT integration.
+
+INK should be designed from the beginning as a **CHAT-native workstation**.
+
+For every new capability, design work must answer both the human-facing and CHAT-facing path:
+
+```text
+How does the human use it?
+How does CHAT discover that the capability exists?
+How does CHAT identify the correct target?
+How does CHAT invoke the capability?
+How does CHAT receive structured evidence of the result?
+How does CHAT visually verify the result where needed?
+How does CHAT make a bounded correction?
+How is the operation recorded in History / Revision / provenance?
+```
+
+### Mature-tool-first rule
+
+Before inventing a new interaction model or teaching CHAT a bespoke operation path, first ask:
+
+> **CHAT 已經在哪些成熟工具中學會這件事？**
+
+Current reference systems include, but are not limited to:
+
+```text
+Figma
+= programmable native-object / design-system workflow
+
+Penpot
+= plugin-API / execute-code workflow
+
+Adobe
+= capability routing
+  + specialized creative tools
+  + asset/result handles
+  + selection/mask targeting
+  + preview verification
+  + template/library reuse
+```
+
+The preferred development sequence is:
+
+```text
+1. identify a mature CHAT-operable workflow
+2. reuse its vocabulary / API grammar / routing pattern where appropriate
+3. connect existing mature external capability instead of rebuilding it unnecessarily
+4. build custom capability only where INK needs real differentiation
+5. keep INK's own Document / History / Revision / Geometry authorities intact
+6. make external results return to an editable INK structure when INK is the destination
+```
+
+### External tools are an ability pool, not competitors
+
+Figma, Penpot, Adobe and future mature tools are not only architecture references.
+
+They may also be selected by CHAT as the most suitable working environment for part of a creative task:
+
+```text
+USER intent
+→ CHAT evaluates available workflows
+→ choose INK / Figma / Penpot / Adobe / another mature tool
+→ perform the part of the task where that tool is strongest
+→ return the result to INK when continued INK editing / composition / provenance is required
+```
+
+Therefore INK does not need to reproduce every mature capability found elsewhere.
+
+A high-value INK capability may instead be:
+
+```text
+understand external result
+→ import it
+→ convert it to stable editable INK structure
+→ continue operating through CHAT
+→ preserve History / Revision / provenance
+```
+
+### Development pattern change
+
+Avoid the old pattern:
+
+```text
+invent feature
+→ build engine
+→ build UI
+→ later teach CHAT how to use it
+```
+
+Prefer:
+
+```text
+inspect what CHAT already knows
+→ identify mature external workflow
+→ reuse known vocabulary / connector grammar
+→ design the native INK authority
+→ expose CHAT-operable entry points from the start
+→ validate through structural evidence + visual feedback
+```
+
+This principle applies beyond INK.
+
+For future user-created tools and projects, the default starting question should be:
+
+> **先找 CHAT 已熟悉的成熟工作流，再決定哪些部分值得自己開發。**
+
+This is intended to reduce repeated integration cost, shorten the time needed for CHAT to become fluent in a new tool, and concentrate custom development on capabilities that are genuinely unique or strategically important.
+
+
+---
+
 ## 4. 現階段：先穩定會影響文件格式與結構的 shared core
 
 目前不是正式 Cloud implementation 階段。
