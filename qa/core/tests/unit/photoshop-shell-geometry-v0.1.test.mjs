@@ -27,7 +27,7 @@ test('desktop shell collapses contextual controls into the second chrome row', (
     assert.match(bar, /id="fullscreenToggle"/);
     assert.equal(html.split('id="contextualOptions"').length - 1, 1);
   }
-  for (const token of ['--menu-h:24px','--options-h:36px','--topbar-h:60px','--tool-w:40px','--inspector-w:252px']) {
+  for (const token of ['--menu-h:24px','--options-h:32px','--topbar-h:56px','--tool-w:40px','--inspector-w:252px']) {
     assert.ok(css.includes(token), 'missing geometry token ' + token);
   }
   assert.match(css, /\.topbar > \.contextual-options\{[\s\S]*?position:relative;[\s\S]*?height:100%/);
