@@ -1,14 +1,14 @@
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_003_DEV_ACTIVE / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_003_MR_REVISE / BOUNDED_SCHEMA_FIX / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-003 / Capability Schema Discovery` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-003` |
 | DEV_BRANCH | `work/ink-chat-connector-003` |
-| DEV_HANDOFF | `Connector-003 = NOT_STARTED / Connector-002 = CLOSED` |
-| MR_REVIEW | `Connector-003 = DEV_AUTHORIZED` |
+| DEV_HANDOFF | `Connector-003 = RECEIVED / MR_REVISE / bounded schema fix authorized` |
+| MR_REVIEW | `Connector-003 = REVISE / Runtime held` |
 | TARGET_GATE | `INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
@@ -17,7 +17,24 @@ STATUS: `CONNECTOR_003_DEV_ACTIVE / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HO
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-003 DEV → focused QA → DEV_HANDOFF / STOP → MR review` |
+| NEXT_STAGE | `Connector-003 schema-contract correction → DEV_HANDOFF / STOP → MR re-review` |
+
+## Connector-003 MR revision checkpoint
+
+```text
+REVIEW_HEAD = 5c531dba2c87ee0762c3f21d54845effafe33164
+ARCHITECTURE = PASS
+MR = REVISE
+BLOCKER = Descriptor input contract is not yet fully truthful
+RUNTIME = HOLD
+
+AUTHORIZED_REVISION =
+  capability-registry metadata/schema correction
+  + Public API adapter input-shape compatibility where required
+  + focused QA only
+
+CONNECTOR_004 = NOT_AUTHORIZED
+```
 
 ## Connector-003 authorization
 
