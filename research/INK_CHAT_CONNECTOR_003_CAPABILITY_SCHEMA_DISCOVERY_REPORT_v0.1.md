@@ -1,6 +1,88 @@
 # INK-CHAT-CONNECTOR-003 — Capability / Schema Discovery Evidence v0.1
 
-STATUS: `DEV_SOURCE_STATIC_ISOLATED_QA_PASS / HANDOFF_READY`
+STATUS: `MR_REVISE_SCHEMA_CONTRACT_FIXED / DEV_SOURCE_STATIC_ISOLATED_QA_PASS / HANDOFF_READY`
+
+## MR_REVISE bounded remediation — 2026-09-24
+
+Reviewed DEV head:
+
+```text
+MR_REVIEWED_HEAD = 5c531dba2c87ee0762c3f21d54845effafe33164
+MR_VERDICT = REVISE
+REVISION_SCOPE = SCHEMA_CONTRACT_ONLY
+```
+
+The MR architecture/scope/authority review was accepted; the revision was limited to descriptor accuracy and Public API input-shape compatibility.
+
+Corrected contract mismatches:
+
+```text
+path.refine.v1
+  maxControlLength:
+    previous descriptor minimum = 0
+    existing authority minimum = Number.EPSILON
+    corrected descriptor minimum = Number.EPSILON
+
+preview.capture
+  scale > 0
+  ppi > 0
+  corrected descriptor minimum = Number.EPSILON for both
+
+object.translate.v1
+  existing authority rejects { dx: 0, dy: 0 } as CHAT_EDIT_NO_OP
+  descriptor constraints now state the non-zero-vector rule explicitly
+
+path.repaint.v1
+  existing authority rejects empty arguments as CHAT_EDIT_ARGUMENTS_EMPTY
+  descriptor constraints now state at least one repaint field is required
+
+revision.capture
+  previous descriptor advertised { options: { reason, label } }
+  publicMethod revision.capture accepts direct options
+  corrected descriptor = direct { reason, label } shape
+```
+
+Public-method compatibility was also made additive for descriptors whose Named Tool contract is object-shaped while the pre-existing public method historically accepted positional/direct arguments. The public methods now accept the descriptor object shape while preserving the legacy call shape for:
+
+```text
+document.inspect
+reference.decompose
+edit.approve
+edit.execute
+revision.list
+revision.restore
+asset.inspect
+asset.release
+capability.describe
+```
+
+No execution semantics or authority changed.
+
+Revision commits:
+
+```text
+SCHEMA_CONTRACT_FIX = ecf1545ce9c104977a677f319916474979b1ae4a
+PUBLIC_INPUT_COMPAT = 41a9d2d2119e236f0ccdf132116d91161c6187a1
+FOCUSED_QA_REVISION = 4412991c84a755b596adeba335f95de5ad144c4e
+```
+
+Focused committed-source validation:
+
+```text
+REVISED_PRODUCT_SOURCE_SYNTAX = PASS
+REVISED_FOCUSED_QA_SYNTAX = PASS
+SCHEMA_AUTHORITY_ISOLATED_CHECK = PASS
+PUBLIC_INPUT_COMPAT_ISOLATED_CHECK = PASS
+
+REPAINT_EMPTY_ARGUMENTS = AUTHORITY REJECTS / DESCRIPTOR CONSTRAINT MATCHES
+TRANSLATE_ZERO_VECTOR = AUTHORITY REJECTS / DESCRIPTOR CONSTRAINT MATCHES
+REFINE_ZERO_CONTROL_LENGTH = AUTHORITY REJECTS / POSITIVE MINIMUM MATCHES
+PREVIEW_ZERO_SCALE = EXISTING AUTHORITY REJECTS / POSITIVE MINIMUM MATCHES
+PREVIEW_ZERO_PPI = EXISTING AUTHORITY REJECTS / POSITIVE MINIMUM MATCHES
+REVISION_CAPTURE_INPUT_SHAPE = DIRECT OPTIONS / MATCHED
+```
+
+No full repository Node run or browser Runtime is newly claimed by this remediation.
 
 ## Scope
 
