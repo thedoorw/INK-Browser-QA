@@ -74,6 +74,18 @@ Registered only, not authorized after Phase C:
 - Phase E — multi-step Color + Line plan + Revision;
 - Phase F — end-to-end private-image collaboration.
 
+## Drawing-validation hold / connector priority
+
+```text
+USER_DECISION = PAUSE DRAWING TESTS NOW
+CHAT_PHASE_C_RUNTIME = HOLD
+CHAT_PHASE_D_TO_F = HOLD
+UI = SEPARATE / NOT PAUSED BY THIS DECISION
+NEW_PRIORITY = FIGMA/PENPOT WORKFLOW MAPPING → INK CONNECTOR ARCHITECTURE
+```
+
+Do not use the central Runtime queue for CHAT Phase C while this hold is active.
+
 ## CHAT Phase C MR source review
 
 ```text
