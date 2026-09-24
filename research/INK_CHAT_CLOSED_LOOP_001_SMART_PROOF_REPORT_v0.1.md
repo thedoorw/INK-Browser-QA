@@ -182,3 +182,44 @@ Verified:
 No Runtime rerun was performed by DEV in this diagnostic-only revision.
 
 `DEV_HANDOFF → STOP`.
+
+
+## MR_REVISE / PRODUCT_DEFECT_ONLY — content preview fractional boundary
+
+Runtime run `36009581263` attempt 2 reached the smart closed-loop proof with UI, Reference import, Color + Line decomposition and stable refs PASS, then failed at `SMART_LOOP_PREVIEW_BEFORE_CAPTURED` with:
+
+```text
+INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED
+previewOptions = { scope:'content', maxDimension:960, background:true }
+```
+
+Root cause is a floating-point boundary in content preview planning: `safeScale` may mathematically target exactly `maxDimension`, while `Math.ceil(bounds * scale)` can observe a value one floating-point step above the integer boundary. The deterministic regression case reproduces the prior behavior as:
+
+```text
+1302.370453 * (960 / 1302.370453)
+= 960.0000000000001
+Math.ceil(...) = 961
+```
+
+Bounded product fix in `product/source/src/agent/visual-feedback.js`:
+
+- content preview retains the raw padded width/height used for scale and planned pixel sizing, while continuing to expose normalized bounds metadata;
+- `safeContentScale` preserves the existing requested-scale / hard-dimension / hard-pixel calculation, and only applies a tiny `Number.EPSILON`-derived backoff when content `Math.ceil` would exceed the requested `maxDimension`;
+- content `plannedPixelSize` uses those raw base dimensions, matching the existing `renderExportCanvas` content rule `Math.ceil(bounds.w * scale)` / `Math.ceil(bounds.h * scale)`;
+- renderer, `renderExportCanvas`, output registry, refs/output-handle semantics and hard dimension/pixel assertions remain unchanged.
+
+Focused regression added to `qa/ink-chat-closed-loop-001-smart-proof.test.mjs` with fractional content width `1254.370453 + 48 = 1302.370453`. The old arithmetic produces width `961`; the corrected planning produces `960 × 478`, and the test mirrors the renderer's existing content-sizing rule.
+
+Focused connector-side QA: **PASS**.
+
+Verified:
+
+- old fractional boundary deterministically reproduces `960.0000000000001 → 961`;
+- corrected boundary produces `959.9999999999991 → 960`;
+- product source and focused QA both compile after module-syntax normalization;
+- before documentation updates, the revision diff from `2a56b602af280fcc923a394d68accab755d0611f` contains only `visual-feedback.js` and the focused smart-proof QA file;
+- no `smartPreviewOptions`, renderer, `renderExportCanvas`, output registry, resolver route, timeout, retry, external transport, UI, `FORMAT_VERSION` or native operation vocabulary change was made.
+
+DEV did not rerun browser Runtime.
+
+`DEV_HANDOFF → STOP`.
