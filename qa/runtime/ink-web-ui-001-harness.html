@@ -113,9 +113,9 @@
 
       record('Photoshop shell viewport is 1280 CSS px', near(geometry1280.viewport.width, 1280, 1), geometry1280);
       record('menu row is 24 px', near(geometry1280.menu?.height, 24, 1) && near(geometry1280.menu?.top, 0, 1), geometry1280.menu);
-      record('shared options row is 36 px at y=24', near(geometry1280.options?.height, 36, 1) && near(geometry1280.options?.top, 24, 1), geometry1280.options);
+      record('Phase C compact options row is 32 px at y=24', near(geometry1280.options?.height, 32, 1) && near(geometry1280.options?.top, 24, 1), geometry1280.options);
       record('contextual controls occupy the same second row', near(geometry1280.contextual?.top, geometry1280.options?.top, 1) && near(geometry1280.contextual?.bottom, geometry1280.options?.bottom, 1), { options: geometry1280.options, contextual: geometry1280.contextual });
-      record('workspace origin is y=60', near(geometry1280.stage?.top, 60, 1) && near(geometry1280.rail?.top, 60, 1) && near(geometry1280.dock?.top, 60, 1), geometry1280);
+      record('Phase C workspace origin is y=56', near(geometry1280.stage?.top, 56, 1) && near(geometry1280.rail?.top, 56, 1) && near(geometry1280.dock?.top, 56, 1), geometry1280);
       record('left rail is edge-attached 40 px', near(geometry1280.rail?.left, 0, 1) && near(geometry1280.rail?.width, 40, 1), geometry1280.rail);
       record('workspace begins immediately after left rail', near(geometry1280.stage?.left, geometry1280.rail?.right, 1), { stage: geometry1280.stage, rail: geometry1280.rail });
       record('right dock is edge-attached 40 px', near(geometry1280.dock?.right, 1280, 1) && near(geometry1280.dock?.width, 40, 1), geometry1280.dock);
@@ -278,14 +278,69 @@
 
       const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
       record('New/Open/Save/Export/Fullscreen command bindings remain wired', buttonsWired);
-      doc.querySelector('#exportBtn').click();
+
+      const fileMenuToggle = doc.querySelector('#fileMenuToggle');
+      fileMenuToggle?.click();
+      await sleep(50);
+      const fileMenu = doc.querySelector('#fileMenu');
+      const fileCommands = [...doc.querySelectorAll('#fileMenu [data-file-command]')].map(button => button.dataset.fileCommand);
+      const topFileHidden = ['newBtn','openBtn','saveBtn','exportBtn'].every(id => getComputedStyle(doc.querySelector('#' + id)).display === 'none');
+      const desktopWorkspaceHidden = getComputedStyle(doc.querySelector('#workspaceSwitch')).display === 'none';
+      record('Phase C File menu is the visible desktop Primary Home',
+        visible(doc, '#fileMenu') &&
+        JSON.stringify(fileCommands) === JSON.stringify(['new','open','save','export']) &&
+        topFileHidden,
+        { fileCommands, topFileHidden });
+      record('Phase C desktop workspace switch is not an equal-weight duplicate',
+        desktopWorkspaceHidden && visible(doc, '#workspaceMenuToggle'),
+        { desktopWorkspaceHidden, workspaceMenuToggle: visible(doc, '#workspaceMenuToggle') });
+
+      doc.querySelector('#fileMenu [data-file-command="export"]')?.click();
       await sleep(60);
-      record('Export surface still opens', (() => {
+      record('File menu Export reaches the existing export command', (() => {
         const dialog = doc.querySelector('#exportDialog');
         return Boolean(dialog && !dialog.hidden);
       })());
       const cancelExport = doc.querySelector('#cancelExportBtn');
       if (cancelExport && !cancelExport.hidden) cancelExport.click();
+
+      const toolRailToggle = doc.querySelector('#toolRailColumnsToggle');
+      const toolOrder = () => [...doc.querySelectorAll('.tool-rail [data-tool]')].map(button => button.dataset.tool);
+      const initialToolOrder = toolOrder();
+      if (shell.state().toolColumns === 2) toolRailToggle?.click();
+      await sleep(80);
+      const oneColumn = {
+        shell: shell.state(),
+        rail: rectOf(doc, '.tool-rail'),
+        stage: rectOf(doc, '#stageWrap'),
+        order: toolOrder()
+      };
+      toolRailToggle?.click();
+      await sleep(100);
+      const twoColumn = {
+        shell: shell.state(),
+        rail: rectOf(doc, '.tool-rail'),
+        stage: rectOf(doc, '#stageWrap'),
+        order: toolOrder(),
+        stored: win.localStorage.getItem('ink.web.ui.toolbar-columns.v0.1')
+      };
+      record('Phase D single-column mode remains the compact baseline',
+        oneColumn.shell.toolColumns === 1 && near(oneColumn.rail?.width, 40, 1) && near(oneColumn.stage?.left, oneColumn.rail?.right, 1),
+        oneColumn);
+      record('Phase D two-column mode changes layout only',
+        twoColumn.shell.toolColumns === 2 &&
+        near(twoColumn.rail?.width, 72, 1) &&
+        near(twoColumn.stage?.left, twoColumn.rail?.right, 1) &&
+        JSON.stringify(twoColumn.order) === JSON.stringify(initialToolOrder) &&
+        twoColumn.stored === '2',
+        twoColumn);
+      toolRailToggle?.click();
+      await sleep(100);
+      record('Phase D toolbar returns to one column without command identity drift',
+        shell.state().toolColumns === 1 &&
+        JSON.stringify(toolOrder()) === JSON.stringify(initialToolOrder) &&
+        win.localStorage.getItem('ink.web.ui.toolbar-columns.v0.1') === '1',
+        { shell: shell.state(), order: toolOrder() });
 
       const fullscreenDiag = test.fullscreen();
       record('Fullscreen API remains supported and command surface wired', fullscreenDiag.supported && typeof doc.querySelector('#fullscreenToggle').onclick === 'function', fullscreenDiag);
