@@ -1,23 +1,50 @@
 # INK WORKING STATUS
 
-STATUS: `UI_LANE_ACTIVE / DRAWING_VALIDATION_HOLD / AGENT_CONNECTIVITY_PLANNING`
+STATUS: `CONNECTOR_DEV_ACTIVE / DRAWING_VALIDATION_HOLD / UI_SEPARATE`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `CHAT: INK-CHAT-VALIDATION-001 Phase C / UI: branch-local UI-006 C+D handoff` |
-| CURRENT_TASK_ID | `CHAT: INK-CHAT-VALIDATION-001 / UI: INK-WEB-UI-006` |
-| DEV_BRANCH | `CHAT: work/ink-chat-validation-001-phase-c / UI: work/ink-web-ui-standard-001` |
-| DEV_HANDOFF | `CHAT Phase C = RECEIVED / STOP / UI Phase C+D = RECEIVED / STOP` |
-| MR_REVIEW | `CHAT Phase C = MR_SOURCE_PASS / HOLD_BY_USER / UI = separate active lane` |
-| TARGET_GATE | `CHAT drawing gate HOLD / new planning target = INK Agent Connectivity / UI separate` |
+| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-001 / Public Creative API facade` |
+| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-001` |
+| DEV_BRANCH | `work/ink-chat-connector-001` |
+| DEV_HANDOFF | `CONNECTOR = NOT_STARTED / Phase C = preserved HOLD` |
+| MR_REVIEW | `Connector-001 = DEV_AUTHORIZED / Phase C = HOLD_BY_USER` |
+| TARGET_GATE | `INK_PUBLIC_CREATIVE_API_FOUNDATION_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `CHAT Phase C Runtime NOT QUEUED while hold is active; existing baseline retained` |
+| RUNTIME_QA | `Connector-001 source/focused QA first; MR decides browser Runtime after handoff` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
-| PARALLEL_MODE | `UI active / drawing-validation held / connectivity research active` |
-| NEXT_STAGE | `Plan INK Agent API + MCP/plugin + skills architecture; do not queue Phase C Runtime` |
+| PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
+| NEXT_STAGE | `DEV Connector-001 → DEV_HANDOFF / STOP → MR review` |
+
+## Connector-001 authorization
+
+```text
+TASK = INK-CHAT-CONNECTOR-001
+BRANCH = work/ink-chat-connector-001
+PURPOSE = one stable Public Creative API over existing INK authorities
+
+CONNECTION_POINTS =
+  Document / Selection / Inspect
+  Reference decomposition
+  Bounded edit proposal / approval / execute
+  History
+  Revision
+
+NOT_IN_SCOPE =
+  use_ink execution sandbox
+  MCP/plugin transport
+  screenshot transport
+  asset transport
+  new drawing behavior
+```
+
+Research baseline:
+`research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md`
+
+Drawing validation remains on user hold.
 
 ## Dual-track coordination synchronization — 2026-09-24
 
