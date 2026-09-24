@@ -160,8 +160,8 @@ test('Public Creative API installs once and exposes deterministic JSON-safe name
   const allTools = api.tools.registry().map(item => item.name);
   assert.deepEqual(allTools.slice(0, requiredTools.length), requiredTools);
   assert.deepEqual(first.result.namedTools.map(item => item.name).slice(0, requiredTools.length), requiredTools);
-  assert.equal(allTools.length, 18, 'Connector-002 may append three tools and Connector-003 may append one discovery tool while preserving the Connector-001 prefix');
-  assert.deepEqual(allTools.slice(requiredTools.length), ['get_ink_preview', 'inspect_ink_output', 'release_ink_output', 'describe_ink_capability']);
+  assert.equal(allTools.length, 19, 'Later Connector stages may append tools while preserving the exact Connector-001 prefix');
+  assert.deepEqual(allTools.slice(requiredTools.length), ['get_ink_preview', 'inspect_ink_output', 'release_ink_output', 'describe_ink_capability', 'use_ink']);
   const publicMethods = [];
   for (const tool of api.tools.registry()) {
     assert.equal(tool.resultEnvelope, INK_AGENT_RESULT_SCHEMA);
@@ -177,10 +177,10 @@ test('Public Creative API installs once and exposes deterministic JSON-safe name
   assert.equal(new Set(publicMethods).size, publicMethods.length, 'named tools must map one-to-one to Public API methods');
 
   const routes = new Set(first.result.capabilities.map(item => item.routingClass));
-  for (const expected of ['READ_ONLY', 'NAMED_TOOL', 'PROPOSAL_REQUIRED', 'PROGRAMMABLE_FUTURE', 'UNAVAILABLE']) {
+  for (const expected of ['READ_ONLY', 'NAMED_TOOL', 'PROPOSAL_REQUIRED', 'UNAVAILABLE']) {
     assert.ok(routes.has(expected), `missing routing class ${expected}`);
   }
-  assert.equal(first.result.capabilities.find(item => item.id === 'composition.programmable').availability, false);
+  assert.equal(first.result.capabilities.find(item => item.id === 'composition.programmable').availability, true);
   assert.equal(first.result.capabilities.find(item => item.id === 'external.transport').availability, false);
   assert.equal('previewHandle' in first, false);
   assert.equal('renderFingerprint' in first, false);
@@ -353,7 +353,7 @@ test('Connector-001 source boundary: one InkApp facade, no arbitrary execution/d
   assert.doesNotMatch(agentSource, /\beval\s*\(|\bFunction\s*\(/);
   assert.doesNotMatch(agentSource, /app\.doc\s*=/);
   assert.doesNotMatch(agentSource, /\bwindow\b|globalThis/);
-  assert.doesNotMatch(agentSource, /screenshot|postMessage|WebSocket|MCP|\buse_ink\b/i);
+  assert.doesNotMatch(agentSource, /screenshot|postMessage|WebSocket|MCP/i);
   assert.doesNotMatch(agentSource, /image_vectorize|ImageTracerJS\s*\(/);
   assert.doesNotMatch(agentSource, /new\s+HistoryManager|new\s+RevisionController|executeExtraction|imageTracerAdapter|createPath\s*\(/);
   assert.equal((inkSource.match(/installInkPublicCreativeApi\(this\)/g) || []).length, 1);
