@@ -1,11 +1,9 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf",
-  "pending_work_orders": [
-    "INK-WEB-UI-006-PHASE-H"
-  ],
+  "pending_work_orders": [],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -17,11 +15,12 @@
     "INK-WEB-UI-006-PHASE-E",
     "INK-WEB-UI-006-PHASE-F",
     "INK-WEB-UI-006-PHASE-G",
-    "INK-CHAT-CONNECTOR-001"
+    "INK-CHAT-CONNECTOR-001",
+    "INK-WEB-UI-006-PHASE-H"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "INK-WEB-UI-006 Phase H bounded Creative Workspace geometry correction requires an immediate exact-SHA Windows self-hosted Runtime rerun before Phase I."
+    "enabled": false,
+    "reason": "INK-WEB-UI-006 Phase H corrected exact-SHA Windows self-hosted Runtime passed."
   },
   "batch_policy": {
     "default_target": 3,
@@ -29,8 +28,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35951970300,
-    "tested_sha": "04ba565c80551fe364174b3964a3ebaa850454a5",
-    "result": "FAIL"
+    "run_id": 35953369828,
+    "tested_sha": "1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf",
+    "result": "PASS"
   }
 }
