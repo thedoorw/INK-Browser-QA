@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase C + D DEV HANDOFF
 
-STATUS: UR_REVIEW / STATIC_PASS / RUNTIME_HOLD / PHASE_C_D
+STATUS: UI_PASS / STATIC_PASS / WINDOWS_RUNTIME_PASS / PHASE_C_D / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-cd`
@@ -368,3 +368,34 @@ Current UR result:
 `UI_HOLD / RUNTIME_REQUIRED`
 
 Do not start Phase E.
+
+
+---
+
+## UR final gate — 2026-09-24
+
+Authoritative Windows self-hosted Runtime:
+
+- run: `35940344586`
+- attempt: `2`
+- tested SHA: `9e3799718490151a69de56a12e489e103481bbbd`
+- runner: `DESKTOP-NSOQH69`
+- browser: Google Chrome
+- UI: PASS
+- Creative: PASS
+- Geometry: PASS
+- artifact: `10784912639`
+
+Attempt 1 had a transient Creative Runtime condition timeout. Re-running the failed jobs against the same exact SHA passed all suites without source change.
+
+Final UR result:
+
+`UI_PASS`
+
+Phase C + D is accepted.
+
+Completion state:
+
+`UR_REVIEW → UI_PASS → STOP`
+
+Phase E remains separately authorized work and is not started by this gate.
