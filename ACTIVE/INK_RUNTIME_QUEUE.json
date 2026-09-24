@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "HOLD",
-  "target_sha": "2a56b602af280fcc923a394d68accab755d0611f",
+  "state": "READY",
+  "target_sha": "20262d942c7a4d1a5ca03898856a2d7ddff9f5d6",
   "pending_work_orders": [
     "INK-CHAT-CLOSED-LOOP-001"
   ],
@@ -27,7 +27,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Runtime 36009581263 attempt 2 reached smart loop and exposed product preview planner defect INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED; bounded visual-feedback.js revision authorized."
+    "reason": "MR source review PASS for bounded visual-feedback.js content preview floating-boundary fix after Runtime 36009581263 exposed INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED; exact-SHA rerun required."
   },
   "batch_policy": {
     "default_target": 3,
