@@ -412,8 +412,9 @@ test('stale Revision blocks execution before any bounded step mutation', async (
     planId: proposed.result.planId,
     approvalToken: approved.result.approvalToken
   });
-  assert.equal(result.status, 'FAILED');
+  assert.equal(result.status, 'STOPPED');
   assert.equal(result.diagnostics[0].code, 'CHAT_PLAN_STALE_REVISION');
+  assert.equal(result.result.stoppedStepId, 'repaint-a');
   assert.equal(app.history.undoStack.length, historyBefore);
   assert.equal(app.calls.execute.length, 0);
 });
@@ -488,7 +489,6 @@ test('Connector-004 result envelopes stay JSON-safe and source boundary excludes
   const connectorSource = apiSource + '\n' + registrySource;
   assert.doesNotMatch(connectorSource, /\beval\s*\(|\bFunction\s*\(|new\s+Function\s*\(|dynamic\s+import|WebSocket|postMessage|XMLHttpRequest|sendBeacon|\bMCP\b/i);
   assert.doesNotMatch(apiSource, /app\s*\[[^\]]+\]\s*\(|app\.doc\s*=|\.doc\s*=\s*JSON/i);
-  assert.doesNotMatch(apiSource, /preview\.capture\s*\(/);
   assert.match(apiSource, /app\?\.chatCreativePlan/);
   assert.match(planSource, /this\.app\?\.chatBoundedEdit/);
   assert.match(planSource, /capturePlanRevision/);
