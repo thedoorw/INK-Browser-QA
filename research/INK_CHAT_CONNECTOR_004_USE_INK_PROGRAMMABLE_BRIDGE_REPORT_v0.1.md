@@ -1,6 +1,6 @@
 # INK-CHAT-CONNECTOR-004 — use_ink Programmable Bridge Evidence v0.1
 
-STATUS: `DEV_SOURCE_COMPLETE / SOURCE_STATIC_FOCUSED_QA_PASS / EXECUTABLE_QA_AUTHORED / NODE_EXECUTION_NOT_CLAIMED / BROWSER_RUNTIME_MR_STAGE`
+STATUS: `MR_REVISION_COMPLETE / BROWSER_FEATURE_QA_READY / RUNTIME_RERUN_PENDING`
 
 ## Control
 
@@ -282,3 +282,58 @@ FORMAT_VERSION = 4 / PRESERVED
 ## Gate
 
 `DEV_HANDOFF → STOP → MR exact-HEAD source review / executable QA / browser runtime as authorized`
+
+## MR revision — real-browser use_ink coverage
+
+MR found that run `35968312192` passed UI / Creative / Geometry at exact SHA
+`adb994650c62ea7e917cb15af574545ab0d72d9a`, but the then-current browser harness did not call `use_ink` or `composition.*`.
+
+The bounded revision adds browser execution without changing Connector product source.
+
+### Browser path now exercised
+
+```text
+app.inkPublicApi.tools.invoke("use_ink", ...)
+→ propose
+→ execute-before-approval rejection
+→ approve
+→ execute two ordered bounded steps
+→ History receipts
+→ final Chat Creative Plan Revision
+→ unsupported action rejection
+→ forbidden operation rejection
+→ no automatic Preview
+```
+
+Required markers:
+
+```text
+USE_INK_TOOL_AVAILABLE
+USE_INK_PROPOSE_MUTATION_NEUTRAL
+USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL
+USE_INK_APPROVAL_TOKEN_ISSUED
+USE_INK_TWO_STEP_EXECUTION_ORDERED
+USE_INK_HISTORY_RECORDED
+USE_INK_FINAL_REVISION_CAPTURED
+USE_INK_UNSUPPORTED_ACTION_REJECTED
+USE_INK_FORBIDDEN_OPERATION_REJECTED
+USE_INK_NO_AUTO_PREVIEW
+```
+
+`qa/runtime/run-ink-runtime-batch.mjs` now treats all ten as required Creative checks.
+
+### Authority preservation during revision
+
+```text
+product/source/src/agent/capability-registry.js = UNCHANGED
+product/source/src/agent/public-creative-api.js = UNCHANGED
+Chat Creative Plan = UNCHANGED
+bounded edit = UNCHANGED
+History = UNCHANGED
+Revision = UNCHANGED
+Renderer = UNCHANGED
+FORMAT_VERSION = 4
+```
+
+Final exact-SHA browser Runtime is MR stage and is not claimed by DEV.
+
