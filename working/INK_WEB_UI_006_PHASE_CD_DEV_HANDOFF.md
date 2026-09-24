@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase C + D DEV HANDOFF
 
-STATUS: DEV_HANDOFF / UI_ONLY / PHASE_C_D / STOP
+STATUS: UR_REVIEW / STATIC_PASS / RUNTIME_HOLD / PHASE_C_D
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-cd`
@@ -317,3 +317,54 @@ Boundary confirmation:
 Completion state:
 
 `DEV_HANDOFF → UR_REVIEW → STOP`
+
+
+---
+
+## UR source review — 2026-09-24
+
+Reviewed exact branch HEAD:
+
+`c5fcf8101c36854d68ef43821c4c1753ffe78188`
+
+Baseline:
+
+`c2e0b91cd1cbf96240e212a290877e7b82bd690e`
+
+Compare result:
+- branch is 3 commits ahead / 0 behind baseline;
+- changed files are limited to the authorized UI shell / QA / handoff set;
+- no Service Worker, bootstrap, Core, Document, History, Revision, Renderer or FORMAT_VERSION source is in the package diff.
+
+Static findings:
+- File menu routes New / Open / Save / Export through the existing endpoint buttons; no second file/document authority found.
+- Permanent desktop file-command copies are hidden by the accepted desktop shell authority.
+- Contextual Options remains intact.
+- Toolbar layout preference is UI-only localStorage.
+- Desktop single-column remains default.
+- Dual-column changes presentation width/grid only and preserves DOM tool identity/order.
+- Mobile forces effective single-column and retains existing mobile toolbar authority.
+- shell.template.html remains the editable HTML authority; generated Web / Portable outputs are included.
+- explicit `ink:runtime-ready` contract remains present.
+- Phase E has not started.
+
+UR static result:
+
+`STATIC_PASS`
+
+Runtime gate is still required before UI_PASS:
+- normal desktop single-column
+- dual-column
+- single ↔ dual geometry
+- File menu routing
+- Draw / Selection contextual options
+- right panel collapsed / expanded
+- narrow desktop
+- fullscreen
+- Web / Portable smoke parity
+
+Current UR result:
+
+`UI_HOLD / RUNTIME_REQUIRED`
+
+Do not start Phase E.
