@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / RUNTIME_PENDING`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / HOLD_BY_USER`
 
 ## Control
 
@@ -285,3 +285,38 @@ MR_SOURCE_PASS
 
 The central Runtime queue is currently occupied by the separately authorized
 UI-006 Phase C+D exact-SHA run. Do not overwrite that queue while the run is active.
+
+
+## User pivot — pause drawing validation
+
+Date: `2026-09-24`
+
+```text
+DRAWING_VALIDATION = HOLD_BY_USER
+PHASE_C_SOURCE_REVIEW = PASS / PRESERVE
+PHASE_C_RUNTIME = DO_NOT_START
+PRIVATE_REAL_IMAGE_ACCEPTANCE = HOLD
+PHASE_D_TO_F = HOLD / NOT_AUTHORIZED
+
+NEW_PLANNING_PRIORITY =
+  INK → CHAT programmable connection
+  modeled after mature Figma / Penpot agent workflows
+```
+
+The Phase C DEV branch and MR source-pass evidence remain preserved.
+
+Do not continue one-operation-at-a-time drawing validation until the new
+agent-connectivity architecture is reviewed.
+
+Planning target:
+
+```text
+INK Core
+→ stable INK Agent API
+→ generic programmable execution bridge
+→ MCP / ChatGPT plugin transport
+→ reusable INK skills
+→ inspect / create / edit / validate workflows
+```
+
+UI-006 remains a separate lane and is not stopped by this hold.
