@@ -156,3 +156,30 @@ FORMAT_VERSION = 4 / PRESERVED
 NEXT_ACTION = DEV_HANDOFF / STOP → MR exact-SHA Runtime rerun
 ```
 
+
+
+## MR Runtime classification — 35970456976
+
+```text
+TESTED_SHA = a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = HARNESS_TIMEOUT / 240 seconds
+GEOMETRY = NOT_REACHED
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+PRODUCT_SOURCE_CHANGE = 0
+
+CLASSIFICATION =
+  QA_HARNESS_TIME_BUDGET_INSUFFICIENT
+
+EVIDENCE =
+  prior same-product regression Runtime 35968312192 completed browser batch in ~219 seconds
+  Connector-004 browser feature coverage added to the same creative harness
+  expanded harness reached the fixed 240-second suite ceiling before evidence callback
+
+MR_BOUNDED_REVISION =
+  qa/runtime/run-ink-runtime-batch.mjs only
+  per-suite harness timeout 240s → 360s
+  no product source mutation
+  exact-SHA Runtime rerun required
+```
