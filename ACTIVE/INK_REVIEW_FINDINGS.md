@@ -1,3 +1,25 @@
+## INK-CHAT-CLOSED-LOOP-001 source findings — 2026-09-24
+
+Accepted at exact HEAD `2b3c2f79147b6122f5ac78ed47d19c9878522386`:
+
+- only two product files changed: capability registry and Public Creative API;
+- `reference.import` delegates the existing CHAT Reference Handoff import authority exactly once;
+- Named Tool 20 `import_ink_reference` is append-only; the accepted Connector-004 19-tool prefix is preserved;
+- import output is normalized through the existing JSON-safe `INK_AGENT_RESULT / 1` envelope;
+- Reference import continues to own decode/import/History/provenance/audit behavior; no second importer was introduced;
+- capability discovery truthfully advertises browser-local File/Blob input and keeps `external.transport` unavailable;
+- the browser proof starts from capability discovery and named-tool routing, then uses `use_ink` for the two-step native repaint plan;
+- proposal neutrality, blocked pre-approval execute, explicit approval, ordered execution, History and final Revision are required;
+- preview materialization reaches the existing realm-local `INK_OUTPUT_HANDLE` payload only from fixed QA code;
+- QA loopback accepts only two fixed PNG slots, has size/dimension bounds, and does not add a product transport API;
+- no UI, new drawing engine, Path geometry creation/editing, Boolean/Repeat/Group/Frame/Component/Layout exposure, arbitrary code execution, external transport or FORMAT_VERSION change exists in this candidate.
+
+Known test debt retained rather than hidden:
+- four older Connector tests assert exact tool total 19 and therefore fail after the authorized Tool 20 append;
+- three other Connector failures reproduce unchanged on the starting source.
+
+Decision: `SOURCE_REVIEW_PASS / RUNTIME_REQUIRED`.
+
 # INK REVIEW FINDINGS
 
 STATUS: `INK-TECH-DEBT-001 / MR_PASS / CLEAN_PROMOTED / CLOSED`
