@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-CONNECTOR-003 / CAPABILITY_SCHEMA_DISCOVERY / MR_ISSUED / DEV_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-003 / MR_REVISE / BOUNDED_SCHEMA_CONTRACT_FIX_AUTHORIZED`
 
 ## Control
 
@@ -529,6 +529,152 @@ Final
 ```
 
 ---
+
+## MR source review revision — 2026-09-24
+
+```text
+REVIEW_HEAD = 5c531dba2c87ee0762c3f21d54845effafe33164
+SOURCE_ARCHITECTURE = PASS
+AUTHORITY_BOUNDARIES = PASS
+CANONICAL_REGISTRY_DIRECTION = PASS
+NAMED_TOOL_PREFIX_17 = PASS
+NAMED_TOOL_TOTAL_18 = PASS
+
+MR = REVISE
+RUNTIME = NOT_QUEUED
+
+BLOCKER_CLASS =
+  SELF_DESCRIPTION_CONTRACT_MISMATCH
+```
+
+The execution authorities are not rejected. The revision is limited to making Descriptor v1 truthful enough for CHAT to rely on.
+
+### Blocker A — schema-valid values rejected by accepted authorities
+
+Current Descriptor v1 permits values that the real authority rejects.
+
+Confirmed examples:
+
+```text
+path.refine.v1
+descriptor:
+  maxControlLength.minimum = 0
+authority:
+  maxControlLength > 0
+  (Number.EPSILON minimum)
+
+preview.capture
+descriptor:
+  scale = number / no positive minimum
+  ppi   = number / no positive minimum
+authority:
+  scale > 0
+  ppi > 0
+
+object.translate.v1
+descriptor:
+  dx = 0, dy = 0 passes declared schema
+authority:
+  dx = 0 AND dy = 0 → NO_OP rejection
+
+path.repaint.v1
+descriptor schema:
+  arguments {} is structurally allowed
+authority:
+  empty arguments → ARGUMENTS_EMPTY
+```
+
+The bounded schema subset does not need a general JSON Schema engine. Where the allowed keyword subset cannot express a cross-field rule, the capability descriptor must state the exact restriction in `constraints[]` and QA must verify it.
+
+Review all operation/preview descriptors for the same class of mismatch, not only the four examples above.
+
+### Blocker B — inputSchema surface ambiguity
+
+Several descriptors expose both:
+
+```text
+namedTool
+publicMethod
+inputSchema
+```
+
+but the declared object-shaped `inputSchema` matches the Named Tool wrapper while the referenced Public API method still uses positional/direct arguments.
+
+Examples include:
+
+```text
+document.inspect
+reference.decompose
+edit.approve
+edit.execute
+revision.list
+revision.capture
+revision.restore
+asset.inspect
+asset.release
+capability.describe
+```
+
+Concrete failure mode:
+
+```text
+revision.capture descriptor
+→ schema suggests { options: { reason, label } }
+
+publicMethod = revision.capture
+
+api.revision.capture({ options: { reason, label } })
+→ existing RevisionController receives the wrapper object
+→ reason/label are not the intended top-level capture options
+```
+
+Connector-003 must establish one canonical invocation contract.
+
+Preferred bounded fix:
+
+```text
+Descriptor inputSchema = canonical object input
+Named Tool accepts canonical object input
+Public API method also accepts that same object input
+existing positional/direct forms may remain as backward-compatible overloads
+```
+
+Alternative designs are acceptable only if Descriptor v1 explicitly distinguishes the two invocation surfaces without ambiguity.
+
+Do not change any underlying execution authority.
+
+### Required revision QA
+
+Add focused checks for:
+
+1. Descriptor-valid positive boundary values accepted by the corresponding input normalizers;
+2. `maxControlLength = 0` is not advertised as valid;
+3. preview `scale <= 0` and `ppi <= 0` are not advertised as valid;
+4. translate `dx=0,dy=0` restriction is explicit;
+5. repaint empty-arguments restriction is explicit;
+6. descriptor canonical input shape is accepted by both Named Tool and declared Public API route, or the descriptor explicitly distinguishes the surfaces;
+7. existing 17-tool prefix and Connector-002 behavior remain unchanged;
+8. no execution authority, Renderer, History, Revision, output-handle contract, UI, or FORMAT_VERSION change.
+
+### Scope boundary
+
+```text
+CAPABILITY_REGISTRY / PUBLIC_API ADAPTER METADATA FIX ONLY
+USE_INK = 0
+EXTERNAL_TRANSPORT = 0
+NEW_EXECUTION_ENGINE = 0
+RENDERER_CHANGE = 0
+OUTPUT_HANDLE_CONTRACT_CHANGE = 0
+DOCUMENT_AUTHORITY_CHANGE = 0
+HISTORY_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+UI_CHANGE = 0
+FORMAT_VERSION = 4
+```
+
+After the bounded revision:
+
+`DEV_HANDOFF → STOP → MR exact-HEAD re-review`
 
 ## Gate
 
