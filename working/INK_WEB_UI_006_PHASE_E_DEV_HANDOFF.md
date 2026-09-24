@@ -373,3 +373,53 @@ UR must run the existing authoritative Windows self-hosted Runtime batch against
 Completion state:
 
 `DEV_HANDOFF → UR_REVIEW → STOP`
+
+
+---
+
+## UR source review — 2026-09-24
+
+Reviewed product source checkpoint:
+
+`6ee7ef4343a0bc8d70c3340ba7bd12be4b430931`
+
+Accepted UI baseline:
+
+`fd7020f2042f2a70d5b33ee6d3a34ca8a7dbe65f`
+
+Compare result:
+- Phase E branch is 9 commits ahead / 0 behind the accepted UI baseline.
+- Product/QA delta is limited to the authorized shell, presentation, panel-controller and runtime-harness surfaces plus Phase E handoff/evidence docs.
+- The final two commits after the source checkpoint are documentation/evidence only; no product-source delta exists after `6ee7ef4...`.
+
+UR static findings:
+- the existing `product/source/web-shell.js` remains the only panel controller;
+- dock definitions are grouped as Editor / Creative Loop / Specialist without adding a second panel router;
+- Properties exposes Tool / Object / Geometry while Specialist reuses the same Inspector for AI / advanced diagnostic surfaces;
+- Path Boolean / Repeat endpoints remain single-instance and are routed under Properties → Geometry;
+- GPU validation / program-asset engineering controls remain single-instance and are reachable through Specialist;
+- one primary panel at a time is still enforced across Inspector and Creative Workspace;
+- edge collapse/restore retains last-panel behavior;
+- Window menu exposes the same grouped dock routes;
+- Layers / History / Reference / Compose / CHAT / Revision authorities remain in their accepted controllers;
+- Web / Portable shell generation authority remains `shell.template.html`;
+- no prohibited Core / Document / History / Revision / Renderer / Service Worker / bootstrap / build-identity source is in the Phase E compare;
+- `FORMAT_VERSION = 4` and visible `v0.1` are preserved;
+- Phase F has not started.
+
+UR static result:
+
+`STATIC_PASS`
+
+Runtime gate required before UI_PASS:
+- authoritative Windows self-hosted exact-SHA browser Runtime;
+- Phase E dock routing / grouping / resize / collapse / Window-menu assertions;
+- Layers / History wiring;
+- narrow desktop / fullscreen / Web-Portable parity;
+- UI / Creative / Geometry regression.
+
+Current UR result:
+
+`UR_REVIEW / STATIC_PASS / WINDOWS_RUNTIME_REQUIRED / PHASE_E`
+
+Do not begin Phase F.
