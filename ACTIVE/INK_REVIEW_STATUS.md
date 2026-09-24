@@ -1,6 +1,30 @@
+## Connector-004 review target — 2026-09-24
+
+```text
+TASK = INK-CHAT-CONNECTOR-004
+TARGET_GATE = INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS
+
+CONNECTOR_003 = CLOSED / MR_PASS / PROMOTED
+USE_INK = AUTHORIZED
+NEW_NATIVE_OPERATION_FAMILIES = NOT_AUTHORIZED
+EXTERNAL_TRANSPORT = NOT_AUTHORIZED
+```
+
+Review focus:
+
+- `use_ink` is one declarative facade over existing `app.chatCreativePlan`;
+- explicit top-level approval remains mandatory;
+- each step remains inside `CHAT_EDIT_OPERATIONS` / bounded-edit authority;
+- no second plan store, execution loop, History, Revision, or Document authority;
+- `composition.programmable` becomes available in Connector-003 registry;
+- existing 18 tools remain exact ordered prefix; `use_ink` becomes tool 19;
+- no arbitrary JS/eval/dynamic app dispatch;
+- Preview remains explicit and separate;
+- FORMAT_VERSION 4 preserved.
+
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-003 / CLOSED / MR_PASS / PROMOTED`
+STATUS: `INK-CHAT-CONNECTOR-004 / USE_INK_PROGRAMMABLE_BRIDGE / DEV_AUTHORIZED`
 
 ## Connector-003 promotion closure — 2026-09-24
 
