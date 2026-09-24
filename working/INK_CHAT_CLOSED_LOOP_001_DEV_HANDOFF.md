@@ -232,3 +232,37 @@ Exact final handoff HEAD is reported in the DEV response.
 
 `DEV_HANDOFF → STOP`.
 
+## MR_REVISE / QA_ORDER_ISOLATION_ONLY completion
+
+Diagnostic input:
+
+```text
+RUN = 36014703794
+TESTED_SHA = b57a3471ceaaba915a296aa1fe46680ee3e44134
+RUNNER = DESKTOP-NSOQH69
+SMART_LOOP = 18 / 18 PASS
+SMART_REFERENCE_COLOR_LINE_CHAT_PROOF = PASS
+FIRST_POST_PROOF_FAIL = WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT
+CLASSIFICATION = QA_STATE_ORDER_CONTAMINATION
+PRODUCT_RUNTIME_FAIL = NOT ESTABLISHED
+```
+
+Only QA execution order was changed.
+
+The real browser assertion `WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT` now executes once before the smart loop starts and before any smart-loop Revision is created. The later duplicate pre-revision assumption was removed, while the later Revision panel open and all capture / compare / restore coverage remain.
+
+Focused ordering contract verifies:
+
+- unavailable-state marker is singular;
+- it occurs before `const smartApi=app.inkPublicApi`;
+- the smart-loop source block is byte-identical to tested SHA `b57a3471ceaaba915a296aa1fe46680ee3e44134`;
+- later Revision baseline capture, structure capture, structural compare and restore remain after the smart-loop proof.
+
+Product source, INK functionality, smart-loop logic and Revision system were not modified.
+
+DEV did not rerun Windows Runtime. MR owns the next exact-SHA Runtime rerun.
+
+Exact final handoff HEAD is reported in the DEV response.
+
+`DEV_HANDOFF → STOP`.
+
