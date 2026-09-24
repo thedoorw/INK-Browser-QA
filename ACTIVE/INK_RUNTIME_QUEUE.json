@@ -2,7 +2,7 @@
   "schema": "ink-runtime-queue",
   "version": 1,
   "state": "READY",
-  "target_sha": "a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc",
+  "target_sha": "448eef0fd15a9543464bfd6830a5840f81d196f0",
   "pending_work_orders": [
     "INK-CHAT-CONNECTOR-004"
   ],
@@ -26,7 +26,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Connector-004 MR revision adds mandatory real-browser use_ink feature coverage; exact-SHA rerun required."
+    "reason": "Connector-004 product source is unchanged; rerun QA-only timeout revision to obtain complete real-browser use_ink evidence."
   },
   "batch_policy": {
     "default_target": 3,
@@ -34,8 +34,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35968312192,
-    "tested_sha": "adb994650c62ea7e917cb15af574545ab0d72d9a",
-    "result": "PASS"
+    "run_id": 35970456976,
+    "tested_sha": "a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc",
+    "result": "FAIL_HARNESS_TIMEOUT_240S"
   }
 }
