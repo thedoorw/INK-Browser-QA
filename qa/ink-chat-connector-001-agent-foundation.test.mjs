@@ -159,6 +159,7 @@ test('Public Creative API installs once and exposes deterministic JSON-safe name
   ];
   assert.deepEqual(api.tools.registry().map(item => item.name), requiredTools);
   assert.deepEqual(first.result.namedTools.map(item => item.name), requiredTools);
+  const publicMethods = [];
   for (const tool of api.tools.registry()) {
     assert.equal(tool.resultEnvelope, INK_AGENT_RESULT_SCHEMA);
     assert.equal(typeof tool.publicMethod, 'string');
@@ -166,7 +167,11 @@ test('Public Creative API installs once and exposes deterministic JSON-safe name
     assert.equal(typeof tool.approvalRequired, 'boolean');
     assert.equal(typeof tool.availability, 'boolean');
     assert.ok(['READ', 'PROPOSAL', 'WRITE'].includes(tool.role));
+    const method = tool.publicMethod.split('.').reduce((value, key) => value?.[key], api);
+    assert.equal(typeof method, 'function', `missing Public API method for ${tool.name}: ${tool.publicMethod}`);
+    publicMethods.push(tool.publicMethod);
   }
+  assert.equal(new Set(publicMethods).size, publicMethods.length, 'named tools must map one-to-one to Public API methods');
 
   const routes = new Set(first.result.capabilities.map(item => item.routingClass));
   for (const expected of ['READ_ONLY', 'NAMED_TOOL', 'PROPOSAL_REQUIRED', 'PROGRAMMABLE_FUTURE', 'UNAVAILABLE']) {
@@ -347,5 +352,6 @@ test('Connector-001 source boundary: one InkApp facade, no arbitrary execution/d
   assert.doesNotMatch(agentSource, /\bwindow\b|globalThis/);
   assert.doesNotMatch(agentSource, /get_ink_preview|screenshot|postMessage|WebSocket|MCP/i);
   assert.doesNotMatch(agentSource, /image_vectorize|ImageTracerJS\s*\(/);
+  assert.doesNotMatch(agentSource, /new\s+HistoryManager|new\s+RevisionController|executeExtraction|imageTracerAdapter|createPath\s*\(/);
   assert.equal((inkSource.match(/installInkPublicCreativeApi\(this\)/g) || []).length, 1);
 });
