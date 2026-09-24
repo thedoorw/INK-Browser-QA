@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / RUNTIME_PENDING`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / HOLD_BY_USER`
 
 ```text
 TASK_ID = INK-TECH-DEBT-001
@@ -90,6 +90,26 @@ Runtime coordination:
 
 ---
 
+## Drawing validation hold / connectivity pivot
+
+```text
+USER_DIRECTION = PAUSE DRAWING TESTS
+PHASE_C_DEV_HEAD = cd3b4dee28a7a47e2298569138f5dbd73af5cc14
+PHASE_C_SOURCE_REVIEW = PASS / PRESERVED
+PHASE_C_RUNTIME = HOLD
+PHASE_C_PRIVATE_IMAGE = HOLD
+PHASE_D_TO_F = HOLD
+
+CURRENT_RESEARCH =
+  Figma MCP / Plugin API / skills workflow
+  Penpot MCP / Plugin API / generic execution workflow
+  ChatGPT MCP / plugin connection route
+```
+
+No Phase C Runtime should be queued until the user explicitly resumes drawing validation.
+
+---
+
 ## Accepted closure
 
 - Service Worker offline source closure is exact.
@@ -121,7 +141,7 @@ INK-TECH-DEBT-001 = CLOSED
 UI-006 B3 = RESOLVED
 UI-006 Phase C+D = DEV_HANDOFF / UR_REVIEW / STOP on UI branch
 UI-006 Phase E–I = NOT_STARTED / NOT_AUTHORIZED
-CHAT Validation Phase C = DEV_HANDOFF / MR_SOURCE_PASS / RUNTIME_PENDING
+CHAT Validation Phase C = DEV_HANDOFF / MR_SOURCE_PASS / HOLD_BY_USER
 PARALLEL_MODE = SELECTED / WORK ORDERS REMAIN SEPARATE
 automatic next-stage start = NO
 ```
