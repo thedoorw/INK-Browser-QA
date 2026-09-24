@@ -2,9 +2,9 @@
   "schema": "ink-runtime-queue",
   "version": 1,
   "state": "READY",
-  "target_sha": "033d9ffe9c3b58c257a87380d7db26dc22628eea",
+  "target_sha": "2b3c2f79147b6122f5ac78ed47d19c9878522386",
   "pending_work_orders": [
-    "INK-CHAT-SMART-CLOSED-LOOP-001"
+    "INK-CHAT-CLOSED-LOOP-001"
   ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
@@ -27,7 +27,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "QA-only acceptance: prove the original CHAT attachment → Reference → Color+Line → use_ink → History/Revision → get_ink_preview visual closed loop with before/after PNG evidence."
+    "reason": "Exact-HEAD smart closed-loop acceptance: Tool 20 reference import → Color+Line decomposition → preview → use_ink two-step repaint → History/Revision → before/after PNG artifacts."
   },
   "batch_policy": {
     "default_target": 3,
