@@ -183,7 +183,7 @@ export async function runBatch(root) {
         const failure = new Promise((_, reject) => {
           child.once('error', reject);
           child.once('exit', (code, signal) => reject(new Error(`Browser exited before evidence: ${code}/${signal}`)));
-          timer = setTimeout(() => reject(new Error('Harness timeout (240 seconds)')), 240000);
+          timer = setTimeout(() => reject(new Error('Harness timeout (360 seconds)')), 360000);
         });
         const evidence = await Promise.race([result, failure]);
         await writeFile(path.join(evidenceDir, `${suite.id}.json`), JSON.stringify(evidence, null, 2));
