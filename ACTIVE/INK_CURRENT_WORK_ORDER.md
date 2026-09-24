@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-CONNECTOR-004 / USE_INK_PROGRAMMABLE_BRIDGE / MR_ISSUED / DEV_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-004 / MR_REVISE / BROWSER_FEATURE_COVERAGE_REQUIRED`
 
 ## Control
 
@@ -322,6 +322,66 @@ Connector-008
 Final
 = full creative closed loop
 ```
+
+## MR bounded revision — browser feature coverage
+
+```text
+REVIEW_HEAD = adb994650c62ea7e917cb15af574545ab0d72d9a
+SOURCE_REVIEW = PASS
+EXACT_SHA_RUNTIME = PASS / REGRESSION ONLY
+RUNTIME_RUN = 35968312192
+RUNTIME_TESTED_SHA = adb994650c62ea7e917cb15af574545ab0d72d9a
+
+BLOCKER =
+  browser Runtime does not exercise use_ink / composition.*
+  therefore target gate is not yet proven
+
+MR = REVISE
+PROMOTION = BLOCKED
+```
+
+### Revision scope
+
+Stay on:
+
+`work/ink-chat-connector-004`
+
+Product source is frozen unless browser QA exposes a real defect.
+
+Authorized:
+
+```text
+qa/runtime/ink-cloud-018-browser-harness.html
+qa/runtime/run-ink-runtime-batch.mjs
+qa/ink-chat-connector-004-use-ink-programmable-bridge.test.mjs   (only if needed)
+research/INK_CHAT_CONNECTOR_004_USE_INK_PROGRAMMABLE_BRIDGE_REPORT_v0.1.md
+ACTIVE/INK_DEV_PROGRESS.md
+working/WORKING_STATUS.md
+working/INK_CHAT_CONNECTOR_004_DEV_HANDOFF.md
+```
+
+Required new browser checks:
+
+```text
+USE_INK_TOOL_AVAILABLE
+USE_INK_PROPOSE_MUTATION_NEUTRAL
+USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL
+USE_INK_APPROVAL_TOKEN_ISSUED
+USE_INK_TWO_STEP_EXECUTION_ORDERED
+USE_INK_HISTORY_RECORDED
+USE_INK_FINAL_REVISION_CAPTURED
+USE_INK_UNSUPPORTED_ACTION_REJECTED
+USE_INK_NO_AUTO_PREVIEW
+```
+
+Equivalent marker names are acceptable, but `run-ink-runtime-batch.mjs` must require them.
+
+No new native operation families, external transport, UI changes, eval/arbitrary execution, or FORMAT_VERSION change.
+
+Return:
+
+`DEV_HANDOFF → STOP`.
+
 
 ## Gate
 
