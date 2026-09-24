@@ -1,6 +1,6 @@
 # INK-CHAT-CONNECTOR-003 — DEV Handoff
 
-STATUS: `DEV_HANDOFF / SOURCE_STATIC_ISOLATED_QA_PASS / STOP`
+STATUS: `DEV_HANDOFF / MR_REVISE_SCHEMA_CONTRACT_FIXED / SOURCE_STATIC_ISOLATED_QA_PASS / STOP`
 
 ## Control
 
@@ -10,6 +10,8 @@ PHASE = SELF_DESCRIBING_CAPABILITY_REGISTRY
 BRANCH = work/ink-chat-connector-003
 BRANCH_BASE = 652bdb76ef16cac84512b6d57eec1bbbae54580e
 TARGET_GATE = INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS
+MR_REVIEWED_HEAD = 5c531dba2c87ee0762c3f21d54845effafe33164
+MR_VERDICT = REVISE / SCHEMA_CONTRACT_ONLY
 FINAL_DEV_HEAD = exact final branch HEAD reported externally with this handoff
 ```
 
@@ -30,6 +32,91 @@ CHANGED_EVIDENCE_FILES =
   research/INK_CHAT_CONNECTOR_003_CAPABILITY_SCHEMA_DISCOVERY_REPORT_v0.1.md
   ACTIVE/INK_DEV_PROGRESS.md
   working/INK_CHAT_CONNECTOR_003_DEV_HANDOFF.md
+```
+
+## MR_REVISE bounded delta
+
+```text
+REVISE_DELTA_CHANGED_PRODUCT_FILES =
+  product/source/src/agent/capability-registry.js
+  product/source/src/agent/public-creative-api.js
+
+REVISE_DELTA_CHANGED_QA_FILES =
+  qa/ink-chat-connector-003-capability-schema-discovery.test.mjs
+
+REVISE_DELTA_CHANGED_EVIDENCE_FILES =
+  research/INK_CHAT_CONNECTOR_003_CAPABILITY_SCHEMA_DISCOVERY_REPORT_v0.1.md
+  working/INK_CHAT_CONNECTOR_003_DEV_HANDOFF.md
+
+SCHEMA_CONTRACT_FIX = ecf1545ce9c104977a677f319916474979b1ae4a
+PUBLIC_INPUT_COMPAT = 41a9d2d2119e236f0ccdf132116d91161c6187a1
+FOCUSED_QA_REVISION = 4412991c84a755b596adeba335f95de5ad144c4e
+EVIDENCE_REVISION = 03dae964b10198b4908a0ee56f3b4ada01b9847e
+```
+
+Resolved MR findings:
+
+```text
+PATH_REFINE_MAX_CONTROL_LENGTH =
+  DESCRIPTOR minimum = Number.EPSILON
+  AUTHORITY minimum = Number.EPSILON
+  PASS
+
+PREVIEW_SCALE =
+  DESCRIPTOR minimum = Number.EPSILON
+  EXISTING AUTHORITY rejects <= 0
+  PASS
+
+PREVIEW_PPI =
+  DESCRIPTOR minimum = Number.EPSILON
+  EXISTING AUTHORITY rejects <= 0
+  PASS
+
+OBJECT_TRANSLATE_ZERO_VECTOR =
+  constraints[] explicitly rejects dx=0 + dy=0 as NO_OP
+  existing authority = CHAT_EDIT_NO_OP
+  PASS
+
+PATH_REPAINT_EMPTY_ARGUMENTS =
+  constraints[] explicitly requires at least one repaint field
+  existing authority = CHAT_EDIT_ARGUMENTS_EMPTY
+  PASS
+
+REVISION_CAPTURE_INPUT_SHAPE =
+  descriptor = direct { reason, label }
+  publicMethod revision.capture(options) = direct options
+  Named Tool direct input = accepted
+  PASS
+```
+
+Descriptor-object Public API compatibility was added without removing legacy positional/direct forms for:
+
+```text
+document.inspect
+reference.decompose
+edit.approve
+edit.execute
+revision.list
+revision.restore
+asset.inspect
+asset.release
+capability.describe
+```
+
+This is input normalization only. Underlying Document / bounded edit / History / Revision / Renderer / Preview / Output Handle authorities remain unchanged.
+
+Focused remediation evidence:
+
+```text
+REVISED_REGISTRY_SYNTAX = PASS
+REVISED_PUBLIC_API_SYNTAX = PASS
+REVISED_CONNECTOR_003_QA_SYNTAX = PASS
+SCHEMA_AUTHORITY_ISOLATED_EXECUTION = PASS
+PUBLIC_INPUT_COMPAT_ISOLATED_EXECUTION = PASS
+DOCUMENT_INSPECT_DESCRIPTOR_SHAPE_ISOLATED_EXECUTION = PASS
+
+FULL_REPOSITORY_NODE_TEST = NOT_EXECUTED / NOT_CLAIMED
+CONNECTOR_BROWSER_RUNTIME = NOT_EXECUTED / NOT_CLAIMED
 ```
 
 ## Capability discovery contract
