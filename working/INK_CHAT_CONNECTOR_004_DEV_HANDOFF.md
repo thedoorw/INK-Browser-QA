@@ -1,6 +1,6 @@
 # INK-CHAT-CONNECTOR-004 — DEV Handoff
 
-STATUS: `DEV_HANDOFF / SOURCE_COMPLETE / SOURCE_STATIC_FOCUSED_QA_PASS / EXECUTABLE_QA_AUTHORED_NOT_EXECUTED / STOP`
+STATUS: `DEV_HANDOFF / MR_REVISION_COMPLETE / BROWSER_FEATURE_QA_READY / STOP`
 
 ## Control
 
@@ -248,3 +248,59 @@ Detailed evidence:
 `DEV_HANDOFF → STOP → MR exact-HEAD review`
 
 Do not start Connector-005, external transport, new native operation families, UI work, or runtime certification from this handoff.
+
+## MR bounded revision completion — browser feature coverage
+
+```text
+MR_BASELINE_HEAD = adb994650c62ea7e917cb15af574545ab0d72d9a
+MR_BASELINE_RUNTIME = 35968312192 / PASS / regression only
+MR_BLOCKER = use_ink not exercised by browser harness
+
+REVISION_PRODUCT_SOURCE_CHANGE = 0
+
+CHANGED_FOR_REVISION =
+  qa/runtime/ink-cloud-018-browser-harness.html
+  qa/runtime/run-ink-runtime-batch.mjs
+  research/INK_CHAT_CONNECTOR_004_USE_INK_PROGRAMMABLE_BRIDGE_REPORT_v0.1.md
+  ACTIVE/INK_DEV_PROGRESS.md
+  working/WORKING_STATUS.md
+  working/INK_CHAT_CONNECTOR_004_DEV_HANDOFF.md
+```
+
+Browser evidence now requires:
+
+```text
+USE_INK_TOOL_AVAILABLE
+USE_INK_PROPOSE_MUTATION_NEUTRAL
+USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL
+USE_INK_APPROVAL_TOKEN_ISSUED
+USE_INK_TWO_STEP_EXECUTION_ORDERED
+USE_INK_HISTORY_RECORDED
+USE_INK_FINAL_REVISION_CAPTURED
+USE_INK_UNSUPPORTED_ACTION_REJECTED
+USE_INK_FORBIDDEN_OPERATION_REJECTED
+USE_INK_NO_AUTO_PREVIEW
+```
+
+The test plan uses only the existing allowed operations:
+
+```text
+path.repaint.v1
+object.translate.v1
+```
+
+The forbidden-operation check attempts `object.delete.v1` only to prove deterministic rejection before mutation.
+
+```text
+NEW_NATIVE_OPERATION_FAMILIES = 0
+EXTERNAL_TRANSPORT = 0
+AUTO_PREVIEW = 0
+UI_CHANGE = 0
+FORMAT_VERSION = 4 / PRESERVED
+DEV_RUNTIME_PASS_CLAIM = 0
+```
+
+Gate:
+
+`DEV_HANDOFF → STOP → MR exact-HEAD review → exact-SHA Runtime rerun`.
+
