@@ -1,3 +1,32 @@
+## Connector-004 MR revise checkpoint
+
+```text
+REVIEW_HEAD = adb994650c62ea7e917cb15af574545ab0d72d9a
+SOURCE_REVIEW = PASS
+SCOPE_REVIEW = PASS
+
+RUNTIME_RUN = 35968312192
+RUNTIME_TESTED_SHA = adb994650c62ea7e917cb15af574545ab0d72d9a
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+
+CONNECTOR_004_FEATURE_BROWSER_COVERAGE = MISSING
+MR = REVISE
+PROMOTION = BLOCKED
+
+REVISION_SCOPE =
+  Connector-004 browser QA
+  + Runtime required markers
+  + evidence/handoff only
+
+PRODUCT_SOURCE = FROZEN unless QA exposes real defect
+NEW_NATIVE_OPERATION_FAMILIES = 0
+EXTERNAL_TRANSPORT = 0
+UI_CHANGE = 0
+FORMAT_VERSION = 4
+```
+
 ## Connector-004 authorization
 
 ```text
@@ -21,24 +50,24 @@ FORMAT_VERSION = 4
 
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_004_DEV_ACTIVE / CONNECTOR_003_CLOSED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_004_MR_REVISE / BROWSER_FEATURE_COVERAGE_REQUIRED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-004 / use_ink programmable bridge` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
 | DEV_BRANCH | `work/ink-chat-connector-004` |
-| DEV_HANDOFF | `Connector-004 = NOT_STARTED / Connector-003 = CLOSED` |
-| MR_REVIEW | `Connector-004 = DEV_AUTHORIZED` |
+| DEV_HANDOFF | `Connector-004 = RECEIVED / MR_REVISE issued` |
+| MR_REVIEW | `Connector-004 = SOURCE_PASS / RUNTIME_REGRESSION_PASS / FEATURE_COVERAGE_MISSING` |
 | TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `Connector-003 run 35961649436 / exact SHA a873c432... / UI+Creative+Geometry PASS` |
+| RUNTIME_QA | `run 35968312192 / exact SHA adb99465... / UI+Creative+Geometry PASS / use_ink browser coverage absent` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-004 DEV → focused QA → DEV_HANDOFF / STOP → MR review` |
+| NEXT_STAGE | `same branch bounded QA/evidence revision → DEV_HANDOFF / STOP → MR rerun` |
 
 ## Connector-003 promotion closure
 
