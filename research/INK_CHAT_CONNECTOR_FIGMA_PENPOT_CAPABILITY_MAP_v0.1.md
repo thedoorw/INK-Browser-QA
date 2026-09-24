@@ -1832,3 +1832,65 @@ INK will be considered well connected to CHAT only when both styles work:
 Target:
 
 `CHAT_CAN_ROUTE_AND_OPERATE_INK_LIKE_A_MATURE_CREATIVE_CONNECTOR`
+
+
+---
+
+## 18. 2026-09-24 implementation checkpoint
+
+This research baseline has now been partially realized in product code.
+
+```text
+Connector-001 = CLOSED / Public Creative API + named-tool foundation + INK_AGENT_RESULT
+Connector-002 = CLOSED / visual preview + output-handle feedback
+Connector-003 = CLOSED / capability descriptor + schema discovery
+Connector-004 = CLOSED / use_ink programmable proposal → approval → execution bridge
+```
+
+The following original connector goals are therefore established at foundation level:
+
+```text
+CHAT can discover INK capabilities
+CHAT can inspect document/selection/objects
+CHAT can route through named tools
+CHAT can receive structured results and output handles
+CHAT can obtain bounded visual preview evidence
+CHAT can invoke use_ink through existing Plan authority
+CHAT writes remain governed by approval, History and Revision
+```
+
+The accepted `use_ink` v0.1 operation vocabulary remains intentionally narrow:
+
+```text
+path.repaint.v1
+path.material.apply.v1
+path.material.remove.v1
+object.translate.v1
+path.simplify.v1
+path.refine.v1
+```
+
+Existing INK capabilities still reserved for later bounded native-operation exposure include, among others:
+
+```text
+Path geometry edit / creation where separately authorized
+Boolean geometry
+Repeat / parametric composition
+Group / hierarchy operations
+Frame operations
+Component / Instance operations
+Layout / constraints operations
+additional transform / ordering / creation operations
+```
+
+Important distinction:
+
+```text
+connector foundation = completed through Connector-004
+full native operation vocabulary = not completed
+Creative Library Search = not completed
+external transport = not implemented
+canonical Reference → Color + Line → CHAT → correction → preview → Revision acceptance = still to be resumed as a whole-loop validation
+```
+
+This preserves the original project intent: finish the familiar CHAT-facing operating grammar first, then expose more native INK capabilities through that already-accepted grammar instead of inventing another interface.
