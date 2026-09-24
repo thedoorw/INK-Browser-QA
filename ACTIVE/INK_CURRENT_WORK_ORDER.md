@@ -461,3 +461,38 @@ Disposition:
 - UI-006 B3 technical prerequisite is resolved.
 - UI-006 Phase C–I remains HOLD until separately authorized.
 - CHAT Validation Phase C remains NOT_STARTED and unauthorized.
+
+
+## Post-closure dual-track coordination
+
+This Work Order is closed. The next program direction may run UI and drawing/CHAT in parallel, but this closed task does not itself authorize either lane.
+
+Coordination contract:
+
+```text
+UI lane
+= Presentation / Placement / Responsive / Interaction shell
+
+CHAT lane
+= Grounding / Reasoning / Creative command flow / Validation
+
+Core authority
+= FROZEN unless separately authorized
+```
+
+Required boundaries:
+- UI must not redefine Document / History / Revision / Geometry / execution semantics.
+- CHAT must not create a second Document / History / Revision / panel/router authority.
+- shared UI/CHAT files must preserve ownership by concern: presentation vs grounded behavior.
+- any schema, persistence, `FORMAT_VERSION`, Geometry, History, Revision, approval or execution-authority change is a STOP and returns to MR for a separate Core/Integration Work Order.
+- UI and CHAT use separate task branches and independent gates; do not merge the development branches into each other.
+- after each lane passes independently, run combined UI + CHAT + Creative + Geometry regression and verify History/Revision authority remains unchanged.
+
+Current state:
+```text
+UI-006 Phase C+D = DEV_HANDOFF / UR_REVIEW / STOP
+UI-006 Phase E-I = NOT_STARTED / NOT_AUTHORIZED
+CHAT Validation Phase C = NOT_STARTED / NOT_AUTHORIZED
+PARALLEL_DIRECTION = SELECTED
+AUTOMATIC_START = NO
+```
