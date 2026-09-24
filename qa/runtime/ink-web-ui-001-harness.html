@@ -490,13 +490,14 @@
       const selectionProxyIds = ['duplicateSelectionBtn','groupSelectionBtn','frontSelectionBtn','deleteSelectionBtn'];
       record('UI-006 Phase F removes the equal-status Properties selection action strip while preserving handlers',
         doc.querySelector('#selectionBar')?.dataset.uiRoute === 'CONTEXTUAL_SHORTCUT' &&
-        selectionProxyIds.every(id => doc.querySelector('#' + id)?.hidden === false ? getComputedStyle(doc.querySelector('#' + id)).display === 'none' : true) &&
+        doc.querySelector('.selection-command-proxies')?.hidden === true &&
         selectionProxyIds.every(id => typeof doc.querySelector('#' + id)?.onclick === 'function') &&
         ['ungroupSelectionBtn','backSelectionBtn'].every(id => Boolean(doc.querySelector('#' + id)) && !doc.querySelector('#' + id).hidden) &&
         doc.querySelector('.object-deep-actions')?.dataset.uiRoute === 'DEEP_SECONDARY',
         {
           contextual: doc.querySelector('#selectionBar')?.dataset.uiRoute,
-          hiddenProxies: selectionProxyIds.map(id => ({ id, hidden: doc.querySelector('#' + id)?.hidden, display: getComputedStyle(doc.querySelector('#' + id)).display })),
+          hiddenProxyContainer: doc.querySelector('.selection-command-proxies')?.hidden,
+          hiddenProxyIds: selectionProxyIds,
           deeper: ['ungroupSelectionBtn','backSelectionBtn']
         });
       record('UI-006 Phase F immediate contextual controls and deep Properties controls are explicitly separated',
