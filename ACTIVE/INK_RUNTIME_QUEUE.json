@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "HOLD",
-  "target_sha": "74c02f41dd9bde3262a6e7ee507126b74c2e18c9",
+  "state": "READY",
+  "target_sha": "2a56b602af280fcc923a394d68accab755d0611f",
   "pending_work_orders": [
     "INK-CHAT-CLOSED-LOOP-001"
   ],
@@ -27,7 +27,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Run 36006888089 failed at SMART_LOOP_PREVIEW_BEFORE_CAPTURED after import/decompose/stable refs PASS; diagnostic payload missing, so product vs QA classification unresolved. Diagnostic-only revision required."
+    "reason": "MR exact-HEAD rerun after DIAGNOSTIC_ONLY revision at SMART_LOOP_PREVIEW_BEFORE_CAPTURED; product source frozen, Runtime diagnosis required."
   },
   "batch_policy": {
     "default_target": 3,
