@@ -147,17 +147,18 @@ function handleFixture(id, byteLength) {
   };
 }
 
-test('Connector-002 appends exactly three named tools while preserving the Connector-001 14-tool prefix', () => {
+test('Connector-002 three-tool surface remains exact while Connector-003 appends discovery after it', () => {
   const { app } = makeApp();
   const api = createInkPublicCreativeApi(app);
   const names = api.tools.registry().map(item => item.name);
   assert.deepEqual(names.slice(0, CONNECTOR_001_TOOLS.length), CONNECTOR_001_TOOLS);
-  assert.deepEqual(names.slice(CONNECTOR_001_TOOLS.length), [
+  assert.deepEqual(names.slice(CONNECTOR_001_TOOLS.length, CONNECTOR_001_TOOLS.length + 3), [
     'get_ink_preview',
     'inspect_ink_output',
     'release_ink_output'
   ]);
-  assert.equal(names.length, 17);
+  assert.equal(names[17], 'describe_ink_capability');
+  assert.equal(names.length, 18);
 
   const capabilities = api.capabilities().result.capabilities;
   for (const id of ['preview.capture', 'asset.inspect', 'asset.release']) {
@@ -372,7 +373,7 @@ test('Connector-002 source boundary preserves existing renderer/export authority
   assert.match(inkSource, /if\(width\*height>6000000\)/, 'preview hard limit stays below the existing tiled-export threshold');
 
   assert.doesNotMatch(visualSource, /exportPNG\s*\(|printArtboard\s*\(|download\s*\(|createObjectURL|window\.|globalThis|screenshot/i);
-  assert.doesNotMatch(registrySource + '\n' + visualSource + '\n' + apiSource, /\buse_ink\b|describe_ink_capability|Capability Schema Discovery|WebSocket|postMessage|\bMCP\b/i);
+  assert.doesNotMatch(registrySource + '\n' + visualSource + '\n' + apiSource, /\buse_ink\b|WebSocket|postMessage|\bMCP\b/i);
   assert.doesNotMatch(registrySource + '\n' + visualSource, /IndexedDB|localStorage|sessionStorage|FileSystem|cloud/i);
   assert.doesNotMatch(visualSource, /new\s+Renderer|renderTiledCanvas|TiledExportJob|DOM/);
   assert.equal((apiSource.match(/get_ink_preview/g) || []).length >= 2, true);
