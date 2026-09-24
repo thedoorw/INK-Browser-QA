@@ -50,6 +50,20 @@ UI remains a parallel, separate-authority lane. Phase D–F drawing validations 
 
 ---
 
+## User hold — drawing validation paused
+
+```text
+DRAWING_VALIDATION = PAUSED BY USER
+PHASE_C_RUNTIME = DO NOT QUEUE
+PRIVATE_REAL_IMAGE_ACCEPTANCE = HOLD
+PHASE_D_TO_F = HOLD / NOT_AUTHORIZED
+UI_LANE = CONTINUES INDEPENDENTLY
+NEW_REVIEW_TARGET = INK CONNECTOR / PUBLIC API ARCHITECTURE
+REFERENCE_WORKFLOWS = FIGMA + PENPOT
+```
+
+Phase C source PASS is retained; no further drawing-validation execution is authorized until the connector architecture is reviewed.
+
 ## Phase C MR source disposition
 
 ```text
