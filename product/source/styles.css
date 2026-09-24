@@ -2483,3 +2483,224 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
    ========================================================================== */
 .selection-command-proxies{display:none!important}
 .object-deep-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+
+/* ==========================================================================
+   INK-WEB-UI-006 — Phase G typography system
+   Presentation-only. Artwork Text/document typography semantics are untouched.
+   ========================================================================== */
+:root{
+  /* Accepted-shell values consolidated into one UI typography authority. */
+  --ui-type-xs:9px;       /* UI-XS: metadata / compact badges only */
+  --ui-type-sm:9.5px;     /* UI-SM: secondary labels / compact state */
+  --ui-type-md:10px;      /* UI-MD: normal workstation controls */
+  --ui-type-lg:11px;      /* UI-LG: panel/application headings */
+  --ui-type-brand:10px;   /* BRAND: INK brand text only */
+  --ui-weight-regular:400;
+  --ui-weight-control:500;
+  --ui-weight-heading:650;
+  --ui-weight-meta:700;
+  --ui-line-control:1.2;
+  --ui-line-copy:1.45;
+}
+
+/* Brand is intentionally separate from the workstation hierarchy. */
+.menu-app-mark strong,
+.brand strong{
+  font-size:var(--ui-type-brand);
+  font-weight:var(--ui-weight-heading);
+  line-height:var(--ui-line-control);
+}
+.menu-app-mark small,
+.brand .version,
+.web-surface-badge{
+  font-size:var(--ui-type-xs);
+  font-weight:var(--ui-weight-meta);
+  line-height:var(--ui-line-control);
+}
+
+/* Application/menu headings retain the accepted 11px command prominence. */
+.application-menus > button,
+.application-menu > button,
+.application-command-menu button,
+.doc-title{
+  font-size:var(--ui-type-lg);
+  line-height:var(--ui-line-control);
+}
+.application-menus > button,
+.application-menu > button,
+.application-command-menu button{font-weight:var(--ui-weight-regular)}
+.doc-title{font-weight:var(--ui-weight-control)}
+
+/* Normal interactive/control text. */
+.quiet-button,
+.primary-button,
+.workspace-switch button,
+.contextual-tool-identity strong,
+.contextual-advanced-button,
+.context-control-label,
+.contextual-options .quick-slider output,
+.contextual-options #eraserOptions .segmented button,
+.contextual-options #shapeOptions .shape-grid button,
+.contextual-options #selectionBar button,
+.selection-bar button,
+.panel-window-item,
+.inspector-tab,
+.properties-subnav .inspector-tab,
+.preset-button,
+.layer-actions button,
+.object-actions button,
+.stroke-edit-actions button,
+.creative-workspace-tabs button,
+.creative-workspace-field,
+.creative-workspace-field input,
+.creative-workspace-field select,
+.creative-workspace-actions button,
+.creative-workspace-action-grid button,
+.creative-workspace-primary,
+.creative-structure-option>summary,
+#canvasSettings .control-row,
+#canvasSettings .control-row>span:first-child,
+#canvasSettings .toggle-row,
+.inspector-section .control-row,
+.inspector-section .toggle-row,
+.inspector-section input,
+.inspector-section select,
+.inspector-section textarea{
+  font-size:var(--ui-type-md);
+  line-height:var(--ui-line-control);
+}
+
+/* Primary panel/application headings. */
+.inspector-head strong,
+.panel-header strong,
+.creative-workspace-head strong,
+.section-title strong,
+.empty-hint strong,
+.no-selection strong,
+.storage-health-status,
+#canvasSettings .panel-header strong{
+  font-size:var(--ui-type-lg);
+  font-weight:var(--ui-weight-heading);
+  line-height:var(--ui-line-control);
+}
+
+/* Secondary readable labels and numeric/state values. */
+.selection-title,
+.zoom-hud,
+.quick-glyph,
+.range-row output,
+.inspector-section .range-row output,
+.subpanel-title strong,
+.inspector-section .subpanel-title strong,
+.layer-row .layer-name strong,
+.history-step-copy strong,
+.creative-workspace-state strong,
+.creative-chat-runtime span,
+.creative-chat-runtime button,
+.creative-chat-message>strong,
+.statusbar,
+.artboard-summary,
+.export-summary{
+  font-size:var(--ui-type-sm);
+  line-height:var(--ui-line-control);
+}
+.subpanel-title strong,
+.inspector-section .subpanel-title strong,
+.layer-row .layer-name strong,
+.history-step-copy strong{font-weight:var(--ui-weight-control)}
+
+/* Metadata is the only family allowed to use the smallest token. */
+.brand .version,
+kbd,
+.quick-slider output,
+.eyebrow,
+.subpanel-title span,
+.inspector-section .subpanel-title span,
+.section-title span,
+.layer-row .layer-meta,
+.page-title span,
+.history-step-index,
+.history-step-copy small,
+.engine-status,
+.render-engine-meta,
+.render-engine-note,
+.version-badge,
+.panel-window-group-label,
+.ai-settings-grid label,
+.ai-risk,
+.ai-preview-toolbar button,
+.object-tree-row .tree-object-name span,
+.creative-workspace-state span,
+.creative-workspace-body output,
+.creative-workspace-status,
+.creative-structure-option>summary span,
+.mobile-dock .tool-label,
+.dock-action .tool-label,
+.tool-button .tool-label,
+.brush-family-head>span:last-child,
+#exportProgress{
+  font-size:var(--ui-type-xs)!important;
+  line-height:var(--ui-line-control);
+}
+.eyebrow,
+.panel-window-group-label,
+.engine-status{
+  font-weight:var(--ui-weight-meta);
+}
+
+/* Workstation body/copy remains readable without becoming a second scale. */
+.no-selection span,
+.artboard-summary,
+.export-summary,
+.storage-health-status,
+.gpu-validation-status,
+.pen-calibration-status,
+.export-progress,
+.render-engine-note,
+.studio-report,
+.ai-analysis,
+.ai-plan-overview,
+.ai-difference-summary,
+.ai-transmission-preview,
+.creative-workspace-body p,
+.creative-chat-message>p,
+.creative-chat-empty,
+.workspace-settings-note,
+#canvasSettings .workspace-settings-note,
+#canvasSettings .viewport-note{
+  font-size:var(--ui-type-md);
+  line-height:var(--ui-line-copy);
+}
+
+/* Important transient state is never metadata microtext. */
+.toast{
+  font-size:var(--ui-type-lg);
+  line-height:var(--ui-line-copy);
+}
+.stroke-edit-status,
+.render-engine-meta,
+.gpu-validation-status,
+.pen-calibration-status,
+.export-progress{
+  font-size:var(--ui-type-md);
+}
+
+/* Keep CJK, Latin and numeric controls on the same inherited cross-platform stack. */
+.app,
+.app button,
+.app input,
+.app select,
+.app textarea,
+.app output{
+  font-family:Inter,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+
+/* Narrow/mobile uses the same token system; only low-priority identity text steps down. */
+@media(max-width:760px){
+  .contextual-tool-identity strong,
+  .mobile-dock .tool-label,
+  .dock-action .tool-label{
+    font-size:var(--ui-type-xs);
+  }
+}
