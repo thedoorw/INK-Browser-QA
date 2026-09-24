@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { Script } from 'node:vm';
 import { createInkPublicCreativeApi } from '../product/source/src/agent/public-creative-api.js';
+import { captureInkPreview } from '../product/source/src/agent/visual-feedback.js';
 import { getInkNamedToolDefinitions, resolveInkCapabilityDescriptor } from '../product/source/src/agent/capability-registry.js';
 import { createChatReferenceHandoffAdapter } from '../product/source/src/ai/chat-reference-handoff.js';
 import { defaultDocument, findPageObject, installRevision } from '../product/source/src/document/index.js';
@@ -144,6 +145,36 @@ test('Two repaint steps use real bounded edit, History and Revision authorities 
   assert.equal(executed.revisionReceipt.captureSkipped,null);
   const revisions=await api.tools.invoke('get_ink_revisions');
   assert.ok(revisions.result.items.some(r=>r.revisionId===executed.revisionReceipt.endingRevisionId));jsonSafe(executed);
+});
+
+test('Content preview fractional max-dimension boundary stays within requested dimension and renderer sizing',async()=>{
+  const doc=defaultDocument(),page=doc.pages[0];
+  const contentBounds={x:12.25,y:8.5,w:1254.370453,h:600.25};
+  let renderedPixelSize=null;
+  const app={
+    doc,
+    page:()=>page,
+    revisions:{revisionIdFor:()=>null},
+    renderer:{contentBounds:()=>({...contentBounds})},
+    async renderExportCanvas(options){
+      const pad=24;
+      const bounds={
+        x:contentBounds.x-pad,
+        y:contentBounds.y-pad,
+        w:contentBounds.w+pad*2,
+        h:contentBounds.h+pad*2
+      };
+      const width=Math.max(1,Math.ceil(bounds.w*options.scale));
+      const height=Math.max(1,Math.ceil(bounds.h*options.scale));
+      renderedPixelSize={width,height};
+      return {width,height,toBlob(callback){callback(new Blob([Uint8Array.of(137,80,78,71)],{type:'image/png'}));}};
+    }
+  };
+  const registry={store(handle){return handle;}};
+  const result=await captureInkPreview(app,registry,{scope:'content',maxDimension:960,background:true});
+  assert.deepEqual(renderedPixelSize,{width:960,height:479});
+  assert.deepEqual(result.handle.pixelSize,renderedPixelSize);
+  assert.ok(result.handle.pixelSize.width<=960&&result.handle.pixelSize.height<=960);
 });
 
 // Tiny pre-existing PNG byte fixtures exercise file transport only, never browser visual proof.
