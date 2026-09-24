@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "5ad4a271b37a1dca9236239be8bb867bff320b7c",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "c728266fa2ec65c2fd53852ae32fd368b9a7d832",
+  "pending_work_orders": [
+    "INK-CHAT-CONNECTOR-002"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -20,8 +22,8 @@
     "INK-WEB-UI-006-PHASE-I"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": "INK-WEB-UI-006 Phase I final exact-SHA Windows self-hosted Runtime passed."
+    "enabled": true,
+    "reason": "INK-CHAT-CONNECTOR-002 is now integrated on latest main; run immediate exact-SHA combined browser regression before final MR acceptance."
   },
   "batch_policy": {
     "default_target": 3,
