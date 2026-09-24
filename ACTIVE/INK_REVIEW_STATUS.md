@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / AUTHORIZED / DEV_NOT_STARTED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / RUNTIME_PENDING`
 
 ```text
 TASK_ID = INK-TECH-DEBT-001
@@ -50,6 +50,46 @@ UI remains a parallel, separate-authority lane. Phase D–F drawing validations 
 
 ---
 
+## Phase C MR source disposition
+
+```text
+REVIEWED_DEV_HEAD = cd3b4dee28a7a47e2298569138f5dbd73af5cc14
+SOURCE_REVIEW = PASS
+PRODUCT_SOURCE_CHANGE = 0
+CHANGED_PAYLOAD =
+  qa/chat-validation-001-phase-c-bounded-edit.test.mjs
+  qa/runtime/ink-cloud-018-browser-harness.html
+  research/INK_CHAT_VALIDATION_001_PHASE_C_BOUNDED_EDIT_REPORT_v0.1.md
+  working/INK_CHAT_VALIDATION_001_PHASE_C_DEV_HANDOFF.md
+  ACTIVE/INK_DEV_PROGRESS.md
+
+MAIN_DIVERGENCE = ahead 6 / behind 1
+MAIN_ONLY_DELTA = UI C+D Runtime queue commit
+SOURCE_CONFLICT = 0
+
+RUNTIME = PENDING
+PRIVATE_REAL_IMAGE_ACCEPTANCE = PENDING
+FINAL_MR_PASS = NOT_YET_CLAIMED
+```
+
+Source review accepted:
+- actual Phase B generated Color/Line IDs feed the Phase C browser path;
+- Color uses existing `path.repaint.v1` fill mutation;
+- Line uses existing `path.repaint.v1` stroke mutation;
+- proposal and approval are non-mutating;
+- execution remains approval-token gated;
+- History / Undo / Redo remain authoritative;
+- stale fingerprint rejection is covered;
+- no automatic Revision creation is introduced;
+- no Product/Core/Document/History/Revision/Geometry authority changed.
+
+Runtime coordination:
+- central Windows Runtime is serialized;
+- UI-006 Phase C+D run `35940344586` currently owns the queue/runner;
+- Phase C queue target must not replace the active UI target.
+
+---
+
 ## Accepted closure
 
 - Service Worker offline source closure is exact.
@@ -81,7 +121,7 @@ INK-TECH-DEBT-001 = CLOSED
 UI-006 B3 = RESOLVED
 UI-006 Phase C+D = DEV_HANDOFF / UR_REVIEW / STOP on UI branch
 UI-006 Phase E–I = NOT_STARTED / NOT_AUTHORIZED
-CHAT Validation Phase C = NOT_STARTED / NOT_AUTHORIZED
+CHAT Validation Phase C = DEV_HANDOFF / MR_SOURCE_PASS / RUNTIME_PENDING
 PARALLEL_MODE = SELECTED / WORK ORDERS REMAIN SEPARATE
 automatic next-stage start = NO
 ```
