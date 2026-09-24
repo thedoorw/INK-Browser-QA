@@ -1,6 +1,48 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-002 / MR_PASS / PROMOTED / CLOSED`
+STATUS: `INK-CHAT-CONNECTOR-003 / CAPABILITY_SCHEMA_DISCOVERY / DEV_AUTHORIZED`
+
+## Connector-003 review target — 2026-09-24
+
+```text
+TASK = INK-CHAT-CONNECTOR-003
+PHASE = SELF_DESCRIBING_CAPABILITY_REGISTRY
+BRANCH = work/ink-chat-connector-003
+TARGET_GATE = INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS
+
+ACCEPTED_UPSTREAM =
+  Connector-001 CLOSED / MR_PASS / promoted
+  Connector-002 CLOSED / MR_PASS / promoted
+
+CONNECTOR_003 =
+  self-describing capability registry
+  + INK_CAPABILITY_DESCRIPTOR v1
+  + capability.describe(idOrToolName)
+  + describe_ink_capability
+
+NAMED_TOOLS =
+  existing 17 exact prefix
+  + describe_ink_capability
+  = 18
+
+USE_INK = NOT_AUTHORIZED
+EXTERNAL_TRANSPORT = NOT_AUTHORIZED
+CREATIVE_SESSION = NOT_AUTHORIZED
+RECIPE_WORKFLOW = NOT_AUTHORIZED
+```
+
+Review focus:
+
+- one canonical metadata registry rather than duplicate capability/tool definitions;
+- bounded JSON-Schema-like input schema only;
+- descriptor matches actual existing Public API contract;
+- targetTypes and constraints do not invent semantics;
+- approval/history/revision/preview policy is machine-readable;
+- unavailable/future capabilities remain discoverable but unavailable;
+- describe by capability ID and Named Tool resolve same canonical descriptor;
+- no execution authority changes;
+- Connector-001/002 behavior and 17-tool ordered prefix preserved;
+- FORMAT_VERSION 4 preserved.
 
 ## Connector-002 final MR PASS — 2026-09-24
 
