@@ -8,3 +8,14 @@ export {
   createInkPublicCreativeApi,
   installInkPublicCreativeApi
 } from './public-creative-api.js';
+
+export {
+  INK_CAPABILITY_DESCRIPTOR_SCHEMA,
+  INK_CAPABILITY_DESCRIPTOR_VERSION,
+  INK_CAPABILITY_INPUT_SCHEMA_KEYWORDS,
+  INK_CAPABILITY_TARGET_TYPES,
+  getInkCapabilityDescriptors,
+  getInkCapabilitySummaries,
+  getInkNamedToolDefinitions,
+  resolveInkCapabilityDescriptor
+} from './capability-registry.js';

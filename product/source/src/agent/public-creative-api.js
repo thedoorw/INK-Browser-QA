@@ -1,7 +1,7 @@
 import { buildAIDocumentBridge } from '../ai/document-bridge.js';
-import { CHAT_EDIT_OPERATIONS } from '../editor/chat-bounded-edit.js';
 import { installInkOutputRegistry } from './output-handle-registry.js';
 import { captureInkPreview, inspectInkOutput, releaseInkOutput } from './visual-feedback.js';
+import { getInkCapabilitySummaries, getInkNamedToolDefinitions, resolveInkCapabilityDescriptor } from './capability-registry.js';
 
 export const INK_PUBLIC_CREATIVE_API_SCHEMA = 'INK-PUBLIC-CREATIVE-API';
 export const INK_PUBLIC_CREATIVE_API_VERSION = 1;
@@ -256,54 +256,19 @@ function failedResult(app, action, error, result = null) {
   });
 }
 
-const NAMED_TOOL_DEFINITIONS = Object.freeze([
-  Object.freeze({ name: 'get_ink_capabilities', publicMethod: 'capabilities', role: 'READ', authoritativeRoute: 'Ink Public Creative API registry', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'NONE', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'get_ink_context', publicMethod: 'context', role: 'READ', authoritativeRoute: 'buildAIDocumentBridge', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'get_ink_selection', publicMethod: 'selection', role: 'READ', authoritativeRoute: 'buildAIDocumentBridge + app.selection', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'inspect_ink_objects', publicMethod: 'inspect', role: 'READ', authoritativeRoute: 'buildAIDocumentBridge', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'decompose_ink_reference', publicMethod: 'reference.decompose', role: 'WRITE', authoritativeRoute: 'app.chatReferenceHandoff.decomposeReference', approvalRequired: false, historyExpectation: 'AUTHORITATIVE_COMMIT', revisionExpectation: 'NO_AUTO_CAPTURE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'propose_ink_edit', publicMethod: 'edit.propose', role: 'PROPOSAL', authoritativeRoute: 'app.chatBoundedEditAdapter.propose', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'NONE', availability: true, routingClass: 'PROPOSAL_REQUIRED', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'approve_ink_edit', publicMethod: 'edit.approve', role: 'PROPOSAL', authoritativeRoute: 'app.chatBoundedEditAdapter.approve', approvalRequired: true, historyExpectation: 'NONE', revisionExpectation: 'NONE', availability: true, routingClass: 'PROPOSAL_REQUIRED', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'execute_ink_edit', publicMethod: 'edit.execute', role: 'WRITE', authoritativeRoute: 'app.chatBoundedEditAdapter.execute', approvalRequired: true, historyExpectation: 'AUTHORITATIVE_COMMIT', revisionExpectation: 'NO_AUTO_CAPTURE', availability: true, routingClass: 'PROPOSAL_REQUIRED', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'get_ink_history', publicMethod: 'history.inspect', role: 'READ', authoritativeRoute: 'app.history', approvalRequired: false, historyExpectation: 'READ_EXISTING', revisionExpectation: 'NONE', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'undo_ink', publicMethod: 'history.undo', role: 'WRITE', authoritativeRoute: 'app.history.undo', approvalRequired: false, historyExpectation: 'MOVE_EXISTING_STACK', revisionExpectation: 'NO_AUTO_CAPTURE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'redo_ink', publicMethod: 'history.redo', role: 'WRITE', authoritativeRoute: 'app.history.redo', approvalRequired: false, historyExpectation: 'MOVE_EXISTING_STACK', revisionExpectation: 'NO_AUTO_CAPTURE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'get_ink_revisions', publicMethod: 'revision.list', role: 'READ', authoritativeRoute: 'app.revisions.list', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_EXISTING', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'capture_ink_revision', publicMethod: 'revision.capture', role: 'WRITE', authoritativeRoute: 'app.revisions.capture', approvalRequired: false, historyExpectation: 'REQUIRE_IDLE', revisionExpectation: 'EXPLICIT_CAPTURE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'restore_ink_revision', publicMethod: 'revision.restore', role: 'WRITE', authoritativeRoute: 'app.revisions.restore', approvalRequired: false, historyExpectation: 'RESET_TO_REVISION', revisionExpectation: 'EXPLICIT_RESTORE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'get_ink_preview', publicMethod: 'preview.capture', role: 'READ', authoritativeRoute: 'app.renderExportCanvas + existing Renderer', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'inspect_ink_output', publicMethod: 'asset.inspect', role: 'READ', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry + documentFingerprint', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'release_ink_output', publicMethod: 'asset.release', role: 'WRITE', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'NONE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA })
-]);
-
-const CAPABILITY_DEFINITIONS = Object.freeze([
-  Object.freeze({ id: 'document.context', routingClass: 'READ_ONLY', namedTool: 'get_ink_context', availability: true }),
-  Object.freeze({ id: 'document.selection', routingClass: 'READ_ONLY', namedTool: 'get_ink_selection', availability: true }),
-  Object.freeze({ id: 'document.inspect', routingClass: 'READ_ONLY', namedTool: 'inspect_ink_objects', availability: true }),
-  Object.freeze({ id: 'reference.decompose', routingClass: 'NAMED_TOOL', namedTool: 'decompose_ink_reference', availability: true }),
-  ...CHAT_EDIT_OPERATIONS.map(id => Object.freeze({ id, routingClass: 'PROPOSAL_REQUIRED', namedTool: 'propose_ink_edit', availability: true })),
-  Object.freeze({ id: 'history.undo', routingClass: 'NAMED_TOOL', namedTool: 'undo_ink', availability: true }),
-  Object.freeze({ id: 'history.redo', routingClass: 'NAMED_TOOL', namedTool: 'redo_ink', availability: true }),
-  Object.freeze({ id: 'revision.capture', routingClass: 'NAMED_TOOL', namedTool: 'capture_ink_revision', availability: true }),
-  Object.freeze({ id: 'revision.restore', routingClass: 'NAMED_TOOL', namedTool: 'restore_ink_revision', availability: true }),
-  Object.freeze({ id: 'preview.capture', routingClass: 'NAMED_TOOL', namedTool: 'get_ink_preview', availability: true, role: 'READ', authoritativeRoute: 'app.renderExportCanvas + existing Renderer', historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ id: 'asset.inspect', routingClass: 'READ_ONLY', namedTool: 'inspect_ink_output', availability: true, role: 'READ', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry + documentFingerprint', historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ id: 'asset.release', routingClass: 'NAMED_TOOL', namedTool: 'release_ink_output', availability: true, role: 'WRITE', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry', historyExpectation: 'NONE', revisionExpectation: 'NONE', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ id: 'composition.programmable', routingClass: 'PROGRAMMABLE_FUTURE', namedTool: null, availability: false }),
-  Object.freeze({ id: 'external.transport', routingClass: 'UNAVAILABLE', namedTool: null, availability: false })
-]);
-
 export function createInkPublicCreativeApi(app) {
   if (!app) throw new TypeError('INK public API requires an InkApp instance');
   const outputRegistry = installInkOutputRegistry(app);
+  const capabilitySummaries = getInkCapabilitySummaries();
+  const namedToolDefinitions = getInkNamedToolDefinitions();
 
   const capabilities = () => {
     try {
       return createInkAgentResult(app, 'capabilities', {
         result: {
           api: { schema: INK_PUBLIC_CREATIVE_API_SCHEMA, version: INK_PUBLIC_CREATIVE_API_VERSION },
-          capabilities: CAPABILITY_DEFINITIONS,
-          namedTools: NAMED_TOOL_DEFINITIONS
+          capabilities: capabilitySummaries,
+          namedTools: namedToolDefinitions
         }
       });
     } catch (error) {
@@ -344,6 +309,11 @@ export function createInkPublicCreativeApi(app) {
 
   const inspect = (refsOrObjectIds, options = {}) => {
     try {
+      if (isRecord(refsOrObjectIds) && (hasOwn(refsOrObjectIds, 'refs') || hasOwn(refsOrObjectIds, 'objectIds') || hasOwn(refsOrObjectIds, 'options'))) {
+        const input = refsOrObjectIds;
+        refsOrObjectIds = input.refs ?? input.objectIds ?? [];
+        options = input.options ?? options;
+      }
       const refs = normalizeRefs(refsOrObjectIds);
       if (!refs.length) throw Object.assign(new Error('INK inspect requires at least one stable object reference'), { code: 'INK_AGENT_INSPECT_TARGET_REQUIRED' });
       const result = bridgeRead(app, { ...options, objectIds: refs.map(ref => ref.objectId) });
@@ -360,6 +330,11 @@ export function createInkPublicCreativeApi(app) {
     async decompose(referenceObjectId, options = {}) {
       const action = 'reference.decompose';
       try {
+        if (isRecord(referenceObjectId) && hasOwn(referenceObjectId, 'referenceObjectId')) {
+          const input = referenceObjectId;
+          referenceObjectId = input.referenceObjectId;
+          options = input.options ?? options;
+        }
         if (typeof app?.chatReferenceHandoff?.decomposeReference !== 'function') {
           throw Object.assign(new Error('INK Reference decomposition authority unavailable'), { code: 'INK_AGENT_REFERENCE_AUTHORITY_UNAVAILABLE' });
         }
@@ -410,6 +385,7 @@ export function createInkPublicCreativeApi(app) {
     approve(proposalId) {
       const action = 'edit.approve';
       try {
+        if (isRecord(proposalId)) proposalId = proposalId.proposalId;
         const raw = app?.chatBoundedEditAdapter?.approve?.(proposalId);
         if (!raw) throw Object.assign(new Error('INK bounded edit authority unavailable'), { code: 'INK_AGENT_EDIT_AUTHORITY_UNAVAILABLE' });
         const metadata = editResultMetadata(raw);
@@ -425,6 +401,11 @@ export function createInkPublicCreativeApi(app) {
     execute(proposalId, approvalToken) {
       const action = 'edit.execute';
       try {
+        if (isRecord(proposalId)) {
+          const input = proposalId;
+          proposalId = input.proposalId;
+          approvalToken = input.approvalToken ?? approvalToken;
+        }
         const raw = app?.chatBoundedEditAdapter?.execute?.(proposalId, approvalToken);
         if (!raw) throw Object.assign(new Error('INK bounded edit authority unavailable'), { code: 'INK_AGENT_EDIT_AUTHORITY_UNAVAILABLE' });
         const metadata = editResultMetadata(raw);
@@ -500,6 +481,7 @@ export function createInkPublicCreativeApi(app) {
     async list(documentId = app?.doc?.id) {
       const action = 'revision.list';
       try {
+        if (isRecord(documentId)) documentId = documentId.documentId ?? app?.doc?.id;
         if (typeof app?.revisions?.list !== 'function') throw Object.assign(new Error('INK Revision authority unavailable'), { code: 'INK_AGENT_REVISION_UNAVAILABLE' });
         const items = await app.revisions.list(documentId);
         return createInkAgentResult(app, action, { result: { items } });
@@ -524,6 +506,11 @@ export function createInkPublicCreativeApi(app) {
     async restore(revisionId, options = {}) {
       const action = 'revision.restore';
       try {
+        if (isRecord(revisionId) && hasOwn(revisionId, 'revisionId')) {
+          const input = revisionId;
+          revisionId = input.revisionId;
+          options = input.options ?? options;
+        }
         if (typeof app?.revisions?.restore !== 'function') throw Object.assign(new Error('INK Revision authority unavailable'), { code: 'INK_AGENT_REVISION_UNAVAILABLE' });
         const raw = await app.revisions.restore(revisionId, options);
         return createInkAgentResult(app, action, {
@@ -557,6 +544,7 @@ export function createInkPublicCreativeApi(app) {
     inspect(handleId) {
       const action = 'asset.inspect';
       try {
+        if (isRecord(handleId)) handleId = handleId.handleId;
         const raw = inspectInkOutput(app, outputRegistry, handleId);
         return createInkAgentResult(app, action, {
           targetRefs: raw.handle?.objectRefs || [],
@@ -570,6 +558,7 @@ export function createInkPublicCreativeApi(app) {
     release(handleId) {
       const action = 'asset.release';
       try {
+        if (isRecord(handleId)) handleId = handleId.handleId;
         const raw = releaseInkOutput(app, outputRegistry, handleId);
         return createInkAgentResult(app, action, {
           status: raw.found ? 'COMPLETED' : 'NO_OP',
@@ -583,7 +572,27 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
-  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, history, revision, preview, asset });
+  const capability = Object.freeze({
+    describe(idOrToolName) {
+      const action = 'capability.describe';
+      try {
+        if (isRecord(idOrToolName)) idOrToolName = idOrToolName.idOrToolName ?? idOrToolName.capabilityId ?? idOrToolName.toolName;
+        const descriptor = resolveInkCapabilityDescriptor(idOrToolName);
+        if (!descriptor) {
+          throw Object.assign(new Error('Unknown INK capability or named tool'), {
+            code: 'INK_CAPABILITY_NOT_FOUND',
+            field: 'idOrToolName',
+            actual: String(idOrToolName || '')
+          });
+        }
+        return createInkAgentResult(app, action, { result: descriptor });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    }
+  });
+
+  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, history, revision, preview, asset, capability });
   const toolHandlers = Object.freeze({
     get_ink_capabilities: () => capabilities(),
     get_ink_context: input => context(input?.options ?? input ?? {}),
@@ -601,11 +610,12 @@ export function createInkPublicCreativeApi(app) {
     restore_ink_revision: input => revision.restore(input?.revisionId, input?.options ?? {}),
     get_ink_preview: input => preview.capture(input?.options ?? input ?? {}),
     inspect_ink_output: input => asset.inspect(input?.handleId ?? input),
-    release_ink_output: input => asset.release(input?.handleId ?? input)
+    release_ink_output: input => asset.release(input?.handleId ?? input),
+    describe_ink_capability: input => capability.describe(input?.idOrToolName ?? input?.capabilityId ?? input?.toolName ?? input)
   });
 
   const tools = Object.freeze({
-    registry() { return safeClone(NAMED_TOOL_DEFINITIONS); },
+    registry() { return safeClone(namedToolDefinitions); },
     invoke(name, input = {}) {
       const handler = toolHandlers[String(name || '')];
       if (!handler) return failedResult(app, 'tools.invoke', Object.assign(new Error('Unknown INK named tool'), { code: 'INK_AGENT_TOOL_NOT_FOUND' }));

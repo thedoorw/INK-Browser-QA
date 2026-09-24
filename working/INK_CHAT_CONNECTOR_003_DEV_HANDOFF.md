@@ -1,0 +1,284 @@
+# INK-CHAT-CONNECTOR-003 — DEV Handoff
+
+STATUS: `DEV_HANDOFF / MR_REVISE_SCHEMA_CONTRACT_FIXED / SOURCE_STATIC_ISOLATED_QA_PASS / STOP`
+
+## Control
+
+```text
+TASK_ID = INK-CHAT-CONNECTOR-003
+PHASE = SELF_DESCRIBING_CAPABILITY_REGISTRY
+BRANCH = work/ink-chat-connector-003
+BRANCH_BASE = 652bdb76ef16cac84512b6d57eec1bbbae54580e
+TARGET_GATE = INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS
+MR_REVIEWED_HEAD = 5c531dba2c87ee0762c3f21d54845effafe33164
+MR_VERDICT = REVISE / SCHEMA_CONTRACT_ONLY
+FINAL_DEV_HEAD = exact final branch HEAD reported externally with this handoff
+```
+
+## Changed paths
+
+```text
+CHANGED_PRODUCT_FILES =
+  product/source/src/agent/capability-registry.js
+  product/source/src/agent/public-creative-api.js
+  product/source/src/agent/index.js
+
+CHANGED_QA_FILES =
+  qa/ink-chat-connector-001-agent-foundation.test.mjs
+  qa/ink-chat-connector-002-visual-asset-feedback.test.mjs
+  qa/ink-chat-connector-003-capability-schema-discovery.test.mjs
+
+CHANGED_EVIDENCE_FILES =
+  research/INK_CHAT_CONNECTOR_003_CAPABILITY_SCHEMA_DISCOVERY_REPORT_v0.1.md
+  ACTIVE/INK_DEV_PROGRESS.md
+  working/INK_CHAT_CONNECTOR_003_DEV_HANDOFF.md
+```
+
+## MR_REVISE bounded delta
+
+```text
+REVISE_DELTA_CHANGED_PRODUCT_FILES =
+  product/source/src/agent/capability-registry.js
+  product/source/src/agent/public-creative-api.js
+
+REVISE_DELTA_CHANGED_QA_FILES =
+  qa/ink-chat-connector-003-capability-schema-discovery.test.mjs
+
+REVISE_DELTA_CHANGED_EVIDENCE_FILES =
+  research/INK_CHAT_CONNECTOR_003_CAPABILITY_SCHEMA_DISCOVERY_REPORT_v0.1.md
+  working/INK_CHAT_CONNECTOR_003_DEV_HANDOFF.md
+
+SCHEMA_CONTRACT_FIX = ecf1545ce9c104977a677f319916474979b1ae4a
+PUBLIC_INPUT_COMPAT = 41a9d2d2119e236f0ccdf132116d91161c6187a1
+FOCUSED_QA_REVISION = 4412991c84a755b596adeba335f95de5ad144c4e
+EVIDENCE_REVISION = 03dae964b10198b4908a0ee56f3b4ada01b9847e
+```
+
+Resolved MR findings:
+
+```text
+PATH_REFINE_MAX_CONTROL_LENGTH =
+  DESCRIPTOR minimum = Number.EPSILON
+  AUTHORITY minimum = Number.EPSILON
+  PASS
+
+PREVIEW_SCALE =
+  DESCRIPTOR minimum = Number.EPSILON
+  EXISTING AUTHORITY rejects <= 0
+  PASS
+
+PREVIEW_PPI =
+  DESCRIPTOR minimum = Number.EPSILON
+  EXISTING AUTHORITY rejects <= 0
+  PASS
+
+OBJECT_TRANSLATE_ZERO_VECTOR =
+  constraints[] explicitly rejects dx=0 + dy=0 as NO_OP
+  existing authority = CHAT_EDIT_NO_OP
+  PASS
+
+PATH_REPAINT_EMPTY_ARGUMENTS =
+  constraints[] explicitly requires at least one repaint field
+  existing authority = CHAT_EDIT_ARGUMENTS_EMPTY
+  PASS
+
+REVISION_CAPTURE_INPUT_SHAPE =
+  descriptor = direct { reason, label }
+  publicMethod revision.capture(options) = direct options
+  Named Tool direct input = accepted
+  PASS
+```
+
+Descriptor-object Public API compatibility was added without removing legacy positional/direct forms for:
+
+```text
+document.inspect
+reference.decompose
+edit.approve
+edit.execute
+revision.list
+revision.restore
+asset.inspect
+asset.release
+capability.describe
+```
+
+This is input normalization only. Underlying Document / bounded edit / History / Revision / Renderer / Preview / Output Handle authorities remain unchanged.
+
+Focused remediation evidence:
+
+```text
+REVISED_REGISTRY_SYNTAX = PASS
+REVISED_PUBLIC_API_SYNTAX = PASS
+REVISED_CONNECTOR_003_QA_SYNTAX = PASS
+SCHEMA_AUTHORITY_ISOLATED_EXECUTION = PASS
+PUBLIC_INPUT_COMPAT_ISOLATED_EXECUTION = PASS
+DOCUMENT_INSPECT_DESCRIPTOR_SHAPE_ISOLATED_EXECUTION = PASS
+
+FULL_REPOSITORY_NODE_TEST = NOT_EXECUTED / NOT_CLAIMED
+CONNECTOR_BROWSER_RUNTIME = NOT_EXECUTED / NOT_CLAIMED
+```
+
+## Capability discovery contract
+
+```text
+CAPABILITY_REGISTRY_SOURCE =
+  product/source/src/agent/capability-registry.js
+
+CAPABILITY_DESCRIPTOR_SCHEMA = INK_CAPABILITY_DESCRIPTOR / 1
+CAPABILITY_LIST_METHOD = capabilities()
+CAPABILITY_DESCRIBE_METHOD = capability.describe
+CAPABILITY_DESCRIBE_TOOL = describe_ink_capability
+
+DESCRIPTOR_COUNT = 26
+
+EXISTING_NAMED_TOOLS_PRESERVED = 17 / EXACT ORDERED PREFIX
+FINAL_NAMED_TOOL_TOTAL = 18
+
+CAPABILITY_IDS_UNIQUE = PASS
+NAMED_TOOL_MAPPING_CONSISTENT = PASS
+PUBLIC_METHOD_MAPPING_CONSISTENT = PASS
+
+INPUT_SCHEMA_KEYWORD_SUBSET =
+  type
+  properties
+  required
+  items
+  enum
+  const
+  minimum
+  maximum
+  minItems
+  maxItems
+  additionalProperties
+  description
+  default
+
+TARGET_TYPE_VOCABULARY =
+  Document
+  Page
+  Layer
+  Object
+  Path
+  ReferenceImage
+  INK_OUTPUT_HANDLE
+  Revision
+  None
+
+APPROVAL_POLICY = EXPLICIT MACHINE-READABLE / PASS
+HISTORY_POLICY = EXPLICIT MACHINE-READABLE / PASS
+REVISION_POLICY = EXPLICIT MACHINE-READABLE / PASS
+PREVIEW_POLICY = EXPLICIT MACHINE-READABLE / PASS
+RESULT_CONTRACT = INK_AGENT_RESULT / 1 / PASS
+EXAMPLES = AVAILABLE CAPABILITIES HAVE SMALL JSON-SAFE INPUT EXAMPLES / PASS
+
+DESCRIBE_BY_CAPABILITY_ID = PASS
+DESCRIBE_BY_NAMED_TOOL = PASS
+UNKNOWN_CAPABILITY_DIAGNOSTIC = INK_CAPABILITY_NOT_FOUND / PASS
+
+UNAVAILABLE_CAPABILITIES_PRESERVED =
+  composition.programmable
+  external.transport
+```
+
+## Compatibility / regressions
+
+```text
+CONNECTOR_001_REGRESSION =
+  COMPAT_STATIC_PASS
+  exact 14-tool Connector-001 prefix still preserved
+
+CONNECTOR_002_REGRESSION =
+  COMPAT_STATIC_PASS
+  exact three Connector-002 tools still occupy positions 15-17
+
+DOCUMENT_BRIDGE_REGRESSION =
+  BASELINE_PRESERVED
+  blob = f55262329ea4d792bf55c5fb04e3e342301fddfd
+
+REFERENCE_HANDOFF_REGRESSION =
+  BASELINE_PRESERVED
+  blob = 7e63499c914670ce6176011d1d88a92c1d472bae
+
+BOUNDED_EDIT_REGRESSION =
+  BASELINE_PRESERVED
+  blob = a0051d60d016d1875a881708e249590b9fe207e3
+
+HISTORY_REGRESSION =
+  BASELINE_PRESERVED
+  blob = a1c3cefe60b9923d030bcead1d8565b134aebd21
+
+REVISION_REGRESSION =
+  BASELINE_PRESERVED
+  blob = 18028bb15866ff07c87d81073a63a3265ff6839e
+
+PREVIEW_OUTPUT_HANDLE_REGRESSION =
+  PREVIEW SOURCE UNCHANGED
+  visual-feedback blob = 66aa44d3d19d679466cc6e71f1b224f994982ffe
+  output-handle-registry blob = 4d1877d49dae0798ef74788a2fea90090fc65310
+
+RENDERER_REGRESSION =
+  BASELINE_PRESERVED
+  product/source/src/ink.js blob = b9eabc748e4a357d67febacadc3cacd2be6067ce
+
+FORMAT_VERSION_REGRESSION =
+  PASS / PRESERVED AT 4
+  config blob = 5d5b9791166427f2c46786fd8b33c49b11ea2ff9
+```
+
+## Focused QA
+
+```text
+CAPABILITY_REGISTRY_ISOLATED_EXECUTION = PASS
+PUBLIC_API_DISCOVERY_ISOLATED_EXECUTION = PASS
+
+PRODUCT_SOURCE_SYNTAX_PARSE = PASS
+CONNECTOR_001_QA_SYNTAX_PARSE = PASS
+CONNECTOR_002_QA_SYNTAX_PARSE = PASS
+CONNECTOR_003_QA_SYNTAX_PARSE = PASS
+
+NAMED_TOOL_TOTAL = 18 / PASS
+CAPABILITY_SUMMARY_COUNT = 26
+CAPABILITY_LIST_DETERMINISM = PASS
+CAPABILITY_DESCRIBE_ID_TOOL_EQUIVALENCE = PASS
+UNKNOWN_DIAGNOSTIC = PASS
+UNAVAILABLE_FUTURE_DISCOVERY = PASS
+EDIT_APPROVAL_BOUNDARY_METADATA = PASS
+PREVIEW_OUTPUT_HANDLE_CONTRACT = PASS
+
+FULL_REPOSITORY_NODE_TEST =
+  NOT_EXECUTED / NOT_CLAIMED
+  current DEV tool environment has no runnable Git checkout shell
+
+CONNECTOR_BROWSER_RUNTIME =
+  NOT_EXECUTED / NOT_CLAIMED
+  MR exact-HEAD stage
+```
+
+Detailed evidence:
+
+`research/INK_CHAT_CONNECTOR_003_CAPABILITY_SCHEMA_DISCOVERY_REPORT_v0.1.md`
+
+## Boundaries
+
+```text
+USE_INK = 0
+ARBITRARY_EXECUTION = 0
+EXTERNAL_TRANSPORT = 0
+AUTO_EXECUTION_FROM_DISCOVERY = 0
+GENERIC_JSON_SCHEMA_ENGINE = 0
+SECOND_EXECUTION_AUTHORITY = 0
+DOCUMENT_MUTATION = 0
+HISTORY_AUTHORITY_CHANGE = 0
+REVISION_AUTHORITY_CHANGE = 0
+RENDERER_CHANGE = 0
+OUTPUT_HANDLE_CONTRACT_CHANGE = 0
+UI_CHANGE = 0
+FORMAT_VERSION = 4 / PRESERVED
+```
+
+## Gate
+
+`DEV_HANDOFF → STOP → MR exact-HEAD source review`
+
+Do not start Connector-004, `use_ink`, external transport, Recipe/Workflow, Creative Session, Creative Library, Design Critic, or UI work from this handoff.
