@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase E DEV HANDOFF
 
-STATUS: DEV_HANDOFF / UI_ONLY / PHASE_E / STOP
+STATUS: DEV_HANDOFF / STATIC_PASS / RUNTIME_DISPATCH_PENDING / UI_ONLY / PHASE_E / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-e`
@@ -281,3 +281,95 @@ Completion state:
 `DEV_HANDOFF → UR_REVIEW → STOP`
 
 Do not begin Phase F automatically.
+
+
+---
+
+## DEV completion — 2026-09-24
+
+Implemented only Phase E.
+
+### Routing result
+
+The existing `product/source/web-shell.js` remains the only panel controller.
+
+Dock groups:
+- Editor → Properties / Layers / History
+- Creative Loop → Reference / Compose / CHAT / Revision
+- Specialist → existing Inspector-based AI / advanced / diagnostic surfaces
+
+No second Inspector, panel router, Creative Workspace controller, or command authority was added.
+
+### Properties / Specialist result
+
+Properties now exposes:
+- Tool
+- Object
+- Geometry
+
+Existing Path Boolean / Repeat controls were moved into Properties → Geometry with their original command IDs and handlers intact.
+
+Specialist now exposes the existing:
+- AI surface
+- advanced production / Recipe engineering surface
+- GPU validation
+- device / performance / QA diagnostics
+
+The GPU self-check UI no longer appears in normal Tool Properties; `runGPUValidationBtn` and `gpuValidationStatus` remain the same endpoints.
+
+### Preserved behavior
+
+- compact icon-only dock
+- one primary panel at a time
+- existing edge collapse / restore affordance
+- last-active primary panel memory
+- resizable Inspector width
+- canvas expansion on close
+- Window-menu access
+- Layers behavior unchanged
+- History semantics unchanged
+- Reference / Compose / CHAT / Revision capability placement unchanged
+- Web / Portable parity
+
+### Verification
+
+PASS:
+- shell generator parity / Web output parity
+- Portable output parity
+- no unresolved shell tokens
+- `web-shell.js` syntax
+- UI runtime harness syntax
+- CSS brace balance
+- moved command endpoints remain unique
+- `product/source/src/ink.js` unchanged from accepted Phase C/D baseline
+- `FORMAT_VERSION = 4`
+- prohibited implementation surfaces untouched
+
+Task-specific Phase E runtime assertions were added to:
+
+`qa/runtime/ink-web-ui-001-harness.html`
+
+Full DEV evidence:
+
+`working/INK_WEB_UI_006_PHASE_E_EVIDENCE.md`
+
+### Exact-SHA Windows Runtime
+
+Not dispatched from this DEV connection because the available GitHub connector does not expose the manual `workflow_dispatch` action.
+
+No Runtime PASS is claimed.
+
+UR must run the existing authoritative Windows self-hosted Runtime batch against the final DEV exact HEAD before promotion.
+
+### Boundary confirmation
+
+- Core / Document / History / Revision / Renderer semantics unchanged
+- Geometry / Recipe execution authority unchanged
+- CHAT approval / execution authority unchanged
+- Service Worker / bootstrap / build-cache identity unchanged
+- visible version remains v0.1
+- Phase F not started
+
+Completion state:
+
+`DEV_HANDOFF → UR_REVIEW → STOP`
