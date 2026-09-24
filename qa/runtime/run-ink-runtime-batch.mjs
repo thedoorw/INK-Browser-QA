@@ -196,6 +196,46 @@ export async function runBatch(root) {
         }
       }
     }
+    // INK-WEB-UI-006 visual-closure evidence: capture the exact tested product UI
+    // at the same 1280×1024 reference viewport used for Photoshop comparison.
+    {
+      const visualSuite = suites.find(s => s.id === 'ui');
+      const started = await startServer(root, visualSuite, () => {});
+      const visualProfile = await mkdtemp(path.join(root, 'profile-ui-visual-'));
+      try {
+        const shot = path.join(evidenceDir, 'ink-ui-latest-1280x1024.png');
+        const child = spawn(browser, [
+          '--headless=new',
+          '--disable-gpu',
+          '--no-first-run',
+          '--no-default-browser-check',
+          '--disable-extensions',
+          '--disable-background-networking',
+          '--hide-scrollbars',
+          '--window-size=1280,1024',
+          '--force-device-scale-factor=1',
+          '--virtual-time-budget=5000',
+          `--user-data-dir=${visualProfile}`,
+          `--screenshot=${shot}`,
+          `${started.origin}/index.html?fresh=1&ink-ui-visual-closure=1`
+        ], { shell: false, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
+        let stderr = '';
+        child.stderr.on('data', chunk => { stderr += chunk.toString(); });
+        const [code] = await once(child, 'exit');
+        assert.equal(code, 0, `Visual screenshot Chrome exit: ${code} ${stderr}`);
+        assert.ok((await stat(shot)).size > 10000, 'Visual screenshot artifact must be non-empty');
+        report.visualEvidence = {
+          file: 'ink-ui-latest-1280x1024.png',
+          viewport: { width: 1280, height: 1024 },
+          source: 'exact-tested-product'
+        };
+      } finally {
+        started.server.closeAllConnections();
+        await new Promise(resolve => started.server.close(resolve));
+        await rm(visualProfile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      }
+    }
+
     report.status = 'PASS';
   } catch (error) {
     report.status = 'FAIL'; report.error = String(error.stack || error); process.exitCode = 1;
