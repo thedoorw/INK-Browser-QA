@@ -1,52 +1,37 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / HOLD_BY_USER`
+STATUS: `INK-CHAT-CONNECTOR-001 / PUBLIC_CREATIVE_API / DEV_AUTHORIZED`
+
+## Current connector development
 
 ```text
-TASK_ID = INK-TECH-DEBT-001
-RUNTIME_TESTED_SHA = 3e22c2f501e100674952650f333024d5b817d86f
-RUNTIME_RUN = 35887731569
-RUNNER = DESKTOP-NSOQH69
-BROWSER = Chrome
-UI = PASS / 72 of 72
-CREATIVE = PASS
-GEOMETRY = PASS
-ARTIFACT_ID = 10763861596
-ARTIFACT_DIGEST = sha256:498b2fcd3087fa56c185b79bb4cd7a8d946416e514737c25320ebef6c4ea4c59
-CLEAN_PROMOTED_MAIN = 7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1
-PROMOTED_PRODUCT_QA_EQUIVALENT_TO_TESTED_SHA = YES
-MATCHED_BLOBS = 23 / 23
-FORMAT_VERSION = 4 / PRESERVED
-PRODUCT_VERSION = v0.1 / PRESERVED
+TASK = INK-CHAT-CONNECTOR-001
+PHASE = PUBLIC_CREATIVE_API_FACADE
+BRANCH = work/ink-chat-connector-001
+TARGET_GATE = INK_PUBLIC_CREATIVE_API_FOUNDATION_WORKS
+RESEARCH = research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md
 ```
 
-## Current authorized validation — Phase C
+Review focus:
+
+- one public facade only;
+- no live mutable document references;
+- reuse Document Bridge / Reference Handoff / Bounded Edit / History / Revision;
+- no second editor authority;
+- no arbitrary execution bridge yet;
+- no screenshot transport yet;
+- FORMAT_VERSION 4 preserved.
+
+## Preserved previous CHAT validation
 
 ```text
-TASK = INK-CHAT-VALIDATION-001
-PHASE = C_COLOR_LINE_BOUNDED_EDIT
-BRANCH = work/ink-chat-validation-001-phase-c
-BASELINE = Phase B accepted + technical-debt closure
-TARGET_GATE = CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS
-IMAGE_MODEL = 0
-PRIVATE_USER_IMAGE_PUBLIC_COMMIT = 0
+INK-CHAT-VALIDATION-001 Phase B = CLOSED / PASS
+INK-CHAT-VALIDATION-001 Phase C = MR_SOURCE_PASS / HOLD_BY_USER
+Phase C Runtime = HOLD
+Phase D-F = HOLD / NOT_AUTHORIZED
 ```
 
-Purpose:
-
-```text
-existing Phase B Color / Line Paths
-→ CHAT grounded stable target
-→ proposal
-→ explicit approval
-→ existing path.repaint.v1
-→ existing History
-→ visible bounded edit
-```
-
-Phase C validates one Color fill edit and one Line stroke edit, plus approval/stale-state guards and Undo/Redo. It does not retune tracing, add semantic labeling, alter Core authority or change FORMAT_VERSION.
-
-UI remains a parallel, separate-authority lane. Phase D–F drawing validations are registered only and are not authorized.
+Phase C evidence remains valid historical evidence but is not the active engineering work order.
 
 ---
 
