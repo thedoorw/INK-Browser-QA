@@ -1,11 +1,9 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "1ccfa450d8fe3248e402d26315c386a50e4f4a1b",
-  "pending_work_orders": [
-    "INK-WEB-UI-006-PHASE-F"
-  ],
+  "pending_work_orders": [],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -14,11 +12,12 @@
     "INK-CHAT-VALIDATION-001",
     "INK-TECH-DEBT-001",
     "INK-WEB-UI-006-PHASE-CD",
-    "INK-WEB-UI-006-PHASE-E"
+    "INK-WEB-UI-006-PHASE-E",
+    "INK-WEB-UI-006-PHASE-F"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "INK-WEB-UI-006 Phase F requires an immediate exact-SHA Windows self-hosted Runtime gate before UR can issue UI_PASS or allow Phase G."
+    "enabled": false,
+    "reason": "INK-WEB-UI-006 Phase F exact-SHA Windows self-hosted Runtime passed."
   },
   "batch_policy": {
     "default_target": 3,
@@ -26,8 +25,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35943860711,
-    "tested_sha": "6ee7ef4343a0bc8d70c3340ba7bd12be4b430931",
+    "run_id": 35945848484,
+    "tested_sha": "1ccfa450d8fe3248e402d26315c386a50e4f4a1b",
     "result": "PASS"
   }
 }
