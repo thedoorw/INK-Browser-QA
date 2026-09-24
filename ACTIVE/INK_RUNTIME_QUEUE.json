@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "adb994650c62ea7e917cb15af574545ab0d72d9a",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc",
+  "pending_work_orders": [
+    "INK-CHAT-CONNECTOR-004"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -23,8 +25,8 @@
     "INK-CHAT-CONNECTOR-003"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": "Connector-004 exact-SHA regression batch passed, but feature-specific use_ink browser coverage is still required by MR revision."
+    "enabled": true,
+    "reason": "Connector-004 MR revision adds mandatory real-browser use_ink feature coverage; exact-SHA rerun required."
   },
   "batch_policy": {
     "default_target": 3,
