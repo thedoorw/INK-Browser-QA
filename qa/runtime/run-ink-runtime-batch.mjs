@@ -1,5 +1,6 @@
 // Manual batch only. Native Node HTTP server; no shell, Git or PowerShell dependency.
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { readFile, writeFile, mkdir, mkdtemp, rm, stat } from 'node:fs/promises';
 import { existsSync, createWriteStream } from 'node:fs';
@@ -13,7 +14,27 @@ export const suites = [
   { id: 'creative', file: 'ink-cloud-018-browser-harness.html' },
   { id: 'geometry', file: 'ink-ra-001-browser-harness.html' }
 ];
+export const smartLoopRequired = [
+  'SMART_LOOP_CAPABILITIES_DISCOVERED',
+  'SMART_LOOP_REFERENCE_IMPORTED',
+  'SMART_LOOP_IMPORT_HISTORY_PROVENANCE_RECORDED',
+  'SMART_LOOP_COLOR_LINE_DECOMPOSED',
+  'SMART_LOOP_STABLE_REFS_RETURNED',
+  'SMART_LOOP_PREVIEW_BEFORE_CAPTURED',
+  'SMART_LOOP_PREVIEW_BEFORE_MATERIALIZED',
+  'SMART_LOOP_USE_INK_PROPOSE_MUTATION_NEUTRAL',
+  'SMART_LOOP_USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL',
+  'SMART_LOOP_USE_INK_APPROVED',
+  'SMART_LOOP_TWO_STEP_REPAINT_EXECUTED',
+  'SMART_LOOP_HISTORY_RECORDED',
+  'SMART_LOOP_FINAL_REVISION_CAPTURED',
+  'SMART_LOOP_PREVIEW_AFTER_CAPTURED',
+  'SMART_LOOP_PREVIEW_AFTER_MATERIALIZED',
+  'SMART_LOOP_RENDER_FINGERPRINT_CHANGED',
+  'SMART_LOOP_ARTIFACT_EVIDENCE_READY',
+];
 const creativeRequired = [
+  ...smartLoopRequired,
   'CANVAS_EDITOR_RENDERED', 'CREATIVE_WORKSPACE_VISIBLE', 'REFERENCE_IMPORT_VISIBLE',
   'DIRECT_EXTRACTION_EXECUTED', 'EDITABLE_PATH_RESULT_VISIBLE', 'REFERENCE_OVERLAY_CONTROLLABLE',
   'PATH_EDIT_ENTERED', 'MUTATION_BLOCKED_BEFORE_APPROVAL', 'BOUNDED_EDIT_EXECUTED',
@@ -83,16 +104,109 @@ export function validateEvidence(id, evidence) {
   return evidence;
 }
 
+
+const SMART_PNG_MAX_BYTES = 4 * 1024 * 1024;
+const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+function assertSmartPng(bytes) {
+  assert.ok(bytes.length >= 45 && bytes.length <= SMART_PNG_MAX_BYTES, 'Bounded PNG required');
+  assert.ok(bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), 'PNG signature required');
+  assert.equal(bytes.toString('ascii', 12, 16), 'IHDR');
+  const width = bytes.readUInt32BE(16), height = bytes.readUInt32BE(20);
+  assert.ok(width > 0 && height > 0 && width <= 960 && height <= 960, 'Smart preview dimensions must be bounded to 960');
+  assert.equal(bytes.toString('ascii', bytes.length - 8, bytes.length - 4), 'IEND');
+  return { width, height };
+}
+
+export async function finalizeSmartLoopEvidence(root, evidence, testedSha) {
+  assert.match(testedSha || '', /^[a-f0-9]{40}$/);
+  for (const name of smartLoopRequired) {
+    assert.ok(evidence.checks?.some(check => check.name === name && check.status === 'PASS'), `Missing ${name}`);
+  }
+  const proof = evidence.smartLoop;
+  assert.equal(proof?.schema, 'INK-SMART-CLOSED-LOOP-PROOF');
+  assert.equal(proof.version, 1);
+  assert.equal(proof.returnPath, 'RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT');
+  assert.equal(proof.fixture, 'qa/fixtures/rose-window/rose-window-primary.png');
+  assert.equal(proof.source.sha256, sha256(await readFile(path.join(root, proof.fixture))));
+  assert.equal(proof.importHistory.commit.valid, true);
+  assert.equal(proof.importProvenance.status, 'AVAILABLE');
+  assert.ok(proof.importProvenance.eventIds.length > 0);
+  assert.equal(proof.decompositionHistory.commit.valid, true);
+  assert.equal(proof.proposalStatus, 'PROPOSED');
+  assert.equal(proof.blockedCode, 'CHAT_PLAN_APPROVAL_REQUIRED');
+  assert.equal(proof.approval.status, 'APPROVED');
+  assert.equal(proof.executionStatus, 'COMPLETED');
+  assert.ok(proof.planId);
+  assert.deepEqual(proof.plan.steps.map(step => step.operation), ['path.repaint.v1', 'path.repaint.v1']);
+  assert.deepEqual(proof.stepResults.map(step => step.stepId), proof.plan.steps.map(step => step.stepId));
+  assert.ok(proof.stepResults.every(step => step.ok === true && step.changed === true));
+  assert.deepEqual(proof.plan.steps.map(step => step.targets), [[proof.targets.color], [proof.targets.line]]);
+  assert.ok(proof.colorRefs.some(ref => JSON.stringify(ref) === JSON.stringify(proof.targets.color)));
+  assert.ok(proof.lineRefs.some(ref => JSON.stringify(ref) === JSON.stringify(proof.targets.line)));
+  assert.notEqual(proof.targets.color.layerId, proof.targets.line.layerId);
+  assert.equal(proof.historyReceipt.steps.length, 2);
+  assert.ok(proof.historyReceipt.steps.every(step => step.history));
+  assert.ok(proof.revisionReceipt.endingRevisionId);
+  assert.notEqual(proof.revisionReceipt.startingRevisionId, proof.revisionReceipt.endingRevisionId);
+  assert.equal(proof.revisionReceipt.captureSkipped, null);
+  const evidenceDir = path.join(root, 'evidence');
+  for (const phase of ['before', 'after']) {
+    const artifact = proof.artifacts[phase];
+    assert.equal(artifact.file, `smart-loop-${phase}.png`);
+    const bytes = await readFile(path.join(evidenceDir, artifact.file));
+    assert.deepEqual(assertSmartPng(bytes), artifact.handle.pixelSize);
+    assert.equal(bytes.length, artifact.byteLength);
+    assert.equal(bytes.length, artifact.handle.byteLength);
+    assert.equal(sha256(bytes), artifact.sha256);
+    assert.equal(artifact.handle.schema, 'INK_OUTPUT_HANDLE');
+    assert.equal(artifact.handle.documentId, proof.documentId);
+    assert.equal(artifact.handle.pageId, proof.pageId);
+    assert.equal(artifact.handle.transport, 'INTERNAL_EPHEMERAL');
+  }
+  assert.equal(proof.artifacts.after.handle.revisionId, proof.revisionReceipt.endingRevisionId);
+  assert.notEqual(proof.artifacts.before.sha256, proof.artifacts.after.sha256);
+  assert.notEqual(proof.artifacts.before.handle.renderFingerprint, proof.artifacts.after.handle.renderFingerprint);
+  const record = { ...proof, testedSha, status: 'PASS', checks: evidence.checks.filter(check => smartLoopRequired.includes(check.name)) };
+  await writeFile(path.join(evidenceDir, 'smart-loop.json'), JSON.stringify(record, null, 2));
+  return record;
+}
+
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.wasm': 'application/wasm' };
 
-export async function startServer(root, suite, onEvidence) {
+export async function startServer(root, suite, onEvidence, { evidenceDir = null } = {}) {
   const site = path.join(root, 'product/source');
   const harness = await readFile(path.join(root, 'qa/runtime', suite.file));
   let delivered = false;
+  const smartWritten = new Set();
   const server = createServer(async (req, res) => {
     try {
       const url = new URL(req.url, 'http://127.0.0.1');
       res.setHeader('Cache-Control', 'no-store');
+      // QA-only, loopback-bound, two fixed artifact names; never a product transport.
+      if (url.pathname.startsWith('/__qa_smart_loop/')) {
+        const phase = url.pathname.slice('/__qa_smart_loop/'.length);
+        if (suite.id !== 'creative' || !evidenceDir || !['before', 'after'].includes(phase)) {
+          res.writeHead(404).end(); return;
+        }
+        if (req.method !== 'POST') { res.writeHead(405).end(); return; }
+        if (delivered || smartWritten.has(phase)) { res.writeHead(409).end(); return; }
+        if (req.headers['content-type'] !== 'image/png') { res.writeHead(415).end(); return; }
+        smartWritten.add(phase);
+        const chunks = []; let size = 0;
+        for await (const chunk of req) {
+          size += chunk.length;
+          if (size > SMART_PNG_MAX_BYTES) { res.writeHead(413).end(); return; }
+          chunks.push(chunk);
+        }
+        const bytes = Buffer.concat(chunks);
+        assertSmartPng(bytes);
+        const file = `smart-loop-${phase}.png`;
+        await mkdir(evidenceDir, { recursive: true });
+        await writeFile(path.join(evidenceDir, file), bytes);
+        res.setHeader('Content-Type', 'application/json');
+        res.writeHead(200).end(JSON.stringify({ file, byteLength: bytes.length, sha256: sha256(bytes) }));
+        return;
+      }
       if (url.pathname === '/__qa_result' && req.method === 'POST') {
         if (delivered) { res.writeHead(409).end(); return; }
         const chunks = []; let size = 0;
@@ -162,6 +276,9 @@ export async function runBatch(root) {
   try {
     assert.match(report.testedSha || '', /^[a-f0-9]{40}$/, 'Exact tested SHA required');
     assert.match(await readFile(path.join(root, 'product/source/src/config.js'), 'utf8'), /FORMAT_VERSION\s*=\s*4\b/);
+    for (const name of ['smart-loop-before.png', 'smart-loop-after.png', 'smart-loop.json']) {
+      await rm(path.join(evidenceDir, name), { force: true });
+    }
     const browser = findBrowser(); report.browser = browser;
     for (const suite of suites) {
       const entry = { id: suite.id, status: 'RUNNING' }; report.suites.push(entry);
@@ -170,7 +287,7 @@ export async function runBatch(root) {
       try {
         let receive;
         const result = new Promise(resolve => { receive = resolve; });
-        const started = await startServer(root, suite, receive); server = started.server;
+        const started = await startServer(root, suite, receive, { evidenceDir }); server = started.server;
         for (const route of ['/', '/src/ink.js', '/styles.css', '/__qa_harness.html', '/__qa_rose_window.png']) {
           const response = await fetch(started.origin + route, { signal: AbortSignal.timeout(5000) });
           assert.equal(response.status, 200, `HTTP preflight: ${route}`);
@@ -188,6 +305,7 @@ export async function runBatch(root) {
         const evidence = await Promise.race([result, failure]);
         await writeFile(path.join(evidenceDir, `${suite.id}.json`), JSON.stringify(evidence, null, 2));
         validateEvidence(suite.id, evidence);
+        if (suite.id === 'creative') await finalizeSmartLoopEvidence(root, evidence, report.testedSha);
         entry.status = 'PASS';
       } catch (error) {
         entry.status = 'FAIL'; entry.error = String(error.stack || error); throw error;
@@ -218,3 +336,4 @@ export async function runBatch(root) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   await runBatch(path.resolve(process.argv[2] || '.'));
 }
+

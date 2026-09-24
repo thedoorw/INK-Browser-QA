@@ -1,107 +1,16 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-CLOSED-LOOP-001 / AUTHORIZED / DEV_NOT_STARTED`
+STATUS: `INK-CHAT-CLOSED-LOOP-001 / DEV_IN_PROGRESS`
 
-## Task
+- Branch: `work/ink-chat-closed-loop-001`
+- Starting exact HEAD: `2634e5481906c248ee3396bf83e2ddc7bb341cbe`
+- Work Order upstream base: `9ab4a6b557628f8fcdd1b58312b219423c68fe34`
+- Milestone: import facade + tool 20 + sequential smart browser proof + QA-only PNG materialization implemented.
+- Product files: only `product/source/src/agent/public-creative-api.js` and `capability-registry.js`.
+- QA files: `qa/ink-chat-closed-loop-001-smart-proof.test.mjs`, `qa/runtime/ink-cloud-018-browser-harness.html`, `qa/runtime/run-ink-runtime-batch.mjs`.
+- Focused QA: 8/8 PASS on Node v24.19.0; existing reference handoff QA PASS.
+- Full Connector 001–004 diagnostic run: 29/36 PASS, 7 FAIL. Four old exact-total assertions expect 19 instead of authorized 20. Three other failures reproduce on unchanged starting source (baseline 33/36 PASS). These tests are outside this Work Order's file allowlist and were not modified.
+- Browser Runtime: NOT_RUN_BY_DEV; exact-SHA Windows self-hosted Runtime and CHAT image retrieval remain the MR gate, per Work Order I.
+- Next: finish review/evidence/handoff, commit exact HEAD, then STOP. No Runtime queue, main, package, UI, transport, operation vocabulary or FORMAT_VERSION changes.
 
-```text
-TASK_ID = INK-CHAT-CLOSED-LOOP-001
-TITLE = Reference → Color + Line → CHAT Smart Closed Loop Proof v0.1
-BRANCH = work/ink-chat-closed-loop-001
-BRANCH_BASE = 9ab4a6b557628f8fcdd1b58312b219423c68fe34
-TARGET_GATE = SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP
-FORMAT_VERSION = 4 / PRESERVE
-UI_CHANGE = 0
-IMAGE_MODEL = 0
-EXTERNAL_TRANSPORT = 0
-NEW_NATIVE_OPERATION_FAMILIES = 0
-CURRENT_PHASE = DEV_START
-```
-
-## Required route
-
-```text
-get_ink_capabilities
-→ import_ink_reference
-→ decompose_ink_reference
-→ get_ink_preview
-→ stable Color / Line refs
-→ use_ink
-→ approve
-→ execute existing path.repaint.v1 × 2
-→ History
-→ Revision
-→ get_ink_preview
-→ Runtime evidence PNG before / after
-```
-
-## Product scope
-
-Only:
-
-```text
-product/source/src/agent/public-creative-api.js
-product/source/src/agent/capability-registry.js
-```
-
-Required addition:
-
-```text
-reference.import
-→ existing app.chatReferenceHandoff.importReference
-
-Named Tool #20:
-import_ink_reference
-```
-
-Connector-004 19 tools remain exact prefix.
-
-## QA scope
-
-```text
-qa/ink-chat-closed-loop-001-smart-proof.test.mjs
-qa/runtime/ink-cloud-018-browser-harness.html
-qa/runtime/run-ink-runtime-batch.mjs
-```
-
-Runtime must materialize:
-
-```text
-evidence/smart-loop-before.png
-evidence/smart-loop-after.png
-evidence/smart-loop.json
-```
-
-The QA-only payload materialization may use the existing internal `resolveInkOutputPayload` path. It is not product external transport.
-
-## Hard boundaries
-
-```text
-Boolean / Repeat / Group / Frame / Component / Layout = 0
-Path geometry / raw Path creation = 0
-new trace engine = 0
-UI = 0
-external transport = 0
-MCP / WebSocket / postMessage = 0
-arbitrary JS / eval / Function = 0
-direct Document JSON write = 0
-automatic approval = 0
-FORMAT_VERSION change = 0
-package/ink-current mutation = 0
-```
-
-## DEV completion
-
-Update:
-
-```text
-focused QA
-Runtime browser evidence support
-research/INK_CHAT_CLOSED_LOOP_001_SMART_PROOF_REPORT_v0.1.md
-working/INK_CHAT_CLOSED_LOOP_001_DEV_HANDOFF.md
-this progress file
-```
-
-Then report exact HEAD and:
-
-`DEV_HANDOFF → STOP`
+Read: README, AGENTS, 我說, ACTIVE README/Current Work Order/DEV New Window Start/branch-local Progress, Working Status, MR/DEV governance, development handoff, Windows Runtime standard, existing Reference Handoff/Public API/capability registry/output registry/preview/plan/History/Revision paths and focused QA.

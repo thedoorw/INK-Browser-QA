@@ -87,6 +87,25 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     await openPanel('reference');
     assert(Boolean(cw.root?.querySelector('[data-workspace-action="research-context-refresh"]') && cw.root?.querySelector('[data-workspace-output="research-context"]')),'WORKSTATION_REFERENCE_RESEARCH_ENTRY_VISIBLE');
 
+    // INK-CHAT-CLOSED-LOOP-001: one connector-first chain, before unrelated regression edits.
+    const smartApi=app.inkPublicApi;
+    const smartDiscovery=await smartApi.tools.invoke('get_ink_capabilities');
+    const smartRequired=['reference.import','reference.decompose','preview.capture','composition.programmable','path.repaint.v1','history.inspect','revision.list'];
+    const smartDescriptors=[];
+    for(const capabilityId of smartRequired){
+      const described=await smartApi.tools.invoke('describe_ink_capability',{idOrToolName:capabilityId});
+      assert(described.status==='COMPLETED' && described.result?.availability===true,
+        'SMART_CAPABILITY_'+capabilityId,{capabilityId,status:described.status});
+      smartDescriptors.push(described.result);
+    }
+    assert(smartDiscovery.status==='COMPLETED' &&
+      smartRequired.every(id=>smartDiscovery.result.capabilities.some(c=>c.id===id && c.availability)) &&
+      smartDiscovery.result.namedTools.length===20 &&
+      smartDiscovery.result.namedTools[19].name==='import_ink_reference' &&
+      smartDescriptors[0].routingClass==='NAMED_TOOL' &&
+      smartDiscovery.result.capabilities.find(c=>c.id==='external.transport')?.availability===false,
+      'SMART_LOOP_CAPABILITIES_DISCOVERED');
+
     const fixtureResponse=await fetch('/__qa_rose_window.png',{cache:'no-store'});
     assert(fixtureResponse.ok,'ROSE_WINDOW_FIXTURE_HTTP',{status:fixtureResponse.status});
     const blob=await fixtureResponse.blob();
@@ -161,16 +180,17 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     };
     const handoffTimeoutMs=15000;
     pass('CHAT_REFERENCE_HANDOFF_LIVENESS_SHORT_TIMEOUT_BOUND',{timeoutMs:handoffTimeoutMs});
-    let handoffReceipt;
+    let handoffReceipt, smartImport;
+    const smartInput=new File([blob],'chat-reference-fixture.png',{type:'image/png'});
     try {
-      const handoffPromise=w.INK_CHAT_HANDOFF.importReference(blob,{
+      const handoffPromise=smartApi.tools.invoke('import_ink_reference',{input:smartInput,options:{
         name:'chat-reference-fixture.png',
         type:'image/png',
         actor:{type:'chat',id:'runtime-chat',channel:'CHAT_ATTACHMENT_HANDOFF'},
         intent:'INK-CHAT-VALIDATION-001 Phase A automated fixture handoff',
         checkpoint:event=>recordHandoffLiveness(event?.stage||'unknown',event||{})
-      });
-      handoffReceipt=await Promise.race([
+      }});
+      smartImport=await Promise.race([
         handoffPromise,
         wait(handoffTimeoutMs).then(()=>{
           throw Object.assign(new Error('CHAT Reference handoff liveness timeout'),{
@@ -183,6 +203,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
           });
         })
       ]);
+      handoffReceipt=smartImport.result;
+      assert(smartImport.status==='COMPLETED' && smartImport.createdRefs.length===1 &&
+        smartImport.createdRefs[0].objectId===handoffReceipt.referenceObjectId,
+        'SMART_LOOP_REFERENCE_IMPORTED',{referenceRef:smartImport.createdRefs[0]});
       recordHandoffLiveness('receipt returned',{
         status:handoffReceipt?.status||null,
         referenceObjectId:handoffReceipt?.referenceObjectId||null
@@ -284,19 +308,26 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {documentId:handoffReceipt.documentId,layerId:handoffReceipt.targetLayerId,referenceObjectId:handoffReceipt.referenceObjectId,auditId:handoffReceipt.audit?.auditId}
     );
 
+    assert(smartImport.historyReceipt?.commit?.valid===true &&
+      smartImport.provenanceReceipt?.status==='AVAILABLE' &&
+      smartImport.provenanceReceipt.eventIds.length>0 &&
+      /^[a-f0-9]{64}$/.test(smartImport.result.source.sha256),
+      'SMART_LOOP_IMPORT_HISTORY_PROVENANCE_RECORDED');
+
     assert(Boolean(w.INK_CHAT_HANDOFF?.decomposeReference),'CHAT_REFERENCE_DECOMPOSITION_API_VISIBLE');
     const phaseBHistoryBefore=app.history.undoStack.length;
     const phaseBRevisionBefore=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
     const phaseBReferenceBefore=app.findObject({objectId:handoffReceipt.referenceObjectId});
     const phaseBStarted=performance.now();
-    const phaseBReceipt=await w.INK_CHAT_HANDOFF.decomposeReference(handoffReceipt.referenceObjectId,{
+    const smartDecomposition=await smartApi.tools.invoke('decompose_ink_reference',{referenceObjectId:smartImport.createdRefs[0].objectId,options:{
       numberOfColors:8,
       pathOmit:8,
       lineStroke:'#202020',
       lineStrokeWidth:1,
       actor:{type:'chat',id:'runtime-chat',channel:'CHAT_REFERENCE_DECOMPOSITION'},
       intent:'INK-CHAT-VALIDATION-001 Phase B Reference to editable Color and Line layers'
-    });
+    }});
+    const phaseBReceipt=smartDecomposition.result;
     const phaseBElapsedMs=performance.now()-phaseBStarted;
     const phaseBTrace=phaseBReceipt?.diagnostics?.traceRaster;
     const phaseBScale=phaseBReceipt?.diagnostics?.coordinateScale;
@@ -438,6 +469,132 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     evidence.metrics.phaseBTraceRaster=phaseBTrace;
     evidence.metrics.phaseBCoordinateScale=phaseBScale;
 
+    assert(smartDecomposition.status==='COMPLETED' && colorLayer.id!==lineLayer.id &&
+      smartDecomposition.targetRefs.some(ref=>ref.objectId===smartImport.createdRefs[0].objectId),
+      'SMART_LOOP_COLOR_LINE_DECOMPOSED');
+    const smartColorRefs=smartDecomposition.createdRefs.filter(ref=>ref.layerId===colorLayer.id);
+    const smartLineRefs=smartDecomposition.createdRefs.filter(ref=>ref.layerId===lineLayer.id);
+    assert(smartColorRefs.length===colorObjects.length && smartLineRefs.length===lineObjects.length &&
+      [...smartColorRefs,...smartLineRefs].every(ref=>ref.pageId===app.page().id &&
+        app.findObject(ref)?.object?.type==='path'),
+      'SMART_LOOP_STABLE_REFS_RETURNED',{colorCount:smartColorRefs.length,lineCount:smartLineRefs.length});
+
+    // Static QA-only module in the app realm: the registry is realm-local. No eval,
+    // public payload API, product hook, alternate renderer, or DOM screenshot.
+    const smartResolverScript=doc.createElement('script');
+    smartResolverScript.type='module';
+    smartResolverScript.textContent="import { resolveInkOutputPayload } from '/src/agent/output-handle-registry.js'; window.__INK_SMART_LOOP_QA_RESOLVE = handleId => resolveInkOutputPayload(window.INK_APP, handleId);";
+    doc.head.appendChild(smartResolverScript);
+    await waitFor(()=>typeof w.__INK_SMART_LOOP_QA_RESOLVE==='function');
+    const smartArtifacts={};
+    const smartMaterialize=async (phase,preview)=>{
+      const handle=preview.outputHandles[0];
+      const payload=w.__INK_SMART_LOOP_QA_RESOLVE(handle.handleId);
+      const bytes=new Uint8Array(await payload.arrayBuffer());
+      assert(bytes.byteLength===handle.byteLength && bytes[0]===137 && bytes[1]===80,
+        'SMART_PREVIEW_'+phase.toUpperCase()+'_PNG_PAYLOAD');
+      const response=await fetch('/__qa_smart_loop/'+phase,{
+        method:'POST',headers:{'Content-Type':'image/png'},body:bytes,cache:'no-store'
+      });
+      if(!response.ok) throw new Error('Smart preview materialization failed: '+response.status);
+      const receipt=await response.json();
+      assert(receipt.file==='smart-loop-'+phase+'.png' && receipt.byteLength===handle.byteLength &&
+        /^[a-f0-9]{64}$/.test(receipt.sha256),
+        'SMART_LOOP_PREVIEW_'+phase.toUpperCase()+'_MATERIALIZED',receipt);
+      smartArtifacts[phase]={...receipt,handle};
+    };
+    const smartPreviewOptions={scope:'content',maxDimension:960,background:true};
+    const smartBefore=await smartApi.tools.invoke('get_ink_preview',smartPreviewOptions);
+    assert(smartBefore.status==='COMPLETED' && smartBefore.outputHandles.length===1,
+      'SMART_LOOP_PREVIEW_BEFORE_CAPTURED');
+    await smartMaterialize('before',smartBefore);
+
+    // Choose prominent real returned refs; read-only geometry inspection is only QA targeting.
+    const smartArea=ref=>{
+      const points=(app.findObject(ref).object.subpaths||[]).flatMap(s=>s.anchors||[]);
+      if(!points.length) return 0;
+      return (Math.max(...points.map(p=>p.x))-Math.min(...points.map(p=>p.x)))*
+        (Math.max(...points.map(p=>p.y))-Math.min(...points.map(p=>p.y)));
+    };
+    const smartColorRef=[...smartColorRefs].sort((a,b)=>smartArea(b)-smartArea(a)||a.objectId.localeCompare(b.objectId))[0];
+    const smartLineRef=smartLineRefs.find(ref=>app.findObject(ref).object.metadata?.decomposition?.sourceColorObjectId===smartColorRef.objectId);
+    assert(Boolean(smartLineRef),'SMART_MATCHED_COLOR_LINE_TARGETS');
+    const smartColorBefore=app.findObject(smartColorRef).object.fill;
+    const smartLineBefore=app.findObject(smartLineRef).object.stroke;
+    const smartFill=smartColorBefore==='#00b8d9'?'#ffcc00':'#00b8d9';
+    const smartStroke=smartLineBefore==='#ff00aa'?'#00ff66':'#ff00aa';
+    const smartPlan={schema:'INK-CHAT-CREATIVE-PLAN',version:1,
+      intentSummary:'Smart closed loop: repaint the returned Color fill, then the matching Line stroke',
+      steps:[
+        {stepId:'smart-color',operation:'path.repaint.v1',targets:[smartColorRef],arguments:{fill:smartFill},dependsOn:[]},
+        {stepId:'smart-line',operation:'path.repaint.v1',targets:[smartLineRef],arguments:{stroke:smartStroke},dependsOn:['smart-color']}
+      ]};
+    const smartNeutral=readOnlySnapshot();
+    const smartProposed=await smartApi.tools.invoke('use_ink',{action:'propose',plan:smartPlan});
+    assert(smartProposed.status==='PROPOSED' && smartProposed.result.planId &&
+      readOnlySnapshot()===smartNeutral,'SMART_LOOP_USE_INK_PROPOSE_MUTATION_NEUTRAL');
+    const smartPlanId=smartProposed.result.planId;
+    const smartBlocked=await smartApi.tools.invoke('use_ink',{action:'execute',planId:smartPlanId,approvalToken:'not-approved'});
+    assert(smartBlocked.status==='FAILED' && smartBlocked.diagnostics[0]?.code==='CHAT_PLAN_APPROVAL_REQUIRED' &&
+      readOnlySnapshot()===smartNeutral,'SMART_LOOP_USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL');
+    // Explicit simulated user approval for this QA plan only; product never auto-approves.
+    const smartApproved=await smartApi.tools.invoke('use_ink',{action:'approve',planId:smartPlanId});
+    assert(smartApproved.status==='APPROVED' && /^INK-LOCAL-PLAN-APPROVAL:/.test(smartApproved.result.approvalToken||''),
+      'SMART_LOOP_USE_INK_APPROVED');
+    const smartRevisionBefore=app.revisions.revisionIdFor(app.doc.id);
+    const smartExecuted=await smartApi.tools.invoke('use_ink',{
+      action:'execute',planId:smartPlanId,approvalToken:smartApproved.result.approvalToken
+    });
+    assert(smartExecuted.status==='COMPLETED' &&
+      smartExecuted.result.stepResults.map(s=>s.stepId).join(',')==='smart-color,smart-line' &&
+      smartExecuted.result.stepResults.every(s=>s.ok===true && s.changed===true) &&
+      app.findObject(smartColorRef).object.fill===smartFill && app.findObject(smartLineRef).object.stroke===smartStroke,
+      'SMART_LOOP_TWO_STEP_REPAINT_EXECUTED');
+    const smartHistory=await smartApi.tools.invoke('get_ink_history');
+    assert(smartHistory.status==='COMPLETED' && smartExecuted.historyReceipt?.steps?.length===2 &&
+      smartExecuted.historyReceipt.steps.every(s=>Boolean(s.history)) &&
+      smartHistory.result.entries.slice(-2).every((entry,i)=>entry.objectIds.includes([smartColorRef,smartLineRef][i].objectId)),
+      'SMART_LOOP_HISTORY_RECORDED');
+    const smartRevisionAfter=app.revisions.revisionIdFor(app.doc.id);
+    const smartRevisions=await smartApi.tools.invoke('get_ink_revisions');
+    assert(smartExecuted.revisionReceipt?.startingRevisionId===smartRevisionBefore &&
+      smartExecuted.revisionReceipt?.endingRevisionId===smartRevisionAfter &&
+      smartRevisionAfter && smartRevisionAfter!==smartRevisionBefore &&
+      smartExecuted.revisionReceipt.captureSkipped===null && smartRevisions.status==='COMPLETED' &&
+      smartRevisions.result.items.some(item=>item.revisionId===smartRevisionAfter),
+      'SMART_LOOP_FINAL_REVISION_CAPTURED');
+    const smartAfter=await smartApi.tools.invoke('get_ink_preview',smartPreviewOptions);
+    assert(smartAfter.status==='COMPLETED' && smartAfter.outputHandles.length===1 &&
+      smartAfter.outputHandles[0].revisionId===smartRevisionAfter,'SMART_LOOP_PREVIEW_AFTER_CAPTURED');
+    await smartMaterialize('after',smartAfter);
+    assert(smartBefore.outputHandles[0].renderFingerprint!==smartAfter.outputHandles[0].renderFingerprint &&
+      smartArtifacts.before.sha256!==smartArtifacts.after.sha256,
+      'SMART_LOOP_RENDER_FINGERPRINT_CHANGED');
+    delete w.__INK_SMART_LOOP_QA_RESOLVE;
+    smartResolverScript.remove();
+    evidence.smartLoop={
+      schema:'INK-SMART-CLOSED-LOOP-PROOF',version:1,
+      returnPath:'RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT',
+      fixture:'qa/fixtures/rose-window/rose-window-primary.png',
+      source:smartImport.result.source,
+      documentId:app.doc.id,pageId:app.page().id,
+      capabilities:smartDescriptors.map(d=>({id:d.id,namedTool:d.namedTool,publicMethod:d.publicMethod})),
+      referenceRef:smartImport.createdRefs[0],
+      importHistory:smartImport.historyReceipt,importProvenance:smartImport.provenanceReceipt,
+      decompositionHistory:smartDecomposition.historyReceipt,
+      colorRefs:smartColorRefs,lineRefs:smartLineRefs,
+      targets:{color:smartColorRef,line:smartLineRef},
+      appearance:{before:{fill:smartColorBefore,stroke:smartLineBefore},after:{fill:smartFill,stroke:smartStroke}},
+      planId:smartPlanId,plan:smartPlan,
+      proposalStatus:smartProposed.status,blockedCode:smartBlocked.diagnostics[0].code,
+      approval:{status:smartApproved.status,mode:'EXPLICIT_QA_USER_APPROVAL'},
+      executionStatus:smartExecuted.status,stepResults:smartExecuted.result.stepResults,
+      historyReceipt:smartExecuted.historyReceipt,revisionReceipt:smartExecuted.revisionReceipt,
+      revisions:smartRevisions.result.items,artifacts:smartArtifacts
+    };
+    pass('SMART_LOOP_ARTIFACT_EVIDENCE_READY',{files:['smart-loop-before.png','smart-loop-after.png','smart-loop.json'],
+      returnPath:evidence.smartLoop.returnPath});
+
     const file=new File([blob],'rose-window-primary.png',{type:'image/png'});
     const transfer=new DataTransfer(); transfer.items.add(file); input.files=transfer.files;
     assert(input.files.length===1,'MANUAL_REFERENCE_FILE_INPUT_STILL_AVAILABLE');
@@ -531,7 +688,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const useInkTools=inkApi?.tools?.registry?.()||[];
     assert(
       Boolean(inkApi?.composition?.propose && inkApi?.composition?.approve && inkApi?.composition?.execute) &&
-      useInkTools.length===19 &&
+      useInkTools.length===20 &&
       useInkTools[18]?.name==='use_ink',
       'USE_INK_TOOL_AVAILABLE',
       {toolCount:useInkTools.length,tool19:useInkTools[18]?.name||null}
@@ -777,3 +934,4 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   }),{once:true});
 })();
 </script>
+
