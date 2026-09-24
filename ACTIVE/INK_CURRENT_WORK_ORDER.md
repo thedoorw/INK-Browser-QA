@@ -1,3 +1,283 @@
+# INK CURRENT WORK ORDER — SMART CLOSED LOOP PROOF
+
+STATUS: `INK-CHAT-CLOSED-LOOP-001 / AUTHORIZED / DEV_START`
+
+## Control
+
+| Field | Value |
+|---|---|
+| TASK_ID | `INK-CHAT-CLOSED-LOOP-001` |
+| TITLE | `Reference → Color + Line → CHAT Smart Closed Loop Proof v0.1` |
+| DEV_BRANCH | `work/ink-chat-closed-loop-001` |
+| ACCEPTED_UPSTREAM | `INK-CHAT-CONNECTOR-004 / CLOSED / MR_PASS / PROMOTED` |
+| TARGET_GATE | `SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP` |
+| FORMAT_VERSION | `4 / PRESERVE` |
+| PRODUCT_VERSION | `v0.1 / PRESERVE` |
+| UI_CHANGE | `0` |
+| IMAGE_MODEL | `0` |
+| EXTERNAL_TRANSPORT | `0` |
+| NEW_NATIVE_OPERATION_FAMILIES | `0` |
+
+## Purpose
+
+Prove the original first creative lesson as one coherent mature-connector workflow instead of another isolated feature test.
+
+```text
+CHAT-style capability discovery
+→ import_ink_reference
+→ decompose_ink_reference
+→ get_ink_preview
+→ inspect stable Color / Line refs
+→ use_ink
+→ explicit approval
+→ existing path.repaint.v1 operations
+→ History
+→ Revision
+→ get_ink_preview
+→ before/after PNG evidence materialized
+→ MR returns those Runtime artifacts to CHAT
+```
+
+This Work Order proves that the Figma / Penpot / Adobe-inspired connector grammar already installed in INK can operate as one workflow.
+
+It does not attempt to expand the general native-operation vocabulary.
+
+## A — Existing authorities are mandatory
+
+Reuse exactly:
+
+```text
+app.chatReferenceHandoff.importReference
+app.chatReferenceHandoff.decomposeReference
+app.inkPublicApi capability discovery
+app.inkPublicApi get_ink_preview / output handles
+app.inkPublicApi use_ink
+app.chatCreativePlan
+app.chatBoundedEditAdapter
+path.repaint.v1
+History
+Revision
+Renderer
+```
+
+Do not create a second Reference importer, decomposition engine, plan executor, History, Revision, Renderer, or Document mutation route.
+
+## B — Only product connector gap to close
+
+Expose the already-implemented Reference import authority through the existing Public Creative API and Named Tool facade.
+
+Required Public API:
+
+```text
+reference.import(input, options?)
+→ app.chatReferenceHandoff.importReference(input, options)
+```
+
+Required Named Tool:
+
+```text
+20. import_ink_reference
+```
+
+The accepted Connector-004 19-tool registry must remain the exact ordered prefix.
+
+Required capability descriptor:
+
+```text
+reference.import
+availability = true
+namedTool = import_ink_reference
+publicMethod = reference.import
+routingClass = NAMED_TOOL
+```
+
+The input may be a browser-local File/Blob handoff as already accepted by `normalizeChatAttachment`.
+
+The returned public result must remain JSON-safe `INK_AGENT_RESULT / 1`; raw File/Blob bytes must not escape through the result envelope.
+
+## C — Smart routing proof
+
+The browser proof must not jump directly to implementation methods.
+
+It must begin through the accepted connector surface:
+
+```text
+get_ink_capabilities
+→ describe_ink_capability where needed
+→ choose narrow named tool first
+→ use_ink only for the coherent multi-step correction
+```
+
+This is the intended combined mature pattern:
+
+```text
+Adobe:
+named capability routing + result handle + preview verification
+
+Figma / Penpot:
+stable native object refs + programmable multi-step native edit
+
+INK:
+same grammar over existing INK authorities
+```
+
+## D — One sequential browser proof
+
+Use the already-versioned Runtime fixture:
+
+`qa/fixtures/rose-window/rose-window-primary.png`
+
+The exact browser sequence must be one traceable chain:
+
+1. discover the required capabilities;
+2. create a browser File/Blob from the Runtime fixture;
+3. call `import_ink_reference`;
+4. verify Reference stable ID + History/provenance receipt;
+5. call `decompose_ink_reference`;
+6. verify separate Color / Line layers and stable Path IDs;
+7. call `get_ink_preview` and retain the output handle;
+8. materialize the internal preview payload in the **QA harness only** as `smart-loop-before.png`;
+9. choose at least one returned Color Path and one returned Line Path by their real stable refs;
+10. call `use_ink` with a two-step plan using only existing `path.repaint.v1`:
+    - visibly change one Color Path fill;
+    - visibly change one Line Path stroke;
+11. prove propose is mutation-neutral;
+12. prove execute-before-approval is blocked;
+13. approve and execute;
+14. verify ordered execution + History receipts + final Revision;
+15. call `get_ink_preview` again;
+16. materialize `smart-loop-after.png` in the QA harness only;
+17. prove before/after render fingerprints differ;
+18. emit one JSON evidence record binding input source, stable refs, plan ID, History, Revision, preview handles and materialized image names.
+
+Do not use IMAGE generation, Python image modification, direct Document JSON mutation, DOM screenshotting, or an alternate renderer.
+
+## E — Runtime artifact bridge is proof transport, not product transport
+
+For this proof only:
+
+```text
+INK_OUTPUT_HANDLE
+→ internal payload resolver
+→ QA-only Runtime materialization
+→ evidence/*.png
+→ GitHub Runtime artifact
+→ MR retrieves artifact into CHAT
+```
+
+This is allowed as the existing Visual / Asset Interchange Standard Runtime fallback.
+
+It must not change:
+
+```text
+external.transport = unavailable
+```
+
+No MCP, WebSocket, postMessage, arbitrary upload/download API, persistence service, or live ChatGPT connector transport is authorized here.
+
+The proof must label the return path truthfully:
+
+`RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT`
+
+## F — Required browser markers
+
+At minimum:
+
+```text
+SMART_LOOP_CAPABILITIES_DISCOVERED
+SMART_LOOP_REFERENCE_IMPORTED
+SMART_LOOP_IMPORT_HISTORY_PROVENANCE_RECORDED
+SMART_LOOP_COLOR_LINE_DECOMPOSED
+SMART_LOOP_STABLE_REFS_RETURNED
+SMART_LOOP_PREVIEW_BEFORE_CAPTURED
+SMART_LOOP_PREVIEW_BEFORE_MATERIALIZED
+SMART_LOOP_USE_INK_PROPOSE_MUTATION_NEUTRAL
+SMART_LOOP_USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL
+SMART_LOOP_USE_INK_APPROVED
+SMART_LOOP_TWO_STEP_REPAINT_EXECUTED
+SMART_LOOP_HISTORY_RECORDED
+SMART_LOOP_FINAL_REVISION_CAPTURED
+SMART_LOOP_PREVIEW_AFTER_CAPTURED
+SMART_LOOP_PREVIEW_AFTER_MATERIALIZED
+SMART_LOOP_RENDER_FINGERPRINT_CHANGED
+SMART_LOOP_ARTIFACT_EVIDENCE_READY
+```
+
+## G — Allowed files
+
+Product:
+
+```text
+product/source/src/agent/public-creative-api.js
+product/source/src/agent/capability-registry.js
+```
+
+QA / Runtime, as necessary:
+
+```text
+qa/ink-chat-closed-loop-001-smart-proof.test.mjs
+qa/runtime/ink-cloud-018-browser-harness.html
+qa/runtime/run-ink-runtime-batch.mjs
+```
+
+Evidence / handoff:
+
+```text
+research/INK_CHAT_CLOSED_LOOP_001_SMART_PROOF_REPORT_v0.1.md
+working/INK_CHAT_CLOSED_LOOP_001_DEV_HANDOFF.md
+ACTIVE/INK_DEV_PROGRESS.md
+```
+
+If another product source file appears necessary, STOP and return to MR before modifying it.
+
+## H — Hard non-goals
+
+```text
+Boolean / Repeat / Group / Frame / Component / Layout exposure
+raw Path creation
+Path geometry editing
+new transform operations
+new drawing or trace engine
+Creative Library Search
+UI changes
+external transport
+arbitrary JS / eval / Function
+arbitrary app method dispatch
+direct Document JSON writes
+automatic approval
+automatic retry
+FORMAT_VERSION change
+package/ink-current mutation
+```
+
+## I — Completion gate
+
+DEV handoff is allowed only when source/focused QA evidence supports the exact chain.
+
+MR acceptance requires:
+
+```text
+exact-HEAD source review
+→ Windows self-hosted browser Runtime
+→ all existing UI / Creative / Geometry regression PASS
+→ all SMART_LOOP_* markers PASS
+→ smart-loop-before.png present
+→ smart-loop-after.png present
+→ evidence JSON present
+→ tested exact SHA pinned
+→ MR retrieves both PNGs into this CHAT
+```
+
+Only after the images are actually retrieved and inspectable here may MR declare:
+
+`SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP = PASS`
+
+Then:
+
+`DEV_HANDOFF → STOP → MR REVIEW`
+
+---
+
 ## INK-CHAT-CONNECTOR-004 final closure — 2026-09-24
 
 ```text
