@@ -20,3 +20,17 @@ STATUS: `INK-CHAT-CLOSED-LOOP-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 - No Runtime queue, main, package, UI, transport, operation vocabulary or FORMAT_VERSION changes.
 
 Read: README, AGENTS, 我說, ACTIVE README/Current Work Order/DEV New Window Start/branch-local Progress, Working Status, MR/DEV governance, development handoff, Windows Runtime standard, existing Reference Handoff/Public API/capability registry/output registry/preview/plan/History/Revision paths and focused QA.
+
+
+## MR_REVISE / QA_BRIDGE_ONLY — realm-local output resolver loader
+
+- Revision baseline: `2b3c2f79147b6122f5ac78ed47d19c9878522386`.
+- Scope: QA-only resolver loader; product source frozen.
+- Replaced iframe dynamic inline module text with deterministic same-origin external QA route `/__qa_smart_loop_resolver.js`.
+- Route is available only to the Creative Runtime suite and contains one fixed resolver binding to `resolveInkOutputPayload(window.INK_APP, handleId)`.
+- Loader executes in the INK iframe realm via `script.src`.
+- Cleanup after after-preview: delete temporary QA global + remove script node + explicit harness assertion.
+- Focused QA contract extended for route body, JavaScript content type, external loader, inline-code absence, cleanup and forbidden bridge primitive absence.
+- Runtime: NOT_RUN_BY_DEV; exact-SHA Windows Runtime remains MR gate.
+- Product transport / external transport / MCP / WebSocket / postMessage / eval / Function / alternate renderer / UI / native operation / FORMAT_VERSION changes: 0.
+- Current gate: `DEV_HANDOFF → STOP`.
