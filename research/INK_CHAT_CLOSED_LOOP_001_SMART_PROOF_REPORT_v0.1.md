@@ -272,3 +272,46 @@ DEV did not rerun Windows Runtime. Real `smart-loop-before.png`, `smart-loop-aft
 
 `DEV_HANDOFF → STOP`.
 
+## MR_REVISE / QA_ORDER_ISOLATION_ONLY — Revision unavailable-state ordering
+
+Runtime evidence from MR:
+
+```text
+RUN = 36014703794
+TESTED_SHA = b57a3471ceaaba915a296aa1fe46680ee3e44134
+RUNNER = DESKTOP-NSOQH69
+SMART_LOOP = 18 / 18 PASS
+SMART_REFERENCE_COLOR_LINE_CHAT_PROOF = PASS
+FIRST_POST_PROOF_FAIL = WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT
+CLASSIFICATION = QA_STATE_ORDER_CONTAMINATION
+PRODUCT_RUNTIME_FAIL = NOT ESTABLISHED
+PRODUCT_SOURCE = FROZEN
+```
+
+Bounded correction:
+
+- preserve `WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT` as a real browser assertion;
+- run it once before `const smartApi=app.inkPublicApi`, before the smart loop creates a Revision;
+- remove only the later unavailable-state assumption;
+- leave the smart-loop block unchanged;
+- preserve later Revision baseline capture, structure capture, structural compare and restore coverage.
+
+Implementation checkpoints:
+
+- harness ordering move: `9b00d832fa5e081233d7b8b6509cbc8428399172`;
+- focused ordering contract: `213f96aea61fbfadd4e47d1213746d2ad29ce645`.
+
+Focused connector-side ordering QA: **PASS**.
+
+Verified against `b57a3471ceaaba915a296aa1fe46680ee3e44134`:
+
+- unavailable-state marker count = 1;
+- unavailable-state assertion executes before smart-loop start;
+- smart-loop source block is byte-identical;
+- later `REVISION_BASELINE_CAPTURED`, `REVISION_STRUCTURE_CAPTURED`, `WORKSTATION_REVISION_STRUCTURAL_COMPARE`, and `REVISION_RESTORE_EXECUTED` remain after the smart loop;
+- product source blobs are unchanged.
+
+DEV did not rerun Windows Runtime.
+
+`DEV_HANDOFF → STOP`.
+
