@@ -309,6 +309,11 @@ export function createInkPublicCreativeApi(app) {
 
   const inspect = (refsOrObjectIds, options = {}) => {
     try {
+      if (isRecord(refsOrObjectIds) && (hasOwn(refsOrObjectIds, 'refs') || hasOwn(refsOrObjectIds, 'objectIds') || hasOwn(refsOrObjectIds, 'options'))) {
+        const input = refsOrObjectIds;
+        refsOrObjectIds = input.refs ?? input.objectIds ?? [];
+        options = input.options ?? options;
+      }
       const refs = normalizeRefs(refsOrObjectIds);
       if (!refs.length) throw Object.assign(new Error('INK inspect requires at least one stable object reference'), { code: 'INK_AGENT_INSPECT_TARGET_REQUIRED' });
       const result = bridgeRead(app, { ...options, objectIds: refs.map(ref => ref.objectId) });
@@ -325,6 +330,11 @@ export function createInkPublicCreativeApi(app) {
     async decompose(referenceObjectId, options = {}) {
       const action = 'reference.decompose';
       try {
+        if (isRecord(referenceObjectId) && hasOwn(referenceObjectId, 'referenceObjectId')) {
+          const input = referenceObjectId;
+          referenceObjectId = input.referenceObjectId;
+          options = input.options ?? options;
+        }
         if (typeof app?.chatReferenceHandoff?.decomposeReference !== 'function') {
           throw Object.assign(new Error('INK Reference decomposition authority unavailable'), { code: 'INK_AGENT_REFERENCE_AUTHORITY_UNAVAILABLE' });
         }
@@ -375,6 +385,7 @@ export function createInkPublicCreativeApi(app) {
     approve(proposalId) {
       const action = 'edit.approve';
       try {
+        if (isRecord(proposalId)) proposalId = proposalId.proposalId;
         const raw = app?.chatBoundedEditAdapter?.approve?.(proposalId);
         if (!raw) throw Object.assign(new Error('INK bounded edit authority unavailable'), { code: 'INK_AGENT_EDIT_AUTHORITY_UNAVAILABLE' });
         const metadata = editResultMetadata(raw);
@@ -390,6 +401,11 @@ export function createInkPublicCreativeApi(app) {
     execute(proposalId, approvalToken) {
       const action = 'edit.execute';
       try {
+        if (isRecord(proposalId)) {
+          const input = proposalId;
+          proposalId = input.proposalId;
+          approvalToken = input.approvalToken ?? approvalToken;
+        }
         const raw = app?.chatBoundedEditAdapter?.execute?.(proposalId, approvalToken);
         if (!raw) throw Object.assign(new Error('INK bounded edit authority unavailable'), { code: 'INK_AGENT_EDIT_AUTHORITY_UNAVAILABLE' });
         const metadata = editResultMetadata(raw);
@@ -465,6 +481,7 @@ export function createInkPublicCreativeApi(app) {
     async list(documentId = app?.doc?.id) {
       const action = 'revision.list';
       try {
+        if (isRecord(documentId)) documentId = documentId.documentId ?? app?.doc?.id;
         if (typeof app?.revisions?.list !== 'function') throw Object.assign(new Error('INK Revision authority unavailable'), { code: 'INK_AGENT_REVISION_UNAVAILABLE' });
         const items = await app.revisions.list(documentId);
         return createInkAgentResult(app, action, { result: { items } });
@@ -489,6 +506,11 @@ export function createInkPublicCreativeApi(app) {
     async restore(revisionId, options = {}) {
       const action = 'revision.restore';
       try {
+        if (isRecord(revisionId) && hasOwn(revisionId, 'revisionId')) {
+          const input = revisionId;
+          revisionId = input.revisionId;
+          options = input.options ?? options;
+        }
         if (typeof app?.revisions?.restore !== 'function') throw Object.assign(new Error('INK Revision authority unavailable'), { code: 'INK_AGENT_REVISION_UNAVAILABLE' });
         const raw = await app.revisions.restore(revisionId, options);
         return createInkAgentResult(app, action, {
@@ -522,6 +544,7 @@ export function createInkPublicCreativeApi(app) {
     inspect(handleId) {
       const action = 'asset.inspect';
       try {
+        if (isRecord(handleId)) handleId = handleId.handleId;
         const raw = inspectInkOutput(app, outputRegistry, handleId);
         return createInkAgentResult(app, action, {
           targetRefs: raw.handle?.objectRefs || [],
@@ -535,6 +558,7 @@ export function createInkPublicCreativeApi(app) {
     release(handleId) {
       const action = 'asset.release';
       try {
+        if (isRecord(handleId)) handleId = handleId.handleId;
         const raw = releaseInkOutput(app, outputRegistry, handleId);
         return createInkAgentResult(app, action, {
           status: raw.found ? 'COMPLETED' : 'NO_OP',
@@ -552,6 +576,7 @@ export function createInkPublicCreativeApi(app) {
     describe(idOrToolName) {
       const action = 'capability.describe';
       try {
+        if (isRecord(idOrToolName)) idOrToolName = idOrToolName.idOrToolName ?? idOrToolName.capabilityId ?? idOrToolName.toolName;
         const descriptor = resolveInkCapabilityDescriptor(idOrToolName);
         if (!descriptor) {
           throw Object.assign(new Error('Unknown INK capability or named tool'), {
