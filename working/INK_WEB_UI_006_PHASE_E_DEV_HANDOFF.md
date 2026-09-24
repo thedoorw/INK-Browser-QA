@@ -423,3 +423,35 @@ Current UR result:
 `UR_REVIEW / STATIC_PASS / WINDOWS_RUNTIME_REQUIRED / PHASE_E`
 
 Do not begin Phase F.
+
+
+---
+
+## UR final gate — 2026-09-24
+
+Authoritative Windows self-hosted Runtime:
+
+- run: `35943860711`
+- attempt: `1`
+- tested SHA: `6ee7ef4343a0bc8d70c3340ba7bd12be4b430931`
+- runner: `DESKTOP-NSOQH69`
+- browser: Google Chrome
+- UI: PASS
+- Creative: PASS
+- Geometry: PASS
+- artifact: `10785598532`
+- artifact digest: `sha256:5f7b00fe9eebefab86efd8fb20d3fa139088c2f4cce8cb568325abddbcd3adce`
+
+The Runtime tested the exact Phase E product/QA source checkpoint. Later branch commits are review/evidence documentation only and do not alter the tested product payload.
+
+Final UR result:
+
+`UI_PASS`
+
+Phase E is accepted.
+
+Completion state:
+
+`UR_REVIEW → UI_PASS → STOP`
+
+Phase F remains separately authorized work and is not started by this gate.
