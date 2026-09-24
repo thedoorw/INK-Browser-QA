@@ -31,6 +31,38 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     for (const byte of bytes) binary += String.fromCharCode(byte);
     return btoa(binary);
   };
+  async function uploadCanvasPreview(stage, canvas) {
+    const blob = await new Promise((resolve, reject) => {
+      try {
+        canvas.toBlob(value => value ? resolve(value) : reject(new Error('Smart-loop canvas PNG encoding failed')), 'image/png');
+      } catch (error) { reject(error); }
+    });
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    const response = await fetch('/__qa_preview?stage=' + encodeURIComponent(stage), {
+      method:'POST', headers:{'Content-Type':'image/png'}, body:bytes, cache:'no-store'
+    });
+    if (!response.ok) throw new Error(`Smart-loop preview upload failed: ${response.status}`);
+    return { byteLength: bytes.byteLength };
+  }
+
+  async function captureSmartLoopPreview(stage, inkApi, app) {
+    const original = app.renderExportCanvas;
+    let uploaded = null;
+    app.renderExportCanvas = async function(...args) {
+      const canvas = await original.apply(this,args);
+      uploaded = await uploadCanvasPreview(stage, canvas);
+      return canvas;
+    };
+    try {
+      const result = await inkApi.tools.invoke('get_ink_preview', {
+        scope:'artboard', maxDimension:1200, background:true
+      });
+      return { result, uploaded };
+    } finally {
+      app.renderExportCanvas = original;
+    }
+  }
+
   async function reportEvidence() {
     const response = await fetch('/__qa_result',{
       method:'POST',
@@ -537,6 +569,16 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {toolCount:useInkTools.length,tool19:useInkTools[18]?.name||null}
     );
 
+    const smartBefore=await captureSmartLoopPreview('before',inkApi,app);
+    assert(
+      smartBefore.result?.status==='COMPLETED' &&
+      smartBefore.result?.outputHandles?.length===1 &&
+      smartBefore.result.outputHandles[0]?.transport==='INTERNAL_EPHEMERAL' &&
+      (smartBefore.uploaded?.byteLength||0)>0,
+      'SMART_CLOSED_LOOP_PREVIEW_BEFORE_RETURNED',
+      {handleId:smartBefore.result?.outputHandles?.[0]?.handleId||null,byteLength:smartBefore.uploaded?.byteLength||0}
+    );
+
     const useInkRefA={pageId:app.page().id,layerId:colorLayer.id,objectId:colorObjects[0].id};
     const useInkRefB={pageId:app.page().id,layerId:colorLayer.id,objectId:colorObjects[1].id};
     const useInkFill=colorObjects[0].fill==='#123456'?'#654321':'#123456';
@@ -672,6 +714,33 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       (useInkExecuted?.outputHandles?.length||0)===0,
       'USE_INK_NO_AUTO_PREVIEW',
       {previewRenderCalls:useInkPreviewRenderCalls,outputHandles:useInkExecuted?.outputHandles?.length||0}
+    );
+
+    const smartAfter=await captureSmartLoopPreview('after',inkApi,app);
+    assert(
+      smartAfter.result?.status==='COMPLETED' &&
+      smartAfter.result?.outputHandles?.length===1 &&
+      smartAfter.result.outputHandles[0]?.transport==='INTERNAL_EPHEMERAL' &&
+      (smartAfter.uploaded?.byteLength||0)>0,
+      'SMART_CLOSED_LOOP_PREVIEW_AFTER_RETURNED',
+      {handleId:smartAfter.result?.outputHandles?.[0]?.handleId||null,byteLength:smartAfter.uploaded?.byteLength||0}
+    );
+    assert(
+      handoffReceipt?.status==='COMPLETED' &&
+      phaseBReceipt?.status==='COMPLETED' &&
+      useInkExecuted?.status==='COMPLETED' &&
+      smartBefore.result?.outputHandles?.[0]?.documentId===app.doc.id &&
+      smartAfter.result?.outputHandles?.[0]?.documentId===app.doc.id &&
+      smartAfter.result?.outputHandles?.[0]?.revisionId===useInkRevisionAfter,
+      'SMART_CLOSED_LOOP_VISUAL_ROUND_TRIP',
+      {
+        referenceObjectId:handoffReceipt?.referenceObjectId||null,
+        colorCount:phaseBReceipt?.colorCount||0,
+        lineCount:phaseBReceipt?.lineCount||0,
+        beforeHandle:smartBefore.result?.outputHandles?.[0]?.handleId||null,
+        afterHandle:smartAfter.result?.outputHandles?.[0]?.handleId||null,
+        revisionId:useInkRevisionAfter
+      }
     );
 
     const prompt=cw.root.querySelector('[data-workspace-input="chat-prompt"]');
