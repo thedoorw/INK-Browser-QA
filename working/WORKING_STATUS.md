@@ -1,3 +1,38 @@
+## Smart closed-loop Runtime 36012548161 — MR_REVISE / QA_ASSERTION_ONLY
+
+```text
+TESTED_SHA = 20262d942c7a4d1a5ca03898856a2d7ddff9f5d6
+RUNNER = DESKTOP-NSOQH69
+RUNTIME_RUN = 36012548161
+UI = PASS
+
+SMART LOOP PASSED THROUGH:
+  capability discovery
+  reference import
+  Color + Line decomposition
+  stable refs
+  preview-before capture
+  preview-before artifact materialization
+  use_ink proposal neutrality
+  execute-before-approval block
+  approval
+  two-step repaint execution
+
+FIRST_FAIL = SMART_LOOP_HISTORY_RECORDED
+
+MR_CLASSIFICATION = QA_ASSERTION_SEMANTICS_MISMATCH
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+PRODUCT_SOURCE = FROZEN
+
+ARTIFACT_ID = 10813525620
+ARTIFACT_DIGEST = sha256:8fc0c14c4bf4872eb1e2af8df2672d3eb28912a72585ca063d6a44e4f22fe57d
+SMART_LOOP_BEFORE_PNG = PRESENT
+SMART_LOOP_AFTER_PNG = NOT_REACHED
+SMART_LOOP_JSON = NOT_REACHED
+
+NEXT = QA assertion-only revision → DEV_HANDOFF → exact-SHA Runtime rerun
+```
+
 ## Smart closed-loop MR product-fix review — 2026-09-24
 
 ```text
