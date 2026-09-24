@@ -1,3 +1,37 @@
+## Smart closed-loop MR product-fix review — 2026-09-24
+
+```text
+TASK = INK-CHAT-CLOSED-LOOP-001
+DEV_HANDOFF_HEAD = 20262d942c7a4d1a5ca03898856a2d7ddff9f5d6
+REVISION_BASELINE = 2a56b602af280fcc923a394d68accab755d0611f
+
+MR_SOURCE_REVIEW = PASS
+PRODUCT_DEFECT_FIX = PASS / BOUNDED
+
+PRODUCT_DELTA =
+  product/source/src/agent/visual-feedback.js only
+
+FIX =
+  content preview floating boundary guard
+  + planned size aligned with existing renderExportCanvas Math.ceil(bounds × scale)
+
+HARD_DIMENSION_LIMIT = PRESERVED
+HARD_PIXEL_LIMIT = PRESERVED
+REFS = UNCHANGED
+OUTPUT_HANDLE = UNCHANGED
+UI = 0
+EXTERNAL_TRANSPORT = 0
+NEW_NATIVE_OPERATION_FAMILIES = 0
+FORMAT_VERSION = 4 / PRESERVED
+
+NEXT_GATE =
+  exact-SHA Windows Runtime
+  → all regression suites PASS
+  → 17 SMART_LOOP markers PASS
+  → before/after PNG + smart-loop.json
+  → retrieve PNG evidence into CHAT
+```
+
 ## Smart-loop Runtime diagnosis — preview dimension boundary defect
 
 ```text
