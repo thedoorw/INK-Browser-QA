@@ -69,3 +69,21 @@ No main merge, package mutation, Runtime queue mutation, new operation families,
 - Revision changes only QA/runtime proof files plus report/handoff/progress. No UI, transport, product authority, native operation vocabulary, package or FORMAT_VERSION changes.
 
 Return: `DEV_HANDOFF → STOP`.
+
+
+### Focused QA result
+
+Connector-side static QA: **PASS**.
+
+Verified against revision checkpoint `5637d54e308b994d30d1de59ee67c90557487a30`:
+
+- revision diff contains only the six authorized QA/report/handoff/progress files;
+- both frozen product source blob SHAs are unchanged from `2b3c2f79147b6122f5ac78ed47d19c9878522386`;
+- no inline resolver module remains in the harness;
+- loader uses `/__qa_smart_loop_resolver.js` through `script.src`;
+- route is Creative-suite-only and preflighted;
+- fixed resolver calls only `resolveInkOutputPayload(window.INK_APP, handleId)`;
+- temporary QA global and module node are removed after materialization;
+- new loader/resolver implementation contains no WebSocket, postMessage, eval or Function path.
+
+No automatic workflow run was associated with that checkpoint. Browser Runtime remains unexecuted by DEV and is not claimed PASS.
