@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase F DEV HANDOFF
 
-STATUS: AUTHORIZED / UI_ONLY / PHASE_F / DEV_START
+STATUS: DEV_HANDOFF / STATIC_PASS / RUNTIME_DISPATCH_PENDING / UI_ONLY / PHASE_F / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-f`
@@ -261,3 +261,111 @@ Completion state:
 `DEV_HANDOFF → UR_REVIEW → STOP`
 
 Do not begin Phase G automatically.
+
+
+---
+
+## DEV completion — 2026-09-24
+
+Implemented only Phase F.
+
+### Primary Home result
+
+- File menu remains the desktop Primary Home for New / Open / Save / Export.
+- retained top-chrome file endpoints are classified only as Responsive Alternatives; normal desktop copies remain hidden.
+- left Toolbar remains the tool-selection Primary Home.
+- top Contextual Options remains the immediate high-frequency control home.
+- Properties remains the deeper configuration home.
+- right Panel Dock remains the panel Primary Home.
+- Window menu is explicitly a secondary panel route.
+- right edge affordance is collapse / restore only.
+- Specialist remains isolated from normal Properties.
+- top workspace switch is Primary Home; menu-strip workspace dropdown is a secondary shortcut.
+- compact Undo / Redo remains a shortcut; History panel semantics are unchanged.
+
+### Selection duplicate cleanup
+
+The equal-status Properties action strip no longer visually duplicates:
+
+- Duplicate
+- Group
+- Bring to Front
+- Delete
+
+Those existing IDs remain as hidden handler proxies so the accepted `src/ink.js` bindings and command semantics are not modified.
+
+Visible Properties selection actions are reduced to deeper operations:
+
+- Ungroup
+- Send to Back
+
+Contextual Selection remains the fast route for:
+
+- Duplicate
+- Group
+- Bring to Front
+- Align Center
+- Delete
+
+Full align/distribute, transform and opacity controls remain deeper Properties settings.
+
+### Contextual vs Properties
+
+Color / Size / Opacity remain synchronized through the existing authority.
+
+They are now explicitly classified as:
+
+```text
+Contextual Options = PRIMARY_HOME / immediate subset
+Properties = DEEP_SETTINGS / complete configuration
+```
+
+No drawing-engine setting semantics changed.
+
+### Verification
+
+PASS:
+
+- Web template-generation parity
+- Portable template-generation parity
+- `web-shell.js` parse
+- runtime-harness inline script parse
+- CSS brace balance
+- shell template duplicate DOM ID check
+- Primary/Secondary route markers
+- hidden selection handler-proxy preservation
+- changed-file compare limited to authorized Phase F surfaces
+- no `product/source/src/**` product source delta
+- no Core / Document / History / Revision / Geometry / CHAT source delta
+
+Task-specific Runtime assertions were added/updated in:
+
+`qa/runtime/ink-web-ui-001-harness.html`
+
+Full evidence:
+
+`working/INK_WEB_UI_006_PHASE_F_EVIDENCE.md`
+
+### Exact-SHA Windows Runtime
+
+Not dispatched from this DEV connection because the available GitHub connector does not expose workflow dispatch.
+
+No Runtime PASS is claimed.
+
+UR must run the existing authoritative Windows self-hosted Runtime batch against the final DEV exact HEAD before promotion.
+
+### Boundary confirmation
+
+- Document unchanged
+- History unchanged
+- Revision unchanged
+- Geometry/Core unchanged
+- CHAT semantics unchanged
+- Service Worker/bootstrap/build identity unchanged
+- product version remains `v0.1`
+- `FORMAT_VERSION = 4` unchanged
+- Phase G not started
+
+Completion state:
+
+`DEV_HANDOFF → UR_REVIEW → STOP`
