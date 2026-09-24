@@ -2444,3 +2444,33 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 @media(max-width:760px){.brand .brand-source-mark{width:28px;height:28px}}
 
 
+
+
+/* ==========================================================================
+   INK-WEB-UI-006 — Phase E right Panel Dock grouping
+   Presentation-only: one existing Inspector / Creative Workspace authority.
+   ========================================================================== */
+@media(min-width:761px){
+  .panel-dock-group.specialist{padding-top:2px;padding-bottom:4px}
+  .panel-dock-group.specialist .panel-dock-button{color:#9fa1a4}
+  .panel-dock-group.specialist .panel-dock-button.active{color:#86c8c2;background:#303f3d}
+
+  /* Properties and Specialist share the existing Inspector, but their
+     navigation families are visually exclusive. */
+  .properties-subnav .specialist-subtab{display:none}
+  .app[data-shell-panel="specialist"] .properties-subnav .properties-subtab{display:none}
+  .app[data-shell-panel="specialist"] .properties-subnav .specialist-subtab{display:flex}
+  .app[data-shell-panel="layers"] .properties-subnav,
+  .app[data-shell-panel="history"] .properties-subnav{display:none}
+
+  .geometry-panel .studio-button-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .specialist-panel .diagnostic-card{border-left:2px solid #65706f}
+}
+
+@media(max-width:760px){
+  /* Mobile keeps the established Inspector entry; all existing capability
+     tabs remain reachable without introducing a second mobile router. */
+  .properties-subnav{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .properties-subnav .inspector-tab{min-width:0}
+  .properties-subnav .inspector-tab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
