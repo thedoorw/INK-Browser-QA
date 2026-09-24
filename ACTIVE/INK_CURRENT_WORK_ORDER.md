@@ -1,3 +1,89 @@
+## MR_REVISE / QA_ASSERTION_ONLY — 2026-09-24
+
+Runtime diagnostic:
+
+```text
+RUN = 36012548161
+TESTED_SHA = 20262d942c7a4d1a5ca03898856a2d7ddff9f5d6
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+SMART_LOOP_REFERENCE_IMPORTED = PASS
+SMART_LOOP_COLOR_LINE_DECOMPOSED = PASS
+SMART_LOOP_STABLE_REFS_RETURNED = PASS
+SMART_LOOP_PREVIEW_BEFORE_CAPTURED = PASS
+SMART_LOOP_PREVIEW_BEFORE_MATERIALIZED = PASS
+SMART_LOOP_USE_INK_PROPOSE_MUTATION_NEUTRAL = PASS
+SMART_LOOP_USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL = PASS
+SMART_LOOP_USE_INK_APPROVED = PASS
+SMART_LOOP_TWO_STEP_REPAINT_EXECUTED = PASS
+FIRST_FAIL = SMART_LOOP_HISTORY_RECORDED
+```
+
+MR classification:
+
+```text
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+CLASSIFICATION = QA_ASSERTION_SEMANTICS_MISMATCH
+PRODUCT_SOURCE = FROZEN
+```
+
+Reason:
+
+`HistoryManager` does record the repaint steps, but `patchObjectIds()` only derives IDs from `patch.id` or `patch.value.id`.
+Scalar fill/stroke patches do not necessarily carry either field. Therefore an assertion requiring repaint History summaries to contain target IDs in `entry.objectIds` is not an authoritative History contract.
+
+Authorized revision only:
+
+```text
+qa/runtime/ink-cloud-018-browser-harness.html
+qa/ink-chat-closed-loop-001-smart-proof.test.mjs   # only if focused regression needs the assertion contract
+research/INK_CHAT_CLOSED_LOOP_001_SMART_PROOF_REPORT_v0.1.md
+working/INK_CHAT_CLOSED_LOOP_001_DEV_HANDOFF.md
+ACTIVE/INK_DEV_PROGRESS.md
+```
+
+Replace the invalid History assertion with evidence that uses existing authoritative receipts:
+
+```text
+smartExecuted.historyReceipt.steps.length === 2
+
+for each step:
+  history.beforeUndoCount is integer
+  history.afterUndoCount === history.beforeUndoCount + 1
+  history.latestLabel === 'CHAT repaint Path'
+
+get_ink_history:
+  status === COMPLETED
+  applied / retainedCount reflect both executed repaint steps
+  final two entries are scoped History entries
+  each final entry label === 'CHAT repaint Path'
+  each final entry patchCount > 0
+```
+
+Do not require `entry.objectIds` for scalar repaint proof.
+
+No product source changes are authorized.
+
+```text
+visual-feedback.js = FROZEN
+public-creative-api.js = FROZEN
+capability-registry.js = FROZEN
+History engine = FROZEN
+patchObjectIds = FROZEN
+Renderer = FROZEN
+UI = 0
+EXTERNAL_TRANSPORT = 0
+FORMAT_VERSION = 4 / PRESERVE
+```
+
+After focused QA:
+
+`DEV_HANDOFF → STOP`
+
+MR will rerun the exact new HEAD on Windows Runtime.
+
+---
+
 ## MR_REVISE — smart preview diagnostic only — 2026-09-24
 
 ```text
