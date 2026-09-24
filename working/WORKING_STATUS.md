@@ -1,3 +1,25 @@
+## Smart-loop Runtime diagnosis — preview dimension boundary defect
+
+```text
+RUN = 36009581263 / attempt 2
+TARGET = 2a56b602af280fcc923a394d68accab755d0611f
+RUNNER = DESKTOP-NSOQH69
+
+UI = PASS
+IMPORT = PASS
+DECOMPOSITION = PASS
+STABLE_REFS = PASS
+FAIL = SMART_LOOP_PREVIEW_BEFORE_CAPTURED
+DIAGNOSTIC = INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED
+
+CLASSIFICATION = PRODUCT_DEFECT / PREVIEW PLANNER
+MR = REVISE / PRODUCT_DEFECT_ONLY
+AUTHORIZED_PRODUCT_FILE = product/source/src/agent/visual-feedback.js
+RENDERER = FROZEN
+smartPreviewOptions = FROZEN
+RUNTIME = HOLD UNTIL DEV_HANDOFF
+```
+
 ## Smart closed-loop Runtime diagnostic checkpoint — 2026-09-24
 
 ```text
