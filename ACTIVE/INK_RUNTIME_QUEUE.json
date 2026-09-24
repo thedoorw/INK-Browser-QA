@@ -1,11 +1,9 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "ac1f3407376a3e7f7cba1b792bac2bfb15f47cd3",
-  "pending_work_orders": [
-    "INK-CHAT-CLOSED-LOOP-001"
-  ],
+  "pending_work_orders": [],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -23,11 +21,12 @@
     "INK-CHAT-CONNECTOR-002",
     "INK-WEB-UI-006-VISUAL-CLOSURE",
     "INK-CHAT-CONNECTOR-003",
-    "INK-CHAT-CONNECTOR-004"
+    "INK-CHAT-CONNECTOR-004",
+    "INK-CHAT-CLOSED-LOOP-001"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "MR source review PASS for QA_ORDER_ISOLATION_ONLY after smart loop 18/18 PASS; product source unchanged, exact-SHA Runtime rerun required for full regression closure."
+    "enabled": false,
+    "reason": ""
   },
   "batch_policy": {
     "default_target": 3,
@@ -35,8 +34,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36014703794,
-    "tested_sha": "b57a3471ceaaba915a296aa1fe46680ee3e44134",
-    "result": "SMART_LOOP_PASS_FULL_RUNTIME_FAIL_QA_REVISION_STATE_ORDER"
+    "run_id": 36017580698,
+    "tested_sha": "ac1f3407376a3e7f7cba1b792bac2bfb15f47cd3",
+    "result": "PASS"
   }
 }
