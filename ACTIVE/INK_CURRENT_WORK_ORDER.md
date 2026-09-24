@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_ISSUED / AUTHORIZED / DEV_NOT_STARTED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / MR_SOURCE_PASS / RUNTIME_PENDING`
 
 ## Control
 
@@ -240,3 +240,48 @@ Phase F
 ```
 
 Phase D–F are planning only. Do not start them from this Work Order.
+
+
+## MR source review — Phase C
+
+```text
+REVIEWED_DEV_HEAD = cd3b4dee28a7a47e2298569138f5dbd73af5cc14
+BRANCH = work/ink-chat-validation-001-phase-c
+SOURCE_REVIEW = PASS
+PRODUCT_SOURCE_MUTATION = 0
+QA_SCOPE = FOCUSED_ONLY
+BRANCH_TO_MAIN_AT_REVIEW = ahead 6 / behind 1
+BEHIND_MAIN_COMMIT = 7ec71731b0a72f4178e6078a60bb427de30d5170
+BEHIND_MAIN_SCOPE = UI Runtime queue only / no Phase C source conflict
+
+COLOR_PATH = existing path.repaint.v1 authority
+LINE_PATH = existing path.repaint.v1 authority
+PROPOSAL_APPROVAL_BOUNDARY = PRESERVED
+HISTORY = EXISTING AUTHORITY
+REVISION = UNCHANGED
+DOCUMENT = UNCHANGED
+GEOMETRY = UNCHANGED
+FORMAT_VERSION = 4 / PRESERVED
+```
+
+MR verified that the browser harness continues directly from actual Phase B
+`colorObjectIds / lineObjectIds` and executes through
+`chatBoundedEditAdapter.propose → approve → execute`.
+No direct product-object mutation is used for the accepted Color/Line edit path.
+
+The stale-state test intentionally perturbs target state only to prove fingerprint
+rejection, then restores the test state. It does not introduce product mutation authority.
+
+Execution gate remains open:
+
+```text
+MR_SOURCE_PASS
+→ exact DEV HEAD Runtime
+→ Phase B regression
+→ Phase C browser checks
+→ private real-image acceptance
+→ MR_PASS / MR_REVISE
+```
+
+The central Runtime queue is currently occupied by the separately authorized
+UI-006 Phase C+D exact-SHA run. Do not overwrite that queue while the run is active.
