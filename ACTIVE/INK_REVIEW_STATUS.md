@@ -1,6 +1,75 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-002 / VISUAL_ASSET_FEEDBACK / DEV_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-002 / MR_SOURCE_PASS / INTEGRATION_RUNTIME_PENDING`
+
+## Connector-002 MR exact-HEAD checkpoint — 2026-09-24
+
+```text
+TASK = INK-CHAT-CONNECTOR-002
+REVIEW_HEAD = f0ad1547de0fce791878b533662058a754993b5b
+BRANCH = work/ink-chat-connector-002
+SOURCE_REVIEW = PASS
+SCOPE_REVIEW = PASS
+FOCUSED_QA_EVIDENCE = PASS
+FINAL_MR_PASS = PENDING_INTEGRATION_RUNTIME
+
+PRODUCT_DIFF =
+  product/source/src/agent/output-handle-registry.js
+  product/source/src/agent/visual-feedback.js
+  product/source/src/agent/public-creative-api.js
+
+UNCHANGED_AUTHORITIES =
+  InkApp / Renderer
+  Document Bridge
+  Reference Handoff
+  Bounded Edit
+  History
+  Revision
+  UI
+  Service Worker / bootstrap / cache
+
+NAMED_TOOLS = 17 / PASS
+CONNECTOR_001_PREFIX_14 = PRESERVED
+GET_INK_PREVIEW = PASS
+INK_OUTPUT_HANDLE_V1 = PASS
+EPHEMERAL_REGISTRY = PASS
+ASSET_INSPECT = PASS
+ASSET_RELEASE = PASS
+DOCUMENT_PAGE_REVISION_FINGERPRINT_BINDING = PASS
+RENDER_FINGERPRINT = PASS
+RAW_BINARY_PUBLIC_RESULT = 0
+SECOND_RENDERER = 0
+DOM_SCREENSHOT = 0
+PERSISTENT_ASSET_STORAGE = 0
+USE_INK = 0
+CAPABILITY_DISCOVERY = 0
+EXTERNAL_TRANSPORT = 0
+FORMAT_VERSION = 4 / PRESERVED
+```
+
+MR source findings:
+
+- preview delegates to existing `app.renderExportCanvas(...)`;
+- preview is bounded below the existing tiled-export threshold;
+- optional refs are grounded through Document Bridge and remain semantic-only;
+- `INK_OUTPUT_HANDLE v1` is deterministic/content-addressed and JSON-safe;
+- encoded PNG bytes participate in `renderFingerprint`;
+- output payload stays in a bounded internal WeakMap-backed ephemeral registry;
+- inspect catches document/page/revision/fingerprint drift and unavailable payload;
+- release only affects connector-side ephemeral payload;
+- no Document / selection / History / Revision mutation is introduced.
+
+Runtime coordination:
+
+```text
+UI-006 Phase I exact-SHA runtime run 35954873725 = PASS
+UI tested SHA = 5ad4a271b37a1dca9236239be8bb867bff320b7c
+UI / Creative / Geometry = PASS
+
+However the UI runtime queue is still owned by UI governance.
+Connector-002 must not overwrite that queue.
+Connector-002 final exact-SHA combined browser gate waits for UI queue closure / integration promotion.
+```
 
 ## Connector-002 review target — 2026-09-24
 
