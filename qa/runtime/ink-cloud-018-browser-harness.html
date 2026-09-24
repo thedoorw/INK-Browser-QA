@@ -526,6 +526,154 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const executed=cw.runChatAction('chat-execute');
     assert(executed?.ok===true,'BOUNDED_EDIT_EXECUTED',{changed:executed?.result?.changed});
 
+    // INK-CHAT-CONNECTOR-004 — real-browser programmable bridge coverage.
+    const inkApi=app.inkPublicApi;
+    const useInkTools=inkApi?.tools?.registry?.()||[];
+    assert(
+      Boolean(inkApi?.composition?.propose && inkApi?.composition?.approve && inkApi?.composition?.execute) &&
+      useInkTools.length===19 &&
+      useInkTools[18]?.name==='use_ink',
+      'USE_INK_TOOL_AVAILABLE',
+      {toolCount:useInkTools.length,tool19:useInkTools[18]?.name||null}
+    );
+
+    const useInkRefA={pageId:app.page().id,layerId:colorLayer.id,objectId:colorObjects[0].id};
+    const useInkRefB={pageId:app.page().id,layerId:colorLayer.id,objectId:colorObjects[1].id};
+    const useInkFill=colorObjects[0].fill==='#123456'?'#654321':'#123456';
+    const useInkBeforeProposal=readOnlySnapshot();
+    const useInkPlan={
+      schema:'INK-CHAT-CREATIVE-PLAN',
+      version:1,
+      intentSummary:'Connector-004 browser QA: repaint then translate through use_ink',
+      steps:[
+        {
+          stepId:'use-ink-repaint',
+          operation:'path.repaint.v1',
+          targets:[useInkRefA],
+          arguments:{fill:useInkFill},
+          dependsOn:[]
+        },
+        {
+          stepId:'use-ink-move',
+          operation:'object.translate.v1',
+          targets:[useInkRefB],
+          arguments:{dx:7,dy:-4},
+          dependsOn:['use-ink-repaint']
+        }
+      ]
+    };
+    const useInkProposed=await inkApi.tools.invoke('use_ink',{action:'propose',plan:useInkPlan});
+    assert(
+      useInkProposed?.status==='PROPOSED' &&
+      Boolean(useInkProposed?.result?.planId) &&
+      readOnlySnapshot()===useInkBeforeProposal,
+      'USE_INK_PROPOSE_MUTATION_NEUTRAL',
+      {status:useInkProposed?.status,planId:useInkProposed?.result?.planId||null}
+    );
+
+    const useInkBlockedBefore=readOnlySnapshot();
+    const useInkBlocked=await inkApi.tools.invoke('use_ink',{
+      action:'execute',
+      planId:useInkProposed.result.planId,
+      approvalToken:'not-approved'
+    });
+    assert(
+      useInkBlocked?.status==='FAILED' &&
+      useInkBlocked?.diagnostics?.[0]?.code==='CHAT_PLAN_APPROVAL_REQUIRED' &&
+      readOnlySnapshot()===useInkBlockedBefore,
+      'USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL',
+      {status:useInkBlocked?.status,code:useInkBlocked?.diagnostics?.[0]?.code||null}
+    );
+
+    const useInkApproved=await inkApi.tools.invoke('use_ink',{
+      action:'approve',
+      planId:useInkProposed.result.planId
+    });
+    assert(
+      useInkApproved?.status==='APPROVED' &&
+      /^INK-LOCAL-PLAN-APPROVAL:/.test(useInkApproved?.result?.approvalToken||''),
+      'USE_INK_APPROVAL_TOKEN_ISSUED',
+      {planId:useInkProposed.result.planId}
+    );
+
+    const useInkRevisionBefore=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
+    const originalUseInkRenderExportCanvas=app.renderExportCanvas;
+    let useInkPreviewRenderCalls=0;
+    app.renderExportCanvas=async function(...args){
+      useInkPreviewRenderCalls++;
+      return originalUseInkRenderExportCanvas.apply(this,args);
+    };
+    let useInkExecuted;
+    try{
+      useInkExecuted=await inkApi.tools.invoke('use_ink',{
+        action:'execute',
+        planId:useInkProposed.result.planId,
+        approvalToken:useInkApproved.result.approvalToken
+      });
+    }finally{
+      app.renderExportCanvas=originalUseInkRenderExportCanvas;
+    }
+
+    const useInkStepOrder=useInkExecuted?.result?.stepResults?.map(step=>step.stepId)||[];
+    assert(
+      useInkExecuted?.status==='COMPLETED' &&
+      useInkStepOrder.join(',')==='use-ink-repaint,use-ink-move',
+      'USE_INK_TWO_STEP_EXECUTION_ORDERED',
+      {status:useInkExecuted?.status,stepOrder:useInkStepOrder}
+    );
+    assert(
+      useInkExecuted?.historyReceipt?.steps?.length===2 &&
+      useInkExecuted.historyReceipt.steps.every(step=>Boolean(step.history)),
+      'USE_INK_HISTORY_RECORDED',
+      {historySteps:useInkExecuted?.historyReceipt?.steps?.length||0}
+    );
+
+    const useInkRevisionAfter=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
+    assert(
+      Boolean(useInkExecuted?.revisionReceipt) &&
+      useInkExecuted.revisionReceipt.startingRevisionId===useInkRevisionBefore &&
+      useInkExecuted.revisionReceipt.endingRevisionId===useInkRevisionAfter &&
+      useInkRevisionAfter!==useInkRevisionBefore &&
+      useInkExecuted.revisionReceipt.captureSkipped===null,
+      'USE_INK_FINAL_REVISION_CAPTURED',
+      {before:useInkRevisionBefore,after:useInkRevisionAfter,revisionReceipt:useInkExecuted?.revisionReceipt}
+    );
+
+    const useInkUnsupported=await inkApi.tools.invoke('use_ink',{action:'boolean'});
+    assert(
+      useInkUnsupported?.status==='FAILED' &&
+      useInkUnsupported?.diagnostics?.[0]?.code==='INK_USE_INK_ACTION_UNSUPPORTED',
+      'USE_INK_UNSUPPORTED_ACTION_REJECTED',
+      {code:useInkUnsupported?.diagnostics?.[0]?.code||null}
+    );
+
+    const useInkForbiddenBefore=readOnlySnapshot();
+    const useInkForbidden=await inkApi.tools.invoke('use_ink',{
+      action:'propose',
+      plan:{
+        schema:'INK-CHAT-CREATIVE-PLAN',
+        version:1,
+        intentSummary:'Connector-004 forbidden operation rejection',
+        steps:[
+          {stepId:'forbidden-delete',operation:'object.delete.v1',targets:[useInkRefA],arguments:{},dependsOn:[]},
+          {stepId:'never-run',operation:'object.translate.v1',targets:[useInkRefB],arguments:{dx:1,dy:1},dependsOn:['forbidden-delete']}
+        ]
+      }
+    });
+    assert(
+      useInkForbidden?.status==='FAILED' &&
+      useInkForbidden?.diagnostics?.[0]?.code==='CHAT_EDIT_OPERATION_NOT_ALLOWED' &&
+      readOnlySnapshot()===useInkForbiddenBefore,
+      'USE_INK_FORBIDDEN_OPERATION_REJECTED',
+      {code:useInkForbidden?.diagnostics?.[0]?.code||null}
+    );
+    assert(
+      useInkPreviewRenderCalls===0 &&
+      (useInkExecuted?.outputHandles?.length||0)===0,
+      'USE_INK_NO_AUTO_PREVIEW',
+      {previewRenderCalls:useInkPreviewRenderCalls,outputHandles:useInkExecuted?.outputHandles?.length||0}
+    );
+
     const prompt=cw.root.querySelector('[data-workspace-input="chat-prompt"]');
     prompt.value='Describe the current Rose Window document context without changing the artwork.';
     const conversationBefore=JSON.stringify(app.doc);
