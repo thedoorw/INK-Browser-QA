@@ -1,23 +1,65 @@
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_002_MR_PASS / PROMOTED / CLOSED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_003_DEV_ACTIVE / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-002 / Visual Asset Feedback` |
-| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-002` |
-| DEV_BRANCH | `work/ink-chat-connector-002` |
-| DEV_HANDOFF | `Connector-002 = CLOSED / STOP` |
-| MR_REVIEW | `Connector-002 = MR_PASS / promoted` |
-| TARGET_GATE | `INK_VISUAL_ASSET_FEEDBACK_WORKS` |
+| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-003 / Capability Schema Discovery` |
+| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-003` |
+| DEV_BRANCH | `work/ink-chat-connector-003` |
+| DEV_HANDOFF | `Connector-003 = NOT_STARTED / Connector-002 = CLOSED` |
+| MR_REVIEW | `Connector-003 = DEV_AUTHORIZED` |
+| TARGET_GATE | `INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `run 35957389410 / tested c728266f... / UI+Creative+Geometry PASS` |
+| RUNTIME_QA | `Connector-003 focused QA first; MR decides exact-SHA browser gate after handoff` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-003 remains NOT_AUTHORIZED; await MR/user direction` |
+| NEXT_STAGE | `Connector-003 DEV → focused QA → DEV_HANDOFF / STOP → MR review` |
+
+## Connector-003 authorization
+
+```text
+TASK = INK-CHAT-CONNECTOR-003
+BRANCH = work/ink-chat-connector-003
+
+PURPOSE =
+  CHAT can discover what INK can do
+  + understand how to invoke each capability
+  + understand constraints and policies
+  + avoid relearning every new tool from zero
+
+PUBLIC_API =
+  capabilities() / preserved list
+  capability.describe(idOrToolName)
+
+NAMED_TOOL =
+  describe_ink_capability
+
+TARGET_NAMED_TOOL_TOTAL = 18
+
+DESCRIPTOR =
+  INK_CAPABILITY_DESCRIPTOR / version 1
+
+DESCRIPTOR_CONTENT =
+  inputSchema
+  targetTypes
+  constraints
+  approvalPolicy
+  historyPolicy
+  revisionPolicy
+  previewPolicy
+  resultContract
+  examples
+
+USE_INK = 0
+EXTERNAL_TRANSPORT = 0
+AUTO_EXECUTION = 0
+NEW_DRAWING_BEHAVIOR = 0
+FORMAT_VERSION = 4 / PRESERVE
+```
 
 ## Connector-002 final acceptance
 
