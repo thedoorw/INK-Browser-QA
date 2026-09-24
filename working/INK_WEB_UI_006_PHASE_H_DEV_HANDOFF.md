@@ -590,3 +590,39 @@ Phase I = not started
 Completion:
 
 `DEV_HANDOFF → UR_RUNTIME_RERUN → STOP`
+
+
+---
+
+## UR bounded revision review — 2026-09-24
+
+Reviewed corrected product / QA checkpoint:
+
+`1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
+
+Revision compare against failed Runtime checkpoint `04ba565c80551fe364174b3964a3ebaa850454a5`:
+- product presentation delta is exactly one bounded CSS correction in `product/source/styles.css`;
+- the exact correction commit changes only `product/source/styles.css`;
+- QA harness is unchanged, so the original failing all-eight-primary-panel assertion remains authoritative and has not been weakened;
+- no `web-shell.js`, shell template, generated HTML, `product/source/src/**`, mobile rule, Core, Document, History, Revision, Renderer, Geometry or CHAT source change is part of the correction.
+
+Correction verified:
+
+```css
+.app:not(.inspector-open) .creative-workspace-panel {
+  right: var(--panel-dock-w);
+  width: clamp(244px, var(--inspector-w), 360px);
+}
+```
+
+This explicitly neutralizes the legacy higher-specificity desktop selector while preserving the accepted single shell authority.
+
+UR bounded revision result:
+
+`STATIC_PASS / RUNTIME_RERUN_REQUIRED`
+
+Exact-SHA Windows Runtime must now test:
+
+`1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
+
+Phase I remains locked until this rerun passes.
