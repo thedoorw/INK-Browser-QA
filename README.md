@@ -415,6 +415,56 @@ This is intended to reduce repeated integration cost, shorten the time needed fo
 
 ---
 
+## 3D. CHAT ↔ Tool visual / asset round-trip rule
+
+User-authoritative cross-tool direction:
+
+```text
+EVERY_USER_TOOL ↔ CHAT ↔ COMPATIBLE_TOOL
+VISUAL_CAPTURE = STANDARDIZED
+ASSET_HANDLE + METADATA = PREFERRED
+EDITABLE_RETURN = PREFERRED
+PROVENANCE / REVISION LINKAGE = PRESERVED
+```
+
+INK 及未來使用者自製工具，都應共用一致的畫面與資產往返概念，而不是每一套工具重新發明一套傳圖方式。
+
+標準交換範圍至少包含：
+
+```text
+APP_FULL
+VIEWPORT
+CANVAS_ONLY
+PANEL
+EVIDENCE_SET
+
+PNG / JPG
+SVG
+JSON / Recipe / Geometry
+preview + asset/output handle + metadata
+```
+
+長期目標：
+
+```text
+Tool A
+→ capture / export / handle
+→ CHAT inspect / reason / modify / route
+→ same tool or Tool B
+→ editable continuation
+→ History / Revision / provenance where applicable
+```
+
+CHAT 應逐步成為 Visual / Asset Router。
+
+正式完整規格：
+
+`research/CHAT_TOOL_VISUAL_ASSET_INTERCHANGE_STANDARD_v0.1.md`
+
+此原則是跨工具產品方向，不會自行授權新的 DEV 工作；任何 external transport、跨工具自動執行、upload/download、schema 或 persistence 實作，仍必須經 bounded Work Order 授權。
+
+---
+
 ## 4. 現階段：先穩定會影響文件格式與結構的 shared core
 
 目前不是正式 Cloud implementation 階段。
