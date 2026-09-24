@@ -369,3 +369,53 @@ UR must run the existing authoritative Windows self-hosted Runtime batch against
 Completion state:
 
 `DEV_HANDOFF → UR_REVIEW → STOP`
+
+
+---
+
+## UR source review — 2026-09-24
+
+Reviewed product/QA checkpoint:
+
+`1ccfa450d8fe3248e402d26315c386a50e4f4a1b`
+
+Accepted Phase E branch baseline:
+
+`1f1151b958a66a44314f0c712942c29c824d5628`
+
+Compare result:
+- Phase F branch is 10 commits ahead / 0 behind the accepted Phase E branch baseline.
+- Changed files are limited to the authorized shell / presentation / panel-controller / UI Runtime harness set plus Phase F handoff/evidence docs.
+- The two commits after `1ccfa45...` are documentation/evidence only; no product/QA source delta exists after the tested checkpoint candidate.
+
+UR static findings:
+- File menu remains the declared desktop Primary Home; retained file command endpoints remain non-competing routes and desktop copies stay visually removed.
+- Left Toolbar remains the declared tool-selection Primary Home.
+- Top contextual controls are explicitly classified as the immediate control home; Properties remains the deeper settings home.
+- Equal-status Properties duplicates for Duplicate / Group / Bring to Front / Delete are no longer user-facing.
+- Existing selection command IDs are preserved inside a hidden handler-proxy container, avoiding a change to accepted command bindings or selection semantics.
+- Visible Properties selection actions are reduced to deeper operations (Ungroup / Send to Back), while the contextual Selection bar keeps the fast action set.
+- Right Panel Dock remains the Primary Home; Window menu remains secondary; edge affordance is collapse/restore only.
+- Workspace top switch is Primary Home; workspace menu is secondary.
+- Specialist remains separated from ordinary Properties.
+- UI route markers and Runtime assertions cover Primary Home / secondary / contextual / responsive classifications and duplicate-DOM-ID regression.
+- `product/source/src/**`, Document, History, Revision, Geometry/Core, CHAT semantics, Service Worker, runtime bootstrap and build/cache identity are not changed by Phase F.
+- visible product version remains `v0.1`; `FORMAT_VERSION = 4`.
+- Phase G has not started.
+
+UR static result:
+
+`STATIC_PASS`
+
+Runtime gate required before UI_PASS:
+- authoritative Windows self-hosted exact-SHA browser Runtime against `1ccfa450d8fe3248e402d26315c386a50e4f4a1b`;
+- Phase F Primary Home classification / selection proxy / contextual-vs-properties assertions;
+- Phase C/D/E regression;
+- narrow desktop / fullscreen / Web-Portable parity;
+- UI / Creative / Geometry regression.
+
+Current UR result:
+
+`UR_REVIEW / STATIC_PASS / WINDOWS_RUNTIME_REQUIRED / PHASE_F`
+
+Do not begin Phase G.
