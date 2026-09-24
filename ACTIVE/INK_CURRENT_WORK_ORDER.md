@@ -1,6 +1,61 @@
+## INK-CHAT-CLOSED-LOOP-001 MR bounded revision — 2026-09-24
+
+```text
+REVIEWED_HEAD = 2b3c2f79147b6122f5ac78ed47d19c9878522386
+RUNTIME_RUN = 36003623197
+RUNTIME_TESTED_SHA = 2b3c2f79147b6122f5ac78ed47d19c9878522386
+RUNNER = DESKTOP-NSOQH69
+
+UI = PASS
+CREATIVE = FAIL / QA artifact resolver injection timeout
+GEOMETRY = NOT_REACHED
+
+SMART_CHAIN_REACHED =
+  capability discovery
+  → reference import
+  → import History/provenance
+  → Color + Line decomposition
+  → 1471 Color refs + 1471 Line refs
+
+FAIL_LOCATION =
+  before first get_ink_preview
+  dynamic inline module did not install __INK_SMART_LOOP_QA_RESOLVE
+
+PRODUCT_DEFECT = NOT_ESTABLISHED
+PRODUCT_SOURCE = FROZEN
+MR = REVISE / QA_BRIDGE_ONLY
+PROMOTION = BLOCKED
+```
+
+Authorized revision only:
+
+```text
+qa/runtime/ink-cloud-018-browser-harness.html
+qa/runtime/run-ink-runtime-batch.mjs
+qa/ink-chat-closed-loop-001-smart-proof.test.mjs   // only if needed for QA coverage
+research/INK_CHAT_CLOSED_LOOP_001_SMART_PROOF_REPORT_v0.1.md
+ACTIVE/INK_DEV_PROGRESS.md
+working/INK_CHAT_CLOSED_LOOP_001_DEV_HANDOFF.md
+```
+
+Required correction:
+
+- replace the failing dynamically injected inline module with a deterministic same-origin external QA module/route or equivalent static QA-only loading path;
+- the resolver must execute in the INK app iframe realm so it reaches that realm's existing output registry;
+- keep the resolver fixed-purpose: `resolveInkOutputPayload(window.INK_APP, handleId)` only;
+- remove the temporary QA global after smart-loop materialization;
+- no product hook, public payload API, external transport, eval, Function, arbitrary module execution or alternate renderer;
+- preserve all 17 SMART_LOOP markers and the same before/after artifact contract.
+
+Then:
+
+`DEV_HANDOFF → STOP → MR source re-check → new exact-SHA Runtime`
+
+---
+
 # INK CURRENT WORK ORDER — SMART CLOSED LOOP PROOF
 
-STATUS: `INK-CHAT-CLOSED-LOOP-001 / AUTHORIZED / DEV_START`
+STATUS: `INK-CHAT-CLOSED-LOOP-001 / MR_REVISE / QA_BRIDGE_ONLY`
 
 ## Control
 
