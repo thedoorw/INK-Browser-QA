@@ -387,6 +387,35 @@ const primary = [
   })
 ];
 
+// Append only: the accepted Connector-004 19-tool registry remains the exact prefix.
+primary.push(descriptor({
+  id: 'reference.import', title: 'Import Reference', description: 'Import a browser-local File/Blob through the existing CHAT Reference Handoff authority.',
+  availability: true, routingClass: 'NAMED_TOOL', namedTool: 'import_ink_reference', publicMethod: 'reference.import', role: 'WRITE',
+  authoritativeRoute: 'app.chatReferenceHandoff.importReference',
+  inputSchema: obj({
+    input: { description: 'Browser-local File or Blob, or the existing normalizeChatAttachment {file} / {blob, name, type} handoff. This is a local binary input, not JSON-encoded bytes or a remote URL.' },
+    options: obj({
+      name: str('Explicit file name required for a bare Blob.'),
+      type: str('MIME type; defaults to the supplied binary MIME type.'),
+      mimeType: str('Existing MIME type alias.'),
+      lastModified: num('Optional file modification time.'),
+      intent: str('Optional audit intent.'),
+      actor: obj({ type: str('Actor type.'), id: str('Actor id.'), channel: str('Actor channel.') }, [], 'Existing handoff actor metadata.'),
+      matrix: arr(num('Affine matrix coefficient.'), 'Optional existing Reference placement matrix.', { minItems: 6, maxItems: 6 })
+    }, [], 'Existing Reference Handoff options; passed unchanged to the authority.')
+  }, ['input'], 'Named Tool canonical request: {input, options?}. Public method: reference.import(input, options?).'),
+  targetTypes: ['ReferenceImage'],
+  constraints: [
+    'Browser-local File/Blob handoff only; normalization, decoding, import, History and provenance use existing authorities.',
+    'Raw File/Blob payloads never appear in the JSON-safe public result.',
+    'No remote URL fetch or external transport; no automatic Revision capture.',
+    'The example input is symbolic: replace <browser-local File> with the actual File/Blob object; passing the placeholder string is rejected.'
+  ],
+  ...policy(false, 'DIRECT_NAMED_TOOL', 'AUTHORITATIVE_COMMIT', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after import or decomposition.'),
+  resultContract: resultContract({ statuses: ['COMPLETED', 'COMMITTED_WITH_ERROR', 'FAILED'], createsRefs: true, changesRefs: true }),
+  examples: [{ input: '<browser-local File>', options: { name: 'reference.png', type: 'image/png' } }], toolPrimary: true
+}));
+
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.');
   const operationConstraints = pathOnly

@@ -408,6 +408,32 @@ export function createInkPublicCreativeApi(app) {
   };
 
   const reference = Object.freeze({
+    async import(input, options = {}) {
+      const action = 'reference.import';
+      try {
+        if (typeof app?.chatReferenceHandoff?.importReference !== 'function') {
+          throw Object.assign(new Error('INK Reference import authority unavailable'), { code: 'INK_AGENT_REFERENCE_AUTHORITY_UNAVAILABLE' });
+        }
+        const raw = await app.chatReferenceHandoff.importReference(input, options);
+        const createdRefs = normalizeRefs(raw?.referenceObjectId ? [{
+          pageId: activePage(app)?.id || null,
+          layerId: raw.targetLayerId || null,
+          objectId: raw.referenceObjectId
+        }] : []);
+        return createInkAgentResult(app, action, {
+          status: raw?.status || 'COMPLETED',
+          createdRefs,
+          changedRefs: createdRefs,
+          historyReceipt: raw?.history ?? null,
+          revisionReceipt: raw?.revision ?? null,
+          provenanceReceipt: raw?.provenance ?? null,
+          diagnostics: raw?.error ? [diagnostic(raw.error, action)] : [],
+          result: raw
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    },
     async decompose(referenceObjectId, options = {}) {
       const action = 'reference.decompose';
       try {
@@ -774,6 +800,7 @@ export function createInkPublicCreativeApi(app) {
     inspect_ink_output: input => asset.inspect(input?.handleId ?? input),
     release_ink_output: input => asset.release(input?.handleId ?? input),
     describe_ink_capability: input => capability.describe(input?.idOrToolName ?? input?.capabilityId ?? input?.toolName ?? input),
+    import_ink_reference: request => reference.import(request?.input ?? request, request?.options ?? {}),
     use_ink: input => {
       const request = isRecord(input) ? input : {};
       const action = String(request.action || '').trim();
