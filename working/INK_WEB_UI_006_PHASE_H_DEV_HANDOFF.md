@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase H DEV HANDOFF
 
-STATUS: AUTHORIZED / UI_ONLY / PHASE_H / DEV_START
+STATUS: DEV_HANDOFF / UI_ONLY / PHASE_H / UR_REVIEW_REQUIRED / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-h`
@@ -247,3 +247,80 @@ Completion state:
 `DEV_HANDOFF → UR_REVIEW → STOP`
 
 Do not run or claim Phase I Final Gate.
+
+
+---
+
+## DEV completion — Phase H
+
+```text
+PHASE = H / CANVAS_STATUS_RESPONSIVE
+BRANCH = work/ink-web-ui-006-h
+BASELINE_PHASE_G_ACCEPTED_BRANCH_HEAD = 8322170ae746ca9af2325cb2783d604e3a9cea6c
+STYLE_CHECKPOINT = 0957ecbd083a0910b2c96404c65c257de18bb797
+PRODUCT_QA_CHECKPOINT = 04ba565c80551fe364174b3964a3ebaa850454a5
+EVIDENCE = working/INK_WEB_UI_006_PHASE_H_EVIDENCE.md
+DEV_STATIC_QA = PASS
+WINDOWS_RUNTIME = UR_EXACT_SHA_REQUIRED
+PHASE_I = NOT_STARTED
+```
+
+### Changed implementation / QA files
+
+- `product/source/styles.css`
+- `qa/runtime/ink-web-ui-001-harness.html`
+
+No shell-template regeneration was required.
+
+### Implemented result
+
+- canvas remains bounded by the accepted left toolbar / right Dock + measured primary-panel geometry;
+- status viewport controls stay readable while secondary status progressively hides on narrow desktop;
+- contextual top controls compress/scroll horizontally rather than wrapping into canvas;
+- fullscreen presentation consumes the browser-provided viewport without creating a second fullscreen authority;
+- compact/mobile continues using the existing Export, mobile tool dock and Inspector alternatives;
+- no mobile router, second panel controller or second canvas authority was introduced.
+
+### QA coverage added
+
+- all eight accepted primary right-panel routes preserve the same canvas boundary;
+- existing Inspector resize changes canvas geometry by the measured width delta;
+- fullscreen presentation keeps stage / panel / Dock contained;
+- 960px desktop retains meaningful canvas width with Properties open;
+- narrow status prioritizes rotation / Fit / zoom controls;
+- compact mode keeps Export / Inspector / tool switching reachable and desktop Dock suppressed;
+- mobile Inspector overlays rather than permanently consuming canvas width.
+
+### Verification / review boundary
+
+```text
+HARNESS_JAVASCRIPT_SYNTAX = PASS
+CSS_BRACE_BALANCE = PASS
+WEB_PORTABLE_SHARED_STYLES = PASS
+WEB_PORTABLE_SHARED_WEB_SHELL = PASS
+PHASE_E_F_G_ASSERTIONS = PRESERVED
+SHELL_TEMPLATE_CHANGED = NO
+GENERATOR_CHECK = NOT_APPLICABLE
+DEV_RUNTIME_PASS_CLAIM = 0
+UR_VISUAL_COMPARISON_REQUIRED = YES
+```
+
+### Explicit preservation
+
+```text
+Document = unchanged
+artwork Text semantics = unchanged
+History = unchanged
+Revision = unchanged
+Renderer = unchanged
+Geometry/Core = unchanged
+CHAT semantics = unchanged
+Service Worker/bootstrap/build identity = unchanged
+product version = v0.1 / preserved
+FORMAT_VERSION = 4 / preserved
+Phase I = not started
+```
+
+Completion:
+
+`DEV_HANDOFF → UR_REVIEW → STOP`
