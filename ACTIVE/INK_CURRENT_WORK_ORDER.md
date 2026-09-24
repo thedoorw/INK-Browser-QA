@@ -340,5 +340,9 @@ NEW_PRIORITY =
   → resume creative validation only after connector architecture is reviewed
 ```
 
+Research baseline:
+
+`research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md`
+
 Do not queue Phase C Runtime or advance Phase D–F while this hold is active.
 Existing Phase C DEV evidence and source-review disposition remain valid as historical evidence.
