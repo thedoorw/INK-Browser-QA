@@ -626,3 +626,36 @@ Exact-SHA Windows Runtime must now test:
 `1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
 
 Phase I remains locked until this rerun passes.
+
+
+---
+
+## UR final gate — corrected Phase H Runtime PASS — 2026-09-24
+
+Authoritative Windows self-hosted Runtime:
+
+- run: `35953369828`
+- attempt: `1`
+- tested SHA: `1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
+- runner: `DESKTOP-NSOQH69`
+- browser: Google Chrome
+- overall: `PASS`
+- UI: `PASS`
+- Creative: `PASS`
+- Geometry: `PASS`
+- artifact: `10789612538`
+- artifact digest: `sha256:ea72a977045a1d1de634a88645ebdcf98f899ca8b20b1ae67c2ba2711d70b321`
+
+The corrected Creative Workspace geometry now satisfies the unchanged all-eight-primary-panel Runtime assertion. The bounded revision therefore closes the prior Phase H Runtime failure without weakening QA.
+
+Final UR result:
+
+`UI_PASS`
+
+Phase H is accepted and closed.
+
+Completion state:
+
+`UR_REVIEW → UI_PASS → STOP`
+
+Phase I may now be separately authorized. The full Photoshop / Figma / INK visual comparison remains deferred until after Phase I, per user direction.
