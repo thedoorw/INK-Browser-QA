@@ -1,11 +1,9 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "a873c4324225b8c760d83bdcc100cc3427dd3bee",
-  "pending_work_orders": [
-    "INK-CHAT-CONNECTOR-003"
-  ],
+  "pending_work_orders": [],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -21,11 +19,12 @@
     "INK-WEB-UI-006-PHASE-H",
     "INK-WEB-UI-006-PHASE-I",
     "INK-CHAT-CONNECTOR-002",
-    "INK-WEB-UI-006-VISUAL-CLOSURE"
+    "INK-WEB-UI-006-VISUAL-CLOSURE",
+    "INK-CHAT-CONNECTOR-003"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "INK-CHAT-CONNECTOR-003 changes Public Creative API invocation normalization and self-describing capability contracts; run one immediate exact-SHA browser regression before final MR acceptance."
+    "enabled": false,
+    "reason": "INK-CHAT-CONNECTOR-003 exact-SHA Windows Runtime passed."
   },
   "batch_policy": {
     "default_target": 3,
@@ -33,8 +32,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35959283474,
-    "tested_sha": "19658b1b7ac67696fd6390c13294b7b2f48da200",
+    "run_id": 35961649436,
+    "tested_sha": "a873c4324225b8c760d83bdcc100cc3427dd3bee",
     "result": "PASS"
   }
 }
