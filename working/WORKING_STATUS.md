@@ -1,3 +1,25 @@
+## Smart closed-loop QA order isolation accepted — 2026-09-24
+
+```text
+TASK = INK-CHAT-CLOSED-LOOP-001
+DEV_HANDOFF_HEAD = ac1f3407376a3e7f7cba1b792bac2bfb15f47cd3
+BASE_RUNTIME_SHA = b57a3471ceaaba915a296aa1fe46680ee3e44134
+
+MR_SOURCE_REVIEW = PASS
+REVISION_SCOPE = QA_ORDER_ISOLATION_ONLY / PASS
+FILES_CHANGED = 5 authorized files
+PRODUCT_SOURCE_CHANGE = 0
+
+WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT =
+  singular
+  + executed before smart loop
+  + smart loop byte-identical
+  + later Revision capture / compare / restore preserved
+
+NEXT = exact-SHA Windows Runtime
+TARGET_SHA = ac1f3407376a3e7f7cba1b792bac2bfb15f47cd3
+```
+
 ## Smart closed-loop Runtime 36014703794 — proof PASS / regression revise
 
 ```text
