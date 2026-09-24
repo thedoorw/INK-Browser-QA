@@ -282,7 +282,7 @@ const CAPABILITY_DEFINITIONS = Object.freeze([
   Object.freeze({ id: 'revision.capture', routingClass: 'NAMED_TOOL', namedTool: 'capture_ink_revision', availability: true }),
   Object.freeze({ id: 'revision.restore', routingClass: 'NAMED_TOOL', namedTool: 'restore_ink_revision', availability: true }),
   Object.freeze({ id: 'composition.programmable', routingClass: 'PROGRAMMABLE_FUTURE', namedTool: null, availability: false }),
-  Object.freeze({ id: 'render.preview', routingClass: 'UNAVAILABLE', namedTool: null, availability: false })
+  Object.freeze({ id: 'external.transport', routingClass: 'UNAVAILABLE', namedTool: null, availability: false })
 ]);
 
 export function createInkPublicCreativeApi(app) {
