@@ -1,18 +1,18 @@
 # INK-WEB-UI-006 — UI DEV HANDOFF
 
-STATUS: UI_REVISE / PHASE_B3_STARTUP
+STATUS: DEV_HANDOFF / PHASE_C_D / UR_REVIEW
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
-CURRENT PACKAGE: PHASE_A_B
+CURRENT PACKAGE: PHASE_C_D
 SOURCE OF TRUTH:
 - `research/INK_IDEAL_UI_STANDARD_v0.1.md`
 - `working/INK_UI_MODIFICATION_CHECKLIST_v0.1.md`
 - `working/INK_WEB_UI_006_WORK_ORDER.md`
 
-## Scope for this package
+## Prior Phase A/B package (historical)
 
-Implement only Phase A and Phase B.
+The following section records the completed Phase A/B package.
 
 ### Phase A — Final UI command map
 1. Produce a complete command/control inventory from current runtime/source.
@@ -258,3 +258,111 @@ Acceptance:
 `ONE SHELL STATE / NO STARTUP VISUAL SUBSTITUTE / NO FLASH DEBT`
 
 A same-color temporary frame is still debt and does not pass.
+
+
+---
+
+## Phase C + D DEV handoff
+
+STATUS: `DEV_HANDOFF → UR_REVIEW → STOP`
+
+Implementation source checkpoint before handoff-document updates:
+`7ce6aa86b6881045be3f120655e7becea8e4c937`
+
+Clean baseline:
+`main@042b4f9f7528b14df6d10593b61f65565b3779ac`
+
+Branch reconciliation:
+- current main product/QA authority was adopted before C/D implementation;
+- branch-local UI research/work-order/history documents were retained;
+- the pre-cleanup duplicated HTML/CSS/bootstrap implementation was not carried forward.
+
+### Phase C — top cleanup
+
+Implemented:
+- `檔案` is the visible desktop Primary Home for New / Open / Save / Export.
+- Existing runtime command buttons remain as hidden command endpoints / responsive fallback; their semantics were not changed.
+- Contextual Options remains the active-tool/selection surface.
+- Undo/Redo remains a compact 24×24 top shortcut; History semantics are unchanged.
+- Desktop Creation/Layout equal-weight switch is hidden; the menu/workspace route remains the desktop Primary Home and the existing mobile switch remains a Responsive Alternative.
+- Desktop top stack reduced from 60 px to 56 px:
+  - menu 24 px
+  - options/contextual row 32 px.
+
+### Phase D — left toolbar
+
+Implemented:
+- one-column is the default.
+- two-column layout is user-selectable.
+- tool order remains:
+  `Draw → Eraser → Select → Lasso → Shape → Text → Image → Pan`.
+- Draw family remains:
+  `Pen → Pencil → Marker → Brush → Airbrush`.
+- shortcuts and command identity are unchanged.
+- two-column mode changes layout only and does not add tools.
+- preference key:
+  `ink.web.ui.toolbar-columns.v0.1`
+- persistence is localStorage-only UI state; no Document / History / Revision write path is used.
+
+### Technical-debt regression guard
+
+Verified against exact branch source:
+- generated Web output equals the `shell.template.html` Web substitution exactly.
+- generated Portable output equals the `shell.template.html` Portable substitution exactly.
+- `generate-shell.mjs` blob is unchanged from current main.
+- `service-worker.js` blob is unchanged from current main.
+- desktop CSS authority marker count = 1.
+- old Phase-B override authority marker count = 0.
+- CSS brace balance = 0.
+- `:root` count = 14 (guard ceiling 14).
+- `!important` count = 220 (guard ceiling 222).
+- runtime-ready event contract is present.
+- bootstrap retry polling patterns are absent.
+- `FORMAT_VERSION = 4`.
+
+Added:
+- `qa/core/tests/unit/ink-web-ui-006-phase-cd.test.mjs`
+  - directly executes `node product/source/generate-shell.mjs --check` when repository tests run.
+- existing Photoshop shell geometry guard updated only for the authorized 32/56 px top geometry.
+- existing browser UI harness updated for the same authorized geometry plus File-menu and one/two-column toolbar behavior.
+
+Execution-context note:
+- this DEV connector context does not provide a checked-out repository filesystem or workflow-dispatch action, so the Node process itself was not invoked here.
+- the exact predicate used by `generate-shell.mjs --check` was evaluated against the committed template and both outputs and returned exact equality for Web and Portable.
+- no Runtime PASS is claimed by DEV; UR retains runtime visual/review authority.
+
+### C/D changed paths from clean reconciliation checkpoint
+
+Product UI:
+- `product/source/shell.template.html`
+- `product/source/index.html` (generated)
+- `product/source/index-standalone.html` (generated)
+- `product/source/styles.css`
+- `product/source/web-shell.js`
+
+QA:
+- `qa/core/tests/unit/ink-web-ui-006-phase-cd.test.mjs`
+- `qa/core/tests/unit/photoshop-shell-geometry-v0.1.test.mjs`
+- `qa/runtime/ink-web-ui-001-harness.html`
+
+Governance / handoff:
+- `working/INK_UI_MODIFICATION_CHECKLIST_v0.1.md`
+- `working/INK_WEB_UI_006_WORK_ORDER.md`
+- `working/INK_WEB_UI_006_DEV_HANDOFF.md`
+- `ACTIVE/INK_DEV_PROGRESS.md`
+
+Not changed by C/D:
+- Service Worker
+- generator authority
+- Core
+- Document
+- History
+- Revision
+- renderer / WebGL / Canvas engine
+- persistence / FORMAT_VERSION
+- Phase E–I implementation
+
+Final gate:
+`DEV_HANDOFF → UR_REVIEW → STOP`
+
+Phase E is NOT started.
