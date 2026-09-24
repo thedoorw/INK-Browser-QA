@@ -1,3 +1,28 @@
+## Smart closed-loop History QA revision accepted — 2026-09-24
+
+```text
+TASK = INK-CHAT-CLOSED-LOOP-001
+DEV_HANDOFF_HEAD = b57a3471ceaaba915a296aa1fe46680ee3e44134
+BASE_RUNTIME_SHA = 20262d942c7a4d1a5ca03898856a2d7ddff9f5d6
+
+MR_SOURCE_REVIEW = PASS
+REVISION_SCOPE = QA_ASSERTION_ONLY / PASS
+FILES_CHANGED = 5 authorized files
+PRODUCT_SOURCE_CHANGE = 0
+
+HISTORY_ASSERTION =
+  2 step receipts
+  + beforeUndoCount → afterUndoCount + 1
+  + latestLabel = CHAT repaint Path
+  + final 2 entries captureMode = scoped
+  + label = CHAT repaint Path
+  + patchCount > 0
+  + no scalar repaint objectIds dependency
+
+NEXT = exact-SHA Windows Runtime
+TARGET_SHA = b57a3471ceaaba915a296aa1fe46680ee3e44134
+```
+
 ## Smart closed-loop Runtime 36012548161 — MR_REVISE / QA_ASSERTION_ONLY
 
 ```text
