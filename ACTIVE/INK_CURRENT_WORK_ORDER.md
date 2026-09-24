@@ -1,400 +1,475 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-CONNECTOR-001 / MR_PASS / PROMOTION_NOT_YET_EXECUTED`
+STATUS: `INK-CHAT-CONNECTOR-002 / VISUAL_ASSET_FEEDBACK / MR_ISSUED / DEV_AUTHORIZED`
 
 ## Control
 
 | Field | Value |
 |---|---|
-| TASK_ID | `INK-CHAT-CONNECTOR-001` |
-| PHASE | `PUBLIC_API_NAMED_TOOLS_RESULT_ENVELOPE` |
-| TITLE | `Figma / Penpot / Adobe-informed INK Agent Connector Foundation` |
-| DEV_BRANCH | `work/ink-chat-connector-001` |
-| RESEARCH_BASELINE | `research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md` |
-| PREVIOUS_CHAT_GATE | `INK-CHAT-VALIDATION-001 Phase C = MR_SOURCE_PASS / HOLD_BY_USER` |
-| TARGET_GATE | `INK_AGENT_CONNECTOR_FOUNDATION_WORKS` |
+| TASK_ID | `INK-CHAT-CONNECTOR-002` |
+| PHASE | `PREVIEW_OUTPUT_HANDLE_FOUNDATION` |
+| TITLE | `Visual / Asset Feedback — Preview + INK_OUTPUT_HANDLE` |
+| DEV_BRANCH | `work/ink-chat-connector-002` |
+| ACCEPTED_UPSTREAM | `INK-CHAT-CONNECTOR-001 / MR_PASS / promoted` |
+| CONNECTOR_001_PROMOTION_COMMIT | `efd48a429d9998b4871aebf7bd1e47a576d41a95` |
+| TARGET_GATE | `INK_VISUAL_ASSET_FEEDBACK_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_VERSION | `v0.1 / PRESERVE` |
 | IMAGE_MODEL | `0` |
-| UI_LANE | `SEPARATE / DO NOT MUTATE UI WORK ORDER` |
+| UI_LANE | `SEPARATE / UI-006 Phase H currently revising after Runtime FAIL` |
 
 ## User direction
 
-The user requested that the connector design be expanded from Figma/Penpot to include the installed Adobe for ChatGPT workflow, then that CHAT ↔ INK capabilities be replanned and re-issued for development.
+Connector-001 stays closed.
 
-Research baseline now includes:
-
-```text
-Figma
-= generic programmable native-object access
-
-Penpot
-= generic execute-code / Plugin API access
-
-Adobe
-= capability routing
-  + specialized tools
-  + stable asset/result handles
-  + before/after model preview
-  + targeted selection/mask workflow
-  + template/library reuse
-```
-
-Drawing validation remains paused:
+The next connector stage is redefined to combine:
 
 ```text
-PHASE_C_RUNTIME = HOLD
-PHASE_D_TO_F = HOLD / NOT_AUTHORIZED
+Preview
++
+Asset / Output Handle
 ```
 
-## Revised target architecture
+The goal is not to add a second renderer or external transport.
+
+The goal is:
 
 ```text
-USER / CHAT intent
-        ↓
-future INK Skill / Capability Router
-        ↓
- ┌─────────────────────────────┐
- │ Layer A — Named INK Tools   │  Adobe pattern
- └─────────────────────────────┘
-        ↓ when sufficient
-
- OR
-
- ┌─────────────────────────────┐
- │ Layer B — future use_ink    │  Figma / Penpot pattern
- └─────────────────────────────┘
-        ↓
-INK Public Creative API
-        ↓
-existing INK authorities only
-        ↓
-Document / Reference / Path
-History / Revision / Grounding
+CHAT requests visual evidence
+→ INK uses its existing render/export authority
+→ INK creates a bounded preview asset
+→ Public Creative API returns JSON-safe metadata + INK_OUTPUT_HANDLE
+→ handle is bound to exact document/page/revision/fingerprint/render result
+→ future transport can resolve the handle to bytes
 ```
 
-This Work Order builds the common foundation under both future layers.
-
-It does **not** build external MCP/plugin transport, arbitrary `use_ink` execution, screenshot transport, or new drawing behavior.
+This Work Order implements the internal visual-feedback and output-handle foundation only.
 
 ---
 
-## A — Public Creative API facade
+## A — Existing authority reuse
 
-Install exactly one JSON-safe facade on the existing `InkApp`.
+Connector-002 must reuse existing accepted product authorities.
 
-Recommended module:
+### Rendering
+
+Preferred authoritative route:
+
+```text
+app.renderExportCanvas(...)
+```
+
+Existing renderer/export helpers may be reused where appropriate:
+
+- `Renderer.viewportWorldBounds()`;
+- `Renderer.contentBounds()`;
+- `artboardExportGeometry(...)`;
+- existing `renderExportWorld(...)`;
+- existing Canvas rendering path.
+
+Do not create:
+
+- a second canvas renderer;
+- DOM screenshot logic;
+- a parallel SVG renderer;
+- a new export engine.
+
+### Document identity
+
+Reuse existing:
+
+```text
+documentFingerprint(...)
+app.revisions.revisionIdFor(...)
+stable Page / Layer / Object refs
+buildAIDocumentBridge(...)
+```
+
+### Public API
+
+Extend the promoted:
+
+```text
+app.inkPublicApi
+INK_AGENT_RESULT
+Named Tool Registry
+Capability Registry
+```
+
+Do not install a second public connector facade.
+
+---
+
+## B — Preview operation
+
+Required Public Creative API family:
+
+```text
+preview.capture(options)
+```
+
+Required named tool:
+
+```text
+get_ink_preview
+```
+
+Supported preview scopes for Connector-002:
+
+```text
+artboard
+viewport
+content
+```
+
+Do not add selection-crop/object-crop rendering in this Work Order.
+
+Optional `refs` may be supplied only as semantic binding metadata. They must be validated through the existing document grounding path and must not silently change the rendered crop.
+
+### Bounded preview
+
+Preview rendering must be explicitly bounded.
+
+Target defaults:
+
+```text
+defaultMaxDimension = 1200
+hardMaxDimension = 1600
+hardMaxPixels = 2_560_000
+format = image/png
+includeBleed = false
+cropMarks = false
+```
+
+The implementation must derive a safe `ppi` or `scale` before calling the existing render authority so the preview stays below the hard limits and does not enter the large tiled-export/UI-progress path.
+
+Preview generation must not:
+
+- open Export UI;
+- call `download(...)`;
+- trigger print;
+- mutate selection;
+- mutate Document;
+- create History;
+- auto-capture Revision.
+
+For preview PNG encoding, a bounded canvas `toBlob('image/png')` path is allowed.
+
+Do not route preview through the user-facing `exportPNG()` controller if that would mutate Export UI state.
+
+---
+
+## C — INK_OUTPUT_HANDLE v1
+
+Create one reusable JSON-safe descriptor schema:
+
+```text
+INK_OUTPUT_HANDLE
+version = 1
+```
+
+Required descriptor fields:
+
+```text
+schema
+version
+handleId
+kind
+format
+mimeType
+
+documentId
+pageId
+revisionId
+documentFingerprint
+
+renderFingerprint
+fingerprintAlgorithm
+
+scope
+bounds
+pixelSize
+background
+
+objectRefs[]
+byteLength
+
+transport
+persistence
+```
+
+Required values for Connector-002 preview output:
+
+```text
+kind = "preview"
+format = "png"
+mimeType = "image/png"
+transport = "INTERNAL_EPHEMERAL"
+persistence = "NONE"
+```
+
+### Binding rules
+
+A handle must bind the visual result to:
+
+- exact Document ID;
+- exact active Page ID;
+- current Revision ID when one exists;
+- exact current Document fingerprint;
+- normalized render request;
+- actual encoded preview result through `renderFingerprint`;
+- validated optional object refs.
+
+The handle descriptor itself must contain no:
+
+- Blob;
+- Canvas;
+- DOM node;
+- function;
+- ObjectURL;
+- raw base64/data URL;
+- live mutable Document/Object reference.
+
+### Handle identity
+
+`handleId` must be deterministic/content-addressed from the normalized output identity.
+
+Do not use a random UUID as the only identity.
+
+The descriptor must state the render fingerprint algorithm.
+
+A small deterministic byte-hash helper may be added for preview bytes. This is not a new rendering/document authority.
+
+---
+
+## D — Internal ephemeral output registry
+
+Connector-002 may add one bounded internal registry for preview payloads.
+
+Purpose:
+
+```text
+INK_OUTPUT_HANDLE descriptor
+↔
+actual preview Blob/string payload
+```
+
+This registry is transport preparation, not persistent asset storage.
+
+Requirements:
+
+```text
+persistence = NONE
+maxEntries <= 8
+maxTotalBytes <= 32 MiB
+bounded eviction required
+duplicate content-addressed handle may reuse an existing entry
+```
+
+The raw payload resolver must **not** be exposed as a normal Named Tool and must **not** be embedded inside `INK_AGENT_RESULT`.
+
+Future MCP/plugin transport may explicitly import/use the internal resolver in a later Work Order.
+
+No filesystem, IndexedDB, project-document, or cloud persistence in Connector-002.
+
+---
+
+## E — Handle inspection / release
+
+Required Public API methods:
+
+```text
+asset.inspect(handleId)
+asset.release(handleId)
+```
+
+Required named tools:
+
+```text
+inspect_ink_output
+release_ink_output
+```
+
+### inspect
+
+Returns only JSON-safe metadata.
+
+It should report:
+
+```text
+handle
+available
+stale
+staleReasons[]
+currentDocumentFingerprint
+currentRevisionId
+```
+
+At minimum, stale detection must catch:
+
+- current Document fingerprint differs from the handle binding;
+- active document/page identity differs;
+- payload has been evicted/released.
+
+A null Revision ID is valid. Document fingerprint remains the exact-state binding even without a captured Revision.
+
+### release
+
+Releases the internal ephemeral payload/entry only.
+
+It must not mutate:
+
+- Document;
+- History;
+- Revision;
+- selection.
+
+---
+
+## F — Extend INK_AGENT_RESULT
+
+`preview.capture()` / `get_ink_preview` must return:
+
+```text
+INK_AGENT_RESULT {
+  ...
+  targetRefs[]
+  outputHandles: [INK_OUTPUT_HANDLE]
+  diagnostics[]
+  result
+}
+```
+
+`outputHandles[]` now has a concrete v1 contract.
+
+No raw binary belongs inside the result envelope.
+
+Connector-001 result-envelope fields and ordering remain compatible.
+
+---
+
+## G — Capability / Named Tool registry update
+
+Add capabilities:
+
+```text
+preview.capture
+asset.inspect
+asset.release
+```
+
+Add Named Tools:
+
+```text
+get_ink_preview
+inspect_ink_output
+release_ink_output
+```
+
+Expected Named Tool count after Connector-002:
+
+```text
+14 existing
++ 3 Connector-002
+= 17
+```
+
+Routing:
+
+```text
+preview.capture = NAMED_TOOL
+asset.inspect = READ_ONLY
+asset.release = NAMED_TOOL
+```
+
+All three must declare:
+
+- authoritative route;
+- read/write role;
+- History expectation;
+- Revision expectation;
+- availability;
+- result-envelope contract.
+
+Preview/asset release are connector-side ephemeral operations and do not count as Document writes.
+
+---
+
+## H — Suggested source shape
+
+Preferred:
 
 ```text
 product/source/src/agent/
   index.js
   public-creative-api.js
+  output-handle-registry.js
+  visual-feedback.js
 ```
 
-Recommended install surface:
+Exact file split may vary, but authority must remain single:
 
 ```text
 app.inkPublicApi
 ```
 
-The facade must delegate to existing authorities and must never return a live mutable reference into `app.doc`.
-
-### Required read families
-
-```text
-capabilities()
-context(options)
-selection()
-inspect(refs / objectIds)
-```
-
-Authority:
-
-- existing `buildAIDocumentBridge`;
-- stable Page / Layer / Object IDs;
-- existing selection state.
+Do not expose a new unrestricted `window` or `globalThis` API.
 
 ---
 
-## B — Adobe-style Named Tool foundation
-
-Within the same facade, expose a deterministic named-tool registry.
-
-Do **not** create a second engine or second global tool router.
-
-Required logical tool names:
-
-```text
-get_ink_capabilities
-get_ink_context
-get_ink_selection
-inspect_ink_objects
-
-decompose_ink_reference
-
-propose_ink_edit
-approve_ink_edit
-execute_ink_edit
-
-get_ink_history
-undo_ink
-redo_ink
-
-get_ink_revisions
-capture_ink_revision
-restore_ink_revision
-```
-
-Implementation may expose them as a registry/map or `tools` family under `app.inkPublicApi`.
-
-Each named tool must declare:
-
-- tool name;
-- read / proposal / write role;
-- authoritative INK route;
-- approval requirement;
-- History expectation;
-- Revision expectation;
-- availability;
-- result-envelope behavior.
-
-The named tool is only a wrapper over the Public Creative API method.
-
----
-
-## C — Reference decomposition connection
-
-Named/public operation:
-
-```text
-reference.decompose(referenceObjectId, options)
-decompose_ink_reference
-```
-
-Authority:
-
-`app.chatReferenceHandoff.decomposeReference`
-
-Preserve unchanged:
-
-- accepted ImageTracerJS bounded trace;
-- Reference → editable Color + boundary Line;
-- separate layer identities;
-- generated stable object IDs;
-- History receipt;
-- Revision behavior;
-- audit/provenance.
-
-Do not use Adobe `image_vectorize` inside INK and do not rewrite Phase B.
-
-Adobe is a workflow reference, not the decomposition authority.
-
----
-
-## D — Bounded edit connection
-
-Public methods:
-
-```text
-edit.inspect()
-edit.propose(task)
-edit.approve(proposalId)
-edit.execute(proposalId, approvalToken)
-```
-
-Named tools:
-
-```text
-propose_ink_edit
-approve_ink_edit
-execute_ink_edit
-```
-
-Authority:
-
-`app.chatBoundedEditAdapter`
-
-Existing operation registry remains authoritative:
-
-```text
-path.repaint.v1
-path.material.apply.v1
-path.material.remove.v1
-object.translate.v1
-path.simplify.v1
-path.refine.v1
-```
-
-No named tool may bypass proposal/approval by directly mutating Document/Path state.
-
----
-
-## E — History connection
-
-Public methods / named tools:
-
-```text
-history.inspect()   / get_ink_history
-history.undo()      / undo_ink
-history.redo()      / redo_ink
-```
-
-Authority:
-
-`app.history`
-
-No second stack.
-
----
-
-## F — Revision connection
-
-Public methods / named tools:
-
-```text
-revision.current()
-revision.list()       / get_ink_revisions
-revision.capture()    / capture_ink_revision
-revision.restore()    / restore_ink_revision
-```
-
-Authority:
-
-`app.revisions`
-
-No automatic Revision after every operation.
-
----
-
-## G — Normalized INK agent result envelope
-
-Borrow Adobe's mature structured-result pattern.
-
-All public/named tool results must be normalized into one JSON-safe envelope while retaining the original underlying receipt.
-
-Target schema:
-
-```text
-INK_AGENT_RESULT
-{
-  schema
-  version
-  action
-  status
-
-  documentId
-  pageId
-  revisionId
-
-  targetRefs[]
-  createdRefs[]
-  changedRefs[]
-
-  historyReceipt
-  revisionReceipt
-  provenanceReceipt
-
-  outputHandles[]
-  diagnostics[]
-
-  result
-}
-```
-
-Requirements:
-
-- deterministic field ordering where serialized for tests;
-- JSON-safe only;
-- no Blob/Canvas/DOM/live object references;
-- no live mutable Document reference;
-- preserve useful underlying receipt under `result`;
-- empty/unsupported fields use bounded null/empty forms rather than fabricated values.
-
-Preview fields such as `previewHandle`, `renderFingerprint`, bounds and mime type are reserved for Connector-002 and are not produced in this Work Order.
-
----
-
-## H — Capability routing metadata
-
-The registry must let a later INK Skill choose:
-
-```text
-named tool first
-→ if not sufficient, future use_ink
-```
-
-Each capability should identify a routing class:
-
-```text
-NAMED_TOOL
-PROGRAMMABLE_FUTURE
-READ_ONLY
-PROPOSAL_REQUIRED
-UNAVAILABLE
-```
-
-Examples:
-
-```text
-Reference decomposition
-= NAMED_TOOL
-
-Path repaint
-= PROPOSAL_REQUIRED
-  via propose_ink_edit → approve → execute
-
-complex multi-object scripted composition
-= PROGRAMMABLE_FUTURE
-  future use_ink
-```
-
----
-
-## I — Installation boundary
-
-Required product order:
-
-```text
-existing InkApp
-→ installExtraction
-→ installChatReferenceHandoff
-→ installPathEditing / Repaint
-→ installRevision
-→ installChatBoundedEdit
-→ installInkPublicCreativeApi
-```
-
-Exact ordering may differ where dependencies prove otherwise, but the Public API must install only after every authority it delegates to is available.
-
-Do not expose a new unrestricted `window` API in Connector-001.
-
----
-
-## Required QA
-
-Focused tests must cover at minimum:
-
-1. capability registry deterministic and JSON-safe;
-2. named-tool registry deterministic and one-to-one with existing Public API methods;
-3. routing metadata correctly distinguishes named/proposal/future-programmable operations;
-4. `INK_AGENT_RESULT` schema is deterministic and JSON-safe;
-5. returned values cannot mutate `app.doc`;
-6. context/selection/inspect delegate to grounded Document Bridge;
-7. `decompose_ink_reference` delegates to existing Reference Handoff;
-8. bounded edit still requires existing proposal → approval → execute authority;
-9. direct execution without valid approval remains rejected;
-10. History named tools delegate to the existing HistoryManager;
-11. Revision named tools delegate to the existing RevisionController;
-12. no second History / Revision / Geometry / decomposition engine;
-13. no `eval`, `Function`, arbitrary execution or direct JSON write path;
-14. `FORMAT_VERSION = 4`;
-15. Web / Portable use the same shared source.
+## I — Required QA
+
+Focused QA must cover at minimum:
+
+1. Connector-001 14 existing named tools remain unchanged;
+2. total named tools = 17;
+3. capability registry exposes preview/asset operations deterministically;
+4. `get_ink_preview` delegates to the existing INK render/export path;
+5. preview dimensions obey max-dimension/max-pixel limits;
+6. preview does not enter large tiled-export/UI-progress behavior;
+7. preview does not call download/print/user export UI;
+8. `INK_OUTPUT_HANDLE` is deterministic and JSON-safe;
+9. no Blob/Canvas/DOM/ObjectURL/base64 appears in public result;
+10. internal registry can resolve the exact stored preview payload;
+11. duplicate content-addressed result reuses a compatible handle;
+12. registry obeys entry/byte bounds and eviction;
+13. descriptor binds document/page/revision/document fingerprint;
+14. actual encoded preview contributes to `renderFingerprint`;
+15. optional refs are grounded/validated but do not alter crop;
+16. `asset.inspect` reports current/stale state correctly after document mutation;
+17. `asset.release` invalidates availability without Document mutation;
+18. Preview/inspect/release do not create History;
+19. Preview/inspect/release do not auto-capture Revision;
+20. Connector-001 focused QA remains PASS;
+21. `FORMAT_VERSION = 4`;
+22. Web / Portable use the same source implementation.
 
 Required regressions:
 
-- Phase B Reference → Color + Line focused QA PASS;
-- accepted CHAT bounded-edit core QA PASS;
-- document/history/revision core QA PASS.
+- Connector-001 Agent Foundation focused QA;
+- Document Bridge core;
+- History core;
+- Revision core;
+- Renderer/export focused checks relevant to `renderExportCanvas`.
+
+---
+
+## J — Browser/runtime gate coordination
+
+UI-006 Phase H currently has a separate Runtime FAIL and revision lane.
+
+Connector-002 DEV must not take over or rewrite the central UI Runtime queue.
+
+During DEV:
+
+```text
+focused source/unit QA = REQUIRED
+browser Runtime = DO NOT CLAIM FINAL PASS
+```
+
+After DEV handoff, MR will choose an exact-SHA browser gate after reconciling against the then-current accepted UI/main state.
+
+A Runtime failure inherited solely from unresolved UI-006 Phase H is not permission for Connector DEV to modify UI.
 
 ---
 
@@ -402,93 +477,72 @@ Required regressions:
 
 Do not implement:
 
-- `use_ink` / arbitrary programmable execution;
-- `eval`, `Function`, arbitrary JS sandbox;
-- MCP server or ChatGPT plugin packaging;
-- WebSocket/postMessage external transport;
-- `get_ink_preview` or screenshot/image transport;
-- external asset upload transport;
-- Adobe/Figma/Penpot adapters;
-- Adobe `image_vectorize` inside INK;
-- new trace/decomposition behavior;
-- new drawing/edit operation;
-- new design-token engine;
+- external MCP/plugin transport;
+- ChatGPT image attachment transport;
+- `use_ink`;
+- arbitrary JS/eval/Function execution;
+- Capability Schema Discovery / `describe_ink_capability` — reserved for Connector-003;
+- Creative Session;
+- Recipe/Workflow registry;
 - Creative Library Search;
+- Design Critic / Fix;
+- selection/object crop preview;
+- new Renderer;
+- DOM screenshot;
+- persistent asset library;
+- cloud upload;
+- automatic Revision capture;
+- new drawing/edit operation;
+- new trace/decomposition behavior;
+- Document schema / FORMAT_VERSION change;
 - UI redesign;
-- Service Worker/bootstrap/cache changes;
-- Document schema / FORMAT_VERSION changes;
-- automatic approval;
-- automatic Revision capture.
+- Service Worker/bootstrap/cache changes.
 
 If required:
 
-`STOP → MR → next Connector Work Order`
+`STOP → MR → separate next Work Order`
 
 ---
 
-## Revised next sequence — planning only
+## Planned next sequence — not authorized by this Work Order
 
 ```text
-Connector-002
-= Visual Feedback
-  get_ink_preview
-  + metadata / bounds / render fingerprint
-
 Connector-003
-= use_ink programmable execution bridge
+= Capability Discovery / describe capability / input schema
 
 Connector-004
-= INK Skill / Capability Router
-  Figma + Penpot + Adobe workflow grammar
+= use_ink programmable native composition
 
 Connector-005
-= Creative Library Search
-  components / materials / recipes / structures / templates
+= INK Skill / Capability Router
 
 Connector-006
-= full Reference → Color + Line → CHAT
-  → preview → correction → History / Revision closed loop
-```
+= Creative Library + Recipe foundation
 
-The deliberate change is:
+Connector-007
+= Creative Session / reusable Workflow
 
-```text
-Preview BEFORE general use_ink
-+
-Named tools become first-class
+Connector-008
+= Design Critic / Fix
+
+Final
+= full creative closed loop
 ```
 
 ---
-
-## MR final disposition
-
-```text
-REVIEW_HEAD = d95d8f80fb57920d8bba2f07557d084a11305ecd
-SOURCE_REVIEW = PASS
-EXACT_SHA_RUNTIME = PASS
-RUNTIME_RUN = 35951192558
-UI = PASS
-CREATIVE = PASS
-GEOMETRY = PASS
-FINAL_GATE = INK_AGENT_CONNECTOR_FOUNDATION_WORKS
-MR = PASS
-PROMOTION = NOT_YET_EXECUTED
-CONNECTOR_002 = NOT_AUTHORIZED
-```
 
 ## Gate
 
 ```text
 DEV_AUTHORIZED
-→ implementation + focused QA
+→ implementation
+→ focused QA + required regressions
 → DEV_HANDOFF / STOP
 → MR exact-HEAD source review
-→ regression review
+→ MR runtime decision / integration reconciliation
 → MR_PASS / MR_REVISE
 ```
 
-Browser Runtime is not automatically required for Connector-001 unless DEV changes browser integration beyond installing the facade. MR decides after exact-HEAD review.
-
 Acceptance:
 
-`INK_AGENT_CONNECTOR_FOUNDATION_WORKS`
+`INK_VISUAL_ASSET_FEEDBACK_WORKS`
