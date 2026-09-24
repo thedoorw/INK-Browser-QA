@@ -739,9 +739,9 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .menu-app-mark{height:100%;display:flex;align-items:center;gap:5px;padding:0 9px 0 6px;border-right:1px solid var(--chrome-line);white-space:nowrap}
   .menu-app-mark strong{font-size:10px;letter-spacing:.12em;font-weight:700}
   .menu-app-mark small{font-size:8px;color:var(--chrome-faint);font-variant-numeric:tabular-nums}
-  .application-menus{display:flex;align-items:stretch;height:100%;min-width:0;overflow:hidden}
-  .application-menus button{height:100%;padding:0 8px;color:#d5d6d8;font-size:11px;font-weight:400;border-radius:0;white-space:nowrap}
-  .application-menus button:hover,.application-menus button:focus-visible{background:#505155;color:#fff;outline:0}
+  .application-menus{display:flex;align-items:stretch;height:100%;min-width:0;overflow:visible}
+  .application-menus > button,.application-menu > button{height:100%;padding:0 8px;color:#d5d6d8;font-size:11px;font-weight:400;border-radius:0;white-space:nowrap}
+  .application-menus > button:hover,.application-menus > button:focus-visible,.application-menu > button:hover,.application-menu > button:focus-visible{background:#505155;color:#fff;outline:0}
   .menu-workspace{margin-left:auto;height:100%;display:flex;align-items:center;border-left:1px solid var(--chrome-line);color:var(--chrome-muted);font-size:9px}
   .menu-workspace span{padding:0 7px 0 10px;letter-spacing:.02em}
   .menu-workspace button{height:100%;width:25px;color:var(--chrome-muted);border-left:1px solid rgba(0,0,0,.18);border-radius:0}
@@ -853,7 +853,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 @media(max-width:1120px) and (min-width:761px){
-  .application-menus button{padding:0 6px;font-size:10px}
+  .application-menus > button,.application-menu > button{padding:0 6px;font-size:10px}
   .menu-workspace span{display:none}
   .topbar{grid-template-columns:minmax(210px,1fr) auto minmax(310px,1fr)}
   .doc-title{width:min(22vw,250px)}
@@ -968,6 +968,15 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 /* ========================================================================== 
    Field-test repair pass — workspace controls
    ========================================================================== */
+
+/* Functional application menus */
+.application-menu{position:relative;height:100%;display:flex;align-items:stretch}
+.application-command-menu{position:absolute;left:0;top:100%;z-index:145;width:196px;padding:4px;background:#363739;border:1px solid #191a1c;box-shadow:0 8px 24px rgba(0,0,0,.44);color:#dedfe1}
+.application-command-menu[hidden]{display:none!important}
+.application-command-menu button{width:100%;height:30px;padding:0 8px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;text-align:left;color:#d7d8da;border:0;border-radius:1px;background:transparent;font-size:11px}
+.application-command-menu button:hover,.application-command-menu button:focus-visible{background:#4a4b4e;color:#fff;outline:none}
+.application-command-menu kbd{font:9px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace;color:#9fa1a5;background:transparent;border:0;box-shadow:none;padding:0}
+.application-menu-separator{display:block;height:1px;margin:4px 5px;background:#242527}
 
 /* Functional workspace menu */
 .menu-workspace{position:relative}
@@ -2149,7 +2158,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
         --chrome-line-soft:#c4c4c4;}
   .menu-strip{height:var(--menu-h);border-bottom:1px solid #202123}
   .menu-app-mark{padding-inline:5px 8px}
-  .application-menus button{padding-inline:7px}
+  .application-menus > button,.application-menu > button{padding-inline:7px}
   .menu-workspace{border-left-color:#292a2c}
   .topbar{top:var(--menu-h);height:var(--options-h);grid-template-columns:auto minmax(250px,1fr) auto auto;column-gap:0;padding:0 4px;overflow:visible;border-bottom:1px solid #202123;box-shadow:inset 0 1px rgba(255,255,255,.045)}
   .topbar-leading{gap:1px;height:100%;padding-right:3px}
@@ -2169,6 +2178,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .topbar .history-group{gap:0}
   .topbar .history-group .icon-button{width:27px;height:27px}
   .file-group{gap:1px;height:100%;padding-left:3px}
+  .file-group .desktop-file,.file-group .mobile-file-export{display:none}
   .quiet-button{height:27px;padding-inline:6px}
   .primary-button{height:28px;min-height:28px;padding-inline:8px}
   .file-group .icon-button{width:28px;height:28px}
@@ -2177,12 +2187,20 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .app.panel-primary-open .stage-wrap{right:calc(var(--panel-dock-w) + var(--active-panel-w))}
   .app[data-space="layout"] .stage-wrap{background:#262626}
   .app[data-space="layout"] .canvas-vignette{box-shadow:inset 0 0 32px rgba(0,0,0,.10)}
-  .tool-rail{top:var(--topbar-h);bottom:var(--status-h);left:0;width:var(--tool-w);padding:2px 1px;border:0;border-right:1px solid #202123;border-radius:0;box-shadow:inset -1px 0 rgba(255,255,255,.03)}
+  .tool-rail{top:var(--topbar-h);bottom:var(--status-h);left:0;width:var(--tool-w);padding:2px 1px;border:0;border-right:1px solid #202123;border-radius:0;box-shadow:inset -1px 0 rgba(255,255,255,.03);display:flex;flex-direction:column;overflow:hidden}
   .tool-group{gap:0}
   .tool-rail .tool-button{height:28px;border-radius:1px}
   .tool-button .tool-icon{width:24px;height:24px}
   .tool-button .tool-icon svg{width:19px;height:19px;stroke-width:1.45}
   .tool-separator{height:1px;margin:2px 3px}
+  .app.toolbar-layout-dual{--tool-w:68px}
+  .app.toolbar-layout-dual .tool-group{display:grid;grid-template-columns:repeat(2,31px);justify-content:center;align-content:start}
+  .app.toolbar-layout-dual .tool-rail .tool-button{width:31px}
+  .tool-layout-controls{margin-top:auto;padding:4px 3px 2px;border-top:1px solid #202123;display:flex;justify-content:center;flex:0 0 auto}
+  .tool-layout-toggle{width:30px;height:26px;display:grid;place-items:center;border-radius:1px;color:#aeb0b3;background:transparent}
+  .tool-layout-toggle svg{width:15px;height:15px}
+  .tool-layout-toggle:hover,.tool-layout-toggle:focus-visible{background:#505154;color:#fff;outline:0}
+  .tool-layout-toggle[aria-pressed="true"]{color:#79c8c0;background:#30403e}
   .brush-family-popover{left:var(--tool-w);top:var(--topbar-h)}
 
   .panel-dock{position:absolute;z-index:84;top:var(--topbar-h);right:0;bottom:var(--status-h);width:var(--panel-dock-w);padding:2px 0;display:flex;flex-direction:column;align-items:stretch;overflow:hidden;background:#303133;border-left:1px solid #202123;box-shadow:inset 1px 0 rgba(255,255,255,.035)}
@@ -2200,6 +2218,11 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .inspector-resizer::after{left:3px;top:0;width:1px;height:100%;border-radius:0;background:#17181a}
 
   .creative-workspace-panel{z-index:79;right:var(--panel-dock-w);top:var(--topbar-h);bottom:var(--status-h);width:clamp(244px,var(--inspector-w),360px);min-height:0;max-height:none;overflow:hidden;flex-direction:column;border-radius:0;border-top:0;border-bottom:0;border-right:0;border-left:1px solid #1c1d1f;background:#343537;box-shadow:-2px 0 8px rgba(0,0,0,.18)}
+  /* Phase H Runtime correction: the legacy Creative Workspace selector has
+     higher specificity and otherwise re-applies right:14px / legacy width
+     whenever Inspector is closed. Keep the consolidated desktop shell as the
+     sole geometry authority without altering mobile rules. */
+  .app:not(.inspector-open) .creative-workspace-panel{right:var(--panel-dock-w);width:clamp(244px,var(--inspector-w),360px)}
   .creative-workspace-panel:not(.open){display:none}
   .creative-workspace-panel.open{display:flex}
   .creative-workspace-toggle{display:none!important}
@@ -2280,9 +2303,16 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
     border-radius:2px;
   }
   .menu-app-mark small{color:#858585}
-  .application-menus button{color:#333}
-  .application-menus button:hover,
-  .application-menus button:focus-visible{background:#e8e8e8;color:#111}
+  .application-menus > button,.application-menu > button{color:#333}
+  .application-menus > button:hover,
+  .application-menus > button:focus-visible,
+  .application-menu > button:hover,
+  .application-menu > button:focus-visible{background:#e8e8e8;color:#111}
+  .application-command-menu{background:#fff;border-color:#cfcfcf;color:#333;box-shadow:0 6px 18px rgba(0,0,0,.16)}
+  .application-command-menu button{color:#333}
+  .application-command-menu button:hover,.application-command-menu button:focus-visible{background:#e8e8e8;color:#111}
+  .application-command-menu kbd{color:#777}
+  .application-menu-separator{background:#ddd}
   .menu-workspace{border-left-color:#d7d7d7;color:#686868}
   .menu-workspace button{color:#666;border-left-color:#d7d7d7}
   .menu-workspace button:hover{background:#e8e8e8;color:#111}
@@ -2334,6 +2364,10 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
   .tool-button:hover{color:#202020;background:#ececec}
   .tool-button.active{color:#286f68;background:#e1efed;box-shadow:inset 0 0 0 1px #c5ddda}
   .tool-separator{background:#d5d5d5}
+  .tool-layout-controls{border-top-color:#d5d5d5}
+  .tool-layout-toggle{color:#666}
+  .tool-layout-toggle:hover,.tool-layout-toggle:focus-visible{background:#e9e9e9;color:#202020}
+  .tool-layout-toggle[aria-pressed="true"]{background:#e1efed;color:#286f68}
 
   .panel-dock{
     background:#f7f7f7;
@@ -2414,4 +2448,395 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 }.brand-source-mark{display:block;width:25px;height:25px;object-fit:contain;flex:0 0 auto}
 @media(max-width:760px){.brand .brand-source-mark{width:28px;height:28px}}
 
+
+
+
+/* ==========================================================================
+   INK-WEB-UI-006 — Phase E right Panel Dock grouping
+   Presentation-only: one existing Inspector / Creative Workspace authority.
+   ========================================================================== */
+@media(min-width:761px){
+  .panel-dock-group.specialist{padding-top:2px;padding-bottom:4px}
+  .panel-dock-group.specialist .panel-dock-button{color:#9fa1a4}
+  .panel-dock-group.specialist .panel-dock-button.active{color:#86c8c2;background:#303f3d}
+
+  /* Properties and Specialist share the existing Inspector, but their
+     navigation families are visually exclusive. */
+  .properties-subnav .specialist-subtab{display:none}
+  .app[data-shell-panel="specialist"] .properties-subnav .properties-subtab{display:none}
+  .app[data-shell-panel="specialist"] .properties-subnav .specialist-subtab{display:flex}
+  .app[data-shell-panel="layers"] .properties-subnav,
+  .app[data-shell-panel="history"] .properties-subnav{display:none}
+
+  .geometry-panel .studio-button-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .specialist-panel .diagnostic-card{border-left:2px solid #65706f}
+}
+
+@media(max-width:760px){
+  /* Mobile keeps the established Inspector entry; all existing capability
+     tabs remain reachable without introducing a second mobile router. */
+  .properties-subnav{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .properties-subnav .inspector-tab{min-width:0}
+  .properties-subnav .inspector-tab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+
+
+/* ==========================================================================
+   INK-WEB-UI-006 — Phase F Primary Home enforcement
+   Keep legacy object-action handler endpoints in DOM without exposing a
+   second equal-status visible selection action strip.
+   ========================================================================== */
+.selection-command-proxies{display:none!important}
+.object-deep-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+
+/* ==========================================================================
+   INK-WEB-UI-006 — Phase G typography system
+   Presentation-only. Artwork Text/document typography semantics are untouched.
+   ========================================================================== */
+:root{
+  /* Accepted-shell values consolidated into one UI typography authority. */
+  --ui-type-xs:9px;       /* UI-XS: metadata / compact badges only */
+  --ui-type-sm:9.5px;     /* UI-SM: secondary labels / compact state */
+  --ui-type-md:10px;      /* UI-MD: normal workstation controls */
+  --ui-type-lg:11px;      /* UI-LG: panel/application headings */
+  --ui-type-brand:10px;   /* BRAND: INK brand text only */
+  --ui-weight-regular:400;
+  --ui-weight-control:500;
+  --ui-weight-heading:650;
+  --ui-weight-meta:700;
+  --ui-line-control:1.2;
+  --ui-line-copy:1.45;
+}
+
+/* Brand is intentionally separate from the workstation hierarchy. */
+.menu-app-mark strong,
+.brand strong{
+  font-size:var(--ui-type-brand);
+  font-weight:var(--ui-weight-heading);
+  line-height:var(--ui-line-control);
+}
+.menu-app-mark small,
+.brand .version,
+.web-surface-badge{
+  font-size:var(--ui-type-xs);
+  font-weight:var(--ui-weight-meta);
+  line-height:var(--ui-line-control);
+}
+
+/* Application/menu headings retain the accepted 11px command prominence. */
+.application-menus > button,
+.application-menu > button,
+.application-command-menu button,
+.doc-title{
+  font-size:var(--ui-type-lg);
+  line-height:var(--ui-line-control);
+}
+.application-menus > button,
+.application-menu > button,
+.application-command-menu button{font-weight:var(--ui-weight-regular)}
+.doc-title{font-weight:var(--ui-weight-control)}
+
+/* Normal interactive/control text. */
+.quiet-button,
+.primary-button,
+.workspace-switch button,
+.contextual-tool-identity strong,
+.contextual-advanced-button,
+.context-control-label,
+.contextual-options .quick-slider output,
+.contextual-options #eraserOptions .segmented button,
+.contextual-options #shapeOptions .shape-grid button,
+.contextual-options #selectionBar button,
+.selection-bar button,
+.panel-window-item,
+.inspector-tab,
+.properties-subnav .inspector-tab,
+.preset-button,
+.layer-actions button,
+.object-actions button,
+.stroke-edit-actions button,
+.statusbar button,
+.creative-workspace-toggle,
+.ai-settings-grid label,
+.ai-preview-toolbar button,
+.creative-chat-runtime button,
+.mobile-dock .tool-label,
+.dock-action .tool-label,
+.tool-button .tool-label,
+.creative-workspace-tabs button,
+.creative-workspace-field,
+.creative-workspace-field input,
+.creative-workspace-field select,
+.creative-workspace-actions button,
+.creative-workspace-action-grid button,
+.creative-workspace-primary,
+.creative-structure-option>summary,
+#canvasSettings .control-row,
+#canvasSettings .control-row>span:first-child,
+#canvasSettings .toggle-row,
+.inspector-section .control-row,
+.inspector-section .toggle-row,
+.inspector-section input,
+.inspector-section select,
+.inspector-section textarea{
+  font-size:var(--ui-type-md);
+  line-height:var(--ui-line-control);
+}
+
+/* Primary panel/application headings. */
+.inspector-head strong,
+.panel-header strong,
+.creative-workspace-head strong,
+.section-title strong,
+.empty-hint strong,
+.no-selection strong,
+.storage-health-status,
+#canvasSettings .panel-header strong{
+  font-size:var(--ui-type-lg);
+  font-weight:var(--ui-weight-heading);
+  line-height:var(--ui-line-control);
+}
+
+/* Secondary readable labels and numeric/state values. */
+.selection-title,
+.zoom-hud,
+.quick-glyph,
+.range-row output,
+.inspector-section .range-row output,
+.subpanel-title strong,
+.inspector-section .subpanel-title strong,
+.layer-row .layer-name strong,
+.history-step-copy strong,
+.creative-workspace-state strong,
+.creative-chat-runtime span,
+.creative-chat-message>strong,
+.creative-workspace-body output,
+.creative-workspace-status,
+.quick-slider output,
+#exportProgress,
+.statusbar,
+.artboard-summary,
+.export-summary{
+  font-size:var(--ui-type-sm);
+  line-height:var(--ui-line-control);
+}
+.subpanel-title strong,
+.inspector-section .subpanel-title strong,
+.layer-row .layer-name strong,
+.history-step-copy strong{font-weight:var(--ui-weight-control)}
+
+/* Metadata is the only family allowed to use the smallest token. */
+.brand .version,
+kbd,
+.eyebrow,
+.subpanel-title span,
+.inspector-section .subpanel-title span,
+.section-title span,
+.layer-row .layer-meta,
+.page-title span,
+.history-step-index,
+.history-step-copy small,
+.engine-status,
+.render-engine-meta,
+.render-engine-note,
+.version-badge,
+.panel-window-group-label,
+.object-tree-row .tree-object-name span,
+.creative-workspace-state span,
+.creative-structure-option>summary span,
+.brush-family-head>span:last-child{
+  font-size:var(--ui-type-xs)!important;
+  line-height:var(--ui-line-control);
+}
+.eyebrow,
+.panel-window-group-label,
+.engine-status{
+  font-weight:var(--ui-weight-meta);
+}
+
+/* Workstation body/copy remains readable without becoming a second scale. */
+.no-selection span,
+.artboard-summary,
+.export-summary,
+.storage-health-status,
+.gpu-validation-status,
+.pen-calibration-status,
+.export-progress,
+.render-engine-note,
+.studio-report,
+.ai-analysis,
+.ai-plan-overview,
+.ai-difference-summary,
+.ai-transmission-preview,
+.creative-workspace-body p,
+.creative-chat-message>p,
+.creative-chat-empty,
+.workspace-settings-note,
+#canvasSettings .workspace-settings-note,
+#canvasSettings .viewport-note{
+  font-size:var(--ui-type-md);
+  line-height:var(--ui-line-copy);
+}
+
+/* Important transient state is never metadata microtext. */
+.toast{
+  font-size:var(--ui-type-lg);
+  line-height:var(--ui-line-copy);
+}
+.ai-risk,
+.stroke-edit-status,
+.render-engine-meta,
+.gpu-validation-status,
+.pen-calibration-status,
+.export-progress{
+  font-size:var(--ui-type-md);
+}
+
+/* Keep CJK, Latin and numeric controls on the same inherited cross-platform stack. */
+.app,
+.app button,
+.app input,
+.app select,
+.app textarea,
+.app output{
+  font-family:Inter,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+}
+
+/* Narrow/mobile uses the same token system; only low-priority identity text steps down. */
+@media(max-width:760px){
+  .contextual-tool-identity strong{
+    font-size:var(--ui-type-xs);
+  }
+  .mobile-dock .tool-label,
+  .dock-action .tool-label{
+    font-size:var(--ui-type-md);
+  }
+}
+
+/* ========================================================================== 
+   INK-WEB-UI-006 — Phase H canvas / status / responsive
+   Presentation-only. Preserve accepted editor/document/render authorities.
+   ========================================================================== */
+@media(min-width:761px){
+  /* Canvas remains the dominant working region. The shell-owned left rail,
+     primary panel width and right dock are the only horizontal offsets. */
+  .stage-wrap{
+    min-width:0;
+    contain:layout paint;
+  }
+
+  /* Keep persistent status/view controls compact. Secondary status is allowed
+     to compress before view controls become unreadable or force page overflow. */
+  .statusbar{
+    overflow:hidden;
+    padding-inline:8px;
+    gap:8px;
+  }
+  .statusbar > .status-cluster{
+    min-width:0;
+    white-space:nowrap;
+  }
+  .statusbar > .status-cluster:not(.view-controls){
+    flex:1 1 auto;
+    gap:10px;
+    overflow:hidden;
+  }
+  .statusbar > .view-controls{
+    flex:0 0 auto;
+    gap:3px;
+    margin-left:auto;
+  }
+  .statusbar > .view-controls button{
+    min-width:24px;
+    height:22px;
+    padding-inline:6px;
+  }
+  #zoomText{
+    display:inline-block;
+    min-width:38px;
+    text-align:center;
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* Narrow desktop may compress secondary identity, but command homes remain
+     unchanged and contextual controls stay inside the top shell. */
+  .topbar,
+  .topbar-leading,
+  .topbar-center,
+  .file-group,
+  .contextual-options,
+  .contextual-control-host{
+    min-width:0;
+  }
+  .contextual-control-host{
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+  }
+  .contextual-control-host::-webkit-scrollbar{display:none}
+
+  /* Existing Fullscreen API/class remains authoritative; only viewport
+     containment is normalized for app-root fullscreen. */
+  .app.fullscreen-active,
+  .app:fullscreen{
+    inset:0;
+    width:100%;
+    height:100%;
+    max-width:none;
+    max-height:none;
+    overflow:hidden;
+  }
+  .app.fullscreen-active .stage-wrap,
+  .app:fullscreen .stage-wrap{
+    contain:layout paint size;
+  }
+}
+
+@media(max-width:1120px) and (min-width:761px){
+  #autosaveStatus{display:none}
+}
+
+@media(max-width:980px) and (min-width:761px){
+  #statusArtboard,
+  #selectionModeStatus{display:none}
+  .statusbar > .status-cluster:not(.view-controls){gap:8px}
+}
+
+@media(max-width:860px) and (min-width:761px){
+  #statusObjects{display:none}
+  .doc-title{
+    min-width:132px;
+    width:min(19vw,168px);
+  }
+  .contextual-tool-identity{
+    min-width:48px;
+    max-width:66px;
+  }
+  .contextual-tool-identity strong{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+}
+
+@media(max-width:760px){
+  /* Mobile keeps the existing responsive alternatives. Desktop-only chrome
+     remains out of the compact canvas and essential labels keep Phase G size. */
+  .stage-wrap{
+    min-width:0;
+    max-width:100vw;
+  }
+  .mobile-dock,
+  .mobile-tool-sheet,
+  .inspector,
+  .pages-panel,
+  .floating-panel{
+    box-sizing:border-box;
+  }
+  .mobile-dock .tool-label,
+  .dock-action .tool-label{
+    white-space:nowrap;
+  }
+}
 
