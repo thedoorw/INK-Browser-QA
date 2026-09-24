@@ -206,12 +206,12 @@ test('Browser proof parses, keeps every required marker and uses connector flow 
   }
   for(const tool of ['get_ink_capabilities','import_ink_reference','decompose_ink_reference','get_ink_preview','use_ink'])assert.ok(harness.includes("smartApi.tools.invoke('"+tool+"'"));
   assert.ok(harness.indexOf("smartApi.tools.invoke('get_ink_capabilities'")<harness.indexOf("smartApi.tools.invoke('import_ink_reference'"));
-  assert.match(harness,/smartResolverScript\.src='\\/__qa_smart_loop_resolver\\.js'/);
+  assert.match(harness,/smartResolverScript\.src='\/__qa_smart_loop_resolver\.js'/);
   assert.match(harness,/delete w\.__INK_SMART_LOOP_QA_RESOLVE/);
   assert.match(harness,/SMART_LOOP_QA_RESOLVER_CLEANED_UP/);
   assert.doesNotMatch(harness,/smartResolverScript\.textContent|resolveInkOutputPayload|\beval\s*\(|new\s+Function\s*\(/);
   const runner=await readFile(path.join(root,'qa/runtime/run-ink-runtime-batch.mjs'),'utf8');
-  assert.match(runner,/SMART_LOOP_RESOLVER_ROUTE\s*=\s*'\\/__qa_smart_loop_resolver\\.js'/);
+  assert.match(runner,/SMART_LOOP_RESOLVER_ROUTE\s*=\s*'\/__qa_smart_loop_resolver\.js'/);
   assert.match(runner,/resolveInkOutputPayload\(window\.INK_APP, handleId\)/);
   assert.doesNotMatch(runner,/WebSocket|postMessage|\beval\s*\(|new\s+Function\s*\(/);
   const api=await readFile(path.join(root,'product/source/src/agent/public-creative-api.js'),'utf8');
