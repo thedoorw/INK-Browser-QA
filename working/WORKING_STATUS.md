@@ -1,14 +1,14 @@
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_003_MR_PASS / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_003_CLOSED / MR_PASS / PROMOTED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-003 / Capability Schema Discovery` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-003` |
 | DEV_BRANCH | `work/ink-chat-connector-003` |
-| DEV_HANDOFF | `Connector-003 = RECEIVED / STOP` |
-| MR_REVIEW | `Connector-003 = MR_PASS` |
+| DEV_HANDOFF | `Connector-003 = CLOSED` |
+| MR_REVIEW | `Connector-003 = MR_PASS / promoted` |
 | TARGET_GATE | `INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
@@ -17,7 +17,22 @@ STATUS: `CONNECTOR_003_MR_PASS / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HOLD`
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Promotion decision only; Connector-004 NOT_AUTHORIZED` |
+| NEXT_STAGE | `No next Connector authorized; Connector-004 remains HOLD` |
+
+## Connector-003 promotion closure
+
+```text
+PROMOTION_COMMIT = 96f8c553e87fd53b5ca0d2b01cc2972902f2fd69
+TESTED_HEAD = a873c4324225b8c760d83bdcc100cc3427dd3bee
+RUNTIME_RUN = 35961649436
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+
+PROMOTION_EQUIVALENCE = exact accepted Agent + QA blobs
+CONNECTOR_003 = CLOSED
+CONNECTOR_004 = NOT_AUTHORIZED
+```
 
 ## Connector-003 final acceptance
 
