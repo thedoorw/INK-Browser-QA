@@ -1,3 +1,72 @@
+## MR_REVISE — smart preview diagnostic only — 2026-09-24
+
+```text
+TASK = INK-CHAT-CLOSED-LOOP-001
+RUNTIME_RUN = 36006888089
+TESTED_SHA = 74c02f41dd9bde3262a6e7ee507126b74c2e18c9
+RUNNER = DESKTOP-NSOQH69
+
+UI = PASS / 106 of 106
+CREATIVE = FAIL
+GEOMETRY = NOT_REACHED
+
+PASS_BEFORE_FAILURE =
+  SMART_LOOP_CAPABILITIES_DISCOVERED
+  SMART_LOOP_REFERENCE_IMPORTED
+  SMART_LOOP_IMPORT_HISTORY_PROVENANCE_RECORDED
+  SMART_LOOP_COLOR_LINE_DECOMPOSED
+  SMART_LOOP_STABLE_REFS_RETURNED
+
+DECOMPOSITION =
+  Color Paths = 1471
+  Line Paths = 1471
+
+FAIL_AT =
+  SMART_LOOP_PREVIEW_BEFORE_CAPTURED
+
+PRODUCT_PREVIEW_FAIL = NOT YET ESTABLISHED
+QA_BRIDGE_FAIL = NOT YET ESTABLISHED
+CURRENT_MISSING_EVIDENCE =
+  smartBefore.status / diagnostics / result were not attached to the failed assertion
+
+MR = REVISE / DIAGNOSTIC_ONLY
+PRODUCT_SOURCE = FROZEN
+QA_RESOLVER_ROUTE = FROZEN
+NEW_OPERATION_FAMILIES = 0
+EXTERNAL_TRANSPORT = 0
+UI_CHANGE = 0
+FORMAT_VERSION = 4
+```
+
+Authorized revision only:
+
+```text
+qa/runtime/ink-cloud-018-browser-harness.html
+research/INK_CHAT_CLOSED_LOOP_001_SMART_PROOF_REPORT_v0.1.md
+working/INK_CHAT_CLOSED_LOOP_001_DEV_HANDOFF.md
+ACTIVE/INK_DEV_PROGRESS.md
+```
+
+Required change:
+
+At the `SMART_LOOP_PREVIEW_BEFORE_CAPTURED` assertion, attach a JSON-safe diagnostic payload containing at minimum:
+
+```text
+smartBefore.status
+smartBefore.diagnostics
+smartBefore.result
+smartBefore.outputHandles
+preview options
+```
+
+Do not alter the preview request, renderer, product API, output registry, resolver route, fixture, decomposition, or acceptance condition in this revision.
+
+Goal: one exact-SHA Runtime rerun that identifies the real `INK_PREVIEW_*` failure code without changing behavior.
+
+`DEV_HANDOFF → STOP → MR REVIEW`
+
+---
+
 ## INK-CHAT-CLOSED-LOOP-001 MR bounded revision — 2026-09-24
 
 ```text
