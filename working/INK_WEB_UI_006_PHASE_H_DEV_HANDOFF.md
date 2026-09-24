@@ -379,3 +379,109 @@ Current UR result:
 `UR_REVIEW / STATIC_PASS / WINDOWS_RUNTIME_REQUIRED / FINAL_VISUAL_COMPARISON_DEFERRED_TO_POST_PHASE_I`
 
 Do not begin Phase I until the Phase H Runtime gate passes.
+
+
+---
+
+## UR Runtime failure / DEV revision order — 2026-09-24
+
+Authoritative Windows self-hosted Runtime:
+
+- run: `35951970300`
+- attempt: `1`
+- tested SHA: `04ba565c80551fe364174b3964a3ebaa850454a5`
+- runner: Windows self-hosted
+- overall: `FAIL`
+- UI suite: `FAIL`
+- failure artifact: `10788518495`
+- artifact digest: `sha256:c81fd5b5bb21477b4fe5bb69dfa7c794dc4e11e64c30a46731b756e4c85e21cf`
+
+### Exact failing assertion
+
+`UI-006 Phase H every primary right panel preserves one coherent canvas boundary`
+
+Passing primary panels:
+- Properties
+- Layers
+- History
+- Specialist
+
+Failing Creative Loop panels:
+- Reference
+- Compose
+- CHAT
+- Revision
+
+Observed 1280px desktop geometry for each failing Creative Loop panel:
+
+```text
+stage.right = 880
+creative panel.left = 906
+creative panel.right = 1266
+dock.left = 1240
+creative panel.width = 360
+```
+
+This produces:
+- 26px gap between canvas stage and Creative Workspace panel;
+- 26px overlap between Creative Workspace panel and Panel Dock.
+
+Expected single-primary-panel geometry:
+
+```text
+stage.right == creative panel.left
+creative panel.right == dock.left
+```
+
+### Root presentation conflict to correct
+
+The accepted single-desktop-shell rule declares:
+
+```css
+.creative-workspace-panel {
+  right: var(--panel-dock-w);
+  ...
+}
+```
+
+but the older legacy selector remains more specific:
+
+```css
+.app:not(.inspector-open) .creative-workspace-panel {
+  right: 14px;
+  ...
+}
+```
+
+When a Creative Loop panel is active, Inspector is closed, so the legacy higher-specificity rule wins and offsets the Creative Workspace from the current Panel Dock authority.
+
+This is a bounded presentation defect. No Core/Document semantic change is required.
+
+## DEV revision scope
+
+Fix only the Phase H desktop Creative Workspace geometry conflict.
+
+Required result:
+- Reference / Compose / CHAT / Revision align flush with the stage on the left;
+- Creative Workspace aligns flush with Panel Dock on the right;
+- no panel/dock overlap;
+- no canvas/panel dead gap;
+- Properties / Layers / History / Specialist geometry remains unchanged;
+- mobile/compact overlay behavior remains unchanged;
+- the accepted single shell controller remains the only panel authority.
+
+Preferred correction:
+- neutralize or override the legacy `.app:not(.inspector-open) .creative-workspace-panel` desktop right-offset/width behavior inside the current consolidated desktop shell presentation authority;
+- do not change `web-shell.js` unless evidence proves CSS alone cannot resolve it;
+- do not weaken/remove the Phase H Runtime assertion to make the test pass.
+
+Re-run static checks and update the Phase H evidence with:
+- new exact product/QA checkpoint;
+- before/after Creative Loop geometry;
+- confirmation all eight primary panel routes satisfy the same boundary invariant.
+
+Then return:
+
+`DEV_HANDOFF → UR_REVIEW → STOP`
+
+Phase I remains locked until the corrected exact-SHA Windows Runtime passes.
