@@ -70,3 +70,19 @@ Result: **PASS for the authorized QA-bridge revision scope**.
 - browser Runtime was not run by DEV and remains the MR exact-SHA gate.
 
 `DEV_HANDOFF → STOP`.
+
+## MR_REVISE / DIAGNOSTIC_ONLY — SMART_LOOP_PREVIEW_BEFORE_CAPTURED
+
+- Runtime evidence supplied by MR: run `36006888089`; UI `106/106 PASS`; import PASS; decomposition PASS; stable refs PASS; failure at `SMART_LOOP_PREVIEW_BEFORE_CAPTURED`.
+- Authorized change: assertion diagnostics only in `qa/runtime/ink-cloud-018-browser-harness.html`.
+- Implementation checkpoint: `be77d526f963849924e91e2e6e30711207324229`.
+- Assertion now reports `status`, `diagnostics`, `result`, `outputHandles`, and `previewOptions` on failure.
+- Safe optional-length check prevents missing `outputHandles` from masking the intended assertion with a TypeError.
+- `smartPreviewOptions` unchanged: `{scope:'content',maxDimension:960,background:true}`.
+- Frozen product blob SHAs unchanged:
+  - `public-creative-api.js` = `72111d866584c7c414cd0e4f061953038e23596a`;
+  - `capability-registry.js` = `acb56063c3c8a26bcc0b92c9088786b77620bdf6`.
+- Focused connector-side static QA: PASS.
+- Product source / renderer / visual-feedback / output registry / resolver route / timeout / retry / external transport / UI / FORMAT_VERSION changes: 0.
+- Runtime rerun: NOT_RUN_BY_DEV.
+- Current gate: `DEV_HANDOFF → STOP`.
