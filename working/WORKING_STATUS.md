@@ -1,3 +1,39 @@
+## Smart closed-loop proof authorization — 2026-09-24
+
+```text
+TASK = INK-CHAT-CLOSED-LOOP-001
+BRANCH = work/ink-chat-closed-loop-001
+USER = PROCEED / PROVE THE SMART CLOSED LOOP
+UPSTREAM = Connector-004 CLOSED / PROMOTED
+
+TARGET =
+  Reference fixture
+  → capability discovery
+  → import_ink_reference
+  → decompose_ink_reference
+  → preview before
+  → stable Color / Line refs
+  → use_ink two-step repaint
+  → approval
+  → History / Revision
+  → preview after
+  → Runtime artifact
+  → MR returns before/after PNG to CHAT
+
+PRODUCT_DELTA =
+  expose existing app.chatReferenceHandoff.importReference
+  through Public Creative API + Named Tool only
+
+NAMED_TOOL_TARGET = 20
+NEW_NATIVE_OPERATION_FAMILIES = 0
+EXTERNAL_TRANSPORT = 0
+PROOF_RETURN_PATH = RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT
+UI_CHANGE = 0
+FORMAT_VERSION = 4 / PRESERVE
+
+GATE = SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP
+```
+
 ## Connector-004 final closure — 2026-09-24
 
 ```text
@@ -83,16 +119,16 @@ FORMAT_VERSION = 4
 
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_004_CLOSED / UI_VISUAL_LANE_PENDING / DRAWING_VALIDATION_HOLD`
+STATUS: `SMART_CLOSED_LOOP_001_ACTIVE / UI_VISUAL_LANE_PENDING`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-004 / use_ink programmable bridge` |
-| CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
-| DEV_BRANCH | `work/ink-chat-connector-004` |
-| DEV_HANDOFF | `Connector-004 = CLOSED / PROMOTED` |
-| MR_REVIEW | `Connector-004 MR_PASS / Runtime PASS / promoted` |
-| TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
+| CURRENT_WORK_ORDER | `INK-CHAT-CLOSED-LOOP-001 / smart Reference→Color+Line→CHAT proof` |
+| CURRENT_TASK_ID | `INK-CHAT-CLOSED-LOOP-001` |
+| DEV_BRANCH | `work/ink-chat-closed-loop-001` |
+| DEV_HANDOFF | `NOT_YET / DEV_START` |
+| MR_REVIEW | `AUTHORIZED / waiting DEV_HANDOFF` |
+| TARGET_GATE | `SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
@@ -100,7 +136,7 @@ STATUS: `CONNECTOR_004_CLOSED / UI_VISUAL_LANE_PENDING / DRAWING_VALIDATION_HOLD
 | UI-006 | `A–I payload integrated to main via PR #49 / deployed / visual screenshot gate pending` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-004 closed; return to separate UI visual audit when USER chooses` |
+| NEXT_STAGE | `Complete one smart closed-loop proof; then return to UI decision` |
 
 ## Connector-003 promotion closure
 
