@@ -1,6 +1,6 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-CHAT-CONNECTOR-001 / AGENT_CONNECTOR_FOUNDATION / REISSUED / DEV_NOT_STARTED`
+STATUS: `INK-CHAT-CONNECTOR-001 / AGENT_CONNECTOR_FOUNDATION / DEV_HANDOFF / STOP`
 
 ```text
 TASK_ID = INK-CHAT-CONNECTOR-001
@@ -8,81 +8,82 @@ PHASE = PUBLIC_API_NAMED_TOOLS_RESULT_ENVELOPE
 BRANCH = work/ink-chat-connector-001
 ORIGINAL_BRANCH_BASE = 5d9eeee4c39fb39d1413191033bcb5e78a255e25
 REVISED_AUTHORIZATION_MAIN = 3e0d71c9190848b6cffcb642ee0bb9840507a7ff
-LATEST_MAIN_SEEN = e40475c28ac4aa43b2a79bcf06198481d2a93b1b
-LATEST_MAIN_DELTA = UI-006 Phase F Runtime queue only / no Connector source conflict
+DEV_HANDOFF_BASE = 611c025d983dbbde2dc8200ddebca0df55011596
+IMPLEMENTATION_SOURCE_HEAD = f6495effb2bbcae927a247c26b134089f5ca6cbb
+EVIDENCE_REPORT_COMMIT = 62a7761d2f237759cc4ad30fe18b2f9493efe37c
 TARGET_GATE = INK_AGENT_CONNECTOR_FOUNDATION_WORKS
 
-RESEARCH_BASELINE =
-  research/INK_CHAT_CONNECTOR_FIGMA_PENPOT_CAPABILITY_MAP_v0.1.md
-  now includes Figma + Penpot + Adobe
+PUBLIC_CREATIVE_API = IMPLEMENTED
+PUBLIC_API_INSTALL = app.inkPublicApi / exactly one facade
+NAMED_TOOL_REGISTRY = IMPLEMENTED / 14 tools
+INK_AGENT_RESULT = IMPLEMENTED / JSON-safe normalized envelope
+CAPABILITY_ROUTING_METADATA = IMPLEMENTED
 
-DRAWING_VALIDATION =
-  Phase C Runtime HOLD
-  Phase D-F NOT_AUTHORIZED
-
-PRODUCT_SOURCE_MUTATION = 0 / NOT_STARTED
-QA_MUTATION = 0 / NOT_STARTED
-
-PUBLIC_CREATIVE_API = NOT_STARTED
-NAMED_TOOL_REGISTRY = NOT_STARTED
-INK_AGENT_RESULT = NOT_STARTED
-CAPABILITY_ROUTING_METADATA = NOT_STARTED
-
-CONNECTOR_002_PREVIEW = NOT_AUTHORIZED
-CONNECTOR_003_USE_INK = NOT_AUTHORIZED
-MCP_TRANSPORT = NOT_AUTHORIZED
-EXTERNAL_ASSET_TRANSPORT = NOT_AUTHORIZED
+DOCUMENT_SELECTION_INSPECT = DELEGATED_TO_EXISTING_DOCUMENT_BRIDGE
+REFERENCE_DECOMPOSITION = DELEGATED_TO_EXISTING_CHAT_REFERENCE_HANDOFF
+BOUNDED_EDIT = DELEGATED_TO_EXISTING_CHAT_BOUNDED_EDIT_ADAPTER
+HISTORY = DELEGATED_TO_EXISTING_HISTORY_MANAGER
+REVISION = DELEGATED_TO_EXISTING_REVISION_CONTROLLER
 
 DOCUMENT_AUTHORITY_CHANGE = 0
 HISTORY_AUTHORITY_CHANGE = 0
 REVISION_AUTHORITY_CHANGE = 0
 GEOMETRY_AUTHORITY_CHANGE = 0
 DECOMPOSITION_AUTHORITY_CHANGE = 0
-FORMAT_VERSION = 4 / PRESERVE
+
+USE_INK = 0 / NOT_AUTHORIZED
+MCP_PLUGIN_TRANSPORT = 0 / NOT_AUTHORIZED
+PREVIEW_SCREENSHOT_TRANSPORT = 0 / NOT_AUTHORIZED
+NEW_DRAWING_OPERATION = 0
+NEW_TRACE = 0
+SERVICE_WORKER_BOOTSTRAP_CACHE_FINAL_DIFF = 0
+FORMAT_VERSION = 4 / PRESERVED
 IMAGE_MODEL = 0
+
+SOURCE_STATIC_ISOLATED_QA = PASS
+FOCUSED_QA_FILE = qa/ink-chat-connector-001-agent-foundation.test.mjs
+FULL_REPOSITORY_NODE_TEST_RERUN = NOT_EXECUTED / connector-only environment
+BROWSER_RUNTIME_QA = DEFERRED_TO_MR
 ```
 
-## Revised implementation order
+## Final source / QA files
 
-1. deterministic Public Creative API capability registry;
-2. normalized JSON-safe `INK_AGENT_RESULT` envelope;
-3. JSON-safe Document / Selection / Inspect facade;
-4. Adobe-style named-tool registry wrapping the same facade;
-5. Reference decomposition delegation;
-6. bounded edit inspect / propose / approve / execute delegation;
-7. History inspect / undo / redo delegation;
-8. Revision current / list / capture / restore delegation;
-9. install exactly one facade on `InkApp`;
-10. focused QA + required regressions;
-11. update evidence / handoff;
-12. `DEV_HANDOFF → STOP`.
+- `product/source/src/agent/index.js`
+- `product/source/src/agent/public-creative-api.js`
+- `product/source/src/ink.js`
+- `qa/ink-chat-connector-001-agent-foundation.test.mjs`
 
-## Routing principle
+Evidence:
+
+- `research/INK_CHAT_CONNECTOR_001_AGENT_FOUNDATION_REPORT_v0.1.md`
+
+## Executed checks
+
+1. exact committed Public API source syntax parse — PASS;
+2. exact committed focused-QA source syntax parse — PASS;
+3. isolated Public API behavior harness from the exact committed source — PASS;
+4. named-tool registry / routing / `INK_AGENT_RESULT` deterministic JSON checks — PASS;
+5. detached Document/Selection/Inspect result checks — PASS;
+6. Reference Handoff delegation — PASS;
+7. proposal → approval → execute delegation and invalid-token rejection — PASS;
+8. existing History delegation — PASS;
+9. existing Revision delegation — PASS;
+10. no arbitrary execution, direct document JSON write, new global, transport, new trace, or second authority — PASS;
+11. `FORMAT_VERSION = 4` — PASS;
+12. final branch scope — PASS.
+
+## Required regression status
+
+The required regression files and their delegated authority sources are byte-identical to the accepted current-main blobs. Their exact current blobs also pass the available syntax harness.
 
 ```text
-future CHAT:
-named tool first
-→ future use_ink only when a named tool is insufficient
-
-Connector-001:
-build common authority underneath both
+PHASE_B_REGRESSION_BASELINE = PRESERVED
+BOUNDED_EDIT_REGRESSION_BASELINE = PRESERVED
+DOCUMENT_HISTORY_REVISION_REGRESSION_BASELINE = PRESERVED
 ```
 
-## Hard boundary
+Historical accepted execution evidence is referenced in the Connector-001 evidence report. No unavailable full `node --test` execution is claimed PASS.
 
-Do not add:
+## Gate
 
-- `use_ink`, eval, Function or arbitrary execution;
-- MCP/plugin external transport;
-- preview/screenshot transport;
-- external asset transport;
-- Adobe/Figma/Penpot runtime dependency;
-- Adobe image_vectorize inside INK;
-- new drawing operations;
-- second Document/History/Revision/Geometry/decomposition authority;
-- automatic approval or automatic Revision;
-- UI redesign;
-- Service Worker/bootstrap/cache changes;
-- FORMAT_VERSION changes.
-
-If required: `STOP → MR`.
+`DEV_HANDOFF → STOP → MR exact-HEAD review`
