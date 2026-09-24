@@ -35,11 +35,13 @@
     { id: 'reference', label: 'Reference', icon: 'i-image', kind: 'creative', stage: 'reference', group: 'creative' },
     { id: 'compose', label: 'Compose', icon: 'i-group', kind: 'creative', stage: 'compose', group: 'creative' },
     { id: 'chat', label: 'CHAT', icon: 'i-spark', kind: 'creative', stage: 'chat', group: 'creative' },
-    { id: 'revision', label: 'Revision', icon: 'i-history', kind: 'creative', stage: 'revision', group: 'creative' }
+    { id: 'revision', label: 'Revision', icon: 'i-history', kind: 'creative', stage: 'revision', group: 'creative' },
+    { id: 'specialist', label: 'Specialist', icon: 'i-settings', kind: 'inspector', tab: 'ai', group: 'specialist' }
   ]);
   const PANEL_GROUPS = Object.freeze([
     { id: 'editor', label: 'Editor', items: PANEL_DEFS.filter(def => def.group === 'editor') },
-    { id: 'creative', label: 'Creative Loop', items: PANEL_DEFS.filter(def => def.group === 'creative') }
+    { id: 'creative', label: 'Creative Loop', items: PANEL_DEFS.filter(def => def.group === 'creative') },
+    { id: 'specialist', label: 'Specialist', items: PANEL_DEFS.filter(def => def.group === 'specialist') }
   ]);
   const PRIMARY_PANEL_STATES = Object.freeze(['collapsed', ...PANEL_DEFS.map(def => def.id)]);
 
@@ -344,6 +346,7 @@
     if (state.root.classList.contains('inspector-open')) {
       const tab = state.root.dataset.panel;
       if (tab === 'layers' || tab === 'history') return tab;
+      if (tab === 'ai' || tab === 'studio') return 'specialist';
       return 'properties';
     }
     return null;
@@ -373,7 +376,10 @@
     if (!app) return false;
     app.creativeWorkspace?.setOpen?.(false);
     if (def.id === 'properties') app.toggleInspector?.(true, app.selection?.length ? 'object' : 'brush');
-    else app.toggleInspector?.(true, def.tab);
+    else if (def.id === 'specialist') {
+      const currentTab = state.root?.dataset.panel;
+      app.toggleInspector?.(true, currentTab === 'ai' || currentTab === 'studio' ? currentTab : def.tab);
+    } else app.toggleInspector?.(true, def.tab);
     return true;
   }
 
@@ -477,6 +483,19 @@
     creative.setAttribute('aria-label', 'INK ' + label);
   }
 
+  function syncInspectorPresentation(active) {
+    const title = document.querySelector('#inspectorTitle');
+    if (!title) return;
+    const tab = state.root?.dataset.panel;
+    if (active === 'specialist') {
+      title.textContent = tab === 'studio' ? '進階製作／診斷' : 'AI／連線與計畫';
+      return;
+    }
+    if (active === 'properties') {
+      title.textContent = tab === 'object' ? '物件屬性' : tab === 'geometry' ? 'Path／Repeat' : '工具屬性';
+    }
+  }
+
   function syncLayout() {
     if (!state.root) return;
     const active = currentPanel();
@@ -498,9 +517,11 @@
       button.classList.toggle('active', pressed);
       button.setAttribute('aria-pressed', String(pressed));
     });
-    const creativeOpen = Boolean(runtime()?.creativeWorkspace?.open);
-    state.dock?.querySelector('[data-panel-group="editor"]')?.classList.toggle('group-active', Boolean(state.root.classList.contains('inspector-open')));
-    state.dock?.querySelector('[data-panel-group="creative"]')?.classList.toggle('group-active', creativeOpen);
+    const activeDef = active ? PANEL_DEFS.find(def => def.id === active) : null;
+    state.dock?.querySelectorAll('[data-panel-group]').forEach(group => {
+      group.classList.toggle('group-active', group.dataset.panelGroup === activeDef?.group);
+    });
+    syncInspectorPresentation(active);
     if (state.windowMenu && !state.windowMenu.hidden) positionWindowMenu();
     syncCreativePresentation();
     syncContextualOptions();
