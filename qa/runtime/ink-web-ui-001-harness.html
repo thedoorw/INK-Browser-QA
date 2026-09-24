@@ -245,6 +245,22 @@
       record('primary panel fits exactly between canvas and dock', near(expandedGeometry.stage?.right, expandedGeometry.panel?.left, 1) && near(expandedGeometry.panel?.right, expandedGeometry.dock?.left, 1), expandedGeometry);
       record('canvas resizes for expanded panel', layersState.stageWidth < initialStageWidth - 235, { initialStageWidth, expandedStageWidth: layersState.stageWidth });
 
+      const inspectorResizer = doc.querySelector('#inspectorResizer');
+      inspectorResizer?.dispatchEvent(new win.PointerEvent('pointerdown', { bubbles: true, clientX: 1018 }));
+      win.dispatchEvent(new win.PointerEvent('pointermove', { bubbles: true, clientX: 940 }));
+      win.dispatchEvent(new win.PointerEvent('pointerup', { bubbles: true, clientX: 940 }));
+      await sleep(120);
+      const resizedPanel = shell.state();
+      record('UI-006 Phase E active Inspector remains resizable and canvas follows its width',
+        resizedPanel.panelWidth >= 320 &&
+        resizedPanel.panelWidth <= 340 &&
+        resizedPanel.stageWidth < layersState.stageWidth - 60,
+        { before: layersState, after: resizedPanel });
+      inspectorResizer?.dispatchEvent(new win.PointerEvent('pointerdown', { bubbles: true, clientX: 940 }));
+      win.dispatchEvent(new win.PointerEvent('pointermove', { bubbles: true, clientX: 1018 }));
+      win.dispatchEvent(new win.PointerEvent('pointerup', { bubbles: true, clientX: 1018 }));
+      await sleep(120);
+
       const layerSection = doc.querySelector('.inspector-section.active');
       const panelContainment1280 = {
         inspector: rectOf(doc, '#inspector'),
@@ -289,6 +305,48 @@
       record('History undo works', afterUndo.layers === layersBefore + 2 && afterUndo.redo >= 1, { beforeUndo, afterUndo });
       record('History redo works', afterRedo.layers === layersBefore + 1, afterRedo);
 
+      shell.open('properties');
+      await sleep(120);
+      const propertyTabs = Array.from(doc.querySelectorAll('.properties-subtab'));
+      const specialistTabs = Array.from(doc.querySelectorAll('.specialist-subtab'));
+      record('UI-006 Phase E Properties shows only normal property families on desktop',
+        shell.state().activePanel === 'properties' &&
+        propertyTabs.every(tab => visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')) &&
+        specialistTabs.every(tab => !visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')) &&
+        !visible(doc, '#runGPUValidationBtn') &&
+        !visible(doc, '#programAssetPick'),
+        { shell: shell.state(), propertyTabs: propertyTabs.map(tab => tab.dataset.tab), specialistTabs: specialistTabs.map(tab => tab.dataset.tab) });
+      doc.querySelector('.inspector-tab[data-tab="geometry"]')?.click();
+      await sleep(100);
+      record('UI-006 Phase E Path Boolean and Repeat remain under Properties without duplicate endpoints',
+        doc.querySelector('#app').dataset.panel === 'geometry' &&
+        visible(doc, '#booleanUnion') &&
+        visible(doc, '#repeatRadial') &&
+        doc.querySelectorAll('#booleanUnion').length === 1 &&
+        doc.querySelectorAll('#repeatRadial').length === 1,
+        { panel: doc.querySelector('#app').dataset.panel });
+
+      shell.open('specialist');
+      await sleep(120);
+      const specialistState = shell.state();
+      record('UI-006 Phase E Specialist uses the existing Inspector as one primary panel',
+        specialistState.activePanel === 'specialist' &&
+        specialistState.inspectorOpen &&
+        !specialistState.creativeOpen &&
+        specialistState.panelGroup === 'specialist' &&
+        specialistTabs.every(tab => visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')) &&
+        propertyTabs.every(tab => !visible(doc, '.inspector-tab[data-tab="' + tab.dataset.tab + '"]')),
+        specialistState);
+      doc.querySelector('.inspector-tab[data-tab="studio"]')?.click();
+      await sleep(100);
+      record('UI-006 Phase E engineering and diagnostic endpoints remain reachable only from Specialist',
+        doc.querySelector('#app').dataset.panel === 'studio' &&
+        visible(doc, '#programAssetPick') &&
+        visible(doc, '#runGPUValidationBtn') &&
+        doc.querySelectorAll('#programAssetPick').length === 1 &&
+        doc.querySelectorAll('#runGPUValidationBtn').length === 1,
+        { panel: doc.querySelector('#app').dataset.panel });
+
       for (const id of ['reference','compose','chat','revision']) {
         shell.open(id);
         await sleep(90);
@@ -302,6 +360,22 @@
           routeState);
       }
 
+      shell.close();
+      await sleep(100);
+      const lastPanelCollapse = shell.state();
+      doc.querySelector('#inspectorEdgeToggle')?.click();
+      await sleep(140);
+      const lastPanelRestored = shell.state();
+      record('UI-006 Phase E collapse remembers and restores the last active primary panel',
+        lastPanelCollapse.collapsed &&
+        lastPanelCollapse.lastPanel === 'revision' &&
+        lastPanelRestored.activePanel === 'revision' &&
+        lastPanelRestored.creativeOpen &&
+        !lastPanelRestored.inspectorOpen,
+        { collapsed: lastPanelCollapse, restored: lastPanelRestored });
+      doc.querySelector('#inspectorEdgeToggle')?.click();
+      await sleep(100);
+
       shell.open('chat');
       await sleep(80);
       shell.close();
@@ -313,7 +387,10 @@
       const windowButton = Array.from(doc.querySelectorAll('.application-menus button')).find(button => button.textContent.trim() === '視窗');
       windowButton?.click();
       await sleep(50);
-      record('Window menu coherently exposes dock panels', visible(doc, '#panelWindowMenu') && doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 7);
+      record('Window menu coherently exposes Editor, Creative Loop and Specialist dock panels',
+        visible(doc, '#panelWindowMenu') &&
+        doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 8 &&
+        doc.querySelectorAll('#panelWindowMenu [data-panel-group]').length === 3);
 
       const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
       record('New/Open/Save/Export/Fullscreen command bindings remain wired', buttonsWired);
@@ -469,7 +546,7 @@
       frame.style.height = '520px';
       frame.style.width = '1280px';
       await sleep(300);
-      shell.open('properties');
+      shell.open('specialist');
       await sleep(100);
       doc.querySelector('.inspector-tab[data-tab="studio"]')?.click();
       await sleep(180);
