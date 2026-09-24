@@ -1,4 +1,4 @@
-## Connector-004 authorization
+## Connector-004 DEV handoff
 
 ```text
 BRANCH = work/ink-chat-connector-004
@@ -6,39 +6,45 @@ BRANCH = work/ink-chat-connector-004
 use_ink
 → app.inkPublicApi.composition.*
 → app.chatCreativePlan
-→ app.chatBoundedEditAdapter
+→ existing Chat Creative Plan bounded-edit authority
 → History
 → Revision
 
-NAMED_TOOL_TARGET = 19
+NAMED_TOOL_TOTAL = 19
+CONNECTOR_003_PREFIX_18 = PRESERVED
 composition.programmable = AVAILABLE
 external.transport = UNAVAILABLE
 
+SOURCE_STATIC_FOCUSED_QA = PASS
+EXECUTABLE_FOCUSED_QA = AUTHORED / NOT_EXECUTED IN CURRENT DEV ENVIRONMENT
+BROWSER_RUNTIME = NOT_EXECUTED / MR EXACT-HEAD STAGE
+
 NEW_BOOLEAN_REPEAT_GROUP_FRAME_COMPONENT_LAYOUT_EXPOSURE = 0
 ARBITRARY_CODE_EXECUTION = 0
+EXTERNAL_TRANSPORT = 0
 FORMAT_VERSION = 4
 ```
 
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_004_DEV_ACTIVE / CONNECTOR_003_CLOSED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_004_DEV_HANDOFF / STOP / CONNECTOR_003_CLOSED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-004 / use_ink programmable bridge` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
 | DEV_BRANCH | `work/ink-chat-connector-004` |
-| DEV_HANDOFF | `Connector-004 = NOT_STARTED / Connector-003 = CLOSED` |
-| MR_REVIEW | `Connector-004 = DEV_AUTHORIZED` |
+| DEV_HANDOFF | `Connector-004 = READY / STOP / Connector-003 = CLOSED` |
+| MR_REVIEW | `Connector-004 = EXACT_HEAD_REVIEW_PENDING` |
 | TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `Connector-003 run 35961649436 / exact SHA a873c432... / UI+Creative+Geometry PASS` |
+| RUNTIME_QA | `Connector-003 run 35961649436 / exact SHA a873c432... / UI+Creative+Geometry PASS; Connector-004 runtime not executed` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
-| PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-004 DEV → focused QA → DEV_HANDOFF / STOP → MR review` |
+| PARALLEL_MODE | `Connector-004 stopped at DEV handoff / UI separate / drawing validation held` |
+| NEXT_STAGE | `Connector-004 MR exact-HEAD source review / executable QA / runtime as authorized` |
 
 ## Connector-003 promotion closure
 
