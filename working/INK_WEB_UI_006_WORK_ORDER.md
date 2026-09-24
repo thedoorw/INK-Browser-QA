@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — UI System Realignment Work Order
 
-STATUS: PHASE_A_PASS_B3_UI_REVISE / UI_ONLY
+STATUS: PHASE_C_D / UR_ISSUED / UI_ONLY
 OWNER: INK UR
 BRANCH: `work/ink-web-ui-standard-001`
 BASELINE:
@@ -355,9 +355,24 @@ UR returns exactly one:
 
 ## Current issued package
 
-Phase A is accepted. Phase B1/B2 are accepted. Phase B3 startup first-paint consistency is under `UI_REVISE`.
+Phase A + B are accepted; Phase B3 prerequisite was closed by the promoted `INK-TECH-DEBT-001` cleanup on current `main`.
 
-Phase C and later remain UR-held until B3 passes.
+UI DEV is authorized for **Phase C + Phase D only**:
+
+- Phase C — File Primary Home / compact Contextual Options / compact Undo-Redo shortcut / workspace-entry deduplication / reduced top chrome.
+- Phase D — single-column default + user-selectable two-column left toolbar; preserve tool order, shortcuts and Draw family; layout-only preference may persist in localStorage.
+
+Regression guard is mandatory:
+- `node product/source/generate-shell.mjs --check`
+- no manual dual-HTML authority
+- no new CSS override authority
+- no bootstrap polling
+- no Service Worker mutation
+
+Phase E–I remain UR-held.
+
+Completion gate:
+`DEV_HANDOFF → UR_REVIEW → STOP`
 
 ---
 
