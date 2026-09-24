@@ -1,5 +1,7 @@
 import { buildAIDocumentBridge } from '../ai/document-bridge.js';
 import { CHAT_EDIT_OPERATIONS } from '../editor/chat-bounded-edit.js';
+import { installInkOutputRegistry } from './output-handle-registry.js';
+import { captureInkPreview, inspectInkOutput, releaseInkOutput } from './visual-feedback.js';
 
 export const INK_PUBLIC_CREATIVE_API_SCHEMA = 'INK-PUBLIC-CREATIVE-API';
 export const INK_PUBLIC_CREATIVE_API_VERSION = 1;
@@ -268,7 +270,10 @@ const NAMED_TOOL_DEFINITIONS = Object.freeze([
   Object.freeze({ name: 'redo_ink', publicMethod: 'history.redo', role: 'WRITE', authoritativeRoute: 'app.history.redo', approvalRequired: false, historyExpectation: 'MOVE_EXISTING_STACK', revisionExpectation: 'NO_AUTO_CAPTURE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
   Object.freeze({ name: 'get_ink_revisions', publicMethod: 'revision.list', role: 'READ', authoritativeRoute: 'app.revisions.list', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_EXISTING', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
   Object.freeze({ name: 'capture_ink_revision', publicMethod: 'revision.capture', role: 'WRITE', authoritativeRoute: 'app.revisions.capture', approvalRequired: false, historyExpectation: 'REQUIRE_IDLE', revisionExpectation: 'EXPLICIT_CAPTURE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
-  Object.freeze({ name: 'restore_ink_revision', publicMethod: 'revision.restore', role: 'WRITE', authoritativeRoute: 'app.revisions.restore', approvalRequired: false, historyExpectation: 'RESET_TO_REVISION', revisionExpectation: 'EXPLICIT_RESTORE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA })
+  Object.freeze({ name: 'restore_ink_revision', publicMethod: 'revision.restore', role: 'WRITE', authoritativeRoute: 'app.revisions.restore', approvalRequired: false, historyExpectation: 'RESET_TO_REVISION', revisionExpectation: 'EXPLICIT_RESTORE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
+  Object.freeze({ name: 'get_ink_preview', publicMethod: 'preview.capture', role: 'READ', authoritativeRoute: 'app.renderExportCanvas + existing Renderer', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
+  Object.freeze({ name: 'inspect_ink_output', publicMethod: 'asset.inspect', role: 'READ', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry + documentFingerprint', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', availability: true, routingClass: 'READ_ONLY', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
+  Object.freeze({ name: 'release_ink_output', publicMethod: 'asset.release', role: 'WRITE', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry', approvalRequired: false, historyExpectation: 'NONE', revisionExpectation: 'NONE', availability: true, routingClass: 'NAMED_TOOL', resultEnvelope: INK_AGENT_RESULT_SCHEMA })
 ]);
 
 const CAPABILITY_DEFINITIONS = Object.freeze([
@@ -281,12 +286,16 @@ const CAPABILITY_DEFINITIONS = Object.freeze([
   Object.freeze({ id: 'history.redo', routingClass: 'NAMED_TOOL', namedTool: 'redo_ink', availability: true }),
   Object.freeze({ id: 'revision.capture', routingClass: 'NAMED_TOOL', namedTool: 'capture_ink_revision', availability: true }),
   Object.freeze({ id: 'revision.restore', routingClass: 'NAMED_TOOL', namedTool: 'restore_ink_revision', availability: true }),
+  Object.freeze({ id: 'preview.capture', routingClass: 'NAMED_TOOL', namedTool: 'get_ink_preview', availability: true, role: 'READ', authoritativeRoute: 'app.renderExportCanvas + existing Renderer', historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
+  Object.freeze({ id: 'asset.inspect', routingClass: 'READ_ONLY', namedTool: 'inspect_ink_output', availability: true, role: 'READ', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry + documentFingerprint', historyExpectation: 'NONE', revisionExpectation: 'READ_CURRENT', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
+  Object.freeze({ id: 'asset.release', routingClass: 'NAMED_TOOL', namedTool: 'release_ink_output', availability: true, role: 'WRITE', authoritativeRoute: 'Connector ephemeral INK_OUTPUT_HANDLE registry', historyExpectation: 'NONE', revisionExpectation: 'NONE', resultEnvelope: INK_AGENT_RESULT_SCHEMA }),
   Object.freeze({ id: 'composition.programmable', routingClass: 'PROGRAMMABLE_FUTURE', namedTool: null, availability: false }),
   Object.freeze({ id: 'external.transport', routingClass: 'UNAVAILABLE', namedTool: null, availability: false })
 ]);
 
 export function createInkPublicCreativeApi(app) {
   if (!app) throw new TypeError('INK public API requires an InkApp instance');
+  const outputRegistry = installInkOutputRegistry(app);
 
   const capabilities = () => {
     try {
@@ -528,7 +537,53 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
-  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, history, revision });
+  const preview = Object.freeze({
+    async capture(options = {}) {
+      const action = 'preview.capture';
+      try {
+        const raw = await captureInkPreview(app, outputRegistry, isRecord(options) ? options : {});
+        return createInkAgentResult(app, action, {
+          targetRefs: raw.targetRefs,
+          outputHandles: [raw.handle],
+          result: raw.result
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    }
+  });
+
+  const asset = Object.freeze({
+    inspect(handleId) {
+      const action = 'asset.inspect';
+      try {
+        const raw = inspectInkOutput(app, outputRegistry, handleId);
+        return createInkAgentResult(app, action, {
+          targetRefs: raw.handle?.objectRefs || [],
+          outputHandles: raw.handle ? [raw.handle] : [],
+          result: raw
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    },
+    release(handleId) {
+      const action = 'asset.release';
+      try {
+        const raw = releaseInkOutput(app, outputRegistry, handleId);
+        return createInkAgentResult(app, action, {
+          status: raw.found ? 'COMPLETED' : 'NO_OP',
+          targetRefs: raw.handle?.objectRefs || [],
+          outputHandles: raw.handle ? [raw.handle] : [],
+          result: raw
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    }
+  });
+
+  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, history, revision, preview, asset });
   const toolHandlers = Object.freeze({
     get_ink_capabilities: () => capabilities(),
     get_ink_context: input => context(input?.options ?? input ?? {}),
@@ -543,7 +598,10 @@ export function createInkPublicCreativeApi(app) {
     redo_ink: () => history.redo(),
     get_ink_revisions: input => revision.list(input?.documentId ?? app?.doc?.id),
     capture_ink_revision: input => revision.capture(input?.options ?? input ?? {}),
-    restore_ink_revision: input => revision.restore(input?.revisionId, input?.options ?? {})
+    restore_ink_revision: input => revision.restore(input?.revisionId, input?.options ?? {}),
+    get_ink_preview: input => preview.capture(input?.options ?? input ?? {}),
+    inspect_ink_output: input => asset.inspect(input?.handleId ?? input),
+    release_ink_output: input => asset.release(input?.handleId ?? input)
   });
 
   const tools = Object.freeze({
