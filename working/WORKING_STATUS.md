@@ -1,23 +1,32 @@
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_DEV_ACTIVE / DRAWING_VALIDATION_HOLD / UI_SEPARATE`
+STATUS: `CONNECTOR_MR_SOURCE_PASS / RUNTIME_QUEUED / DRAWING_VALIDATION_HOLD / UI_SEPARATE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-001 / Agent Connector Foundation` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-001` |
 | DEV_BRANCH | `work/ink-chat-connector-001` |
-| DEV_HANDOFF | `CONNECTOR = NOT_STARTED / Phase C = preserved HOLD` |
-| MR_REVIEW | `Connector-001 = DEV_AUTHORIZED / Phase C = HOLD_BY_USER` |
+| DEV_HANDOFF | `Connector-001 = RECEIVED / STOP` |
+| MR_REVIEW | `Connector-001 = SOURCE_PASS / RUNTIME_PENDING` |
 | TARGET_GATE | `INK_AGENT_CONNECTOR_FOUNDATION_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `Connector-001 source/focused QA first; MR decides browser Runtime after handoff` |
+| RUNTIME_QA | `Connector-001 exact HEAD d95d8f80... queued on central Windows Runtime` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `DEV revised Connector-001 → DEV_HANDOFF / STOP → MR review` |
+| NEXT_STAGE | `Exact-SHA Runtime → MR_PASS or MR_REVISE` |
+
+## Connector-001 MR checkpoint
+
+```text
+REVIEW_HEAD = d95d8f80fb57920d8bba2f07557d084a11305ecd
+SOURCE_REVIEW = PASS
+DEV_HANDOFF = RECEIVED / STOP
+FINAL_MR_PASS = PENDING exact-SHA browser Runtime
+```
 
 ## Connector-001 authorization
 
