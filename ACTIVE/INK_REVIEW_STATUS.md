@@ -1,6 +1,54 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-001 / AGENT_CONNECTOR_FOUNDATION / DEV_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-001 / MR_SOURCE_PASS / EXACT_SHA_RUNTIME_QUEUED`
+
+## Connector-001 MR exact-HEAD checkpoint — 2026-09-24
+
+```text
+REVIEW_HEAD = d95d8f80fb57920d8bba2f07557d084a11305ecd
+DEV_HANDOFF_PAYLOAD_END = 6e92d63d332c961987058aaca2982407d834eeb3
+POST_HANDOFF_DELTA = README-only MR sync
+SOURCE_REVIEW = PASS
+SCOPE_REVIEW = PASS
+AUTHORITY_REUSE = PASS
+
+PUBLIC_CREATIVE_API = PASS
+NAMED_TOOL_REGISTRY = PASS / 14 tools
+INK_AGENT_RESULT = PASS
+DOCUMENT_SELECTION_INSPECT = PASS
+REFERENCE_DECOMPOSITION_DELEGATION = PASS
+BOUNDED_EDIT_APPROVAL_BOUNDARY = PASS
+HISTORY_DELEGATION = PASS
+REVISION_DELEGATION = PASS
+
+SECOND_DOCUMENT_AUTHORITY = 0
+SECOND_HISTORY = 0
+SECOND_REVISION = 0
+SECOND_GEOMETRY = 0
+SECOND_DECOMPOSITION = 0
+ARBITRARY_EXECUTION = 0
+MCP_TRANSPORT = 0
+PREVIEW_TRANSPORT = 0
+FORMAT_VERSION = 4 / PRESERVED
+
+DEV_FOCUSED_ISOLATED_QA = PASS
+FULL_NODE_REGRESSION_RERUN = NOT_EXECUTED
+MR_DECISION = exact-SHA browser Runtime required because InkApp constructor install chain changed
+FINAL_MR_PASS = PENDING_RUNTIME
+```
+
+MR source findings:
+
+- one `app.inkPublicApi` facade only;
+- facade is installed after existing Reference / Revision / bounded-edit authorities;
+- named tools are wrappers over the same Public API and do not form a second command authority;
+- Reference decomposition still delegates to `app.chatReferenceHandoff.decomposeReference`;
+- edit execution still delegates to `app.chatBoundedEditAdapter` and preserves explicit approval;
+- History and Revision continue using the existing managers/controllers;
+- final diff contains no Service Worker/bootstrap/cache mutation;
+- no product-source conflict exists with current main-only UI/runtime-queue changes.
+
+The DEV environment did not execute the full repository Node regression. Existing authority/test blobs are unchanged and focused isolated behavior QA passed, so this is not a source-revision blocker; exact-SHA browser Runtime is required before final acceptance.
 
 ## Current connector development
 
