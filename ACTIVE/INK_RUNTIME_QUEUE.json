@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "HOLD",
   "target_sha": "2a56b602af280fcc923a394d68accab755d0611f",
   "pending_work_orders": [
     "INK-CHAT-CLOSED-LOOP-001"
@@ -27,7 +27,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "MR exact-HEAD rerun after DIAGNOSTIC_ONLY revision at SMART_LOOP_PREVIEW_BEFORE_CAPTURED; product source frozen, Runtime diagnosis required."
+    "reason": "Runtime 36009581263 attempt 2 reached smart loop and exposed product preview planner defect INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED; bounded visual-feedback.js revision authorized."
   },
   "batch_policy": {
     "default_target": 3,
@@ -35,8 +35,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36006888089,
-    "tested_sha": "74c02f41dd9bde3262a6e7ee507126b74c2e18c9",
-    "result": "FAIL_SMART_LOOP_PREVIEW_BEFORE_CAPTURED_DIAGNOSTIC_MISSING"
+    "run_id": 36009581263,
+    "tested_sha": "2a56b602af280fcc923a394d68accab755d0611f",
+    "result": "FAIL_SMART_LOOP_PREVIEW_DIMENSION_LIMIT_EXCEEDED"
   }
 }
