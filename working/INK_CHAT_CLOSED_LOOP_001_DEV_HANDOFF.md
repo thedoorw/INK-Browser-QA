@@ -130,3 +130,55 @@ The original `smartPreviewOptions` literal is unchanged. Frozen product source b
 DEV did not rerun browser Runtime. The exact final handoff HEAD is the final documentation commit reported in the DEV response.
 
 `DEV_HANDOFF → STOP`.
+
+
+## MR_REVISE / PRODUCT_DEFECT_ONLY completion
+
+Runtime run `36009581263` attempt 2 is the diagnostic input for this revision:
+
+- UI PASS;
+- Reference import PASS;
+- Color + Line decomposition PASS;
+- stable refs PASS;
+- first failing marker: `SMART_LOOP_PREVIEW_BEFORE_CAPTURED`;
+- diagnostic: `INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED`;
+- preview options: `{scope:'content',maxDimension:960,background:true}`.
+
+Revision baseline: `2a56b602af280fcc923a394d68accab755d0611f`.
+
+Bounded product correction:
+
+- modified only `product/source/src/agent/visual-feedback.js` in product source;
+- content preview planning now preserves the raw padded width/height used by the existing `renderExportCanvas` content sizing path;
+- planned content pixels are calculated from those same raw base dimensions;
+- when floating rounding would make `Math.ceil(baseDimension * scale)` exceed requested `maxDimension`, `safeContentScale` applies a tiny `Number.EPSILON`-derived backoff;
+- existing hard dimension and hard pixel limits remain enforced by the unchanged assertions;
+- refs and output-handle behavior are unchanged.
+
+Deterministic regression was added to `qa/ink-chat-closed-loop-001-smart-proof.test.mjs` for the fractional boundary where the previous arithmetic produced:
+
+```text
+960.0000000000001 → Math.ceil = 961
+```
+
+Corrected result:
+
+```text
+959.9999999999991 → 960 × 478
+```
+
+Focused connector-side QA: **PASS**.
+
+Verified:
+
+- fractional defect reproduces under the old arithmetic and closes under the corrected arithmetic;
+- renderer/content sizing remains `Math.ceil(bounds.w * scale)` / `Math.ceil(bounds.h * scale)`;
+- modified product source and focused QA syntax compile after module-syntax normalization;
+- pre-handoff revision diff contains only the authorized product file, focused QA, report and progress files;
+- `smartPreviewOptions`, renderer, `renderExportCanvas`, output registry, resolver route, timeout, retry, external transport, UI, `FORMAT_VERSION` and native operation vocabulary were not modified.
+
+DEV did not rerun browser Runtime.
+
+Exact final handoff HEAD is the commit containing this section and is reported in the DEV response.
+
+`DEV_HANDOFF → STOP`.
