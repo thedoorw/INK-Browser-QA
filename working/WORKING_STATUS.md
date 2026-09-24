@@ -1,6 +1,6 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK_ACTIVE / UI_CD_RUNTIME_ACTIVE / CHAT_PHASE_C_SOURCE_PASS`
+STATUS: `UI_LANE_ACTIVE / DRAWING_VALIDATION_HOLD / AGENT_CONNECTIVITY_PLANNING`
 
 | Field | Value |
 |---|---|
@@ -8,16 +8,16 @@ STATUS: `DUAL_TRACK_ACTIVE / UI_CD_RUNTIME_ACTIVE / CHAT_PHASE_C_SOURCE_PASS`
 | CURRENT_TASK_ID | `CHAT: INK-CHAT-VALIDATION-001 / UI: INK-WEB-UI-006` |
 | DEV_BRANCH | `CHAT: work/ink-chat-validation-001-phase-c / UI: work/ink-web-ui-standard-001` |
 | DEV_HANDOFF | `CHAT Phase C = RECEIVED / STOP / UI Phase C+D = RECEIVED / STOP` |
-| MR_REVIEW | `CHAT Phase C = MR_SOURCE_PASS / RUNTIME_PENDING / UI = UR Runtime active` |
-| TARGET_GATE | `CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS / UI C+D review` |
+| MR_REVIEW | `CHAT Phase C = MR_SOURCE_PASS / HOLD_BY_USER / UI = separate active lane` |
+| TARGET_GATE | `CHAT drawing gate HOLD / new planning target = INK Agent Connectivity / UI separate` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `CHAT Phase C exact-SHA Runtime REQUIRED; technical-debt baseline PASS retained` |
+| RUNTIME_QA | `CHAT Phase C Runtime NOT QUEUED while hold is active; existing baseline retained` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
-| CHAT VALIDATION | `Phase B CLOSED / Phase C DEV_HANDOFF / MR_SOURCE_PASS / Runtime pending` |
-| PARALLEL_MODE | `ACTIVE / SEPARATE AUTHORITIES` |
-| NEXT_STAGE | `Finish UI C+D serialized Runtime → queue exact Phase C DEV HEAD → private-image acceptance` |
+| CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
+| PARALLEL_MODE | `UI active / drawing-validation held / connectivity research active` |
+| NEXT_STAGE | `Plan INK Agent API + MCP/plugin + skills architecture; do not queue Phase C Runtime` |
 
 ## Dual-track coordination synchronization — 2026-09-24
 
@@ -99,6 +99,25 @@ Phase C source path accepted:
 `Phase B generated Path → CHAT proposal → approval → path.repaint.v1 → History`.
 
 Final Phase C MR_PASS is not claimed until exact-SHA browser Runtime and private real-image acceptance pass.
+
+## Connectivity-planning pivot
+
+```text
+USER_DECISION = PAUSE DRAWING TESTS
+PHASE_C_SOURCE_PASS = PRESERVE
+PHASE_C_RUNTIME = HOLD / DO NOT QUEUE
+PHASE_C_PRIVATE_IMAGE = HOLD
+PHASE_D_TO_F = HOLD
+
+PRIMARY_PLANNING =
+  Figma-like general agent execution
+  + reusable skills
+  + Penpot-like API discovery / execute-code bridge
+  + MCP / ChatGPT plugin transport
+```
+
+Goal: establish one reusable, programmable INK interface that lets CHAT inspect,
+create, edit and validate native INK content through existing authorities.
 
 ## Previous MR synchronization
 
