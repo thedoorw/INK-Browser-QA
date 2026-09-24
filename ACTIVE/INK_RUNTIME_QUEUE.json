@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "19658b1b7ac67696fd6390c13294b7b2f48da200",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "a873c4324225b8c760d83bdcc100cc3427dd3bee",
+  "pending_work_orders": [
+    "INK-CHAT-CONNECTOR-003"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -22,8 +24,8 @@
     "INK-WEB-UI-006-VISUAL-CLOSURE"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": "INK-WEB-UI-006 visual closure Runtime passed and produced the formal 1280x1024 screenshot evidence."
+    "enabled": true,
+    "reason": "INK-CHAT-CONNECTOR-003 changes Public Creative API invocation normalization and self-describing capability contracts; run one immediate exact-SHA browser regression before final MR acceptance."
   },
   "batch_policy": {
     "default_target": 3,
