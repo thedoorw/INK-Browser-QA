@@ -479,11 +479,11 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         app.findObject(ref)?.object?.type==='path'),
       'SMART_LOOP_STABLE_REFS_RETURNED',{colorCount:smartColorRefs.length,lineCount:smartLineRefs.length});
 
-    // Static QA-only module in the app realm: the registry is realm-local. No eval,
-    // public payload API, product hook, alternate renderer, or DOM screenshot.
+    // Deterministic same-origin external QA module in the app realm: the registry is realm-local.
+    // No inline module text, public payload API, product hook, alternate renderer, or DOM screenshot.
     const smartResolverScript=doc.createElement('script');
     smartResolverScript.type='module';
-    smartResolverScript.textContent="import { resolveInkOutputPayload } from '/src/agent/output-handle-registry.js'; window.__INK_SMART_LOOP_QA_RESOLVE = handleId => resolveInkOutputPayload(window.INK_APP, handleId);";
+    smartResolverScript.src='/__qa_smart_loop_resolver.js';
     doc.head.appendChild(smartResolverScript);
     await waitFor(()=>typeof w.__INK_SMART_LOOP_QA_RESOLVE==='function');
     const smartArtifacts={};
@@ -572,6 +572,8 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       'SMART_LOOP_RENDER_FINGERPRINT_CHANGED');
     delete w.__INK_SMART_LOOP_QA_RESOLVE;
     smartResolverScript.remove();
+    assert(typeof w.__INK_SMART_LOOP_QA_RESOLVE==='undefined' && !smartResolverScript.isConnected,
+      'SMART_LOOP_QA_RESOLVER_CLEANED_UP');
     evidence.smartLoop={
       schema:'INK-SMART-CLOSED-LOOP-PROOF',version:1,
       returnPath:'RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT',
