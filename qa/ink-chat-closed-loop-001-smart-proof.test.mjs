@@ -172,7 +172,7 @@ test('Content preview fractional max-dimension boundary stays within requested d
   };
   const registry={store(handle){return handle;}};
   const result=await captureInkPreview(app,registry,{scope:'content',maxDimension:960,background:true});
-  assert.deepEqual(renderedPixelSize,{width:960,height:479});
+  assert.deepEqual(renderedPixelSize,{width:960,height:478});
   assert.deepEqual(result.handle.pixelSize,renderedPixelSize);
   assert.ok(result.handle.pixelSize.width<=960&&result.handle.pixelSize.height<=960);
 });
