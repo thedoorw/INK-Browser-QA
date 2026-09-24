@@ -33,6 +33,12 @@ export const smartLoopRequired = [
   'SMART_LOOP_RENDER_FINGERPRINT_CHANGED',
   'SMART_LOOP_ARTIFACT_EVIDENCE_READY',
 ];
+const SMART_LOOP_RESOLVER_ROUTE = '/__qa_smart_loop_resolver.js';
+const SMART_LOOP_RESOLVER_MODULE = [
+  "import { resolveInkOutputPayload } from '/src/agent/output-handle-registry.js';",
+  'window.__INK_SMART_LOOP_QA_RESOLVE = handleId => resolveInkOutputPayload(window.INK_APP, handleId);',
+  ''
+].join('\n');
 const creativeRequired = [
   ...smartLoopRequired,
   'CANVAS_EDITOR_RENDERED', 'CREATIVE_WORKSPACE_VISIBLE', 'REFERENCE_IMPORT_VISIBLE',
@@ -224,7 +230,11 @@ export async function startServer(root, suite, onEvidence, { evidenceDir = null 
       }
       if (!['GET', 'HEAD'].includes(req.method)) { res.writeHead(405).end(); return; }
       let bytes; let ext;
-      if (url.pathname === '/__qa_harness.html') { bytes = harness; ext = '.html'; }
+      if (url.pathname === SMART_LOOP_RESOLVER_ROUTE) {
+        if (suite.id !== 'creative') { res.writeHead(404).end(); return; }
+        bytes = Buffer.from(SMART_LOOP_RESOLVER_MODULE, 'utf8'); ext = '.js';
+      }
+      else if (url.pathname === '/__qa_harness.html') { bytes = harness; ext = '.html'; }
       else {
         const decoded = decodeURIComponent(url.pathname);
         if (decoded.includes('\\') || decoded.includes('\0')) { res.writeHead(403).end(); return; }
@@ -288,7 +298,9 @@ export async function runBatch(root) {
         let receive;
         const result = new Promise(resolve => { receive = resolve; });
         const started = await startServer(root, suite, receive, { evidenceDir }); server = started.server;
-        for (const route of ['/', '/src/ink.js', '/styles.css', '/__qa_harness.html', '/__qa_rose_window.png']) {
+        const preflightRoutes = ['/', '/src/ink.js', '/styles.css', '/__qa_harness.html', '/__qa_rose_window.png'];
+        if (suite.id === 'creative') preflightRoutes.push(SMART_LOOP_RESOLVER_ROUTE);
+        for (const route of preflightRoutes) {
           const response = await fetch(started.origin + route, { signal: AbortSignal.timeout(5000) });
           assert.equal(response.status, 200, `HTTP preflight: ${route}`);
           if (route.endsWith('.js')) assert.match(response.headers.get('content-type'), /javascript/);
