@@ -237,6 +237,18 @@ test('Browser proof parses, keeps every required marker and uses connector flow 
   }
   for(const tool of ['get_ink_capabilities','import_ink_reference','decompose_ink_reference','get_ink_preview','use_ink'])assert.ok(harness.includes("smartApi.tools.invoke('"+tool+"'"));
   assert.ok(harness.indexOf("smartApi.tools.invoke('get_ink_capabilities'")<harness.indexOf("smartApi.tools.invoke('import_ink_reference'"));
+  const historyStart=harness.indexOf("const smartHistory=await smartApi.tools.invoke('get_ink_history')");
+  const historyEnd=harness.indexOf("const smartRevisionAfter=",historyStart);
+  assert.ok(historyStart>=0&&historyEnd>historyStart,'smart History proof block');
+  const historyProof=harness.slice(historyStart,historyEnd);
+  assert.match(historyProof,/smartHistorySteps\.length===2/);
+  assert.match(historyProof,/Number\.isInteger\(s\.history\?\.beforeUndoCount\)/);
+  assert.match(historyProof,/s\.history\.afterUndoCount===s\.history\.beforeUndoCount\+1/);
+  assert.match(historyProof,/s\.history\.latestLabel==='CHAT repaint Path'/);
+  assert.match(historyProof,/entry\.captureMode==='scoped'/);
+  assert.match(historyProof,/entry\.label==='CHAT repaint Path'/);
+  assert.match(historyProof,/Number\(entry\.patchCount\)>0/);
+  assert.doesNotMatch(historyProof,/objectIds/);
   assert.match(harness,/smartResolverScript\.src='\/__qa_smart_loop_resolver\.js'/);
   assert.match(harness,/delete w\.__INK_SMART_LOOP_QA_RESOLVE/);
   assert.match(harness,/SMART_LOOP_QA_RESOLVER_CLEANED_UP/);
