@@ -185,6 +185,87 @@ function editResultMetadata(raw) {
   };
 }
 
+function creativePlanAuthority(app) {
+  const controller = app?.chatCreativePlan;
+  if (!controller
+    || typeof controller.inspect !== 'function'
+    || typeof controller.getPlan !== 'function'
+    || typeof controller.propose !== 'function'
+    || typeof controller.approve !== 'function'
+    || typeof controller.execute !== 'function'
+    || typeof controller.reject !== 'function') {
+    throw Object.assign(new Error('INK Chat Creative Plan authority unavailable'), { code: 'INK_AGENT_COMPOSITION_AUTHORITY_UNAVAILABLE' });
+  }
+  return controller;
+}
+
+function creativePlanTargetRefs(record) {
+  const refs = [];
+  for (const step of Array.isArray(record?.steps) ? record.steps : []) {
+    refs.push(...(Array.isArray(step?.targets) ? step.targets : []));
+  }
+  if (!refs.length) {
+    for (const step of Array.isArray(record?.stepResults) ? record.stepResults : []) {
+      refs.push(...(Array.isArray(step?.targets) ? step.targets : []));
+    }
+  }
+  return normalizeRefs(refs);
+}
+
+function creativePlanMetadata(record) {
+  const stepResults = Array.isArray(record?.stepResults)
+    ? record.stepResults
+    : (Array.isArray(record?.result?.stepResults) ? record.result.stepResults : []);
+  const changedRefs = normalizeRefs(stepResults
+    .filter(step => step?.ok === true && step?.changed === true)
+    .flatMap(step => Array.isArray(step?.targets) ? step.targets : []));
+  const historySteps = stepResults
+    .filter(step => step?.history != null)
+    .map(step => ({ stepId: step.stepId ?? null, stepIndex: step.stepIndex ?? null, history: step.history }));
+  const diagnostics = Array.isArray(record?.diagnostics) && record.diagnostics.length
+    ? record.diagnostics
+    : (record?.result?.diagnostic ? [record.result.diagnostic] : []);
+  return {
+    status: record?.status || record?.result?.status || 'COMPLETED',
+    targetRefs: creativePlanTargetRefs(record),
+    changedRefs,
+    historyReceipt: historySteps.length ? { steps: historySteps } : null,
+    revisionReceipt: record?.result?.revision ?? null,
+    diagnostics: normalizeDiagnostics(diagnostics)
+  };
+}
+
+function creativePlanInspection(record) {
+  const stepResults = new Map((Array.isArray(record?.stepResults) ? record.stepResults : [])
+    .map(step => [String(step?.stepId || ''), step]));
+  const steps = (Array.isArray(record?.steps) ? record.steps : []).map((step, stepIndex) => {
+    const receipt = stepResults.get(String(step?.stepId || ''));
+    return {
+      stepId: step?.stepId ?? null,
+      stepIndex,
+      operation: step?.operation ?? null,
+      state: receipt?.state || 'PENDING',
+      dependsOn: Array.isArray(step?.dependsOn) ? [...step.dependsOn] : []
+    };
+  });
+  return safeClone({
+    planId: record?.planId ?? null,
+    status: record?.status ?? null,
+    approved: Boolean(record?.approved),
+    intentSummary: record?.intentSummary ?? null,
+    source: record?.source ? {
+      documentId: record.source.documentId ?? null,
+      pageId: record.source.pageId ?? null,
+      revisionId: record.source.revisionId ?? null,
+      documentFingerprint: record.source.documentFingerprint ?? null
+    } : null,
+    stepCount: steps.length,
+    completedStepCount: steps.filter(step => step.state === 'COMPLETED').length,
+    stoppedStepCount: steps.filter(step => step.state === 'STOPPED').length,
+    steps
+  });
+}
+
 function historyEntrySummary(entry) {
   if (!entry) return null;
   return safeClone({
@@ -420,6 +501,87 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
+  const composition = Object.freeze({
+    inspect(input = {}) {
+      const action = 'composition.inspect';
+      try {
+        const controller = creativePlanAuthority(app);
+        const planId = isRecord(input) ? input.planId : (typeof input === 'string' ? input : null);
+        if (!planId) {
+          return createInkAgentResult(app, action, { result: { state: safeClone(controller.inspect()) } });
+        }
+        const record = controller.getPlan(planId);
+        if (!record) {
+          throw Object.assign(new Error('INK Chat Creative Plan not found'), {
+            code: 'CHAT_PLAN_PLAN_NOT_FOUND',
+            field: 'planId',
+            actual: String(planId)
+          });
+        }
+        return createInkAgentResult(app, action, {
+          status: record.status || 'COMPLETED',
+          targetRefs: creativePlanTargetRefs(record),
+          result: { plan: creativePlanInspection(record) }
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    },
+    propose(input) {
+      const action = 'composition.propose';
+      try {
+        const controller = creativePlanAuthority(app);
+        const plan = isRecord(input) && hasOwn(input, 'plan') ? input.plan : input;
+        const record = controller.propose(plan);
+        const metadata = creativePlanMetadata(record);
+        return createInkAgentResult(app, action, { ...metadata, result: record });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    },
+    approve(planId) {
+      const action = 'composition.approve';
+      try {
+        if (isRecord(planId)) planId = planId.planId;
+        const controller = creativePlanAuthority(app);
+        const record = controller.approve(planId);
+        const metadata = creativePlanMetadata(record);
+        return createInkAgentResult(app, action, { ...metadata, result: record });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    },
+    async execute(planId, approvalToken) {
+      const action = 'composition.execute';
+      try {
+        if (isRecord(planId)) {
+          const input = planId;
+          planId = input.planId;
+          approvalToken = input.approvalToken ?? approvalToken;
+        }
+        const controller = creativePlanAuthority(app);
+        const raw = await controller.execute(planId, approvalToken);
+        const record = controller.getPlan(planId) || raw;
+        const metadata = creativePlanMetadata(record);
+        return createInkAgentResult(app, action, { ...metadata, result: raw });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    },
+    cancel(planId) {
+      const action = 'composition.cancel';
+      try {
+        if (isRecord(planId)) planId = planId.planId;
+        const controller = creativePlanAuthority(app);
+        const record = controller.reject(planId);
+        const metadata = creativePlanMetadata(record);
+        return createInkAgentResult(app, action, { ...metadata, result: record });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    }
+  });
+
   const history = Object.freeze({
     inspect() {
       const action = 'history.inspect';
@@ -592,7 +754,7 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
-  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, history, revision, preview, asset, capability });
+  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, composition, history, revision, preview, asset, capability });
   const toolHandlers = Object.freeze({
     get_ink_capabilities: () => capabilities(),
     get_ink_context: input => context(input?.options ?? input ?? {}),
@@ -611,7 +773,21 @@ export function createInkPublicCreativeApi(app) {
     get_ink_preview: input => preview.capture(input?.options ?? input ?? {}),
     inspect_ink_output: input => asset.inspect(input?.handleId ?? input),
     release_ink_output: input => asset.release(input?.handleId ?? input),
-    describe_ink_capability: input => capability.describe(input?.idOrToolName ?? input?.capabilityId ?? input?.toolName ?? input)
+    describe_ink_capability: input => capability.describe(input?.idOrToolName ?? input?.capabilityId ?? input?.toolName ?? input),
+    use_ink: input => {
+      const request = isRecord(input) ? input : {};
+      const action = String(request.action || '').trim();
+      if (action === 'inspect') return composition.inspect(request);
+      if (action === 'propose') return composition.propose(request);
+      if (action === 'approve') return composition.approve(request);
+      if (action === 'execute') return composition.execute(request);
+      if (action === 'cancel') return composition.cancel(request);
+      return failedResult(app, 'use_ink', Object.assign(new Error('Unsupported use_ink action'), {
+        code: 'INK_USE_INK_ACTION_UNSUPPORTED',
+        field: 'action',
+        actual: action
+      }));
+    }
   });
 
   const tools = Object.freeze({
