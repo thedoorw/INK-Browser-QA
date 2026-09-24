@@ -1,6 +1,35 @@
+## MR revision completion / Runtime infrastructure state
+
+```text
+REVISION_HEAD = a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc
+REVISION_SCOPE = browser QA + Runtime required markers + evidence only
+PRODUCT_SOURCE_CHANGE = 0
+
+RUNTIME_RUN = 35970456976
+ATTEMPT_1 =
+  Windows job 107538744566
+  failure before step 1
+  steps = 0
+  artifacts = 0
+  logs = 0
+  classification = SELF_HOSTED_RUNNER_START_FAILURE / NOT_PRODUCT_RUNTIME
+
+ATTEMPT_2 =
+  Windows job 107541920713
+  state = QUEUED
+  steps = 0
+
+TARGET_SHA = a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc
+MR_SOURCE_RECHECK = PASS
+FINAL_RUNTIME_GATE = PENDING_RUNNER
+PROMOTION = BLOCKED_UNTIL_REAL_RUNTIME_RESULT
+```
+
+Do not revise Connector product source for this infrastructure condition.
+
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-CONNECTOR-004 / MR_REVISE / BROWSER_FEATURE_COVERAGE_REQUIRED`
+STATUS: `INK-CHAT-CONNECTOR-004 / MR_RUNTIME_RERUN_QUEUED / SELF_HOSTED_RUNNER_BLOCKED`
 
 ## Control
 
