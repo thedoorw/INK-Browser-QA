@@ -324,3 +324,58 @@ Phase I = not started
 Completion:
 
 `DEV_HANDOFF → UR_REVIEW → STOP`
+
+
+---
+
+## UR source review — 2026-09-24
+
+Reviewed Phase H product / QA checkpoint:
+
+`04ba565c80551fe364174b3964a3ebaa850454a5`
+
+Accepted Phase G branch baseline:
+
+`8322170ae746ca9af2325cb2783d604e3a9cea6c`
+
+Compare result:
+- Phase H branch is 7 commits ahead / 0 behind the accepted Phase G baseline.
+- Product / QA implementation delta is limited to `product/source/styles.css` and `qa/runtime/ink-web-ui-001-harness.html`.
+- Changes after `04ba565...` are governance / handoff / evidence only; there is no later product / QA source delta.
+- No shell template, generated Web / Portable HTML, `web-shell.js`, or `product/source/src/**` change is part of Phase H implementation.
+
+UR static findings:
+- canvas remains governed by the accepted shell geometry and measured active-panel width; no second canvas/panel authority was introduced;
+- Phase H presentation rules keep status/view controls compact while progressively hiding secondary status at narrow desktop widths;
+- contextual controls compress horizontally instead of wrapping into the canvas;
+- fullscreen changes are presentation containment only and do not alter Fullscreen API authority;
+- compact/mobile preserves existing responsive alternatives and suppresses desktop Panel Dock;
+- Runtime harness now checks all eight primary panel routes against the same stage/panel/dock boundary;
+- Runtime harness exercises the existing Inspector resizer and checks the corresponding canvas-width delta;
+- Runtime harness checks 960px narrow desktop, fullscreen containment, compact essentials, mobile overlay behavior, and absence of shell-level overflow;
+- accepted Phase E/F/G assertions remain in the authoritative UI harness;
+- Document, artwork Text semantics, History, Revision, Renderer, Geometry/Core, CHAT, Service Worker, runtime bootstrap, cache/build identity, product version and FORMAT_VERSION remain unchanged;
+- Phase I has not started.
+
+UR static result:
+
+`STATIC_PASS`
+
+Runtime gate required before promotion:
+- authoritative Windows self-hosted exact-SHA Runtime against `04ba565c80551fe364174b3964a3ebaa850454a5`;
+- Phase H canvas/panel geometry assertions;
+- Inspector resize/canvas-width assertion;
+- fullscreen containment;
+- narrow desktop status/canvas behavior;
+- compact/mobile essentials and overlay behavior;
+- Phase E/F/G regression;
+- Web / Portable parity;
+- UI / Creative / Geometry regression.
+
+Per user direction, the full Photoshop/Figma/INK visual comparison is intentionally deferred until Phase I implementation/certification is complete, so the final visual review is performed once against the completed UI rather than repeated during Phase H.
+
+Current UR result:
+
+`UR_REVIEW / STATIC_PASS / WINDOWS_RUNTIME_REQUIRED / FINAL_VISUAL_COMPARISON_DEFERRED_TO_POST_PHASE_I`
+
+Do not begin Phase I until the Phase H Runtime gate passes.
