@@ -2192,7 +2192,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .topbar .history-group{gap:0}
   .topbar .history-group .icon-button{width:24px;height:24px}
   .file-group{gap:1px;height:100%;padding-left:2px}
-  .file-group .desktop-file,.file-group #exportBtn{display:none!important}
+  .file-group .desktop-file,.file-group #exportBtn{display:none}
   .quiet-button{height:24px;padding-inline:5px}
   .primary-button{height:25px;min-height:25px;padding-inline:7px}
   .file-group .icon-button{width:25px;height:25px}
