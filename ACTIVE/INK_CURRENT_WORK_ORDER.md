@@ -1,6 +1,6 @@
 # INK CURRENT WORK ORDER
 
-STATUS: `INK-CHAT-CONNECTOR-003 / MR_REVISE / BOUNDED_SCHEMA_CONTRACT_FIX_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-003 / MR_SOURCE_PASS / EXACT_SHA_RUNTIME_QUEUED`
 
 ## Control
 
@@ -675,6 +675,37 @@ FORMAT_VERSION = 4
 After the bounded revision:
 
 `DEV_HANDOFF → STOP → MR exact-HEAD re-review`
+
+## MR bounded-fix re-review — 2026-09-24
+
+```text
+REVIEW_HEAD = a873c4324225b8c760d83bdcc100cc3427dd3bee
+PREVIOUS_REVIEW_HEAD = 5c531dba2c87ee0762c3f21d54845effafe33164
+
+BOUNDED_FIX_SCOPE = PASS
+SCHEMA_TRUTHFULNESS = PASS
+CANONICAL_INPUT_SHAPE = PASS
+PUBLIC_API_COMPAT_ADAPTERS = PASS
+NAMED_TOOL_PREFIX_17 = PASS
+NAMED_TOOL_TOTAL_18 = PASS
+AUTHORITY_BOUNDARIES = PASS
+FORMAT_VERSION = 4 / PRESERVED
+
+SOURCE_REVIEW = PASS
+RUNTIME = QUEUED / exact branch SHA
+FINAL_MR_PASS = PENDING_RUNTIME
+```
+
+Accepted corrections:
+
+- `path.refine.v1.maxControlLength` now advertises strictly positive minimum matching authority;
+- Preview `scale` and `ppi` now advertise strictly positive minima;
+- translate zero-vector rejection is explicit in `constraints[]`;
+- repaint empty-arguments rejection is explicit in `constraints[]`;
+- `revision.capture` descriptor now uses the direct canonical options shape;
+- object-shaped descriptor input is accepted directly by the declared Public API routes for inspect/reference/approve/execute/revision/asset/describe while legacy forms remain compatible.
+
+No Document Bridge, bounded-edit execution, History, Revision, Renderer, Preview, Output Handle, UI, or FORMAT_VERSION authority changed.
 
 ## Gate
 
