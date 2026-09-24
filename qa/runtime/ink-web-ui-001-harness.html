@@ -748,6 +748,115 @@
       frame.style.height = '800px';
       await sleep(260);
 
+      // UI-006 Phase H: every accepted primary panel must consume only its
+      // measured right-side width and keep one coherent canvas boundary.
+      const phaseHPanelIds = ['properties','layers','history','reference','compose','chat','revision','specialist'];
+      const phaseHPanelGeometry = [];
+      let phaseHPanelGeometryPass = true;
+      for (const panelId of phaseHPanelIds) {
+        shell.open(panelId);
+        await sleep(120);
+        const panelState = shell.state();
+        const panelSelector = panelState.inspectorOpen ? '#inspector' : '#creativeWorkspace';
+        const geometry = {
+          id: panelId,
+          state: panelState,
+          stage: rectOf(doc, '#stageWrap'),
+          rail: rectOf(doc, '.tool-rail'),
+          panel: rectOf(doc, panelSelector),
+          dock: rectOf(doc, '#panelDock')
+        };
+        const coherent =
+          panelState.activePanel === panelId &&
+          geometry.stage &&
+          geometry.rail &&
+          geometry.panel &&
+          geometry.dock &&
+          near(geometry.stage.left, geometry.rail.right, 1) &&
+          near(geometry.stage.right, geometry.panel.left, 2) &&
+          near(geometry.panel.right, geometry.dock.left, 2) &&
+          geometry.stage.width > 520;
+        geometry.pass = Boolean(coherent);
+        phaseHPanelGeometryPass = phaseHPanelGeometryPass && Boolean(coherent);
+        phaseHPanelGeometry.push(geometry);
+      }
+      record('UI-006 Phase H every primary right panel preserves one coherent canvas boundary',
+        phaseHPanelGeometryPass,
+        phaseHPanelGeometry);
+
+      // Exercise the existing Inspector resizer. ResizeObserver + shell layout
+      // must update --active-panel-w so the stage contracts by the same delta.
+      shell.open('properties');
+      await sleep(140);
+      const resizeHandle = doc.querySelector('#inspectorResizer');
+      const resizeBefore = {
+        shell: shell.state(),
+        stage: rectOf(doc, '#stageWrap'),
+        panel: rectOf(doc, '#inspector')
+      };
+      const targetPanelWidth = Math.min(340, Math.max(300, resizeBefore.shell.panelWidth + 64));
+      if (resizeHandle && typeof win.PointerEvent === 'function') {
+        const pointerId = 91;
+        resizeHandle.dispatchEvent(new win.PointerEvent('pointerdown', {
+          bubbles: true, cancelable: true, pointerId, clientX: resizeBefore.panel.left + 2, clientY: resizeBefore.panel.top + 40
+        }));
+        win.dispatchEvent(new win.PointerEvent('pointermove', {
+          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth - 10, clientY: resizeBefore.panel.top + 40
+        }));
+        win.dispatchEvent(new win.PointerEvent('pointerup', {
+          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth - 10, clientY: resizeBefore.panel.top + 40
+        }));
+      }
+      await sleep(180);
+      const resizeAfter = {
+        shell: shell.state(),
+        stage: rectOf(doc, '#stageWrap'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock')
+      };
+      const resizeDelta = resizeAfter.shell.panelWidth - resizeBefore.shell.panelWidth;
+      record('UI-006 Phase H Inspector resize updates canvas geometry through the existing shell authority',
+        typeof win.PointerEvent === 'function' &&
+        resizeDelta >= 35 &&
+        resizeBefore.stage.width - resizeAfter.stage.width >= resizeDelta - 3 &&
+        near(resizeAfter.stage.right, resizeAfter.panel.left, 2) &&
+        near(resizeAfter.panel.right, resizeAfter.dock.left, 2),
+        { before: resizeBefore, after: resizeAfter, resizeDelta, targetPanelWidth });
+
+      // Restore the accepted default width after the bounded resize exercise.
+      doc.querySelector('#app').style.setProperty('--inspector-w', '252px');
+      app.inspectorNormalWidth = 252;
+      app.inspectorWide = false;
+      try { win.localStorage.setItem('ink-inspector-width', '252'); } catch {}
+      await sleep(160);
+
+      // Fullscreen API semantics live in INK_APP and are tested separately for
+      // support/binding. Here Phase H verifies the presentation class produced
+      // by that API keeps shell geometry contained while a panel is open.
+      doc.querySelector('#app').classList.add('fullscreen-active');
+      await sleep(100);
+      const fullscreenPresentation = {
+        viewport: { width: win.innerWidth, height: win.innerHeight },
+        app: rectOf(doc, '#app'),
+        stage: rectOf(doc, '#stageWrap'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock'),
+        rootScroll: { width: doc.documentElement.scrollWidth, height: doc.documentElement.scrollHeight }
+      };
+      record('UI-006 Phase H fullscreen presentation keeps chrome, panel and canvas contained',
+        near(fullscreenPresentation.app?.left, 0, 1) &&
+        near(fullscreenPresentation.app?.top, 0, 1) &&
+        near(fullscreenPresentation.app?.width, win.innerWidth, 1) &&
+        near(fullscreenPresentation.app?.height, win.innerHeight, 1) &&
+        near(fullscreenPresentation.stage?.right, fullscreenPresentation.panel?.left, 2) &&
+        near(fullscreenPresentation.panel?.right, fullscreenPresentation.dock?.left, 2) &&
+        fullscreenPresentation.rootScroll.width <= win.innerWidth + 1 &&
+        fullscreenPresentation.rootScroll.height <= win.innerHeight + 1,
+        fullscreenPresentation);
+      doc.querySelector('#app').classList.remove('fullscreen-active');
+      shell.close();
+      await sleep(140);
+
       frame.style.width = '960px';
       await sleep(260);
       shell.close();
@@ -765,6 +874,49 @@
         narrowTypography.propertiesTabs.scroll <= narrowTypography.propertiesTabs.client + 1 &&
         narrowTypography.status.scroll <= narrowTypography.status.client + 1,
         narrowTypography);
+
+      shell.open('properties');
+      await sleep(140);
+      const narrowOpenState = shell.state();
+      const narrowOpenGeometry = {
+        stage: rectOf(doc, '#stageWrap'),
+        rail: rectOf(doc, '.tool-rail'),
+        panel: rectOf(doc, '#inspector'),
+        dock: rectOf(doc, '#panelDock')
+      };
+      record('UI-006 Phase H narrow desktop keeps a meaningful canvas with the primary panel open',
+        narrowOpenState.activePanel === 'properties' &&
+        narrowOpenState.stageWidth >= 560 &&
+        near(narrowOpenGeometry.stage?.left, narrowOpenGeometry.rail?.right, 1) &&
+        near(narrowOpenGeometry.stage?.right, narrowOpenGeometry.panel?.left, 2) &&
+        near(narrowOpenGeometry.panel?.right, narrowOpenGeometry.dock?.left, 2),
+        { shell: narrowOpenState, geometry: narrowOpenGeometry });
+
+      const narrowStatus = {
+        autosaveDisplay: getComputedStyle(doc.querySelector('#autosaveStatus')).display,
+        artboardDisplay: getComputedStyle(doc.querySelector('#statusArtboard')).display,
+        selectionDisplay: getComputedStyle(doc.querySelector('#selectionModeStatus')).display,
+        client: doc.querySelector('.statusbar')?.clientWidth || 0,
+        scroll: doc.querySelector('.statusbar')?.scrollWidth || 0,
+        rotateVisible: visible(doc, '#rotateResetBtn'),
+        fitVisible: visible(doc, '#fitBtn'),
+        zoomOutVisible: visible(doc, '#zoomOutBtn'),
+        zoomTextVisible: visible(doc, '#zoomText'),
+        zoomInVisible: visible(doc, '#zoomInBtn')
+      };
+      record('UI-006 Phase H narrow desktop compresses secondary status before viewport controls',
+        narrowStatus.autosaveDisplay === 'none' &&
+        narrowStatus.artboardDisplay === 'none' &&
+        narrowStatus.selectionDisplay === 'none' &&
+        narrowStatus.scroll <= narrowStatus.client + 1 &&
+        narrowStatus.rotateVisible &&
+        narrowStatus.fitVisible &&
+        narrowStatus.zoomOutVisible &&
+        narrowStatus.zoomTextVisible &&
+        narrowStatus.zoomInVisible,
+        narrowStatus);
+      shell.close();
+      await sleep(100);
 
       frame.style.width = '720px';
       await sleep(320);
@@ -788,10 +940,38 @@
         !doc.querySelector('#app').classList.contains('toolbar-layout-dual') &&
         getComputedStyle(doc.querySelector('.tool-rail')).display === 'none',
         shell.state());
+      const compactEssentials = {
+        exportVisible: visible(doc, '#exportBtn'),
+        inspectorVisible: visible(doc, '#inspectorToggle'),
+        moreToolsVisible: visible(doc, '#mobileToolsToggle'),
+        mobileDockVisible: visible(doc, '.mobile-dock'),
+        panelDockDisplay: getComputedStyle(doc.querySelector('#panelDock')).display,
+        rootScrollWidth: doc.documentElement.scrollWidth,
+        bodyScrollWidth: doc.body.scrollWidth,
+        labelSizes: Array.from(doc.querySelectorAll('.mobile-dock .tool-label')).map(node => parseFloat(getComputedStyle(node).fontSize) || 0)
+      };
+      record('UI-006 Phase H compact mode keeps essential responsive alternatives reachable without desktop chrome leakage',
+        compactEssentials.exportVisible &&
+        compactEssentials.inspectorVisible &&
+        compactEssentials.moreToolsVisible &&
+        compactEssentials.mobileDockVisible &&
+        compactEssentials.panelDockDisplay === 'none' &&
+        compactEssentials.rootScrollWidth <= win.innerWidth + 1 &&
+        compactEssentials.bodyScrollWidth <= win.innerWidth + 1 &&
+        compactEssentials.labelSizes.length >= 4 &&
+        compactEssentials.labelSizes.every(size => size >= 10),
+        compactEssentials);
       shell.open('layers');
       await sleep(120);
       const inspectorRect = doc.querySelector('#inspector').getBoundingClientRect();
       record('mobile Inspector remains within viewport', inspectorRect.left >= 0 && inspectorRect.right <= win.innerWidth + 1 && inspectorRect.bottom <= win.innerHeight + 1, { viewport: [win.innerWidth, win.innerHeight], rect: inspectorRect.toJSON?.() || { left: inspectorRect.left, right: inspectorRect.right, top: inspectorRect.top, bottom: inspectorRect.bottom } });
+      const compactStage = rectOf(doc, '#stageWrap');
+      record('UI-006 Phase H mobile Inspector overlays rather than permanently shrinking the compact canvas',
+        compactStage &&
+        near(compactStage.left, 0, 1) &&
+        near(compactStage.right, win.innerWidth, 1) &&
+        doc.documentElement.scrollWidth <= win.innerWidth + 1,
+        { stage: compactStage, viewport: [win.innerWidth, win.innerHeight], scrollWidth: doc.documentElement.scrollWidth });
       shell.close();
       frame.style.width = '1280px';
       await sleep(250);
