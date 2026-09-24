@@ -237,6 +237,14 @@ test('Browser proof parses, keeps every required marker and uses connector flow 
   }
   for(const tool of ['get_ink_capabilities','import_ink_reference','decompose_ink_reference','get_ink_preview','use_ink'])assert.ok(harness.includes("smartApi.tools.invoke('"+tool+"'"));
   assert.ok(harness.indexOf("smartApi.tools.invoke('get_ink_capabilities'")<harness.indexOf("smartApi.tools.invoke('import_ink_reference'"));
+  const unavailableRevisionMarker="'WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT'";
+  const unavailableRevisionIndex=harness.indexOf(unavailableRevisionMarker);
+  const smartLoopStart=harness.indexOf("const smartApi=app.inkPublicApi");
+  assert.ok(unavailableRevisionIndex>=0&&smartLoopStart>unavailableRevisionIndex,'legacy Revision unavailable-state assertion runs before smart loop');
+  assert.equal(harness.split('WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT').length-1,1,'legacy Revision unavailable-state assertion remains singular');
+  for(const marker of ['REVISION_BASELINE_CAPTURED','REVISION_STRUCTURE_CAPTURED','WORKSTATION_REVISION_STRUCTURAL_COMPARE','REVISION_RESTORE_EXECUTED']){
+    assert.ok(harness.indexOf(marker)>harness.indexOf('SMART_LOOP_ARTIFACT_EVIDENCE_READY'),marker+' remains after smart loop');
+  }
   const historyStart=harness.indexOf("const smartHistory=await smartApi.tools.invoke('get_ink_history')");
   const historyEnd=harness.indexOf("const smartRevisionAfter=",historyStart);
   assert.ok(historyStart>=0&&historyEnd>historyStart,'smart History proof block');
