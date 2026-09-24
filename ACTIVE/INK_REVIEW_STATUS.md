@@ -1,6 +1,34 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-003 / CAPABILITY_SCHEMA_DISCOVERY / DEV_AUTHORIZED`
+STATUS: `INK-CHAT-CONNECTOR-003 / MR_REVISE / SCHEMA_CONTRACT_FIX_REQUIRED`
+
+## Connector-003 MR source review — 2026-09-24
+
+```text
+REVIEW_HEAD = 5c531dba2c87ee0762c3f21d54845effafe33164
+SOURCE_ARCHITECTURE = PASS
+SCOPE = PASS
+AUTHORITY_REUSE = PASS
+DESCRIPTOR_REGISTRY = STRUCTURALLY_PASS
+NAMED_TOOL_18 = PASS
+
+FINAL_SOURCE_GATE = REVISE
+RUNTIME = HELD
+```
+
+Blocking findings:
+
+- Descriptor ranges currently advertise some values the accepted authority rejects:
+  - `path.refine.v1.maxControlLength = 0`;
+  - `preview.capture.scale <= 0`;
+  - `preview.capture.ppi <= 0`;
+  - `object.translate.v1 dx=0,dy=0`;
+  - `path.repaint.v1 arguments={}`.
+- `inputSchema` currently mixes Named Tool envelope shape with positional/direct Public API method signatures. Descriptor v1 therefore does not yet provide one unambiguous callable contract.
+
+No change is requested to Document Bridge, Reference Handoff, bounded edit execution, History, Revision, Renderer/export, Preview, Output Handle, UI, or FORMAT_VERSION.
+
+Runtime is not queued until this metadata/input-contract correction passes source review.
 
 ## Connector-003 review target — 2026-09-24
 
