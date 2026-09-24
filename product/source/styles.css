@@ -2474,3 +2474,12 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
   .properties-subnav .inspector-tab{min-width:0}
   .properties-subnav .inspector-tab span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
+
+
+/* ==========================================================================
+   INK-WEB-UI-006 — Phase F Primary Home enforcement
+   Keep legacy object-action handler endpoints in DOM without exposing a
+   second equal-status visible selection action strip.
+   ========================================================================== */
+.selection-command-proxies{display:none!important}
+.object-deep-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
