@@ -153,3 +153,32 @@ Result: **PASS for the authorized QA-bridge revision scope**.
 - browser Runtime was not run by DEV and remains the MR exact-SHA gate.
 
 `DEV_HANDOFF → STOP`.
+
+## MR_REVISE / DIAGNOSTIC_ONLY — preview-before failure details
+
+Runtime run `36006888089` reached the smart closed-loop proof with UI `106/106 PASS`, Reference import PASS, decomposition PASS and stable refs PASS, then failed at `SMART_LOOP_PREVIEW_BEFORE_CAPTURED`.
+
+This bounded revision changes only the browser QA assertion diagnostics:
+
+- `SMART_LOOP_PREVIEW_BEFORE_CAPTURED` now uses a safe optional-length check so a missing `outputHandles` value is reported by the intended assertion instead of an incidental TypeError;
+- failure details now include exactly the requested diagnostic surfaces: `status`, `diagnostics`, `result`, `outputHandles`, and `previewOptions`;
+- `smartPreviewOptions` remains `{scope:'content',maxDimension:960,background:true}`;
+- no product source, renderer, `visual-feedback.js`, output registry, resolver route, timeout, retry, transport, UI or `FORMAT_VERSION` behavior changed.
+
+Implementation checkpoint: `be77d526f963849924e91e2e6e30711207324229`.
+
+Focused connector-side QA: **PASS**.
+
+Verified:
+
+- one and only one `SMART_LOOP_PREVIEW_BEFORE_CAPTURED` marker remains;
+- the assertion captures all five requested failure-detail fields;
+- the preview options literal is unchanged;
+- frozen product blobs remain:
+  - `public-creative-api.js` = `72111d866584c7c414cd0e4f061953038e23596a`;
+  - `capability-registry.js` = `acb56063c3c8a26bcc0b92c9088786b77620bdf6`;
+- implementation commit changes only `qa/runtime/ink-cloud-018-browser-harness.html`.
+
+No Runtime rerun was performed by DEV in this diagnostic-only revision.
+
+`DEV_HANDOFF → STOP`.
