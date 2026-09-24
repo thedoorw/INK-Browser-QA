@@ -1,3 +1,24 @@
+## Smart closed-loop Runtime diagnostic checkpoint — 2026-09-24
+
+```text
+RUN = 36006888089
+TESTED_SHA = 74c02f41dd9bde3262a6e7ee507126b74c2e18c9
+UI = PASS / 106 of 106
+CREATIVE = FAIL at SMART_LOOP_PREVIEW_BEFORE_CAPTURED
+GEOMETRY = NOT_REACHED
+
+import = PASS
+decompose = PASS
+stable refs = PASS
+Color Paths = 1471
+Line Paths = 1471
+
+CLASSIFICATION = UNRESOLVED / missing preview diagnostics in QA evidence
+MR = REVISE / DIAGNOSTIC_ONLY
+PRODUCT = FROZEN
+RUNTIME = HOLD until diagnostic revision handoff
+```
+
 ## Smart closed-loop Runtime revise — 2026-09-24
 
 ```text
