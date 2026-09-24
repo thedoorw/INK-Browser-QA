@@ -50,7 +50,7 @@ FORMAT_VERSION = 4
 
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_004_REVISION_READY / MR_RUNTIME_RUNNER_BLOCKED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_004_QA_TIMEOUT_REVISED / MR_RUNTIME_RERUN_QUEUED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
@@ -58,16 +58,16 @@ STATUS: `CONNECTOR_004_REVISION_READY / MR_RUNTIME_RUNNER_BLOCKED / DRAWING_VALI
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
 | DEV_BRANCH | `work/ink-chat-connector-004` |
 | DEV_HANDOFF | `Connector-004 revision = READY / STOP` |
-| MR_REVIEW | `source PASS / revision PASS / exact-SHA Runtime waiting self-hosted runner` |
+| MR_REVIEW | `source PASS / browser revision PASS / first feature Runtime hit harness timeout; QA-only rerun queued` |
 | TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `run 35970456976 / target a050e0d8... / attempt 1 runner-start FAIL / attempt 2 QUEUED` |
+| RUNTIME_QA | `run 35970456976 = UI PASS / creative 240s harness timeout; next exact target 448eef0f... with 360s timeout` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `No code revision; execute queued exact-SHA Runtime when self-hosted Windows runner accepts job` |
+| NEXT_STAGE | `Execute QA-only timeout revision exact-SHA Runtime; classify Connector-004 feature result` |
 
 ## Connector-003 promotion closure
 
