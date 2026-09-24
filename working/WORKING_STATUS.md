@@ -1,23 +1,23 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK_SELECTED / UI-006_CD_DEV_HANDOFF / CHAT_PHASE_C_NOT_STARTED`
+STATUS: `DUAL_TRACK_ACTIVE / UI-006_CD_DEV_HANDOFF / CHAT_PHASE_C_AUTHORIZED`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `NONE GLOBAL / UI-006 branch-local Phase C+D handoff` |
-| CURRENT_TASK_ID | `UI: INK-WEB-UI-006 / CHAT: PHASE_C NOT_STARTED` |
-| DEV_BRANCH | `UI: work/ink-web-ui-standard-001 / CHAT: NONE` |
-| DEV_HANDOFF | `UI Phase C+D = RECEIVED / STOP / CHAT = NONE` |
-| MR_REVIEW | `UI = UR_REVIEW / CHAT = NOT_STARTED` |
-| TARGET_GATE | `UI C+D review → next UI authorization; CHAT Phase C separate Work Order` |
+| CURRENT_WORK_ORDER | `CHAT: INK-CHAT-VALIDATION-001 Phase C / UI: branch-local UI-006 C+D handoff` |
+| CURRENT_TASK_ID | `CHAT: INK-CHAT-VALIDATION-001 / UI: INK-WEB-UI-006` |
+| DEV_BRANCH | `CHAT: work/ink-chat-validation-001-phase-c / UI: work/ink-web-ui-standard-001` |
+| DEV_HANDOFF | `CHAT = NOT_STARTED / UI Phase C+D = RECEIVED / STOP` |
+| MR_REVIEW | `CHAT Phase C = AUTHORIZED / UI = UR_REVIEW` |
+| TARGET_GATE | `CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS / UI C+D review` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `TECH-DEBT BASELINE PASS / RUN 35887731569 / TESTED 3e22c2f501e100674952650f333024d5b817d86f` |
+| RUNTIME_QA | `CHAT Phase C exact-SHA Runtime REQUIRED; technical-debt baseline PASS retained` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
-| CHAT VALIDATION | `Phase B regression PASS / Phase C NOT_STARTED / NOT_AUTHORIZED` |
-| PARALLEL_MODE | `SELECTED / SEPARATE AUTHORITIES / NO AUTOMATIC START` |
-| NEXT_STAGE | `UI UR review and CHAT Phase C Work Order may proceed in parallel when separately authorized` |
+| CHAT VALIDATION | `Phase B CLOSED / regression PASS / Phase C AUTHORIZED / DEV_NOT_STARTED` |
+| PARALLEL_MODE | `ACTIVE / SEPARATE AUTHORITIES` |
+| NEXT_STAGE | `CHAT Phase C DEV → HANDOFF / STOP while UI remains under UR review` |
 
 ## Dual-track coordination synchronization — 2026-09-24
 
@@ -29,8 +29,13 @@ CORE_AUTHORITY = FROZEN unless separately authorized
 
 UI-006 Phase C+D = DEV_HANDOFF / UR_REVIEW / STOP
 UI-006 Phase E-I = NOT_STARTED / NOT_AUTHORIZED
-CHAT Validation Phase C = NOT_STARTED / NOT_AUTHORIZED
-AUTOMATIC_START = NO
+
+CHAT Validation Phase B = CLOSED / REGRESSION PASS
+CHAT Validation Phase C = AUTHORIZED / DEV_NOT_STARTED
+CHAT Phase C branch = work/ink-chat-validation-001-phase-c
+CHAT Phase C gate = CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS
+
+AUTOMATIC_PHASE_D_PLUS_START = NO
 ```
 
 Hard boundary:
@@ -38,6 +43,36 @@ Hard boundary:
 - UI and CHAT remain separate task branches and separate gates.
 - no development-branch-to-development-branch merge.
 - after independent acceptance, run combined UI + CHAT + Creative + Geometry regression and verify History/Revision authority unchanged.
+
+## CHAT Validation Phase C authorization
+
+```text
+GOAL =
+  Phase B generated Color + Line
+  → stable CHAT target
+  → proposal
+  → explicit approval
+  → existing path.repaint.v1
+  → existing History
+  → visible bounded edit
+
+C1 = Color Path fill edit
+C2 = Line Path stroke edit
+C3 = approval + stale-state guard
+C4 = private real-image acceptance
+
+TRACER_RETUNING = 0
+NEW_ENGINE = 0
+SEMANTIC_PART_LABELING = 0
+IMAGE_MODEL = 0
+PRIVATE_IMAGE_PUBLIC_COMMIT = 0
+FORMAT_VERSION = 4 / PRESERVE
+```
+
+Registered only, not authorized after Phase C:
+- Phase D — bounded Path geometry correction;
+- Phase E — multi-step Color + Line plan + Revision;
+- Phase F — end-to-end private-image collaboration.
 
 ## Previous MR synchronization
 
