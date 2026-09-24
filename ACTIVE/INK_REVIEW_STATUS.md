@@ -1,6 +1,53 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-CONNECTOR-001 / MR_PASS / PROMOTION_NOT_YET_EXECUTED`
+STATUS: `INK-CHAT-CONNECTOR-002 / VISUAL_ASSET_FEEDBACK / DEV_AUTHORIZED`
+
+## Connector-002 review target — 2026-09-24
+
+```text
+TASK = INK-CHAT-CONNECTOR-002
+PHASE = PREVIEW_OUTPUT_HANDLE_FOUNDATION
+BRANCH = work/ink-chat-connector-002
+TARGET_GATE = INK_VISUAL_ASSET_FEEDBACK_WORKS
+
+CONNECTOR_001 =
+  MR_PASS
+  promoted on main
+  promotion commit = efd48a429d9998b4871aebf7bd1e47a576d41a95
+
+CONNECTOR_002 =
+  get_ink_preview
+  + INK_OUTPUT_HANDLE
+  + inspect/release output handle
+  + exact document/page/revision/fingerprint binding
+
+CONNECTOR_003_CAPABILITY_DISCOVERY = NOT_AUTHORIZED
+USE_INK = NOT_AUTHORIZED
+EXTERNAL_TRANSPORT = NOT_AUTHORIZED
+```
+
+Review focus:
+
+- reuse existing `renderExportCanvas` / Renderer authority;
+- no second renderer or DOM screenshot;
+- bounded preview dimensions/pixels;
+- output handle is JSON-safe and content-addressed;
+- raw preview payload remains internal/ephemeral;
+- no Blob/Canvas/data URL/ObjectURL in `INK_AGENT_RESULT`;
+- handle binds exact Document/Page/Revision/Document fingerprint/render result;
+- asset inspect detects stale/evicted/released state;
+- preview/asset operations do not mutate Document/History/Revision;
+- existing Connector-001 14 tools remain compatible;
+- 17 named tools total;
+- FORMAT_VERSION 4 preserved.
+
+Runtime coordination:
+
+```text
+UI-006 Phase H = separate Runtime FAIL / revision lane
+Connector-002 DEV = do not take over UI Runtime queue
+Final browser gate = MR decision after DEV handoff and UI/main reconciliation
+```
 
 ## Connector-001 final MR PASS — 2026-09-24
 
