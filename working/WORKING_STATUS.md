@@ -1,23 +1,45 @@
 # INK WORKING STATUS
 
-STATUS: `INK-TECH-DEBT-001_CLOSED / CLEAN_PROMOTED / UI-006_B3_RESOLVED`
+STATUS: `DUAL_TRACK_SELECTED / UI-006_CD_DEV_HANDOFF / CHAT_PHASE_C_NOT_STARTED`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `INK-TECH-DEBT-001 — Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1` |
-| CURRENT_TASK_ID | `INK-TECH-DEBT-001` |
-| DEV_BRANCH | `work/ink-tech-debt-001` |
-| DEV_HANDOFF | `RECEIVED / SOURCE_HEAD ed38789bd1aa6dd12235ee57bbceb5195b965ad0` |
-| MR_REVIEW | `MR_PASS / CLOSED` |
-| TARGET_GATE | `CLOSED / CLEAN PROMOTION COMPLETE` |
+| CURRENT_WORK_ORDER | `NONE GLOBAL / UI-006 branch-local Phase C+D handoff` |
+| CURRENT_TASK_ID | `UI: INK-WEB-UI-006 / CHAT: PHASE_C NOT_STARTED` |
+| DEV_BRANCH | `UI: work/ink-web-ui-standard-001 / CHAT: NONE` |
+| DEV_HANDOFF | `UI Phase C+D = RECEIVED / STOP / CHAT = NONE` |
+| MR_REVIEW | `UI = UR_REVIEW / CHAT = NOT_STARTED` |
+| TARGET_GATE | `UI C+D review → next UI authorization; CHAT Phase C separate Work Order` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `PASS / RUN 35887731569 / TESTED 3e22c2f501e100674952650f333024d5b817d86f` |
-| UI-006 | `Phase A/B1/B2 preserved / B3 RESOLVED / Phase C–I HOLD` |
-| NEXT_STAGE | `No automatic start; await next MR authorization` |
+| RUNTIME_QA | `TECH-DEBT BASELINE PASS / RUN 35887731569 / TESTED 3e22c2f501e100674952650f333024d5b817d86f` |
+| UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
+| CHAT VALIDATION | `Phase B regression PASS / Phase C NOT_STARTED / NOT_AUTHORIZED` |
+| PARALLEL_MODE | `SELECTED / SEPARATE AUTHORITIES / NO AUTOMATIC START` |
+| NEXT_STAGE | `UI UR review and CHAT Phase C Work Order may proceed in parallel when separately authorized` |
 
-## Latest MR synchronization
+## Dual-track coordination synchronization — 2026-09-24
+
+```text
+PARALLEL_DIRECTION = UI + DRAWING/CHAT
+UI_AUTHORITY = Presentation / Placement / Responsive / Interaction shell
+CHAT_AUTHORITY = Grounding / Reasoning / Creative command flow / Validation
+CORE_AUTHORITY = FROZEN unless separately authorized
+
+UI-006 Phase C+D = DEV_HANDOFF / UR_REVIEW / STOP
+UI-006 Phase E-I = NOT_STARTED / NOT_AUTHORIZED
+CHAT Validation Phase C = NOT_STARTED / NOT_AUTHORIZED
+AUTOMATIC_START = NO
+```
+
+Hard boundary:
+- Document/schema, History, Revision, Geometry, persistence/FORMAT_VERSION, approval or execution authority changes require `STOP → MR → separate Core/Integration Work Order`.
+- UI and CHAT remain separate task branches and separate gates.
+- no development-branch-to-development-branch merge.
+- after independent acceptance, run combined UI + CHAT + Creative + Geometry regression and verify History/Revision authority unchanged.
+
+## Previous MR synchronization
 
 ```text
 INK-CHAT-VALIDATION-001 PHASE_B
