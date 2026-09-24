@@ -1,23 +1,33 @@
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_002_DEV_ACTIVE / DRAWING_VALIDATION_HOLD / UI_PHASE_H_REVISION_SEPARATE`
+STATUS: `CONNECTOR_002_MR_SOURCE_PASS / INTEGRATION_RUNTIME_PENDING / DRAWING_VALIDATION_HOLD / UI_SEPARATE`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-002 / Visual Asset Feedback` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-002` |
 | DEV_BRANCH | `work/ink-chat-connector-002` |
-| DEV_HANDOFF | `Connector-002 = NOT_STARTED / Connector-001 = CLOSED` |
-| MR_REVIEW | `Connector-002 = DEV_AUTHORIZED / Connector-001 = MR_PASS + promoted` |
+| DEV_HANDOFF | `Connector-002 = RECEIVED / STOP` |
+| MR_REVIEW | `Connector-002 = SOURCE_PASS / final integration Runtime pending` |
 | TARGET_GATE | `INK_VISUAL_ASSET_FEEDBACK_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `Connector-002 final Runtime deferred to MR; UI Phase H FAIL lane remains separate` |
+| RUNTIME_QA | `Connector-002 exact-HEAD browser gate pending; UI Phase I run 35954873725 passed separately` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-002 DEV → focused QA → DEV_HANDOFF / STOP → MR review` |
+| NEXT_STAGE | `UI queue closure → Connector-002 accepted-payload integration → exact-SHA browser gate` |
+
+## Connector-002 MR source checkpoint
+
+```text
+REVIEW_HEAD = f0ad1547de0fce791878b533662058a754993b5b
+SOURCE_REVIEW = PASS
+DEV_HANDOFF = RECEIVED / STOP
+FINAL_MR_PASS = PENDING_INTEGRATION_RUNTIME
+UI_PHASE_I_RUNTIME = PASS / separate lane
+```
 
 ## Connector-002 authorization
 
