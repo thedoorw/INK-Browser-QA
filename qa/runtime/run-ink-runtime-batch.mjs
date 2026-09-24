@@ -336,4 +336,3 @@ export async function runBatch(root) {
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   await runBatch(path.resolve(process.argv[2] || '.'));
 }
-
