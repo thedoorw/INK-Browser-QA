@@ -64,9 +64,19 @@
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
     <div class="menu-app-mark" aria-label="INK v0.1 · {{DELIVERY}}"><img class="brand-source-mark" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong>INK</strong><small>0.1</small></div>
     <nav class="application-menus" aria-label="主選單">
-      <button type="button">檔案</button><button type="button">編輯</button><button type="button">檢視</button><button type="button">選取</button><button type="button">物件</button><button type="button">圖層</button><button type="button">筆刷</button><button type="button">視窗</button><button type="button">說明</button>
+      <div class="application-menu application-file-menu">
+        <button id="fileMenuToggle" type="button" aria-haspopup="menu" aria-expanded="false">檔案</button>
+        <div id="fileMenu" class="application-command-menu" role="menu" aria-label="檔案" data-ui-home="file" data-ui-route="PRIMARY_HOME" hidden>
+          <button type="button" role="menuitem" data-file-command="new"><span>新增</span><kbd>Ctrl+N</kbd></button>
+          <button type="button" role="menuitem" data-file-command="open"><span>開啟</span><kbd>Ctrl+O</kbd></button>
+          <button type="button" role="menuitem" data-file-command="save"><span>儲存</span><kbd>Ctrl+S</kbd></button>
+          <span class="application-menu-separator" aria-hidden="true"></span>
+          <button type="button" role="menuitem" data-file-command="export"><span>匯出</span></button>
+        </div>
+      </div>
+      <button type="button">編輯</button><button type="button">檢視</button><button type="button">選取</button><button type="button">物件</button><button type="button">圖層</button><button type="button">筆刷</button><button type="button">視窗</button><button type="button">說明</button>
     </nav>
-    <div class="menu-workspace" aria-label="工作區狀態"><span>繪畫與向量</span><button id="workspaceMenuToggle" type="button" title="工作區清單" aria-haspopup="menu" aria-expanded="false">▾</button>
+    <div class="menu-workspace" aria-label="工作區狀態" data-ui-home="workspace" data-ui-route="SECONDARY_SHORTCUT"><span>繪畫與向量</span><button id="workspaceMenuToggle" type="button" title="工作區清單" aria-haspopup="menu" aria-expanded="false">▾</button>
       <div id="workspaceMenu" class="workspace-menu" role="menu" hidden>
         <button type="button" role="menuitemradio" data-workspace-command="creation"><svg><use href="#i-infinite"/></svg><span>創作空間</span><kbd>Ctrl+1</kbd></button>
         <button type="button" role="menuitemradio" data-workspace-command="layout"><svg><use href="#i-layout"/></svg><span>版面空間</span><kbd>Ctrl+2</kbd></button>
@@ -85,32 +95,32 @@
       <input id="docTitle" class="doc-title" value="未命名作品" aria-label="作品名稱">
     </div>
 
-    <section id="contextualOptions" class="contextual-options glass-surface" aria-label="目前工具選項" data-context-mode="draw" data-context-tool="pen">
+    <section id="contextualOptions" class="contextual-options glass-surface" aria-label="目前工具選項" data-context-mode="draw" data-context-tool="pen" data-ui-home="immediate-context" data-ui-route="PRIMARY_HOME">
       <div class="contextual-tool-identity" aria-live="polite">
         <svg aria-hidden="true"><use id="contextualToolUse" href="#i-pen"/></svg>
         <strong id="contextualToolName">鋼筆</strong>
       </div>
       <span class="contextual-divider" aria-hidden="true"></span>
       <div id="contextualControlHost" class="contextual-control-host"></div>
-      <button id="contextualAdvancedBtn" class="contextual-advanced-button" type="button" aria-pressed="false" aria-expanded="false" aria-controls="inspector">進階</button>
+      <button id="contextualAdvancedBtn" class="contextual-advanced-button" type="button" aria-pressed="false" aria-expanded="false" aria-controls="inspector" data-ui-home="properties" data-ui-route="SHORTCUT">進階</button>
     </section>
 
     <div class="topbar-center">
-      <div id="workspaceSwitch" class="workspace-switch" role="group" aria-label="工作空間">
+      <div id="workspaceSwitch" class="workspace-switch" role="group" aria-label="工作空間" data-ui-home="workspace" data-ui-route="PRIMARY_HOME">
         <button type="button" data-space="creation" class="active" title="創作空間 Ctrl+1"><svg><use href="#i-infinite"/></svg><span>創作</span></button>
         <button type="button" data-space="layout" title="版面空間 Ctrl+2"><svg><use href="#i-layout"/></svg><span>版面</span></button>
       </div>
-      <div class="history-group pill-group" aria-label="歷程">
+      <div class="history-group pill-group" aria-label="歷程" data-ui-home="edit-history" data-ui-route="SHORTCUT">
         <button id="undoBtn" class="icon-button" title="復原 Ctrl+Z" disabled><svg><use href="#i-undo"/></svg></button>
         <button id="redoBtn" class="icon-button" title="重做 Ctrl+Shift+Z" disabled><svg><use href="#i-redo"/></svg></button>
       </div>
     </div>
 
     <div class="file-group">
-      <button id="newBtn" class="quiet-button desktop-file">新增</button>
-      <button id="openBtn" class="quiet-button desktop-file">開啟</button>
-      <button id="saveBtn" class="quiet-button desktop-file">儲存</button>
-      <button id="exportBtn" class="primary-button"><svg><use href="#i-export"/></svg><span>匯出</span></button>
+      <button id="newBtn" class="quiet-button desktop-file" data-ui-home="file" data-ui-route="RESPONSIVE_ALTERNATIVE">新增</button>
+      <button id="openBtn" class="quiet-button desktop-file" data-ui-home="file" data-ui-route="RESPONSIVE_ALTERNATIVE">開啟</button>
+      <button id="saveBtn" class="quiet-button desktop-file" data-ui-home="file" data-ui-route="RESPONSIVE_ALTERNATIVE">儲存</button>
+      <button id="exportBtn" class="primary-button mobile-file-export" data-ui-home="file" data-ui-route="RESPONSIVE_ALTERNATIVE"><svg><use href="#i-export"/></svg><span>匯出</span></button>
       <button id="fullscreenToggle" class="icon-button" title="進入全螢幕 Ctrl+Shift+F" aria-label="進入全螢幕" aria-pressed="false"><svg><use href="#i-expand"/></svg></button>
       <button id="inspectorToggle" class="icon-button legacy-inspector-toggle" title="開啟檢查器" aria-label="開啟檢查器" aria-expanded="false"><svg><use href="#i-sliders"/></svg></button>
       <button id="settingsToggle" class="icon-button" title="畫布設定" aria-label="畫布設定"><svg><use href="#i-settings"/></svg></button>
@@ -130,7 +140,7 @@
     <div id="pagesList" class="pages-list"></div>
   </aside>
 
-  <nav class="tool-rail glass-surface" aria-label="主要工具">
+  <nav class="tool-rail glass-surface" aria-label="主要工具" data-ui-home="tool-selection" data-ui-route="PRIMARY_HOME">
     <div class="tool-group">
       <button id="drawToolButton" class="tool-button tool-stack active" data-tool-stack="draw" data-tool="pen" title="繪圖工具；再按一次或長按可切換筆種（W）" aria-haspopup="true" aria-expanded="false">
         <span class="tool-icon"><svg><use id="drawToolUse" href="#i-pen"/></svg></span><span id="drawToolLabel" class="tool-label">鋼筆</span><span class="stack-corner" aria-hidden="true"></span>
@@ -145,6 +155,11 @@
       <button class="tool-button" data-tool="text" title="文字（T）"><span class="tool-icon"><svg><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
       <button class="tool-button" data-tool="image" title="圖片"><span class="tool-icon"><svg><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
       <button class="tool-button" data-tool="pan" title="移動畫布（H／空白鍵）"><span class="tool-icon"><svg><use href="#i-pan"/></svg></span><span class="tool-label">移動</span></button>
+    </div>
+    <div class="tool-layout-controls" aria-label="工具列版面">
+      <button id="toolbarLayoutToggle" class="tool-layout-toggle" type="button" title="切換為雙欄工具列" aria-label="切換為雙欄工具列" aria-pressed="false">
+        <svg aria-hidden="true"><use href="#i-layout"/></svg>
+      </button>
     </div>
   </nav>
 
@@ -170,13 +185,13 @@
       <div class="hint-keys"><kbd>B</kbd> 鋼筆 <kbd>I</kbd> 毛筆 <kbd>V</kbd> 選取</div>
     </div>
 
-    <section id="quickControls" class="quick-controls glass-surface" aria-label="快速工具控制">
+    <section id="quickControls" class="quick-controls glass-surface" aria-label="快速工具控制" data-ui-home="immediate-context" data-ui-route="PRIMARY_HOME">
       <div class="context-inline-control" data-context-control="color"><span class="context-control-label">顏色</span><div class="quick-color-wrap"><button id="quickColor" class="quick-color" type="button" title="目前顏色" tabindex="-1" aria-hidden="true"><span></span></button><input id="quickColorInput" class="quick-color-input" type="color" value="#202020" aria-label="選擇目前顏色"></div></div>
       <label class="quick-slider context-inline-control" data-context-control="size" title="工具大小"><span class="context-control-label">大小</span><input id="quickSizeInput" type="range" min="0.5" max="120" step="0.5" value="4"><output id="quickSizeOutput">4</output></label>
       <label class="quick-slider context-inline-control" data-context-control="opacity" title="透明度"><span class="context-control-label">透明度</span><input id="quickOpacityInput" type="range" min="1" max="100" step="1" value="100"><output id="quickOpacityOutput">100</output></label>
     </section>
 
-    <section id="selectionBar" class="selection-bar glass-surface" hidden>
+    <section id="selectionBar" class="selection-bar glass-surface" data-ui-home="selection-actions" data-ui-route="CONTEXTUAL_SHORTCUT" hidden>
       <span class="selection-title"><svg><use href="#i-select"/></svg><strong><span id="selectionBarCount">1</span> 個物件</strong></span>
       <span class="selection-divider"></span>
       <button data-selection-action="duplicate" title="複製"><svg><use href="#i-copy"/></svg><span>複製</span></button>
@@ -198,7 +213,7 @@
 
   <div id="panelScrim" class="panel-scrim" hidden></div>
 
-  <button id="inspectorEdgeToggle" class="inspector-edge-toggle primary-panel-collapse" type="button" title="展開右側面板" aria-label="展開右側面板" aria-controls="inspector creativeWorkspace" aria-expanded="false">
+  <button id="inspectorEdgeToggle" class="inspector-edge-toggle primary-panel-collapse" type="button" title="展開右側面板" aria-label="展開右側面板" aria-controls="inspector creativeWorkspace" aria-expanded="false" data-ui-home="panels" data-ui-route="COLLAPSE_RESTORE_ONLY">
     <svg class="edge-chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
   </button>
 
@@ -211,14 +226,15 @@
         <button id="closeInspector" class="mini-button panel-close-button" title="關閉檢查器" aria-label="關閉檢查器"><svg><use href="#i-close"/></svg></button>
       </div>
     </div>
-    <div class="inspector-tabs properties-subnav" data-panel-subnav="properties" aria-label="屬性子導覽">
-      <button class="inspector-tab active" data-tab="brush"><svg><use href="#i-sliders"/></svg><span>工具</span></button>
-      <button class="inspector-tab" data-tab="object"><svg><use href="#i-select"/></svg><span>物件</span></button>
-      <button class="inspector-tab" data-tab="ai"><svg><use href="#i-spark"/></svg><span>AI</span></button>
-      <button class="inspector-tab" data-tab="studio"><svg><use href="#i-spark"/></svg><span>核心</span></button>
+    <div class="inspector-tabs properties-subnav" data-panel-subnav="properties" aria-label="面板子導覽">
+      <button class="inspector-tab properties-subtab active" data-tab="brush"><svg><use href="#i-sliders"/></svg><span>工具</span></button>
+      <button class="inspector-tab properties-subtab" data-tab="object"><svg><use href="#i-select"/></svg><span>物件</span></button>
+      <button class="inspector-tab properties-subtab" data-tab="geometry"><svg><use href="#i-group"/></svg><span>幾何</span></button>
+      <button class="inspector-tab specialist-subtab" data-tab="ai"><svg><use href="#i-spark"/></svg><span>AI</span></button>
+      <button class="inspector-tab specialist-subtab" data-tab="studio"><svg><use href="#i-settings"/></svg><span>進階</span></button>
     </div>
 
-    <section class="inspector-section tab-content active" data-content="brush">
+    <section class="inspector-section tab-content active" data-content="brush" data-ui-home="properties" data-ui-route="DEEP_SETTINGS">
       <div class="section-title tool-heading"><div><strong id="activeToolName">鋼筆</strong><span id="pointerInfo">滑鼠</span></div><span class="shortcut-badge" id="activeShortcut">B</span></div>
       <div id="brushPresetGrid" class="preset-grid"></div>
       <div class="property-card brush-preview-card"><div class="subpanel-title"><strong>即時筆刷預覽</strong><span>LIVE</span></div><canvas id="brushLivePreview" class="brush-live-preview" aria-label="即時筆刷預覽"></canvas></div>
@@ -247,7 +263,7 @@
         <div class="subpanel-title"><strong>媒材渲染</strong><span id="renderEngineStatus" class="engine-status" data-state="checking">偵測中</span></div>
         <label class="control-row"><span>引擎</span><select id="renderEngineMode" aria-label="自然媒材渲染引擎"><option value="auto">自動選擇</option><option value="gpu">WebGL2 GPU</option><option value="canvas2d">Canvas 相容</option></select></label>
         <div class="render-engine-meta"><span id="renderEngineBackend">Canvas 2D</span><span id="renderEngineStats">0 draw</span></div>
-        <p class="render-engine-note">連續濕筆畫使用顏料／水分／沉積多通道合成；GPU 不可用時自動改用 Canvas 參考模擬。</p><button id="runGPUValidationBtn" class="wide-button compact-button">執行 GPU 自我檢查</button><p id="gpuValidationStatus" class="gpu-validation-status">尚未檢查</p>
+        <p class="render-engine-note">連續濕筆畫使用顏料／水分／沉積多通道合成；GPU 不可用時自動改用 Canvas 參考模擬。</p>
       </div>
 
       <div id="eraserOptions" class="property-card subpanel" hidden>
@@ -288,11 +304,19 @@
       <div class="history-panel-footer"><span id="historyUsage">0／30</span><span>本次工作階段</span></div>
     </section>
 
-    <section class="inspector-section tab-content" data-content="object">
+    <section class="inspector-section tab-content" data-content="object" data-ui-home="properties" data-ui-route="DEEP_SETTINGS">
       <div id="noSelection" class="no-selection"><svg><use href="#i-select"/></svg><strong>尚未選取物件</strong><span>選擇左側「選取」或按 V，再點擊畫布物件。</span></div>
       <div id="selectionControls" hidden>
         <div class="section-title"><div><strong>已選取 <span id="selectionCount">1</span> 個</strong><span>拖曳控制點可縮放與旋轉</span></div></div>
-        <div class="object-actions"><button id="duplicateSelectionBtn">複製</button><button id="groupSelectionBtn">群組</button><button id="ungroupSelectionBtn">解散</button><button id="frontSelectionBtn">移至最上</button><button id="backSelectionBtn">移至最下</button><button id="deleteSelectionBtn" class="danger">刪除</button></div>
+        <div class="selection-command-proxies" hidden aria-hidden="true">
+          <button id="duplicateSelectionBtn" tabindex="-1">複製</button>
+          <button id="groupSelectionBtn" tabindex="-1">群組</button>
+          <button id="frontSelectionBtn" tabindex="-1">移至最上</button>
+          <button id="deleteSelectionBtn" class="danger" tabindex="-1">刪除</button>
+        </div>
+        <div class="object-actions object-deep-actions" data-ui-home="selection-actions" data-ui-route="DEEP_SECONDARY">
+          <button id="ungroupSelectionBtn">解散</button><button id="backSelectionBtn">移至最下</button>
+        </div>
         <div id="strokeEditCard" class="property-card stroke-edit-card" hidden>
           <div class="subpanel-title"><strong>筆畫節點與區段</strong><span>STROKE EDIT</span></div>
           <p id="strokeEditStatus" class="stroke-edit-status">選取一筆筆畫後進入編輯。</p>
@@ -341,7 +365,7 @@
             <label class="rotation-field"><span>R°</span><input id="transformR" type="number" step="1"></label>
           </div>
         </div>
-        <div class="property-card align-card">
+        <div class="property-card align-card" data-ui-home="selection-alignment" data-ui-route="DEEP_SETTINGS">
           <div class="subpanel-title"><strong>對齊與分布</strong><span>2 個以上</span></div>
           <div class="align-grid">
             <button data-align="left" title="靠左"><svg><use href="#i-align-left"/></svg></button>
@@ -355,6 +379,22 @@
           </div>
         </div>
         <div class="property-card"><label class="control-row range-row"><span>透明度</span><input id="objectOpacity" type="range" min="0" max="100" value="100"><output id="objectOpacityOutput">100%</output></label></div>
+      </div>
+    </section>
+
+    <section class="inspector-section tab-content geometry-panel" data-content="geometry" aria-label="Path and Repeat controls" data-ui-home="properties" data-ui-route="DEEP_SETTINGS">
+      <div class="section-title"><div><strong>Path／Repeat</strong><span>既有幾何命令端點</span></div></div>
+      <div class="property-card studio-card">
+        <div class="subpanel-title"><strong>Path Boolean</strong><span>EDITABLE</span></div>
+        <button id="pathEditToggle" class="wide-button">Path／Node 編輯</button>
+        <div class="transform-grid"><label><span>Node X</span><input id="pathNodeX" type="number" step="1" value="0"></label><label><span>Node Y</span><input id="pathNodeY" type="number" step="1" value="0"></label></div>
+        <button id="pathNodeApply" class="wide-button">更新所選 Node</button>
+        <div class="studio-button-grid"><button id="booleanUnion">Union</button><button id="booleanDifference">Difference</button><button id="booleanIntersection">Intersection</button><button id="booleanXor">XOR</button><button id="booleanDivide">Divide</button></div>
+      </div>
+      <div class="property-card studio-card">
+        <div class="subpanel-title"><strong>Repeat</strong><span>LIVE INSTANCES</span></div>
+        <label class="control-row"><span>數量</span><input id="repeatCount" type="number" min="2" max="72" value="8"></label>
+        <div class="studio-button-grid"><button id="repeatRadial">Radial</button><button id="repeatMirror">Mirror</button><button id="repeatGrid">Grid</button><button id="repeatExpand">展開 Path</button></div>
       </div>
     </section>
 
@@ -412,8 +452,13 @@
       </form>
     </dialog>
 
-    <section class="inspector-section tab-content studio-panel" data-content="studio">
-      <div class="section-title"><div><strong>INK Core v0.1</strong><span>AI Command · Editable Plan · Preview · Approval · Rollback</span></div></div>
+    <section class="inspector-section tab-content studio-panel specialist-panel" data-content="studio">
+      <div class="section-title"><div><strong>進階製作／診斷</strong><span>既有工程與驗證工具</span></div></div>
+      <div class="property-card studio-card diagnostic-card">
+        <div class="subpanel-title"><strong>GPU Validation</strong><span>DIAGNOSTIC</span></div>
+        <button id="runGPUValidationBtn" class="wide-button compact-button">執行 GPU 自我檢查</button>
+        <p id="gpuValidationStatus" class="gpu-validation-status">尚未檢查</p>
+      </div>
       <div class="property-card studio-card program-asset-card">
         <div class="subpanel-title"><strong>程序資產</strong><span>SAFE IMPORT → RECIPE</span></div>
         <label class="control-row"><span>安全模式</span><select id="programSafetyMode"><option value="STATIC_PARSE">STATIC_PARSE</option><option value="SANDBOX_ANALYSIS">SANDBOX_ANALYSIS</option><option value="TRANSLATE_ONLY">TRANSLATE_ONLY</option><option value="TRUSTED_EXTERNAL_RUN">TRUSTED_EXTERNAL_RUN</option></select></label>
@@ -441,18 +486,6 @@
         <label class="control-row range-row"><span>紋理</span><input id="recipeTexture" type="range" min="0" max="60" value="14"><output>14</output></label>
         <label class="control-row range-row"><span>對比</span><input id="recipeContrast" type="range" min="-50" max="50" value="8"><output>8</output></label>
         <div class="studio-button-grid"><button id="studioRunRecipe">執行全部</button><button id="studioReplayStep">局部重播</button><button id="studioRollback">回滾</button><button id="studioQA">執行 QA</button></div>
-      </div>
-      <div class="property-card studio-card">
-        <div class="subpanel-title"><strong>Path Boolean</strong><span>EDITABLE</span></div>
-        <button id="pathEditToggle" class="wide-button">Path／Node 編輯</button>
-        <div class="transform-grid"><label><span>Node X</span><input id="pathNodeX" type="number" step="1" value="0"></label><label><span>Node Y</span><input id="pathNodeY" type="number" step="1" value="0"></label></div>
-        <button id="pathNodeApply" class="wide-button">更新所選 Node</button>
-        <div class="studio-button-grid"><button id="booleanUnion">Union</button><button id="booleanDifference">Difference</button><button id="booleanIntersection">Intersection</button><button id="booleanXor">XOR</button><button id="booleanDivide">Divide</button></div>
-      </div>
-      <div class="property-card studio-card">
-        <div class="subpanel-title"><strong>Repeat</strong><span>LIVE INSTANCES</span></div>
-        <label class="control-row"><span>數量</span><input id="repeatCount" type="number" min="2" max="72" value="8"></label>
-        <div class="studio-button-grid"><button id="repeatRadial">Radial</button><button id="repeatMirror">Mirror</button><button id="repeatGrid">Grid</button><button id="repeatExpand">展開 Path</button></div>
       </div>
       <div class="property-card studio-card">
         <div class="subpanel-title"><strong>Mask</strong><span>PATH BOUNDARY</span></div>
