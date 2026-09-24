@@ -147,7 +147,7 @@ function handleFixture(id, byteLength) {
   };
 }
 
-test('Connector-002 three-tool surface remains exact while Connector-003 appends discovery after it', () => {
+test('Connector-002 three-tool surface remains exact while later Connector stages append after it', () => {
   const { app } = makeApp();
   const api = createInkPublicCreativeApi(app);
   const names = api.tools.registry().map(item => item.name);
@@ -158,7 +158,8 @@ test('Connector-002 three-tool surface remains exact while Connector-003 appends
     'release_ink_output'
   ]);
   assert.equal(names[17], 'describe_ink_capability');
-  assert.equal(names.length, 18);
+  assert.equal(names[18], 'use_ink');
+  assert.equal(names.length, 19);
 
   const capabilities = api.capabilities().result.capabilities;
   for (const id of ['preview.capture', 'asset.inspect', 'asset.release']) {
@@ -357,7 +358,7 @@ test('ephemeral registry enforces bounded entries/bytes, byte eviction, release,
   );
 });
 
-test('Connector-002 source boundary preserves existing renderer/export authority, no UI/export transport, no use_ink/discovery/MCP, FORMAT_VERSION 4', async () => {
+test('Connector-002 source boundary preserves existing renderer/export authority, no UI/export transport or external transport, FORMAT_VERSION 4', async () => {
   const [visualSource, registrySource, apiSource, inkSource, configSource] = await Promise.all([
     readFile(path.join(root, 'product/source/src/agent/visual-feedback.js'), 'utf8'),
     readFile(path.join(root, 'product/source/src/agent/output-handle-registry.js'), 'utf8'),
@@ -373,7 +374,7 @@ test('Connector-002 source boundary preserves existing renderer/export authority
   assert.match(inkSource, /if\(width\*height>6000000\)/, 'preview hard limit stays below the existing tiled-export threshold');
 
   assert.doesNotMatch(visualSource, /exportPNG\s*\(|printArtboard\s*\(|download\s*\(|createObjectURL|window\.|globalThis|screenshot/i);
-  assert.doesNotMatch(registrySource + '\n' + visualSource + '\n' + apiSource, /\buse_ink\b|WebSocket|postMessage|\bMCP\b/i);
+  assert.doesNotMatch(registrySource + '\n' + visualSource + '\n' + apiSource, /WebSocket|postMessage|\bMCP\b/i);
   assert.doesNotMatch(registrySource + '\n' + visualSource, /IndexedDB|localStorage|sessionStorage|FileSystem|cloud/i);
   assert.doesNotMatch(visualSource, /new\s+Renderer|renderTiledCanvas|TiledExportJob|DOM/);
   assert.equal((apiSource.match(/get_ink_preview/g) || []).length >= 2, true);
