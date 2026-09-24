@@ -1,23 +1,23 @@
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_003_MR_REVISE / BOUNDED_SCHEMA_FIX / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_003_MR_SOURCE_PASS / RUNTIME_QUEUED / CONNECTOR_002_CLOSED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-003 / Capability Schema Discovery` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-003` |
 | DEV_BRANCH | `work/ink-chat-connector-003` |
-| DEV_HANDOFF | `Connector-003 = RECEIVED / MR_REVISE / bounded schema fix authorized` |
-| MR_REVIEW | `Connector-003 = REVISE / Runtime held` |
+| DEV_HANDOFF | `Connector-003 = RECEIVED / STOP` |
+| MR_REVIEW | `Connector-003 = SOURCE_PASS / RUNTIME_PENDING` |
 | TARGET_GATE | `INK_CAPABILITY_SCHEMA_DISCOVERY_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `Connector-003 focused QA first; MR decides exact-SHA browser gate after handoff` |
+| RUNTIME_QA | `Connector-003 exact HEAD a873c432... queued on central Windows Runtime` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-003 schema-contract correction → DEV_HANDOFF / STOP → MR re-review` |
+| NEXT_STAGE | `Exact-SHA Runtime → MR_PASS or MR_REVISE` |
 
 ## Connector-003 MR revision checkpoint
 
