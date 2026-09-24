@@ -182,3 +182,53 @@ DEV did not rerun browser Runtime.
 Exact final handoff HEAD is the commit containing this section and is reported in the DEV response.
 
 `DEV_HANDOFF → STOP`.
+
+## MR_REVISE / QA_ASSERTION_ONLY completion
+
+Runtime run `36012548161` at tested SHA `20262d942c7a4d1a5ca03898856a2d7ddff9f5d6` is the diagnostic input for this revision.
+
+MR classification:
+
+```text
+FIRST_FAIL = SMART_LOOP_HISTORY_RECORDED
+PRODUCT_RUNTIME_FAIL = NOT ESTABLISHED
+CLASSIFICATION = QA_ASSERTION_SEMANTICS_MISMATCH
+PRODUCT_SOURCE = FROZEN
+```
+
+The browser harness no longer treats repaint target membership in `HistoryEntry.objectIds` as proof that History was recorded.
+
+The corrected `SMART_LOOP_HISTORY_RECORDED` gate now requires:
+
+- exactly two `smartExecuted.historyReceipt.steps`;
+- per step: integer `beforeUndoCount`, exact +1 `afterUndoCount`, and `latestLabel === "CHAT repaint Path"`;
+- completed `get_ink_history`;
+- final two History entries both `captureMode === "scoped"`, `label === "CHAT repaint Path"`, `patchCount > 0`;
+- at least two applied and retained History entries.
+
+Focused QA additionally asserts that the smart History proof block contains no `objectIds` dependency.
+
+Code checkpoints:
+
+- `43ceec0af6b8acfd60e1f21b7cd1b756eda37174` — browser harness;
+- `3901d2bd5cae0aba029170ca7cc943ec0df7fd86` — focused QA contract.
+
+Focused connector-side QA: **PASS**.
+
+Pre-documentation diff from the Runtime tested SHA contains only:
+
+1. `qa/runtime/ink-cloud-018-browser-harness.html`
+2. `qa/ink-chat-closed-loop-001-smart-proof.test.mjs`
+
+Frozen product blobs remain unchanged:
+
+- `product/source/src/agent/visual-feedback.js` = `f24dbe4f231bdc8c1acb9c197e59485815f8dc22`;
+- `product/source/src/agent/public-creative-api.js` = `72111d866584c7c414cd0e4f061953038e23596a`;
+- `product/source/src/agent/capability-registry.js` = `acb56063c3c8a26bcc0b92c9088786b77620bdf6`.
+
+DEV did not rerun Windows Runtime. MR must rerun the new exact handoff HEAD and retrieve the real Runtime-produced `smart-loop-before.png`, `smart-loop-after.png`, and `smart-loop.json` before the target gate can be declared PASS.
+
+Exact final handoff HEAD is reported in the DEV response.
+
+`DEV_HANDOFF → STOP`.
+
