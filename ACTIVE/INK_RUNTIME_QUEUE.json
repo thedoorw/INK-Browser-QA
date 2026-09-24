@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "04ba565c80551fe364174b3964a3ebaa850454a5",
+  "state": "READY",
+  "target_sha": "1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf",
   "pending_work_orders": [
     "INK-WEB-UI-006-PHASE-H"
   ],
@@ -21,7 +21,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "INK-WEB-UI-006 Phase H exact-SHA Windows Runtime failed: Creative Loop panels violate the stage/panel/dock boundary invariant. DEV revision required before Phase I."
+    "reason": "INK-WEB-UI-006 Phase H bounded Creative Workspace geometry correction requires an immediate exact-SHA Windows self-hosted Runtime rerun before Phase I."
   },
   "batch_policy": {
     "default_target": 3,
