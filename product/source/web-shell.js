@@ -4,7 +4,14 @@
   const DESKTOP_QUERY = '(min-width: 761px)';
   const RUNTIME_READY_EVENT = 'ink:runtime-ready';
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
+  const TOOLBAR_COLUMNS_KEY = 'ink.web.ui.toolbar-columns.v0.1';
   const DEFAULT_PRIMARY_PANEL_WIDTH = 252;
+  const FILE_COMMAND_TARGETS = Object.freeze({
+    new: 'newBtn',
+    open: 'openBtn',
+    save: 'saveBtn',
+    export: 'exportBtn'
+  });
   const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
   const CONTEXT_CONTROL_IDS = Object.freeze(['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar']);
   const CONTEXT_TOOL_META = Object.freeze({
@@ -41,6 +48,9 @@
     dock: null,
     windowMenu: null,
     windowButton: null,
+    fileMenu: null,
+    fileButton: null,
+    toolColumns: 1,
     runtimeBound: false,
     activePanel: 'collapsed',
     lastPanel: null,
@@ -161,6 +171,86 @@
     return true;
   }
 
+  function positionFileMenu() {
+    if (!state.fileMenu || state.fileMenu.hidden || !state.fileButton || !state.root) return;
+    const rootRect = state.root.getBoundingClientRect();
+    const rect = state.fileButton.getBoundingClientRect();
+    state.fileMenu.style.left = Math.max(4, Math.round(rect.left - rootRect.left)) + 'px';
+    state.fileMenu.style.top = Math.round(rect.bottom - rootRect.top) + 'px';
+  }
+
+  function setFileMenu(open) {
+    if (!state.fileMenu) return;
+    state.fileMenu.hidden = !open;
+    state.fileButton?.setAttribute('aria-expanded', String(open));
+    if (open) {
+      if (state.windowMenu && !state.windowMenu.hidden) setWindowMenu(false);
+      positionFileMenu();
+    }
+  }
+
+  function bindFileMenu() {
+    const menu = document.querySelector('#fileMenu');
+    const button = document.querySelector('#fileMenuToggle');
+    if (!menu || !button) return false;
+    state.fileMenu = menu;
+    state.fileButton = button;
+    if (button.dataset.shellFileBound === 'true') return true;
+    button.dataset.shellFileBound = 'true';
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      setFileMenu(menu.hidden);
+    });
+    menu.addEventListener('click', event => {
+      const item = event.target.closest('[data-file-command]');
+      if (!item) return;
+      const targetId = FILE_COMMAND_TARGETS[item.dataset.fileCommand];
+      const target = targetId ? document.getElementById(targetId) : null;
+      if (target) target.click();
+      setFileMenu(false);
+    });
+    return true;
+  }
+
+  function setToolRailColumns(columns, persist = false) {
+    const value = Number(columns) === 2 ? 2 : 1;
+    state.toolColumns = value;
+    const twoColumns = value === 2;
+    state.root?.classList.toggle('tool-rail-two-column', twoColumns);
+    if (state.root) state.root.dataset.toolRailColumns = String(value);
+    const rail = document.querySelector('.tool-rail');
+    if (rail) rail.dataset.columns = String(value);
+    const button = document.querySelector('#toolRailColumnsToggle');
+    if (button) {
+      const label = twoColumns ? '切換為單欄工具列' : '切換為雙欄工具列';
+      button.setAttribute('aria-pressed', String(twoColumns));
+      button.setAttribute('aria-label', label);
+      button.title = label;
+    }
+    if (persist) {
+      try { localStorage.setItem(TOOLBAR_COLUMNS_KEY, String(value)); } catch {}
+    }
+    syncSoon();
+    return value;
+  }
+
+  function bindToolRailColumns() {
+    const button = document.querySelector('#toolRailColumnsToggle');
+    if (!button) return false;
+    let saved = 1;
+    try { saved = Number(localStorage.getItem(TOOLBAR_COLUMNS_KEY)) === 2 ? 2 : 1; } catch {}
+    setToolRailColumns(saved, false);
+    if (button.dataset.shellColumnsBound === 'true') return true;
+    button.dataset.shellColumnsBound = 'true';
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      setToolRailColumns(state.toolColumns === 2 ? 1 : 2, true);
+    });
+    return true;
+  }
+
   function createDock() {
     if (document.querySelector('#panelDock')) return document.querySelector('#panelDock');
     const appRoot = document.querySelector('#app');
@@ -221,6 +311,7 @@
       windowButton.addEventListener('click', event => {
         event.preventDefault();
         event.stopPropagation();
+        if (state.fileMenu && !state.fileMenu.hidden) setFileMenu(false);
         setWindowMenu(menu.hidden);
       });
     }
@@ -411,6 +502,7 @@
     state.dock?.querySelector('[data-panel-group="editor"]')?.classList.toggle('group-active', Boolean(state.root.classList.contains('inspector-open')));
     state.dock?.querySelector('[data-panel-group="creative"]')?.classList.toggle('group-active', creativeOpen);
     if (state.windowMenu && !state.windowMenu.hidden) positionWindowMenu();
+    if (state.fileMenu && !state.fileMenu.hidden) positionFileMenu();
     syncCreativePresentation();
     syncContextualOptions();
   }
@@ -480,6 +572,7 @@
 
       document.addEventListener('click', event => {
         if (!state.windowMenu?.hidden && !event.target.closest('#panelWindowMenu') && event.target !== state.windowButton) setWindowMenu(false);
+        if (!state.fileMenu?.hidden && !event.target.closest('#fileMenu') && event.target !== state.fileButton) setFileMenu(false);
       });
       window.addEventListener('resize', syncSoon, { passive: true });
       globalThis.matchMedia?.(DESKTOP_QUERY)?.addEventListener?.('change', syncSoon);
@@ -499,6 +592,8 @@
     } catch {}
 
     mountContextualControls();
+    bindFileMenu();
+    bindToolRailColumns();
     createDock();
     createWindowMenu();
 
@@ -534,7 +629,8 @@
         panelGroup: active && PANEL_DEFS.find(def => def.id === active)?.group || (runtime()?.creativeWorkspace?.open ? 'creative' : null),
         creativeStage: runtime()?.creativeWorkspace?.stage || null,
         contextMode: state.contextualRoot?.dataset.contextMode || null,
-        contextTool: state.contextualRoot?.dataset.contextTool || null
+        contextTool: state.contextualRoot?.dataset.contextTool || null,
+        toolColumns: state.toolColumns
       };
     }
   };
