@@ -2,7 +2,7 @@
   "schema": "ink-runtime-queue",
   "version": 1,
   "state": "READY",
-  "target_sha": "448eef0fd15a9543464bfd6830a5840f81d196f0",
+  "target_sha": "bae2353fdd057f5334a219bcdfcda67cc9090c46",
   "pending_work_orders": [
     "INK-CHAT-CONNECTOR-004"
   ],
@@ -26,7 +26,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Connector-004 product source is unchanged; rerun QA-only timeout revision to obtain complete real-browser use_ink evidence."
+    "reason": "User prioritized completing Connector-004 before UI; run exact integration candidate with current main and full use_ink browser coverage."
   },
   "batch_policy": {
     "default_target": 3,
@@ -34,8 +34,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35970456976,
-    "tested_sha": "a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc",
-    "result": "FAIL_HARNESS_TIMEOUT_240S"
+    "run_id": 35976673401,
+    "tested_sha": "448eef0fd15a9543464bfd6830a5840f81d196f0",
+    "result": "FAIL_UI_CONTEXTUAL_TOOL_ROUTE_NONDETERMINISTIC_OR_BASELINE_UNRESOLVED"
   }
 }
