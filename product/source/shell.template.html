@@ -64,8 +64,15 @@
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
     <div class="menu-app-mark" aria-label="INK v0.1 · {{DELIVERY}}"><img class="brand-source-mark" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong>INK</strong><small>0.1</small></div>
     <nav class="application-menus" aria-label="主選單">
-      <button type="button">檔案</button><button type="button">編輯</button><button type="button">檢視</button><button type="button">選取</button><button type="button">物件</button><button type="button">圖層</button><button type="button">筆刷</button><button type="button">視窗</button><button type="button">說明</button>
+      <button id="fileMenuToggle" type="button" aria-haspopup="menu" aria-expanded="false">檔案</button><button type="button">編輯</button><button type="button">檢視</button><button type="button">選取</button><button type="button">物件</button><button type="button">圖層</button><button type="button">筆刷</button><button type="button">視窗</button><button type="button">說明</button>
     </nav>
+    <div id="fileMenu" class="application-command-menu" role="menu" aria-label="檔案" hidden>
+      <button type="button" role="menuitem" data-file-command="new"><span>新增</span></button>
+      <button type="button" role="menuitem" data-file-command="open"><span>開啟</span></button>
+      <button type="button" role="menuitem" data-file-command="save"><span>儲存</span></button>
+      <span class="application-command-separator" aria-hidden="true"></span>
+      <button type="button" role="menuitem" data-file-command="export"><span>匯出</span></button>
+    </div>
     <div class="menu-workspace" aria-label="工作區狀態"><span>繪畫與向量</span><button id="workspaceMenuToggle" type="button" title="工作區清單" aria-haspopup="menu" aria-expanded="false">▾</button>
       <div id="workspaceMenu" class="workspace-menu" role="menu" hidden>
         <button type="button" role="menuitemradio" data-workspace-command="creation"><svg><use href="#i-infinite"/></svg><span>創作空間</span><kbd>Ctrl+1</kbd></button>
@@ -130,22 +137,27 @@
     <div id="pagesList" class="pages-list"></div>
   </aside>
 
-  <nav class="tool-rail glass-surface" aria-label="主要工具">
-    <div class="tool-group">
-      <button id="drawToolButton" class="tool-button tool-stack active" data-tool-stack="draw" data-tool="pen" title="繪圖工具；再按一次或長按可切換筆種（W）" aria-haspopup="true" aria-expanded="false">
-        <span class="tool-icon"><svg><use id="drawToolUse" href="#i-pen"/></svg></span><span id="drawToolLabel" class="tool-label">鋼筆</span><span class="stack-corner" aria-hidden="true"></span>
-      </button>
+  <nav class="tool-rail glass-surface" aria-label="主要工具" data-columns="1">
+    <div class="tool-rail-tools">
+      <div class="tool-group">
+        <button id="drawToolButton" class="tool-button tool-stack active" data-tool-stack="draw" data-tool="pen" title="繪圖工具；再按一次或長按可切換筆種（W）" aria-haspopup="true" aria-expanded="false">
+          <span class="tool-icon"><svg><use id="drawToolUse" href="#i-pen"/></svg></span><span id="drawToolLabel" class="tool-label">鋼筆</span><span class="stack-corner" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="tool-separator"></div>
+      <div class="tool-group">
+        <button class="tool-button" data-tool="eraser" title="橡皮擦（E）"><span class="tool-icon"><svg><use href="#i-eraser"/></svg></span><span class="tool-label">橡皮擦</span></button>
+        <button class="tool-button emphasis" data-tool="select" title="選取（V）"><span class="tool-icon"><svg><use href="#i-select"/></svg></span><span class="tool-label">選取</span></button>
+        <button class="tool-button" data-tool="lasso" title="套索（L）"><span class="tool-icon"><svg><use href="#i-lasso"/></svg></span><span class="tool-label">套索</span></button>
+        <button class="tool-button" data-tool="shape" title="幾何（S）"><span class="tool-icon"><svg><use href="#i-shape"/></svg></span><span class="tool-label">幾何</span></button>
+        <button class="tool-button" data-tool="text" title="文字（T）"><span class="tool-icon"><svg><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
+        <button class="tool-button" data-tool="image" title="圖片"><span class="tool-icon"><svg><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
+        <button class="tool-button" data-tool="pan" title="移動畫布（H／空白鍵）"><span class="tool-icon"><svg><use href="#i-pan"/></svg></span><span class="tool-label">移動</span></button>
+      </div>
     </div>
-    <div class="tool-separator"></div>
-    <div class="tool-group">
-      <button class="tool-button" data-tool="eraser" title="橡皮擦（E）"><span class="tool-icon"><svg><use href="#i-eraser"/></svg></span><span class="tool-label">橡皮擦</span></button>
-      <button class="tool-button emphasis" data-tool="select" title="選取（V）"><span class="tool-icon"><svg><use href="#i-select"/></svg></span><span class="tool-label">選取</span></button>
-      <button class="tool-button" data-tool="lasso" title="套索（L）"><span class="tool-icon"><svg><use href="#i-lasso"/></svg></span><span class="tool-label">套索</span></button>
-      <button class="tool-button" data-tool="shape" title="幾何（S）"><span class="tool-icon"><svg><use href="#i-shape"/></svg></span><span class="tool-label">幾何</span></button>
-      <button class="tool-button" data-tool="text" title="文字（T）"><span class="tool-icon"><svg><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
-      <button class="tool-button" data-tool="image" title="圖片"><span class="tool-icon"><svg><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
-      <button class="tool-button" data-tool="pan" title="移動畫布（H／空白鍵）"><span class="tool-icon"><svg><use href="#i-pan"/></svg></span><span class="tool-label">移動</span></button>
-    </div>
+    <button id="toolRailColumnsToggle" class="tool-rail-columns-toggle" type="button" title="切換為雙欄工具列" aria-label="切換為雙欄工具列" aria-pressed="false">
+      <svg aria-hidden="true"><use href="#i-panel-width"/></svg>
+    </button>
   </nav>
 
   <section id="brushFamilyPopover" class="brush-family-popover elevated-panel" hidden aria-label="繪圖子工具">
