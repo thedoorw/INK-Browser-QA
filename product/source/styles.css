@@ -45,7 +45,6 @@ svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-wi
 .file-group{justify-content:flex-end}
 .history-group{justify-self:center}
 .brand{display:flex;align-items:baseline;gap:7px;margin:0 5px 0 3px;letter-spacing:.08em}
-.brand-mark{width:25px;height:25px;display:grid;place-items:center;border-radius:8px;background:var(--ink);color:#fff;font-family:Georgia,serif;font-weight:700;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
 .brand strong{font-size:17px;letter-spacing:.15em}
 .brand .version{font-size:9px;color:var(--muted);letter-spacing:.04em}
 .top-divider{width:1px;height:24px;background:var(--line);margin:0 4px}
@@ -275,7 +274,6 @@ select:focus,input:focus{outline-color:rgba(30,98,90,.35)}
   .mobile-only{display:grid!important}.desktop-only{display:none!important}.mobile-dock{display:flex}
   .topbar{grid-template-columns:minmax(0,1fr) auto;height:var(--topbar-h);padding:0 8px 0 7px}
   .topbar-leading{min-width:0}
-  .brand-mark{width:28px;height:28px}
   .brand strong,.brand .version,.top-divider,#pagesToggle{display:none}
   .doc-title{width:min(47vw,250px);padding:0 7px;font-size:13px}
   .history-group{display:none}
@@ -436,7 +434,7 @@ html,body{position:fixed;inset:0;max-width:100vw;max-height:100vh;overscroll-beh
 .export-progress{font-variant-numeric:tabular-nums;text-align:center}
 
 /* --------------------------------------------------------------------------
-   INK v0.8.2 — A4 artboard and output foundation
+   A4 artboard and output foundation
    Product-version reset only. Functional and document architecture preserved.
    -------------------------------------------------------------------------- */
 :root{
@@ -480,7 +478,6 @@ svg{width:18px;height:18px;stroke-width:1.55}
 .topbar{grid-template-columns:minmax(250px,1fr) auto minmax(310px,1fr);padding:0 7px;border-bottom-color:var(--line-strong);box-shadow:0 1px 0 rgba(255,255,255,.5)}
 .topbar-leading,.file-group,.history-group{gap:2px}
 .brand{gap:5px;margin:0 4px 0 2px;letter-spacing:.04em}
-.brand-mark{width:22px;height:22px;border-radius:4px;font-size:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
 .brand strong{font-size:14px;letter-spacing:.13em;font-weight:700}
 .brand .version{font-size:8px;letter-spacing:.035em}
 .top-divider{height:20px;margin:0 4px}
@@ -671,7 +668,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 @media(max-width:760px){
   :root{--topbar-h:48px;--status-h:0px}
   .topbar{grid-template-columns:minmax(0,1fr) auto;padding:0 6px}
-  .brand-mark{width:24px;height:24px}
   .brand strong{font-size:13px}
   .doc-title{height:32px;font-size:11px}
   .file-group .primary-button{width:34px;height:34px;border-radius:4px}
@@ -701,7 +697,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 /* ========================================================================== 
-   INK v0.8.2 — A4 artboard and output foundation
+   A4 artboard and output foundation
    Dense professional chrome informed by mature raster/vector painting tools.
    Functional structure and document behavior remain unchanged.
    ========================================================================== */
@@ -741,7 +737,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
     user-select:none;
   }
   .menu-app-mark{height:100%;display:flex;align-items:center;gap:5px;padding:0 9px 0 6px;border-right:1px solid var(--chrome-line);white-space:nowrap}
-  .menu-app-mark>span{width:18px;height:18px;display:grid;place-items:center;border-radius:2px;background:#172d39;color:#59b8d5;font:700 11px Georgia,serif;box-shadow:inset 0 0 0 1px rgba(89,184,213,.28)}
   .menu-app-mark strong{font-size:10px;letter-spacing:.12em;font-weight:700}
   .menu-app-mark small{font-size:8px;color:var(--chrome-faint);font-variant-numeric:tabular-nums}
   .application-menus{display:flex;align-items:stretch;height:100%;min-width:0;overflow:hidden}
@@ -871,7 +866,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 /* =========================================================
-   INK v0.8.2 — A4 artboard and precision output
+   A4 artboard and precision output
    ========================================================= */
 .number-unit{display:flex;align-items:center;gap:5px;min-width:104px;justify-content:flex-end}
 .number-unit input{width:72px;text-align:right;font-variant-numeric:tabular-nums}
@@ -896,7 +891,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 /* ========================================================================== 
-   INK v0.8.3 — Dual Space & Unified Studio UI
+   Dual Space & Unified Studio UI foundation
    One visual system across desktop and mobile; touch changes size, not identity.
    ========================================================================== */
 .topbar-center{display:flex;align-items:center;justify-content:center;gap:5px;min-width:0}
@@ -925,7 +920,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .workspace-switch button svg{width:13px;height:13px}
   .file-group{z-index:2}
   .doc-title{color:#e0e1e3!important;background:#2c2d2f!important;border-color:#1f2022!important}
-  .brand-mark{background:#172d39!important;color:#59b8d5!important;border-radius:2px!important;box-shadow:inset 0 0 0 1px rgba(89,184,213,.28)!important}
   .file-group .primary-button{background:#2f8179!important;color:#fff!important;border-color:#1f5f59!important;box-shadow:none!important}
   .file-group .icon-button{color:#d6d7d9!important;border-radius:3px!important}
   .file-group .icon-button:hover,.file-group .icon-button:active{background:#505154!important;color:#fff!important}
@@ -972,7 +966,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 /* ========================================================================== 
-   INK v0.8.3-p1 — first field-test repair pass
+   Field-test repair pass — workspace controls
    ========================================================================== */
 
 /* Functional workspace menu */
@@ -1041,7 +1035,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 
 
 /* =========================================================
-   INK v0.8.3-p2 — Fullscreen and professional layer workflow
+   Fullscreen and professional layer workflow
    ========================================================= */
 .inspector-head>.header-actions{display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:2px;flex:0 0 auto;min-width:52px;height:100%}
 .inspector-head>.header-actions .mini-button{flex:0 0 24px;width:24px!important;height:24px!important;padding:0!important;margin:0!important;display:grid;place-items:center}
@@ -1098,7 +1092,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 /* =========================================================
-   INK v0.8.3-p3 — Visual history panel
+   Visual history panel
    ========================================================= */
 /* Properties sub-navigation column count is owned by INK-UI-DEBT-001. */
 .history-panel.active{display:flex!important;flex-direction:column;overflow:hidden;padding-bottom:0!important}
@@ -1148,7 +1142,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 .ai-panel{gap:10px}.ai-card{display:grid;gap:9px}.ai-permission{color:#8c5d14;background:#fff4d5;border:1px solid #e4c878;border-radius:999px;padding:2px 7px}.ai-prompt-label{font-size:11px;color:var(--muted)}.ai-prompt{box-sizing:border-box;width:100%;resize:vertical;min-height:84px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);padding:9px;font:12px/1.5 system-ui}.ai-plan-steps{display:grid;gap:6px;max-height:320px;overflow:auto}.ai-step{display:grid;gap:5px;border:1px solid var(--line);border-radius:7px;padding:7px;background:rgba(255,255,255,.48)}.ai-step label{font-size:11px}.ai-step small{color:var(--muted);overflow-wrap:anywhere}.ai-step textarea{box-sizing:border-box;width:100%;min-height:48px;resize:vertical;border:1px solid var(--line);border-radius:5px;background:var(--surface);color:var(--ink);font:10px/1.35 ui-monospace,monospace}.ai-step-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.ai-visual-preview{display:grid;grid-template-columns:1fr 1fr;gap:6px}.ai-visual-preview figure{margin:0}.ai-visual-preview img{display:block;width:100%;aspect-ratio:210/297;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:5px}.ai-visual-preview figcaption{text-align:center;color:var(--muted);font-size:10px}.ai-output{white-space:pre-wrap;overflow:auto;max-height:300px;font:10px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace}.ai-panel button:disabled{opacity:.42;cursor:not-allowed}
 
-/* INK v1.5.1 RC — collapsible CHAT control layer; existing manual workspace remains unchanged. */
+/* Collapsible CHAT control layer; existing manual workspace remains unchanged. */
 .ai-connection-settings{border:1px solid var(--line);border-radius:6px;padding:7px;background:rgba(255,255,255,.3)}
 .ai-connection-settings>summary{cursor:pointer;font-weight:650;list-style-position:inside}
 .ai-connection-settings[open]>summary{padding-bottom:7px;border-bottom:1px solid var(--line)}
@@ -1337,15 +1331,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
     color:#85878a;
     letter-spacing:.015em;
   }
-
-  /* Keep the user mark visible in the compact application identity surfaces. */
-  .menu-app-mark>span,
-  .brand-mark{
-    background:#172d39 url("assets/ink-mark.svg") center/cover no-repeat;
-    color:transparent;
-    text-shadow:none;
-  }
-
   .panel-window-menu{
     position:absolute;
     z-index:132;
@@ -1378,12 +1363,6 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 @media(max-width:760px){
   .panel-dock,.panel-window-menu{display:none!important}
   .app.panel-primary-open .stage-wrap{right:0}
-  .menu-app-mark>span,
-  .brand-mark{
-    background:#172d39 url("assets/ink-mark.svg") center/cover no-repeat;
-    color:transparent;
-    text-shadow:none;
-  }
 }
 
 
@@ -2157,7 +2136,17 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
     --inspector-w:252px;
     --active-panel-w:0px;
     --ui-panel-head-h:34px;
-  }
+  
+    --chrome-0:#e7e7e7;
+        --chrome-1:#efefef;
+        --chrome-2:#f5f5f5;
+        --chrome-3:#fafafa;
+        --chrome-4:#e6e6e6;
+        --chrome-text:#262626;
+        --chrome-muted:#656565;
+        --chrome-faint:#898989;
+        --chrome-line:#d0d0d0;
+        --chrome-line-soft:#c4c4c4;}
   .menu-strip{height:var(--menu-h);border-bottom:1px solid #202123}
   .menu-app-mark{padding-inline:5px 8px}
   .application-menus button{padding-inline:7px}
@@ -2271,57 +2260,9 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .pages-panel{top:var(--topbar-h);left:var(--tool-w);bottom:var(--status-h)}
   .floating-panel{top:calc(var(--topbar-h) + 1px);right:calc(var(--panel-dock-w) + var(--inspector-w) + 8px)}
   .app:not(.inspector-open) .floating-panel{right:calc(var(--panel-dock-w) + 7px)}
-}
-@media(max-width:1120px) and (min-width:761px){
-  .topbar{grid-template-columns:auto minmax(215px,1fr) auto auto}
-  .doc-title{width:min(21vw,220px);min-width:160px}
-  .contextual-tool-identity{min-width:62px;max-width:82px}
-  .contextual-options .quick-slider input{width:58px}
-}
-@media(max-width:980px) and (min-width:761px){
-  .inspector{width:min(var(--inspector-w),38vw);min-width:min(244px,38vw);max-width:360px}
-  .creative-workspace-panel{width:clamp(244px,38vw,340px)}
-  .creative-workspace-field{grid-template-columns:72px minmax(0,1fr)}
-  .creative-workspace-state span{font-size:8.5px}
-  .creative-workspace-state strong{font-size:9px}
-}
-@media(max-width:900px) and (min-width:761px){
-  .topbar .history-group{display:none}
-  .contextual-tool-identity{min-width:52px}
-  .contextual-tool-identity strong{max-width:44px}
-}
 
-
-/* ==========================================================================
-   INK-WEB-UI-006 Phase B — LIGHT SHELL / ORIGINAL BRAND SOURCE
-   UI-only override. Geometry, command identity, document/history/revision
-   semantics and renderer contracts are intentionally unchanged.
-   ========================================================================== */
-.brand-source-mark{
-  display:block;
-  width:25px;
-  height:25px;
-  object-fit:contain;
-  flex:0 0 auto;
-}
-@media(max-width:760px){
-  .brand .brand-source-mark{width:28px;height:28px}
-}
-@media(min-width:761px){
-  :root{
-    --chrome-0:#e7e7e7;
-    --chrome-1:#efefef;
-    --chrome-2:#f5f5f5;
-    --chrome-3:#fafafa;
-    --chrome-4:#e6e6e6;
-    --chrome-text:#262626;
-    --chrome-muted:#656565;
-    --chrome-faint:#898989;
-    --chrome-line:#d0d0d0;
-    --chrome-line-soft:#c4c4c4;
-  }
-
-  html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
+  /* UI-006 B1 light-shell values consolidated into this single desktop authority. */
+html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 
   .menu-strip{
     background:#f7f7f7;
@@ -2453,3 +2394,24 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 
   .app[data-space="layout"] .stage-wrap{background:#dedede}
 }
+@media(max-width:1120px) and (min-width:761px){
+  .topbar{grid-template-columns:auto minmax(215px,1fr) auto auto}
+  .doc-title{width:min(21vw,220px);min-width:160px}
+  .contextual-tool-identity{min-width:62px;max-width:82px}
+  .contextual-options .quick-slider input{width:58px}
+}
+@media(max-width:980px) and (min-width:761px){
+  .inspector{width:min(var(--inspector-w),38vw);min-width:min(244px,38vw);max-width:360px}
+  .creative-workspace-panel{width:clamp(244px,38vw,340px)}
+  .creative-workspace-field{grid-template-columns:72px minmax(0,1fr)}
+  .creative-workspace-state span{font-size:8.5px}
+  .creative-workspace-state strong{font-size:9px}
+}
+@media(max-width:900px) and (min-width:761px){
+  .topbar .history-group{display:none}
+  .contextual-tool-identity{min-width:52px}
+  .contextual-tool-identity strong{max-width:44px}
+}.brand-source-mark{display:block;width:25px;height:25px;object-fit:contain;flex:0 0 auto}
+@media(max-width:760px){.brand .brand-source-mark{width:28px;height:28px}}
+
+

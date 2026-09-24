@@ -107,9 +107,17 @@ test('portable static shell is an exact local closure of product/source/src', ()
     assert.equal(existsSync(resolve(sourceRoot, path.replace(/^\.\//, ''))), true, path);
   }
   assert.doesNotMatch(serviceWorker, /icons\/ink-(?:192|512)\.png/);
+  assert.match(serviceWorker, /const PRODUCT_VERSION = '0\.1'/);
+  assert.match(serviceWorker, /const CACHE_PREFIX = 'ink-build-'/);
+  assert.match(serviceWorker, /const BUILD_ID = '[^']+'/);
+  assert.doesNotMatch(serviceWorker, /searchParams\.get\('build'\)/);
+  assert.doesNotMatch(serviceWorker, /const RELEASE_VERSION = '0\.1-Web'/);
 
   const manifest = JSON.parse(readSource('manifest.webmanifest'));
-  assert.deepEqual(manifest.icons, []);
+  assert.equal(manifest.icons?.length, 1);
+  assert.equal(manifest.icons?.[0]?.src, './assets/ink-mark.svg');
+  assert.ok(serviceWorker.includes("'./assets/ink-mark.svg'"));
+  assert.ok(serviceWorker.includes("'./assets/INK_MARK_SOURCE_W-300.jpg'"));
 });
 
 test('all local static ES module references resolve to files in the shared source tree', () => {
@@ -136,8 +144,8 @@ test('portable entries converge on one authoritative shared runtime with determi
   const compat = readSource('dist/ink.compat.js');
   const ink = readSource('src/ink.js');
 
-  assert.match(index, /<script type="module" src="src\/ink\.js"><\/script>/);
-  assert.match(standalone, /<script src="dist\/ink\.compat\.js"><\/script>/);
+  assert.match(index, /<script type="module" src="src\/ink\.js\?v=0\.1"><\/script>/);
+  assert.match(standalone, /<script src="dist\/ink\.compat\.js\?v=0\.1"><\/script>/);
   assert.match(compat, /import\(['"]\.\.\/src\/ink\.js['"]\)/);
 
   const sequence = [

@@ -52,7 +52,7 @@ test('entire Portable/Web shell matches after exact delivery-only normalization'
     for (const tab of ['brush', 'object', 'ai', 'studio']) assert.ok(html.includes(`data-tab="${tab}"`));
     assert.ok(html.includes('data-panel-subnav="properties"'));
     assert.ok(html.includes('data-tool-stack="draw"'));
-    for (const tag of ['<link rel="stylesheet" href="styles.css?v=0.1">', '<script src="web-shell.js?v=0.1" defer></script>', '<link rel="icon" href="assets/favicon.svg?v=0.1" type="image/svg+xml" sizes="32x32">']) assert.equal(html.split(tag).length - 1, 1);
+    for (const tag of ['<link rel="stylesheet" href="styles.css?v=0.1">', '<script src="web-shell.js?v=0.1"></script>', '<link rel="icon" href="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" type="image/jpeg">']) assert.equal(html.split(tag).length - 1, 1);
   }
 });
 
@@ -77,9 +77,30 @@ test('shared dynamic dock and Creative Workspace remain reachable and contained'
   const css = read('styles.css');
   assert.match(css, /\.panel-dock/);
   assert.match(css, /\.creative-workspace-panel/);
-  assert.match(css, /\.brand-mark\s*\{[^}]*url\("assets\/ink-mark\.svg"\)/);
-  assert.ok(existsSync(path.join(root, 'product/source/assets/ink-mark.svg')));
+  assert.match(css, /\.brand-source-mark\{[^}]*object-fit:contain/);
+  assert.ok(existsSync(path.join(root, 'product/source/assets/INK_MARK_SOURCE_W-300.jpg')));
   assert.match(read('src/config.js'), /FORMAT_VERSION\s*=\s*4\b/);
+  assert.match(coordinator, /RUNTIME_READY_EVENT = 'ink:runtime-ready'/);
+  assert.doesNotMatch(coordinator, /retryCount|setTimeout\(tryBind/);
+  assert.match(coordinator, /addEventListener\(RUNTIME_READY_EVENT, onRuntimeReady, \{ once: true \}\)/);
+  for (const html of [web, portable]) {
+    assert.doesNotMatch(html, /ink-startup-shell/);
+    const shellIndex = html.indexOf('<script src="web-shell.js?v=0.1"></script>');
+    const bootIndex = Math.max(html.indexOf('<script type="module" src="src/ink.js?v=0.1"></script>'), html.indexOf('<script src="dist/ink.compat.js?v=0.1"></script>'));
+    assert.ok(shellIndex >= 0 && bootIndex > shellIndex, 'authoritative shell must mount before runtime bootstrap');
+  }
+});
+
+test('runtime QA bridge is explicit, opt-in and outside production src', () => {
+  const ink = read('src/ink.js');
+  const qaBridge = read('qa/runtime-test-bridge.js');
+  assert.match(ink, /searchParams\.get\('ink-qa'\)==='1'/);
+  assert.match(ink, /import\('\.\.\/qa\/runtime-test-bridge\.js'\)/);
+  assert.doesNotMatch(ink, /window\.INK_TEST\s*=/);
+  assert.doesNotMatch(ink, /fresh\(\)\{app\.replaceDocument/);
+  assert.match(qaBridge, /target\.INK_TEST = bridge/);
+  assert.match(qaBridge, /export function installRuntimeQaBridge/);
+  assert.match(ink, /INK_QA_BRIDGE_READY=loadRuntimeQaBridge\(app\)\.finally\(\(\)=>signalRuntimeReady\(app\)\)/);
 });
 
 test('shared contextual-options contract preserves one command surface across deliveries', () => {
@@ -112,7 +133,7 @@ test('Web-only mutations fail: structure, command hooks, tool hooks, styles, coo
     html => html.replace('data-content="layers"', 'data-content="other"'),
     html => html.replace('web-shell.js?v=0.1', 'other-shell.js?v=0.1'),
     html => html.replace('styles.css?v=0.1', 'web-only.css?v=0.1'),
-    html => html.replace('assets/favicon.svg?v=0.1', 'other-favicon.svg?v=0.1'),
+    html => html.replace('assets/INK_MARK_SOURCE_W-300.jpg?v=0.1', 'assets/other-mark.jpg?v=0.1'),
     html => html.replace('<main id="stageWrap"', '<aside id="stageWrap"'),
     html => html.replace('</head>', '<style>.tool-rail{display:none}</style></head>'),
     html => html.replace('</body>', '<script src="web-only.js"></script></body>'),

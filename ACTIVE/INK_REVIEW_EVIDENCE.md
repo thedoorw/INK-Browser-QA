@@ -1,58 +1,111 @@
 # INK REVIEW EVIDENCE
 
-STATUS: `INK-CORE-INTEGRATION-005 / MR_PASS_EVIDENCE / CLOSED`
+STATUS: `INK-TECH-DEBT-001 / MR_PASS_EVIDENCE / CLEAN_PROMOTED / CLOSED`
 
-## Source evidence
+## Exact reviewed source
 
 ```text
-DEV_HANDOFF = 02a5ac20206bd82d83068dd1e0b07d1c3dc267b1
-BRANCH_BASE = 1e9d5f4df798eba97d21db551b71055230c61532
-SOURCE_QA_RUN = 35810111857
-SOURCE_QA_JOB = 107019569622
-SOURCE_QA_TESTED_SHA = c28b9e4625931c9d2f7b53f1f352c7009281d1e4
-SOURCE_QA_RESULT = SUCCESS
-POST_QA_PRODUCT_DELTA = NONE
+DEV_BRANCH = work/ink-chat-validation-001-phase-b
+EXACT_RUNTIME_TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
+TRACE_BUDGET = 64000 px / 320 px
+COLOR_QUANTIZATION_CYCLES = 1
+POST_COMMIT_SELECTION = ONE REPRESENTATIVE LINE PATH
+FORMAT_VERSION = 4
+PHASE_C = NOT_STARTED
 ```
 
-## Promotion
+Focused/source contract includes a >96-object selection-bound case:
+- 97 generated Color Paths retained;
+- 97 generated Line Paths retained;
+- an unbounded 97-object Document Bridge selection is rejected at the default 96-object limit;
+- authoritative post-commit selection is 1 object;
+- CHAT receipt returns `COMPLETED`.
+
+## Authoritative Windows browser Runtime
 
 ```text
-PROMOTION_PR = #43 / MERGED
-PROMOTED_MAIN_SHA = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
-```
-
-Promotion payload:
-- `product/source/src/ai/chat-runtime.js`
-- `product/source/src/ai/creative-intelligence-context.js`
-- `qa/core-integration-005-creative-intelligence.test.mjs`
-- `research/INK_CORE_INTEGRATION_005_CREATIVE_INTELLIGENCE_MEMORY_RESEARCH_REPORT_v0.1.md`
-
-Excluded:
-- branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-- task-local source-QA workflow
-
-## Central Runtime
-
-```text
-QUEUE_READY_COMMIT = b3d1d860cc3e898abcc9454531d7ffad0ae0f82b
-RUN = 35811427341
-CONTROLLER_JOB = 107023660922 / PASS
-WINDOWS_JOB = 107023680473 / PASS
-TESTED_SHA = bb51388d2c99733ff4577c1636c6ab5c2074bb7b
-WORKFLOW_SHA = b3d1d860cc3e898abcc9454531d7ffad0ae0f82b
+RUN = 35865777424
+CONTROLLER_JOB = 107196859300 / PASS
+WINDOWS_JOB = 107196901658 / PASS
+TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
 RUNNER = DESKTOP-NSOQH69
 UI = PASS
 CREATIVE = PASS
 GEOMETRY = PASS
-ARTIFACT_ID = 10730145736
-ARTIFACT_DIGEST = sha256:32727c1dc07eb9ce95d91cf386e302d4d7dead9392389e379148c580e4628c1f
+PHASE_B_ELAPSED_MS = 2214.1
+COLOR_REGIONS = 1471
+BOUNDARY_LINES = 1471
+POST_COMMIT_SELECTION = BOUNDED / PASS
+CHAT_RECEIPT = COMPLETED
+HISTORY = PASS
+AUDIT = PASS
+PROVENANCE = PASS
+REVISION = UNCHANGED / PASS
+ARTIFACT_ID = 10751389785
+ARTIFACT_DIGEST = sha256:b7e97974e1acd0fd3447353c83caf80bb40efefef47875daba107f0387a81784
 ```
 
-Queue closure:
-- pending work orders = none;
-- covered work orders include `INK-CORE-INTEGRATION-004` and `INK-CORE-INTEGRATION-005`;
-- last run = 35811427341 / exact tested SHA / PASS.
+## Promotion equivalence
+
+```text
+PROMOTION_PR = #48 / MERGED
+PROMOTION_HEAD = d49c13d4cce1677310c4f4f49b46b31674368327
+PROMOTED_MAIN_SHA = cd911dc240452ed2bc74e9be41549116b088374b
+PROMOTED_PRODUCT_QA_EQUIVALENT_TO_TESTED_SHA = YES
+MATCHED_BLOBS = 8 / 8
+```
+
+Byte-identical promoted/tested paths:
+
+- `product/source/src/ai/chat-reference-handoff.js`
+- `product/source/src/extraction/adapters.js`
+- `product/source/src/extraction/core.js`
+- `product/source/src/extraction/install.js`
+- `product/source/src/extraction/workspace.js`
+- `qa/chat-validation-001-phase-b-line-color.test.mjs`
+- `qa/runtime/ink-cloud-018-browser-harness.html`
+- `qa/runtime/run-ink-runtime-batch.mjs`
+
+## Private user reference evidence
+
+```text
+FILE = 1.jpg
+MIME = image/jpeg
+SIZE_BYTES = 28354
+DIMENSIONS = 564x703
+SHA256 = e5b9623bb58f107331f4e9db8f265031baf56dafba77745c63be8bd2c3b18de5
+FINAL_TRACE_WORK_RASTER = 226x282 / 63732 px
+TRACE_BUDGET_COMPATIBILITY = PASS
+MULTI_COLOR_DECOMPOSITION_COMPATIBILITY = PASS
+USER_IMAGE_PUBLIC_COMMIT = 0
+```
 
 Evidence scope:
-- Integration-005 high-level advisory semantics: source/Node QA.
-- browser-level product integration/regression: central Windows Runtime.
+- exact browser execution and regression proof: repository fixture at `40a7e5e8...`;
+- private `1.jpg`: input/decode and final trace-budget compatibility, without public commit;
+- no duplicate post-merge Runtime required because all eight promoted product/QA blobs are identical to the exact Runtime-tested blobs.
+
+
+## INK-TECH-DEBT-001 authoritative evidence
+
+```text
+RUNTIME_RUN = 35887731569
+TESTED_SHA = 3e22c2f501e100674952650f333024d5b817d86f
+RUNNER = DESKTOP-NSOQH69
+UI = PASS / 72 of 72
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10763861596
+ARTIFACT_DIGEST = sha256:498b2fcd3087fa56c185b79bb4cd7a8d946416e514737c25320ebef6c4ea4c59
+PROMOTED_MAIN = 7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1
+PROMOTED_PRODUCT_QA_EQUIVALENT_TO_TESTED_SHA = YES
+MATCHED_BLOBS = 23 / 23
+CHAT_PHASE_B_COLOR = 1471
+CHAT_PHASE_B_LINE = 1471
+CHAT_PHASE_B_SELECTION = 1 representative Line Path
+CHAT_RECEIPT = COMPLETED
+FORMAT_VERSION = 4
+PRODUCT_VERSION = v0.1
+```
+
+No duplicate post-promotion Runtime is required because every promoted product/QA blob is byte-identical to the exact Runtime-tested tree.

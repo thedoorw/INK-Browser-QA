@@ -1,26 +1,55 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-CHAT-VALIDATION-001 / MR_REVISE / PHASE_B_LINE_COLOR_DECOMPOSITION`
+STATUS: `INK-TECH-DEBT-001 / MR_PASS / CLEAN_PROMOTED / CLOSED`
 
 ```text
-TASK_ID = INK-CHAT-VALIDATION-001
-PHASE = B_LINE_COLOR_DECOMPOSITION
-DEV_BRANCH = work/ink-chat-validation-001-phase-b
-REVIEWED_DEV_HEAD = 79af1c96a55635f6b8471e1ee02edade9fb25dac
-SOURCE_REVIEW = PASS
-RUNTIME_RUN = 35854909964
-RUNTIME_TESTED_SHA = 79af1c96a55635f6b8471e1ee02edade9fb25dac
-UI = PASS
-CREATIVE = FAIL / HARNESS_TIMEOUT_240S
-GEOMETRY = NOT_REACHED
-BLOCKER = synchronous full-raster ImageTracerJS color-region workload is not bounded
-ARTIFACT = 10747521014
-ARTIFACT_DIGEST = sha256:7569e8327cd411d998ea72bde1fa0915c18d1b37084e4e6c4070c465979283a8
-PRIVATE_USER_IMAGE_TEST = HELD
-FORMAT_VERSION = 4
-DECISION = MR_REVISE
+TASK_ID = INK-TECH-DEBT-001
+RUNTIME_TESTED_SHA = 3e22c2f501e100674952650f333024d5b817d86f
+RUNTIME_RUN = 35887731569
+RUNNER = DESKTOP-NSOQH69
+BROWSER = Chrome
+UI = PASS / 72 of 72
+CREATIVE = PASS
+GEOMETRY = PASS
+ARTIFACT_ID = 10763861596
+ARTIFACT_DIGEST = sha256:498b2fcd3087fa56c185b79bb4cd7a8d946416e514737c25320ebef6c4ea4c59
+CLEAN_PROMOTED_MAIN = 7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1
+PROMOTED_PRODUCT_QA_EQUIVALENT_TO_TESTED_SHA = YES
+MATCHED_BLOBS = 23 / 23
+FORMAT_VERSION = 4 / PRESERVED
+PRODUCT_VERSION = v0.1 / PRESERVED
 ```
 
-Architecture and authority boundaries are accepted. The only blocking delta is practical Runtime completion of the color-region trace.
+## Accepted closure
 
-Do not expand scope. Bound the trace workload, preserve source-coordinate geometry, and return to DEV_HANDOFF / STOP.
+- Service Worker offline source closure is exact.
+- Build/cache identity is independent from the visible v0.1 label and worker-owned.
+- Bootstrap uses one explicit runtime-ready contract; normal retry polling is removed.
+- Production QA surface is opt-in rather than embedded as the permanent production control surface.
+- Web / Portable shell maintenance has one authoritative template/generator.
+- Accepted light-shell CSS is consolidated without a new late override authority.
+- active diagnostics/version metadata is current or explicitly partial.
+- no Document / History / Revision / Renderer authority change occurred.
+
+## CHAT Phase B regression
+
+```text
+Reference → editable Color + Line → separate layers = PASS
+COLOR_REGIONS = 1471
+BOUNDARY_LINES = 1471
+POST_COMMIT_SELECTION = 1 representative Line Path
+CHAT_RECEIPT = COMPLETED
+HISTORY = PASS
+PROVENANCE = PASS
+REVISION = UNCHANGED
+```
+
+## Next-state boundary
+
+```text
+INK-TECH-DEBT-001 = CLOSED
+UI-006 B3 = RESOLVED
+UI-006 Phase C–I = HOLD pending separate authorization
+CHAT Validation Phase C = NOT_STARTED
+automatic next-stage start = NO
+```

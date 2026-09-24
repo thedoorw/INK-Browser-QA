@@ -7,7 +7,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
 <h1>INK-CLOUD-018 Browser Runtime QA</h1>
 <strong id="qa-result" data-state="RUNNING">RUNNING</strong>
 <pre id="qa-log"></pre>
-<iframe id="ink-frame" src="/index.html?fresh=1"></iframe>
+<iframe id="ink-frame" src="/index.html?fresh=1&ink-qa=1"></iframe>
 <script>
 (() => {
   const resultNode = document.querySelector('#qa-result');
@@ -283,6 +283,160 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       'CHAT_REFERENCE_HANDOFF_RECEIPT_INSPECTABLE',
       {documentId:handoffReceipt.documentId,layerId:handoffReceipt.targetLayerId,referenceObjectId:handoffReceipt.referenceObjectId,auditId:handoffReceipt.audit?.auditId}
     );
+
+    assert(Boolean(w.INK_CHAT_HANDOFF?.decomposeReference),'CHAT_REFERENCE_DECOMPOSITION_API_VISIBLE');
+    const phaseBHistoryBefore=app.history.undoStack.length;
+    const phaseBRevisionBefore=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
+    const phaseBReferenceBefore=app.findObject({objectId:handoffReceipt.referenceObjectId});
+    const phaseBStarted=performance.now();
+    const phaseBReceipt=await w.INK_CHAT_HANDOFF.decomposeReference(handoffReceipt.referenceObjectId,{
+      numberOfColors:8,
+      pathOmit:8,
+      lineStroke:'#202020',
+      lineStrokeWidth:1,
+      actor:{type:'chat',id:'runtime-chat',channel:'CHAT_REFERENCE_DECOMPOSITION'},
+      intent:'INK-CHAT-VALIDATION-001 Phase B Reference to editable Color and Line layers'
+    });
+    const phaseBElapsedMs=performance.now()-phaseBStarted;
+    const phaseBTrace=phaseBReceipt?.diagnostics?.traceRaster;
+    const phaseBScale=phaseBReceipt?.diagnostics?.coordinateScale;
+    assert(
+      phaseBElapsedMs<30000 &&
+      Number.isInteger(phaseBTrace?.pixels) && phaseBTrace.pixels<=64000 &&
+      phaseBTrace.width<=320 && phaseBTrace.height<=320,
+      'CHAT_REFERENCE_DECOMPOSITION_BOUNDED_TRACE_RUNTIME',
+      {elapsedMs:phaseBElapsedMs,traceRaster:phaseBTrace}
+    );
+    const phaseBShouldDownsample=
+      phaseBReceipt.source.width*phaseBReceipt.source.height>64000 ||
+      phaseBReceipt.source.width>320 ||
+      phaseBReceipt.source.height>320;
+    assert(
+      phaseBTrace?.sourceWidth===phaseBReceipt.source?.width &&
+      phaseBTrace?.sourceHeight===phaseBReceipt.source?.height &&
+      phaseBTrace?.downsampled===phaseBShouldDownsample &&
+      Math.abs((phaseBTrace.width*phaseBScale?.x)-phaseBReceipt.source.width)<1e-6 &&
+      Math.abs((phaseBTrace.height*phaseBScale?.y)-phaseBReceipt.source.height)<1e-6,
+      'CHAT_REFERENCE_DECOMPOSITION_SOURCE_COORDINATE_MAPPING',
+      {traceRaster:phaseBTrace,coordinateScale:phaseBScale,source:phaseBReceipt.source,shouldDownsample:phaseBShouldDownsample}
+    );
+    assert(phaseBReceipt?.status==='COMPLETED','CHAT_REFERENCE_DECOMPOSITION_COMPLETED',{receipt:phaseBReceipt});
+    assert(
+      phaseBReceipt.operation==='reference.decompose.line-color' &&
+      phaseBReceipt.sourceReferenceObjectId===handoffReceipt.referenceObjectId &&
+      phaseBReceipt.source?.sha256===handoffReceipt.source?.sha256,
+      'CHAT_REFERENCE_DECOMPOSITION_SOURCE_REFERENCE_RETAINED',
+      {sourceReferenceObjectId:phaseBReceipt.sourceReferenceObjectId,source:phaseBReceipt.source}
+    );
+    const phaseBReferenceAfter=app.findObject({objectId:handoffReceipt.referenceObjectId});
+    assert(
+      phaseBReferenceAfter?.object===phaseBReferenceBefore?.object &&
+      phaseBReferenceAfter?.object?.type==='image',
+      'CHAT_REFERENCE_DECOMPOSITION_REFERENCE_REMAINS',
+      {referenceObjectId:handoffReceipt.referenceObjectId}
+    );
+    const colorLayer=app.page().layers.find(layer=>layer.id===phaseBReceipt.colorLayerId);
+    const lineLayer=app.page().layers.find(layer=>layer.id===phaseBReceipt.lineLayerId);
+    assert(
+      colorLayer?.name==='Color' && lineLayer?.name==='Line' && colorLayer.id!==lineLayer.id,
+      'CHAT_REFERENCE_DECOMPOSITION_SEPARATE_LAYERS',
+      {colorLayerId:colorLayer?.id,lineLayerId:lineLayer?.id,colorName:colorLayer?.name,lineName:lineLayer?.name}
+    );
+    const sourceLayerIndex=app.page().layers.findIndex(layer=>layer.id===phaseBReferenceAfter?.layer?.id);
+    const colorLayerIndex=app.page().layers.findIndex(layer=>layer.id===colorLayer?.id);
+    const lineLayerIndex=app.page().layers.findIndex(layer=>layer.id===lineLayer?.id);
+    assert(
+      colorLayerIndex>sourceLayerIndex && lineLayerIndex>colorLayerIndex,
+      'CHAT_REFERENCE_DECOMPOSITION_LAYER_ORDER',
+      {sourceLayerIndex,colorLayerIndex,lineLayerIndex}
+    );
+    const colorObjects=colorLayer?.objects||[];
+    const lineObjects=lineLayer?.objects||[];
+    assert(
+      colorObjects.length>=2 &&
+      colorObjects.every(object=>object.type==='path' && object.fill && object.fill!=='none' && (!object.stroke || object.stroke==='none') && (object.subpaths||[]).every(subpath=>subpath.closed)),
+      'CHAT_REFERENCE_DECOMPOSITION_EDITABLE_COLOR_REGIONS',
+      {count:colorObjects.length,fills:[...new Set(colorObjects.map(object=>object.fill))]}
+    );
+    assert(
+      lineObjects.length>=1 &&
+      lineObjects.length===colorObjects.length &&
+      lineObjects.every(object=>object.type==='path' && (!object.fill || object.fill==='none') && object.stroke && object.stroke!=='none' && object.strokeWidth>0 && (object.subpaths||[]).every(subpath=>subpath.closed)),
+      'CHAT_REFERENCE_DECOMPOSITION_EDITABLE_BOUNDARY_LINES',
+      {count:lineObjects.length,stroke:lineObjects[0]?.stroke,strokeWidth:lineObjects[0]?.strokeWidth}
+    );
+    assert(
+      lineObjects.length>96 &&
+      (app.selection?.length||0)===1 &&
+      app.selection?.[0]?.layerId===lineLayer?.id &&
+      app.selection?.[0]?.objectId===lineObjects[0]?.id &&
+      phaseBReceipt?.status==='COMPLETED',
+      'CHAT_REFERENCE_DECOMPOSITION_BOUNDED_POST_COMMIT_SELECTION',
+      {generatedLinePaths:lineObjects.length,documentBridgeDefaultMaxObjects:96,selection:app.selection,receiptStatus:phaseBReceipt?.status}
+    );
+    assert(
+      colorObjects.every((object,index)=>{
+        const line=lineObjects[index];
+        return line?.metadata?.decomposition?.sourceColorObjectId===object.id &&
+          line?.subpaths?.length===object.subpaths?.length &&
+          line?.metadata?.decomposition?.referenceObjectId===handoffReceipt.referenceObjectId &&
+          object?.metadata?.decomposition?.referenceObjectId===handoffReceipt.referenceObjectId;
+      }),
+      'CHAT_REFERENCE_DECOMPOSITION_ALIGNED_REGION_GEOMETRY',
+      {pairs:Math.min(colorObjects.length,lineObjects.length)}
+    );
+    assert(
+      colorObjects.every(object=>object.metadata?.source?.id===handoffReceipt.source?.sha256) &&
+      lineObjects.every(object=>object.metadata?.source?.id===handoffReceipt.source?.sha256),
+      'CHAT_REFERENCE_DECOMPOSITION_PROVENANCE_LINKAGE',
+      {sourceSha256:handoffReceipt.source?.sha256}
+    );
+    assert(
+      Array.isArray(phaseBReceipt.palette) && phaseBReceipt.palette.length>=2 &&
+      phaseBReceipt.colorCount===colorObjects.length &&
+      phaseBReceipt.lineCount===lineObjects.length &&
+      phaseBReceipt.colorObjectIds?.length===colorObjects.length &&
+      phaseBReceipt.lineObjectIds?.length===lineObjects.length,
+      'CHAT_REFERENCE_DECOMPOSITION_RECEIPT_INSPECTABLE',
+      {colorCount:phaseBReceipt.colorCount,lineCount:phaseBReceipt.lineCount,palette:phaseBReceipt.palette}
+    );
+    const phaseBExpectedApplied=Math.min(
+      (phaseBReceipt.history?.before?.applied??phaseBHistoryBefore)+1,
+      phaseBReceipt.history?.after?.limit??app.history.limit
+    );
+    assert(
+      phaseBReceipt.history?.commit?.valid===true &&
+      phaseBReceipt.history?.after?.applied===phaseBExpectedApplied &&
+      app.history.undoStack.at(-1)?.label==='Reference → Color + Line layers',
+      'CHAT_REFERENCE_DECOMPOSITION_HISTORY_RECORDED',
+      {before:phaseBReceipt.history?.before,after:phaseBReceipt.history?.after,commit:phaseBReceipt.history?.commit}
+    );
+    const phaseBRevisionAfter=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
+    assert(
+      phaseBReceipt.revision?.before===phaseBRevisionBefore &&
+      phaseBReceipt.revision?.after===phaseBRevisionAfter &&
+      phaseBRevisionAfter===phaseBRevisionBefore,
+      'CHAT_REFERENCE_DECOMPOSITION_NO_AUTO_REVISION',
+      {before:phaseBRevisionBefore,after:phaseBRevisionAfter}
+    );
+    const phaseBAudit=phaseBReceipt.audit?.auditId?w.INK_AI?.layer?.audit?.find?.(phaseBReceipt.audit.auditId):null;
+    assert(
+      Boolean(phaseBAudit) && phaseBAudit.commands?.includes('reference.decompose.line-color') && phaseBAudit.permissionLevel==='EXECUTE',
+      'CHAT_REFERENCE_DECOMPOSITION_AUDIT_INSPECTABLE',
+      {auditId:phaseBReceipt.audit?.auditId,commands:phaseBAudit?.commands}
+    );
+    assert(
+      phaseBReceipt.provenance?.status==='AVAILABLE' &&
+      (phaseBReceipt.provenance?.eventIds?.length||0)>0,
+      'CHAT_REFERENCE_DECOMPOSITION_PROVENANCE_INSPECTABLE',
+      {provenance:phaseBReceipt.provenance}
+    );
+    evidence.metrics.phaseBColorRegions=colorObjects.length;
+    evidence.metrics.phaseBBoundaryLines=lineObjects.length;
+    evidence.metrics.phaseBPalette=phaseBReceipt.palette;
+    evidence.metrics.phaseBElapsedMs=phaseBElapsedMs;
+    evidence.metrics.phaseBTraceRaster=phaseBTrace;
+    evidence.metrics.phaseBCoordinateScale=phaseBScale;
 
     const file=new File([blob],'rose-window-primary.png',{type:'image/png'});
     const transfer=new DataTransfer(); transfer.items.add(file); input.files=transfer.files;

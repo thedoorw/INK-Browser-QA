@@ -1,22 +1,127 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK / UI_MAINTENANCE / CORE-MOD-003_AUTHORIZED`
+STATUS: `INK-TECH-DEBT-001_CLOSED / CLEAN_PROMOTED / UI-006_B3_RESOLVED`
 
 | Field | Value |
 |---|---|
-| CURRENT_WORK_ORDER | `GLOBAL CLOSED / UI DELEGATED` |
-| CURRENT_TASK_ID | `NONE GLOBAL / UR MAY ISSUE UI-003` |
-| DEV_BRANCH | `NONE GLOBAL` |
-| DEV_HANDOFF | `N/A GLOBAL` |
-| MR_REVIEW | `UI DELEGATED / CORE DISCUSSION` |
-| TARGET_GATE | `UI_LANE_READY_FOR_INTEGRATION` |
+| CURRENT_WORK_ORDER | `INK-TECH-DEBT-001 — Main Runtime / Bootstrap / Offline / UI Foundation Cleanup v0.1` |
+| CURRENT_TASK_ID | `INK-TECH-DEBT-001` |
+| DEV_BRANCH | `work/ink-tech-debt-001` |
+| DEV_HANDOFF | `RECEIVED / SOURCE_HEAD ed38789bd1aa6dd12235ee57bbceb5195b965ad0` |
+| MR_REVIEW | `MR_PASS / CLOSED` |
+| TARGET_GATE | `CLOSED / CLEAN PROMOTION COMPLETE` |
 | FORMAT_VERSION | `4 / PRESERVE` |
-| WEB_DISPLAY_VERSION | `INK v0.1 · Web / REQUIRED` |
-| FAVICON | `USER ORIGINAL MARK / REQUIRED` |
-| INK_MARK_SOURCE | `reference/brand/INK_MARK_SOURCE_W-300.jpg` |
-| INK_WEB_STAGING | `LIVE / MAIN-BASED` |
+| PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| NEXT_STAGE | `UR: UI-003→005 / MR: CORE LANE DESIGN` |
+| RUNTIME_QA | `PASS / RUN 35887731569 / TESTED 3e22c2f501e100674952650f333024d5b817d86f` |
+| UI-006 | `Phase A/B1/B2 preserved / B3 RESOLVED / Phase C–I HOLD` |
+| NEXT_STAGE | `No automatic start; await next MR authorization` |
+
+## Latest MR synchronization
+
+```text
+INK-CHAT-VALIDATION-001 PHASE_B
+= MR_PASS / PROMOTED / CLOSED
+PROMOTED_MAIN = cd911dc240452ed2bc74e9be41549116b088374b
+PHASE_C = NOT_STARTED
+
+INK-WEB-UI-006
+= BRANCH-LOCAL
+UI_BRANCH = work/ink-web-ui-standard-001
+PHASE_A = PASS
+PHASE_B1/B2 = PRESERVE
+PHASE_B3 = startup debt transferred into global technical-debt cleanup
+PHASE_C-I = HOLD
+
+INK-TECH-DEBT-001
+= DEV_AUTHORIZED
+SCOPE =
+  Service Worker/offline closure
+  cache/build identity
+  bootstrap readiness authority
+  production QA-hook boundary
+  shared shell/CSS authority cleanup
+  stale active metadata
+DOCUMENT/HISTORY/REVISION/RENDERER AUTHORITY = PRESERVE
+RUNTIME = EXACT-SHA SELF-HOSTED WINDOWS CHROME / REQUIRED
+```
+
+## Technical-debt evidence baseline
+
+```text
+product/source/src JS+JSON = 189
+service-worker SOURCE_SHELL = 176
+OFFLINE_CLOSURE_MISSING = 13
+
+web-shell normal startup = INK_APP retry polling / 50ms × max 40
+styles.css = ~2293 lines / 14 :root / 222 !important
+src/ink.js embeds large window.INK_TEST production hook surface
+Web + Portable entry = 621 lines each / 7 intentional differences
+```
+
+The task is bounded cleanup. File size alone does not authorize broad Core refactoring.
+
+
+
+## INK-TECH-DEBT-001 MR source review
+
+```text
+REVIEWED_SOURCE_HEAD = ed38789bd1aa6dd12235ee57bbceb5195b965ad0
+HANDOFF_BRANCH_HEAD = fad5fc806e24d67a5720b7a9af29ba1ae5ca8903
+SOURCE_TO_HANDOFF_DELTA = docs/progress only
+DECISION = MR_REVISE
+RUNTIME = HELD
+
+P0 =
+  build identity depends on stale-controlled app config
+  → previous client can register new worker under old build identity
+  → cache namespace reuse/version skew risk
+
+P1 =
+  Web/Portable HTML manual duplication not actually removed
+  product diagnostic download omits BUILD_ID
+  foundation test freezes incidental debt counts
+
+NEXT =
+  same branch bounded fix
+  → DEV_HANDOFF / STOP
+  → MR source re-review
+```
+
+
+
+## INK-TECH-DEBT-001 source re-review
+
+```text
+REVIEWED_REMOTE_HEAD = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+SOURCE_REVIEW = PASS
+PREVIOUS_FOUR_REVISE_ITEMS = CLOSED
+RUNTIME_QUEUE_STATE = READY
+RUNTIME_TARGET = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+QUEUE_TRIGGER_COMMIT = 24a1e09e523ecd190765ae2defabf62f1e3ea94c
+HIGH_RISK_IMMEDIATE = YES / Service Worker + cache + bootstrap
+PROMOTION = HELD
+DIRECT_MERGE = NO / BRANCH DIVERGED
+```
+
+
+
+## INK-TECH-DEBT-001 Runtime checkpoint — 35885929148
+
+```text
+TESTED_SHA = ae9a8d0d9c41b7063d87d03c0b84811ac04e0656
+RUNNER = DESKTOP-NSOQH69
+UI = FAIL / 69 of 71
+CREATIVE = NOT_REACHED
+GEOMETRY = NOT_REACHED
+CAUSE = 2 stale dark-shell UI assertions
+PRODUCT_SOURCE_REGRESSION = NOT ESTABLISHED
+MR = REVISE / QA_HARNESS_ONLY
+ARTIFACT = 10763165329
+DIGEST = sha256:d47a862b58636bbe932201475d9d67bc8e7083c466158e1873ab9dff64b4b934
+```
+
+Observed renderer still produces dark workbench pixels around light A4 paper; the obsolete assertion was the CSS wrapper color. Typography size floors also pass; the obsolete assertion was absolute bright-text RGB intended for the former dark chrome.
 
 ## Readiness assessment
 
@@ -2455,4 +2560,104 @@ BLOCKER = unbounded synchronous full-raster color-region trace
 DECISION = MR_REVISE
 PRIVATE_USER_IMAGE = HELD
 NEXT = bounded trace workload fix → DEV_HANDOFF / STOP → MR Runtime rerun
+```
+
+
+## INK-CHAT-VALIDATION-001 Phase B performance Runtime checkpoint
+
+```text
+TESTED_SHA = 1ad65b932835ef754b7d42291f7e70cdcd048925
+RUN = 35860798446
+SOURCE_REVIEW = PASS
+BOUNDED_TRACE_ARCHITECTURE = PASS
+UI = PASS
+CREATIVE = TIMEOUT_240S
+CURRENT_BOUND = 160000 px / 512
+DECISION = MR_REVISE
+PRIVATE_USER_1_JPG = HELD
+NEXT = reduce ImageTracerJS validation trace budget only → DEV_HANDOFF / STOP → MR Runtime
+```
+
+
+## INK-CHAT-VALIDATION-001 Phase B final-tuning Runtime checkpoint
+
+```text
+TESTED_SHA = 31a427d807f7497b7e64d159607380c056829d67
+RUN = 35863528804
+FINAL_TRACE_TUNING = ACCEPTED
+PREVIOUS_240S_TIMEOUT = RESOLVED
+UI = PASS
+CREATIVE = FAIL / AI_DOCUMENT_BRIDGE_SELECTION_BOUNDS_EXCEEDED
+CAUSE = decomposition selects all generated Line Paths (>96) before grounded provenance read
+DECISION = MR_REVISE
+PRIVATE_USER_1_JPG = HELD
+NEXT = bounded post-operation selection/receipt fix only → DEV_HANDOFF / STOP → MR Runtime
+```
+
+
+## INK-CHAT-VALIDATION-001 Phase B MR PASS
+
+```text
+TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
+RUNTIME = 35865777424 / PASS
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+Reference → Color + Line = PASS
+POST_COMMIT_SELECTION = PASS
+CHAT_RECEIPT = COMPLETED
+PRIVATE_USER_1_JPG = PASS / TRACE-BUDGET COMPATIBILITY
+PHASE_B = MR_PASS
+PROMOTION = AUTHORIZED
+PHASE_C = NOT_STARTED
+```
+
+
+## INK-CHAT-VALIDATION-001 Phase B final closure
+
+```text
+PR = #48 / MERGED
+PROMOTED_MAIN = cd911dc240452ed2bc74e9be41549116b088374b
+TESTED_SHA = 40a7e5e86e7b08c316210240be8527b020c5ecce
+RUNTIME = 35865777424 / PASS
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+REFERENCE → COLOR + LINE = ACCEPTED
+POST_COMMIT_SELECTION = BOUNDED
+CHAT_RECEIPT = COMPLETED
+PRIVATE_USER_1_JPG = PASS / TRACE-BUDGET COMPATIBILITY
+PHASE_B = CLOSED
+PHASE_C = NOT_STARTED
+```
+
+
+## Harness re-review — 51d9ca0
+
+```text
+HEAD = 51d9ca0d4326720c5a9970f3872c99eb2808db2c
+SCOPE = QA ONLY / PASS
+WORKER_IDENTITY_HARNESS = CORRECTED
+DARK_SHELL_TYPOGRAPHY_ASSERTION = STILL PRESENT
+DARK_STAGE_WRAPPER_ASSERTION = STILL PRESENT
+RUNTIME_RERUN = NOT AUTHORIZED
+```
+
+
+## INK-TECH-DEBT-001 final closure
+
+```text
+MR = PASS
+RUNTIME = PASS
+RUN = 35887731569
+TESTED_SHA = 3e22c2f501e100674952650f333024d5b817d86f
+PROMOTED_MAIN = 7d99d2bf093f10ce2d489e6ebf68f28a2740ebe1
+PROMOTION_EQUIVALENCE = 23 / 23 product+QA blobs exact
+UI = 72 / 72 PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+CHAT_PHASE_B = NO REGRESSION
+UI-006_B3 = RESOLVED
+UI-006_PHASE_C_TO_I = HOLD
+CHAT_PHASE_C = NOT_STARTED
 ```

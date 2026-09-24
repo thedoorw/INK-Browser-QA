@@ -1,5 +1,6 @@
 import { Matrix, uid } from '../core/index.js';
 import { findPageObject } from '../document/hierarchy.js';
+import { defaultLayer } from '../document/model.js';
 import { moveAnchor } from '../vector/vector-core.js';
 import { executeExtraction, normalizePaths, requireValue, checkAbort, sha256, validateRaster } from './core.js';
 import { radialEvidence, sectorMask, reconstructRadial } from './structure.js';
@@ -84,6 +85,176 @@ export function importReferenceIntoDocument(app, decoded, {
     width:raster.width,
     height:raster.height,
     historyLabel:label
+  };
+}
+
+
+export const REFERENCE_DECOMPOSITION_SCHEMA='INK-REFERENCE-DECOMPOSITION/1';
+export const REFERENCE_DECOMPOSITION_OPERATION='reference.decompose.line-color';
+
+function referenceEmbeddedFile(reference) {
+  requireValue(reference?.type==='image'&&typeof reference.src==='string','REFERENCE_DECOMPOSITION_REFERENCE_IMAGE_REQUIRED');
+  const match=reference.src.match(/^data:(image\/(?:png|jpeg|webp));base64,([\s\S]+)$/);
+  requireValue(match&&typeof File!=='undefined'&&typeof atob==='function','REFERENCE_DECOMPOSITION_EMBEDDED_SOURCE_REQUIRED');
+  let binary;
+  try { binary=atob(match[2]); } catch { requireValue(false,'REFERENCE_DECOMPOSITION_BASE64_INVALID'); }
+  const bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+  const storedSource=reference.metadata?.referenceImport?.source||reference.metadata?.extractionReference?.source||{};
+  const name=String(storedSource.name||reference.name||'reference').trim()||'reference';
+  return new File([bytes],name,{type:match[1]});
+}
+
+function rekeyDecompositionPath(path,id,name) {
+  path.id=id; path.name=name;
+  for(const [subpathIndex,subpath] of (path.subpaths||[]).entries()){
+    subpath.id=`${id}-s${subpathIndex}`;
+    for(const [anchorIndex,anchor] of (subpath.anchors||[]).entries())anchor.id=`${subpath.id}-n${anchorIndex}`;
+  }
+  return path;
+}
+
+function paletteSummary(paths) {
+  const counts=new Map();
+  for(const path of paths){
+    const color=typeof path.fill==='string'?path.fill.trim():null;
+    if(!color||color==='none')continue;
+    counts.set(color,(counts.get(color)||0)+1);
+  }
+  return [...counts.entries()].map(([color,regions])=>({color,regions})).sort((a,b)=>b.regions-a.regions||a.color.localeCompare(b.color));
+}
+
+export async function decomposeReferenceIntoLayers(app, referenceObjectId, adapter, {
+  numberOfColors=8,
+  pathOmit=8,
+  lineStroke='#202020',
+  lineStrokeWidth=1,
+  actor={type:'chat',id:'chat'},
+  sourceChannel='CHAT_REFERENCE_DECOMPOSITION',
+  signal
+}={}) {
+  const doc=app?.doc,page=app?.page?.();
+  const found=referenceObjectId?findPageObject(page,referenceObjectId):null;
+  const reference=found?.object;
+  requireValue(doc&&page&&!app.history?.pending,'REFERENCE_DECOMPOSITION_TARGET_UNAVAILABLE');
+  requireValue(reference?.type==='image'&&reference.metadata?.extractionReference,'REFERENCE_DECOMPOSITION_REFERENCE_REQUIRED');
+  requireValue(Number.isInteger(Number(numberOfColors))&&Number(numberOfColors)>=2&&Number(numberOfColors)<=16,'REFERENCE_DECOMPOSITION_COLOR_COUNT');
+  requireValue(Number.isFinite(Number(lineStrokeWidth))&&Number(lineStrokeWidth)>0&&Number(lineStrokeWidth)<=100,'REFERENCE_DECOMPOSITION_LINE_WIDTH');
+  requireValue(typeof lineStroke==='string'&&lineStroke.trim()&&lineStroke!=='none','REFERENCE_DECOMPOSITION_LINE_STROKE');
+  requireValue(typeof sourceChannel==='string'&&sourceChannel.trim(),'REFERENCE_DECOMPOSITION_SOURCE_CHANNEL');
+  const before=JSON.stringify(doc),pageId=page.id;
+  const file=referenceEmbeddedFile(reference);
+  const decoded=await decodeReferenceFile(file);
+  checkAbort(signal);
+  const storedSource=reference.metadata?.referenceImport?.source||reference.metadata?.extractionReference?.source||{};
+  if(storedSource.sha256)requireValue(decoded.source.sha256===storedSource.sha256,'REFERENCE_DECOMPOSITION_SOURCE_SHA_MISMATCH');
+  const result=await executeExtraction({
+    raster:decoded.raster,
+    source:decoded.source,
+    parameters:{
+      mode:'color-regions',
+      numberOfColors:Number(numberOfColors),
+      pathOmit:Number(pathOmit),
+      traceMaxPixels:64_000,
+      traceMaxDimension:320
+    }
+  },adapter,{signal});
+  await new Promise(resolve=>setTimeout(resolve,0)); checkAbort(signal);
+  requireValue(app.doc===doc&&app.page().id===pageId&&JSON.stringify(doc)===before&&!app.history.pending,'REFERENCE_DECOMPOSITION_STALE_DOCUMENT');
+
+  const batchId=uid();
+  const referenceMatrix=Array.isArray(reference.matrix)&&reference.matrix.length===6?reference.matrix:Matrix.identity();
+  const sourceLink=copy(reference.metadata?.source||{
+    type:'reference',
+    id:decoded.source.sha256,
+    name:decoded.source.name
+  });
+  const colorPaths=result.paths.filter(path=>typeof path.fill==='string'&&path.fill.trim()&&path.fill!=='none').map((path,index)=>{
+    const out=copy(path);
+    rekeyDecompositionPath(out,`${batchId}-color-p${index}`,`Color region ${index+1}`);
+    out.matrix=Matrix.multiply(referenceMatrix,out.matrix);
+    out.stroke=null; out.strokeWidth=0;
+    out.metadata={
+      ...(out.metadata||{}),
+      source:copy(sourceLink),
+      decomposition:{
+        schema:REFERENCE_DECOMPOSITION_SCHEMA,
+        operation:REFERENCE_DECOMPOSITION_OPERATION,
+        role:'color-region',
+        referenceObjectId,
+        sourceSha256:decoded.source.sha256,
+        batchId,
+        actor:copy(actor),
+        sourceChannel
+      }
+    };
+    return out;
+  });
+  requireValue(colorPaths.length>0,'REFERENCE_DECOMPOSITION_NO_COLOR_REGIONS');
+
+  const linePaths=colorPaths.map((colorPath,index)=>{
+    const out=copy(colorPath);
+    rekeyDecompositionPath(out,`${batchId}-line-p${index}`,`Boundary line ${index+1}`);
+    out.fill=null;
+    out.gradient=null;
+    out.stroke=lineStroke;
+    out.strokeWidth=Number(lineStrokeWidth);
+    delete out.materialAppearance;
+    delete out.expressiveStroke;
+    out.metadata={
+      ...(out.metadata||{}),
+      source:copy(sourceLink),
+      decomposition:{
+        ...copy(out.metadata?.decomposition||{}),
+        role:'boundary-line',
+        sourceColorObjectId:colorPath.id
+      }
+    };
+    return out;
+  });
+
+  const colorLayer=defaultLayer('Color'),lineLayer=defaultLayer('Line');
+  colorLayer.objects.push(...colorPaths);
+  lineLayer.objects.push(...linePaths);
+  const pagePath=app.pagePath?.(page);
+  requireValue(Array.isArray(pagePath),'REFERENCE_DECOMPOSITION_PAGE_PATH');
+  const layersPath=[...pagePath,'layers'],activeLayerPath=[...pagePath,'activeLayerId'];
+  app.history.pushScoped('Reference → Color + Line layers',[layersPath,activeLayerPath],()=>{
+    page.layers.push(colorLayer,lineLayer);
+    page.activeLayerId=lineLayer.id;
+  });
+  app.selection=linePaths.length?[{layerId:lineLayer.id,objectId:linePaths[0].id}]:[];
+  app.spatialDirty=true; app.refreshAll?.();
+
+  return {
+    schema:REFERENCE_DECOMPOSITION_SCHEMA,
+    operation:REFERENCE_DECOMPOSITION_OPERATION,
+    batchId,
+    documentId:doc.id,
+    pageId:page.id,
+    referenceObjectId,
+    source:{
+      name:decoded.source.name,
+      mimeType:decoded.source.mimeType,
+      sha256:decoded.source.sha256,
+      width:decoded.source.width,
+      height:decoded.source.height,
+      sizeBytes:decoded.source.sizeBytes
+    },
+    colorLayerId:colorLayer.id,
+    lineLayerId:lineLayer.id,
+    colorObjectIds:colorPaths.map(path=>path.id),
+    lineObjectIds:linePaths.map(path=>path.id),
+    colorCount:colorPaths.length,
+    lineCount:linePaths.length,
+    palette:paletteSummary(colorPaths),
+    historyLabel:'Reference → Color + Line layers',
+    provenance:{
+      source:copy(sourceLink),
+      referenceObjectId,
+      generatedObjectIds:[...colorPaths.map(path=>path.id),...linePaths.map(path=>path.id)]
+    },
+    diagnostics:copy(result.diagnostics)
   };
 }
 

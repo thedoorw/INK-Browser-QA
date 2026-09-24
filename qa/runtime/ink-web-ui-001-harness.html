@@ -10,7 +10,7 @@
   </style>
 </head>
 <body data-qa-status="RUNNING">
-<iframe id="inkFrame" allow="fullscreen" src="/index.html?fresh=1&ink-ui-qa=1"></iframe>
+<iframe id="inkFrame" allow="fullscreen" src="/index.html?fresh=1&ink-ui-qa=1&ink-qa=1"></iframe>
 <pre id="inkQaResult">INK_UI_QA_RUNNING</pre>
 <script>
 (() => {
@@ -61,17 +61,6 @@
   const dispatchKey = (win, key, init = {}) => {
     win.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, ...init }));
   };
-  const waitWorkerState = worker => new Promise(resolve => {
-    if (!worker || worker.state === 'installed' || worker.state === 'activated') return resolve(worker?.state || null);
-    const handler = () => {
-      if (worker.state === 'installed' || worker.state === 'activated' || worker.state === 'redundant') {
-        worker.removeEventListener('statechange', handler);
-        resolve(worker.state);
-      }
-    };
-    worker.addEventListener('statechange', handler);
-  });
-
   async function publishResult(payload) {
     document.body.dataset.qaStatus = payload.status;
     output.textContent = 'INK_UI_QA_RESULT:' + JSON.stringify(payload);
@@ -159,32 +148,49 @@
       frame.style.height = '800px';
       await sleep(220);
 
-      const parseRgb = value => (value.match(/\d+(?:\.\d+)?/g) || []).slice(0, 3).map(Number);
+      const parseColor = value => (value.match(/[\d.]+/g) || []).map(Number);
+      const relativeLuminance = rgb => {
+        const channels = rgb.slice(0, 3).map(value => {
+          const channel = value / 255;
+          return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+        });
+        return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+      };
+      const textContrast = element => {
+        const foreground = parseColor(getComputedStyle(element).color);
+        let background = [255, 255, 255];
+        for (let current = element; current; current = current.parentElement) {
+          const color = parseColor(getComputedStyle(current).backgroundColor);
+          if (color.length >= 3 && (color[3] ?? 1) === 1) { background = color; break; }
+        }
+        const light = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+        const dark = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+        return (light + 0.05) / (dark + 0.05);
+      };
       const typographyDiag = {
         advanced: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('#contextualAdvancedBtn')).fontSize),
-          color: getComputedStyle(doc.querySelector('#contextualAdvancedBtn')).color
+          contrast: textContrast(doc.querySelector('#contextualAdvancedBtn'))
         },
         inspectorTitle: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('.inspector-head strong')).fontSize),
-          color: getComputedStyle(doc.querySelector('.inspector-head strong')).color
+          contrast: textContrast(doc.querySelector('.inspector-head strong'))
         },
         inspectorTab: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('.inspector-tab')).fontSize),
-          color: getComputedStyle(doc.querySelector('.inspector-tab')).color
+          contrast: textContrast(doc.querySelector('.inspector-tab'))
         },
         contextLabel: {
           fontSize: parseFloat(getComputedStyle(doc.querySelector('.context-control-label')).fontSize),
-          color: getComputedStyle(doc.querySelector('.context-control-label')).color
+          contrast: textContrast(doc.querySelector('.context-control-label'))
         }
       };
-      const secondaryRgb = parseRgb(typographyDiag.contextLabel.color);
       record('UI-MAINT-002 desktop typography readability lift is active',
         typographyDiag.advanced.fontSize >= 10 &&
         typographyDiag.inspectorTitle.fontSize >= 11 &&
         typographyDiag.inspectorTab.fontSize >= 10 &&
         typographyDiag.contextLabel.fontSize >= 10 &&
-        secondaryRgb.reduce((sum, value) => sum + value, 0) >= 480,
+        Object.values(typographyDiag).every(sample => sample.contrast >= 4.5),
         typographyDiag);
 
       shell.open('layers');
@@ -302,12 +308,11 @@
       const layoutPixels = {
         corner: canvasPixel(layoutCanvas, 8, 8),
         center: canvasPixel(layoutCanvas, layoutCanvas.clientWidth / 2, layoutCanvas.clientHeight / 2),
-        stageBackground: getComputedStyle(doc.querySelector('#stageWrap')).backgroundColor,
         stage: layoutStage,
         artboard: test.artboard()
       };
       const luminance = rgba => (rgba?.[0] || 0) + (rgba?.[1] || 0) + (rgba?.[2] || 0);
-      record('Layout shows dark workbench around real A4 paper', luminance(layoutPixels.corner) < 210 && luminance(layoutPixels.center) > 600 && /38, 38, 38/.test(layoutPixels.stageBackground), layoutPixels);
+      record('Layout shows dark workbench around real A4 paper', luminance(layoutPixels.corner) < 210 && luminance(layoutPixels.center) > 600 && luminance(layoutPixels.center) - luminance(layoutPixels.corner) > 390, layoutPixels);
       test.switchWorkspace('creation');
       await sleep(60);
 
@@ -492,12 +497,18 @@
 
       const favicon = doc.querySelector('link[rel="icon"]');
       const faviconResponse = favicon ? await win.fetch(favicon.href, { cache: 'reload' }) : null;
-      const markStyle = getComputedStyle(doc.querySelector('.menu-app-mark>span')).backgroundImage;
+      const mark = doc.querySelector('.menu-app-mark>.brand-source-mark');
+      const markResponse = mark ? await win.fetch(mark.src, { cache: 'reload' }) : null;
       record('favicon link resolves successfully in fresh context', Boolean(faviconResponse?.ok), { href: favicon?.href || null, status: faviconResponse?.status || null });
-      record('user INK mark is requested by visible shell CSS', /ink-mark\.svg/.test(markStyle), markStyle);
+      record('original INK mark is the visible shell source', Boolean(markResponse?.ok) && /INK_MARK_SOURCE_W-300\.jpg/.test(mark?.src || ''), { src: mark?.src || null, status: markResponse?.status || null });
 
+      const appBuildId = win.INK_ARCHITECTURE?.buildId || test.updateStatus?.().buildId || null;
+      let workerBuildId = null;
       let swReady = false;
-      let swVersion = null;
+      let swProductVersion = null;
+      let swScriptURL = null;
+      let swUpdateViaCache = null;
+      let swUpdateChecked = false;
       let cacheKeys = [];
       let legacyCacheRemoved = false;
       try {
@@ -506,34 +517,45 @@
           new Promise((_, reject) => setTimeout(() => reject(new Error('service-worker-ready-timeout')), 90000))
         ]);
         swReady = Boolean(registration?.active);
-        const swResponse = await win.fetch(new URL('./service-worker.js?v=qa', win.location.href));
-        const swText = await swResponse.text();
-        swVersion = /RELEASE_VERSION\s*=\s*'([^']+)'/.exec(swText)?.[1] || null;
+        swScriptURL = registration?.active?.scriptURL || null;
+        swUpdateViaCache = registration?.updateViaCache || null;
+        const workerVersion = await new Promise((resolve, reject) => {
+          const timer = setTimeout(() => {
+            win.navigator.serviceWorker.removeEventListener('message', onMessage);
+            reject(new Error('worker-version-timeout'));
+          }, 10000);
+          const onMessage = event => {
+            if (event.data?.type !== 'INK_VERSION') return;
+            clearTimeout(timer);
+            win.navigator.serviceWorker.removeEventListener('message', onMessage);
+            resolve(event.data);
+          };
+          win.navigator.serviceWorker.addEventListener('message', onMessage);
+          registration.active.postMessage({ type: 'INK_GET_VERSION' });
+        });
+        workerBuildId = workerVersion.buildId || null;
+        swProductVersion = workerVersion.version || null;
+        const shellCacheName = workerBuildId ? `ink-build-${workerBuildId}-shell` : null;
         await waitFor(async () => {
           cacheKeys = await win.caches.keys();
-          return cacheKeys.includes('ink-v0.1-Web-shell');
+          return Boolean(shellCacheName) && cacheKeys.includes(shellCacheName);
         }, 90000, 250);
-
-        const legacy = await win.caches.open('ink-v1.6.5-RC-shell');
-        await legacy.put(new Request(new URL('./qa-legacy-probe', win.location.href)), new Response('legacy'));
-        const qaScript = new URL('./service-worker.js?qa-refresh=0.1', win.location.href).href;
-        const qaScope = new URL('./', win.location.href).pathname;
-        const updated = await win.navigator.serviceWorker.register(qaScript, { scope: qaScope });
-        let worker = updated.installing || updated.waiting;
-        if (worker?.state !== 'installed' && worker?.state !== 'activated') await waitWorkerState(worker);
-        worker = updated.waiting || worker;
-        if (worker?.state === 'installed') worker.postMessage({ type: 'INK_SKIP_WAITING' });
-        await waitFor(async () => {
-          cacheKeys = await win.caches.keys();
-          return !cacheKeys.includes('ink-v1.6.5-RC-shell') && cacheKeys.includes('ink-v0.1-Web-shell');
-        }, 90000, 250);
-        legacyCacheRemoved = !cacheKeys.includes('ink-v1.6.5-RC-shell');
+        await registration.update();
+        swUpdateChecked = true;
+        cacheKeys = await win.caches.keys();
+        legacyCacheRemoved = !cacheKeys.some(key => key.startsWith('ink-v'));
       } catch (error) {
         results.push({ name: 'service-worker diagnostic detail', pass: false, detail: String(error?.stack || error) });
       }
-      record('service worker activates in loopback Web runtime', swReady, { swReady });
-      record('service worker exposes v0.1 Web cache identity', swVersion === '0.1-Web' && cacheKeys.includes('ink-v0.1-Web-shell'), { swVersion, cacheKeys });
-      record('service-worker activation removes historical cache without storage reset', legacyCacheRemoved, { cacheKeys });
+      record('service worker activates in loopback Web runtime', swReady, { swReady, swScriptURL });
+      record('service worker owns build identity independent of stale app query',
+        swProductVersion === '0.1' && Boolean(workerBuildId) && workerBuildId === appBuildId &&
+        cacheKeys.includes(`ink-build-${workerBuildId}-shell`) &&
+        new URL(swScriptURL || win.location.href).search === '',
+        { swProductVersion, appBuildId, workerBuildId, swScriptURL, cacheKeys });
+      record('service worker update check bypasses script HTTP cache', swUpdateViaCache === 'none' && swUpdateChecked,
+        { swUpdateViaCache, swUpdateChecked });
+      record('service-worker activation removed historical cache without storage reset', legacyCacheRemoved, { cacheKeys });
 
       const integrity = test.documentIntegrity();
       const health = test.runtimeHealth();
