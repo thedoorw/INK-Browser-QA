@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "HOLD",
   "target_sha": "74c02f41dd9bde3262a6e7ee507126b74c2e18c9",
   "pending_work_orders": [
     "INK-CHAT-CLOSED-LOOP-001"
@@ -27,7 +27,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "MR source PASS after QA_BRIDGE_ONLY revision: dynamic inline module removed; same-origin Creative-suite resolver route via script.src; exact-SHA Runtime required for smart closed-loop artifacts."
+    "reason": "Run 36006888089 failed at SMART_LOOP_PREVIEW_BEFORE_CAPTURED after import/decompose/stable refs PASS; diagnostic payload missing, so product vs QA classification unresolved. Diagnostic-only revision required."
   },
   "batch_policy": {
     "default_target": 3,
@@ -35,8 +35,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36003623197,
-    "tested_sha": "2b3c2f79147b6122f5ac78ed47d19c9878522386",
-    "result": "FAIL_QA_ARTIFACT_BRIDGE_LOADER_TIMEOUT"
+    "run_id": 36006888089,
+    "tested_sha": "74c02f41dd9bde3262a6e7ee507126b74c2e18c9",
+    "result": "FAIL_SMART_LOOP_PREVIEW_BEFORE_CAPTURED_DIAGNOSTIC_MISSING"
   }
 }
