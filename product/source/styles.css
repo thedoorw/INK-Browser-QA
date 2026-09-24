@@ -2551,6 +2551,14 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 .layer-actions button,
 .object-actions button,
 .stroke-edit-actions button,
+.statusbar button,
+.creative-workspace-toggle,
+.ai-settings-grid label,
+.ai-preview-toolbar button,
+.creative-chat-runtime button,
+.mobile-dock .tool-label,
+.dock-action .tool-label,
+.tool-button .tool-label,
 .creative-workspace-tabs button,
 .creative-workspace-field,
 .creative-workspace-field input,
@@ -2597,8 +2605,11 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 .history-step-copy strong,
 .creative-workspace-state strong,
 .creative-chat-runtime span,
-.creative-chat-runtime button,
 .creative-chat-message>strong,
+.creative-workspace-body output,
+.creative-workspace-status,
+.quick-slider output,
+#exportProgress,
 .statusbar,
 .artboard-summary,
 .export-summary{
@@ -2613,7 +2624,6 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 /* Metadata is the only family allowed to use the smallest token. */
 .brand .version,
 kbd,
-.quick-slider output,
 .eyebrow,
 .subpanel-title span,
 .inspector-section .subpanel-title span,
@@ -2627,19 +2637,10 @@ kbd,
 .render-engine-note,
 .version-badge,
 .panel-window-group-label,
-.ai-settings-grid label,
-.ai-risk,
-.ai-preview-toolbar button,
 .object-tree-row .tree-object-name span,
 .creative-workspace-state span,
-.creative-workspace-body output,
-.creative-workspace-status,
 .creative-structure-option>summary span,
-.mobile-dock .tool-label,
-.dock-action .tool-label,
-.tool-button .tool-label,
-.brush-family-head>span:last-child,
-#exportProgress{
+.brush-family-head>span:last-child{
   font-size:var(--ui-type-xs)!important;
   line-height:var(--ui-line-control);
 }
@@ -2678,6 +2679,7 @@ kbd,
   font-size:var(--ui-type-lg);
   line-height:var(--ui-line-copy);
 }
+.ai-risk,
 .stroke-edit-status,
 .render-engine-meta,
 .gpu-validation-status,
@@ -2698,9 +2700,11 @@ kbd,
 
 /* Narrow/mobile uses the same token system; only low-priority identity text steps down. */
 @media(max-width:760px){
-  .contextual-tool-identity strong,
+  .contextual-tool-identity strong{
+    font-size:var(--ui-type-xs);
+  }
   .mobile-dock .tool-label,
   .dock-action .tool-label{
-    font-size:var(--ui-type-xs);
+    font-size:var(--ui-type-md);
   }
 }
