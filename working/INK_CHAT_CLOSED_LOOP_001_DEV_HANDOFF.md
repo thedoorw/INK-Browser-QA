@@ -55,3 +55,17 @@ Proof transport label: `RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT`.
 No main merge, package mutation, Runtime queue mutation, new operation families, geometry editing, raw Path creation, drawing engine, UI, external transport, arbitrary execution, automatic product approval or FORMAT_VERSION change.
 
 `DEV_HANDOFF → STOP`
+
+
+## MR_REVISE / QA_BRIDGE_ONLY completion
+
+- Revision baseline: `2b3c2f79147b6122f5ac78ed47d19c9878522386`.
+- Product source frozen: `product/source/src/agent/public-creative-api.js` and `product/source/src/agent/capability-registry.js` were not modified in this revision.
+- Browser loader now uses deterministic same-origin external QA route `/__qa_smart_loop_resolver.js`; no dynamic inline module text remains.
+- Route is Creative-suite-only and provides only `resolveInkOutputPayload(window.INK_APP, handleId)` through temporary `window.__INK_SMART_LOOP_QA_RESOLVE`.
+- The INK iframe loads the route with `script.src`; after the after-preview is materialized, the temporary global is deleted and the script node is removed.
+- Focused QA contract covers route body/content type, external loader, cleanup and forbidden bridge primitives.
+- Browser Runtime and real `smart-loop-before.png` / `smart-loop-after.png` remain MR-owned exact-SHA evidence; DEV does not claim Runtime PASS.
+- Revision changes only QA/runtime proof files plus report/handoff/progress. No UI, transport, product authority, native operation vocabulary, package or FORMAT_VERSION changes.
+
+Return: `DEV_HANDOFF → STOP`.
