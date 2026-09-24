@@ -50,24 +50,24 @@ FORMAT_VERSION = 4
 
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_004_MR_REVISE / BROWSER_FEATURE_COVERAGE_REQUIRED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_004_REVISION_READY / MR_RUNTIME_RUNNER_BLOCKED / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-004 / use_ink programmable bridge` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
 | DEV_BRANCH | `work/ink-chat-connector-004` |
-| DEV_HANDOFF | `Connector-004 = RECEIVED / MR_REVISE issued` |
-| MR_REVIEW | `Connector-004 = SOURCE_PASS / RUNTIME_REGRESSION_PASS / FEATURE_COVERAGE_MISSING` |
+| DEV_HANDOFF | `Connector-004 revision = READY / STOP` |
+| MR_REVIEW | `source PASS / revision PASS / exact-SHA Runtime waiting self-hosted runner` |
 | TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
-| RUNTIME_QA | `run 35968312192 / exact SHA adb99465... / UI+Creative+Geometry PASS / use_ink browser coverage absent` |
+| RUNTIME_QA | `run 35970456976 / target a050e0d8... / attempt 1 runner-start FAIL / attempt 2 QUEUED` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector development active / UI separate / drawing validation held` |
-| NEXT_STAGE | `same branch bounded QA/evidence revision → DEV_HANDOFF / STOP → MR rerun` |
+| NEXT_STAGE | `No code revision; execute queued exact-SHA Runtime when self-hosted Windows runner accepts job` |
 
 ## Connector-003 promotion closure
 
