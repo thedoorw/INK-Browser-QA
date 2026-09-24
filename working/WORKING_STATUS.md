@@ -1,23 +1,23 @@
 # INK WORKING STATUS
 
-STATUS: `DUAL_TRACK_ACTIVE / UI-006_CD_DEV_HANDOFF / CHAT_PHASE_C_AUTHORIZED`
+STATUS: `DUAL_TRACK_ACTIVE / UI_CD_RUNTIME_ACTIVE / CHAT_PHASE_C_SOURCE_PASS`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `CHAT: INK-CHAT-VALIDATION-001 Phase C / UI: branch-local UI-006 C+D handoff` |
 | CURRENT_TASK_ID | `CHAT: INK-CHAT-VALIDATION-001 / UI: INK-WEB-UI-006` |
 | DEV_BRANCH | `CHAT: work/ink-chat-validation-001-phase-c / UI: work/ink-web-ui-standard-001` |
-| DEV_HANDOFF | `CHAT = NOT_STARTED / UI Phase C+D = RECEIVED / STOP` |
-| MR_REVIEW | `CHAT Phase C = AUTHORIZED / UI = UR_REVIEW` |
+| DEV_HANDOFF | `CHAT Phase C = RECEIVED / STOP / UI Phase C+D = RECEIVED / STOP` |
+| MR_REVIEW | `CHAT Phase C = MR_SOURCE_PASS / RUNTIME_PENDING / UI = UR Runtime active` |
 | TARGET_GATE | `CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS / UI C+D review` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
 | PACKAGE_INK_CURRENT | `NO MUTATION` |
 | RUNTIME_QA | `CHAT Phase C exact-SHA Runtime REQUIRED; technical-debt baseline PASS retained` |
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
-| CHAT VALIDATION | `Phase B CLOSED / regression PASS / Phase C AUTHORIZED / DEV_NOT_STARTED` |
+| CHAT VALIDATION | `Phase B CLOSED / Phase C DEV_HANDOFF / MR_SOURCE_PASS / Runtime pending` |
 | PARALLEL_MODE | `ACTIVE / SEPARATE AUTHORITIES` |
-| NEXT_STAGE | `CHAT Phase C DEV → HANDOFF / STOP while UI remains under UR review` |
+| NEXT_STAGE | `Finish UI C+D serialized Runtime → queue exact Phase C DEV HEAD → private-image acceptance` |
 
 ## Dual-track coordination synchronization — 2026-09-24
 
@@ -73,6 +73,32 @@ Registered only, not authorized after Phase C:
 - Phase D — bounded Path geometry correction;
 - Phase E — multi-step Color + Line plan + Revision;
 - Phase F — end-to-end private-image collaboration.
+
+## CHAT Phase C MR source review
+
+```text
+DEV_HEAD = cd3b4dee28a7a47e2298569138f5dbd73af5cc14
+DEV_HANDOFF = RECEIVED / STOP
+SOURCE_REVIEW = PASS
+PRODUCT_SOURCE_MUTATION = 0
+PHASE_C_GATE = CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS / RUNTIME_PENDING
+
+BRANCH_TO_MAIN = ahead 6 / behind 1
+MAIN_ONLY_DELTA = UI Runtime queue
+CONFLICT = 0
+
+ACTIVE_RUNTIME =
+  UI-006 Phase C+D
+  run 35940344586
+  serialized Windows runner
+
+CHAT_PHASE_C_RUNTIME_QUEUE = DO_NOT_OVERWRITE_ACTIVE_UI_QUEUE
+```
+
+Phase C source path accepted:
+`Phase B generated Path → CHAT proposal → approval → path.repaint.v1 → History`.
+
+Final Phase C MR_PASS is not claimed until exact-SHA browser Runtime and private real-image acceptance pass.
 
 ## Previous MR synchronization
 
