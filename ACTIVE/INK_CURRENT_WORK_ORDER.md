@@ -1,3 +1,25 @@
+## UI-006 main integration visual gate — 2026-09-24
+
+```text
+UI_INTEGRATION_PR = #49 / MERGED
+UI_INTEGRATION_MAIN = 9852f7ef67fd530c683cf1257406494e31c3b51d
+UI_PAYLOAD = UI-006 accepted shell/template/styles/web-shell + authoritative UI harness
+CONNECTOR_CORE_SOURCE_MUTATION = 0
+FAVICON = assets/favicon.svg / restored from accepted UI-MAINT-002 authority
+VISIBLE_INK_MARK = existing INK mark / preserved
+
+PAGES_DEPLOY_RUN = 35979527212
+PAGES_DEPLOY_HEAD = 9852f7ef67fd530c683cf1257406494e31c3b51d
+PAGES_BUILD = PASS
+PAGES_DEPLOY = PASS
+
+VISUAL_GATE = REQUIRED
+DEPLOYED_SCREENSHOT = NOT_YET_CAPTURED
+CAPTURE_BLOCKER = external live-page capture requires Playwright MCP; unavailable in current MR tool surface
+RUNTIME = HOLD
+CONNECTOR_004_PROMOTION = BLOCKED / unchanged
+```
+
 ## MR Runtime timeout classification / rerun queued
 
 ```text
