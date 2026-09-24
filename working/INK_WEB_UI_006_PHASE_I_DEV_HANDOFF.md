@@ -199,3 +199,44 @@ DEV does not claim `FINAL_CERTIFIED`.
 Completion:
 
 `DEV_HANDOFF → UR_FINAL_RUNTIME → STOP`
+
+
+---
+
+## UR final source review — 2026-09-24
+
+Reviewed final Runtime candidate:
+
+`5ad4a271b37a1dca9236239be8bb867bff320b7c`
+
+Accepted Phase H branch baseline:
+
+`34a7925ef097ab771859d3722d9964a69d46bc94`
+
+Exact compare result:
+- candidate is 1 commit ahead / 0 behind;
+- the only changed file is `working/INK_WEB_UI_006_PHASE_I_DEV_HANDOFF.md`;
+- product presentation delta = 0;
+- QA harness delta = 0;
+- no protected authority changed.
+
+Branch changes after the candidate are progress / handoff / evidence documentation only and do not alter product or QA payload.
+
+UR source findings:
+- Phase I correctly remained source-frozen;
+- accepted A–H UI implementation is preserved exactly;
+- all accepted Phase C–H Runtime assertions remain intact;
+- Web / Portable shared UI authority remains preserved;
+- visible product version remains `v0.1`;
+- `FORMAT_VERSION = 4`;
+- static final-gate evidence reports no polish candidate.
+
+UR source result:
+
+`STATIC_PASS / FINAL_RUNTIME_REQUIRED`
+
+Authoritative exact-SHA Windows Runtime must test:
+
+`5ad4a271b37a1dca9236239be8bb867bff320b7c`
+
+After Runtime PASS, UR will perform the user-requested Photoshop / Figma / INK final visual comparison before issuing FINAL_CERTIFIED or a bounded polish decision.
