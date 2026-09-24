@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase I FINAL GATE DEV HANDOFF
 
-STATUS: AUTHORIZED / UI_ONLY / PHASE_I / FINAL_GATE_START
+STATUS: DEV_HANDOFF / STATIC_PASS / UR_FINAL_RUNTIME_REQUIRED / UI_ONLY / PHASE_I / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-i`
@@ -132,3 +132,70 @@ Completion:
 `DEV_HANDOFF → UR_FINAL_RUNTIME → STOP`
 
 Do not self-promote to FINAL_CERTIFIED.
+
+---
+
+## DEV completion — Phase I final gate
+
+Final Runtime candidate source SHA:
+
+`5ad4a271b37a1dca9236239be8bb867bff320b7c`
+
+Accepted Phase H baseline:
+
+- branch head: `34a7925ef097ab771859d3722d9964a69d46bc94`
+- tested product SHA: `1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
+- Runtime: `35953369828 / PASS`
+
+Phase I source-freeze result:
+
+- product presentation files changed: NO
+- QA harness changed: NO
+- protected Core / Document / History / Revision / Renderer / Geometry / CHAT / Service Worker authorities changed: NO
+- product version: `v0.1 / PRESERVED`
+- `FORMAT_VERSION = 4 / PRESERVED`
+
+Changed-file compare from accepted Phase H head to the Phase I candidate source SHA:
+
+```text
+AHEAD = 1
+BEHIND = 0
+CHANGED = working/INK_WEB_UI_006_PHASE_I_DEV_HANDOFF.md only
+PRODUCT_DELTA = 0
+HARNESS_DELTA = 0
+```
+
+Final static verification:
+
+```text
+WEB_TEMPLATE_GENERATION_PARITY = PASS
+PORTABLE_TEMPLATE_GENERATION_PARITY = PASS
+UNRESOLVED_SHELL_TOKENS = 0
+HARNESS_INLINE_JAVASCRIPT_SYNTAX = PASS
+CSS_BRACE_BALANCE = PASS / 1587 : 1587
+SHELL_TEMPLATE_DUPLICATE_DOM_IDS = 0
+PRIMARY_HOME_CLASSIFICATIONS = PRESERVED
+TYPOGRAPHY_AUTHORITY = PRESERVED
+ALL_EIGHT_PRIMARY_PANEL_BOUNDARY_ASSERTION = PRESERVED
+INSPECTOR_RESIZE_ASSERTION = PRESERVED
+FULLSCREEN_ASSERTION = PRESERVED
+NARROW_DESKTOP_ASSERTIONS = PRESERVED
+COMPACT_MOBILE_ASSERTIONS = PRESERVED
+WEB_PORTABLE_PARITY = PASS
+```
+
+Evidence:
+
+- `working/INK_WEB_UI_006_PHASE_I_FINAL_GATE_EVIDENCE.md`
+
+POLISH_CANDIDATE:
+
+`NONE_FROM_STATIC_FINAL_GATE`
+
+The final Photoshop / Figma / INK visual comparison remains deferred to UR after the final Runtime PASS as instructed.
+
+DEV does not claim `FINAL_CERTIFIED`.
+
+Completion:
+
+`DEV_HANDOFF → UR_FINAL_RUNTIME → STOP`
