@@ -1,3 +1,81 @@
+## MR_REVISE / QA_ORDER_ISOLATION_ONLY — 2026-09-24
+
+Runtime evidence:
+
+```text
+RUN = 36014703794
+TESTED_SHA = b57a3471ceaaba915a296aa1fe46680ee3e44134
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+
+SMART_LOOP_MARKERS = 18 / 18 PASS
+SMART_LOOP_BEFORE_PNG = PASS
+SMART_LOOP_AFTER_PNG = PASS
+SMART_LOOP_JSON = PRESENT
+
+BEFORE_SHA256 = 19eb289da30929082ecc9e59b34d89b7e066a5df06aa4a1e3bd535492cfab4e5
+AFTER_SHA256 = 9c45b05df543b86e4e1a57174c3ce538d98db213fa8dabed551e79c53f378b1d
+
+FIRST_POST_SMART_LOOP_FAIL =
+  WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT
+```
+
+MR classification:
+
+```text
+SMART_REFERENCE_COLOR_LINE_CHAT_PROOF = PASS
+FULL_CREATIVE_REGRESSION = FAIL
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+CLASSIFICATION = QA_STATE_ORDER_CONTAMINATION
+```
+
+Cause:
+
+The smart closed-loop proof intentionally captures a final Revision before the legacy Workstation Revision block runs.
+The legacy marker `WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT` was originally written for the pre-revision state and still asserts that Revision Compare is disabled.
+After the smart loop, that precondition is no longer true.
+
+Authorized revision only:
+
+```text
+qa/runtime/ink-cloud-018-browser-harness.html
+qa/ink-chat-closed-loop-001-smart-proof.test.mjs   # focused ordering contract only
+research/INK_CHAT_CLOSED_LOOP_001_SMART_PROOF_REPORT_v0.1.md
+working/INK_CHAT_CLOSED_LOOP_001_DEV_HANDOFF.md
+ACTIVE/INK_DEV_PROGRESS.md
+```
+
+Required correction:
+
+- preserve `WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT` as a real browser assertion;
+- execute that assertion before the smart loop creates any Revision;
+- remove only the now-invalid later duplicate assumption;
+- do not weaken it to a constant / skipped / unconditional PASS;
+- preserve all later Revision capture / compare / restore coverage;
+- preserve the smart-loop sequence and all 18 passing smart-loop markers.
+
+Product source is frozen:
+
+```text
+product/source/** = FROZEN
+History = FROZEN
+Revision = FROZEN
+Renderer = FROZEN
+Public Creative API = FROZEN
+Capability Registry = FROZEN
+UI product source = FROZEN
+EXTERNAL_TRANSPORT = 0
+FORMAT_VERSION = 4 / PRESERVE
+```
+
+After focused QA:
+
+`DEV_HANDOFF → STOP`
+
+MR then runs one new exact-SHA Windows Runtime.
+
+---
+
 ## MR_REVISE / QA_ASSERTION_ONLY — 2026-09-24
 
 Runtime diagnostic:
