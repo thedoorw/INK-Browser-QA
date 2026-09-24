@@ -353,3 +353,52 @@ UR must run the authoritative Windows self-hosted Runtime against the final exac
 Completion state:
 
 `DEV_HANDOFF → UR_REVIEW → STOP`
+
+
+---
+
+## UR source review — 2026-09-24
+
+Reviewed product / QA checkpoint:
+
+`718eff8c31a82a8ffd82bbf3d2b83f38b2aa993b`
+
+Accepted Phase F branch baseline:
+
+`ed06a4562017c1ea78bcd2c39ced5c0b81d1ad71`
+
+Compare result:
+- Phase G branch is 7 commits ahead / 0 behind the accepted Phase F branch baseline.
+- Product / QA delta is limited to `product/source/styles.css` and `qa/runtime/ink-web-ui-001-harness.html`.
+- Later branch changes after `718eff8...` are progress / handoff / evidence documentation only; no product / QA source delta exists after the checkpoint.
+- No shell template or generated Web / Portable entry file changed in Phase G.
+
+UR static findings:
+- one named typography token authority is present: UI-XS / UI-SM / UI-MD / UI-LG / BRAND;
+- the accepted cross-platform font stack is preserved and no font binary/dependency was added;
+- normal interactive/control text is normalized to UI-MD or above;
+- smallest UI-XS token is reserved for metadata / compact badges;
+- panel titles, tabs, property labels, inputs, contextual controls, status and Creative Workspace surfaces are mapped into the common typography hierarchy;
+- CJK / Latin / numeric UI text shares the same inherited font-stack and size authority;
+- artwork Text/document typography semantics are outside this authority and remain unchanged;
+- Phase E Panel Dock and Phase F Primary Home routing are untouched;
+- `product/source/src/**`, Document, History, Revision, Geometry/Core, CHAT semantics, Service Worker, runtime bootstrap and build/cache identity are unchanged;
+- visible version remains `v0.1`; `FORMAT_VERSION = 4`;
+- Phase H has not started.
+
+UR static result:
+
+`STATIC_PASS`
+
+Runtime gate required before UI_PASS:
+- authoritative Windows self-hosted exact-SHA browser Runtime against `718eff8c31a82a8ffd82bbf3d2b83f38b2aa993b`;
+- Phase G token authority / minimum readable control size / metadata floor / panel hierarchy / CJK-Latin-numeric / narrow-desktop assertions;
+- Phase C/D/E/F regression;
+- fullscreen / responsive / Web-Portable parity;
+- UI / Creative / Geometry regression.
+
+Current UR result:
+
+`UR_REVIEW / STATIC_PASS / WINDOWS_RUNTIME_REQUIRED / PHASE_G`
+
+Do not begin Phase H.
