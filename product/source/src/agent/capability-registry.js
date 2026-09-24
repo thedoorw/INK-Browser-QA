@@ -360,14 +360,14 @@ const unavailable = [
     id: 'composition.programmable', title: 'Programmable native composition', description: 'Future programmable native composition capability; not implemented by Connector-003.',
     availability: false, availabilityReason: 'CONNECTOR_004_NOT_IMPLEMENTED', routingClass: 'PROGRAMMABLE_FUTURE', namedTool: null, publicMethod: null, role: 'UNAVAILABLE',
     authoritativeRoute: 'UNAVAILABLE', inputSchema: obj({}, [], 'Unavailable capability.'), targetTypes: ['None'],
-    constraints: ['Discovery only. No use_ink or arbitrary execution is available.'],
+    constraints: ['Discovery only. Programmable native composition is unavailable.'],
     ...policy(false, 'UNAVAILABLE', 'NONE', 'NONE'), resultContract: resultContract({ statuses: ['FAILED'] }), examples: [], toolPrimary: false
   }),
   descriptor({
     id: 'external.transport', title: 'External connector transport', description: 'Future external transport capability; not implemented by Connector-003.',
     availability: false, availabilityReason: 'EXTERNAL_TRANSPORT_NOT_IMPLEMENTED', routingClass: 'UNAVAILABLE', namedTool: null, publicMethod: null, role: 'UNAVAILABLE',
     authoritativeRoute: 'UNAVAILABLE', inputSchema: obj({}, [], 'Unavailable capability.'), targetTypes: ['None'],
-    constraints: ['Discovery only. No MCP/plugin transport is provided by Connector-003.'],
+    constraints: ['Discovery only. External plugin transport is unavailable.'],
     ...policy(false, 'UNAVAILABLE', 'NONE', 'NONE'), resultContract: resultContract({ statuses: ['FAILED'] }), examples: [], toolPrimary: false
   })
 ];
