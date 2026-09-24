@@ -557,10 +557,21 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       app.findObject(smartColorRef).object.fill===smartFill && app.findObject(smartLineRef).object.stroke===smartStroke,
       'SMART_LOOP_TWO_STEP_REPAINT_EXECUTED');
     const smartHistory=await smartApi.tools.invoke('get_ink_history');
-    assert(smartHistory.status==='COMPLETED' && smartExecuted.historyReceipt?.steps?.length===2 &&
-      smartExecuted.historyReceipt.steps.every(s=>Boolean(s.history)) &&
-      smartHistory.result.entries.slice(-2).every((entry,i)=>entry.objectIds.includes([smartColorRef,smartLineRef][i].objectId)),
-      'SMART_LOOP_HISTORY_RECORDED');
+    const smartHistorySteps=smartExecuted.historyReceipt?.steps||[];
+    const smartHistoryEntries=smartHistory.result?.entries?.slice(-2)||[];
+    assert(smartHistory.status==='COMPLETED' && smartHistorySteps.length===2 &&
+      smartHistorySteps.every(s=>Number.isInteger(s.history?.beforeUndoCount) &&
+        s.history.afterUndoCount===s.history.beforeUndoCount+1 &&
+        s.history.latestLabel==='CHAT repaint Path') &&
+      smartHistoryEntries.length===2 &&
+      smartHistoryEntries.every(entry=>entry.captureMode==='scoped' &&
+        entry.label==='CHAT repaint Path' && Number(entry.patchCount)>0) &&
+      Number.isInteger(smartHistory.result?.applied) && smartHistory.result.applied>=2 &&
+      Number.isInteger(smartHistory.result?.retainedCount) && smartHistory.result.retainedCount>=2,
+      'SMART_LOOP_HISTORY_RECORDED',{
+        historyReceipt:smartExecuted.historyReceipt,
+        history:smartHistory.result
+      });
     const smartRevisionAfter=app.revisions.revisionIdFor(app.doc.id);
     const smartRevisions=await smartApi.tools.invoke('get_ink_revisions');
     assert(smartExecuted.revisionReceipt?.startingRevisionId===smartRevisionBefore &&
