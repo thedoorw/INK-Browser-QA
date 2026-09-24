@@ -1,3 +1,67 @@
+## INK-CHAT-CLOSED-LOOP-001 final closure — 2026-09-24
+
+```text
+TASK = INK-CHAT-CLOSED-LOOP-001
+MR = PASS
+TESTED_SHA = ac1f3407376a3e7f7cba1b792bac2bfb15f47cd3
+RUNTIME_RUN = 36017580698
+RUNNER = DESKTOP-NSOQH69
+
+UI = PASS
+CREATIVE = PASS
+GEOMETRY = PASS
+
+SMART_LOOP_MARKERS = 18 / 18 PASS
+SMART_REFERENCE_COLOR_LINE_CHAT_CLOSED_LOOP = PASS
+
+BEFORE_PNG_SHA256 = 19eb289da30929082ecc9e59b34d89b7e066a5df06aa4a1e3bd535492cfab4e5
+AFTER_PNG_SHA256 = 9c45b05df543b86e4e1a57174c3ce538d98db213fa8dabed551e79c53f378b1d
+
+ARTIFACT_ID = 10815532458
+ARTIFACT_DIGEST = sha256:e9778946a951d238b0474a9847f05f392a4a68970de0ec994c55736640fdf2fb
+
+PROMOTION_PR = #52 / MERGED
+PROMOTED_MAIN = d6c28be13cddee0d83b9e7613b5498b06d1f7b0e
+PROMOTION_EQUIVALENCE = 9 / 9 exact
+
+NAMED_TOOL_TOTAL = 20
+import_ink_reference = AVAILABLE
+
+RETURN_PATH =
+  RUNTIME_ARTIFACT_BRIDGE / NOT_LIVE_EXTERNAL_TRANSPORT
+
+EXTERNAL_TRANSPORT = UNAVAILABLE / unchanged
+FORMAT_VERSION = 4 / PRESERVED
+
+CLOSED_LOOP_001 = CLOSED
+NEXT_CONNECTOR_WORK_ORDER = NOT_AUTHORIZED
+DRAWING_VALIDATION = HOLD_BY_USER
+```
+
+Proven chain:
+
+```text
+CHAT-style capability discovery
+→ import_ink_reference
+→ native INK Reference
+→ decompose_ink_reference
+→ native Color + Line Paths
+→ stable refs
+→ get_ink_preview
+→ use_ink
+→ proposal
+→ explicit approval
+→ native repaint × 2
+→ History
+→ Revision
+→ get_ink_preview
+→ before/after PNG artifact returned to CHAT
+```
+
+This closure does not claim live external ChatGPT binary transport. The accepted proof return path remains the bounded Runtime artifact bridge.
+
+---
+
 ## MR_REVISE / QA_ORDER_ISOLATION_ONLY — 2026-09-24
 
 Runtime evidence:
