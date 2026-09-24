@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "HOLD",
-  "target_sha": "2b3c2f79147b6122f5ac78ed47d19c9878522386",
+  "state": "READY",
+  "target_sha": "74c02f41dd9bde3262a6e7ee507126b74c2e18c9",
   "pending_work_orders": [
     "INK-CHAT-CLOSED-LOOP-001"
   ],
@@ -27,7 +27,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "MR_REVISE: QA-only realm-local output resolver loader timed out before first preview; product source frozen pending bounded QA bridge correction."
+    "reason": "MR source PASS after QA_BRIDGE_ONLY revision: dynamic inline module removed; same-origin Creative-suite resolver route via script.src; exact-SHA Runtime required for smart closed-loop artifacts."
   },
   "batch_policy": {
     "default_target": 3,
