@@ -121,13 +121,14 @@ function assertExample(schema, value, at = 'example') {
   }
 }
 
-test('Connector-003 appends describe_ink_capability as tool 18 and preserves the exact Connector-002 prefix', () => {
+test('Connector-003 keeps describe_ink_capability as tool 18 and preserves the exact Connector-002 prefix', () => {
   const tools = getInkNamedToolDefinitions();
   assert.deepEqual(tools.slice(0, 17).map(item => item.name), CONNECTOR_002_TOOLS);
   assert.equal(tools[17].name, 'describe_ink_capability');
-  assert.equal(tools.length, 18);
-  assert.equal(new Set(tools.map(item => item.name)).size, 18);
-  assert.equal(new Set(tools.map(item => item.publicMethod)).size, 18);
+  assert.equal(tools[18].name, 'use_ink');
+  assert.equal(tools.length, 19);
+  assert.equal(new Set(tools.map(item => item.name)).size, 19);
+  assert.equal(new Set(tools.map(item => item.publicMethod)).size, 19);
 });
 
 test('Capability registry is deterministic, unique, JSON-safe, and complete for required coverage', () => {
@@ -253,12 +254,15 @@ test('policy/result metadata keeps proposal approval, Preview semantics, History
   assert.equal(resolveInkCapabilityDescriptor('revision.capture').revisionPolicy.mode, 'EXPLICIT_CAPTURE');
   assert.equal(resolveInkCapabilityDescriptor('revision.restore').revisionPolicy.mode, 'EXPLICIT_RESTORE');
 
-  for (const id of ['composition.programmable', 'external.transport']) {
-    const item = resolveInkCapabilityDescriptor(id);
-    assert.equal(item.availability, false);
-    assert.equal(typeof item.availabilityReason, 'string');
-    assert.ok(item.availabilityReason.length > 0);
-  }
+  const composition = resolveInkCapabilityDescriptor('composition.programmable');
+  assert.equal(composition.availability, true);
+  assert.equal(composition.namedTool, 'use_ink');
+  assert.equal(composition.publicMethod, 'composition.propose');
+
+  const external = resolveInkCapabilityDescriptor('external.transport');
+  assert.equal(external.availability, false);
+  assert.equal(typeof external.availabilityReason, 'string');
+  assert.ok(external.availabilityReason.length > 0);
 });
 
 test('MR revise: descriptor bounds and constraints match existing edit/preview authority rejection contracts', async () => {
@@ -362,7 +366,7 @@ test('Connector-003 source boundary adds discovery metadata only and preserves F
 
   assert.equal(FORMAT_VERSION, 4);
   assert.match(configSource, /FORMAT_VERSION\s*=\s*4/);
-  assert.doesNotMatch(registrySource + '\n' + apiSource, /\beval\s*\(|\bFunction\s*\(|\buse_ink\b|WebSocket|postMessage|createObjectURL/i);
+  assert.doesNotMatch(registrySource + '\n' + apiSource, /\beval\s*\(|\bFunction\s*\(|WebSocket|postMessage|createObjectURL/i);
   assert.doesNotMatch(apiSource, /app\.doc\s*=/);
   assert.doesNotMatch(registrySource, /new\s+HistoryManager|new\s+RevisionController|new\s+Renderer/);
   assert.match(apiSource, /resolveInkCapabilityDescriptor/);
