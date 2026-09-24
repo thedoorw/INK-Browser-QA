@@ -226,11 +226,12 @@
         <button id="closeInspector" class="mini-button panel-close-button" title="關閉檢查器" aria-label="關閉檢查器"><svg><use href="#i-close"/></svg></button>
       </div>
     </div>
-    <div class="inspector-tabs properties-subnav" data-panel-subnav="properties" aria-label="屬性子導覽">
-      <button class="inspector-tab active" data-tab="brush"><svg><use href="#i-sliders"/></svg><span>工具</span></button>
-      <button class="inspector-tab" data-tab="object"><svg><use href="#i-select"/></svg><span>物件</span></button>
-      <button class="inspector-tab" data-tab="ai"><svg><use href="#i-spark"/></svg><span>AI</span></button>
-      <button class="inspector-tab" data-tab="studio"><svg><use href="#i-spark"/></svg><span>核心</span></button>
+    <div class="inspector-tabs properties-subnav" data-panel-subnav="properties" aria-label="面板子導覽">
+      <button class="inspector-tab properties-subtab active" data-tab="brush"><svg><use href="#i-sliders"/></svg><span>工具</span></button>
+      <button class="inspector-tab properties-subtab" data-tab="object"><svg><use href="#i-select"/></svg><span>物件</span></button>
+      <button class="inspector-tab properties-subtab" data-tab="geometry"><svg><use href="#i-group"/></svg><span>幾何</span></button>
+      <button class="inspector-tab specialist-subtab" data-tab="ai"><svg><use href="#i-spark"/></svg><span>AI</span></button>
+      <button class="inspector-tab specialist-subtab" data-tab="studio"><svg><use href="#i-settings"/></svg><span>進階</span></button>
     </div>
 
     <section class="inspector-section tab-content active" data-content="brush">
@@ -262,7 +263,7 @@
         <div class="subpanel-title"><strong>媒材渲染</strong><span id="renderEngineStatus" class="engine-status" data-state="checking">偵測中</span></div>
         <label class="control-row"><span>引擎</span><select id="renderEngineMode" aria-label="自然媒材渲染引擎"><option value="auto">自動選擇</option><option value="gpu">WebGL2 GPU</option><option value="canvas2d">Canvas 相容</option></select></label>
         <div class="render-engine-meta"><span id="renderEngineBackend">Canvas 2D</span><span id="renderEngineStats">0 draw</span></div>
-        <p class="render-engine-note">連續濕筆畫使用顏料／水分／沉積多通道合成；GPU 不可用時自動改用 Canvas 參考模擬。</p><button id="runGPUValidationBtn" class="wide-button compact-button">執行 GPU 自我檢查</button><p id="gpuValidationStatus" class="gpu-validation-status">尚未檢查</p>
+        <p class="render-engine-note">連續濕筆畫使用顏料／水分／沉積多通道合成；GPU 不可用時自動改用 Canvas 參考模擬。</p>
       </div>
 
       <div id="eraserOptions" class="property-card subpanel" hidden>
@@ -373,6 +374,22 @@
       </div>
     </section>
 
+    <section class="inspector-section tab-content geometry-panel" data-content="geometry" aria-label="Path and Repeat controls">
+      <div class="section-title"><div><strong>Path／Repeat</strong><span>既有幾何命令端點</span></div></div>
+      <div class="property-card studio-card">
+        <div class="subpanel-title"><strong>Path Boolean</strong><span>EDITABLE</span></div>
+        <button id="pathEditToggle" class="wide-button">Path／Node 編輯</button>
+        <div class="transform-grid"><label><span>Node X</span><input id="pathNodeX" type="number" step="1" value="0"></label><label><span>Node Y</span><input id="pathNodeY" type="number" step="1" value="0"></label></div>
+        <button id="pathNodeApply" class="wide-button">更新所選 Node</button>
+        <div class="studio-button-grid"><button id="booleanUnion">Union</button><button id="booleanDifference">Difference</button><button id="booleanIntersection">Intersection</button><button id="booleanXor">XOR</button><button id="booleanDivide">Divide</button></div>
+      </div>
+      <div class="property-card studio-card">
+        <div class="subpanel-title"><strong>Repeat</strong><span>LIVE INSTANCES</span></div>
+        <label class="control-row"><span>數量</span><input id="repeatCount" type="number" min="2" max="72" value="8"></label>
+        <div class="studio-button-grid"><button id="repeatRadial">Radial</button><button id="repeatMirror">Mirror</button><button id="repeatGrid">Grid</button><button id="repeatExpand">展開 Path</button></div>
+      </div>
+    </section>
+
     <section class="inspector-section tab-content ai-panel" data-content="ai" aria-label="AI-assisted controls">
       <div class="property-card ai-card">
         <div class="subpanel-title"><strong>AI-assisted</strong><span id="aiPermission" class="ai-permission">PROPOSE</span></div>
@@ -427,8 +444,13 @@
       </form>
     </dialog>
 
-    <section class="inspector-section tab-content studio-panel" data-content="studio">
-      <div class="section-title"><div><strong>INK Core v0.1</strong><span>AI Command · Editable Plan · Preview · Approval · Rollback</span></div></div>
+    <section class="inspector-section tab-content studio-panel specialist-panel" data-content="studio">
+      <div class="section-title"><div><strong>進階製作／診斷</strong><span>既有工程與驗證工具</span></div></div>
+      <div class="property-card studio-card diagnostic-card">
+        <div class="subpanel-title"><strong>GPU Validation</strong><span>DIAGNOSTIC</span></div>
+        <button id="runGPUValidationBtn" class="wide-button compact-button">執行 GPU 自我檢查</button>
+        <p id="gpuValidationStatus" class="gpu-validation-status">尚未檢查</p>
+      </div>
       <div class="property-card studio-card program-asset-card">
         <div class="subpanel-title"><strong>程序資產</strong><span>SAFE IMPORT → RECIPE</span></div>
         <label class="control-row"><span>安全模式</span><select id="programSafetyMode"><option value="STATIC_PARSE">STATIC_PARSE</option><option value="SANDBOX_ANALYSIS">SANDBOX_ANALYSIS</option><option value="TRANSLATE_ONLY">TRANSLATE_ONLY</option><option value="TRUSTED_EXTERNAL_RUN">TRUSTED_EXTERNAL_RUN</option></select></label>
@@ -456,18 +478,6 @@
         <label class="control-row range-row"><span>紋理</span><input id="recipeTexture" type="range" min="0" max="60" value="14"><output>14</output></label>
         <label class="control-row range-row"><span>對比</span><input id="recipeContrast" type="range" min="-50" max="50" value="8"><output>8</output></label>
         <div class="studio-button-grid"><button id="studioRunRecipe">執行全部</button><button id="studioReplayStep">局部重播</button><button id="studioRollback">回滾</button><button id="studioQA">執行 QA</button></div>
-      </div>
-      <div class="property-card studio-card">
-        <div class="subpanel-title"><strong>Path Boolean</strong><span>EDITABLE</span></div>
-        <button id="pathEditToggle" class="wide-button">Path／Node 編輯</button>
-        <div class="transform-grid"><label><span>Node X</span><input id="pathNodeX" type="number" step="1" value="0"></label><label><span>Node Y</span><input id="pathNodeY" type="number" step="1" value="0"></label></div>
-        <button id="pathNodeApply" class="wide-button">更新所選 Node</button>
-        <div class="studio-button-grid"><button id="booleanUnion">Union</button><button id="booleanDifference">Difference</button><button id="booleanIntersection">Intersection</button><button id="booleanXor">XOR</button><button id="booleanDivide">Divide</button></div>
-      </div>
-      <div class="property-card studio-card">
-        <div class="subpanel-title"><strong>Repeat</strong><span>LIVE INSTANCES</span></div>
-        <label class="control-row"><span>數量</span><input id="repeatCount" type="number" min="2" max="72" value="8"></label>
-        <div class="studio-button-grid"><button id="repeatRadial">Radial</button><button id="repeatMirror">Mirror</button><button id="repeatGrid">Grid</button><button id="repeatExpand">展開 Path</button></div>
       </div>
       <div class="property-card studio-card">
         <div class="subpanel-title"><strong>Mask</strong><span>PATH BOUNDARY</span></div>
