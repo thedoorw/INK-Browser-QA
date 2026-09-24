@@ -515,6 +515,97 @@
       record('UI-006 Phase F introduces no duplicate DOM command IDs',
         new Set(domIds).size === domIds.length,
         { ids: domIds.length, unique: new Set(domIds).size });
+
+      const typographyRootStyle = win.getComputedStyle(doc.documentElement);
+      const typographyTokens = {
+        xs: typographyRootStyle.getPropertyValue('--ui-type-xs').trim(),
+        sm: typographyRootStyle.getPropertyValue('--ui-type-sm').trim(),
+        md: typographyRootStyle.getPropertyValue('--ui-type-md').trim(),
+        lg: typographyRootStyle.getPropertyValue('--ui-type-lg').trim(),
+        brand: typographyRootStyle.getPropertyValue('--ui-type-brand').trim()
+      };
+      record('UI-006 Phase G exposes one named typography token authority',
+        typographyTokens.xs === '9px' &&
+        typographyTokens.sm === '9.5px' &&
+        typographyTokens.md === '10px' &&
+        typographyTokens.lg === '11px' &&
+        typographyTokens.brand === '10px',
+        typographyTokens);
+
+      const fontPx = node => node ? Number.parseFloat(win.getComputedStyle(node).fontSize) : NaN;
+      const controlTypographySamples = [
+        doc.querySelector('.application-menus > button'),
+        doc.querySelector('#contextualAdvancedBtn'),
+        doc.querySelector('.properties-subnav .inspector-tab'),
+        doc.querySelector('.inspector-section .control-row'),
+        doc.querySelector('.creative-workspace-tabs button')
+      ].filter(Boolean);
+      const controlTypography = controlTypographySamples.map(node => ({
+        node: node.id || node.className || node.tagName,
+        size: fontPx(node),
+        weight: win.getComputedStyle(node).fontWeight
+      }));
+      record('UI-006 Phase G normal interactive/control text stays at or above UI-MD',
+        controlTypography.length >= 4 &&
+        controlTypography.every(item => item.size >= Number.parseFloat(typographyTokens.md)),
+        controlTypography);
+
+      const metadataTypographySamples = [
+        doc.querySelector('.panel-window-group-label'),
+        doc.querySelector('.section-title span'),
+        doc.querySelector('.version-badge'),
+        doc.querySelector('kbd'),
+        doc.querySelector('.tool-button .tool-label')
+      ].filter(Boolean);
+      const metadataTypography = metadataTypographySamples.map(node => ({
+        node: node.className || node.tagName,
+        size: fontPx(node)
+      }));
+      record('UI-006 Phase G metadata-only text never falls below UI-XS',
+        metadataTypography.length >= 3 &&
+        metadataTypography.every(item => item.size >= Number.parseFloat(typographyTokens.xs)),
+        metadataTypography);
+
+      const panelTitleSizes = [
+        doc.querySelector('#inspector .inspector-head strong'),
+        doc.querySelector('#creativeWorkspace .creative-workspace-head strong')
+      ].filter(Boolean).map(fontPx);
+      const panelTabSizes = [
+        doc.querySelector('.properties-subnav .inspector-tab'),
+        doc.querySelector('.creative-workspace-tabs button')
+      ].filter(Boolean).map(fontPx);
+      record('UI-006 Phase G panel titles and tabs share the common hierarchy',
+        panelTitleSizes.length === 2 &&
+        panelTabSizes.length === 2 &&
+        panelTitleSizes.every(size => near(size, Number.parseFloat(typographyTokens.lg), 0.01)) &&
+        panelTabSizes.every(size => near(size, Number.parseFloat(typographyTokens.md), 0.01)),
+        { panelTitleSizes, panelTabSizes, tokens: typographyTokens });
+
+      const typographyProbe = doc.createElement('div');
+      typographyProbe.className = 'context-control-label';
+      typographyProbe.style.cssText = 'position:absolute;left:-9999px;top:-9999px;visibility:hidden;white-space:nowrap;';
+      for (const [script, value] of [['cjk','圖層'], ['latin','Layer'], ['numeric','100']]) {
+        const span = doc.createElement('span');
+        span.dataset.script = script;
+        span.textContent = value;
+        typographyProbe.appendChild(span);
+      }
+      doc.querySelector('#app')?.appendChild(typographyProbe);
+      const scriptTypography = Array.from(typographyProbe.querySelectorAll('span')).map(node => {
+        const style = win.getComputedStyle(node);
+        return { script: node.dataset.script, size: style.fontSize, family: style.fontFamily };
+      });
+      typographyProbe.remove();
+      record('UI-006 Phase G CJK Latin and numeric UI text share size and font-stack authority',
+        scriptTypography.length === 3 &&
+        new Set(scriptTypography.map(item => item.size)).size === 1 &&
+        new Set(scriptTypography.map(item => item.family)).size === 1 &&
+        scriptTypography.every(item =>
+          item.family.includes('Inter') &&
+          item.family.includes('Noto Sans TC') &&
+          item.family.includes('Microsoft JhengHei')),
+        scriptTypography);
+
       app.clearSelection();
       await sleep(50);
 
@@ -664,6 +755,16 @@
       const desktopResize = shell.state();
       const narrowGeometry = { stage: rectOf(doc, '#stageWrap'), rail: rectOf(doc, '.tool-rail'), dock: rectOf(doc, '#panelDock'), topbar: rectOf(doc, '.topbar') };
       record('narrow desktop containment remains stable', frame.contentWindow.innerWidth <= 960 && desktopResize.stageWidth > 800 && visible(doc, '#panelDock') && near(narrowGeometry.stage?.left, narrowGeometry.rail?.right, 1) && near(narrowGeometry.stage?.right, narrowGeometry.dock?.left, 1), { viewport: frame.contentWindow.innerWidth, shell: desktopResize, geometry: narrowGeometry });
+      const narrowTypography = {
+        topbar: { client: doc.querySelector('.topbar')?.clientWidth || 0, scroll: doc.querySelector('.topbar')?.scrollWidth || 0 },
+        propertiesTabs: { client: doc.querySelector('.properties-subnav')?.clientWidth || 0, scroll: doc.querySelector('.properties-subnav')?.scrollWidth || 0 },
+        status: { client: doc.querySelector('.statusbar')?.clientWidth || 0, scroll: doc.querySelector('.statusbar')?.scrollWidth || 0 }
+      };
+      record('UI-006 Phase G narrow desktop typography does not overflow persistent chrome',
+        narrowTypography.topbar.scroll <= narrowTypography.topbar.client + 1 &&
+        narrowTypography.propertiesTabs.scroll <= narrowTypography.propertiesTabs.client + 1 &&
+        narrowTypography.status.scroll <= narrowTypography.status.client + 1,
+        narrowTypography);
 
       frame.style.width = '720px';
       await sleep(320);
