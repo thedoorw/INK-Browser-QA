@@ -1,3 +1,46 @@
+## Smart closed-loop exact-HEAD source review — 2026-09-24
+
+```text
+TASK = INK-CHAT-CLOSED-LOOP-001
+REVIEW_HEAD = 2b3c2f79147b6122f5ac78ed47d19c9878522386
+BRANCH = work/ink-chat-closed-loop-001
+
+SCOPE_REVIEW = PASS
+SOURCE_REVIEW = PASS
+AUTHORITY_REUSE = PASS
+CONNECTOR_ROUTING = PASS
+QA_ARTIFACT_BRIDGE_BOUNDARY = PASS
+FORMAT_VERSION = 4 / PRESERVED
+
+PRODUCT_DELTA =
+  reference.import
+  + Named Tool 20 import_ink_reference
+
+AUTHORITATIVE_ROUTE =
+  reference.import
+  → app.chatReferenceHandoff.importReference
+
+ORIGINAL_19_TOOLS_PREFIX = PRESERVED
+EXTERNAL_TRANSPORT = UNAVAILABLE / PRESERVED
+NEW_NATIVE_OPERATION_FAMILIES = 0
+UI_CHANGE = 0
+
+FOCUSED_QA = 8 / 8 PASS
+REFERENCE_HANDOFF_QA = PASS
+
+LEGACY_CONNECTOR_DIAGNOSTIC =
+  baseline 33 / 36
+  candidate 29 / 36
+  4 additional failures = stale exact total 19 assertions after authorized Tool 20
+  3 inherited failures = reproduced on starting source
+  classified QA debt / not product regression for this Work Order
+
+MR = WAIT_EXACT_SHA_RUNTIME
+PROMOTION = BLOCKED
+```
+
+Runtime acceptance still requires UI / Creative / Geometry PASS, 17/17 SMART_LOOP markers, and real smart-loop before/after PNG + JSON artifacts retrieved into CHAT.
+
 ## Connector-004 bounded revision re-review — 2026-09-24
 
 ```text
