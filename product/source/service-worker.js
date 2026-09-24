@@ -1,7 +1,7 @@
 const PRODUCT_VERSION = '0.1';
 // Deployment identity belongs to the worker script, never to the controlled app.
 // Change this token for every published source change, independent of product v0.1.
-const BUILD_ID = '20260923-ink-tech-debt-001-r2';
+const BUILD_ID = '20260924-ink-chat-connector-001';
 const CACHE_PREFIX = 'ink-build-';
 const SHELL_CACHE = `${CACHE_PREFIX}${BUILD_ID}-shell`;
 const RUNTIME_CACHE = `${CACHE_PREFIX}${BUILD_ID}-runtime`;
@@ -24,6 +24,8 @@ const SOURCE_SHELL = Object.freeze([
   './src/ai/intent/intent-to-plan.js',
   './src/ai/intent/intent-validator.js',
   './src/ai/plan-analyzers.js',
+  './src/agent/index.js',
+  './src/agent/public-creative-api.js',
   './src/assets/asset-error.js',
   './src/assets/asset-manifest.js',
   './src/assets/asset-migration.js',
