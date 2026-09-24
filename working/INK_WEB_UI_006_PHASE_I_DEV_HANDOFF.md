@@ -273,3 +273,39 @@ Remaining UR action before FINAL_CERTIFIED:
 Current state:
 
 `PHASE_I / STATIC_PASS / FINAL_RUNTIME_PASS / VISUAL_COMPARISON_REQUIRED`
+
+
+---
+
+## UR final visual / structural comparison — 2026-09-24
+
+Final comparison record:
+
+`working/INK_WEB_UI_006_FINAL_VISUAL_COMPARISON.md`
+
+Comparison basis:
+- user-supplied Photoshop reference screenshots;
+- mature Photoshop workstation grammar;
+- Figma-like lighter chrome / density principles;
+- final INK source authority;
+- exact-SHA Windows Runtime geometry / typography / responsive evidence.
+
+Key measured alignment:
+- top chrome: `24px + 36px = 60px`;
+- left toolbar: `40px` single / `68px` dual;
+- right Panel Dock: `40px`;
+- default primary panel: `252px`;
+- all eight primary panels share one canvas → panel → dock boundary;
+- 960px narrow-desktop canvas remains `628px` with a primary panel open;
+- mobile/compact removes desktop dock and preserves responsive alternatives.
+
+Final comparison outcome:
+- no blocking visual or structural polish candidate;
+- Photoshop spatial/editor grammar is preserved;
+- Figma-like lighter chrome is preserved;
+- INK-specific Creative Loop / CHAT / Revision identity remains distinct;
+- future typography/accessibility tuning, if desired, should be a new independent pass rather than reopening UI-006.
+
+Final UR result:
+
+`INK-WEB-UI-006 = UI_PASS / FINAL_CERTIFIED / STOP`
