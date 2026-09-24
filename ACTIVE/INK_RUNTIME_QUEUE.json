@@ -1,11 +1,9 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "19658b1b7ac67696fd6390c13294b7b2f48da200",
-  "pending_work_orders": [
-    "INK-WEB-UI-006-VISUAL-CLOSURE"
-  ],
+  "pending_work_orders": [],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -20,11 +18,12 @@
     "INK-CHAT-CONNECTOR-001",
     "INK-WEB-UI-006-PHASE-H",
     "INK-WEB-UI-006-PHASE-I",
-    "INK-CHAT-CONNECTOR-002"
+    "INK-CHAT-CONNECTOR-002",
+    "INK-WEB-UI-006-VISUAL-CLOSURE"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "Capture exact-tested INK UI screenshot evidence at 1280x1024 for final Photoshop comparison and UI optimization closure."
+    "enabled": false,
+    "reason": "INK-WEB-UI-006 visual closure Runtime passed and produced the formal 1280x1024 screenshot evidence."
   },
   "batch_policy": {
     "default_target": 3,
@@ -32,8 +31,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 35957389410,
-    "tested_sha": "c728266fa2ec65c2fd53852ae32fd368b9a7d832",
+    "run_id": 35959283474,
+    "tested_sha": "19658b1b7ac67696fd6390c13294b7b2f48da200",
     "result": "PASS"
   }
 }
