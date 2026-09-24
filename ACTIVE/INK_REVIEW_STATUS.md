@@ -1,6 +1,6 @@
 # INK REVIEW STATUS
 
-STATUS: `INK-TECH-DEBT-001 / MR_PASS / CLEAN_PROMOTED / CLOSED`
+STATUS: `INK-CHAT-VALIDATION-001 / PHASE_C / AUTHORIZED / DEV_NOT_STARTED`
 
 ```text
 TASK_ID = INK-TECH-DEBT-001
@@ -19,6 +19,36 @@ MATCHED_BLOBS = 23 / 23
 FORMAT_VERSION = 4 / PRESERVED
 PRODUCT_VERSION = v0.1 / PRESERVED
 ```
+
+## Current authorized validation — Phase C
+
+```text
+TASK = INK-CHAT-VALIDATION-001
+PHASE = C_COLOR_LINE_BOUNDED_EDIT
+BRANCH = work/ink-chat-validation-001-phase-c
+BASELINE = Phase B accepted + technical-debt closure
+TARGET_GATE = CHAT_COLOR_LINE_BOUNDED_EDIT_WORKS
+IMAGE_MODEL = 0
+PRIVATE_USER_IMAGE_PUBLIC_COMMIT = 0
+```
+
+Purpose:
+
+```text
+existing Phase B Color / Line Paths
+→ CHAT grounded stable target
+→ proposal
+→ explicit approval
+→ existing path.repaint.v1
+→ existing History
+→ visible bounded edit
+```
+
+Phase C validates one Color fill edit and one Line stroke edit, plus approval/stale-state guards and Undo/Redo. It does not retune tracing, add semantic labeling, alter Core authority or change FORMAT_VERSION.
+
+UI remains a parallel, separate-authority lane. Phase D–F drawing validations are registered only and are not authorized.
+
+---
 
 ## Accepted closure
 
