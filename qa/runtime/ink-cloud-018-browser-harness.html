@@ -505,8 +505,14 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     };
     const smartPreviewOptions={scope:'content',maxDimension:960,background:true};
     const smartBefore=await smartApi.tools.invoke('get_ink_preview',smartPreviewOptions);
-    assert(smartBefore.status==='COMPLETED' && smartBefore.outputHandles.length===1,
-      'SMART_LOOP_PREVIEW_BEFORE_CAPTURED');
+    assert(smartBefore.status==='COMPLETED' && smartBefore.outputHandles?.length===1,
+      'SMART_LOOP_PREVIEW_BEFORE_CAPTURED',{
+        status:smartBefore?.status,
+        diagnostics:smartBefore?.diagnostics,
+        result:smartBefore?.result,
+        outputHandles:smartBefore?.outputHandles,
+        previewOptions:smartPreviewOptions
+      });
     await smartMaterialize('before',smartBefore);
 
     // Choose prominent real returned refs; read-only geometry inspection is only QA targeting.
