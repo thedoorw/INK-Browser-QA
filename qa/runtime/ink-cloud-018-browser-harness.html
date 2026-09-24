@@ -438,6 +438,201 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     evidence.metrics.phaseBTraceRaster=phaseBTrace;
     evidence.metrics.phaseBCoordinateScale=phaseBScale;
 
+    const phaseCAdapter=app.chatBoundedEditAdapter;
+    assert(
+      Boolean(phaseCAdapter?.propose && phaseCAdapter?.approve && phaseCAdapter?.execute),
+      'CHAT_PHASE_C_BOUNDED_EDIT_ADAPTER_VISIBLE'
+    );
+    const phaseCRef=(layerId,objectId)=>({pageId:app.page().id,layerId,objectId});
+    const phaseCFind=objectId=>app.findObject({objectId})?.object||null;
+    const phaseCCurrentLayer=layerId=>app.page().layers.find(layer=>layer.id===layerId)||null;
+    const phaseCTask=(taskId,target,args)=>({
+      schema:'INK-CHAT-EDIT-TASK',
+      version:1,
+      taskId,
+      operation:'path.repaint.v1',
+      targets:[target],
+      arguments:args
+    });
+    const phaseCColorRef=phaseCRef(phaseBReceipt.colorLayerId,phaseBReceipt.colorObjectIds[0]);
+    const phaseCLineRef=phaseCRef(phaseBReceipt.lineLayerId,phaseBReceipt.lineObjectIds[0]);
+    const phaseCColorBefore=phaseCFind(phaseCColorRef.objectId)?.fill;
+    const phaseCLineBefore=phaseCFind(phaseCLineRef.objectId)?.stroke;
+    const phaseCColorAfter=phaseCColorBefore==='#8f4c78'?'#4d7f6a':'#8f4c78';
+    const phaseCLineAfter=phaseCLineBefore==='#315f86'?'#8a5635':'#315f86';
+    const phaseCRevisionBefore=app.revisions?.revisionIdFor?.(app.doc?.id)??null;
+    const phaseCReferenceSnapshot=JSON.stringify(phaseCFind(handoffReceipt.referenceObjectId));
+    const phaseCColorSiblingId=phaseBReceipt.colorObjectIds[1]||null;
+    const phaseCLineSiblingId=phaseBReceipt.lineObjectIds[1]||null;
+    const phaseCColorSiblingSnapshot=phaseCColorSiblingId?JSON.stringify(phaseCFind(phaseCColorSiblingId)):null;
+    const phaseCLineSiblingSnapshot=phaseCLineSiblingId?JSON.stringify(phaseCFind(phaseCLineSiblingId)):null;
+    const phaseCColorGeometry=JSON.stringify({
+      matrix:phaseCFind(phaseCColorRef.objectId)?.matrix,
+      subpaths:phaseCFind(phaseCColorRef.objectId)?.subpaths
+    });
+    const phaseCLineGeometry=JSON.stringify({
+      matrix:phaseCFind(phaseCLineRef.objectId)?.matrix,
+      subpaths:phaseCFind(phaseCLineRef.objectId)?.subpaths
+    });
+    const phaseCColorCount=phaseCCurrentLayer(phaseBReceipt.colorLayerId)?.objects?.length||0;
+    const phaseCLineCount=phaseCCurrentLayer(phaseBReceipt.lineLayerId)?.objects?.length||0;
+
+    const phaseCColorDocBefore=JSON.stringify(app.doc);
+    const phaseCColorProposal=phaseCAdapter.propose(
+      phaseCTask('phase-c-color-runtime',phaseCColorRef,{fill:phaseCColorAfter})
+    );
+    assert(
+      phaseCColorProposal?.ok===true && JSON.stringify(app.doc)===phaseCColorDocBefore,
+      'CHAT_PHASE_C_COLOR_PROPOSAL_ZERO_MUTATION',
+      {proposalId:phaseCColorProposal?.result?.proposalId}
+    );
+    const phaseCBlocked=phaseCAdapter.execute(phaseCColorProposal.result.proposalId,'not-approved');
+    assert(
+      phaseCBlocked?.ok===false &&
+      phaseCBlocked?.code==='CHAT_EDIT_APPROVAL_REQUIRED' &&
+      JSON.stringify(app.doc)===phaseCColorDocBefore,
+      'CHAT_PHASE_C_EXECUTION_REQUIRES_APPROVAL',
+      {code:phaseCBlocked?.code}
+    );
+    const phaseCColorApproved=phaseCAdapter.approve(phaseCColorProposal.result.proposalId);
+    assert(
+      phaseCColorApproved?.ok===true && JSON.stringify(app.doc)===phaseCColorDocBefore,
+      'CHAT_PHASE_C_COLOR_APPROVAL_ZERO_MUTATION'
+    );
+    const phaseCColorExecuted=phaseCAdapter.execute(
+      phaseCColorProposal.result.proposalId,
+      phaseCColorApproved.result.approvalToken
+    );
+    assert(
+      phaseCColorExecuted?.ok===true &&
+      phaseCColorExecuted?.result?.changed===true &&
+      phaseCFind(phaseCColorRef.objectId)?.fill===phaseCColorAfter,
+      'CHAT_PHASE_C_COLOR_BOUNDED_EDIT',
+      {targetId:phaseCColorRef.objectId,before:phaseCColorBefore,after:phaseCFind(phaseCColorRef.objectId)?.fill}
+    );
+    assert(
+      phaseCCurrentLayer(phaseBReceipt.colorLayerId)?.id===phaseBReceipt.colorLayerId &&
+      phaseCCurrentLayer(phaseBReceipt.colorLayerId)?.objects?.length===phaseCColorCount &&
+      phaseCCurrentLayer(phaseBReceipt.lineLayerId)?.objects?.length===phaseCLineCount &&
+      JSON.stringify({
+        matrix:phaseCFind(phaseCColorRef.objectId)?.matrix,
+        subpaths:phaseCFind(phaseCColorRef.objectId)?.subpaths
+      })===phaseCColorGeometry &&
+      JSON.stringify(phaseCFind(handoffReceipt.referenceObjectId))===phaseCReferenceSnapshot &&
+      (!phaseCColorSiblingId || JSON.stringify(phaseCFind(phaseCColorSiblingId))===phaseCColorSiblingSnapshot) &&
+      (!phaseCLineSiblingId || JSON.stringify(phaseCFind(phaseCLineSiblingId))===phaseCLineSiblingSnapshot) &&
+      (app.revisions?.revisionIdFor?.(app.doc?.id)??null)===phaseCRevisionBefore,
+      'CHAT_PHASE_C_COLOR_TARGET_ONLY'
+    );
+    assert(
+      app.history.undoStack.at(-1)?.label==='CHAT repaint Path',
+      'CHAT_PHASE_C_COLOR_HISTORY_AUTHORITATIVE',
+      {label:app.history.undoStack.at(-1)?.label}
+    );
+    assert(
+      app.history.undo()===true && phaseCFind(phaseCColorRef.objectId)?.fill===phaseCColorBefore,
+      'CHAT_PHASE_C_COLOR_UNDO'
+    );
+    assert(
+      app.history.redo()===true && phaseCFind(phaseCColorRef.objectId)?.fill===phaseCColorAfter,
+      'CHAT_PHASE_C_COLOR_REDO'
+    );
+
+    const phaseCColorAcceptedSnapshot=JSON.stringify(phaseCCurrentLayer(phaseBReceipt.colorLayerId));
+    const phaseCLineDocBefore=JSON.stringify(app.doc);
+    const phaseCLineProposal=phaseCAdapter.propose(
+      phaseCTask('phase-c-line-runtime',phaseCLineRef,{stroke:phaseCLineAfter})
+    );
+    assert(
+      phaseCLineProposal?.ok===true && JSON.stringify(app.doc)===phaseCLineDocBefore,
+      'CHAT_PHASE_C_LINE_PROPOSAL_ZERO_MUTATION',
+      {proposalId:phaseCLineProposal?.result?.proposalId}
+    );
+    const phaseCLineApproved=phaseCAdapter.approve(phaseCLineProposal.result.proposalId);
+    assert(
+      phaseCLineApproved?.ok===true && JSON.stringify(app.doc)===phaseCLineDocBefore,
+      'CHAT_PHASE_C_LINE_APPROVAL_ZERO_MUTATION'
+    );
+    const phaseCLineExecuted=phaseCAdapter.execute(
+      phaseCLineProposal.result.proposalId,
+      phaseCLineApproved.result.approvalToken
+    );
+    assert(
+      phaseCLineExecuted?.ok===true &&
+      phaseCLineExecuted?.result?.changed===true &&
+      phaseCFind(phaseCLineRef.objectId)?.stroke===phaseCLineAfter,
+      'CHAT_PHASE_C_LINE_BOUNDED_EDIT',
+      {targetId:phaseCLineRef.objectId,before:phaseCLineBefore,after:phaseCFind(phaseCLineRef.objectId)?.stroke}
+    );
+    assert(
+      phaseCCurrentLayer(phaseBReceipt.lineLayerId)?.id===phaseBReceipt.lineLayerId &&
+      phaseCCurrentLayer(phaseBReceipt.lineLayerId)?.objects?.length===phaseCLineCount &&
+      JSON.stringify({
+        matrix:phaseCFind(phaseCLineRef.objectId)?.matrix,
+        subpaths:phaseCFind(phaseCLineRef.objectId)?.subpaths
+      })===phaseCLineGeometry &&
+      JSON.stringify(phaseCCurrentLayer(phaseBReceipt.colorLayerId))===phaseCColorAcceptedSnapshot &&
+      JSON.stringify(phaseCFind(handoffReceipt.referenceObjectId))===phaseCReferenceSnapshot &&
+      (!phaseCLineSiblingId || JSON.stringify(phaseCFind(phaseCLineSiblingId))===phaseCLineSiblingSnapshot) &&
+      (app.revisions?.revisionIdFor?.(app.doc?.id)??null)===phaseCRevisionBefore,
+      'CHAT_PHASE_C_LINE_TARGET_ONLY'
+    );
+    assert(
+      app.history.undoStack.at(-1)?.label==='CHAT repaint Path',
+      'CHAT_PHASE_C_LINE_HISTORY_AUTHORITATIVE',
+      {label:app.history.undoStack.at(-1)?.label}
+    );
+    assert(
+      app.history.undo()===true && phaseCFind(phaseCLineRef.objectId)?.stroke===phaseCLineBefore,
+      'CHAT_PHASE_C_LINE_UNDO'
+    );
+    assert(
+      app.history.redo()===true && phaseCFind(phaseCLineRef.objectId)?.stroke===phaseCLineAfter,
+      'CHAT_PHASE_C_LINE_REDO'
+    );
+
+    const phaseCStaleProposal=phaseCAdapter.propose(
+      phaseCTask('phase-c-stale-runtime',phaseCColorRef,{fill:phaseCColorBefore})
+    );
+    assert(phaseCStaleProposal?.ok===true,'CHAT_PHASE_C_STALE_PROPOSAL_CREATED');
+    const phaseCStaleApproved=phaseCAdapter.approve(phaseCStaleProposal.result.proposalId);
+    assert(phaseCStaleApproved?.ok===true,'CHAT_PHASE_C_STALE_PROPOSAL_APPROVED');
+    const phaseCStaleTarget=phaseCFind(phaseCColorRef.objectId);
+    const phaseCStaleOpacity=phaseCStaleTarget.opacity??1;
+    phaseCStaleTarget.opacity=phaseCStaleOpacity===0.91?0.92:0.91;
+    const phaseCBeforeStaleExecute=JSON.stringify(app.doc);
+    const phaseCStaleExecuted=phaseCAdapter.execute(
+      phaseCStaleProposal.result.proposalId,
+      phaseCStaleApproved.result.approvalToken
+    );
+    assert(
+      phaseCStaleExecuted?.ok===false &&
+      phaseCStaleExecuted?.code==='CHAT_EDIT_TARGET_STALE' &&
+      JSON.stringify(app.doc)===phaseCBeforeStaleExecute,
+      'CHAT_PHASE_C_STALE_STATE_REJECTED',
+      {code:phaseCStaleExecuted?.code,targetId:phaseCColorRef.objectId}
+    );
+    phaseCFind(phaseCColorRef.objectId).opacity=phaseCStaleOpacity;
+
+    evidence.metrics.phaseCColorTarget={
+      layerId:phaseCColorRef.layerId,
+      objectId:phaseCColorRef.objectId,
+      before:phaseCColorBefore,
+      after:phaseCColorAfter
+    };
+    evidence.metrics.phaseCLineTarget={
+      layerId:phaseCLineRef.layerId,
+      objectId:phaseCLineRef.objectId,
+      before:phaseCLineBefore,
+      after:phaseCLineAfter
+    };
+    evidence.metrics.phaseCProposalZeroMutation=true;
+    evidence.metrics.phaseCApprovalZeroMutation=true;
+    evidence.metrics.phaseCStaleRejected=true;
+    evidence.metrics.phaseCHistoryUndoRedo=true;
+    evidence.metrics.phaseCRevisionUnchanged=
+      (app.revisions?.revisionIdFor?.(app.doc?.id)??null)===phaseCRevisionBefore;
+
     const file=new File([blob],'rose-window-primary.png',{type:'image/png'});
     const transfer=new DataTransfer(); transfer.items.add(file); input.files=transfer.files;
     assert(input.files.length===1,'MANUAL_REFERENCE_FILE_INPUT_STILL_AVAILABLE');
