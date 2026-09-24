@@ -260,6 +260,8 @@
     const dock = document.createElement('nav');
     dock.id = 'panelDock';
     dock.className = 'panel-dock';
+    dock.dataset.uiHome = 'panels';
+    dock.dataset.uiRoute = 'PRIMARY_HOME';
     dock.setAttribute('aria-label', '面板 Dock');
     dock.innerHTML = PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-dock-separator" aria-hidden="true"></div>' : '') +
@@ -286,6 +288,8 @@
     const menu = document.createElement('div');
     menu.id = 'panelWindowMenu';
     menu.className = 'panel-window-menu';
+    menu.dataset.uiHome = 'panels';
+    menu.dataset.uiRoute = 'SECONDARY_ROUTE';
     menu.setAttribute('role', 'menu');
     menu.hidden = true;
     menu.innerHTML = PANEL_GROUPS.map(group =>
