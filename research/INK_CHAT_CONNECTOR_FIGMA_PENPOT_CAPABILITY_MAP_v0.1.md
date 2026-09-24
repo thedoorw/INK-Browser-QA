@@ -840,3 +840,314 @@ MCP client
 ```
 
 This architecture is the closest direct reference for the proposed INK connector.
+
+
+---
+
+## 13. Reference → Color + Line → CHAT closed-loop workflow
+
+This section replaces the previous idea of validating the workflow as a sequence of isolated CHAT edit phases.
+
+### 13.1 Common target
+
+The editor-independent target is:
+
+```text
+reference image
+→ bounded raster preparation
+→ color-region vectorization
+→ Color editable paths
+→ derive Line boundary paths from the same geometry
+→ commit Reference / Color / Line as separate native layers
+→ return stable IDs + counts + palette + source identity
+→ CHAT structural inspection
+→ visual screenshot
+→ native editor corrections
+→ History / Revision / provenance
+→ inspectable editable artwork
+```
+
+Important semantic boundary:
+
+```text
+Line = boundary geometry derived from Color regions
+Line ≠ semantic centerline
+Line ≠ object-recognition contour
+```
+
+The current INK Phase B implementation intentionally follows this boundary model.
+
+### 13.2 Figma workflow
+
+#### Fast native-assisted Figma route
+
+Figma currently provides an AI `Vectorize` feature for static images. Full-color mode can preserve multiple source colors and lets the user choose the number of colors.
+
+A practical Figma workflow is:
+
+```text
+1. place Reference image
+2. Figma AI Vectorize → full-color editable vector layers
+3. group resulting filled vectors as Color
+4. duplicate the same vector geometry
+5. remove fills + apply stroke → Line
+6. retain original raster as Reference
+7. organize:
+   Reference
+   Color
+   Line
+8. CHAT inspects stable node IDs
+9. CHAT uses use_figma for native edits
+10. screenshot → visual QA → targeted correction
+```
+
+Caveat:
+
+The current external Figma `use_figma` workflow writes through the Plugin API.
+The documented Plugin API exposes vector/image/node creation and mutation, but the Figma AI `Vectorize` command is a separate product AI feature rather than a documented Plugin API primitive.
+
+Therefore the **fully CHAT-controlled closed loop** should not depend on invoking Figma AI Vectorize.
+
+#### Fully agent-controlled Figma route — preferred benchmark
+
+```text
+CHAT receives Reference
+→ shared trace/decomposition engine
+→ TraceBundle:
+   source identity
+   palette
+   Color SVG/paths
+   Line SVG/paths
+→ use_figma
+→ create native Reference image node
+→ create/import Color vectors
+→ create/import Line vectors
+→ preserve alignment
+→ return created node IDs
+→ get_screenshot
+→ CHAT correction through use_figma
+```
+
+Figma can create vector nodes directly and can create Figma nodes from SVG, so it is a strong host for the resulting vector structures.
+
+### 13.3 Penpot workflow
+
+Penpot MCP exposes `execute_code`, `import_image`, `export_shape`, `high_level_overview`, and Plugin API access to the currently focused page.
+
+Penpot Plugin API can create/import native Path/SVG structures, group them, and apply fills/strokes.
+
+For this exact task, the recommended closed loop is:
+
+```text
+CHAT receives Reference
+→ import_image → Reference
+→ shared trace/decomposition engine
+→ TraceBundle
+→ execute_code
+→ createShapeFromSvg(Color SVG)
+→ group/name as Color
+→ createShapeFromSvg(Line SVG)
+   or clone same paths + fill none + stroke
+→ group/name as Line
+→ align with Reference
+→ return Penpot shape IDs
+→ high_level_overview / export_shape
+→ CHAT visual inspection
+→ execute_code targeted native corrections
+```
+
+The current official Penpot MCP / Plugin API documentation does not define a dedicated raster-vectorization primitive comparable to Figma AI Vectorize, so the shared trace engine remains the deterministic decomposition stage.
+
+### 13.4 INK workflow — current implementation
+
+INK already contains the specialized decomposition stage that Figma/Penpot would otherwise need to obtain externally.
+
+Current accepted Phase B path:
+
+```text
+Reference
+→ decodeReferenceFile
+→ boundedColorTraceRaster
+→ ImageTracerJS adapter
+→ executeExtraction(mode = color-regions)
+→ editable Color Paths
+→ duplicate same geometry as Line Paths
+   fill = null
+   stroke = requested lineStroke
+→ create separate Color / Line layers
+→ authoritative History pushScoped
+→ stable object IDs
+→ CHAT decomposition receipt
+→ audit / provenance
+```
+
+Current bounded trace contract:
+
+```text
+COLOR_TRACE_MAX_PIXELS = 64,000
+COLOR_TRACE_MAX_DIMENSION = 320
+colorsampling = 2
+colorquantcycles = 1
+```
+
+Current layer commit:
+
+```text
+Reference layer = original source
+Color layer     = filled editable Paths
+Line layer      = boundary copies of the same Paths
+```
+
+Current receipt already contains:
+
+```text
+referenceObjectId
+colorLayerId
+lineLayerId
+colorObjectIds[]
+lineObjectIds[]
+colorCount
+lineCount
+palette
+source identity
+History evidence
+Revision before/after
+audit
+provenance
+```
+
+The post-commit selection is intentionally bounded to one representative Line Path rather than selecting every generated path.
+
+### 13.5 Cross-editor comparison
+
+| Closed-loop stage | Figma | Penpot | INK |
+|---|---|---|---|
+| Reference ingest | image node / image fill | `import_image` / image fill | READY |
+| Raster → vector color regions | Figma AI Vectorize available, but not a documented `use_figma` Plugin API primitive | shared/external trace needed | **native READY** |
+| Deterministic bounded tracing | external/shared tracer | external/shared tracer | **native READY** |
+| Editable Color paths | native Vector nodes | native Path/SVG shapes | **native Path** |
+| Line boundary layer | duplicate/import vector geometry + stroke | duplicate/import vector geometry + stroke | **native READY** |
+| Separate Reference/Color/Line structure | Frames/groups/layers | Boards/groups/layers | **native READY** |
+| Stable IDs | node IDs | shape IDs | **native stable IDs** |
+| Structured receipt | agent must assemble | agent must assemble | **native READY** |
+| History | Figma native undo/history | Penpot native history context | **authoritative HistoryManager** |
+| Revision/provenance | file/version ecosystem | file/history ecosystem | **native Revision + provenance** |
+| CHAT write surface | `use_figma` | `execute_code` | target = `use_ink` |
+| CHAT screenshot loop | `get_screenshot` | `export_shape` / visual agent | **renderer exists; connector primitive missing** |
+
+### 13.6 Efficiency conclusion
+
+For this exact workflow, INK should **not** replace its current decomposition with Figma or Penpot.
+
+Instead:
+
+```text
+borrow Figma/Penpot connector grammar
++
+keep INK's existing decomposition engine
+```
+
+Target:
+
+```text
+CHAT
+→ use_ink
+→ ink.reference.import(...)
+→ ink.reference.decompose(...)
+→ native receipt
+→ ink.getScreenshot(...)
+→ CHAT inspects result
+→ native bounded edits
+```
+
+This removes the previous need to teach CHAT each decomposition/edit step as a separate bespoke integration.
+
+### 13.7 Standard TraceBundle
+
+To make the workflow portable and benchmarkable, define one editor-neutral decomposition result:
+
+```text
+TraceBundle
+{
+  source
+  sourceTransform
+  palette[]
+  colorPaths[]
+  linePaths[]
+  diagnostics
+  extractionParameters
+}
+```
+
+Adapters:
+
+```text
+TraceBundle → Figma native vectors
+TraceBundle → Penpot native shapes
+TraceBundle → INK native Paths
+```
+
+INK remains the production authority; Figma and Penpot can be used as comparison/benchmark hosts.
+
+### 13.8 Recommended INK closed-loop command grammar
+
+```text
+ink.reference.import(file)
+
+ink.reference.decompose(referenceId, {
+  mode: "color-regions",
+  numberOfColors,
+  lineStroke,
+  lineStrokeWidth
+})
+
+→ returns:
+{
+  referenceObjectId,
+  colorLayerId,
+  lineLayerId,
+  colorObjectIds,
+  lineObjectIds,
+  palette,
+  diagnostics,
+  operationReceipt
+}
+
+ink.getScreenshot({
+  layerIds: [referenceLayerId, colorLayerId, lineLayerId]
+})
+
+CHAT visual inspection
+
+ink.path.repaint(...)
+ink.path.edit(...)
+ink.history.undo()
+ink.history.redo()
+ink.revision.capture(...)
+```
+
+### 13.9 Revised validation strategy
+
+Do not resume with isolated Phase C/D/E feature tests as the primary user-facing path.
+
+Resume only after `use_ink` + screenshot feedback exists, then validate the whole workflow:
+
+```text
+USER uploads real reference
+→ CHAT imports
+→ CHAT decomposes
+→ CHAT receives stable Color/Line IDs
+→ CHAT gets screenshot
+→ CHAT visually identifies one required correction
+→ CHAT performs native INK edit
+→ screenshot again
+→ History/Undo/Redo
+→ optional Revision capture
+→ final editable artwork
+```
+
+This becomes the canonical creative-loop acceptance workflow.
+
+Target gate:
+
+`REFERENCE_TO_COLOR_LINE_TO_CHAT_CLOSED_LOOP`
