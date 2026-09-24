@@ -124,6 +124,89 @@ Then:
 
 # INK CURRENT WORK ORDER — SMART CLOSED LOOP PROOF
 
+## MR_REVISE — PREVIEW DIMENSION BOUNDARY DEFECT
+
+Runtime attempt 2:
+
+```text
+RUN = 36009581263 / attempt 2
+TARGET_SHA = 2a56b602af280fcc923a394d68accab755d0611f
+RUNNER = DESKTOP-NSOQH69
+
+UI = PASS
+REFERENCE_IMPORT = PASS
+DECOMPOSITION = PASS
+STABLE_REFS = PASS
+
+FIRST_PRODUCT_FAILURE =
+  SMART_LOOP_PREVIEW_BEFORE_CAPTURED
+
+PREVIEW_STATUS = FAILED
+PREVIEW_DIAGNOSTIC = INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED
+PREVIEW_OPTIONS =
+  scope: content
+  maxDimension: 960
+  background: true
+```
+
+MR classification:
+
+```text
+PRODUCT_DEFECT = YES
+AREA = product/source/src/agent/visual-feedback.js
+RENDERER_FAILURE = NO
+TRANSPORT_FAILURE = NO
+REFERENCE_PIPELINE_FAILURE = NO
+```
+
+Observed source behavior:
+
+```text
+content bounds
+→ safeScale(..., maxDimension)
+→ plannedPixelSize uses Math.ceil(bounds × scale)
+→ boundary floating-point overshoot can become maxDimension + 1
+→ assertPixelBounds rejects the preview before rendering
+```
+
+Authorized revision scope:
+
+```text
+MR_REVISE / PRODUCT_DEFECT_ONLY
+
+ALLOW:
+- product/source/src/agent/visual-feedback.js
+- focused QA for preview content-dimension boundary
+- existing smart-loop browser harness only if assertion coverage needs bounded update
+- report / handoff / progress
+
+REQUIRE:
+- content preview planning must never exceed requested maxDimension because of rounding
+- planned dimensions must remain consistent with renderExportCanvas content sizing
+- add deterministic regression for a fractional/boundary content size that previously yields maxDimension + 1
+- preserve existing hard dimension / hard pixel limits
+- preserve all object-ref validation and output-handle behavior
+
+FORBID:
+- smartPreviewOptions changes
+- renderer changes
+- renderExportCanvas changes
+- output registry changes
+- resolver route changes
+- timeout / retry changes
+- external transport
+- UI
+- FORMAT_VERSION
+- new native operation families
+```
+
+After focused QA:
+
+```text
+DEV_HANDOFF → STOP
+MR exact-HEAD Runtime rerun required
+```
+
 STATUS: `INK-CHAT-CLOSED-LOOP-001 / MR_REVISE / QA_BRIDGE_ONLY`
 
 ## Control
