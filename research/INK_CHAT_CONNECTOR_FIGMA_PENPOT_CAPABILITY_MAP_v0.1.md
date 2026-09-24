@@ -1222,3 +1222,64 @@ This becomes the canonical creative-loop acceptance workflow.
 Target gate:
 
 `REFERENCE_TO_COLOR_LINE_TO_CHAT_CLOSED_LOOP`
+
+
+---
+
+## 14. Concrete INK source connection map for development
+
+Connector-001 must connect to the following existing product authorities.
+
+| Public facade family | Existing INK source/authority | Current app surface | Connector rule |
+|---|---|---|---|
+| Document / selection / inspect | `src/ai/document-bridge.js` | app document + selection | return JSON-safe grounded summaries only |
+| Reference import/decompose | `src/ai/chat-reference-handoff.js` + extraction | `app.chatReferenceHandoff` | delegate; preserve existing receipt/audit/provenance |
+| Bounded edits | `src/editor/chat-bounded-edit.js` | `app.chatBoundedEditAdapter` | expose inspect/propose/approve/execute only |
+| Repaint/material | `src/editor/repaint-material.js` | reached through bounded edit | do not bypass with a second direct mutation route |
+| History | `src/history/history.js` | `app.history` | inspect/undo/redo on existing manager |
+| Revision | `src/document/revision.js` | `app.revisions` | list/capture/restore/current on existing controller |
+| Install point | `src/ink.js` `InkApp` constructor | existing app initialization | install exactly one facade after required authorities exist |
+
+Current install facts:
+
+```text
+installChatReferenceHandoff(this)
+→ app.chatReferenceHandoff
+
+installChatBoundedEdit(this)
+→ app.chatBoundedEdit
+→ app.chatBoundedEditAdapter
+
+installRevision(this)
+→ app.revisions
+
+HistoryManager
+→ app.history
+```
+
+Connector-001 target:
+
+```text
+existing authorities
+→ installInkPublicCreativeApi(app)
+→ app.inkPublicApi
+```
+
+Do not create a new unrestricted `window` global in Connector-001.
+External exposure belongs to the later `use_ink` / MCP transport stage.
+
+### Development order
+
+```text
+1. define deterministic capability registry
+2. add read-only context / selection / inspect facade
+3. delegate reference decomposition
+4. delegate bounded edit proposal / approval / execution
+5. delegate History inspect / undo / redo
+6. delegate Revision current / list / capture / restore
+7. install one facade in InkApp
+8. focused unit/static regression
+9. DEV_HANDOFF → STOP
+```
+
+The facade is considered correct only if every mutation still passes through the same controller that the existing INK product already trusts.
