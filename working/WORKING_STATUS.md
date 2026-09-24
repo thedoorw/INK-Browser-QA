@@ -1,3 +1,25 @@
+## Connector-004 browser-feature revision completion
+
+```text
+PRODUCT_SOURCE_CHANGE = 0
+
+BROWSER_QA =
+  use_ink availability
+  proposal neutrality
+  approval gate
+  two-step execution order
+  History
+  final Revision
+  unsupported action rejection
+  forbidden operation rejection
+  no automatic Preview
+
+RUNTIME_REQUIRED_MARKERS = UPDATED
+DEV_RUNTIME_PASS_CLAIM = 0
+NEXT = MR exact-SHA rerun
+STOP
+```
+
 ## Connector-004 DEV handoff
 
 ```text
@@ -27,15 +49,15 @@ FORMAT_VERSION = 4
 
 # INK WORKING STATUS
 
-STATUS: `CONNECTOR_004_DEV_HANDOFF / STOP / CONNECTOR_003_CLOSED / DRAWING_VALIDATION_HOLD`
+STATUS: `CONNECTOR_004_MR_REVISION_COMPLETE / DEV_HANDOFF / STOP / DRAWING_VALIDATION_HOLD`
 
 | Field | Value |
 |---|---|
 | CURRENT_WORK_ORDER | `INK-CHAT-CONNECTOR-004 / use_ink programmable bridge` |
 | CURRENT_TASK_ID | `INK-CHAT-CONNECTOR-004` |
 | DEV_BRANCH | `work/ink-chat-connector-004` |
-| DEV_HANDOFF | `Connector-004 = READY / STOP / Connector-003 = CLOSED` |
-| MR_REVIEW | `Connector-004 = EXACT_HEAD_REVIEW_PENDING` |
+| DEV_HANDOFF | `Connector-004 MR revision = READY / STOP` |
+| MR_REVIEW | `source PASS / browser feature rerun pending` |
 | TARGET_GATE | `INK_USE_INK_PROGRAMMABLE_BRIDGE_WORKS` |
 | FORMAT_VERSION | `4 / PRESERVE` |
 | PRODUCT_BASE_VERSION | `v0.1 / PRESERVE` |
@@ -44,7 +66,7 @@ STATUS: `CONNECTOR_004_DEV_HANDOFF / STOP / CONNECTOR_003_CLOSED / DRAWING_VALID
 | UI-006 | `B3 RESOLVED / Phase C+D DEV_HANDOFF / Phase E–I NOT_AUTHORIZED` |
 | CHAT VALIDATION | `Phase B CLOSED / Phase C MR_SOURCE_PASS / HOLD_BY_USER` |
 | PARALLEL_MODE | `Connector-004 stopped at DEV handoff / UI separate / drawing validation held` |
-| NEXT_STAGE | `Connector-004 MR exact-HEAD source review / executable QA / runtime as authorized` |
+| NEXT_STAGE | `MR exact-HEAD re-review → exact-SHA Runtime rerun` |
 
 ## Connector-003 promotion closure
 
