@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "c728266fa2ec65c2fd53852ae32fd368b9a7d832",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "19658b1b7ac67696fd6390c13294b7b2f48da200",
+  "pending_work_orders": [
+    "INK-WEB-UI-006-VISUAL-CLOSURE"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -21,8 +23,8 @@
     "INK-CHAT-CONNECTOR-002"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": "INK-CHAT-CONNECTOR-002 combined exact-SHA Windows Runtime passed."
+    "enabled": true,
+    "reason": "Capture exact-tested INK UI screenshot evidence at 1280x1024 for final Photoshop comparison and UI optimization closure."
   },
   "batch_policy": {
     "default_target": 3,
