@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "b57a3471ceaaba915a296aa1fe46680ee3e44134",
+  "state": "READY",
+  "target_sha": "ac1f3407376a3e7f7cba1b792bac2bfb15f47cd3",
   "pending_work_orders": [
     "INK-CHAT-CLOSED-LOOP-001"
   ],
@@ -27,7 +27,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "Runtime 36014703794 proves smart loop 18/18 PASS with before/after PNGs, but legacy WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT ran after smart loop created a Revision; QA ordering-only revision authorized."
+    "reason": "MR source review PASS for QA_ORDER_ISOLATION_ONLY after smart loop 18/18 PASS; product source unchanged, exact-SHA Runtime rerun required for full regression closure."
   },
   "batch_policy": {
     "default_target": 3,
