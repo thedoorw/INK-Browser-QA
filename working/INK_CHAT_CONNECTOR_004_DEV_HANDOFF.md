@@ -304,3 +304,27 @@ Gate:
 
 `DEV_HANDOFF → STOP → MR exact-HEAD review → exact-SHA Runtime rerun`.
 
+
+
+## MR Runtime timeout revision
+
+```text
+RUNTIME_RUN = 35970456976
+TESTED_SHA = a050e0d87d9b53b2d0ad5c34baffb4a88a070fdc
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = HARNESS_TIMEOUT / 240 seconds
+GEOMETRY = NOT_REACHED
+
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+PRODUCT_SOURCE_CHANGE = 0
+QA_HARNESS_REVISION_ONLY = YES
+
+REVISION =
+  qa/runtime/run-ink-runtime-batch.mjs
+  timeout 240 seconds → 360 seconds
+
+NEXT =
+  exact-SHA Runtime rerun
+  → MR classify real feature/runtime result
+```
