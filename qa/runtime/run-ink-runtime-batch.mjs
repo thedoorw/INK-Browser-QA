@@ -22,6 +22,8 @@ const creativeRequired = [
   'USE_INK_TWO_STEP_EXECUTION_ORDERED', 'USE_INK_HISTORY_RECORDED',
   'USE_INK_FINAL_REVISION_CAPTURED', 'USE_INK_UNSUPPORTED_ACTION_REJECTED',
   'USE_INK_FORBIDDEN_OPERATION_REJECTED', 'USE_INK_NO_AUTO_PREVIEW',
+  'SMART_CLOSED_LOOP_PREVIEW_BEFORE_RETURNED', 'SMART_CLOSED_LOOP_PREVIEW_AFTER_RETURNED',
+  'SMART_CLOSED_LOOP_VISUAL_ROUND_TRIP',
   'CHAT_DOCUMENT_CONTEXT_BOUND', 'CHAT_NATURAL_LANGUAGE_RESPONSE', 'CHAT_DISCUSSION_NON_MUTATING',
   'STRUCTURE_AWARE_EXECUTED', 'REVISION_RESTORE_EXECUTED', 'PROJECT_RELOAD_INTEGRITY',
   'WORKSTATION_PROPERTIES_UNAVAILABLE_STATE_EXPLICIT', 'WORKSTATION_PROPERTIES_GROUNDED_READOUT',
@@ -85,7 +87,7 @@ export function validateEvidence(id, evidence) {
 
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.wasm': 'application/wasm' };
 
-export async function startServer(root, suite, onEvidence) {
+export async function startServer(root, suite, onEvidence, onPreview = null) {
   const site = path.join(root, 'product/source');
   const harness = await readFile(path.join(root, 'qa/runtime', suite.file));
   let delivered = false;
@@ -93,6 +95,22 @@ export async function startServer(root, suite, onEvidence) {
     try {
       const url = new URL(req.url, 'http://127.0.0.1');
       res.setHeader('Cache-Control', 'no-store');
+      if (url.pathname === '/__qa_preview' && req.method === 'POST') {
+        if (typeof onPreview !== 'function') { res.writeHead(404).end(); return; }
+        const stage = String(url.searchParams.get('stage') || '').trim();
+        if (!['before','after'].includes(stage)) { res.writeHead(400).end(); return; }
+        const chunks = []; let size = 0;
+        for await (const chunk of req) {
+          size += chunk.length;
+          if (size > 8 * 1024 * 1024) { res.writeHead(413).end(); return; }
+          chunks.push(chunk);
+        }
+        const bytes = Buffer.concat(chunks);
+        if (!bytes.length) { res.writeHead(400).end(); return; }
+        await onPreview(stage, bytes, String(req.headers['content-type'] || 'application/octet-stream'));
+        res.writeHead(200).end('OK');
+        return;
+      }
       if (url.pathname === '/__qa_result' && req.method === 'POST') {
         if (delivered) { res.writeHead(409).end(); return; }
         const chunks = []; let size = 0;
@@ -170,7 +188,11 @@ export async function runBatch(root) {
       try {
         let receive;
         const result = new Promise(resolve => { receive = resolve; });
-        const started = await startServer(root, suite, receive); server = started.server;
+        const started = await startServer(root, suite, receive, async (stage, bytes, contentType) => {
+          assert.equal(suite.id, 'creative', 'Preview upload is creative-suite only');
+          assert.match(contentType, /^image\/png\b/i, 'Smart-loop preview must be PNG');
+          await writeFile(path.join(evidenceDir, `smart-loop-${stage}.png`), bytes);
+        }); server = started.server;
         for (const route of ['/', '/src/ink.js', '/styles.css', '/__qa_harness.html', '/__qa_rose_window.png']) {
           const response = await fetch(started.origin + route, { signal: AbortSignal.timeout(5000) });
           assert.equal(response.status, 200, `HTTP preflight: ${route}`);
@@ -188,6 +210,12 @@ export async function runBatch(root) {
         const evidence = await Promise.race([result, failure]);
         await writeFile(path.join(evidenceDir, `${suite.id}.json`), JSON.stringify(evidence, null, 2));
         validateEvidence(suite.id, evidence);
+        if (suite.id === 'creative') {
+          const beforeBytes = await readFile(path.join(evidenceDir, 'smart-loop-before.png'));
+          const afterBytes = await readFile(path.join(evidenceDir, 'smart-loop-after.png'));
+          assert.ok(beforeBytes.length > 0 && afterBytes.length > 0, 'Smart-loop preview PNGs must be non-empty');
+          assert.ok(!beforeBytes.equals(afterBytes), 'Smart-loop before/after previews must differ after native INK edit');
+        }
         entry.status = 'PASS';
       } catch (error) {
         entry.status = 'FAIL'; entry.error = String(error.stack || error); throw error;
