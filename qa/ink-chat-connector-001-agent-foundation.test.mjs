@@ -160,8 +160,8 @@ test('Public Creative API installs once and exposes deterministic JSON-safe name
   const allTools = api.tools.registry().map(item => item.name);
   assert.deepEqual(allTools.slice(0, requiredTools.length), requiredTools);
   assert.deepEqual(first.result.namedTools.map(item => item.name).slice(0, requiredTools.length), requiredTools);
-  assert.equal(allTools.length, 17, 'Connector-002 may append exactly three tools while preserving the Connector-001 prefix');
-  assert.deepEqual(allTools.slice(requiredTools.length), ['get_ink_preview', 'inspect_ink_output', 'release_ink_output']);
+  assert.equal(allTools.length, 18, 'Connector-002 may append three tools and Connector-003 may append one discovery tool while preserving the Connector-001 prefix');
+  assert.deepEqual(allTools.slice(requiredTools.length), ['get_ink_preview', 'inspect_ink_output', 'release_ink_output', 'describe_ink_capability']);
   const publicMethods = [];
   for (const tool of api.tools.registry()) {
     assert.equal(tool.resultEnvelope, INK_AGENT_RESULT_SCHEMA);
@@ -353,7 +353,7 @@ test('Connector-001 source boundary: one InkApp facade, no arbitrary execution/d
   assert.doesNotMatch(agentSource, /\beval\s*\(|\bFunction\s*\(/);
   assert.doesNotMatch(agentSource, /app\.doc\s*=/);
   assert.doesNotMatch(agentSource, /\bwindow\b|globalThis/);
-  assert.doesNotMatch(agentSource, /screenshot|postMessage|WebSocket|MCP|\buse_ink\b|describe_ink_capability/i);
+  assert.doesNotMatch(agentSource, /screenshot|postMessage|WebSocket|MCP|\buse_ink\b/i);
   assert.doesNotMatch(agentSource, /image_vectorize|ImageTracerJS\s*\(/);
   assert.doesNotMatch(agentSource, /new\s+HistoryManager|new\s+RevisionController|executeExtraction|imageTracerAdapter|createPath\s*\(/);
   assert.equal((inkSource.match(/installInkPublicCreativeApi\(this\)/g) || []).length, 1);
