@@ -86,3 +86,19 @@ Result: **PASS for the authorized QA-bridge revision scope**.
 - Product source / renderer / visual-feedback / output registry / resolver route / timeout / retry / external transport / UI / FORMAT_VERSION changes: 0.
 - Runtime rerun: NOT_RUN_BY_DEV.
 - Current gate: `DEV_HANDOFF → STOP`.
+
+
+## MR_REVISE / PRODUCT_DEFECT_ONLY — content preview boundary rounding
+
+- Runtime evidence supplied by MR: run `36009581263` attempt 2; UI PASS; Reference import PASS; Color + Line decomposition PASS; stable refs PASS; fail at `SMART_LOOP_PREVIEW_BEFORE_CAPTURED`.
+- Diagnostic: `INK_PREVIEW_DIMENSION_LIMIT_EXCEEDED` with `{scope:'content',maxDimension:960,background:true}`.
+- Revision baseline: `2a56b602af280fcc923a394d68accab755d0611f`.
+- Product fix: `product/source/src/agent/visual-feedback.js` only.
+- Content planning now uses the raw padded dimensions that `renderExportCanvas` also sizes with, and applies an epsilon-derived backoff only when `Math.ceil(baseDimension * scale)` would otherwise exceed requested `maxDimension` by floating rounding.
+- Hard dimension / hard pixel assertions remain active and unchanged.
+- Refs, output handles, renderer, `renderExportCanvas`, output registry, resolver route, timeout, retry, external transport, UI, native operation vocabulary and `FORMAT_VERSION` remain unchanged.
+- Deterministic focused regression added in `qa/ink-chat-closed-loop-001-smart-proof.test.mjs` for `1302.370453 * (960 / 1302.370453) = 960.0000000000001`.
+- Old result: `Math.ceil = 961`; corrected result: `960 × 478`.
+- Focused connector-side QA: PASS; source/test syntax compile PASS; renderer formula alignment PASS.
+- Browser Runtime rerun: NOT_RUN_BY_DEV.
+- Current gate: `DEV_HANDOFF → STOP`.
