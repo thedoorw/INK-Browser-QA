@@ -293,6 +293,25 @@ This is the minimum product condition for calling INK a real human-AI collaborat
 
 ## 3C. CHAT-first tool development principle
 
+### Why this principle exists
+
+This direction came from the first serious creative-loop validation after the INK core/creative foundations were believed ready enough to test as a working drawing system. The Reference → Color + Line → CHAT workflow exposed that having engine capabilities was not sufficient: CHAT still needed a mature, discoverable, inspectable and auditable way to operate INK.
+
+The project therefore paused further drawing-validation expansion and compared the same workflow against mature CHAT-operable systems:
+
+```text
+existing INK capabilities
+→ first end-to-end drawing test exposes CHAT operation gap
+→ pause isolated feature-by-feature validation
+→ study Figma / Penpot / Adobe operating grammar
+→ reuse familiar connector vocabulary and routing patterns
+→ build INK connector foundation
+→ return to the original creative closed-loop test
+```
+
+This causal chain is part of the reason the project prefers mature-workflow reuse over teaching CHAT a bespoke INK interaction model from zero.
+
+
 User-authoritative development principle:
 
 ```text
