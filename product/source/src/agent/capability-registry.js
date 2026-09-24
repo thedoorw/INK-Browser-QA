@@ -83,7 +83,7 @@ const editSchemas = {
       stroke: str('Stroke paint token.'),
       opacity: num('Opacity.', { minimum: 0, maximum: 1 }),
       expressiveStrokeColor: str('Expressive-stroke color token.')
-    }, [], 'At least one repaint field is required.'),
+    }, [], 'At least one of fill, stroke, opacity, or expressiveStrokeColor is required; empty arguments are rejected by the edit authority.'),
     64
   ),
   'path.material.apply.v1': editTaskSchema(
@@ -118,7 +118,7 @@ const editSchemas = {
   'path.refine.v1': editTaskSchema(
     { type: 'string', const: 'path.refine.v1', description: 'Refine one Path.' },
     obj({
-      maxControlLength: num('Maximum control length.', { minimum: 0, maximum: 1000000, default: 48 }),
+      maxControlLength: num('Maximum control length; must be greater than zero.', { minimum: Number.EPSILON, maximum: 1000000, default: 48 }),
       maxAddedAnchors: { type: 'integer', minimum: 1, maximum: 4096, default: 128, description: 'Maximum added anchors.' }
     }, [], 'Path refinement arguments.'),
     1
@@ -272,9 +272,9 @@ const primary = [
     id: 'revision.capture', title: 'Capture Revision', description: 'Explicitly capture a Revision through the existing Revision authority.',
     availability: true, routingClass: 'NAMED_TOOL', namedTool: 'capture_ink_revision', publicMethod: 'revision.capture', role: 'WRITE',
     authoritativeRoute: 'app.revisions.capture',
-    inputSchema: obj({ options: obj({ reason: str('Revision reason.'), label: str('Human-readable label.') }, [], 'Revision capture options.') }, [], 'Revision capture request; direct options object is also accepted.'),
+    inputSchema: obj({ reason: str('Revision reason.'), label: str('Human-readable label.') }, [], 'Revision capture options passed directly to revision.capture; the Named Tool also accepts this direct shape.'),
     targetTypes: ['Document'], constraints: ['Requires an idle History boundary.'],
-    ...policy(false, 'DIRECT_NAMED_TOOL', 'REQUIRE_IDLE', 'EXPLICIT_CAPTURE'), resultContract: resultContract({ statuses: ['COMPLETED', 'NO_OP', 'FAILED'] }), examples: [{ options: { reason: 'chat-checkpoint', label: 'CHAT checkpoint' } }], toolPrimary: true
+    ...policy(false, 'DIRECT_NAMED_TOOL', 'REQUIRE_IDLE', 'EXPLICIT_CAPTURE'), resultContract: resultContract({ statuses: ['COMPLETED', 'NO_OP', 'FAILED'] }), examples: [{ reason: 'chat-checkpoint', label: 'CHAT checkpoint' }], toolPrimary: true
   }),
   descriptor({
     id: 'revision.restore', title: 'Restore Revision', description: 'Explicitly restore an existing Revision through the existing Revision authority.',
@@ -291,8 +291,8 @@ const primary = [
     inputSchema: obj({
       scope: { type: 'string', enum: ['artboard', 'viewport', 'content'], default: 'artboard', description: 'Preview scope.' },
       maxDimension: { type: 'integer', minimum: 1, maximum: 1600, default: 1200, description: 'Maximum output dimension.' },
-      scale: num('Viewport/content scale.'),
-      ppi: num('Artboard PPI.'),
+      scale: num('Viewport/content scale; must be greater than zero.', { minimum: Number.EPSILON }),
+      ppi: num('Artboard PPI; must be greater than zero.', { minimum: Number.EPSILON }),
       background: bool('Include existing page background.', { default: true }),
       refs: arr(objectRefSchema, 'Optional semantic object bindings.', { maxItems: 512 })
     }, [], 'Preview request.'),
@@ -327,6 +327,15 @@ const primary = [
 
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.');
+  const operationConstraints = pathOnly
+    ? ['Targets must resolve to editable visible unlocked Path objects.']
+    : ['Targets must resolve to editable visible unlocked objects.'];
+  if (operation === 'path.repaint.v1') {
+    operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
+  }
+  if (operation === 'object.translate.v1') {
+    operationConstraints.push('dx and dy may each be zero, but they must not both be zero; {dx:0,dy:0} is rejected as NO_OP.');
+  }
   return descriptor({
     id: operation,
     title: operation,
@@ -339,7 +348,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
     targetTypes: pathOnly ? ['Path'] : ['Object'],
-    constraints: pathOnly ? ['Targets must resolve to editable visible unlocked Path objects.'] : ['Targets must resolve to editable visible unlocked objects.'],
+    constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
     examples: operation === 'object.translate.v1'
