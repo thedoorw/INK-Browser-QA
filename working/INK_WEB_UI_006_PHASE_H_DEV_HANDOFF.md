@@ -1,6 +1,6 @@
 # INK-WEB-UI-006 — Phase H DEV HANDOFF
 
-STATUS: DEV_HANDOFF / UI_ONLY / PHASE_H / UR_REVIEW_REQUIRED / STOP
+STATUS: DEV_HANDOFF / UI_ONLY / PHASE_H / RUNTIME_REVISION_COMPLETE / UR_RUNTIME_RERUN_REQUIRED / STOP
 OWNER: UI DEV
 REVIEWER: INK UR
 BRANCH: `work/ink-web-ui-006-h`
@@ -485,3 +485,108 @@ Then return:
 `DEV_HANDOFF → UR_REVIEW → STOP`
 
 Phase I remains locked until the corrected exact-SHA Windows Runtime passes.
+
+
+---
+
+## DEV Runtime revision completion — Creative Workspace geometry
+
+Revision authority:
+
+`UR Runtime failure / DEV revision order — 2026-09-24`
+
+Failed Runtime:
+
+```text
+RUN = 35951970300
+TESTED_SHA = 04ba565c80551fe364174b3964a3ebaa850454a5
+FAIL = Creative Loop panel geometry only
+```
+
+Corrected product / QA checkpoint:
+
+`1eb8757bc3d1b3983ad8e727c434a8a9f2ae9fbf`
+
+Changed implementation file in this bounded revision:
+
+- `product/source/styles.css`
+
+QA harness:
+
+- unchanged;
+- failing all-eight-primary-panels assertion preserved exactly;
+- no assertion removed, weakened or bypassed.
+
+### Correction made
+
+The legacy high-specificity desktop selector:
+
+```css
+.app:not(.inspector-open) .creative-workspace-panel
+```
+
+previously overrode the consolidated shell with `right:14px` and a legacy width whenever Creative Workspace was active.
+
+The consolidated desktop authority now explicitly overrides that selector with:
+
+```text
+right = var(--panel-dock-w)
+width = clamp(244px, var(--inspector-w), 360px)
+```
+
+This restores the same invariant used by Properties / Layers / History / Specialist:
+
+```text
+stage.right == primary panel.left
+primary panel.right == Panel Dock.left
+```
+
+Reference / Compose / CHAT / Revision now use that same geometry authority statically.
+
+### Static verification
+
+```text
+CSS_BRACE_BALANCE = PASS / 1587 : 1587
+LEGACY_CONFLICT_IDENTIFIED = PASS
+CORRECTED_OVERRIDE_AFTER_LEGACY = PASS
+CORRECTED_RIGHT_OFFSET = PASS
+CORRECTED_WIDTH_AUTHORITY = PASS
+ALL_EIGHT_PANEL_RUNTIME_ASSERTION = PRESERVED
+HARNESS_JAVASCRIPT_SYNTAX = PASS
+WEB_SHELL_JS_CHANGED = NO
+MOBILE_RULES_CHANGED = NO
+PRODUCT_SOURCE_SRC_CHANGED = NO
+PHASE_I = NOT_STARTED
+```
+
+Updated evidence:
+
+- `working/INK_WEB_UI_006_PHASE_H_EVIDENCE.md`
+
+Runtime boundary:
+
+```text
+CORRECTED_WINDOWS_EXACT_SHA_RUNTIME = UR_REQUIRED
+DEV_RUNTIME_PASS_CLAIM = 0
+FINAL_VISUAL_COMPARISON = DEFERRED_TO_POST_PHASE_I per UR
+```
+
+Explicit preservation:
+
+```text
+Document = unchanged
+artwork Text semantics = unchanged
+History = unchanged
+Revision = unchanged
+Renderer = unchanged
+Geometry/Core = unchanged
+CHAT semantics = unchanged
+Service Worker/bootstrap/build identity = unchanged
+product version = v0.1 / preserved
+FORMAT_VERSION = 4 / preserved
+Phase I = not started
+```
+
+Completion:
+
+`DEV_HANDOFF → UR_RUNTIME_RERUN → STOP`
