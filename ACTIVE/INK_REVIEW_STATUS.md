@@ -49,7 +49,39 @@ REVISION = UNCHANGED
 ```text
 INK-TECH-DEBT-001 = CLOSED
 UI-006 B3 = RESOLVED
-UI-006 Phase C–I = HOLD pending separate authorization
-CHAT Validation Phase C = NOT_STARTED
+UI-006 Phase C+D = DEV_HANDOFF / UR_REVIEW / STOP on UI branch
+UI-006 Phase E–I = NOT_STARTED / NOT_AUTHORIZED
+CHAT Validation Phase C = NOT_STARTED / NOT_AUTHORIZED
+PARALLEL_MODE = SELECTED / WORK ORDERS REMAIN SEPARATE
 automatic next-stage start = NO
 ```
+
+
+## Dual-track governance boundary
+
+The user selected UI + drawing/CHAT as the next parallel direction. Parallel direction does not merge authorities or automatically start unauthorized work.
+
+```text
+UI = presentation / placement / responsive / interaction shell
+CHAT = grounding / reasoning / creative command flow / validation
+CORE = frozen unless separately authorized
+```
+
+Shared-surface rule:
+- UI owns how a control/panel is presented.
+- CHAT owns what grounded state/behavior the control represents.
+- Shared files do not create shared authority.
+
+Hard STOP → MR → separate Core/Integration Work Order if either lane requires:
+- Document/schema change;
+- History or Revision semantic change;
+- Geometry authority change;
+- persistence / FORMAT_VERSION change;
+- approval/execution authority change.
+
+Branch rule:
+- UI and CHAT remain separate task branches.
+- no development-branch-to-development-branch merge;
+- each lane passes its own review/runtime gate;
+- accepted payloads reconcile against current main;
+- final combined regression must cover UI + CHAT + Creative + Geometry and unchanged History/Revision authority.
