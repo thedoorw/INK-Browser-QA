@@ -1,3 +1,58 @@
+## MR source review — UI debt cleanup handoff — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+DEV_BRANCH = work/ink-ui-rebuild-001-tech-debt-cleanup
+REVIEWED_EXACT_HEAD = cfa9fa01e6e0fa71e1bb59cbc8e6d607f91d0560
+SOURCE_REVIEW = PASS
+
+G0 = PASS
+G1 = PASS
+G2 = PASS_AT_SOURCE
+G3 = PASS_AT_SOURCE
+G4 = PASS_AT_SOURCE
+G5 = PASS_AT_SOURCE / REVISED
+G6 = PASS_AT_SOURCE
+G7 = HOLD_USER_ASSET_AUTHORITY
+G8 = NOT_AUTHORIZED_YET
+
+CSS_HEALTH =
+  !important 223 → 19
+  presentation !important = 0
+  final override block = 0
+
+RESPONSIVE =
+  DESKTOP_WIDE > 1120
+  DESKTOP_NARROW 761–1120
+  COMPACT <= 760
+
+FROZEN_CORE_MUTATION = 0
+DEV_SCOPE = ACCEPTED
+```
+
+MR verified the post-revision delta and independently recomputed the main CSS-health invariants.
+
+G7 is the only pre-Runtime blocker:
+
+```text
+favicon = assets/favicon.svg / authority proven
+visible logo current route = assets/INK_MARK_SOURCE_W-300.jpg
+alternate ink-mark.svg = embedded wrapper around the same JPEG payload
+exact user-approved visible logo asset = not proven by GitHub SSOT
+```
+
+Do not guess or silently freeze the current JPG as the final accepted logo.
+
+Required next input:
+
+- USER identifies/approves the exact visible-logo asset, or supplies the approved source so it can become GitHub SSOT.
+- Then perform a bounded G7 contract update if needed.
+- Only after G7 PASS may MR authorize G8 exact-SHA Windows Runtime + visual evidence.
+
+`PHOTOSHOP_WORKSTATION_REBUILD = HOLD`
+
+---
+
 ## MR checkpoint — UI debt cleanup G5 health revision — 2026-09-25
 
 ```text
