@@ -289,3 +289,57 @@ Photoshop workstation rebuild remains HOLD.
 
 `DEV_HANDOFF → STOP`
 
+## G7 exact approved asset closure — 2026-09-25
+
+This section supersedes the earlier `G7 = HOLD_ASSET` disposition.
+
+Approved user asset:
+
+```text
+SOURCE = /INK-DEV-ASSET-STAGING/INK_APPROVED_VISIBLE_LOGO_W-300.jpg
+DIMENSIONS = 300x300
+BYTES = 19801
+SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+```
+
+DEV verification and installation:
+
+```text
+PREWRITE_SHA256 = PASS
+TARGET = product/source/assets/INK_MARK_SOURCE_W-300.jpg
+ASSET_INSTALL_COMMIT = c50e10aec6826876ee6b7cedc8af9271538b7274
+GIT_BLOB_SHA = bb640a245af35c993c4fe322fbe8744830e872b6
+GITHUB_REFETCH_EXACT_BASE64_MATCH = PASS
+VISIBLE_LOGO_ROUTE = assets/INK_MARK_SOURCE_W-300.jpg?v=0.1
+VISIBLE_LOGO_AUTHORITY = 1
+FAVICON_AUTHORITY = 1 / unchanged
+```
+
+Focused QA now locks the visible-logo route and exact approved SHA256:
+
+`qa/core/tests/unit/ui-debt-001-shell-panel-authority-v0.1.test.mjs`
+
+Focused QA contract checkpoint:
+
+`1893abd440dc7401156c1bd2c7b9f2a77309f450`
+
+Bounded-delta verification from MR authorization HEAD `8e5308f7b004864f674e6e5a569846ea2f941d24`:
+
+- only approved JPEG changed under `product/source/**`;
+- `favicon.svg` blob unchanged;
+- Web / Portable visible-logo route remains singular;
+- `ink-mark.svg` remains non-authoritative and unchanged;
+- no Runtime;
+- no Photoshop alignment;
+- no Core / Renderer / Document / History / Revision / Geometry / CHAT / persistence / FORMAT_VERSION mutation.
+
+Current gates:
+
+```text
+G0-G7 = SOURCE PASS
+G8 = MR_OWNED / NOT_RUN_BY_DEV
+PHOTOSHOP_WORKSTATION_REBUILD = HOLD
+```
+
+`DEV_HANDOFF → STOP`
+
