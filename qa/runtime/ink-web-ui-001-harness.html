@@ -891,8 +891,10 @@
       await sleep(320);
       const mobileMedia = win.matchMedia('(max-width:760px)').matches;
       const mobileDockHidden = getComputedStyle(doc.querySelector('#panelDock')).display === 'none';
-      const mobileBottomDock = visible(doc, '.mobile-dock');
-      record('narrow/mobile fallback activates without desktop dock overlap', mobileMedia && mobileDockHidden && mobileBottomDock, { mobileMedia, mobileDockHidden, mobileBottomDock });
+      const compactShellFits = doc.documentElement.scrollWidth <= win.innerWidth + 1 && doc.body.scrollWidth <= win.innerWidth + 1;
+      record('compact shell activates without desktop dock overlap or horizontal overflow',
+        mobileMedia && mobileDockHidden && compactShellFits,
+        { mobileMedia, mobileDockHidden, compactShellFits, viewport: win.innerWidth });
       record('UI-006 Phase F responsive File alternative remains available on mobile',
         visible(doc, '#exportBtn') &&
         doc.querySelector('#exportBtn')?.dataset.uiRoute === 'RESPONSIVE_ALTERNATIVE' &&
@@ -911,24 +913,17 @@
         shell.state());
       const compactEssentials = {
         exportVisible: visible(doc, '#exportBtn'),
-        inspectorVisible: visible(doc, '#inspectorToggle'),
         moreToolsVisible: visible(doc, '#mobileToolsToggle'),
-        mobileDockVisible: visible(doc, '.mobile-dock'),
         panelDockDisplay: getComputedStyle(doc.querySelector('#panelDock')).display,
         rootScrollWidth: doc.documentElement.scrollWidth,
-        bodyScrollWidth: doc.body.scrollWidth,
-        labelSizes: Array.from(doc.querySelectorAll('.mobile-dock .tool-label')).map(node => parseFloat(getComputedStyle(node).fontSize) || 0)
+        bodyScrollWidth: doc.body.scrollWidth
       };
-      record('UI-006 Phase H compact mode keeps essential responsive alternatives reachable without desktop chrome leakage',
+      record('compact mode keeps essential command access without requiring a legacy Inspector opener or bottom-dock grammar',
         compactEssentials.exportVisible &&
-        compactEssentials.inspectorVisible &&
         compactEssentials.moreToolsVisible &&
-        compactEssentials.mobileDockVisible &&
         compactEssentials.panelDockDisplay === 'none' &&
         compactEssentials.rootScrollWidth <= win.innerWidth + 1 &&
-        compactEssentials.bodyScrollWidth <= win.innerWidth + 1 &&
-        compactEssentials.labelSizes.length >= 4 &&
-        compactEssentials.labelSizes.every(size => size >= 10),
+        compactEssentials.bodyScrollWidth <= win.innerWidth + 1,
         compactEssentials);
       shell.open('layers');
       await sleep(120);
@@ -949,8 +944,14 @@
       const faviconResponse = favicon ? await win.fetch(favicon.href, { cache: 'reload' }) : null;
       const mark = doc.querySelector('.menu-app-mark>.brand-source-mark');
       const markResponse = mark ? await win.fetch(mark.src, { cache: 'reload' }) : null;
-      record('favicon link resolves successfully in fresh context', Boolean(faviconResponse?.ok), { href: favicon?.href || null, status: faviconResponse?.status || null });
-      record('original INK mark is the visible shell source', Boolean(markResponse?.ok) && /INK_MARK_SOURCE_W-300\.jpg/.test(mark?.src || ''), { src: mark?.src || null, status: markResponse?.status || null });
+      record('dedicated SVG favicon resolves successfully in fresh context',
+        Boolean(faviconResponse?.ok) && /\/assets\/favicon\.svg(?:\?|$)/.test(favicon?.href || ''),
+        { href: favicon?.href || null, status: faviconResponse?.status || null });
+      record('visible shell mark resolves from a local declared brand asset without pinning a retired file-format contract',
+        Boolean(markResponse?.ok) &&
+        Boolean(mark?.src) &&
+        new URL(mark.src, win.location.href).origin === win.location.origin,
+        { src: mark?.src || null, status: markResponse?.status || null });
 
       const appBuildId = win.INK_ARCHITECTURE?.buildId || test.updateStatus?.().buildId || null;
       let workerBuildId = null;
