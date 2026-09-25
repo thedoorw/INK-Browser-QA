@@ -1,3 +1,44 @@
+## MR source PASS — G8_QA_CAPTURE_ONLY rerun — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+REVIEWED_EXACT_HEAD = 5bd8754aad3e53886ce6109bd350fa4fc5f68db9
+REVISION = G8_QA_CAPTURE_ONLY
+SOURCE_REVIEW = PASS
+PRODUCT_SOURCE_DELTA = 0
+AUTHORIZED_QA_DELTA = PASS
+G0-G7 = PASS
+G8 = WINDOWS EXACT-SHA RERUN AUTHORIZED
+PHOTOSHOP_WORKSTATION_REBUILD = HOLD
+```
+
+MR verified delta from prior tested SHA `5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8`:
+
+- product/source changes = 0;
+- only `ACTIVE/INK_DEV_PROGRESS.md` and `qa/runtime/run-ink-runtime-batch.mjs` changed;
+- visual capture transport now uses Chrome CDP `Page.captureScreenshot`;
+- exact viewport is enforced through `Emulation.setDeviceMetricsOverride`;
+- PNG signature/dimensions are validated;
+- captured bytes are explicitly persisted and re-read;
+- persisted byte length and SHA256 are cross-checked;
+- missing capture bytes/files are explicit failures;
+- UI / Creative / Geometry Runtime suites remain intact;
+- no workflow change;
+- no product capture hook / alternate renderer.
+
+Required Runtime artifacts remain:
+
+```text
+ui-first-paint.png = 1280x1024 / delivered shell / script disabled
+ui-1280x1024.png   = 1280x1024 / runtime enabled
+ui-960x800.png     = 960x800 / runtime enabled
+```
+
+Exact G8 rerun target:
+`5bd8754aad3e53886ce6109bd350fa4fc5f68db9`
+
+---
+
 ## MR_REVISE — G8_QA_CAPTURE_ONLY — 2026-09-25
 
 ```text
