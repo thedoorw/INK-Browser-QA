@@ -275,6 +275,7 @@ test('export_ink_asset returns existing lifecycle handle without Document/Histor
   });
 
   const tools = getInkNamedToolDefinitions();
+  assert.equal(tools.length, 21);
   assert.equal(tools.at(-1).name, 'export_ink_asset');
   assert.equal(tools.filter(item => item.name === 'export_ink_asset').length, 1);
 
