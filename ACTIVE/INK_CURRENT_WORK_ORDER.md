@@ -34,13 +34,14 @@ working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_SCOPE.md
   source commit: 273e17c33616a421d7738b93e352896e48b4e55b
 ```
 
-Sequencing safety rule:
+Implementation-base safety rule:
 
-1. Close the already-implemented `INK-CHAT-GEOMETRY-OPS-001` exact-SHA Runtime and promote it first, because Geometry Ops and UI cleanup both touch the shared browser Runtime harness.
-2. Create a fresh UI cleanup branch from that promoted, Runtime-PASS `main`.
+1. `INK-CHAT-GEOMETRY-OPS-001` remains `MR_HOLD / NOT_PROMOTED`; it does not block UI cleanup.
+2. Create a fresh UI cleanup branch from the current known-good `main`, whose `product/source` tree is unchanged from `d6c28be13cddee0d83b9e7613b5498b06d1f7b0e`.
 3. Copy the two UR audit/scope documents into that fresh branch as the cleanup baseline.
 4. Do not reuse the old audit branch as the implementation base.
 5. Execute cleanup in bounded health gates. A later gate may not mask a failure from an earlier gate.
+6. Geometry Ops must later be replayed/reconciled onto the post-cleanup main rather than merged from its stale Runtime-harness branch as-is.
 
 Frozen product authorities throughout cleanup:
 
