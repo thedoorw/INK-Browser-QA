@@ -6,32 +6,50 @@ STATUS: `ACTIVE / AUTHORITATIVE_WORKFLOW`
 
 This document defines the cross-window development workflow for INK.
 
-The project uses a gated flow:
+The project uses two coordinated development lanes under one product:
 
 ```text
-USER
-  ↓
-MR (MAIN REVIEW)
-  ↓ writes / updates ACTIVE bulletin
-DEV
-  ↓ implements only the authorized work order
-DEV_PROGRESS
-  ↓
-MR REVIEW
-  ↓ PASS / REVISE / HOLD / NEXT WORK ORDER
+                         USER
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+      MR — MAIN REVIEW             UR — UI REVIEW
+      technical / Core             delegated UI lane
+             │                           │
+             ↓                           ↓
+            DEV                         UI DEV
+             │                           │
+       DEV_HANDOFF                 DEV_HANDOFF
+             │                           │
+         MR REVIEW                   UR REVIEW
+             │                           │
+   Core / integration main     UI integrate to current main
+             │                           │
+             └─────────────┬─────────────┘
+                           ↓
+                       ONE INK MAIN
 ```
+
+The reason for the delegated UR lane is operational, not organizational duplication: MR must remain free to continue INK technical/Core development while UR owns the quality and health of the user interface end to end.
 
 ## Roles
 
 ### MR — MAIN REVIEW
 
+MR is the primary technical / Core governance authority.
+
 MR owns:
-- product direction and work decomposition;
-- the current GitHub bulletin/work order;
-- scope control;
-- review of DEV evidence and code changes;
-- acceptance / rejection / revision decisions;
-- authorization of the next development step.
+- overall product direction and technical roadmap;
+- Core / Renderer / Document / History / Revision / Geometry / CHAT / persistence boundaries;
+- cross-lane integration decisions where UI work requires a non-UI authority change;
+- technical work decomposition and global Current Work Order;
+- Core/integration scope control;
+- review of Core/technical DEV evidence and code changes;
+- acceptance / rejection / revision decisions for MR-owned work;
+- product-version / FORMAT_VERSION / package / certification authority;
+- arbitration when UR escalates an UI task as `INTEGRATION_REQUIRED`.
+
+MR is intentionally not the routine UI reviewer. UI visual quality, UI technical health, UI branch integration, and UI-on-main acceptance belong to UR while the work remains inside the delegated UI boundary.
 
 MR does not treat discussion alone as Runtime modification authorization.
 
@@ -225,62 +243,180 @@ Runtime batching is a development-efficiency policy. It does not permit false cl
 USER-authoritative delegation:
 
 ```text
-MR = MAIN REVIEW / overall product + Core + Integration authority
-UR = UI REVIEW / delegated UI-lane authority
+MR = MAIN REVIEW / technical + Core + cross-lane authority
+UR = UI REVIEW / end-to-end UI authority
 ```
 
-MR defines only:
+### Why UR exists
 
-1. the UI lane's large-direction sequence;
-2. branch-task boundaries;
-3. role boundaries.
+UR exists so INK can continue advancing technically under MR while the interface is developed, reviewed, integrated, and kept healthy in parallel.
 
-Within that pre-authorized UI sequence, UR does **not** wait for a new MR command between bounded UI tasks.
+UR is not a second overall product governor and is not merely a planning assistant.
 
-UR may autonomously:
+The delegated responsibility is:
 
-- issue the next bounded UI workpack from the MR-approved UI sequence;
-- create/name the dedicated `work/ink-web-ui-*` branch;
-- write the branch-local Work Order and DEV progress baseline;
-- supervise UI DEV;
-- review DEV handoff;
-- issue `UI_PASS / UI_REVISE / UI_HOLD`;
-- clean-promote an accepted UI-only payload to current `main`;
-- continue directly to the next pre-authorized UI task;
-- record deferred UI Runtime debt.
+> If the work is UI-only and does not require changing a frozen Core/product authority, UR owns the UI result from planning through the final state on `main`.
 
-UR must STOP and escalate to MR as `INTEGRATION_REQUIRED` if a UI task needs to change:
+### UR end-to-end responsibility
 
-- Document authority or schema/migration;
+Within the delegated UI boundary, UR owns:
+
+- UI direction preparation from USER intent and accepted references;
+- UI workpacks, measurement baselines, function inventories and Primary-Home classification;
+- bounded UI Work Orders;
+- dedicated UI branches and branch-local DEV progress;
+- supervision of UI DEV;
+- `UI_PASS / UI_REVISE / UI_HOLD`;
+- UI source/static QA;
+- UI technical-debt and health guardrails;
+- responsive / typography / CSS / menu / panel / shell / branding / first-paint health;
+- required screenshots and interaction evidence;
+- reconciliation of the reviewed UI payload with the latest `main`;
+- resolution of ordinary UI-only merge conflicts;
+- clean promotion of accepted UI-only payloads to `main`;
+- UI Runtime on the integrated `main`;
+- visual verification on the integrated `main`;
+- final UI closure only after the integrated main result is proven.
+
+The following is explicitly forbidden as a closure model:
+
+```text
+UI branch looks correct
+→ UR_PASS
+→ hand responsibility to MR
+→ merge later
+→ discover UI is wrong on main
+```
+
+Required model:
+
+```text
+plan
+→ UI DEV
+→ UR review
+→ reconcile with current main
+→ integrate UI payload to main
+→ main UI Runtime
+→ main screenshots / interaction review
+→ UI health delta
+→ UR final closure
+```
+
+Therefore:
+
+`UI_BRANCH_PASS != UI_COMPLETE`
+
+and:
+
+`UI_COMPLETE = VERIFIED_ON_CURRENT_MAIN`
+
+UR may not use "not merged to main yet" as a reason that final UI quality is unknown. Integration and post-integration UI verification are part of UR responsibility.
+
+### UR authority
+
+Within a USER/MR-approved UI program boundary, UR may autonomously:
+
+- issue the next bounded UI workpack;
+- create/name dedicated UI planning and work branches;
+- write branch-local UI Work Orders and DEV progress baselines;
+- authorize UI DEV to start;
+- require revision without returning to MR for ordinary UI defects;
+- update or replace obsolete UI regression contracts when the accepted UI behavior changes;
+- maintain UI function inventories and Primary-Home classification;
+- enforce and evolve UI health rules that remain UI-only;
+- run focused UI QA and UI browser Runtime;
+- create required visual evidence;
+- reconcile an accepted UI payload against current main;
+- clean-promote UI-only changes to current `main`;
+- verify the promoted result and issue final UI closure;
+- continue to the next bounded task inside the already approved UI program.
+
+This delegation is intentionally broad so MR can remain focused on technical/Core development.
+
+### UI technical-health ownership
+
+UR owns the authoritative UI health baseline and must enforce:
+
+`governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
+
+At every UI handoff and before every final UI closure, UR must verify the required health delta.
+
+A UI change is not acceptable merely because it looks correct. It must also preserve the accepted health contracts, including single authorities, responsive taxonomy, CSS discipline, typography authority, generated-shell authority, first-paint behavior, and absence of renewed technical debt.
+
+Likewise, an UI change is not acceptable merely because static/Runtime QA passes. Required visual evidence must also pass.
+
+### UI main-integration authority
+
+For UI-only payloads, UR is authorized to integrate to `main` without a separate MR merge ceremony, provided all of the following are true:
+
+- the diff remains inside the delegated UI boundary;
+- no frozen Core authority is modified;
+- the reviewed payload is reconciled against the current main rather than an obsolete base;
+- generated artifacts are produced through their accepted generator path;
+- UI health guardrails pass;
+- required Runtime / visual evidence is produced after integration;
+- the exact integrated main SHA is recorded.
+
+If integration exposes a UI defect, UR remains responsible for correction.
+
+If integration exposes a Core/cross-lane conflict, UR must STOP and escalate to MR.
+
+### UR escalation boundary — STOP → MR
+
+UR must stop and return the issue to MR as `INTEGRATION_REQUIRED` before modifying any of the following:
+
+- Renderer / WebGL / Canvas engine semantics;
+- Document authority, schema or migration;
 - History semantics;
 - Revision semantics;
-- renderer / WebGL / Canvas engine;
-- Recipe or Geometry core contracts;
+- Geometry / Recipe Core contracts;
+- CHAT proposal / approval / execution authority;
+- persistence semantics;
 - Core module contracts;
-- destructive persistence behavior;
+- FORMAT_VERSION;
 - product base version;
-- package/certification;
-- another lane's owned implementation.
+- package / certification authority;
+- another technical lane's owned implementation;
+- any merge conflict whose correct resolution requires changing Core behavior rather than choosing the UI-side integration.
 
-UR does not need MR approval merely because `main` advanced. For a diverged UI branch, UR uses a clean promotion from current main and promotes only the reviewed UI payload.
+UR may identify and document such a need, but may not solve it by silently widening an UI Work Order.
+
+### MR relationship to UI work
+
+MR does not re-review every pixel, repeat UR's screenshot audit, or become the final hidden UI QA stage.
+
+MR's responsibility is to keep the technical/Core boundary safe and to handle escalations that exceed UR authority.
+
+If UR declares final UI closure under this governance, that closure means UR has already verified the actual integrated main UI.
 
 ### UI lane task authority
 
 The main `ACTIVE/INK_CURRENT_WORK_ORDER.md` remains the global MR / Core / Integration bulletin.
 
-For delegated UI tasks, UR may create a branch-local `ACTIVE/INK_CURRENT_WORK_ORDER.md` on the dedicated UI branch. That branch-local Work Order is authoritative **only for that UI branch** and must remain inside the pre-authorized UI sequence.
+For delegated UI tasks, UR may create a branch-local `ACTIVE/INK_CURRENT_WORK_ORDER.md` on the dedicated UI branch. That branch-local Work Order is authoritative only for that UI branch and only inside the approved UI program.
 
-Branch-local UI Work Orders and DEV progress files are excluded from clean promotion unless MR governance explicitly requires otherwise.
+Branch-local UI Work Orders and DEV progress files are not automatically promoted to main unless they are intentionally part of the durable governance/evidence record.
 
-This delegation removes per-task MR orchestration while preserving one MAIN authority for cross-lane integration.
+This delegation removes per-task MR orchestration while preserving one technical authority for Core and cross-lane changes.
 
-### UI Runtime cadence
+### UI Runtime and closure
 
-UR may promote UI-only Work Orders with `RUNTIME_QA = DEFERRED_TO_BATCH` when source/static evidence is adequate and no immediate-runtime trigger exists.
+UR owns UI Runtime and visual acceptance for UI work.
 
-UR does not wait for MR between UI tasks because of deferred Runtime debt.
+Runtime batching may still be used for low-risk intermediate UI tasks, but no final UI stage/program closure may rely on deferred Runtime or branch-only screenshots.
 
-The accumulated UI debt is handed to the Integration checkpoint. MR owns the cross-lane Runtime batch unless a future explicit delegation says otherwise.
+Before final UI closure:
+
+```text
+current main exact SHA
+→ UI Runtime
+→ required main screenshots
+→ interaction verification
+→ UI health verification
+→ UR_PASS / CLOSED
+```
+
+Cross-lane technical Runtime remains MR-owned when it validates Core or multiple technical lanes together. That does not replace UR's responsibility for the UI result on main.
 
 
 ## Core Module lane — MR supervised
