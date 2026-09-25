@@ -18,6 +18,7 @@ REFERENCE:
 - user-supplied Photoshop workstation captures `ps-1.png` and `ps-2.png`;
 - prior UI REBUILD 001 development plan / function inventory / master checklist;
 - current `INK_WORKSTATION_UI_CAPABILITY_MATRIX_v0.1.md`;
+- `working/INK_UI_REBUILD_001_PS_REFERENCE_MEASUREMENT_SHEET_v0.1.md`;
 - technical-debt completion record / evidence / health report on main.
 
 ## 1. Goal
@@ -200,6 +201,20 @@ Other dimensions are not to be guessed from memory. Phase P0 must measure the su
 - spacing and divider thickness.
 
 No implementation may treat an approximate visual estimate as an exact contract before P0 records it.
+
+### Elastic-panel rule
+
+Photoshop panel widths/heights that are user-resizable are not permanent hard dimensions.
+
+The measurement sheet classifies values as:
+- `LOCKED_FIXED`;
+- `ALIGNMENT_RELATION`;
+- `REFERENCE_STATE_ONLY`;
+- `OBSERVED_DENSITY`.
+
+For resizable panels, INK must match Photoshop docking, edge continuity, resize behavior and reference-state appearance without freezing the panel to the one width/height shown in a screenshot.
+
+The captured values `39 / 72 / 39 / 252 px` for single toolbar / double toolbar / collapsed dock / expanded right panel are reference states, not a blanket prohibition on valid resizing.
 
 ## 3. Functional-placement rules carried forward
 
