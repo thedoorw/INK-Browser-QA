@@ -1,3 +1,133 @@
+## MR_REVISE — G8 Runtime UI isolation — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+TESTED_SHA = 272c656cb98994540d3311f3f38dac1e95dfb519
+RUNTIME_RUN = 36109323685
+RUN_ATTEMPT_1 = MATERIALIZATION_FAIL / transient GitHub blob fetch HTTP 500
+RUN_ATTEMPT_2 = MATERIALIZATION_PASS / UI_BROWSER_EXECUTED
+RUNNER = DESKTOP-NSOQH69
+UI = FAIL / 105 of 110 PASS
+CREATIVE = NOT_REACHED
+GEOMETRY = NOT_REACHED
+ARTIFACT_ID = 10852681462
+ARTIFACT_DIGEST = sha256:3cb2e0682b39ef9ea6cbecdd76073f7242556ded6342e32d86ee189e0f286a31
+
+G0-G7 = REMAIN PASS
+G8 = MR_REVISE
+PRODUCT_RUNTIME_FAILURES_CONFIRMED = 2
+QA_CONTRACT_FAILURES_CONFIRMED = 3
+G8_VISUAL_ARTIFACT_REQUIREMENT = NOT YET SATISFIED
+```
+
+The first attempt did not execute browser QA. It failed while materializing one Git blob through the GitHub API with a transient HTTP 500. MR reran the Windows job without product/source change.
+
+Attempt 2 reached the real UI browser suite and produced five failures.
+
+### A. Product/source corrections required
+
+1. Compact File-route regression:
+
+```text
+exportBtn = visible / RESPONSIVE_ALTERNATIVE
+newBtn = incorrectly visible
+openBtn = incorrectly visible
+saveBtn = incorrectly visible
+```
+
+Accepted contract remains:
+
+```text
+File menu = PRIMARY
+compact Export = RESPONSIVE_ALTERNATIVE
+compact New/Open/Save permanent copies = HIDDEN
+```
+
+Authorized product change:
+`product/source/styles.css` only for this visibility correction.
+
+2. Delivery build identity mismatch:
+
+```text
+app BUILD_ID    = 20260924-ui-006-main-r1
+worker BUILD_ID = 20260925-ui-rebuild-001-g3-first-paint-r1
+```
+
+Authorized product change:
+- `product/source/src/config.js` — BUILD_ID only;
+- `product/source/service-worker.js` — BUILD_ID only.
+
+Use one new identical cleanup/G8 build identity in both files. Preserve:
+`INK_VERSION = 0.1`, `PRODUCT_VERSION = 0.1`, `FORMAT_VERSION = 4`.
+
+### B. QA-contract corrections required
+
+The following Runtime failures are old assertion semantics, not accepted product defects:
+
+1. Escape menu assertion dispatches `Escape` directly to `window`, while the real application-menu controller is bound on the document/menu DOM path.
+   - Preserve a real Escape interaction assertion.
+   - Dispatch through the real DOM keyboard path; do not replace with constant PASS.
+
+2. Typography assertion still requires `Inter`.
+   - G4 accepted font authority is the single `--ui-font` stack beginning with Segoe UI.
+   - Preserve CJK/Latin/numeric same-size and same-family verification.
+   - Validate against the current token authority; remove only the obsolete Inter requirement.
+
+3. Compact toolbar assertion requires the desktop `.tool-rail` to be hidden.
+   - This was inherited from the retired mobile-bottom-dock-only UI-006 contract.
+   - Preserve verification that COMPACT forces effective single-column toolbar state, no dual class, and no shell overflow.
+   - Do not require the old hidden-rail grammar.
+   - Do not redesign compact navigation in this revision.
+
+Authorized QA change:
+`qa/runtime/ink-web-ui-001-harness.html`
+
+Focused source QA may be updated/added only as needed to lock the corrected contracts.
+
+### C. Missing G8 visual evidence
+
+The current central Runtime artifact contains JSON/log evidence but does not yet produce the mandatory visual set.
+
+G8 must produce actual Chrome/browser pixels for:
+
+```text
+ui-first-paint.png
+ui-1280x1024.png
+ui-960x800.png
+```
+
+Requirements:
+- 1280×1024 and 960×800 are real browser viewport evidence;
+- first-paint capture must come from a fresh browser profile/reload path and identify the capture milestone;
+- use browser-native capture/CDP or equivalent QA-only browser mechanism;
+- do not add a product screenshot hook;
+- do not use an alternate renderer or DOM-to-canvas reconstruction;
+- store capture metadata in Runtime evidence;
+- preserve the existing UI / Creative / Geometry batch.
+
+Authorized QA infrastructure:
+`qa/runtime/run-ink-runtime-batch.mjs`
+and the existing UI Runtime harness only where necessary.
+
+### Hard bounds
+
+No Renderer / Canvas / WebGL / Document / History / Revision / Geometry / CHAT / persistence semantics.
+No FORMAT_VERSION or product-version change.
+No Photoshop workstation rebuild.
+No broad mobile redesign.
+No weakening assertions into unconditional PASS.
+
+After bounded correction:
+
+```text
+FOCUSED_QA = PASS
+DEV_HANDOFF → STOP
+MR exact-HEAD source review
+→ one new exact-SHA G8 Windows Runtime
+```
+
+---
+
 ## MR_PASS — G7 / G8 Runtime authorization — 2026-09-25
 
 ```text
