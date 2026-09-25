@@ -384,9 +384,26 @@
       record('Revision close preserves underlying controller', app.revisions === initialRevisionController && Boolean(app.revisions), { installed: Boolean(app.revisions) });
       record('panel collapse restores canvas width', shell.state().collapsed && shell.state().stageWidth > initialStageWidth - 10, shell.state());
 
-      const windowButton = Array.from(doc.querySelectorAll('.application-menus button')).find(button => button.textContent.trim() === '視窗');
+      const windowButton = doc.querySelector('#windowMenuToggle');
+      const fileMenuButtonForController = doc.querySelector('#fileMenuToggle');
+      fileMenuButtonForController?.click();
+      await sleep(40);
+      const fileOpenBeforeWindow = visible(doc, '#fileMenu');
       windowButton?.click();
       await sleep(50);
+      const windowOpenState = {
+        fileVisible: visible(doc, '#fileMenu'),
+        windowVisible: visible(doc, '#panelWindowMenu'),
+        shell: shell.state()
+      };
+      record('one application-menu controller keeps only one menu open at a time',
+        fileOpenBeforeWindow &&
+        !windowOpenState.fileVisible &&
+        windowOpenState.windowVisible &&
+        windowOpenState.shell.menuController === 'application-menu-registry' &&
+        windowOpenState.shell.openApplicationMenu === 'window' &&
+        JSON.stringify(windowOpenState.shell.liveApplicationMenus) === JSON.stringify(['file','window']),
+        windowOpenState);
       record('Window menu coherently exposes Editor, Creative Loop and Specialist dock panels',
         visible(doc, '#panelWindowMenu') &&
         doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 8 &&
@@ -399,6 +416,34 @@
           dock: doc.querySelector('#panelDock')?.dataset.uiRoute,
           window: doc.querySelector('#panelWindowMenu')?.dataset.uiRoute
         });
+
+      doc.querySelector('#panelWindowMenu [data-shell-panel="properties"]')?.click();
+      await sleep(120);
+      const windowPropertiesState = shell.state();
+      windowButton?.click();
+      await sleep(40);
+      doc.querySelector('#panelWindowMenu [data-shell-panel="properties"]')?.click();
+      await sleep(120);
+      const windowPropertiesClosedState = shell.state();
+      record('Window panel route converges on the same toggle authority as the Dock',
+        windowPropertiesState.activePanel === 'properties' &&
+        windowPropertiesClosedState.collapsed,
+        { opened: windowPropertiesState, closed: windowPropertiesClosedState });
+
+      fileMenuButtonForController?.click();
+      await sleep(40);
+      dispatchKey(win, 'Escape');
+      await sleep(40);
+      record('application-menu controller closes the active menu on Escape',
+        !visible(doc, '#fileMenu') && shell.state().openApplicationMenu === null,
+        shell.state());
+      fileMenuButtonForController?.click();
+      await sleep(40);
+      doc.querySelector('#stageWrap')?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await sleep(40);
+      record('application-menu controller closes the active menu on outside click',
+        !visible(doc, '#fileMenu') && shell.state().openApplicationMenu === null,
+        shell.state());
 
       const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
       record('New/Open/Save/Export/Fullscreen command bindings remain wired', buttonsWired);
@@ -629,34 +674,45 @@
         advancedOpen);
       advanced.click();
       await sleep(140);
-      const advancedClosed = {
+      const advancedSecond = {
         shell: shell.state(),
         pressed: advanced.getAttribute('aria-pressed'),
         expanded: advanced.getAttribute('aria-expanded'),
         active: advanced.classList.contains('active')
       };
-      record('UI-MAINT-002 Advanced second press closes the same primary panel',
-        advancedClosed.shell.collapsed &&
-        advancedClosed.pressed === 'false' &&
-        advancedClosed.expanded === 'false' &&
-        !advancedClosed.active,
-        advancedClosed);
+      record('Contextual Advanced remains navigation to Properties and cannot close the primary panel',
+        advancedSecond.shell.activePanel === 'properties' &&
+        advancedSecond.shell.inspectorOpen &&
+        advancedSecond.pressed === 'true' &&
+        advancedSecond.expanded === 'true' &&
+        advancedSecond.active,
+        advancedSecond);
 
-      shell.open('properties');
-      await sleep(120);
       const propertiesDock = doc.querySelector('#panelDock [data-shell-panel="properties"]');
-      const propertiesOpenState = shell.state();
+      propertiesDock?.click();
+      await sleep(140);
+      const propertiesClosedByDock = shell.state();
+      record('same active Dock item closes the primary panel through the shared toggle authority',
+        propertiesClosedByDock.collapsed &&
+        !propertiesClosedByDock.inspectorOpen &&
+        !propertiesClosedByDock.creativeOpen,
+        propertiesClosedByDock);
+
+      propertiesDock?.click();
+      await sleep(140);
+      const propertiesOpenedByDock = shell.state();
+      const layersDock = doc.querySelector('#panelDock [data-shell-panel="layers"]');
+      layersDock?.click();
+      await sleep(140);
+      const layersOpenedByDock = shell.state();
+      record('different Dock item switches the active primary panel without a second state owner',
+        propertiesOpenedByDock.activePanel === 'properties' &&
+        layersOpenedByDock.activePanel === 'layers' &&
+        layersOpenedByDock.inspectorOpen &&
+        !layersOpenedByDock.creativeOpen,
+        { properties: propertiesOpenedByDock, layers: layersOpenedByDock });
       shell.close();
       await sleep(140);
-      const propertiesClosedState = shell.state();
-      record('web-shell remains the authoritative primary-panel close route without requiring a legacy edge control',
-        propertiesOpenState.activePanel === 'properties' &&
-        propertiesOpenState.inspectorOpen &&
-        propertiesClosedState.collapsed &&
-        !propertiesClosedState.inspectorOpen &&
-        !propertiesClosedState.creativeOpen &&
-        Boolean(propertiesDock),
-        { open: propertiesOpenState, closed: propertiesClosedState, dockPresent: Boolean(propertiesDock) });
 
       // Short-height desktop: force a long Inspector surface and prove body-owned scrolling.
       frame.style.height = '520px';
