@@ -1,3 +1,21 @@
+## UI cleanup source review PASS / G7 asset hold — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+REVIEWED_HEAD = cfa9fa01e6e0fa71e1bb59cbc8e6d607f91d0560
+SOURCE_REVIEW = PASS
+G0-G6 = PASS
+G7 = HOLD_USER_ASSET_AUTHORITY
+G8 = HOLD UNTIL G7 PASS
+CORE_MUTATION = 0
+PHOTOSHOP_REBUILD = HOLD
+```
+
+Only unresolved pre-Runtime item:
+exact user-approved visible-logo asset is not provable from current GitHub evidence.
+
+---
+
 ## UI cleanup MR checkpoint — G5 revision required — 2026-09-25
 
 ```text
