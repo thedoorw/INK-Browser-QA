@@ -165,6 +165,7 @@ export async function exportInkAsset(app, registry, input = {}) {
   assertIdentityUnchanged(before, after);
 
   const bytes = await bytesForBlob(payload);
+  assertIdentityUnchanged(before, currentIdentity(app));
   const byteFingerprint = 'fnv1a32-bytes:' + fnv1a32Bytes(bytes);
   const pixelSize = pixelSizeFor(app, options.format);
   const physicalSize = physicalSizeFor(app, options.scope);
