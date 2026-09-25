@@ -10,38 +10,74 @@ INK 是一個以同一套 shared core 為基礎、同時朝 **可攜版** 與 **
 
 ## 1. 先確認你的角色
 
-INK 目前採：
+INK 目前採兩條協調中的開發線：
 
 ```text
-USER
-  ↓
-MR — Main Review
-  ↓ 發布 Current Work Order
-DEV
-  ↓ branch implementation + progress checkpoints
-DEV_HANDOFF
-  ↓
-MR REVIEW
-  ↓ PASS / REVISE / HOLD
-下一張 Work Order
+                         USER
+                           │
+             ┌─────────────┴─────────────┐
+             │                           │
+      MR — Main Review              UR — UI Review
+      技術／Core 主線                UI 專責線
+             │                           │
+            DEV                         UI DEV
+             │                           │
+       DEV_HANDOFF                 DEV_HANDOFF
+             │                           │
+         MR REVIEW                   UR REVIEW
+             │                           │
+     Core / integration        reconcile + integrate main
+             │                           │
+             └─────────────┬─────────────┘
+                           ↓
+                       ONE INK MAIN
 ```
+
+UR 的存在是為了讓 MR 可以持續推進 INK 技術／Core，同時 UI 由專責 Review 從規劃、開發、健康度、整合到 main 上的最終效果負責到底。
 
 ### MR — Main Review
 
-MR 負責：
+MR 是技術／Core 主治理者，負責：
 
-- 產品方向與階段規劃；
-- 將大目標拆成 bounded Work Order；
-- 維護 `ACTIVE/INK_CURRENT_WORK_ORDER.md`；
-- 指定 DEV branch；
-- 控制 scope / gate；
-- 檢查 DEV branch、diff、tests、reports；
-- 作出 `MR_PASS / MR_REVISE / MR_HOLD`；
-- 決定何時 promotion 到 `main`；
-- 只有 MR 才能授權下一張 DEV 任務；
-- 在 Cloud Start Gate 成立時，必須先提醒 USER，再等 USER 明確同意才可開始 Cloud implementation。
+- 產品技術方向與階段規劃；
+- Core / Renderer / Document / History / Revision / Geometry / CHAT / persistence 等 authority；
+- MR-owned bounded Work Order；
+- 技術 DEV branch、scope / gate、review；
+- `MR_PASS / MR_REVISE / MR_HOLD`；
+- 跨 UI/Core 整合與 UR escalation；
+- FORMAT_VERSION、product version、package／certification 等全域 authority；
+- 在 Cloud Start Gate 成立時，提醒 USER 並等待明確同意。
 
-MR 不把討論本身視為產品修改授權，也不因 DEV「看起來做完」就自動進下一階段。
+MR 不再作為日常 UI 視覺／UI 健康的最後一道隱性 QA。只要工作仍是 UI-only，該責任屬於 UR。
+
+### UR — UI Review
+
+UR 是 USER 授權的 UI end-to-end authority。
+
+只要不需要修改 frozen Core／全域 authority，UR 負責：
+
+- UI workpack、量測、功能歸位與 bounded UI Work Order；
+- UI DEV supervision 與 `UI_PASS / UI_REVISE / UI_HOLD`；
+- UI technical-debt / health guardrails；
+- UI source/static QA、Runtime、截圖與 interaction evidence；
+- 將 reviewed UI payload 與最新 `main` reconcile；
+- UI-only clean promotion 到 `main`；
+- 在整合後的 exact main SHA 上再次驗證 UI；
+- 只有 main 上的 UI 實際通過後，才可宣告 UI closure。
+
+`UI_BRANCH_PASS != UI_COMPLETE`
+
+`UI_COMPLETE = VERIFIED_ON_CURRENT_MAIN`
+
+若 UI 工作需要改 Renderer / Document / History / Revision / Geometry / CHAT / persistence / Core contracts / FORMAT_VERSION / product version 等，UR 必須 `STOP → MR / INTEGRATION_REQUIRED`。
+
+UI 健康規範：
+
+`governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
+
+完整權責：
+
+`governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
 
 ### DEV
 
@@ -53,7 +89,7 @@ DEV 負責：
 - 持續 commit meaningful checkpoints；
 - 持續更新 branch-local `ACTIVE/INK_DEV_PROGRESS.md`；
 - 保留 source / QA / report evidence；
-- 完成後 `DEV_HANDOFF` 並 STOP 等 MR。
+- 完成後 `DEV_HANDOFF` 並 STOP；MR-owned task 等 MR，UI-owned task 等 UR。
 
 DEV 不得自行：
 
@@ -62,7 +98,7 @@ DEV 不得自行：
 - 發版／certify；
 - 升 `FORMAT_VERSION`（除非 Work Order 先授權）；
 - 擴大 FLORA / AI / Recipe product boundary；
-- 開始下一張任務；
+- 未經所屬 Review authority（MR 或 UR）授權開始下一張任務；
 - 提前開始 Cloud implementation。
 
 完整治理規則：
@@ -95,6 +131,17 @@ DEV 不得自行：
 
 MR Review 必須 pin exact DEV branch HEAD；HEAD 若改變，舊 review fingerprint 即失效。
 
+### UR 再讀
+
+1. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
+2. `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
+3. 當前 UI program / workpack
+4. dedicated UI branch 的 branch-local Work Order 與 `ACTIVE/INK_DEV_PROGRESS.md`
+5. 最新 `main` 與待整合 UI branch exact HEAD
+6. UI evidence / screenshots / health delta
+
+UR 的 UI closure 必須以整合後的 current main 為準，不以 branch-only evidence 代替。
+
 ### DEV 再讀
 
 1. `ACTIVE/INK_DEV_NEW_WINDOW_START.md`
@@ -108,11 +155,19 @@ MR Review 必須 pin exact DEV branch HEAD；HEAD 若改變，舊 review fingerp
 > DEV 活動期間，真正的即時 DEV 進度在 **指定 work branch** 上的 `ACTIVE/INK_DEV_PROGRESS.md`。
 > main 上同名檔案可能只是任務初始化／前一 checkpoint，不得用它取代 branch-local progress。
 
-### 唯一任務授權來源
+### 任務授權來源
+
+全域／MR-owned 任務的 authority：
+
+`main:ACTIVE/INK_CURRENT_WORK_ORDER.md`
+
+在已獲 USER／MR 授權的 UI program 內，UR 可在 dedicated UI branch 建立 branch-local：
 
 `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-其他 README、board、progress、research 文件都不能自行授權新工作。
+它只對該 UI branch 與該 bounded UI task 有效，不得授權 Core／跨 lane 工作。
+
+其他 README、board、progress、research 文件都不能自行擴張任務 authority。
 
 ---
 
