@@ -79,12 +79,31 @@ test('single CSS authority owns panel geometry and rejects known contradictory p
   assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length);
 });
 
-test('Advanced follows Properties authority and other Dock choices clear its active route', () => {
-  assert.match(shell, /if \(currentPanel\(\) === 'properties'\)[\s\S]*?closePrimaryPanels\(\)/);
-  assert.match(shell, /return selectPanel\('properties'\)/);
+test('Dock owns panel toggle state and Advanced only navigates into Properties', () => {
+  assert.match(shell, /dock\.addEventListener\('click'[\s\S]*?togglePanel\(button\.dataset\.shellPanel\)/);
+  assert.match(shell, /function openContextualAdvanced\(\)[\s\S]*?return selectPanel\('properties'\)/);
+  assert.doesNotMatch(shell, /function openContextualAdvanced\(\)[\s\S]{0,240}?closePrimaryPanels\(\)/);
   assert.match(shell, /const propertiesOpen = currentPanel\(\) === 'properties'/);
   assert.match(shell, /advanced\.classList\.toggle\('active', propertiesOpen\)/);
   assert.match(shell, /document\.querySelectorAll\('\[data-shell-panel\]'\)[\s\S]*?button\.dataset\.shellPanel === active/);
+});
+
+test('application menus have one registry/controller and dead menu labels are not live buttons', () => {
+  assert.match(shell, /const APPLICATION_MENU_REGISTRY = Object\.freeze\(\[/);
+  for (const id of ['file','edit','view','select','object','layer','brush','window','help']) {
+    assert.match(shell, new RegExp(`\\{ id: '${id}'`));
+  }
+  assert.match(shell, /function bindApplicationMenus\(\)/);
+  assert.match(shell, /function setApplicationMenu\(id, open\)/);
+  assert.match(shell, /function closeApplicationMenus\(/);
+  for (const html of [web, portable]) {
+    for (const id of ['edit','view','select','object','layer','brush','help']) {
+      assert.match(html, new RegExp(`<span class="application-menu-label" data-application-menu-id="${id}">`));
+      assert.doesNotMatch(html, new RegExp(`<button[^>]+data-application-menu-(?:id|trigger)="${id}"`));
+    }
+    assert.match(html, /id="fileMenuToggle"[^>]+data-application-menu-trigger="file"/);
+    assert.match(html, /id="windowMenuToggle"[^>]+data-application-menu-trigger="window"/);
+  }
 });
 
 test('Web Portable favicon contract is singular and uses the dedicated SVG favicon', () => {
