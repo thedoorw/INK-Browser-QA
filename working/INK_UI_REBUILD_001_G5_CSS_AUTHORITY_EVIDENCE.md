@@ -1,26 +1,40 @@
 # INK UI REBUILD 001 — G5 CSS Shell Authority Evidence
 
-STATUS: `G5_CSS_SHELL_AUTHORITY / SOURCE_PASS`
+STATUS: `G5_CSS_SHELL_AUTHORITY / REVISED_SOURCE_PASS`
 
-Checkpoint SHA:
+Primary authority checkpoint:
 
 `8d686989fd0c71c0f2319f93e73d72455c7388af`
+
+Substantive cascade-health correction:
+
+`f9bf8481f7f0050db47c0c4bc551f154056c2eed`
 
 ## Method
 
 No late override block was added.
 
-All exact core-selector rules inside every existing `@media(min-width:761px)` block were collected in source order, their declarations were merged using normal last-declaration-wins semantics, and the resulting rule was moved into the existing:
+The earlier G5 pass consolidated exact desktop shell selector authorities but reduced `!important` only `223 → 220`, which MR correctly rejected as non-substantive.
 
-`INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY`
+The revision therefore audited every remaining `!important` and removed it from presentation declarations where ordinary source order / selector specificity already provides authority.
 
-Historical exact desktop rules were deleted.
+Retained `!important` is limited to semantic state visibility and accessibility behavior:
 
-Mobile / narrow breakpoint rules were intentionally left untouched for G6.
+- `display:none` = 14
+- `display:flex` = 2
+- `display:grid` = 1
+- `animation:none` under `prefers-reduced-motion` = 1
+- `transition:none` under `prefers-reduced-motion` = 1
+
+No typography, color, background, border, width, height, spacing, shadow or blur declaration retains `!important`.
 
 ## Desktop authority result
 
-Inside the accepted desktop authority region:
+Inside:
+
+`INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY`
+
+the exact core selector count remains:
 
 ```text
 .topbar = 1
@@ -33,9 +47,7 @@ Inside the accepted desktop authority region:
 .creative-workspace-panel = 1
 ```
 
-## Whole-file exact selector movement
-
-G0 → G5:
+Whole-file exact selector movement from G0 remains:
 
 ```text
 .topbar                  14 → 11
@@ -48,31 +60,44 @@ G0 → G5:
 .creative-workspace-panel 12 → 3
 ```
 
-The remaining duplicates are predominantly mobile/narrow/responsive contracts and are owned by G6.
+Remaining whole-file duplicates belong to the accepted responsive taxonomy and are handled under G6; there is still only one desktop authority block.
 
-Other source health:
+## CSS health delta
 
 ```text
-styles.css chars:
-  G0 = 157379
-  G5 = 157817
-  note: semantic typography tokens added in G4; duplicate desktop rule bodies removed in G5
-
 !important:
-  G0 = 223
-  G5 = 220
+  G0 baseline       = 223
+  original G5       = 220
+  revised G5        = 19
+  total reduction   = 204 / 91.5%
+
+presentation !important = 0
+semantic visibility/accessibility !important = 19
 
 CSS brace balance = PASS
 single desktop authority marker = 1
-new "final override" marker = 0
-forbidden Core mutation = 0
+new final-override block = 0
+frozen Core mutation = 0
 ```
 
-QA now asserts exactly one occurrence of each of the eight core selectors inside the accepted desktop authority region.
+Focused QA now enforces:
+
+- `!important <= 19`;
+- every retained `!important` must be either semantic `display:none|flex|grid` state or reduced-motion animation/transition suppression;
+- presentation properties cannot use `!important`;
+- the eight accepted desktop core selectors remain single-authority inside the desktop authority region.
 
 ## Gate result
 
-`G5_CSS_SHELL_AUTHORITY = SOURCE_PASS`
+`G5_CSS_SHELL_AUTHORITY = REVISED_SOURCE_PASS`
+
+`G5_IMPORTANT_REDUCTION = SUBSTANTIVE`
+
+`TOUCHED_SHELL_CASCADE_WAR = 0`
+
+`NEW_FINAL_OVERRIDE = 0`
+
+`CORE_MUTATION = 0`
 
 Next:
 
