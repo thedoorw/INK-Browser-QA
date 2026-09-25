@@ -1,3 +1,19 @@
+## UI cleanup G8 — QA capture transport revise — 2026-09-25
+
+```text
+TESTED_SHA = 5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8
+RUN = 36111515142
+MATERIALIZATION = PASS
+FAILURE = ui-first-paint.png not produced by Chrome CLI capture
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+PRODUCT_SOURCE = FROZEN
+NEXT = QA_CAPTURE_ONLY
+```
+
+G0-G7 remain PASS. Photoshop rebuild remains HOLD.
+
+---
+
 ## UI cleanup G8 source PASS / exact-SHA rerun authorized — 2026-09-25
 
 ```text
