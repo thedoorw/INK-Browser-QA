@@ -1,5 +1,6 @@
 import { buildAIDocumentBridge } from '../ai/document-bridge.js';
 import { installInkOutputRegistry } from './output-handle-registry.js';
+import { exportInkAsset } from './export-asset.js';
 import { captureInkPreview, inspectInkOutput, releaseInkOutput } from './visual-feedback.js';
 import { getInkCapabilitySummaries, getInkNamedToolDefinitions, resolveInkCapabilityDescriptor } from './capability-registry.js';
 
@@ -729,6 +730,18 @@ export function createInkPublicCreativeApi(app) {
   });
 
   const asset = Object.freeze({
+    async export(options = {}) {
+      const action = 'asset.export';
+      try {
+        const raw = await exportInkAsset(app, outputRegistry, isRecord(options) ? options : {});
+        return createInkAgentResult(app, action, {
+          outputHandles: raw.handle ? [raw.handle] : [],
+          result: raw.result
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    },
     inspect(handleId) {
       const action = 'asset.inspect';
       try {
@@ -801,6 +814,7 @@ export function createInkPublicCreativeApi(app) {
     release_ink_output: input => asset.release(input?.handleId ?? input),
     describe_ink_capability: input => capability.describe(input?.idOrToolName ?? input?.capabilityId ?? input?.toolName ?? input),
     import_ink_reference: request => reference.import(request?.input ?? request, request?.options ?? {}),
+    export_ink_asset: input => asset.export(input ?? {}),
     use_ink: input => {
       const request = isRecord(input) ? input : {};
       const action = String(request.action || '').trim();
