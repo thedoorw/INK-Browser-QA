@@ -1,3 +1,28 @@
+## UI cleanup MR checkpoint — G5 revision required — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+BRANCH = work/ink-ui-rebuild-001-tech-debt-cleanup
+REVIEWED_HEAD = f574731b0e920950211f04177826b3ad2ce0157b
+
+G0-G4 = ACCEPTED SOURCE CHECKPOINTS
+G5 = MR_REVISE
+CAUSE = !important 223 → 220 is not materially reduced
+G6_DIRECTION = ACCEPTED / three width modes
+G7-G8 = PENDING
+
+NEXT =
+  bounded G5 cascade-war cleanup
+  → finish G6
+  → G7
+  → focused QA
+  → DEV_HANDOFF / STOP
+```
+
+Photoshop workstation rebuild remains HOLD.
+
+---
+
 ## Geometry Ops Runtime hold / UI health baseline released — 2026-09-25
 
 ```text
