@@ -1,6 +1,6 @@
 # INK Technical Closure 001 — C2 Exposure Disposition
 
-STATUS: `MR_DISPOSITION_COMPLETE / IMPLEMENTATION_SEQUENCING_PENDING_C1`
+STATUS: `MR_DISPOSITION_COMPLETE / INSTALL_FIRST_SEQUENCE_APPROVED`
 
 Authority:
 - user decision: technical closure before final UI rebuild;
@@ -54,7 +54,7 @@ They remain C1 until Runtime PASS and promotion.
 
 ## C2 bounded implementation groups
 
-After C1 closes, exposure work should be split rather than implemented as one unreviewable patch.
+After C1 reaches `C1_SOURCE_FOCUSED_PASS`, exposure work proceeds on the same closure branch without an intervening full Runtime unless the high-risk exception is triggered. Work remains split into separate reviewable checkpoint commits:
 
 ### C2-A — Basic structure / transform / import-export
 
@@ -129,3 +129,21 @@ explicitly revised by the user/MR to CORE_ONLY_ACCEPTED with a concrete reason
 ```
 
 No ambiguous status is permitted.
+
+
+## Runtime batching rule
+
+Authoritative execution plan:
+
+`working/INK_TECH_CLOSURE_001_EXECUTION_PLAN.md`
+
+```text
+C1_SOURCE_FOCUSED_PASS
+→ C2A_SOURCE_FOCUSED_PASS
+→ C2B_SOURCE_FOCUSED_PASS
+→ C2C_SOURCE_FOCUSED_PASS
+→ one FINAL exact-SHA Runtime
+→ clean promotion
+```
+
+No C1/C2 partial promotion occurs before the final Runtime PASS.
