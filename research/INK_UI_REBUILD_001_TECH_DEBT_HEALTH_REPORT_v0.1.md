@@ -2,17 +2,23 @@
 
 ## Executive result
 
-The cleanup now has a materially healthier UI foundation than the G0 baseline.
+The UI technical-debt cleanup is complete, MR-approved and promoted to main.
 
-The main MR blocker at G5 is closed at source level:
+```text
+UI_TECH_DEBT_CLEANUP = COMPLETE
+G0-G8_UI = PASS
+PROMOTED_MAIN = 9ebdbe771346e6509c902f71766b117ab674f503
+TESTED_SHA = 5bd8754aad3e53886ce6109bd350fa4fc5f68db9
+RUNTIME_RUN = 36112690309
+UI_SUITE = PASS
+PRODUCT_UI_RUNTIME_FAIL = 0
+```
 
-`!important 223 → 19`
+The main G5 debt was reduced from `!important 223 → 19`; all remaining declarations are semantic visibility/reduced-motion exceptions and presentation cascade-war `!important` is zero.
 
-All remaining declarations are state-visibility or reduced-motion exceptions. Presentation cascade-war `!important` has been reduced to zero.
+Responsive authority is now the accepted three-mode taxonomy, the exact user-approved visible logo is locked by SHA256, first-paint evidence is stable/light, and the required 1280×1024 / 960×800 browser captures passed.
 
-G6 is also source-complete on the accepted three-mode responsive taxonomy.
-
-G7 asset authority is now resolved: the exact user-approved 300×300 JPEG is installed at the existing visible-logo route and locked to SHA256 `08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8`. G8 is the only remaining gate.
+The pre-existing Creative harness 360-second timeout remains a separate baseline/integration HOLD and does not reopen this completed UI cleanup.
 
 ## What was cleaned
 
@@ -106,3 +112,32 @@ No product screenshot API or alternate renderer was introduced.
 
 Focused source/static verification and syntax parse checks pass. Final G8 status remains pending the MR-owned exact-SHA Windows Runtime rerun.
 
+
+
+## Final Runtime closure
+
+```text
+TESTED_SHA = 5bd8754aad3e53886ce6109bd350fa4fc5f68db9
+RUNTIME_RUN = 36112690309
+UI = PASS
+ARTIFACT_ID = 10854191875
+ARTIFACT_DIGEST = sha256:7f06e3fe7876ad1e9d9d302b2867646928b5630b191069de0a166ae86ec0c3f2
+```
+
+Validated browser evidence:
+
+- `ui-first-paint.png` — 1280×1024;
+- `ui-1280x1024.png` — 1280×1024;
+- `ui-960x800.png` — 960×800.
+
+Final disposition:
+
+```text
+UI_FOUNDATION_DEBT = PASS
+PHOTOSHOP_WORKSTATION_REBUILD = RELEASED / NEW WORK ORDER
+CREATIVE_BASELINE_TIMEOUT = SEPARATE MR_HOLD
+```
+
+Canonical completion record:
+
+`working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_COMPLETION_RECORD.md`
