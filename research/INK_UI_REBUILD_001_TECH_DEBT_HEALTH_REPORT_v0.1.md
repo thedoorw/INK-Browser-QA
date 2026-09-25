@@ -83,3 +83,26 @@ Photoshop workstation alignment remains intentionally blocked until the cleanup 
 ## DEV disposition
 
 `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+
+## G8 isolation revision
+
+Runtime `36109323685` tested `272c656cb98994540d3311f3f38dac1e95dfb519` and reached `105 / 110 PASS`.
+
+The bounded revision addresses only the five accepted G8 blockers:
+
+1. compact New/Open/Save hidden while Export remains the responsive alternative;
+2. app/worker BUILD_ID unified;
+3. Escape QA moved to the actual DOM keyboard path;
+4. typography QA moved from obsolete Inter matching to the current `--ui-font` authority;
+5. compact toolbar QA no longer requires the tool rail to be hidden.
+
+The Runtime batch now creates three browser-native visual artifacts:
+
+- `ui-first-paint.png`
+- `ui-1280x1024.png`
+- `ui-960x800.png`
+
+No product screenshot API or alternate renderer was introduced.
+
+Focused source/static verification and syntax parse checks pass. Final G8 status remains pending the MR-owned exact-SHA Windows Runtime rerun.
+
