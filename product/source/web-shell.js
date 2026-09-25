@@ -12,6 +12,17 @@
     save: 'saveBtn',
     export: 'exportBtn'
   });
+  const APPLICATION_MENU_REGISTRY = Object.freeze([
+    { id: 'file', label: '檔案', live: true },
+    { id: 'edit', label: '編輯', live: false },
+    { id: 'view', label: '檢視', live: false },
+    { id: 'select', label: '選取', live: false },
+    { id: 'object', label: '物件', live: false },
+    { id: 'layer', label: '圖層', live: false },
+    { id: 'brush', label: '筆刷', live: false },
+    { id: 'window', label: '視窗', live: true },
+    { id: 'help', label: '說明', live: false }
+  ]);
   const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
   const CONTEXT_CONTROL_IDS = Object.freeze(['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar']);
   const CONTEXT_TOOL_META = Object.freeze({
@@ -50,8 +61,9 @@
     dock: null,
     windowMenu: null,
     windowButton: null,
-    fileMenu: null,
-    fileButton: null,
+    applicationMenus: new Map(),
+    openApplicationMenu: null,
+    applicationMenuBound: false,
     toolbarLayout: 'single',
     runtimeBound: false,
     activePanel: 'collapsed',
@@ -83,45 +95,116 @@
       svgIcon(def.icon) + (menu ? '<span>' + def.label + '</span>' : '') + '</button>';
   }
 
-  function setFileMenu(open) {
-    if (!state.fileMenu || !state.fileButton) return;
-    const next = Boolean(open);
-    if (next && state.windowMenu && !state.windowMenu.hidden) setWindowMenu(false);
-    state.fileMenu.hidden = !next;
-    state.fileButton.setAttribute('aria-expanded', String(next));
+  function applicationMenuElements(id) {
+    const trigger = document.querySelector(`[data-application-menu-trigger="${id}"]`);
+    const menu = id === 'file'
+      ? document.querySelector('#fileMenu')
+      : id === 'window'
+        ? document.querySelector('#panelWindowMenu')
+        : null;
+    return { trigger, menu };
   }
 
-  function bindFileMenu() {
-    const menu = document.querySelector('#fileMenu');
-    const button = document.querySelector('#fileMenuToggle');
-    if (!menu || !button) return false;
-    state.fileMenu = menu;
-    state.fileButton = button;
-    if (button.dataset.shellFileBound === 'true') return true;
-    button.dataset.shellFileBound = 'true';
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      event.stopPropagation();
-      setFileMenu(menu.hidden);
-    });
-    menu.addEventListener('click', event => {
-      const item = event.target.closest('[data-file-command]');
-      if (!item) return;
-      event.preventDefault();
-      const targetId = FILE_COMMAND_TARGETS[item.dataset.fileCommand];
-      const target = targetId ? document.getElementById(targetId) : null;
-      setFileMenu(false);
-      target?.click();
-    });
+  function closeApplicationMenus({ focus = false } = {}) {
+    const activeId = state.openApplicationMenu;
+    for (const entry of state.applicationMenus.values()) {
+      entry.menu.hidden = true;
+      entry.trigger.setAttribute('aria-expanded', 'false');
+    }
+    state.openApplicationMenu = null;
+    if (focus && activeId) state.applicationMenus.get(activeId)?.trigger?.focus();
+  }
+
+  function setApplicationMenu(id, open) {
+    const entry = state.applicationMenus.get(id);
+    if (!entry) return false;
+    const next = Boolean(open);
+    closeApplicationMenus();
+    if (!next) return true;
+    entry.menu.hidden = false;
+    entry.trigger.setAttribute('aria-expanded', 'true');
+    state.openApplicationMenu = id;
+    if (id === 'window') positionWindowMenu();
+    return true;
+  }
+
+  function moveApplicationMenuFocus(menu, direction) {
+    const items = [...menu.querySelectorAll('[role="menuitem"]:not([disabled])')];
+    if (!items.length) return;
+    const current = items.indexOf(document.activeElement);
+    const next = direction === 'first'
+      ? 0
+      : direction === 'last'
+        ? items.length - 1
+        : (current + direction + items.length) % items.length;
+    items[next]?.focus();
+  }
+
+  function bindApplicationMenus() {
+    if (state.applicationMenuBound) return true;
+    const root = document.querySelector('#applicationMenus');
+    if (!root) return false;
+
+    for (const def of APPLICATION_MENU_REGISTRY) {
+      if (!def.live) {
+        const label = root.querySelector(`[data-application-menu-id="${def.id}"]`);
+        if (!label || label.matches('button,[role="menuitem"]')) return false;
+        continue;
+      }
+      const { trigger, menu } = applicationMenuElements(def.id);
+      if (!trigger || !menu) return false;
+      state.applicationMenus.set(def.id, { ...def, trigger, menu });
+      trigger.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        setApplicationMenu(def.id, state.openApplicationMenu !== def.id);
+      });
+      trigger.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowDown') return;
+        event.preventDefault();
+        setApplicationMenu(def.id, true);
+        moveApplicationMenuFocus(menu, 'first');
+      });
+      menu.addEventListener('click', event => {
+        const fileItem = event.target.closest('[data-file-command]');
+        const panelItem = event.target.closest('[data-shell-panel]');
+        if (!fileItem && !panelItem) return;
+        event.preventDefault();
+        if (fileItem) {
+          const targetId = FILE_COMMAND_TARGETS[fileItem.dataset.fileCommand];
+          closeApplicationMenus();
+          if (targetId) document.getElementById(targetId)?.click();
+          return;
+        }
+        const panelId = panelItem.dataset.shellPanel;
+        closeApplicationMenus();
+        togglePanel(panelId);
+      });
+      menu.addEventListener('keydown', event => {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+          event.preventDefault();
+          moveApplicationMenuFocus(menu, event.key === 'ArrowDown' ? 1 : -1);
+        } else if (event.key === 'Home' || event.key === 'End') {
+          event.preventDefault();
+          moveApplicationMenuFocus(menu, event.key === 'Home' ? 'first' : 'last');
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          closeApplicationMenus({ focus: true });
+        }
+      });
+    }
+
     document.addEventListener('click', event => {
-      if (!menu.hidden && !event.target.closest('#fileMenu') && event.target !== button) setFileMenu(false);
+      if (!state.openApplicationMenu) return;
+      const active = state.applicationMenus.get(state.openApplicationMenu);
+      if (!active) return;
+      if (event.target.closest('.application-menu') || event.target.closest('#panelWindowMenu')) return;
+      closeApplicationMenus();
     });
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && !menu.hidden) {
-        setFileMenu(false);
-        button.focus();
-      }
+      if (event.key === 'Escape' && state.openApplicationMenu) closeApplicationMenus({ focus: true });
     });
+    state.applicationMenuBound = true;
     return true;
   }
 
@@ -207,7 +290,7 @@
       advanced.setAttribute('aria-pressed', String(propertiesOpen));
       advanced.setAttribute('aria-expanded', String(propertiesOpen));
       advanced.setAttribute('aria-controls', 'inspector');
-      const action = propertiesOpen ? '關閉屬性面板' : (descriptor.mode === 'selection' ? '開啟物件屬性' : '開啟工具進階設定');
+      const action = descriptor.mode === 'selection' ? '前往物件屬性' : '前往工具進階設定';
       advanced.setAttribute('aria-label', action);
       advanced.title = action;
     }
@@ -223,10 +306,6 @@
 
   function openContextualAdvanced() {
     if (!runtime()) return false;
-    if (currentPanel() === 'properties') {
-      closePrimaryPanels();
-      return true;
-    }
     return selectPanel('properties');
   }
 
@@ -274,7 +353,7 @@
       const button = event.target.closest('[data-shell-panel]');
       if (!button) return;
       event.preventDefault();
-      selectPanel(button.dataset.shellPanel);
+      togglePanel(button.dataset.shellPanel);
     });
     appRoot.append(dock);
     state.dock = dock;
@@ -282,7 +361,12 @@
   }
 
   function createWindowMenu() {
-    if (document.querySelector('#panelWindowMenu')) return document.querySelector('#panelWindowMenu');
+    const existing = document.querySelector('#panelWindowMenu');
+    if (existing) {
+      state.windowMenu = existing;
+      state.windowButton = document.querySelector('#windowMenuToggle');
+      return existing;
+    }
     const appRoot = document.querySelector('#app');
     if (!appRoot) return null;
     const menu = document.createElement('div');
@@ -291,6 +375,7 @@
     menu.dataset.uiHome = 'panels';
     menu.dataset.uiRoute = 'SECONDARY_ROUTE';
     menu.setAttribute('role', 'menu');
+    menu.setAttribute('aria-label', '視窗');
     menu.hidden = true;
     menu.innerHTML = PANEL_GROUPS.map(group =>
       '<div class="panel-window-group" data-panel-group="' + group.id + '">' +
@@ -298,28 +383,9 @@
       group.items.map(def => buttonMarkup(def, true)).join('') +
       '</div>'
     ).join('');
-    menu.addEventListener('click', event => {
-      const button = event.target.closest('[data-shell-panel]');
-      if (!button) return;
-      event.preventDefault();
-      selectPanel(button.dataset.shellPanel);
-      setWindowMenu(false);
-    });
     appRoot.append(menu);
     state.windowMenu = menu;
-
-    const windowButton = Array.from(document.querySelectorAll('.application-menus button'))
-      .find(button => button.textContent.trim() === '視窗');
-    if (windowButton) {
-      state.windowButton = windowButton;
-      windowButton.setAttribute('aria-haspopup', 'menu');
-      windowButton.setAttribute('aria-expanded', 'false');
-      windowButton.addEventListener('click', event => {
-        event.preventDefault();
-        event.stopPropagation();
-        setWindowMenu(menu.hidden);
-      });
-    }
+    state.windowButton = document.querySelector('#windowMenuToggle');
     return menu;
   }
 
@@ -329,14 +395,6 @@
     const rect = state.windowButton.getBoundingClientRect();
     state.windowMenu.style.left = Math.max(4, Math.round(rect.left - rootRect.left)) + 'px';
     state.windowMenu.style.top = Math.round(rect.bottom - rootRect.top) + 'px';
-  }
-
-  function setWindowMenu(open) {
-    if (!state.windowMenu) return;
-    if (open) setFileMenu(false);
-    state.windowMenu.hidden = !open;
-    state.windowButton?.setAttribute('aria-expanded', String(open));
-    if (open) positionWindowMenu();
   }
 
   function observedPanel() {
@@ -435,21 +493,6 @@
     return null;
   }
 
-  function bindCollapseControl() {
-    const button = document.querySelector('#inspectorEdgeToggle');
-    if (!button) return false;
-    if (button.dataset.shellCollapseBound === 'true') return true;
-    button.dataset.shellCollapseBound = 'true';
-    button.setAttribute('aria-controls', 'inspector creativeWorkspace');
-    button.addEventListener('click', event => {
-      event.preventDefault();
-      event.stopPropagation();
-      if (currentPanel()) closePrimaryPanels();
-      else selectPanel(state.lastPanel || 'properties');
-    });
-    return true;
-  }
-
   function bindInspectorCloseControl() {
     const button = document.querySelector('#closeInspector');
     if (!button) return false;
@@ -461,17 +504,6 @@
       closePrimaryPanels();
     });
     return true;
-  }
-
-  function syncCollapseControl(active) {
-    const button = document.querySelector('#inspectorEdgeToggle');
-    if (!button) return;
-    const expanded = Boolean(active);
-    button.classList.toggle('active', expanded);
-    button.setAttribute('aria-expanded', String(expanded));
-    const label = expanded ? '收合右側面板' : '展開右側面板';
-    button.setAttribute('aria-label', label);
-    button.title = label;
   }
 
   function syncCreativePresentation() {
@@ -513,9 +545,8 @@
     state.root.style.setProperty('--active-panel-w', width + 'px');
     state.root.classList.toggle('panel-primary-open', Boolean(desktop && panel && width));
     state.root.dataset.shellPanel = active || 'collapsed';
-    syncCollapseControl(active);
-    const legacyInspectorToggle = document.querySelector('#inspectorToggle');
-    legacyInspectorToggle?.setAttribute('aria-expanded', String(Boolean(state.root.classList.contains('inspector-open'))));
+    const responsiveInspectorToggle = document.querySelector('#inspectorToggle');
+    responsiveInspectorToggle?.setAttribute('aria-expanded', String(Boolean(state.root.classList.contains('inspector-open'))));
     document.querySelectorAll('[data-shell-panel]').forEach(button => {
       const pressed = button.dataset.shellPanel === active;
       button.classList.toggle('active', pressed);
@@ -563,7 +594,6 @@
         state.root.style.setProperty('--inspector-w', DEFAULT_PRIMARY_PANEL_WIDTH + 'px');
       }
       bindContextualOptions();
-      bindCollapseControl();
       bindInspectorCloseControl();
 
       // Fresh entry is deliberately canvas-first. Only the last selected panel
@@ -594,9 +624,6 @@
         if (creativeRoot) state.resizeObserver.observe(creativeRoot);
       }
 
-      document.addEventListener('click', event => {
-        if (!state.windowMenu?.hidden && !event.target.closest('#panelWindowMenu') && event.target !== state.windowButton) setWindowMenu(false);
-      });
       window.addEventListener('resize', syncSoon, { passive: true });
       globalThis.matchMedia?.(DESKTOP_QUERY)?.addEventListener?.('change', syncSoon);
     }
@@ -615,10 +642,10 @@
     } catch {}
 
     mountContextualControls();
-    bindFileMenu();
     bindToolbarLayout();
     createDock();
     createWindowMenu();
+    bindApplicationMenus();
 
     const onRuntimeReady = () => bindRuntime();
     globalThis.addEventListener(RUNTIME_READY_EVENT, onRuntimeReady, { once: true });
@@ -654,7 +681,10 @@
         contextMode: state.contextualRoot?.dataset.contextMode || null,
         contextTool: state.contextualRoot?.dataset.contextTool || null,
         toolbarLayout: state.root?.dataset.toolbarLayout || 'single',
-        toolbarLayoutPreference: state.toolbarLayout
+        toolbarLayoutPreference: state.toolbarLayout,
+        menuController: 'application-menu-registry',
+        openApplicationMenu: state.openApplicationMenu,
+        liveApplicationMenus: [...state.applicationMenus.keys()]
       };
     }
   };
