@@ -75,6 +75,13 @@ test('Dock is primary navigation and Properties owns only Tool Object AI Core su
 
 test('single CSS authority owns panel geometry and rejects known contradictory patterns', () => {
   assert.equal((css.match(/INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY/g) || []).length, 1);
+  const authorityStart = css.indexOf('INK-UI-DEBT-001 — SINGLE DESKTOP SHELL AUTHORITY');
+  const authorityEnd = css.indexOf('@media(max-width:1120px) and (min-width:761px)', authorityStart);
+  const desktopAuthority = css.slice(authorityStart, authorityEnd);
+  for (const selector of ['.topbar','.tool-rail','.inspector','.stage-wrap','.statusbar','.control-row','.inspector-tab','.creative-workspace-panel']) {
+    const escaped = selector.replace('.', '\\.');
+    assert.equal((desktopAuthority.match(new RegExp(`(^|\\n)\\s*${escaped}\\s*\\{`, 'gm')) || []).length, 1, `one desktop authority for ${selector}`);
+  }
   assert.match(css, /\.stage-wrap\{[^}]*right:var\(--panel-dock-w\)[^}]*transition:right/);
   assert.match(css, /\.app\.panel-primary-open \.stage-wrap\{right:calc\(var\(--panel-dock-w\) \+ var\(--active-panel-w\)\)\}/);
   assert.match(css, /\.panel-dock\{[^}]*right:0;[^}]*width:var\(--panel-dock-w\)/);
