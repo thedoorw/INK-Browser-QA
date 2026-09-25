@@ -923,6 +923,314 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     app.dirty=false;
     assert(w.INK_TEST.documentIntegrity()?.passed===true && app.doc.formatVersion===4,'PROJECT_RELOAD_INTEGRITY',{formatVersion:app.doc.formatVersion,size:savedBlob.size});
 
+    // INK-CHAT-GEOMETRY-OPS-001 — real-browser native geometry authority exposure.
+    const geometryOperations=[
+      'path.create.v1',
+      'path.edit.v1',
+      'object.rotate.v1',
+      'object.clone.v1',
+      'repeat.radial.v1',
+      'boolean.apply.v1',
+      'group.create.v1',
+      'object.reparent.v1'
+    ];
+    const geometryDiscovery=await inkApi.tools.invoke('get_ink_capabilities');
+    assert(
+      geometryDiscovery?.status==='COMPLETED' &&
+      geometryOperations.every(id=>geometryDiscovery.result.capabilities.some(capability=>capability.id===id && capability.availability===true)),
+      'GEOMETRY_OPS_DISCOVERED',
+      {operations:geometryOperations}
+    );
+
+    const geometryPageId=app.page().id;
+    const geometryLayerId=app.layer().id;
+    const geometryRef=objectId=>({pageId:geometryPageId,layerId:geometryLayerId,objectId});
+    const geometryRuns=[];
+    const executeGeometryPlan=async(label,steps,{checkBlocked=false}={})=>{
+      const beforeProposal=readOnlySnapshot();
+      const proposed=await inkApi.tools.invoke('use_ink',{
+        action:'propose',
+        plan:{schema:'INK-CHAT-CREATIVE-PLAN',version:1,intentSummary:label,steps}
+      });
+      assert(
+        proposed?.status==='PROPOSED' &&
+        Boolean(proposed?.result?.planId) &&
+        readOnlySnapshot()===beforeProposal,
+        'GEOMETRY_OPS_PROPOSAL_MUTATION_NEUTRAL',
+        {label,status:proposed?.status}
+      );
+      if(checkBlocked){
+        const blockedBefore=readOnlySnapshot();
+        const blocked=await inkApi.tools.invoke('use_ink',{
+          action:'execute',planId:proposed.result.planId,approvalToken:'not-approved'
+        });
+        assert(
+          blocked?.status==='FAILED' &&
+          blocked?.diagnostics?.[0]?.code==='CHAT_PLAN_APPROVAL_REQUIRED' &&
+          readOnlySnapshot()===blockedBefore,
+          'GEOMETRY_OPS_EXECUTE_BLOCKED_BEFORE_APPROVAL',
+          {label,code:blocked?.diagnostics?.[0]?.code||null}
+        );
+      }
+      const approved=await inkApi.tools.invoke('use_ink',{action:'approve',planId:proposed.result.planId});
+      assert(
+        approved?.status==='APPROVED' &&
+        /^INK-LOCAL-PLAN-APPROVAL:/.test(approved?.result?.approvalToken||''),
+        'GEOMETRY_OPS_EXPLICIT_APPROVAL',
+        {label,planId:proposed.result.planId}
+      );
+      const executed=await inkApi.tools.invoke('use_ink',{
+        action:'execute',
+        planId:proposed.result.planId,
+        approvalToken:approved.result.approvalToken
+      });
+      assert(
+        executed?.status==='COMPLETED' &&
+        executed?.result?.stepResults?.length===steps.length &&
+        executed.result.stepResults.every(step=>step.ok===true && step.changed===true),
+        'GEOMETRY_OPS_PLAN_EXECUTED',
+        {label,status:executed?.status,steps:executed?.result?.stepResults}
+      );
+      geometryRuns.push({label,proposed,approved,executed});
+      return executed;
+    };
+    const geometryTargetFromStep=(executed,stepId)=>{
+      const step=executed?.result?.stepResults?.find(item=>item.stepId===stepId);
+      const target=step?.targets?.[0];
+      return target?.ref||target||null;
+    };
+
+    const geometryCreate=await executeGeometryPlan('Geometry Ops 001 · create native construction geometry',[
+      {
+        stepId:'geo-create-module',
+        operation:'path.create.v1',
+        targets:[],
+        arguments:{
+          shape:'path',objectId:'qa-geometry-module',name:'QA Geometry Module',fill:'none',stroke:'#202020',strokeWidth:1.5,
+          subpaths:[{role:'outer',closed:true,anchors:[
+            {x:400,y:190},{x:420,y:220},{x:400,y:260},{x:380,y:220}
+          ]}]
+        },
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-create-circle',
+        operation:'path.create.v1',
+        targets:[],
+        arguments:{shape:'circle',objectId:'qa-geometry-circle',name:'QA Geometry Circle',cx:480,cy:220,r:18,fill:'none',stroke:'#202020',strokeWidth:1.5},
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-create-boolean-a',
+        operation:'path.create.v1',
+        targets:[],
+        arguments:{shape:'rectangle',objectId:'qa-geometry-bool-a',name:'QA Boolean A',x:540,y:195,width:42,height:42,fill:'#d8d8d8',stroke:'#202020',strokeWidth:1},
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-create-boolean-b',
+        operation:'path.create.v1',
+        targets:[],
+        arguments:{shape:'rectangle',objectId:'qa-geometry-bool-b',name:'QA Boolean B',x:560,y:205,width:42,height:42,fill:'#d8d8d8',stroke:'#202020',strokeWidth:1},
+        dependsOn:[]
+      }
+    ],{checkBlocked:true});
+    assert(
+      ['qa-geometry-module','qa-geometry-circle','qa-geometry-bool-a','qa-geometry-bool-b'].every(id=>app.findObject(geometryRef(id))?.object?.type==='path'),
+      'GEOMETRY_OPS_CREATE_EXECUTED'
+    );
+
+    const geometryEditRotate=await executeGeometryPlan('Geometry Ops 001 · edit Path and rotate around explicit center',[
+      {
+        stepId:'geo-edit-anchor',
+        operation:'path.edit.v1',
+        targets:[geometryRef('qa-geometry-module')],
+        arguments:{action:'move-anchor',subpathIndex:0,anchorIndex:0,x:400,y:182},
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-rotate-module',
+        operation:'object.rotate.v1',
+        targets:[geometryRef('qa-geometry-module')],
+        arguments:{degrees:30,center:{x:400,y:220}},
+        dependsOn:['geo-edit-anchor']
+      }
+    ]);
+    const geometryModule=app.findObject(geometryRef('qa-geometry-module'))?.object;
+    assert(
+      geometryModule?.subpaths?.[0]?.anchors?.[0]?.y===182,
+      'GEOMETRY_OPS_PATH_EDIT_EXECUTED',
+      {anchor:geometryModule?.subpaths?.[0]?.anchors?.[0]}
+    );
+    assert(
+      Array.isArray(geometryModule?.matrix) && Math.abs(geometryModule.matrix[1])>0.1,
+      'GEOMETRY_OPS_ROTATE_EXECUTED',
+      {matrix:geometryModule?.matrix}
+    );
+
+    const geometryCloneRepeat=await executeGeometryPlan('Geometry Ops 001 · clone module and create radial Repeat',[
+      {
+        stepId:'geo-clone-module',
+        operation:'object.clone.v1',
+        targets:[geometryRef('qa-geometry-module')],
+        arguments:{dx:58,dy:0},
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-repeat-module',
+        operation:'repeat.radial.v1',
+        targets:[geometryRef('qa-geometry-module')],
+        arguments:{count:8,center:{x:400,y:220},sweep:360,startAngle:0,linked:true},
+        dependsOn:[]
+      }
+    ]);
+    const geometryCloneRef=geometryTargetFromStep(geometryCloneRepeat,'geo-clone-module');
+    const geometryRepeatRef=geometryTargetFromStep(geometryCloneRepeat,'geo-repeat-module');
+    const geometryClone=geometryCloneRef?app.findObject(geometryCloneRef)?.object:null;
+    const geometryRepeat=geometryRepeatRef?app.findObject(geometryRepeatRef)?.object:null;
+    assert(
+      Boolean(geometryCloneRef && geometryClone) &&
+      geometryClone.id!=='qa-geometry-module' &&
+      geometryClone.metadata?.composition?.duplicatedFromObjectId==='qa-geometry-module',
+      'GEOMETRY_OPS_CLONE_EXECUTED',
+      {cloneRef:geometryCloneRef,lineage:geometryClone?.metadata?.composition}
+    );
+    assert(
+      geometryRepeat?.type==='repeat' &&
+      geometryRepeat.count===8 &&
+      geometryRepeat.instances?.length===8,
+      'GEOMETRY_OPS_RADIAL_REPEAT_EXECUTED',
+      {repeatRef:geometryRepeatRef,count:geometryRepeat?.count,instances:geometryRepeat?.instances?.length}
+    );
+
+    const geometryBoolean=await executeGeometryPlan('Geometry Ops 001 · Boolean and independent native transform',[
+      {
+        stepId:'geo-boolean-union',
+        operation:'boolean.apply.v1',
+        targets:[geometryRef('qa-geometry-bool-a'),geometryRef('qa-geometry-bool-b')],
+        arguments:{operation:'union',name:'QA Geometry Union',tolerance:0.65},
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-rotate-circle',
+        operation:'object.rotate.v1',
+        targets:[geometryRef('qa-geometry-circle')],
+        arguments:{degrees:12,center:{x:480,y:220}},
+        dependsOn:[]
+      }
+    ]);
+    const geometryBooleanRef=geometryTargetFromStep(geometryBoolean,'geo-boolean-union');
+    assert(
+      Boolean(geometryBooleanRef && app.findObject(geometryBooleanRef)?.object?.type==='path') &&
+      !app.findObject(geometryRef('qa-geometry-bool-a')) &&
+      !app.findObject(geometryRef('qa-geometry-bool-b')),
+      'GEOMETRY_OPS_BOOLEAN_EXECUTED',
+      {resultRef:geometryBooleanRef}
+    );
+
+    const geometryGroup=await executeGeometryPlan('Geometry Ops 001 · group reusable module objects',[
+      {
+        stepId:'geo-group-module',
+        operation:'group.create.v1',
+        targets:[geometryRef('qa-geometry-circle'),geometryCloneRef],
+        arguments:{name:'QA Geometry Module Group'},
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-rotate-module-again',
+        operation:'object.rotate.v1',
+        targets:[geometryRef('qa-geometry-module')],
+        arguments:{degrees:5,center:{x:400,y:220}},
+        dependsOn:[]
+      }
+    ]);
+    const geometryGroupRef=geometryTargetFromStep(geometryGroup,'geo-group-module');
+    const geometryGroupObject=geometryGroupRef?app.findObject(geometryGroupRef)?.object:null;
+    assert(
+      geometryGroupObject?.type==='group' &&
+      geometryGroupObject.children?.some(child=>child.id===geometryCloneRef.objectId) &&
+      geometryGroupObject.children?.some(child=>child.id==='qa-geometry-circle'),
+      'GEOMETRY_OPS_GROUP_EXECUTED',
+      {groupRef:geometryGroupRef,children:geometryGroupObject?.children?.map(child=>child.id)}
+    );
+
+    const geometryReparent=await executeGeometryPlan('Geometry Ops 001 · reparent grouped child through native hierarchy',[
+      {
+        stepId:'geo-reparent-clone',
+        operation:'object.reparent.v1',
+        targets:[geometryCloneRef],
+        arguments:{parentObjectId:null,targetLayerId:geometryLayerId},
+        dependsOn:[]
+      },
+      {
+        stepId:'geo-final-rotate',
+        operation:'object.rotate.v1',
+        targets:[geometryRef('qa-geometry-module')],
+        arguments:{degrees:-5,center:{x:400,y:220}},
+        dependsOn:[]
+      }
+    ]);
+    const geometryReparentRef=geometryTargetFromStep(geometryReparent,'geo-reparent-clone');
+    const geometryReparentFound=geometryReparentRef?app.findObject(geometryReparentRef):null;
+    assert(
+      Boolean(geometryReparentFound) &&
+      !geometryReparentFound.parentObject &&
+      geometryReparentFound.layer.id===geometryLayerId,
+      'GEOMETRY_OPS_REPARENT_EXECUTED',
+      {ref:geometryReparentRef,parentId:geometryReparentFound?.parentObject?.id||null}
+    );
+
+    const geometryHistory=await inkApi.tools.invoke('get_ink_history');
+    const geometryHistorySteps=geometryRuns.flatMap(run=>run.executed?.historyReceipt?.steps||[]);
+    assert(
+      geometryHistory?.status==='COMPLETED' &&
+      geometryHistorySteps.length===14 &&
+      geometryHistorySteps.every(step=>Boolean(step.history) &&
+        Number.isInteger(step.history.beforeUndoCount) &&
+        step.history.afterUndoCount===step.history.beforeUndoCount+1) &&
+      Number(geometryHistory.result?.applied)>=14,
+      'GEOMETRY_OPS_HISTORY_RECORDED',
+      {stepCount:geometryHistorySteps.length,applied:geometryHistory.result?.applied}
+    );
+    const geometryRevisionReceipts=geometryRuns.map(run=>run.executed?.revisionReceipt).filter(Boolean);
+    const geometryFinalRevision=app.revisions.revisionIdFor(app.doc.id);
+    assert(
+      geometryRevisionReceipts.length===6 &&
+      geometryRevisionReceipts.every(receipt=>receipt.captureSkipped===null && receipt.endingRevisionId!==receipt.startingRevisionId) &&
+      geometryRevisionReceipts.at(-1)?.endingRevisionId===geometryFinalRevision,
+      'GEOMETRY_OPS_REVISION_CAPTURED',
+      {revisionCount:geometryRevisionReceipts.length,finalRevision:geometryFinalRevision}
+    );
+    const geometryPreview=await inkApi.tools.invoke('get_ink_preview',{scope:'content',maxDimension:960,background:true});
+    assert(
+      geometryPreview?.status==='COMPLETED' &&
+      geometryPreview.outputHandles?.length===1 &&
+      geometryPreview.outputHandles[0].revisionId===geometryFinalRevision,
+      'GEOMETRY_OPS_PREVIEW_CAPTURED',
+      {handle:geometryPreview?.outputHandles?.[0]||null}
+    );
+    evidence.geometryOps={
+      schema:'INK-CHAT-GEOMETRY-OPS-PROOF',
+      version:1,
+      operations:geometryOperations,
+      planCount:geometryRuns.length,
+      stepCount:geometryHistorySteps.length,
+      cloneRef:geometryCloneRef,
+      repeatRef:geometryRepeatRef,
+      booleanRef:geometryBooleanRef,
+      groupRef:geometryGroupRef,
+      reparentRef:geometryReparentRef,
+      finalRevisionId:geometryFinalRevision,
+      previewHandle:geometryPreview.outputHandles[0]
+    };
+    pass('GEOMETRY_OPS_GATE_PASS',{
+      gate:'CHAT_NATIVE_GEOMETRY_OPS_V01',
+      operationCount:geometryOperations.length,
+      planCount:geometryRuns.length,
+      historySteps:geometryHistorySteps.length,
+      revisionCount:geometryRevisionReceipts.length
+    });
+
     const health=w.INK_TEST.runtimeHealth?.();
     evidence.metrics.runtimeHealth=health;
     const fatalCount=Number(health?.errors?.fatal || health?.fatalErrors || health?.fatal || 0);
