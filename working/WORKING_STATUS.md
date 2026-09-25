@@ -1,3 +1,17 @@
+## UI cleanup G8 source PASS / exact-SHA rerun authorized — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+TARGET_SHA = 5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8
+G0-G7 = PASS
+G8_SOURCE = PASS
+G8_RUNTIME = RUNNING_NEXT
+CORE_MUTATION = 0
+PHOTOSHOP_REBUILD = HOLD
+```
+
+---
+
 ## UI cleanup G8 Runtime — MR_REVISE — 2026-09-25
 
 ```text
