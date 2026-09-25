@@ -1,3 +1,21 @@
+## UI cleanup G7 user asset authority resolved — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+SOURCE_REVIEW = PASS
+REVIEWED_HEAD = cfa9fa01e6e0fa71e1bb59cbc8e6d607f91d0560
+G0-G6 = PASS
+G7 = DEV_DELTA_AUTHORIZED
+APPROVED_VISIBLE_LOGO_SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+APPROVED_VISIBLE_LOGO_DIMENSIONS = 300x300
+G8 = HOLD UNTIL NEW DEV_HANDOFF
+PHOTOSHOP_REBUILD = HOLD
+```
+
+GitHub remains final SSOT. Library staging exists only to transfer the exact user-approved binary to DEV.
+
+---
+
 ## UI cleanup source review PASS / G7 asset hold — 2026-09-25
 
 ```text
