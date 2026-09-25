@@ -1,6 +1,6 @@
 # INK UI REBUILD 001 — Technical Debt Cleanup Evidence
 
-STATUS: `DEV_SOURCE_COMPLETE / G7_SOURCE_PASS / G8_MR_OWNED`
+STATUS: `DEV_SOURCE_COMPLETE / G7_SOURCE_PASS / G8_ISOLATION_SOURCE_READY`
 
 BRANCH: `work/ink-ui-rebuild-001-tech-debt-cleanup`
 
@@ -20,7 +20,7 @@ MR revision baseline: `f574731b0e920950211f04177826b3ad2ce0157b`
 | G5 CSS shell authority | REVISED_SOURCE_PASS | `f9bf8481f7f0050db47c0c4bc551f154056c2eed` + G5 evidence |
 | G6 Responsive authority | SOURCE_PASS | `6731d07d01cc059054212592e6e34716e55d2ff5` + G6 evidence |
 | G7 Brand contract | SOURCE_PASS | approved exact JPEG SHA locked; G7 evidence |
-| G8 Full Runtime / visual evidence | HOLD / MR_OWNED | not run by DEV |
+| G8 Full Runtime / visual evidence | ISOLATION_SOURCE_READY / MR_RERUN_REQUIRED | Runtime runner emits required PNG evidence |
 
 ## Health metrics — G0 → current source
 
@@ -173,3 +173,65 @@ PHOTOSHOP_WORKSTATION_REBUILD = HOLD
 DEV source work for the authorized cleanup is complete.
 
 `DEV_HANDOFF → STOP`
+
+## G8 UI Runtime isolation revision — source ready
+
+MR Runtime diagnostic:
+
+```text
+TESTED_HEAD = 272c656cb98994540d3311f3f38dac1e95dfb519
+RUNTIME_RUN = 36109323685
+UI = 105 / 110 PASS
+G0-G7 = ACCEPTED
+G8 = REVISE
+```
+
+Bounded product delta:
+
+```text
+COMPACT:
+  newBtn  = hidden
+  openBtn = hidden
+  saveBtn = hidden
+  exportBtn = visible / RESPONSIVE_ALTERNATIVE
+
+BUILD_ID:
+  config.js         = 20260925-ui-rebuild-001-g8-runtime-r1
+  service-worker.js = 20260925-ui-rebuild-001-g8-runtime-r1
+
+FORMAT_VERSION = 4 / preserved
+PRODUCT_VERSION = 0.1 / preserved
+```
+
+Runtime QA isolation:
+
+- Escape now exercises a real DOM `KeyboardEvent('keydown')` path from an actual File-menu item and verifies focus return to the trigger.
+- typography validates the current `--ui-font` token and computed authority; no obsolete Inter requirement remains.
+- compact toolbar validates effective single mode, no dual class, and viewport containment without requiring `.tool-rail` to be hidden.
+
+Browser-native Runtime evidence contract:
+
+```text
+ui-first-paint.png  = 1280x1024 / delivered shell / JavaScript disabled
+ui-1280x1024.png    = 1280x1024 / Runtime enabled
+ui-960x800.png      = 960x800 / Runtime enabled
+```
+
+Each capture is validated as PNG with exact requested dimensions and recorded in `batch.json` with capture kind, transport, script mode, pixel size, byte length and SHA256.
+
+The existing central Windows Runtime workflow uploads the entire `evidence/` directory, so these files require no workflow mutation.
+
+Focused connector-side source QA: **PASS**.
+
+Syntax parse smoke checks:
+
+```text
+qa/runtime/run-ink-runtime-batch.mjs = PASS
+qa/runtime/ink-web-ui-001-harness.html script = PASS
+qa/core/tests/unit/ui-debt-001-shell-panel-authority-v0.1.test.mjs = PASS
+```
+
+DEV did not start the MR-owned exact-SHA Windows Runtime rerun.
+
+`G8_RUNTIME_RESULT = PENDING_MR_EXACT_SHA_RERUN`
+
