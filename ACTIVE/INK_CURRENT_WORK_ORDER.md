@@ -1,3 +1,62 @@
+## MR_REVISE — G7 USER-APPROVED VISIBLE LOGO ASSET — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+SOURCE_REVIEWED_HEAD = cfa9fa01e6e0fa71e1bb59cbc8e6d607f91d0560
+G0-G6 = MR SOURCE PASS
+G7 = USER ASSET AUTHORITY RESOLVED / DEV_DELTA_REQUIRED
+G8 = HOLD
+```
+
+User supplied and approved the official INK visible logo in CHAT.
+
+Approved asset identity:
+
+```text
+SOURCE_NAME = W-300.jpg
+DIMENSIONS = 300x300
+BYTES = 19801
+SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+ROLE = OFFICIAL_INK_VISIBLE_LOGO
+```
+
+Transport-only staging copy for DEV retrieval:
+
+```text
+LIBRARY_PATH = /INK-DEV-ASSET-STAGING/INK_APPROVED_VISIBLE_LOGO_W-300.jpg
+AUTHORITY = USER_APPROVAL_IN_THIS_WORK_ORDER
+NOTE = Library is transport only; GitHub remains the sole final SSOT.
+```
+
+Bounded G7 implementation authorization on the existing cleanup branch:
+
+1. Retrieve the exact staged approved image and verify SHA-256 equals `08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8`.
+2. Replace the bytes of:
+   `product/source/assets/INK_MARK_SOURCE_W-300.jpg`
+   with the exact approved asset.
+3. Keep the existing visible-logo route unless changing it is strictly required; do not introduce a second visible-logo authority.
+4. Do not substitute `ink-mark.svg` as the authority. It is not the approved source.
+5. Favicon authority remains `product/source/assets/favicon.svg`; do not change it in this delta.
+6. Update G7 evidence and focused QA to lock the exact approved visible-logo SHA / route contract.
+7. If `ink-mark.svg` is demonstrably unreferenced and only preserves stale logo bytes, DEV may retire it only if focused QA proves zero active references; otherwise leave it untouched and document it as non-authoritative.
+8. No other UI redesign, no G8 Runtime, no Photoshop alignment.
+9. Frozen Core / Renderer / Document / History / Revision / Geometry / CHAT / persistence / FORMAT_VERSION remain unchanged.
+
+Completion:
+
+```text
+G7_VISIBLE_LOGO_SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+VISIBLE_LOGO_AUTHORITY = 1
+FAVICON_AUTHORITY = 1
+CORE_MUTATION = 0
+FOCUSED_QA = PASS
+DEV_HANDOFF → STOP
+```
+
+MR will then pin the new exact HEAD and authorize G8.
+
+---
+
 ## MR source review — UI debt cleanup handoff — 2026-09-25
 
 ```text
