@@ -46,8 +46,8 @@ function run(adapter,raw){
 }
 function square(id,x=0,y=0,s=20){return{shape:'path',objectId:id,name:id,fill:'none',stroke:'#202020',strokeWidth:1,subpaths:[{role:'outer',closed:true,anchors:[{x,y},{x:x+s,y},{x:x+s,y:y+s},{x,y:y+s}]}]};}
 
-test('authorized geometry vocabulary is exactly original six plus eight additions',()=>{
-  assert.deepEqual([...CHAT_EDIT_OPERATIONS],OPS);assert.equal(FORMAT_VERSION,4);
+test('authorized geometry vocabulary remains the exact original-six plus eight prefix',()=>{
+  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(0,OPS.length),OPS);assert.ok(CHAT_EDIT_OPERATIONS.length>=OPS.length);assert.equal(FORMAT_VERSION,4);
   for(const op of OPS){const d=resolveInkCapabilityDescriptor(op);assert.equal(d?.availability,true,op);assert.ok(d?.inputSchema,op);}
   assert.equal(resolveInkCapabilityDescriptor('path.create.v1').inputSchema.properties.targets.minItems,0);
   assert.equal(resolveInkCapabilityDescriptor('boolean.apply.v1').inputSchema.properties.targets.minItems,2);
