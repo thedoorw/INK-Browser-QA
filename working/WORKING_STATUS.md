@@ -1,3 +1,32 @@
+## Geometry Ops Runtime hold / UI health baseline released — 2026-09-25
+
+```text
+GEOMETRY_TASK = INK-CHAT-GEOMETRY-OPS-001
+TESTED_SHA = 51dcc27570440e5a4a779e7ffed64dd634995489
+RUNTIME = 36088550693
+RUNNER = DESKTOP-NSOQH69
+UI = PASS
+CREATIVE = FAIL / HARNESS TIMEOUT 360s
+GEOMETRY_SUITE = NOT_REACHED
+ARTIFACT_ID = 10844784050
+ARTIFACT_DIGEST = sha256:85ad8c782f6ca8c4b3372d83cc2b2b321197d4f4569ee0a2472376ed778d3469
+
+PRODUCT_DEFECT = NOT ESTABLISHED
+GEOMETRY_OPS = MR_HOLD / NOT_PROMOTED / NO_BLIND_RERUN
+
+CURRENT_MAIN_PRODUCT_SOURCE =
+  exact unchanged from promoted main d6c28be13cddee0d83b9e7613b5498b06d1f7b0e
+
+UI_HEALTH_CLEANUP =
+  RELEASED TO START from current main
+  because current main differs from d6c28be... only in governance/runtime-queue files
+
+SHARED_RUNTIME_HARNESS_RULE =
+  UI cleanup branch becomes the new forward baseline.
+  Geometry Ops must later be replayed/reconciled onto the post-cleanup main,
+  not merged from its stale harness branch as-is.
+```
+
 ## UI foundation health cleanup authorized — 2026-09-25
 
 ```text
