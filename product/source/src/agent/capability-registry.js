@@ -383,6 +383,53 @@ const editSchemas = {
     { type: 'string', const: 'layout.item.remove.v1', description: 'Remove existing LayoutItem metadata from one current Frame child.' },
     obj({}, [], 'No arguments.', false),
     1
+  ),
+  'component.register.v1': editTaskSchema(
+    { type: 'string', const: 'component.register.v1', description: 'Register one existing structural container as a native Component Definition.' },
+    obj({ name: str('Component definition name.') }, ['name'], 'Existing registerComponentDefinition arguments.'),
+    1
+  ),
+  'component.instance.create.v1': editTaskSchema(
+    { type: 'string', const: 'component.instance.create.v1', description: 'Create one native Component Instance from an existing definition.' },
+    obj({
+      definitionId: str('Existing Component Definition id.'),
+      pageId: str('Destination active page id.'),
+      layerId: str('Destination layer id on the active page.'),
+      parentId: str('Optional structural parent id.'),
+      matrix: arr(num('Affine matrix component.'), 'Optional existing six-number affine matrix.', { minItems: 6, maxItems: 6 })
+    }, ['definitionId', 'pageId', 'layerId'], 'Existing createComponentInstance placement contract.'),
+    0, 0
+  ),
+  'component.override.set.v1': editTaskSchema(
+    { type: 'string', const: 'component.override.set.v1', description: 'Set the existing opacity override on one Component Instance source node.' },
+    obj({
+      sourceNodeId: str('Source node id from the linked Component Definition.'),
+      opacity: num('Existing supported opacity override.', { minimum: 0, maximum: 1 })
+    }, ['sourceNodeId', 'opacity'], 'Only opacity override is supported in the current Component contract.'),
+    1
+  ),
+  'component.override.reset.v1': editTaskSchema(
+    { type: 'string', const: 'component.override.reset.v1', description: 'Reset one existing Component Instance source-node override.' },
+    obj({ sourceNodeId: str('Source node id whose override is reset.') }, ['sourceNodeId'], 'Existing setComponentOverride(..., null) reset contract.'),
+    1
+  ),
+  'component.instance.detach.v1': editTaskSchema(
+    { type: 'string', const: 'component.instance.detach.v1', description: 'Detach one native Component Instance into ordinary remapped geometry.' },
+    obj({}, [], 'No arguments.', false),
+    1
+  ),
+  'component.definition.duplicate.v1': editTaskSchema(
+    { type: 'string', const: 'component.definition.duplicate.v1', description: 'Duplicate one existing Component Definition and its source geometry.' },
+    obj({
+      definitionId: str('Existing Component Definition id.'),
+      name: str('Optional duplicate definition name.')
+    }, ['definitionId'], 'Existing duplicateComponentDefinition contract.'),
+    0, 0
+  ),
+  'component.reference.repair.v1': editTaskSchema(
+    { type: 'string', const: 'component.reference.repair.v1', description: 'Explicitly repair one Component Instance reference to an existing definition.' },
+    obj({ definitionId: str('Existing replacement Component Definition id.') }, ['definitionId'], 'Explicit repair only; never automatic.'),
+    1
   )
 };
 
@@ -676,7 +723,7 @@ primary.push(descriptor({
 
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
-  const zeroTargetCreate = ['path.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1'].includes(operation);
+  const zeroTargetCreate = ['path.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
   const operationConstraints = zeroTargetCreate
     ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
     : operation === 'text.edit.v1'
@@ -693,6 +740,12 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
   if (operation === 'layout.frame.set.v1' || operation === 'layout.frame.remove.v1') operationConstraints.push('Target must be one native Frame; setFrameLayout remains the sole mutation authority.');
   if (operation === 'layout.item.set.v1' || operation === 'layout.item.remove.v1') operationConstraints.push('Target must be one current child of a native Frame; setChildLayoutItem remains the sole mutation authority.');
+  if (operation === 'component.register.v1') operationConstraints.push('Target must satisfy the native structural-container definition rules; nested instances remain unsupported.');
+  if (operation === 'component.instance.create.v1') operationConstraints.push('Zero-target creation uses an existing definition and an explicit destination on the active page.');
+  if (operation === 'component.override.set.v1' || operation === 'component.override.reset.v1') operationConstraints.push('Target must be one native Component Instance; only the existing opacity override contract is exposed.');
+  if (operation === 'component.instance.detach.v1') operationConstraints.push('Target must be one resolvable Component Instance; native detach remaps geometry ids and replaces the instance.');
+  if (operation === 'component.definition.duplicate.v1') operationConstraints.push('Zero-target definition duplication uses the existing native definition/source duplication transaction.');
+  if (operation === 'component.reference.repair.v1') operationConstraints.push('Explicit repair only; target must be one Component Instance and automatic repair remains prohibited.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
@@ -711,7 +764,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
     targetTypes: zeroTargetCreate
-      ? (operation === 'text.create.v1' ? ['Page'] : operation === 'svg.import.v1' ? ['Page'] : operation === 'frame.create.v1' ? ['Page'] : ['Page'])
+      ? (operation === 'component.definition.duplicate.v1' ? ['Document'] : ['Page'])
       : operation === 'text.edit.v1'
         ? ['Object']
         : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
