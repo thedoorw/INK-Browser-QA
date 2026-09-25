@@ -1,3 +1,25 @@
+## UI technical-debt cleanup COMPLETE — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+STATE = COMPLETE / PROMOTED
+G0-G8_UI = PASS
+PROMOTED_MAIN = 9ebdbe771346e6509c902f71766b117ab674f503
+TESTED_SHA = 5bd8754aad3e53886ce6109bd350fa4fc5f68db9
+RUNTIME_RUN = 36112690309
+UI = PASS
+VISUAL_EVIDENCE = PASS
+CORE_MUTATION = 0
+
+CREATIVE_TIMEOUT = PRE_EXISTING / SEPARATE HOLD
+GEOMETRY = NOT_REACHED BECAUSE OF CREATIVE BASELINE TIMEOUT
+PHOTOSHOP_REBUILD = READY_FOR_NEW_WORK_ORDER
+```
+
+The UI cleanup branch is no longer the active implementation lane. Future Photoshop-aligned UI work must start from promoted main on a fresh bounded branch.
+
+---
+
 ## UI cleanup G8 capture-only PASS / Runtime rerun — 2026-09-25
 
 ```text
