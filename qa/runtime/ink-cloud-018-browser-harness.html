@@ -1471,6 +1471,201 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       exportFormats:c2aExportHandles.map(handle=>handle.format)
     });
 
+    // INK-TECH-CLOSURE-001 C2-B — final-batch browser proof.
+    // repeat.expand.v1 is intentionally NOT exposed: vector-core has expansion generation,
+    // but current product has no authoritative commit semantics for writing an expanded group back.
+    const c2bOperations=[
+      'repeat.mirror.v1',
+      'repeat.grid.v1',
+      'layout.frame.set.v1',
+      'layout.frame.remove.v1',
+      'layout.item.set.v1',
+      'layout.item.remove.v1'
+    ];
+    const c2bDiscovery=await inkApi.tools.invoke('get_ink_capabilities');
+    assert(
+      c2bDiscovery?.status==='COMPLETED' &&
+      c2bOperations.every(id=>c2bDiscovery.result.capabilities.some(capability=>capability.id===id && capability.availability===true)) &&
+      !c2bDiscovery.result.capabilities.some(capability=>capability.id==='repeat.expand.v1' && capability.availability===true),
+      'C2B_CAPABILITIES_DISCOVERED_WITH_EXPAND_BOUNDARY',
+      {operations:c2bOperations}
+    );
+
+    const c2bRuns=[];
+    const executeC2BPlan=async(label,steps)=>{
+      const beforeProposal=readOnlySnapshot();
+      const proposed=await inkApi.tools.invoke('use_ink',{
+        action:'propose',
+        plan:{schema:'INK-CHAT-CREATIVE-PLAN',version:1,intentSummary:label,steps}
+      });
+      assert(
+        proposed?.status==='PROPOSED' &&
+        Boolean(proposed?.result?.planId) &&
+        readOnlySnapshot()===beforeProposal,
+        'C2B_PROPOSAL_MUTATION_NEUTRAL',
+        {label,status:proposed?.status}
+      );
+      const blocked=await inkApi.tools.invoke('use_ink',{
+        action:'execute',planId:proposed.result.planId,approvalToken:'not-approved'
+      });
+      assert(
+        blocked?.status==='FAILED' &&
+        blocked?.diagnostics?.[0]?.code==='CHAT_PLAN_APPROVAL_REQUIRED',
+        'C2B_EXECUTE_BLOCKED_BEFORE_APPROVAL',
+        {label,code:blocked?.diagnostics?.[0]?.code||null}
+      );
+      const approved=await inkApi.tools.invoke('use_ink',{action:'approve',planId:proposed.result.planId});
+      assert(
+        approved?.status==='APPROVED' &&
+        /^INK-LOCAL-PLAN-APPROVAL:/.test(approved?.result?.approvalToken||''),
+        'C2B_EXPLICIT_APPROVAL',
+        {label,planId:proposed.result.planId}
+      );
+      const executed=await inkApi.tools.invoke('use_ink',{
+        action:'execute',
+        planId:proposed.result.planId,
+        approvalToken:approved.result.approvalToken
+      });
+      assert(
+        executed?.status==='COMPLETED' &&
+        executed?.result?.stepResults?.length===steps.length &&
+        executed.result.stepResults.every(step=>step.ok===true && step.changed===true),
+        'C2B_PLAN_EXECUTED',
+        {label,status:executed?.status,steps:executed?.result?.stepResults}
+      );
+      c2bRuns.push({label,proposed,approved,executed});
+      return executed;
+    };
+    const c2bTargetFromStep=(executed,stepId)=>{
+      const step=executed?.result?.stepResults?.find(item=>item.stepId===stepId);
+      const target=step?.targets?.[0];
+      return target?.ref||target||null;
+    };
+
+    const c2bRepeats=await executeC2BPlan('Closure C2-B · mirror and procedural grid Repeat',[
+      {
+        stepId:'c2b-repeat-mirror',
+        operation:'repeat.mirror.v1',
+        targets:[c2aSvgRef],
+        arguments:{axis:'y',center:{x:854,y:198},linked:true},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2b-repeat-grid',
+        operation:'repeat.grid.v1',
+        targets:[c2aSvgRef],
+        arguments:{columns:3,rows:2,dx:60,dy:48,linked:true},
+        dependsOn:[]
+      }
+    ]);
+    const c2bMirrorRef=c2bTargetFromStep(c2bRepeats,'c2b-repeat-mirror');
+    const c2bGridRef=c2bTargetFromStep(c2bRepeats,'c2b-repeat-grid');
+    const c2bMirror=app.findObject(c2bMirrorRef)?.object;
+    const c2bGrid=app.findObject(c2bGridRef)?.object;
+    assert(
+      c2bMirror?.type==='repeat' && c2bMirror?.mode==='mirror' && c2bMirror?.axis==='y' &&
+      c2bGrid?.type==='repeat' && c2bGrid?.mode==='grid' &&
+      c2bGrid?.columns===3 && c2bGrid?.rows===2,
+      'C2B_NATIVE_REPEAT_AUTHORITIES',
+      {mirrorRef:c2bMirrorRef,gridRef:c2bGridRef}
+    );
+
+    await executeC2BPlan('Closure C2-B · reparent existing Text then set Frame/LayoutItem metadata',[
+      {
+        stepId:'c2b-reparent-text',
+        operation:'object.reparent.v1',
+        targets:[c2aTextRef],
+        arguments:{parentObjectId:c2aFrameRef.objectId},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2b-frame-layout-set',
+        operation:'layout.frame.set.v1',
+        targets:[c2aFrameRef],
+        arguments:{
+          mode:'horizontal',
+          gap:12,
+          padding:{top:8,right:10,bottom:8,left:10},
+          align:{main:'center',cross:'stretch'},
+          sizing:{horizontal:'fixed',vertical:'hug'}
+        },
+        dependsOn:['c2b-reparent-text']
+      },
+      {
+        stepId:'c2b-item-layout-set',
+        operation:'layout.item.set.v1',
+        targets:[c2aTextRef],
+        arguments:{
+          participation:'flow',
+          sizing:{horizontal:'fill',vertical:'hug'},
+          fixedSize:{width:120,height:36},
+          constraints:{horizontal:'stretch',vertical:'center'}
+        },
+        dependsOn:['c2b-reparent-text','c2b-frame-layout-set']
+      }
+    ]);
+    const c2bFrame=app.findObject(c2aFrameRef)?.object;
+    const c2bText=app.findObject(c2aTextRef)?.object;
+    assert(
+      c2bFrame?.layout?.schema==='INK-LAYOUT-1' &&
+      c2bFrame.layout.mode==='horizontal' &&
+      c2bFrame.layout.gap===12 &&
+      c2bText?.layoutItem?.schema==='INK-LAYOUT-ITEM-1' &&
+      c2bText.layoutItem.sizing?.horizontal==='fill' &&
+      c2bText.layoutItem.constraints?.horizontal==='stretch',
+      'C2B_LAYOUT_METADATA_NATIVE_AUTHORITIES',
+      {frameLayout:c2bFrame?.layout,textLayoutItem:c2bText?.layoutItem}
+    );
+
+    await executeC2BPlan('Closure C2-B · remove LayoutItem and FrameLayout metadata',[
+      {
+        stepId:'c2b-item-layout-remove',
+        operation:'layout.item.remove.v1',
+        targets:[c2aTextRef],
+        arguments:{},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2b-frame-layout-remove',
+        operation:'layout.frame.remove.v1',
+        targets:[c2aFrameRef],
+        arguments:{},
+        dependsOn:['c2b-item-layout-remove']
+      }
+    ]);
+    assert(
+      app.findObject(c2aFrameRef)?.object?.layout===undefined &&
+      app.findObject(c2aTextRef)?.object?.layoutItem===undefined,
+      'C2B_LAYOUT_METADATA_REMOVED'
+    );
+
+    const c2bHistorySteps=c2bRuns.flatMap(run=>run.executed?.historyReceipt?.steps||[]);
+    assert(
+      c2bHistorySteps.length===7 &&
+      c2bHistorySteps.every(step=>Boolean(step.history) &&
+        Number.isInteger(step.history.beforeUndoCount) &&
+        step.history.afterUndoCount===step.history.beforeUndoCount+1),
+      'C2B_HISTORY_RECORDED_WITHOUT_NESTED_TRANSACTION',
+      {stepCount:c2bHistorySteps.length}
+    );
+
+    evidence.c2b={
+      schema:'INK-TECH-CLOSURE-001-C2B-PROOF',
+      version:1,
+      operations:c2bOperations,
+      expandDisposition:'CORE_ONLY_ACCEPTED_NO_COMMIT_SEMANTICS',
+      planCount:c2bRuns.length,
+      historySteps:c2bHistorySteps.length,
+      mirrorRef:c2bMirrorRef,
+      gridRef:c2bGridRef
+    };
+    pass('C2B_GATE_PASS',{
+      gate:'C2B_REPEAT_LAYOUT_EXPOSURE',
+      operationCount:c2bOperations.length,
+      expandDisposition:evidence.c2b.expandDisposition,
+      historySteps:c2bHistorySteps.length
+    });
+
     const health=w.INK_TEST.runtimeHealth?.();
     evidence.metrics.runtimeHealth=health;
     const fatalCount=Number(health?.errors?.fatal || health?.fatalErrors || health?.fatal || 0);
