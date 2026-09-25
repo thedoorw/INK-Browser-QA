@@ -47,6 +47,133 @@ INK-specific functions remain INK-native:
 
 They must fit the same workstation grammar and must not create a second UI system.
 
+## 1A. Photoshop Standard Answer Pack — prerequisite to acceptance rules
+
+Before defining or executing recurring UI acceptance, UR must first maintain a stable Photoshop reference pack. This pack is the answer key for later comparison; individual screenshots, CSS declarations or visual impressions are not independently authoritative.
+
+### Reference hierarchy
+
+1. **Adobe official documentation — behavior authority**
+   - Photoshop workspace structure / Application bar / Panels / Tools panel / Document window / Options bar:
+     https://helpx.adobe.com/photoshop/desktop/get-started/learn-the-basics/workspace-overview.html
+   - Panel docking / undocking:
+     https://helpx.adobe.com/photoshop/desktop/get-started/learn-the-basics/dock-undock-panels.html
+   - Collapsed / expanded panel-icon behavior:
+     https://helpx.adobe.com/photoshop/desktop/get-started/learn-the-basics/collapse-expand-icons.html
+   - Toolbar grouping / customization:
+     https://helpx.adobe.com/tw/photoshop/desktop/get-started/set-up-toolbars-panels/customize-the-toolbar.html
+   - Navigator interaction:
+     https://helpx.adobe.com/tw/photoshop/using/viewing-images.html
+   - History panel behavior:
+     https://helpx.adobe.com/photoshop/desktop/get-started/set-up-toolbars-panels/history-panel-overview.html
+   - Manage History states:
+     https://helpx.adobe.com/photoshop/desktop/get-started/set-up-toolbars-panels/manage-image-states.html
+
+   Rule: Adobe documentation defines what a Photoshop control/panel is expected to do. It does not by itself define pixel geometry for the user's exact desktop capture.
+
+2. **Fixed Photoshop reference screenshots — visual/geometry authority**
+   - `ps-1.png` = 1280 × 1024
+   - `ps-2.png` = 1280 × 1024
+
+   These captures are the fixed visual answer for this UI program until USER explicitly replaces them.
+
+   They define:
+   - shell proportions;
+   - visible density;
+   - spacing;
+   - panel/tool arrangement;
+   - tonal hierarchy;
+   - icon/text scale relationship;
+   - actual screenshot geometry at that captured configuration.
+
+3. **Photoshop measurement sheet — numeric geometry authority**
+
+   UR must derive and record exact pixel measurements from the fixed reference screenshots, including:
+   - application/menu row;
+   - dividers;
+   - options row;
+   - left toolbar single/double width;
+   - canvas origin/bounds;
+   - right dock width;
+   - expanded panel width;
+   - status/bottom region;
+   - key gutters/padding/dividers.
+
+   Existing locked value:
+
+   ```text
+   menu row        24 px
+   divider          1 px
+   options row     35 px
+   divider          1 px
+   TOTAL           61 px
+   ```
+
+4. **INK Runtime computed geometry — implementation truth**
+
+   INK CSS source is not final evidence. Runtime must record actual rendered values using DOM/computed geometry such as:
+   - `getBoundingClientRect()`;
+   - `getComputedStyle()`.
+
+   CSS source is used to explain *why* the Runtime result occurred; Runtime rendered geometry records *what actually occurred*.
+
+5. **Pixel overlay / difference — rendered parity evidence**
+
+   At matched viewport dimensions, compare the fixed Photoshop reference and INK Runtime capture using:
+   - aligned side-by-side comparison;
+   - 50% overlay;
+   - pixel/edge difference;
+   - major-boundary guide comparison.
+
+6. **USER + CHAT visual review — perceptual acceptance**
+
+   Used for:
+   - visual density;
+   - hierarchy;
+   - perceived Photoshop likeness;
+   - readability;
+   - awkward spacing/grouping;
+   - interaction ergonomics.
+
+   It must not replace numeric evidence for claims such as exact widths/heights.
+
+### Conflict rule
+
+When evidence conflicts:
+
+```text
+behavior question
+→ Adobe official documentation
+
+exact Photoshop captured geometry
+→ fixed PS screenshot + measurement sheet
+
+exact INK rendered geometry
+→ INK Runtime computed geometry
+
+rendered visual mismatch
+→ screenshot overlay / difference
+
+implementation cause
+→ CSS / DOM / source
+
+perceptual quality
+→ USER + CHAT visual review
+```
+
+### Reference change control
+
+Do not silently replace the answer key during development.
+
+A Photoshop reference screenshot may be superseded only when USER intentionally supplies/approves a new reference configuration. Record:
+- image identity;
+- pixel dimensions;
+- relevant workspace/panel state;
+- replacement reason;
+- which prior measurements become obsolete.
+
+Acceptance rules must always name the reference-pack revision they were tested against.
+
 ## 2. Reference geometry
 
 Authoritative user measurement already established for the Photoshop top chrome:
