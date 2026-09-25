@@ -1,5 +1,55 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-TECH-CLOSURE-001 / C2-C / DEV_AUTHORIZED / START`
+
+- Branch: `work/ink-tech-closure-001`
+- C2-B reviewed exact HEAD: `f44416b6a41af0235adeb01ed402408c005b4255`
+- C2-B MR result: `MR_SOURCE_PASS / Runtime deferred`
+- Repeat Expand: `CORE_ONLY_ACCEPTED / NOT_EXPOSED`
+- C2-C Workpack: `working/INK_TECH_CLOSURE_001_C2C_DEV_WORKPACK.md`
+- Full Windows Runtime: `DEFERRED_TO_FINAL_CLOSURE_BATCH`
+- Current gate: `C2-C DEV execution`
+
+## Preserved closure state
+
+```text
+C1 use_ink prefix = 14 / MR_SOURCE_PASS
+C2-A total = 21 / MR_SOURCE_PASS
+C2-B total = 27 / MR_SOURCE_PASS
+named tools = 21
+Runtime acceptance = pending final Closure Runtime
+promotion = pending final Closure promotion
+```
+
+## C2-C target
+
+```text
+component.register.v1
+component.instance.create.v1
+component.override.set.v1
+component.override.reset.v1
+component.instance.detach.v1
+component.definition.duplicate.v1
+component.reference.repair.v1
+
+expected final bounded use_ink total = 34
+```
+
+## Stop rule
+
+After `C2C_SOURCE_FOCUSED_PASS`:
+
+```text
+record exact HEAD
+DEV_HANDOFF → STOP
+```
+
+Runtime is not authorized until MR final source review.
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-TECH-CLOSURE-001 / C2-B / C2B_SOURCE_FOCUSED_PASS / DEV_HANDOFF / STOP`
 
 - Branch: `work/ink-tech-closure-001`
