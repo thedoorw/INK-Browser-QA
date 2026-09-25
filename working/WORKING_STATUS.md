@@ -1,3 +1,30 @@
+## INK-CHAT-GEOMETRY-OPS-001 started — 2026-09-25
+
+```text
+USER_AUTHORIZED = YES
+TASK = INK-CHAT-GEOMETRY-OPS-001
+BRANCH = work/ink-chat-geometry-ops-001
+TARGET_GATE = CHAT_NATIVE_GEOMETRY_OPS_V01
+BASE = bda6026e251e6dd1ea1a5c9d515e97e424d8329a
+
+ADD_TO_USE_INK =
+  path.create.v1
+  path.edit.v1
+  object.rotate.v1
+  object.clone.v1
+  repeat.radial.v1
+  boolean.apply.v1
+  group.create.v1
+  object.reparent.v1
+
+PRODUCT_RULE =
+  expose existing native authorities only
+  no second geometry engine
+
+LESSON_002 = BLOCKED only on this operation exposure
+DRAWING_VALIDATION = HOLD_BY_USER
+```
+
 ## Smart closed-loop final closure — 2026-09-24
 
 ```text
