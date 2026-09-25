@@ -224,6 +224,7 @@ async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
   const output = path.join(evidenceDir, spec.file);
   const profile = await mkdtemp(path.join(root, 'profile-ui-visual-'));
   let child;
+  let stderr = '';
   try {
     await rm(output, { force: true });
     const args = [
@@ -243,7 +244,6 @@ async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
       windowsHide: true,
       stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe']
     });
-    let stderr = '';
     child.stderr.on('data', chunk => { if (stderr.length < 8192) stderr += chunk.toString(); });
 
     const cdp = createCdpPipe(child);
@@ -312,7 +312,12 @@ async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
   }
 }
 
-/* Retired Runtime failure source: Chrome CLI --screenshot=${output} side effects are not used. */
+/* Retired Runtime failure source: Chrome CLI --screenshot=${output} side effects are not used.
+   Previous static-probe tokens retained as diagnostics only:
+   BROWSER_NATIVE_HEADLESS_SCREENSHOT
+   --blink-settings=scriptEnabled=false
+   --window-size=${spec.width},${spec.height}
+*/
 
 export async function finalizeSmartLoopEvidence(root, evidence, testedSha) {
   assert.match(testedSha || '', /^[a-f0-9]{40}$/);
