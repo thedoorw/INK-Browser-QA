@@ -235,3 +235,51 @@ DEV did not start the MR-owned exact-SHA Windows Runtime rerun.
 
 `G8_RUNTIME_RESULT = PENDING_MR_EXACT_SHA_RERUN`
 
+
+
+## G8 final Windows Runtime closure — 2026-09-25
+
+```text
+PROMOTED_MAIN_BASE = 9ebdbe771346e6509c902f71766b117ab674f503
+TESTED_EXACT_SHA = 5bd8754aad3e53886ce6109bd350fa4fc5f68db9
+RUNTIME_RUN = 36112690309
+RUNNER = DESKTOP-NSOQH69
+UI_SUITE = PASS
+G8_UI_GATE = PASS
+CENTRAL_BATCH = FAIL_AFTER_UI / PRE-EXISTING_CREATIVE_TIMEOUT_360S
+PRODUCT_UI_RUNTIME_FAIL = 0
+ARTIFACT_ID = 10854191875
+ARTIFACT_DIGEST = sha256:7f06e3fe7876ad1e9d9d302b2867646928b5630b191069de0a166ae86ec0c3f2
+```
+
+Required visual evidence was produced through browser-native CDP capture and validated for PNG signature, exact dimensions, byte length and SHA-256:
+
+```text
+ui-first-paint.png
+  1280x1024
+  DELIVERED_FIRST_PAINT / SCRIPT_DISABLED
+  sha256=b0cbbd73fc5b807ec7d3e2bc920b60494604af4009592c37ef9784991fa059a6
+
+ui-1280x1024.png
+  1280x1024
+  RUNTIME_ENABLED
+  sha256=e3ca10151dd2f939183e9018f0d2e2e37904b4e9a4b5f765499eb577c9ea7986
+
+ui-960x800.png
+  960x800
+  RUNTIME_ENABLED
+  sha256=095d785c2367d303f47ca0eedc4eef35b46498c2201ac4c409a2bf6f37813148
+```
+
+MR visually inspected all three captures: delivered first paint is light/stable with no black-screen transition; both Runtime viewport captures are contained without horizontal overflow.
+
+The same central Creative-harness timeout pattern existed before this UI cleanup in run `36088550693`: UI PASS → Creative 360s timeout → Geometry not reached. Both runs progressed far enough to emit smart-loop before/after evidence. Therefore that shared Creative baseline issue is retained separately and is not attributed to this UI cleanup payload.
+
+Clean promotion copied only the reviewed product/QA/evidence payload onto then-current main; branch-local `ACTIVE/INK_DEV_PROGRESS.md` was excluded.
+
+```text
+G0-G8_UI = PASS
+UI_TECH_DEBT_CLEANUP = COMPLETE
+CREATIVE_BASELINE_TIMEOUT = SEPARATE_MR_HOLD
+PHOTOSHOP_WORKSTATION_REBUILD = RELEASED_FOR_NEXT_WORK_ORDER
+```
