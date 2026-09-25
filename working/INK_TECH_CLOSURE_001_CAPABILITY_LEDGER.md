@@ -172,3 +172,23 @@ Each checkpoint must pass source/static/unit/focused QA and receive a durable co
 Full Windows Runtime is batched to the final closure branch HEAD unless a high-risk exception is triggered.
 
 This policy reduces repeated transport/evidence churn while preserving exact causal recovery in GitHub.
+
+
+## H. C1 MR source checkpoint
+
+```text
+REVIEWED_HEAD = 6a9fb25558cda958b90140867ac054f3662dfa01
+C1_SOURCE = MR_PASS
+REPLAY_IDENTITY = 7 / 7 exact accepted blobs
+USE_INK_TOTAL_ON_CLOSURE_BRANCH = 14
+
+RUNTIME = PENDING_FINAL_CLOSURE_BATCH
+PROMOTION = PENDING
+MAIN_INSTALLED = NO
+```
+
+C1 therefore moves from `IMPLEMENTED_NOT_PROMOTED` to:
+
+`INTEGRATED_ON_CLOSURE_BRANCH / SOURCE_ACCEPTED / RUNTIME_AND_PROMOTION_PENDING`
+
+C2-A is released on the same branch. The main capability state is not yet changed until final Runtime PASS and promotion.
