@@ -12,7 +12,7 @@ All remaining declarations are state-visibility or reduced-motion exceptions. Pr
 
 G6 is also source-complete on the accepted three-mode responsive taxonomy.
 
-The only unresolved pre-Runtime gate is G7 asset authority: the current visible-logo route is singular, but the exact user-approved final logo asset cannot be proven from repository evidence. The correct result is therefore `HOLD_ASSET`, not a guessed replacement.
+G7 asset authority is now resolved: the exact user-approved 300×300 JPEG is installed at the existing visible-logo route and locked to SHA256 `08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8`. G8 is the only remaining gate.
 
 ## What was cleaned
 
@@ -39,18 +39,24 @@ panel state owner             → 1
 menu controller               → 1
 duplicate literal DOM ids     → 0
 favicon authority             → 1
-visible logo route            → 1 / asset approval pending
+visible logo route            → 1 / exact approved SHA locked
 ```
 
 Tracked core selector definitions materially decreased while the accepted desktop authority has exactly one definition for each tracked selector.
 
 ## Remaining risk
 
-### G7 — visible brand asset
+### G7 — visible brand asset — RESOLVED
 
-The repository contains multiple candidate brand assets, but only one current delivered visible-logo route. The current route is not sufficient evidence that the asset is the exact approved final logo.
+The exact user-approved JPEG was verified before source mutation and installed byte-for-byte at `product/source/assets/INK_MARK_SOURCE_W-300.jpg`.
 
-No asset guess was made.
+```text
+SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+BYTES = 19801
+DIMENSIONS = 300x300
+VISIBLE_LOGO_AUTHORITY = 1
+FAVICON_AUTHORITY = 1
+```
 
 ### G8 — browser / visual proof
 
