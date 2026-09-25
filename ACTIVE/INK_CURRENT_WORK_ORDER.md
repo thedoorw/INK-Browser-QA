@@ -1,6 +1,21 @@
+### Health baseline release note — 2026-09-25
+
+```text
+KNOWN_GOOD_PRODUCT_BASE = d6c28be13cddee0d83b9e7613b5498b06d1f7b0e
+CURRENT_MAIN_PRODUCT_SOURCE_DELTA_FROM_BASE = 0 files
+
+GEOMETRY_OPS_RUNTIME =
+  36088550693 / FAIL / Creative harness timeout
+  branch remains unpromoted
+
+DECISION =
+  do not block UI debt cleanup on an unpromoted experimental branch
+  start cleanup from current main because its product/source tree is unchanged
+```
+
 ## INK-UI-REBUILD-001-TECH-DEBT-CLEANUP — health-first cleanup authorization — 2026-09-25
 
-STATUS: `INK-UI-REBUILD-001-TECH-DEBT-CLEANUP / AUTHORIZED / WAIT_CLEAN_MAIN_BASELINE`
+STATUS: `INK-UI-REBUILD-001-TECH-DEBT-CLEANUP / AUTHORIZED / DEV_START_FROM_KNOWN_GOOD_MAIN`
 
 User priority:
 
@@ -156,7 +171,7 @@ Until G8 passes:
 
 ## INK-CHAT-GEOMETRY-OPS-001 — CHAT native geometry operation exposure — 2026-09-25
 
-STATUS: `INK-CHAT-GEOMETRY-OPS-001 / AUTHORIZED / DEV_START`
+STATUS: `INK-CHAT-GEOMETRY-OPS-001 / MR_HOLD / RUNTIME_TIMEOUT / NOT_PROMOTED`
 
 User authorization:
 
