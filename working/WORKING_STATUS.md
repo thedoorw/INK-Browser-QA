@@ -1,3 +1,33 @@
+## Closure 001 install-first execution plan adopted — 2026-09-25
+
+```text
+USER_POLICY = minimize repeated Runtime/evidence transport
+BRANCH = work/ink-tech-closure-001
+
+SEQUENCE =
+  C1 Geometry Ops replay
+  → C2-A basic structure/transform/import-export
+  → C2-B repeat/layout/constraints
+  → C2-C components/overrides
+  → ONE concentrated exact-SHA Runtime
+  → clean promotion
+  → CURRENT_CAPABILITY_BASELINE_FROZEN
+
+CHECKPOINT_RULE =
+  source/static/unit/focused QA
+  + durable commit
+  + WHY / NATIVE_AUTHORITY / WHAT_CHANGED / REMAINS / NEXT
+
+PARTIAL_PROMOTION = PROHIBITED
+IMMEDIATE_RUNTIME = HIGH_RISK_EXCEPTION_ONLY
+UI_REBUILD = WAIT_FOR_C3_BASELINE_FREEZE
+```
+
+Authority:
+`working/INK_TECH_CLOSURE_001_EXECUTION_PLAN.md`
+
+---
+
 ## Technical capability closure started — 2026-09-25
 
 ```text
