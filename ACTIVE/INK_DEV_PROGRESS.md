@@ -148,3 +148,61 @@ Result: **PASS for the authorized QA-bridge revision scope**.
 - Windows Runtime rerun: NOT_RUN_BY_DEV.
 - Current gate: `DEV_HANDOFF → STOP`.
 
+
+
+## 2026-09-25 — INK-CHAT-GEOMETRY-OPS-001
+
+```text
+TASK = INK-CHAT-GEOMETRY-OPS-001
+BRANCH = work/ink-chat-geometry-ops-001
+TARGET_GATE = CHAT_NATIVE_GEOMETRY_OPS_V01
+STATUS = DEV_IMPLEMENTED / DEV_HANDOFF_PENDING
+```
+
+User-authorized additive `use_ink` geometry vocabulary:
+
+```text
+path.create.v1
+path.edit.v1
+object.rotate.v1
+object.clone.v1
+repeat.radial.v1
+boolean.apply.v1
+group.create.v1
+object.reparent.v1
+```
+
+The accepted Connector-004 six operations remain unchanged and are the exact prefix. Current bounded vocabulary is 14 operations total.
+
+Implementation routes only through existing native authorities:
+
+```text
+create        → vector-core createPath / createAnchor
+path edit     → PathEditController
+rotate        → Matrix.around + applyWorldTransformBatch
+clone         → cloneCompositionObject
+radial repeat → createRepeat
+boolean       → booleanPaths / dividePaths
+group         → createVectorGroup
+reparent      → reparentPageObject
+```
+
+No new geometry engine, renderer, UI, external transport, arbitrary JS execution, or FORMAT_VERSION change was introduced.
+
+A parent-coordinate correction was included for `repeat.radial.v1`: public input remains world-space center, converted through the source parent world inverse before native Repeat construction.
+
+QA added:
+
+- `qa/ink-chat-geometry-ops-001.test.mjs`: focused operation/History/identity contract.
+- existing Connector-004 vocabulary regression updated from permanent exact-six to exact six-prefix + authorized eight additions.
+- real-browser Runtime proof added to `ink-cloud-018-browser-harness.html` with create → edit → rotate → clone → repeat → boolean → group → reparent → History → Revision → Preview markers.
+
+Focused source/contract QA executed in DEV:
+- modified JS/browser script syntax parse: PASS
+- operation exposure contract: PASS
+- native-authority routing contract: PASS
+- radial world-center conversion contract: PASS
+- arbitrary execution / external transport guard: PASS
+- Runtime marker completeness: 13 / 13 PASS
+
+Windows Runtime was not run by DEV. MR owns the exact-SHA Runtime.
