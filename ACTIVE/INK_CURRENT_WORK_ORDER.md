@@ -1,3 +1,53 @@
+## MR checkpoint — UI debt cleanup G5 health revision — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+REVIEWED_HEAD = f574731b0e920950211f04177826b3ad2ce0157b
+MR = REVISE / G5_CSS_HEALTH_DELTA_ONLY
+G0 = PASS
+G1 = PASS
+G2 = SOURCE_PASS
+G3 = SOURCE_PASS
+G4 = SOURCE_PASS
+G5 = NOT YET MR_PASS
+G6 = PARTIAL / WIDTH TAXONOMY DIRECTION ACCEPTED
+G7 = NOT_STARTED
+G8 = NOT_STARTED
+
+BLOCKER =
+  !important 223 → 220 does not satisfy the existing
+  "materially decrease" CSS-health rule.
+
+OBSERVED_G6 =
+  width taxonomy is now limited to:
+    DESKTOP_WIDE > 1120
+    DESKTOP_NARROW 761–1120
+    COMPACT <= 760
+  pointer/height/accessibility media features remain modifiers.
+  This direction is accepted, but G6 may not mask the unresolved G5 gate.
+```
+
+Authorized bounded revision:
+
+1. Return to G5 only for `!important` debt on touched workstation/shell presentation surfaces.
+2. Remove avoidable cascade-war `!important` declarations by deleting/replacing obsolete competing authorities; do not bulk-strip declarations blindly.
+3. Preserve only declarations that have a documented concrete necessity after authority consolidation.
+4. Update G5 evidence with:
+   - exact before/after total;
+   - remaining `!important` inventory by semantic family/property;
+   - explanation for any remaining touched-shell `!important`;
+   - proof that no new late override block or frozen-Core mutation was introduced.
+5. G5 MR acceptance requires a substantive reduction, not a cosmetic 3-count change. The evidence must demonstrate that touched shell authorities no longer depend on cascade-war `!important` rules.
+6. After G5 is corrected, continue G6 → G7 → focused QA → `DEV_HANDOFF / STOP`.
+7. Do not start Photoshop workstation rebuild.
+8. Do not run/promote Geometry Ops from the stale branch.
+
+Frozen authorities remain unchanged.
+
+`DEV → bounded G5 health delta → continue G6/G7 → DEV_HANDOFF → STOP`
+
+---
+
 ### Health baseline release note — 2026-09-25
 
 ```text
