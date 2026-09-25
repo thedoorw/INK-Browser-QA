@@ -40,7 +40,10 @@ test('delivered shell owns a light workstation first paint before Runtime boot',
     assert.match(html, /<div id="app" class="app web-shell-v0-1" data-panel="brush" data-space="creation" data-shell-panel="collapsed" data-toolbar-layout="single" data-first-paint="ready" style="--active-panel-w:0px">/);
     assert.doesNotMatch(html, /inkFirstPaintStyle[\s\S]{0,240}?(?:#000|black|#111|#1[0-9a-f]{5})/i);
   }
-  assert.match(serviceWorker, /const BUILD_ID = '20260925-ui-rebuild-001-g3-first-paint-r1';/);
+  const appBuildId = config.match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
+  const workerBuildId = serviceWorker.match(/const BUILD_ID = '([^']+)'/)?.[1];
+  assert.ok(appBuildId);
+  assert.equal(workerBuildId, appBuildId);
 });
 
 test('desktop primary-panel state is explicit and fresh entry is collapsed', () => {
