@@ -312,6 +312,77 @@ const editSchemas = {
       action: { type: 'string', enum: ['front', 'back'], description: 'Existing native ordering action.' }
     }, ['action'], 'C2-A ordering is limited to current front/back semantics.'),
     64
+  ),
+  'repeat.mirror.v1': editTaskSchema(
+    { type: 'string', const: 'repeat.mirror.v1', description: 'Create one native mirror Repeat adjacent to the source object.' },
+    obj({
+      axis: { type: 'string', enum: ['x', 'y'], default: 'y', description: 'Existing mirror axis.' },
+      center: obj({ x: num('World-space mirror center X.'), y: num('World-space mirror center Y.') }, ['x', 'y'], 'Optional explicit world-space mirror center.'),
+      linked: bool('Preserve existing linked Repeat semantics.', { default: true })
+    }, [], 'Existing createRepeat(mode=mirror) arguments.'),
+    1
+  ),
+  'repeat.grid.v1': editTaskSchema(
+    { type: 'string', const: 'repeat.grid.v1', description: 'Create one native procedural grid Repeat adjacent to the source object.' },
+    obj({
+      columns: { type: 'integer', minimum: 1, maximum: 64, description: 'Repeat columns.' },
+      rows: { type: 'integer', minimum: 1, maximum: 64, description: 'Repeat rows.' },
+      dx: num('Existing X spacing.', { minimum: -100000, maximum: 100000 }),
+      dy: num('Existing Y spacing.', { minimum: -100000, maximum: 100000 }),
+      linked: bool('Preserve existing linked Repeat semantics.', { default: true })
+    }, ['columns', 'rows'], 'Existing createRepeat(mode=grid) arguments; total instances are additionally bounded by the edit authority.'),
+    1
+  ),
+  'layout.frame.set.v1': editTaskSchema(
+    { type: 'string', const: 'layout.frame.set.v1', description: 'Set existing INK-LAYOUT-1 metadata on one native Frame.' },
+    obj({
+      mode: { type: 'string', enum: ['manual', 'horizontal', 'vertical'], default: 'manual', description: 'Existing FrameLayout mode.' },
+      gap: num('Gap.', { minimum: 0, maximum: 1000000, default: 0 }),
+      padding: obj({
+        top: num('Top padding.', { minimum: 0, maximum: 1000000, default: 0 }),
+        right: num('Right padding.', { minimum: 0, maximum: 1000000, default: 0 }),
+        bottom: num('Bottom padding.', { minimum: 0, maximum: 1000000, default: 0 }),
+        left: num('Left padding.', { minimum: 0, maximum: 1000000, default: 0 })
+      }, [], 'Existing FrameLayout padding.'),
+      align: obj({
+        main: { type: 'string', enum: ['start', 'center', 'end', 'space-between'], default: 'start', description: 'Main-axis alignment.' },
+        cross: { type: 'string', enum: ['start', 'center', 'end', 'stretch'], default: 'start', description: 'Cross-axis alignment.' }
+      }, [], 'Existing FrameLayout alignment.'),
+      sizing: obj({
+        horizontal: { type: 'string', enum: ['fixed', 'hug'], default: 'fixed', description: 'Horizontal Frame sizing.' },
+        vertical: { type: 'string', enum: ['fixed', 'hug'], default: 'fixed', description: 'Vertical Frame sizing.' }
+      }, [], 'Existing FrameLayout sizing.')
+    }, [], 'Existing INK-LAYOUT-1 metadata only.'),
+    1
+  ),
+  'layout.frame.remove.v1': editTaskSchema(
+    { type: 'string', const: 'layout.frame.remove.v1', description: 'Remove existing FrameLayout metadata from one native Frame.' },
+    obj({}, [], 'No arguments.', false),
+    1
+  ),
+  'layout.item.set.v1': editTaskSchema(
+    { type: 'string', const: 'layout.item.set.v1', description: 'Set existing INK-LAYOUT-ITEM-1 metadata on one current Frame child.' },
+    obj({
+      participation: { type: 'string', enum: ['flow', 'absolute'], default: 'flow', description: 'Existing participation mode.' },
+      sizing: obj({
+        horizontal: { type: 'string', enum: ['fixed', 'fill', 'hug'], default: 'hug', description: 'Horizontal child sizing.' },
+        vertical: { type: 'string', enum: ['fixed', 'fill', 'hug'], default: 'hug', description: 'Vertical child sizing.' }
+      }, [], 'Existing LayoutItem sizing.'),
+      fixedSize: obj({
+        width: num('Fixed width.', { minimum: 0, maximum: 1000000, default: 1 }),
+        height: num('Fixed height.', { minimum: 0, maximum: 1000000, default: 1 })
+      }, [], 'Existing fixed size metadata.'),
+      constraints: obj({
+        horizontal: { type: 'string', enum: ['start', 'end', 'center', 'scale', 'stretch'], default: 'start', description: 'Horizontal constraint.' },
+        vertical: { type: 'string', enum: ['start', 'end', 'center', 'scale', 'stretch'], default: 'start', description: 'Vertical constraint.' }
+      }, [], 'Existing resize constraints.')
+    }, [], 'Existing INK-LAYOUT-ITEM-1 metadata only.'),
+    1
+  ),
+  'layout.item.remove.v1': editTaskSchema(
+    { type: 'string', const: 'layout.item.remove.v1', description: 'Remove existing LayoutItem metadata from one current Frame child.' },
+    obj({}, [], 'No arguments.', false),
+    1
   )
 };
 
@@ -619,6 +690,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
   if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
+  if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
+  if (operation === 'layout.frame.set.v1' || operation === 'layout.frame.remove.v1') operationConstraints.push('Target must be one native Frame; setFrameLayout remains the sole mutation authority.');
+  if (operation === 'layout.item.set.v1' || operation === 'layout.item.remove.v1') operationConstraints.push('Target must be one current child of a native Frame; setChildLayoutItem remains the sole mutation authority.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
