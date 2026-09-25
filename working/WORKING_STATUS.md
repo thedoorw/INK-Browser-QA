@@ -1,3 +1,40 @@
+## UI cleanup G8 Runtime — MR_REVISE — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+TESTED_SHA = 272c656cb98994540d3311f3f38dac1e95dfb519
+RUN = 36109323685 / attempt 2
+RUNNER = DESKTOP-NSOQH69
+UI = 105 / 110 PASS
+CREATIVE = NOT_REACHED
+GEOMETRY = NOT_REACHED
+ARTIFACT_ID = 10852681462
+ARTIFACT_DIGEST = sha256:3cb2e0682b39ef9ea6cbecdd76073f7242556ded6342e32d86ee189e0f286a31
+
+G0-G7 = PASS
+G8 = REVISE
+
+TRUE_SOURCE_DELTA =
+  compact New/Open/Save visibility
+  app/worker BUILD_ID convergence
+
+QA_CONTRACT_DELTA =
+  Escape real DOM dispatch
+  typography current --ui-font authority
+  compact toolbar no old hidden-rail requirement
+
+G8_EVIDENCE_DELTA =
+  first-paint PNG
+  1280x1024 PNG
+  960x800 PNG
+```
+
+Attempt 1 was a transient GitHub blob-fetch materialization failure and is not classified as a product failure.
+
+Photoshop workstation rebuild remains HOLD.
+
+---
+
 ## UI cleanup G7 PASS / G8 authorized — 2026-09-25
 
 ```text
