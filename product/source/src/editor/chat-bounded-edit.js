@@ -1,5 +1,6 @@
 import { Matrix } from '../core/index.js';
 import { createFrame, findPageObject, reparentPageObject, walkPageObjects } from '../document/hierarchy.js';
+import { setFrameLayout, setChildLayoutItem } from '../document/layout.js';
 import { PathEditController } from './path-edit.js';
 import { cloneCompositionObject } from './composition.js';
 import { applyWorldTransformBatch } from './transform.js';
@@ -230,7 +231,13 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'svg.import.v1',
   'object.resize.v1',
   'object.scale.v1',
-  'object.order.v1'
+  'object.order.v1',
+  'repeat.mirror.v1',
+  'repeat.grid.v1',
+  'layout.frame.set.v1',
+  'layout.frame.remove.v1',
+  'layout.item.set.v1',
+  'layout.item.remove.v1'
 ]);
 
 const CHAT_EDIT_OPERATION_SET = new Set(CHAT_EDIT_OPERATIONS);
@@ -542,6 +549,89 @@ function normalizeOrderArguments(raw = {}) {
   return { action: boundedEnum(raw.action, 'arguments.action', ['front', 'back']) };
 }
 
+function normalizeRepeatMirrorArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    axis: boundedEnum(raw.axis ?? 'y', 'arguments.axis', ['x', 'y']),
+    center: normalizePoint(raw.center, 'arguments.center', { optional: true }),
+    linked: raw.linked === undefined ? true : boundedBoolean(raw.linked, 'arguments.linked')
+  };
+}
+
+function normalizeRepeatGridArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const columns = boundedNumber(raw.columns, 'arguments.columns', { min: 1, max: 64, integer: true });
+  const rows = boundedNumber(raw.rows, 'arguments.rows', { min: 1, max: 64, integer: true });
+  if (columns * rows > 1024) editFail('ARGUMENTS_BOUNDS', { field: 'arguments.columns/rows' });
+  return {
+    columns,
+    rows,
+    dx: boundedNumber(raw.dx ?? 0, 'arguments.dx', { min: -1e5, max: 1e5 }),
+    dy: boundedNumber(raw.dy ?? 0, 'arguments.dy', { min: -1e5, max: 1e5 }),
+    linked: raw.linked === undefined ? true : boundedBoolean(raw.linked, 'arguments.linked')
+  };
+}
+
+function normalizeFrameLayoutSetArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const padding = raw.padding == null ? {} : raw.padding;
+  const align = raw.align == null ? {} : raw.align;
+  const sizing = raw.sizing == null ? {} : raw.sizing;
+  for (const [value, field] of [[padding, 'arguments.padding'], [align, 'arguments.align'], [sizing, 'arguments.sizing']]) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) editFail('ARGUMENT_INVALID', { field });
+  }
+  const layout = {
+    mode: boundedEnum(raw.mode ?? 'manual', 'arguments.mode', ['manual', 'horizontal', 'vertical']),
+    gap: boundedNumber(raw.gap ?? 0, 'arguments.gap', { min: 0, max: 1e6 }),
+    padding: {
+      top: boundedNumber(padding.top ?? 0, 'arguments.padding.top', { min: 0, max: 1e6 }),
+      right: boundedNumber(padding.right ?? 0, 'arguments.padding.right', { min: 0, max: 1e6 }),
+      bottom: boundedNumber(padding.bottom ?? 0, 'arguments.padding.bottom', { min: 0, max: 1e6 }),
+      left: boundedNumber(padding.left ?? 0, 'arguments.padding.left', { min: 0, max: 1e6 })
+    },
+    align: {
+      main: boundedEnum(align.main ?? 'start', 'arguments.align.main', ['start', 'center', 'end', 'space-between']),
+      cross: boundedEnum(align.cross ?? 'start', 'arguments.align.cross', ['start', 'center', 'end', 'stretch'])
+    },
+    sizing: {
+      horizontal: boundedEnum(sizing.horizontal ?? 'fixed', 'arguments.sizing.horizontal', ['fixed', 'hug']),
+      vertical: boundedEnum(sizing.vertical ?? 'fixed', 'arguments.sizing.vertical', ['fixed', 'hug'])
+    }
+  };
+  return layout;
+}
+
+function normalizeLayoutItemSetArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const sizing = raw.sizing == null ? {} : raw.sizing;
+  const fixedSize = raw.fixedSize == null ? {} : raw.fixedSize;
+  const constraints = raw.constraints == null ? {} : raw.constraints;
+  for (const [value, field] of [[sizing, 'arguments.sizing'], [fixedSize, 'arguments.fixedSize'], [constraints, 'arguments.constraints']]) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) editFail('ARGUMENT_INVALID', { field });
+  }
+  return {
+    participation: boundedEnum(raw.participation ?? 'flow', 'arguments.participation', ['flow', 'absolute']),
+    sizing: {
+      horizontal: boundedEnum(sizing.horizontal ?? 'hug', 'arguments.sizing.horizontal', ['fixed', 'fill', 'hug']),
+      vertical: boundedEnum(sizing.vertical ?? 'hug', 'arguments.sizing.vertical', ['fixed', 'fill', 'hug'])
+    },
+    fixedSize: {
+      width: boundedNumber(fixedSize.width ?? 1, 'arguments.fixedSize.width', { min: 0, max: 1e6 }),
+      height: boundedNumber(fixedSize.height ?? 1, 'arguments.fixedSize.height', { min: 0, max: 1e6 })
+    },
+    constraints: {
+      horizontal: boundedEnum(constraints.horizontal ?? 'start', 'arguments.constraints.horizontal', ['start', 'end', 'center', 'scale', 'stretch']),
+      vertical: boundedEnum(constraints.vertical ?? 'start', 'arguments.constraints.vertical', ['start', 'end', 'center', 'scale', 'stretch'])
+    }
+  };
+}
+
+function normalizeNoArguments(raw = {}) {
+  if (raw == null) return {};
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).length) editFail('ARGUMENTS_INVALID');
+  return {};
+}
+
 function normalizeRepaintArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   const patch = {};
@@ -613,6 +703,12 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'object.resize.v1') return normalizeResizeArguments(raw);
   if (operation === 'object.scale.v1') return normalizeScaleArguments(raw);
   if (operation === 'object.order.v1') return normalizeOrderArguments(raw);
+  if (operation === 'repeat.mirror.v1') return normalizeRepeatMirrorArguments(raw);
+  if (operation === 'repeat.grid.v1') return normalizeRepeatGridArguments(raw);
+  if (operation === 'layout.frame.set.v1') return normalizeFrameLayoutSetArguments(raw);
+  if (operation === 'layout.frame.remove.v1') return normalizeNoArguments(raw);
+  if (operation === 'layout.item.set.v1') return normalizeLayoutItemSetArguments(raw);
+  if (operation === 'layout.item.remove.v1') return normalizeNoArguments(raw);
   editFail('OPERATION_NOT_ALLOWED', { operation });
 }
 
@@ -625,7 +721,13 @@ function operationTargetRules(operation) {
     || operation === 'repeat.radial.v1'
     || operation === 'object.reparent.v1'
     || operation === 'text.edit.v1'
-    || operation === 'object.resize.v1') return { exact: 1, max: 1 };
+    || operation === 'object.resize.v1'
+    || operation === 'repeat.mirror.v1'
+    || operation === 'repeat.grid.v1'
+    || operation === 'layout.frame.set.v1'
+    || operation === 'layout.frame.remove.v1'
+    || operation === 'layout.item.set.v1'
+    || operation === 'layout.item.remove.v1') return { exact: 1, max: 1 };
   if (operation === 'boolean.apply.v1') return { min: 2, max: 64 };
   return { min: 1, max: 64 };
 }
@@ -1327,6 +1429,98 @@ function executeOrderTask(app, task) {
   };
 }
 
+
+function repeatDefaultWorldCenter(app, found) {
+  if (typeof app?.renderer?.objectWorldBounds === 'function') {
+    const bounds = app.renderer.objectWorldBounds(found.object, found.parentWorldMatrix);
+    if (bounds && [bounds.x, bounds.y, bounds.w, bounds.h].every(Number.isFinite)) {
+      return { x: bounds.x + bounds.w / 2, y: bounds.y + bounds.h / 2 };
+    }
+  }
+  const matrix = found.worldMatrix || found.object?.matrix || Matrix.identity();
+  return { x: Number(matrix[4]) || 0, y: Number(matrix[5]) || 0 };
+}
+
+function insertRepeatAdjacent(app, source, repeat, label) {
+  if (source.parentObject?.id) repeat.parentId = source.parentObject.id;
+  const sourceIndex = source.parentArray.indexOf(source.object);
+  app.history.pushScoped(label, structuralHistoryPaths(app, [source]), () => {
+    source.parentArray.splice(sourceIndex + 1, 0, repeat);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: source.layer.id, objectId: repeat.id };
+  return { createdRefs: [ref], resultRefs: [ref] };
+}
+
+function executeRepeatMirrorTask(app, task) {
+  const source = findPageObject(app.page(), task.targets[0]);
+  if (!source) editFail('TARGET_MISSING');
+  const parentWorld = source.parentWorldMatrix || Matrix.identity();
+  const inverseParentWorld = Matrix.tryInvert(parentWorld);
+  if (!inverseParentWorld) editFail('SINGULAR_TARGET', { objectId: source.object.id });
+  const worldCenter = task.arguments.center || repeatDefaultWorldCenter(app, source);
+  const nativeCenter = Matrix.point(inverseParentWorld, worldCenter);
+  const repeat = createRepeat(source.object, {
+    mode: 'mirror',
+    count: 2,
+    axis: task.arguments.axis,
+    center: nativeCenter,
+    linked: task.arguments.linked,
+    sourceObjectId: source.object.id
+  });
+  const result = insertRepeatAdjacent(app, source, repeat, 'CHAT create mirror Repeat');
+  return { ...result, sourceObjectId: source.object.id, axis: repeat.axis, center: worldCenter, nativeCenter };
+}
+
+function executeRepeatGridTask(app, task) {
+  const source = findPageObject(app.page(), task.targets[0]);
+  if (!source) editFail('TARGET_MISSING');
+  const count = task.arguments.columns * task.arguments.rows;
+  const repeat = createRepeat(source.object, {
+    mode: 'grid',
+    count,
+    columns: task.arguments.columns,
+    rows: task.arguments.rows,
+    dx: task.arguments.dx,
+    dy: task.arguments.dy,
+    linked: task.arguments.linked,
+    sourceObjectId: source.object.id
+  });
+  const result = insertRepeatAdjacent(app, source, repeat, 'CHAT create grid Repeat');
+  return {
+    ...result,
+    sourceObjectId: source.object.id,
+    columns: repeat.columns,
+    rows: repeat.rows,
+    dx: repeat.dx,
+    dy: repeat.dy,
+    count
+  };
+}
+
+function executeFrameLayoutTask(app, task, remove = false) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'frame') editFail('FRAME_REQUIRED');
+  setFrameLayout(app, found.object.id, remove ? null : task.arguments);
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+    layout: clone(found.object.layout ?? null)
+  };
+}
+
+function executeLayoutItemTask(app, task, remove = false) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found) editFail('TARGET_MISSING');
+  if (!found.parentObject || found.parentObject.type !== 'frame') editFail('LAYOUT_ITEM_FRAME_PARENT_REQUIRED');
+  setChildLayoutItem(app, found.object.id, remove ? null : task.arguments);
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+    layoutItem: clone(found.object.layoutItem ?? null)
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
@@ -1349,6 +1543,12 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'object.resize.v1') return executeResizeTask(app, task);
   if (task.operation === 'object.scale.v1') return executeScaleTask(app, task);
   if (task.operation === 'object.order.v1') return executeOrderTask(app, task);
+  if (task.operation === 'repeat.mirror.v1') return executeRepeatMirrorTask(app, task);
+  if (task.operation === 'repeat.grid.v1') return executeRepeatGridTask(app, task);
+  if (task.operation === 'layout.frame.set.v1') return executeFrameLayoutTask(app, task, false);
+  if (task.operation === 'layout.frame.remove.v1') return executeFrameLayoutTask(app, task, true);
+  if (task.operation === 'layout.item.set.v1') return executeLayoutItemTask(app, task, false);
+  if (task.operation === 'layout.item.remove.v1') return executeLayoutItemTask(app, task, true);
   editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
 }
 
