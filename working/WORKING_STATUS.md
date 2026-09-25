@@ -1,3 +1,21 @@
+## Technical capability closure started — 2026-09-25
+
+```text
+TASK = INK-TECH-CLOSURE-001
+STATE = CLOSURE_IN_PROGRESS
+LEDGER = working/INK_TECH_CLOSURE_001_CAPABILITY_LEDGER.md
+
+C1 = reconcile implemented-but-unpromoted Geometry Ops onto current main
+C2 = explicit disposition for Core-only / partial CHAT exposure debt
+C3 = freeze CURRENT_CAPABILITY_BASELINE for UR
+
+NEW_FEATURE_EXPANSION = 0
+UI_REBUILD = WAIT_FOR_FROZEN_CAPABILITY_BASELINE
+CONNECTOR_005 = TRACKED_SEPARATELY / NOT_FORGOTTEN
+```
+
+---
+
 ## UR end-to-end UI governance adopted — 2026-09-25
 
 ```text
