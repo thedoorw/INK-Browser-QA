@@ -1,5 +1,41 @@
 # INK DEV PROGRESS
 
+## MR_REVISE — G7_EXACT_ASSET_ONLY — 2026-09-25
+
+```text
+MR_SOURCE_REVIEW = PASS
+REVIEWED_HEAD = cfa9fa01e6e0fa71e1bb59cbc8e6d607f91d0560
+G0-G6 = ACCEPTED
+G7 = USER_APPROVED_ASSET_DELTA
+G8 = HOLD
+```
+
+Official visible logo supplied by USER:
+
+```text
+LIBRARY_TRANSPORT_PATH = /INK-DEV-ASSET-STAGING/INK_APPROVED_VISIBLE_LOGO_W-300.jpg
+DIMENSIONS = 300x300
+BYTES = 19801
+SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+```
+
+Required delta:
+
+- materialize the exact staged file;
+- verify SHA-256 before modifying source;
+- replace `product/source/assets/INK_MARK_SOURCE_W-300.jpg` bytes exactly;
+- preserve the single existing visible-logo route;
+- keep `favicon.svg` unchanged;
+- do not treat `ink-mark.svg` as approved authority;
+- update G7 evidence + focused QA with the exact SHA contract;
+- no other product/UI changes;
+- no Runtime;
+- `DEV_HANDOFF → STOP`.
+
+GitHub commit becomes final SSOT; Library copy is transport only.
+
+---
+
 ## 2026-09-25 — INK-UI-REBUILD-001 technical-debt cleanup final DEV handoff
 
 ```text
