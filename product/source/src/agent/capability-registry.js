@@ -238,6 +238,80 @@ const editSchemas = {
       index: { type: 'integer', minimum: 0, description: 'Optional insertion index.' }
     }, [], 'Reparent arguments.'),
     1
+  ),
+  'frame.create.v1': editTaskSchema(
+    { type: 'string', const: 'frame.create.v1', description: 'Create one empty native Frame on the active layer.' },
+    obj({
+      name: str('Frame name.'),
+      x: num('World X position.'),
+      y: num('World Y position.'),
+      width: num('Frame width.', { minimum: Number.EPSILON, maximum: 1000000, default: 320 }),
+      height: num('Frame height.', { minimum: Number.EPSILON, maximum: 1000000, default: 240 }),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, [], 'Native Frame constructor arguments.'),
+    0, 0
+  ),
+  'text.create.v1': editTaskSchema(
+    { type: 'string', const: 'text.create.v1', description: 'Create one native Text object using the editor Text object authority.' },
+    obj({
+      text: str('Text content.'),
+      x: num('World X position.'),
+      y: num('World Y position.'),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      color: str('Text color token.'),
+      fontFamily: str('Existing font-family value.'),
+      fontSize: num('Font size.', { minimum: Number.EPSILON, maximum: 10000 }),
+      lineHeight: num('Line-height multiplier.', { minimum: Number.EPSILON, maximum: 20 }),
+      fontWeight: num('Existing numeric font weight.', { minimum: 1, maximum: 1000 })
+    }, ['text'], 'Bounded Text creation arguments.'),
+    0, 0
+  ),
+  'text.edit.v1': editTaskSchema(
+    { type: 'string', const: 'text.edit.v1', description: 'Edit the accepted native Text field subset on one Text object.' },
+    obj({
+      text: str('Text content.'),
+      x: num('World X position.'),
+      y: num('World Y position.'),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1 }),
+      color: str('Text color token.'),
+      fontFamily: str('Existing font-family value.'),
+      fontSize: num('Font size.', { minimum: Number.EPSILON, maximum: 10000 }),
+      lineHeight: num('Line-height multiplier.', { minimum: Number.EPSILON, maximum: 20 }),
+      fontWeight: num('Existing numeric font weight.', { minimum: 1, maximum: 1000 })
+    }, [], 'At least one accepted Text field is required.'),
+    1
+  ),
+  'svg.import.v1': editTaskSchema(
+    { type: 'string', const: 'svg.import.v1', description: 'Import bounded raw SVG through the native structured SVG parser.' },
+    obj({
+      svg: str('Raw SVG source string; maximum length and unsafe execution/network forms are rejected by the bounded authority.')
+    }, ['svg'], 'Local raw SVG only; no URL fetch or external transport.'),
+    0, 0
+  ),
+  'object.resize.v1': editTaskSchema(
+    { type: 'string', const: 'object.resize.v1', description: 'Resize one object to an absolute world-space width and/or height using existing transform/bounds authority.' },
+    obj({
+      width: num('Absolute width.', { minimum: Number.EPSILON, maximum: 1000000 }),
+      height: num('Absolute height.', { minimum: Number.EPSILON, maximum: 1000000 }),
+      preserveAspect: bool('Preserve aspect when only one dimension is supplied.', { default: false })
+    }, [], 'At least one of width or height is required.'),
+    1
+  ),
+  'object.scale.v1': editTaskSchema(
+    { type: 'string', const: 'object.scale.v1', description: 'Apply bounded world-space scale through Matrix/applyWorldTransformBatch.' },
+    obj({
+      sx: num('World-space X scale.', { minimum: -10000, maximum: 10000 }),
+      sy: num('World-space Y scale; defaults to sx.', { minimum: -10000, maximum: 10000 }),
+      center: obj({ x: num('World-space center X.'), y: num('World-space center Y.') }, ['x', 'y'], 'Optional explicit scale center.')
+    }, ['sx'], 'Scale components must remain finite and non-singular.'),
+    64
+  ),
+  'object.order.v1': editTaskSchema(
+    { type: 'string', const: 'object.order.v1', description: 'Move same-parent objects to the front or back of the existing parent array.' },
+    obj({
+      action: { type: 'string', enum: ['front', 'back'], description: 'Existing native ordering action.' }
+    }, ['action'], 'C2-A ordering is limited to current front/back semantics.'),
+    64
   )
 };
 
@@ -500,16 +574,51 @@ primary.push(descriptor({
   examples: [{ input: '<browser-local File>', options: { name: 'reference.png', type: 'image/png' } }], toolPrimary: true
 }));
 
+
+// C2-A direct high-level export tool. Export is readback/output generation, not a bounded Document mutation.
+primary.push(descriptor({
+  id: 'asset.export', title: 'Export INK asset', description: 'Generate PNG, SVG or PDF through the existing INK export authorities and retain the result in the existing ephemeral output registry.',
+  availability: true, routingClass: 'NAMED_TOOL', namedTool: 'export_ink_asset', publicMethod: 'asset.export', role: 'READ',
+  authoritativeRoute: 'app.exportPNG / app.exportSVG / app.exportPDF → existing INK output registry',
+  inputSchema: obj({
+    format: { type: 'string', enum: ['png', 'svg', 'pdf', 'PNG', 'SVG', 'PDF'], description: 'Existing non-print export format.' },
+    scope: { type: 'string', enum: ['artboard', 'viewport', 'content'], default: 'artboard', description: 'Existing export scope. PDF remains artboard-only.' },
+    scale: num('Existing raster/content scale.', { minimum: 0.01, maximum: 64, default: 2 }),
+    ppi: num('Existing artboard export PPI.', { minimum: 36, maximum: 2400, default: 300 }),
+    includeBleed: bool('Use existing bleed behavior.', { default: false }),
+    cropMarks: bool('Use existing crop-mark behavior.', { default: false }),
+    background: bool('Include existing paper/background behavior.', { default: true })
+  }, ['format'], 'Asset export request. Browser Print and automatic download are intentionally excluded.'),
+  targetTypes: ['Document', 'Page', 'INK_OUTPUT_HANDLE'],
+  constraints: [
+    'Calls only the existing PNG/SVG/PDF export authorities; no new renderer or serializer is introduced.',
+    'Export must not mutate Document, History or Revision state.',
+    'Result stays INTERNAL_EPHEMERAL and is returned as INK_OUTPUT_HANDLE / 1; no browser-anchor download or external transport occurs.',
+    'SVG is marked editable vector output; PNG and PDF are not marked structurally editable.',
+    'PDF is artboard-only because that is the existing native export authority.'
+  ],
+  ...policy(false, 'DIRECT_NAMED_TOOL', 'NONE', 'READ_CURRENT', false, false, 'Export does not require automatic Preview.'),
+  resultContract: resultContract({ statuses: ['COMPLETED', 'FAILED'], returnsOutputHandles: true }),
+  examples: [{ format: 'svg', scope: 'artboard', background: true }],
+  toolPrimary: true
+}));
+
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
-  const operationConstraints = operation === 'path.create.v1'
-    ? ['Creation uses zero targets and inserts one native editable Path on the active layer.']
-    : pathOnly || operation === 'boolean.apply.v1'
-      ? ['Targets must resolve to editable visible unlocked Path objects.']
-      : ['Targets must resolve to editable visible unlocked objects.'];
+  const zeroTargetCreate = ['path.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1'].includes(operation);
+  const operationConstraints = zeroTargetCreate
+    ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
+    : operation === 'text.edit.v1'
+      ? ['Target must resolve to one editable visible unlocked Text object.']
+      : pathOnly || operation === 'boolean.apply.v1'
+        ? ['Targets must resolve to editable visible unlocked Path objects.']
+        : ['Targets must resolve to editable visible unlocked objects.'];
   if (operation === 'boolean.apply.v1') operationConstraints.push('All 2+ Path targets must share the same layer and structural parent.');
   if (operation === 'group.create.v1') operationConstraints.push('All targets must share the same layer and structural parent.');
   if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
+  if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
+  if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
+  if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
@@ -527,7 +636,11 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     role: 'PROPOSAL',
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
-    targetTypes: operation === 'path.create.v1' ? ['Page'] : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
+    targetTypes: zeroTargetCreate
+      ? (operation === 'text.create.v1' ? ['Page'] : operation === 'svg.import.v1' ? ['Page'] : operation === 'frame.create.v1' ? ['Page'] : ['Page'])
+      : operation === 'text.edit.v1'
+        ? ['Object']
+        : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
