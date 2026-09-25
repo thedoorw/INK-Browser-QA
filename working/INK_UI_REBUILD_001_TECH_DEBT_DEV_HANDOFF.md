@@ -1,6 +1,6 @@
 # INK UI REBUILD 001 — Technical Debt Cleanup DEV Handoff
 
-STATUS: `DEV_START / HEALTH_FIRST / BOUNDED_CLEANUP`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 TASK: `INK-UI-REBUILD-001-TECH-DEBT-CLEANUP`
 
@@ -211,3 +211,81 @@ Final handoff only after focused QA:
 `DEV_HANDOFF → STOP`
 
 MR owns exact-SHA Windows Runtime and promotion.
+
+## Final DEV handoff — 2026-09-25
+
+```text
+MR_REVIEWED_HEAD = f574731b0e920950211f04177826b3ad2ce0157b
+
+G0 = PASS
+G1 = PASS
+G2 = SOURCE_PASS
+G3 = SOURCE_PASS
+G4 = SOURCE_PASS
+G5 = REVISED_SOURCE_PASS
+G6 = SOURCE_PASS
+G7 = HOLD_ASSET
+G8 = NOT_RUN_BY_DEV / MR_OWNED
+```
+
+### G5 revision closure
+
+The MR blocker is closed at source level:
+
+```text
+!important
+G0 = 223
+prior G5 = 220
+revised G5 = 19
+presentation !important = 0
+```
+
+The 19 retained exceptions are limited to semantic display state and reduced-motion behavior.
+
+No new final override block was added.
+
+### G6 completion
+
+Responsive source authority is now explicitly:
+
+```text
+DESKTOP_WIDE   > 1120
+DESKTOP_NARROW 761–1120
+COMPACT        <= 760
+```
+
+The focused regression no longer requires retired `980 / 560 / 440` breakpoints.
+
+### G7 disposition
+
+```text
+FAVICON_AUTHORITY = PASS / assets/favicon.svg
+VISIBLE_LOGO_ROUTE_SINGULARITY = PASS
+VISIBLE_LOGO_EXACT_ASSET_APPROVAL = NOT PROVEN
+G7 = HOLD_ASSET
+```
+
+No final visible-logo asset was guessed or replaced.
+
+### Focused source evidence
+
+Connector-side deterministic source verification: **PASS**.
+
+Verified generator output equality, Web/Portable parity, duplicate DOM IDs = 0, CSS brace balance, semantic-only `!important`, responsive taxonomy, favicon/brand route singularity, FORMAT_VERSION 4, and the G3 service-worker build identity.
+
+No local Node checkout run is claimed because the container cannot resolve GitHub. No Windows Runtime was run by DEV.
+
+### Frozen authorities
+
+No Renderer, WebGL/Canvas, Document, History, Revision, Recipe/Geometry, CHAT, persistence, FORMAT_VERSION or product-version authority was changed by the revision from the MR reviewed HEAD.
+
+### MR next gate
+
+MR should review the exact final HEAD reported in the DEV response.
+
+Because G7 is `HOLD_ASSET`, the exact visible-logo asset authority must be resolved before final cleanup PASS. G8 Runtime/visual evidence remains MR-owned.
+
+Photoshop workstation rebuild remains HOLD.
+
+`DEV_HANDOFF → STOP`
+
