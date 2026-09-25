@@ -1,14 +1,42 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-TECH-CLOSURE-001 / C2-B / DEV_AUTHORIZED / START`
+STATUS: `INK-TECH-CLOSURE-001 / C2-B / C2B_SOURCE_FOCUSED_PASS / DEV_HANDOFF / STOP`
 
 - Branch: `work/ink-tech-closure-001`
-- C2-A reviewed exact HEAD: `f3e75f7574d8705d58e654977e8af0e07b74e8d4`
-- C2-A MR result: `MR_SOURCE_PASS / Runtime deferred`
-- C2-B Workpack: `working/INK_TECH_CLOSURE_001_C2B_DEV_WORKPACK.md`
-- C2-B Workpack commit before this progress dispatch: `f5ddf18754add806f4c63587c4dc7643eb1657ca`
+- C2-A MR source review: `PASS`
+- C2-B checkpoint: `working/INK_TECH_CLOSURE_001_C2B_CHECKPOINT.md`
+- C2-B use_ink additions: `6`
+- Bounded operation total: `27`
+- Repeat Expand: `CORE_ONLY_ACCEPTED / NOT_EXPOSED`
 - Full Windows Runtime: `DEFERRED_TO_FINAL_CLOSURE_BATCH`
-- Current gate: `C2-B DEV execution`
+- Current gate: `MR_SOURCE_REVIEW`
+
+## C2-B causal summary
+
+```text
+WHY =
+  close Repeat/Layout exposure using existing native authorities
+
+NATIVE_AUTHORITY =
+  createRepeat
+  setFrameLayout
+  setChildLayoutItem
+
+FOCUSED_QA =
+  deterministic source gate 15/15 PASS
+  executable Node test authored / NOT EXECUTED
+  browser proof authored / NOT EXECUTED
+
+KNOWN_GAP =
+  expandRepeat has generation semantics but no current product commit authority
+  → CORE_ONLY_ACCEPTED, not silently exposed
+
+NEXT =
+  MR_SOURCE_REVIEW
+  C2-C remains unauthorized until MR release
+```
+
+---
 
 ## Preserved closure state
 
