@@ -1,3 +1,39 @@
+## MR_PASS — INK-UI-REBUILD-001 technical-debt cleanup COMPLETE — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+RESULT = MR_PASS / COMPLETE
+PROMOTED_MAIN = 9ebdbe771346e6509c902f71766b117ab674f503
+FINAL_EVIDENCE_COMMIT = 15ef1b4ec62312f7a843e18fbf787957b08da4f2
+
+TESTED_EXACT_SHA = 5bd8754aad3e53886ce6109bd350fa4fc5f68db9
+RUNTIME_RUN = 36112690309
+RUNNER = DESKTOP-NSOQH69
+UI_SUITE = PASS
+G0-G8_UI = PASS
+
+ARTIFACT_ID = 10854191875
+ARTIFACT_DIGEST = sha256:7f06e3fe7876ad1e9d9d302b2867646928b5630b191069de0a166ae86ec0c3f2
+
+PRODUCT_UI_RUNTIME_FAIL = 0
+FROZEN_CORE_MUTATION = 0
+PHOTOSHOP_WORKSTATION_REBUILD = RELEASED / NEXT_WORK_ORDER
+```
+
+Final G8 captures:
+
+- `ui-first-paint.png` — 1280×1024 — SHA256 `b0cbbd73fc5b807ec7d3e2bc920b60494604af4009592c37ef9784991fa059a6`
+- `ui-1280x1024.png` — 1280×1024 — SHA256 `e3ca10151dd2f939183e9018f0d2e2e37904b4e9a4b5f765499eb577c9ea7986`
+- `ui-960x800.png` — 960×800 — SHA256 `095d785c2367d303f47ca0eedc4eef35b46498c2201ac4c409a2bf6f37813148`
+
+The central batch continued after UI PASS and hit the already-known Creative harness 360s timeout. The same UI-PASS → Creative-timeout pattern existed before this cleanup in run `36088550693`; it is therefore retained as a separate baseline/integration HOLD and does not reopen this completed UI work order.
+
+Clean promotion rule was followed: reviewed product/QA/evidence blobs were promoted onto current main; branch-local DEV progress was not promoted.
+
+Next UI direction remains the previously approved Photoshop workstation alignment/rebuild, but it starts under a new bounded Work Order rather than extending this cleanup task.
+
+---
+
 ## MR source PASS — G8_QA_CAPTURE_ONLY rerun — 2026-09-25
 
 ```text
