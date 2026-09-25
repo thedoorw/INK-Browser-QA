@@ -14,6 +14,21 @@ Authoritative ledger:
 
 `working/INK_TECH_CLOSURE_001_CAPABILITY_LEDGER.md`
 
+Execution plan authority:
+
+`working/INK_TECH_CLOSURE_001_EXECUTION_PLAN.md`
+
+User-approved Runtime policy:
+
+```text
+INSTALL_FIRST_ON_ONE_CLOSURE_BRANCH
+→ focused QA at C1 / C2-A / C2-B / C2-C
+→ ONE concentrated exact-SHA Runtime after all focused checkpoints PASS
+→ ONE clean promotion after Runtime PASS
+```
+
+The earlier C1 wording that implied an immediate standalone Runtime is superseded by this batching policy. Immediate Runtime is required only when the execution plan's high-risk exception rule is triggered.
+
 Primary rule:
 
 ```text
@@ -62,9 +77,10 @@ Required:
 - no Renderer/Document/History/Revision semantics change;
 - no FORMAT_VERSION change;
 - focused QA;
-- DEV_HANDOFF → STOP;
-- MR exact-SHA Runtime;
-- promote only after Geometry gate PASS.
+- record C1 checkpoint commit and causal evidence;
+- continue to C2-A after MR source/focused review;
+- full Runtime = DEFERRED_TO_FINAL_CLOSURE_BATCH unless the high-risk exception is triggered;
+- no promotion until the final concentrated Runtime passes all required gates.
 
 ### Closure Phase C2 — exposure-debt disposition
 
