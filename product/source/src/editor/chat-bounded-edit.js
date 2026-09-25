@@ -1,10 +1,12 @@
 import { Matrix } from '../core/index.js';
-import { findPageObject, reparentPageObject, walkPageObjects } from '../document/hierarchy.js';
+import { createFrame, findPageObject, reparentPageObject, walkPageObjects } from '../document/hierarchy.js';
 import { PathEditController } from './path-edit.js';
 import { cloneCompositionObject } from './composition.js';
 import { applyWorldTransformBatch } from './transform.js';
+import { resizeFrameGeometry } from './bounds.js';
+import { createTextObject, updateTextObject } from './text-object.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
-import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths } from '../vector/vector-core.js';
+import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
@@ -221,7 +223,14 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'repeat.radial.v1',
   'boolean.apply.v1',
   'group.create.v1',
-  'object.reparent.v1'
+  'object.reparent.v1',
+  'frame.create.v1',
+  'text.create.v1',
+  'text.edit.v1',
+  'svg.import.v1',
+  'object.resize.v1',
+  'object.scale.v1',
+  'object.order.v1'
 ]);
 
 const CHAT_EDIT_OPERATION_SET = new Set(CHAT_EDIT_OPERATIONS);
@@ -240,6 +249,15 @@ function boundedText(value, field, { required = true, max = 160 } = {}) {
   const text = value.trim();
   if ((required && !text) || text.length > max) editFail('FIELD_INVALID', { field });
   return text || null;
+}
+
+function boundedRawString(value, field, { required = true, max = 32768 } = {}) {
+  if (value == null) {
+    if (!required) return null;
+    editFail('FIELD_REQUIRED', { field });
+  }
+  if (typeof value !== 'string' || value.length > max || (required && !value.trim())) editFail('FIELD_INVALID', { field });
+  return value;
 }
 
 function boundedNumber(value, field, { min = -1e6, max = 1e6, integer = false } = {}) {
@@ -441,6 +459,89 @@ function normalizeReparentArguments(raw = {}) {
   };
 }
 
+
+function normalizeFrameCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    name: raw.name == null ? 'CHAT Frame' : boundedText(raw.name, 'arguments.name', { max: 160 }),
+    x: boundedNumber(raw.x ?? 0, 'arguments.x'),
+    y: boundedNumber(raw.y ?? 0, 'arguments.y'),
+    width: boundedNumber(raw.width ?? 320, 'arguments.width', { min: Number.EPSILON, max: 1e6 }),
+    height: boundedNumber(raw.height ?? 240, 'arguments.height', { min: Number.EPSILON, max: 1e6 }),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
+}
+
+function normalizeTextCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    text: boundedRawString(raw.text, 'arguments.text', { max: 32768 }),
+    x: boundedNumber(raw.x ?? 0, 'arguments.x'),
+    y: boundedNumber(raw.y ?? 0, 'arguments.y'),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
+    color: raw.color == null ? '#202020' : boundedPaintToken(raw.color, 'arguments.color'),
+    fontFamily: raw.fontFamily == null ? 'system-ui' : boundedText(raw.fontFamily, 'arguments.fontFamily', { max: 160 }),
+    fontSize: boundedNumber(raw.fontSize ?? 32, 'arguments.fontSize', { min: Number.EPSILON, max: 1e4 }),
+    lineHeight: boundedNumber(raw.lineHeight ?? 1.25, 'arguments.lineHeight', { min: Number.EPSILON, max: 20 }),
+    fontWeight: raw.fontWeight == null ? null : boundedNumber(raw.fontWeight, 'arguments.fontWeight', { min: 1, max: 1000 })
+  };
+}
+
+function normalizeTextEditArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const patch = {};
+  if (hasOwn(raw, 'text')) patch.text = boundedRawString(raw.text, 'arguments.text', { max: 32768 });
+  if (hasOwn(raw, 'x')) patch.x = boundedNumber(raw.x, 'arguments.x');
+  if (hasOwn(raw, 'y')) patch.y = boundedNumber(raw.y, 'arguments.y');
+  if (hasOwn(raw, 'opacity')) patch.opacity = boundedNumber(raw.opacity, 'arguments.opacity', { min: 0, max: 1 });
+  if (hasOwn(raw, 'color')) patch.color = boundedPaintToken(raw.color, 'arguments.color');
+  if (hasOwn(raw, 'fontFamily')) patch.fontFamily = boundedText(raw.fontFamily, 'arguments.fontFamily', { max: 160 });
+  if (hasOwn(raw, 'fontSize')) patch.fontSize = boundedNumber(raw.fontSize, 'arguments.fontSize', { min: Number.EPSILON, max: 1e4 });
+  if (hasOwn(raw, 'lineHeight')) patch.lineHeight = boundedNumber(raw.lineHeight, 'arguments.lineHeight', { min: Number.EPSILON, max: 20 });
+  if (hasOwn(raw, 'fontWeight')) patch.fontWeight = boundedNumber(raw.fontWeight, 'arguments.fontWeight', { min: 1, max: 1000 });
+  if (!Object.keys(patch).length) editFail('ARGUMENTS_EMPTY');
+  return patch;
+}
+
+function normalizeSvgImportArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const svg = boundedRawString(raw.svg, 'arguments.svg', { max: 1048576 });
+  if (
+    /<\s*(?:script|foreignObject|iframe|object|embed)\b/i.test(svg)
+    || /\son[a-z]+\s*=/i.test(svg)
+    || /(?:href|xlink:href)\s*=\s*["']\s*(?:https?:|\/\/|javascript:|data:text\/html)/i.test(svg)
+    || /url\s*\(\s*["']?\s*(?:https?:|\/\/|javascript:)/i.test(svg)
+    || /@import\b/i.test(svg)
+  ) editFail('SVG_UNSAFE_CONTENT');
+  return { svg };
+}
+
+function normalizeResizeArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const width = raw.width == null ? null : boundedNumber(raw.width, 'arguments.width', { min: Number.EPSILON, max: 1e6 });
+  const height = raw.height == null ? null : boundedNumber(raw.height, 'arguments.height', { min: Number.EPSILON, max: 1e6 });
+  if (width == null && height == null) editFail('ARGUMENTS_EMPTY');
+  return {
+    width,
+    height,
+    preserveAspect: raw.preserveAspect === undefined ? false : boundedBoolean(raw.preserveAspect, 'arguments.preserveAspect')
+  };
+}
+
+function normalizeScaleArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const sx = boundedNumber(raw.sx, 'arguments.sx', { min: -1e4, max: 1e4 });
+  const sy = boundedNumber(raw.sy ?? raw.sx, 'arguments.sy', { min: -1e4, max: 1e4 });
+  if (Math.abs(sx) < 1e-6 || Math.abs(sy) < 1e-6) editFail('SINGULAR_SCALE');
+  if (sx === 1 && sy === 1) editFail('NO_OP');
+  return { sx, sy, center: normalizePoint(raw.center, 'arguments.center', { optional: true }) };
+}
+
+function normalizeOrderArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return { action: boundedEnum(raw.action, 'arguments.action', ['front', 'back']) };
+}
+
 function normalizeRepaintArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   const patch = {};
@@ -505,17 +606,26 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'boolean.apply.v1') return normalizeBooleanArguments(raw);
   if (operation === 'group.create.v1') return normalizeGroupArguments(raw);
   if (operation === 'object.reparent.v1') return normalizeReparentArguments(raw);
+  if (operation === 'frame.create.v1') return normalizeFrameCreateArguments(raw);
+  if (operation === 'text.create.v1') return normalizeTextCreateArguments(raw);
+  if (operation === 'text.edit.v1') return normalizeTextEditArguments(raw);
+  if (operation === 'svg.import.v1') return normalizeSvgImportArguments(raw);
+  if (operation === 'object.resize.v1') return normalizeResizeArguments(raw);
+  if (operation === 'object.scale.v1') return normalizeScaleArguments(raw);
+  if (operation === 'object.order.v1') return normalizeOrderArguments(raw);
   editFail('OPERATION_NOT_ALLOWED', { operation });
 }
 
 function operationTargetRules(operation) {
-  if (operation === 'path.create.v1') return { exact: 0, min: 0, max: 0 };
+  if (operation === 'path.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
     || operation === 'object.clone.v1'
     || operation === 'repeat.radial.v1'
-    || operation === 'object.reparent.v1') return { exact: 1, max: 1 };
+    || operation === 'object.reparent.v1'
+    || operation === 'text.edit.v1'
+    || operation === 'object.resize.v1') return { exact: 1, max: 1 };
   if (operation === 'boolean.apply.v1') return { min: 2, max: 64 };
   return { min: 1, max: 64 };
 }
@@ -638,6 +748,9 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
     if ((operationRequiresPath(task.operation) || task.operation === 'boolean.apply.v1') && found.object?.type !== 'path') {
       editFail('PATH_REQUIRED', { objectId: found.object?.id || null });
+    }
+    if (task.operation === 'text.edit.v1' && found.object?.type !== 'text') {
+      editFail('TEXT_REQUIRED', { objectId: found.object?.id || null });
     }
     if (found.effectiveLocked) editFail('TARGET_LOCKED', { objectId: found.object.id });
     if (found.effectiveVisible === false) editFail('TARGET_HIDDEN', { objectId: found.object.id });
@@ -1047,6 +1160,173 @@ function executeReparentTask(app, task) {
   return { resultRefs: [{ pageId: app.page().id, layerId: after.layer.id, objectId: after.object.id }], parentObjectId: task.arguments.parentObjectId };
 }
 
+
+function executeFrameCreateTask(app, task) {
+  const layer = activeLayer(app);
+  if (!layer) editFail('LAYER_UNAVAILABLE');
+  const frame = createFrame({
+    name: task.arguments.name,
+    matrix: Matrix.translate(task.arguments.x, task.arguments.y),
+    width: task.arguments.width,
+    height: task.arguments.height,
+    opacity: task.arguments.opacity
+  });
+  if (findPageObject(app.page(), frame.id)) editFail('OBJECT_ID_COLLISION', { objectId: frame.id });
+  app.history.pushScoped('CHAT create Frame', structuralHistoryPaths(app, []), () => {
+    layer.objects.push(frame);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: layer.id, objectId: frame.id };
+  return { createdRefs: [ref], resultRefs: [ref], width: frame.width, height: frame.height };
+}
+
+function executeTextCreateTask(app, task) {
+  const layer = activeLayer(app);
+  if (!layer) editFail('LAYER_UNAVAILABLE');
+  const textObject = createTextObject(task.arguments);
+  if (findPageObject(app.page(), textObject.id)) editFail('OBJECT_ID_COLLISION', { objectId: textObject.id });
+  app.history.pushScoped('CHAT create Text', structuralHistoryPaths(app, []), () => {
+    layer.objects.push(textObject);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: layer.id, objectId: textObject.id };
+  return { createdRefs: [ref], resultRefs: [ref], objectId: textObject.id };
+}
+
+function executeTextEditTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'text') editFail('TEXT_REQUIRED');
+  app.history.pushScoped('CHAT edit Text', structuralHistoryPaths(app, [found]), () => {
+    if (!updateTextObject(found.object, task.arguments)) editFail('TEXT_REQUIRED');
+  });
+  finishStructuralMutation(app);
+  return { resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }] };
+}
+
+function collectImportedObjects(objects, output = []) {
+  for (const object of objects || []) {
+    if (!object || typeof object !== 'object') continue;
+    output.push(object);
+    if (Array.isArray(object.children)) collectImportedObjects(object.children, output);
+  }
+  return output;
+}
+
+function executeSvgImportTask(app, task) {
+  const layer = activeLayer(app);
+  if (!layer) editFail('LAYER_UNAVAILABLE');
+  const imported = importSVGDocument(task.arguments.svg, {
+    sourceDocumentIdentity: app.doc?.id || 'document',
+    importSessionSeed: task.taskId
+  });
+  const topLevel = Array.isArray(imported?.objects) ? imported.objects : [];
+  if (!topLevel.length) editFail('SVG_NO_SUPPORTED_OBJECTS');
+
+  const importedObjects = collectImportedObjects(topLevel);
+  const importedIds = new Set();
+  for (const object of importedObjects) {
+    if (!object.id) editFail('SVG_OBJECT_ID_MISSING');
+    if (importedIds.has(object.id) || findPageObject(app.page(), object.id)) {
+      editFail('OBJECT_ID_COLLISION', { objectId: object.id });
+    }
+    importedIds.add(object.id);
+  }
+
+  app.history.pushScoped('CHAT import SVG', structuralHistoryPaths(app, []), () => {
+    layer.objects.push(...topLevel);
+  });
+  finishStructuralMutation(app);
+  const refs = importedObjects.map(object => ({ pageId: app.page().id, layerId: layer.id, objectId: object.id }));
+  return {
+    createdRefs: refs,
+    resultRefs: refs,
+    format: imported.format,
+    version: imported.version,
+    unsupported: clone(imported.unsupported || []),
+    metadata: clone(imported.metadata || null)
+  };
+}
+
+function executeResizeTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found) editFail('TARGET_MISSING');
+  const args = task.arguments;
+  if (found.object.type === 'frame') {
+    app.history.pushScoped('CHAT resize Frame', structuralHistoryPaths(app, [found]), () => {
+      if (!resizeFrameGeometry(found.object, {
+        width: args.width,
+        height: args.height,
+        preserveAspect: args.preserveAspect
+      })) editFail('RESIZE_INVALID');
+    });
+    finishStructuralMutation(app);
+    return {
+      resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+      width: found.object.width,
+      height: found.object.height
+    };
+  }
+
+  if (typeof app?.renderer?.objectWorldBounds !== 'function') editFail('BOUNDS_AUTHORITY_UNAVAILABLE');
+  const bounds = app.renderer.objectWorldBounds(found.object, found.parentWorldMatrix);
+  if (!bounds || !Number.isFinite(bounds.w) || !Number.isFinite(bounds.h) || bounds.w <= 0 || bounds.h <= 0) editFail('BOUNDS_INVALID');
+  let sx = args.width == null ? 1 : args.width / bounds.w;
+  let sy = args.height == null ? 1 : args.height / bounds.h;
+  if (args.preserveAspect && args.width != null && args.height == null) sy = sx;
+  if (args.preserveAspect && args.height != null && args.width == null) sx = sy;
+  if (!Number.isFinite(sx) || !Number.isFinite(sy) || Math.abs(sx) < 1e-6 || Math.abs(sy) < 1e-6) editFail('SINGULAR_SCALE');
+  const transform = Matrix.around(bounds.x, bounds.y, Matrix.scale(sx, sy));
+  app.history.pushScoped('CHAT resize object', structuralHistoryPaths(app, [found]), () => {
+    applyWorldTransformBatch([{ found, transform }]);
+  });
+  finishStructuralMutation(app);
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+    width: args.width,
+    height: args.height,
+    preserveAspect: args.preserveAspect
+  };
+}
+
+function executeScaleTask(app, task) {
+  const foundItems = task.targets.map(ref => findPageObject(app.page(), ref));
+  if (!foundItems.length || foundItems.some(found => !found)) editFail('TARGET_MISSING');
+  let center = task.arguments.center;
+  if (!center) {
+    const matrices = foundItems.map(found => found.worldMatrix || found.object.matrix || Matrix.identity());
+    center = {
+      x: matrices.reduce((sum, matrix) => sum + matrix[4], 0) / matrices.length,
+      y: matrices.reduce((sum, matrix) => sum + matrix[5], 0) / matrices.length
+    };
+  }
+  const transform = Matrix.around(center.x, center.y, Matrix.scale(task.arguments.sx, task.arguments.sy));
+  app.history.pushScoped('CHAT scale objects', structuralHistoryPaths(app, foundItems), () => {
+    applyWorldTransformBatch(foundItems.map(found => ({ found, transform })));
+  });
+  finishStructuralMutation(app);
+  return { sx: task.arguments.sx, sy: task.arguments.sy, center };
+}
+
+function executeOrderTask(app, task) {
+  const foundItems = task.targets.map(ref => findPageObject(app.page(), ref));
+  const first = assertSameStructuralParent(foundItems, task.operation);
+  const selected = new Set(foundItems.map(found => found.object));
+  const orderedSelected = first.parentArray.filter(object => selected.has(object));
+  const kept = first.parentArray.filter(object => !selected.has(object));
+  app.history.pushScoped(task.arguments.action === 'front' ? 'CHAT move to front' : 'CHAT move to back', structuralHistoryPaths(app, foundItems), () => {
+    first.parentArray.splice(
+      0,
+      first.parentArray.length,
+      ...(task.arguments.action === 'front' ? [...kept, ...orderedSelected] : [...orderedSelected, ...kept])
+    );
+  });
+  finishStructuralMutation(app);
+  return {
+    resultRefs: orderedSelected.map(object => ({ pageId: app.page().id, layerId: first.layer.id, objectId: object.id })),
+    action: task.arguments.action
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
@@ -1062,6 +1342,13 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'boolean.apply.v1') return executeBooleanTask(app, task);
   if (task.operation === 'group.create.v1') return executeGroupTask(app, task);
   if (task.operation === 'object.reparent.v1') return executeReparentTask(app, task);
+  if (task.operation === 'frame.create.v1') return executeFrameCreateTask(app, task);
+  if (task.operation === 'text.create.v1') return executeTextCreateTask(app, task);
+  if (task.operation === 'text.edit.v1') return executeTextEditTask(app, task);
+  if (task.operation === 'svg.import.v1') return executeSvgImportTask(app, task);
+  if (task.operation === 'object.resize.v1') return executeResizeTask(app, task);
+  if (task.operation === 'object.scale.v1') return executeScaleTask(app, task);
+  if (task.operation === 'object.order.v1') return executeOrderTask(app, task);
   editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
 }
 
