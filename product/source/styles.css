@@ -334,6 +334,8 @@ select:focus,input:focus{outline-color:rgba(30,98,90,.35)}
 
 @media(max-width:760px){
   .doc-title{width:39vw}
+  #newBtn,#openBtn,#saveBtn{display:none}
+  #exportBtn{display:flex}
   .file-group #settingsToggle{display:none}
   .quick-controls{transform:scale(.92);transform-origin:top left}
   .mobile-tool-grid{grid-template-columns:repeat(4,1fr)}
