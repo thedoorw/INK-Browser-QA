@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "51dcc27570440e5a4a779e7ffed64dd634995489",
   "pending_work_orders": [
     "INK-CHAT-GEOMETRY-OPS-001"
@@ -27,8 +27,8 @@
     "INK-CHAT-CLOSED-LOOP-001"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "Establish one clean, exact-SHA health baseline before UI technical-debt cleanup. Geometry Ops touches the shared browser harness, so it must be validated/promoted first to prevent divergent QA authorities."
+    "enabled": false,
+    "reason": ""
   },
   "batch_policy": {
     "default_target": 3,
@@ -36,8 +36,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36017580698,
-    "tested_sha": "ac1f3407376a3e7f7cba1b792bac2bfb15f47cd3",
-    "result": "PASS"
+    "run_id": 36088550693,
+    "tested_sha": "51dcc27570440e5a4a779e7ffed64dd634995489",
+    "result": "FAIL_CREATIVE_HARNESS_TIMEOUT_360S"
   }
 }
