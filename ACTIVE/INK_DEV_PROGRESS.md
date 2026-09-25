@@ -1,13 +1,13 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-TECH-CLOSURE-001 / C2-A / DEV_IN_PROGRESS`
+STATUS: `INK-TECH-CLOSURE-001 / C2-A / C2A_SOURCE_FOCUSED_PASS / DEV_HANDOFF / STOP`
 
 - Branch: `work/ink-tech-closure-001`
 - C1 reviewed exact HEAD: `6a9fb25558cda958b90140867ac054f3662dfa01`
 - C1 MR result: `MR_SOURCE_PASS / Runtime deferred`
 - C2-A Workpack: `working/INK_TECH_CLOSURE_001_C2A_DEV_WORKPACK.md`
 - Full Windows Runtime: `DEFERRED_TO_FINAL_CLOSURE_BATCH`
-- Current gate: `C2_A_NATIVE_AUTHORITY_RECONCILE`
+- Current gate: `DEV_HANDOFF → STOP / MR_SOURCE_REVIEW`
 
 ## Preserved C1 state
 
@@ -99,3 +99,85 @@ Implementation and focused C2-A QA pending.
 NEXT
 
 Implement only the seven bounded operations plus `export_ink_asset`.
+
+
+## C2-A checkpoint — source focused PASS / handoff
+
+LATEST_COMMIT
+
+`6d19efac3e0e87bcc97044121eb41d2c7cef6184` — `working/INK_TECH_CLOSURE_001_C2A_CHECKPOINT.md` recorded after implementation and focused source/contract QA.
+
+FILES_CHANGED
+
+Authorized C2-A product source:
+
+```text
+product/source/src/editor/chat-bounded-edit.js
+product/source/src/agent/capability-registry.js
+product/source/src/agent/public-creative-api.js
+product/source/src/editor/text-object.js
+product/source/src/agent/export-asset.js
+product/source/src/ink.js
+```
+
+Authorized C2-A QA/evidence:
+
+```text
+qa/ink-tech-closure-001-c2a.test.mjs
+qa/ink-chat-geometry-ops-001.test.mjs
+qa/ink-chat-connector-004-use-ink-programmable-bridge.test.mjs
+qa/runtime/ink-cloud-018-browser-harness.html
+working/INK_TECH_CLOSURE_001_C2A_CHECKPOINT.md
+ACTIVE/INK_DEV_PROGRESS.md
+```
+
+WHY
+
+Expose the already accepted C2-A basic structure / transform / SVG import / export capability families through existing native INK authorities only.
+
+NATIVE_AUTHORITY
+
+```text
+Frame      → createFrame
+Text       → shared text-object helper used by both UI and CHAT
+SVG        → importSVGDocument
+Resize     → resizeFrameGeometry / existing bounds + applyWorldTransformBatch
+Scale      → Matrix + applyWorldTransformBatch
+Order      → existing parent-array front/back semantics
+Asset export → app.exportPNG / app.exportSVG / app.exportPDF
+               + existing INK output registry lifecycle
+```
+
+FOCUSED_QA
+
+```text
+deterministic source/contract gate = 25 / 25 PASS
+C1 operation prefix = exact 14 preserved
+C2-A additions = exact 7
+bounded operation total = 21
+named tool total = 21
+export_ink_asset = appended exactly once
+FORMAT_VERSION = 4
+output registry / transform / hierarchy / vector parser / History core blobs = unchanged
+central Runtime runner = unchanged
+C2-A final-batch browser proof = authored / NOT_EXECUTED
+executable Node focused test = authored / NOT_EXECUTED in this DEV environment
+FULL_WINDOWS_RUNTIME = NOT_RUN
+```
+
+KNOWN_GAPS
+
+```text
+Executable Node test cannot be claimed PASS because this DEV tool environment cannot resolve GitHub host for a local clone.
+Browser/Windows Runtime remains intentionally deferred to the final closure batch.
+C2-B and C2-C remain untouched.
+```
+
+NEXT
+
+```text
+RESULT = C2A_SOURCE_FOCUSED_PASS
+RUNTIME = DEFERRED_TO_FINAL_CLOSURE_BATCH
+NEXT = MR_SOURCE_REVIEW
+DEV_HANDOFF → STOP
+```
