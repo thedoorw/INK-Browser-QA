@@ -97,6 +97,26 @@
       await sleep(350);
 
       const initialShell = shell.state();
+      const firstPaintStyle = doc.querySelector('#inkFirstPaintStyle')?.textContent || '';
+      const deliveredApp = doc.querySelector('#app');
+      record('G3 delivered first-paint contract is present before Runtime-state assertions',
+        doc.body?.dataset?.inkFirstPaint === 'workstation' &&
+        deliveredApp?.dataset?.firstPaint === 'ready' &&
+        deliveredApp?.dataset?.space === 'creation' &&
+        deliveredApp?.dataset?.shellPanel === 'collapsed' &&
+        deliveredApp?.dataset?.toolbarLayout === 'single' &&
+        /background:#e7e7e7/.test(firstPaintStyle) &&
+        !/(?:background:\s*(?:#000|black|#111))/.test(firstPaintStyle),
+        {
+          body: doc.body?.dataset?.inkFirstPaint || null,
+          app: {
+            firstPaint: deliveredApp?.dataset?.firstPaint || null,
+            space: deliveredApp?.dataset?.space || null,
+            shellPanel: deliveredApp?.dataset?.shellPanel || null,
+            toolbarLayout: deliveredApp?.dataset?.toolbarLayout || null
+          },
+          style: firstPaintStyle.trim()
+        });
       const initialStageWidth = doc.querySelector('#stageWrap').getBoundingClientRect().width;
       const initialChatController = app.chatBoundedEdit;
       const initialRevisionController = app.revisions;
