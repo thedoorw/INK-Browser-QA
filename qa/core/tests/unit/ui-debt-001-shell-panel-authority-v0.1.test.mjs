@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 const root = fileURLToPath(new URL('../../../../', import.meta.url));
 const read = name => readFileSync(path.join(root, 'product/source', name), 'utf8');
 const readBytes = name => readFileSync(path.join(root, 'product/source', name));
+const readRuntimeQa = name => readFileSync(path.join(root, 'qa/runtime', name), 'utf8');
 const shell = read('web-shell.js');
 const ink = read('src/ink.js');
 const css = read('styles.css');
@@ -15,6 +16,8 @@ const web = read('index.html');
 const portable = read('index-standalone.html');
 const config = read('src/config.js');
 const serviceWorker = read('service-worker.js');
+const runtimeUiHarness = readRuntimeQa('ink-web-ui-001-harness.html');
+const runtimeBatch = readRuntimeQa('run-ink-runtime-batch.mjs');
 
 function normalizeDelivery(html, delivery) {
   const label = `INK v0.1 · ${delivery}`;
@@ -168,6 +171,35 @@ test('approved visible-logo route is singular and exact asset SHA is locked', ()
   }
   const actualSha256 = createHash('sha256').update(readBytes(approvedRoute)).digest('hex');
   assert.equal(actualSha256, approvedSha256);
+});
+
+test('G8 compact file commands and build identity are isolated to the accepted contract', () => {
+  assert.match(css, /@media\(max-width:760px\)\{[\s\S]*?#newBtn,#openBtn,#saveBtn\{display:none\}[\s\S]*?#exportBtn\{display:flex\}/);
+  const configBuild = config.match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
+  const workerBuild = serviceWorker.match(/const BUILD_ID = '([^']+)'/)?.[1];
+  assert.equal(configBuild, '20260925-ui-rebuild-001-g8-runtime-r1');
+  assert.equal(workerBuild, configBuild);
+  assert.match(config, /FORMAT_VERSION\s*=\s*4\b/);
+  assert.match(serviceWorker, /const PRODUCT_VERSION = '0\.1';/);
+});
+
+test('G8 Runtime QA uses current DOM keyboard typography and compact-toolbar contracts', () => {
+  assert.match(runtimeUiHarness, /escapeMenuItem\?\.dispatchEvent\(new win\.KeyboardEvent\('keydown'/);
+  assert.doesNotMatch(runtimeUiHarness, /dispatchKey\(win, 'Escape'\)/);
+  assert.match(runtimeUiHarness, /getPropertyValue\('--ui-font'\)\.trim\(\)/);
+  assert.doesNotMatch(runtimeUiHarness, /item\.family\.includes\('Inter'\)/);
+  assert.match(runtimeUiHarness, /compact toolbar resolves to effective single mode without requiring legacy rail hiding/);
+  assert.doesNotMatch(runtimeUiHarness, /getComputedStyle\(doc\.querySelector\('\.tool-rail'\)\)\.display === 'none'/);
+});
+
+test('G8 Runtime batch emits bounded browser-native UI visual evidence', () => {
+  for (const file of ['ui-first-paint.png','ui-1280x1024.png','ui-960x800.png']) assert.ok(runtimeBatch.includes(file));
+  assert.match(runtimeBatch, /BROWSER_NATIVE_HEADLESS_SCREENSHOT/);
+  assert.match(runtimeBatch, /--blink-settings=scriptEnabled=false/);
+  assert.match(runtimeBatch, /--window-size=\$\{spec\.width\},\$\{spec\.height\}/);
+  assert.match(runtimeBatch, /--screenshot=\$\{output\}/);
+  assert.match(runtimeBatch, /report\.uiVisualEvidence = entry\.visualCaptures/);
+  assert.match(runtimeBatch, /assertUiPng\(bytes, spec\.width, spec\.height\)/);
 });
 
 test('Web Portable favicon contract is singular and uses the dedicated SVG favicon', () => {
