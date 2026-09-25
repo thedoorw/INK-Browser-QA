@@ -1,10 +1,10 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "5bd8754aad3e53886ce6109bd350fa4fc5f68db9",
   "pending_work_orders": [
-    "INK-UI-REBUILD-001-TECH-DEBT-CLEANUP"
+    "INK-CHAT-GEOMETRY-OPS-001"
   ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
@@ -24,11 +24,12 @@
     "INK-WEB-UI-006-VISUAL-CLOSURE",
     "INK-CHAT-CONNECTOR-003",
     "INK-CHAT-CONNECTOR-004",
-    "INK-CHAT-CLOSED-LOOP-001"
+    "INK-CHAT-CLOSED-LOOP-001",
+    "INK-UI-REBUILD-001-TECH-DEBT-CLEANUP"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "Mandatory G8 exact-SHA rerun after QA-only capture transport correction; blocks UI cleanup closure and Photoshop rebuild."
+    "enabled": false,
+    "reason": ""
   },
   "batch_policy": {
     "default_target": 3,
@@ -36,8 +37,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36111515142,
-    "tested_sha": "5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8",
-    "result": "FAIL_G8_QA_CAPTURE_MISSING_FIRST_PAINT_PNG"
+    "run_id": 36112690309,
+    "tested_sha": "5bd8754aad3e53886ce6109bd350fa4fc5f68db9",
+    "result": "UI_PASS_CREATIVE_BASELINE_TIMEOUT_360S"
   }
 }
