@@ -142,12 +142,11 @@ kbd{font-family:inherit;font-size:9px;min-width:20px;padding:3px 5px;border:1px 
 .inspector-resizer{position:absolute;z-index:3;left:-5px;top:20px;bottom:20px;width:10px;cursor:ew-resize;touch-action:none}
 .inspector-resizer::after{content:"";position:absolute;left:4px;top:42%;width:2px;height:38px;border-radius:2px;background:rgba(54,50,43,.16);transition:background .15s}
 .inspector-resizer:hover::after,.app.inspector-resizing .inspector-resizer::after{background:var(--accent)}
-.inspector-edge-toggle{position:absolute;z-index:58;right:-1px;top:50%;width:34px;height:96px;transform:translateY(-50%);border:1px solid rgba(255,255,255,.86);border-right:0;border-radius:14px 0 0 14px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#5f5b54;transition:opacity .16s,transform .2s,color .15s}
-.inspector-edge-toggle svg{width:16px;height:16px}
-.inspector-edge-toggle span{font-size:9px;font-weight:700;writing-mode:vertical-rl;letter-spacing:.12em}
-.inspector-edge-toggle .edge-chevron{width:13px;height:13px}
-.inspector-edge-toggle:hover{color:var(--accent);transform:translate(-3px,-50%)}
-.app.inspector-open .inspector-edge-toggle{opacity:0;pointer-events:none;transform:translate(8px,-50%)}
+
+
+
+
+
 .inspector-head{height:55px;display:flex;align-items:center;justify-content:space-between;padding:0 12px 0 15px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.35)}
 .inspector-head>div,.panel-header>div:first-child,.section-title>div{display:flex;flex-direction:column;gap:2px}
 .inspector-head strong,.panel-header strong{font-size:14px}
@@ -281,7 +280,6 @@ select:focus,input:focus{outline-color:rgba(30,98,90,.35)}
   .file-group .primary-button{width:38px;height:38px;padding:0;border-radius:11px}
   .file-group .primary-button span{display:none}
   .file-group .icon-button{width:36px;height:36px}
-  .tool-rail,.statusbar,.brush-family-popover,.inspector-edge-toggle,.inspector-resizer{display:none!important}
   .stage-wrap,.app:not(.inspector-open) .stage-wrap{top:var(--topbar-h);left:0;right:0;bottom:calc(72px + env(safe-area-inset-bottom))}
   .canvas-vignette{box-shadow:none}
   .quick-controls{left:10px;top:12px;width:46px;padding:6px 5px;border-radius:16px}
@@ -546,8 +544,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 .inspector{top:calc(var(--topbar-h) + 6px);right:6px;bottom:calc(var(--status-h) + 6px);border-radius:7px;border-color:var(--line-strong)}
 .inspector-resizer{top:10px;bottom:10px}
 .inspector-resizer::after{height:30px}
-.inspector-edge-toggle{width:28px;height:82px;border-color:var(--line-strong);border-radius:5px 0 0 5px;gap:5px}
-.inspector-edge-toggle span{font-size:8px;letter-spacing:.08em}
+
 .inspector-head{height:38px;padding:0 6px 0 9px;background:rgba(255,255,255,.34)}
 .inspector-head strong,.panel-header strong{font-size:11px;font-weight:650}
 .eyebrow{font-size:7px;letter-spacing:.14em}
@@ -740,7 +737,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
   .menu-app-mark strong{font-size:10px;letter-spacing:.12em;font-weight:700}
   .menu-app-mark small{font-size:8px;color:var(--chrome-faint);font-variant-numeric:tabular-nums}
   .application-menus{display:flex;align-items:stretch;height:100%;min-width:0;overflow:visible}
-  .application-menus > button,.application-menu > button{height:100%;padding:0 8px;color:#d5d6d8;font-size:11px;font-weight:400;border-radius:0;white-space:nowrap}
+  .application-menus > button,.application-menu > button,.application-menu-label{height:100%;padding:0 8px;color:#d5d6d8;font-size:11px;font-weight:400;border-radius:0;white-space:nowrap;display:flex;align-items:center}
   .application-menus > button:hover,.application-menus > button:focus-visible,.application-menu > button:hover,.application-menu > button:focus-visible{background:#505155;color:#fff;outline:0}
   .menu-workspace{margin-left:auto;height:100%;display:flex;align-items:center;border-left:1px solid var(--chrome-line);color:var(--chrome-muted);font-size:9px}
   .menu-workspace span{padding:0 7px 0 10px;letter-spacing:.02em}
@@ -853,7 +850,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 }
 
 @media(max-width:1120px) and (min-width:761px){
-  .application-menus > button,.application-menu > button{padding:0 6px;font-size:10px}
+  .application-menus > button,.application-menu > button,.application-menu-label{padding:0 6px;font-size:10px}
   .menu-workspace span{display:none}
   .topbar{grid-template-columns:minmax(210px,1fr) auto minmax(310px,1fr)}
   .doc-title{width:min(22vw,250px)}
@@ -2158,7 +2155,7 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
         --chrome-line-soft:#c4c4c4;}
   .menu-strip{height:var(--menu-h);border-bottom:1px solid #202123}
   .menu-app-mark{padding-inline:5px 8px}
-  .application-menus > button,.application-menu > button{padding-inline:7px}
+  .application-menus > button,.application-menu > button,.application-menu-label{padding-inline:7px}
   .menu-workspace{border-left-color:#292a2c}
   .topbar{top:var(--menu-h);height:var(--options-h);grid-template-columns:auto minmax(250px,1fr) auto auto;column-gap:0;padding:0 4px;overflow:visible;border-bottom:1px solid #202123;box-shadow:inset 0 1px rgba(255,255,255,.045)}
   .topbar-leading{gap:1px;height:100%;padding-right:3px}
@@ -2229,11 +2226,10 @@ kbd{font-size:8px;padding:2px 4px;border-radius:3px}
 
   #inspectorToggle.legacy-inspector-toggle{display:none!important}
   #closeInspector,.creative-workspace-head [data-workspace-action="close"]{display:none!important}
-  .inspector-edge-toggle.primary-panel-collapse,.app.inspector-open .inspector-edge-toggle.primary-panel-collapse{display:grid!important;place-items:center;position:absolute;z-index:86;top:calc(var(--topbar-h) + 5px);right:calc(var(--panel-dock-w) + var(--active-panel-w));width:18px;height:25px;padding:0;border:1px solid #202123;border-right:0;border-radius:2px 0 0 2px;background:#3b3c3e;color:#aeb0b3;box-shadow:-1px 1px 3px rgba(0,0,0,.22);opacity:1;pointer-events:auto;outline:0;transform:none;transition:right .14s ease,background .14s ease,color .14s ease}
-  .inspector-edge-toggle.primary-panel-collapse:hover,.inspector-edge-toggle.primary-panel-collapse:focus-visible{color:#fff;background:#505154;transform:none}
-  .inspector-edge-toggle.primary-panel-collapse .edge-chevron{width:12px;height:12px;transform:rotate(180deg);transition:transform .14s ease}
-  .inspector-edge-toggle.primary-panel-collapse.active{color:#79c8c0;background:#30403e}
-  .inspector-edge-toggle.primary-panel-collapse.active .edge-chevron{transform:none}
+
+
+
+
 
   .inspector-head,.creative-workspace-head{flex:0 0 var(--ui-panel-head-h);height:var(--ui-panel-head-h);min-height:var(--ui-panel-head-h);padding:0 6px 0 9px;background:#38393b;border-bottom:1px solid #232426}
   .inspector-head .eyebrow,.creative-workspace-head .eyebrow{display:none}
@@ -2303,7 +2299,7 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
     border-radius:2px;
   }
   .menu-app-mark small{color:#858585}
-  .application-menus > button,.application-menu > button{color:#333}
+  .application-menus > button,.application-menu > button,.application-menu-label{color:#333}
   .application-menus > button:hover,
   .application-menus > button:focus-visible,
   .application-menu > button:hover,
@@ -2407,16 +2403,7 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
   .creative-workspace-status{color:#6e6e6e}
   .creative-structure-option>summary span{color:#757575}
 
-  .inspector-edge-toggle.primary-panel-collapse,
-  .app.inspector-open .inspector-edge-toggle.primary-panel-collapse{
-    background:#f7f7f7;
-    color:#626262;
-    border-color:#d0d0d0;
-    box-shadow:-1px 1px 3px rgba(0,0,0,.08);
-  }
-  .inspector-edge-toggle.primary-panel-collapse:hover,
-  .inspector-edge-toggle.primary-panel-collapse:focus-visible{color:#202020;background:#fff}
-  .inspector-edge-toggle.primary-panel-collapse.active{color:#286f68;background:#e5f0ee}
+
 
   .statusbar{
     background:#f5f5f5;
@@ -2534,6 +2521,7 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 }
 .application-menus > button,
 .application-menu > button,
+.application-menu-label,
 .application-command-menu button{font-weight:var(--ui-weight-regular)}
 .doc-title{font-weight:var(--ui-weight-control)}
 
