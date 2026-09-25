@@ -63,9 +63,9 @@
 <div id="app" class="app" data-panel="brush">
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
     <div class="menu-app-mark" aria-label="INK v0.1 · Web"><img class="brand-source-mark" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong>INK</strong><small>0.1</small></div>
-    <nav class="application-menus" aria-label="主選單">
-      <div class="application-menu application-file-menu">
-        <button id="fileMenuToggle" type="button" aria-haspopup="menu" aria-expanded="false">檔案</button>
+    <nav id="applicationMenus" class="application-menus" aria-label="主選單">
+      <div class="application-menu application-file-menu" data-application-menu="file">
+        <button id="fileMenuToggle" type="button" data-application-menu-trigger="file" aria-haspopup="menu" aria-expanded="false">檔案</button>
         <div id="fileMenu" class="application-command-menu" role="menu" aria-label="檔案" data-ui-home="file" data-ui-route="PRIMARY_HOME" hidden>
           <button type="button" role="menuitem" data-file-command="new"><span>新增</span><kbd>Ctrl+N</kbd></button>
           <button type="button" role="menuitem" data-file-command="open"><span>開啟</span><kbd>Ctrl+O</kbd></button>
@@ -74,7 +74,16 @@
           <button type="button" role="menuitem" data-file-command="export"><span>匯出</span></button>
         </div>
       </div>
-      <button type="button">編輯</button><button type="button">檢視</button><button type="button">選取</button><button type="button">物件</button><button type="button">圖層</button><button type="button">筆刷</button><button type="button">視窗</button><button type="button">說明</button>
+      <span class="application-menu-label" data-application-menu-id="edit">編輯</span>
+      <span class="application-menu-label" data-application-menu-id="view">檢視</span>
+      <span class="application-menu-label" data-application-menu-id="select">選取</span>
+      <span class="application-menu-label" data-application-menu-id="object">物件</span>
+      <span class="application-menu-label" data-application-menu-id="layer">圖層</span>
+      <span class="application-menu-label" data-application-menu-id="brush">筆刷</span>
+      <div class="application-menu application-window-menu" data-application-menu="window">
+        <button id="windowMenuToggle" type="button" data-application-menu-trigger="window" aria-haspopup="menu" aria-expanded="false">視窗</button>
+      </div>
+      <span class="application-menu-label" data-application-menu-id="help">說明</span>
     </nav>
     <div class="menu-workspace" aria-label="工作區狀態" data-ui-home="workspace" data-ui-route="SECONDARY_SHORTCUT"><span>繪畫與向量</span><button id="workspaceMenuToggle" type="button" title="工作區清單" aria-haspopup="menu" aria-expanded="false">▾</button>
       <div id="workspaceMenu" class="workspace-menu" role="menu" hidden>
@@ -212,10 +221,6 @@
   </main>
 
   <div id="panelScrim" class="panel-scrim" hidden></div>
-
-  <button id="inspectorEdgeToggle" class="inspector-edge-toggle primary-panel-collapse" type="button" title="展開右側面板" aria-label="展開右側面板" aria-controls="inspector creativeWorkspace" aria-expanded="false" data-ui-home="panels" data-ui-route="COLLAPSE_RESTORE_ONLY">
-    <svg class="edge-chevron" aria-hidden="true"><use href="#i-chevron"/></svg>
-  </button>
 
   <aside id="inspector" class="inspector elevated-panel" aria-hidden="true">
     <div id="inspectorResizer" class="inspector-resizer" role="separator" aria-orientation="vertical" aria-label="調整檢查器寬度"></div>
