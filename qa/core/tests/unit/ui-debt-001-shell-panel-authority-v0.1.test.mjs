@@ -98,6 +98,18 @@ test('single CSS authority owns panel geometry and rejects known contradictory p
   assert.equal((css.match(/\{/g) || []).length, (css.match(/\}/g) || []).length);
 });
 
+test('workstation presentation CSS has no !important cascade war', () => {
+  const count = (css.match(/!important/g) || []).length;
+  assert.ok(count <= 19, `semantic !important ceiling exceeded: ${count}`);
+  const importantLines = css.split(/\r?\n/).filter(line => line.includes('!important'));
+  for (const line of importantLines) {
+    const semanticVisibility = /display\s*:\s*(?:none|flex|grid)!important/.test(line);
+    const reducedMotion = /prefers-reduced-motion:reduce/.test(line) && /(?:animation|transition):none!important/.test(line);
+    assert.ok(semanticVisibility || reducedMotion, `presentation !important is not allowed: ${line.trim()}`);
+  }
+  assert.doesNotMatch(css, /(?:font-size|color|background(?:-color)?|border(?:-[a-z-]+)?|width|height|padding|margin|box-shadow|backdrop-filter)\s*:[^;{}]*!important/);
+});
+
 test('Dock owns panel toggle state and Advanced only navigates into Properties', () => {
   assert.match(shell, /dock\.addEventListener\('click'[\s\S]*?togglePanel\(button\.dataset\.shellPanel\)/);
   assert.match(shell, /function openContextualAdvanced\(\)[\s\S]*?return selectPanel\('properties'\)/);
