@@ -143,6 +143,7 @@ product/source/src/agent/capability-registry.js
 product/source/src/editor/chat-creative-plan.js        # only if generic sequencing requires it
 product/source/src/editor/composition.js               # only if an adapter helper is required; preserve existing semantics
 qa/ink-chat-geometry-ops-001.test.mjs
+qa/ink-chat-connector-004-use-ink-programmable-bridge.test.mjs   # update stale exact-six vocabulary assertion only
 qa/runtime/ink-cloud-018-browser-harness.html
 ACTIVE/INK_DEV_PROGRESS.md
 working/INK_CHAT_GEOMETRY_OPS_001_DEV_HANDOFF.md
@@ -150,6 +151,14 @@ research/INK_CHAT_GEOMETRY_OPS_001_REPORT_v0.1.md
 ```
 
 Existing native geometry modules are upstream authorities and should remain unchanged unless a focused defect is proven.
+
+Compatibility rule:
+
+```text
+Connector-004 accepted six-operation vocabulary = exact preserved prefix/subset
+Geometry Ops 001 = authorized additive expansion to fourteen operations
+Any old QA asserting "exactly six forever" must be revised; all six original operations remain unchanged.
+```
 
 DEV must run focused QA, report exact HEAD, then:
 
