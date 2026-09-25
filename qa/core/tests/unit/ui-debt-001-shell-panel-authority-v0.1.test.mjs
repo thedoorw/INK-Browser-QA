@@ -35,10 +35,10 @@ test('desktop primary-panel state is explicit and fresh entry is collapsed', () 
   assert.doesNotMatch(shell, /localStorage\.setItem\([^\n]*(?:open|expanded)/i);
 });
 
-test('web-shell is the only desktop Chevron and close event owner', () => {
-  assert.match(shell, /function bindCollapseControl\(\)/);
-  assert.match(shell, /button\.dataset\.shellCollapseBound === 'true'/);
-  assert.match(shell, /button\.addEventListener\('click'/);
+test('web-shell owns primary-panel open close state independently of any legacy presenter', () => {
+  assert.match(shell, /function selectPanel\(id\)/);
+  assert.match(shell, /function togglePanel\(id\)/);
+  assert.match(shell, /function closePrimaryPanels\(\)/);
   assert.match(shell, /function bindInspectorCloseControl\(\)/);
   assert.doesNotMatch(shell, /button\.onclick\s*=/);
   assert.doesNotMatch(ink, /\$\('#inspectorEdgeToggle'\)\.onclick/);
@@ -87,9 +87,12 @@ test('Advanced follows Properties authority and other Dock choices clear its act
   assert.match(shell, /document\.querySelectorAll\('\[data-shell-panel\]'\)[\s\S]*?button\.dataset\.shellPanel === active/);
 });
 
-test('Web Portable favicon version and format contracts are preserved', () => {
+test('Web Portable favicon contract is singular and uses the dedicated SVG favicon', () => {
   assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
-  for (const html of [web, portable]) assert.match(html, /<link rel="icon" href="assets\/INK_MARK_SOURCE_W-300\.jpg\?v=0\.1" type="image\/jpeg">/);
+  for (const html of [web, portable]) {
+    assert.match(html, /<link rel="icon" href="assets\/favicon\.svg\?v=0\.1" type="image\/svg\+xml" sizes="32x32">/);
+    assert.doesNotMatch(html, /rel="icon"[^>]*INK_MARK_SOURCE_W-300\.jpg/);
+  }
   assert.match(config, /FORMAT_VERSION\s*=\s*4\b/);
   assert.match(web, /INK v0\.1 · Web/);
   assert.match(portable, /INK v0\.1 · Portable/);
