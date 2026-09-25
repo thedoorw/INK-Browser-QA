@@ -148,3 +148,24 @@ Result: **PASS for the authorized QA-bridge revision scope**.
 - Windows Runtime rerun: NOT_RUN_BY_DEV.
 - Current gate: `DEV_HANDOFF → STOP`.
 
+
+
+## 2026-09-25 — INK-UI-REBUILD-001 technical-debt cleanup initialized
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+BRANCH = work/ink-ui-rebuild-001-tech-debt-cleanup
+G0_BASELINE_EVIDENCE = PASS
+PRODUCT_UI_MUTATION = 0 at initialization
+KNOWN_GOOD_PRODUCT_BASE = d6c28be13cddee0d83b9e7613b5498b06d1f7b0e
+CORE = FROZEN
+PHOTOSHOP_REBUILD = HOLD
+```
+
+UR preflight and bounded cleanup scope were imported unchanged from the audit branch.
+
+Verified baseline metrics are recorded in:
+`working/INK_UI_REBUILD_001_TECH_DEBT_BASELINE_EVIDENCE.md`
+
+Next gate:
+`G1 OBSOLETE_UI_QA_CONTRACTS`
