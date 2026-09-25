@@ -948,10 +948,14 @@ function executeCloneTask(app, task) {
 function executeRepeatRadialTask(app, task) {
   const source = findPageObject(app.page(), task.targets[0]);
   if (!source) editFail('TARGET_MISSING');
+  const parentWorld = source.parentWorldMatrix || Matrix.identity();
+  const inverseParentWorld = Matrix.tryInvert(parentWorld);
+  if (!inverseParentWorld) editFail('SINGULAR_TARGET', { objectId: source.object.id });
+  const nativeCenter = Matrix.point(inverseParentWorld, task.arguments.center);
   const repeat = createRepeat(source.object, {
     mode: 'radial',
     count: task.arguments.count,
-    center: task.arguments.center,
+    center: nativeCenter,
     sweep: task.arguments.sweep,
     startAngle: task.arguments.startAngle,
     linked: task.arguments.linked,
@@ -964,7 +968,14 @@ function executeRepeatRadialTask(app, task) {
   });
   finishStructuralMutation(app);
   const ref = { pageId: app.page().id, layerId: source.layer.id, objectId: repeat.id };
-  return { createdRefs: [ref], resultRefs: [ref], sourceObjectId: source.object.id, count: repeat.count };
+  return {
+    createdRefs: [ref],
+    resultRefs: [ref],
+    sourceObjectId: source.object.id,
+    count: repeat.count,
+    center: { ...task.arguments.center },
+    nativeCenter
+  };
 }
 
 function assertSameStructuralParent(foundItems, operation) {
