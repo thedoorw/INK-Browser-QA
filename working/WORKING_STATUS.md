@@ -1,3 +1,26 @@
+## UI foundation health cleanup authorized — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+USER_PRIORITY = INK_HEALTH_FIRST
+STATUS = AUTHORIZED / WAIT_CLEAN_MAIN_BASELINE
+
+UPSTREAM_BLOCK =
+  INK-CHAT-GEOMETRY-OPS-001 exact-SHA Runtime + promotion
+  required only to avoid shared Runtime-harness branch divergence
+
+UR_PREFLIGHT = ACCEPTED
+UR_CLEANUP_SCOPE = ACCEPTED
+
+IMPLEMENTATION_BASE =
+  fresh branch from Runtime-PASS promoted main
+  old work/ink-ui-rebuild-001 = AUDIT SOURCE ONLY
+
+CORE = FROZEN
+PHOTOSHOP_REBUILD = HOLD
+EVIDENCE = MANDATORY
+```
+
 ## INK-CHAT-GEOMETRY-OPS-001 started — 2026-09-25
 
 ```text
