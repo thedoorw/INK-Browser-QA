@@ -1,3 +1,101 @@
+## INK-TECH-CLOSURE-001 — Capability closure before final UI rebuild — 2026-09-25
+
+STATUS: `MR_AUTHORIZED / CLOSURE_IN_PROGRESS`
+
+User decision:
+
+```text
+TECHNICAL_CLOSURE_FIRST
+→ freeze truthful current capability baseline
+→ then final Photoshop-aligned UI function placement/rebuild
+```
+
+Authoritative ledger:
+
+`working/INK_TECH_CLOSURE_001_CAPABILITY_LEDGER.md`
+
+Primary rule:
+
+```text
+planned != implemented != installed != Runtime verified != promoted
+CLOSED requires an explicit final disposition.
+```
+
+### Closure Phase C1 — Geometry Ops integration debt
+
+Old source branch:
+
+`work/ink-chat-geometry-ops-001`
+tested/head evidence: `51dcc27570440e5a4a779e7ffed64dd634995489`
+
+The two product authorities and related Geometry Ops QA were verified unchanged on current main relative to the old accepted base `d6c28be13cddee0d83b9e7613b5498b06d1f7b0e`. Therefore the implementation may be replayed exactly onto a fresh current-main branch without importing old governance/runtime-queue state.
+
+Fresh closure branch:
+
+`work/ink-tech-closure-001`
+
+Authorized replay files:
+
+```text
+product/source/src/editor/chat-bounded-edit.js
+product/source/src/agent/capability-registry.js
+qa/ink-chat-connector-004-use-ink-programmable-bridge.test.mjs
+qa/ink-chat-geometry-ops-001.test.mjs
+qa/runtime/ink-cloud-018-browser-harness.html
+research/INK_CHAT_GEOMETRY_OPS_001_REPORT_v0.1.md
+working/INK_CHAT_GEOMETRY_OPS_001_DEV_HANDOFF.md
+```
+
+Do NOT replay stale:
+
+```text
+ACTIVE/INK_CURRENT_WORK_ORDER.md
+ACTIVE/INK_DEV_PROGRESS.md
+ACTIVE/INK_RUNTIME_QUEUE.json
+working/WORKING_STATUS.md
+```
+
+Required:
+- preserve post-cleanup UI/current-main product state;
+- no new geometry operation beyond the already authorized eight;
+- no UI change;
+- no Renderer/Document/History/Revision semantics change;
+- no FORMAT_VERSION change;
+- focused QA;
+- DEV_HANDOFF → STOP;
+- MR exact-SHA Runtime;
+- promote only after Geometry gate PASS.
+
+### Closure Phase C2 — exposure-debt disposition
+
+After C1 source closure, MR audits the remaining CORE_ONLY/PARTIAL families in the ledger against current native authorities and the original connector target.
+
+No implementation is automatically authorized by C2.
+
+Each family must end as one of:
+
+```text
+CLOSED_INSTALLED
+CORE_ONLY_ACCEPTED
+ACTIVE_EXPOSURE_WORK
+DEFERRED
+RETIRED
+```
+
+### Closure Phase C3 — freeze current capability baseline
+
+Only after C1 and C2:
+
+```text
+CURRENT_CAPABILITY_BASELINE = FROZEN
+→ hand to UR
+→ final Photoshop-aligned command/menu/tool/panel mapping may be locked
+```
+
+Connector-005 Creative Library Search remains separately tracked planned work and may not disappear from the ledger.
+
+---
+
 ## MR_PASS — INK-UI-REBUILD-001 technical-debt cleanup COMPLETE — 2026-09-25
 
 ```text
