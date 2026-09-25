@@ -131,3 +131,21 @@ Deferred/retired/optional items do not block closure.
 The Photoshop-aligned UI may use this ledger for planning, but final menu/tool/panel placement must use the later frozen `CURRENT_CAPABILITY_BASELINE`.
 
 No UI should expose a command as operational merely because it appears in research or an unpromoted branch.
+
+## F. C2 disposition checkpoint
+
+MR disposition is recorded in:
+
+`working/INK_TECH_CLOSURE_001_C2_DISPOSITION.md`
+
+Result:
+
+```text
+ACTIVE_EXPOSURE_WORK = Frame, Text, SVG import, full Transform/Order,
+                       Repeat remainder, Auto/Flex Layout, Constraints,
+                       Components/Overrides, Asset Export
+
+CLOSED_AT_ACCEPTED_ADVISORY_SCOPE = Creative Memory / Research
+
+C1_GEOMETRY_OPS = still blocks closure until reconcile + Runtime + promotion
+```
