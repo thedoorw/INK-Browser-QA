@@ -1,3 +1,69 @@
+## MR_REVISE — G8_QA_CAPTURE_ONLY — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+TESTED_SHA = 5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8
+RUNTIME_RUN = 36111515142
+RUNNER = DESKTOP-NSOQH69
+MATERIALIZATION = PASS
+BROWSER_BATCH = FAIL_BEFORE_UI_ASSERTIONS
+PRODUCT_RUNTIME_FAIL = NOT_ESTABLISHED
+G0-G7 = PASS
+G8_SOURCE_PRODUCT_DELTA = ACCEPTED
+G8 = REVISE / QA_CAPTURE_ONLY
+ARTIFACT_ID = 10853825533
+ARTIFACT_DIGEST = sha256:4dd9bc4b1d1841acf342c3720d9f9ab0eea83df34b0d3dd533c64f025d8a9658
+```
+
+Failure:
+
+```text
+Error: ENOENT
+missing:
+  evidence/ui-first-paint.png
+Chrome screenshot process exit code = 0
+visualCaptures = []
+```
+
+Classification:
+
+- product CSS / BUILD_ID corrections from the previous G8 revision remain accepted;
+- this run failed in the newly added QA screenshot transport before the normal UI Runtime suite could be evaluated;
+- no product defect is established by this run.
+
+Authorized revision only:
+
+`qa/runtime/run-ink-runtime-batch.mjs`
+
+Required:
+
+1. Make browser-native visual capture deterministic on the Windows self-hosted runner.
+2. Do not assume that Chrome exit code 0 implies the screenshot file exists.
+3. Prefer a bounded browser-native method that returns/captures pixels explicitly (for example CDP `Page.captureScreenshot` with an exact viewport) over relying on Chrome CLI screenshot side effects.
+4. Required exact artifacts remain:
+   - `ui-first-paint.png` 1280×1024;
+   - `ui-1280x1024.png`;
+   - `ui-960x800.png`.
+5. Each capture must:
+   - be real Chrome/browser pixels;
+   - validate PNG signature and dimensions;
+   - record byte length and SHA256;
+   - use a fresh bounded browser context/profile;
+   - fail explicitly if capture bytes are absent.
+6. First-paint evidence must remain delivered-shell / pre-runtime evidence and be labeled as such.
+7. Preserve the existing UI / Creative / Geometry Runtime suites and their assertions.
+8. No product/source mutation.
+9. No workflow mutation unless the runner cannot implement capture within its existing Node/browser process model; if that becomes necessary, STOP for MR authorization instead.
+10. No Photoshop rebuild.
+
+After focused syntax/source QA:
+
+`DEV_HANDOFF → STOP`
+
+MR will rerun the exact new HEAD.
+
+---
+
 ## MR source PASS — G8 Runtime isolation rerun — 2026-09-25
 
 ```text
