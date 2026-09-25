@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8",
+  "state": "READY",
+  "target_sha": "5bd8754aad3e53886ce6109bd350fa4fc5f68db9",
   "pending_work_orders": [
     "INK-UI-REBUILD-001-TECH-DEBT-CLEANUP"
   ],
@@ -27,8 +27,8 @@
     "INK-CHAT-CLOSED-LOOP-001"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": ""
+    "enabled": true,
+    "reason": "Mandatory G8 exact-SHA rerun after QA-only capture transport correction; blocks UI cleanup closure and Photoshop rebuild."
   },
   "batch_policy": {
     "default_target": 3,
