@@ -32,18 +32,20 @@ SHARED_RUNTIME_HARNESS_RULE =
 ```text
 TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
 USER_PRIORITY = INK_HEALTH_FIRST
-STATUS = AUTHORIZED / WAIT_CLEAN_MAIN_BASELINE
+STATUS = AUTHORIZED / DEV_START_FROM_KNOWN_GOOD_MAIN
 
-UPSTREAM_BLOCK =
-  INK-CHAT-GEOMETRY-OPS-001 exact-SHA Runtime + promotion
-  required only to avoid shared Runtime-harness branch divergence
+UPSTREAM_STATE =
+  INK-CHAT-GEOMETRY-OPS-001 = MR_HOLD / NOT_PROMOTED
+  does not block UI cleanup
 
 UR_PREFLIGHT = ACCEPTED
 UR_CLEANUP_SCOPE = ACCEPTED
 
 IMPLEMENTATION_BASE =
-  fresh branch from Runtime-PASS promoted main
+  fresh branch from current main
+  current product/source = exact known-good promoted baseline
   old work/ink-ui-rebuild-001 = AUDIT SOURCE ONLY
+  Geometry Ops replay/reconcile only after cleanup
 
 CORE = FROZEN
 PHOTOSHOP_REBUILD = HOLD
