@@ -168,6 +168,35 @@ DEV must update `ACTIVE/INK_DEV_PROGRESS.md` with:
 
 Long-lived research or architecture outputs belong under `research/` or `governance/`, not only in chat.
 
+## Plan continuity / unresolved commitment rule
+
+Once a plan, roadmap item, deferred capability, or promised follow-up is accepted and recorded in GitHub, MR owns continuity of that unresolved state.
+
+```text
+USER = decides direction / priority / acceptance / cancellation
+MR = remembers and tracks unresolved commitments through GitHub SSOT
+DEV = records exact implementation state and handoff evidence
+```
+
+The user must not be required to remember or reintroduce unfinished project commitments after context changes.
+
+Before declaring a technical program complete, MR must reconcile the original target list against current state and explicitly classify every unresolved item as one of:
+
+- `CLOSED`
+- `ACTIVE`
+- `DEFERRED`
+- `RETIRED_WITH_REASON`
+- `IMPLEMENTED_NOT_PROMOTED`
+- `RUNTIME_DEBT`
+
+No item may disappear silently because a later Work Order changes topic.
+
+Completion language must distinguish foundation completion from full-plan completion.
+
+Reference audit:
+
+`research/INK_CHAT_CONNECTOR_PLAN_INTEGRITY_AUDIT_v0.1.md`
+
 ## Penpot reference rule
 
 Penpot is currently a reference source for INK Cloud Editor development, not the product platform.
