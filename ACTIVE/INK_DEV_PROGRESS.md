@@ -1,5 +1,39 @@
 # INK DEV PROGRESS
 
+## MR_REVISE — G8_QA_CAPTURE_ONLY — 2026-09-25
+
+```text
+MR_TESTED_HEAD = 5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8
+RUNTIME_RUN = 36111515142
+MATERIALIZATION = PASS
+FAILURE = QA screenshot file missing before UI assertions
+PRODUCT_SOURCE = FROZEN
+AUTHORIZED_FILE = qa/runtime/run-ink-runtime-batch.mjs
+```
+
+Fix only the Windows/browser visual-capture transport.
+
+Acceptance:
+
+```text
+ui-first-paint.png = real 1280x1024 PNG
+ui-1280x1024.png   = real 1280x1024 PNG
+ui-960x800.png     = real 960x800 PNG
+capture metadata   = dimensions + bytes + SHA256
+missing capture    = explicit FAIL
+UI/Creative/Geometry suites preserved
+PRODUCT_MUTATION = 0
+```
+
+Prefer explicit browser-native pixel capture (e.g. CDP `Page.captureScreenshot`) rather than Chrome CLI screenshot file side effects.
+
+Do not touch:
+CSS / config / service worker / shell / Core / Renderer / Document / History / Revision / Geometry / CHAT / persistence / FORMAT_VERSION / product version.
+
+Focused QA → `DEV_HANDOFF / STOP`.
+
+---
+
 ## 2026-09-25 — G8 UI Runtime isolation DEV handoff
 
 ```text
