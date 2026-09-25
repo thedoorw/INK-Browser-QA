@@ -1,13 +1,51 @@
 # INK DEV PROGRESS
 
-STATUS: `INK-TECH-CLOSURE-001 / C2-A / C2A_SOURCE_FOCUSED_PASS / DEV_HANDOFF / STOP`
+STATUS: `INK-TECH-CLOSURE-001 / C2-B / DEV_AUTHORIZED / START`
 
 - Branch: `work/ink-tech-closure-001`
-- C1 reviewed exact HEAD: `6a9fb25558cda958b90140867ac054f3662dfa01`
-- C1 MR result: `MR_SOURCE_PASS / Runtime deferred`
-- C2-A Workpack: `working/INK_TECH_CLOSURE_001_C2A_DEV_WORKPACK.md`
+- C2-A reviewed exact HEAD: `f3e75f7574d8705d58e654977e8af0e07b74e8d4`
+- C2-A MR result: `MR_SOURCE_PASS / Runtime deferred`
+- C2-B Workpack: `working/INK_TECH_CLOSURE_001_C2B_DEV_WORKPACK.md`
+- C2-B Workpack commit before this progress dispatch: `f5ddf18754add806f4c63587c4dc7643eb1657ca`
 - Full Windows Runtime: `DEFERRED_TO_FINAL_CLOSURE_BATCH`
-- Current gate: `DEV_HANDOFF → STOP / MR_SOURCE_REVIEW`
+- Current gate: `C2-B DEV execution`
+
+## Preserved closure state
+
+```text
+C1 use_ink prefix = 14 / MR_SOURCE_PASS
+C2-A use_ink total = 21 / MR_SOURCE_PASS
+named tools = 21 / export_ink_asset appended
+Runtime acceptance = pending final Closure Runtime
+promotion = pending final Closure promotion
+```
+
+## C2-B target
+
+```text
+repeat.mirror.v1
+repeat.grid.v1
+repeat.expand.v1
+layout.frame.set.v1
+layout.frame.remove.v1
+layout.item.set.v1
+layout.item.remove.v1
+
+expected bounded use_ink total after C2-B = 28
+```
+
+## Stop rule
+
+After `C2B_SOURCE_FOCUSED_PASS`:
+
+```text
+record exact HEAD
+DEV_HANDOFF → STOP
+```
+
+C2-C is not authorized until MR source review.
+
+---
 
 ## Preserved C1 state
 
