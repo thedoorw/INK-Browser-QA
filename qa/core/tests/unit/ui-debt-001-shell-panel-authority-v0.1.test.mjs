@@ -137,6 +137,31 @@ test('application menus have one registry/controller and dead menu labels are no
   }
 });
 
+test('responsive width authority uses exactly DESKTOP_WIDE DESKTOP_NARROW COMPACT taxonomy', () => {
+  assert.match(css, /INK-UI-RESPONSIVE-001 — WIDTH TAXONOMY/);
+  assert.match(shell, /const LAYOUT_MODES = Object\.freeze\(\{[\s\S]*?DESKTOP_WIDE: 'DESKTOP_WIDE',[\s\S]*?DESKTOP_NARROW: 'DESKTOP_NARROW',[\s\S]*?COMPACT: 'COMPACT'/);
+  assert.match(shell, /function resolveLayoutMode\(width = globalThis\.innerWidth \|\| 1280\)[\s\S]*?width <= 760[\s\S]*?COMPACT[\s\S]*?width <= 1120[\s\S]*?DESKTOP_NARROW[\s\S]*?DESKTOP_WIDE/);
+  const widthQueries = [...css.matchAll(/@media\s*\(([^)]*(?:min|max)-width[^)]*)\)/g)].map(match => match[1]);
+  assert.ok(widthQueries.length > 0);
+  for (const query of widthQueries) {
+    assert.match(query, /^(?:max-width:1120px|max-width:760px|min-width:761px|max-width:1120px\) and \(min-width:761px)$/);
+  }
+  assert.doesNotMatch(css, /(?:max|min)-width\s*:\s*(?:410|440|560|860|900|980)px/);
+  assert.match(css, /@media\(max-width:1120px\) and \(min-width:761px\)\{[\s\S]*?\.inspector\{width:min\(var\(--inspector-w\),38vw\)/);
+  assert.match(css, /@media\(max-width:1120px\) and \(min-width:761px\)\{[\s\S]*?\.creative-workspace-panel\{width:clamp\(244px,38vw,340px\)/);
+  assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
+});
+
+test('brand routing is singular without freezing an unapproved visible-logo asset', () => {
+  for (const html of [web, portable]) {
+    const visibleLogoRoutes = [...html.matchAll(/class="brand-source-mark" src="([^"]+)"/g)].map(match => match[1].replace(/\?v=.*$/, ''));
+    assert.ok(visibleLogoRoutes.length >= 1);
+    assert.equal(new Set(visibleLogoRoutes).size, 1);
+    assert.doesNotMatch(html, /class="brand-source-mark"[^>]+assets\/favicon\.svg/);
+    assert.doesNotMatch(html, /rel="icon"[^>]+assets\/ink-mark\.svg/);
+  }
+});
+
 test('Web Portable favicon contract is singular and uses the dedicated SVG favicon', () => {
   assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
   for (const html of [web, portable]) {
