@@ -343,3 +343,66 @@ PHOTOSHOP_WORKSTATION_REBUILD = HOLD
 
 `DEV_HANDOFF → STOP`
 
+## MR_REVISE / G8_UI_RUNTIME_ISOLATION_ONLY completion — 2026-09-25
+
+Runtime input:
+
+```text
+MR_TESTED_HEAD = 272c656cb98994540d3311f3f38dac1e95dfb519
+RUNTIME_RUN = 36109323685
+UI = 105 / 110 PASS
+G0-G7 = ACCEPTED
+G8 = REVISE
+```
+
+Authorized product changes only:
+
+```text
+product/source/styles.css
+  COMPACT new/open/save = hidden
+  COMPACT export = visible responsive alternative
+
+product/source/src/config.js
+product/source/service-worker.js
+  BUILD_ID = 20260925-ui-rebuild-001-g8-runtime-r1
+```
+
+Preserved:
+
+```text
+FORMAT_VERSION = 4
+PRODUCT_VERSION = 0.1
+Core / Renderer / Document / History / Revision / Geometry / CHAT / persistence = unchanged
+Photoshop UI rebuild = not started
+```
+
+Runtime QA corrections:
+
+1. Escape uses an actual File-menu DOM item and realm-local `KeyboardEvent('keydown')` bubbling path.
+2. typography validates the current `--ui-font` token/computed authority; obsolete Inter matching is removed.
+3. compact toolbar validates effective single mode + no dual class + containment; it does not require `.tool-rail` to be hidden.
+
+Runtime batch visual evidence contract:
+
+```text
+ui-first-paint.png = 1280x1024 / delivered shell / JavaScript disabled
+ui-1280x1024.png   = 1280x1024 / Runtime enabled
+ui-960x800.png     = 960x800 / Runtime enabled
+```
+
+The runner validates exact PNG dimensions and records capture kind, transport, script mode, pixel size, byte length and SHA256 in `batch.json`. The existing central Runtime workflow already uploads the complete `evidence/` directory.
+
+Focused connector-side QA: **PASS**.
+
+Syntax parse smoke checks:
+
+```text
+run-ink-runtime-batch.mjs = PASS
+ink-web-ui-001-harness.html script = PASS
+ui-debt-001-shell-panel-authority-v0.1.test.mjs = PASS
+```
+
+No Windows Runtime was executed by DEV. Per Work Order, MR owns the next exact-SHA G8 Runtime rerun and artifact verification.
+
+`DEV_HANDOFF → STOP`
+
