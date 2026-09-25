@@ -149,3 +149,26 @@ CLOSED_AT_ACCEPTED_ADVISORY_SCOPE = Creative Memory / Research
 
 C1_GEOMETRY_OPS = still blocks closure until reconcile + Runtime + promotion
 ```
+
+
+## G. Install-first closure policy
+
+User-approved execution:
+
+`working/INK_TECH_CLOSURE_001_EXECUTION_PLAN.md`
+
+```text
+C1
+→ C2-A
+→ C2-B
+→ C2-C
+→ FINAL_RUNTIME
+→ PROMOTION
+→ CURRENT_CAPABILITY_BASELINE_FROZEN
+```
+
+Each checkpoint must pass source/static/unit/focused QA and receive a durable commit boundary.
+
+Full Windows Runtime is batched to the final closure branch HEAD unless a high-risk exception is triggered.
+
+This policy reduces repeated transport/evidence churn while preserving exact causal recovery in GitHub.
