@@ -11,8 +11,9 @@ import { fileURLToPath } from 'node:url';
 
 export const suites = [
   { id: 'ui', file: 'ink-web-ui-001-harness.html' },
-  { id: 'creative', file: 'ink-cloud-018-browser-harness.html' },
-  { id: 'geometry', file: 'ink-ra-001-browser-harness.html' }
+  { id: 'closure', file: 'ink-tech-closure-001-browser-harness.html' },
+  { id: 'geometry', file: 'ink-ra-001-browser-harness.html' },
+  { id: 'creative', file: 'ink-cloud-018-browser-harness.html' }
 ];
 export const smartLoopRequired = [
   'SMART_LOOP_CAPABILITIES_DISCOVERED',
@@ -106,6 +107,28 @@ export function validateEvidence(id, evidence) {
     assert.equal(evidence.formatVersion, 4);
     assert.equal(evidence.roseOutputSubpaths, 12);
     assert.equal(evidence.deterministicRepeat, true);
+  } else if (id === 'closure') {
+    assert.equal(evidence.task, 'INK-TECH-CLOSURE-001');
+    assert.equal(evidence.schema, 'INK-TECH-CLOSURE-001-BROWSER-PROOF');
+    assert.equal(evidence.version, 1);
+    assert.equal(evidence.formatVersion, 4);
+    assert.equal(evidence.status, 'PASS');
+    assert.deepEqual(evidence.failures, []);
+    assert.ok(Array.isArray(evidence.checks));
+    assert.ok(evidence.checks.every(check => check.status === 'PASS'));
+    for (const name of [
+      'CLOSURE_EXACT_34_OPERATION_VOCABULARY',
+      'GEOMETRY_OPS_GATE_PASS',
+      'C2A_GATE_PASS',
+      'C2B_GATE_PASS',
+      'C2C_GATE_PASS',
+      'CLOSURE_REVISION_CAPTURED_PER_APPROVED_PLAN',
+      'CLOSURE_HISTORY_ACCUMULATED',
+      'CLOSURE_GATE_PASS'
+    ]) assert.ok(evidence.checks.some(check => check.name === name), `Missing ${name}`);
+    assert.equal(evidence.final?.boundedOperationCount, 34);
+    assert.equal(evidence.final?.namedToolCount, 21);
+    assert.equal(evidence.checkpoints?.c2b?.repeatExpand, 'CORE_ONLY_ACCEPTED');
   } else throw new Error(`Unknown suite: ${id}`);
   return evidence;
 }
@@ -523,7 +546,11 @@ export async function runBatch(root) {
         if (suite.id === 'creative') await finalizeSmartLoopEvidence(root, evidence, report.testedSha);
         entry.status = 'PASS';
       } catch (error) {
-        entry.status = 'FAIL'; entry.error = String(error.stack || error); throw error;
+        entry.status = 'FAIL';
+        entry.error = String(error.stack || error);
+        // Closure batch policy: one suite failure must not starve later independent suites.
+        // Keep the failure on this suite and continue so UI / Closure / Geometry / Creative
+        // can all be classified from one exact-SHA Windows run.
       } finally {
         clearTimeout(timer);
         try { await stopBrowser(child); }
@@ -534,7 +561,12 @@ export async function runBatch(root) {
         }
       }
     }
-    report.status = 'PASS';
+    const failedSuites = report.suites.filter(suite => suite.status !== 'PASS');
+    report.status = failedSuites.length ? 'FAIL' : 'PASS';
+    if (failedSuites.length) {
+      report.error = `Suite failures: ${failedSuites.map(suite => suite.id).join(', ')}`;
+      process.exitCode = 1;
+    }
   } catch (error) {
     report.status = 'FAIL'; report.error = String(error.stack || error); process.exitCode = 1;
   } finally {
