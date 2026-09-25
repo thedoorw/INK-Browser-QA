@@ -1,6 +1,6 @@
 # INK UI REBUILD 001 — Technical Debt Cleanup Evidence
 
-STATUS: `DEV_SOURCE_COMPLETE / G7_HOLD_ASSET / G8_MR_OWNED`
+STATUS: `DEV_SOURCE_COMPLETE / G7_SOURCE_PASS / G8_MR_OWNED`
 
 BRANCH: `work/ink-ui-rebuild-001-tech-debt-cleanup`
 
@@ -19,7 +19,7 @@ MR revision baseline: `f574731b0e920950211f04177826b3ad2ce0157b`
 | G4 Typography authority | SOURCE_PASS | `dcbc8c086a7da4ae202cc2c78eca424befba347f` |
 | G5 CSS shell authority | REVISED_SOURCE_PASS | `f9bf8481f7f0050db47c0c4bc551f154056c2eed` + G5 evidence |
 | G6 Responsive authority | SOURCE_PASS | `6731d07d01cc059054212592e6e34716e55d2ff5` + G6 evidence |
-| G7 Brand contract | HOLD_ASSET | no guessed replacement; G7 evidence |
+| G7 Brand contract | SOURCE_PASS | approved exact JPEG SHA locked; G7 evidence |
 | G8 Full Runtime / visual evidence | HOLD / MR_OWNED | not run by DEV |
 
 ## Health metrics — G0 → current source
@@ -124,11 +124,13 @@ FORMAT_VERSION = 4
 favicon authority = assets/favicon.svg?v=0.1
 favicon route count = 1 per delivery
 visible logo unique route count = 1
-visible logo exact approved asset = NOT PROVEN
-G7 = HOLD_ASSET
+visible logo exact approved asset = PASS
+visible logo SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+visible logo bytes = 19801
+G7 = SOURCE_PASS
 ```
 
-The current JPG is not promoted to a new brand acceptance contract.
+The visible JPG now contains the exact user-approved bytes and is locked by SHA256 QA.
 
 ## Focused source verification
 
@@ -147,7 +149,7 @@ Verified:
 - retired width thresholds absent;
 - responsive regression test updated to the accepted taxonomy;
 - favicon singularity;
-- visible-logo route singularity without freezing its identity;
+- visible-logo route singularity and exact approved SHA256 contract;
 - FORMAT_VERSION remains 4;
 - service-worker build identity matches G3.
 
@@ -162,10 +164,9 @@ No Renderer, Canvas/WebGL, Document, History, Revision, Geometry, CHAT, persiste
 ## Exit disposition
 
 ```text
-G0-G6 = SOURCE PASS
-G7 = HOLD_ASSET
+G0-G7 = SOURCE PASS
 G8 = MR_OWNED / NOT RUN
-UI_FOUNDATION_DEBT = PENDING G7 ASSET AUTHORITY + G8
+UI_FOUNDATION_DEBT = PENDING G8
 PHOTOSHOP_WORKSTATION_REBUILD = HOLD
 ```
 
