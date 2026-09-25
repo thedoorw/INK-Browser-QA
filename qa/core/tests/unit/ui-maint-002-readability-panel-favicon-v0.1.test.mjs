@@ -37,23 +37,26 @@ test('Web and Portable keep one shared UI shell', () => {
   }
 });
 
-test('primary-panel authority is owned by web-shell rather than a required legacy presenter', () => {
+test('primary-panel authority is owned by web-shell and Dock clicks use its toggle route', () => {
   assert.match(shell, /function selectPanel\(id\)/);
   assert.match(shell, /function togglePanel\(id\)/);
   assert.match(shell, /function closePrimaryPanels\(\)/);
+  assert.match(shell, /dock\.addEventListener\('click'[\s\S]*?togglePanel\(button\.dataset\.shellPanel\)/);
   assert.match(shell, /open: selectPanel/);
+  assert.match(shell, /toggle: togglePanel/);
   assert.match(shell, /close: closePrimaryPanels/);
-  assert.doesNotMatch(shell, /\.click\(\)/);
+  assert.doesNotMatch(shell, /function bindCollapseControl\(\)/);
 });
 
-test('contextual Advanced is a synchronized two-way Properties toggle', () => {
-  assert.match(shell, /if \(currentPanel\(\) === 'properties'\)[\s\S]*?closePrimaryPanels\(\)/);
-  assert.match(shell, /return selectPanel\('properties'\)/);
+test('contextual Advanced is synchronized navigation to Properties, not a second panel toggle authority', () => {
+  assert.match(shell, /function openContextualAdvanced\(\)[\s\S]*?return selectPanel\('properties'\)/);
+  assert.doesNotMatch(shell, /function openContextualAdvanced\(\)[\s\S]{0,240}?closePrimaryPanels\(\)/);
   assert.match(shell, /advanced\.setAttribute\('aria-pressed', String\(propertiesOpen\)\)/);
   assert.match(shell, /advanced\.setAttribute\('aria-expanded', String\(propertiesOpen\)\)/);
   assert.match(shell, /advanced\.classList\.toggle\('active', propertiesOpen\)/);
   for (const html of [web, portable]) {
     assert.match(html, /id="contextualAdvancedBtn"[^>]*aria-pressed="false"[^>]*aria-expanded="false"[^>]*aria-controls="inspector"/);
+    assert.doesNotMatch(html, /id="inspectorEdgeToggle"/);
   }
 });
 
