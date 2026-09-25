@@ -1,3 +1,19 @@
+## UI cleanup G7 PASS / G8 authorized — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+REVIEWED_HEAD = 272c656cb98994540d3311f3f38dac1e95dfb519
+G0-G7 = PASS
+G8 = AUTHORIZED / WINDOWS EXACT-SHA RUNTIME
+TARGET_SHA = 272c656cb98994540d3311f3f38dac1e95dfb519
+GEOMETRY_OPS = remains MR_HOLD / stale unpromoted branch
+PHOTOSHOP_REBUILD = HOLD
+```
+
+G8 must complete before cleanup closure or Photoshop-aligned rebuild begins.
+
+---
+
 ## UI cleanup G7 user asset authority resolved — 2026-09-25
 
 ```text
