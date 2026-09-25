@@ -1,6 +1,7 @@
 import { Matrix } from '../core/index.js';
 import { createFrame, findPageObject, reparentPageObject, walkPageObjects } from '../document/hierarchy.js';
 import { setFrameLayout, setChildLayoutItem } from '../document/layout.js';
+import { registerComponentDefinition, createComponentInstance, setComponentOverride, detachComponentInstance, duplicateComponentDefinition, repairComponentReference } from '../document/components.js';
 import { PathEditController } from './path-edit.js';
 import { cloneCompositionObject } from './composition.js';
 import { applyWorldTransformBatch } from './transform.js';
@@ -237,7 +238,14 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'layout.frame.set.v1',
   'layout.frame.remove.v1',
   'layout.item.set.v1',
-  'layout.item.remove.v1'
+  'layout.item.remove.v1',
+  'component.register.v1',
+  'component.instance.create.v1',
+  'component.override.set.v1',
+  'component.override.reset.v1',
+  'component.instance.detach.v1',
+  'component.definition.duplicate.v1',
+  'component.reference.repair.v1'
 ]);
 
 const CHAT_EDIT_OPERATION_SET = new Set(CHAT_EDIT_OPERATIONS);
@@ -632,6 +640,56 @@ function normalizeNoArguments(raw = {}) {
   return {};
 }
 
+function normalizeComponentRegisterArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return { name: boundedText(raw.name, 'arguments.name', { max: 160 }) };
+}
+
+function normalizeComponentInstanceCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  let matrix = null;
+  if (raw.matrix != null) {
+    if (!Array.isArray(raw.matrix) || raw.matrix.length !== 6 || raw.matrix.some(value => !Number.isFinite(Number(value)))) {
+      editFail('ARGUMENT_INVALID', { field: 'arguments.matrix' });
+    }
+    matrix = raw.matrix.map(Number);
+    if (!Matrix.isInvertible(matrix)) editFail('SINGULAR_MATRIX', { field: 'arguments.matrix' });
+  }
+  return {
+    definitionId: boundedText(raw.definitionId, 'arguments.definitionId', { max: 160 }),
+    pageId: boundedText(raw.pageId, 'arguments.pageId', { max: 160 }),
+    layerId: boundedText(raw.layerId, 'arguments.layerId', { max: 160 }),
+    parentId: raw.parentId == null ? null : boundedText(raw.parentId, 'arguments.parentId', { max: 160 }),
+    matrix
+  };
+}
+
+function normalizeComponentOverrideSetArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    sourceNodeId: boundedText(raw.sourceNodeId, 'arguments.sourceNodeId', { max: 160 }),
+    opacity: boundedNumber(raw.opacity, 'arguments.opacity', { min: 0, max: 1 })
+  };
+}
+
+function normalizeComponentOverrideResetArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return { sourceNodeId: boundedText(raw.sourceNodeId, 'arguments.sourceNodeId', { max: 160 }) };
+}
+
+function normalizeComponentDefinitionDuplicateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    definitionId: boundedText(raw.definitionId, 'arguments.definitionId', { max: 160 }),
+    name: raw.name == null ? null : boundedText(raw.name, 'arguments.name', { max: 160 })
+  };
+}
+
+function normalizeComponentReferenceRepairArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return { definitionId: boundedText(raw.definitionId, 'arguments.definitionId', { max: 160 }) };
+}
+
 function normalizeRepaintArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   const patch = {};
@@ -709,11 +767,18 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'layout.frame.remove.v1') return normalizeNoArguments(raw);
   if (operation === 'layout.item.set.v1') return normalizeLayoutItemSetArguments(raw);
   if (operation === 'layout.item.remove.v1') return normalizeNoArguments(raw);
+  if (operation === 'component.register.v1') return normalizeComponentRegisterArguments(raw);
+  if (operation === 'component.instance.create.v1') return normalizeComponentInstanceCreateArguments(raw);
+  if (operation === 'component.override.set.v1') return normalizeComponentOverrideSetArguments(raw);
+  if (operation === 'component.override.reset.v1') return normalizeComponentOverrideResetArguments(raw);
+  if (operation === 'component.instance.detach.v1') return normalizeNoArguments(raw);
+  if (operation === 'component.definition.duplicate.v1') return normalizeComponentDefinitionDuplicateArguments(raw);
+  if (operation === 'component.reference.repair.v1') return normalizeComponentReferenceRepairArguments(raw);
   editFail('OPERATION_NOT_ALLOWED', { operation });
 }
 
 function operationTargetRules(operation) {
-  if (operation === 'path.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1') return { exact: 0, min: 0, max: 0 };
+  if (operation === 'path.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
@@ -727,7 +792,12 @@ function operationTargetRules(operation) {
     || operation === 'layout.frame.set.v1'
     || operation === 'layout.frame.remove.v1'
     || operation === 'layout.item.set.v1'
-    || operation === 'layout.item.remove.v1') return { exact: 1, max: 1 };
+    || operation === 'layout.item.remove.v1'
+    || operation === 'component.register.v1'
+    || operation === 'component.override.set.v1'
+    || operation === 'component.override.reset.v1'
+    || operation === 'component.instance.detach.v1'
+    || operation === 'component.reference.repair.v1') return { exact: 1, max: 1 };
   if (operation === 'boolean.apply.v1') return { min: 2, max: 64 };
   return { min: 1, max: 64 };
 }
@@ -1521,6 +1591,103 @@ function executeLayoutItemTask(app, task, remove = false) {
   };
 }
 
+
+function documentObjectRef(app, objectId) {
+  for (const page of app.doc?.pages || []) {
+    const found = findPageObject(page, objectId);
+    if (found) return { pageId: page.id, layerId: found.layer.id, objectId: found.object.id };
+  }
+  return null;
+}
+
+function executeComponentRegisterTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found) editFail('TARGET_MISSING');
+  const definition = registerComponentDefinition(app, found.object.id, task.arguments.name);
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+    definitionId: definition.id,
+    sourceRootId: definition.sourceRootId,
+    name: definition.name
+  };
+}
+
+function executeComponentInstanceCreateTask(app, task) {
+  if (task.arguments.pageId !== app.page().id) editFail('ACTIVE_PAGE_REQUIRED', { pageId: task.arguments.pageId });
+  const placement = {
+    pageId: task.arguments.pageId,
+    layerId: task.arguments.layerId,
+    ...(task.arguments.parentId ? { parentId: task.arguments.parentId } : {}),
+    ...(task.arguments.matrix ? { matrix: task.arguments.matrix } : {})
+  };
+  const instance = createComponentInstance(app, task.arguments.definitionId, placement);
+  const ref = documentObjectRef(app, instance.id);
+  if (!ref) editFail('TARGET_MISSING', { objectId: instance.id });
+  app.renderer?.render?.();
+  return { createdRefs: [ref], resultRefs: [ref], definitionId: instance.definitionId };
+}
+
+function executeComponentOverrideTask(app, task, reset = false) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'component-instance') editFail('COMPONENT_INSTANCE_REQUIRED');
+  const result = setComponentOverride(
+    app,
+    found.object.id,
+    task.arguments.sourceNodeId,
+    reset ? null : task.arguments.opacity
+  );
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+    sourceNodeId: task.arguments.sourceNodeId,
+    opacity: reset ? null : task.arguments.opacity,
+    overrides: clone(result.overrides || {})
+  };
+}
+
+function executeComponentDetachTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'component-instance') editFail('COMPONENT_INSTANCE_REQUIRED');
+  const detachedFrom = found.object.id;
+  const ordinary = detachComponentInstance(app, detachedFrom);
+  const ref = documentObjectRef(app, ordinary.id);
+  if (!ref) editFail('TARGET_MISSING', { objectId: ordinary.id });
+  app.renderer?.render?.();
+  return {
+    createdRefs: [ref],
+    resultRefs: [ref],
+    detachedFrom,
+    detachedObjectId: ordinary.id,
+    detachedType: ordinary.type
+  };
+}
+
+function executeComponentDefinitionDuplicateTask(app, task) {
+  const definition = duplicateComponentDefinition(app, task.arguments.definitionId, task.arguments.name);
+  const sourceRef = documentObjectRef(app, definition.sourceRootId);
+  if (!sourceRef) editFail('TARGET_MISSING', { objectId: definition.sourceRootId });
+  app.renderer?.render?.();
+  return {
+    createdRefs: [sourceRef],
+    resultRefs: [sourceRef],
+    definitionId: definition.id,
+    sourceRootId: definition.sourceRootId,
+    name: definition.name
+  };
+}
+
+function executeComponentReferenceRepairTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'component-instance') editFail('COMPONENT_INSTANCE_REQUIRED');
+  const instance = repairComponentReference(app, found.object.id, task.arguments.definitionId);
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: found.object.id }],
+    definitionId: instance.definitionId
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
@@ -1549,6 +1716,13 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'layout.frame.remove.v1') return executeFrameLayoutTask(app, task, true);
   if (task.operation === 'layout.item.set.v1') return executeLayoutItemTask(app, task, false);
   if (task.operation === 'layout.item.remove.v1') return executeLayoutItemTask(app, task, true);
+  if (task.operation === 'component.register.v1') return executeComponentRegisterTask(app, task);
+  if (task.operation === 'component.instance.create.v1') return executeComponentInstanceCreateTask(app, task);
+  if (task.operation === 'component.override.set.v1') return executeComponentOverrideTask(app, task, false);
+  if (task.operation === 'component.override.reset.v1') return executeComponentOverrideTask(app, task, true);
+  if (task.operation === 'component.instance.detach.v1') return executeComponentDetachTask(app, task);
+  if (task.operation === 'component.definition.duplicate.v1') return executeComponentDefinitionDuplicateTask(app, task);
+  if (task.operation === 'component.reference.repair.v1') return executeComponentReferenceRepairTask(app, task);
   editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
 }
 
