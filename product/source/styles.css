@@ -1009,7 +1009,7 @@ kbd{font-size:var(--ui-type-xs);padding:2px 4px;border-radius:3px}
 #canvasSettings{width:332px!important;padding-bottom:12px!important}
 #canvasSettings .panel-header{min-height:38px!important}
 #canvasSettings .panel-header strong{font-size:var(--ui-type-xl)!important;font-weight:650!important;line-height:1.2!important}
-#canvasSettings .eyebrow{font-size:var(--ui-type-xs)!important;line-height:1.2!important;letter-spacing:.1em!important}
+#canvasSettings .eyebrow{font-size:var(--ui-type-xs);line-height:1.2!important;letter-spacing:.1em!important}
 #canvasSettings .subpanel-title{min-height:30px!important;padding-top:5px!important}
 #canvasSettings .subpanel-title strong{font-size:var(--ui-type-lg)!important;font-weight:650!important;line-height:1.25!important}
 #canvasSettings .subpanel-title span{font-size:var(--ui-type-xs)!important;line-height:1.2!important;letter-spacing:.08em!important}
@@ -2517,6 +2517,7 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 /* Application/menu headings retain the accepted 11px command prominence. */
 .application-menus > button,
 .application-menu > button,
+.application-menu-label,
 .application-command-menu button,
 .doc-title{
   font-size:var(--ui-type-lg);
