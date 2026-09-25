@@ -1,10 +1,12 @@
 # INK UI REBUILD 001 — Photoshop Alignment Workpack
 
-STATUS: `UR_PREPARED / MR_AUTHORIZATION_REQUIRED / NO_PRODUCT_CHANGE`
+STATUS: `UR_ACTIVE_UI_PROGRAM / USER_CONFIRMED_DIRECTION / NO_PRODUCT_CHANGE`
 
 PLANNING_BRANCH: `planning/ink-ui-rebuild-001-photoshop-alignment`
 
-BASELINE_MAIN: `79b76ccafd6e1d3443d2565fcc6d4f284e1d6eac`
+CURRENT_GOVERNANCE_BASELINE_MAIN: `c5725b817deaac686d076561de9e1d5ad97255f6`
+
+UI_AUTHORITY: `UR = END-TO-END UI AUTHORITY`
 
 UPSTREAM:
 - `INK-UI-REBUILD-001-TECH-DEBT-CLEANUP = COMPLETE / MR_PASS / PROMOTED`
@@ -20,9 +22,9 @@ REFERENCE:
 
 ## 1. Goal
 
-Align INK to Photoshop's mature workstation grammar before applying INK-specific visual refinement.
+Rebuild INK as a near-complete light-gray Photoshop-style workstation, with Photoshop used as the primary visual, spatial and interaction reference wherever doing so does not break an accepted INK authority.
 
-This is structural alignment, not a Photoshop skin.
+USER direction is explicit: this phase is not merely “inspired by Photoshop”. The visible workstation should reproduce Photoshop's shell grammar, density, panel behavior, toolbar behavior and interaction conventions as closely as practical, while mapping INK-only capabilities into the same grammar instead of inventing a second UI language.
 
 Target workstation grammar:
 
@@ -121,6 +123,7 @@ Primary dock destinations:
 - Properties
 - Layers
 - History
+- Navigator — planned Photoshop-parity panel; currently missing in INK
 - Reference
 - Compose
 - CHAT
@@ -140,6 +143,78 @@ Rules:
 ### Specialist / diagnostics
 - SPECIALIST only.
 - never occupy permanent ordinary top chrome.
+
+## 3A. User-priority Photoshop parity panels
+
+USER has explicitly identified **Navigator** and **History / 步驟記錄** as frequent-use functions. They are mandatory Photoshop-parity targets, not optional polish.
+
+### Navigator
+
+Current INK status:
+
+`MISSING_AS_A_PHOTOSHOP_STYLE_PANEL`
+
+INK currently has pan / zoom / fit / rotate / viewport controls, but no Navigator-style miniature overview panel.
+
+Required placement:
+- `Window → Navigator`;
+- right panel dock / panel system, using the existing single panel authority;
+- no floating independent navigator window and no second viewport authority.
+
+Required Photoshop-style interaction target:
+- live thumbnail/overview of the current artwork;
+- visible proxy view rectangle corresponding to the current main-canvas viewport;
+- drag the proxy rectangle to pan the main canvas;
+- click the thumbnail to reposition the visible area;
+- zoom percentage readout/input;
+- Zoom Out / Zoom In controls;
+- zoom slider;
+- two-way synchronization: canvas pan/zoom updates Navigator, Navigator interaction updates the existing canvas viewport;
+- panel opens/closes through the same Dock + Window-menu convergence as other panels.
+
+Implementation boundary:
+- Navigator is a UI surface over the existing document/viewport/renderer authorities;
+- it must not introduce a second document, camera, renderer or persistence authority;
+- if accurate thumbnail/proxy behavior requires new Renderer semantics rather than consuming an existing read-only render/projection path, `STOP → MR / INTEGRATION_REQUIRED`.
+
+### History / 步驟記錄
+
+Current INK status:
+
+`EXISTS / FUNCTIONAL / REQUIRES_PHOTOSHOP_INTERACTION_ALIGNMENT`
+
+Existing INK capability already includes:
+- `HistoryManager`;
+- Undo / Redo;
+- History panel;
+- chronological operation states;
+- clicking a step to return to that state;
+- configurable retained states: 20 / 30 / 50;
+- current-session usage indicator.
+
+Required placement:
+- `Window → History`;
+- right panel dock remains PRIMARY;
+- Undo / Redo and Edit-menu routes remain secondary routes to the same History authority.
+
+Required Photoshop-style interaction target:
+- older states above, newer states below;
+- current state visibly selected;
+- click a prior state to return to that state;
+- Step Backward / Step Forward semantics remain available through the same underlying History authority;
+- visual treatment of states after a selected earlier point should clearly communicate whether they remain available or will be discarded by the next edit;
+- panel header/footer/action placement should follow Photoshop's compact History-panel grammar;
+- History interaction must remain session-oriented and must not become a second Revision system.
+
+Photoshop-only History features such as snapshots, creating a new document from a state, or non-linear-history options must be evaluated against INK's existing `Revision` authority before exposure. Do not create duplicate History/Revision semantics merely to imitate labels.
+
+Parity evidence required:
+- `Window → Navigator` opens the same Navigator panel as its Dock route;
+- Navigator proxy rectangle tracks canvas pan/zoom in both directions;
+- `Window → History` opens the same History panel as its Dock route;
+- create multiple edits → select an earlier step → canvas returns to that state;
+- Undo / Redo / History-click remain convergent;
+- Navigator and History screenshots are included in the final deployed evidence set.
 
 ## 4. Photoshop alignment program
 
@@ -209,7 +284,7 @@ Required:
 - no tool loss between modes;
 - no duplicate permanent tool family.
 
-### P4 — Right panel dock
+### P4 — Right panel dock + priority Photoshop panels
 
 Use the existing single panel authority established by technical-debt cleanup.
 
@@ -221,7 +296,11 @@ Required:
 - resizable panel;
 - Window menu convergence;
 - zero floating edge opener;
-- Properties/Advanced/Inspector duplication = 0.
+- Properties/Advanced/Inspector duplication = 0;
+- existing History panel restyled/reorganized for Photoshop interaction parity without replacing HistoryManager;
+- Navigator implemented as a new Photoshop-parity UI panel over the existing viewport/render authorities;
+- Navigator and History both available through Dock + Window menu;
+- no second viewport, History, Revision or panel authority.
 
 ### P5 — Density / typography / visual system
 
@@ -264,7 +343,9 @@ Mandatory evidence:
 - right dock collapsed;
 - Properties open;
 - Layers open;
-- History open;
+- History open with multiple states and an earlier state selected;
+- Navigator open with live thumbnail + proxy viewport visible;
+- Navigator after canvas pan/zoom;
 - one Creative panel open;
 - fullscreen;
 - browser favicon;
@@ -335,6 +416,8 @@ DUPLICATE_PRIMARY_HOME = 0
 DEAD_VISIBLE_CONTROLS = 0
 LEFT_TOOLBAR_SINGLE_DUAL = PASS
 RIGHT_PANEL_DOCK = PASS
+NAVIGATOR_PS_PARITY = PASS
+HISTORY_PS_PARITY = PASS
 MENU_COMPLETENESS = PASS
 TOP_RIGHT_DEDUPLICATION = PASS
 TYPOGRAPHY_HEALTH = PASS
