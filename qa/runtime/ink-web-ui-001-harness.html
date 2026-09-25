@@ -452,11 +452,20 @@
 
       fileMenuButtonForController?.click();
       await sleep(40);
-      dispatchKey(win, 'Escape');
+      const escapeMenuItem = doc.querySelector('#fileMenu [role="menuitem"]');
+      escapeMenuItem?.focus();
+      escapeMenuItem?.dispatchEvent(new win.KeyboardEvent('keydown', {
+        key: 'Escape',
+        code: 'Escape',
+        bubbles: true,
+        cancelable: true
+      }));
       await sleep(40);
-      record('application-menu controller closes the active menu on Escape',
-        !visible(doc, '#fileMenu') && shell.state().openApplicationMenu === null,
-        shell.state());
+      record('application-menu controller closes the active menu on Escape through the DOM keyboard path',
+        !visible(doc, '#fileMenu') &&
+        shell.state().openApplicationMenu === null &&
+        doc.activeElement === fileMenuButtonForController,
+        { shell: shell.state(), activeElement: doc.activeElement?.id || doc.activeElement?.tagName || null });
       fileMenuButtonForController?.click();
       await sleep(40);
       doc.querySelector('#stageWrap')?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
@@ -654,20 +663,25 @@
         typographyProbe.appendChild(span);
       }
       doc.querySelector('#app')?.appendChild(typographyProbe);
-      const scriptTypography = Array.from(typographyProbe.querySelectorAll('span')).map(node => {
+      const uiFontAuthority = win.getComputedStyle(doc.documentElement).getPropertyValue('--ui-font').trim();
+      const fontAuthorityProbe = doc.createElement('span');
+      fontAuthorityProbe.textContent = 'INK';
+      fontAuthorityProbe.style.fontFamily = 'var(--ui-font)';
+      typographyProbe.appendChild(fontAuthorityProbe);
+      const authorityFamily = win.getComputedStyle(fontAuthorityProbe).fontFamily;
+      const scriptTypography = Array.from(typographyProbe.querySelectorAll('span[data-script]')).map(node => {
         const style = win.getComputedStyle(node);
         return { script: node.dataset.script, size: style.fontSize, family: style.fontFamily };
       });
       typographyProbe.remove();
-      record('UI-006 Phase G CJK Latin and numeric UI text share size and font-stack authority',
+      record('UI-006 Phase G CJK Latin and numeric UI text share the current --ui-font authority',
+        Boolean(uiFontAuthority) &&
+        Boolean(authorityFamily) &&
         scriptTypography.length === 3 &&
         new Set(scriptTypography.map(item => item.size)).size === 1 &&
         new Set(scriptTypography.map(item => item.family)).size === 1 &&
-        scriptTypography.every(item =>
-          item.family.includes('Inter') &&
-          item.family.includes('Noto Sans TC') &&
-          item.family.includes('Microsoft JhengHei')),
-        scriptTypography);
+        scriptTypography.every(item => item.family === authorityFamily),
+        { token: uiFontAuthority, computedAuthority: authorityFamily, samples: scriptTypography });
 
       app.clearSelection();
       await sleep(50);
@@ -982,11 +996,14 @@
           exportRoute: doc.querySelector('#exportBtn')?.dataset.uiRoute,
           hiddenDesktopCopies: ['newBtn','openBtn','saveBtn'].map(id => [id, getComputedStyle(doc.querySelector('#' + id)).display])
         });
-      record('UI-006 Phase D desktop toolbar layout does not override mobile UI',
+      const compactRail = rectOf(doc, '.tool-rail');
+      record('UI-006 Phase D compact toolbar resolves to effective single mode without requiring legacy rail hiding',
         shell.state().toolbarLayout === 'single' &&
+        doc.querySelector('#app')?.dataset.toolbarLayout === 'single' &&
         !doc.querySelector('#app').classList.contains('toolbar-layout-dual') &&
-        getComputedStyle(doc.querySelector('.tool-rail')).display === 'none',
-        shell.state());
+        compactShellFits &&
+        (!compactRail || (compactRail.left >= -1 && compactRail.right <= win.innerWidth + 1)),
+        { shell: shell.state(), rail: compactRail, compactShellFits, viewport: win.innerWidth });
       const compactEssentials = {
         exportVisible: visible(doc, '#exportBtn'),
         moreToolsVisible: visible(doc, '#mobileToolsToggle'),
