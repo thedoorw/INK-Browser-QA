@@ -1,3 +1,159 @@
+## INK-UI-REBUILD-001-TECH-DEBT-CLEANUP — health-first cleanup authorization — 2026-09-25
+
+STATUS: `INK-UI-REBUILD-001-TECH-DEBT-CLEANUP / AUTHORIZED / WAIT_CLEAN_MAIN_BASELINE`
+
+User priority:
+
+```text
+INK health > schedule/management convenience.
+Safely remove the UI technical debt identified by UR and leave auditable evidence.
+```
+
+Authoritative UR evidence:
+
+```text
+working/INK_UI_REBUILD_001_TECH_DEBT_PREFLIGHT.md
+  source commit: c0e9177d13d6efaf390f662cccc999ae5d1654e4
+
+working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_SCOPE.md
+  source commit: 273e17c33616a421d7738b93e352896e48b4e55b
+```
+
+Sequencing safety rule:
+
+1. Close the already-implemented `INK-CHAT-GEOMETRY-OPS-001` exact-SHA Runtime and promote it first, because Geometry Ops and UI cleanup both touch the shared browser Runtime harness.
+2. Create a fresh UI cleanup branch from that promoted, Runtime-PASS `main`.
+3. Copy the two UR audit/scope documents into that fresh branch as the cleanup baseline.
+4. Do not reuse the old audit branch as the implementation base.
+5. Execute cleanup in bounded health gates. A later gate may not mask a failure from an earlier gate.
+
+Frozen product authorities throughout cleanup:
+
+```text
+Renderer / WebGL / Canvas engine
+Document model / schema / migration
+History semantics
+Revision semantics
+Recipe / Geometry contracts
+CHAT proposal / approval / execution semantics
+persistence semantics
+FORMAT_VERSION
+product base version
+```
+
+Cleanup gates, in required order:
+
+```text
+G0  BASELINE_EVIDENCE
+G1  OBSOLETE_UI_QA_CONTRACTS
+G2  MENU_PANEL_AUTHORITY
+G3  FIRST_PAINT_AUTHORITY
+G4  TYPOGRAPHY_AUTHORITY
+G5  CSS_SHELL_AUTHORITY
+G6  RESPONSIVE_AUTHORITY
+G7  BRAND_CONTRACT
+G8  FULL_RUNTIME_AND_VISUAL_EVIDENCE
+```
+
+Health evidence is mandatory. DEV must produce one machine-readable/Markdown evidence register that records before/after metrics and exact proof for every gate.
+
+Required before/after metrics at minimum:
+
+```text
+styles.css bytes / characters
+!important count
+.topbar definition count
+.tool-rail definition count
+.inspector definition count
+.stage-wrap definition count
+.statusbar definition count
+.control-row definition count
+.inspector-tab definition count
+.creative-workspace-panel definition count
+
+media-query thresholds / named layout modes
+font-family authorities
+hard-coded workstation font-size inventory
+visible panel-open route count
+panel state owner count
+menu controller count
+brand visible-logo authorities
+favicon authorities
+obsolete UI regression assertions
+duplicate DOM ids
+service-worker build identity
+```
+
+Required behavioral evidence:
+
+```text
+same Dock panel click: open → close
+different Dock item: switch
+Window menu route: converges on same panel state
+floating edge tab: retired
+legacy duplicate Inspector opener: retired where superseded
+File + >=1 non-File menu: same menu controller
+Escape / outside click: menu closes
+first delivered paint: intended workspace state
+no black/dark legacy flash contract
+DESKTOP_WIDE / DESKTOP_NARROW / COMPACT = one responsive taxonomy
+1280 shell containment
+960 shell containment
+Web / Portable parity
+generator --check
+no duplicate DOM IDs
+```
+
+CSS health rule:
+
+```text
+NO new final-override block.
+Touched shell surfaces must delete/replace obsolete authorities.
+Repeated core selectors must materially decrease.
+!important must materially decrease.
+No new anonymous breakpoint family.
+```
+
+Regression rule:
+
+Retired QA assertions must be replaced by the new accepted contract, never deleted into unconditional PASS.
+
+Brand rule:
+
+If exact approved visible logo cannot be proven, G7 remains `HOLD_ASSET`. Do not guess. Favicon and visible-logo tests must still converge on one declared contract.
+
+Evidence artifacts required before MR can declare cleanup PASS:
+
+```text
+working/INK_UI_REBUILD_001_TECH_DEBT_BASELINE_EVIDENCE.md
+working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_EVIDENCE.md
+research/INK_UI_REBUILD_001_TECH_DEBT_HEALTH_REPORT_v0.1.md
+qa focused source/static evidence
+browser Runtime evidence
+reload / first-paint capture
+1280×1024 shell capture
+960px shell capture
+exact tested SHA
+Runtime run id
+artifact id + digest
+```
+
+Exit gate:
+
+```text
+UI_FOUNDATION_DEBT = PASS
+CORE_MUTATION = 0
+NEW_TECH_DEBT = 0
+FULL_RUNTIME = PASS
+NORMAL_UI_REBUILD = READY
+```
+
+Until G8 passes:
+
+`PHOTOSHOP_WORKSTATION_REBUILD = HOLD`
+
+---
+
 ## INK-CHAT-GEOMETRY-OPS-001 — CHAT native geometry operation exposure — 2026-09-25
 
 STATUS: `INK-CHAT-GEOMETRY-OPS-001 / AUTHORIZED / DEV_START`
