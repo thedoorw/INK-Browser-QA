@@ -3,9 +3,11 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../../../../', import.meta.url));
 const read = name => readFileSync(path.join(root, 'product/source', name), 'utf8');
+const readBytes = name => readFileSync(path.join(root, 'product/source', name));
 const shell = read('web-shell.js');
 const ink = read('src/ink.js');
 const css = read('styles.css');
@@ -152,14 +154,20 @@ test('responsive width authority uses exactly DESKTOP_WIDE DESKTOP_NARROW COMPAC
   assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
 });
 
-test('brand routing is singular without freezing an unapproved visible-logo asset', () => {
+test('approved visible-logo route is singular and exact asset SHA is locked', () => {
+  const approvedRoute = 'assets/INK_MARK_SOURCE_W-300.jpg';
+  const approvedSha256 = '08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8';
   for (const html of [web, portable]) {
     const visibleLogoRoutes = [...html.matchAll(/class="brand-source-mark" src="([^"]+)"/g)].map(match => match[1].replace(/\?v=.*$/, ''));
     assert.ok(visibleLogoRoutes.length >= 1);
     assert.equal(new Set(visibleLogoRoutes).size, 1);
+    assert.equal(visibleLogoRoutes[0], approvedRoute);
     assert.doesNotMatch(html, /class="brand-source-mark"[^>]+assets\/favicon\.svg/);
-    assert.doesNotMatch(html, /rel="icon"[^>]+assets\/ink-mark\.svg/);
+    assert.doesNotMatch(html, /class="brand-source-mark"[^>]+assets\/ink-mark\.svg/);
+    assert.doesNotMatch(html, /rel="icon"[^>]+INK_MARK_SOURCE_W-300\.jpg/);
   }
+  const actualSha256 = createHash('sha256').update(readBytes(approvedRoute)).digest('hex');
+  assert.equal(actualSha256, approvedSha256);
 });
 
 test('Web Portable favicon contract is singular and uses the dedicated SVG favicon', () => {
