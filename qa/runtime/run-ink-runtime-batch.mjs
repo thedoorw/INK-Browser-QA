@@ -162,10 +162,13 @@ async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
     child = spawn(browser, args, { shell: false, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
     let stderr = '';
     child.stderr.on('data', chunk => { if (stderr.length < 8192) stderr += chunk.toString(); });
+    let captureTimer;
     const result = await Promise.race([
       once(child, 'exit').then(([code, signal]) => ({ code, signal })),
-      new Promise((_, reject) => setTimeout(() => reject(new Error(`UI capture timeout: ${spec.file}`)), 45000))
-    ]);
+      new Promise((_, reject) => {
+        captureTimer = setTimeout(() => reject(new Error(`UI capture timeout: ${spec.file}`)), 45000);
+      })
+    ]).finally(() => clearTimeout(captureTimer));
     assert.equal(result.code, 0, `Chrome UI capture failed for ${spec.file}: ${result.code}/${result.signal} ${stderr.slice(-1200)}`);
     const bytes = await readFile(output);
     const pixelSize = assertUiPng(bytes, spec.width, spec.height);
