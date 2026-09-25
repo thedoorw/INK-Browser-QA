@@ -1,5 +1,48 @@
 # INK DEV PROGRESS
 
+## 2026-09-25 — INK-UI-REBUILD-001 technical-debt cleanup final DEV handoff
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+BRANCH = work/ink-ui-rebuild-001-tech-debt-cleanup
+MR_REVIEWED_HEAD = f574731b0e920950211f04177826b3ad2ce0157b
+
+G0 = PASS
+G1 = PASS
+G2 = SOURCE_PASS
+G3 = SOURCE_PASS
+G4 = SOURCE_PASS
+G5 = REVISED_SOURCE_PASS
+G6 = SOURCE_PASS
+G7 = HOLD_ASSET
+G8 = MR_OWNED / NOT_RUN_BY_DEV
+
+IMPORTANT = 223 → 19
+PRESENTATION_IMPORTANT = 0
+WIDTH_TAXONOMY = DESKTOP_WIDE / DESKTOP_NARROW / COMPACT
+FAVICON_AUTHORITY = 1
+VISIBLE_LOGO_ROUTE = 1 / EXACT ASSET APPROVAL NOT PROVEN
+CORE_MUTATION = 0
+PHOTOSHOP_WORKSTATION_REBUILD = HOLD
+
+FOCUSED_SOURCE_VERIFICATION = PASS
+DEV_HANDOFF → STOP
+```
+
+Evidence:
+
+- `working/INK_UI_REBUILD_001_G5_CSS_AUTHORITY_EVIDENCE.md`
+- `working/INK_UI_REBUILD_001_G6_RESPONSIVE_AUTHORITY_EVIDENCE.md`
+- `working/INK_UI_REBUILD_001_G7_BRAND_CONTRACT_EVIDENCE.md`
+- `working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_EVIDENCE.md`
+- `research/INK_UI_REBUILD_001_TECH_DEBT_HEALTH_REPORT_v0.1.md`
+- `working/INK_UI_REBUILD_001_TECH_DEBT_DEV_HANDOFF.md`
+
+Focused source verification covered generator equality, Web/Portable parity, duplicate DOM IDs, CSS brace balance, semantic-only remaining `!important`, responsive taxonomy, obsolete responsive regression removal, brand route singularity, favicon authority, service-worker build identity, and `FORMAT_VERSION = 4`.
+
+Windows Runtime was not run by DEV. G8 remains MR-owned.
+
+
 ## MR_REVISE — G5_CSS_HEALTH_DELTA_ONLY — 2026-09-25
 
 ```text
