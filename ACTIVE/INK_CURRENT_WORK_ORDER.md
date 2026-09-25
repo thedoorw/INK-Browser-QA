@@ -1,3 +1,46 @@
+## MR_PASS — G7 / G8 Runtime authorization — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+REVIEWED_EXACT_HEAD = 272c656cb98994540d3311f3f38dac1e95dfb519
+G0-G7 = MR SOURCE PASS
+G8 = AUTHORIZED / MR_OWNED
+PHOTOSHOP_WORKSTATION_REBUILD = HOLD
+```
+
+G7 exact user-approved visible-logo contract:
+
+```text
+VISIBLE_LOGO_SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+VISIBLE_LOGO_ROUTE = assets/INK_MARK_SOURCE_W-300.jpg?v=0.1
+VISIBLE_LOGO_AUTHORITY = 1
+FAVICON_AUTHORITY = assets/favicon.svg?v=0.1
+CORE_MUTATION = 0
+```
+
+G7 bounded delta review PASS:
+only the approved JPEG, focused UI QA and evidence/progress files changed.
+
+G8 exact-SHA Runtime target:
+
+`272c656cb98994540d3311f3f38dac1e95dfb519`
+
+Required G8 acceptance remains:
+
+- full UI / Creative / Geometry Runtime regression;
+- same Dock open → close;
+- different Dock switch;
+- Window-route convergence;
+- File + non-File shared-menu behavior;
+- reload / first-paint evidence;
+- 1280×1024 containment capture;
+- 960px containment capture;
+- exact tested SHA, run id, artifact id + digest.
+
+The central Runtime queue is authorized to run this task immediately as high-risk/single-item because G8 is the mandatory blocking gate for the UI foundation and cannot be batched with stale unpromoted Geometry Ops.
+
+---
+
 ## MR_REVISE — G7 USER-APPROVED VISIBLE LOGO ASSET — 2026-09-25
 
 ```text
