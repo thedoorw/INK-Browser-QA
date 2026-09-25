@@ -1,3 +1,18 @@
+## UI cleanup G8 capture-only PASS / Runtime rerun — 2026-09-25
+
+```text
+TARGET_SHA = 5bd8754aad3e53886ce6109bd350fa4fc5f68db9
+G0-G7 = PASS
+G8_CAPTURE_SOURCE = PASS
+G8_RUNTIME = AUTHORIZED
+PRODUCT_SOURCE_MUTATION = 0
+PHOTOSHOP_REBUILD = HOLD
+```
+
+MR will classify the exact-SHA Windows Runtime result and inspect all three PNG artifacts.
+
+---
+
 ## UI cleanup G8 — QA capture transport revise — 2026-09-25
 
 ```text
