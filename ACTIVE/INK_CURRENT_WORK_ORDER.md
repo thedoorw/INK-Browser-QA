@@ -1,3 +1,39 @@
+## MR checkpoint — Closure 001 C1 source PASS / C2-A authorized — 2026-09-25
+
+```text
+TASK = INK-TECH-CLOSURE-001
+C1_REVIEWED_HEAD = 6a9fb25558cda958b90140867ac054f3662dfa01
+C1 = MR_SOURCE_PASS
+C1_RUNTIME = DEFERRED_TO_FINAL_CLOSURE_BATCH
+
+C2_A = AUTHORIZED
+BRANCH = work/ink-tech-closure-001
+DISPATCH_HEAD = aa21b4f185344697c6d4a4d434ee064b90ac0b51
+WORKPACK = working/INK_TECH_CLOSURE_001_C2A_DEV_WORKPACK.md
+
+C2_B = HOLD UNTIL C2-A DEV_HANDOFF + MR_SOURCE_REVIEW
+```
+
+C2-A authorized target:
+
+```text
+use_ink:
+  frame.create.v1
+  text.create.v1
+  text.edit.v1
+  svg.import.v1
+  object.resize.v1
+  object.scale.v1
+  object.order.v1
+
+named tool:
+  export_ink_asset
+```
+
+No full Windows Runtime between C1 and C2-A unless the approved high-risk exception is triggered.
+
+---
+
 ## INK-TECH-CLOSURE-001 — Capability closure before final UI rebuild — 2026-09-25
 
 STATUS: `MR_AUTHORIZED / CLOSURE_IN_PROGRESS`
