@@ -2,6 +2,11 @@
   'use strict';
 
   const DESKTOP_QUERY = '(min-width: 761px)';
+  const LAYOUT_MODES = Object.freeze({
+    DESKTOP_WIDE: 'DESKTOP_WIDE',
+    DESKTOP_NARROW: 'DESKTOP_NARROW',
+    COMPACT: 'COMPACT'
+  });
   const RUNTIME_READY_EVENT = 'ink:runtime-ready';
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
   const TOOLBAR_LAYOUT_KEY = 'ink.web.ui.toolbar-layout.v0.1';
@@ -80,8 +85,14 @@
     return globalThis.INK_APP || null;
   }
 
+  function resolveLayoutMode(width = globalThis.innerWidth || 1280) {
+    if (width <= 760) return LAYOUT_MODES.COMPACT;
+    if (width <= 1120) return LAYOUT_MODES.DESKTOP_NARROW;
+    return LAYOUT_MODES.DESKTOP_WIDE;
+  }
+
   function isDesktop() {
-    return globalThis.matchMedia?.(DESKTOP_QUERY)?.matches ?? true;
+    return resolveLayoutMode() !== LAYOUT_MODES.COMPACT;
   }
 
   function svgIcon(id) {
@@ -536,7 +547,9 @@
     if (!state.root) return;
     const active = currentPanel();
     const panel = activePanelElement();
-    const desktop = globalThis.matchMedia?.(DESKTOP_QUERY)?.matches ?? true;
+    const layoutMode = resolveLayoutMode();
+    const desktop = layoutMode !== LAYOUT_MODES.COMPACT;
+    state.root.dataset.layoutMode = layoutMode;
     let width = 0;
     if (desktop && panel) {
       const rect = panel.getBoundingClientRect();
@@ -636,6 +649,7 @@
     if (!appRoot) return;
     state.root = appRoot;
     appRoot.classList.add('web-shell-v0-1');
+    appRoot.dataset.layoutMode = resolveLayoutMode();
     try {
       const last = localStorage.getItem(LAST_PANEL_KEY);
       if (PANEL_DEFS.some(def => def.id === last)) state.lastPanel = last;
@@ -656,6 +670,7 @@
     version: '0.1',
     runtimeReadyEvent: RUNTIME_READY_EVENT,
     states: PRIMARY_PANEL_STATES,
+    layoutModes: Object.values(LAYOUT_MODES),
     panels: PANEL_DEFS.map(def => def.id),
     open: selectPanel,
     select: selectPanel,
@@ -667,6 +682,7 @@
       return {
         version: '0.1',
         authority: 'single',
+        layoutMode: state.root?.dataset.layoutMode || resolveLayoutMode(),
         primaryState: state.activePanel,
         activePanel: currentPanel(),
         lastPanel: state.lastPanel,
