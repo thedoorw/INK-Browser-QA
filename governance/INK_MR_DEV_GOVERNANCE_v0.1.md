@@ -56,11 +56,11 @@ MR does not treat discussion alone as Runtime modification authorization.
 ### DEV
 
 DEV:
-- reads the current bulletin before doing work;
+- reads the authoritative Work Order for its lane before doing work;
 - implements only the explicitly authorized scope;
 - preserves evidence and progress in GitHub;
 - does not expand scope autonomously;
-- stops at every MR gate.
+- stops at every gate owned by its Review authority: MR for technical/Core work, UR for delegated UI work.
 
 ## Authoritative active files
 
@@ -69,29 +69,34 @@ Read in this order:
 1. `README.md`
 2. `AGENTS.md`
 3. `ACTIVE/README.md`
-4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
-5. `working/WORKING_STATUS.md`
+4. `working/WORKING_STATUS.md`
+5. the Work Order authoritative for the lane:
+   - MR / technical / Core / cross-lane work: `main:ACTIVE/INK_CURRENT_WORK_ORDER.md`
+   - delegated UI task: dedicated UI branch `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 6. role-specific active files:
-   - DEV: `ACTIVE/INK_DEV_PROGRESS.md`
+   - DEV / UI DEV: branch-local `ACTIVE/INK_DEV_PROGRESS.md`
    - MR: `ACTIVE/INK_REVIEW_STATUS.md`
-7. governance files explicitly named by the Current Work Order
+   - UR: UI program/workpack + UI health governance + exact UI branch/main evidence
+7. governance files explicitly named by the Work Order
 8. only the product / research / QA files needed for that work order
 
-The single authoritative task definition is:
+The global technical task definition remains:
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+`main:ACTIVE/INK_CURRENT_WORK_ORDER.md`
+
+A branch-local UI Work Order is authoritative only inside an already approved UI program and may not authorize Core or cross-lane mutation.
 
 Cross-window recovery is governed by:
 
 `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
 
-Legacy/detail bulletin files may preserve history, but cannot authorize work that is not present in the Current Work Order.
+Legacy/detail bulletin files may preserve history, but cannot independently expand authority.
 
 ## Gate rule
 
-Every work order has a gate.
+Every work order has a gate owned by its Review authority.
 
-Normal sequence:
+MR-owned technical/Core sequence:
 
 ```text
 AUTHORIZED
@@ -101,27 +106,42 @@ AUTHORIZED
 → MR_PASS / MR_REVISE / MR_HOLD
 ```
 
-DEV must not start the next task merely because the previous implementation appears complete.
+UR-owned delegated UI sequence:
 
-Only MR may change the current task to the next authorized work order.
+```text
+UI_AUTHORIZED
+→ UI_DEV_IN_PROGRESS
+→ DEV_HANDOFF
+→ UR_REVIEW_REQUIRED
+→ UI_PASS / UI_REVISE / UI_HOLD
+→ reconcile + integrate current main
+→ main UI Runtime / visual / health verification
+→ UI_CLOSED
+```
+
+DEV must not start the next task merely because implementation appears complete.
+
+MR authorizes the next MR-owned task. UR may authorize the next bounded UI task inside an already approved UI program after the previous task reaches the required UI gate.
 
 ## Mandatory DEV work branch
 
 Every authorized DEV task must use a dedicated Git branch.
 
 Rules:
-- MR names the branch in the current work order.
-- DEV must work only on that branch until MR review.
-- DEV must commit meaningful progress checkpoints to the branch, not keep all work only inside chat.
-- `ACTIVE/INK_DEV_PROGRESS.md` must be updated on the same branch.
-- Each progress update must record the latest commit SHA and a short milestone note.
-- MR reviews the branch commits / diff before PASS.
-- DEV must not merge to `main`, update the package branch, or start another branch unless MR explicitly authorizes it.
-- Final DEV handoff must leave the branch intact and STOP for MR review.
+- the owning Review authority names the branch: MR for technical/Core work, UR for delegated UI work;
+- DEV must work only on that branch until the owning Review authority reviews it;
+- DEV must commit meaningful progress checkpoints to the branch, not keep all work only inside chat;
+- `ACTIVE/INK_DEV_PROGRESS.md` must be updated on the same branch;
+- each progress update must record the latest commit SHA and a short milestone note;
+- the owning Review authority reviews the branch commits / diff before PASS;
+- DEV itself must not merge to `main`, update the package branch, or start another branch unless explicitly authorized by the owning Review authority;
+- final DEV handoff must leave the branch intact and STOP for review.
 
 This makes the Git branch itself the durable implementation/progress record.
 
-MR must pin the exact DEV branch HEAD in `working/WORKING_STATUS.md` before review. If the HEAD changes, the review fingerprint changes and the prior review is stale.
+The owning Review authority must pin the exact DEV branch HEAD before review. If the HEAD changes, the review fingerprint changes and the prior review is stale.
+
+For UI work, UR — not UI DEV — owns the later reconcile / clean-promotion / main-verification steps.
 
 ## Change discipline
 
