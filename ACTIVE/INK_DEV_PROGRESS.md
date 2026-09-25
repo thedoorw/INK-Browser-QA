@@ -1,5 +1,35 @@
 # INK DEV PROGRESS
 
+## 2026-09-25 — G7 exact approved visible-logo asset DEV handoff
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+G0-G6 = ACCEPTED
+G7 = SOURCE_PASS
+G8 = HOLD / MR_OWNED
+
+APPROVED_VISIBLE_LOGO_SHA256 = 08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8
+APPROVED_VISIBLE_LOGO_DIMENSIONS = 300x300
+APPROVED_VISIBLE_LOGO_BYTES = 19801
+VISIBLE_LOGO_AUTHORITY = 1
+FAVICON_AUTHORITY = 1 / UNCHANGED
+CORE_MUTATION = 0
+RUNTIME = NOT_RUN_BY_DEV
+PHOTOSHOP_WORKSTATION_REBUILD = HOLD
+
+DEV_HANDOFF → STOP
+```
+
+Implementation:
+
+- approved asset install: `c50e10aec6826876ee6b7cedc8af9271538b7274`
+- exact SHA/route QA: `1893abd440dc7401156c1bd2c7b9f2a77309f450`
+- G7 evidence: `working/INK_UI_REBUILD_001_G7_BRAND_CONTRACT_EVIDENCE.md`
+- cleanup evidence and health report updated to G7 SOURCE_PASS.
+
+GitHub re-fetch of the committed JPEG is byte-for-byte identical to the verified staging asset.
+
+
 ## MR_REVISE — G7_EXACT_ASSET_ONLY — 2026-09-25
 
 ```text
