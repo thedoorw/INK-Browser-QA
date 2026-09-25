@@ -1,5 +1,58 @@
 # INK DEV PROGRESS
 
+## MR_REVISE — G5_CSS_HEALTH_DELTA_ONLY — 2026-09-25
+
+```text
+MR_REVIEWED_HEAD = f574731b0e920950211f04177826b3ad2ce0157b
+RESULT = MR_REVISE
+BLOCKING_GATE = G5_CSS_SHELL_AUTHORITY
+
+G0 = PASS
+G1 = PASS
+G2 = SOURCE_PASS
+G3 = SOURCE_PASS
+G4 = SOURCE_PASS
+G5 = REVISE
+G6 = PARTIAL / three-mode width taxonomy direction accepted
+G7 = HOLD
+G8 = HOLD
+PHOTOSHOP_WORKSTATION_REBUILD = HOLD
+```
+
+Reason:
+
+`!important` moved only `223 → 220`. This does not satisfy the Work Order requirement that cascade-war debt be materially reduced.
+
+Authorized next delta only:
+
+- continue on this branch;
+- inspect remaining `!important` declarations on workstation/shell presentation surfaces;
+- remove obsolete competing authorities rather than blindly deleting declarations;
+- consolidate touched selectors so ordinary specificity/cascade is sufficient;
+- preserve genuinely necessary exceptional `!important` only with evidence;
+- update `working/INK_UI_REBUILD_001_G5_CSS_AUTHORITY_EVIDENCE.md` with exact before/after count and remaining semantic inventory;
+- add/adjust focused QA so the cleanup contract cannot regress;
+- no new final-override block;
+- no frozen Core/Renderer/Document/History/Revision/Geometry/CHAT/persistence/FORMAT_VERSION mutation.
+
+Acceptance:
+
+```text
+G5_IMPORTANT_REDUCTION = SUBSTANTIVE
+TOUCHED_SHELL_CASCADE_WAR = 0
+NEW_FINAL_OVERRIDE = 0
+CORE_MUTATION = 0
+FOCUSED_QA = PASS
+```
+
+After G5 passes locally, continue:
+
+`G6 → G7 → focused QA → DEV_HANDOFF / STOP`
+
+Do not start G8 Runtime and do not start Photoshop alignment. MR owns exact-HEAD review and G8.
+
+---
+
 STATUS: `INK-CHAT-CLOSED-LOOP-001 / DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
 
 - Branch: `work/ink-chat-closed-loop-001`
