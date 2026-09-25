@@ -1,3 +1,40 @@
+## UR end-to-end UI governance adopted — 2026-09-25
+
+```text
+USER_DECISION =
+  MR focuses on INK technical/Core advancement
+  UR owns delegated UI lane end to end
+
+MR =
+  technical / Core / cross-lane authority
+
+UR =
+  UI planning
+  UI Work Orders
+  UI DEV review
+  UI technical-health governance
+  UI reconcile with current main
+  UI-only clean promotion to main
+  integrated-main UI Runtime
+  integrated-main visual / interaction verification
+  final UI closure
+
+UI_BRANCH_PASS != UI_COMPLETE
+UI_COMPLETE = VERIFIED_ON_CURRENT_MAIN
+
+UR_ESCALATION =
+  STOP → MR only when UI work requires frozen Core / product-global / cross-lane authority change
+```
+
+Authoritative governance:
+
+- `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
+- `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
+
+This delegation exists so MR can continue the technical lane while UR carries full responsibility for UI effect and UI health.
+
+---
+
 ## UI technical-debt cleanup COMPLETE — 2026-09-25
 
 ```text
