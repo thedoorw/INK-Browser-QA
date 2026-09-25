@@ -1,3 +1,164 @@
+## INK-CHAT-GEOMETRY-OPS-001 — CHAT native geometry operation exposure — 2026-09-25
+
+STATUS: `INK-CHAT-GEOMETRY-OPS-001 / AUTHORIZED / DEV_START`
+
+User authorization:
+
+```text
+Add these CHAT geometry capabilities now:
+create path / primitive
+edit path geometry
+rotate around center
+radial repeat
+clone / reuse module
+boolean geometry
+group / hierarchy
+```
+
+Purpose:
+
+Expose existing INK native geometry authorities through the already accepted
+`use_ink → Chat Creative Plan → bounded edit → History / Revision` route.
+Do not build a second geometry engine.
+
+Authoritative existing sources:
+
+```text
+Path creation:
+  vector/vector-core.js
+  createPath / createAnchor
+
+Path geometry editing:
+  editor/path-edit.js
+  PathEditController
+
+rotation:
+  core/math.js
+  Matrix.rotate / Matrix.around
+  editor/transform.js
+  applyWorldTransformBatch
+
+clone:
+  editor/composition.js
+  cloneCompositionObject
+
+repeat:
+  vector/vector-core.js
+  createRepeat / repeatTransforms / expandRepeat
+  repeat/repeat-identity.js
+
+boolean:
+  vector/vector-core.js
+  booleanPaths / dividePaths
+
+group / hierarchy:
+  vector/vector-core.js
+  createVectorGroup
+  document/hierarchy.js
+  reparentPageObject
+```
+
+Required `use_ink` v0.2 operation vocabulary:
+
+```text
+existing:
+  path.repaint.v1
+  path.material.apply.v1
+  path.material.remove.v1
+  object.translate.v1
+  path.simplify.v1
+  path.refine.v1
+
+add:
+  path.create.v1
+  path.edit.v1
+  object.rotate.v1
+  object.clone.v1
+  repeat.radial.v1
+  boolean.apply.v1
+  group.create.v1
+  object.reparent.v1
+```
+
+Required behavior:
+
+- all new writes use the existing proposal → explicit approval → execute boundary;
+- all writes commit through authoritative History;
+- final plan Revision behavior remains owned by Chat Creative Plan;
+- no arbitrary JS / eval / Function / direct document JSON writes;
+- stable refs returned for created / changed objects;
+- creation operations must support deterministic geometry sufficient for rose-window reconstruction:
+  custom Path anchors/subpaths, ellipse/circle, rectangle, polygon/polyline;
+- `path.edit.v1` must expose bounded existing PathEditController actions, at minimum:
+  move-anchor, move-handle, set-anchor-mode, add-anchor, delete-anchors, set-subpath-closed;
+- `object.rotate.v1` accepts degrees and optional explicit world-space center;
+- `object.clone.v1` creates fresh stable object/path/subpath/anchor IDs and preserves composition lineage;
+- `repeat.radial.v1` creates an editable native Repeat from exactly one source object and explicit center/count/sweep/startAngle;
+- `boolean.apply.v1` supports union / difference / intersection / xor / divide over 2+ Path targets and returns editable result refs;
+- `group.create.v1` groups selected same-parent/same-layer objects while preserving world appearance;
+- `object.reparent.v1` uses hierarchy authority and rejects cycles / cross-layer invalid moves.
+
+Acceptance gate:
+
+`CHAT_NATIVE_GEOMETRY_OPS_V01`
+
+Runtime proof must demonstrate in one approved plan or bounded sequence:
+
+```text
+create primitive/path
+→ edit path geometry
+→ rotate around explicit center
+→ clone
+→ radial repeat
+→ boolean
+→ group
+→ reparent
+→ History receipts
+→ Revision
+→ preview
+```
+
+Non-goals:
+
+```text
+UI changes = 0
+IMAGE model = 0
+external transport = 0
+new renderer = 0
+new geometry engine = 0
+FORMAT_VERSION = 4 / preserve
+Drawing Validation Phase C = HOLD_BY_USER
+Lesson-002 artwork comparison = NOT YET; this task only exposes the operation authority needed for it
+```
+
+DEV branch:
+
+`work/ink-chat-geometry-ops-001`
+
+Authorized implementation files:
+
+```text
+product/source/src/editor/chat-bounded-edit.js
+product/source/src/agent/capability-registry.js
+product/source/src/editor/chat-creative-plan.js        # only if generic sequencing requires it
+product/source/src/editor/composition.js               # only if an adapter helper is required; preserve existing semantics
+qa/ink-chat-geometry-ops-001.test.mjs
+qa/runtime/ink-cloud-018-browser-harness.html
+ACTIVE/INK_DEV_PROGRESS.md
+working/INK_CHAT_GEOMETRY_OPS_001_DEV_HANDOFF.md
+research/INK_CHAT_GEOMETRY_OPS_001_REPORT_v0.1.md
+```
+
+Existing native geometry modules are upstream authorities and should remain unchanged unless a focused defect is proven.
+
+DEV must run focused QA, report exact HEAD, then:
+
+`DEV_HANDOFF → STOP`
+
+MR owns exact-SHA Windows Runtime, review and promotion.
+
+---
+
 ## INK-CHAT-CLOSED-LOOP-001 final closure — 2026-09-24
 
 ```text
