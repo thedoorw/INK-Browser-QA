@@ -31,22 +31,19 @@ test('Web and Portable keep one shared UI shell', () => {
   assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
   assert.doesNotThrow(() => new Function(shell));
   for (const html of [web, portable]) {
-    for (const id of ['contextualAdvancedBtn', 'inspectorToggle', 'inspectorEdgeToggle', 'inspector', 'stageWrap']) {
+    for (const id of ['contextualAdvancedBtn', 'inspector', 'stageWrap']) {
       assert.equal(html.split(`id="${id}"`).length - 1, 1, `Expected one shared hook: ${id}`);
     }
   }
 });
 
-test('primary-panel authority is selection-first with one desktop collapse chevron', () => {
+test('primary-panel authority is owned by web-shell rather than a required legacy presenter', () => {
   assert.match(shell, /function selectPanel\(id\)/);
-  assert.match(shell, /selectPanel\(button\.dataset\.shellPanel\)/);
-  assert.match(shell, /function bindCollapseControl\(\)/);
-  assert.match(shell, /state\.lastPanel \|\| 'properties'/);
+  assert.match(shell, /function togglePanel\(id\)/);
+  assert.match(shell, /function closePrimaryPanels\(\)/);
   assert.match(shell, /open: selectPanel/);
+  assert.match(shell, /close: closePrimaryPanels/);
   assert.doesNotMatch(shell, /\.click\(\)/);
-  assert.match(css, /#inspectorToggle\.legacy-inspector-toggle\{display:none!important\}/);
-  assert.doesNotMatch(css, /\.inspector-edge-toggle\{display:none!important\}/);
-  assert.match(css, /#closeInspector,[\s\S]*?data-workspace-action="close"[\s\S]*?display:none!important/);
 });
 
 test('contextual Advanced is a synchronized two-way Properties toggle', () => {
