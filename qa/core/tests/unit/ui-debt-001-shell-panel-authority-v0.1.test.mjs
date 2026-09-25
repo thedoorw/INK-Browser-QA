@@ -12,6 +12,7 @@ const css = read('styles.css');
 const web = read('index.html');
 const portable = read('index-standalone.html');
 const config = read('src/config.js');
+const serviceWorker = read('service-worker.js');
 
 function normalizeDelivery(html, delivery) {
   const label = `INK v0.1 · ${delivery}`;
@@ -25,6 +26,17 @@ function normalizeDelivery(html, delivery) {
     .replace(delivery === 'Web' ? '<script type="module" src="src/ink.js?v=0.1"></script>' : '<script src="dist/ink.compat.js?v=0.1"></script>', '<script src="DELIVERY_BOOT"></script>')
     .replace(delivery === 'Web' ? '<span class="web-surface-badge">WEB</span>' : '', '');
 }
+
+test('delivered shell owns a light workstation first paint before Runtime boot', () => {
+  for (const html of [web, portable]) {
+    assert.match(html, /<meta name="theme-color" content="#e7e7e7">/);
+    assert.match(html, /<style id="inkFirstPaintStyle">[\s\S]*?html,body\{margin:0;background:#e7e7e7;color:#262626\}[\s\S]*?#app\{background:#e7e7e7;color:#262626\}[\s\S]*?<\/style>/);
+    assert.match(html, /<body data-ink-first-paint="workstation">/);
+    assert.match(html, /<div id="app" class="app web-shell-v0-1" data-panel="brush" data-space="creation" data-shell-panel="collapsed" data-toolbar-layout="single" data-first-paint="ready" style="--active-panel-w:0px">/);
+    assert.doesNotMatch(html, /inkFirstPaintStyle[\s\S]{0,240}?(?:#000|black|#111|#1[0-9a-f]{5})/i);
+  }
+  assert.match(serviceWorker, /const BUILD_ID = '20260925-ui-rebuild-001-g3-first-paint-r1';/);
+});
 
 test('desktop primary-panel state is explicit and fresh entry is collapsed', () => {
   assert.match(shell, /PRIMARY_PANEL_STATES = Object\.freeze\(\['collapsed', \.\.\.PANEL_DEFS\.map\(def => def\.id\)\]\)/);
