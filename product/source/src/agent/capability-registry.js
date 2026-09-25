@@ -63,12 +63,12 @@ const expectedStateSchema = obj({
 
 const targetArraySchema = arr(objectRefSchema, 'Stable edit targets.', { minItems: 1, maxItems: 64 });
 
-const editTaskSchema = (operationSchema, argumentSchema, maxTargets = 64) => obj({
+const editTaskSchema = (operationSchema, argumentSchema, maxTargets = 64, minTargets = 1) => obj({
   schema: { type: 'string', const: 'INK-CHAT-EDIT-TASK', default: 'INK-CHAT-EDIT-TASK', description: 'Bounded edit task schema.' },
   version: { type: 'integer', const: 1, default: 1, description: 'Bounded edit task version.' },
   taskId: str('Caller supplied stable task id.'),
   operation: operationSchema,
-  targets: { ...targetArraySchema, maxItems: maxTargets },
+  targets: { ...targetArraySchema, minItems: minTargets, maxItems: maxTargets },
   arguments: argumentSchema,
   expected: expectedStateSchema
 }, ['taskId', 'operation', 'targets', 'arguments'], 'Input accepted by propose_ink_edit / edit.propose.');
@@ -86,7 +86,7 @@ const creativePlanStepSchema = obj({
   stepId: str('Stable plan step id.'),
   taskId: str('Optional compatibility task id; the existing plan authority derives its own bounded task identity.'),
   operation: { type: 'string', enum: CHAT_EDIT_OPERATIONS, description: 'Existing bounded-edit operation.' },
-  targets: targetArraySchema,
+  targets: { ...targetArraySchema, minItems: 0 },
   arguments: genericEditArguments,
   dependsOn: arr(str('Earlier step id dependency.'), 'Earlier step dependencies.', { maxItems: 32 })
 }, ['stepId', 'operation', 'targets', 'arguments'], 'One existing bounded-edit step in a Chat Creative Plan.');
@@ -153,6 +153,90 @@ const editSchemas = {
       maxControlLength: num('Maximum control length; must be greater than zero.', { minimum: Number.EPSILON, maximum: 1000000, default: 48 }),
       maxAddedAnchors: { type: 'integer', minimum: 1, maximum: 4096, default: 128, description: 'Maximum added anchors.' }
     }, [], 'Path refinement arguments.'),
+    1
+  ),
+  'path.create.v1': editTaskSchema(
+    { type: 'string', const: 'path.create.v1', description: 'Create one native editable Path or geometric primitive on the active layer.' },
+    obj({
+      shape: { type: 'string', enum: ['path', 'ellipse', 'circle', 'rectangle', 'polygon', 'polyline'], description: 'Geometry constructor.' },
+      objectId: str('Optional caller-supplied stable object id; collisions are rejected.'),
+      name: str('Path name.'),
+      fill: str('Fill paint token.'),
+      stroke: str('Stroke paint token.'),
+      strokeWidth: num('Stroke width.', { minimum: 0, maximum: 100000 }),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1 }),
+      subpaths: arr({ type: 'object', properties: {}, additionalProperties: true, description: 'Subpath with bounded anchors.' }, 'Custom Path subpaths.', { maxItems: 64 }),
+      cx: num('Ellipse/circle center X.'), cy: num('Ellipse/circle center Y.'),
+      r: num('Circle radius.', { minimum: Number.EPSILON }), rx: num('Ellipse X radius.', { minimum: Number.EPSILON }), ry: num('Ellipse Y radius.', { minimum: Number.EPSILON }),
+      x: num('Rectangle X.'), y: num('Rectangle Y.'), width: num('Rectangle width.', { minimum: Number.EPSILON }), height: num('Rectangle height.', { minimum: Number.EPSILON }),
+      points: arr(obj({ x: num('Point X.'), y: num('Point Y.') }, ['x', 'y'], 'Point.'), 'Polygon/polyline points.', { maxItems: 4096 })
+    }, ['shape'], 'Shape-specific geometry is validated by the bounded edit authority.'),
+    0, 0
+  ),
+  'path.edit.v1': editTaskSchema(
+    { type: 'string', const: 'path.edit.v1', description: 'Edit one Path through the existing PathEditController.' },
+    obj({
+      action: { type: 'string', enum: ['move-anchor', 'move-handle', 'set-anchor-mode', 'add-anchor', 'delete-anchors', 'set-subpath-closed'], description: 'Bounded Path edit action.' },
+      subpathIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Subpath index.' },
+      anchorIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Anchor index.' },
+      segmentIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Segment index.' },
+      side: { type: 'string', enum: ['in', 'out'], description: 'Bezier handle side.' },
+      mode: { type: 'string', enum: ['corner', 'smooth', 'symmetric'], description: 'Anchor mode.' },
+      x: num('Geometry X / handle-vector X.'), y: num('Geometry Y / handle-vector Y.'),
+      t: num('Segment split parameter.', { minimum: Number.EPSILON, maximum: 1 - Number.EPSILON }),
+      anchors: arr(obj({
+        subpathIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Subpath index.' },
+        anchorIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Anchor index.' }
+      }, ['subpathIndex', 'anchorIndex'], 'Anchor ref.'), 'Anchors to delete.', { maxItems: 512 }),
+      closed: bool('Desired subpath closed state.')
+    }, ['action'], 'Action-specific fields are validated by the Path edit authority.'),
+    1
+  ),
+  'object.rotate.v1': editTaskSchema(
+    { type: 'string', const: 'object.rotate.v1', description: 'Rotate editable objects in world space.' },
+    obj({
+      degrees: num('Rotation in degrees.', { minimum: -360000, maximum: 360000 }),
+      center: obj({ x: num('World-space center X.'), y: num('World-space center Y.') }, ['x', 'y'], 'Optional explicit world-space rotation center.')
+    }, ['degrees'], 'Rotation arguments.'),
+    64
+  ),
+  'object.clone.v1': editTaskSchema(
+    { type: 'string', const: 'object.clone.v1', description: 'Clone one object with fresh stable identity and composition lineage.' },
+    obj({ dx: num('Optional local X offset.'), dy: num('Optional local Y offset.') }, [], 'Clone arguments.'),
+    1
+  ),
+  'repeat.radial.v1': editTaskSchema(
+    { type: 'string', const: 'repeat.radial.v1', description: 'Create one native editable radial Repeat from one source object.' },
+    obj({
+      count: { type: 'integer', minimum: 2, maximum: 720, description: 'Instance count.' },
+      center: obj({ x: num('World-space repeat center X.'), y: num('World-space repeat center Y.') }, ['x', 'y'], 'Repeat center.'),
+      sweep: num('Sweep angle in degrees.', { default: 360 }),
+      startAngle: num('Start angle in degrees.', { default: 0 }),
+      linked: bool('Keep native Repeat linked.', { default: true })
+    }, ['count', 'center'], 'Radial Repeat arguments.'),
+    1
+  ),
+  'boolean.apply.v1': editTaskSchema(
+    { type: 'string', const: 'boolean.apply.v1', description: 'Apply native editable Boolean geometry to 2+ same-parent Paths.' },
+    obj({
+      operation: { type: 'string', enum: ['union', 'difference', 'intersection', 'xor', 'divide'], description: 'Boolean operation.' },
+      name: str('Optional result name.'),
+      tolerance: num('Geometry flattening/refit tolerance.', { minimum: Number.EPSILON, default: 0.65 })
+    }, ['operation'], 'Boolean arguments.'),
+    64, 2
+  ),
+  'group.create.v1': editTaskSchema(
+    { type: 'string', const: 'group.create.v1', description: 'Group same-parent objects while preserving world appearance.' },
+    obj({ name: str('Group name.') }, [], 'Group arguments.'),
+    64
+  ),
+  'object.reparent.v1': editTaskSchema(
+    { type: 'string', const: 'object.reparent.v1', description: 'Reparent one object through the native hierarchy authority.' },
+    obj({
+      parentObjectId: str('Target Frame object id; omit/null for layer root.'),
+      targetLayerId: str('Optional target layer id; native hierarchy rules reject invalid cross-layer moves.'),
+      index: { type: 'integer', minimum: 0, description: 'Optional insertion index.' }
+    }, [], 'Reparent arguments.'),
     1
   )
 };
@@ -417,10 +501,15 @@ primary.push(descriptor({
 }));
 
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
-  const pathOnly = operation.startsWith('path.');
-  const operationConstraints = pathOnly
-    ? ['Targets must resolve to editable visible unlocked Path objects.']
-    : ['Targets must resolve to editable visible unlocked objects.'];
+  const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
+  const operationConstraints = operation === 'path.create.v1'
+    ? ['Creation uses zero targets and inserts one native editable Path on the active layer.']
+    : pathOnly || operation === 'boolean.apply.v1'
+      ? ['Targets must resolve to editable visible unlocked Path objects.']
+      : ['Targets must resolve to editable visible unlocked objects.'];
+  if (operation === 'boolean.apply.v1') operationConstraints.push('All 2+ Path targets must share the same layer and structural parent.');
+  if (operation === 'group.create.v1') operationConstraints.push('All targets must share the same layer and structural parent.');
+  if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
@@ -438,7 +527,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     role: 'PROPOSAL',
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
-    targetTypes: pathOnly ? ['Path'] : ['Object'],
+    targetTypes: operation === 'path.create.v1' ? ['Page'] : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
