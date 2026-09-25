@@ -1,7 +1,10 @@
 import { Matrix } from '../core/index.js';
-import { findPageObject, walkPageObjects } from '../document/hierarchy.js';
+import { findPageObject, reparentPageObject, walkPageObjects } from '../document/hierarchy.js';
 import { PathEditController } from './path-edit.js';
+import { cloneCompositionObject } from './composition.js';
+import { applyWorldTransformBatch } from './transform.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
+import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
@@ -210,7 +213,15 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.material.remove.v1',
   'object.translate.v1',
   'path.simplify.v1',
-  'path.refine.v1'
+  'path.refine.v1',
+  'path.create.v1',
+  'path.edit.v1',
+  'object.rotate.v1',
+  'object.clone.v1',
+  'repeat.radial.v1',
+  'boolean.apply.v1',
+  'group.create.v1',
+  'object.reparent.v1'
 ]);
 
 const CHAT_EDIT_OPERATION_SET = new Set(CHAT_EDIT_OPERATIONS);
@@ -252,13 +263,182 @@ function normalizeTargetRef(ref, index) {
   };
 }
 
-function normalizeTargets(raw, { exact = null, max = 64 } = {}) {
-  if (!Array.isArray(raw) || !raw.length || raw.length > max) editFail('TARGETS_INVALID');
+function normalizeTargets(raw, { exact = null, min = 1, max = 64 } = {}) {
+  if (!Array.isArray(raw) || raw.length < min || raw.length > max) editFail('TARGETS_INVALID');
   const targets = raw.map(normalizeTargetRef);
   const unique = new Set(targets.map(ref => `${ref.pageId}\u0000${ref.layerId}\u0000${ref.objectId}`));
   if (unique.size !== targets.length) editFail('TARGET_DUPLICATE');
   if (exact != null && targets.length !== exact) editFail('TARGET_COUNT_INVALID', { expected: exact, actual: targets.length });
   return targets;
+}
+
+function boundedBoolean(value, field, fallback = null) {
+  if (value == null && fallback !== null) return fallback;
+  if (typeof value !== 'boolean') editFail('ARGUMENT_INVALID', { field });
+  return value;
+}
+
+function boundedEnum(value, field, allowed) {
+  const text = boundedText(value, field, { max: 80 });
+  if (!allowed.includes(text)) editFail('ARGUMENT_INVALID', { field });
+  return text;
+}
+
+function normalizePoint(value, field, { optional = false } = {}) {
+  if (value == null && optional) return null;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) editFail('ARGUMENT_INVALID', { field });
+  return {
+    x: boundedNumber(value.x, `${field}.x`),
+    y: boundedNumber(value.y, `${field}.y`)
+  };
+}
+
+function normalizeAnchor(value, field) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) editFail('ARGUMENT_INVALID', { field });
+  const mode = value.mode == null ? 'corner' : boundedEnum(value.mode, `${field}.mode`, ['corner', 'smooth', 'symmetric']);
+  return {
+    x: boundedNumber(value.x, `${field}.x`),
+    y: boundedNumber(value.y, `${field}.y`),
+    in: value.in == null ? { x: 0, y: 0 } : normalizePoint(value.in, `${field}.in`),
+    out: value.out == null ? { x: 0, y: 0 } : normalizePoint(value.out, `${field}.out`),
+    mode
+  };
+}
+
+function normalizePathCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const shape = boundedEnum(raw.shape || 'path', 'arguments.shape', ['path', 'ellipse', 'circle', 'rectangle', 'polygon', 'polyline']);
+  const result = {
+    shape,
+    objectId: raw.objectId == null ? null : boundedText(raw.objectId, 'arguments.objectId', { max: 160 }),
+    name: raw.name == null ? 'CHAT Path' : boundedText(raw.name, 'arguments.name', { max: 160 }),
+    fill: raw.fill == null ? 'none' : boundedPaintToken(raw.fill, 'arguments.fill'),
+    stroke: raw.stroke == null ? '#202020' : boundedPaintToken(raw.stroke, 'arguments.stroke'),
+    strokeWidth: boundedNumber(raw.strokeWidth ?? 1.5, 'arguments.strokeWidth', { min: 0, max: 1e5 }),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
+  if (shape === 'path') {
+    if (!Array.isArray(raw.subpaths) || !raw.subpaths.length || raw.subpaths.length > 64) editFail('ARGUMENTS_INVALID');
+    let anchorCount = 0;
+    result.subpaths = raw.subpaths.map((subpath, subpathIndex) => {
+      if (!subpath || typeof subpath !== 'object' || Array.isArray(subpath)) editFail('ARGUMENT_INVALID', { field: `arguments.subpaths[${subpathIndex}]` });
+      if (!Array.isArray(subpath.anchors) || subpath.anchors.length < 2) editFail('ARGUMENT_INVALID', { field: `arguments.subpaths[${subpathIndex}].anchors` });
+      anchorCount += subpath.anchors.length;
+      if (anchorCount > 4096) editFail('ARGUMENTS_BOUNDS');
+      return {
+        closed: subpath.closed === undefined ? true : boundedBoolean(subpath.closed, `arguments.subpaths[${subpathIndex}].closed`),
+        role: subpath.role == null ? 'outer' : boundedEnum(subpath.role, `arguments.subpaths[${subpathIndex}].role`, ['outer', 'hole']),
+        anchors: subpath.anchors.map((anchor, anchorIndex) => normalizeAnchor(anchor, `arguments.subpaths[${subpathIndex}].anchors[${anchorIndex}]`))
+      };
+    });
+  } else if (shape === 'ellipse' || shape === 'circle') {
+    result.cx = boundedNumber(raw.cx, 'arguments.cx');
+    result.cy = boundedNumber(raw.cy, 'arguments.cy');
+    result.rx = boundedNumber(raw.rx ?? raw.r, 'arguments.rx', { min: Number.EPSILON, max: 1e6 });
+    result.ry = shape === 'circle'
+      ? result.rx
+      : boundedNumber(raw.ry ?? raw.r ?? raw.rx, 'arguments.ry', { min: Number.EPSILON, max: 1e6 });
+  } else if (shape === 'rectangle') {
+    result.x = boundedNumber(raw.x, 'arguments.x');
+    result.y = boundedNumber(raw.y, 'arguments.y');
+    result.width = boundedNumber(raw.width, 'arguments.width', { min: Number.EPSILON, max: 1e6 });
+    result.height = boundedNumber(raw.height, 'arguments.height', { min: Number.EPSILON, max: 1e6 });
+  } else {
+    if (!Array.isArray(raw.points) || raw.points.length < (shape === 'polygon' ? 3 : 2) || raw.points.length > 4096) editFail('ARGUMENTS_INVALID');
+    result.points = raw.points.map((point, index) => normalizePoint(point, `arguments.points[${index}]`));
+  }
+  return result;
+}
+
+function normalizePathEditArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const action = boundedEnum(raw.action, 'arguments.action', [
+    'move-anchor', 'move-handle', 'set-anchor-mode', 'add-anchor', 'delete-anchors', 'set-subpath-closed'
+  ]);
+  const index = (value, field) => boundedNumber(value, field, { min: 0, max: 4096, integer: true });
+  if (action === 'move-anchor') return {
+    action, subpathIndex: index(raw.subpathIndex, 'arguments.subpathIndex'), anchorIndex: index(raw.anchorIndex, 'arguments.anchorIndex'),
+    x: boundedNumber(raw.x, 'arguments.x'), y: boundedNumber(raw.y, 'arguments.y')
+  };
+  if (action === 'move-handle') return {
+    action, subpathIndex: index(raw.subpathIndex, 'arguments.subpathIndex'), anchorIndex: index(raw.anchorIndex, 'arguments.anchorIndex'),
+    side: boundedEnum(raw.side, 'arguments.side', ['in', 'out']),
+    x: boundedNumber(raw.x, 'arguments.x'), y: boundedNumber(raw.y, 'arguments.y')
+  };
+  if (action === 'set-anchor-mode') return {
+    action, subpathIndex: index(raw.subpathIndex, 'arguments.subpathIndex'), anchorIndex: index(raw.anchorIndex, 'arguments.anchorIndex'),
+    mode: boundedEnum(raw.mode, 'arguments.mode', ['corner', 'smooth', 'symmetric'])
+  };
+  if (action === 'add-anchor') return {
+    action, subpathIndex: index(raw.subpathIndex, 'arguments.subpathIndex'), segmentIndex: index(raw.segmentIndex, 'arguments.segmentIndex'),
+    t: boundedNumber(raw.t ?? 0.5, 'arguments.t', { min: Number.EPSILON, max: 1 - Number.EPSILON })
+  };
+  if (action === 'delete-anchors') {
+    if (!Array.isArray(raw.anchors) || !raw.anchors.length || raw.anchors.length > 512) editFail('ARGUMENTS_INVALID');
+    return {
+      action,
+      anchors: raw.anchors.map((ref, refIndex) => ({
+        subpathIndex: index(ref?.subpathIndex, `arguments.anchors[${refIndex}].subpathIndex`),
+        anchorIndex: index(ref?.anchorIndex, `arguments.anchors[${refIndex}].anchorIndex`)
+      }))
+    };
+  }
+  return {
+    action,
+    subpathIndex: index(raw.subpathIndex, 'arguments.subpathIndex'),
+    closed: boundedBoolean(raw.closed, 'arguments.closed')
+  };
+}
+
+function normalizeRotateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const degrees = boundedNumber(raw.degrees, 'arguments.degrees', { min: -360000, max: 360000 });
+  if (degrees === 0) editFail('NO_OP');
+  return { degrees, center: normalizePoint(raw.center, 'arguments.center', { optional: true }) };
+}
+
+function normalizeCloneArguments(raw = {}) {
+  if (raw == null) raw = {};
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    dx: boundedNumber(raw.dx ?? 0, 'arguments.dx'),
+    dy: boundedNumber(raw.dy ?? 0, 'arguments.dy')
+  };
+}
+
+function normalizeRepeatRadialArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    count: boundedNumber(raw.count, 'arguments.count', { min: 2, max: 720, integer: true }),
+    center: normalizePoint(raw.center, 'arguments.center'),
+    sweep: boundedNumber(raw.sweep ?? 360, 'arguments.sweep', { min: -360000, max: 360000 }),
+    startAngle: boundedNumber(raw.startAngle ?? 0, 'arguments.startAngle', { min: -360000, max: 360000 }),
+    linked: raw.linked === undefined ? true : boundedBoolean(raw.linked, 'arguments.linked')
+  };
+}
+
+function normalizeBooleanArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    operation: boundedEnum(raw.operation, 'arguments.operation', ['union', 'difference', 'intersection', 'xor', 'divide']),
+    name: raw.name == null ? null : boundedText(raw.name, 'arguments.name', { max: 160 }),
+    tolerance: boundedNumber(raw.tolerance ?? 0.65, 'arguments.tolerance', { min: Number.EPSILON, max: 1e4 })
+  };
+}
+
+function normalizeGroupArguments(raw = {}) {
+  if (raw == null) raw = {};
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return { name: raw.name == null ? 'CHAT Group' : boundedText(raw.name, 'arguments.name', { max: 160 }) };
+}
+
+function normalizeReparentArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    parentObjectId: raw.parentObjectId == null ? null : boundedText(raw.parentObjectId, 'arguments.parentObjectId', { max: 160 }),
+    targetLayerId: raw.targetLayerId == null ? null : boundedText(raw.targetLayerId, 'arguments.targetLayerId', { max: 160 }),
+    index: raw.index == null ? null : boundedNumber(raw.index, 'arguments.index', { min: 0, max: 1e6, integer: true })
+  };
 }
 
 function normalizeRepaintArguments(raw = {}) {
@@ -317,12 +497,27 @@ function normalizeOperationArguments(operation, raw) {
       maxAddedAnchors: boundedNumber(raw?.maxAddedAnchors ?? 128, 'arguments.maxAddedAnchors', { min: 1, max: 4096, integer: true })
     };
   }
+  if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
+  if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
+  if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
+  if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
+  if (operation === 'repeat.radial.v1') return normalizeRepeatRadialArguments(raw);
+  if (operation === 'boolean.apply.v1') return normalizeBooleanArguments(raw);
+  if (operation === 'group.create.v1') return normalizeGroupArguments(raw);
+  if (operation === 'object.reparent.v1') return normalizeReparentArguments(raw);
   editFail('OPERATION_NOT_ALLOWED', { operation });
 }
 
 function operationTargetRules(operation) {
-  if (operation.startsWith('path.simplify.') || operation.startsWith('path.refine.')) return { exact: 1, max: 1 };
-  return { max: 64 };
+  if (operation === 'path.create.v1') return { exact: 0, min: 0, max: 0 };
+  if (operation === 'path.edit.v1'
+    || operation.startsWith('path.simplify.')
+    || operation.startsWith('path.refine.')
+    || operation === 'object.clone.v1'
+    || operation === 'repeat.radial.v1'
+    || operation === 'object.reparent.v1') return { exact: 1, max: 1 };
+  if (operation === 'boolean.apply.v1') return { min: 2, max: 64 };
+  return { min: 1, max: 64 };
 }
 
 function normalizeExpected(raw) {
@@ -397,7 +592,7 @@ function targetRefKey(ref) {
 }
 
 function operationRequiresPath(operation) {
-  return operation.startsWith('path.');
+  return operation.startsWith('path.') && operation !== 'path.create.v1';
 }
 
 function currentTargetFingerprint(page, found) {
@@ -441,7 +636,7 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (ref.pageId !== page.id) editFail('TARGET_PAGE_INACTIVE', { pageId: ref.pageId, actual: page.id || null });
     const found = findPageObject(page, ref);
     if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
-    if (operationRequiresPath(task.operation) && found.object?.type !== 'path') {
+    if ((operationRequiresPath(task.operation) || task.operation === 'boolean.apply.v1') && found.object?.type !== 'path') {
       editFail('PATH_REQUIRED', { objectId: found.object?.id || null });
     }
     if (found.effectiveLocked) editFail('TARGET_LOCKED', { objectId: found.object.id });
@@ -542,9 +737,9 @@ export function installChatBoundedEdit(app) {
 export const CHAT_EDIT_RESULT_SCHEMA = 'INK-CHAT-EDIT-RESULT';
 export const CHAT_EDIT_RESULT_VERSION = 1;
 
-function snapshotTaskTargets(app, task) {
+function snapshotRefs(app, refs) {
   const page = app.page();
-  return task.targets.map(ref => {
+  return refs.map(ref => {
     const found = findPageObject(page, ref);
     if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
     return {
@@ -553,6 +748,10 @@ function snapshotTaskTargets(app, task) {
       worldMatrix: clone(found.worldMatrix || found.object?.matrix || null)
     };
   });
+}
+
+function snapshotTaskTargets(app, task) {
+  return snapshotRefs(app, task.targets);
 }
 
 function targetSnapshotsChanged(before, after) {
@@ -602,11 +801,250 @@ function executePathEditTask(app, task) {
     try {
       if (task.operation === 'path.simplify.v1') return editor.simplify(task.arguments);
       if (task.operation === 'path.refine.v1') return editor.refine(task.arguments);
+      if (task.operation === 'path.edit.v1') {
+        const args = task.arguments;
+        if (args.action === 'move-anchor') return editor.moveAnchorTo(args.subpathIndex, args.anchorIndex, args.x, args.y);
+        if (args.action === 'move-handle') {
+          editor.selectHandle(args.subpathIndex, args.anchorIndex, args.side);
+          return editor.moveSelectedHandle(args.x, args.y);
+        }
+        if (args.action === 'set-anchor-mode') {
+          editor.selectAnchor(args.subpathIndex, args.anchorIndex);
+          return editor.setSelectedAnchorMode(args.mode);
+        }
+        if (args.action === 'add-anchor') return editor.addAnchorOnSegment(args.subpathIndex, args.segmentIndex, args.t);
+        if (args.action === 'delete-anchors') {
+          editor.selectAnchors(args.anchors);
+          return editor.deleteSelectedAnchors();
+        }
+        if (args.action === 'set-subpath-closed') return editor.setSubpathClosed(args.subpathIndex, args.closed);
+      }
       editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
     } finally {
       editor.exit();
     }
   });
+}
+
+function activeLayer(app) {
+  const page = app.page();
+  return page.layers.find(layer => layer.id === page.activeLayerId) || app.layer?.() || page.layers[0] || null;
+}
+
+function structuralHistoryPaths(app, foundItems = []) {
+  const layers = new Map();
+  for (const found of foundItems) if (found?.layer?.id) layers.set(found.layer.id, found.layer);
+  if (!layers.size) {
+    const layer = activeLayer(app);
+    if (layer?.id) layers.set(layer.id, layer);
+  }
+  const paths = [...layers.values()].map(layer => app.layerObjectsPath?.(layer)).filter(Array.isArray);
+  if (!paths.length) editFail('HISTORY_REQUIRED');
+  return paths;
+}
+
+function finishStructuralMutation(app) {
+  app.spatialDirty = true;
+  app.refreshAll?.();
+  app.renderer?.render?.();
+}
+
+function pathForCreate(args) {
+  let subpaths;
+  if (args.shape === 'path') {
+    subpaths = args.subpaths;
+  } else if (args.shape === 'ellipse' || args.shape === 'circle') {
+    const k = 0.5522847498307936;
+    subpaths = [{
+      role: 'outer', closed: true,
+      anchors: [
+        createAnchor(args.cx + args.rx, args.cy, { x: 0, y: -args.ry * k }, { x: 0, y: args.ry * k }, { mode: 'smooth' }),
+        createAnchor(args.cx, args.cy + args.ry, { x: args.rx * k, y: 0 }, { x: -args.rx * k, y: 0 }, { mode: 'smooth' }),
+        createAnchor(args.cx - args.rx, args.cy, { x: 0, y: args.ry * k }, { x: 0, y: -args.ry * k }, { mode: 'smooth' }),
+        createAnchor(args.cx, args.cy - args.ry, { x: -args.rx * k, y: 0 }, { x: args.rx * k, y: 0 }, { mode: 'smooth' })
+      ]
+    }];
+  } else if (args.shape === 'rectangle') {
+    subpaths = [{
+      role: 'outer', closed: true,
+      anchors: [
+        createAnchor(args.x, args.y),
+        createAnchor(args.x + args.width, args.y),
+        createAnchor(args.x + args.width, args.y + args.height),
+        createAnchor(args.x, args.y + args.height)
+      ]
+    }];
+  } else {
+    subpaths = [{
+      role: 'outer',
+      closed: args.shape === 'polygon',
+      anchors: args.points.map(point => createAnchor(point.x, point.y))
+    }];
+  }
+  return createPath({
+    ...(args.objectId ? { id: args.objectId } : {}),
+    name: args.name,
+    subpaths,
+    fill: args.fill,
+    stroke: args.stroke,
+    strokeWidth: args.strokeWidth,
+    opacity: args.opacity
+  });
+}
+
+function executePathCreateTask(app, task) {
+  const layer = activeLayer(app);
+  if (!layer) editFail('LAYER_UNAVAILABLE');
+  const path = pathForCreate(task.arguments);
+  if (findPageObject(app.page(), path.id)) editFail('OBJECT_ID_COLLISION', { objectId: path.id });
+  app.history.pushScoped('CHAT create Path', structuralHistoryPaths(app, []), () => {
+    layer.objects.push(path);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: layer.id, objectId: path.id };
+  return { createdRefs: [ref], resultRefs: [ref], objectId: path.id, shape: task.arguments.shape };
+}
+
+function executeRotateTask(app, task) {
+  const foundItems = task.targets.map(ref => findPageObject(app.page(), ref));
+  if (foundItems.some(found => !found)) editFail('TARGET_MISSING');
+  let center = task.arguments.center;
+  if (!center) {
+    const translations = foundItems.map(found => found.worldMatrix || found.object.matrix || Matrix.identity());
+    center = {
+      x: translations.reduce((sum, matrix) => sum + matrix[4], 0) / translations.length,
+      y: translations.reduce((sum, matrix) => sum + matrix[5], 0) / translations.length
+    };
+  }
+  const radians = task.arguments.degrees * Math.PI / 180;
+  const transform = Matrix.around(center.x, center.y, Matrix.rotate(radians));
+  app.history.pushScoped('CHAT rotate objects', structuralHistoryPaths(app, foundItems), () => {
+    applyWorldTransformBatch(foundItems.map(found => ({ found, transform })));
+  });
+  finishStructuralMutation(app);
+  return { degrees: task.arguments.degrees, center };
+}
+
+function executeCloneTask(app, task) {
+  const source = findPageObject(app.page(), task.targets[0]);
+  if (!source) editFail('TARGET_MISSING');
+  const cloneObject = cloneCompositionObject(source.object, { parentId: source.parentObject?.id || null });
+  if (task.arguments.dx || task.arguments.dy) {
+    cloneObject.matrix = Matrix.multiply(
+      Matrix.translate(task.arguments.dx, task.arguments.dy),
+      cloneObject.matrix || Matrix.identity()
+    );
+  }
+  const sourceIndex = source.parentArray.indexOf(source.object);
+  if (sourceIndex < 0) editFail('TARGET_MISSING');
+  app.history.pushScoped('CHAT clone object', structuralHistoryPaths(app, [source]), () => {
+    source.parentArray.splice(sourceIndex + 1, 0, cloneObject);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: source.layer.id, objectId: cloneObject.id };
+  return { createdRefs: [ref], resultRefs: [ref], sourceObjectId: source.object.id };
+}
+
+function executeRepeatRadialTask(app, task) {
+  const source = findPageObject(app.page(), task.targets[0]);
+  if (!source) editFail('TARGET_MISSING');
+  const parentWorld = source.parentWorldMatrix || Matrix.identity();
+  const inverseParentWorld = Matrix.tryInvert(parentWorld);
+  if (!inverseParentWorld) editFail('SINGULAR_TARGET', { objectId: source.object.id });
+  const nativeCenter = Matrix.point(inverseParentWorld, task.arguments.center);
+  const repeat = createRepeat(source.object, {
+    mode: 'radial',
+    count: task.arguments.count,
+    center: nativeCenter,
+    sweep: task.arguments.sweep,
+    startAngle: task.arguments.startAngle,
+    linked: task.arguments.linked,
+    sourceObjectId: source.object.id
+  });
+  if (source.parentObject?.id) repeat.parentId = source.parentObject.id;
+  const sourceIndex = source.parentArray.indexOf(source.object);
+  app.history.pushScoped('CHAT create radial Repeat', structuralHistoryPaths(app, [source]), () => {
+    source.parentArray.splice(sourceIndex + 1, 0, repeat);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: source.layer.id, objectId: repeat.id };
+  return {
+    createdRefs: [ref],
+    resultRefs: [ref],
+    sourceObjectId: source.object.id,
+    count: repeat.count,
+    center: { ...task.arguments.center },
+    nativeCenter
+  };
+}
+
+function assertSameStructuralParent(foundItems, operation) {
+  if (!foundItems.length || foundItems.some(found => !found)) editFail('TARGET_MISSING', { operation });
+  const first = foundItems[0];
+  if (foundItems.some(found => found.layer.id !== first.layer.id || found.parentArray !== first.parentArray)) {
+    editFail('STRUCTURAL_PARENT_MISMATCH', { operation });
+  }
+  return first;
+}
+
+function executeBooleanTask(app, task) {
+  const foundItems = task.targets.map(ref => findPageObject(app.page(), ref));
+  const first = assertSameStructuralParent(foundItems, task.operation);
+  const paths = foundItems.map(found => found.object);
+  const operation = task.arguments.operation;
+  const result = operation === 'divide'
+    ? dividePaths(paths, { name: task.arguments.name || 'CHAT Divide', tolerance: task.arguments.tolerance })
+    : booleanPaths(paths, operation, { name: task.arguments.name || `CHAT ${operation}`, tolerance: task.arguments.tolerance });
+  const created = result.type === 'group' ? result.children : [result];
+  const indexes = foundItems.map(found => first.parentArray.indexOf(found.object));
+  const insertionIndex = Math.min(...indexes);
+  const parentId = first.parentObject?.id || null;
+  for (const object of created) {
+    if (parentId) object.parentId = parentId;
+    else delete object.parentId;
+  }
+  app.history.pushScoped(`CHAT boolean ${operation}`, structuralHistoryPaths(app, foundItems), () => {
+    const selected = new Set(paths);
+    first.parentArray.splice(0, first.parentArray.length, ...first.parentArray.filter(object => !selected.has(object)));
+    first.parentArray.splice(Math.max(0, Math.min(insertionIndex, first.parentArray.length)), 0, ...created);
+  });
+  finishStructuralMutation(app);
+  const refs = created.map(object => ({ pageId: app.page().id, layerId: first.layer.id, objectId: object.id }));
+  return { createdRefs: refs, resultRefs: refs, operation, sourceObjectIds: paths.map(path => path.id) };
+}
+
+function executeGroupTask(app, task) {
+  const foundItems = task.targets.map(ref => findPageObject(app.page(), ref));
+  const first = assertSameStructuralParent(foundItems, task.operation);
+  const objects = foundItems.map(found => found.object);
+  const indexes = foundItems.map(found => first.parentArray.indexOf(found.object));
+  const insertionIndex = Math.min(...indexes);
+  const group = createVectorGroup(objects, { name: task.arguments.name });
+  if (first.parentObject?.id) group.parentId = first.parentObject.id;
+  for (const child of group.children) child.parentId = group.id;
+  app.history.pushScoped('CHAT create Group', structuralHistoryPaths(app, foundItems), () => {
+    const selected = new Set(objects);
+    first.parentArray.splice(0, first.parentArray.length, ...first.parentArray.filter(object => !selected.has(object)));
+    first.parentArray.splice(Math.max(0, Math.min(insertionIndex, first.parentArray.length)), 0, group);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: first.layer.id, objectId: group.id };
+  return { createdRefs: [ref], resultRefs: [ref], childObjectIds: group.children.map(child => child.id) };
+}
+
+function executeReparentTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found) editFail('TARGET_MISSING');
+  app.history.pushScoped('CHAT reparent object', structuralHistoryPaths(app, [found]), () => {
+    reparentPageObject(app.page(), found.object.id, task.arguments.parentObjectId, {
+      targetLayerId: task.arguments.targetLayerId,
+      index: task.arguments.index
+    });
+  });
+  finishStructuralMutation(app);
+  const after = findPageObject(app.page(), { layerId: found.layer.id, objectId: found.object.id });
+  if (!after) editFail('TARGET_MISSING', { objectId: found.object.id });
+  return { resultRefs: [{ pageId: app.page().id, layerId: after.layer.id, objectId: after.object.id }], parentObjectId: task.arguments.parentObjectId };
 }
 
 function executeApprovedTask(app, task) {
@@ -616,7 +1054,14 @@ function executeApprovedTask(app, task) {
     return executeAppearanceTask(app, task);
   }
   if (task.operation === 'object.translate.v1') return executeTranslateTask(app, task);
-  if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1') return executePathEditTask(app, task);
+  if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
+  if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
+  if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
+  if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
+  if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
+  if (task.operation === 'boolean.apply.v1') return executeBooleanTask(app, task);
+  if (task.operation === 'group.create.v1') return executeGroupTask(app, task);
+  if (task.operation === 'object.reparent.v1') return executeReparentTask(app, task);
   editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
 }
 
@@ -627,9 +1072,10 @@ ChatBoundedEditController.prototype.execute = function execute(proposalId, appro
 
   const controllerResult = executeApprovedTask(this.app, proposal.task);
 
-  const afterTargets = snapshotTaskTargets(this.app, proposal.task);
+  const resultRefs = Array.isArray(controllerResult?.resultRefs) ? controllerResult.resultRefs : null;
+  const afterTargets = resultRefs ? snapshotRefs(this.app, resultRefs) : snapshotTaskTargets(this.app, proposal.task);
   const afterUndoCount = this.app.history?.undoStack?.length ?? null;
-  const changed = targetSnapshotsChanged(beforeTargets, afterTargets);
+  const changed = resultRefs ? resultRefs.length > 0 : targetSnapshotsChanged(beforeTargets, afterTargets);
   const latestHistory = this.app.history?.undoStack?.at?.(-1) || null;
 
   proposal.state = 'EXECUTED';
