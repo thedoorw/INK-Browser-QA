@@ -37,9 +37,9 @@ test('final UI keeps Portable and Web on one shared shell', () => {
   }
 });
 
-test('medium desktop constrains primary panels while preserving canvas compensation', () => {
-  assert.match(css, /INK-WEB-UI-005 — responsive \/ fullscreen \/ final containment closure/);
-  assert.match(css, /@media\(max-width:980px\) and \(min-width:761px\)/);
+test('DESKTOP_NARROW constrains primary panels while preserving canvas compensation', () => {
+  assert.match(css, /INK-UI-RESPONSIVE-001 — WIDTH TAXONOMY/);
+  assert.match(css, /@media\(max-width:1120px\) and \(min-width:761px\)/);
   assert.match(css, /\.inspector\{[\s\S]*?width:min\(var\(--inspector-w\),38vw\);[\s\S]*?max-width:360px/);
   assert.match(css, /\.creative-workspace-panel\{width:clamp\(244px,38vw,340px\)/);
   assert.match(css, /\.app\.panel-primary-open \.stage-wrap\{[\s\S]*?--active-panel-w|--active-panel-w/);
@@ -54,8 +54,7 @@ test('mobile and coarse-pointer surfaces stay inside the dynamic viewport', () =
   assert.match(css, /max-height:calc\(100dvh - var\(--topbar-h\) - var\(--contextual-h\) - 12px\)/);
   assert.match(css, /#app\[data-panel="ai"\] #inspector\{[\s\S]*?inset:calc\(var\(--topbar-h\) \+ var\(--contextual-h\)\) 0 0 0/);
   assert.match(css, /@media\(pointer:coarse\) and \(max-height:520px\)/);
-  assert.match(css, /@media\(max-width:560px\)/);
-  assert.match(css, /@media\(max-width:440px\)/);
+  assert.doesNotMatch(css, /(?:max|min)-width\s*:\s*(?:410|440|560|860|900|980)px/);
   assert.match(css, /\.mobile-tool-sheet\{[\s\S]*?overflow-y:auto/);
 });
 

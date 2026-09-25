@@ -31,32 +31,32 @@ test('Web and Portable keep one shared UI shell', () => {
   assert.equal(normalizeDelivery(web, 'Web'), normalizeDelivery(portable, 'Portable'));
   assert.doesNotThrow(() => new Function(shell));
   for (const html of [web, portable]) {
-    for (const id of ['contextualAdvancedBtn', 'inspectorToggle', 'inspectorEdgeToggle', 'inspector', 'stageWrap']) {
+    for (const id of ['contextualAdvancedBtn', 'inspector', 'stageWrap']) {
       assert.equal(html.split(`id="${id}"`).length - 1, 1, `Expected one shared hook: ${id}`);
     }
   }
 });
 
-test('primary-panel authority is selection-first with one desktop collapse chevron', () => {
+test('primary-panel authority is owned by web-shell and Dock clicks use its toggle route', () => {
   assert.match(shell, /function selectPanel\(id\)/);
-  assert.match(shell, /selectPanel\(button\.dataset\.shellPanel\)/);
-  assert.match(shell, /function bindCollapseControl\(\)/);
-  assert.match(shell, /state\.lastPanel \|\| 'properties'/);
+  assert.match(shell, /function togglePanel\(id\)/);
+  assert.match(shell, /function closePrimaryPanels\(\)/);
+  assert.match(shell, /dock\.addEventListener\('click'[\s\S]*?togglePanel\(button\.dataset\.shellPanel\)/);
   assert.match(shell, /open: selectPanel/);
-  assert.doesNotMatch(shell, /\.click\(\)/);
-  assert.match(css, /#inspectorToggle\.legacy-inspector-toggle\{display:none!important\}/);
-  assert.doesNotMatch(css, /\.inspector-edge-toggle\{display:none!important\}/);
-  assert.match(css, /#closeInspector,[\s\S]*?data-workspace-action="close"[\s\S]*?display:none!important/);
+  assert.match(shell, /toggle: togglePanel/);
+  assert.match(shell, /close: closePrimaryPanels/);
+  assert.doesNotMatch(shell, /function bindCollapseControl\(\)/);
 });
 
-test('contextual Advanced is a synchronized two-way Properties toggle', () => {
-  assert.match(shell, /if \(currentPanel\(\) === 'properties'\)[\s\S]*?closePrimaryPanels\(\)/);
-  assert.match(shell, /return selectPanel\('properties'\)/);
+test('contextual Advanced is synchronized navigation to Properties, not a second panel toggle authority', () => {
+  assert.match(shell, /function openContextualAdvanced\(\)[\s\S]*?return selectPanel\('properties'\)/);
+  assert.doesNotMatch(shell, /function openContextualAdvanced\(\)[\s\S]{0,240}?closePrimaryPanels\(\)/);
   assert.match(shell, /advanced\.setAttribute\('aria-pressed', String\(propertiesOpen\)\)/);
   assert.match(shell, /advanced\.setAttribute\('aria-expanded', String\(propertiesOpen\)\)/);
   assert.match(shell, /advanced\.classList\.toggle\('active', propertiesOpen\)/);
   for (const html of [web, portable]) {
     assert.match(html, /id="contextualAdvancedBtn"[^>]*aria-pressed="false"[^>]*aria-expanded="false"[^>]*aria-controls="inspector"/);
+    assert.doesNotMatch(html, /id="inspectorEdgeToggle"/);
   }
 });
 
@@ -70,14 +70,18 @@ test('Inspector and Creative Loop bodies own vertical scroll without horizontal 
   assert.match(css, /\.creative-workspace-body pre\{[\s\S]*?min-width:0;[\s\S]*?max-width:100%/);
 });
 
-test('bounded readability lift removes critical 7–8 px secondary text from active desktop authority', () => {
-  assert.match(css, /\.contextual-advanced-button\{[\s\S]*?font-size:10px/);
-  assert.match(css, /\.creative-workspace-state span\{font-size:9px/);
-  assert.match(css, /\.creative-workspace-state strong\{font-size:9\.5px/);
-  assert.match(css, /\.creative-workspace-tabs button\{font-size:10px/);
-  assert.match(css, /\.creative-workspace-field\{font-size:10px/);
-  assert.match(css, /\.creative-workspace-status\{font-size:9\.5px/);
-  assert.match(css, /\.statusbar\{font-size:9\.5px/);
+test('one semantic typography authority owns workstation font stack and scale', () => {
+  assert.match(css, /--ui-font:"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif/);
+  assert.match(css, /--ui-font-mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace/);
+  for (const token of ['xs','sm','md','lg','xl','display']) assert.match(css, new RegExp(`--ui-type-${token}:`));
+  assert.match(css, /--ui-type-brand:var\(--ui-type-md\)/);
+  assert.equal((css.match(/font-size\s*:\s*[0-9.]+px/gi) || []).length, 0, 'No hard-coded workstation font-size declarations');
+  assert.doesNotMatch(css, /font-family:Georgia/i);
+  assert.doesNotMatch(css, /--font:/);
+  assert.doesNotMatch(css, /font-family:Inter,"Noto Sans TC"/);
+  assert.doesNotMatch(css, /font-size:var\(--ui-type-xs\)!important/);
+  assert.match(css, /\.contextual-advanced-button,[\s\S]*?font-size:var\(--ui-type-md\)/);
+  assert.match(css, /\.creative-workspace-status,[\s\S]*?font-size:var\(--ui-type-sm\)/);
 });
 
 test('local favicon is dedicated, mirrored and small-pixel robust', () => {

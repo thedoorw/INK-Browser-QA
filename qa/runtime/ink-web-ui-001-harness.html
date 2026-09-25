@@ -97,6 +97,26 @@
       await sleep(350);
 
       const initialShell = shell.state();
+      const firstPaintStyle = doc.querySelector('#inkFirstPaintStyle')?.textContent || '';
+      const deliveredApp = doc.querySelector('#app');
+      record('G3 delivered first-paint contract is present before Runtime-state assertions',
+        doc.body?.dataset?.inkFirstPaint === 'workstation' &&
+        deliveredApp?.dataset?.firstPaint === 'ready' &&
+        deliveredApp?.dataset?.space === 'creation' &&
+        deliveredApp?.dataset?.shellPanel === 'collapsed' &&
+        deliveredApp?.dataset?.toolbarLayout === 'single' &&
+        /background:#e7e7e7/.test(firstPaintStyle) &&
+        !/(?:background:\s*(?:#000|black|#111))/.test(firstPaintStyle),
+        {
+          body: doc.body?.dataset?.inkFirstPaint || null,
+          app: {
+            firstPaint: deliveredApp?.dataset?.firstPaint || null,
+            space: deliveredApp?.dataset?.space || null,
+            shellPanel: deliveredApp?.dataset?.shellPanel || null,
+            toolbarLayout: deliveredApp?.dataset?.toolbarLayout || null
+          },
+          style: firstPaintStyle.trim()
+        });
       const initialStageWidth = doc.querySelector('#stageWrap').getBoundingClientRect().width;
       const initialChatController = app.chatBoundedEdit;
       const initialRevisionController = app.revisions;
@@ -363,17 +383,17 @@
       shell.close();
       await sleep(100);
       const lastPanelCollapse = shell.state();
-      doc.querySelector('#inspectorEdgeToggle')?.click();
+      shell.open(lastPanelCollapse.lastPanel || 'properties');
       await sleep(140);
       const lastPanelRestored = shell.state();
-      record('UI-006 Phase E collapse remembers and restores the last active primary panel',
+      record('primary-panel state owner remembers and can restore the last active panel without a legacy presenter dependency',
         lastPanelCollapse.collapsed &&
         lastPanelCollapse.lastPanel === 'revision' &&
         lastPanelRestored.activePanel === 'revision' &&
         lastPanelRestored.creativeOpen &&
         !lastPanelRestored.inspectorOpen,
         { collapsed: lastPanelCollapse, restored: lastPanelRestored });
-      doc.querySelector('#inspectorEdgeToggle')?.click();
+      shell.close();
       await sleep(100);
 
       shell.open('chat');
@@ -384,23 +404,75 @@
       record('Revision close preserves underlying controller', app.revisions === initialRevisionController && Boolean(app.revisions), { installed: Boolean(app.revisions) });
       record('panel collapse restores canvas width', shell.state().collapsed && shell.state().stageWidth > initialStageWidth - 10, shell.state());
 
-      const windowButton = Array.from(doc.querySelectorAll('.application-menus button')).find(button => button.textContent.trim() === '視窗');
+      const windowButton = doc.querySelector('#windowMenuToggle');
+      const fileMenuButtonForController = doc.querySelector('#fileMenuToggle');
+      fileMenuButtonForController?.click();
+      await sleep(40);
+      const fileOpenBeforeWindow = visible(doc, '#fileMenu');
       windowButton?.click();
       await sleep(50);
+      const windowOpenState = {
+        fileVisible: visible(doc, '#fileMenu'),
+        windowVisible: visible(doc, '#panelWindowMenu'),
+        shell: shell.state()
+      };
+      record('one application-menu controller keeps only one menu open at a time',
+        fileOpenBeforeWindow &&
+        !windowOpenState.fileVisible &&
+        windowOpenState.windowVisible &&
+        windowOpenState.shell.menuController === 'application-menu-registry' &&
+        windowOpenState.shell.openApplicationMenu === 'window' &&
+        JSON.stringify(windowOpenState.shell.liveApplicationMenus) === JSON.stringify(['file','window']),
+        windowOpenState);
       record('Window menu coherently exposes Editor, Creative Loop and Specialist dock panels',
         visible(doc, '#panelWindowMenu') &&
         doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 8 &&
         doc.querySelectorAll('#panelWindowMenu [data-panel-group]').length === 3);
-      record('UI-006 Phase F Panel Dock is Primary Home and Window menu is a secondary route',
+      record('Panel Dock is Primary Home and Window menu is a secondary route to the same shell authority',
         doc.querySelector('#panelDock')?.dataset.uiRoute === 'PRIMARY_HOME' &&
         doc.querySelector('#panelDock')?.dataset.uiHome === 'panels' &&
-        doc.querySelector('#panelWindowMenu')?.dataset.uiRoute === 'SECONDARY_ROUTE' &&
-        doc.querySelector('#inspectorEdgeToggle')?.dataset.uiRoute === 'COLLAPSE_RESTORE_ONLY',
+        doc.querySelector('#panelWindowMenu')?.dataset.uiRoute === 'SECONDARY_ROUTE',
         {
           dock: doc.querySelector('#panelDock')?.dataset.uiRoute,
-          window: doc.querySelector('#panelWindowMenu')?.dataset.uiRoute,
-          edge: doc.querySelector('#inspectorEdgeToggle')?.dataset.uiRoute
+          window: doc.querySelector('#panelWindowMenu')?.dataset.uiRoute
         });
+
+      doc.querySelector('#panelWindowMenu [data-shell-panel="properties"]')?.click();
+      await sleep(120);
+      const windowPropertiesState = shell.state();
+      windowButton?.click();
+      await sleep(40);
+      doc.querySelector('#panelWindowMenu [data-shell-panel="properties"]')?.click();
+      await sleep(120);
+      const windowPropertiesClosedState = shell.state();
+      record('Window panel route converges on the same toggle authority as the Dock',
+        windowPropertiesState.activePanel === 'properties' &&
+        windowPropertiesClosedState.collapsed,
+        { opened: windowPropertiesState, closed: windowPropertiesClosedState });
+
+      fileMenuButtonForController?.click();
+      await sleep(40);
+      const escapeMenuItem = doc.querySelector('#fileMenu [role="menuitem"]');
+      escapeMenuItem?.focus();
+      escapeMenuItem?.dispatchEvent(new win.KeyboardEvent('keydown', {
+        key: 'Escape',
+        code: 'Escape',
+        bubbles: true,
+        cancelable: true
+      }));
+      await sleep(40);
+      record('application-menu controller closes the active menu on Escape through the DOM keyboard path',
+        !visible(doc, '#fileMenu') &&
+        shell.state().openApplicationMenu === null &&
+        doc.activeElement === fileMenuButtonForController,
+        { shell: shell.state(), activeElement: doc.activeElement?.id || doc.activeElement?.tagName || null });
+      fileMenuButtonForController?.click();
+      await sleep(40);
+      doc.querySelector('#stageWrap')?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      await sleep(40);
+      record('application-menu controller closes the active menu on outside click',
+        !visible(doc, '#fileMenu') && shell.state().openApplicationMenu === null,
+        shell.state());
 
       const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
       record('New/Open/Save/Export/Fullscreen command bindings remain wired', buttonsWired);
@@ -591,20 +663,25 @@
         typographyProbe.appendChild(span);
       }
       doc.querySelector('#app')?.appendChild(typographyProbe);
-      const scriptTypography = Array.from(typographyProbe.querySelectorAll('span')).map(node => {
+      const uiFontAuthority = win.getComputedStyle(doc.documentElement).getPropertyValue('--ui-font').trim();
+      const fontAuthorityProbe = doc.createElement('span');
+      fontAuthorityProbe.textContent = 'INK';
+      fontAuthorityProbe.style.fontFamily = 'var(--ui-font)';
+      typographyProbe.appendChild(fontAuthorityProbe);
+      const authorityFamily = win.getComputedStyle(fontAuthorityProbe).fontFamily;
+      const scriptTypography = Array.from(typographyProbe.querySelectorAll('span[data-script]')).map(node => {
         const style = win.getComputedStyle(node);
         return { script: node.dataset.script, size: style.fontSize, family: style.fontFamily };
       });
       typographyProbe.remove();
-      record('UI-006 Phase G CJK Latin and numeric UI text share size and font-stack authority',
+      record('UI-006 Phase G CJK Latin and numeric UI text share the current --ui-font authority',
+        Boolean(uiFontAuthority) &&
+        Boolean(authorityFamily) &&
         scriptTypography.length === 3 &&
         new Set(scriptTypography.map(item => item.size)).size === 1 &&
         new Set(scriptTypography.map(item => item.family)).size === 1 &&
-        scriptTypography.every(item =>
-          item.family.includes('Inter') &&
-          item.family.includes('Noto Sans TC') &&
-          item.family.includes('Microsoft JhengHei')),
-        scriptTypography);
+        scriptTypography.every(item => item.family === authorityFamily),
+        { token: uiFontAuthority, computedAuthority: authorityFamily, samples: scriptTypography });
 
       app.clearSelection();
       await sleep(50);
@@ -631,63 +708,45 @@
         advancedOpen);
       advanced.click();
       await sleep(140);
-      const advancedClosed = {
+      const advancedSecond = {
         shell: shell.state(),
         pressed: advanced.getAttribute('aria-pressed'),
         expanded: advanced.getAttribute('aria-expanded'),
         active: advanced.classList.contains('active')
       };
-      record('UI-MAINT-002 Advanced second press closes the same primary panel',
-        advancedClosed.shell.collapsed &&
-        advancedClosed.pressed === 'false' &&
-        advancedClosed.expanded === 'false' &&
-        !advancedClosed.active,
-        advancedClosed);
+      record('Contextual Advanced remains navigation to Properties and cannot close the primary panel',
+        advancedSecond.shell.activePanel === 'properties' &&
+        advancedSecond.shell.inspectorOpen &&
+        advancedSecond.pressed === 'true' &&
+        advancedSecond.expanded === 'true' &&
+        advancedSecond.active,
+        advancedSecond);
 
-      shell.open('properties');
-      await sleep(120);
-      const collapse = doc.querySelector('#inspectorEdgeToggle');
-      const legacyToggle = doc.querySelector('#inspectorToggle');
       const propertiesDock = doc.querySelector('#panelDock [data-shell-panel="properties"]');
-      const legacyHidden = getComputedStyle(legacyToggle).display === 'none';
-      const propertiesGeometry = {
-        chevron: rectOf(doc, '#inspectorEdgeToggle'),
-        panel: rectOf(doc, '#inspector'),
-        dock: rectOf(doc, '#panelDock'),
-        properties: rectOf(doc, '#panelDock [data-shell-panel="properties"]')
-      };
-      record('UI-DEBT-001 Chevron sits on canvas / panel boundary without Dock occlusion',
-        propertiesGeometry.chevron?.right <= propertiesGeometry.panel?.left + 1 &&
-        propertiesGeometry.chevron?.right < propertiesGeometry.dock?.left &&
-        propertiesGeometry.properties?.left >= propertiesGeometry.dock?.left &&
-        propertiesGeometry.properties?.right <= propertiesGeometry.dock?.right + 1,
-        propertiesGeometry);
-
-      collapse.click();
-      await sleep(140);
-      const collapseClosed = shell.state();
       propertiesDock?.click();
       await sleep(140);
-      const dockPropertiesOpened = shell.state();
-      record('UI-DEBT-001 Dock Properties remains fully clickable after collapse',
-        dockPropertiesOpened.activePanel === 'properties' &&
-        dockPropertiesOpened.inspectorOpen &&
-        !dockPropertiesOpened.creativeOpen,
-        { state: dockPropertiesOpened, geometry: propertiesGeometry });
+      const propertiesClosedByDock = shell.state();
+      record('same active Dock item closes the primary panel through the shared toggle authority',
+        propertiesClosedByDock.collapsed &&
+        !propertiesClosedByDock.inspectorOpen &&
+        !propertiesClosedByDock.creativeOpen,
+        propertiesClosedByDock);
 
-      collapse.click();
+      propertiesDock?.click();
       await sleep(140);
-      const collapseClosedAgain = shell.state();
-      collapse.click();
+      const propertiesOpenedByDock = shell.state();
+      const layersDock = doc.querySelector('#panelDock [data-shell-panel="layers"]');
+      layersDock?.click();
       await sleep(140);
-      const collapseReopened = shell.state();
-      record('UI-DEBT-001 chevron is the single visible desktop collapse authority',
-        legacyHidden &&
-        collapseClosed.collapsed &&
-        collapseClosedAgain.collapsed &&
-        collapseReopened.activePanel === 'properties' &&
-        collapse.getAttribute('aria-expanded') === 'true',
-        { legacyHidden, collapseClosed, dockPropertiesOpened, collapseClosedAgain, collapseReopened, collapseExpanded: collapse.getAttribute('aria-expanded') });
+      const layersOpenedByDock = shell.state();
+      record('different Dock item switches the active primary panel without a second state owner',
+        propertiesOpenedByDock.activePanel === 'properties' &&
+        layersOpenedByDock.activePanel === 'layers' &&
+        layersOpenedByDock.inspectorOpen &&
+        !layersOpenedByDock.creativeOpen,
+        { properties: propertiesOpenedByDock, layers: layersOpenedByDock });
+      shell.close();
+      await sleep(140);
 
       // Short-height desktop: force a long Inspector surface and prove body-owned scrolling.
       frame.style.height = '520px';
@@ -922,8 +981,10 @@
       await sleep(320);
       const mobileMedia = win.matchMedia('(max-width:760px)').matches;
       const mobileDockHidden = getComputedStyle(doc.querySelector('#panelDock')).display === 'none';
-      const mobileBottomDock = visible(doc, '.mobile-dock');
-      record('narrow/mobile fallback activates without desktop dock overlap', mobileMedia && mobileDockHidden && mobileBottomDock, { mobileMedia, mobileDockHidden, mobileBottomDock });
+      const compactShellFits = doc.documentElement.scrollWidth <= win.innerWidth + 1 && doc.body.scrollWidth <= win.innerWidth + 1;
+      record('compact shell activates without desktop dock overlap or horizontal overflow',
+        mobileMedia && mobileDockHidden && compactShellFits,
+        { mobileMedia, mobileDockHidden, compactShellFits, viewport: win.innerWidth });
       record('UI-006 Phase F responsive File alternative remains available on mobile',
         visible(doc, '#exportBtn') &&
         doc.querySelector('#exportBtn')?.dataset.uiRoute === 'RESPONSIVE_ALTERNATIVE' &&
@@ -935,31 +996,27 @@
           exportRoute: doc.querySelector('#exportBtn')?.dataset.uiRoute,
           hiddenDesktopCopies: ['newBtn','openBtn','saveBtn'].map(id => [id, getComputedStyle(doc.querySelector('#' + id)).display])
         });
-      record('UI-006 Phase D desktop toolbar layout does not override mobile UI',
+      const compactRail = rectOf(doc, '.tool-rail');
+      record('UI-006 Phase D compact toolbar resolves to effective single mode without requiring legacy rail hiding',
         shell.state().toolbarLayout === 'single' &&
+        doc.querySelector('#app')?.dataset.toolbarLayout === 'single' &&
         !doc.querySelector('#app').classList.contains('toolbar-layout-dual') &&
-        getComputedStyle(doc.querySelector('.tool-rail')).display === 'none',
-        shell.state());
+        compactShellFits &&
+        (!compactRail || (compactRail.left >= -1 && compactRail.right <= win.innerWidth + 1)),
+        { shell: shell.state(), rail: compactRail, compactShellFits, viewport: win.innerWidth });
       const compactEssentials = {
         exportVisible: visible(doc, '#exportBtn'),
-        inspectorVisible: visible(doc, '#inspectorToggle'),
         moreToolsVisible: visible(doc, '#mobileToolsToggle'),
-        mobileDockVisible: visible(doc, '.mobile-dock'),
         panelDockDisplay: getComputedStyle(doc.querySelector('#panelDock')).display,
         rootScrollWidth: doc.documentElement.scrollWidth,
-        bodyScrollWidth: doc.body.scrollWidth,
-        labelSizes: Array.from(doc.querySelectorAll('.mobile-dock .tool-label')).map(node => parseFloat(getComputedStyle(node).fontSize) || 0)
+        bodyScrollWidth: doc.body.scrollWidth
       };
-      record('UI-006 Phase H compact mode keeps essential responsive alternatives reachable without desktop chrome leakage',
+      record('compact mode keeps essential command access without requiring a legacy Inspector opener or bottom-dock grammar',
         compactEssentials.exportVisible &&
-        compactEssentials.inspectorVisible &&
         compactEssentials.moreToolsVisible &&
-        compactEssentials.mobileDockVisible &&
         compactEssentials.panelDockDisplay === 'none' &&
         compactEssentials.rootScrollWidth <= win.innerWidth + 1 &&
-        compactEssentials.bodyScrollWidth <= win.innerWidth + 1 &&
-        compactEssentials.labelSizes.length >= 4 &&
-        compactEssentials.labelSizes.every(size => size >= 10),
+        compactEssentials.bodyScrollWidth <= win.innerWidth + 1,
         compactEssentials);
       shell.open('layers');
       await sleep(120);
@@ -980,8 +1037,14 @@
       const faviconResponse = favicon ? await win.fetch(favicon.href, { cache: 'reload' }) : null;
       const mark = doc.querySelector('.menu-app-mark>.brand-source-mark');
       const markResponse = mark ? await win.fetch(mark.src, { cache: 'reload' }) : null;
-      record('favicon link resolves successfully in fresh context', Boolean(faviconResponse?.ok), { href: favicon?.href || null, status: faviconResponse?.status || null });
-      record('original INK mark is the visible shell source', Boolean(markResponse?.ok) && /INK_MARK_SOURCE_W-300\.jpg/.test(mark?.src || ''), { src: mark?.src || null, status: markResponse?.status || null });
+      record('dedicated SVG favicon resolves successfully in fresh context',
+        Boolean(faviconResponse?.ok) && /\/assets\/favicon\.svg(?:\?|$)/.test(favicon?.href || ''),
+        { href: favicon?.href || null, status: faviconResponse?.status || null });
+      record('visible shell mark resolves from a local declared brand asset without pinning a retired file-format contract',
+        Boolean(markResponse?.ok) &&
+        Boolean(mark?.src) &&
+        new URL(mark.src, win.location.href).origin === win.location.origin,
+        { src: mark?.src || null, status: markResponse?.status || null });
 
       const appBuildId = win.INK_ARCHITECTURE?.buildId || test.updateStatus?.().buildId || null;
       let workerBuildId = null;

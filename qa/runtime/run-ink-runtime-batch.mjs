@@ -113,6 +113,11 @@ export function validateEvidence(id, evidence) {
 
 const SMART_PNG_MAX_BYTES = 4 * 1024 * 1024;
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+const UI_VISUAL_CAPTURES = Object.freeze([
+  { file: 'ui-first-paint.png', width: 1280, height: 1024, kind: 'DELIVERED_FIRST_PAINT', disableScript: true },
+  { file: 'ui-1280x1024.png', width: 1280, height: 1024, kind: 'RUNTIME_1280x1024', disableScript: false },
+  { file: 'ui-960x800.png', width: 960, height: 800, kind: 'RUNTIME_960x800', disableScript: false }
+]);
 function assertSmartPng(bytes) {
   assert.ok(bytes.length >= 45 && bytes.length <= SMART_PNG_MAX_BYTES, 'Bounded PNG required');
   assert.ok(bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), 'PNG signature required');
@@ -122,6 +127,197 @@ function assertSmartPng(bytes) {
   assert.equal(bytes.toString('ascii', bytes.length - 8, bytes.length - 4), 'IEND');
   return { width, height };
 }
+
+function assertUiPng(bytes, expectedWidth, expectedHeight) {
+  assert.ok(bytes.length >= 45, 'UI PNG payload required');
+  assert.ok(bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])), 'UI PNG signature required');
+  assert.equal(bytes.toString('ascii', 12, 16), 'IHDR');
+  const width = bytes.readUInt32BE(16), height = bytes.readUInt32BE(20);
+  assert.deepEqual({ width, height }, { width: expectedWidth, height: expectedHeight }, 'UI capture dimensions must match requested viewport');
+  assert.equal(bytes.toString('ascii', bytes.length - 8, bytes.length - 4), 'IEND');
+  return { width, height };
+}
+
+function createCdpPipe(child) {
+  const input = child.stdio?.[3];
+  const output = child.stdio?.[4];
+  assert.ok(input?.writable && output?.readable, 'CDP pipe transport unavailable');
+  let nextId = 1;
+  let buffer = Buffer.alloc(0);
+  const pending = new Map();
+  const eventWaiters = new Set();
+
+  const rejectAll = error => {
+    for (const entry of pending.values()) {
+      clearTimeout(entry.timer);
+      entry.reject(error);
+    }
+    pending.clear();
+    for (const waiter of eventWaiters) {
+      clearTimeout(waiter.timer);
+      waiter.reject(error);
+    }
+    eventWaiters.clear();
+  };
+
+  output.on('data', chunk => {
+    buffer = Buffer.concat([buffer, chunk]);
+    while (true) {
+      const boundary = buffer.indexOf(0);
+      if (boundary < 0) break;
+      const raw = buffer.subarray(0, boundary).toString('utf8');
+      buffer = buffer.subarray(boundary + 1);
+      if (!raw) continue;
+      let message;
+      try { message = JSON.parse(raw); }
+      catch (error) { rejectAll(new Error(`Invalid CDP payload: ${error.message}`)); continue; }
+
+      if (message.id) {
+        const entry = pending.get(message.id);
+        if (!entry) continue;
+        pending.delete(message.id);
+        clearTimeout(entry.timer);
+        if (message.error) entry.reject(new Error(`CDP ${entry.method} failed: ${message.error.code} ${message.error.message}`));
+        else entry.resolve(message.result || {});
+        continue;
+      }
+
+      for (const waiter of [...eventWaiters]) {
+        if (waiter.method !== message.method) continue;
+        if (waiter.sessionId && waiter.sessionId !== message.sessionId) continue;
+        eventWaiters.delete(waiter);
+        clearTimeout(waiter.timer);
+        waiter.resolve(message.params || {});
+      }
+    }
+  });
+  output.once('error', rejectAll);
+  output.once('close', () => rejectAll(new Error('CDP pipe closed before capture completed')));
+  child.once('error', rejectAll);
+  child.once('exit', (code, signal) => rejectAll(new Error(`Chrome exited during CDP capture: ${code}/${signal}`)));
+
+  const send = (method, params = {}, sessionId = null, timeoutMs = 15000) => new Promise((resolve, reject) => {
+    const id = nextId++;
+    const timer = setTimeout(() => {
+      pending.delete(id);
+      reject(new Error(`CDP command timeout: ${method}`));
+    }, timeoutMs);
+    pending.set(id, { method, resolve, reject, timer });
+    const message = { id, method, params };
+    if (sessionId) message.sessionId = sessionId;
+    input.write(JSON.stringify(message) + '\0');
+  });
+
+  const waitFor = (method, sessionId = null, timeoutMs = 15000) => new Promise((resolve, reject) => {
+    const waiter = { method, sessionId, resolve, reject, timer: null };
+    waiter.timer = setTimeout(() => {
+      eventWaiters.delete(waiter);
+      reject(new Error(`CDP event timeout: ${method}`));
+    }, timeoutMs);
+    eventWaiters.add(waiter);
+  });
+
+  return { send, waitFor };
+}
+
+async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
+  const output = path.join(evidenceDir, spec.file);
+  const profile = await mkdtemp(path.join(root, 'profile-ui-visual-'));
+  let child;
+  let stderr = '';
+  try {
+    await rm(output, { force: true });
+    const args = [
+      '--headless=new',
+      '--disable-gpu',
+      '--no-first-run',
+      '--no-default-browser-check',
+      '--disable-extensions',
+      '--disable-background-networking',
+      '--hide-scrollbars',
+      '--remote-debugging-pipe',
+      `--user-data-dir=${profile}`,
+      'about:blank'
+    ];
+    child = spawn(browser, args, {
+      shell: false,
+      windowsHide: true,
+      stdio: ['ignore', 'ignore', 'pipe', 'pipe', 'pipe']
+    });
+    child.stderr.on('data', chunk => { if (stderr.length < 8192) stderr += chunk.toString(); });
+
+    const cdp = createCdpPipe(child);
+    await cdp.send('Browser.getVersion');
+    const { targetId } = await cdp.send('Target.createTarget', { url: 'about:blank' });
+    assert.ok(targetId, `CDP target missing for ${spec.file}`);
+    const { sessionId } = await cdp.send('Target.attachToTarget', { targetId, flatten: true });
+    assert.ok(sessionId, `CDP session missing for ${spec.file}`);
+
+    await cdp.send('Page.enable', {}, sessionId);
+    await cdp.send('Emulation.setDeviceMetricsOverride', {
+      width: spec.width,
+      height: spec.height,
+      deviceScaleFactor: 1,
+      mobile: false
+    }, sessionId);
+    if (spec.disableScript) {
+      await cdp.send('Emulation.setScriptExecutionDisabled', { value: true }, sessionId);
+    }
+
+    const loaded = cdp.waitFor('Page.loadEventFired', sessionId, 20000);
+    const navigation = await cdp.send('Page.navigate', { url: `${origin}/` }, sessionId, 20000);
+    assert.ok(!navigation.errorText, `CDP navigation failed for ${spec.file}: ${navigation.errorText}`);
+    await loaded;
+    if (!spec.disableScript) await new Promise(resolve => setTimeout(resolve, 1200));
+
+    const layout = await cdp.send('Page.getLayoutMetrics', {}, sessionId);
+    const viewport = layout.cssVisualViewport || layout.cssLayoutViewport;
+    assert.ok(viewport, `CDP viewport missing for ${spec.file}`);
+    assert.equal(Math.round(viewport.clientWidth), spec.width, `CDP viewport width mismatch for ${spec.file}`);
+    assert.equal(Math.round(viewport.clientHeight), spec.height, `CDP viewport height mismatch for ${spec.file}`);
+
+    const shot = await cdp.send('Page.captureScreenshot', {
+      format: 'png',
+      fromSurface: true,
+      captureBeyondViewport: false
+    }, sessionId, 30000);
+    assert.ok(typeof shot.data === 'string' && shot.data.length > 0, `UI_CAPTURE_DATA_MISSING: ${spec.file}`);
+    const bytes = Buffer.from(shot.data, 'base64');
+    const pixelSize = assertUiPng(bytes, spec.width, spec.height);
+
+    await writeFile(output, bytes);
+    let persisted;
+    try { persisted = await readFile(output); }
+    catch (error) { throw new Error(`UI_CAPTURE_FILE_MISSING: ${spec.file}: ${error.message}`); }
+    assert.equal(persisted.length, bytes.length, `UI capture persisted byte length mismatch: ${spec.file}`);
+    assert.equal(sha256(persisted), sha256(bytes), `UI capture persisted SHA mismatch: ${spec.file}`);
+
+    return {
+      file: spec.file,
+      kind: spec.kind,
+      transport: 'BROWSER_NATIVE_CDP_PAGE_CAPTURE_SCREENSHOT',
+      scriptMode: spec.disableScript ? 'DISABLED_DELIVERED_SHELL' : 'RUNTIME_ENABLED',
+      pixelSize,
+      byteLength: bytes.length,
+      sha256: sha256(bytes)
+    };
+  } catch (error) {
+    if (error?.message && !error.message.includes('stderr=')) {
+      error.message += ` stderr=${stderr?.slice(-1200) || ''}`;
+    }
+    throw error;
+  } finally {
+    if (child && child.exitCode === null && child.signalCode === null) await stopBrowser(child);
+    await rm(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+  }
+}
+
+/* Retired Runtime failure source: Chrome CLI --screenshot=${output} side effects are not used.
+   Previous static-probe tokens retained as diagnostics only:
+   BROWSER_NATIVE_HEADLESS_SCREENSHOT
+   --blink-settings=scriptEnabled=false
+   --window-size=${spec.width},${spec.height}
+*/
 
 export async function finalizeSmartLoopEvidence(root, evidence, testedSha) {
   assert.match(testedSha || '', /^[a-f0-9]{40}$/);
@@ -286,7 +482,7 @@ export async function runBatch(root) {
   try {
     assert.match(report.testedSha || '', /^[a-f0-9]{40}$/, 'Exact tested SHA required');
     assert.match(await readFile(path.join(root, 'product/source/src/config.js'), 'utf8'), /FORMAT_VERSION\s*=\s*4\b/);
-    for (const name of ['smart-loop-before.png', 'smart-loop-after.png', 'smart-loop.json']) {
+    for (const name of ['smart-loop-before.png', 'smart-loop-after.png', 'smart-loop.json', ...UI_VISUAL_CAPTURES.map(item => item.file)]) {
       await rm(path.join(evidenceDir, name), { force: true });
     }
     const browser = findBrowser(); report.browser = browser;
@@ -305,6 +501,13 @@ export async function runBatch(root) {
           assert.equal(response.status, 200, `HTTP preflight: ${route}`);
           if (route.endsWith('.js')) assert.match(response.headers.get('content-type'), /javascript/);
           await response.arrayBuffer();
+        }
+        if (suite.id === 'ui') {
+          entry.visualCaptures = [];
+          for (const spec of UI_VISUAL_CAPTURES) {
+            entry.visualCaptures.push(await captureUiVisual(browser, root, started.origin, evidenceDir, spec));
+          }
+          report.uiVisualEvidence = entry.visualCaptures;
         }
         log = createWriteStream(path.join(evidenceDir, `${suite.id}-browser.log`));
         child = spawn(browser, ['--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--disable-extensions', '--disable-background-timer-throttling', '--disable-background-networking', `--user-data-dir=${profile}`, `${started.origin}/__qa_harness.html`], { shell: false, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] });
