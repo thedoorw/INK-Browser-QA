@@ -363,17 +363,17 @@
       shell.close();
       await sleep(100);
       const lastPanelCollapse = shell.state();
-      doc.querySelector('#inspectorEdgeToggle')?.click();
+      shell.open(lastPanelCollapse.lastPanel || 'properties');
       await sleep(140);
       const lastPanelRestored = shell.state();
-      record('UI-006 Phase E collapse remembers and restores the last active primary panel',
+      record('primary-panel state owner remembers and can restore the last active panel without a legacy presenter dependency',
         lastPanelCollapse.collapsed &&
         lastPanelCollapse.lastPanel === 'revision' &&
         lastPanelRestored.activePanel === 'revision' &&
         lastPanelRestored.creativeOpen &&
         !lastPanelRestored.inspectorOpen,
         { collapsed: lastPanelCollapse, restored: lastPanelRestored });
-      doc.querySelector('#inspectorEdgeToggle')?.click();
+      shell.close();
       await sleep(100);
 
       shell.open('chat');
@@ -391,15 +391,13 @@
         visible(doc, '#panelWindowMenu') &&
         doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 8 &&
         doc.querySelectorAll('#panelWindowMenu [data-panel-group]').length === 3);
-      record('UI-006 Phase F Panel Dock is Primary Home and Window menu is a secondary route',
+      record('Panel Dock is Primary Home and Window menu is a secondary route to the same shell authority',
         doc.querySelector('#panelDock')?.dataset.uiRoute === 'PRIMARY_HOME' &&
         doc.querySelector('#panelDock')?.dataset.uiHome === 'panels' &&
-        doc.querySelector('#panelWindowMenu')?.dataset.uiRoute === 'SECONDARY_ROUTE' &&
-        doc.querySelector('#inspectorEdgeToggle')?.dataset.uiRoute === 'COLLAPSE_RESTORE_ONLY',
+        doc.querySelector('#panelWindowMenu')?.dataset.uiRoute === 'SECONDARY_ROUTE',
         {
           dock: doc.querySelector('#panelDock')?.dataset.uiRoute,
-          window: doc.querySelector('#panelWindowMenu')?.dataset.uiRoute,
-          edge: doc.querySelector('#inspectorEdgeToggle')?.dataset.uiRoute
+          window: doc.querySelector('#panelWindowMenu')?.dataset.uiRoute
         });
 
       const buttonsWired = ['newBtn','openBtn','saveBtn','exportBtn','fullscreenToggle'].every(id => typeof doc.querySelector('#' + id)?.onclick === 'function');
@@ -646,48 +644,19 @@
 
       shell.open('properties');
       await sleep(120);
-      const collapse = doc.querySelector('#inspectorEdgeToggle');
-      const legacyToggle = doc.querySelector('#inspectorToggle');
       const propertiesDock = doc.querySelector('#panelDock [data-shell-panel="properties"]');
-      const legacyHidden = getComputedStyle(legacyToggle).display === 'none';
-      const propertiesGeometry = {
-        chevron: rectOf(doc, '#inspectorEdgeToggle'),
-        panel: rectOf(doc, '#inspector'),
-        dock: rectOf(doc, '#panelDock'),
-        properties: rectOf(doc, '#panelDock [data-shell-panel="properties"]')
-      };
-      record('UI-DEBT-001 Chevron sits on canvas / panel boundary without Dock occlusion',
-        propertiesGeometry.chevron?.right <= propertiesGeometry.panel?.left + 1 &&
-        propertiesGeometry.chevron?.right < propertiesGeometry.dock?.left &&
-        propertiesGeometry.properties?.left >= propertiesGeometry.dock?.left &&
-        propertiesGeometry.properties?.right <= propertiesGeometry.dock?.right + 1,
-        propertiesGeometry);
-
-      collapse.click();
+      const propertiesOpenState = shell.state();
+      shell.close();
       await sleep(140);
-      const collapseClosed = shell.state();
-      propertiesDock?.click();
-      await sleep(140);
-      const dockPropertiesOpened = shell.state();
-      record('UI-DEBT-001 Dock Properties remains fully clickable after collapse',
-        dockPropertiesOpened.activePanel === 'properties' &&
-        dockPropertiesOpened.inspectorOpen &&
-        !dockPropertiesOpened.creativeOpen,
-        { state: dockPropertiesOpened, geometry: propertiesGeometry });
-
-      collapse.click();
-      await sleep(140);
-      const collapseClosedAgain = shell.state();
-      collapse.click();
-      await sleep(140);
-      const collapseReopened = shell.state();
-      record('UI-DEBT-001 chevron is the single visible desktop collapse authority',
-        legacyHidden &&
-        collapseClosed.collapsed &&
-        collapseClosedAgain.collapsed &&
-        collapseReopened.activePanel === 'properties' &&
-        collapse.getAttribute('aria-expanded') === 'true',
-        { legacyHidden, collapseClosed, dockPropertiesOpened, collapseClosedAgain, collapseReopened, collapseExpanded: collapse.getAttribute('aria-expanded') });
+      const propertiesClosedState = shell.state();
+      record('web-shell remains the authoritative primary-panel close route without requiring a legacy edge control',
+        propertiesOpenState.activePanel === 'properties' &&
+        propertiesOpenState.inspectorOpen &&
+        propertiesClosedState.collapsed &&
+        !propertiesClosedState.inspectorOpen &&
+        !propertiesClosedState.creativeOpen &&
+        Boolean(propertiesDock),
+        { open: propertiesOpenState, closed: propertiesClosedState, dockPresent: Boolean(propertiesDock) });
 
       // Short-height desktop: force a long Inspector surface and prove body-owned scrolling.
       frame.style.height = '520px';
