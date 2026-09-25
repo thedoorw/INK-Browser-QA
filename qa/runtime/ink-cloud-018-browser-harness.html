@@ -1231,6 +1231,246 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       revisionCount:geometryRevisionReceipts.length
     });
 
+    // INK-TECH-CLOSURE-001 C2-A — real-browser exposure proof, executed only in the final closure Runtime batch.
+    const c2aOperations=[
+      'frame.create.v1',
+      'text.create.v1',
+      'text.edit.v1',
+      'svg.import.v1',
+      'object.resize.v1',
+      'object.scale.v1',
+      'object.order.v1'
+    ];
+    const c2aDiscovery=await inkApi.tools.invoke('get_ink_capabilities');
+    assert(
+      c2aDiscovery?.status==='COMPLETED' &&
+      c2aOperations.every(id=>c2aDiscovery.result.capabilities.some(capability=>capability.id===id && capability.availability===true)) &&
+      c2aDiscovery.result.namedTools.some(tool=>tool.name==='export_ink_asset' && tool.availability===true),
+      'C2A_CAPABILITIES_DISCOVERED',
+      {operations:c2aOperations,namedTools:c2aDiscovery?.result?.namedTools?.map(tool=>tool.name)||[]}
+    );
+
+    const c2aPageId=app.page().id;
+    const c2aLayerId=app.layer().id;
+    const c2aRef=objectId=>({pageId:c2aPageId,layerId:c2aLayerId,objectId});
+    const c2aRuns=[];
+    const executeC2APlan=async(label,steps,{checkBlocked=false}={})=>{
+      const beforeProposal=readOnlySnapshot();
+      const proposed=await inkApi.tools.invoke('use_ink',{
+        action:'propose',
+        plan:{schema:'INK-CHAT-CREATIVE-PLAN',version:1,intentSummary:label,steps}
+      });
+      assert(
+        proposed?.status==='PROPOSED' &&
+        Boolean(proposed?.result?.planId) &&
+        readOnlySnapshot()===beforeProposal,
+        'C2A_PROPOSAL_MUTATION_NEUTRAL',
+        {label,status:proposed?.status}
+      );
+      if(checkBlocked){
+        const blockedBefore=readOnlySnapshot();
+        const blocked=await inkApi.tools.invoke('use_ink',{
+          action:'execute',planId:proposed.result.planId,approvalToken:'not-approved'
+        });
+        assert(
+          blocked?.status==='FAILED' &&
+          blocked?.diagnostics?.[0]?.code==='CHAT_PLAN_APPROVAL_REQUIRED' &&
+          readOnlySnapshot()===blockedBefore,
+          'C2A_EXECUTE_BLOCKED_BEFORE_APPROVAL',
+          {label,code:blocked?.diagnostics?.[0]?.code||null}
+        );
+      }
+      const approved=await inkApi.tools.invoke('use_ink',{action:'approve',planId:proposed.result.planId});
+      assert(
+        approved?.status==='APPROVED' &&
+        /^INK-LOCAL-PLAN-APPROVAL:/.test(approved?.result?.approvalToken||''),
+        'C2A_EXPLICIT_APPROVAL',
+        {label,planId:proposed.result.planId}
+      );
+      const executed=await inkApi.tools.invoke('use_ink',{
+        action:'execute',
+        planId:proposed.result.planId,
+        approvalToken:approved.result.approvalToken
+      });
+      assert(
+        executed?.status==='COMPLETED' &&
+        executed?.result?.stepResults?.length===steps.length &&
+        executed.result.stepResults.every(step=>step.ok===true && step.changed===true),
+        'C2A_PLAN_EXECUTED',
+        {label,status:executed?.status,steps:executed?.result?.stepResults}
+      );
+      c2aRuns.push({label,proposed,approved,executed});
+      return executed;
+    };
+    const c2aTargetFromStep=(executed,stepId)=>{
+      const step=executed?.result?.stepResults?.find(item=>item.stepId===stepId);
+      const target=step?.targets?.[0];
+      return target?.ref||target||null;
+    };
+
+    const c2aCreate=await executeC2APlan('Closure C2-A · create Frame, Text and structured SVG',[
+      {
+        stepId:'c2a-create-frame',
+        operation:'frame.create.v1',
+        targets:[],
+        arguments:{name:'QA C2-A Frame',x:650,y:160,width:140,height:100,opacity:1},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2a-create-text',
+        operation:'text.create.v1',
+        targets:[],
+        arguments:{text:'C2-A',x:670,y:210,color:'#202020',fontFamily:'system-ui',fontSize:24,lineHeight:1.25,fontWeight:600},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2a-import-svg',
+        operation:'svg.import.v1',
+        targets:[],
+        arguments:{svg:'<svg xmlns="http://www.w3.org/2000/svg"><rect id="qa-c2a-svg-path" x="830" y="180" width="48" height="36" fill="#d8d8d8" stroke="#202020"/></svg>'},
+        dependsOn:[]
+      }
+    ],{checkBlocked:true});
+
+    const c2aFrameRef=c2aTargetFromStep(c2aCreate,'c2a-create-frame');
+    const c2aTextRef=c2aTargetFromStep(c2aCreate,'c2a-create-text');
+    const c2aSvgRef=c2aRef('qa-c2a-svg-path');
+    assert(
+      app.findObject(c2aFrameRef)?.object?.type==='frame' &&
+      app.findObject(c2aTextRef)?.object?.type==='text' &&
+      app.findObject(c2aSvgRef)?.object?.type==='path',
+      'C2A_NATIVE_OBJECTS_CREATED',
+      {frameRef:c2aFrameRef,textRef:c2aTextRef,svgRef:c2aSvgRef}
+    );
+
+    const c2aTransform=await executeC2APlan('Closure C2-A · edit Text, resize Frame, scale SVG and reorder',[
+      {
+        stepId:'c2a-edit-text',
+        operation:'text.edit.v1',
+        targets:[c2aTextRef],
+        arguments:{text:'C2-A edited',fontSize:28,color:'#303030',x:680},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2a-resize-frame',
+        operation:'object.resize.v1',
+        targets:[c2aFrameRef],
+        arguments:{width:180,height:120,preserveAspect:false},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2a-scale-svg',
+        operation:'object.scale.v1',
+        targets:[c2aSvgRef],
+        arguments:{sx:1.25,sy:0.75,center:{x:830,y:180}},
+        dependsOn:[]
+      },
+      {
+        stepId:'c2a-order-front',
+        operation:'object.order.v1',
+        targets:[c2aTextRef,c2aSvgRef],
+        arguments:{action:'front'},
+        dependsOn:['c2a-edit-text','c2a-scale-svg']
+      }
+    ]);
+
+    const c2aFrame=app.findObject(c2aFrameRef)?.object;
+    const c2aText=app.findObject(c2aTextRef)?.object;
+    const c2aSvg=app.findObject(c2aSvgRef)?.object;
+    assert(
+      c2aFrame?.width===180 && c2aFrame?.height===120 &&
+      c2aText?.text==='C2-A edited' && c2aText?.fontSize===28 &&
+      Array.isArray(c2aSvg?.matrix) && Math.abs(c2aSvg.matrix[0]-1)>0.01,
+      'C2A_MUTATIONS_USE_NATIVE_AUTHORITIES',
+      {frame:{width:c2aFrame?.width,height:c2aFrame?.height},text:{text:c2aText?.text,fontSize:c2aText?.fontSize},svgMatrix:c2aSvg?.matrix}
+    );
+    const c2aRootObjects=app.layer().objects;
+    assert(
+      c2aRootObjects.at(-1)?.id===c2aSvgRef.objectId &&
+      c2aRootObjects.at(-2)?.id===c2aTextRef.objectId,
+      'C2A_ORDER_FRONT_PRESERVES_TARGET_IDS',
+      {tail:c2aRootObjects.slice(-4).map(object=>object.id)}
+    );
+
+    const c2aHistorySteps=c2aRuns.flatMap(run=>run.executed?.historyReceipt?.steps||[]);
+    assert(
+      c2aHistorySteps.length===7 &&
+      c2aHistorySteps.every(step=>Boolean(step.history) &&
+        Number.isInteger(step.history.beforeUndoCount) &&
+        step.history.afterUndoCount===step.history.beforeUndoCount+1),
+      'C2A_HISTORY_RECORDED',
+      {stepCount:c2aHistorySteps.length}
+    );
+
+    const c2aExportBefore=readOnlySnapshot();
+    const c2aExportRequests=[
+      {format:'png',scope:'content',scale:.5,background:true,editable:false},
+      {format:'svg',scope:'content',background:true,editable:true},
+      {format:'pdf',scope:'artboard',ppi:72,background:true,editable:false}
+    ];
+    const c2aExportHandles=[];
+    for(const request of c2aExportRequests){
+      const exported=await inkApi.tools.invoke('export_ink_asset',request);
+      const handle=exported?.outputHandles?.[0]||null;
+      assert(
+        exported?.status==='COMPLETED' &&
+        handle?.schema==='INK_OUTPUT_HANDLE' &&
+        handle?.version===1 &&
+        handle?.format===request.format &&
+        handle?.editable===request.editable &&
+        Number(handle?.byteLength)>0,
+        'C2A_EXPORT_HANDLE_CREATED',
+        {format:request.format,status:exported?.status,handle}
+      );
+      const inspected=await inkApi.tools.invoke('inspect_ink_output',{handleId:handle.handleId});
+      assert(
+        inspected?.status==='COMPLETED' &&
+        inspected?.result?.available===true &&
+        inspected?.outputHandles?.[0]?.handleId===handle.handleId,
+        'C2A_EXPORT_HANDLE_INSPECTABLE',
+        {format:request.format,inspection:inspected?.result}
+      );
+      c2aExportHandles.push(handle);
+    }
+    assert(
+      readOnlySnapshot()===c2aExportBefore,
+      'C2A_EXPORT_DOCUMENT_HISTORY_REVISION_NEUTRAL'
+    );
+    for(const handle of c2aExportHandles){
+      const released=await inkApi.tools.invoke('release_ink_output',{handleId:handle.handleId});
+      assert(
+        released?.status==='COMPLETED' &&
+        released?.result?.found===true &&
+        released?.result?.released===true,
+        'C2A_EXPORT_HANDLE_RELEASED',
+        {handleId:handle.handleId,status:released?.status}
+      );
+    }
+
+    evidence.c2a={
+      schema:'INK-TECH-CLOSURE-001-C2A-PROOF',
+      version:1,
+      operations:c2aOperations,
+      planCount:c2aRuns.length,
+      historySteps:c2aHistorySteps.length,
+      frameRef:c2aFrameRef,
+      textRef:c2aTextRef,
+      svgRef:c2aSvgRef,
+      exportHandles:c2aExportHandles.map(handle=>({
+        handleId:handle.handleId,
+        format:handle.format,
+        mimeType:handle.mimeType,
+        byteLength:handle.byteLength,
+        editable:handle.editable
+      }))
+    };
+    pass('C2A_GATE_PASS',{
+      gate:'C2A_BASIC_STRUCTURE_TRANSFORM_IMPORT_EXPORT',
+      operationCount:c2aOperations.length,
+      historySteps:c2aHistorySteps.length,
+      exportFormats:c2aExportHandles.map(handle=>handle.format)
+    });
+
     const health=w.INK_TEST.runtimeHealth?.();
     evidence.metrics.runtimeHealth=health;
     const fatalCount=Number(health?.errors?.fatal || health?.fatalErrors || health?.fatal || 0);
