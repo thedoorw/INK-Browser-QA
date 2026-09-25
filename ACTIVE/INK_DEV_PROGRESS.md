@@ -1,5 +1,57 @@
 # INK DEV PROGRESS
 
+## MR_REVISE — G8_UI_RUNTIME_ISOLATION_ONLY — 2026-09-25
+
+```text
+MR_TESTED_HEAD = 272c656cb98994540d3311f3f38dac1e95dfb519
+RUNTIME_RUN = 36109323685
+UI = 105 / 110 PASS
+G0-G7 = ACCEPTED
+G8 = REVISE
+```
+
+Authorized bounded revision:
+
+### Product
+- `product/source/styles.css`
+  - COMPACT: hide `newBtn/openBtn/saveBtn`;
+  - keep `exportBtn` visible as `RESPONSIVE_ALTERNATIVE`.
+- `product/source/src/config.js`
+  - BUILD_ID only.
+- `product/source/service-worker.js`
+  - BUILD_ID only.
+- app and worker BUILD_ID must be one new identical value.
+
+### Runtime QA
+- `qa/runtime/ink-web-ui-001-harness.html`
+  - Escape assertion uses real DOM keyboard event path;
+  - typography validates current `--ui-font` authority, not obsolete Inter;
+  - compact toolbar verifies effective single/no dual/containment without requiring old hidden rail.
+- `qa/runtime/run-ink-runtime-batch.mjs`
+  - emit actual Chrome visual evidence:
+    - `ui-first-paint.png`
+    - `ui-1280x1024.png`
+    - `ui-960x800.png`
+  - include capture metadata.
+  - browser-native/CDP or equivalent QA-only capture; no product capture hook / alternate renderer.
+
+Focused tests/evidence may change only as needed for these contracts.
+
+Forbidden:
+- Core/Renderer/Document/History/Revision/Geometry/CHAT/persistence changes;
+- FORMAT_VERSION/product version changes;
+- broader mobile redesign;
+- Photoshop alignment;
+- unconditional/skipped PASS.
+
+Finish with focused QA and:
+
+`DEV_HANDOFF → STOP`
+
+MR owns the next exact-SHA G8 Runtime rerun.
+
+---
+
 ## 2026-09-25 — G7 exact approved visible-logo asset DEV handoff
 
 ```text
