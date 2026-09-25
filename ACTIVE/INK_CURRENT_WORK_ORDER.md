@@ -1,3 +1,37 @@
+## MR source PASS — G8 Runtime isolation rerun — 2026-09-25
+
+```text
+TASK = INK-UI-REBUILD-001-TECH-DEBT-CLEANUP
+REVIEWED_EXACT_HEAD = 5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8
+G0-G7 = PASS
+G8_REVISION_SOURCE = PASS
+G8_WINDOWS_RUNTIME = AUTHORIZED
+PHOTOSHOP_WORKSTATION_REBUILD = HOLD
+```
+
+MR verified the bounded G8 revision:
+
+- COMPACT hides New / Open / Save and keeps Export as the responsive alternative.
+- `config.js` and `service-worker.js` share BUILD_ID `20260925-ui-rebuild-001-g8-runtime-r1`.
+- Escape QA uses the real DOM keyboard path.
+- Typography QA validates the current `--ui-font` authority without the obsolete Inter requirement.
+- COMPACT toolbar QA verifies effective single mode and containment without the retired hidden-rail assumption.
+- Runtime runner emits browser-native:
+  - `ui-first-paint.png` 1280×1024;
+  - `ui-1280x1024.png`;
+  - `ui-960x800.png`;
+  with per-capture metadata and SHA256.
+- Frozen Core authorities unchanged.
+
+A stale earlier G3 BUILD_ID line remains in the cumulative evidence narrative; the later G8 section supersedes it and source files are authoritative. Do not alter the exact tested head for that documentation-only residue.
+
+Exact G8 target:
+`5c37db9c9e64333ece3b492f7cc2eabbd7aae1e8`
+
+MR owns Runtime result classification and any subsequent revision.
+
+---
+
 ## MR_REVISE — G8 Runtime UI isolation — 2026-09-25
 
 ```text
