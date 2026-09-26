@@ -378,7 +378,8 @@ test('Connector-005 preserves operation and format baselines and contains no net
   const source = await readFile(path.join(root, 'product/source/src/agent/creative-library-search.js'), 'utf8');
   assert.doesNotMatch(source, /\beval\s*\(|\bFunction\s*\(|\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource|navigator\.sendBeacon/);
   assert.doesNotMatch(source, /markDirty|history\.(?:push|begin|commit|cancel)|revisions\.(?:capture|restore)|replaceDocument|selection\s*=/);
-  assert.match(source, /page\.floraRecipeState\?\.recipes/);
+  assert.match(source, /page\?\.floraRecipeState\?\.recipes/);
+  assert.match(source, /\.map\(value => normalized\(value\)\)/);
   assert.match(source, /document\?\.materialLibrary\?\.templates/);
   assert.match(source, /document\?\.components\?\.definitions/);
   assert.match(source, /entry\.object\?\.type === 'repeat'/);
