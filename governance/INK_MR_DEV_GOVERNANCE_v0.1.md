@@ -69,28 +69,27 @@ Read in this order:
 1. `README.md`
 2. `AGENTS.md`
 3. `ACTIVE/README.md`
-4. `working/WORKING_STATUS.md`
-5. the Work Order authoritative for the lane:
-   - MR / technical / Core / cross-lane work: `main:ACTIVE/INK_CURRENT_WORK_ORDER.md`
-   - delegated UI task: dedicated UI branch `ACTIVE/INK_CURRENT_WORK_ORDER.md`
-6. role-specific active files:
-   - DEV / UI DEV: branch-local `ACTIVE/INK_DEV_PROGRESS.md`
-   - MR: `ACTIVE/INK_REVIEW_STATUS.md`
-   - UR: UI program/workpack + UI health governance + exact UI branch/main evidence
-7. governance files explicitly named by the Work Order
-8. only the product / research / QA files needed for that work order
+4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
+5. `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
+6. `working/WORKING_STATUS.md`
+7. role/task-specific files:
+   - DEV / UI DEV: branch-local `ACTIVE/INK_DEV_PROGRESS.md` when present;
+   - MR: exact task branch + task-specific checkpoint/handoff/evidence;
+   - UR: UI program/workpack + UI health governance + exact UI branch/main evidence.
+8. only the governance / product / research / QA files needed by that work order.
 
 The global technical task definition remains:
-
 `main:ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
 A branch-local UI Work Order is authoritative only inside an already approved UI program and may not authorize Core or cross-lane mutation.
 
-Cross-window recovery is governed by:
-
+Cross-window recovery:
 `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
 
-Legacy/detail bulletin files may preserve history, but cannot independently expand authority.
+Document lifecycle:
+`governance/INK_DOCUMENT_LIFECYCLE_STANDARD_v1.0.md`
+
+Historical bulletin/status files cannot independently expand authority.
 
 ## Gate rule
 
@@ -156,17 +155,24 @@ Unless the current work order explicitly permits it, DEV must not:
 
 ## Evidence retention
 
-DEV must update `ACTIVE/INK_DEV_PROGRESS.md` with:
+During an active DEV task, branch-local `ACTIVE/INK_DEV_PROGRESS.md` may record:
 - task ID;
-- mandatory DEV work branch;
-- latest commit SHA at each meaningful checkpoint;
-- files read;
+- mandatory work branch;
+- latest checkpoint SHA;
 - files changed;
-- tests or checks performed;
+- tests/checks;
 - known gaps;
 - handoff status.
 
-Long-lived research or architecture outputs belong under `research/` or `governance/`, not only in chat.
+It is not promoted to main merely to preserve history.
+
+At closure:
+- durable methods move to `governance/`;
+- durable technical knowledge moves to `research/`;
+- selected milestone evidence may move to `ARCHIVE/`;
+- pure transient status may leave the current tree because Git history is complete.
+
+Long-lived research or architecture outputs must not exist only in chat.
 
 ## Plan continuity / unresolved commitment rule
 
@@ -504,17 +510,8 @@ A module may be promoted to main while dormant or adapter-only if:
 
 Formal product wiring of multiple prepared modules happens under an Integration Work Order and may be followed by one Runtime batch.
 
-### Core module sequence
+### Core module sequencing
 
-Current MR-owned sequence:
+Core-module ordering is task/program state and belongs in the current Work Order or roadmap, not durable governance.
 
-```text
-CORE-MOD-000  Vector Geometry Kernel baseline / already established
-CORE-MOD-001  AI Document Bridge
-CORE-MOD-002  Semantic Region Grounding
-CORE-MOD-003  Revision / Provenance
-CORE-MOD-004  Visual Compare / Variant
-CORE-MOD-005  Parametric Creative Structure
-```
-
-MR may revise the sequence only from evidence or a demonstrated dependency.
+This governance defines the module development pattern only; it does not preserve a historical "current sequence".
