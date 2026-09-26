@@ -315,6 +315,22 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   assert.match(creativeHarness, /useInkTools\[19\]\?\.name==='import_ink_reference'/);
   assert.match(creativeHarness, /useInkTools\[20\]\?\.name==='export_ink_asset'/);
   assert.doesNotMatch(creativeHarness, /useInkTools\.length===20/);
+  assert.match(creativeHarness, /const reportProgress = \(marker, details=\{\}\) =>/);
+  assert.match(creativeHarness, /fetch\('\/__qa_progress'/);
+  assert.match(creativeHarness, /reportProgress\(name\)/);
+  assert.match(creativeHarness, /HARNESS_FINAL_EVIDENCE_READY/);
+  assert.match(creativeHarness, /HARNESS_FAILURE/);
+
+  const runtimeRunner = await readFile(path.join(root, 'qa/runtime/run-ink-runtime-batch.mjs'), 'utf8');
+  assert.match(runtimeRunner, /async function waitForUiCaptureReadiness/);
+  assert.match(runtimeRunner, /DOM\.querySelector/);
+  assert.match(runtimeRunner, /CSS\.getMatchedStylesForNode/);
+  assert.match(runtimeRunner, /window\.INK_APP && window\.INK_WEB_SHELL/);
+  assert.doesNotMatch(runtimeRunner, /cdp\.waitFor\('Page\.loadEventFired'/);
+  assert.doesNotMatch(runtimeRunner, /setTimeout\(resolve, 1200\)/);
+  assert.match(runtimeRunner, /url\.pathname === '\/__qa_progress'/);
+  assert.match(runtimeRunner, /\$\{suite\.id\}-progress\.json/);
+  assert.match(runtimeRunner, /entry\.lastProgress = progress/);
 
   const closureHarness = await readFile(path.join(root, 'qa/runtime/ink-tech-closure-001-browser-harness.html'), 'utf8');
   assert.match(closureHarness, /Math\.min\(history\.beforeUndoCount\+1,limit\)/);
