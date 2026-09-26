@@ -1,3 +1,31 @@
+## Closure Runtime run 36220214402 classified / Fix 2 dispatched — 2026-09-26
+
+```text
+TASK = INK-TECH-CLOSURE-001
+TESTED_SHA = 399b039ffcd4677e073391418f50e77f8b0a0a63
+RUN = 36220214402
+
+FOCUSED_NODE = 25 / 25 PASS
+UI = PASS
+GEOMETRY = PASS
+
+CLOSURE_FAIL =
+  C2C_HISTORY_RECORDED_WITH_NATIVE_COMPONENT_TRANSACTIONS
+  cause class = QA assertion does not account for History limit saturation at 30
+
+CREATIVE_FAIL =
+  WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY
+  exact Document diff = $.modifiedAt only
+  History = unchanged
+  Revision = unchanged
+
+NEXT = DEV Runtime Fix 2
+WORKPACK = working/INK_TECH_CLOSURE_001_RUNTIME_FIX_2_DEV_WORKPACK.md
+PROMOTION = HOLD
+```
+
+---
+
 ## Closure final Runtime defects dispatched to DEV — 2026-09-26
 
 ```text
