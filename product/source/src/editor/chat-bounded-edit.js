@@ -926,7 +926,10 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     }
     if (found.effectiveLocked) editFail('TARGET_LOCKED', { objectId: found.object.id });
     if (found.effectiveVisible === false) editFail('TARGET_HIDDEN', { objectId: found.object.id });
-    if (found.interactionExposed === false) editFail('TARGET_UNEXPOSED', { objectId: found.object.id });
+    const stableRefHierarchyEscape = task.operation === 'object.reparent.v1';
+    if (found.interactionExposed === false && !stableRefHierarchyEscape) {
+      editFail('TARGET_UNEXPOSED', { objectId: found.object.id });
+    }
     if (!Matrix.isInvertible(found.worldMatrix || found.object?.matrix || Matrix.identity())) {
       editFail('TARGET_SINGULAR', { objectId: found.object.id });
     }
