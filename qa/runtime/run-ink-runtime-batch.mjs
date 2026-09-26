@@ -127,7 +127,7 @@ export function validateEvidence(id, evidence) {
       'CLOSURE_GATE_PASS'
     ]) assert.ok(evidence.checks.some(check => check.name === name), `Missing ${name}`);
     assert.equal(evidence.final?.boundedOperationCount, 34);
-    assert.equal(evidence.final?.namedToolCount, 21);
+    assert.equal(evidence.final?.namedToolCount, 22);
     assert.equal(evidence.checkpoints?.c2b?.repeatExpand, 'CORE_ONLY_ACCEPTED');
   } else throw new Error(`Unknown suite: ${id}`);
   return evidence;
