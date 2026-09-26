@@ -1,3 +1,31 @@
+## Scope boundary — Photoshop-aligned final UI rebuild excluded from current Closure — 2026-09-26
+
+```text
+INK-TECH-CLOSURE-001 =
+  technical capability closure only
+
+IN_SCOPE =
+  residual defect fixes
+  source/focused QA
+  exact-SHA Runtime
+  clean promotion to current main
+  CURRENT_CAPABILITY_BASELINE freeze
+
+OUT_OF_SCOPE =
+  Photoshop-aligned final UI rebuild
+  final command/menu/tool/panel placement
+  Navigator / History panel UI alignment
+  final UI visual/interaction closure
+
+NEXT_AFTER_CLOSURE =
+  hand frozen capability baseline to UR
+  → separate UI Work Order
+```
+
+The Photoshop-aligned final UI rebuild is NOT part of the completion percentage or completion criteria for `INK-TECH-CLOSURE-001`.
+
+---
+
 ## Runtime Fix 2 DEV package issued — 2026-09-26
 
 ```text
