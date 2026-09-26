@@ -1,3 +1,28 @@
+## Runtime harness stability lane authorized — 2026-09-26
+
+```text
+TASK = INK-RUNTIME-HARNESS-STABILITY-001
+BRANCH = work/ink-runtime-harness-stability-001
+BASELINE = 54301b0916a04d0a1c611df4db540481baa12300
+WORKPACK = working/INK_RUNTIME_HARNESS_STABILITY_001_DEV_WORKPACK.md
+
+DEV_RUNTIME_EXCEPTION = AUTHORIZED / TASK-LOCAL
+PRODUCT_SOURCE = FROZEN
+PROMOTION = PROHIBITED
+MR = final acceptance / classification authority
+
+ENTERING_EVIDENCE =
+  focused Node 26/26 PASS
+  Closure PASS
+  Geometry PASS
+  UI CDP load-event timeout
+  Creative 360s harness timeout
+```
+
+This lane exists to stabilize the shared Runtime harness before Connector-005 and the final Photoshop-aligned UI rebuild. It does not reopen Closure product logic.
+
+---
+
 ## Closure 001 install-first execution plan adopted — 2026-09-25
 
 ```text
