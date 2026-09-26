@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "89d91e3b77198409d384de95f5d595f14f4620ca",
   "pending_work_orders": [
     "INK-CHAT-GEOMETRY-OPS-001",
@@ -39,8 +39,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36230493892,
-    "tested_sha": "54301b0916a04d0a1c611df4db540481baa12300",
-    "result": "FOCUSED_26_PASS / UI_CDP_LOAD_EVENT_TIMEOUT / CLOSURE_PASS / GEOMETRY_PASS / CREATIVE_HARNESS_TIMEOUT_360S"
+    "run_id": 36237399168,
+    "tested_sha": "89d91e3b77198409d384de95f5d595f14f4620ca",
+    "result": "FOCUSED_26_PASS / UI_PASS / CLOSURE_PASS / GEOMETRY_PASS / CREATIVE_PASS / DEV_EVIDENCE_COMPLETE / MR_ACCEPTANCE_PENDING"
   }
 }
