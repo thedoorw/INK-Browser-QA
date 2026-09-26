@@ -1,12 +1,13 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "89d91e3b77198409d384de95f5d595f14f4620ca",
+  "state": "READY",
+  "target_sha": "2964a940ec28440f29ef189e74533e3740c461ad",
   "pending_work_orders": [
     "INK-CHAT-GEOMETRY-OPS-001",
     "INK-TECH-CLOSURE-001",
-    "INK-RUNTIME-HARNESS-STABILITY-001"
+    "INK-RUNTIME-HARNESS-STABILITY-001",
+    "INK-CONNECTOR-005-CREATIVE-LIBRARY-SEARCH"
   ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
@@ -41,6 +42,6 @@
   "last_run": {
     "run_id": 36237399168,
     "tested_sha": "89d91e3b77198409d384de95f5d595f14f4620ca",
-    "result": "FOCUSED_26_PASS / UI_PASS / CLOSURE_PASS / GEOMETRY_PASS / CREATIVE_PASS / DEV_EVIDENCE_COMPLETE / MR_ACCEPTANCE_PENDING"
+    "result": "PREVIOUS_STABILITY_PASS / INTEGRATED_CONNECTOR_005_RUNTIME_REQUESTED"
   }
 }
