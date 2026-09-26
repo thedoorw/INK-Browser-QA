@@ -1,3 +1,20 @@
+## Runtime 36225526214 — infrastructure-only failure / retry — 2026-09-26
+
+```text
+TARGET = d6ce01dc47614100bedea2592e64c18f66bc28d3
+RESULT = INFRA_TRANSIENT
+CAUSE = GitHub git/blob API 502 during exact-SHA materialization
+
+Closure source = NOT REOPENED
+Creative source = NOT REOPENED
+DEV = NO ACTION
+Runtime evidence = NONE / tests did not start
+
+NEXT = retry same exact SHA
+```
+
+---
+
 ## Closure Runtime Fix 2 source accepted — 2026-09-26
 
 ```text
