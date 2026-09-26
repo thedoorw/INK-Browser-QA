@@ -57,7 +57,8 @@ RUNTIME_FAILURE_MAY_STOP_CONNECTOR_IMPLEMENTATION = NO
 
 PROMOTION = MR_HOLD
 CURRENT_CAPABILITY_BASELINE_REFRESH = AFTER_MR_RECONCILIATION
-PHOTOSHOP_UI_REBUILD = HOLD
+PHOTOSHOP_UI_REBUILD = PROVISIONAL_START_ALLOWED_AFTER_CONNECTOR_005_DEV_HANDOFF
+FINAL_UI_BASELINE = HOLD
 ```
 
 Runtime-harness and Connector product work remain on separate branches. A failed/inconclusive Runtime handoff is evidence to be preserved, not a reason to block Connector-005.
@@ -220,8 +221,9 @@ AFTER_CLOSURE =
   → Photoshop-aligned final UI rebuild
 
 CONNECTOR_005_PLAN = working/INK_CONNECTOR_005_BOUNDED_PLAN.md
-CONNECTOR_005 = PLANNED / NOT_YET_AUTHORIZED
-UI_REBUILD = HOLD UNTIL POST-CONNECTOR-005 BASELINE
+CONNECTOR_005 = SUPERSEDED / NOW DEV_AUTHORIZED
+UI_REBUILD = PROVISIONAL_START_AFTER_CONNECTOR_005_DEV_HANDOFF
+FINAL_UI_BASELINE = HOLD UNTIL POST-PROMOTION CAPABILITY BASELINE
 ```
 
 Connector-005 remains bounded to search / inspect / reuse of existing INK reusable assets through existing native authority. It does not authorize Library Manager UI, cloud library, AI auto-classification, Variables/Tokens, Styles, or Component Variants.
