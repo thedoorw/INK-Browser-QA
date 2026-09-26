@@ -1,6 +1,6 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / UI_PROGRAM_READY`
+STATUS: `CURRENT / FINAL_UI_SPEC_LOCKED / IMPLEMENTATION_WORK_ORDER_NEXT`
 
 DATE: 2026-09-26
 
@@ -75,3 +75,36 @@ No technical Closure or Connector task is currently open.
 
 Historical Closure/Connector execution details:
 `ARCHIVE/milestones/2026-09-26-chat-technical-closure/`
+
+
+## UR final UI specification lock — 2026-09-26
+
+The frozen capability baseline has now been fully reconciled into the final Photoshop-aligned UI specification.
+
+Authoritative UI implementation package:
+
+- `working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md`
+- `working/INK_UI_FINAL_PHOTOSHOP_ALIGNMENT_SPEC_v1.0.md`
+- `working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md`
+- `working/INK_UI_FINAL_STATIC_CONTROL_LEDGER_v1.0.md`
+- `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
+- `working/INK_UI_FINAL_IMPLEMENTATION_INDEX.md`
+
+Reconciliation result:
+
+```text
+C3_PENDING = 0
+NAMED_TOOLS_PLACED = 22 / 22
+BOUNDED_EDIT_OPERATIONS_PLACED = 34 / 34
+PERSISTENT_TOOL_MODES_PLACED = 12 / 12
+SELECT_CONTROLS_PLACED = 29 / 29
+STATIC_BUTTONS_ENUMERATED = 212 / 212
+UNCLASSIFIED_FUNCTIONS = 0
+PRODUCT_UI_MUTATION = 0
+```
+
+Final UI closure must use the AI Completion Checklist and may not declare `UI_COMPLETE` until every required item passes on integrated current main.
+
+Next:
+
+`UR → issue bounded UI implementation Work Order(s)`
