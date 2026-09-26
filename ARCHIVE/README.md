@@ -1,5 +1,18 @@
-# ARCHIVE
+# INK Archive
 
-這裡保存被取代、已完成或退出現役工作面的資料，但仍保留歷史、研究、QA 或追溯價值。
+ARCHIVE contains selected historical material that remains useful to humans without replaying Git history.
 
-原則：不確定是否仍有價值時，先 ARCHIVE，不直接刪除。
+It is not current authority.
+
+## Curated areas
+
+- `original-import-1.6.5/` — immutable source/import identity and classification.
+- `milestones/2026-09-25-ui-tech-debt-cleanup/` — UI health baseline evidence.
+- `milestones/2026-09-26-chat-technical-closure/` — CHAT/Closure/Runtime/Connector-005 technical closure evidence.
+- `workflows/` — retired executable-workflow index.
+- `historical/` — earlier release/replacement/checksum material.
+
+Current authority always starts from:
+`ACTIVE/README.md`
+
+Complete per-commit history remains in Git.
