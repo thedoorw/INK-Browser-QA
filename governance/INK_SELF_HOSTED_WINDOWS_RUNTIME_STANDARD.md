@@ -89,19 +89,21 @@ When GitHub-hosted Actions quota is exhausted:
 
 Runtime QA may be marked `DEFERRED_TO_BATCH` when the Current Work Order explicitly authorizes batching. Otherwise, unavailability must be established against the existing self-hosted path before declaring Runtime blocked.
 
-## Existing historical workflow
+## Current executable workflow
 
-The repository already contains:
+The current Runtime workflow authority is:
 
-`.github/workflows/ink-v0.1-runtime-baseline.yml`
+`.github/workflows/ink-runtime-batch-windows.yml`
 
-This workflow is historical proof that INK runtime QA was designed to execute on:
+It targets:
 
 `[self-hosted, Windows, X64]`
 
-New Work Orders should reuse the self-hosted pattern but may create a bounded task-specific workflow when the product/runtime target has changed.
+and materializes an exact bounded revision before focused/browser execution.
 
-Do not assume the historical workflow's old reconstructed/original-runtime target is automatically appropriate for the current `product/source`.
+Completed task-specific Runtime workflows have been removed from the executable workflow surface. Their historical YAML remains available through Git history.
+
+New Work Orders should extend the central batch only when the central authority genuinely needs new accepted coverage; do not recreate one workflow per historical task.
 
 ## Current browser-web runtime pattern
 
