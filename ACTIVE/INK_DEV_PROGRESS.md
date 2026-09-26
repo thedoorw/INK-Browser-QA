@@ -1,5 +1,36 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-CONNECTOR-005-CREATIVE-LIBRARY-SEARCH / DEV_AUTHORIZED / QUEUED`
+
+- Branch: `work/ink-connector-005`
+- Baseline: `54301b0916a04d0a1c611df4db540481baa12300`
+- Workpack: `working/INK_CONNECTOR_005_DEV_WORKPACK.md`
+- Start trigger: Runtime stability DEV checkpoint/handoff
+- Runtime clean PASS prerequisite: `REMOVED`
+- New named tool target: `search_ink_library`
+- Named tool total target: `22`
+- Bounded edit operations: `34 / unchanged`
+- FORMAT_VERSION: `4 / unchanged`
+- UI: `OUT OF SCOPE`
+- Promotion: `PROHIBITED`
+
+Required sequence:
+
+```text
+Runtime stability checkpoint/handoff
+→ no MR wait
+→ switch to this branch
+→ Connector-005 implementation
+→ focused QA
+→ checkpoint
+→ DEV_CONNECTOR_005_IMPLEMENTATION_READY_FOR_MR_REVIEW
+→ DEV_HANDOFF / STOP
+```
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-TECH-CLOSURE-001 / FINAL_RUNTIME_FIX_3 / DEV_HANDOFF / STOP`
 
 - Branch: `work/ink-tech-closure-001`
