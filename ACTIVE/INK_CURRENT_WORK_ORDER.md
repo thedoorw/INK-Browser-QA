@@ -1,3 +1,33 @@
+## MR source PASS — Final Runtime defect fix — 2026-09-26
+
+```text
+TASK = INK-TECH-CLOSURE-001
+PHASE = FINAL_RUNTIME_DEFECT_FIX
+REVIEWED_EXACT_HEAD = 399b039ffcd4677e073391418f50e77f8b0a0a63
+RESULT = MR_SOURCE_PASS
+MR_REVIEW = working/INK_TECH_CLOSURE_001_RUNTIME_FIX_MR_REVIEW.md
+
+DEFECT_A = ACCEPTED / C2-C browser single-edit routing corrected
+DEFECT_B = ACCEPTED / grounded Document snapshot isolation
+
+WINDOWS_WORKFLOW_QA_ONLY_UPDATE = 09c694bc60d09378c0b995593282039fbc4b3c66
+NEW_FOCUSED_REGRESSION = qa/ink-tech-closure-001-runtime-fix.test.mjs
+EXACT_SHA_RUNTIME = AUTHORIZED
+PROMOTION = HOLD
+```
+
+Required next gate:
+
+```text
+focused Node contracts including runtime-fix regression
+→ UI
+→ Closure
+→ Geometry
+→ Creative
+```
+
+---
+
 ## Final Runtime defect fix DEV package issued — 2026-09-26
 
 ```text
