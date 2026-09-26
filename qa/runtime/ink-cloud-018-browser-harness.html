@@ -178,7 +178,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     // INK-CHAT-CLOSED-LOOP-001: one connector-first chain, before unrelated regression edits.
     const smartApi=app.inkPublicApi;
     const smartDiscovery=await smartApi.tools.invoke('get_ink_capabilities');
-    const smartRequired=['reference.import','reference.decompose','preview.capture','composition.programmable','path.repaint.v1','history.inspect','revision.list'];
+    const smartRequired=['reference.import','reference.decompose','preview.capture','composition.programmable','path.repaint.v1','history.inspect','revision.list','library.search'];
     const smartDescriptors=[];
     for(const capabilityId of smartRequired){
       const described=await smartApi.tools.invoke('describe_ink_capability',{idOrToolName:capabilityId});
@@ -188,12 +188,25 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     }
     assert(smartDiscovery.status==='COMPLETED' &&
       smartRequired.every(id=>smartDiscovery.result.capabilities.some(c=>c.id===id && c.availability)) &&
-      smartDiscovery.result.namedTools.length===21 &&
+      smartDiscovery.result.namedTools.length===22 &&
       smartDiscovery.result.namedTools[19].name==='import_ink_reference' &&
       smartDiscovery.result.namedTools[20].name==='export_ink_asset' &&
+      smartDiscovery.result.namedTools[21].name==='search_ink_library' &&
       smartDescriptors[0].routingClass==='NAMED_TOOL' &&
       smartDiscovery.result.capabilities.find(c=>c.id==='external.transport')?.availability===false,
       'SMART_LOOP_CAPABILITIES_DISCOVERED');
+
+    const connector005Before=readOnlySnapshot();
+    const connector005Search=await smartApi.tools.invoke('search_ink_library',{action:'search',limit:5});
+    assert(
+      connector005Search.status==='COMPLETED' &&
+      connector005Search.result?.schema==='INK_CREATIVE_LIBRARY_QUERY_RESULT' &&
+      connector005Search.result?.version===1 &&
+      Array.isArray(connector005Search.result?.results),
+      'CONNECTOR_005_LIBRARY_SEARCH_BROWSER_READ_ONLY',
+      {status:connector005Search.status,count:connector005Search.result?.results?.length??null}
+    );
+    assertReadOnly(connector005Before,'CONNECTOR_005_LIBRARY_SEARCH_MUTATION_NEUTRAL');
 
     const fixtureResponse=await fetch('/__qa_rose_window.png',{cache:'no-store'});
     assert(fixtureResponse.ok,'ROSE_WINDOW_FIXTURE_HTTP',{status:fixtureResponse.status});
@@ -801,10 +814,11 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const useInkTools=inkApi?.tools?.registry?.()||[];
     assert(
       Boolean(inkApi?.composition?.propose && inkApi?.composition?.approve && inkApi?.composition?.execute) &&
-      useInkTools.length===21 &&
+      useInkTools.length===22 &&
       useInkTools[18]?.name==='use_ink' &&
       useInkTools[19]?.name==='import_ink_reference' &&
-      useInkTools[20]?.name==='export_ink_asset',
+      useInkTools[20]?.name==='export_ink_asset' &&
+      useInkTools[21]?.name==='search_ink_library',
       'USE_INK_TOOL_AVAILABLE',
       {toolCount:useInkTools.length,tool19:useInkTools[18]?.name||null}
     );
