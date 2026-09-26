@@ -1,12 +1,20 @@
 # INK Current Capability Baseline
 
-STATUS: `FROZEN / POST-CONNECTOR-005 / UI-AUTHORITATIVE`
+STATUS: `REOPENED / PREVIOUS POST-CONNECTOR-005 SNAPSHOT / NOT FINAL UI AUTHORITY`
 
 DATE: 2026-09-26
 
-## 1. Authority
+## 1. Authority status
 
-This is the authoritative capability baseline for the Photoshop-aligned final UI rebuild.
+This file preserves the previously accepted post-Connector-005 CHAT public/control-surface snapshot.
+
+It is **not** the complete INK product capability inventory and is **not** sufficient to authorize the final Photoshop-aligned UI rebuild while `INK-FULL-CAPABILITY-REBASELINE-001` is open.
+
+Current MR development authority:
+
+`ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`
+
+The 22 named tools / 34 bounded edit operations below remain valid as CHAT public-surface metrics only.
 
 ```text
 PROMOTED_MAIN = 6ab67fe355b787d251c4431fe55b9d4f4990384b
@@ -26,7 +34,7 @@ ARTIFACT_DIGEST = sha256:beb8790c0c31583cde36eb7c59cf0dbcedbd55b2676f2c5c9b19bec
 
 The promoted main technical source/QA was verified blob-for-blob source-equivalent to the accepted exact Runtime candidate before promotion while preserving newer main governance and provisional UI planning.
 
-## 2. Fixed technical invariants
+## 2. Previously accepted CHAT public-surface invariants
 
 ```text
 FORMAT_VERSION = 4
@@ -36,7 +44,9 @@ PUBLIC_CREATIVE_API = installed
 CONNECTOR_005 = installed
 ```
 
-No final UI work may invent an operational command outside this baseline merely because it exists in research, backlog, or an unpromoted branch.
+These counts do not define the full product. Existing native INK capabilities outside this CHAT surface remain subject to the full-product preservation audit and may not be removed by omission.
+
+No final UI implementation is authorized from this snapshot until the refreshed full-product baseline is republished.
 
 ## 3. Installed named tools — exact order
 
@@ -194,15 +204,14 @@ prototype-interaction system
 design-to-code as drawing-core capability
 ```
 
-## 8. UI authority
-
-The previous provisional UI-start rule is now superseded for capability placement by this frozen baseline.
+## 8. UI authority — suspended pending rebaseline
 
 ```text
-PHOTOSHOP_ALIGNED_UI_REBUILD = ACTIVE
-FINAL_UI_CAPABILITY_BASELINE = THIS FILE
-CONNECTOR_005_FINAL_UI_PLACEMENT = AUTHORIZED FOR UI DESIGN
-UI_CAPABILITY_INVENTION = PROHIBITED
+PHOTOSHOP_ALIGNED_UI_REBUILD = HOLD
+FINAL_UI_CAPABILITY_BASELINE = NOT YET REPUBLISHED
+CURRENT_DEVELOPMENT_AUTHORITY = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
+THIS_FILE_UI_AUTHORITY = SUSPENDED
+CONNECTOR_005_CHAT_SURFACE_RECORD = PRESERVED
 ```
 
 UI may change placement, grouping, density, panel behavior, icons, labels and Photoshop-aligned interaction presentation. It may not change Core capability semantics, History/Revision contracts, operation vocabulary, tool vocabulary, or document format merely to fit the UI.
