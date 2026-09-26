@@ -1,3 +1,25 @@
+# Superseding continuation authority — 2026-09-26
+
+The user has changed the post-Runtime sequence.
+
+```text
+AFTER_RUNTIME_STABILITY_CHECKPOINT =
+  preserve exact Runtime result/evidence
+  → DEV_HANDOFF checkpoint for this task
+  → DO NOT WAIT FOR MR
+  → switch branch to work/ink-connector-005
+  → read working/INK_CONNECTOR_005_DEV_WORKPACK.md
+  → complete Connector-005 implementation + focused QA
+```
+
+This supersedes older terminal wording that required the DEV session to remain stopped awaiting MR after the Runtime-stability handoff.
+
+Runtime PASS is **not** a prerequisite for starting Connector-005.
+
+The Runtime task itself remains bounded exactly as written below. Do not mix Connector product changes into this branch.
+
+---
+
 # INK Runtime Harness Stability 001 — DEV Workpack
 
 STATUS: `DEV_AUTHORIZED / START`
