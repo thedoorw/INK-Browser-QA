@@ -2,7 +2,7 @@
   "schema": "ink-runtime-queue",
   "version": 1,
   "state": "READY",
-  "target_sha": "98529265aacf548389934d47641a22d55dad6666",
+  "target_sha": "c5da5a622d7f6068dd2071c1a537b0f742647031",
   "pending_work_orders": [
     "INK-CHAT-GEOMETRY-OPS-001",
     "INK-TECH-CLOSURE-001"
@@ -38,9 +38,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36112690309,
-    "tested_sha": "5bd8754aad3e53886ce6109bd350fa4fc5f68db9",
-    "result": "UI_PASS_CREATIVE_BASELINE_TIMEOUT_360S",
-    "note": "Superseded by INK-TECH-CLOSURE-001 final install-first batch"
+    "run_id": 36205164761,
+    "tested_sha": "98529265aacf548389934d47641a22d55dad6666",
+    "result": "FOCUSED_QA_FAIL_3 / QA_CONTRACT_REVISED / PRODUCT_UNCHANGED"
   }
 }
