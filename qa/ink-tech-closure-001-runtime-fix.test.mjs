@@ -323,11 +323,11 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   const inkSource = await readFile(path.join(root, 'product/source/src/ink.js'), 'utf8');
   assert.match(
     inkSource,
-    /\$\$\('#workspaceSwitch button\[data-space\]'\)\.forEach\(button=>button\.addEventListener\('click',\(\)=>this\.switchWorkspace\(button\.dataset\.space\)\)\)/
+    /document\.querySelectorAll\('#workspaceSwitch button\[data-space\]'\)\.forEach\(button=>button\.addEventListener\('click',\(\)=>this\.switchWorkspace\(button\.dataset\.space\)\)\)/
   );
   assert.doesNotMatch(
     inkSource,
-    /\$\$\('\[data-space\]'\)\.forEach\(button=>button\.addEventListener\('click',\(\)=>this\.switchWorkspace/
+    /querySelectorAll\('\[data-space\]'\)|\$\$\('\[data-space\]'\)/
   );
 
   const indexSource = await readFile(path.join(root, 'product/source/index.html'), 'utf8');
