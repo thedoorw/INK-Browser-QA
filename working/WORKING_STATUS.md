@@ -10,8 +10,10 @@ CURRENT_PRIMARY_TASK = INK-FULL-CAPABILITY-REBASELINE-001
 CURRENT_PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
 DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
 FIRST_PRIORITY = RESTORE_ALL_EXISTING_INK_CAPABILITIES
-CURRENT_GATE = RESTORE_ALL_EXISTING_P0_BEFORE_FIRST_REBASELINE_RUNTIME
-FIRST_REBASELINE_RUNTIME = PROHIBITED
+CURRENT_GATE = FIRST_REBASELINE_RUNTIME_AUTHORIZED
+FIRST_REBASELINE_RUNTIME = AUTHORIZED
+FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
+MR_PRE_RUNTIME_REVIEW = PASS
 UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 UI_STATUS = HOLD
 TECHNICAL_CLOSURE = CLOSED
@@ -37,7 +39,7 @@ RUNTIME_QUEUE =
 
 ## Current next step
 
-MR must first restore/reconcile every existing Section 4 P0 capability from `ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`. Focused/unit non-integrated QA, History safety and save/load checks are allowed. The first rebaseline integrated Runtime and Runtime queue submission are prohibited until `ALL_EXISTING_P0_CAPABILITIES_RESTORED = PASS` and `UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0`. UI implementation remains paused.
+MR reviewed exact DEV HEAD `f911f777f770cbe290e290c4b0cbc3692b36641e`: Section 4 = 61/61, unresolved existing capability loss = 0 identified, and the pre-Runtime gate passed. The first rebaseline integrated Runtime is now authorized for that exact SHA. P1/P2 implementation and UI implementation remain blocked until this Runtime passes.
 
 ## Historical technical milestone
 
