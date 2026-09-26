@@ -11,6 +11,7 @@ import { ChatBoundedEditController, createChatBoundedEditAdapter, CHAT_EDIT_OPER
 import { createAnchor, createPath } from '../product/source/src/vector/vector-core.js';
 import { createInkPublicCreativeApi } from '../product/source/src/agent/public-creative-api.js';
 import { createCreativeIntelligenceContextAdapter } from '../product/source/src/ai/creative-intelligence-context.js';
+import { AICommandLayer } from '../product/source/src/ai/ai-core.js';
 import { ToolCallRouter } from '../product/source/src/ai/chat-runtime.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -188,8 +189,9 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
     getRevisionRecords: () => [],
     getHistoryEntries: () => []
   });
+  const layer = new AICommandLayer({ app });
   const router = new ToolCallRouter({
-    layer: {},
+    layer,
     auditBridge: { record() {} },
     groundedContextProvider: provider
   });
@@ -207,6 +209,54 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   assert.equal(result.result?.authority?.revisionWrite, false);
   assert.deepEqual(result.result?.modules?.documentBridge?.context?.selection?.objectIds, ['component-source-child']);
   assert.equal(readOnlySnapshot(app), before);
+
+  const beforeSummary = readOnlySnapshot(app);
+  const summary = await router.route({
+    id: 'runtime-fix-document-summary',
+    name: 'get_document_summary',
+    arguments: {}
+  }, { permission: 'OBSERVE', scope: 'CURRENT_DOCUMENT', sessionId: 'runtime-fix' });
+  assert.equal(summary.status, 'COMPLETED');
+  assert.equal(readOnlySnapshot(app), beforeSummary);
+
+  const publicApi = createInkPublicCreativeApi(app);
+  const beforeContext = readOnlySnapshot(app);
+  const inkContext = await publicApi.tools.invoke('get_ink_context', {});
+  assert.equal(inkContext.status, 'COMPLETED');
+  assert.equal(readOnlySnapshot(app), beforeContext);
+
+  const beforeSelection = readOnlySnapshot(app);
+  const inkSelection = await publicApi.tools.invoke('get_ink_selection', {});
+  assert.equal(inkSelection.status, 'COMPLETED');
+  assert.deepEqual(inkSelection.result?.selection?.objectIds, ['component-source-child']);
+  assert.equal(readOnlySnapshot(app), beforeSelection);
+
+  const unavailableApp = makeApp();
+  const unavailableFound = unavailableApp.findObject({ objectId: 'component-source-child' });
+  unavailableFound.object.subpaths[0].closed = false;
+  unavailableApp.selection = [ref(unavailableApp, 'component-source-child')];
+  const unavailableProvider = createCreativeIntelligenceContextAdapter({
+    getDocument: () => unavailableApp.doc,
+    getSelectedObjectIds: () => unavailableApp.selection.map(item => item.objectId),
+    getRevisionId: () => unavailableApp.revisions.revisionIdFor(unavailableApp.doc.id),
+    getRevisionRecords: () => [],
+    getHistoryEntries: () => []
+  });
+  const unavailableRouter = new ToolCallRouter({
+    layer: new AICommandLayer({ app: unavailableApp }),
+    auditBridge: { record() {} },
+    groundedContextProvider: unavailableProvider
+  });
+  const beforeUnavailable = readOnlySnapshot(unavailableApp);
+  const unavailable = await unavailableRouter.route({
+    id: 'runtime-fix-grounded-unavailable',
+    name: 'get_grounded_creative_context',
+    arguments: {}
+  }, { permission: 'OBSERVE', scope: 'CURRENT_DOCUMENT', sessionId: 'runtime-fix' });
+  assert.equal(unavailable.status, 'COMPLETED');
+  assert.equal(unavailable.result?.modules?.semanticRegions?.status, 'UNAVAILABLE');
+  assert.deepEqual(unavailable.result?.modules?.documentBridge?.context?.selection?.objectIds, ['component-source-child']);
+  assert.equal(readOnlySnapshot(unavailableApp), beforeUnavailable);
 
   const source = await readFile(path.join(root, 'product/source/src/ai/creative-intelligence-context.js'), 'utf8');
   assert.match(source, /document:\s*clone\(getDocument\(\)\)/);
