@@ -192,3 +192,33 @@ C1 therefore moves from `IMPLEMENTED_NOT_PROMOTED` to:
 `INTEGRATED_ON_CLOSURE_BRANCH / SOURCE_ACCEPTED / RUNTIME_AND_PROMOTION_PENDING`
 
 C2-A is released on the same branch. The main capability state is not yet changed until final Runtime PASS and promotion.
+
+
+## Scope boundary — Photoshop-aligned final UI rebuild excluded from current Closure — 2026-09-26
+
+```text
+INK-TECH-CLOSURE-001 =
+  technical capability closure only
+
+IN_SCOPE =
+  residual defect fixes
+  source/focused QA
+  exact-SHA Runtime
+  clean promotion to current main
+  CURRENT_CAPABILITY_BASELINE freeze
+
+OUT_OF_SCOPE =
+  Photoshop-aligned final UI rebuild
+  final command/menu/tool/panel placement
+  Navigator / History panel UI alignment
+  final UI visual/interaction closure
+
+NEXT_AFTER_CLOSURE =
+  hand frozen capability baseline to UR
+  → separate UI Work Order
+```
+
+The Photoshop-aligned final UI rebuild is NOT part of the completion percentage or completion criteria for `INK-TECH-CLOSURE-001`.
+
+---
+
