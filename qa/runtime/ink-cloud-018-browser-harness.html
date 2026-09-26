@@ -67,12 +67,24 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       assert(valid,`WORKSTATION_PANEL_${id.toUpperCase()}_AUTHORITY`,detail);
       return state;
     };
-    const readOnlySnapshot=()=>JSON.stringify({
+    const readOnlyState=()=>({
       document:app.doc,
       history:{undo:app.history?.undoStack?.length||0,redo:app.history?.redoStack?.length||0,pending:Boolean(app.history?.pending)},
       revision:app.revisions?.revisionIdFor?.(app.doc?.id)??null
     });
-    const assertReadOnly=(before,name,details={})=>assert(readOnlySnapshot()===before,name,details);
+    const readOnlySnapshot=()=>JSON.stringify(readOnlyState());
+    const assertReadOnly=(before,name,details={})=>{
+      const after=readOnlySnapshot();
+      if(after===before){ pass(name,details); return true; }
+      let prior=null,next=null;
+      try{prior=JSON.parse(before);next=JSON.parse(after);}catch{}
+      const changed={
+        document:prior&&next?JSON.stringify(prior.document)!==JSON.stringify(next.document):null,
+        history:prior&&next?JSON.stringify(prior.history)!==JSON.stringify(next.history):null,
+        revision:prior&&next?prior.revision!==next.revision:null
+      };
+      assert(false,name,{...details,changed,beforeHistory:prior?.history||null,afterHistory:next?.history||null,beforeRevision:prior?.revision??null,afterRevision:next?.revision??null});
+    };
     await openPanel('reference'); // UI-001 intentionally starts collapsed; use the accepted shell authority to enter the workspace.
     assert(w.INK_ARCHITECTURE?.formatVersion===4,'FORMAT_VERSION_4',{value:w.INK_ARCHITECTURE?.formatVersion});
     assert(Boolean(w.document.querySelector('#stage')),'CANVAS_EDITOR_RENDERED');
@@ -644,8 +656,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     app.selectOnly(foundPath.layer.id,firstPath.id);
     cw.refresh();
 
-    const beforePropertiesRead=readOnlySnapshot();
+    const beforePropertiesOpen=readOnlySnapshot();
     await openPanel('properties');
+    assertReadOnly(beforePropertiesOpen,'WORKSTATION_PROPERTIES_PANEL_OPEN_READ_ONLY');
+    const beforePropertiesRead=readOnlySnapshot();
     const propertiesButton=doc.querySelector('[data-workstation-action="grounded-selection-refresh"]');
     assert(Boolean(propertiesButton),'WORKSTATION_PROPERTIES_GROUNDED_ENTRY_VISIBLE');
     propertiesButton.click();
