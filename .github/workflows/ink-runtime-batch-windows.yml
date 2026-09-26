@@ -163,7 +163,6 @@ jobs:
               'qa/ink-tech-closure-001-runtime-fix.test.mjs',
               'qa/ink-connector-005-creative-library-search.test.mjs',
               'qa/ink-p0-restore-all-001-focused.test.mjs',
-              'qa/core-mod-002-semantic-region.test.mjs',
               'qa/chat-validation-001-reference-handoff.test.mjs',
               'qa/core-mod-006-creative-memory.test.mjs',
               'qa/fixtures/rose-window/rose-window-primary.png'
@@ -207,6 +206,7 @@ jobs:
           script: |
             const { spawn } = require('node:child_process');
             const path = require('node:path');
+            const { pathToFileURL } = require('node:url');
             const root = process.env.INK_BATCH_ROOT;
             const tests = [
               'qa/ink-chat-geometry-ops-001.test.mjs',
@@ -221,13 +221,18 @@ jobs:
               'qa/chat-validation-001-reference-handoff.test.mjs',
               'qa/core-mod-006-creative-memory.test.mjs'
             ].map(file => path.join(root, file));
-            await new Promise((resolve, reject) => {
-              const child = spawn(process.execPath, ['--test', ...tests], {
+            const runChild = (args, label) => new Promise((resolve, reject) => {
+              const child = spawn(process.execPath, args, {
                 cwd: root, stdio: 'inherit', shell: false, windowsHide: true
               });
               child.once('error', reject);
-              child.once('exit', (code, signal) => code === 0 ? resolve() : reject(new Error(`Closure focused tests failed: code=${code} signal=${signal}`)));
+              child.once('exit', (code, signal) => code === 0 ? resolve() : reject(new Error(`${label} failed: code=${code} signal=${signal}`)));
             });
+            await runChild(['--test', ...tests], 'Closure focused tests');
+            const polygonUmd = path.join(root, 'product/source/src/vendor/polygon-clipping.umd.min.js');
+            const semanticUrl = pathToFileURL(path.join(root, 'qa/core-mod-002-semantic-region.test.mjs')).href;
+            const semanticBootstrap = `globalThis.polygonClipping=require(${JSON.stringify(polygonUmd)});import(${JSON.stringify(semanticUrl)}).catch(error=>{console.error(error);process.exit(1);});`;
+            await runChild(['-e', semanticBootstrap], 'Semantic region preload test');
 
       - name: Execute bounded browser batch
         uses: actions/github-script@v7
