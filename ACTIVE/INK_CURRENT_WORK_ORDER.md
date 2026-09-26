@@ -11,6 +11,8 @@ PRIMARY_TASK = INK-FULL-CAPABILITY-REBASELINE-001
 PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
 OWNER = MR / MAIN REVIEW
 DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
+FIRST_PRIORITY = RESTORE_ALL_EXISTING_INK_CAPABILITIES
+FIRST_REBASELINE_RUNTIME = PROHIBITED UNTIL ALL_EXISTING_P0_CAPABILITIES_RESTORED
 
 SECONDARY_UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 UI_OWNER = UR / UI REVIEW
@@ -87,10 +89,14 @@ The previous 22-tool / 34-operation baseline is a CHAT public/control surface su
 MR
 → execute INK-FULL-CAPABILITY-REBASELINE-001 from the new development basis
 → complete full product inventory lock
-→ reconcile omitted existing capabilities before inventing replacements
-→ explicitly disposition Photoshop/mature-platform P1 gaps
+→ restore/reconcile EVERY existing Section 4 P0 capability to its accepted historical/current scope
+→ run focused non-integrated QA, History safety and save/load checks
+→ require UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
+→ only then authorize FIRST_REBASELINE_RUNTIME
+→ run the first integrated Runtime on the fully restored existing-capability candidate
+→ only after that Runtime, disposition/implement Photoshop and mature-platform P1/P2 gaps
 → republish ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md as full-product truth
-→ provide exact promoted/runtime-verified authority
+→ provide final exact promoted/runtime-verified authority
 
 UR
 → remain on HOLD
@@ -101,9 +107,18 @@ UR
 → only then issue bounded UI implementation Work Order(s)
 ```
 
-Until that sequence completes:
+Until the existing-capability restoration gate passes:
 
-`NO UI DEV / NO UI IMPLEMENTATION WORK ORDER / NO FINAL FUNCTION LOCK`
+```text
+NO REBASELINE INTEGRATED RUNTIME
+NO RUNTIME QUEUE SUBMISSION
+NO P1/P2 NEW CAPABILITY IMPLEMENTATION
+NO UI DEV
+NO UI IMPLEMENTATION WORK ORDER
+NO FINAL FUNCTION LOCK
+```
+
+Static inspection and focused/unit non-integrated QA required to restore existing P0 capabilities remain allowed.
 
 No technical Closure or Connector task is currently open.
 
