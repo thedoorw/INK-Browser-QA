@@ -1,3 +1,24 @@
+## Program sequence updated — Connector-005 before final UI — 2026-09-26
+
+```text
+CURRENT = INK-TECH-CLOSURE-001
+
+AFTER_CLOSURE =
+  Connector-005 Creative Library Search
+  → update CURRENT_CAPABILITY_BASELINE
+  → Photoshop-aligned final UI rebuild
+
+CONNECTOR_005_PLAN = working/INK_CONNECTOR_005_BOUNDED_PLAN.md
+CONNECTOR_005 = PLANNED / NOT_YET_AUTHORIZED
+UI_REBUILD = HOLD UNTIL POST-CONNECTOR-005 BASELINE
+```
+
+Connector-005 remains bounded to search / inspect / reuse of existing INK reusable assets through existing native authority. It does not authorize Library Manager UI, cloud library, AI auto-classification, Variables/Tokens, Styles, or Component Variants.
+
+This sequence supersedes earlier wording that handed the Closure-only frozen baseline directly to UR.
+
+---
+
 ## Scope boundary — Photoshop-aligned final UI rebuild excluded from current Closure — 2026-09-26
 
 ```text
