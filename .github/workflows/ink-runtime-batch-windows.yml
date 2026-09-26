@@ -160,6 +160,7 @@ jobs:
               'qa/ink-tech-closure-001-c2b.test.mjs',
               'qa/ink-tech-closure-001-c2c.test.mjs',
               'qa/ink-tech-closure-001-final-runtime-prep.test.mjs',
+              'qa/ink-tech-closure-001-runtime-fix.test.mjs',
               'qa/fixtures/rose-window/rose-window-primary.png'
             ]);
             const files = tree.tree.filter(item => item.path.startsWith('product/source/') || exact.has(item.path));
@@ -207,7 +208,8 @@ jobs:
               'qa/ink-tech-closure-001-c2a.test.mjs',
               'qa/ink-tech-closure-001-c2b.test.mjs',
               'qa/ink-tech-closure-001-c2c.test.mjs',
-              'qa/ink-tech-closure-001-final-runtime-prep.test.mjs'
+              'qa/ink-tech-closure-001-final-runtime-prep.test.mjs',
+              'qa/ink-tech-closure-001-runtime-fix.test.mjs'
             ].map(file => path.join(root, file));
             await new Promise((resolve, reject) => {
               const child = spawn(process.execPath, ['--test', ...tests], {
