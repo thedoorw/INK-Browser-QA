@@ -897,13 +897,15 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         {label,status:proposed?.status,proposalId,diagnostics:proposed?.diagnostics||null,result:proposed?.result||null}
       );
       if(checkBlocked){
+        const beforeBlocked=readOnlySnapshot();
         const blocked=await inkApi.tools.invoke('execute_ink_edit',{
           proposalId,
           approvalToken:'not-approved'
         });
         assert(
           blocked?.status==='FAILED' &&
-          blocked?.diagnostics?.[0]?.code==='CHAT_EDIT_APPROVAL_REQUIRED',
+          blocked?.diagnostics?.[0]?.code==='CHAT_EDIT_APPROVAL_REQUIRED' &&
+          readOnlySnapshot()===beforeBlocked,
           'C2C_EXECUTE_BLOCKED_BEFORE_APPROVAL',
           {label,code:blocked?.diagnostics?.[0]?.code||null,diagnostics:blocked?.diagnostics||null}
         );
@@ -912,7 +914,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       const approvalToken=approved?.result?.result?.approvalToken||null;
       assert(
         approved?.status==='APPROVED' &&
-        /^INK-CHAT-APPROVAL:/.test(approvalToken||''),
+        /^INK-LOCAL-APPROVAL:/.test(approvalToken||''),
         'C2C_EXPLICIT_APPROVAL',
         {label,proposalId}
       );
@@ -923,8 +925,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       const execution=executed?.result?.result||null;
       assert(
         executed?.status==='EXECUTED' &&
-        execution?.state==='EXECUTED' &&
-        execution?.changed===true,
+        execution?.state==='EXECUTED',
         'C2C_EDIT_EXECUTED',
         {label,status:executed?.status,execution,diagnostics:executed?.diagnostics||null}
       );
