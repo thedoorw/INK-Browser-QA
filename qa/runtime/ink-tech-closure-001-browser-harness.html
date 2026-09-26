@@ -1138,6 +1138,8 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       : null;
     const finalHistoryEntries=Array.isArray(finalHistory?.result?.entries)?finalHistory.result.entries:[];
     const latestRetainedHistory=finalHistoryEntries.at(-1)||null;
+    const latestC2CHistoryStep=c2cHistorySteps.at(-1)||null;
+    const expectedLatestRetainedLabel=latestC2CHistoryStep?c2cHistoryLabels[latestC2CHistoryStep.operation]:null;
     assert(
       finalHistory?.status==='COMPLETED' &&
       finalHistory.result?.pending===false &&
@@ -1146,7 +1148,8 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       Number(finalHistory.result?.applied)===expectedRetainedApplied &&
       Number(finalHistory.result?.retainedCount)===finalHistoryEntries.length &&
       Number(finalHistory.result?.retainedCount)===Number(finalHistory.result?.applied) &&
-      latestRetainedHistory?.label===c2cHistoryLabels['component.reference.repair.v1'],
+      Boolean(expectedLatestRetainedLabel) &&
+      latestRetainedHistory?.label===expectedLatestRetainedLabel,
       'CLOSURE_HISTORY_ACCUMULATED',
       {
         expectedAccumulatedHistory,
@@ -1154,6 +1157,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         expectedRetainedApplied,
         applied:finalHistory?.result?.applied,
         retainedCount:finalHistory?.result?.retainedCount,
+        expectedLatestLabel:expectedLatestRetainedLabel,
         latestLabel:latestRetainedHistory?.label||null
       }
     );
