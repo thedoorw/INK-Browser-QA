@@ -1,5 +1,57 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-RUNTIME-HARNESS-STABILITY-001 / DEV_HANDOFF / RUNTIME_PASS_EVIDENCE_COMPLETE`
+
+- Branch: `work/ink-runtime-harness-stability-001`
+- Baseline: `54301b0916a04d0a1c611df4db540481baa12300`
+- Tested exact SHA: `89d91e3b77198409d384de95f5d595f14f4620ca`
+- Runtime run: `36237399168`
+- Runner: `DESKTOP-NSOQH69`
+- Focused Node: `26 / 26 PASS`
+- UI: `PASS`
+- Closure: `PASS`
+- Geometry: `PASS`
+- Creative: `PASS`
+- Artifact: `10904374338`
+- Artifact digest: `sha256:d6dc16745eebedd1202183b403933543fef65f400395bd7f02c6258e9ccf6384`
+- Checkpoint: `working/INK_RUNTIME_HARNESS_STABILITY_001_CHECKPOINT.md`
+- Checkpoint commit: `3594fb9a4c982b50f77ee051006c537aee45ef68`
+- Product source change: `0`
+- Bounded operations: `34`
+- Named tools: `21`
+- FORMAT_VERSION: `4`
+- Promotion: `NOT RUN`
+
+## Runtime stability handoff
+
+```text
+H1 UI:
+  Page.loadEventFired one-shot dependency removed
+  bounded navigation + DOM + CSS + runtime readiness used
+  all 3 real Chrome PNG captures PASS
+
+H2 Creative:
+  bounded per-assertion progress evidence added
+  151 assertions PASS
+  final marker HARNESS_FINAL_EVIDENCE_READY
+  prior timeout did not reproduce
+  product defect not established
+
+RESULT = DEV_RUNTIME_HARNESS_STABILITY_READY_FOR_MR_REVIEW
+DEV_HANDOFF
+```
+
+Per superseding authority:
+
+```text
+DO NOT WAIT FOR MR
+→ continue separately on work/ink-connector-005
+```
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-RUNTIME-HARNESS-STABILITY-001 / DEV_AUTHORIZED / CONTINUE_TO_CONNECTOR_005_AFTER_HANDOFF`
 
 Post-task continuation:
