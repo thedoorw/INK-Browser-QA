@@ -1,5 +1,37 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-RUNTIME-HARNESS-STABILITY-001 / DEV_AUTHORIZED / START`
+
+- Branch: `work/ink-runtime-harness-stability-001`
+- Baseline exact SHA: `54301b0916a04d0a1c611df4db540481baa12300`
+- Workpack: `working/INK_RUNTIME_HARNESS_STABILITY_001_DEV_WORKPACK.md`
+- Entering Runtime: `36230493892`
+- Focused Node: `26 / 26 PASS`
+- Closure Runtime: `PASS`
+- Geometry Runtime: `PASS`
+- UI residual: `CDP Page.loadEventFired timeout`
+- Creative residual: `Harness timeout 360s`
+- Product source: `FROZEN`
+- Windows Runtime by DEV: `AUTHORIZED / THIS WORKPACK ONLY`
+- Promotion: `PROHIBITED`
+
+Required stop:
+
+```text
+diagnose Runtime harness stability
+→ bounded QA/runtime correction
+→ focused/static PASS
+→ exact-SHA Windows Runtime + evidence
+→ working/INK_RUNTIME_HARNESS_STABILITY_001_CHECKPOINT.md
+→ DEV_RUNTIME_HARNESS_STABILITY_READY_FOR_MR_REVIEW
+→ DEV_HANDOFF
+→ STOP
+```
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-TECH-CLOSURE-001 / FINAL_RUNTIME_FIX_3 / DEV_HANDOFF / STOP`
 
 - Branch: `work/ink-tech-closure-001`
