@@ -1,3 +1,25 @@
+## Post-Closure sequence fixed — 2026-09-26
+
+```text
+INK-TECH-CLOSURE-001
+→ Connector-005 Creative Library Search
+→ capability baseline refresh
+→ Photoshop-aligned final UI rebuild
+```
+
+Connector-005 plan:
+
+`working/INK_CONNECTOR_005_BOUNDED_PLAN.md`
+
+State:
+
+```text
+Connector-005 = PLANNED / NOT_YET_AUTHORIZED
+UI = HOLD FOR POST-CONNECTOR-005 BASELINE
+current active work remains Closure Runtime Fix 2
+```
+
+---
 ## Closure Runtime run 36220214402 classified / Fix 2 dispatched — 2026-09-26
 
 ```text
