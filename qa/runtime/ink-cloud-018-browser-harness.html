@@ -17,6 +17,8 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   const pass = (name, details={}) => { evidence.checks.push({name,...details,status:'PASS'}); logNode.textContent = JSON.stringify(evidence,null,2); };
   const assert = (condition, name, details={}) => { if (!condition) throw Object.assign(new Error(name),{qa:name,details}); pass(name,details); };
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+  let runtimeStage='BOOT';
+  const markRuntimeStage=stage=>{runtimeStage=stage;evidence.runtimeStage=stage;};
   const waitFor = async (predicate, timeout = 8000, step = 40) => {
     const started = performance.now();
     while (performance.now() - started < timeout) {
@@ -811,6 +813,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         }
       ]
     };
+    markRuntimeStage('USE_INK_PROPOSE');
     const useInkProposed=await inkApi.tools.invoke('use_ink',{action:'propose',plan:useInkPlan});
     assert(
       useInkProposed?.status==='PROPOSED' &&
@@ -821,6 +824,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     );
 
     const useInkBlockedBefore=readOnlySnapshot();
+    markRuntimeStage('USE_INK_BLOCKED_EXECUTE');
     const useInkBlocked=await inkApi.tools.invoke('use_ink',{
       action:'execute',
       planId:useInkProposed.result.planId,
@@ -834,6 +838,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {status:useInkBlocked?.status,code:useInkBlocked?.diagnostics?.[0]?.code||null}
     );
 
+    markRuntimeStage('USE_INK_APPROVE');
     const useInkApproved=await inkApi.tools.invoke('use_ink',{
       action:'approve',
       planId:useInkProposed.result.planId
@@ -854,6 +859,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     };
     let useInkExecuted;
     try{
+      markRuntimeStage('USE_INK_EXECUTE');
       useInkExecuted=await inkApi.tools.invoke('use_ink',{
         action:'execute',
         planId:useInkProposed.result.planId,
@@ -888,6 +894,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {before:useInkRevisionBefore,after:useInkRevisionAfter,revisionReceipt:useInkExecuted?.revisionReceipt}
     );
 
+    markRuntimeStage('USE_INK_UNSUPPORTED');
     const useInkUnsupported=await inkApi.tools.invoke('use_ink',{action:'boolean'});
     assert(
       useInkUnsupported?.status==='FAILED' &&
@@ -897,6 +904,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     );
 
     const useInkForbiddenBefore=readOnlySnapshot();
+    markRuntimeStage('USE_INK_FORBIDDEN');
     const useInkForbidden=await inkApi.tools.invoke('use_ink',{
       action:'propose',
       plan:{
@@ -926,14 +934,17 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const prompt=cw.root.querySelector('[data-workspace-input="chat-prompt"]');
     prompt.value='Describe the current Rose Window document context without changing the artwork.';
     const conversationBefore=JSON.stringify(app.doc);
+    markRuntimeStage('CHAT_CONTEXT');
     const context=await cw.runConversationAction('chat-conversation-inspect');
     assert(context?.format==='INK-CHAT-CONTEXT','CHAT_DOCUMENT_CONTEXT_BOUND',{sourceVersion:context?.sourceVersion});
+    markRuntimeStage('CHAT_SEND');
     const conversation=await cw.runConversationAction('chat-conversation-send');
     assert(Boolean(conversation?.content),'CHAT_NATURAL_LANGUAGE_RESPONSE',{source:conversation?.source,provider:conversation?.provider});
     assert(JSON.stringify(app.doc)===conversationBefore,'CHAT_DISCUSSION_NON_MUTATING');
 
     await openPanel('reference');
     cw.root.querySelector('[data-workspace-input="structure-count"]').value='6';
+    markRuntimeStage('STRUCTURE_RUN');
     const structured=await cw.runStructure();
     assert(Boolean(structured),'STRUCTURE_AWARE_EXECUTED');
     evidence.metrics.structureRadialCount=structured?.radialCount;
@@ -952,6 +963,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
 
     await openPanel('revision');
     cw.root.querySelector('[data-workspace-input="revision-label"]').value='Rose Window structure checkpoint';
+    markRuntimeStage('REVISION_CAPTURE');
     const structureCapture=await cw.runRevisionAction('revision-capture');
     const structureRevision=structureCapture?.record?.revisionId || app.revisions.revisionIdFor?.(app.doc.id);
     assert(Boolean(structureRevision),'REVISION_STRUCTURE_CAPTURED',{revisionId:structureRevision});
@@ -962,6 +974,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const beforeRevisionCompare=readOnlySnapshot();
     const compareButton=cw.root.querySelector('[data-workspace-action="revision-compare"]');
     assert(compareButton?.disabled===false,'WORKSTATION_REVISION_COMPARE_ENTRY_ENABLED',{revisionId:baselineRevision});
+    markRuntimeStage('REVISION_COMPARE');
     compareButton.click();
     await waitFor(()=>cw.status?.code==='REVISION_COMPARISON_REFRESHED');
     const compareText=cw.root.querySelector('[data-workspace-output="revision-compare"]')?.textContent||'';
@@ -969,6 +982,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     assert(Boolean(cw.lastRevisionComparison) && /structural/.test(compareText) && /renderer not used/.test(compareText),'WORKSTATION_REVISION_STRUCTURAL_COMPARE',{text:compareText});
     assert(/Provenance /.test(provenanceText) && /read-only/.test(provenanceText),'WORKSTATION_REVISION_PROVENANCE_VISIBLE',{text:provenanceText});
     assertReadOnly(beforeRevisionCompare,'WORKSTATION_REVISION_COMPARE_READ_ONLY');
+    markRuntimeStage('REVISION_RESTORE');
     const restored=await cw.runRevisionAction('revision-restore');
     assert(Boolean(restored) && cw.lastRevisionResult?.action==='restore','REVISION_RESTORE_EXECUTED',{revisionId:baselineRevision});
     assert(w.INK_TEST.documentIntegrity()?.passed===true,'DOCUMENT_INTEGRITY_AFTER_RESTORE');
@@ -976,6 +990,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     let savedBlob=null, savedName=null;
     const originalDownload=app.download.bind(app);
     app.download=(blobValue,name)=>{savedBlob=blobValue;savedName=name;};
+    markRuntimeStage('PROJECT_SAVE');
     await app.saveProject();
     app.download=originalDownload;
     const blobCtor=w.Blob;
@@ -994,6 +1009,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     assert(w.INK_TEST.documentIntegrity()?.passed===true && app.doc.formatVersion===4,'PROJECT_RELOAD_INTEGRITY',{formatVersion:app.doc.formatVersion,size:savedBlob.size});
 
     // INK-CHAT-GEOMETRY-OPS-001 — real-browser native geometry authority exposure.
+    markRuntimeStage('FINAL_HEALTH');
     const health=w.INK_TEST.runtimeHealth?.();
     evidence.metrics.runtimeHealth=health;
     const fatalCount=Number(health?.errors?.fatal || health?.fatalErrors || health?.fatal || 0);
@@ -1014,16 +1030,30 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     await reportEvidence();
   }
 
-  frame.addEventListener('load',()=>run().catch(async error=>{
-    evidence.failures.push({message:error?.message||String(error),qa:error?.qa||null,details:error?.details||null,stack:error?.stack||null});
-    resultNode.dataset.state='FAIL'; resultNode.textContent='FAIL';
-    logNode.textContent=JSON.stringify(evidence,null,2);
-    document.documentElement.dataset.qa='FAIL';
-    try {
-      await reportEvidence();
-    } catch (reportError) {
-      console.error('INK-CLOUD-018 QA result callback failed', reportError);
+  frame.addEventListener('load',async()=>{
+    let watchdog=null;
+    try{
+      await Promise.race([
+        run(),
+        new Promise((_,reject)=>{
+          watchdog=setTimeout(()=>reject(Object.assign(new Error('CREATIVE_STAGE_TIMEOUT'),{
+            qa:'CREATIVE_STAGE_TIMEOUT',details:{stage:runtimeStage}
+          })),300000);
+        })
+      ]);
+    }catch(error){
+      evidence.failures.push({message:error?.message||String(error),qa:error?.qa||null,details:error?.details||null,stack:error?.stack||null});
+      resultNode.dataset.state='FAIL'; resultNode.textContent='FAIL';
+      logNode.textContent=JSON.stringify(evidence,null,2);
+      document.documentElement.dataset.qa='FAIL';
+      try {
+        await reportEvidence();
+      } catch (reportError) {
+        console.error('INK-CLOUD-018 QA result callback failed', reportError);
+      }
+    }finally{
+      if(watchdog)clearTimeout(watchdog);
     }
-  }),{once:true});
+  },{once:true});
 })();
 </script>
