@@ -1,3 +1,33 @@
+## FINAL RUNTIME authorized — Closure 001 — 2026-09-26
+
+```text
+TASK = INK-TECH-CLOSURE-001
+TARGET_EXACT_SHA = 98529265aacf548389934d47641a22d55dad6666
+PRODUCT_SOURCE = FROZEN
+C1 = MR_SOURCE_PASS
+C2-A = MR_SOURCE_PASS
+C2-B = MR_SOURCE_PASS
+C2-C = MR_SOURCE_PASS
+
+FINAL_RUNTIME_PREP = PASS
+STATIC_ORCHESTRATION_GATE = 21 / 21 PASS
+
+WINDOWS_BATCH =
+  focused Node contracts
+  → UI
+  → Closure
+  → Geometry
+  → Creative
+
+SUITE_FAILURE_STARVATION = DISABLED
+PARTIAL_PROMOTION = 0
+PROMOTION = HOLD UNTIL FINAL RUNTIME CLASSIFICATION
+```
+
+Runtime workflow materialization now includes the isolated Closure harness and all five Closure focused Node tests.
+
+---
+
 ## Closure C2-B source PASS / C2-C released — 2026-09-25
 
 ```text
