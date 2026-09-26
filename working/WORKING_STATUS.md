@@ -1,3 +1,30 @@
+## Closure final Runtime defects dispatched to DEV — 2026-09-26
+
+```text
+TASK = INK-TECH-CLOSURE-001
+STATE = DEV_FIX_IN_PROGRESS
+
+BRANCH = work/ink-tech-closure-001
+DISPATCH_HEAD = f5eaf45715859004436d15d4645209b7be29a120
+WORKPACK = working/INK_TECH_CLOSURE_001_RUNTIME_FIX_DEV_WORKPACK.md
+
+KNOWN_RUNTIME =
+  focused contracts = PASS
+  UI = PASS
+  Geometry = PASS
+
+OPEN_DEFECTS =
+  component.register.v1 proposal FAIL
+  grounded OBSERVE mutates Document JSON
+
+MR = STOP DIRECT IMPLEMENTATION
+DEV = FIX + FOCUSED QA + HANDOFF
+RUNTIME = AFTER MR REVIEW
+PROMOTION = HOLD
+```
+
+---
+
 ## FINAL RUNTIME authorized — Closure 001 — 2026-09-26
 
 ```text
