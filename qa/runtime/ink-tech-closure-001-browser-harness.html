@@ -871,59 +871,72 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     );
 
     const c2cRuns=[];
-    const executeC2CPlan=async(label,steps,{checkBlocked=false}={})=>{
+    const executeC2CEdit=async(label,steps,{checkBlocked=false}={})=>{
+      assert(
+        Array.isArray(steps) && steps.length===1,
+        'C2C_SINGLE_EDIT_ROUTE_REQUIRED',
+        {label,stepCount:steps?.length??null}
+      );
+      const step=steps[0];
+      const task={
+        schema:'INK-CHAT-EDIT-TASK',
+        version:1,
+        taskId:`closure-c2c:${step.stepId}`,
+        operation:step.operation,
+        targets:step.targets,
+        arguments:step.arguments
+      };
       const beforeProposal=readOnlySnapshot();
-      const proposed=await inkApi.tools.invoke('use_ink',{
-        action:'propose',
-        plan:{schema:'INK-CHAT-CREATIVE-PLAN',version:1,intentSummary:label,steps}
-      });
+      const proposed=await inkApi.tools.invoke('propose_ink_edit',{task});
+      const proposalId=proposed?.result?.result?.proposalId||null;
       assert(
         proposed?.status==='PROPOSED' &&
-        Boolean(proposed?.result?.planId) &&
+        Boolean(proposalId) &&
         readOnlySnapshot()===beforeProposal,
         'C2C_PROPOSAL_MUTATION_NEUTRAL',
-        {label,status:proposed?.status,diagnostics:proposed?.diagnostics||null,result:proposed?.result||null}
+        {label,status:proposed?.status,proposalId,diagnostics:proposed?.diagnostics||null,result:proposed?.result||null}
       );
       if(checkBlocked){
-        const blocked=await inkApi.tools.invoke('use_ink',{
-          action:'execute',planId:proposed.result.planId,approvalToken:'not-approved'
+        const blocked=await inkApi.tools.invoke('execute_ink_edit',{
+          proposalId,
+          approvalToken:'not-approved'
         });
         assert(
           blocked?.status==='FAILED' &&
-          blocked?.diagnostics?.[0]?.code==='CHAT_PLAN_APPROVAL_REQUIRED',
+          blocked?.diagnostics?.[0]?.code==='CHAT_EDIT_APPROVAL_REQUIRED',
           'C2C_EXECUTE_BLOCKED_BEFORE_APPROVAL',
-          {label,code:blocked?.diagnostics?.[0]?.code||null}
+          {label,code:blocked?.diagnostics?.[0]?.code||null,diagnostics:blocked?.diagnostics||null}
         );
       }
-      const approved=await inkApi.tools.invoke('use_ink',{action:'approve',planId:proposed.result.planId});
+      const approved=await inkApi.tools.invoke('approve_ink_edit',{proposalId});
+      const approvalToken=approved?.result?.result?.approvalToken||null;
       assert(
         approved?.status==='APPROVED' &&
-        /^INK-LOCAL-PLAN-APPROVAL:/.test(approved?.result?.approvalToken||''),
+        /^INK-CHAT-APPROVAL:/.test(approvalToken||''),
         'C2C_EXPLICIT_APPROVAL',
-        {label,planId:proposed.result.planId}
+        {label,proposalId}
       );
-      const executed=await inkApi.tools.invoke('use_ink',{
-        action:'execute',
-        planId:proposed.result.planId,
-        approvalToken:approved.result.approvalToken
+      const executed=await inkApi.tools.invoke('execute_ink_edit',{
+        proposalId,
+        approvalToken
       });
+      const execution=executed?.result?.result||null;
       assert(
-        executed?.status==='COMPLETED' &&
-        executed?.result?.stepResults?.length===steps.length &&
-        executed.result.stepResults.every(step=>step.ok===true && step.changed===true),
-        'C2C_PLAN_EXECUTED',
-        {label,status:executed?.status,steps:executed?.result?.stepResults}
+        executed?.status==='EXECUTED' &&
+        execution?.state==='EXECUTED' &&
+        execution?.changed===true,
+        'C2C_EDIT_EXECUTED',
+        {label,status:executed?.status,execution,diagnostics:executed?.diagnostics||null}
       );
-      c2cRuns.push({label,proposed,approved,executed});
-      return executed;
+      c2cRuns.push({label,step,proposed,approved,executed,execution});
+      return execution;
     };
-    const c2cTargetFromStep=(executed,stepId)=>{
-      const step=executed?.result?.stepResults?.find(item=>item.stepId===stepId);
-      const target=step?.targets?.[0];
+    const c2cTargetFromExecution=execution=>{
+      const target=execution?.targets?.[0];
       return target?.ref||target||null;
     };
 
-    await executeC2CPlan('Closure C2-C · register Frame source as Component Definition',[
+    await executeC2CEdit('Closure C2-C · register Frame source as Component Definition',[
       {
         stepId:'c2c-register',
         operation:'component.register.v1',
@@ -939,7 +952,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {definition:c2cDefinition}
     );
 
-    const c2cCreate=await executeC2CPlan('Closure C2-C · create native Component Instance',[
+    const c2cCreate=await executeC2CEdit('Closure C2-C · create native Component Instance',[
       {
         stepId:'c2c-instance-create',
         operation:'component.instance.create.v1',
@@ -953,7 +966,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         dependsOn:[]
       }
     ],{checkBlocked:true});
-    const c2cInstanceRef=c2cTargetFromStep(c2cCreate,'c2c-instance-create');
+    const c2cInstanceRef=c2cTargetFromExecution(c2cCreate);
     let c2cInstance=app.findObject(c2cInstanceRef)?.object;
     assert(
       c2cInstance?.type==='component-instance' &&
@@ -962,7 +975,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {instanceRef:c2cInstanceRef,definitionId:c2cDefinition.id}
     );
 
-    await executeC2CPlan('Closure C2-C · set and reset existing opacity override',[
+    await executeC2CEdit('Closure C2-C · set and reset existing opacity override',[
       {
         stepId:'c2c-override-set',
         operation:'component.override.set.v1',
@@ -977,7 +990,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       'C2C_OPACITY_OVERRIDE_SET',
       {overrides:c2cInstance?.overrides}
     );
-    await executeC2CPlan('Closure C2-C · reset existing opacity override',[
+    await executeC2CEdit('Closure C2-C · reset existing opacity override',[
       {
         stepId:'c2c-override-reset',
         operation:'component.override.reset.v1',
@@ -993,7 +1006,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     );
 
     const c2cDefinitionsBeforeDuplicate=app.doc.components.definitions.length;
-    await executeC2CPlan('Closure C2-C · duplicate Component Definition',[
+    await executeC2CEdit('Closure C2-C · duplicate Component Definition',[
       {
         stepId:'c2c-definition-duplicate',
         operation:'component.definition.duplicate.v1',
@@ -1011,7 +1024,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {definition:c2cDuplicateDefinition}
     );
 
-    await executeC2CPlan('Closure C2-C · explicitly repair Instance reference',[
+    await executeC2CEdit('Closure C2-C · explicitly repair Instance reference',[
       {
         stepId:'c2c-reference-repair',
         operation:'component.reference.repair.v1',
@@ -1027,7 +1040,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {definitionId:c2cInstance?.definitionId}
     );
 
-    const c2cDetach=await executeC2CPlan('Closure C2-C · detach native Component Instance',[
+    const c2cDetach=await executeC2CEdit('Closure C2-C · detach native Component Instance',[
       {
         stepId:'c2c-instance-detach',
         operation:'component.instance.detach.v1',
@@ -1036,7 +1049,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         dependsOn:[]
       }
     ]);
-    const c2cDetachedRef=c2cTargetFromStep(c2cDetach,'c2c-instance-detach');
+    const c2cDetachedRef=c2cTargetFromExecution(c2cDetach);
     const c2cDetached=app.findObject(c2cDetachedRef)?.object;
     assert(
       Boolean(c2cDetached) &&
@@ -1046,7 +1059,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {detachedRef:c2cDetachedRef,detachedType:c2cDetached?.type}
     );
 
-    const c2cHistorySteps=c2cRuns.flatMap(run=>run.executed?.historyReceipt?.steps||[]);
+    const c2cHistorySteps=c2cRuns.map(run=>({stepId:run.step.stepId,history:run.execution?.history||null}));
     assert(
       c2cHistorySteps.length===7 &&
       c2cHistorySteps.every(step=>Boolean(step.history) &&
@@ -1060,7 +1073,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       schema:'INK-TECH-CLOSURE-001-C2C-PROOF',
       version:1,
       operations:c2cOperations,
-      planCount:c2cRuns.length,
+      editCount:c2cRuns.length,
       historySteps:c2cHistorySteps.length,
       definitionId:c2cDefinition.id,
       duplicateDefinitionId:c2cDuplicateDefinition.id,
@@ -1074,7 +1087,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
 
 
 
-    const allPlanRuns=[...geometryRuns,...c2aRuns,...c2bRuns,...c2cRuns];
+    const allPlanRuns=[...geometryRuns,...c2aRuns,...c2bRuns];
     const allReceipts=allPlanRuns.map(run=>run.executed?.revisionReceipt).filter(Boolean);
     assert(
       allReceipts.length===allPlanRuns.length &&
