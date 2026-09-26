@@ -1,11 +1,12 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "54301b0916a04d0a1c611df4db540481baa12300",
+  "state": "READY",
+  "target_sha": "5cecc4df067ee4158107babcfdced0489f76f2fa",
   "pending_work_orders": [
     "INK-CHAT-GEOMETRY-OPS-001",
-    "INK-TECH-CLOSURE-001"
+    "INK-TECH-CLOSURE-001",
+    "INK-RUNTIME-HARNESS-STABILITY-001"
   ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
