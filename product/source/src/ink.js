@@ -387,7 +387,7 @@ class InkApp{
     drawButton.addEventListener('contextmenu',e=>{e.preventDefault();this.toggleBrushFamilyPopover(true);});
     $$('[data-subtool]').forEach(btn=>btn.addEventListener('click',()=>{this.setTool(btn.dataset.subtool);this.toggleBrushFamilyPopover(false);}));
     $$('.inspector-tab').forEach(btn=>btn.addEventListener('click',()=>{this.autoInspectorContext=false;this.setInspectorTab(btn.dataset.tab);}));
-    $$('[data-space]').forEach(button=>button.addEventListener('click',()=>this.switchWorkspace(button.dataset.space)));
+    $('#workspaceSwitch button[data-space]').forEach(button=>button.addEventListener('click',()=>this.switchWorkspace(button.dataset.space)));
     $('#undoBtn').onclick=()=>this.history.undo();$('#redoBtn').onclick=()=>this.history.redo();$('#historyLimit').onchange=e=>this.setHistoryLimit(+e.target.value);
     $('#newBtn').onclick=()=>this.newDocument();$('#openBtn').onclick=()=>$('#projectInput').click();$('#saveBtn').onclick=()=>this.saveProject();$('#exportBtn').onclick=()=>this.openExport();
     $('#projectInput').onchange=e=>this.openProjectFile(e.target.files?.[0]);$('#imageInput').onchange=e=>this.importImage(e.target.files?.[0]);
