@@ -12,7 +12,7 @@ import { createAnchor, createPath } from '../product/source/src/vector/vector-co
 import { createInkPublicCreativeApi } from '../product/source/src/agent/public-creative-api.js';
 import { createCreativeIntelligenceContextAdapter } from '../product/source/src/ai/creative-intelligence-context.js';
 import { AICommandLayer } from '../product/source/src/ai/ai-core.js';
-import { ToolCallRouter } from '../product/source/src/ai/chat-runtime.js';
+import { AuditBridge, ToolCallRouter } from '../product/source/src/ai/chat-runtime.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -177,6 +177,41 @@ test('A: component.register single-step browser route uses bounded edit named to
   assert.match(creativePlanSource, /raw\.steps\.length\s*<\s*2/);
 });
 
+test('C: C2-C History receipt remains valid when undo stack is saturated', async () => {
+  const app = makeApp();
+  app.history.setLimit(20);
+  for (let index = 0; index < 20; index++) {
+    app.history.pushScoped('Fill history', [['title']], () => {
+      app.doc.title = `history-${index}`;
+    });
+  }
+  assert.equal(app.history.undoStack.length, 20);
+
+  const api = createInkPublicCreativeApi(app);
+  const proposed = await api.tools.invoke('propose_ink_edit', {
+    task: {
+      schema: 'INK-CHAT-EDIT-TASK',
+      version: 1,
+      taskId: 'runtime-fix-saturated-component-register',
+      operation: 'component.register.v1',
+      targets: [ref(app, 'component-source-root')],
+      arguments: { name: 'Saturated Component' }
+    }
+  });
+  const proposalId = proposed.result?.result?.proposalId;
+  const approved = await api.tools.invoke('approve_ink_edit', { proposalId });
+  const executed = await api.tools.invoke('execute_ink_edit', {
+    proposalId,
+    approvalToken: approved.result?.result?.approvalToken
+  });
+  const history = executed.result?.result?.history;
+  assert.equal(history.beforeUndoCount, 20);
+  assert.equal(history.afterUndoCount, Math.min(history.beforeUndoCount + 1, app.history.limit));
+  assert.equal(history.afterUndoCount, 20);
+  assert.equal(history.latestLabel, 'Register Component');
+  assert.equal(app.history.pending, null);
+});
+
 test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document History Revision and grounds selection', async () => {
   const app = makeApp();
   const selected = ref(app, 'component-source-child');
@@ -190,9 +225,10 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
     getHistoryEntries: () => []
   });
   const layer = new AICommandLayer({ app });
+  const auditBridge = new AuditBridge(layer);
   const router = new ToolCallRouter({
     layer,
-    auditBridge: { record() {} },
+    auditBridge,
     groundedContextProvider: provider
   });
 
@@ -260,6 +296,16 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
 
   const source = await readFile(path.join(root, 'product/source/src/ai/creative-intelligence-context.js'), 'utf8');
   assert.match(source, /document:\s*clone\(getDocument\(\)\)/);
+
+  const creativeHarness = await readFile(path.join(root, 'qa/runtime/ink-cloud-018-browser-harness.html'), 'utf8');
+  assert.match(creativeHarness, /WORKSTATION_PROPERTIES_GROUNDED_NO_DIRTY_WRITER/);
+  assert.match(creativeHarness, /groundedDirtyCalls\.length===0/);
+  assert.match(creativeHarness, /assertReadOnly\(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY'/);
+  assert.doesNotMatch(creativeHarness, /delete\s+[^;]*modifiedAt|modifiedAt\s*=\s*[^;]*before/i);
+
+  const closureHarness = await readFile(path.join(root, 'qa/runtime/ink-tech-closure-001-browser-harness.html'), 'utf8');
+  assert.match(closureHarness, /Math\.min\(history\.beforeUndoCount\+1,limit\)/);
+  assert.match(closureHarness, /history\.latestLabel===c2cHistoryLabels\[step\.operation\]/);
 });
 
 console.log('INK-TECH-CLOSURE-001 runtime focused fix regression: PASS');
