@@ -1,3 +1,54 @@
+## Runtime harness stability DEV lane authorized — 2026-09-26
+
+```text
+TASK = INK-RUNTIME-HARNESS-STABILITY-001
+STATUS = DEV_AUTHORIZED / START
+
+BRANCH = work/ink-runtime-harness-stability-001
+BASELINE_EXACT_SHA = 54301b0916a04d0a1c611df4db540481baa12300
+WORKPACK = branch:working/INK_RUNTIME_HARNESS_STABILITY_001_DEV_WORKPACK.md
+
+USER_DECISION =
+  delegate remaining Runtime harness stability execution + evidence to DEV
+  → MR retains review / classification / Closure / Connector-005 authority
+
+WINDOWS_RUNTIME_BY_DEV =
+  AUTHORIZED / THIS WORKPACK ONLY
+
+PRODUCT_SOURCE = FROZEN
+PROMOTION = PROHIBITED
+CONNECTOR_005 = NOT_YET_AUTHORIZED
+PHOTOSHOP_UI_REBUILD = HOLD
+```
+
+This task-local Runtime authorization supersedes older Closure workpack wording that prohibited DEV Runtime **only for this stability lane**. It does not retroactively change those completed DEV packages and does not grant DEV promotion or product/Core authority.
+
+Entering evidence:
+
+```text
+RUN = 36230493892
+TESTED_SHA = 54301b0916a04d0a1c611df4db540481baa12300
+
+FOCUSED_NODE = 26 / 26 PASS
+CLOSURE = PASS
+GEOMETRY = PASS
+
+UI = FAIL / CDP Page.loadEventFired timeout
+CREATIVE = FAIL / Harness timeout 360s
+```
+
+Required DEV handoff:
+
+```text
+DEV_RUNTIME_HARNESS_STABILITY_READY_FOR_MR_REVIEW
+→ DEV_HANDOFF
+→ STOP
+```
+
+MR remains responsible for exact-head review, evidence classification, final Runtime acceptance, Closure completion/promotion, and release of Connector-005.
+
+---
+
 ## Runtime Fix 3 DEV package issued — 2026-09-26
 
 ```text
