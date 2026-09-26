@@ -1,3 +1,37 @@
+## Runtime 36225935515 classified / Fix 3 dispatched — 2026-09-26
+
+```text
+TARGET = d6ce01dc47614100bedea2592e64c18f66bc28d3
+MATERIALIZATION = PASS
+FOCUSED_NODE = 26 / 26 PASS
+UI = PASS
+GEOMETRY = PASS
+
+CLOSURE_FAIL =
+  CLOSURE_HISTORY_ACCUMULATED
+  applied = 30
+  limit = 30
+  cause = final QA still assumes >=35 retained entries
+
+CREATIVE_FAIL =
+  WORKSTATION_PROPERTIES_GROUNDED_NO_DIRTY_WRITER
+  exact writer =
+    app.markDirty
+    → InkApp.switchWorkspace
+    → root #app click listener
+    → properties grounded button click
+
+ROOT_CAUSE =
+  #app carries data-space as state
+  bindUI uses global [data-space] as control selector
+
+NEXT = DEV Runtime Fix 3
+WORKPACK = working/INK_TECH_CLOSURE_001_RUNTIME_FIX_3_DEV_WORKPACK.md
+PROMOTION = HOLD
+```
+
+---
+
 ## Runtime 36225526214 — infrastructure-only failure / retry — 2026-09-26
 
 ```text
