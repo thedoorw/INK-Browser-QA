@@ -15,13 +15,15 @@ INK-RUNTIME-HARNESS-STABILITY-001
 → MR reconcile Runtime + Connector branches
 → integrated exact-SHA Runtime / final acceptance
 → clean promotion
+→ provisional Photoshop-aligned UI may already be in progress
 → update CURRENT_CAPABILITY_BASELINE
-→ Photoshop-aligned final UI rebuild
+→ reconcile provisional UI against promoted capability baseline
+→ final Photoshop-aligned UI closure
 ```
 
 Connector-005 implementation no longer waits for Closure/Runtime clean promotion.
 
-The final UI rebuild still does not start until Connector-005 is reviewed, reconciled, promoted, and the capability baseline is refreshed.
+Provisional Photoshop-aligned UI development may start immediately after the Connector-005 DEV handoff. Final capability-facing UI bindings and final UI baseline lock still wait for MR reconciliation, promotion, and CURRENT_CAPABILITY_BASELINE refresh. See `working/INK_UI_PROVISIONAL_BASELINE_RULE.md`.
 
 Implementation branch:
 
@@ -203,5 +205,6 @@ RUNTIME_CLEAN_PASS_PREREQUISITE = REMOVED
 
 MR_FINAL_ACCEPTANCE = REQUIRED
 PROMOTION = HOLD
-PHOTOSHOP_UI_REBUILD = HOLD
+PHOTOSHOP_UI_REBUILD = PROVISIONAL_START_ALLOWED_AFTER_CONNECTOR_005_DEV_HANDOFF
+FINAL_UI_BASELINE = HOLD
 ```
