@@ -778,8 +778,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const useInkTools=inkApi?.tools?.registry?.()||[];
     assert(
       Boolean(inkApi?.composition?.propose && inkApi?.composition?.approve && inkApi?.composition?.execute) &&
-      useInkTools.length===20 &&
-      useInkTools[18]?.name==='use_ink',
+      useInkTools.length===21 &&
+      useInkTools[18]?.name==='use_ink' &&
+      useInkTools[19]?.name==='import_ink_reference' &&
+      useInkTools[20]?.name==='export_ink_asset',
       'USE_INK_TOOL_AVAILABLE',
       {toolCount:useInkTools.length,tool19:useInkTools[18]?.name||null}
     );
