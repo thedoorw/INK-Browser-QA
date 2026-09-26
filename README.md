@@ -12,16 +12,27 @@ RUNTIME_STABILITY = CLOSED
 CONNECTOR_005 = CLOSED / PROMOTED
 
 FORMAT_VERSION = 4
-BOUNDED_EDIT_OPERATIONS = 34
-NAMED_TOOLS = 22
 
-CURRENT_PROGRAM = Photoshop-aligned final UI rebuild
-CURRENT_GATE = UI Work Order required
+CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
+CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
+CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
+
+CURRENT_PRIMARY_REMEDIATION = INK-FULL-CAPABILITY-REBASELINE-001
+CURRENT_PROGRAM = Full Product Capability Rebaseline / Preservation Recovery
+UI_PROGRAM = Photoshop-aligned final UI rebuild
+UI_STATUS = HOLD
+CURRENT_GATE = MR capability rebaseline before any UI Work Order
 ```
 
-Current installed capability truth:
+Current primary remediation authority:
+
+`ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`
+
+Previous capability baseline under active rebaseline:
 
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
+
+The 22 named tools / 34 bounded edit operations recorded there are the current CHAT public/control surface subset. They must not be interpreted as the complete INK product capability inventory.
 
 Current task/gate:
 
@@ -192,7 +203,13 @@ Do not recreate retired task-specific workflows merely because their historical 
 
 ## UI authority
 
-Current UI capability baseline:
+UI implementation is currently **HOLD** while MR rebuilds the full product capability baseline.
+
+Current remediation/development authority:
+
+`ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`
+
+Previous UI capability snapshot, retained for diff but not sufficient to authorize final UI implementation:
 
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
