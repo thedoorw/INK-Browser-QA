@@ -38,8 +38,13 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36220214402,
-    "tested_sha": "399b039ffcd4677e073391418f50e77f8b0a0a63",
-    "result": "FOCUSED_25_PASS / UI_PASS / GEOMETRY_PASS / CLOSURE_HISTORY_SATURATION_ASSERTION_FAIL / CREATIVE_MODIFIED_AT_ONLY_FAIL"
+    "run_id": 36225526214,
+    "tested_sha": "d6ce01dc47614100bedea2592e64c18f66bc28d3",
+    "result": "INFRA_TRANSIENT / MATERIALIZATION_GITHUB_BLOB_502 / PRODUCT_TESTS_NOT_STARTED"
+  },
+  "retry": {
+    "reason": "GitHub git/blob API returned 502 during exact-SHA materialization",
+    "same_target": true,
+    "attempt": 1
   }
 }
