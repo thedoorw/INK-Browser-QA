@@ -882,7 +882,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         Boolean(proposed?.result?.planId) &&
         readOnlySnapshot()===beforeProposal,
         'C2C_PROPOSAL_MUTATION_NEUTRAL',
-        {label,status:proposed?.status}
+        {label,status:proposed?.status,diagnostics:proposed?.diagnostics||null,result:proposed?.result||null}
       );
       if(checkBlocked){
         const blocked=await inkApi.tools.invoke('use_ink',{
