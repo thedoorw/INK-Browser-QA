@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "d6ce01dc47614100bedea2592e64c18f66bc28d3",
   "pending_work_orders": [
     "INK-CHAT-GEOMETRY-OPS-001",
@@ -38,13 +38,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36225526214,
+    "run_id": 36225935515,
     "tested_sha": "d6ce01dc47614100bedea2592e64c18f66bc28d3",
-    "result": "INFRA_TRANSIENT / MATERIALIZATION_GITHUB_BLOB_502 / PRODUCT_TESTS_NOT_STARTED"
-  },
-  "retry": {
-    "reason": "GitHub git/blob API returned 502 during exact-SHA materialization",
-    "same_target": true,
-    "attempt": 1
+    "result": "MATERIALIZATION_PASS / FOCUSED_26_PASS / UI_PASS / GEOMETRY_PASS / CLOSURE_HISTORY_RETENTION_QA_FAIL / CREATIVE_ROOT_DATA_SPACE_EVENT_COLLISION_FAIL"
   }
 }
