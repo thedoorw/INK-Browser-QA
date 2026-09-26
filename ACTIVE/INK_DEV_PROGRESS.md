@@ -6,7 +6,7 @@ BRANCH: `work/ink-p0-restore-all-001`
 
 BASELINE: `b68a0a9fe1e0e65e30f6f2a691e8b60b15186c46`
 
-STATUS: `AUTHORIZED / NOT STARTED`
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED`
 
 WORKPACK:
 `working/INK_P0_EXISTING_CAPABILITY_RESTORE_DEV_WORKPACK_v1.0.md`
@@ -17,11 +17,13 @@ P1_P2_EXPANSION: `PROHIBITED`
 
 UI_IMPLEMENTATION: `PROHIBITED`
 
-LATEST_CHECKPOINT_SHA: `BASELINE`
+LATEST_CHECKPOINT_SHA: `96236c4e5b26be3218f7de9ffd7771831abd49bf`
 
 ## Current milestone
 
-Restore/reconcile every existing Section 4 P0 capability and produce complete non-runtime handoff evidence.
+Section 4 inventory: `61 / 61` rows mapped in `working/INK_P0_EXISTING_CAPABILITY_RESTORE_LEDGER_v1.0.md`.
+
+Existing image, brush-package, semantic-intersection and History/save-load wiring restored. See `working/INK_P0_EXISTING_CAPABILITY_RESTORE_DEV_HANDOFF_v1.0.md` for evidence and historical test fixture limitations.
 
 ## Handoff target
 
@@ -30,6 +32,8 @@ FULL_SECTION_4_COVERAGE = PASS
 FOCUSED_NON_RUNTIME_QA = PASS
 SAVE_LOAD_INTEGRITY = PASS
 HISTORY_SAFETY = PASS
-UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
+UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0 identified by source/focused audit
+INTEGRATED_RUNTIME = NOT RUN / PROHIBITED
+RUNTIME_QUEUE = NOT TOUCHED
 → DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP
 ```
