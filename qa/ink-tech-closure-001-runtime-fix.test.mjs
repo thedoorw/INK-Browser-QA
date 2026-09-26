@@ -210,6 +210,14 @@ test('C: C2-C History receipt remains valid when undo stack is saturated', async
   assert.equal(history.afterUndoCount, 20);
   assert.equal(history.latestLabel, 'Register Component');
   assert.equal(app.history.pending, null);
+
+  const inspectedHistory = await api.tools.invoke('get_ink_history');
+  assert.equal(inspectedHistory.status, 'COMPLETED');
+  assert.equal(inspectedHistory.result?.limit, 20);
+  assert.equal(inspectedHistory.result?.applied, 20);
+  assert.equal(inspectedHistory.result?.retainedCount, 20);
+  assert.equal(inspectedHistory.result?.pending, false);
+  assert.equal(inspectedHistory.result?.entries?.at(-1)?.label, 'Register Component');
 });
 
 test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document History Revision and grounds selection', async () => {
@@ -306,6 +314,27 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   const closureHarness = await readFile(path.join(root, 'qa/runtime/ink-tech-closure-001-browser-harness.html'), 'utf8');
   assert.match(closureHarness, /Math\.min\(history\.beforeUndoCount\+1,limit\)/);
   assert.match(closureHarness, /history\.latestLabel===c2cHistoryLabels\[step\.operation\]/);
+  assert.match(closureHarness, /const expectedAccumulatedHistory=/);
+  assert.match(closureHarness, /Math\.min\(expectedAccumulatedHistory,finalHistoryLimit\)/);
+  assert.match(closureHarness, /finalHistory\.result\?\.retainedCount/);
+  assert.match(closureHarness, /latestRetainedHistory\?\.label===c2cHistoryLabels\['component\.reference\.repair\.v1'\]/);
+  assert.doesNotMatch(closureHarness, /Number\(finalHistory\.result\?\.applied\)>=35/);
+
+  const inkSource = await readFile(path.join(root, 'product/source/src/ink.js'), 'utf8');
+  assert.match(
+    inkSource,
+    /\$\$\('#workspaceSwitch button\[data-space\]'\)\.forEach\(button=>button\.addEventListener\('click',\(\)=>this\.switchWorkspace\(button\.dataset\.space\)\)\)/
+  );
+  assert.doesNotMatch(
+    inkSource,
+    /\$\$\('\[data-space\]'\)\.forEach\(button=>button\.addEventListener\('click',\(\)=>this\.switchWorkspace/
+  );
+
+  const indexSource = await readFile(path.join(root, 'product/source/index.html'), 'utf8');
+  assert.match(indexSource, /id="app"[^>]*data-space="creation"/);
+  const workspaceMarkup = indexSource.match(/id="workspaceSwitch"[\s\S]*?<\/div>/)?.[0] || '';
+  assert.match(workspaceMarkup, /button[^>]*data-space="creation"/);
+  assert.match(workspaceMarkup, /button[^>]*data-space="layout"/);
 });
 
 console.log('INK-TECH-CLOSURE-001 runtime focused fix regression: PASS');
