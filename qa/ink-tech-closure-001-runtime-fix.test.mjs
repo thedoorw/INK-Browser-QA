@@ -310,6 +310,11 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   assert.match(creativeHarness, /groundedDirtyCalls\.length===0/);
   assert.match(creativeHarness, /assertReadOnly\(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY'/);
   assert.doesNotMatch(creativeHarness, /delete\s+[^;]*modifiedAt|modifiedAt\s*=\s*[^;]*before/i);
+  assert.match(creativeHarness, /useInkTools\.length===21/);
+  assert.match(creativeHarness, /useInkTools\[18\]\?\.name==='use_ink'/);
+  assert.match(creativeHarness, /useInkTools\[19\]\?\.name==='import_ink_reference'/);
+  assert.match(creativeHarness, /useInkTools\[20\]\?\.name==='export_ink_asset'/);
+  assert.doesNotMatch(creativeHarness, /useInkTools\.length===20/);
 
   const closureHarness = await readFile(path.join(root, 'qa/runtime/ink-tech-closure-001-browser-harness.html'), 'utf8');
   assert.match(closureHarness, /Math\.min\(history\.beforeUndoCount\+1,limit\)/);
@@ -317,7 +322,10 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   assert.match(closureHarness, /const expectedAccumulatedHistory=/);
   assert.match(closureHarness, /Math\.min\(expectedAccumulatedHistory,finalHistoryLimit\)/);
   assert.match(closureHarness, /finalHistory\.result\?\.retainedCount/);
-  assert.match(closureHarness, /latestRetainedHistory\?\.label===c2cHistoryLabels\['component\.reference\.repair\.v1'\]/);
+  assert.match(closureHarness, /const latestC2CHistoryStep=c2cHistorySteps\.at\(-1\)\|\|null/);
+  assert.match(closureHarness, /const expectedLatestRetainedLabel=latestC2CHistoryStep\?c2cHistoryLabels\[latestC2CHistoryStep\.operation\]:null/);
+  assert.match(closureHarness, /latestRetainedHistory\?\.label===expectedLatestRetainedLabel/);
+  assert.doesNotMatch(closureHarness, /latestRetainedHistory\?\.label===c2cHistoryLabels\['component\.reference\.repair\.v1'\]/);
   assert.doesNotMatch(closureHarness, /Number\(finalHistory\.result\?\.applied\)>=35/);
 
   const inkSource = await readFile(path.join(root, 'product/source/src/ink.js'), 'utf8');
