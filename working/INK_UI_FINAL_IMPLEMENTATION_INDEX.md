@@ -1,6 +1,6 @@
 # INK Final UI — Implementation Index
 
-STATUS: `FINAL_UI_SPEC_LOCKED / IMPLEMENTATION_WORK_ORDER_NEXT`
+STATUS: `UI_HOLD / CAPABILITY_REBASELINE_REQUIRED`
 
 DATE: 2026-09-26
 
@@ -67,10 +67,23 @@ Current readiness:
 ```text
 TECHNICAL_BASELINE_FROZEN = YES
 PHOTOSHOP_ALIGNMENT_ITEMS_RECORDED = YES
-FUNCTION_PLACEMENT_COMPLETE = YES
-C3_PENDING = 0
-RAW_CONTROL_LEDGER_COMPLETE = YES
-AI_COMPLETION_CHECKLIST_READY = YES
+FUNCTION_PLACEMENT_COMPLETE = SNAPSHOT_ONLY_PENDING_REBASELINE
+C3_PENDING = REOPENED_BY_CAPABILITY_AUDIT
+RAW_CONTROL_LEDGER_COMPLETE = CURRENT_SHELL_SNAPSHOT_ONLY
+AI_COMPLETION_CHECKLIST_READY = STRUCTURE_READY_COUNTS_PENDING_REFRESH
 PRODUCT_UI_MUTATION = 0
-NEXT = ISSUE_BOUNDED_UI_IMPLEMENTATION_WORK_ORDER
+UI_IMPLEMENTATION = HOLD
+NEXT = MR_REFRESHED_CAPABILITY_BASELINE
 ```
+
+
+## Capability-reopen hold
+
+The Photoshop reference package is retained, but capability-facing placement is no longer final because USER has reopened baseline completeness.
+
+Do not issue UI implementation Work Orders from this index until:
+1. MR republishes the authoritative capability baseline;
+2. UR diffs that baseline against the current placement map;
+3. every added/restored capability receives one Primary Home;
+4. all checklist counts and exclusions are refreshed;
+5. `UI_HOLD` is explicitly cleared.
