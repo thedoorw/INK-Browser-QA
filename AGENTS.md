@@ -1,100 +1,93 @@
 # INK Agent Contract
 
-AI / Agent 進入本 repository 時，依下列順序讀取：
+GitHub is the SSOT.
+
+## Read order
 
 1. `README.md`
-2. `我說.md`（只理解使用者原文，不把原文自動視為實作授權）
+2. `我說.md` for user intent only — it is not automatic implementation authority
 3. `ACTIVE/README.md`
 4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
-5. `working/WORKING_STATUS.md`
-6. role-specific active status / handoff documents
-7. 本次任務需要的 `governance/` 文件
-8. 只讀任務真正需要的 product / qa / research / engineering 內容
+5. `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
+6. `working/WORKING_STATUS.md`
+7. role/task-specific governance/workpack/evidence explicitly required by the Current Work Order
+
+DEV also reads `ACTIVE/INK_DEV_NEW_WINDOW_START.md` and then the named work branch's branch-local progress file if present.
 
 ## Current-work authority
 
-`ACTIVE/INK_CURRENT_WORK_ORDER.md` is the single authoritative current task.
+Global technical/Core/cross-lane authority:
 
-`working/WORKING_STATUS.md` is the cross-window checkpoint and branch fingerprint record.
+`main:ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-For cross-window continuation, read:
-`governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`.
+A delegated UI branch may carry a branch-local Current Work Order only inside an already approved UI program and only for UI-bounded work.
 
-Legacy files such as `ACTIVE/INK_MAIN_REVIEW_BOARD.md` and `ACTIVE/INK_DEV_PROGRESS.md` may preserve detailed task history or branch-local DEV evidence, but they do not override the Current Work Order.
+Historical status, research reports, archived Workpacks and chat memory cannot independently expand scope.
 
-## 固定安全規則
+## Fixed safety rules
 
-- 未經 Current Work Order 明確授權，不修改正式產品行為。
-- DEV 必須使用 Work Order 指定的 branch，持續 commit，並在 MR gate STOP。
-- DEV 不得自行 merge 到 `main`、更新 `package/ink-current`、發版、certify 或開始下一張任務。
-- 原始 INK v1.6.5 RC 工程包的身份以 SHA256 固定，不得在整理時改寫後仍宣稱為 original baseline。
-- 研究價值、QA 證據價值或歷史追溯價值不明的資料，不直接刪除；優先保留或移入 `ARCHIVE/`。
-- Product、QA、R&D、Engineering、Governance 必須分線，不把大型 Validation / research evidence 當成正式產品 payload。
-- `manifest.webmanifest` / `service-worker.js`、圖示/素材/schema、FLORA/AI/Recipe 目前是 `BOUNDARY_PENDING`；不得未經判定就硬塞入或移出正式主程式。
-- 正式三件式 package 目標為 `INK.html` + `WORKING_STATUS.md` + `SHA256SUMS.txt`，但在單檔 build 與功能驗證完成前不得宣稱 certified。
-- 主程式 packaging 必須讀 `governance/INK_GitHub_Fast_Packaging_Standard.md`；預設採 exact Git blob/tree reuse → package branch → GitHub ZIP，不把 packaging 擴張成 PR merge、Actions、runner、Artifact 或 Runtime 工作。
-- 現階段 modular package 可直接重用 `product/source/` 產品樹；其 validation status 必須清楚標示，不得冒充 certified baseline。
-- 任何刪除必須有明確依據：無 Runtime 依賴、無 QA 證據價值、無研究價值、無治理/追溯價值。
+- Do not modify product behavior without explicit current authorization.
+- DEV works on the named branch and stops at the owning Review gate.
+- DEV does not self-merge main, promote, package/certify, or start the next task.
+- Do not change FORMAT_VERSION unless explicitly authorized.
+- Do not create a second Document, History, Revision, Renderer, Component, Material, Recipe, Repeat or CHAT mutation authority.
+- Do not delete product/QA/research evidence merely because a task ID is old.
+- Old task-named QA may be permanent regression coverage; dependency decides, not filename age.
+- Imported historical documentation under `governance/source/` is not current authority by default.
+- Repository cleanup follows `governance/INK_DOCUMENT_LIFECYCLE_STANDARD_v1.0.md`.
 
+## Product / QA / Research separation
 
-## Self-hosted runtime baseline
+```text
+product/     product source
+qa/          regression/runtime evidence
+research/    technical knowledge
+engineering/ engineering utilities
+governance/  durable rules
+ACTIVE/      current authority
+working/     current task only
+ARCHIVE/     curated historical milestones
+```
 
-Browser/runtime QA involving the user's Windows machine must first read:
+## Runtime
+
+Windows/browser QA uses:
 
 `governance/INK_SELF_HOSTED_WINDOWS_RUNTIME_STANDARD.md`
 
-Do not equate GitHub-hosted Actions quota exhaustion with self-hosted runtime unavailability. Reuse the existing `C:\actions-runner-ink` / `[self-hosted, Windows, X64]` path before inventing a new runtime route.
+Current executable workflow:
 
+`.github/workflows/ink-runtime-batch-windows.yml`
 
-## Self-hosted PowerShell safety
+Do not equate GitHub-hosted quota/state with the availability of the user's Windows self-hosted runner.
 
-When a GitHub Actions job uses the user's Windows self-hosted runner, PowerShell is allowed as a bounded local-processing tool, but the workflow must minimize antivirus / endpoint-security triggers.
+For self-hosted PowerShell:
+- prefer bounded local filesystem/compression/hash work;
+- do not change machine/user execution policy;
+- do not disable endpoint protection;
+- do not download and immediately execute remote PowerShell;
+- prefer checked-in logic and standard GitHub actions/API for repository mutation.
 
-Required default:
+## UI
 
-- prefer PowerShell only for local filesystem, compression, hashing, or deterministic runtime tasks;
-- do not change the machine-wide or user-wide PowerShell execution policy;
-- do not use `Set-ExecutionPolicy` as a workflow setup step;
-- do not combine `ExecutionPolicy Bypass` with downloading and immediately executing remote `.ps1` content;
-- keep GitHub token / API mutation outside PowerShell when a standard GitHub Action or connector can perform it;
-- prefer checked-in, reviewable workflow logic over dynamically downloaded executable scripts;
-- prefer `.NET System.IO.Compression` for ZIP extraction on Windows;
-- preserve antivirus / endpoint protection; do not add exclusions merely to make a workflow pass.
+UI-only work follows:
 
-Preferred bounded pattern:
+`governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
 
-```text
-GitHub Action / standard step
-→ obtain trusted repository input
+UI work may not silently change frozen Core/global authority.
 
-PowerShell
-→ local ZIP / filesystem / hash operation only
+## Packaging
 
-GitHub Action / GitHub API step
-→ commit or publish the resulting repository changes
-```
+Packaging follows:
 
-A new PowerShell workflow is not considered accepted merely because the Action reports SUCCESS. Before it becomes a reusable project method, verify that it completes on the existing self-hosted Windows runner without changing PowerShell policy and without antivirus / endpoint-security intervention.
+`governance/INK_GitHub_Fast_Packaging_Standard.md`
 
+Normal packaging is exact Git-object reuse, not a reason to rebuild or rerun Runtime when accepted source bytes are unchanged.
 
-Verified RA ZIP import pattern (2026-09-21):
+## Cross-window continuity
 
-```text
-curl / standard step downloads trusted repository ZIP to RUNNER_TEMP
-→ cmd launches powershell.exe -NoLogo -NoProfile -NonInteractive -Command
-→ PowerShell uses System.IO.Compression.ZipFile only for local extraction
-→ actions/github-script verifies SHA256 + file count and writes Git blobs/tree/commit
-→ local temp cleanup
-```
+Follow:
 
-Verified run: `35615070012 / SUCCESS`
+`governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
 
-Verified evidence:
-
-- PowerShell extraction step = PASS
-- no `ExecutionPolicy Bypass`
-- no downloaded/executed remote `.ps1`
-- ZIP SHA256 = `525fdff89305135eedebde4fa039517040220724fdee8e557a3d5a2ad5add1d4`
-- extracted file count = `158`
-- extracted bytes = `19909084`
-- import commit = `342a20ecf7932a9b532e3ae9a861e8c240ca7d26`
+The branch plus GitHub evidence is the durable implementation record. Chat history is supplementary, not authoritative.
