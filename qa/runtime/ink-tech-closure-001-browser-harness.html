@@ -99,10 +99,11 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {operationCount:proposalOps.length,operations:proposalOps}
     );
     assert(
-      discovery.result.namedTools?.length===21 &&
+      discovery.result.namedTools?.length===22 &&
       discovery.result.namedTools[19]?.name==='import_ink_reference' &&
-      discovery.result.namedTools[20]?.name==='export_ink_asset',
-      'CLOSURE_NAMED_TOOL_APPEND_ONLY_21',
+      discovery.result.namedTools[20]?.name==='export_ink_asset' &&
+      discovery.result.namedTools[21]?.name==='search_ink_library',
+      'CLOSURE_NAMED_TOOL_APPEND_ONLY_22',
       {namedTools:discovery.result.namedTools?.map(item=>item.name)||[]}
     );
     assert(
