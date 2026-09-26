@@ -7,8 +7,13 @@ DATE: 2026-09-26
 ## Current program
 
 ```text
-PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
-OWNER = UR / UI REVIEW
+PRIMARY_TASK = INK-FULL-CAPABILITY-REBASELINE-001
+PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
+OWNER = MR / MAIN REVIEW
+DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
+
+SECONDARY_UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
+UI_OWNER = UR / UI REVIEW
 TECHNICAL_BASELINE = REOPEN_REQUIRED
 UI_IMPLEMENTATION = HOLD
 UI_WORK_ORDER = PROHIBITED UNTIL REBASELINE
@@ -26,8 +31,9 @@ CURRENT_CAPABILITY_BASELINE =
   FROZEN / POST-CONNECTOR-005 / UI-AUTHORITATIVE
 
 FORMAT_VERSION = 4
-BOUNDED_EDIT_OPERATIONS = 34
-NAMED_TOOLS = 22
+CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
+CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
+CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
 ```
 
 Accepted integrated Runtime:
@@ -59,19 +65,34 @@ UI may change placement, grouping, density, panel behavior, typography, icons an
 
 UI must not change Core/Document/History/Revision/Geometry/CHAT semantics merely to fit the interface.
 
+## Current MR development authority
+
+`ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`
+
+This plan contains:
+- the recovered full-product preservation inventory;
+- the Photoshop capability comparison / maturity gap register;
+- development priority and disposition rules;
+- the mandatory completion self-check checklist.
+
+The previous 22-tool / 34-operation baseline is a CHAT public/control surface subset only.
+
 ## Next action
 
 ```text
 MR
-→ audit omitted existing/required INK capabilities
-→ restore/add accepted capabilities
-→ publish a refreshed ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
+→ execute INK-FULL-CAPABILITY-REBASELINE-001 from the new development basis
+→ complete full product inventory lock
+→ reconcile omitted existing capabilities before inventing replacements
+→ explicitly disposition Photoshop/mature-platform P1 gaps
+→ republish ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md as full-product truth
 → provide exact promoted/runtime-verified authority
 
 UR
-→ diff refreshed baseline against current Function Placement Map
-→ add/remove/reposition affected commands, tools and panels
-→ refresh AI Completion Checklist counts/coverage
+→ remain on HOLD
+→ after MR closure, diff refreshed full-product baseline against current Function Placement Map
+→ restore/place all accepted capabilities
+→ refresh AI Completion Checklist against full product inventory
 → explicitly clear UI_HOLD
 → only then issue bounded UI implementation Work Order(s)
 ```
