@@ -1,5 +1,22 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-RUNTIME-HARNESS-STABILITY-001 / DEV_AUTHORIZED / CONTINUE_TO_CONNECTOR_005_AFTER_HANDOFF`
+
+Post-task continuation:
+
+```text
+Runtime checkpoint/handoff with PASS / FAIL / INCONCLUSIVE evidence
+→ DO NOT WAIT FOR MR
+→ switch to work/ink-connector-005
+→ execute working/INK_CONNECTOR_005_DEV_WORKPACK.md
+```
+
+Connector-005 must proceed regardless of the Runtime result. Keep the two branches isolated.
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-RUNTIME-HARNESS-STABILITY-001 / DEV_AUTHORIZED / START`
 
 - Branch: `work/ink-runtime-harness-stability-001`
