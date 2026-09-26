@@ -1,3 +1,46 @@
+## Runtime Fix 3 DEV package issued — 2026-09-26
+
+```text
+TASK = INK-TECH-CLOSURE-001
+PHASE = FINAL_RUNTIME_FIX_3
+BRANCH = work/ink-tech-closure-001
+DISPATCH_HEAD = d6ce01dc47614100bedea2592e64c18f66bc28d3
+WORKPACK = working/INK_TECH_CLOSURE_001_RUNTIME_FIX_3_DEV_WORKPACK.md
+
+AUTHORITATIVE_RUNTIME = 36225935515
+MATERIALIZATION = PASS
+FOCUSED_NODE = 26 / 26 PASS
+UI = PASS
+GEOMETRY = PASS
+
+DEFECT_E =
+  Closure final History accumulation assertion ignores limit=30
+  actual retained applied=30
+  classification = QA_FALSE_NEGATIVE_AT_HISTORY_RETENTION_LIMIT
+
+DEFECT_F =
+  #app[data-space] receives workspace-control click listener
+  unrelated descendant click bubbles to app root
+  → switchWorkspace('creation')
+  → markDirty()
+  → modifiedAt changes
+  classification = PRODUCT_EVENT_SELECTOR_COLLISION
+
+DEV = AUTHORIZED
+WINDOWS_RUNTIME_BY_DEV = PROHIBITED
+PROMOTION = HOLD
+```
+
+Required DEV result:
+
+```text
+DEV_FIX_3_READY_FOR_MR_REVIEW
+→ DEV_HANDOFF
+→ STOP
+```
+
+---
+
 ## Runtime retry — transient GitHub blob 502 — 2026-09-26
 
 ```text
