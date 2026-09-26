@@ -19,9 +19,12 @@ CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
 
 CURRENT_PRIMARY_REMEDIATION = INK-FULL-CAPABILITY-REBASELINE-001
 CURRENT_PROGRAM = Full Product Capability Rebaseline / Preservation Recovery
+FIRST_PRIORITY = Restore all existing INK capabilities
+FIRST_REBASELINE_RUNTIME = PROHIBITED until all existing P0 capabilities are restored
+P1_P2_EXPANSION = AFTER first restored-capability Runtime
 UI_PROGRAM = Photoshop-aligned final UI rebuild
 UI_STATUS = HOLD
-CURRENT_GATE = MR capability rebaseline before any UI Work Order
+CURRENT_GATE = Restore-all-before-first-Runtime
 ```
 
 Current primary remediation authority:
@@ -33,6 +36,20 @@ Previous capability baseline under active rebaseline:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
 The 22 named tools / 34 bounded edit operations recorded there are the current CHAT public/control surface subset. They must not be interpreted as the complete INK product capability inventory.
+
+Current hard sequence:
+
+```text
+inventory existing INK
+→ restore/reconcile ALL existing P0 capabilities
+→ focused/unit non-integrated QA + History/save-load checks
+→ UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
+→ first rebaseline integrated Runtime
+→ only then P1/P2 Photoshop/mature-platform expansion
+→ later UI reconciliation
+```
+
+Do not submit a rebaseline Runtime before the restore-all gate passes.
 
 Current task/gate:
 
@@ -186,6 +203,8 @@ Document lifecycle:
 `governance/INK_DOCUMENT_LIFECYCLE_STANDARD_v1.0.md`
 
 ## Runtime authority
+
+For `INK-FULL-CAPABILITY-REBASELINE-001`, integrated Runtime execution is currently gated and must not run until all existing P0 capabilities are restored and the pre-Runtime self-check passes.
 
 Current executable Windows Runtime workflow:
 

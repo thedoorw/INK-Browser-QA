@@ -12,6 +12,8 @@ OWNER: `MR / MAIN REVIEW`
 
 UI STATUS: `HOLD — NO UI IMPLEMENTATION UNTIL THIS TASK CLOSES AND UR RECONCILES`
 
+RUNTIME STATUS: `HOLD — NO REBASELINE RUNTIME UNTIL ALL EXISTING INK CAPABILITIES ARE RESTORED`
+
 ---
 
 ## 1. Purpose
@@ -127,14 +129,53 @@ Classifications:
 - `ADAPTER` — better supplied through optional AI/external adapter than native drawing core.
 - `OUTSIDE CURRENT CORE` — not required for present INK direction.
 
-### 3.5 No UI restart before rebaseline closure
+### 3.5 Restore-all-before-first-Runtime — USER hard gate
+
+The first execution priority is **not** Photoshop gap expansion and **not** UI reconstruction.
+
+It is:
+
+```text
+RECOVER FULL EXISTING INK INVENTORY
+→ RESTORE / RECONCILE EVERY EXISTING P0 CAPABILITY
+→ COMPLETE PRE-RUNTIME SELF-CHECK
+→ ONLY THEN RUN THE FIRST REBASELINE INTEGRATED RUNTIME
+```
+
+For this task, "all original/existing INK capabilities restored" means every capability in Section 4 has been dispositioned and every `P0 PRESERVE` / `P0 RECONCILE` item is present in current product source at its accepted historical/current scope, wired to the native product authority, save/load-safe, History-safe when mutating, and covered by focused QA appropriate to that capability.
+
+A historically partial capability may remain partial for the first Runtime only when:
+- the preserved historical/current partial scope is explicitly documented;
+- no existing supported behavior is lost;
+- unfinished expansion is classified separately as P1/P2.
+
+Before this gate passes:
+
+```text
+NEW_REBASELINE_RUNTIME = PROHIBITED
+INTEGRATED_BROWSER_RUNTIME = PROHIBITED
+RUNTIME_QUEUE_SUBMISSION = PROHIBITED
+P1 / P2 NEW CAPABILITY IMPLEMENTATION = PROHIBITED
+FINAL UI IMPLEMENTATION = PROHIBITED
+```
+
+Allowed before first Runtime:
+- source inventory and diff work;
+- implementation/restoration of existing P0 capabilities;
+- static inspection;
+- unit/focused non-integrated QA;
+- History/save-load/schema checks needed to establish restoration readiness.
+
+Previous historical Runtime evidence remains evidence only and does not satisfy this new first-Runtime gate.
+
+### 3.6 No UI restart before rebaseline closure
 
 UR/UI DEV remains on HOLD until:
 
 ```text
 FULL PRODUCT INVENTORY = COMPLETE
-EXISTING CAPABILITY PRESERVATION = PASS
-OMITTED CAPABILITY RECONCILIATION = PASS
+ALL EXISTING P0 CAPABILITIES RESTORED = PASS
+FIRST REBASELINE RUNTIME = PASS
 P1 GAP DISPOSITION = RECORDED
 REFRESHED ACTIVE CAPABILITY BASELINE = PUBLISHED
 UR FUNCTION MAP RECONCILIATION = PASS
@@ -319,6 +360,8 @@ Primary official references used for the 2026-09-26 comparison:
 
 # 7. Development execution order
 
+The sequence below is mandatory. Phases may not be reordered merely to obtain earlier Runtime evidence.
+
 ## Phase A — Full product inventory lock
 
 Goal: prove what INK already owns before any remediation.
@@ -337,7 +380,9 @@ Deliverable:
 
 `FULL_PRODUCT_INVENTORY = COMPLETE`
 
-## Phase B — P0 preservation / reconciliation
+## Phase B — Restore every existing P0 capability before any Runtime
+
+This is the first implementation phase and the USER-mandated priority.
 
 First remediation targets:
 
@@ -355,18 +400,61 @@ First remediation targets:
 For each existing capability:
 
 ```text
-Core exists?
-→ UI exists?
-→ History-safe?
-→ Revision/Provenance-safe where applicable?
-→ CHAT should expose?
-→ QA exists?
-→ Runtime proven?
+Core/source exists?
+→ native product wiring restored?
+→ historically/currently human-facing route still reachable?
+→ mutating operation History-safe?
+→ save/load integrity safe?
+→ Revision/Provenance scope classified where applicable?
+→ focused QA passes?
+→ historical/current supported scope preserved?
 ```
+
+CHAT expansion is not required merely to unlock the first Runtime unless that CHAT route was already an accepted existing capability. New CHAT exposure belongs later.
 
 Existing capability is repaired/reconciled; it is not rewritten merely because Connector authority is newer.
 
-## Phase C — P1 mature-platform gap decisions
+Deliverable:
+
+`ALL_EXISTING_P0_CAPABILITIES_RESTORED = PASS`
+
+## Phase C — Pre-Runtime restoration gate
+
+Before the first rebaseline Runtime, MR must complete the dedicated pre-Runtime checklist in Section 8.
+
+Required state:
+
+```text
+FULL_PRODUCT_INVENTORY = COMPLETE
+ALL_SECTION_4_ROWS_CLASSIFIED = PASS
+ALL_P0_PRESERVE_RESTORED = PASS
+ALL_P0_RECONCILE_RESTORED_TO_ACCEPTED_SCOPE = PASS
+FOCUSED_NON_RUNTIME_QA = PASS
+SAVE_LOAD_INTEGRITY = PASS
+HISTORY_SAFETY = PASS
+UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
+```
+
+If any item fails, Runtime remains prohibited.
+
+## Phase D — First rebaseline integrated Runtime
+
+This is the **first permitted integrated Runtime** for `INK-FULL-CAPABILITY-REBASELINE-001`.
+
+It must validate the fully restored existing-capability candidate as one product before any P1/P2 expansion work begins.
+
+Required evidence:
+
+- exact tested SHA;
+- integrated browser Runtime result;
+- capability-family smoke coverage sufficient to prove restored product wiring;
+- no regression in Document / History / save-load;
+- no regression in Drawing / Raster / Vector / Natural Media / Render / Export;
+- retained CHAT/Connector closure does not break the restored native product.
+
+Failure returns the task to Phase B/C. It does not authorize bypassing a missing capability.
+
+## Phase E — P1 mature-platform gap decisions
 
 P1 candidates must receive one explicit decision:
 
@@ -390,7 +478,7 @@ Priority review groups:
 - advanced typography;
 - high-bit-depth / channels / color mode / ICC if professional print remains a target.
 
-## Phase D — CHAT authority reconciliation
+## Phase F — CHAT authority reconciliation
 
 After native product authority is confirmed:
 
@@ -400,7 +488,7 @@ After native product authority is confirmed:
 - every newly exposed mutation must participate in existing History;
 - Preview/Revision/Provenance requirements must be explicit.
 
-## Phase E — Republish capability truth
+## Phase G — Republish capability truth
 
 Replace the incomplete interpretation of:
 
@@ -418,7 +506,7 @@ QA / Runtime Maturity
 
 22/34 counts may remain as CHAT-surface metrics only.
 
-## Phase F — UR/UI handoff
+## Phase H — UR/UI handoff
 
 Only after MR closes the technical rebaseline:
 
@@ -484,7 +572,44 @@ For every mutating generic product capability retained in the final workstation:
 - [ ] CHAT exposure classified as YES / NO / DEFER.
 - [ ] No second competing mutation authority introduced.
 
-## D. Photoshop maturity gap review
+## D. Pre-Runtime restoration gate — mandatory before first integrated Runtime
+
+- [ ] Full product inventory is complete.
+- [ ] Every Section 4 capability row has an explicit current implementation state.
+- [ ] Every `P0 PRESERVE` capability is restored and wired at its accepted historical/current scope.
+- [ ] Every `P0 RECONCILE` capability is restored to its accepted historical/current scope; later expansion is split out.
+- [ ] Drawing / Stylus / Natural Media restoration is complete.
+- [ ] Raster / Image / Mask / Adjustment / Filter / Blend restoration is complete.
+- [ ] Vector / Path / Boolean / Transform / Deformation restoration is complete.
+- [ ] Page / Layer / Selection / Align / Snap restoration is complete.
+- [ ] Document / History / Storage / Recovery restoration is complete.
+- [ ] Render / GPU / tile / export restoration is complete.
+- [ ] Material / Recompute / Recipe / Program Import restoration is complete.
+- [ ] Existing CHAT / Revision / Provenance / Library accepted scope remains intact.
+- [ ] Focused unit/non-integrated QA for restored families passes.
+- [ ] Save/load integrity checks pass.
+- [ ] History participation for restored mutating capabilities passes.
+- [ ] No known existing capability is missing solely because it was absent from 22/34.
+- [ ] `UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0`.
+- [ ] MR records `FIRST_REBASELINE_RUNTIME_AUTHORIZED = YES`.
+
+Until every checkbox above passes: **do not run integrated Runtime**.
+
+## E. First rebaseline Runtime
+
+- [ ] First rebaseline Runtime was not started before Section D passed.
+- [ ] Exact tested SHA recorded.
+- [ ] Integrated browser Runtime passes.
+- [ ] Drawing/paint/stylus capability smoke passes.
+- [ ] Raster/image/filter/adjustment/mask capability smoke passes.
+- [ ] Vector/path/geometry capability smoke passes.
+- [ ] Page/layer/selection/transform capability smoke passes.
+- [ ] Storage/recovery/save-load capability smoke passes.
+- [ ] Render/export capability smoke passes.
+- [ ] Existing CHAT/Connector functionality remains non-regressed.
+- [ ] Runtime failure, if any, returned the task to restoration instead of skipping a capability.
+
+## F. Photoshop maturity gap review
 
 - [ ] Every row in Section 5 has final disposition.
 - [ ] All `P1 MATURE-PLATFORM GAP` rows have an implementation/defer/adapter decision.
@@ -499,7 +624,7 @@ For every mutating generic product capability retained in the final workstation:
 - [ ] Format breadth strategy explicitly decided.
 - [ ] AI-generation features classified as native vs adapter; no accidental duplication.
 
-## E. Refreshed baseline
+## G. Refreshed baseline
 
 - [ ] `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md` no longer treats 22/34 as total product capability.
 - [ ] Full Product Capability Inventory is present.
@@ -510,20 +635,19 @@ For every mutating generic product capability retained in the final workstation:
 - [ ] Explicit retired/deferred list is present.
 - [ ] Existing capabilities cannot disappear by omission.
 
-## F. QA / Runtime
+## H. Post-Runtime QA / maturity closure
 
-- [ ] Focused unit tests pass for every reconciled existing capability family.
 - [ ] Existing professional drawing tests pass.
 - [ ] Existing pro creative image/filter/brush tests pass.
 - [ ] Storage/recovery tests pass.
 - [ ] Renderer/natural-media tests pass.
 - [ ] Program-import tests pass.
-- [ ] Integrated browser Runtime passes on exact SHA.
 - [ ] No regression in CHAT closure tests.
 - [ ] No regression in Document/History/Revision.
-- [ ] Runtime evidence identifies exact SHA and artifact/run.
+- [ ] Any P1/P2 implementation added after the first Runtime has its own focused QA.
+- [ ] Final promoted candidate receives exact-SHA Runtime evidence after all authorized post-Runtime work.
 
-## G. UR release gate
+## I. UR release gate
 
 - [ ] MR publishes refreshed capability authority.
 - [ ] UR diffs full inventory against Function Placement Map.
@@ -543,10 +667,11 @@ Closure requires:
 
 ```text
 existing INK capability truth recovered
-+ omitted capabilities reconciled
++ ALL existing P0 capabilities restored BEFORE first rebaseline Runtime
++ first rebaseline Runtime passes on the fully restored existing-capability candidate
 + mature-platform gaps explicitly dispositioned
 + refreshed full-product baseline published
-+ exact-SHA QA/Runtime evidence
++ final exact-SHA QA/Runtime evidence
 + UR full-inventory reconciliation ready
 ```
 

@@ -9,8 +9,11 @@ CURRENT_MAIN = repository current main
 CURRENT_PRIMARY_TASK = INK-FULL-CAPABILITY-REBASELINE-001
 CURRENT_PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
 DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
+FIRST_PRIORITY = RESTORE_ALL_EXISTING_INK_CAPABILITIES
+CURRENT_GATE = RESTORE_ALL_EXISTING_P0_BEFORE_FIRST_REBASELINE_RUNTIME
+FIRST_REBASELINE_RUNTIME = PROHIBITED
 UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
-CURRENT_GATE = UI_HOLD / CAPABILITY_REBASELINE_REQUIRED
+UI_STATUS = HOLD
 TECHNICAL_CLOSURE = CLOSED
 RUNTIME_STABILITY = CLOSED
 CONNECTOR_005 = CLOSED
@@ -34,7 +37,7 @@ RUNTIME_QUEUE =
 
 ## Current next step
 
-UI implementation is paused. MR must execute `INK-FULL-CAPABILITY-REBASELINE-001` from `ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`, republish the full-product capability baseline, and provide QA/Runtime authority. UR then reconciles function placement and the AI completion checklist before any UI Work Order is issued.
+MR must first restore/reconcile every existing Section 4 P0 capability from `ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`. Focused/unit non-integrated QA, History safety and save/load checks are allowed. The first rebaseline integrated Runtime and Runtime queue submission are prohibited until `ALL_EXISTING_P0_CAPABILITIES_RESTORED = PASS` and `UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0`. UI implementation remains paused.
 
 ## Historical technical milestone
 
