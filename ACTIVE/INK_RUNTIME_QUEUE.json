@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "5d6e6bd81f1bcc65ed9d52cc0249f29f199ffa8f",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "f911f777f770cbe290e290c4b0cbc3692b36641e",
+  "pending_work_orders": [
+    "INK-P0-RESTORE-ALL-001"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -26,8 +28,8 @@
     "INK-UI-REBUILD-001-TECH-DEBT-CLEANUP"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": ""
+    "enabled": true,
+    "reason": "USER hard gate: first Runtime immediately after full 61/61 existing-capability restoration; product-wide P0 rebaseline requires exact-SHA validation before any P1/P2 or UI work."
   },
   "batch_policy": {
     "default_target": 3,
