@@ -419,7 +419,12 @@ function searchableText(item) {
     item.metadata,
     item.provenance
   ];
-  return normalized(pieces.flatMap(value => searchableStrings(value)).filter(Boolean).join(' '));
+  return pieces
+    .flatMap(value => searchableStrings(value))
+    .filter(Boolean)
+    .map(value => normalized(value))
+    .filter(Boolean)
+    .join(' ');
 }
 
 function matchesQuery(item, query) {
