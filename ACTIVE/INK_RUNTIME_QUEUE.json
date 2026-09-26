@@ -29,7 +29,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "USER hard gate: first Runtime immediately after full 61/61 existing-capability restoration; product-wide P0 rebaseline requires exact-SHA validation before any P1/P2 or UI work."
+    "reason": "Retry first P0 restored-capability Runtime on the same exact product SHA after fixing only the Node semantic Boolean UMD preload in the central harness. Attempt 1 product P0 focused tests passed; semantic harness preload failed before browser batch."
   },
   "batch_policy": {
     "default_target": 3,
