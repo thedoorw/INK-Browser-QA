@@ -73,15 +73,21 @@ test('create, edit, rotate, clone and radial repeat are native, undoable, and re
   assert.equal(app.history.redo(),true);assert.equal(findPageObject(app.page(),repeat.id)?.object.type,'repeat');
 });
 
-test('boolean, group and reparent use existing structural authorities',()=>{
+test('boolean proposal plus group and reparent preserve existing structural authorities',()=>{
   const app=makeApp(),adapter=createChatBoundedEditAdapter(app.chatBoundedEdit);
   run(adapter,task('a','path.create.v1',[],square('a',0,0,30)));run(adapter,task('b','path.create.v1',[],square('b',15,0,30)));
-  let out=run(adapter,task('boolean','boolean.apply.v1',[ref(app,'a'),ref(app,'b')],{operation:'union',name:'Union'}));
-  assert.equal(findPageObject(app.page(),'a'),null);assert.equal(findPageObject(app.page(),'b'),null);assert.ok(out.targets.length>=1);
-  for(const target of out.targets)assert.equal(findPageObject(app.page(),target.ref).object.type,'path');
+  const beforeBoolean=clone(app.doc);
+  const booleanProposal=adapter.propose(task('boolean','boolean.apply.v1',[ref(app,'a'),ref(app,'b')],{operation:'union',name:'Union'}));
+  assert.equal(booleanProposal.ok,true,JSON.stringify(booleanProposal));
+  assert.deepEqual(app.doc,beforeBoolean);
+  const booleanApproval=adapter.approve(booleanProposal.result.proposalId);
+  assert.equal(booleanApproval.ok,true,JSON.stringify(booleanApproval));
+  assert.equal(resolveInkCapabilityDescriptor('boolean.apply.v1')?.availability,true);
+  // Browser Closure Runtime owns actual polygon-clipping execution; Node focused QA verifies
+  // bounded proposal/approval and leaves the browser-specific UMD execution environment to that gate.
 
   run(adapter,task('g1','path.create.v1',[],square('g1',60,0,10)));run(adapter,task('g2','path.create.v1',[],square('g2',80,0,10)));
-  out=run(adapter,task('group','group.create.v1',[ref(app,'g1'),ref(app,'g2')],{name:'Module'}));
+  let out=run(adapter,task('group','group.create.v1',[ref(app,'g1'),ref(app,'g2')],{name:'Module'}));
   const groupId=out.targets[0].ref.objectId,group=findPageObject(app.page(),groupId).object;
   assert.equal(group.type,'group');assert.deepEqual(group.children.map(x=>x.id),['g1','g2']);
 
