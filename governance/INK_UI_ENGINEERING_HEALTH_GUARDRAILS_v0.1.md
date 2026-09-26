@@ -10,8 +10,8 @@ AUTHORITY:
 - UI health must be verified again on the integrated current `main`; branch-only health is not final closure evidence.
 
 SOURCE_HEALTH_BASELINE:
-- `working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_COMPLETION_RECORD.md`
-- `working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_EVIDENCE.md`
+- `ARCHIVE/milestones/2026-09-25-ui-tech-debt-cleanup/working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_COMPLETION_RECORD.md`
+- `ARCHIVE/milestones/2026-09-25-ui-tech-debt-cleanup/working/INK_UI_REBUILD_001_TECH_DEBT_CLEANUP_EVIDENCE.md`
 - `research/INK_UI_REBUILD_001_TECH_DEBT_HEALTH_REPORT_v0.1.md`
 
 ## 1. Purpose
