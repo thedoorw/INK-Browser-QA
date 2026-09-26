@@ -1,3 +1,25 @@
+# Final closure supersession — 2026-09-26
+
+```text
+STATUS = CLOSED / PROMOTED
+PROMOTION_MAIN = 6ab67fe355b787d251c4431fe55b9d4f4990384b
+RUNTIME_TESTED_EXACT_SHA = 5d6e6bd81f1bcc65ed9d52cc0249f29f199ffa8f
+RUNTIME_RUN = 36240038654
+RUNTIME = PASS
+
+BOUNDED_EDIT_OPERATIONS = 34
+NAMED_TOOLS = 22
+FORMAT_VERSION = 4
+
+FINAL_UI_AUTHORITY = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
+```
+
+All historical entries below that describe C1/C2 capability work as stale-branch, exposure debt, Runtime-pending, promotion-pending, or Connector-005 as planned/not implemented are superseded by the promoted post-Connector baseline.
+
+The historical ledger remains intact as provenance.
+
+---
+
 # INK Technical Closure 001 — Capability Ledger
 
 STATUS: `AUTHORITATIVE_CLOSURE_LEDGER / CLOSURE_IN_PROGRESS`
