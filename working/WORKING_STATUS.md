@@ -113,9 +113,9 @@ Connector-005 plan:
 State:
 
 ```text
-Connector-005 = PLANNED / NOT_YET_AUTHORIZED
-UI = HOLD FOR POST-CONNECTOR-005 BASELINE
-current active work remains Closure Runtime Fix 2
+Connector-005 = HISTORICAL / SUPERSEDED BY DEV_AUTHORIZED
+UI = HISTORICAL HOLD / SUPERSEDED BY PROVISIONAL START RULE
+current active work in this historical block was Closure Runtime Fix 2
 ```
 
 ---
