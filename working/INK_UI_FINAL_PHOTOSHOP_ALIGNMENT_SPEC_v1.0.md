@@ -769,3 +769,56 @@ INTEGRATED_CURRENT_MAIN = PASS
 ```
 
 A branch-only screenshot is not final closure evidence.
+
+
+# 30. Photoshop interface coverage matrix — required / adapted / explicitly excluded
+
+This matrix prevents “not implemented because it was never discussed.” Every major Photoshop workstation concept has an explicit disposition.
+
+| Photoshop concept | INK disposition | Reason / target |
+|---|---|---|
+| Application/menu bar | REQUIRED | compact Photoshop-like command row |
+| Menu dropdown interaction | REQUIRED | shared controller, keyboard/Escape/outside-click |
+| Options bar | REQUIRED | current-tool/context controls |
+| Tools panel | REQUIRED | left edge, dense icon grammar |
+| single/double toolbar | REQUIRED | same tool set, alternate layout |
+| tool flyouts/groups | REQUIRED | Draw family grouping |
+| Edit > Toolbar / Extra Tools customization | DEFERRED | useful later; not required by frozen baseline |
+| foreground/background color-swatch grammar | ADAPTED | current color authority; do not create unsupported second color model |
+| Document window/canvas | REQUIRED | canvas dominant |
+| multi-document tabbing | NOT AUTHORIZED | no frozen multi-document UI requirement |
+| Contextual Task Bar | ADAPTED / NOT REQUIRED | INK uses Options + Properties + CHAT; no floating duplicate task bar |
+| right panel Dock | REQUIRED | edge-attached/collapsible |
+| panel width resizing | REQUIRED | elastic |
+| panel vertical grouping/stacking | REQUIRED | under one panel authority |
+| panel tab grouping | REQUIRED | Photoshop-like grouped panel grammar |
+| freely floating primary panels | DEFERRED | not necessary for first final UI; avoid second layout/state authority |
+| Window menu panel access | REQUIRED | same panel authority |
+| collapse Dock to icons | REQUIRED | Photoshop-like compact state |
+| hide/show all panels with Tab | OPTIONAL / LATER | may be added only through same panel authority; not closure-blocking |
+| save custom workspace layouts | DEFERRED | current scope may remember local panel state but no full workspace manager required |
+| Properties panel | REQUIRED | parameters/state |
+| Layers panel | REQUIRED | hierarchy/reorder/actions |
+| History panel | REQUIRED | Photoshop interaction parity over existing History |
+| Navigator panel | REQUIRED | thumbnail/proxy/zoom/two-way sync |
+| Libraries panel concept | ADAPTED REQUIRED | Connector-005 read-only Creative Library Search, not Adobe Libraries |
+| Pages panel | INK-SPECIFIC REQUIRED | normalized into Photoshop panel grammar |
+| Reference panel | INK-SPECIFIC REQUIRED | same panel grammar |
+| Compose panel | INK-SPECIFIC REQUIRED | same panel grammar |
+| CHAT panel | INK-SPECIFIC REQUIRED | same panel grammar |
+| Revision panel | INK-SPECIFIC REQUIRED | separate from History |
+| screen/fullscreen modes | REQUIRED | use existing fullscreen/view authority |
+| zoom/status controls | REQUIRED | low-noise bottom/view grammar |
+| rulers/persistent guides | NOT INVENTED | frozen baseline does not prove full Photoshop-style ruler/guide system |
+| notification/bell UI | NOT REQUIRED | Photoshop account/update surface, not INK creative requirement |
+| Discover/tutorial panel | NOT REQUIRED | not part of INK final editor requirement |
+| Photoshop Generative Contextual UI | NOT COPIED | CHAT is INK governed collaboration surface |
+| Photoshop Filter menu | NOT CREATED | no general Filter capability in frozen baseline |
+| Photoshop 3D menu | NOT CREATED | historical screenshot feature, not INK capability |
+| Photoshop branded icons/logo/assets | PROHIBITED | preserve INK branding; no Adobe proprietary asset copy |
+
+Rule:
+
+`EXPLICITLY_EXCLUDED != FORGOTTEN`
+
+Any later request to promote a deferred/excluded Photoshop concept requires a new bounded Work Order and, where capability semantics are involved, a technical baseline update.
