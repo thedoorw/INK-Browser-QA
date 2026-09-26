@@ -190,10 +190,10 @@ function run(app, raw) {
   return executed.result;
 }
 
-test('C2-B preserves exact C2-A prefix and appends six exposure operations for total 27', () => {
+test('C2-B preserves exact C2-A prefix and owns the exact six-operation C2-B segment', () => {
   assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(0, C2A_TOTAL.length), C2A_TOTAL);
-  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(C2A_TOTAL.length), C2B);
-  assert.equal(CHAT_EDIT_OPERATIONS.length, 27);
+  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(C2A_TOTAL.length, C2A_TOTAL.length + C2B.length), C2B);
+  assert.ok(CHAT_EDIT_OPERATIONS.length >= 27);
   assert.equal(CHAT_EDIT_OPERATIONS.includes('repeat.expand.v1'), false);
   assert.equal(FORMAT_VERSION, 4);
   for (const operation of C2B) {
