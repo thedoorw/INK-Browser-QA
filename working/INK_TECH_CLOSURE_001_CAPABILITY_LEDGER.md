@@ -222,3 +222,33 @@ The Photoshop-aligned final UI rebuild is NOT part of the completion percentage 
 
 ---
 
+
+
+## UI-authoritative baseline sequencing supersession — 2026-09-26
+
+The previous Closure-only handoff rule is superseded by:
+
+```text
+INK-TECH-CLOSURE-001
+→ Connector-005 Creative Library Search
+→ refresh CURRENT_CAPABILITY_BASELINE
+→ freeze UI-authoritative baseline
+→ hand to UR
+→ Photoshop-aligned final UI rebuild
+```
+
+Closure 001 still must complete its own Runtime / promotion / ledger closure. Connector-005 is not absorbed into Closure 001 and does not block Closure 001 from becoming technically complete.
+
+However:
+
+```text
+CLOSURE_001_COMPLETE
+!= FINAL_UI_BASELINE_READY
+```
+
+The final UI-authoritative baseline is produced only after the bounded Connector-005 work is promoted and the capability ledger is refreshed.
+
+Connector-005 bounded scope authority:
+
+`working/INK_CONNECTOR_005_BOUNDED_PLAN.md`
+
