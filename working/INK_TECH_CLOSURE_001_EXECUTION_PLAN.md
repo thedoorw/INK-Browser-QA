@@ -374,3 +374,28 @@ C1 installed
 ```
 
 No item is allowed to become “complete” solely because code was written.
+
+
+## 15. Supersession — post-Closure Connector-005 before final UI — 2026-09-26
+
+Sections 10, 12, 13 and 14 remain valid for Closure 001 technical completion except where they previously implied that the Closure-only capability baseline is immediately handed to UR.
+
+The authoritative program order is now:
+
+```text
+INK-TECH-CLOSURE-001
+→ clean promotion / Closure technical completion
+→ Connector-005 Creative Library Search
+→ refresh CURRENT_CAPABILITY_BASELINE
+→ freeze UI-authoritative baseline
+→ Photoshop-aligned final UI rebuild
+```
+
+Therefore the Closure C3 output becomes a technical closure checkpoint rather than the final UI-authoritative baseline.
+
+Connector-005 is a separate bounded Work Order, defined by:
+
+`working/INK_CONNECTOR_005_BOUNDED_PLAN.md`
+
+It may search / inspect / reuse existing INK reusable assets, but may not expand into a full Library Manager, cloud library, Variables/Tokens, Styles, Component Variants, or AI auto-classification system.
+
