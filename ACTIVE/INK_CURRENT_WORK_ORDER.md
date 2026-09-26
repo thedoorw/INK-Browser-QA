@@ -1,6 +1,6 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / FINAL_UI_SPEC_LOCKED / IMPLEMENTATION_WORK_ORDER_NEXT`
+STATUS: `CURRENT / UI_HOLD / CAPABILITY_BASELINE_REOPEN_REQUIRED`
 
 DATE: 2026-09-26
 
@@ -9,8 +9,9 @@ DATE: 2026-09-26
 ```text
 PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 OWNER = UR / UI REVIEW
-TECHNICAL_BASELINE = FROZEN
-UI_WORK_ORDER = REQUIRED BEFORE IMPLEMENTATION
+TECHNICAL_BASELINE = REOPEN_REQUIRED
+UI_IMPLEMENTATION = HOLD
+UI_WORK_ORDER = PROHIBITED UNTIL REBASELINE
 ```
 
 ## Technical gate entering UI
@@ -61,15 +62,23 @@ UI must not change Core/Document/History/Revision/Geometry/CHAT semantics merely
 ## Next action
 
 ```text
+MR
+→ audit omitted existing/required INK capabilities
+→ restore/add accepted capabilities
+→ publish a refreshed ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
+→ provide exact promoted/runtime-verified authority
+
 UR
-→ reconcile Photoshop reference measurement + function placement
-→ issue bounded final UI Work Order
-→ UI DEV
-→ UR review
-→ integrate current main
-→ main UI Runtime / screenshots / health verification
-→ UI closure
+→ diff refreshed baseline against current Function Placement Map
+→ add/remove/reposition affected commands, tools and panels
+→ refresh AI Completion Checklist counts/coverage
+→ explicitly clear UI_HOLD
+→ only then issue bounded UI implementation Work Order(s)
 ```
+
+Until that sequence completes:
+
+`NO UI DEV / NO UI IMPLEMENTATION WORK ORDER / NO FINAL FUNCTION LOCK`
 
 No technical Closure or Connector task is currently open.
 
@@ -108,3 +117,36 @@ Final UI closure must use the AI Completion Checklist and may not declare `UI_CO
 Next:
 
 `UR → issue bounded UI implementation Work Order(s)`
+
+
+## UI HOLD — capability baseline completeness reopened
+
+USER has identified that the current frozen capability baseline may have omitted:
+- capabilities INK already had;
+- capabilities required for a mature image/drawing workstation.
+
+Therefore the previous final placement reconciliation is preserved as a **reference snapshot**, not an implementation authorization.
+
+The Photoshop visual/interaction reference remains valid where independent of capability inventory.
+
+The following documents must not be treated as final capability-facing authority until MR republishes the capability baseline and UR reconciles it:
+
+- `working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md`
+- `working/INK_UI_FINAL_STATIC_CONTROL_LEDGER_v1.0.md`
+- capability/count sections of `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
+
+The following remain valid reference authorities during HOLD:
+- `working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md`
+- Photoshop geometry/behavior requirements in `working/INK_UI_FINAL_PHOTOSHOP_ALIGNMENT_SPEC_v1.0.md`
+
+Release condition:
+
+```text
+MR_REFRESHED_CAPABILITY_BASELINE = PUBLISHED
+UR_CAPABILITY_DIFF = COMPLETE
+FUNCTION_PLACEMENT_RECONCILED = PASS
+AI_CHECKLIST_RECONCILED = PASS
+UNCLASSIFIED_FUNCTIONS = 0
+USER/MR CAPABILITY_REOPEN = CLOSED
+→ UI_HOLD may be cleared
+```
