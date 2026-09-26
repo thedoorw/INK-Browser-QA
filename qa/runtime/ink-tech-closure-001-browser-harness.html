@@ -552,10 +552,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         dependsOn:[]
       },
       {
-        stepId:'c2a-order-front',
+        stepId:'c2a-order-back',
         operation:'object.order.v1',
         targets:[c2aTextRef,c2aSvgRef],
-        arguments:{action:'front'},
+        arguments:{action:'back'},
         dependsOn:['c2a-edit-text','c2a-scale-svg']
       }
     ]);
@@ -572,10 +572,10 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     );
     const c2aRootObjects=app.layer().objects;
     assert(
-      c2aRootObjects.at(-1)?.id===c2aSvgRef.objectId &&
-      c2aRootObjects.at(-2)?.id===c2aTextRef.objectId,
-      'C2A_ORDER_FRONT_PRESERVES_TARGET_IDS',
-      {tail:c2aRootObjects.slice(-4).map(object=>object.id)}
+      c2aRootObjects[0]?.id===c2aTextRef.objectId &&
+      c2aRootObjects[1]?.id===c2aSvgRef.objectId,
+      'C2A_ORDER_BACK_PRESERVES_TARGET_IDS',
+      {head:c2aRootObjects.slice(0,4).map(object=>object.id)}
     );
 
     const c2aHistorySteps=c2aRuns.flatMap(run=>run.executed?.historyReceipt?.steps||[]);
