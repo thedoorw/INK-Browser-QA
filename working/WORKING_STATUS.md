@@ -6,7 +6,10 @@ DATE: 2026-09-26
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
+CURRENT_PRIMARY_TASK = INK-FULL-CAPABILITY-REBASELINE-001
+CURRENT_PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
+DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
+UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 CURRENT_GATE = UI_HOLD / CAPABILITY_REBASELINE_REQUIRED
 TECHNICAL_CLOSURE = CLOSED
 RUNTIME_STABILITY = CLOSED
@@ -17,8 +20,9 @@ CAPABILITY_BASELINE =
   REOPEN_REQUIRED / PREVIOUS FROZEN SNAPSHOT RETAINED FOR DIFF
 
 FORMAT_VERSION = 4
-BOUNDED_EDIT_OPERATIONS = 34
-NAMED_TOOLS = 22
+CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
+CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
+CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
 
 CENTRAL_RUNTIME_WORKFLOW =
   .github/workflows/ink-runtime-batch-windows.yml
@@ -30,7 +34,7 @@ RUNTIME_QUEUE =
 
 ## Current next step
 
-UI implementation is paused. MR must first audit and republish the capability baseline; UR then reconciles function placement and the AI completion checklist before any UI Work Order is issued.
+UI implementation is paused. MR must execute `INK-FULL-CAPABILITY-REBASELINE-001` from `ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`, republish the full-product capability baseline, and provide QA/Runtime authority. UR then reconciles function placement and the AI completion checklist before any UI Work Order is issued.
 
 ## Historical technical milestone
 
