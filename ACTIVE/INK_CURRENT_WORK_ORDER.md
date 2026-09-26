@@ -1,3 +1,35 @@
+## Connector-005 released independent of Runtime result — 2026-09-26
+
+```text
+USER_DECISION =
+  DEV must complete Connector-005 this cycle
+  regardless of Runtime harness result
+
+SEQUENCE =
+  INK-RUNTIME-HARNESS-STABILITY-001 DEV checkpoint/handoff
+  → DO NOT WAIT FOR MR
+  → switch to work/ink-connector-005
+  → complete Connector-005 implementation + focused QA
+  → DEV Connector handoff
+  → MR reviews/reconciles both lanes
+
+CONNECTOR_005 = DEV_AUTHORIZED
+CONNECTOR_BRANCH = work/ink-connector-005
+CONNECTOR_BASELINE = 54301b0916a04d0a1c611df4db540481baa12300
+CONNECTOR_WORKPACK = branch:working/INK_CONNECTOR_005_DEV_WORKPACK.md
+
+RUNTIME_PASS_REQUIRED_BEFORE_CONNECTOR = NO
+RUNTIME_FAILURE_MAY_STOP_CONNECTOR_IMPLEMENTATION = NO
+
+PROMOTION = MR_HOLD
+CURRENT_CAPABILITY_BASELINE_REFRESH = AFTER_MR_RECONCILIATION
+PHOTOSHOP_UI_REBUILD = HOLD
+```
+
+Runtime-harness and Connector product work remain on separate branches. A failed/inconclusive Runtime handoff is evidence to be preserved, not a reason to block Connector-005.
+
+---
+
 ## Runtime harness stability DEV lane authorized — 2026-09-26
 
 ```text
