@@ -50,7 +50,7 @@ test('isolated Closure harness owns C1/C2 proof and exact capability baseline', 
     'CLOSURE_GATE_PASS'
   ]) assert.match(harness, new RegExp(marker));
 
-  assert.match(harness, /namedTools\?\.length===21/);
+  assert.match(harness, /namedTools\?\.length===22/);
   assert.match(harness, /repeat\.expand\.v1/);
   assert.match(harness, /CORE_ONLY_ACCEPTED/);
 
@@ -66,9 +66,10 @@ test('isolated Closure harness owns C1/C2 proof and exact capability baseline', 
 
 test('Creative regression suite no longer owns Closure proof and accepts append-only named tool growth', async () => {
   const creative = await readFile(path.join(root, 'qa/runtime/ink-cloud-018-browser-harness.html'), 'utf8');
-  assert.match(creative, /namedTools\.length===21/);
+  assert.match(creative, /namedTools\.length===22/);
   assert.match(creative, /namedTools\[19\]\.name==='import_ink_reference'/);
   assert.match(creative, /namedTools\[20\]\.name==='export_ink_asset'/);
+  assert.match(creative, /namedTools\[21\]\.name==='search_ink_library'/);
   assert.doesNotMatch(creative, /GEOMETRY_OPS_GATE_PASS/);
   assert.doesNotMatch(creative, /C2A_GATE_PASS/);
   assert.doesNotMatch(creative, /C2B_GATE_PASS/);
