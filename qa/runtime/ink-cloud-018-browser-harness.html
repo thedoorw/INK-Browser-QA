@@ -14,7 +14,30 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   const logNode = document.querySelector('#qa-log');
   const frame = document.querySelector('#ink-frame');
   const evidence = { task:'INK-CLOUD-018', fixture:'rose-window-primary.png', checks:[], metrics:{}, failures:[] };
-  const pass = (name, details={}) => { evidence.checks.push({name,...details,status:'PASS'}); logNode.textContent = JSON.stringify(evidence,null,2); };
+  let progressSequence = 0;
+  const reportProgress = (marker, details={}) => {
+    progressSequence += 1;
+    const payload = {
+      sequence: progressSequence,
+      marker: String(marker || 'UNKNOWN'),
+      atMs: Math.round(performance.now()),
+      checkCount: evidence.checks.length,
+      ...details
+    };
+    void fetch('/__qa_progress',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload),
+      cache:'no-store',
+      keepalive:true
+    }).catch(()=>{});
+    return payload;
+  };
+  const pass = (name, details={}) => {
+    evidence.checks.push({name,...details,status:'PASS'});
+    logNode.textContent = JSON.stringify(evidence,null,2);
+    reportProgress(name);
+  };
   const assert = (condition, name, details={}) => { if (!condition) throw Object.assign(new Error(name),{qa:name,details}); pass(name,details); };
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   const waitFor = async (predicate, timeout = 8000, step = 40) => {
@@ -1011,10 +1034,16 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     resultNode.dataset.state='PASS'; resultNode.textContent='PASS';
     logNode.textContent=JSON.stringify(evidence,null,2);
     document.documentElement.dataset.qa='PASS';
+    reportProgress('HARNESS_FINAL_EVIDENCE_READY',{status:'PASS'});
     await reportEvidence();
   }
 
   frame.addEventListener('load',()=>run().catch(async error=>{
+    reportProgress('HARNESS_FAILURE',{
+      status:'FAIL',
+      qa:error?.qa||null,
+      message:String(error?.message||error).slice(0,240)
+    });
     evidence.failures.push({message:error?.message||String(error),qa:error?.qa||null,details:error?.details||null,stack:error?.stack||null});
     resultNode.dataset.state='FAIL'; resultNode.textContent='FAIL';
     logNode.textContent=JSON.stringify(evidence,null,2);
