@@ -134,8 +134,8 @@ function makeApp() {
       templateVersion: '1.0.0',
       materialType: 'pointed-petal',
       semanticRole: 'petal',
-      sourceBenchmark: 'connector-005-fixture',
-      validationState: 'VALIDATED'
+      sourceBenchmark: { source: 'connector-005-fixture', benchmarkId: 'material-benchmark-1' },
+      validationState: { status: 'VALIDATED', checkedBy: 'connector-005-fixture' }
     }]
   };
 
@@ -143,12 +143,21 @@ function makeApp() {
     schemaVersion: '0.1',
     recipes: {
       'recipe:petal-glaze': {
-        recipeId: 'recipe:petal-glaze',
-        schemaVersion: '0.2',
+        recipe: {
+          recipeId: 'recipe:petal-glaze',
+          schemaVersion: '0.2',
+          operation: 'Transparent Glaze',
+          targetRegionId: referenceDerived.id,
+          palette: ['#d7889b', '#f0b7c1'],
+          metadata: { label: 'Petal Transparent Glaze' }
+        },
+        compileHash: 'compile:petal-glaze',
+        layerId: layer.id,
+        actionIds: ['action:petal-glaze'],
+        strokeIds: [],
+        revision: 2,
         operation: 'Transparent Glaze',
-        targetRegionId: referenceDerived.id,
-        palette: ['#d7889b', '#f0b7c1'],
-        metadata: { label: 'Petal Transparent Glaze' }
+        targetRegionId: referenceDerived.id
       }
     },
     actionToRecipe: {},
@@ -230,6 +239,21 @@ test('search returns all five existing families with deterministic stable typed 
   const types = new Set(first.result.results.map(item => item.type));
   for (const type of INK_CREATIVE_LIBRARY_TYPES) assert.ok(types.has(type), type);
 
+  const resultByType = byType(first);
+  assert.deepEqual(resultByType.get('material').metadata.validationState, {
+    status: 'VALIDATED',
+    checkedBy: 'connector-005-fixture'
+  });
+  assert.deepEqual(resultByType.get('material').provenance.sourceBenchmark, {
+    source: 'connector-005-fixture',
+    benchmarkId: 'material-benchmark-1'
+  });
+  assert.equal(resultByType.get('recipe').label, 'Petal Transparent Glaze');
+  assert.equal(resultByType.get('recipe').metadata.schemaVersion, '0.2');
+  assert.deepEqual(resultByType.get('recipe').metadata.palette, ['#d7889b', '#f0b7c1']);
+  assert.equal(resultByType.get('recipe').metadata.revision, 2);
+  assert.equal(resultByType.get('recipe').provenance.compileHash, 'compile:petal-glaze');
+
   for (const item of first.result.results) {
     assert.equal(item.ref.schema, INK_CREATIVE_LIBRARY_REF_SCHEMA);
     assert.equal(item.ref.version, 1);
@@ -261,12 +285,20 @@ test('search is type-disambiguated, query-normalized, empty-safe and limit-bound
 
   const material = api.tools.invoke('search_ink_library', {
     action: 'search',
-    query: 'PETAL',
+    query: 'BENCHMARK-1',
     types: ['material']
   });
   assert.equal(material.status, 'COMPLETED');
   assert.ok(material.result.results.length >= 1);
   assert.ok(material.result.results.every(item => item.type === 'material'));
+
+  const recipe = api.tools.invoke('search_ink_library', {
+    action: 'search',
+    query: 'transparent glaze',
+    types: ['recipe']
+  });
+  assert.equal(recipe.status, 'COMPLETED');
+  assert.equal(recipe.result.results[0].label, 'Petal Transparent Glaze');
 
   const empty = api.tools.invoke('search_ink_library', {
     action: 'search',
