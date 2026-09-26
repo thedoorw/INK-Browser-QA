@@ -12,11 +12,15 @@ User-authorized program order:
 INK-RUNTIME-HARNESS-STABILITY-001
 → DEV handoff with PASS / FAIL / INCONCLUSIVE evidence
 → Connector-005 Creative Library Search implementation + focused QA
-→ MR reconcile Runtime + Connector branches
-→ integrated exact-SHA Runtime / final acceptance
-→ clean promotion
-→ provisional Photoshop-aligned UI may already be in progress
-→ update CURRENT_CAPABILITY_BASELINE
+→ Connector-005 DEV handoff
+→ ┬→ MR reconcile Runtime + Connector branches
+  │   → integrated exact-SHA Runtime / final acceptance
+  │   → clean promotion
+  │   → update CURRENT_CAPABILITY_BASELINE
+  │
+  └→ provisional Photoshop-aligned UI development
+
+CURRENT_CAPABILITY_BASELINE refreshed
 → reconcile provisional UI against promoted capability baseline
 → final Photoshop-aligned UI closure
 ```
