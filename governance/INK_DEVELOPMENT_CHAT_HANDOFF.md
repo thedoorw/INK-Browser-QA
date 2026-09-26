@@ -4,60 +4,47 @@ STATUS: `AUTHORITATIVE_HANDOFF_RULE`
 
 ## Purpose
 
-Allow INK work to continue safely across independent ChatGPT windows without depending on chat history.
+Continue INK safely across independent ChatGPT windows without depending on chat history.
 
 GitHub is the SSOT.
 
-## New-window recovery sequence
+## Shared recovery sequence
 
-Every new project window must first identify its role.
-
-### DEV window
-
-Read in order:
+Every window identifies its role, then reads:
 
 1. `README.md`
 2. `AGENTS.md`
 3. `ACTIVE/README.md`
 4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
-5. `working/WORKING_STATUS.md`
-6. `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
-7. `ACTIVE/INK_DEV_PROGRESS.md`
-8. only the files explicitly required by the Current Work Order
+5. `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
+6. `working/WORKING_STATUS.md`
 
-DEV must use the exact work branch named by the Current Work Order.
+Then read only files required by the current role/task.
 
-### MR / REVIEW window
+## DEV window
 
-Read in order:
+1. Read `ACTIVE/INK_DEV_NEW_WINDOW_START.md`.
+2. Use the exact branch named by the Current Work Order.
+3. On that branch, read `ACTIVE/INK_DEV_PROGRESS.md` if it exists.
+4. Read the named workpack/governance/QA files only.
+5. Work within scope, commit meaningful checkpoints, hand off, STOP at the owning Review gate.
 
-1. `README.md`
-2. `AGENTS.md`
-3. `ACTIVE/README.md`
-4. `ACTIVE/INK_CURRENT_WORK_ORDER.md`
-5. `working/WORKING_STATUS.md`
-6. `ACTIVE/INK_REVIEW_STATUS.md`
-7. DEV branch diff / commits / handoff deliverables
-8. only the evidence needed for review
+Main does not maintain a global append-only DEV progress log.
 
-## Persistent branch rule
+## MR / UR review window
 
-DEV work must be preserved on the work branch through meaningful commits.
+Review uses:
+- current Work Order;
+- current capability baseline;
+- exact task branch HEAD;
+- branch/task-specific checkpoint, handoff and evidence;
+- only the product/QA/research needed to verify the task.
 
-The branch is not merely a delivery location; it is the development record.
-
-DEV must:
-- commit meaningful checkpoints;
-- keep progress evidence in GitHub;
-- record the latest branch HEAD;
-- STOP at the MR gate;
-- never self-merge to `main`.
+There is no global append-only Review Status / Findings / Evidence authority.
 
 ## Review fingerprint
 
-MR must review an exact branch fingerprint.
-
-Minimum fingerprint:
+Minimum:
 
 ```text
 TASK_ID
@@ -67,9 +54,11 @@ HEAD_COMMIT
 EXPECTED_CHANGED_FILES
 ```
 
-If HEAD changes, prior review conclusions do not automatically apply.
+If HEAD changes, the previous review fingerprint is stale.
 
-## Handoff states
+## Gate
+
+MR-owned:
 
 ```text
 AUTHORIZED
@@ -77,34 +66,55 @@ AUTHORIZED
 → DEV_HANDOFF
 → MR_REVIEW_REQUIRED
 → MR_PASS / MR_REVISE / MR_HOLD
-→ NEXT_WORK_ORDER
 ```
 
-No role may skip a gate merely because the previous chat claims the task is complete.
+UR-owned UI:
 
-## STOP rule
+```text
+UI_AUTHORIZED
+→ UI_DEV_IN_PROGRESS
+→ DEV_HANDOFF
+→ UR_REVIEW_REQUIRED
+→ UI_PASS / UI_REVISE / UI_HOLD
+→ reconcile current main
+→ main verification
+→ UI_CLOSED
+```
 
-At `MR_REVIEW_REQUIRED`, DEV stops.
+## Durable record rule
 
-At `MR_PASS`, DEV still stops until a new Current Work Order exists.
+```text
+current authority
+→ ACTIVE/
 
-Packaging, certification, version promotion and `package/ink-current` updates require separate explicit authorization.
+current task state
+→ working/ or branch-local task files
 
+durable method
+→ governance/
+
+durable technical knowledge
+→ research/
+
+selected milestone evidence
+→ ARCHIVE/
+
+complete event history
+→ Git history
+```
+
+Lifecycle:
+`governance/INK_DOCUMENT_LIFECYCLE_STANDARD_v1.0.md`
 
 ## Shared collaboration language
 
-For USER ↔ CHAT collaboration, keep language simple.
-
-Examples:
+Simple language such as:
 
 ```text
-用 Figma 畫圖
 用 INK 畫圖
 讓 CHAT 用 INK 畫圖
 ```
 
-These phrases mean: CHAT uses the target application's available structured controls, document model and editing operations to complete the intended visual result.
+means CHAT uses the target application's available structured controls, document model and accepted editing operations.
 
-They do not imply literal mouse imitation or manual cursor simulation.
-
-Do not over-explain this distinction in ordinary conversation. USER and CHAT share this understanding unless a technical implementation detail requires a more precise description.
+It does not imply literal mouse imitation.
