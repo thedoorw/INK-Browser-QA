@@ -1,8 +1,15 @@
 # INK Final UI — AI Completion Checklist v1.0
 
-STATUS: `AUTHORITATIVE_UI_CLOSURE_CHECKLIST / UR_OWNED`
+STATUS: `UI_HOLD / CHECKLIST_FRAMEWORK_RETAINED / CAPABILITY_COUNTS_REQUIRE_REFRESH`
 
 DATE: 2026-09-26
+
+
+
+> **HOLD NOTICE**
+>
+> Do not run this checklist as a final closure checklist until MR publishes the refreshed capability baseline and UR updates all capability/count/placement sections. Geometry, visual and interaction sections remain useful; baseline counts and capability coverage are provisional during HOLD.
+
 
 Use this document after implementation as the mandatory AI self-audit. No final UI closure may be declared from visual impression alone.
 
