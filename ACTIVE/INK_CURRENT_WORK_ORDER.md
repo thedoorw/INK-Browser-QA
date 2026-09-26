@@ -1,3 +1,40 @@
+## MR technical convergence complete — 2026-09-26
+
+```text
+INK-RUNTIME-HARNESS-STABILITY-001 = ACCEPTED / CLOSED
+INK-TECH-CLOSURE-001 = ACCEPTED / PROMOTED / CLOSED
+INK-CONNECTOR-005 = ACCEPTED / PROMOTED / CLOSED
+
+PROMOTION_MAIN = 6ab67fe355b787d251c4431fe55b9d4f4990384b
+RUNTIME_TESTED_EXACT_SHA = 5d6e6bd81f1bcc65ed9d52cc0249f29f199ffa8f
+RUNTIME_RUN = 36240038654
+FOCUSED_NODE = 32 / 32 PASS
+UI = PASS
+CLOSURE = PASS
+GEOMETRY = PASS
+CREATIVE = PASS
+ARTIFACT_ID = 10905628104
+ARTIFACT_DIGEST = sha256:beb8790c0c31583cde36eb7c59cf0dbcedbd55b2676f2c5c9b19beccab9fa858
+
+BOUNDED_EDIT_OPERATIONS = 34
+NAMED_TOOLS = 22
+FORMAT_VERSION = 4
+
+CURRENT_CAPABILITY_BASELINE =
+  ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
+  FROZEN / POST-CONNECTOR-005 / UI-AUTHORITATIVE
+
+PHOTOSHOP_UI_REBUILD = ACTIVE
+PROVISIONAL_CAPABILITY_GATE = SUPERSEDED BY FINAL FROZEN BASELINE
+NEXT = final Photoshop-aligned UI reconciliation against CURRENT_CAPABILITY_BASELINE
+```
+
+The accepted promotion preserves newer main governance and provisional UI planning while promoting technical source/QA that was verified blob-equivalent to the clean exact-SHA Runtime candidate.
+
+Historical Runtime/Closure/Connector blocks below remain evidence only when they conflict with this final status.
+
+---
+
 ## Provisional Photoshop UI start gate released — 2026-09-26
 
 ```text
