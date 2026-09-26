@@ -1,3 +1,18 @@
+## MR convergence complete — 2026-09-26
+
+```text
+Closure = CLOSED / PROMOTED
+Runtime Harness Stability = ACCEPTED
+Connector-005 = CLOSED / PROMOTED
+Accepted Runtime = 36240038654
+Exact tested SHA = 5d6e6bd81f1bcc65ed9d52cc0249f29f199ffa8f
+Promotion = 6ab67fe355b787d251c4431fe55b9d4f4990384b
+Capability baseline = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
+Next = Photoshop-aligned final UI reconciliation
+```
+
+---
+
 ## UI provisional start gate authorized — 2026-09-26
 
 ```text
