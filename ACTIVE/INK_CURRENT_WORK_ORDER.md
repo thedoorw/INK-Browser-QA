@@ -1,3 +1,40 @@
+## Final Runtime defect fix DEV package issued — 2026-09-26
+
+```text
+TASK = INK-TECH-CLOSURE-001
+PHASE = FINAL_RUNTIME_DEFECT_FIX
+BRANCH = work/ink-tech-closure-001
+DISPATCH_HEAD = f5eaf45715859004436d15d4645209b7be29a120
+WORKPACK = working/INK_TECH_CLOSURE_001_RUNTIME_FIX_DEV_WORKPACK.md
+
+DEFECT_A =
+  component.register.v1 proposal FAIL in browser Runtime
+
+DEFECT_B =
+  get_grounded_creative_context OBSERVE mutates Document JSON
+  History unchanged
+  Revision unchanged
+
+UI_RUNTIME = PASS
+GEOMETRY_RUNTIME = PASS
+FOCUSED_NODE_CONTRACTS = PASS
+
+MR_DIRECT_DEBUG = STOP
+DEV = AUTHORIZED
+WINDOWS_RUNTIME_BY_DEV = PROHIBITED
+PROMOTION = HOLD
+```
+
+Required DEV result:
+
+```text
+DEV_FIX_READY_FOR_MR_REVIEW
+→ DEV_HANDOFF
+→ STOP
+```
+
+---
+
 ## FINAL RUNTIME authorized — Closure 001 — 2026-09-26
 
 ```text
