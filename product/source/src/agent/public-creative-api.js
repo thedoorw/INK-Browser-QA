@@ -2,6 +2,7 @@ import { buildAIDocumentBridge } from '../ai/document-bridge.js';
 import { installInkOutputRegistry } from './output-handle-registry.js';
 import { exportInkAsset } from './export-asset.js';
 import { captureInkPreview, inspectInkOutput, releaseInkOutput } from './visual-feedback.js';
+import { createCreativeLibrarySearch } from './creative-library-search.js';
 import { getInkCapabilitySummaries, getInkNamedToolDefinitions, resolveInkCapabilityDescriptor } from './capability-registry.js';
 
 export const INK_PUBLIC_CREATIVE_API_SCHEMA = 'INK-PUBLIC-CREATIVE-API';
@@ -341,6 +342,7 @@ function failedResult(app, action, error, result = null) {
 export function createInkPublicCreativeApi(app) {
   if (!app) throw new TypeError('INK public API requires an InkApp instance');
   const outputRegistry = installInkOutputRegistry(app);
+  const creativeLibrarySearch = createCreativeLibrarySearch(app);
   const capabilitySummaries = getInkCapabilitySummaries();
   const namedToolDefinitions = getInkNamedToolDefinitions();
 
@@ -773,6 +775,18 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
+  const library = Object.freeze({
+    query(input = {}) {
+      const action = 'library.query';
+      try {
+        const result = creativeLibrarySearch.query(isRecord(input) ? input : {});
+        return createInkAgentResult(app, action, { result });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    }
+  });
+
   const capability = Object.freeze({
     describe(idOrToolName) {
       const action = 'capability.describe';
@@ -793,7 +807,7 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
-  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, composition, history, revision, preview, asset, capability });
+  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, composition, history, revision, preview, asset, library, capability });
   const toolHandlers = Object.freeze({
     get_ink_capabilities: () => capabilities(),
     get_ink_context: input => context(input?.options ?? input ?? {}),
@@ -815,6 +829,7 @@ export function createInkPublicCreativeApi(app) {
     describe_ink_capability: input => capability.describe(input?.idOrToolName ?? input?.capabilityId ?? input?.toolName ?? input),
     import_ink_reference: request => reference.import(request?.input ?? request, request?.options ?? {}),
     export_ink_asset: input => asset.export(input ?? {}),
+    search_ink_library: input => library.query(input ?? {}),
     use_ink: input => {
       const request = isRecord(input) ? input : {};
       const action = String(request.action || '').trim();
