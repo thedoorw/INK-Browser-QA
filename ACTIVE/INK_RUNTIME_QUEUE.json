@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "399b039ffcd4677e073391418f50e77f8b0a0a63",
+  "state": "READY",
+  "target_sha": "d6ce01dc47614100bedea2592e64c18f66bc28d3",
   "pending_work_orders": [
     "INK-CHAT-GEOMETRY-OPS-001",
     "INK-TECH-CLOSURE-001"
