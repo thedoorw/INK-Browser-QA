@@ -1,3 +1,29 @@
+## UI provisional start gate authorized — 2026-09-26
+
+```text
+TRIGGER =
+  Connector-005 DEV implementation handoff
+
+THEN =
+  Photoshop-aligned UI may start provisionally
+  without waiting for Connector-005 promotion
+
+AUTHORITATIVE_RULE =
+  working/INK_UI_PROVISIONAL_BASELINE_RULE.md
+
+PROVISIONAL_UI =
+  shell / layout / panels / Navigator / History / fullscreen /
+  typography / spacing / responsive / promoted command placement
+
+FINAL_CAPABILITY_BINDINGS =
+  HOLD for MR reconciliation + promotion + CURRENT_CAPABILITY_BASELINE refresh
+
+FINAL_UI_BASELINE = HOLD
+UI_PROMOTION = HOLD
+```
+
+---
+
 ## Runtime 36225935515 classified / Fix 3 dispatched — 2026-09-26
 
 ```text
