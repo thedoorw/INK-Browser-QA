@@ -1,5 +1,54 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-TECH-CLOSURE-001 / FINAL_RUNTIME_FIX_3 / DEV_HANDOFF / STOP`
+
+- Branch: `work/ink-tech-closure-001`
+- Dispatch head: `d6ce01dc47614100bedea2592e64c18f66bc28d3`
+- Latest implementation / focused-regression head: `198f4b3b721c32d5170af13e19ddb231531ee70a`
+- Checkpoint commit: `ba814a740c17d5b8f757ef740c7d5f0d519e56d7`
+- Checkpoint: `working/INK_TECH_CLOSURE_001_RUNTIME_FIX_3_CHECKPOINT.md`
+- Defect E: final Closure History accumulation proof is retention-limit aware
+- Defect F: workspace event binding is restricted to actual `#workspaceSwitch button[data-space]` controls
+- Bounded operations: `34 / preserved`
+- Named tools: `21 / preserved`
+- FORMAT_VERSION: `4 / preserved`
+- Focused source/static QA: `PASS`
+- Windows Runtime by DEV: `NOT RUN / PROHIBITED`
+- Promotion: `NOT RUN`
+
+## Final Runtime Fix 3 handoff
+
+```text
+CLOSURE HISTORY:
+  expected accumulated operations = 35
+  retained applied = min(expected accumulated, history.limit)
+  pending = false
+  retainedCount / entries / applied consistent
+  latest native Component History label required
+
+WORKSPACE SELECTOR:
+  root #app[data-space] remains state authority
+  click binding = #workspaceSwitch button[data-space] only
+  unrelated descendant click no longer routes through switchWorkspace
+  markDirty authority unchanged
+  grounded modifiedAt strict equality remains enforced
+
+FOCUSED QA:
+  Closure inline script syntax = PASS
+  focused regression source syntax = PASS
+  exact authorized branch delta = PASS
+  executable Node regression updated / MR execution next
+
+RESULT = DEV_FIX_3_READY_FOR_MR_REVIEW
+WINDOWS_RUNTIME = NOT_RUN_BY_DEV
+PROMOTION = NOT_RUN
+DEV_HANDOFF → STOP
+```
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-TECH-CLOSURE-001 / FINAL_RUNTIME_FIX_3 / DEV_AUTHORIZED / START`
 
 - Branch: `work/ink-tech-closure-001`
