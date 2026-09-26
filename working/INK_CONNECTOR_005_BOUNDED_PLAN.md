@@ -1,21 +1,39 @@
 # INK Connector-005 — Bounded Creative Library Search Plan
 
-STATUS: `PLANNED / NOT_YET_AUTHORIZED`
+STATUS: `DEV_AUTHORIZED / QUEUED_AFTER_RUNTIME_STABILITY_HANDOFF`
 
 DATE: 2026-09-26
 
 ## 1. Program order
 
+User-authorized program order:
+
 ```text
-INK-TECH-CLOSURE-001
-→ Connector-005 Creative Library Search
+INK-RUNTIME-HARNESS-STABILITY-001
+→ DEV handoff with PASS / FAIL / INCONCLUSIVE evidence
+→ Connector-005 Creative Library Search implementation + focused QA
+→ MR reconcile Runtime + Connector branches
+→ integrated exact-SHA Runtime / final acceptance
+→ clean promotion
 → update CURRENT_CAPABILITY_BASELINE
 → Photoshop-aligned final UI rebuild
 ```
 
-Connector-005 starts only after Closure 001 reaches clean promotion and technical closure.
+Connector-005 implementation no longer waits for Closure/Runtime clean promotion.
 
-The final UI rebuild does not start from the Closure-only baseline. UR receives the baseline refreshed after Connector-005.
+The final UI rebuild still does not start until Connector-005 is reviewed, reconciled, promoted, and the capability baseline is refreshed.
+
+Implementation branch:
+
+`work/ink-connector-005`
+
+Implementation baseline:
+
+`54301b0916a04d0a1c611df4db540481baa12300`
+
+DEV Workpack:
+
+`working/INK_CONNECTOR_005_DEV_WORKPACK.md`
 
 ## 2. Purpose
 
@@ -68,7 +86,7 @@ query reusable assets
 → inspect one selected result
 ```
 
-Search must not mutate Document, History, Revision, library state, Creative Memory, or Research state.
+Search must not mutate Document, History, Revision, library state, Creative Memory, Research state, modifiedAt, selection, or workspace state.
 
 ## 5. Required reuse path
 
@@ -87,6 +105,8 @@ explicit proposal
 ```
 
 Where reuse is read-only, no History/Revision mutation is allowed.
+
+Connector-005 must report truthfully when a searchable type has no currently accepted user-governed mutation route; it must not invent one merely to claim reuse support.
 
 ## 6. Stable reference contract
 
@@ -123,9 +143,11 @@ UI work is limited to any minimum technical surface strictly required for Runtim
 
 ## 8. Capability-baseline rule
 
-Closure 001 may finish with its own technical closure record, but the baseline handed to UR is not final until Connector-005 is closed.
+Closure/Runtime may remain under a separate harness-stability review while Connector-005 implementation proceeds.
 
-After Connector-005:
+The baseline handed to UR is not final until MR has reconciled both lanes and Connector-005 is closed.
+
+After Connector-005 + Runtime reconciliation:
 
 ```text
 re-audit installed CHAT capabilities
@@ -138,20 +160,33 @@ re-audit History / Revision / provenance requirements
 → hand to UR
 ```
 
-## 9. Acceptance target
+## 9. Acceptance targets
 
-Connector-005 is complete only when all of the following are true:
+### DEV implementation handoff
+
+DEV Connector work is complete when:
 
 ```text
 bounded search implemented
 stable typed refs implemented
 inspect selected result implemented
-reuse/apply routes through existing native authority
-read-only search proven mutation-neutral
-mutating reuse proven user-governed
-History / Revision / provenance contracts verified where applicable
+reuse route classified through existing native authority
+read-only search/inspect proven mutation-neutral
+mutating reuse path proven user-governed where currently supported
 focused QA PASS
-exact-SHA Runtime PASS
+DEV checkpoint / handoff complete
+```
+
+A shared Runtime-harness FAIL/INCONCLUSIVE/DEFERRED result does not block this DEV handoff.
+
+### Final MR closure
+
+Connector-005 is finally closed only when:
+
+```text
+DEV implementation accepted
+Runtime-harness and Connector branches reconciled
+integrated exact-SHA Runtime accepted
 clean promotion to current main
 capability baseline refreshed
 ```
@@ -159,8 +194,14 @@ capability baseline refreshed
 ## 10. Current gate
 
 ```text
-CURRENT = INK-TECH-CLOSURE-001
-CONNECTOR_005 = PLANNED / HOLD
-IMPLEMENTATION_AUTHORIZATION = NO
-NEXT_AUTHORITY = MR after Closure 001 clean promotion
+CURRENT_DEV_1 = INK-RUNTIME-HARNESS-STABILITY-001
+CURRENT_DEV_2 = Connector-005 queued immediately after DEV Runtime handoff
+
+CONNECTOR_005 = DEV_AUTHORIZED
+IMPLEMENTATION_AUTHORIZATION = YES
+RUNTIME_CLEAN_PASS_PREREQUISITE = REMOVED
+
+MR_FINAL_ACCEPTANCE = REQUIRED
+PROMOTION = HOLD
+PHOTOSHOP_UI_REBUILD = HOLD
 ```
