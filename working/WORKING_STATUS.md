@@ -7,14 +7,14 @@ DATE: 2026-09-26
 ```text
 CURRENT_MAIN = repository current main
 CURRENT_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
-CURRENT_GATE = UI_WORK_ORDER_REQUIRED
+CURRENT_GATE = UI_HOLD / CAPABILITY_REBASELINE_REQUIRED
 TECHNICAL_CLOSURE = CLOSED
 RUNTIME_STABILITY = CLOSED
 CONNECTOR_005 = CLOSED
 
 CAPABILITY_BASELINE =
   ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
-  FROZEN / UI-AUTHORITATIVE
+  REOPEN_REQUIRED / PREVIOUS FROZEN SNAPSHOT RETAINED FOR DIFF
 
 FORMAT_VERSION = 4
 BOUNDED_EDIT_OPERATIONS = 34
@@ -30,7 +30,7 @@ RUNTIME_QUEUE =
 
 ## Current next step
 
-UR prepares and issues the bounded Photoshop-aligned final UI Work Order against the frozen capability baseline.
+UI implementation is paused. MR must first audit and republish the capability baseline; UR then reconciles function placement and the AI completion checklist before any UI Work Order is issued.
 
 ## Historical technical milestone
 
