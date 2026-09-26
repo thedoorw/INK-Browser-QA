@@ -1,6 +1,6 @@
 # INK Final UI — Function Placement Map v1.0
 
-STATUS: `FINAL / FROZEN_BASELINE_RECONCILED / C3_PENDING_0`
+STATUS: `REFERENCE_SNAPSHOT / UI_HOLD / RECONCILIATION_REQUIRED_AFTER_MR_REBASELINE`
 
 DATE: 2026-09-26
 
@@ -24,6 +24,14 @@ STATIC_BUTTONS = 212
 SELECTS = 29
 PERSISTENT_CANVAS_TOOL_MODES = 12
 ```
+
+
+
+> **HOLD NOTICE — 2026-09-26**
+>
+> USER has reopened capability-baseline completeness because existing/required INK capabilities may have been omitted by MR.  
+> This map records the placement decision against the previous baseline only. It must not authorize UI implementation until a refreshed `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md` is published and this map is reconciled again.
+
 
 Purpose:
 Every installed capability and every current visible/static UI family receives one intentional UI disposition before the Photoshop-aligned final rebuild.
