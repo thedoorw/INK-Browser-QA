@@ -1,5 +1,39 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-TECH-CLOSURE-001 / FINAL_RUNTIME_DEFECT_FIX / DEV_AUTHORIZED / START`
+
+- Branch: `work/ink-tech-closure-001`
+- Dispatch baseline: `f5eaf45715859004436d15d4645209b7be29a120`
+- Workpack: `working/INK_TECH_CLOSURE_001_RUNTIME_FIX_DEV_WORKPACK.md`
+- UI Runtime: `PASS`
+- Geometry Runtime: `PASS`
+- Focused Node contracts: `PASS`
+- Promotion: `HOLD`
+- Windows Runtime by DEV: `PROHIBITED`
+
+## Authorized defects only
+
+```text
+A. component.register.v1 proposal failure
+B. grounded OBSERVE Document mutation
+```
+
+## Required stop
+
+```text
+focused fix + regression QA
+→ working/INK_TECH_CLOSURE_001_RUNTIME_FIX_CHECKPOINT.md
+→ DEV_FIX_READY_FOR_MR_REVIEW
+→ DEV_HANDOFF
+→ STOP
+```
+
+Do not continue to Runtime, promotion, baseline freeze, UI, or other Closure work.
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-TECH-CLOSURE-001 / C2-C / C2C_SOURCE_FOCUSED_PASS / DEV_HANDOFF / STOP`
 
 - Branch: `work/ink-tech-closure-001`
