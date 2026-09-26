@@ -222,7 +222,6 @@ Layer
 Type
 Select
 Object
-Filter
 View
 Window
 Help
@@ -233,6 +232,7 @@ Rationale:
 - historical Photoshop `3D` is omitted;
 - vector-centric `Object` is an INK-required menu;
 - old top-level `Brush` is removed; Brush belongs to Tools + Options/Properties.
+- `Filter` is deliberately omitted from the final normal menu because the frozen capability baseline does not authorize a general Filter capability; legacy Filter/Adjustment/Mask validation controls remain Specialist/legacy.
 
 Requirements:
 - every visible top-level label opens a functional menu;
