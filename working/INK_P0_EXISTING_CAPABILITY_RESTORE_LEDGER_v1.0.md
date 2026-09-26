@@ -67,7 +67,7 @@ History key: `M` = document mutation is routed through native History at its exi
 | 55 | Recipe / automation | `recipe/recipe-engine.js`, `studio-core.js` | P — existing authority retained | M | D | `studio-core-v090.test.mjs` | 0 identified |
 | 56 | Program Import | `program-import/importer.js`, `studio-core.js` | F — Program Import attachment enclosed in History | M | D | `program-import-v110.test.mjs` | 0 identified |
 | 57 | CHAT control | `editor/chat-bounded-edit.js`, `editor/chat-creative-plan.js` | P — existing authority retained | M | D | `chat-bounded-edit-core-v0.1.test.mjs` | 0 identified |
-| 58 | Semantic grounding | `semantic/semantic-model.js`, `semantic/semantic-region-grounding.js` | P — existing authority retained | R | D | `qa/core-mod-002-semantic-region.test.mjs` | 0 identified |
+| 58 | Semantic grounding | `semantic/semantic-model.js`, `semantic/semantic-region-grounding.js` | F — positive overlap now emits the existing `intersects` relationship even without boundary crossings | R | D | `qa/core-mod-002-semantic-region.test.mjs` | 0 identified |
 | 59 | Creative Library | `agent/creative-library-search.js`, `agent/public-creative-api.js` | P — existing authority retained | R | D | `qa/ink-connector-005-creative-library-search.test.mjs` | 0 identified |
 | 60 | Creative Memory / Research | `memory/creative-memory.js`, `research/research-creation-bridge.js` | P — existing authority retained | R | D | `qa/core-mod-006-creative-memory.test.mjs` | 0 identified |
 | 61 | FLORA specialization | `flora/hero`, `flora/recipe` | P — specialized boundary retained; generic Core unchanged | R | D | `flora-wp9a.test.mjs` | 0 identified |
@@ -75,6 +75,7 @@ History key: `M` = document mutation is routed through native History at its exi
 ## Evidence and explicit limits
 
 - Changed render paths: image/object/layer masks, adjustment/filter stacks, color overlay, blend modes; cache invalidation on document replacement and mutation.
+- Existing semantic region grounding now reports `intersects` for regions with positive overlapping area, including containment, using the same native geometry authority.
 - Changed History paths: mask, adjustment, filter, filter reorder, brush replay, Stroke Session, drawing import report, calibration embedding, device/performance reports, and the full Program Import document attachment.
 - Brush packages: built-in package export remains; native `INK_STUDIO.drawing.importBrushPackage(...)` persists imported packages in `.ink` and reloads them after document replacement, including Undo/Redo.
 - Layer effects were historically **partial**. Color overlay is rendered from its existing model; drop/inner shadow, outer glow and stroke retain their historical data-model-only scope. This is not a claim of completed effects rendering.

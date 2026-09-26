@@ -310,8 +310,10 @@ function geometryRelationships(regions, limits, options) {
         const minimumArea = Math.min(areaA, areaB);
         const tolerance = Math.max(areaEpsilon, minimumArea * 1e-6);
         const containsMinimum = overlapArea >= minimumArea - tolerance;
-        if (intersections.length) {
-          const evidence = [{ kind: 'geometry-kernel', operation: 'segment-intersection', pointCount: intersections.length, points: intersections.slice(0, 32), truncated: intersections.length > 32 }];
+        if (intersections.length || overlapArea > areaEpsilon) {
+          const evidence = intersections.length
+            ? [{ kind: 'geometry-kernel', operation: 'segment-intersection', pointCount: intersections.length, points: intersections.slice(0, 32), truncated: intersections.length > 32 }]
+            : [{ kind: 'vector-boolean', operation: 'intersection', area: round(overlapArea) }];
           addEdge(edges, { from: a.descriptor.regionId, type: 'intersects', to: b.descriptor.regionId, confidence: 1, evidence });
           addEdge(edges, { from: b.descriptor.regionId, type: 'intersects', to: a.descriptor.regionId, confidence: 1, evidence });
         }
