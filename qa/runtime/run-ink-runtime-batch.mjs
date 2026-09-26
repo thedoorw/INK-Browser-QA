@@ -243,6 +243,60 @@ function createCdpPipe(child) {
   return { send, waitFor };
 }
 
+async function waitForUiCaptureReadiness(cdp, sessionId, expectedUrl, { scriptEnabled, timeoutMs = 20000 } = {}) {
+  await cdp.send('DOM.enable', {}, sessionId);
+  await cdp.send('CSS.enable', {}, sessionId);
+  if (scriptEnabled) await cdp.send('Runtime.enable', {}, sessionId);
+  const started = Date.now();
+  let last = null;
+  while (Date.now() - started < timeoutMs) {
+    try {
+      const history = await cdp.send('Page.getNavigationHistory', {}, sessionId, 5000);
+      const current = history.entries?.[history.currentIndex] || null;
+      const documentRoot = await cdp.send('DOM.getDocument', { depth: 1, pierce: false }, sessionId, 5000);
+      const rootNodeId = documentRoot.root?.nodeId || 0;
+      const appNode = rootNodeId
+        ? await cdp.send('DOM.querySelector', { nodeId: rootNodeId, selector: '#app' }, sessionId, 5000)
+        : { nodeId: 0 };
+      let styled = false;
+      if (appNode.nodeId) {
+        const matched = await cdp.send('CSS.getMatchedStylesForNode', { nodeId: appNode.nodeId }, sessionId, 5000);
+        styled = Array.isArray(matched.matchedCSSRules) && matched.matchedCSSRules.length > 0;
+      }
+      let runtimeReady = !scriptEnabled;
+      let readyState = null;
+      let runtimeHref = null;
+      if (scriptEnabled) {
+        const evaluated = await cdp.send('Runtime.evaluate', {
+          expression: '({href:location.href,readyState:document.readyState,inkReady:Boolean(window.INK_APP && window.INK_WEB_SHELL)})',
+          returnByValue: true,
+          awaitPromise: false
+        }, sessionId, 5000);
+        const value = evaluated.result?.value || {};
+        runtimeHref = value.href || null;
+        readyState = value.readyState || null;
+        runtimeReady = value.href === expectedUrl && value.readyState === 'complete' && value.inkReady === true;
+      }
+      const navigationReady = current?.url === expectedUrl;
+      last = {
+        navigationUrl: current?.url || null,
+        appNodeId: appNode.nodeId || null,
+        styled,
+        runtimeHref,
+        readyState,
+        runtimeReady
+      };
+      if (navigationReady && appNode.nodeId && styled && runtimeReady) {
+        return { ...last, waitedMs: Date.now() - started };
+      }
+    } catch (error) {
+      last = { error: error?.message || String(error) };
+    }
+    await new Promise(resolve => setTimeout(resolve, 75));
+  }
+  throw new Error(`UI capture readiness timeout: ${JSON.stringify(last)}`);
+}
+
 async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
   const output = path.join(evidenceDir, spec.file);
   const profile = await mkdtemp(path.join(root, 'profile-ui-visual-'));
@@ -287,11 +341,13 @@ async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
       await cdp.send('Emulation.setScriptExecutionDisabled', { value: true }, sessionId);
     }
 
-    const loaded = cdp.waitFor('Page.loadEventFired', sessionId, 20000);
-    const navigation = await cdp.send('Page.navigate', { url: `${origin}/` }, sessionId, 20000);
+    const targetUrl = `${origin}/`;
+    const navigation = await cdp.send('Page.navigate', { url: targetUrl }, sessionId, 20000);
     assert.ok(!navigation.errorText, `CDP navigation failed for ${spec.file}: ${navigation.errorText}`);
-    await loaded;
-    if (!spec.disableScript) await new Promise(resolve => setTimeout(resolve, 1200));
+    const readiness = await waitForUiCaptureReadiness(cdp, sessionId, targetUrl, {
+      scriptEnabled: !spec.disableScript,
+      timeoutMs: 20000
+    });
 
     const layout = await cdp.send('Page.getLayoutMetrics', {}, sessionId);
     const viewport = layout.cssVisualViewport || layout.cssLayoutViewport;
@@ -322,7 +378,8 @@ async function captureUiVisual(browser, root, origin, evidenceDir, spec) {
       scriptMode: spec.disableScript ? 'DISABLED_DELIVERED_SHELL' : 'RUNTIME_ENABLED',
       pixelSize,
       byteLength: bytes.length,
-      sha256: sha256(bytes)
+      sha256: sha256(bytes),
+      readiness
     };
   } catch (error) {
     if (error?.message && !error.message.includes('stderr=')) {
@@ -398,7 +455,7 @@ export async function finalizeSmartLoopEvidence(root, evidence, testedSha) {
 
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css', '.svg': 'image/svg+xml', '.png': 'image/png', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.wasm': 'application/wasm' };
 
-export async function startServer(root, suite, onEvidence, { evidenceDir = null } = {}) {
+export async function startServer(root, suite, onEvidence, { evidenceDir = null, onProgress = null } = {}) {
   const site = path.join(root, 'product/source');
   const harness = await readFile(path.join(root, 'qa/runtime', suite.file));
   let delivered = false;
@@ -407,6 +464,24 @@ export async function startServer(root, suite, onEvidence, { evidenceDir = null 
     try {
       const url = new URL(req.url, 'http://127.0.0.1');
       res.setHeader('Cache-Control', 'no-store');
+      if (url.pathname === '/__qa_progress') {
+        if (suite.id !== 'creative' || typeof onProgress !== 'function') { res.writeHead(404).end(); return; }
+        if (req.method !== 'POST') { res.writeHead(405).end(); return; }
+        const chunks = []; let size = 0;
+        for await (const chunk of req) {
+          size += chunk.length;
+          if (size > 16 * 1024) { res.writeHead(413).end(); return; }
+          chunks.push(chunk);
+        }
+        const progress = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+        if (!Number.isInteger(progress?.sequence) || progress.sequence < 1 || typeof progress?.marker !== 'string' || !progress.marker) {
+          res.writeHead(400).end(); return;
+        }
+        await onProgress(progress);
+        res.setHeader('Content-Type', 'application/json');
+        res.writeHead(200).end(JSON.stringify({ accepted: true, sequence: progress.sequence }));
+        return;
+      }
       // QA-only, loopback-bound, two fixed artifact names; never a product transport.
       if (url.pathname.startsWith('/__qa_smart_loop/')) {
         const phase = url.pathname.slice('/__qa_smart_loop/'.length);
@@ -516,7 +591,25 @@ export async function runBatch(root) {
       try {
         let receive;
         const result = new Promise(resolve => { receive = resolve; });
-        const started = await startServer(root, suite, receive, { evidenceDir }); server = started.server;
+        let latestProgress = null;
+        const progressTrace = [];
+        const progressPath = path.join(evidenceDir, `${suite.id}-progress.json`);
+        const onProgress = suite.id === 'creative'
+          ? async progress => {
+              if (latestProgress && progress.sequence <= latestProgress.sequence) return;
+              latestProgress = progress;
+              progressTrace.push(progress);
+              if (progressTrace.length > 160) progressTrace.splice(0, progressTrace.length - 160);
+              entry.lastProgress = progress;
+              await writeFile(progressPath, JSON.stringify({
+                suite: suite.id,
+                testedSha: report.testedSha,
+                latest: latestProgress,
+                trace: progressTrace
+              }, null, 2));
+            }
+          : null;
+        const started = await startServer(root, suite, receive, { evidenceDir, onProgress }); server = started.server;
         const preflightRoutes = ['/', '/src/ink.js', '/styles.css', '/__qa_harness.html', '/__qa_rose_window.png'];
         if (suite.id === 'creative') preflightRoutes.push(SMART_LOOP_RESOLVER_ROUTE);
         for (const route of preflightRoutes) {
