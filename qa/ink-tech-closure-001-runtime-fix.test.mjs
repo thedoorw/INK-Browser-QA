@@ -315,6 +315,9 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   assert.match(creativeHarness, /useInkTools\[19\]\?\.name==='import_ink_reference'/);
   assert.match(creativeHarness, /useInkTools\[20\]\?\.name==='export_ink_asset'/);
   assert.doesNotMatch(creativeHarness, /useInkTools\.length===20/);
+  assert.match(creativeHarness, /CREATIVE_STAGE_TIMEOUT/);
+  assert.match(creativeHarness, /markRuntimeStage\('USE_INK_EXECUTE'\)/);
+  assert.match(creativeHarness, /markRuntimeStage\('STRUCTURE_RUN'\)/);
 
   const closureHarness = await readFile(path.join(root, 'qa/runtime/ink-tech-closure-001-browser-harness.html'), 'utf8');
   assert.match(closureHarness, /Math\.min\(history\.beforeUndoCount\+1,limit\)/);
