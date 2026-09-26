@@ -1,4 +1,4 @@
-import { walkPageObjects } from '../document/hierarchy.js';
+import { isStructuralContainer, walkPageObjects } from '../document/hierarchy.js';
 
 export const INK_CREATIVE_LIBRARY_REF_SCHEMA = 'INK_CREATIVE_LIBRARY_REF';
 export const INK_CREATIVE_LIBRARY_REF_VERSION = 1;
@@ -61,6 +61,34 @@ function boundedStringList(value, limit = 8) {
     .filter(item => typeof item === 'string' && item.trim())
     .slice(0, limit)
     .map(item => text(item));
+}
+
+function boundedValue(value, depth = 0) {
+  if (value == null || typeof value === 'boolean') return value ?? null;
+  if (typeof value === 'string') return text(value);
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  if (depth >= 3) return null;
+  if (Array.isArray(value)) return value.slice(0, 12).map(item => boundedValue(item, depth + 1));
+  if (record(value)) {
+    const entries = Object.entries(value).slice(0, 16);
+    return Object.fromEntries(entries.map(([key, item]) => [text(key), boundedValue(item, depth + 1)]));
+  }
+  return null;
+}
+
+function searchableStrings(value, depth = 0) {
+  if (value == null || depth >= 4) return [];
+  if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') return [String(value)];
+  if (Array.isArray(value)) return value.slice(0, 16).flatMap(item => searchableStrings(item, depth + 1));
+  if (record(value)) return Object.entries(value).slice(0, 24).flatMap(([key, item]) => [key, ...searchableStrings(item, depth + 1)]);
+  return [];
+}
+
+function containsComponentInstance(value, seen = new WeakSet()) {
+  if (!value || typeof value !== 'object' || seen.has(value)) return false;
+  seen.add(value);
+  if (value.type === 'component-instance') return true;
+  return Object.values(value).some(child => containsComponentInstance(child, seen));
 }
 
 function objectIndex(document) {
@@ -154,7 +182,19 @@ function componentCandidates(document, index) {
     .filter(definition => record(definition) && typeof definition.id === 'string' && definition.id.trim())
     .map(definition => {
       const sourceEntries = index.byId.get(definition.sourceRootId) || [];
-      const sourceValid = sourceEntries.length === 1;
+      const sourceEntry = sourceEntries.length === 1 ? sourceEntries[0] : null;
+      const subtree = sourceEntry
+        ? index.entries.filter(entry => entry === sourceEntry || entry.ancestorIds?.includes(sourceEntry.object.id))
+        : [];
+      const subtreeIds = subtree.map(entry => entry.object?.id).filter(id => typeof id === 'string' && id.trim());
+      const sourceValid = Boolean(
+        sourceEntry
+        && isStructuralContainer(sourceEntry.object)
+        && text(definition.name)
+        && subtreeIds.length === subtree.length
+        && new Set(subtreeIds).size === subtreeIds.length
+        && !containsComponentInstance(sourceEntry.object)
+      );
       const label = text(definition.name) || text(definition.id);
       const ref = makeRef({
         type: 'component',
@@ -203,11 +243,11 @@ function materialCandidates(document) {
           templateVersion: templateVersion || null,
           materialType: text(template.materialType) || null,
           semanticRole: text(template.semanticRole) || null,
-          validationState: text(template.validationState) || null
+          validationState: boundedValue(template.validationState)
         },
         provenance: {
           source: 'document.materialLibrary.templates',
-          sourceBenchmark: text(template.sourceBenchmark) || null
+          sourceBenchmark: boundedValue(template.sourceBenchmark)
         },
         reuse: materialReuse(template)
       };
@@ -218,11 +258,12 @@ function recipeCandidates(document) {
   const results = [];
   for (const page of document?.pages || []) {
     const recipes = record(page?.floraRecipeState?.recipes) ? page.floraRecipeState.recipes : {};
-    for (const [key, recipe] of Object.entries(recipes)) {
-      if (!record(recipe)) continue;
-      const recipeId = text(recipe.recipeId || key);
+    for (const [key, entry] of Object.entries(recipes)) {
+      if (!record(entry)) continue;
+      const recipe = record(entry.recipe) ? entry.recipe : entry;
+      const recipeId = text(recipe.recipeId || entry.recipeId || key);
       if (!recipeId) continue;
-      const label = text(recipe.metadata?.label || recipe.title || recipe.name || recipeId) || recipeId;
+      const label = text(recipe.metadata?.label || recipe.title || recipe.name || entry.metadata?.label || recipeId) || recipeId;
       const ref = makeRef({
         type: 'recipe',
         document,
@@ -236,14 +277,17 @@ function recipeCandidates(document) {
         label,
         metadata: {
           recipeId,
-          schemaVersion: text(recipe.schemaVersion) || null,
-          operation: text(recipe.operation) || null,
-          targetRegionId: text(recipe.targetRegionId) || null,
-          palette: boundedStringList(recipe.palette)
+          schemaVersion: text(recipe.schemaVersion || entry.schemaVersion) || null,
+          operation: text(recipe.operation || entry.operation) || null,
+          targetRegionId: text(recipe.targetRegionId || entry.targetRegionId) || null,
+          palette: boundedStringList(recipe.palette || entry.palette),
+          revision: Number.isFinite(Number(entry.revision)) ? Number(entry.revision) : null
         },
         provenance: {
           source: 'page.floraRecipeState.recipes',
-          pageId: page.id
+          pageId: page.id,
+          compileHash: text(entry.compileHash) || null,
+          layerId: text(entry.layerId) || null
         },
         reuse: recipeReuse()
       });
@@ -372,22 +416,10 @@ function searchableText(item) {
     item.type,
     item.label,
     item.ref.id,
-    item.metadata?.definitionId,
-    item.metadata?.sourceRootId,
-    item.metadata?.templateId,
-    item.metadata?.materialType,
-    item.metadata?.semanticRole,
-    item.metadata?.recipeId,
-    item.metadata?.operation,
-    item.metadata?.objectId,
-    item.metadata?.nativeType,
-    item.metadata?.mode,
-    item.metadata?.role,
-    item.metadata?.referenceObjectId,
-    item.provenance?.sourceBenchmark,
-    item.provenance?.sourceName
+    item.metadata,
+    item.provenance
   ];
-  return normalized(pieces.filter(Boolean).join(' '));
+  return normalized(pieces.flatMap(value => searchableStrings(value)).filter(Boolean).join(' '));
 }
 
 function matchesQuery(item, query) {
