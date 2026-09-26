@@ -310,10 +310,11 @@ test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document 
   assert.match(creativeHarness, /groundedDirtyCalls\.length===0/);
   assert.match(creativeHarness, /assertReadOnly\(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY'/);
   assert.doesNotMatch(creativeHarness, /delete\s+[^;]*modifiedAt|modifiedAt\s*=\s*[^;]*before/i);
-  assert.match(creativeHarness, /useInkTools\.length===21/);
+  assert.match(creativeHarness, /useInkTools\.length===22/);
   assert.match(creativeHarness, /useInkTools\[18\]\?\.name==='use_ink'/);
   assert.match(creativeHarness, /useInkTools\[19\]\?\.name==='import_ink_reference'/);
   assert.match(creativeHarness, /useInkTools\[20\]\?\.name==='export_ink_asset'/);
+  assert.match(creativeHarness, /useInkTools\[21\]\?\.name==='search_ink_library'/);
   assert.doesNotMatch(creativeHarness, /useInkTools\.length===20/);
   assert.match(creativeHarness, /const reportProgress = \(marker, details=\{\}\) =>/);
   assert.match(creativeHarness, /fetch\('\/__qa_progress'/);
