@@ -1,3 +1,37 @@
+## Provisional Photoshop UI start gate released — 2026-09-26
+
+```text
+USER_DECISION =
+  allow Photoshop-aligned UI development to start early
+  after Connector-005 DEV implementation handoff
+  without waiting for Connector-005 MR promotion
+
+UI_RULE = working/INK_UI_PROVISIONAL_BASELINE_RULE.md
+
+START_GATE =
+  DEV_CONNECTOR_005_IMPLEMENTATION_READY_FOR_MR_REVIEW
+  → DEV_HANDOFF
+  → PHOTOSHOP_UI_REBUILD = PROVISIONAL_ACTIVE
+
+NOT_REQUIRED_FOR_PROVISIONAL_UI_START =
+  Connector-005 MR promotion
+  integrated exact-SHA Runtime PASS
+  CURRENT_CAPABILITY_BASELINE final refresh
+
+FINAL_UI_BASELINE =
+  HOLD until MR reconciliation + promotion + CURRENT_CAPABILITY_BASELINE refresh
+
+UI_PROMOTION = PROHIBITED before final baseline reconciliation
+```
+
+Provisional UI work may proceed on shell geometry, toolbar/panel structure, Navigator, History, fullscreen, typography, spacing, responsive behavior, existing promoted command placement, and Photoshop/CSS/DOM visual alignment.
+
+Connector-005 Library/Search final entry point, menu/panel placement, shortcut/icon, final command mapping, final capability matrix, and final UI closure remain provisional until MR publishes the refreshed capability baseline.
+
+An unpromoted Connector branch is evidence for likely future capability exposure only; it is **not** the authoritative product baseline.
+
+---
+
 ## Connector-005 released independent of Runtime result — 2026-09-26
 
 ```text
