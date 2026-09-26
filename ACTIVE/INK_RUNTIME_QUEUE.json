@@ -40,8 +40,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36239246243,
-    "tested_sha": "2964a940ec28440f29ef189e74533e3740c461ad",
-    "result": "FOCUSED_30_PASS_2_FAIL / BROWSER_NOT_STARTED / MR_INTEGRATION_CORRECTION_APPLIED"
+    "run_id": 36239397464,
+    "tested_sha": "5d6e6bd81f1bcc65ed9d52cc0249f29f199ffa8f",
+    "result": "FOCUSED_32_PASS / UI_PASS / CLOSURE_PASS / GEOMETRY_PASS / CONNECTOR_005_BROWSER_PASS / CREATIVE_TIMEOUT_AT_DIRECT_EXTRACTION / SAME_SHA_RETRY_ONCE"
   }
 }
