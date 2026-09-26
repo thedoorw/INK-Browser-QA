@@ -163,6 +163,7 @@ jobs:
               'qa/ink-tech-closure-001-runtime-fix.test.mjs',
               'qa/ink-connector-005-creative-library-search.test.mjs',
               'qa/ink-p0-restore-all-001-focused.test.mjs',
+              'qa/core-mod-002-semantic-region.test.mjs',
               'qa/chat-validation-001-reference-handoff.test.mjs',
               'qa/core-mod-006-creative-memory.test.mjs',
               'qa/fixtures/rose-window/rose-window-primary.png'
@@ -217,7 +218,6 @@ jobs:
               'qa/ink-tech-closure-001-runtime-fix.test.mjs',
               'qa/ink-connector-005-creative-library-search.test.mjs',
               'qa/ink-p0-restore-all-001-focused.test.mjs',
-              'qa/core-mod-002-semantic-region.test.mjs',
               'qa/chat-validation-001-reference-handoff.test.mjs',
               'qa/core-mod-006-creative-memory.test.mjs'
             ].map(file => path.join(root, file));
