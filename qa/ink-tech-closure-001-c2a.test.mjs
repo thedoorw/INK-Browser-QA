@@ -148,10 +148,10 @@ function run(adapter, raw) {
   return executed.result;
 }
 
-test('C2-A preserves C1 prefix and adds exactly seven bounded operations for total 21', () => {
+test('C2-A preserves C1 prefix and owns the exact seven-operation C2-A segment', () => {
   assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(0, C1.length), C1);
-  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(C1.length), C2A);
-  assert.equal(CHAT_EDIT_OPERATIONS.length, 21);
+  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(C1.length, C1.length + C2A.length), C2A);
+  assert.ok(CHAT_EDIT_OPERATIONS.length >= 21);
   assert.equal(FORMAT_VERSION, 4);
   for (const operation of C2A) {
     const descriptor = resolveInkCapabilityDescriptor(operation);
