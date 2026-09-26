@@ -1,3 +1,27 @@
+## Provisional baseline execution rule — 2026-09-26
+
+Authoritative rule:
+
+`working/INK_UI_PROVISIONAL_BASELINE_RULE.md`
+
+UI implementation may start after the Connector-005 DEV implementation handoff even if Connector-005 has not yet been promoted.
+
+```text
+CONNECTOR_005_DEV_HANDOFF
+= UI_PROVISIONAL_START_ALLOWED
+
+MR_PROMOTION + CURRENT_CAPABILITY_BASELINE_REFRESH
+= UI_FINAL_BASELINE_MAY_LOCK
+```
+
+Before final baseline lock, UI work is allowed to implement Photoshop-aligned shell/layout/panel/tool geometry, Navigator, History, fullscreen, typography, spacing, responsive behavior, and placement of already-promoted capabilities.
+
+Connector-005 final Library/Search entry point and all final capability-facing command/menu/tool/panel mappings remain provisional. The unpromoted Connector branch must not be treated as the product SSOT.
+
+After MR promotion and capability-baseline refresh, UI must run a reconciliation pass before final closure.
+
+---
+
 # INK Web UI Development Plan v0.1
 
 STATUS: `ACTIVE_PLAN / USER_AUTHORIZED / INK-WEB-UI-001_READY`
