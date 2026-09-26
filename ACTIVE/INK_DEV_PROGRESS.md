@@ -1,5 +1,56 @@
 # INK DEV PROGRESS
 
+STATUS: `INK-CONNECTOR-005-CREATIVE-LIBRARY-SEARCH / DEV_HANDOFF / STOP`
+
+- Branch: `work/ink-connector-005`
+- Baseline: `54301b0916a04d0a1c611df4db540481baa12300`
+- Latest implementation / focused-QA head: `ab0d401b1b1eb924de5d2064d0e96e4b9bcc9988`
+- Checkpoint: `working/INK_CONNECTOR_005_CHECKPOINT.md`
+- Checkpoint commit: `fc99b12c244a6dde3520f4ca32150e985a12d7dd`
+- New named tool: `search_ink_library`
+- Named tools: `22`
+- First 21 tools: `exact accepted prefix / preserved`
+- Search families: `component / material / recipe / parametric-structure / reference-derived-structure`
+- Public API: `library.query`
+- Stable ref: `INK_CREATIVE_LIBRARY_REF / 1`
+- Focused contract QA: `A-U PASS`
+- Native Node test file: `authored / MR execution next`
+- Connector browser Runtime: `DEFERRED_MR_RECONCILIATION_WITH_STABLE_HARNESS`
+- Bounded edit operations: `34 / unchanged`
+- FORMAT_VERSION: `4 / unchanged`
+- Promotion: `NOT RUN`
+
+## Connector-005 handoff
+
+```text
+SEARCH:
+  bounded + deterministic + read-only
+  no remote search
+  no registry creation
+  empty family/query = []
+  stable type-disambiguated refs
+  exact inspect / stale failure
+
+REUSE:
+  Component = existing component.instance.create.v1
+  Material = existing path.material.apply.v1
+  Recipe = read-only / no new CHAT execution route
+  Parametric = existing object.clone.v1
+  Reference-derived = existing object.clone.v1
+
+MUTATION NEUTRAL:
+  Document / modifiedAt / History / Revision / selection preserved
+  no auto apply
+  no Creative Memory / Research write
+
+RESULT = DEV_CONNECTOR_005_IMPLEMENTATION_READY_FOR_MR_REVIEW
+DEV_HANDOFF → STOP
+```
+
+---
+
+# INK DEV PROGRESS
+
 STATUS: `INK-CONNECTOR-005-CREATIVE-LIBRARY-SEARCH / DEV_AUTHORIZED / QUEUED`
 
 - Branch: `work/ink-connector-005`
