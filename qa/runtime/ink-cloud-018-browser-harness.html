@@ -14,7 +14,30 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   const logNode = document.querySelector('#qa-log');
   const frame = document.querySelector('#ink-frame');
   const evidence = { task:'INK-CLOUD-018', fixture:'rose-window-primary.png', checks:[], metrics:{}, failures:[] };
-  const pass = (name, details={}) => { evidence.checks.push({name,...details,status:'PASS'}); logNode.textContent = JSON.stringify(evidence,null,2); };
+  let progressSequence = 0;
+  const reportProgress = (marker, details={}) => {
+    progressSequence += 1;
+    const payload = {
+      sequence: progressSequence,
+      marker: String(marker || 'UNKNOWN'),
+      atMs: Math.round(performance.now()),
+      checkCount: evidence.checks.length,
+      ...details
+    };
+    void fetch('/__qa_progress',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(payload),
+      cache:'no-store',
+      keepalive:true
+    }).catch(()=>{});
+    return payload;
+  };
+  const pass = (name, details={}) => {
+    evidence.checks.push({name,...details,status:'PASS'});
+    logNode.textContent = JSON.stringify(evidence,null,2);
+    reportProgress(name);
+  };
   const assert = (condition, name, details={}) => { if (!condition) throw Object.assign(new Error(name),{qa:name,details}); pass(name,details); };
   const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
   const waitFor = async (predicate, timeout = 8000, step = 40) => {
@@ -53,6 +76,24 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   async function run() {
     const w=await ready(), app=w.INK_APP, cw=app.creativeWorkspace, shell=w.INK_WEB_SHELL, doc=w.document;
     assert(Boolean(shell?.open && shell?.state),'WORKSTATION_SHELL_AVAILABLE');
+    const markDirtyCalls=[];
+    const originalMarkDirty=app.markDirty.bind(app);
+    app.markDirty=(...args)=>{
+      markDirtyCalls.push({
+        at:Date.now(),
+        modifiedAtBefore:app.doc?.modifiedAt??null,
+        historyUndo:app.history?.undoStack?.length??null,
+        historyPending:Boolean(app.history?.pending),
+        stack:String(new Error('markDirty trace').stack||'').split('\n').slice(1,9)
+      });
+      return originalMarkDirty(...args);
+    };
+    const settleReadOnlyBoundary=async()=>{
+      await new Promise(resolve=>w.requestAnimationFrame(()=>w.requestAnimationFrame(resolve)));
+      await wait(800);
+      assert(!app.history?.pending,'WORKSTATION_READ_ONLY_BOUNDARY_HISTORY_IDLE');
+      return {modifiedAt:app.doc?.modifiedAt??null,markDirtyCount:markDirtyCalls.length};
+    };
     const panelStates=[];
     const openPanel=async id=>{
       shell.open(id);
@@ -67,12 +108,55 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       assert(valid,`WORKSTATION_PANEL_${id.toUpperCase()}_AUTHORITY`,detail);
       return state;
     };
-    const readOnlySnapshot=()=>JSON.stringify({
+    const readOnlyState=()=>({
       document:app.doc,
       history:{undo:app.history?.undoStack?.length||0,redo:app.history?.redoStack?.length||0,pending:Boolean(app.history?.pending)},
       revision:app.revisions?.revisionIdFor?.(app.doc?.id)??null
     });
-    const assertReadOnly=(before,name,details={})=>assert(readOnlySnapshot()===before,name,details);
+    const readOnlySnapshot=()=>JSON.stringify(readOnlyState());
+    const diffJson=(before,after,{limit=16}={})=>{
+      const out=[];
+      const walk=(a,b,path='$')=>{
+        if(out.length>=limit||Object.is(a,b))return;
+        const aObject=a!==null&&typeof a==='object';
+        const bObject=b!==null&&typeof b==='object';
+        if(!aObject||!bObject||Array.isArray(a)!==Array.isArray(b)){
+          out.push({path,before:a,after:b});
+          return;
+        }
+        const keys=[...new Set([...Object.keys(a),...Object.keys(b)])].sort();
+        for(const key of keys){
+          if(out.length>=limit)break;
+          const nextPath=Array.isArray(a)?`${path}[${key}]`:`${path}.${key}`;
+          if(!Object.prototype.hasOwnProperty.call(a,key)||!Object.prototype.hasOwnProperty.call(b,key)){
+            out.push({path:nextPath,before:a[key],after:b[key]});
+            continue;
+          }
+          walk(a[key],b[key],nextPath);
+        }
+      };
+      walk(before,after);
+      return out;
+    };
+    const assertReadOnly=(before,name,details={})=>{
+      const after=readOnlySnapshot();
+      if(after===before){ pass(name,details); return true; }
+      let prior=null,next=null;
+      try{prior=JSON.parse(before);next=JSON.parse(after);}catch{}
+      const changed={
+        document:prior&&next?JSON.stringify(prior.document)!==JSON.stringify(next.document):null,
+        history:prior&&next?JSON.stringify(prior.history)!==JSON.stringify(next.history):null,
+        revision:prior&&next?prior.revision!==next.revision:null
+      };
+      assert(false,name,{
+        ...details,
+        changed,
+        documentDiff:prior&&next?diffJson(prior.document,next.document):[],
+        historyDiff:prior&&next?diffJson(prior.history,next.history):[],
+        beforeRevision:prior?.revision??null,
+        afterRevision:next?.revision??null
+      });
+    };
     await openPanel('reference'); // UI-001 intentionally starts collapsed; use the accepted shell authority to enter the workspace.
     assert(w.INK_ARCHITECTURE?.formatVersion===4,'FORMAT_VERSION_4',{value:w.INK_ARCHITECTURE?.formatVersion});
     assert(Boolean(w.document.querySelector('#stage')),'CANVAS_EDITOR_RENDERED');
@@ -94,7 +178,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     // INK-CHAT-CLOSED-LOOP-001: one connector-first chain, before unrelated regression edits.
     const smartApi=app.inkPublicApi;
     const smartDiscovery=await smartApi.tools.invoke('get_ink_capabilities');
-    const smartRequired=['reference.import','reference.decompose','preview.capture','composition.programmable','path.repaint.v1','history.inspect','revision.list'];
+    const smartRequired=['reference.import','reference.decompose','preview.capture','composition.programmable','path.repaint.v1','history.inspect','revision.list','library.search'];
     const smartDescriptors=[];
     for(const capabilityId of smartRequired){
       const described=await smartApi.tools.invoke('describe_ink_capability',{idOrToolName:capabilityId});
@@ -104,11 +188,25 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     }
     assert(smartDiscovery.status==='COMPLETED' &&
       smartRequired.every(id=>smartDiscovery.result.capabilities.some(c=>c.id===id && c.availability)) &&
-      smartDiscovery.result.namedTools.length===20 &&
+      smartDiscovery.result.namedTools.length===22 &&
       smartDiscovery.result.namedTools[19].name==='import_ink_reference' &&
+      smartDiscovery.result.namedTools[20].name==='export_ink_asset' &&
+      smartDiscovery.result.namedTools[21].name==='search_ink_library' &&
       smartDescriptors[0].routingClass==='NAMED_TOOL' &&
       smartDiscovery.result.capabilities.find(c=>c.id==='external.transport')?.availability===false,
       'SMART_LOOP_CAPABILITIES_DISCOVERED');
+
+    const connector005Before=readOnlySnapshot();
+    const connector005Search=await smartApi.tools.invoke('search_ink_library',{action:'search',limit:5});
+    assert(
+      connector005Search.status==='COMPLETED' &&
+      connector005Search.result?.schema==='INK_CREATIVE_LIBRARY_QUERY_RESULT' &&
+      connector005Search.result?.version===1 &&
+      Array.isArray(connector005Search.result?.results),
+      'CONNECTOR_005_LIBRARY_SEARCH_BROWSER_READ_ONLY',
+      {status:connector005Search.status,count:connector005Search.result?.results?.length??null}
+    );
+    assertReadOnly(connector005Before,'CONNECTOR_005_LIBRARY_SEARCH_MUTATION_NEUTRAL');
 
     const fixtureResponse=await fetch('/__qa_rose_window.png',{cache:'no-store'});
     assert(fixtureResponse.ok,'ROSE_WINDOW_FIXTURE_HTTP',{status:fixtureResponse.status});
@@ -643,15 +741,21 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     app.selectOnly(foundPath.layer.id,firstPath.id);
     cw.refresh();
 
-    const beforePropertiesRead=readOnlySnapshot();
+    const beforePropertiesOpen=readOnlySnapshot();
     await openPanel('properties');
+    assertReadOnly(beforePropertiesOpen,'WORKSTATION_PROPERTIES_PANEL_OPEN_READ_ONLY');
+    const propertiesBoundary=await settleReadOnlyBoundary();
+    const beforePropertiesRead=readOnlySnapshot();
+    const beforePropertiesDirtyCount=markDirtyCalls.length;
     const propertiesButton=doc.querySelector('[data-workstation-action="grounded-selection-refresh"]');
     assert(Boolean(propertiesButton),'WORKSTATION_PROPERTIES_GROUNDED_ENTRY_VISIBLE');
     propertiesButton.click();
     await waitFor(()=>cw.status?.code==='GROUNDED_CONTEXT_REFRESHED');
     const propertiesText=doc.querySelector('[data-workstation-output="selection-capability"]')?.textContent||'';
+    const groundedDirtyCalls=markDirtyCalls.slice(beforePropertiesDirtyCount);
     assert(Boolean(cw.lastGroundedContext) && /Document Bridge AVAILABLE/.test(propertiesText) && /Semantic/.test(propertiesText) && /read-only/i.test(propertiesText),'WORKSTATION_PROPERTIES_GROUNDED_READOUT',{text:propertiesText});
-    assertReadOnly(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY');
+    assert(groundedDirtyCalls.length===0,'WORKSTATION_PROPERTIES_GROUNDED_NO_DIRTY_WRITER',{boundary:propertiesBoundary,markDirtyCalls:groundedDirtyCalls});
+    assertReadOnly(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY',{boundary:propertiesBoundary,markDirtyCalls:groundedDirtyCalls});
 
     const beforeReferenceResearch=readOnlySnapshot();
     await openPanel('reference');
@@ -710,8 +814,11 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const useInkTools=inkApi?.tools?.registry?.()||[];
     assert(
       Boolean(inkApi?.composition?.propose && inkApi?.composition?.approve && inkApi?.composition?.execute) &&
-      useInkTools.length===20 &&
-      useInkTools[18]?.name==='use_ink',
+      useInkTools.length===22 &&
+      useInkTools[18]?.name==='use_ink' &&
+      useInkTools[19]?.name==='import_ink_reference' &&
+      useInkTools[20]?.name==='export_ink_asset' &&
+      useInkTools[21]?.name==='search_ink_library',
       'USE_INK_TOOL_AVAILABLE',
       {toolCount:useInkTools.length,tool19:useInkTools[18]?.name||null}
     );
@@ -923,6 +1030,7 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     app.dirty=false;
     assert(w.INK_TEST.documentIntegrity()?.passed===true && app.doc.formatVersion===4,'PROJECT_RELOAD_INTEGRITY',{formatVersion:app.doc.formatVersion,size:savedBlob.size});
 
+    // INK-CHAT-GEOMETRY-OPS-001 — real-browser native geometry authority exposure.
     const health=w.INK_TEST.runtimeHealth?.();
     evidence.metrics.runtimeHealth=health;
     const fatalCount=Number(health?.errors?.fatal || health?.fatalErrors || health?.fatal || 0);
@@ -940,10 +1048,16 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     resultNode.dataset.state='PASS'; resultNode.textContent='PASS';
     logNode.textContent=JSON.stringify(evidence,null,2);
     document.documentElement.dataset.qa='PASS';
+    reportProgress('HARNESS_FINAL_EVIDENCE_READY',{status:'PASS'});
     await reportEvidence();
   }
 
   frame.addEventListener('load',()=>run().catch(async error=>{
+    reportProgress('HARNESS_FAILURE',{
+      status:'FAIL',
+      qa:error?.qa||null,
+      message:String(error?.message||error).slice(0,240)
+    });
     evidence.failures.push({message:error?.message||String(error),qa:error?.qa||null,details:error?.details||null,stack:error?.stack||null});
     resultNode.dataset.state='FAIL'; resultNode.textContent='FAIL';
     logNode.textContent=JSON.stringify(evidence,null,2);

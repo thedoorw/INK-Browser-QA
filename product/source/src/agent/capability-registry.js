@@ -63,12 +63,12 @@ const expectedStateSchema = obj({
 
 const targetArraySchema = arr(objectRefSchema, 'Stable edit targets.', { minItems: 1, maxItems: 64 });
 
-const editTaskSchema = (operationSchema, argumentSchema, maxTargets = 64) => obj({
+const editTaskSchema = (operationSchema, argumentSchema, maxTargets = 64, minTargets = 1) => obj({
   schema: { type: 'string', const: 'INK-CHAT-EDIT-TASK', default: 'INK-CHAT-EDIT-TASK', description: 'Bounded edit task schema.' },
   version: { type: 'integer', const: 1, default: 1, description: 'Bounded edit task version.' },
   taskId: str('Caller supplied stable task id.'),
   operation: operationSchema,
-  targets: { ...targetArraySchema, maxItems: maxTargets },
+  targets: { ...targetArraySchema, minItems: minTargets, maxItems: maxTargets },
   arguments: argumentSchema,
   expected: expectedStateSchema
 }, ['taskId', 'operation', 'targets', 'arguments'], 'Input accepted by propose_ink_edit / edit.propose.');
@@ -86,7 +86,7 @@ const creativePlanStepSchema = obj({
   stepId: str('Stable plan step id.'),
   taskId: str('Optional compatibility task id; the existing plan authority derives its own bounded task identity.'),
   operation: { type: 'string', enum: CHAT_EDIT_OPERATIONS, description: 'Existing bounded-edit operation.' },
-  targets: targetArraySchema,
+  targets: { ...targetArraySchema, minItems: 0 },
   arguments: genericEditArguments,
   dependsOn: arr(str('Earlier step id dependency.'), 'Earlier step dependencies.', { maxItems: 32 })
 }, ['stepId', 'operation', 'targets', 'arguments'], 'One existing bounded-edit step in a Chat Creative Plan.');
@@ -153,6 +153,282 @@ const editSchemas = {
       maxControlLength: num('Maximum control length; must be greater than zero.', { minimum: Number.EPSILON, maximum: 1000000, default: 48 }),
       maxAddedAnchors: { type: 'integer', minimum: 1, maximum: 4096, default: 128, description: 'Maximum added anchors.' }
     }, [], 'Path refinement arguments.'),
+    1
+  ),
+  'path.create.v1': editTaskSchema(
+    { type: 'string', const: 'path.create.v1', description: 'Create one native editable Path or geometric primitive on the active layer.' },
+    obj({
+      shape: { type: 'string', enum: ['path', 'ellipse', 'circle', 'rectangle', 'polygon', 'polyline'], description: 'Geometry constructor.' },
+      objectId: str('Optional caller-supplied stable object id; collisions are rejected.'),
+      name: str('Path name.'),
+      fill: str('Fill paint token.'),
+      stroke: str('Stroke paint token.'),
+      strokeWidth: num('Stroke width.', { minimum: 0, maximum: 100000 }),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1 }),
+      subpaths: arr({ type: 'object', properties: {}, additionalProperties: true, description: 'Subpath with bounded anchors.' }, 'Custom Path subpaths.', { maxItems: 64 }),
+      cx: num('Ellipse/circle center X.'), cy: num('Ellipse/circle center Y.'),
+      r: num('Circle radius.', { minimum: Number.EPSILON }), rx: num('Ellipse X radius.', { minimum: Number.EPSILON }), ry: num('Ellipse Y radius.', { minimum: Number.EPSILON }),
+      x: num('Rectangle X.'), y: num('Rectangle Y.'), width: num('Rectangle width.', { minimum: Number.EPSILON }), height: num('Rectangle height.', { minimum: Number.EPSILON }),
+      points: arr(obj({ x: num('Point X.'), y: num('Point Y.') }, ['x', 'y'], 'Point.'), 'Polygon/polyline points.', { maxItems: 4096 })
+    }, ['shape'], 'Shape-specific geometry is validated by the bounded edit authority.'),
+    0, 0
+  ),
+  'path.edit.v1': editTaskSchema(
+    { type: 'string', const: 'path.edit.v1', description: 'Edit one Path through the existing PathEditController.' },
+    obj({
+      action: { type: 'string', enum: ['move-anchor', 'move-handle', 'set-anchor-mode', 'add-anchor', 'delete-anchors', 'set-subpath-closed'], description: 'Bounded Path edit action.' },
+      subpathIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Subpath index.' },
+      anchorIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Anchor index.' },
+      segmentIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Segment index.' },
+      side: { type: 'string', enum: ['in', 'out'], description: 'Bezier handle side.' },
+      mode: { type: 'string', enum: ['corner', 'smooth', 'symmetric'], description: 'Anchor mode.' },
+      x: num('Geometry X / handle-vector X.'), y: num('Geometry Y / handle-vector Y.'),
+      t: num('Segment split parameter.', { minimum: Number.EPSILON, maximum: 1 - Number.EPSILON }),
+      anchors: arr(obj({
+        subpathIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Subpath index.' },
+        anchorIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Anchor index.' }
+      }, ['subpathIndex', 'anchorIndex'], 'Anchor ref.'), 'Anchors to delete.', { maxItems: 512 }),
+      closed: bool('Desired subpath closed state.')
+    }, ['action'], 'Action-specific fields are validated by the Path edit authority.'),
+    1
+  ),
+  'object.rotate.v1': editTaskSchema(
+    { type: 'string', const: 'object.rotate.v1', description: 'Rotate editable objects in world space.' },
+    obj({
+      degrees: num('Rotation in degrees.', { minimum: -360000, maximum: 360000 }),
+      center: obj({ x: num('World-space center X.'), y: num('World-space center Y.') }, ['x', 'y'], 'Optional explicit world-space rotation center.')
+    }, ['degrees'], 'Rotation arguments.'),
+    64
+  ),
+  'object.clone.v1': editTaskSchema(
+    { type: 'string', const: 'object.clone.v1', description: 'Clone one object with fresh stable identity and composition lineage.' },
+    obj({ dx: num('Optional local X offset.'), dy: num('Optional local Y offset.') }, [], 'Clone arguments.'),
+    1
+  ),
+  'repeat.radial.v1': editTaskSchema(
+    { type: 'string', const: 'repeat.radial.v1', description: 'Create one native editable radial Repeat from one source object.' },
+    obj({
+      count: { type: 'integer', minimum: 2, maximum: 720, description: 'Instance count.' },
+      center: obj({ x: num('World-space repeat center X.'), y: num('World-space repeat center Y.') }, ['x', 'y'], 'Repeat center.'),
+      sweep: num('Sweep angle in degrees.', { default: 360 }),
+      startAngle: num('Start angle in degrees.', { default: 0 }),
+      linked: bool('Keep native Repeat linked.', { default: true })
+    }, ['count', 'center'], 'Radial Repeat arguments.'),
+    1
+  ),
+  'boolean.apply.v1': editTaskSchema(
+    { type: 'string', const: 'boolean.apply.v1', description: 'Apply native editable Boolean geometry to 2+ same-parent Paths.' },
+    obj({
+      operation: { type: 'string', enum: ['union', 'difference', 'intersection', 'xor', 'divide'], description: 'Boolean operation.' },
+      name: str('Optional result name.'),
+      tolerance: num('Geometry flattening/refit tolerance.', { minimum: Number.EPSILON, default: 0.65 })
+    }, ['operation'], 'Boolean arguments.'),
+    64, 2
+  ),
+  'group.create.v1': editTaskSchema(
+    { type: 'string', const: 'group.create.v1', description: 'Group same-parent objects while preserving world appearance.' },
+    obj({ name: str('Group name.') }, [], 'Group arguments.'),
+    64
+  ),
+  'object.reparent.v1': editTaskSchema(
+    { type: 'string', const: 'object.reparent.v1', description: 'Reparent one object through the native hierarchy authority.' },
+    obj({
+      parentObjectId: str('Target Frame object id; omit/null for layer root.'),
+      targetLayerId: str('Optional target layer id; native hierarchy rules reject invalid cross-layer moves.'),
+      index: { type: 'integer', minimum: 0, description: 'Optional insertion index.' }
+    }, [], 'Reparent arguments.'),
+    1
+  ),
+  'frame.create.v1': editTaskSchema(
+    { type: 'string', const: 'frame.create.v1', description: 'Create one empty native Frame on the active layer.' },
+    obj({
+      name: str('Frame name.'),
+      x: num('World X position.'),
+      y: num('World Y position.'),
+      width: num('Frame width.', { minimum: Number.EPSILON, maximum: 1000000, default: 320 }),
+      height: num('Frame height.', { minimum: Number.EPSILON, maximum: 1000000, default: 240 }),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, [], 'Native Frame constructor arguments.'),
+    0, 0
+  ),
+  'text.create.v1': editTaskSchema(
+    { type: 'string', const: 'text.create.v1', description: 'Create one native Text object using the editor Text object authority.' },
+    obj({
+      text: str('Text content.'),
+      x: num('World X position.'),
+      y: num('World Y position.'),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      color: str('Text color token.'),
+      fontFamily: str('Existing font-family value.'),
+      fontSize: num('Font size.', { minimum: Number.EPSILON, maximum: 10000 }),
+      lineHeight: num('Line-height multiplier.', { minimum: Number.EPSILON, maximum: 20 }),
+      fontWeight: num('Existing numeric font weight.', { minimum: 1, maximum: 1000 })
+    }, ['text'], 'Bounded Text creation arguments.'),
+    0, 0
+  ),
+  'text.edit.v1': editTaskSchema(
+    { type: 'string', const: 'text.edit.v1', description: 'Edit the accepted native Text field subset on one Text object.' },
+    obj({
+      text: str('Text content.'),
+      x: num('World X position.'),
+      y: num('World Y position.'),
+      opacity: num('Opacity.', { minimum: 0, maximum: 1 }),
+      color: str('Text color token.'),
+      fontFamily: str('Existing font-family value.'),
+      fontSize: num('Font size.', { minimum: Number.EPSILON, maximum: 10000 }),
+      lineHeight: num('Line-height multiplier.', { minimum: Number.EPSILON, maximum: 20 }),
+      fontWeight: num('Existing numeric font weight.', { minimum: 1, maximum: 1000 })
+    }, [], 'At least one accepted Text field is required.'),
+    1
+  ),
+  'svg.import.v1': editTaskSchema(
+    { type: 'string', const: 'svg.import.v1', description: 'Import bounded raw SVG through the native structured SVG parser.' },
+    obj({
+      svg: str('Raw SVG source string; maximum length and unsafe execution/network forms are rejected by the bounded authority.')
+    }, ['svg'], 'Local raw SVG only; no URL fetch or external transport.'),
+    0, 0
+  ),
+  'object.resize.v1': editTaskSchema(
+    { type: 'string', const: 'object.resize.v1', description: 'Resize one object to an absolute world-space width and/or height using existing transform/bounds authority.' },
+    obj({
+      width: num('Absolute width.', { minimum: Number.EPSILON, maximum: 1000000 }),
+      height: num('Absolute height.', { minimum: Number.EPSILON, maximum: 1000000 }),
+      preserveAspect: bool('Preserve aspect when only one dimension is supplied.', { default: false })
+    }, [], 'At least one of width or height is required.'),
+    1
+  ),
+  'object.scale.v1': editTaskSchema(
+    { type: 'string', const: 'object.scale.v1', description: 'Apply bounded world-space scale through Matrix/applyWorldTransformBatch.' },
+    obj({
+      sx: num('World-space X scale.', { minimum: -10000, maximum: 10000 }),
+      sy: num('World-space Y scale; defaults to sx.', { minimum: -10000, maximum: 10000 }),
+      center: obj({ x: num('World-space center X.'), y: num('World-space center Y.') }, ['x', 'y'], 'Optional explicit scale center.')
+    }, ['sx'], 'Scale components must remain finite and non-singular.'),
+    64
+  ),
+  'object.order.v1': editTaskSchema(
+    { type: 'string', const: 'object.order.v1', description: 'Move same-parent objects to the front or back of the existing parent array.' },
+    obj({
+      action: { type: 'string', enum: ['front', 'back'], description: 'Existing native ordering action.' }
+    }, ['action'], 'C2-A ordering is limited to current front/back semantics.'),
+    64
+  ),
+  'repeat.mirror.v1': editTaskSchema(
+    { type: 'string', const: 'repeat.mirror.v1', description: 'Create one native mirror Repeat adjacent to the source object.' },
+    obj({
+      axis: { type: 'string', enum: ['x', 'y'], default: 'y', description: 'Existing mirror axis.' },
+      center: obj({ x: num('World-space mirror center X.'), y: num('World-space mirror center Y.') }, ['x', 'y'], 'Optional explicit world-space mirror center.'),
+      linked: bool('Preserve existing linked Repeat semantics.', { default: true })
+    }, [], 'Existing createRepeat(mode=mirror) arguments.'),
+    1
+  ),
+  'repeat.grid.v1': editTaskSchema(
+    { type: 'string', const: 'repeat.grid.v1', description: 'Create one native procedural grid Repeat adjacent to the source object.' },
+    obj({
+      columns: { type: 'integer', minimum: 1, maximum: 64, description: 'Repeat columns.' },
+      rows: { type: 'integer', minimum: 1, maximum: 64, description: 'Repeat rows.' },
+      dx: num('Existing X spacing.', { minimum: -100000, maximum: 100000 }),
+      dy: num('Existing Y spacing.', { minimum: -100000, maximum: 100000 }),
+      linked: bool('Preserve existing linked Repeat semantics.', { default: true })
+    }, ['columns', 'rows'], 'Existing createRepeat(mode=grid) arguments; total instances are additionally bounded by the edit authority.'),
+    1
+  ),
+  'layout.frame.set.v1': editTaskSchema(
+    { type: 'string', const: 'layout.frame.set.v1', description: 'Set existing INK-LAYOUT-1 metadata on one native Frame.' },
+    obj({
+      mode: { type: 'string', enum: ['manual', 'horizontal', 'vertical'], default: 'manual', description: 'Existing FrameLayout mode.' },
+      gap: num('Gap.', { minimum: 0, maximum: 1000000, default: 0 }),
+      padding: obj({
+        top: num('Top padding.', { minimum: 0, maximum: 1000000, default: 0 }),
+        right: num('Right padding.', { minimum: 0, maximum: 1000000, default: 0 }),
+        bottom: num('Bottom padding.', { minimum: 0, maximum: 1000000, default: 0 }),
+        left: num('Left padding.', { minimum: 0, maximum: 1000000, default: 0 })
+      }, [], 'Existing FrameLayout padding.'),
+      align: obj({
+        main: { type: 'string', enum: ['start', 'center', 'end', 'space-between'], default: 'start', description: 'Main-axis alignment.' },
+        cross: { type: 'string', enum: ['start', 'center', 'end', 'stretch'], default: 'start', description: 'Cross-axis alignment.' }
+      }, [], 'Existing FrameLayout alignment.'),
+      sizing: obj({
+        horizontal: { type: 'string', enum: ['fixed', 'hug'], default: 'fixed', description: 'Horizontal Frame sizing.' },
+        vertical: { type: 'string', enum: ['fixed', 'hug'], default: 'fixed', description: 'Vertical Frame sizing.' }
+      }, [], 'Existing FrameLayout sizing.')
+    }, [], 'Existing INK-LAYOUT-1 metadata only.'),
+    1
+  ),
+  'layout.frame.remove.v1': editTaskSchema(
+    { type: 'string', const: 'layout.frame.remove.v1', description: 'Remove existing FrameLayout metadata from one native Frame.' },
+    obj({}, [], 'No arguments.', false),
+    1
+  ),
+  'layout.item.set.v1': editTaskSchema(
+    { type: 'string', const: 'layout.item.set.v1', description: 'Set existing INK-LAYOUT-ITEM-1 metadata on one current Frame child.' },
+    obj({
+      participation: { type: 'string', enum: ['flow', 'absolute'], default: 'flow', description: 'Existing participation mode.' },
+      sizing: obj({
+        horizontal: { type: 'string', enum: ['fixed', 'fill', 'hug'], default: 'hug', description: 'Horizontal child sizing.' },
+        vertical: { type: 'string', enum: ['fixed', 'fill', 'hug'], default: 'hug', description: 'Vertical child sizing.' }
+      }, [], 'Existing LayoutItem sizing.'),
+      fixedSize: obj({
+        width: num('Fixed width.', { minimum: 0, maximum: 1000000, default: 1 }),
+        height: num('Fixed height.', { minimum: 0, maximum: 1000000, default: 1 })
+      }, [], 'Existing fixed size metadata.'),
+      constraints: obj({
+        horizontal: { type: 'string', enum: ['start', 'end', 'center', 'scale', 'stretch'], default: 'start', description: 'Horizontal constraint.' },
+        vertical: { type: 'string', enum: ['start', 'end', 'center', 'scale', 'stretch'], default: 'start', description: 'Vertical constraint.' }
+      }, [], 'Existing resize constraints.')
+    }, [], 'Existing INK-LAYOUT-ITEM-1 metadata only.'),
+    1
+  ),
+  'layout.item.remove.v1': editTaskSchema(
+    { type: 'string', const: 'layout.item.remove.v1', description: 'Remove existing LayoutItem metadata from one current Frame child.' },
+    obj({}, [], 'No arguments.', false),
+    1
+  ),
+  'component.register.v1': editTaskSchema(
+    { type: 'string', const: 'component.register.v1', description: 'Register one existing structural container as a native Component Definition.' },
+    obj({ name: str('Component definition name.') }, ['name'], 'Existing registerComponentDefinition arguments.'),
+    1
+  ),
+  'component.instance.create.v1': editTaskSchema(
+    { type: 'string', const: 'component.instance.create.v1', description: 'Create one native Component Instance from an existing definition.' },
+    obj({
+      definitionId: str('Existing Component Definition id.'),
+      pageId: str('Destination active page id.'),
+      layerId: str('Destination layer id on the active page.'),
+      parentId: str('Optional structural parent id.'),
+      matrix: arr(num('Affine matrix component.'), 'Optional existing six-number affine matrix.', { minItems: 6, maxItems: 6 })
+    }, ['definitionId', 'pageId', 'layerId'], 'Existing createComponentInstance placement contract.'),
+    0, 0
+  ),
+  'component.override.set.v1': editTaskSchema(
+    { type: 'string', const: 'component.override.set.v1', description: 'Set the existing opacity override on one Component Instance source node.' },
+    obj({
+      sourceNodeId: str('Source node id from the linked Component Definition.'),
+      opacity: num('Existing supported opacity override.', { minimum: 0, maximum: 1 })
+    }, ['sourceNodeId', 'opacity'], 'Only opacity override is supported in the current Component contract.'),
+    1
+  ),
+  'component.override.reset.v1': editTaskSchema(
+    { type: 'string', const: 'component.override.reset.v1', description: 'Reset one existing Component Instance source-node override.' },
+    obj({ sourceNodeId: str('Source node id whose override is reset.') }, ['sourceNodeId'], 'Existing setComponentOverride(..., null) reset contract.'),
+    1
+  ),
+  'component.instance.detach.v1': editTaskSchema(
+    { type: 'string', const: 'component.instance.detach.v1', description: 'Detach one native Component Instance into ordinary remapped geometry.' },
+    obj({}, [], 'No arguments.', false),
+    1
+  ),
+  'component.definition.duplicate.v1': editTaskSchema(
+    { type: 'string', const: 'component.definition.duplicate.v1', description: 'Duplicate one existing Component Definition and its source geometry.' },
+    obj({
+      definitionId: str('Existing Component Definition id.'),
+      name: str('Optional duplicate definition name.')
+    }, ['definitionId'], 'Existing duplicateComponentDefinition contract.'),
+    0, 0
+  ),
+  'component.reference.repair.v1': editTaskSchema(
+    { type: 'string', const: 'component.reference.repair.v1', description: 'Explicitly repair one Component Instance reference to an existing definition.' },
+    obj({ definitionId: str('Existing replacement Component Definition id.') }, ['definitionId'], 'Explicit repair only; never automatic.'),
     1
   )
 };
@@ -416,11 +692,121 @@ primary.push(descriptor({
   examples: [{ input: '<browser-local File>', options: { name: 'reference.png', type: 'image/png' } }], toolPrimary: true
 }));
 
+
+// C2-A direct high-level export tool. Export is readback/output generation, not a bounded Document mutation.
+primary.push(descriptor({
+  id: 'asset.export', title: 'Export INK asset', description: 'Generate PNG, SVG or PDF through the existing INK export authorities and retain the result in the existing ephemeral output registry.',
+  availability: true, routingClass: 'NAMED_TOOL', namedTool: 'export_ink_asset', publicMethod: 'asset.export', role: 'READ',
+  authoritativeRoute: 'app.exportPNG / app.exportSVG / app.exportPDF → existing INK output registry',
+  inputSchema: obj({
+    format: { type: 'string', enum: ['png', 'svg', 'pdf', 'PNG', 'SVG', 'PDF'], description: 'Existing non-print export format.' },
+    scope: { type: 'string', enum: ['artboard', 'viewport', 'content'], default: 'artboard', description: 'Existing export scope. PDF remains artboard-only.' },
+    scale: num('Existing raster/content scale.', { minimum: 0.01, maximum: 64, default: 2 }),
+    ppi: num('Existing artboard export PPI.', { minimum: 36, maximum: 2400, default: 300 }),
+    includeBleed: bool('Use existing bleed behavior.', { default: false }),
+    cropMarks: bool('Use existing crop-mark behavior.', { default: false }),
+    background: bool('Include existing paper/background behavior.', { default: true })
+  }, ['format'], 'Asset export request. Browser Print and automatic download are intentionally excluded.'),
+  targetTypes: ['Document', 'Page', 'INK_OUTPUT_HANDLE'],
+  constraints: [
+    'Calls only the existing PNG/SVG/PDF export authorities; no new renderer or serializer is introduced.',
+    'Export must not mutate Document, History or Revision state.',
+    'Result stays INTERNAL_EPHEMERAL and is returned as INK_OUTPUT_HANDLE / 1; no browser-anchor download or external transport occurs.',
+    'SVG is marked editable vector output; PNG and PDF are not marked structurally editable.',
+    'PDF is artboard-only because that is the existing native export authority.'
+  ],
+  ...policy(false, 'DIRECT_NAMED_TOOL', 'NONE', 'READ_CURRENT', false, false, 'Export does not require automatic Preview.'),
+  resultContract: resultContract({ statuses: ['COMPLETED', 'FAILED'], returnsOutputHandles: true }),
+  examples: [{ format: 'svg', scope: 'artboard', background: true }],
+  toolPrimary: true
+}));
+
+// Connector-005 append-only read-only Creative Library search.
+// The accepted 21-tool registry remains the exact ordered prefix.
+primary.push(descriptor({
+  id: 'library.search',
+  title: 'Search INK Creative Library',
+  description: 'Search or inspect existing reusable INK structures through bounded read-only adapters over current native Document authorities.',
+  availability: true,
+  routingClass: 'NAMED_TOOL',
+  namedTool: 'search_ink_library',
+  publicMethod: 'library.query',
+  role: 'READ',
+  authoritativeRoute: 'app.inkPublicApi.library.query → current Document Component / Material / Recipe / Repeat / Reference-derived authorities',
+  inputSchema: obj({
+    action: {
+      type: 'string',
+      enum: ['search', 'inspect'],
+      default: 'search',
+      description: 'Search the current document library view or inspect one stable returned library ref.'
+    },
+    query: str('Optional normalized substring query for search.'),
+    types: arr({
+      type: 'string',
+      enum: ['component', 'material', 'recipe', 'parametric-structure', 'reference-derived-structure'],
+      description: 'Creative Library family.'
+    }, 'Optional family filter.', { maxItems: 5 }),
+    ref: obj({
+      schema: { type: 'string', const: 'INK_CREATIVE_LIBRARY_REF', description: 'Stable Creative Library ref schema.' },
+      version: { type: 'integer', const: 1, description: 'Stable Creative Library ref version.' },
+      type: {
+        type: 'string',
+        enum: ['component', 'material', 'recipe', 'parametric-structure', 'reference-derived-structure'],
+        description: 'Type-disambiguated Creative Library family.'
+      },
+      scope: obj({
+        documentId: str('Owning document id.'),
+        pageId: str('Owning page id when applicable.'),
+        layerId: str('Owning layer id when applicable.')
+      }, ['documentId'], 'Native scope used to reject stale or ambiguous refs.'),
+      id: str('Stable native identity within the documented scope.'),
+      source: str('Bounded native source authority identifier.')
+    }, ['schema', 'version', 'type', 'scope', 'id', 'source'], 'Stable ref returned by a prior search.'),
+    limit: { type: 'integer', minimum: 1, maximum: 50, default: 20, description: 'Maximum returned search results.' }
+  }, [], 'Use action=search with query/types/limit, or action=inspect with ref.'),
+  targetTypes: ['Document', 'Page', 'Object'],
+  constraints: [
+    'Read-only current-document discovery; no remote search, network fetch, registry creation, Creative Memory write, Research write, selection change, workspace change, Document mutation, History mutation, or Revision mutation.',
+    'Searchable families are component, material, recipe, parametric-structure, and reference-derived-structure.',
+    'Missing families return an empty result rather than fabricated assets.',
+    'Returned INK_CREATIVE_LIBRARY_REF / 1 values contain only bounded JSON-safe identity metadata and no executable payload.',
+    'Reuse metadata reports only existing accepted native authorities; search and inspect never apply an asset automatically.',
+    'Stale or mismatched refs fail explicitly instead of resolving to a different asset.'
+  ],
+  ...policy(false, 'DIRECT_NAMED_TOOL', 'NONE', 'READ_CURRENT', false, false, 'Reuse, when available, remains a separate explicit proposal/approval operation.'),
+  resultContract: resultContract({ statuses: ['COMPLETED', 'FAILED'] }),
+  examples: [
+    { action: 'search', query: 'petal', types: ['component', 'material'], limit: 10 },
+    { action: 'inspect', ref: { schema: 'INK_CREATIVE_LIBRARY_REF', version: 1, type: 'component', scope: { documentId: 'doc-1' }, id: 'component-1', source: 'document.components.definitions' } }
+  ],
+  toolPrimary: true
+}));
+
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
-  const pathOnly = operation.startsWith('path.');
-  const operationConstraints = pathOnly
-    ? ['Targets must resolve to editable visible unlocked Path objects.']
-    : ['Targets must resolve to editable visible unlocked objects.'];
+  const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
+  const zeroTargetCreate = ['path.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
+  const operationConstraints = zeroTargetCreate
+    ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
+    : operation === 'text.edit.v1'
+      ? ['Target must resolve to one editable visible unlocked Text object.']
+      : pathOnly || operation === 'boolean.apply.v1'
+        ? ['Targets must resolve to editable visible unlocked Path objects.']
+        : ['Targets must resolve to editable visible unlocked objects.'];
+  if (operation === 'boolean.apply.v1') operationConstraints.push('All 2+ Path targets must share the same layer and structural parent.');
+  if (operation === 'group.create.v1') operationConstraints.push('All targets must share the same layer and structural parent.');
+  if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
+  if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
+  if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
+  if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
+  if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
+  if (operation === 'layout.frame.set.v1' || operation === 'layout.frame.remove.v1') operationConstraints.push('Target must be one native Frame; setFrameLayout remains the sole mutation authority.');
+  if (operation === 'layout.item.set.v1' || operation === 'layout.item.remove.v1') operationConstraints.push('Target must be one current child of a native Frame; setChildLayoutItem remains the sole mutation authority.');
+  if (operation === 'component.register.v1') operationConstraints.push('Target must satisfy the native structural-container definition rules; nested instances remain unsupported.');
+  if (operation === 'component.instance.create.v1') operationConstraints.push('Zero-target creation uses an existing definition and an explicit destination on the active page.');
+  if (operation === 'component.override.set.v1' || operation === 'component.override.reset.v1') operationConstraints.push('Target must be one native Component Instance; only the existing opacity override contract is exposed.');
+  if (operation === 'component.instance.detach.v1') operationConstraints.push('Target must be one resolvable Component Instance; native detach remaps geometry ids and replaces the instance.');
+  if (operation === 'component.definition.duplicate.v1') operationConstraints.push('Zero-target definition duplication uses the existing native definition/source duplication transaction.');
+  if (operation === 'component.reference.repair.v1') operationConstraints.push('Explicit repair only; target must be one Component Instance and automatic repair remains prohibited.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
@@ -438,7 +824,11 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     role: 'PROPOSAL',
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
-    targetTypes: pathOnly ? ['Path'] : ['Object'],
+    targetTypes: zeroTargetCreate
+      ? (operation === 'component.definition.duplicate.v1' ? ['Document'] : ['Page'])
+      : operation === 'text.edit.v1'
+        ? ['Object']
+        : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),

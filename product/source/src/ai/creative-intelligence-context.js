@@ -585,7 +585,7 @@ export function createCreativeIntelligenceContextAdapter({
       }
 
       const input = {
-        document: getDocument(),
+        document: clone(getDocument()),
         selectedObjectIds: own(options, 'selectedObjectIds') ? clone(options.selectedObjectIds) : clone(getSelectedObjectIds?.() || []),
         revisionId: own(options, 'revisionId') ? options.revisionId : (getRevisionId?.() ?? null),
         relationshipEvidence: own(options, 'relationshipEvidence') ? clone(options.relationshipEvidence) : clone(getRelationshipEvidence?.() || []),

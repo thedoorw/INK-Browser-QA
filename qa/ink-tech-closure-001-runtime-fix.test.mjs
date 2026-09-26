@@ -1,0 +1,365 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+import { Matrix } from '../product/source/src/core/index.js';
+import { createFrame, defaultDocument, findPageObject } from '../product/source/src/document/index.js';
+import { HistoryManager } from '../product/source/src/history/index.js';
+import { ChatBoundedEditController, createChatBoundedEditAdapter, CHAT_EDIT_OPERATIONS } from '../product/source/src/editor/chat-bounded-edit.js';
+import { createAnchor, createPath } from '../product/source/src/vector/vector-core.js';
+import { createInkPublicCreativeApi } from '../product/source/src/agent/public-creative-api.js';
+import { createCreativeIntelligenceContextAdapter } from '../product/source/src/ai/creative-intelligence-context.js';
+import { AICommandLayer } from '../product/source/src/ai/ai-core.js';
+import { AuditBridge, ToolCallRouter } from '../product/source/src/ai/chat-runtime.js';
+
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+const C2C = [
+  'component.register.v1',
+  'component.instance.create.v1',
+  'component.override.set.v1',
+  'component.override.reset.v1',
+  'component.instance.detach.v1',
+  'component.definition.duplicate.v1',
+  'component.reference.repair.v1'
+];
+
+function makeApp() {
+  const doc = defaultDocument();
+  const page = doc.pages[0];
+  const layer = page.layers[0];
+  doc.id = 'runtime-fix-doc';
+  page.id = 'page-1';
+  doc.activePageId = page.id;
+  layer.id = 'layer-1';
+  page.activeLayerId = layer.id;
+  layer.objects = [];
+
+  const sourceChild = createPath({
+    id: 'component-source-child',
+    name: 'Source Child',
+    subpaths: [{
+      role: 'outer',
+      closed: true,
+      anchors: [
+        createAnchor(0, 0),
+        createAnchor(40, 0),
+        createAnchor(40, 30),
+        createAnchor(0, 30)
+      ]
+    }],
+    fill: '#ddd',
+    stroke: '#222',
+    strokeWidth: 1
+  });
+  const sourceFrame = createFrame({
+    id: 'component-source-root',
+    name: 'Source Root',
+    matrix: Matrix.translate(20, 20),
+    width: 120,
+    height: 90,
+    children: [sourceChild]
+  });
+  sourceChild.parentId = sourceFrame.id;
+  layer.objects.push(sourceFrame);
+
+  const app = {
+    doc,
+    selection: [],
+    spatialDirty: false,
+    page() { return this.doc.pages[0]; },
+    layer() { return this.page().layers.find(item => item.id === this.page().activeLayerId) || this.page().layers[0]; },
+    pagePath(p = this.page()) {
+      const index = this.doc.pages.indexOf(p);
+      return index < 0 ? null : ['pages', index];
+    },
+    layerPath(l = this.layer(), p = this.page()) {
+      const base = this.pagePath(p);
+      const index = p.layers.indexOf(l);
+      return !base || index < 0 ? null : [...base, 'layers', index];
+    },
+    layerObjectsPath(l = this.layer(), p = this.page()) {
+      const base = this.layerPath(l, p);
+      return base ? [...base, 'objects'] : null;
+    },
+    objectPath(found) {
+      const base = this.pagePath();
+      return !found || !base ? null : [...base, ...found.path];
+    },
+    findObject(ref) { return findPageObject(this.page(), ref); },
+    selectedObjects() { return this.selection.map(ref => this.findObject(ref)).filter(Boolean); },
+    queueSpatialObject() {},
+    refreshAll() {},
+    refreshSelectionUI() {},
+    markDirty() {},
+    updateHistoryUI() {},
+    renderer: { render() {} },
+    revisions: {
+      records: new Map(),
+      revisionIdFor() { return 'revision-fixed'; }
+    }
+  };
+  app.history = new HistoryManager(app);
+  app.chatBoundedEdit = new ChatBoundedEditController(app);
+  app.chatBoundedEditAdapter = createChatBoundedEditAdapter(app.chatBoundedEdit);
+  return app;
+}
+
+function ref(app, objectId) {
+  const found = findPageObject(app.page(), objectId);
+  assert.ok(found, objectId);
+  return { pageId: app.page().id, layerId: found.layer.id, objectId };
+}
+
+function readOnlySnapshot(app) {
+  return JSON.stringify({
+    document: app.doc,
+    history: {
+      undo: app.history?.undoStack?.length || 0,
+      redo: app.history?.redoStack?.length || 0,
+      pending: Boolean(app.history?.pending)
+    },
+    revision: app.revisions?.revisionIdFor?.(app.doc?.id) ?? null
+  });
+}
+
+test('A: component.register single-step browser route uses bounded edit named tools without weakening plan contract', async () => {
+  const app = makeApp();
+  const api = createInkPublicCreativeApi(app);
+  const frameRef = ref(app, 'component-source-root');
+  const beforeProposal = readOnlySnapshot(app);
+
+  const proposed = await api.tools.invoke('propose_ink_edit', {
+    task: {
+      schema: 'INK-CHAT-EDIT-TASK',
+      version: 1,
+      taskId: 'runtime-fix-component-register',
+      operation: 'component.register.v1',
+      targets: [frameRef],
+      arguments: { name: 'Runtime Fix Component' }
+    }
+  });
+  assert.equal(proposed.status, 'PROPOSED', JSON.stringify(proposed));
+  assert.equal(readOnlySnapshot(app), beforeProposal);
+  const proposalId = proposed.result?.result?.proposalId;
+  assert.ok(proposalId);
+
+  const beforeBlocked = readOnlySnapshot(app);
+  const blocked = await api.tools.invoke('execute_ink_edit', {
+    proposalId,
+    approvalToken: 'not-approved'
+  });
+  assert.equal(blocked.status, 'FAILED');
+  assert.equal(blocked.diagnostics?.[0]?.code, 'CHAT_EDIT_APPROVAL_REQUIRED');
+  assert.equal(readOnlySnapshot(app), beforeBlocked);
+
+  const approved = await api.tools.invoke('approve_ink_edit', { proposalId });
+  assert.equal(approved.status, 'APPROVED');
+  const approvalToken = approved.result?.result?.approvalToken;
+  assert.match(approvalToken, /^INK-LOCAL-APPROVAL:/);
+
+  const beforeUndoCount = app.history.undoStack.length;
+  const executed = await api.tools.invoke('execute_ink_edit', { proposalId, approvalToken });
+  assert.equal(executed.status, 'EXECUTED', JSON.stringify(executed));
+  assert.equal(executed.result?.result?.state, 'EXECUTED');
+  assert.equal(app.history.undoStack.length, beforeUndoCount + 1);
+  assert.equal(executed.result?.result?.history?.afterUndoCount, executed.result?.result?.history?.beforeUndoCount + 1);
+
+  const definition = app.doc.components?.definitions?.at(-1);
+  assert.ok(definition?.id);
+  assert.equal(definition.sourceRootId, frameRef.objectId);
+  assert.equal(CHAT_EDIT_OPERATIONS.length, 34);
+  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(-7), C2C);
+
+  const creativePlanSource = await readFile(path.join(root, 'product/source/src/editor/chat-creative-plan.js'), 'utf8');
+  assert.match(creativePlanSource, /raw\.steps\.length\s*<\s*2/);
+});
+
+test('C: C2-C History receipt remains valid when undo stack is saturated', async () => {
+  const app = makeApp();
+  app.history.setLimit(20);
+  for (let index = 0; index < 20; index++) {
+    app.history.pushScoped('Fill history', [['title']], () => {
+      app.doc.title = `history-${index}`;
+    });
+  }
+  assert.equal(app.history.undoStack.length, 20);
+
+  const api = createInkPublicCreativeApi(app);
+  const proposed = await api.tools.invoke('propose_ink_edit', {
+    task: {
+      schema: 'INK-CHAT-EDIT-TASK',
+      version: 1,
+      taskId: 'runtime-fix-saturated-component-register',
+      operation: 'component.register.v1',
+      targets: [ref(app, 'component-source-root')],
+      arguments: { name: 'Saturated Component' }
+    }
+  });
+  const proposalId = proposed.result?.result?.proposalId;
+  const approved = await api.tools.invoke('approve_ink_edit', { proposalId });
+  const executed = await api.tools.invoke('execute_ink_edit', {
+    proposalId,
+    approvalToken: approved.result?.result?.approvalToken
+  });
+  const history = executed.result?.result?.history;
+  assert.equal(history.beforeUndoCount, 20);
+  assert.equal(history.afterUndoCount, Math.min(history.beforeUndoCount + 1, app.history.limit));
+  assert.equal(history.afterUndoCount, 20);
+  assert.equal(history.latestLabel, 'Register Component');
+  assert.equal(app.history.pending, null);
+
+  const inspectedHistory = await api.tools.invoke('get_ink_history');
+  assert.equal(inspectedHistory.status, 'COMPLETED');
+  assert.equal(inspectedHistory.result?.limit, 20);
+  assert.equal(inspectedHistory.result?.applied, 20);
+  assert.equal(inspectedHistory.result?.retainedCount, 20);
+  assert.equal(inspectedHistory.result?.pending, false);
+  assert.equal(inspectedHistory.result?.entries?.at(-1)?.label, 'Register Component');
+});
+
+test('B: get_grounded_creative_context OBSERVE is mutation-neutral for Document History Revision and grounds selection', async () => {
+  const app = makeApp();
+  const selected = ref(app, 'component-source-child');
+  app.selection = [selected];
+
+  const provider = createCreativeIntelligenceContextAdapter({
+    getDocument: () => app.doc,
+    getSelectedObjectIds: () => app.selection.map(item => item.objectId),
+    getRevisionId: () => app.revisions.revisionIdFor(app.doc.id),
+    getRevisionRecords: () => [],
+    getHistoryEntries: () => []
+  });
+  const layer = new AICommandLayer({ app });
+  const auditBridge = new AuditBridge(layer);
+  const router = new ToolCallRouter({
+    layer,
+    auditBridge,
+    groundedContextProvider: provider
+  });
+
+  const before = readOnlySnapshot(app);
+  const result = await router.route({
+    id: 'runtime-fix-grounded-read',
+    name: 'get_grounded_creative_context',
+    arguments: {}
+  }, { permission: 'OBSERVE', scope: 'CURRENT_DOCUMENT', sessionId: 'runtime-fix' });
+
+  assert.equal(result.status, 'COMPLETED', JSON.stringify(result));
+  assert.equal(result.result?.authority?.documentWrite, false);
+  assert.equal(result.result?.authority?.historyWrite, false);
+  assert.equal(result.result?.authority?.revisionWrite, false);
+  assert.deepEqual(result.result?.modules?.documentBridge?.context?.selection?.objectIds, ['component-source-child']);
+  assert.equal(readOnlySnapshot(app), before);
+
+  const beforeSummary = readOnlySnapshot(app);
+  const summary = await router.route({
+    id: 'runtime-fix-document-summary',
+    name: 'get_document_summary',
+    arguments: {}
+  }, { permission: 'OBSERVE', scope: 'CURRENT_DOCUMENT', sessionId: 'runtime-fix' });
+  assert.equal(summary.status, 'COMPLETED');
+  assert.equal(readOnlySnapshot(app), beforeSummary);
+
+  const publicApi = createInkPublicCreativeApi(app);
+  const beforeContext = readOnlySnapshot(app);
+  const inkContext = await publicApi.tools.invoke('get_ink_context', {});
+  assert.equal(inkContext.status, 'COMPLETED');
+  assert.equal(readOnlySnapshot(app), beforeContext);
+
+  const beforeSelection = readOnlySnapshot(app);
+  const inkSelection = await publicApi.tools.invoke('get_ink_selection', {});
+  assert.equal(inkSelection.status, 'COMPLETED');
+  assert.deepEqual(inkSelection.result?.selection?.objectIds, ['component-source-child']);
+  assert.equal(readOnlySnapshot(app), beforeSelection);
+
+  const unavailableApp = makeApp();
+  const unavailableFound = unavailableApp.findObject({ objectId: 'component-source-child' });
+  unavailableFound.object.subpaths[0].closed = false;
+  unavailableApp.selection = [ref(unavailableApp, 'component-source-child')];
+  const unavailableProvider = createCreativeIntelligenceContextAdapter({
+    getDocument: () => unavailableApp.doc,
+    getSelectedObjectIds: () => unavailableApp.selection.map(item => item.objectId),
+    getRevisionId: () => unavailableApp.revisions.revisionIdFor(unavailableApp.doc.id),
+    getRevisionRecords: () => [],
+    getHistoryEntries: () => []
+  });
+  const unavailableRouter = new ToolCallRouter({
+    layer: new AICommandLayer({ app: unavailableApp }),
+    auditBridge: { record() {} },
+    groundedContextProvider: unavailableProvider
+  });
+  const beforeUnavailable = readOnlySnapshot(unavailableApp);
+  const unavailable = await unavailableRouter.route({
+    id: 'runtime-fix-grounded-unavailable',
+    name: 'get_grounded_creative_context',
+    arguments: {}
+  }, { permission: 'OBSERVE', scope: 'CURRENT_DOCUMENT', sessionId: 'runtime-fix' });
+  assert.equal(unavailable.status, 'COMPLETED');
+  assert.equal(unavailable.result?.modules?.semanticRegions?.status, 'UNAVAILABLE');
+  assert.deepEqual(unavailable.result?.modules?.documentBridge?.context?.selection?.objectIds, ['component-source-child']);
+  assert.equal(readOnlySnapshot(unavailableApp), beforeUnavailable);
+
+  const source = await readFile(path.join(root, 'product/source/src/ai/creative-intelligence-context.js'), 'utf8');
+  assert.match(source, /document:\s*clone\(getDocument\(\)\)/);
+
+  const creativeHarness = await readFile(path.join(root, 'qa/runtime/ink-cloud-018-browser-harness.html'), 'utf8');
+  assert.match(creativeHarness, /WORKSTATION_PROPERTIES_GROUNDED_NO_DIRTY_WRITER/);
+  assert.match(creativeHarness, /groundedDirtyCalls\.length===0/);
+  assert.match(creativeHarness, /assertReadOnly\(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY'/);
+  assert.doesNotMatch(creativeHarness, /delete\s+[^;]*modifiedAt|modifiedAt\s*=\s*[^;]*before/i);
+  assert.match(creativeHarness, /useInkTools\.length===22/);
+  assert.match(creativeHarness, /useInkTools\[18\]\?\.name==='use_ink'/);
+  assert.match(creativeHarness, /useInkTools\[19\]\?\.name==='import_ink_reference'/);
+  assert.match(creativeHarness, /useInkTools\[20\]\?\.name==='export_ink_asset'/);
+  assert.match(creativeHarness, /useInkTools\[21\]\?\.name==='search_ink_library'/);
+  assert.doesNotMatch(creativeHarness, /useInkTools\.length===20/);
+  assert.match(creativeHarness, /const reportProgress = \(marker, details=\{\}\) =>/);
+  assert.match(creativeHarness, /fetch\('\/__qa_progress'/);
+  assert.match(creativeHarness, /reportProgress\(name\)/);
+  assert.match(creativeHarness, /HARNESS_FINAL_EVIDENCE_READY/);
+  assert.match(creativeHarness, /HARNESS_FAILURE/);
+
+  const runtimeRunner = await readFile(path.join(root, 'qa/runtime/run-ink-runtime-batch.mjs'), 'utf8');
+  assert.match(runtimeRunner, /async function waitForUiCaptureReadiness/);
+  assert.match(runtimeRunner, /DOM\.querySelector/);
+  assert.match(runtimeRunner, /CSS\.getMatchedStylesForNode/);
+  assert.match(runtimeRunner, /window\.INK_APP && window\.INK_WEB_SHELL/);
+  assert.doesNotMatch(runtimeRunner, /cdp\.waitFor\('Page\.loadEventFired'/);
+  assert.doesNotMatch(runtimeRunner, /setTimeout\(resolve, 1200\)/);
+  assert.match(runtimeRunner, /url\.pathname === '\/__qa_progress'/);
+  assert.match(runtimeRunner, /\$\{suite\.id\}-progress\.json/);
+  assert.match(runtimeRunner, /entry\.lastProgress = progress/);
+
+  const closureHarness = await readFile(path.join(root, 'qa/runtime/ink-tech-closure-001-browser-harness.html'), 'utf8');
+  assert.match(closureHarness, /Math\.min\(history\.beforeUndoCount\+1,limit\)/);
+  assert.match(closureHarness, /history\.latestLabel===c2cHistoryLabels\[step\.operation\]/);
+  assert.match(closureHarness, /const expectedAccumulatedHistory=/);
+  assert.match(closureHarness, /Math\.min\(expectedAccumulatedHistory,finalHistoryLimit\)/);
+  assert.match(closureHarness, /finalHistory\.result\?\.retainedCount/);
+  assert.match(closureHarness, /const latestC2CHistoryStep=c2cHistorySteps\.at\(-1\)\|\|null/);
+  assert.match(closureHarness, /const expectedLatestRetainedLabel=latestC2CHistoryStep\?c2cHistoryLabels\[latestC2CHistoryStep\.operation\]:null/);
+  assert.match(closureHarness, /latestRetainedHistory\?\.label===expectedLatestRetainedLabel/);
+  assert.doesNotMatch(closureHarness, /latestRetainedHistory\?\.label===c2cHistoryLabels\['component\.reference\.repair\.v1'\]/);
+  assert.doesNotMatch(closureHarness, /Number\(finalHistory\.result\?\.applied\)>=35/);
+
+  const inkSource = await readFile(path.join(root, 'product/source/src/ink.js'), 'utf8');
+  assert.match(
+    inkSource,
+    /document\.querySelectorAll\('#workspaceSwitch button\[data-space\]'\)\.forEach\(button=>button\.addEventListener\('click',\(\)=>this\.switchWorkspace\(button\.dataset\.space\)\)\)/
+  );
+  assert.doesNotMatch(
+    inkSource,
+    /(?:document\.querySelectorAll|\$\$)\('\[data-space\]'\)\.forEach\(button=>button\.addEventListener\('click',\(\)=>this\.switchWorkspace/
+  );
+
+  const indexSource = await readFile(path.join(root, 'product/source/index.html'), 'utf8');
+  assert.match(indexSource, /id="app"[^>]*data-space="creation"/);
+  const workspaceMarkup = indexSource.match(/id="workspaceSwitch"[\s\S]*?<\/div>/)?.[0] || '';
+  assert.match(workspaceMarkup, /button[^>]*data-space="creation"/);
+  assert.match(workspaceMarkup, /button[^>]*data-space="layout"/);
+});
+
+console.log('INK-TECH-CLOSURE-001 runtime focused fix regression: PASS');

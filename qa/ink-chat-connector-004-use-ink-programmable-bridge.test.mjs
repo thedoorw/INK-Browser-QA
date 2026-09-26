@@ -42,7 +42,7 @@ const CONNECTOR_003_PREFIX = [
   'describe_ink_capability'
 ];
 
-const ALLOWED_PLAN_OPERATIONS = [
+const CONNECTOR_004_OPERATIONS = [
   'path.repaint.v1',
   'path.material.apply.v1',
   'path.material.remove.v1',
@@ -50,6 +50,19 @@ const ALLOWED_PLAN_OPERATIONS = [
   'path.simplify.v1',
   'path.refine.v1'
 ];
+
+const GEOMETRY_OPS_001_ADDITIONS = [
+  'path.create.v1',
+  'path.edit.v1',
+  'object.rotate.v1',
+  'object.clone.v1',
+  'repeat.radial.v1',
+  'boolean.apply.v1',
+  'group.create.v1',
+  'object.reparent.v1'
+];
+
+const ALLOWED_PLAN_OPERATIONS = [...CONNECTOR_004_OPERATIONS, ...GEOMETRY_OPS_001_ADDITIONS];
 
 function pathFixture(id, fill) {
   const item = createPath({
@@ -274,11 +287,12 @@ function assertJsonSafe(value) {
   visit(value);
 }
 
-test('Connector-004 appends use_ink exactly once after the exact Connector-003 18-tool prefix', () => {
+test('Connector-004 use_ink remains the exact tool after the Connector-003 prefix; later named tools stay append-only', () => {
   const tools = getInkNamedToolDefinitions();
   assert.deepEqual(tools.slice(0, 18).map(item => item.name), CONNECTOR_003_PREFIX);
   assert.equal(tools[18].name, 'use_ink');
-  assert.equal(tools.length, 19);
+  assert.equal(tools[19].name, 'import_ink_reference');
+  assert.ok(tools.length >= 20);
   assert.equal(tools.filter(item => item.name === 'use_ink').length, 1);
 
   const composition = resolveInkCapabilityDescriptor('composition.programmable');
@@ -294,10 +308,12 @@ test('Connector-004 appends use_ink exactly once after the exact Connector-003 1
   assert.equal(external.namedTool, null);
 });
 
-test('use_ink operation vocabulary remains exactly the existing six bounded-edit operations', () => {
-  assert.deepEqual([...CHAT_EDIT_OPERATIONS], ALLOWED_PLAN_OPERATIONS);
-  for (const forbidden of ['boolean', 'repeat', 'group', 'frame', 'component', 'layout']) {
-    assert.equal(CHAT_EDIT_OPERATIONS.some(item => item.toLowerCase().includes(forbidden)), false);
+test('use_ink preserves Connector-004 operations and appends only the authorized Geometry Ops 001 vocabulary', () => {
+  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(0, ALLOWED_PLAN_OPERATIONS.length), ALLOWED_PLAN_OPERATIONS);
+  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(0, CONNECTOR_004_OPERATIONS.length), CONNECTOR_004_OPERATIONS);
+  assert.deepEqual(CHAT_EDIT_OPERATIONS.slice(CONNECTOR_004_OPERATIONS.length, ALLOWED_PLAN_OPERATIONS.length), GEOMETRY_OPS_001_ADDITIONS);
+  for (const stillForbidden of ['component.', 'layout.']) {
+    assert.equal(CHAT_EDIT_OPERATIONS.some(item => item.toLowerCase().includes(stillForbidden)), false);
   }
 });
 
