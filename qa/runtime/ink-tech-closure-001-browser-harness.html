@@ -1127,11 +1127,35 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {planCount:allPlanRuns.length,revisionReceiptCount:allReceipts.length}
     );
     const finalHistory=await inkApi.tools.invoke('get_ink_history');
+    const expectedAccumulatedHistory=
+      geometryHistorySteps.length+
+      c2aHistorySteps.length+
+      c2bHistorySteps.length+
+      c2cHistorySteps.length;
+    const finalHistoryLimit=Number(finalHistory?.result?.limit);
+    const expectedRetainedApplied=Number.isInteger(finalHistoryLimit)
+      ? Math.min(expectedAccumulatedHistory,finalHistoryLimit)
+      : null;
+    const finalHistoryEntries=Array.isArray(finalHistory?.result?.entries)?finalHistory.result.entries:[];
+    const latestRetainedHistory=finalHistoryEntries.at(-1)||null;
     assert(
       finalHistory?.status==='COMPLETED' &&
-      Number(finalHistory.result?.applied)>=35,
+      finalHistory.result?.pending===false &&
+      Number.isInteger(finalHistoryLimit) &&
+      finalHistoryLimit===Number(app.history?.limit) &&
+      Number(finalHistory.result?.applied)===expectedRetainedApplied &&
+      Number(finalHistory.result?.retainedCount)===finalHistoryEntries.length &&
+      Number(finalHistory.result?.retainedCount)===Number(finalHistory.result?.applied) &&
+      latestRetainedHistory?.label===c2cHistoryLabels['component.reference.repair.v1'],
       'CLOSURE_HISTORY_ACCUMULATED',
-      {applied:finalHistory?.result?.applied}
+      {
+        expectedAccumulatedHistory,
+        limit:finalHistoryLimit,
+        expectedRetainedApplied,
+        applied:finalHistory?.result?.applied,
+        retainedCount:finalHistory?.result?.retainedCount,
+        latestLabel:latestRetainedHistory?.label||null
+      }
     );
     const finalDiscovery=await inkApi.tools.invoke('get_ink_capabilities');
     const finalOps=(finalDiscovery?.result?.capabilities||[])
