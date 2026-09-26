@@ -721,6 +721,67 @@ primary.push(descriptor({
   toolPrimary: true
 }));
 
+// Connector-005 append-only read-only Creative Library search.
+// The accepted 21-tool registry remains the exact ordered prefix.
+primary.push(descriptor({
+  id: 'library.search',
+  title: 'Search INK Creative Library',
+  description: 'Search or inspect existing reusable INK structures through bounded read-only adapters over current native Document authorities.',
+  availability: true,
+  routingClass: 'NAMED_TOOL',
+  namedTool: 'search_ink_library',
+  publicMethod: 'library.query',
+  role: 'READ',
+  authoritativeRoute: 'app.inkPublicApi.library.query → current Document Component / Material / Recipe / Repeat / Reference-derived authorities',
+  inputSchema: obj({
+    action: {
+      type: 'string',
+      enum: ['search', 'inspect'],
+      default: 'search',
+      description: 'Search the current document library view or inspect one stable returned library ref.'
+    },
+    query: str('Optional normalized substring query for search.'),
+    types: arr({
+      type: 'string',
+      enum: ['component', 'material', 'recipe', 'parametric-structure', 'reference-derived-structure'],
+      description: 'Creative Library family.'
+    }, 'Optional family filter.', { maxItems: 5 }),
+    ref: obj({
+      schema: { type: 'string', const: 'INK_CREATIVE_LIBRARY_REF', description: 'Stable Creative Library ref schema.' },
+      version: { type: 'integer', const: 1, description: 'Stable Creative Library ref version.' },
+      type: {
+        type: 'string',
+        enum: ['component', 'material', 'recipe', 'parametric-structure', 'reference-derived-structure'],
+        description: 'Type-disambiguated Creative Library family.'
+      },
+      scope: obj({
+        documentId: str('Owning document id.'),
+        pageId: str('Owning page id when applicable.'),
+        layerId: str('Owning layer id when applicable.')
+      }, ['documentId'], 'Native scope used to reject stale or ambiguous refs.'),
+      id: str('Stable native identity within the documented scope.'),
+      source: str('Bounded native source authority identifier.')
+    }, ['schema', 'version', 'type', 'scope', 'id', 'source'], 'Stable ref returned by a prior search.'),
+    limit: { type: 'integer', minimum: 1, maximum: 50, default: 20, description: 'Maximum returned search results.' }
+  }, [], 'Use action=search with query/types/limit, or action=inspect with ref.'),
+  targetTypes: ['Document', 'Page', 'Object'],
+  constraints: [
+    'Read-only current-document discovery; no remote search, network fetch, registry creation, Creative Memory write, Research write, selection change, workspace change, Document mutation, History mutation, or Revision mutation.',
+    'Searchable families are component, material, recipe, parametric-structure, and reference-derived-structure.',
+    'Missing families return an empty result rather than fabricated assets.',
+    'Returned INK_CREATIVE_LIBRARY_REF / 1 values contain only bounded JSON-safe identity metadata and no executable payload.',
+    'Reuse metadata reports only existing accepted native authorities; search and inspect never apply an asset automatically.',
+    'Stale or mismatched refs fail explicitly instead of resolving to a different asset.'
+  ],
+  ...policy(false, 'DIRECT_NAMED_TOOL', 'NONE', 'READ_CURRENT', false, false, 'Reuse, when available, remains a separate explicit proposal/approval operation.'),
+  resultContract: resultContract({ statuses: ['COMPLETED', 'FAILED'] }),
+  examples: [
+    { action: 'search', query: 'petal', types: ['component', 'material'], limit: 10 },
+    { action: 'inspect', ref: { schema: 'INK_CREATIVE_LIBRARY_REF', version: 1, type: 'component', scope: { documentId: 'doc-1' }, id: 'component-1', source: 'document.components.definitions' } }
+  ],
+  toolPrimary: true
+}));
+
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
   const zeroTargetCreate = ['path.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
