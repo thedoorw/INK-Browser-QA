@@ -1,3 +1,25 @@
+## Closure Runtime Fix 2 source accepted — 2026-09-26
+
+```text
+TASK = INK-TECH-CLOSURE-001
+REVIEWED_SHA = d6ce01dc47614100bedea2592e64c18f66bc28d3
+MR_SOURCE = PASS
+
+DEFECT_C =
+  QA saturation assertion corrected
+  History semantics unchanged
+
+DEFECT_D =
+  strict modifiedAt comparison retained
+  browser markDirty writer instrumentation added
+  product root cause not invented
+
+NEXT = exact-SHA Windows Runtime
+PROMOTION = HOLD
+```
+
+---
+
 ## Post-Closure sequence fixed — 2026-09-26
 
 ```text
