@@ -53,6 +53,24 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
   async function run() {
     const w=await ready(), app=w.INK_APP, cw=app.creativeWorkspace, shell=w.INK_WEB_SHELL, doc=w.document;
     assert(Boolean(shell?.open && shell?.state),'WORKSTATION_SHELL_AVAILABLE');
+    const markDirtyCalls=[];
+    const originalMarkDirty=app.markDirty.bind(app);
+    app.markDirty=(...args)=>{
+      markDirtyCalls.push({
+        at:Date.now(),
+        modifiedAtBefore:app.doc?.modifiedAt??null,
+        historyUndo:app.history?.undoStack?.length??null,
+        historyPending:Boolean(app.history?.pending),
+        stack:String(new Error('markDirty trace').stack||'').split('\n').slice(1,9)
+      });
+      return originalMarkDirty(...args);
+    };
+    const settleReadOnlyBoundary=async()=>{
+      await new Promise(resolve=>w.requestAnimationFrame(()=>w.requestAnimationFrame(resolve)));
+      await wait(800);
+      assert(!app.history?.pending,'WORKSTATION_READ_ONLY_BOUNDARY_HISTORY_IDLE');
+      return {modifiedAt:app.doc?.modifiedAt??null,markDirtyCount:markDirtyCalls.length};
+    };
     const panelStates=[];
     const openPanel=async id=>{
       shell.open(id);
@@ -690,14 +708,18 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
     const beforePropertiesOpen=readOnlySnapshot();
     await openPanel('properties');
     assertReadOnly(beforePropertiesOpen,'WORKSTATION_PROPERTIES_PANEL_OPEN_READ_ONLY');
+    const propertiesBoundary=await settleReadOnlyBoundary();
     const beforePropertiesRead=readOnlySnapshot();
+    const beforePropertiesDirtyCount=markDirtyCalls.length;
     const propertiesButton=doc.querySelector('[data-workstation-action="grounded-selection-refresh"]');
     assert(Boolean(propertiesButton),'WORKSTATION_PROPERTIES_GROUNDED_ENTRY_VISIBLE');
     propertiesButton.click();
     await waitFor(()=>cw.status?.code==='GROUNDED_CONTEXT_REFRESHED');
     const propertiesText=doc.querySelector('[data-workstation-output="selection-capability"]')?.textContent||'';
+    const groundedDirtyCalls=markDirtyCalls.slice(beforePropertiesDirtyCount);
     assert(Boolean(cw.lastGroundedContext) && /Document Bridge AVAILABLE/.test(propertiesText) && /Semantic/.test(propertiesText) && /read-only/i.test(propertiesText),'WORKSTATION_PROPERTIES_GROUNDED_READOUT',{text:propertiesText});
-    assertReadOnly(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY');
+    assert(groundedDirtyCalls.length===0,'WORKSTATION_PROPERTIES_GROUNDED_NO_DIRTY_WRITER',{boundary:propertiesBoundary,markDirtyCalls:groundedDirtyCalls});
+    assertReadOnly(beforePropertiesRead,'WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY',{boundary:propertiesBoundary,markDirtyCalls:groundedDirtyCalls});
 
     const beforeReferenceResearch=readOnlySnapshot();
     await openPanel('reference');
