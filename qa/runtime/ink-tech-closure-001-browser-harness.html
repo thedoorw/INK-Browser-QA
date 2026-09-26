@@ -929,7 +929,11 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
         'C2C_EDIT_EXECUTED',
         {label,status:executed?.status,execution,diagnostics:executed?.diagnostics||null}
       );
-      c2cRuns.push({label,step,proposed,approved,executed,execution});
+      c2cRuns.push({
+        label,step,proposed,approved,executed,execution,
+        historyLimit:Number(app.history?.limit)||null,
+        historyPending:Boolean(app.history?.pending)
+      });
       return execution;
     };
     const c2cTargetFromExecution=execution=>{
@@ -1060,14 +1064,40 @@ body{font:14px/1.45 ui-monospace,Consolas,monospace;margin:18px}iframe{width:120
       {detachedRef:c2cDetachedRef,detachedType:c2cDetached?.type}
     );
 
-    const c2cHistorySteps=c2cRuns.map(run=>({stepId:run.step.stepId,history:run.execution?.history||null}));
+    const c2cHistoryLabels={
+      'component.register.v1':'Register Component',
+      'component.instance.create.v1':'Create Instance',
+      'component.override.set.v1':'Override Component Opacity',
+      'component.override.reset.v1':'Reset Component Override',
+      'component.instance.detach.v1':'Detach Component Instance',
+      'component.definition.duplicate.v1':'Duplicate Component Definition',
+      'component.reference.repair.v1':'Repair Component Reference'
+    };
+    const c2cHistorySteps=c2cRuns.map(run=>({
+      stepId:run.step.stepId,
+      operation:run.step.operation,
+      history:run.execution?.history||null,
+      limit:run.historyLimit,
+      pending:run.historyPending
+    }));
     assert(
       c2cHistorySteps.length===7 &&
-      c2cHistorySteps.every(step=>Boolean(step.history) &&
-        Number.isInteger(step.history.beforeUndoCount) &&
-        step.history.afterUndoCount===step.history.beforeUndoCount+1),
+      c2cHistorySteps.every(step=>{
+        const history=step.history;
+        const limit=Number(step.limit);
+        const expectedAfter=Number.isInteger(history?.beforeUndoCount) && Number.isInteger(limit)
+          ? Math.min(history.beforeUndoCount+1,limit)
+          : null;
+        return Boolean(history) &&
+          Number.isInteger(history.beforeUndoCount) &&
+          Number.isInteger(history.afterUndoCount) &&
+          Number.isInteger(limit) &&
+          history.afterUndoCount===expectedAfter &&
+          history.latestLabel===c2cHistoryLabels[step.operation] &&
+          step.pending===false;
+      }),
       'C2C_HISTORY_RECORDED_WITH_NATIVE_COMPONENT_TRANSACTIONS',
-      {stepCount:c2cHistorySteps.length}
+      {stepCount:c2cHistorySteps.length,history:c2cHistorySteps}
     );
 
     evidence.c2c={
