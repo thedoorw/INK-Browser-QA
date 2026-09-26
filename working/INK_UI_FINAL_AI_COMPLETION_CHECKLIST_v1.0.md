@@ -531,6 +531,48 @@ No UI refactor may silently remove or rename these tool authorities.
 - [ ] AE09 `DUPLICATE_PRIMARY_HOME = 0`.
 - [ ] AE10 `FAKE_VISIBLE_FEATURES = 0`.
 
+# AG. Photoshop coverage-disposition audit
+
+This section verifies that every major Photoshop workstation concept was either implemented, adapted, or explicitly excluded/deferred rather than forgotten.
+
+- [ ] AG01 Application/menu bar disposition satisfied.
+- [ ] AG02 Options bar disposition satisfied.
+- [ ] AG03 Tools panel disposition satisfied.
+- [ ] AG04 single/double toolbar disposition satisfied.
+- [ ] AG05 tool flyout/group disposition satisfied.
+- [ ] AG06 toolbar customization/Extra Tools remains explicitly deferred unless separately authorized.
+- [ ] AG07 color-swatch behavior uses existing color authority; no unsupported second color model.
+- [ ] AG08 document/canvas workspace disposition satisfied.
+- [ ] AG09 multi-document tabs are not invented without baseline authority.
+- [ ] AG10 Photoshop Contextual Task Bar is not duplicated; INK uses Options/Properties/CHAT.
+- [ ] AG11 right Dock disposition satisfied.
+- [ ] AG12 panel resize disposition satisfied.
+- [ ] AG13 panel grouping/stacking disposition satisfied.
+- [ ] AG14 primary floating panels remain deferred unless separately authorized.
+- [ ] AG15 Window menu convergence satisfied.
+- [ ] AG16 collapsed icon Dock satisfied.
+- [ ] AG17 Tab hide/show-all-panels remains explicitly optional/later unless authorized.
+- [ ] AG18 full workspace-layout manager remains deferred.
+- [ ] AG19 Properties disposition satisfied.
+- [ ] AG20 Layers disposition satisfied.
+- [ ] AG21 History disposition satisfied.
+- [ ] AG22 Navigator disposition satisfied.
+- [ ] AG23 Libraries adaptation satisfied without creating full Library Manager.
+- [ ] AG24 Pages INK-specific panel disposition satisfied.
+- [ ] AG25 Reference panel disposition satisfied.
+- [ ] AG26 Compose panel disposition satisfied.
+- [ ] AG27 CHAT panel disposition satisfied.
+- [ ] AG28 Revision panel disposition satisfied.
+- [ ] AG29 fullscreen/screen-mode disposition satisfied.
+- [ ] AG30 zoom/status disposition satisfied.
+- [ ] AG31 no fake full ruler/guide system was invented.
+- [ ] AG32 no Photoshop notification/account bell UI was copied.
+- [ ] AG33 no Discover/tutorial panel was copied as a required editor feature.
+- [ ] AG34 no Photoshop Generative Contextual UI was duplicated over CHAT.
+- [ ] AG35 no general Filter menu was created under current baseline.
+- [ ] AG36 no historical 3D menu was created.
+- [ ] AG37 no Adobe proprietary logo/icon asset was copied.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.
