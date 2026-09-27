@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { colorMatchesTolerance } from '../product/source/src/image/raster-selection-tools.js';
+import { normalizeRgba } from '../product/source/src/image/raster-fill-tools.js';
 import {
   RETOUCH_METRICS,
   burn,
@@ -21,6 +23,11 @@ const grayLine = values => image(values.length, 1, values.map(value => [value, v
 const fullMask = (width, height = 1) => ({ width, height, alpha: Array(width * height).fill(255) });
 const chroma = rgba => Math.max(...rgba.slice(0,3)) - Math.min(...rgba.slice(0,3));
 
+test('focused harness imports promoted P1-A selection and fill modules directly', () => {
+  assert.equal(colorMatchesTolerance([1,2,3,4], [1,2,3,4], 0), true);
+  assert.deepEqual(normalizeRgba('#010203'), [1,2,3,255]);
+});
+
 test('clone stamp maps source offset to target and clips source/target edges', () => {
   const src = grayLine([10,20,30,100,110]);
   const result = cloneStamp(src, { sourcePoint:{x:1,y:0}, targetPoint:{x:3,y:0}, radius:1 });
@@ -39,11 +46,13 @@ test('clone stamp opacity blends deterministically without mutating source', () 
   assert.deepEqual([...src.data], original);
 });
 
-test('pattern stamp tiles external pattern with deterministic origin', () => {
+test('pattern stamp tiles external pattern with deterministic origin and honors opacity', () => {
   const src = grayLine([0,0,0,0]);
   const pattern = grayLine([25,200]);
   const result = patternStamp(src, { pattern, targetPoint:{x:0,y:0}, mask:fullMask(4), origin:{x:0,y:0} });
   assert.deepEqual([px(result,0)[0],px(result,1)[0],px(result,2)[0],px(result,3)[0]], [25,200,25,200]);
+  const half = patternStamp(grayLine([100]), { pattern:grayLine([200]), targetPoint:{x:0,y:0}, radius:0, opacity:0.5 });
+  assert.deepEqual(px(half,0), [150,150,150,255]);
 });
 
 test('healing copies source structure while adapting toward target tone and is deterministic', () => {
