@@ -6,7 +6,7 @@ BRANCH: `work/ink-p1-h-format-interoperability-001`
 
 BASELINE_MAIN: `136ca9c961ff0f2e543e196e74a3ae0983faaf78`
 
-STATUS: `DEV_HANDOFF_READY / STOP_FOR_MR / PARALLEL_WITH_P1_F`
+STATUS: `BOUNDED_CORRECTION_HANDOFF_READY / STOP_FOR_MR / PARALLEL_WITH_P1_F`
 
 WORKPACK:
 `working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md`
@@ -193,3 +193,118 @@ NEXT_ACTION = STOP FOR MR REVIEW
 ```
 
 DEV does not self-merge, promote, run Runtime, or begin another package.
+
+
+## MR bounded correction — 2026-09-27
+
+MR REVIEW REFERENCE:
+- `working/INK_P1_H_MR_REVIEW_v1.0.md`
+- The referenced review file was not present on the P1-H branch or repository default branch when DEV began this correction.
+- DEV executed only the explicit user-authorized correction scope:
+  1. EXR additional-channel semantics
+  2. TIFF ExtraSamples semantics
+  3. fixtures / QA coverage
+  4. full P1-H QA rerun
+  5. progress update / STOP for MR
+
+CORRECTION_COMMIT:
+`5ed7f3a8506b25156be12e8a91df0a4bbf5e1546`
+
+CORRECTION_TREE:
+`ffc6d18a3f7f3d88cb98bbb6215257c5d545214f`
+
+### Correction exact blobs
+
+- `product/source/src/image/formats/normalized-payload.js`
+  - `52b11f397c362b122a8cd800ab4487c5bb0f6d7f`
+- `product/source/src/image/formats/exr.js`
+  - `0a63bdfa5c3c00067221cd8ac09191108fb71bd0`
+- `product/source/src/image/formats/tiff.js`
+  - `871c3afb929d7cad6437c4dcd22ec2cd9818ac31`
+- `qa/fixtures/p1-h/fixtures.mjs`
+  - `c37ea00dcc216f9b573b0ddfaf1b0f94d93ffae9`
+- `qa/ink-p1-h-format-interoperability.test.mjs`
+  - `226ab9caa910bcd07583da58ef7f6ff679163411`
+
+### EXR correction
+
+- Arbitrary non-R/G/B/A EXR channels are no longer normalized as alpha channels.
+- P1-H now carries them as semantically distinct `additionalChannels`.
+- True `A` remains the alpha channel.
+- Additional-channel descriptors are preserved in EXR metadata.
+- Basic EXR encoder now explicitly rejects payloads containing unsupported additional channels instead of silently dropping them.
+
+### TIFF correction
+
+- `ExtraSamples=0` => unspecified extra data; preserved as `additionalChannels`, not alpha.
+- `ExtraSamples=1` => associated alpha; decoded process samples are normalized to straight-alpha INK raster semantics and the storage normalization is explicitly reported.
+- `ExtraSamples=2` => unassociated alpha; preserved as straight alpha without process-data unassociation.
+- Invalid / ambiguous ExtraSamples semantics are explicitly rejected.
+- Baseline TIFF encoder explicitly rejects unsupported additional channels instead of silently dropping them.
+
+### Added fixtures / regression coverage
+
+- TIFF unspecified extra sample fixture.
+- TIFF associated-alpha fixture.
+- EXR RGBA + independent `Z` additional-channel fixture.
+- Regression assertions verify:
+  - EXR `Z` is not alpha/spot.
+  - TIFF unspecified extra is not alpha.
+  - TIFF associated alpha is unassociated correctly.
+  - TIFF unassociated alpha remains unassociated.
+  - unsupported additional-channel encode paths fail explicitly.
+
+### Full P1-H QA rerun
+
+Command target:
+
+```text
+qa/ink-p1-h-format-interoperability.test.mjs
+```
+
+Result:
+
+```text
+tests = 54
+pass = 54
+fail = 0
+skip = 0
+```
+
+The rerun consumed the exact frozen P1-G authority blobs:
+
+- `color-management-core.js` = `5e56e219e964912e85c68b644004f1b5c14dcbef`
+- `channel-core.js` = `c3d5540f97af3c9fec94e6ac2a3e9b9053aa8bc1`
+
+### Bounded correction isolation
+
+```text
+P1_G_CORE_MUTATION = 0
+P1_F_MUTATION = 0
+DOCUMENT_MODEL_MUTATION = 0
+RENDERER_MUTATION = 0
+INTEGRATION_MUTATION = 0
+RUNTIME_RUN = 0
+FORMAT_VERSION_MUTATION = 0
+UI_MUTATION = 0
+DEPENDENCIES_ADDED = 0
+```
+
+Correction delta before progress update contained only:
+- `product/source/src/image/formats/normalized-payload.js`
+- `product/source/src/image/formats/exr.js`
+- `product/source/src/image/formats/tiff.js`
+- `qa/fixtures/p1-h/fixtures.mjs`
+- `qa/ink-p1-h-format-interoperability.test.mjs`
+
+### Correction handoff
+
+```text
+CORRECTION_COMMIT = 5ed7f3a8506b25156be12e8a91df0a4bbf5e1546
+FULL_P1_H_QA = PASS 54/54 / FAIL 0 / SKIP 0
+RUNTIME = NOT RUN
+DEV_HANDOFF = YES
+NEXT_ACTION = STOP FOR MR REVIEW
+```
+
+DEV does not self-merge, promote, enter Integration, run Runtime, or begin another package.
