@@ -8,7 +8,7 @@ DATE: 2026-09-27
 
 ```text
 PRIMARY_TASK = INK-P1-A-RASTER-SELECTION-FILL-SAMPLING-001
-PROGRAM = PRE_UI_MATURE_PLATFORM_CAPABILITY_COMPLETION
+PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
 BASELINE_MAIN = 9c808b6ef68480dbfd3d394b8dabddaee2aab0b4
@@ -90,24 +90,44 @@ P1-A Raster Selection / Fill / Sampling
 → MR MODULE_READY review
 → P1-D Layer Effects Completion
 → MR MODULE_READY review
-→ PRE-UI INTEGRATION WORK ORDER
-→ focused/integrated QA + exact-SHA Runtime
+→ P1-E Advanced Selection
+→ MR MODULE_READY review
+→ P1-F Raster Processing Expansion
+→ MR MODULE_READY review
+→ P1-G Color / Bit Depth / Channels
+→ MR MODULE_READY review
+→ P1-H Format Interoperability
+→ MR MODULE_READY review
+→ P1 INTEGRATION WORK ORDER
+→ focused/integrated QA
+→ ONE exact-SHA integrated Runtime
 → refreshed promoted capability authority
 → UR full-capability reconciliation
 → UI_HOLD may be cleared
 ```
 
-The following strategic items are explicitly after-UI or Adapter-class and do not block final UI:
-- high-bit-depth workflow;
-- RGB/CMYK/Lab/Multichannel;
-- ICC;
-- Channels;
-- broader PSD/PSB/TIFF/RAW/EXR interoperability;
+User/MR sequencing rule:
+
+```text
+ALL NATIVE P1 = COMPLETE BEFORE INTEGRATED RUNTIME
+NO INTEGRATED RUNTIME BETWEEN P1 PACKAGES
+FOCUSED / UNIT QA PER PACKAGE = REQUIRED
+P2 / ADAPTER = NOT PART OF THIS RUNTIME GATE
+```
+
+The items previously planned after UI but still classified P1 are now moved before Runtime:
+- Magnetic Lasso;
+- Object Selection;
+- Adjustment breadth;
+- Filter / Filter Gallery breadth;
 - Liquify;
-- Magnetic/Object Selection;
-- broader filter/adjustment breadth;
-- plugin ecosystem;
-- generative/content-aware/Neural/RAW engines where classified Adapter.
+- 8/16/32-bit workflow;
+- RGB/CMYK/Lab/Multichannel;
+- ICC color management;
+- Channels / alpha / spot channels;
+- PSD/PSB/TIFF/RAW/EXR interoperability breadth.
+
+P2, Adapter and Outside-current-core items remain later work.
 
 ## UI authority during HOLD
 
@@ -128,8 +148,8 @@ UR must not issue final UI implementation Work Orders yet.
 ```text
 CURRENT_GATE = P1_A_DEV_IN_PROGRESS_OR_HANDOFF
 P1_A_PRODUCT_IMPLEMENTATION = AUTHORIZED
-P1_B_C_D = NOT YET AUTHORIZED
-INTEGRATED_RUNTIME = NOT AUTHORIZED FOR MODULE_READY
+P1_B_C_D_E_F_G_H = NOT YET AUTHORIZED
+INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
 ```
