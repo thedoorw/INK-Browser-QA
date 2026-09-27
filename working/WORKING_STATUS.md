@@ -6,9 +6,9 @@ DATE: 2026-09-27
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PRIMARY_TASK = INK-P1-D-LAYER-EFFECTS-COMPLETION-001
+CURRENT_PRIMARY_TASK = INK-P1-E-ADVANCED-SELECTION-001
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_D_DEV_AUTHORIZED
+CURRENT_GATE = P1_E_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -23,8 +23,10 @@ P1_B = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PROMOTED_MAIN = c35b81a81845b65dfd462e7d225a192d3393f135
 P1_C = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PROMOTED_MAIN = b214c177972be2e6175459005720bb72e697cec2
-P1_D_WORKPACK = working/INK_P1_D_LAYER_EFFECTS_COMPLETION_DEV_WORKPACK_v1.0.md
-P1_D_BRANCH = work/ink-p1-d-layer-effects-completion-001
+P1_D = MODULE_READY / MR_PASS / PROMOTED
+P1_D_PROMOTED_MAIN = 206f027785c04e56e91293e439fef8fb0cdd8521
+P1_E_WORKPACK = working/INK_P1_E_ADVANCED_SELECTION_DEV_WORKPACK_v1.0.md
+P1_E_BRANCH = work/ink-p1-e-advanced-selection-001
 
 FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
@@ -57,7 +59,9 @@ Final UI wiring remains prohibited.
 
 P1-C passed MR MODULE_READY review and is promoted on main `b214c177972be2e6175459005720bb72e697cec2`.
 
-P1-D is now authorized for Layer Effects Completion Core + focused QA. P1-E through P1-H remain queued and each requires separate bounded MR authorization.
+P1-D passed MR MODULE_READY review and is promoted on main `206f027785c04e56e91293e439fef8fb0cdd8521`.
+
+P1-E is now authorized for Advanced Selection Core + focused QA. P1-F through P1-H remain queued and each requires separate bounded MR authorization.
 
 ## UI release sequence
 
