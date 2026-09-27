@@ -168,7 +168,7 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_INTEGRATION_DEV_AUTHORIZED
+CURRENT_GATE = P1_INTEGRATION_MR_REVISE_RENDERER
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
@@ -185,20 +185,21 @@ INK_MANUAL_PROSE = NON_BLOCKING
 ## Next action
 
 DEV-Integration:
-- activation main = `87f57980a071ff8f009f3aa354951d81025fecf0`;
-- branch = `work/ink-p1-integration-001`;
-- lane progress initialized at branch commit `f9e4a012a4dfd1f805981d0b4f94b1238bacd50f`;
-- use only `work/ink-p1-integration-001`;
-- follow `working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`;
-- perform the technical wiring for accepted P1 A-H, including the mandatory ruler/guide/snapping technical integration;
-- run focused/integrated QA;
-- do not run the integrated Runtime;
-- hand off exact HEAD and evidence;
-- STOP for MR review.
+- continue only on `work/ink-p1-integration-001`;
+- reviewed handoff HEAD `4c985ec692b2c1275ec23205c0823bb40283430a` = MR_REVISE;
+- perform only the bounded renderer dispatch correction in `working/INK_P1_INTEGRATION_MR_REVIEW_v1.0.md`;
+- ensure rasterState-only imported images route through the integrated color-raster renderer;
+- add the missing renderer regression;
+- rerun complete Integration QA with fail=0 / skip=0;
+- update lane progress;
+- do not run integrated Runtime;
+- hand off a new exact HEAD;
+- STOP for MR re-review.
 
 MR:
 - record exact activation-main SHA;
-- review exact Integration handoff;
+- Integration reviewed HEAD `4c985ec692b2c1275ec23205c0823bb40283430a` = MR_REVISE; review record `working/INK_P1_INTEGRATION_MR_REVIEW_v1.0.md`;
+- re-review exact Integration handoff after bounded renderer correction;
 - promote only after `P1_INTEGRATION_QA = PASS / FAIL 0 / SKIP 0`;
 - only after Integration MR_PASS/promoted, authorize `INK-P1-INTEGRATED-RUNTIME-001` for DEV.
 
