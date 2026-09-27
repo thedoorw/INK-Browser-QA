@@ -7,7 +7,7 @@ DATE: 2026-09-27
 ## Current program
 
 ```text
-PRIMARY_TASKS = INK-P1-F-RASTER-PROCESSING-EXPANSION-001 + INK-P1-G-COLOR-BITDEPTH-CHANNELS-001
+PRIMARY_TASKS = INK-P1-F-RASTER-PROCESSING-EXPANSION-001 + INK-P1-H-FORMAT-INTEROPERABILITY-001
 PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
@@ -25,9 +25,11 @@ P1_C = MODULE_READY / PROMOTED
 P1_D = MODULE_READY / PROMOTED
 P1_E = MODULE_READY / PROMOTED
 P1_F_WORKPACK = working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md
-P1_G_WORKPACK = working/INK_P1_G_COLOR_BITDEPTH_CHANNELS_DEV_WORKPACK_v1.0.md
+P1_G = MODULE_READY / MR_PASS / PROMOTED
+P1_G_MR_REVIEW = working/INK_P1_G_MR_REVIEW_v1.0.md
+P1_H_WORKPACK = working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
-P1_G_BRANCH = work/ink-p1-g-color-bitdepth-channels-001
+P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
 
 FORMAT_VERSION = 4
 CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
@@ -62,28 +64,29 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current DEV authorization — P1-F + P1-G PARALLEL
+## Current DEV authorization — P1-F + P1-H PARALLEL
 
 P1-A through P1-E:
 `MODULE_READY / MR_PASS / PROMOTED`
 
-P1-E reviewed/promoted product main:
-`fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`
+P1-G:
+`MODULE_READY / MR_PASS / PROMOTED`
+
+P1-G reviewed HEAD:
+`d90985320989607c527199e9c31d75fb6614bfca`
+
+P1-G promotion merge:
+`fff2e6961a5f72d42134ca2fedca533be0aa31c7`
 
 MR review:
-`working/INK_P1_E_MR_REVIEW_v1.0.md`
+`working/INK_P1_G_MR_REVIEW_v1.0.md`
 
-Two independent DEV lanes are now authorized in parallel:
+Two independent DEV lanes may now proceed in parallel:
 
 ### P1-F — Raster Processing Expansion
 
 Task:
 `INK-P1-F-RASTER-PROCESSING-EXPANSION-001`
-
-Scope:
-- Adjustment breadth;
-- Filter / Filter Gallery breadth;
-- Liquify Core.
 
 Branch:
 `work/ink-p1-f-raster-processing-expansion-001`
@@ -91,29 +94,27 @@ Branch:
 Workpack:
 `working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md`
 
-### P1-G — Color / Bit Depth / Channels
+### P1-H — Format Interoperability
 
 Task:
-`INK-P1-G-COLOR-BITDEPTH-CHANNELS-001`
+`INK-P1-H-FORMAT-INTEROPERABILITY-001`
 
 Scope:
-- 8/16/32-bit raster Core;
-- RGB / CMYK / Lab / Multichannel;
-- bounded ICC Core;
-- channels / alpha / spot channels.
+- PSD
+- PSB
+- TIFF
+- RAW adapter boundary
+- EXR
 
 Branch:
-`work/ink-p1-g-color-bitdepth-channels-001`
+`work/ink-p1-h-format-interoperability-001`
 
 Workpack:
-`working/INK_P1_G_COLOR_BITDEPTH_CHANNELS_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md`
 
-Parallel rule:
-- both branches start from the same main SHA;
-- P1-F and P1-G product-source boundaries may not overlap;
-- neither lane may modify `image-core.js`, document schema, Renderer or FORMAT_VERSION;
-- accepted Core is wired only during P1 Integration;
-- P1-H is not authorized until P1-G color/bit-depth/channel contract is MR-frozen.
+P1-H must consume the frozen P1-G color/bit-depth/ICC/channel contract and may not modify P1-G files.
+
+P1-H may run concurrently with remaining P1-F work because their product-source boundaries are disjoint.
 
 ## P1/P2 execution sequence
 
@@ -180,15 +181,15 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_F_G_PARALLEL_DEV_AUTHORIZED
+CURRENT_GATE = P1_F_H_PARALLEL_DEV_AUTHORIZED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_F_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
-P1_G_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
-P1_H = NOT YET AUTHORIZED
+P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
+P1_H_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
@@ -197,22 +198,20 @@ INK_MANUAL_PROSE = NON_BLOCKING
 ## Next action
 
 DEV-F:
-- use `work/ink-p1-f-raster-processing-expansion-001`;
-- implement only P1-F bounded algorithm Core;
-- run focused QA;
-- hand off exact HEAD;
-- STOP for MR.
+- continue only the bounded P1-F lane;
+- STOP independently for MR review.
 
-DEV-G:
-- use `work/ink-p1-g-color-bitdepth-channels-001`;
-- implement only P1-G bounded color/channel Core;
+DEV-H:
+- create/use `work/ink-p1-h-format-interoperability-001`;
+- implement only the bounded P1-H interoperability workpack;
+- consume P1-G Core without modifying it;
 - run focused QA;
 - hand off exact HEAD;
 - STOP for MR.
 
 MR:
-- review F and G independently as each handoff arrives;
-- do not authorize P1-H until P1-G is MR_PASS;
+- review F and H independently as handoffs arrive;
+- P1 Integration remains blocked until both F and H are MR_PASS/promoted;
 - no integrated Runtime.
 
 UR:
