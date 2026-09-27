@@ -1,5 +1,5 @@
 import { FORMAT_VERSION, INK_VERSION } from '../config.js';
-import { Matrix, nowISO, uid } from '../core/index.js';
+import { Matrix, deepClone, nowISO, uid } from '../core/index.js';
 import { createArtboard } from './artboard.js';
 import { createWorkspace } from './workspace.js';
 import { normalizeSemantic } from '../semantic/semantic-model.js';
