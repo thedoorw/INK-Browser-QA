@@ -8,7 +8,7 @@ DATE: 2026-09-27
 CURRENT_MAIN = repository current main
 CURRENT_PRIMARY_TASKS = P1-F BOUNDED CORRECTION
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_F_BOUNDED_CORRECTION_DEV_AUTHORIZED
+CURRENT_GATE = P1_F_FINAL_NORMALIZATION_CORRECTION
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -28,7 +28,7 @@ P1_D_PROMOTED_MAIN = 206f027785c04e56e91293e439fef8fb0cdd8521
 P1_E = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PROMOTED_MAIN = fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74
 P1_PARALLEL_BRANCH_CUT = dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f
-P1_F = MR_REVISE / BOUNDED_CORRECTION_AUTHORIZED
+P1_F = MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION
 P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
 P1_H = MODULE_READY / MR_PASS / PROMOTED
@@ -120,3 +120,11 @@ P1_RUNTIME_ACCEPTANCE = MR
 ```
 
 Neither future lane is active yet. Integration waits for P1-F and P1-H MR_PASS/promoted; Runtime waits for Integration MR_PASS/promoted.
+
+
+P1-F re-review checkpoint:
+- reviewed HEAD `56d8dab73f34eba58132c03a389b4fc04637bed4`;
+- six MR-authorized legal-zero endpoints = PASS;
+- remaining blocker = non-finite numeric fallback in `numberOr()`;
+- next correction is limited to finite-vs-nonfinite normalization + regression;
+- P1 Integration remains blocked pending final P1-F MR_PASS/promotion.
