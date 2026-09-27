@@ -32,6 +32,8 @@ P1_F = AUTHORIZED / PARALLEL
 P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
 P1_H = AUTHORIZED / PARALLEL
+P1_INTEGRATION = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_F_H
+P1_RUNTIME = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_INTEGRATION
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
 
@@ -102,3 +104,18 @@ Integrated Runtime is intentionally prohibited until all native P1 packages A–
 `governance/INK_DOCUMENT_LIFECYCLE_STANDARD_v1.0.md`
 
 This file is not an append-only event log. Replace it when the current checkpoint changes.
+
+
+## Locked future ownership
+
+```text
+P1_INTEGRATION_WORKPACK = working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md
+P1_INTEGRATION_EXECUTOR = DEV
+P1_INTEGRATION_ACCEPTANCE = MR
+
+P1_RUNTIME_WORKPACK = working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md
+P1_RUNTIME_EXECUTOR = DEV
+P1_RUNTIME_ACCEPTANCE = MR
+```
+
+Neither future lane is active yet. Integration waits for P1-F and P1-H MR_PASS/promoted; Runtime waits for Integration MR_PASS/promoted.
