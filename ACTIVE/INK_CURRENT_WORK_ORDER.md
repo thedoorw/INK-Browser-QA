@@ -194,7 +194,7 @@ P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_F_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_H_PRODUCT_IMPLEMENTATION = MR_REVISE / BOUNDED_CORRECTION_AUTHORIZED
+P1_H_PRODUCT_IMPLEMENTATION = MR_REVISE / QA_ONLY_BOUNDED_CORRECTION
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
@@ -208,16 +208,16 @@ DEV-F:
 
 DEV-H:
 - continue on `work/ink-p1-h-format-interoperability-001`;
-- perform only the bounded correction in `working/INK_P1_H_MR_REVIEW_v1.0.md`;
-- correct EXR additional-channel semantics and TIFF ExtraSamples semantics;
-- add the missing focused fixtures;
+- Core semantics correction at HEAD `61193d695c17bb7c59aee3bf3f736662244e7510` passed MR source review;
+- add only the missing bounded TIFF multiple-ExtraSamples fixture/test required by `working/INK_P1_H_MR_REVIEW_v1.0.md`;
 - rerun the full P1-H focused QA;
+- do not change Core unless that fixture exposes a real defect;
 - update lane progress;
 - hand off a new exact HEAD;
 - STOP for MR re-review.
 
 MR:
-- P1-H reviewed HEAD `5c5481c8a93e9a1edea486237677f253c348b4a9` = MR_REVISE; review record `working/INK_P1_H_MR_REVIEW_v1.0.md`;
+- P1-H correction reviewed HEAD `61193d695c17bb7c59aee3bf3f736662244e7510`: Core semantics PASS, one QA-only multiple-ExtraSamples fixture remains; review record `working/INK_P1_H_MR_REVIEW_v1.0.md`;
 - review F independently as its handoff arrives;
 - re-review P1-H after bounded correction;
 - when both are MR_PASS/promoted, activate `INK-P1-INTEGRATION-001` for DEV;
