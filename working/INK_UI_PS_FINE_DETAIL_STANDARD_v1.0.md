@@ -1255,6 +1255,112 @@ For every capture:
 - do not use browser-resized copies as pixel authority.
 
 
+
+
+# 23B. Official-reference closure pass — 2026-09-27
+
+Additional official-source findings:
+
+## Navigator
+
+Adobe Photoshop documentation confirms:
+- the colored Navigator proxy area corresponds to the current visible window;
+- dragging the proxy area moves the document view;
+- clicking the thumbnail designates the viewable area;
+- Ctrl-drag / Command-drag can set proxy size and position;
+- Panel Options can change the proxy color.
+
+Classification:
+`NAVIGATOR_PROXY_DRAG = BEHAVIOR_CONFIRMED`
+
+No additional Photoshop cursor screenshot is required. Runtime must still verify that INK proxy dragging pans the same viewport authority.
+
+## Panel resize
+
+Current Photoshop documentation states that any panel edge can be dragged to resize it.
+
+Classification:
+`PANEL_EDGE_RESIZE = BEHAVIOR_CONFIRMED`
+
+Cursor raster shape is not a Photoshop pixel-fidelity target; INK uses standard resize cursor semantics.
+
+## Smart Guides / equal spacing
+
+Current Adobe documentation confirms:
+- Smart Guides appear dynamically when moving/creating elements;
+- alignment opportunities include object edges, centers and boundaries;
+- Smart Guides display pixel distances while moving;
+- they support maintaining consistent/equal spacing;
+- Adobe's current overview documents guide snapping when dragged within approximately 8 screen pixels.
+
+Classification:
+```text
+SMART_GUIDE_ALIGNMENT = BEHAVIOR_CONFIRMED
+SMART_GUIDE_DISTANCE_READOUT = BEHAVIOR_CONFIRMED
+EQUAL_SPACING_FEEDBACK = BEHAVIOR_CONFIRMED
+PHOTOSHOP_GUIDE_SNAP_PROXIMITY = 8 SCREEN PX / REFERENCE_BEHAVIOR
+```
+
+The 8-screen-pixel figure is a Photoshop reference, not automatically an INK hard constant. Final INK snap tolerance/hysteresis remains one Core/interaction authority and may be tuned if Runtime evidence requires it.
+
+## Ruler origin
+
+Adobe documentation confirms:
+- drag diagonally from the upper-left ruler intersection to establish a new origin;
+- crosshairs appear during the operation;
+- Shift snaps the origin to ruler ticks;
+- double-click the intersection resets the origin.
+
+Because USER rarely uses this function:
+`RULER_ORIGIN_DRAG = OPTIONAL / NON-CLOSURE-BLOCKING`.
+
+## Keyboard focus
+
+Photoshop pixel replication is not the correct authority for web keyboard-focus visibility.
+
+INK accessibility authority:
+- WCAG 2.2 Focus Visible (2.4.7): keyboard-operable controls must expose visible focus;
+- WCAG 2.2 Focus Appearance (2.4.13, AAA) provides a useful quality target: an indicator area at least equivalent to a 2 CSS px perimeter and at least 3:1 contrast between focused and unfocused states.
+
+INK rule:
+```text
+KEYBOARD_FOCUS_REFERENCE = W3C / WEB ACCESSIBILITY AUTHORITY
+PHOTOSHOP_FOCUS_PIXEL_COPY = NOT_REQUIRED
+```
+
+## Disabled controls
+
+Existing USER Photoshop captures already include disabled Options-bar fields and commands. No additional dedicated screenshot is required unless a later visual comparison exposes a mismatch.
+
+`DISABLED_CONTROL_REFERENCE = SUFFICIENT_FOR_IMPLEMENTATION`
+
+## Scrollbars
+
+Current Photoshop documentation confirms ordinary document-window scrollbars as a navigation route and screen modes that show/hide them. USER captures already establish a 16 px reference thickness.
+
+Hover/drag raster appearance is not required as a Photoshop-specific pixel target.
+
+```text
+SCROLLBAR_GEOMETRY_REFERENCE = CLOSED
+SCROLLBAR_HOVER_DRAG_PIXEL_REFERENCE = NOT_REQUIRED
+```
+
+## Light-gray palette — remaining real visual gap
+
+Adobe current products/documentation confirm that Light UI themes exist, but the available documentation does not provide a stable desktop-Photoshop light-theme token table or authoritative RGB values.
+
+Therefore:
+```text
+LIGHT_GRAY_THEME_EXISTENCE = BEHAVIOR_CONFIRMED
+LIGHT_GRAY_DESKTOP_PS_RGB_TOKENS = REFERENCE_MISSING
+```
+
+INK must not invent claims that arbitrary web screenshots provide exact Photoshop light-theme colors. Final light-gray semantic tokens require either:
+- a controlled desktop Photoshop light-theme capture; or
+- explicit UR-approved INK adaptation based on Photoshop hierarchy rather than exact Adobe RGB replication.
+
+---
+
 # 24. Fine-detail completion gate
 
 The standard itself is complete when every intended category exists and every unknown is explicitly marked.
