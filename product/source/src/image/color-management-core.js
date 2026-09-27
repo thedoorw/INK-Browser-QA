@@ -98,3 +98,104 @@ export function transformRgbWithIcc(input,rgb){
   const linear=rgb.map((v,i)=>applyCurve(curves[i],v)),xyz=[0,1,2].map(row=>primaries[0][row]*linear[0]+primaries[1][row]*linear[1]+primaries[2][row]*linear[2]),chad=parseSf32Matrix(profile),wtpt=parseXyzTag(profile,'wtpt'),values=profile.pcs==='Lab '?xyzToLab(xyz):xyz;
   return{status:'ok',pcs:profile.pcs,values,profileFingerprint:profile.fingerprint,whitePoint:wtpt,chromaticAdaptationTagPresent:Boolean(chad),chromaticAdaptationApplied:false};
 }
+
+
+export function serializeColorRaster(raster) {
+  if (!raster || raster.type !== 'color-raster') throw new Error('INK_COLOR_RASTER_REQUIRED');
+  const normalized = createColorRaster({
+    width: raster.width,
+    height: raster.height,
+    bitDepth: raster.bitDepth,
+    colorMode: raster.colorMode,
+    channelCount: raster.channelCount,
+    channelNames: raster.channelNames,
+    data: raster.data,
+    alpha: raster.alpha
+  });
+  return {
+    type: 'color-raster',
+    width: normalized.width,
+    height: normalized.height,
+    bitDepth: normalized.bitDepth,
+    colorMode: normalized.colorMode,
+    channelCount: normalized.channelCount,
+    channelNames: [...normalized.channelNames],
+    data: Array.from(normalized.data),
+    alpha: normalized.alpha ? Array.from(normalized.alpha) : null,
+    float32Policy: normalized.float32Policy
+  };
+}
+
+export function deserializeColorRaster(state) {
+  if (!state || state.type !== 'color-raster') throw new Error('INK_COLOR_RASTER_STATE_REQUIRED');
+  return createColorRaster({
+    width: state.width,
+    height: state.height,
+    bitDepth: state.bitDepth,
+    colorMode: state.colorMode,
+    channelCount: state.channelCount,
+    channelNames: state.channelNames,
+    data: state.data,
+    alpha: state.alpha
+  });
+}
+
+export function colorRasterToRgba8(input, { icc = null } = {}) {
+  let raster;
+  try {
+    raster = input?.data && ArrayBuffer.isView(input.data) ? cloneColorRaster(input) : deserializeColorRaster(input);
+  } catch (error) {
+    return { status: 'unsupported-render', reason: 'invalid-raster', error: String(error?.message || error) };
+  }
+  if (raster.colorMode === 'Lab' || raster.colorMode === 'Multichannel') {
+    return { status: 'unsupported-render', reason: `color-mode:${raster.colorMode}`, sourceBitDepth: raster.bitDepth, colorMode: raster.colorMode };
+  }
+  const profileBytes = icc?.bytes ?? icc;
+  let profile = null;
+  if (profileBytes?.length) {
+    try { profile = parseIccProfile(Uint8Array.from(profileBytes)); }
+    catch (error) {
+      return { status: 'unsupported-render', reason: 'icc-invalid-or-unsupported', error: String(error?.message || error), sourceBitDepth: raster.bitDepth, colorMode: raster.colorMode };
+    }
+  }
+  if (profile && raster.colorMode !== 'RGB') {
+    return { status: 'unsupported-render', reason: 'icc-transform-non-rgb-not-implemented', sourceBitDepth: raster.bitDepth, colorMode: raster.colorMode };
+  }
+  const pixels = raster.width * raster.height;
+  const data = new Uint8ClampedArray(pixels * 4);
+  for (let pixel = 0; pixel < pixels; pixel += 1) {
+    const values = Array.from({ length: raster.channelCount }, (_, channel) => readNormalizedSample(raster, pixel, channel));
+    let rgb;
+    if (raster.colorMode === 'CMYK') rgb = cmykToRgb(values);
+    else {
+      rgb = values.slice(0, 3);
+      if (profile) {
+        const transformed = transformRgbWithIcc(profile, rgb);
+        if (transformed.status !== 'ok') {
+          return {
+            status: 'unsupported-render',
+            reason: transformed.reason || 'icc-transform-unsupported',
+            profileFingerprint: transformed.profileFingerprint || profile.fingerprint,
+            sourceBitDepth: raster.bitDepth,
+            colorMode: raster.colorMode
+          };
+        }
+        if (transformed.pcs === 'XYZ ') rgb = xyzToRgb(transformed.values, { pcsWhite: 'D50' });
+        else if (transformed.pcs === 'Lab ') rgb = labToRgb(transformed.values);
+        else return { status: 'unsupported-render', reason: 'icc-pcs-unsupported', sourceBitDepth: raster.bitDepth, colorMode: raster.colorMode };
+      }
+    }
+    const offset = pixel * 4;
+    data[offset] = Math.round(clamp(rgb[0], 0, 1) * 255);
+    data[offset + 1] = Math.round(clamp(rgb[1], 0, 1) * 255);
+    data[offset + 2] = Math.round(clamp(rgb[2], 0, 1) * 255);
+    data[offset + 3] = raster.alpha ? Math.round(clamp(sampleToNormalized(raster.alpha[pixel], raster.bitDepth), 0, 1) * 255) : 255;
+  }
+  return {
+    status: 'ok',
+    imageData: { width: raster.width, height: raster.height, data },
+    sourceBitDepth: raster.bitDepth,
+    colorMode: raster.colorMode,
+    displayConversion: raster.bitDepth === 8 && !profile && raster.colorMode === 'RGB' ? 'identity-rgb8' : 'bounded-preview-to-rgba8'
+  };
+}
