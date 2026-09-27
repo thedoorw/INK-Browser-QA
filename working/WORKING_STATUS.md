@@ -6,9 +6,9 @@ DATE: 2026-09-27
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PRIMARY_TASKS = P1 INTEGRATED RUNTIME
+CURRENT_PRIMARY_TASKS = P1 RUNTIME HARNESS COVERAGE
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_INTEGRATED_RUNTIME_DEV_AUTHORIZED
+CURRENT_GATE = P1_RUNTIME_HARNESS_COVERAGE_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -36,10 +36,13 @@ P1_H = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PROMOTION_MERGE = 4eb9a8f18781840219217a7cc767ed73aebe3989
 P1_INTEGRATION = MR_PASS / PROMOTED
 P1_INTEGRATION_PROMOTION_MERGE = d1269334338531228ddfdd9383761cd419e58738
-P1_RUNTIME = AUTHORIZED / DEV_OWNED_EXECUTION / DEV_NOT_STARTED
+P1_RUNTIME = BLOCKED_BEFORE_RUN / MR_REVIEWED / NO_PASS_FAIL
 P1_RUNTIME_TARGET_SHA = d1269334338531228ddfdd9383761cd419e58738
 P1_RUNTIME_BRANCH = work/ink-p1-integrated-runtime-001
 P1_RUNTIME_PROGRESS_INIT = 3ebefa880eecc58fa12355fad3daf57fcdedf2ea
+P1_RUNTIME_EVIDENCE_HEAD = 7cb8e8cc750a3b1828d7781a707ae5df471af7c6
+P1_RUNTIME_HARNESS_TASK = INK-P1-RUNTIME-HARNESS-COVERAGE-001
+P1_RUNTIME_HARNESS_BRANCH = work/ink-p1-runtime-harness-coverage-001
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
 
@@ -78,7 +81,7 @@ P1-D passed MR MODULE_READY review and is promoted on main `206f027785c04e56e912
 
 P1-E passed MR MODULE_READY review and is promoted on main `fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`.
 
-P1-A through P1-H are now MODULE_READY / MR_PASS / PROMOTED. P1-F final reviewed HEAD `39aa86906efb94ee8a9992d50802168d8467f802` was promoted at `5bb74c1c0ad655dac8ae00b5474da52b58db18db`. The current program has moved to DEV-owned P1 Integration.
+P1-A through P1-H are now MODULE_READY / MR_PASS / PROMOTED. P1-F final reviewed HEAD `39aa86906efb94ee8a9992d50802168d8467f802` was promoted at `5bb74c1c0ad655dac8ae00b5474da52b58db18db`. The current program is now on the bounded central Runtime harness coverage correction required before the exact-SHA P1 Runtime can execute.
 
 ## UI release sequence
 
@@ -159,3 +162,25 @@ Runtime evidence lane:
 - progress initialization = `3ebefa880eecc58fa12355fad3daf57fcdedf2ea`;
 - exact execution target remains `d1269334338531228ddfdd9383761cd419e58738`;
 - branch HEAD is not an accepted substitute for the exact target.
+
+
+## P1 Integrated Runtime blocked-before-run checkpoint
+
+MR reviewed DEV evidence HEAD:
+`7cb8e8cc750a3b1828d7781a707ae5df471af7c6`
+
+Decision:
+- Runtime was not executed;
+- no Runtime PASS/FAIL is claimed;
+- product-source mutation = 0 verified;
+- connector dispatch limitation is accepted;
+- central workflow coverage is insufficient because P1 A–H + integration contracts are not in the central exact-target batch;
+- exact Runtime product target remains `d1269334338531228ddfdd9383761cd419e58738`.
+
+Current correction:
+`INK-P1-RUNTIME-HARNESS-COVERAGE-001`
+
+Workpack:
+`working/INK_P1_RUNTIME_HARNESS_COVERAGE_DEV_WORKPACK_v1.0.md`
+
+After harness MR PASS/promotion, MR will trigger the existing main queue path. UI remains HOLD.
