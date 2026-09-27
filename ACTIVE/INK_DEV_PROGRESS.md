@@ -1,164 +1,70 @@
 # INK DEV Progress
 
-TASK: `INK-P1-B-LOCAL-RASTER-RETOUCH-001`
+TASK: `INK-P1-C-VECTOR-TEXT-PRECISION-LAYOUT-001`
 
-BRANCH: `work/ink-p1-b-local-raster-retouch-001`
+BRANCH: `work/ink-p1-c-vector-text-precision-layout-001`
 
-BRANCH_BASE: `c96a89b0131081600b0f39ffcd0d00dc4951e1d4`
+BASELINE_MAIN: `38702e793f374e93c613b245d0576fb37d538d84`
 
-WORKPACK_BASELINE_MAIN: `c750b8f2803d87c369edcf9c320a531a32f92d62`
+WORKPACK_PRODUCT_BASELINE: `c35b81a81845b65dfd462e7d225a192d3393f135`
 
-STATUS: `DEV_COMPLETE / REAL_P1_A_UPSTREAM_QA_PASS / MODULE_READY_HANDOFF / WAITING_MR`
+STATUS: `AUTHORIZED / DEV_NOT_STARTED`
 
 WORKPACK:
-`working/INK_P1_B_LOCAL_RASTER_RETOUCH_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_C_VECTOR_TEXT_PRECISION_LAYOUT_DEV_WORKPACK_v1.0.md`
 
 UPSTREAM:
-`P1-A = MODULE_READY / MR_PASS / PROMOTED`
+- `P1-A = MODULE_READY / MR_PASS / PROMOTED`
+- `P1-B = MODULE_READY / MR_PASS / PROMOTED`
 
-RUNTIME: `PROHIBITED / NOT RUN`
+RUNTIME: `PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE`
 
-UI_IMPLEMENTATION: `PROHIBITED / CHANGES_0`
+UI_IMPLEMENTATION: `PROHIBITED`
 
-CHAT_EXPANSION: `PROHIBITED / CHANGES_0`
+CHAT_EXPANSION: `PROHIBITED`
 
-FORMAT_VERSION_CHANGE: `PROHIBITED / CHANGES_0`
+FORMAT_VERSION_CHANGE: `PROHIBITED`
 
-## Branch baseline note
+## Scope
 
-The mandatory P1-B branch was initialized at
-`c96a89b0131081600b0f39ffcd0d00dc4951e1d4`.
+1. Skew
+2. Distort
+3. Perspective
+4. Warp
+5. Paragraph Type
+6. Vertical Type
+7. Text on Path
+8. Gradient Fill
+9. Pattern Fill
+10. Persistent ruler guides
+11. Equal-distance smart snapping
+12. Ruler / measurement
 
-This commit is 4 governance/workpack commits ahead of the formal product baseline
-`c750b8f2803d87c369edcf9c320a531a32f92d62`.
+## Allowed source boundary
 
-The intervening files are governance/review/workpack documents only; product source is unchanged across that delta.
+May add:
+- `product/source/src/editor/transform-advanced.js`
+- `product/source/src/editor/text-layout.js`
+- `product/source/src/editor/precision-layout.js`
+- `product/source/src/vector/fill-appearance.js`
+- `qa/ink-p1-c-vector-text-precision-layout.test.mjs`
 
-## Capability completion
+May modify only if strictly required:
+- `product/source/src/editor/transform.js`
+- `product/source/src/editor/text-object.js`
+- `product/source/src/document/layout.js`
+- `product/source/src/vector/paint-appearance.js`
+- existing Core geometry/math module used by current authority
 
-| Capability | Result | Core contract |
-|---|---|---|
-| Clone Stamp | COMPLETE | relative source-offset mapping; bounded brush; opacity; source/target edge clipping |
-| Pattern Stamp | COMPLETE | external pattern raster; deterministic tiling/origin; bounded mask; opacity |
-| Healing | COMPLETE | explicit source mapping; deterministic target-tone adaptation; target alpha preserved |
-| Spot Healing | COMPLETE | bounded neighboring-pixel replacement; deterministic mean rule; empty-neighbor guard |
-| Patch | COMPLETE | compatible source/target region mapping; clipping; opacity; optional feather |
-| Dodge | COMPLETE | bounded local luminance increase; strength; alpha preserved |
-| Burn | COMPLETE | bounded local luminance decrease; strength; alpha preserved |
-| Sponge | COMPLETE | saturate/desaturate; strength; alpha preserved |
-| Local Blur | COMPLETE | bounded box-kernel read from immutable source; outside pixels preserved |
-| Local Sharpen | COMPLETE | bounded unsharp-style local sharpening; byte-clamped output; outside pixels preserved |
-| Color Replacement Brush | COMPLETE | reuses P1-A color-distance authority; tolerance; strength; alpha preserved; luminance-normalized replacement |
+Anything beyond this boundary requires STOP → MR.
 
-## Shared authority
-
-All 11 tools are implemented through one reusable local-raster authority:
-
-- `createLocalRetouchMask`
-- shared raster validation/clipping
-- shared immutable output path
-- shared opacity/strength semantics
-- shared pixel read/write and blend helpers
-
-P1-A authorities reused directly:
-
-- `colorMatchesTolerance` from `raster-selection-tools.js`
-- `normalizeRgba` from `raster-fill-tools.js`
-
-No second raster/image/document authority was introduced.
-
-## Changed files
-
-Added:
-- `product/source/src/image/raster-retouch-tools.js`
-- `qa/ink-p1-b-local-raster-retouch.test.mjs`
-
-Updated for handoff only:
-- `ACTIVE/INK_DEV_PROGRESS.md`
-
-No existing product source file was modified.
-
-## Focused QA
+## Initial checkpoint
 
 ```text
-NODE_SYNTAX_CHECK = PASS
-COMMAND = node --test qa/ink-p1-b-local-raster-retouch.test.mjs
-P1_B_FOCUSED_QA = PASS
-TESTS = 14 / 14 PASS
-FAIL = 0
-SKIP = 0
-REAL_P1_A_UPSTREAM = YES
+LATEST_CHECKPOINT_SHA = branch creation baseline
+PRODUCT_SOURCE_CHANGES = 0
+FOCUSED_QA = NOT RUN
+DEV_HANDOFF = NO
 ```
 
-Coverage includes:
-
-- Clone source→target exact mapping
-- Clone source/target edge clipping
-- Clone opacity and source immutability
-- Pattern deterministic tile/origin mapping
-- Pattern opacity direct assertion (`opacity: 0.5` -> deterministic 50% blend)
-- Healing structure transfer + target-tone adaptation + determinism
-- Spot Healing bounded neighbor replacement + outside preservation
-- Patch mapping + boundary clipping + invalid geometry guard
-- Dodge luminance increase + alpha preservation
-- Burn luminance decrease + alpha preservation
-- Sponge saturation increase/decrease + alpha preservation
-- Local Blur selected-only change using immutable source pass
-- Local Sharpen selected-only change + byte bounds
-- Color Replacement tolerance inclusion/exclusion
-- Color Replacement alpha preservation
-- Color Replacement known-fixture luminance preservation
-- global outside-mask preservation
-- repeated-input determinism
-- invalid dimensions/options predictable failure
-- Node parse/import of the P1-B module in the focused isolated harness
-- direct import and execution of promoted P1-A `raster-selection-tools.js`
-- direct import and execution of promoted P1-A `raster-fill-tools.js`
-
-Focused QA was rerun with the actual promoted P1-A module bytes directly imported by the test/module graph. No API-compatible P1-A stubs were used. The exact loaded P1-A blobs match the promoted branch blobs: selection `181fafbabff7d71e05015e8479a664880291551d`, fill `4881e9ecd7929500d6f307a0d379ac33e99ac81e`. The P1-B Core blob remained unchanged.
-
-## Implementation checkpoint
-
-`3d1ee69a45535eb9046f1262d2b3c4f61c3b66b5`
-
-Exact committed blobs:
-
-```text
-raster-retouch-tools.js = f2b63749ecbeffe753ae33608410695772f9b0a3
-focused QA              = 594243a9a64f9c30daae99d4f0cc5dccd2f7ee41
-P1-A selection upstream = 181fafbabff7d71e05015e8479a664880291551d
-P1-A fill upstream      = 4881e9ecd7929500d6f307a0d379ac33e99ac81e
-```
-
-The committed P1-B Core and revised QA blob SHAs match the exact locally tested files.
-
-QA-only upstream rerun checkpoint:
-`796989ca7db2fad0df067e6f8924c98e33f41c68`
-
-Current QA revision changed only `qa/ink-p1-b-local-raster-retouch.test.mjs`; P1-B Core source was not modified.
-
-## Bounded limitations / deferred integration
-
-- Core + focused QA only; no document mutation, History, save/load, UI, CHAT, Recipe or Renderer wiring.
-- Clone/Healing/Spot Healing/Patch are deterministic bounded raster algorithms; no content-aware or generative synthesis.
-- Spot Healing uses a bounded neighboring-pixel mean rule.
-- Local Blur uses a deterministic bounded box kernel.
-- Local Sharpen uses a deterministic source-buffer unsharp-style rule.
-- Color Replacement preserves weighted luminance where feasible subject to byte clamping.
-- Runtime is intentionally not run under the all-P1-before-runtime rule.
-
-## Scope confirmation
-
-```text
-UI changes = 0
-CHAT changes = 0
-FORMAT_VERSION change = 0
-History/save-load integration = 0
-P1-C/D/E/F/G/H scope intrusion = 0
-second raster/image authority = 0
-Runtime = NOT RUN
-REAL_P1_A_UPSTREAM = YES
-P1_B_FOCUSED_QA = PASS
-DEV_HANDOFF = YES
-NEXT = STOP / WAIT_MR
-```
+DEV must update this file at meaningful checkpoints and STOP after final handoff for MR review.
