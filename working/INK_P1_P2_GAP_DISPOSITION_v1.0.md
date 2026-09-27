@@ -246,4 +246,4 @@ Rules:
 - no integrated Runtime between P1 packages;
 - Runtime is authorized only after all P1 packages and integration are complete;
 - P2 implementation is not part of this Runtime gate;
-- P1-A is currently the only DEV package authorized; later packages still require separate bounded Work Orders.
+- P1-A through P1-D are MODULE_READY / MR_PASS / promoted. P1-E is the current authorized DEV package. P1-F through P1-H still require separate bounded Work Orders.
