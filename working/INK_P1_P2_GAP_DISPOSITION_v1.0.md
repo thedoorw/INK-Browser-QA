@@ -231,8 +231,7 @@ P1-A MODULE_READY
 → P1-C MODULE_READY
 → P1-D MODULE_READY
 → P1-E MODULE_READY
-→ P1-F MODULE_READY
-→ P1-G MODULE_READY
+→ [P1-F MODULE_READY || P1-G MODULE_READY]
 → P1-H MODULE_READY
 → P1 INTEGRATION
 → focused/integrated QA
@@ -246,4 +245,18 @@ Rules:
 - no integrated Runtime between P1 packages;
 - Runtime is authorized only after all P1 packages and integration are complete;
 - P2 implementation is not part of this Runtime gate;
-- P1-A through P1-D are MODULE_READY / MR_PASS / promoted. P1-E is the current authorized DEV package. P1-F through P1-H still require separate bounded Work Orders.
+- P1-A through P1-E are MODULE_READY / MR_PASS / promoted. P1-F and P1-G are authorized in parallel with non-overlapping source boundaries. P1-H remains blocked until P1-G is MR_PASS and its color/bit-depth/channel contract is frozen.
+
+
+## 8. Parallel execution decision
+
+P1-F and P1-G may run concurrently because their MODULE_READY source boundaries are deliberately disjoint.
+
+```text
+P1-F = advanced raster-processing algorithms only
+P1-G = color / bit-depth / ICC / channel Core only
+SHARED image-core.js mutation = 0 during parallel lanes
+DOCUMENT / RENDERER / FORMAT_VERSION mutation = 0 during parallel lanes
+```
+
+P1-H remains sequential after P1-G because PSD/PSB/TIFF/RAW/EXR interoperability must consume the accepted color-mode, bit-depth, ICC and channel contract rather than invent its own.
