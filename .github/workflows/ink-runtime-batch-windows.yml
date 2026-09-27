@@ -163,6 +163,16 @@ jobs:
               'qa/ink-tech-closure-001-runtime-fix.test.mjs',
               'qa/ink-connector-005-creative-library-search.test.mjs',
               'qa/ink-p0-restore-all-001-focused.test.mjs',
+              'qa/ink-p1-a-raster-selection-fill-sampling.test.mjs',
+              'qa/ink-p1-b-local-raster-retouch.test.mjs',
+              'qa/ink-p1-c-vector-text-precision-layout.test.mjs',
+              'qa/ink-p1-d-layer-effects-completion.test.mjs',
+              'qa/ink-p1-e-advanced-selection.test.mjs',
+              'qa/ink-p1-f-raster-processing-expansion.test.mjs',
+              'qa/ink-p1-g-color-bitdepth-channels.test.mjs',
+              'qa/ink-p1-h-format-interoperability.test.mjs',
+              'qa/ink-p1-integration-001.test.mjs',
+              'qa/fixtures/p1-h/fixtures.mjs',
               'qa/core-mod-002-semantic-region.test.mjs',
               'qa/chat-validation-001-reference-handoff.test.mjs',
               'qa/core-mod-006-creative-memory.test.mjs',
@@ -200,6 +210,63 @@ jobs:
               files: files.filter(f => f.type === 'blob').map(f => ({ path: f.path, sha: f.sha }))
             }, null, 2));
             await core.summary.addHeading('INK central Runtime batch').addRaw(`Tested SHA: ${sha}\n\nWorkflow SHA: ${context.sha}\n\nDispatch: ${process.env.INK_DISPATCH_SOURCE}\n\nRuntime result follows; materialization alone is not a PASS.\n`).write();
+
+      - name: Execute P1 exact-target contract tests
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const { spawn } = require('node:child_process');
+            const root = process.env.INK_BATCH_ROOT;
+            const testedSha = process.env.INK_TESTED_SHA;
+            const p1Files = [
+              'qa/ink-p1-a-raster-selection-fill-sampling.test.mjs',
+              'qa/ink-p1-b-local-raster-retouch.test.mjs',
+              'qa/ink-p1-c-vector-text-precision-layout.test.mjs',
+              'qa/ink-p1-d-layer-effects-completion.test.mjs',
+              'qa/ink-p1-e-advanced-selection.test.mjs',
+              'qa/ink-p1-f-raster-processing-expansion.test.mjs',
+              'qa/ink-p1-g-color-bitdepth-channels.test.mjs',
+              'qa/ink-p1-h-format-interoperability.test.mjs',
+              'qa/ink-p1-integration-001.test.mjs'
+            ];
+            const evidencePath = path.join(root, 'evidence', 'p1-runtime-coverage.json');
+            const command = [process.execPath, '--test', ...p1Files].join(' ');
+            let record = {
+              schema: 'INK-P1-RUNTIME-COVERAGE-EVIDENCE',
+              version: 1,
+              testedSha,
+              testFiles: p1Files,
+              command,
+              status: 'FAIL',
+              exitCode: null,
+              signal: null
+            };
+            try {
+              const tests = p1Files.map(file => path.join(root, file));
+              const execution = await new Promise((resolve, reject) => {
+                const child = spawn(process.execPath, ['--test', ...tests], {
+                  cwd: root, stdio: 'inherit', shell: false, windowsHide: true
+                });
+                child.once('error', reject);
+                child.once('exit', (code, signal) => resolve({ code, signal }));
+              });
+              record = {
+                ...record,
+                status: execution.code === 0 ? 'PASS' : 'FAIL',
+                exitCode: execution.code,
+                signal: execution.signal
+              };
+              await fs.writeFile(evidencePath, JSON.stringify(record, null, 2));
+              if (execution.code !== 0) {
+                throw new Error(`P1 exact-target contract tests failed: code=${execution.code} signal=${execution.signal}`);
+              }
+            } catch (error) {
+              record = { ...record, status: 'FAIL', error: error?.message || String(error) };
+              await fs.writeFile(evidencePath, JSON.stringify(record, null, 2));
+              throw error;
+            }
 
       - name: Execute Closure focused contract tests
         uses: actions/github-script@v7
