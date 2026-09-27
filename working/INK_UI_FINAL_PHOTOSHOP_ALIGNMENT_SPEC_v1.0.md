@@ -822,3 +822,36 @@ Rule:
 `EXPLICITLY_EXCLUDED != FORGOTTEN`
 
 Any later request to promote a deferred/excluded Photoshop concept requires a new bounded Work Order and, where capability semantics are involved, a technical baseline update.
+
+
+# 31. Panel tabs / panel menus / document status-strip detail
+
+Detailed authority:
+`working/INK_UI_PS_PANEL_AND_STATUS_DETAIL_SPEC_v0.1.md`
+
+Additional required panel grammar:
+- panel tab/header active/inactive/hover/focus states;
+- panel grouping/stacking under one state authority;
+- compact panel-local options menu trigger;
+- panel-menu commands are distinct from application-menu commands;
+- frequent actions remain in panel body/footer;
+- panel menu must not be a dead trigger;
+- panel footer contains panel-local actions only.
+
+Fine-detail audit must measure/define:
+- tab row height/padding;
+- active indicator;
+- panel-menu icon/hitbox;
+- panel-menu item height/separators/check/disabled state;
+- panel body padding;
+- scrollbar;
+- footer controls;
+- group splitter.
+
+Status rule:
+- Photoshop status-bar existence does not automatically require a permanent full-width INK bar;
+- INK uses a purpose-driven `DOCUMENT STATUS STRIP` only if persistent document/view telemetry justifies the occupied space;
+- allowed candidates: zoom/view telemetry and production-critical document state such as color mode, bit depth and profile when technically authoritative;
+- diagnostics, GPU/QA/update/provider state and duplicated Properties/Navigator information are prohibited;
+- if only zoom/view remains useful, prefer a compact bottom view cluster;
+- final document-production telemetry is reconciled after P1-G/P1-H capability completion.

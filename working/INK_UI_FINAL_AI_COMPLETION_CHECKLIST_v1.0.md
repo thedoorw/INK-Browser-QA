@@ -580,6 +580,29 @@ This section verifies that every major Photoshop workstation concept was either 
 - [ ] AG36 no historical 3D menu was created.
 - [ ] AG37 no Adobe proprietary logo/icon asset was copied.
 
+# AH. Panel tabs / panel menu / status-strip audit
+
+- [ ] AH01 every grouped panel has a clearly defined active/inactive tab state.
+- [ ] AH02 panel tab hover/focus behavior is defined and verified.
+- [ ] AH03 panel header/tab density is measured against the Photoshop reference.
+- [ ] AH04 panel options menu trigger has one consistent visual location.
+- [ ] AH05 every visible panel-menu trigger opens real commands; dead triggers = 0.
+- [ ] AH06 panel-local menus do not duplicate application-wide command authority.
+- [ ] AH07 frequent panel actions remain body/footer actions rather than being hidden unnecessarily.
+- [ ] AH08 Layers panel-menu disposition is explicit.
+- [ ] AH09 History panel-menu disposition is explicit.
+- [ ] AH10 Navigator panel-menu disposition is explicit.
+- [ ] AH11 Pages/Libraries/Reference/Compose/CHAT/Revision/Specialist panel-menu disposition is explicit.
+- [ ] AH12 panel body scrolling and footer boundaries are verified.
+- [ ] AH13 group splitter geometry/interaction is verified.
+- [ ] AH14 full-width generic status bar is not added without an explicit information case.
+- [ ] AH15 bottom status surface, if present, is documented as DOCUMENT STATUS STRIP / view cluster.
+- [ ] AH16 persistent status content is limited to useful document/view telemetry.
+- [ ] AH17 GPU/QA/storage/update/provider diagnostics are absent from persistent status UI.
+- [ ] AH18 status surface does not duplicate Properties or Navigator state ownership.
+- [ ] AH19 P1-G color mode/bit depth/profile placement is reconsidered after refreshed baseline.
+- [ ] AH20 if only zoom/view telemetry remains useful, compact view controls are used instead of an unnecessary full-width bar.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.
