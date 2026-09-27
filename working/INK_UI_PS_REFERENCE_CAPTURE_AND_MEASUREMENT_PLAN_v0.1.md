@@ -225,9 +225,9 @@ Ruler origin drag:
 `OPTIONAL / NON-CLOSURE-BLOCKING`
 
 Remaining targeted references are optional unless later visual QA exposes a gap:
-- Navigator proxy while actively dragging;
-- panel width resize while actively dragging;
 - keyboard-focus visual;
 - disabled control close-up;
 - scrollbar hover/drag close-up;
 - equal-spacing/smart-snap feedback.
+
+Navigator proxy drag and Panel resize no longer require additional Photoshop screenshots. Their cursor semantics are specified as `grab/grabbing`, `ew-resize`, and `ns-resize`; functional proof belongs to later INK Runtime QA rather than Photoshop pixel-reference acquisition.
