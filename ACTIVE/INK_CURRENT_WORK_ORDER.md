@@ -16,6 +16,8 @@ FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
 FIRST_REBASELINE_RUNTIME_RUN = 36255595714
 FIRST_REBASELINE_RUNTIME_ARTIFACT = 10910238715
+P0_PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
+P0_PROMOTED_SOURCE_EQUIVALENT_TO_RUNTIME = PASS
 MR_PRE_RUNTIME_REVIEW = working/INK_P0_EXISTING_CAPABILITY_RESTORE_MR_REVIEW_v1.0.md
 
 SECONDARY_UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
@@ -98,9 +100,9 @@ MR
 → require UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
 → MR pre-Runtime review PASS recorded
 → FIRST_REBASELINE_RUNTIME = PASS on exact SHA f911f777f770cbe290e290c4b0cbc3692b36641e
-→ cleanly reconcile/promote the Runtime-verified P0 payload onto latest main
-→ verify promoted product-source equivalence
-→ only after P0 promotion authority is closed, disposition/implement Photoshop and mature-platform P1/P2 gaps
+→ cleanly reconcile/promote the Runtime-verified P0 payload onto latest main = COMPLETE
+→ verify promoted product-source equivalence = PASS
+→ next: disposition Photoshop and mature-platform P1/P2 gaps; no implementation without a new bounded Work Order
 → republish ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md as full-product truth
 → provide final exact promoted/runtime-verified authority
 
@@ -118,10 +120,13 @@ Existing-capability restoration gate and first rebaseline Runtime have passed.
 Current gate:
 
 ```text
-P0_PROMOTION_RECONCILIATION = REQUIRED
+P0_PROMOTION_RECONCILIATION = CLOSED
+PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
 RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
+PROMOTED_SOURCE_EQUIVALENCE = 4 / 4 PASS
 RUNTIME_RUN = 36255595714
-NO P1/P2 NEW CAPABILITY IMPLEMENTATION UNTIL P0 PROMOTION CLOSES
+CURRENT_NEXT_GATE = P1_GAP_DISPOSITION + FULL_PRODUCT_CAPABILITY_BASELINE_REFRESH
+NO P1/P2 IMPLEMENTATION WITHOUT NEW WORK ORDER
 NO UI DEV
 NO UI IMPLEMENTATION WORK ORDER
 NO FINAL FUNCTION LOCK

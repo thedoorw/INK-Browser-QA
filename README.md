@@ -23,8 +23,11 @@ FIRST_PRIORITY = Restore all existing INK capabilities
 P0_RESTORE = 61 / 61
 FIRST_REBASELINE_RUNTIME = PASS
 RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
-CURRENT_GATE = Clean P0 promotion / reconciliation
-P1_P2_EXPANSION = BLOCKED until P0 promotion closes
+P0_PROMOTION = CLOSED
+PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
+PROMOTED_SOURCE_EQUIVALENCE = PASS
+CURRENT_GATE = P1 gap disposition + full-product capability baseline refresh
+P1_P2_IMPLEMENTATION = NOT AUTHORIZED until a new bounded Work Order
 UI_PROGRAM = Photoshop-aligned final UI rebuild
 UI_STATUS = HOLD
 ```
@@ -51,7 +54,7 @@ inventory existing INK
 → later UI reconciliation
 ```
 
-The restore-all gate and first rebaseline Runtime have passed. Do not begin P1/P2 or UI work until the Runtime-verified P0 payload is cleanly reconciled/promoted onto latest main.
+The restore-all gate, first rebaseline Runtime, and clean source-equivalent P0 promotion have passed. P1/P2 implementation and UI work still require new explicit bounded authorization.
 
 Current task/gate:
 
