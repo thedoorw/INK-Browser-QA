@@ -7,7 +7,7 @@ DATE: 2026-09-27
 ```text
 CURRENT_MAIN = repository current main
 CURRENT_PRIMARY_TASK = INK-P1-A-RASTER-SELECTION-FILL-SAMPLING-001
-CURRENT_PROGRAM = PRE_UI_MATURE_PLATFORM_CAPABILITY_COMPLETION
+CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 CURRENT_GATE = P1_A_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
@@ -56,7 +56,7 @@ P1-A scope:
 
 Final UI wiring remains prohibited in this task.
 
-P1-B/P1-C/P1-D remain queued and require separate MR authorization.
+P1-B through P1-H remain queued and each requires a separate bounded MR authorization.
 
 ## UI release sequence
 
@@ -65,12 +65,20 @@ P1-A MODULE_READY
 → P1-B MODULE_READY
 → P1-C MODULE_READY
 → P1-D MODULE_READY
-→ PRE-UI INTEGRATION + Runtime
+→ P1-E MODULE_READY
+→ P1-F MODULE_READY
+→ P1-G MODULE_READY
+→ P1-H MODULE_READY
+→ P1 INTEGRATION
+→ focused/integrated QA
+→ ONE exact-SHA Runtime
 → UR capability reconciliation
 → UI_HOLD CLEARED
 ```
 
 Manual prose does not block this sequence.
+
+Integrated Runtime is intentionally prohibited until all native P1 packages A–H are complete and integrated.
 
 ## Historical technical milestone
 
