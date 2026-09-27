@@ -6,9 +6,9 @@ DATE: 2026-09-27
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PRIMARY_TASK = INK-P1-B-LOCAL-RASTER-RETOUCH-001
+CURRENT_PRIMARY_TASK = INK-P1-C-VECTOR-TEXT-PRECISION-LAYOUT-001
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_B_MODULE_READY_AWAIT_PROMOTION
+CURRENT_GATE = P1_C_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -19,8 +19,10 @@ EXPLICIT_PARTIAL_BOUNDED_ITEMS = 8
 P1_P2_DISPOSITION = RECORDED
 P1_A = MODULE_READY / MR_PASS / PROMOTED
 P1_A_PROMOTED_MAIN = c750b8f2803d87c369edcf9c320a531a32f92d62
-P1_B_WORKPACK = working/INK_P1_B_LOCAL_RASTER_RETOUCH_DEV_WORKPACK_v1.0.md
-P1_B_BRANCH = work/ink-p1-b-local-raster-retouch-001
+P1_B = MODULE_READY / MR_PASS / PROMOTED
+P1_B_PROMOTED_MAIN = c35b81a81845b65dfd462e7d225a192d3393f135
+P1_C_WORKPACK = working/INK_P1_C_VECTOR_TEXT_PRECISION_LAYOUT_DEV_WORKPACK_v1.0.md
+P1_C_BRANCH = work/ink-p1-c-vector-text-precision-layout-001
 
 FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
@@ -47,11 +49,11 @@ The full capability census is closed and the refreshed capability baseline is pu
 
 P1-A passed MR MODULE_READY review and is promoted on main `c750b8f2803d87c369edcf9c320a531a32f92d62`.
 
-P1-B has passed MR MODULE_READY review on exact DEV head `35252e8963b4bcf73180151fcc5a6b21258f8f87`.
+P1-B passed MR MODULE_READY review and is promoted on main `c35b81a81845b65dfd462e7d225a192d3393f135`.
 
 Final UI wiring remains prohibited.
 
-P1-B product branch is not yet promoted. Next: promote/reconcile P1-B onto latest main, then authorize P1-C. P1-C through P1-H each require separate bounded MR authorization.
+P1-C is now authorized for Vector / Text / Precision Layout Core + focused QA. P1-D through P1-H remain queued and each requires separate bounded MR authorization.
 
 ## UI release sequence
 
