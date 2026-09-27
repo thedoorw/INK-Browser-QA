@@ -8,7 +8,7 @@ DATE: 2026-09-27
 CURRENT_MAIN = repository current main
 CURRENT_PRIMARY_TASK = INK-P1-C-VECTOR-TEXT-PRECISION-LAYOUT-001
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_C_DEV_AUTHORIZED
+CURRENT_GATE = P1_C_MODULE_READY_AWAIT_PROMOTION
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -53,7 +53,7 @@ P1-B passed MR MODULE_READY review and is promoted on main `c35b81a81845b65dfd46
 
 Final UI wiring remains prohibited.
 
-P1-C is now authorized for Vector / Text / Precision Layout Core + focused QA. P1-D through P1-H remain queued and each requires separate bounded MR authorization.
+P1-C has passed MR MODULE_READY review on exact DEV head `fc7e29de92c9487a58dc8f3c4ded6c69668d5a75`. Product branch is not yet promoted. P1-D through P1-H remain queued and require separate bounded MR authorization.
 
 ## UI release sequence
 
