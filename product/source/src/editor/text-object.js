@@ -1,6 +1,9 @@
 import { Matrix, uid } from '../core/index.js';
 
 const hasOwn = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
+const WRITING_MODES = new Set(['horizontal-tb', 'vertical-rl', 'vertical-lr']);
+const PARAGRAPH_ALIGN = new Set(['left', 'center', 'right']);
+const PATH_OVERFLOW = new Set(['clip', 'visible']);
 
 function finite(value, fallback) {
   const number = Number(value);
@@ -30,6 +33,34 @@ function fontWeight(value) {
   return String(value);
 }
 
+function textBox(value) {
+  if (value == null) return null;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  return {
+    width: positive(value.width, 1),
+    height: positive(value.height, 1)
+  };
+}
+
+function writingMode(value) {
+  return WRITING_MODES.has(value) ? value : 'horizontal-tb';
+}
+
+function paragraphAlign(value) {
+  return PARAGRAPH_ALIGN.has(value) ? value : 'left';
+}
+
+function pathText(value) {
+  if (value == null) return null;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const pathId = value.pathId == null ? null : String(value.pathId);
+  return {
+    pathId,
+    startOffset: Math.max(0, finite(value.startOffset, 0)),
+    overflow: PATH_OVERFLOW.has(value.overflow) ? value.overflow : 'clip'
+  };
+}
+
 export function createTextObject({
   id = uid(),
   text = '',
@@ -41,7 +72,11 @@ export function createTextObject({
   fontFamily = 'system-ui',
   fontSize = 32,
   lineHeight = 1.25,
-  fontWeight: objectFontWeight = null
+  fontWeight: objectFontWeight = null,
+  textBox: objectTextBox = null,
+  paragraphAlign: objectParagraphAlign = 'left',
+  writingMode: objectWritingMode = 'horizontal-tb',
+  pathText: objectPathText = null
 } = {}) {
   const object = {
     id,
@@ -56,6 +91,12 @@ export function createTextObject({
   };
   const weight = fontWeight(objectFontWeight);
   if (weight != null) object.fontWeight = weight;
+  const box = textBox(objectTextBox);
+  if (box) object.textBox = box;
+  if (objectParagraphAlign !== 'left' || box) object.paragraphAlign = paragraphAlign(objectParagraphAlign);
+  if (objectWritingMode !== 'horizontal-tb') object.writingMode = writingMode(objectWritingMode);
+  const path = pathText(objectPathText);
+  if (path) object.pathText = path;
   return object;
 }
 
@@ -82,6 +123,22 @@ export function updateTextObject(object, patch = {}) {
     if (hasOwn(patch, 'x')) matrix[4] = finite(patch.x, matrix[4] || 0);
     if (hasOwn(patch, 'y')) matrix[5] = finite(patch.y, matrix[5] || 0);
     object.matrix = matrix;
+  }
+  if (hasOwn(patch, 'textBox')) {
+    const box = textBox(patch.textBox);
+    if (box) object.textBox = box;
+    else delete object.textBox;
+  }
+  if (hasOwn(patch, 'paragraphAlign')) object.paragraphAlign = paragraphAlign(patch.paragraphAlign);
+  if (hasOwn(patch, 'writingMode')) {
+    const mode = writingMode(patch.writingMode);
+    if (mode === 'horizontal-tb') delete object.writingMode;
+    else object.writingMode = mode;
+  }
+  if (hasOwn(patch, 'pathText')) {
+    const path = pathText(patch.pathText);
+    if (path) object.pathText = path;
+    else delete object.pathText;
   }
   return true;
 }
