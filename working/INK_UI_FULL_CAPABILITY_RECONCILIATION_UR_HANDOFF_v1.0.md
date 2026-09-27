@@ -1,6 +1,6 @@
 # INK UI Full Capability Reconciliation — UR Handoff v1.0
 
-STATUS: `UR_COMPLETE / STOP_FOR_MR_REVIEW`
+STATUS: `UR_REVISION_COMPLETE / STOP_FOR_MR_REVIEW`
 
 TASK: `INK-UI-FULL-CAPABILITY-RECONCILIATION-001`
 
@@ -14,9 +14,12 @@ NEXT OWNER: `MR / MAIN REVIEW`
 
 ## Scope result
 
-Completed UI capability reconciliation / placement planning against:
+Completed the MR-requested bounded revision against:
 - full 64-family normalized capability registry;
-- 496 product atomic capabilities by family inheritance + explicit P1 atomic overrides;
+- explicit 496/496 product atomic disposition;
+- explicit 5/5 headless platform-support atomic disposition;
+- total normalized atomic disposition = 501/501;
+- promoted P1 A-H placement overlay;
 - existing 212-button / 29-select static control ledger;
 - previous final function-placement map;
 - current reconciliation gaps;
@@ -28,11 +31,45 @@ No product source or UI implementation was performed.
 ## Produced documents
 
 1. `working/INK_UI_FULL_CAPABILITY_PLACEMENT_MATRIX_v1.0.md`
-2. `working/INK_UI_UPDATED_CONTROL_LEDGER_v1.0.md`
-3. `working/INK_UI_RECONCILIATION_GAP_REGISTER_v1.0.md`
-4. `working/INK_UI_MENU_TOOLBAR_PANEL_ARCHITECTURE_v1.0.md`
+2. `working/INK_UI_ATOMIC_CAPABILITY_DISPOSITION_v1.0.md` — NEW bounded-revision evidence
+3. `working/INK_UI_UPDATED_CONTROL_LEDGER_v1.0.md`
+4. `working/INK_UI_RECONCILIATION_GAP_REGISTER_v1.0.md`
+5. `working/INK_UI_MENU_TOOLBAR_PANEL_ARCHITECTURE_v1.0.md`
 
-This handoff is the fifth planning document.
+This handoff is the sixth planning/review document on the UR branch.
+
+## MR bounded-revision closure
+
+The two MR blockers are addressed without changing the accepted architecture.
+
+```text
+BLOCKER_A_ATOMIC_DISPOSITION = CLOSED_BY_UR_FOR_REREVIEW
+PRODUCT_ATOMICS = 496 / 496
+HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5 / 5
+TOTAL_NORMALIZED_ATOMICS = 501 / 501
+
+BLOCKER_B_PLANNED_CONTROL_IDENTITY = CLOSED_BY_UR_FOR_REREVIEW
+PUI_PLANNING_IDS = PUI-001 ... PUI-074
+PLANNED_CONTROL_IDENTITIES = 74
+NEW = 14
+RELOCATE = 4
+EXPAND_FLYOUT = 4
+RETIRE_DUPLICATE = 5
+CONTEXTUAL_ONLY = 13
+PANEL = 13
+DIALOG_WORKSPACE = 11
+HEADLESS_NO_CONTROL = 10
+IMPLEMENTATION_STATUS = PLANNED_ONLY
+DOM_ID_PRESCRIPTION = NONE
+
+ATOMIC_AUDIT_NEW_GAPS = 0
+OPEN_UI_GAPS = 34
+P0_UI_GAPS = 14
+P1_UI_GAPS = 15
+P2_UI_GAPS = 5
+```
+
+Accepted MR architecture decisions were not redesigned.
 
 ## Major reconciliation decisions
 
@@ -95,17 +132,19 @@ P2 implementation = 0
 
 ## MR review request
 
-MR should review:
-- capability coverage / authority boundaries;
-- P1 A-H placement convergence;
-- proposed Filter menu and Color/Channels/Adjustments panels;
-- headless/Specialist exclusions;
-- whether/when UI HOLD may be formally cleared.
+MR should re-review only the bounded correction points plus regression safety:
+- 501/501 explicit atomic disposition and heterogeneous-family splits;
+- PUI-001…PUI-074 stable planning identities/counts;
+- atomic gap-audit result `ATOMIC_AUDIT_NEW_GAPS = 0` and retained 34-gap totals;
+- P1 A-H overlay remains consistent with the already accepted architecture;
+- no headless/internal atomic was converted into false creative chrome;
+- no product/source/UI implementation/Runtime/FORMAT_VERSION mutation occurred;
+- only MR may decide whether the UI implementation HOLD is cleared.
 
 UR does not issue implementation work until MR explicitly clears the UI HOLD and authorizes the next bounded UI work.
 
 ```text
-UR_HANDOFF = COMPLETE
+UR_BOUNDED_REVISION = COMPLETE
 DEV_ACTION = NONE
 NEXT_OWNER = MR
 STOP = YES
