@@ -160,10 +160,10 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_C_DEV_AUTHORIZED
+CURRENT_GATE = P1_C_MODULE_READY_AWAIT_PROMOTION
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_C_PRODUCT_IMPLEMENTATION = AUTHORIZED
+P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / NOT_YET_PROMOTED
 P1_D_E_F_G_H = NOT YET AUTHORIZED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
@@ -181,9 +181,9 @@ DEV:
 - STOP.
 
 MR:
-- P1-A and P1-B promotion are closed;
-- wait for exact P1-C handoff;
-- review P1-C before authorizing P1-D.
+- P1-C exact HEAD reviewed and MODULE_READY = PASS;
+- next promote/reconcile P1-C onto latest main;
+- only then authorize P1-D.
 
 UR:
 - remain on HOLD.
