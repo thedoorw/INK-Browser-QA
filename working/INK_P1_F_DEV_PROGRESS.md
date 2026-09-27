@@ -237,3 +237,89 @@ NEXT_ACTION = STOP FOR MR REVIEW
 ```
 
 DEV does not self-merge, promote, enter Integration, run Runtime, or begin another package.
+
+
+## MR exact-scope correction — six legal zero endpoints — 2026-09-27
+
+This entry supersedes the immediately prior zero/default correction scope where DEV had also changed Liquify Reconstruct `strength=0`.
+
+MR-authorized legal-zero endpoints are exactly:
+
+1. `photoFilter.density = 0`
+2. `threshold.level = 0`
+3. `unsharpMask.amount = 0`
+4. `emboss.strength = 0`
+5. `reduceNoise.strength = 0`
+6. `reduceNoise.preserveEdges = 0`
+
+Liquify Reconstruct `strength=0` is NOT part of this MR correction scope and has been restored to the prior branch behavior.
+
+SCOPE_CORRECTION_COMMIT:
+`2bc3214d6cee22294398b57948737aa5e54a5d76`
+
+SCOPE_CORRECTION_TREE:
+`19fb874df1c40df2620b7e15a3357671121607aa`
+
+### Exact correction blobs
+
+- `product/source/src/image/raster-processing-advanced.js`
+  - `8aca747a0825d37d79241fd0f666aa9a030a7619`
+- `qa/ink-p1-f-raster-processing-expansion.test.mjs`
+  - `21ada9d8a1815bb468084dc336bff9742ff60215`
+
+### Regression set
+
+Six legal-zero regressions remain and pass:
+
+- Photo Filter density zero = exact identity.
+- Threshold level zero = legal threshold endpoint.
+- Unsharp Mask amount zero = exact identity.
+- Emboss strength zero = zero-strength endpoint retained.
+- Reduce Noise strength zero = exact identity.
+- Reduce Noise preserveEdges zero = legal edge-preservation endpoint.
+
+The previously-added Liquify Reconstruct zero regression has been removed.
+
+### Full P1-F QA rerun
+
+```text
+tests = 39
+pass = 39
+fail = 0
+skip = 0
+```
+
+### Isolation
+
+The scope-constraining commit from the previous DEV handoff changes only:
+
+- `product/source/src/image/raster-processing-advanced.js`
+- `qa/ink-p1-f-raster-processing-expansion.test.mjs`
+
+No changes were made to:
+
+```text
+image-core.js
+P1-G
+P1-H
+Document
+Renderer
+History
+Integration
+Runtime
+UI
+FORMAT_VERSION
+```
+
+### Final handoff
+
+```text
+SCOPE_CORRECTION_COMMIT = 2bc3214d6cee22294398b57948737aa5e54a5d76
+AUTHORIZED_ZERO_ENDPOINTS = 6
+FULL_P1_F_QA = PASS 39/39 / FAIL 0 / SKIP 0
+RUNTIME = NOT RUN
+DEV_HANDOFF = YES
+NEXT_ACTION = STOP FOR MR REVIEW
+```
+
+DEV stops here.
