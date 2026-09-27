@@ -6,9 +6,9 @@ DATE: 2026-09-27
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PRIMARY_TASKS = P1-F BOUNDED CORRECTION
+CURRENT_PRIMARY_TASKS = P1 INTEGRATION
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_F_FINAL_NORMALIZATION_CORRECTION
+CURRENT_GATE = P1_INTEGRATION_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -28,12 +28,13 @@ P1_D_PROMOTED_MAIN = 206f027785c04e56e91293e439fef8fb0cdd8521
 P1_E = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PROMOTED_MAIN = fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74
 P1_PARALLEL_BRANCH_CUT = dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f
-P1_F = MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION
+P1_F = MODULE_READY / MR_PASS / PROMOTED
+P1_F_PROMOTION_MERGE = 5bb74c1c0ad655dac8ae00b5474da52b58db18db
 P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
 P1_H = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PROMOTION_MERGE = 4eb9a8f18781840219217a7cc767ed73aebe3989
-P1_INTEGRATION = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_F_H
+P1_INTEGRATION = AUTHORIZED / DEV_OWNED_EXECUTION / AWAITING_BRANCH_CUT
 P1_RUNTIME = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_INTEGRATION
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
@@ -73,7 +74,7 @@ P1-D passed MR MODULE_READY review and is promoted on main `206f027785c04e56e912
 
 P1-E passed MR MODULE_READY review and is promoted on main `fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`.
 
-P1-G and P1-H are MODULE_READY / MR_PASS / promoted. P1-F reached DEV handoff at `5abe3d8c696f6eb74a56da415587d9f4834121f5`; MR found one bounded parameter-normalization defect: legal numeric zero values are replaced by defaults for several adjustment/filter controls. P1-F is authorized only for the correction recorded in `working/INK_P1_F_MR_REVIEW_v1.0.md`.
+P1-A through P1-H are now MODULE_READY / MR_PASS / PROMOTED. P1-F final reviewed HEAD `39aa86906efb94ee8a9992d50802168d8467f802` was promoted at `5bb74c1c0ad655dac8ae00b5474da52b58db18db`. The current program has moved to DEV-owned P1 Integration.
 
 ## UI release sequence
 
@@ -122,9 +123,9 @@ P1_RUNTIME_ACCEPTANCE = MR
 Neither future lane is active yet. Integration waits for P1-F and P1-H MR_PASS/promoted; Runtime waits for Integration MR_PASS/promoted.
 
 
-P1-F re-review checkpoint:
-- reviewed HEAD `56d8dab73f34eba58132c03a389b4fc04637bed4`;
-- six MR-authorized legal-zero endpoints = PASS;
-- remaining blocker = non-finite numeric fallback in `numberOr()`;
-- next correction is limited to finite-vs-nonfinite normalization + regression;
-- P1 Integration remains blocked pending final P1-F MR_PASS/promotion.
+P1 Integration activation checkpoint:
+- all P1 A-H = promoted;
+- execution owner = DEV;
+- workpack = `working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`;
+- branch cut exact SHA will be recorded before DEV begins;
+- integrated Runtime remains prohibited until Integration MR_PASS/promoted.
