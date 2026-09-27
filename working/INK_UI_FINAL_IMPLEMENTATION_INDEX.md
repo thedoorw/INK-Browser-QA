@@ -42,6 +42,14 @@ UI AUTHORITIES:
    - source + Runtime + interaction + screenshot + health + current-main closure
    - all items must close before UI_COMPLETE
 
+
+
+6. `working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md`
+   - exhaustive Photoshop fine-detail authority
+   - original 12 detail areas + explicit Panel Tabs / Panel Options / Document Status Strip
+   - shared control/icon/spacing/border/transition/responsive/accessibility rules
+   - every unknown must be marked `REFERENCE_MISSING`; no silent DEV defaults
+
 Governance:
 - `governance/INK_PRODUCT_UX_PRINCIPLES_v1.0.md`
 - `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`

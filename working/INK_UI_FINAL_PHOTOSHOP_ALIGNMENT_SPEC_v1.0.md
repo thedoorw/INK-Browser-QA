@@ -857,3 +857,38 @@ Status rule:
 - the document-status surface is **active-document-only**: hidden with no document open, eligible only when a document is active, and hidden again when the last document closes;
 - empty workspace must not reserve dead bottom height for a hidden document-status surface;
 - final document-production telemetry is reconciled after P1-G/P1-H capability completion.
+
+
+# 32. Photoshop Fine Detail Standard
+
+Fine-detail authority:
+`working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md`
+
+This standard is mandatory for final UI implementation/acceptance and covers:
+- Application Menu micro-geometry/states;
+- Contextual Options controls;
+- Tools hitboxes/icons/flyouts;
+- right Dock / Panel shell;
+- Layers;
+- History;
+- Navigator;
+- Typography;
+- light-gray palette roles;
+- Scrollbar / Tooltip / Cursor / Focus;
+- special-state reference matrix;
+- Panel Tabs;
+- Panel Options Menu;
+- active-document-only Document Status Strip;
+- shared Buttons / Inputs / Selects;
+- Icon system;
+- Spacing rhythm;
+- Border / Radius / Shadow;
+- Animation / reduced motion;
+- Responsive;
+- Accessibility.
+
+Rule:
+`REFERENCE_MISSING` is an explicit blocking/measurement state, not permission for DEV to invent a Photoshop dimension.
+
+Final fine-detail implementation must produce per-field:
+`Target / Actual / Evidence / Result`.
