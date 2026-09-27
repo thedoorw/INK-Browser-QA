@@ -233,10 +233,12 @@ P1-A MODULE_READY
 → P1-E MODULE_READY
 → [P1-F MODULE_READY || P1-G MODULE_READY]
 → P1-H MODULE_READY
-→ P1 INTEGRATION
-→ focused/integrated QA
-→ ONE exact-SHA integrated Runtime
-→ MR promotion/review
+→ P1 INTEGRATION DEV WORK ORDER
+→ DEV focused/integrated QA + technical wiring
+→ MR integration review/promotion
+→ P1 INTEGRATED RUNTIME DEV WORK ORDER
+→ DEV executes ONE exact-SHA integrated Runtime
+→ MR Runtime evidence review
 → UR reconciliation / UI
 ```
 
@@ -260,3 +262,22 @@ DOCUMENT / RENDERER / FORMAT_VERSION mutation = 0 during parallel lanes
 ```
 
 P1-H remains sequential after P1-G because PSD/PSB/TIFF/RAW/EXR interoperability must consume the accepted color-mode, bit-depth, ICC and channel contract rather than invent its own.
+
+
+## 9. Integration / Runtime execution ownership
+
+USER decision:
+
+```text
+P1 Integration technical completion = DEV execution
+Integrated Runtime = DEV execution
+MR = authorization + exact-SHA pinning + review + acceptance
+```
+
+Predeclared workpacks:
+- `working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`
+- `working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md`
+
+Activation remains sequential:
+- Integration only after P1-F + P1-H are MR_PASS/promoted;
+- Runtime only after Integration is MR_PASS/promoted.
