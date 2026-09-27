@@ -1,12 +1,12 @@
 # INK P1 Integration MR Review v1.0
 
-STATUS: `MR_REVISE / BOUNDED_RENDERER_DISPATCH_CORRECTION`
+STATUS: `MR_PASS / P1_INTEGRATION_READY / AWAITING_PROMOTION`
 
 TASK: `INK-P1-INTEGRATION-001`
 
 REVIEWED_BRANCH: `work/ink-p1-integration-001`
 
-REVIEWED_HEAD: `4c985ec692b2c1275ec23205c0823bb40283430a`
+REVIEWED_HEAD: `63b247fd4e8c98b54c4cc6974af7a61d2a71fcc1`
 
 IMPLEMENTATION_HEAD_BEFORE_HANDOFF_DOC: `e2b2a3cec30bcc9ea23cd4d9de3eb2b1574d46bd`
 
@@ -25,9 +25,9 @@ P1_H_INTEROPERABILITY_BRIDGE = PASS
 RULER_GUIDE_SNAP_TECHNICAL_WIRING = PASS
 FORMAT_VERSION_CHANGE = 0
 INTEGRATED_RUNTIME = NOT RUN
-P1_INTEGRATION_RENDERER_DISPATCH = REVISE
-P1_INTEGRATION_READY = NO
-PROMOTION = BLOCKED
+P1_INTEGRATION_RENDERER_DISPATCH = PASS
+P1_INTEGRATION_READY = YES
+PROMOTION = AWAITING_MR_CONTROLLED_MERGE
 ```
 
 ## Reviewed scope
@@ -165,5 +165,53 @@ Legacy current UI toggles still use compatibility setters directly. This is not 
 P1_INTEGRATION = MR_REVISE / BOUNDED_RENDERER_DISPATCH_CORRECTION
 P1_INTEGRATION_PROMOTION = BLOCKED
 P1_INTEGRATED_RUNTIME = PROHIBITED
+UI = HOLD
+```
+
+
+## Bounded renderer correction closure
+
+Final handoff:
+`63b247fd4e8c98b54c4cc6974af7a61d2a71fcc1`
+
+Correction commits:
+```text
+0da5855881b52340d634998219d334ccf79d67e6  fix(p1-integration): dispatch raster-state images to renderer
+dd4eb8083d322d103ab8de60ff57461e1cadd8d2  test(p1-integration): cover raster-state renderer dispatch
+63b247fd4e8c98b54c4cc6974af7a61d2a71fcc1  docs(dev): hand off bounded renderer correction
+```
+
+Verified:
+- correction delta contains only `studio-core.js`, Integration QA and lane progress;
+- rasterState-only image dispatches into the existing integrated image renderer;
+- ordinary src-only image remains on the legacy/base image path;
+- unsupported Multichannel state retains explicit `unsupported-render` diagnostic and fallback;
+- no second Renderer/Image/Color authority was introduced;
+- FORMAT_VERSION unchanged;
+- integrated Runtime not run.
+
+Final exact blobs:
+
+```text
+studio-core.js                  = 2922a9faf888b30a497e0054b85a8b4a44725c0b
+qa/ink-p1-integration-001.test = 04e7a750d58f2e5bba2617c91037dbcd96758ac6
+```
+
+Checked-in Integration QA:
+```text
+declared tests = 20
+skip tokens = 0
+DEV exact-source result = PASS
+FAIL = 0
+SKIP = 0
+INTEGRATED_RUNTIME = NOT RUN
+```
+
+MR reviewed the exact source/test blobs and the functional renderer regression. MR does not claim an independent second Node execution in this review environment.
+
+Final verdict:
+```text
+P1_INTEGRATION = READY / MR_PASS / AWAITING_PROMOTION
+P1_INTEGRATED_RUNTIME = BLOCKED_UNTIL_PROMOTION
 UI = HOLD
 ```
