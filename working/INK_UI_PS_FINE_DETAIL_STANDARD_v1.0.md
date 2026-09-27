@@ -711,13 +711,24 @@ Required cursor classes:
 - move;
 - pan/open-hand;
 - pan/closed-hand;
-- resize EW;
-- resize NS;
+- resize EW — panel-width divider / `ew-resize`;
+- resize NS — stacked-panel splitter / `ns-resize`;
+- Navigator viewport proxy hover — `grab`;
+- Navigator viewport proxy active drag — `grabbing`;
 - transform rotate if supported;
 - drag reorder;
 - forbidden/not-allowed.
 
 No custom cursor merely for decoration.
+
+Cursor pixel shape is not required to be copied from Photoshop. Use platform/CSS cursor semantics unless a later INK-specific custom cursor is explicitly authorized.
+
+```text
+NAVIGATOR_PROXY_CURSOR = grab / grabbing
+PANEL_WIDTH_RESIZE_CURSOR = ew-resize
+PANEL_STACK_RESIZE_CURSOR = ns-resize
+```
+
 
 ## 11.4 Focus
 
