@@ -1,9 +1,11 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "f911f777f770cbe290e290c4b0cbc3692b36641e",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "d1269334338531228ddfdd9383761cd419e58738",
+  "pending_work_orders": [
+    "INK-P1-INTEGRATED-RUNTIME-001"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -27,8 +29,8 @@
     "INK-P0-RESTORE-ALL-001"
   ],
   "high_risk": {
-    "enabled": false,
-    "reason": ""
+    "enabled": true,
+    "reason": "MR-authorized single final P1 integrated Runtime gate after P1 A-H integration and central harness coverage promotion."
   },
   "batch_policy": {
     "default_target": 3,
