@@ -147,7 +147,7 @@ class Renderer{
       for(const layer of page.layers){if(!layer.visible)continue;ctx.save();ctx.globalAlpha*=layer.opacity;this.drawLayerObjects(ctx,layer,page);ctx.restore();}this.drawFloraInspectionOverlay(ctx,page);
     }
     if(this.app.draft?.object)this.drawObject(ctx,this.app.draft.object,{draft:true});ctx.restore();
-    if(this.app.draft?.lasso)this.drawLassoOverlay(ctx,this.app.draft.lasso);if(this.app.draft?.marquee)this.drawMarqueeOverlay(ctx,this.app.draft.marquee);if(this.app.draft?.guides)this.drawGuides(ctx,this.app.draft.guides);this.drawSelectionOverlay(ctx);this.drawStrokeEditOverlay(ctx);this.drawPathEditOverlay(ctx);this.drawBrushCursor(ctx);this.app.updateStatus();
+    if(this.app.draft?.lasso)this.drawLassoOverlay(ctx,this.app.draft.lasso);if(this.app.draft?.marquee)this.drawMarqueeOverlay(ctx,this.app.draft.marquee);this.drawGuides(ctx,(page.guides||[]).filter(guide=>guide.visible!==false).map(guide=>({axis:guide.orientation==='vertical'?'x':'y',value:guide.position,persistent:true,id:guide.id,locked:Boolean(guide.locked)})));if(this.app.draft?.guides)this.drawGuides(ctx,this.app.draft.guides);this.drawSelectionOverlay(ctx);this.drawStrokeEditOverlay(ctx);this.drawPathEditOverlay(ctx);this.drawBrushCursor(ctx);this.app.updateStatus();
   }
   drawArtboardFrameWorld(ctx,page,trim=artboardTrimBounds(page),bleed=artboardBleedBounds(page,true)){
     ctx.save();ctx.shadowColor='rgba(0,0,0,.42)';ctx.shadowBlur=18/Math.max(.05,page.camera.scale);ctx.shadowOffsetY=5/Math.max(.05,page.camera.scale);ctx.fillStyle=page.paper.color;ctx.fillRect(bleed.x,bleed.y,bleed.w,bleed.h);ctx.restore();
