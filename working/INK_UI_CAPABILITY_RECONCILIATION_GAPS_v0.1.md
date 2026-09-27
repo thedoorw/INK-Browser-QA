@@ -151,7 +151,7 @@ UI_IMPLEMENTATION_AUTHORIZED = NO
 
 ## 4. P1/P2 implementation impact on future UI
 
-After pre-UI P1 packages close, UR must additionally place:
+After all P1 A-H packages close and the single integrated Runtime passes, UR must additionally place:
 
 ### P1-A Selection / Fill / Sampling
 - Polygonal Lasso;
@@ -185,7 +185,27 @@ After pre-UI P1 packages close, UR must additionally place:
 - Stroke;
 - existing Color Overlay remains.
 
+### P1-E Advanced Selection
+- Magnetic Lasso;
+- Object Selection.
+
+### P1-F Raster Processing Expansion
+- Adjustment breadth;
+- Filter / Filter Gallery breadth;
+- Liquify.
+
+### P1-G Color / Bit Depth / Channels
+- 8/16/32-bit workflow;
+- RGB / CMYK / Lab / Multichannel;
+- ICC color management;
+- Channels / alpha / spot channels.
+
+### P1-H Format Interoperability
+- PSD / PSB / TIFF / RAW / EXR breadth.
+
 These functions must converge on existing native authorities and may not create parallel panels/engines.
+
+No UI implementation starts between P1 packages. Runtime also waits until A-H are complete and integrated.
 
 ## 5. UR release gate after MR technical work
 
