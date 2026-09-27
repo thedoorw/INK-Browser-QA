@@ -1,6 +1,6 @@
 # INK Full Product Capability Census v0.1
 
-STATUS: `MR_CENSUS_IN_PROGRESS / LIST_FIRST / NO_PRODUCT_MUTATION`
+STATUS: `MR_CENSUS_CLOSED / LIST_FIRST / NO_PRODUCT_MUTATION`
 
 TASK: `INK-CAPABILITY-BASELINE-MANUAL-001`
 
@@ -57,7 +57,7 @@ Current top-level state:
 ```text
 CAPABILITY_FAMILIES = 61 / 61
 RAW_SOURCE_CORROBORATED_CANDIDATE_ENTRIES = 696
-ATOMIC_CAPABILITY_TOTAL = OPEN — normalize/deduplicate before freeze
+ATOMIC_CAPABILITY_TOTAL = 496 product atomics + 5 headless platform-support atomics
 CHAT_NAMED_TOOLS = 22
 CHAT_BOUNDED_EDIT_OPERATIONS = 34
 PRODUCT_SOURCE_MUTATION_IN_THIS_TASK = 0
@@ -1605,7 +1605,7 @@ The following must be completed before `ATOMIC_CAPABILITY_TOTAL` is frozen:
 
 Until these are closed:
 
-`FULL_ATOMIC_CAPABILITY_CENSUS = IN_PROGRESS`
+`FULL_ATOMIC_CAPABILITY_CENSUS = CLOSED / NORMALIZED IN working/INK_CAPABILITY_REGISTRY_v0.1.md`
 
 The value `696` is a raw candidate-entry count, not the final number of INK product features.
 
@@ -1645,3 +1645,19 @@ Manual later adds:
 - relationships to other capabilities.
 
 It must not create a second independent capability inventory.
+
+
+## 8. Closure
+
+The raw census is closed by the normalized registry:
+
+- canonical families: 64;
+- product atomics: 496;
+- headless platform-support atomics: 5;
+- explicit partial/bounded items: 8;
+- current CHAT named tools: 22;
+- current CHAT bounded edit operations: 34.
+
+The value 696 remains only a historical raw candidate-entry count before normalization.
+
+This census is evidence input. The refreshed ACTIVE capability baseline is the formal product-truth publication.
