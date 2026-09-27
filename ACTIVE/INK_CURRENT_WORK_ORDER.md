@@ -175,7 +175,7 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = UI_FULL_CAPABILITY_RECONCILIATION_UR_AUTHORIZED
+CURRENT_GATE = UI_FULL_CAPABILITY_RECONCILIATION_UR_REVISION_REQUIRED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
@@ -186,7 +186,7 @@ P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 INTEGRATED_RUNTIME = MR_PASS / RUNTIME_GATE_CLOSED
 RUNTIME_HARNESS_COVERAGE = MR_PASS / PROMOTED
-UI_RECONCILIATION = AUTHORIZED
+UI_RECONCILIATION = MR_REVISE / ATOMIC_DISPOSITION_REQUIRED
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
 ```
@@ -207,19 +207,41 @@ ARTIFACT = 10936541218
 RUNTIME_GATE = CLOSED
 ```
 
+## MR review of UR handoff
+
+UR HEAD reviewed:
+`5eb8ab1703d2a2feb6dc8f0ab1ad2732702bd205`
+
+MR review:
+`working/INK_UI_FULL_CAPABILITY_RECONCILIATION_MR_REVIEW_v1.0.md`
+
+Result:
+`MR_REVISE / BOUNDED_DOCUMENT_CORRECTION_REQUIRED`
+
+Accepted:
+- 64/64 family placement architecture;
+- P1 A-H placement direction;
+- 34-gap family-level register and internal counts;
+- Filter / Color / Channels / Adjustments / Effects / Liquify / ruler-guide-snap architecture;
+- headless boundary.
+
+Required before PASS:
+- explicit 501/501 atomic disposition evidence (496 product + 5 headless platform support);
+- stable planning IDs/counts for new planned controls/surfaces;
+- re-run gap audit after atomic reconciliation.
+
+No product/UI implementation is authorized.
+
 ## Next action
 
 UR:
-- execute `INK-UI-FULL-CAPABILITY-RECONCILIATION-001`;
-- use the refreshed 64-family / 496-product-atomic capability baseline;
-- reconcile Top Menu / Left Toolbar / Tool Flyout / Contextual Options Bar / Right Panels / Properties / Dialog / Specialist / Help-Settings-Diagnostics / Headless-only placement;
-- update the UI control and gap architecture;
-- do not modify `product/source/**`;
-- STOP back to MR for review.
+- revise `work/ink-ui-full-capability-reconciliation-001` only;
+- complete the bounded atomic-level disposition and planned-control ledger correction;
+- STOP again for MR review.
 
 MR:
-- review UR reconciliation outputs;
-- decide whether UI implementation HOLD can be cleared.
+- re-review the revised UR branch;
+- only then decide UI reconciliation PASS / UI implementation HOLD clearance.
 
 DEV:
 - no action.
