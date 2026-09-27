@@ -54,7 +54,9 @@ RUNTIME: `NOT RUN / PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE`
 
 ```text
 IMPLEMENTATION_COMMIT = a9ad89f11d75f5ec49921abf59a723d01ae3cb9e
-IMPLEMENTATION_HEAD_BEFORE_HANDOFF_DOC = a9ad89f11d75f5ec49921abf59a723d01ae3cb9e
+ICC_CHAD_CORRECTION_SOURCE_COMMIT = 43cf95c7717137a56ab7fd3c7ce53f62d6f33f9b
+ICC_CHAD_CORRECTION_QA_COMMIT = 1f10d9b39735496421969221bf8f1cefe1a83e0f
+IMPLEMENTATION_HEAD_BEFORE_HANDOFF_DOC = 1f10d9b39735496421969221bf8f1cefe1a83e0f
 ```
 
 Changed product/QA files:
@@ -67,9 +69,9 @@ No other product-source file changed in this lane.
 ## Exact blobs
 
 ```text
-color-management-core.js = 4a9c248ec9a00b77dd2dbdd6857128d7fc798ed6
+color-management-core.js = 5e56e219e964912e85c68b644004f1b5c14dcbef
 channel-core.js          = c3d5540f97af3c9fec94e6ac2a3e9b9053aa8bc1
-focused QA               = e077278ad056397e6e71446cf51051c329ec4dcc
+focused QA               = 832800d9a46cb64f7a816553dee4ddcccc609410
 ```
 
 ## Focused QA
@@ -83,8 +85,8 @@ Exact branch blobs were verified with `git hash-object` before execution.
 
 ```text
 P1_G_FOCUSED_QA = PASS
-TESTS = 28
-PASS = 28
+TESTS = 30
+PASS = 30
 FAIL = 0
 SKIP = 0
 ```
@@ -96,7 +98,10 @@ Coverage includes:
 - deterministic RGB/Lab and RGB/CMYK bounded round trips;
 - ICC v2/v4 valid headers, malformed/out-of-bounds rejection;
 - deterministic profile fingerprint and embedded-byte preservation;
-- matrix/TRC RGB ICC execution and optional chromatic-adaptation matrix;
+- matrix/TRC RGB ICC execution with PCS colorant tags;
+- `chad` parse/preserve/inspect without implicit second adaptation in device RGB → PCS;
+- explicit native-illuminant ↔ PCS `chad` helper paths and inverse-adaptation regression QA;
+- D65 → D50 pre-adapted colorant fixture preventing double adaptation;
 - explicit unsupported ICC transform status;
 - RGB process channels, alpha and spot channels;
 - Multichannel naming/order;
@@ -109,7 +114,8 @@ Coverage includes:
 - Float32 finite HDR values are preserved in Core, but no document/renderer integration is included.
 - Default RGB ↔ Lab uses the documented sRGB D65 → Bradford D50 PCS path; it is not arbitrary-profile proofing.
 - RGB ↔ CMYK without a supported ICC transform uses an explicit bounded device-independent fallback and does not claim press-proof parity.
-- Native ICC execution is bounded to matrix/TRC RGB profiles with XYZ/Lab PCS and supported curve forms; complex LUT/CMYK structures are preserved/inspected but return `unsupported-transform`.
+- Native ICC execution is bounded to matrix/TRC RGB profiles with XYZ/Lab PCS and supported curve forms; matrix colorant tags are treated as already expressed in PCS, so `transformRgbWithIcc()` never applies `chad` a second time.
+- `chad` remains parsed/preserved/inspectable and is only executed through explicit native-illuminant ↔ PCS helper functions; complex LUT/CMYK structures are preserved/inspected but return `unsupported-transform`.
 - ICC fingerprint is deterministic identity metadata, not a cryptographic security primitive.
 - Channel serialization descriptor records channel layout metadata only; it is not a second save/document format.
 
@@ -134,10 +140,22 @@ Runtime = NOT RUN
 
 ```text
 PRODUCT_SOURCE_CHANGES = 2 new Core files
-FOCUSED_QA = PASS / 28 of 28
+FOCUSED_QA = PASS / 30 of 30
 DEV_HANDOFF = YES
 NEXT_OWNER = MR
 DEV_ACTION = STOP
 ```
 
-DEV-G stops here for independent MR review.
+## Bounded ICC chad correction
+
+MR correction request completed without reopening P1-G scope:
+
+1. `transformRgbWithIcc()` device RGB → PCS no longer applies `chad` after matrix/TRC colorants.
+2. `chad` remains parsed, byte-preserved and inspectable as metadata.
+3. Explicit `nativeIlluminantXyzToPcs()` and `pcsXyzToNativeIlluminant()` helpers isolate forward/inverse chromatic adaptation from the PCS transform.
+4. Regression QA proves identical device→PCS results with/without `chad` when PCS colorants are unchanged.
+5. D65→D50 pre-adapted sRGB colorants + Bradford `chad` fixture prevents future double adaptation.
+
+No channel-core or other product-source file was changed by this correction.
+
+DEV-G stops here for independent MR re-review.
