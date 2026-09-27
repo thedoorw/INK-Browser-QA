@@ -10,11 +10,13 @@ CURRENT_PRIMARY_TASK = INK-FULL-CAPABILITY-REBASELINE-001
 CURRENT_PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
 DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
 FIRST_PRIORITY = RESTORE_ALL_EXISTING_INK_CAPABILITIES
-CURRENT_GATE = P0_PROMOTION_RECONCILIATION_REQUIRED
+CURRENT_GATE = P1_GAP_DISPOSITION_AND_CAPABILITY_BASELINE_REFRESH
 FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
 FIRST_REBASELINE_RUNTIME_RUN = 36255595714
 FIRST_REBASELINE_RUNTIME_ARTIFACT = 10910238715
+P0_PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
+P0_PROMOTED_SOURCE_EQUIVALENT_TO_RUNTIME = PASS
 MR_PRE_RUNTIME_REVIEW = PASS
 UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 UI_STATUS = HOLD
@@ -41,7 +43,7 @@ RUNTIME_QUEUE =
 
 ## Current next step
 
-Exact DEV HEAD `f911f777f770cbe290e290c4b0cbc3692b36641e` passed the first rebaseline integrated Runtime in run `36255595714`: focused 38/38 PASS, semantic-region PASS, UI/Closure/Geometry/Creative PASS. Current next step is clean P0 promotion/reconciliation onto latest main. P1/P2 and UI implementation remain blocked until that promotion closes.
+Exact DEV HEAD `f911f777f770cbe290e290c4b0cbc3692b36641e` passed the first rebaseline integrated Runtime in run `36255595714`. Its four changed product blobs are now promoted source-equivalent on main `7e3c14004489a816a4163476161626c6fb3d56c2`. P0 promotion is closed. Next MR work is P1/P2 gap disposition and refreshed full-product capability baseline; no P1/P2 implementation or UI implementation is authorized yet.
 
 ## Historical technical milestone
 
