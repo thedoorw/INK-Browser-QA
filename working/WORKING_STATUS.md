@@ -8,7 +8,7 @@ DATE: 2026-09-27
 CURRENT_MAIN = repository current main
 CURRENT_PRIMARY_TASK = INK-P1-B-LOCAL-RASTER-RETOUCH-001
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_B_DEV_AUTHORIZED
+CURRENT_GATE = P1_B_MODULE_READY_AWAIT_PROMOTION
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -47,11 +47,11 @@ The full capability census is closed and the refreshed capability baseline is pu
 
 P1-A passed MR MODULE_READY review and is promoted on main `c750b8f2803d87c369edcf9c320a531a32f92d62`.
 
-P1-B is now authorized for Local Raster Retouch Core + focused QA.
+P1-B has passed MR MODULE_READY review on exact DEV head `35252e8963b4bcf73180151fcc5a6b21258f8f87`.
 
 Final UI wiring remains prohibited.
 
-P1-C through P1-H remain queued and each requires separate bounded MR authorization.
+P1-B product branch is not yet promoted. Next: promote/reconcile P1-B onto latest main, then authorize P1-C. P1-C through P1-H each require separate bounded MR authorization.
 
 ## UI release sequence
 
