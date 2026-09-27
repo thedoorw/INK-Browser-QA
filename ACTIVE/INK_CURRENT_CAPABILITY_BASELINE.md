@@ -1,225 +1,369 @@
 # INK Current Capability Baseline
 
-STATUS: `REOPENED / PREVIOUS POST-CONNECTOR-005 SNAPSHOT / NOT FINAL UI AUTHORITY`
+STATUS: `CURRENT / REFRESHED FULL-PRODUCT AUTHORITY / MR`
 
-DATE: 2026-09-26
+DATE: 2026-09-27
 
-## 1. Authority status
+PROGRAM: `INK-FULL-CAPABILITY-REBASELINE-001`
 
-This file preserves the previously accepted post-Connector-005 CHAT public/control-surface snapshot.
+SOURCE_BASELINE_MAIN: `d3f73cdcc1f4e902f90e7eb3973cc64764fb05b3`
 
-It is **not** the complete INK product capability inventory and is **not** sufficient to authorize the final Photoshop-aligned UI rebuild while `INK-FULL-CAPABILITY-REBASELINE-001` is open.
+FIRST_REBASELINE_RUNTIME_TARGET: `f911f777f770cbe290e290c4b0cbc3692b36641e`
 
-Current MR development authority:
+FIRST_REBASELINE_RUNTIME: `PASS`
 
-`ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`
+P0_PROMOTION: `CLOSED`
 
-The 22 named tools / 34 bounded edit operations below remain valid as CHAT public-surface metrics only.
+UI_STATUS: `HOLD — UNTIL AUTHORIZED PRE-UI P1/P2 PACKAGES CLOSE AND UR RECONCILES THIS BASELINE`
+
+---
+
+## 1. Purpose
+
+This document is the authoritative current answer to:
+
+> What capabilities does INK currently own, and what is their technical/product status?
+
+It replaces the earlier incomplete interpretation in which the CHAT public surface or the 61-row P0 restoration ledger could be mistaken for the whole product.
+
+Hard correction:
 
 ```text
-PROMOTED_MAIN = 6ab67fe355b787d251c4431fe55b9d4f4990384b
-RUNTIME_TESTED_EXACT_SHA = 5d6e6bd81f1bcc65ed9d52cc0249f29f199ffa8f
-RUNTIME_RUN = 36240038654
-RUNTIME_RESULT = PASS
-
-FOCUSED_NODE = 32 / 32 PASS
-UI = PASS
-CLOSURE = PASS
-GEOMETRY = PASS
-CREATIVE = PASS
-
-ARTIFACT_ID = 10905628104
-ARTIFACT_DIGEST = sha256:beb8790c0c31583cde36eb7c59cf0dbcedbd55b2676f2c5c9b19beccab9fa858
+INK PRODUCT CAPABILITY != 22 named CHAT tools + 34 bounded edit operations
+INK PRODUCT CAPABILITY != only the 61 Section-4 P0 restoration rows
 ```
 
-The promoted main technical source/QA was verified blob-for-blob source-equivalent to the accepted exact Runtime candidate before promotion while preserving newer main governance and provisional UI planning.
+The 61 rows remain the preserved existing-capability backbone. Full current-source census adds three explicit anti-omission families and normalizes the product into the model below.
 
-## 2. Previously accepted CHAT public-surface invariants
+---
+
+## 2. Current counts
 
 ```text
-FORMAT_VERSION = 4
-BOUNDED_EDIT_OPERATIONS = 34
+CANONICAL_CAPABILITY_FAMILIES = 64
+
+  PRESERVED_SECTION4_BACKBONE = 61
+  ANTI_OMISSION_ADDITIONS = 3
+    C62 Asset lifecycle
+    C63 PWA / update management
+    C64 Product health / diagnostics
+
+PRODUCT_ATOMIC_CAPABILITIES = 496
+HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5
+EXPLICIT_PARTIAL_BOUNDED_ITEMS = 8
+
+CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
+CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
+CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
+```
+
+Counting policy:
+
+- Product Atomic = one user/CHAT/Specialist-recognizable product behavior after aliases are deduplicated.
+- Platform Contract = internal support behavior preserved for product integrity but not counted as a user feature.
+- Enumerated options such as individual Blend Mode names or import-format identifiers remain vocabulary under the owning capability unless they are materially separate tools/algorithms.
+- Distinct adjustments, filters and drawing tools are separate atomics because they are separate creative operations.
+- One Core capability is counted once even when Human UI, CHAT, Recipe and Specialist all expose it.
+
+Detailed normalization evidence:
+`working/INK_CAPABILITY_REGISTRY_v0.1.md`
+
+Raw source census:
+`working/INK_CAPABILITY_CENSUS_v0.1.md`
+
+---
+
+## 3. Current full-product capability inventory
+
+| ID | Family | Class | Atomic count | Normalized atomic capabilities |
+|---|---|---:|---:|---|
+| C01 | Document / project | EDITOR | 7 | New document; Open .ink document; Save .ink document; Autosave; Serialize/deserialize INK document; Document migration; Document integrity validation |
+| C02 | Pages | EDITOR | 5 | Add page; Duplicate page; Delete page; Switch active page; Rename page |
+| C03 | Layers | EDITOR | 8 | Add layer; Duplicate layer; Delete layer; Drag/reorder layer; Layer opacity; Layer visibility; Layer lock; Select active layer |
+| C04 | Creation / Layout workspaces | EDITOR | 8 | Creation workspace; Layout workspace; Switch workspace; Independent creation camera; Independent layout camera; Layout viewport; First-visit fit behavior; Shared document content across spaces |
+| C05 | Artboard / print | EDITOR | 9 | A4 artboard preset; Portrait/landscape orientation; PPI selection; Bleed; Safe margin; Center guide; Content clipping flag; Fit artboard/layout; Browser print |
+| C06 | Canvas navigation | EDITOR | 6 | Pan; Zoom; Rotate view; Fit content; Fit artboard/layout; Reset view |
+| C07 | Selection | EDITOR | 7 | Topmost click selection; Shift multi-select/toggle; Marquee contain; Marquee intersect; Lasso selection; Select all visible/unlocked; Selection-aware context |
+| C08 | Smart guides / snapping | EDITOR | 5 | Smart edge snapping; Smart center snapping; Grid snapping; Angle snapping; Temporary smart-snap bypass |
+| C09 | Align / distribute | EDITOR | 8 | Align left; Align center X; Align right; Align top; Align center Y; Align bottom; Distribute X; Distribute Y |
+| C10 | Pen / vector Path | VECTOR | 11 | Create editable Path; Add anchor; Delete anchor; Move anchor; Corner node mode; Smooth node mode; Symmetric node mode; Move incoming handle; Move outgoing handle; Open/close subpath; Pen Path session |
+| C11 | Shapes | VECTOR | 8 | Line; Arrow; Rectangle; Ellipse; Circle; Triangle; Polygon; Polyline |
+| C12 | Boolean | VECTOR | 5 | Union; Difference; Intersection; XOR; Divide |
+| C13 | Transform | EDITOR | 9 | Move/translate; Resize; Uniform scale; Non-uniform scale; Rotate; Aspect-ratio lock; Keyboard nudge; Fast keyboard nudge; Numeric transform |
+| C14 | Non-destructive deformation | VECTOR | 3 | Apply reversible deformation; Reset deformation; Inspect deformation state |
+| C15 | Group / ungroup | EDITOR | 2 | Group; Ungroup |
+| C16 | Frame / hierarchy | EDITOR | 5 | Create Frame; Nested hierarchy; Reparent object; Reparent to layer root; Hierarchy drag/direct structure |
+| C17 | Repeat / parametric | VECTOR | 6 | Radial repeat; Mirror repeat; Grid repeat; Repeat count/parameters; Linked repeat instances; Expand repeat |
+| C18 | Components | VECTOR | 7 | Register component; Create instance; Set override; Reset override; Detach instance; Duplicate definition; Repair component reference |
+| C19 | Auto / Flex layout | VECTOR | 12 | Horizontal layout; Vertical layout; Gap; Padding; Alignment; Hug sizing; Fill sizing; Child constraints; Set frame layout; Remove frame layout; Set child layout item; Remove child layout item |
+| C20 | Text | EDITOR | 6 | Create text; Edit text; Font family; Font size; Line height; Text color |
+| C21 | SVG | VECTOR | 4 | Import SVG; Export SVG; Preserve editable vector structure; Normalize imported SVG IDs |
+| C22 | Raster / Image objects | RASTER | 9 | Import image; Create raster layer; Raster layer group; Crop image; Resize image; Image histogram; Image snapshot; Before/after image-state compare; Layer manifest diagnostic export |
+| C23 | Raster / vector masks | RASTER | 11 | Layer mask; Clipping mask; Group mask; Vector mask; Raster mask; Selection from alpha; Selection from Path; Invert mask; Feather mask; Expand mask; Contract mask |
+| C24 | Adjustment stack | RASTER | 10 | Brightness/Contrast; Levels; Curves; Hue/Saturation; Color Balance; Gradient Map; Toggle adjustment; Reorder adjustment; Update adjustment; Remove adjustment |
+| C25 | Filter stack | RASTER | 10 | Gaussian Blur; Sharpen; High Pass; Edge Detection; Noise/Grain; Texture Overlay; Toggle filter; Reorder filter; Update filter; Remove filter |
+| C26 | Blend modes | RASTER | 1 | Blend-mode compositing |
+| C27 | Layer effects | RASTER | 1 | Color Overlay rendering |
+| C28 | Reusable raster source | RASTER | 3 | Create reusable raster source; Create raster-source instance; Instance non-destructive adjustment/filter stack |
+| C29 | Drawing tools | DRAW | 6 | Pen drawing tool; Pencil; Marker; Brush; Airbrush; Eraser |
+| C30 | Brush engine | DRAW | 7 | Brush preset selection; Brush preset registry; Import Brush Package; Export Brush Package; Persist/reload imported Brush Package; Replace brush on existing Stroke/Session; Drawing Workflow detect/import |
+| C31 | Natural media | DRAW | 5 | Watercolor behavior; Oil-like behavior; Dry Brush; Soft/Opaque paint behavior; Natural-media render mode selection |
+| C32 | Brush dynamics | DRAW | 14 | Pressure; Tilt; Velocity; Direction/orientation; Width; Taper; Flow; Wetness; Grain; Texture; Bristle; Scatter; Softness; Pigment/ink amount |
+| C33 | Blender / Smudge | DRAW | 2 | Blender; Smudge |
+| C34 | Stroke editing | DRAW | 9 | Simplify stroke; Set segment style; Clear segment style; Set node mode; Move Bézier handle; Insert node; Delete nodes; Split segment; Local circle erase |
+| C35 | Stroke Session | DRAW | 15 | Create session; Record session; Pause session; Resume session; Checkpoint; Replay session; Select session strokes; Delete session strokes; Recolor session strokes; Set session stroke opacity; Replace session stroke brush; Transform session strokes; Session undo; Session redo; Export session |
+| C36 | Stylus | INPUT | 10 | Pressure input; Tilt input; Altitude input; Azimuth input; Twist input; Coalesced events; Predicted preview events; Latency/sample diagnostics; Stylus test recording; Palm/contact filtering foundation |
+| C37 | Device calibration | INPUT | 13 | Pressure minimum; Pressure maximum; Pressure gamma; Pressure smoothing; Tilt sensitivity; Tilt deadzone; Azimuth offset; Pressure Curve Editor; Select calibration profile; Save calibration profile; Reset calibration profile; Import calibration profile; Export calibration profile |
+| C38 | Paper / media | DRAW | 11 | Paper type selection; Paper color; Grid size; Absorbency; Roughness; Fiber strength; Fiber angle; Sizing; Granulation; Deterministic paper seed; Texture visibility |
+| C39 | Material system | VECTOR | 8 | Create material template; Update material template; Install material templates; Create material instance; Update material instance; Detach material instance; Apply material; Remove material |
+| C40 | Reference import | COLLAB | 4 | Import local Reference; CHAT reference handoff; Decompose Reference into color/line; Preserve source Reference identity |
+| C41 | Extraction / vectorization | COLLAB | 5 | Raster-to-contour extraction; Mask-assisted extraction; Contours-to-editable Paths; Normalize extracted Paths; Cancel extraction |
+| C42 | Structure reconstruction | COLLAB | 7 | Radial evidence analysis; Sector mask; Prototype set; Radial reconstruction; Parametric descriptor; Resolve parametric parameters; Generate deterministic structure plan |
+| C43 | History | HISTORY | 6 | Undo; Redo; History step list; Jump to history step; Configurable retention limit; Linear redo invalidation after new edit |
+| C44 | Revision | HISTORY | 5 | Capture Revision; List Revisions; Inspect Revision; Restore Revision; Compare Revisions |
+| C45 | Provenance | HISTORY | 3 | Build provenance graph; Source→operation→Revision lineage; CHAT provenance readout |
+| C46 | Compare / Variant | HISTORY | 6 | Structural compare; Before/after preview; Split preview; Overlay preview; Difference preview; Variant descriptor |
+| C47 | Storage | PLATFORM | 3 | IndexedDB primary storage; LocalStorage preference/fallback; Memory fallback |
+| C48 | Recovery | PLATFORM | 5 | Recover previous valid snapshot; Recover from checkpoints; Fingerprint verification; Corrupted-current recovery; Storage-envelope migration |
+| C49 | Renderer | RENDER | 7 | Canvas2D renderer; WebGL2 renderer path; Automatic renderer fallback; Vector/object rendering; Raster/image rendering; Renderer cache invalidation; Renderer mode selection |
+| C50 | Natural-media renderer | RENDER | 14 | Pigment amount channel; Pigment RGB channel; Water channel; Deposition channel; Paper field interaction; Directional diffusion; Paper absorption; Pigment movement; Sedimentation/deposition; Evaporation; Wet-edge compositing; Cross-stroke wet interaction; Canvas2D reference backend; WebGL2/MRT backend |
+| C51 | GPU / large-canvas infrastructure | RENDER | 9 | GPU resource budget; LRU resource accounting; Dirty-region tracking; Tile-plan creation; Persistent Tile Atlas; Live Canvas tile renderer; Context-lost handling; Context-restore handling; GPU/tile diagnostics |
+| C52 | High-resolution export | OUTPUT | 6 | Tiled export; Export checkpoint; Cancel export; Resume export; Worker PNG encoding; High-resolution export progress/state |
+| C53 | Output | OUTPUT | 8 | PNG export; SVG export; PDF export; Browser print; Export scope; Export scale; Export PPI; Output handle inspect/release lifecycle |
+| C54 | Recompute | AUTOMATION | 7 | Dependency relation add; Dependency relation remove; Parent dependency relation; Affected-scope analysis; Local recompute analysis; Local recompute execution; Recompute report |
+| C55 | Recipe / automation | AUTOMATION | 17 | Recipe execute; Recipe replay; Recipe edit; Operation recording; Expression evaluation; Role mapping/schema; Condition control; Repeat-over control; Local replay; Resume; Breakpoint; Step-by-step; Rollback; Cancel; Deterministic replay; Replay diff; Recipe report |
+| C56 | Program Import | AUTOMATION | 15 | Detect program format; Translate to canonical operations; Compile translated program; Trial run; Step run; Breakpoint; Safety mode; Issues/coverage preview; Before/after comparison; Save translated Recipe; Save import report; Attach import result to document; Reference package; Manual reference-run kit; External reference runner |
+| C57 | CHAT control | COLLAB | 25 | Capability discovery; Grounded document context; Selection readout; Object inspection; Bounded edit proposal; Explicit approval; Execute approved edit; Cancel/reject proposal; Multi-step Creative Plan; Plan dependency ordering; Plan validation against current state; Preview; Capability description; Public Creative API; AI Document Bridge; Semantic target system; Approval policy; Security sandbox; Canonical executor; Audit log; Local JSON mode; External model mode; Transmission preview; Stale-preview invalidation; CHAT session/runtime management |
+| C58 | Semantic grounding | COLLAB | 8 | Semantic role inference; Semantic query from text; Resolve semantic targets; Semantic-region grounding; Region relationship evaluation; Relationship graph; Semantic document migration; Semantic document validation |
+| C59 | Creative Library | COLLAB | 7 | Search Creative Library; Filter by family; Inspect library item; Stable library reference; Reuse component through native authority; Reuse material through native authority; Reuse parametric/reference-derived structure through native authority |
+| C60 | Creative Memory / Research | COLLAB | 9 | Query Creative Memory; Compare memory records; Bind memory evidence; Build advisory context; Research evidence intake; Derive visual principles; Derive creative constraints; Resolved/unresolved/conflicting state; Create explicit Memory-promotion candidate |
+| C61 | FLORA specialization | SPECIALIZATION | 17 | FLORA action validation/dispatch; Crown painting plan/runtime; Crown visual checks; Petal recipe generation; A4 HERO plan/validation; Complete HERO structure; HERO painting compiler/runtime; HERO recipe generation; Region paint operations; Region-stroke compiler; Painting Recipe compiler/runtime; Refined painting parameters; Reference mapping; Painted-geometry retention; Geometry measurement gates; Species/profile specialization; FLORA runtime adapter |
+| C62 | Asset lifecycle | PLATFORM_SUPPORT | 5 | Asset manifest validation; Asset audit/check; Portable asset package; Linked-document asset descriptor; Asset-manifest migration |
+| C63 | PWA / update management | PLATFORM_OPS | 5 | Service Worker registration; Update detection/check; Track installing update; Activate waiting update; Update status/diagnostics |
+| C64 | Product health / diagnostics | PLATFORM_OPS | 12 | Runtime error monitoring; Frame/long-frame monitoring; Operation timing; Runtime heartbeat/health assessment; WebGL capability probe; Platform capability collection; External diagnostic bundle; External pen/event/gate validation recording; Storage/offline health check; Release/update health readout; Browser interactive benchmark; Artwork QA benchmark/export |
+
+---
+
+## 4. Explicit partial / bounded current capabilities
+
+These exist and must be preserved, but may not be represented as fully mature:
+
+### Layer Effects
+- Color Overlay rendering = current operational scope.
+- Drop Shadow = current data model exists; full rendering belongs to authorized P1-D completion.
+- Inner Shadow = current data model exists; full rendering belongs to authorized P1-D completion.
+- Outer Glow = current data model exists; full rendering belongs to authorized P1-D completion.
+- Stroke effect = current data model exists; full rendering belongs to authorized P1-D completion.
+
+### Visual Compare
+- structural comparison and existing Preview modes are real;
+- do not claim a general standalone renderer-backed wipe/overlay/difference system beyond accepted Preview surfaces.
+
+### Renderer / GPU
+- WebGL2 source/runtime path exists;
+- external browser/GPU execution remains environment dependent;
+- live WebGL tile-atlas completion is not claimed;
+- Canvas fallback remains authoritative compatibility behavior.
+
+### FLORA
+- preserved specialization boundary;
+- does not replace generic Core authorities.
+
+---
+
+## 5. P0 restoration / Runtime evidence
+
+The original 61 Section-4 capability families remain fully preserved at accepted historical/current scope:
+
+```text
+SECTION4_CAPABILITY_FAMILIES = 61
+LEDGER_COVERAGE = 61 / 61
+NATIVE_SOURCE_AUTHORITY_PATHS_MISSING = 0
+LEDGER_QA_POINTERS_MISSING = 0
+UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0 identified
+FIRST_REBASELINE_RUNTIME = PASS
+P0_PROMOTION = CLOSED
+```
+
+Primary evidence:
+- `working/INK_P0_EXISTING_CAPABILITY_RESTORE_LEDGER_v1.0.md`
+- `working/INK_P0_EXISTING_CAPABILITY_RESTORE_MR_REVIEW_v1.0.md`
+- `working/WORKING_STATUS.md`
+
+Runtime PASS is family/integration evidence. It is not a claim that every one of the 496 atomics has an isolated browser Runtime test.
+
+---
+
+## 6. Three anti-omission additions
+
+### C62 — Asset lifecycle
+
+Current source confirms:
+- asset manifest validation;
+- asset audit/check;
+- portable asset packaging;
+- linked-document asset descriptor;
+- asset-manifest migration.
+
+Classification:
+`HEADLESS / PLATFORM SUPPORT`
+
+It is tracked so asset integrity/portability cannot disappear by omission. It does not require a normal creative panel.
+
+### C63 — PWA / update management
+
+Current product source and UI confirm:
+- Service Worker registration;
+- update check/detection;
+- install-state tracking;
+- activate waiting update;
+- update status/diagnostics.
+
+Classification:
+`PRODUCT OPERATIONS / ENVIRONMENT DEPENDENT`
+
+Normal origin/browser restrictions remain evidence boundaries.
+
+### C64 — Product health / diagnostics
+
+Current product source/UI confirm:
+- runtime error monitoring;
+- frame/performance monitoring;
+- operation timing;
+- health heartbeat/assessment;
+- WebGL capability probe;
+- platform capability collection;
+- external diagnostic bundle;
+- external pen/event/gate validation recording;
+- storage/offline health;
+- release/update health;
+- interactive benchmark;
+- artwork QA/export.
+
+Classification:
+`SPECIALIST / HELP / PRODUCT OPERATIONS`
+
+Hardware/GPU/cross-browser gates remain explicitly environment dependent.
+
+---
+
+## 7. Program Import exact boundary
+
+Current detector recognizes multiple Photoshop/Illustrator/Inkscape/GIMP/Krita/Corel/PaintShop/JSON/XML/JavaScript/Python/Text formats.
+
+Important distinction:
+
+- text/script formats supported by current parser paths may proceed into canonical parsing/compilation;
+- opaque binary formats such as Photoshop Action and Clip Studio Auto Action currently use metadata-only binary parsing;
+- their binary operations are explicitly marked unsupported/rejected for translation and must not be described as full import/execution support.
+
+Detection != mature translation.
+
+---
+
+## 8. CHAT surface
+
+Current source was re-counted directly:
+
+```text
 NAMED_TOOLS = 22
-PUBLIC_CREATIVE_API = installed
-CONNECTOR_005 = installed
+BOUNDED_EDIT_OPERATIONS = 34
 ```
 
-These counts do not define the full product. Existing native INK capabilities outside this CHAT surface remain subject to the full-product preservation audit and may not be removed by omission.
+These are CHAT exposure metrics only.
 
-No final UI implementation is authorized from this snapshot until the refreshed full-product baseline is republished.
+Every mutating CHAT route retains:
+`proposal → explicit approval → execution`
 
-## 3. Installed named tools — exact order
+CHAT does not own a second Document, History, Renderer, Selection, Transform, Recipe or storage authority.
+
+---
+
+## 9. Current P1/P2 disposition
+
+Authority:
+`working/INK_P1_P2_GAP_DISPOSITION_v1.0.md`
+
+Pre-UI implementation is intentionally bounded into:
+
+1. P1-A — Raster Selection / Fill / Sampling
+2. P1-B — Local Raster Retouch
+3. P1-C — Vector / Text / Precision Layout
+4. P1-D — Layer Effects Completion
+
+One P2 capability, Color Replacement Brush, is allowed opportunistically inside P1-B because it shares the same local-raster/sampling infrastructure.
+
+Strategic color-management, bit-depth, channels, broader format interoperability, Liquify and similar large systems are explicitly after-UI work and do not keep UI on HOLD indefinitely.
+
+Generative/content-aware/RAW/neural families remain Adapter-class unless later reauthorized.
+
+---
+
+## 10. UI reconciliation status
+
+The old Photoshop-aligned Function Placement Map remains useful but is no longer complete against this refreshed product truth.
+
+Primary required correction:
 
 ```text
-01 get_ink_capabilities
-02 get_ink_context
-03 get_ink_selection
-04 inspect_ink_objects
-05 decompose_ink_reference
-06 propose_ink_edit
-07 approve_ink_edit
-08 execute_ink_edit
-09 get_ink_history
-10 undo_ink
-11 redo_ink
-12 get_ink_revisions
-13 capture_ink_revision
-14 restore_ink_revision
-15 get_ink_preview
-16 inspect_ink_output
-17 release_ink_output
-18 describe_ink_capability
-19 use_ink
-20 import_ink_reference
-21 export_ink_asset
-22 search_ink_library
+Raster / Image / Masks / Adjustments / Filters / Blend Modes /
+Layer Effects / Reusable Raster Source
 ```
 
-Connector-005 is append-only: the accepted 21-tool prefix is preserved exactly and `search_ink_library` is tool 22.
+must be treated as real INK product capabilities, not merely legacy Specialist controls.
 
-## 4. Installed bounded edit operations — exact 34
+Authority:
+`working/INK_UI_CAPABILITY_RECONCILIATION_GAPS_v0.1.md`
+
+Current state:
 
 ```text
-01 path.repaint.v1
-02 path.material.apply.v1
-03 path.material.remove.v1
-04 object.translate.v1
-05 path.simplify.v1
-06 path.refine.v1
-07 path.create.v1
-08 path.edit.v1
-09 object.rotate.v1
-10 object.clone.v1
-11 repeat.radial.v1
-12 boolean.apply.v1
-13 group.create.v1
-14 object.reparent.v1
-15 frame.create.v1
-16 text.create.v1
-17 text.edit.v1
-18 svg.import.v1
-19 object.resize.v1
-20 object.scale.v1
-21 object.order.v1
-22 repeat.mirror.v1
-23 repeat.grid.v1
-24 layout.frame.set.v1
-25 layout.frame.remove.v1
-26 layout.item.set.v1
-27 layout.item.remove.v1
-28 component.register.v1
-29 component.instance.create.v1
-30 component.override.set.v1
-31 component.override.reset.v1
-32 component.instance.detach.v1
-33 component.definition.duplicate.v1
-34 component.reference.repair.v1
+OLD_UI_MAP_REUSABLE = YES
+OLD_UI_MAP_COMPLETE_AGAINST_REFRESHED_REGISTRY = NO
+UI_IMPLEMENTATION_AUTHORIZED = NO
 ```
 
-Mutating CHAT operations remain proposal/approval governed unless an already-accepted direct authority explicitly defines otherwise.
+UR must reconcile this full inventory after the authorized pre-UI P1/P2 packages close.
 
-## 5. Current installed capability families
+---
 
-The following are installed at the accepted current scope and may receive final UI placement:
+## 11. Manual relationship
 
-- document/file context, stable refs, selection and hierarchy inspection;
-- grounded object/document inspection and semantic/provenance context;
-- browser-native preview and internal output-handle lifecycle;
-- local Reference import and Reference decomposition;
-- native Path creation/editing, rectangle/ellipse/circle/polygon/polyline construction;
-- Group, Frame and hierarchy/reparent operations;
-- Text create/edit;
-- bounded local SVG import;
-- fill/stroke/opacity repaint and material appearance application/removal;
-- translate, rotate, resize, scale and front/back ordering;
-- simplify/refine and native Boolean operations;
-- Repeat radial, mirror and grid creation;
-- Frame Auto/Flex layout set/remove and child LayoutItem sizing/constraints set/remove;
-- Component definition, instance, opacity override/reset, detach, definition duplicate and explicit reference repair;
-- History inspect/undo/redo;
-- Revision list/capture/restore;
-- structural/grounded compare paths already accepted in current product;
-- PNG/SVG/PDF asset export through existing native export authorities;
-- programmable `use_ink` composition through the accepted Creative Plan authority;
-- Creative Memory / Research advisory read paths at their accepted conditional-provider scope;
-- Connector-005 Creative Library Search.
+Future `INK_MANUAL.md` consumes this capability inventory.
 
-## 6. Connector-005 Creative Library Search contract
+The Manual answers:
+- what the capability is;
+- what creative problem it solves;
+- when to use it;
+- Human usage;
+- CHAT usage;
+- UI location;
+- limitations and related capabilities.
 
-Installed searchable families:
+The Manual does not maintain a second independent capability list.
+
+Manual prose is not a gate for P1/P2 implementation or UI restart.
+
+---
+
+## 12. Current gate
 
 ```text
-component
-material
-recipe
-parametric-structure
-reference-derived-structure
+FULL_PRODUCT_CAPABILITY_CENSUS = CLOSED
+NORMALIZED_CAPABILITY_REGISTRY = MR_FROZEN
+P1_P2_GAP_DISPOSITION = RECORDED
+REFRESHED_CAPABILITY_BASELINE = PREPARED_ON_MR_BRANCH
+
+NEXT =
+  PROMOTE THIS REFRESHED AUTHORITY
+  → AUTHORIZE P1-A DEV
+  → P1-B
+  → P1-C
+  → P1-D
+  → FINAL P1/P2 INTEGRATED QA/RUNTIME
+  → UR RECONCILIATION
+  → UI HOLD CLEARED
+
+P1/P2 PRODUCT IMPLEMENTATION = NOT YET STARTED
+UI IMPLEMENTATION = HOLD
 ```
-
-Public route:
-
-```text
-search_ink_library
-→ library.query({ action: "search" | "inspect", ... })
-```
-
-Stable ref:
-
-```text
-INK_CREATIVE_LIBRARY_REF / 1
-```
-
-Search and inspect are read-only and were browser-proven mutation-neutral for Document / History / Revision state.
-
-Reuse classifications:
-
-| Family | Accepted current route |
-|---|---|
-| Component | existing proposal/approval → `component.instance.create.v1` |
-| Material | existing proposal/approval → `path.material.apply.v1` |
-| Recipe | read-only search/inspect; no new autonomous mutation route |
-| Parametric structure | existing native object/clone/repeat authorities only |
-| Reference-derived structure | existing native object/clone/composition authorities only |
-
-Connector-005 does not create a second Library, Component, Material, Recipe, Repeat, renderer, History, Revision, or decomposition engine.
-
-## 7. Explicitly not installed / not authorized by this baseline
-
-These remain deferred, optional, or separate future work and must not be presented as operational final UI capability:
-
-```text
-full Library Manager subsystem
-cloud asset library / remote asset search
-AI automatic tagging or classification
-general Variables / Tokens system
-general Styles system
-Component Variants system
-general Grid Layout engine
-CRDT / multiplayer library state
-automatic Creative Memory writes
-automatic Research fetch/scrape
-autonomous asset application
-external connector transport
-prototype-interaction system
-design-to-code as drawing-core capability
-```
-
-## 8. UI authority — suspended pending rebaseline
-
-```text
-PHOTOSHOP_ALIGNED_UI_REBUILD = HOLD
-FINAL_UI_CAPABILITY_BASELINE = NOT YET REPUBLISHED
-CURRENT_DEVELOPMENT_AUTHORITY = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
-THIS_FILE_UI_AUTHORITY = SUSPENDED
-CONNECTOR_005_CHAT_SURFACE_RECORD = PRESERVED
-```
-
-UI may change placement, grouping, density, panel behavior, icons, labels and Photoshop-aligned interaction presentation. It may not change Core capability semantics, History/Revision contracts, operation vocabulary, tool vocabulary, or document format merely to fit the UI.
-
-Navigator and History panel interaction/placement remain UI-design requirements; History capability itself is installed as recorded above.
-
-## 9. Supersession
-
-This file supersedes pre-promotion capability counts and any earlier Closure ledger entry that still describes promoted C1/C2/Connector work as stale-branch, partial, planned, or not installed.
-
-Historical ledgers and checkpoints remain evidence records and are not rewritten retroactively.
