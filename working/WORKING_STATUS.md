@@ -6,9 +6,9 @@ DATE: 2026-09-27
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PRIMARY_TASKS = P1 INTEGRATION
+CURRENT_PRIMARY_TASKS = P1 INTEGRATED RUNTIME
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_INTEGRATION_MR_REVISE_RENDERER
+CURRENT_GATE = P1_INTEGRATED_RUNTIME_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -34,8 +34,10 @@ P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
 P1_H = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PROMOTION_MERGE = 4eb9a8f18781840219217a7cc767ed73aebe3989
-P1_INTEGRATION = MR_REVISE / BOUNDED_RENDERER_DISPATCH_CORRECTION
-P1_RUNTIME = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_INTEGRATION
+P1_INTEGRATION = MR_PASS / PROMOTED
+P1_INTEGRATION_PROMOTION_MERGE = d1269334338531228ddfdd9383761cd419e58738
+P1_RUNTIME = AUTHORIZED / DEV_OWNED_EXECUTION / DEV_NOT_STARTED
+P1_RUNTIME_TARGET_SHA = d1269334338531228ddfdd9383761cd419e58738
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
 
@@ -139,3 +141,12 @@ P1 Integration MR review checkpoint:
 - blocker = rasterState-only imported image is not dispatched into integrated color-raster renderer;
 - correction scope = studio renderer dispatch + focused regression + lane progress;
 - Runtime remains prohibited.
+
+
+P1 Integrated Runtime activation checkpoint:
+- P1 Integration = MR_PASS / promoted at `d1269334338531228ddfdd9383761cd419e58738`;
+- exact Runtime target = `d1269334338531228ddfdd9383761cd419e58738`;
+- executor = DEV;
+- product source mutation during Runtime = prohibited;
+- any Runtime defect must be preserved and returned to MR without in-lane repair;
+- UI remains HOLD.
