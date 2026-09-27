@@ -8,7 +8,7 @@ ACTIVATION_MAIN: `87f57980a071ff8f009f3aa354951d81025fecf0`
 
 IMPLEMENTATION_HEAD_BEFORE_HANDOFF_DOC: `e2b2a3cec30bcc9ea23cd4d9de3eb2b1574d46bd`
 
-STATUS: `DEV_COMPLETE / STOP_FOR_MR_REVIEW`
+STATUS: `DEV_BOUNDED_CORRECTION_COMPLETE / STOP_FOR_MR_RE_REVIEW`
 
 WORKPACK:
 `working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`
@@ -196,11 +196,77 @@ qa/ink-p1-integration-001.test.mjs e560fc8be3d94010abae41d3ff54f44fc70a83b0
 - Persistent ruler/guide UI interaction is intentionally absent; only technical Document/History/Renderer/Transform wiring is complete.
 - Final UI acceptance remains UR-owned after integrated Runtime authorization.
 
+## MR bounded renderer dispatch correction
+
+MR review source:
+`working/INK_P1_INTEGRATION_MR_REVIEW_v1.0.md` on main, reviewed head `4c985ec692b2c1275ec23205c0823bb40283430a`.
+
+Authorized correction only. No other product source was changed.
+
+```text
+CORRECTION_BASE = 4c985ec692b2c1275ec23205c0823bb40283430a
+CORRECTION_IMPLEMENTATION_HEAD_BEFORE_PROGRESS = dd4eb8083d322d103ab8de60ff57461e1cadd8d2
+0da5855881b52340d634998219d334ccf79d67e6  fix(p1-integration): dispatch raster-state images to renderer
+dd4eb8083d322d103ab8de60ff57461e1cadd8d2  test(p1-integration): cover raster-state renderer dispatch
+```
+
+Correction boundary:
+
+```text
+product/source/src/studio-core.js
+qa/ink-p1-integration-001.test.mjs
+working/INK_P1_INTEGRATION_DEV_PROGRESS.md
+```
+
+Renderer dispatch result:
+
+- image objects with `o.rasterState?.colorRaster` now dispatch into the existing integrated `renderer.drawImage()` path even when adjustment/filter/effect/mask stacks are empty;
+- the existing `colorRasterToRgba8(...)` path and `lastColorDiagnostic` unsupported-color diagnostic are retained unchanged;
+- ordinary `src`-only images still fall through to the original/base `drawObject` path;
+- no second Renderer / Color / Image authority was added.
+
+Regression added:
+
+`rasterState-only images dispatch through integrated renderer while ordinary src images retain legacy path`
+
+The deterministic regression proves:
+
+```text
+supported rasterState-only image: legacy drawObject = 0; legacy drawImage = 0; integrated output draw = 1
+ordinary src-only image:          legacy drawObject = 1; integrated raster dispatch not entered
+unsupported Multichannel state:   lastColorDiagnostic.status = unsupported-render; legacy fallback retained
+```
+
+Complete Integration QA replay:
+
+```text
+declared integration tests = 20
+skip tokens = 0
+focused exact-source renderer regression = PASS
+modified Integration source/test syntax checks = 11 PASS
+FAIL = 0
+SKIP = 0
+P1_INTEGRATION_QA = PASS
+INTEGRATED_RUNTIME = NOT RUN
+```
+
+Differential verification from prior MR-reviewed handoff `4c985ec...` to correction head `dd4eb808...`:
+
+```text
+ahead = 2
+behind = 0
+changed product source = product/source/src/studio-core.js only
+changed QA = qa/ink-p1-integration-001.test.mjs
+all other previously-passing Integration source blobs = byte-identical
+```
+
+The execution container still cannot resolve `github.com`, and this repository has no automatic workflow run attached to the correction commit. Therefore the committed `node --test qa/ink-p1-integration-001.test.mjs` command could not be launched from that container; QA was rerun against exact current GitHub SSOT source with the deterministic renderer harness plus syntax/differential checks above. MR should replay the committed Node command in a repository-capable environment before promotion.
+
 ## Handoff
 
 ```text
 DEV_HANDOFF = YES
 NEXT_OWNER = MR
 DEV_ACTION = STOP
-STOP FOR MR REVIEW
+STOP FOR MR RE-REVIEW
 ```
