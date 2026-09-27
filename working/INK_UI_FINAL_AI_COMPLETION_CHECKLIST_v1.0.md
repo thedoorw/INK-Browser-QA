@@ -644,6 +644,40 @@ SNAP_JITTER_REGRESSION = 0
 - [ ] AH25 document-specific status telemetry follows the active document if multi-document behavior is later supported. [SRC][INT]
 - [ ] AH26 document status state has one authority and is not implemented as global always-on application chrome. [SRC][HEALTH]
 
+# AJ. Photoshop Fine Detail Standard audit
+
+Authority:
+`working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md`
+
+- [ ] AJ01 every applicable Menu fine-detail field has Target/Actual/Evidence/Result.
+- [ ] AJ02 every applicable Options Bar fine-detail field has Target/Actual/Evidence/Result.
+- [ ] AJ03 every applicable Tools fine-detail field has Target/Actual/Evidence/Result.
+- [ ] AJ04 every applicable right Dock/general Panel fine-detail field is closed.
+- [ ] AJ05 Layers row/thumbnail/indent/icon/drag/footer details are closed.
+- [ ] AJ06 History row/state/current/future/scroll details are closed.
+- [ ] AJ07 Navigator thumbnail/proxy/zoom-control details are closed.
+- [ ] AJ08 typography semantic tokens are explicitly defined and verified.
+- [ ] AJ09 light-gray semantic palette roles are explicitly defined and verified.
+- [ ] AJ10 scrollbar detail is defined and verified.
+- [ ] AJ11 tooltip detail is defined and verified.
+- [ ] AJ12 cursor classes are defined and verified.
+- [ ] AJ13 keyboard focus visuals are defined and verified.
+- [ ] AJ14 special-state evidence matrix has no silently omitted required state.
+- [ ] AJ15 Panel Tab geometry/states are defined and verified.
+- [ ] AJ16 Panel Options Menu geometry/states/command inventories are defined and verified.
+- [ ] AJ17 Document Status Strip obeys active-document-only visibility and final content rule.
+- [ ] AJ18 shared Button/Input/Select control tokens are defined and verified.
+- [ ] AJ19 icon grid/stroke/optical alignment is coherent across workstation.
+- [ ] AJ20 spacing rhythm uses shared tokens with justified exceptions only.
+- [ ] AJ21 border/radius/shadow grammar remains Photoshop-like and non-card-heavy.
+- [ ] AJ22 transitions are minimal and reduced-motion safe.
+- [ ] AJ23 responsive behavior is specified for every affected fine-detail component.
+- [ ] AJ24 accessibility semantics match visible states.
+- [ ] AJ25 no DEV-invented Photoshop numeric value remains undocumented.
+- [ ] AJ26 every unresolved `REFERENCE_MISSING` is either resolved, explicitly waived by UR, or blocks pixel-fidelity closure.
+- [ ] AJ27 final audit table includes Component / Field / Target / Actual / Evidence / Result.
+- [ ] AJ28 `SILENTLY_UNSPECIFIED_DETAIL_CLASSES = 0`.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.
