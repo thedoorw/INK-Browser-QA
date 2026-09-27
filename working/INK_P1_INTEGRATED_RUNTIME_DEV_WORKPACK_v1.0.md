@@ -1,6 +1,6 @@
 # INK P1 Integrated Runtime — DEV Workpack v1.0
 
-STATUS: `PLANNED / BLOCKED_UNTIL_P1_INTEGRATION_MR_PASS_PROMOTED`
+STATUS: `AUTHORIZED / DEV_NOT_STARTED`
 
 TASK: `INK-P1-INTEGRATED-RUNTIME-001`
 
@@ -24,7 +24,19 @@ P1_INTEGRATION = MR_PASS / PROMOTED
 RUNTIME_TARGET_SHA = exact promoted integration product SHA
 ```
 
-MR records the exact Runtime target SHA before DEV starts.
+MR-pinned Runtime target SHA:
+`d1269334338531228ddfdd9383761cd419e58738`
+
+This exact SHA is mandatory. A branch-only or later-main substitute is not accepted.
+
+## 1A. Active authorization
+
+```text
+RUNTIME_TARGET_SHA = d1269334338531228ddfdd9383761cd419e58738
+P1_INTEGRATION = MR_PASS / PROMOTED
+PRODUCT_MUTATION = PROHIBITED
+UI = HOLD
+```
 
 ## 2. Responsibility
 
