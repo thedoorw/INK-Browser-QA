@@ -7,11 +7,11 @@ DATE: 2026-09-27
 ## Current program
 
 ```text
-PRIMARY_TASK = INK-P1-C-VECTOR-TEXT-PRECISION-LAYOUT-001
+PRIMARY_TASK = INK-P1-D-LAYER-EFFECTS-COMPLETION-001
 PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
-BASELINE_MAIN = c35b81a81845b65dfd462e7d225a192d3393f135
+BASELINE_MAIN = b214c177972be2e6175459005720bb72e697cec2
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
 PRODUCT_ATOMIC_CAPABILITIES = 496
@@ -21,8 +21,9 @@ EXPLICIT_PARTIAL_BOUNDED_ITEMS = 8
 P1_P2_DISPOSITION = working/INK_P1_P2_GAP_DISPOSITION_v1.0.md
 P1_A = MODULE_READY / PROMOTED
 P1_B = MODULE_READY / PROMOTED
-P1_C_WORKPACK = working/INK_P1_C_VECTOR_TEXT_PRECISION_LAYOUT_DEV_WORKPACK_v1.0.md
-MANDATORY_DEV_BRANCH = work/ink-p1-c-vector-text-precision-layout-001
+P1_C = MODULE_READY / PROMOTED
+P1_D_WORKPACK = working/INK_P1_D_LAYER_EFFECTS_COMPLETION_DEV_WORKPACK_v1.0.md
+MANDATORY_DEV_BRANCH = work/ink-p1-d-layer-effects-completion-001
 
 FORMAT_VERSION = 4
 CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
@@ -57,7 +58,7 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current DEV authorization — P1-C
+## Current DEV authorization — P1-D
 
 P1-A:
 `MODULE_READY / MR_PASS / PROMOTED`
@@ -65,33 +66,30 @@ P1-A:
 P1-B:
 `MODULE_READY / MR_PASS / PROMOTED`
 
-P1-B promoted main:
-`c35b81a81845b65dfd462e7d225a192d3393f135`
+P1-C:
+`MODULE_READY / MR_PASS / PROMOTED`
 
-DEV is now authorized only for P1-C:
+P1-C promoted main:
+`b214c177972be2e6175459005720bb72e697cec2`
 
-1. Skew
-2. Distort
-3. Perspective
-4. Warp
-5. Paragraph Type
-6. Vertical Type
-7. Text on Path
-8. Gradient Fill
-9. Pattern Fill
-10. Persistent ruler guides
-11. Equal-distance smart snapping
-12. Ruler / measurement
+DEV is now authorized only for P1-D:
+
+1. Drop Shadow
+2. Inner Shadow
+3. Outer Glow
+4. Stroke
+
+Existing Color Overlay must remain operational and regression-tested.
 
 Mandatory branch:
-`work/ink-p1-c-vector-text-precision-layout-001`
+`work/ink-p1-d-layer-effects-completion-001`
 
 Authoritative workpack:
-`working/INK_P1_C_VECTOR_TEXT_PRECISION_LAYOUT_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_D_LAYER_EFFECTS_COMPLETION_DEV_WORKPACK_v1.0.md`
 
-P1-C is UI-neutral Core/data-contract + focused QA only.
+P1-D completes the existing `image-core.js → applyLayerEffects()` renderer authority.
 
-No P1-D through P1-H implementation is authorized by this Work Order.
+No P1-E through P1-H implementation is authorized by this Work Order.
 
 ## P1/P2 execution sequence
 
@@ -160,11 +158,12 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_C_MODULE_READY_AWAIT_PROMOTION
+CURRENT_GATE = P1_D_DEV_AUTHORIZED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / NOT_YET_PROMOTED
-P1_D_E_F_G_H = NOT YET AUTHORIZED
+P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
+P1_D_PRODUCT_IMPLEMENTATION = AUTHORIZED
+P1_E_F_G_H = NOT YET AUTHORIZED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
@@ -173,17 +172,17 @@ INK_MANUAL_PROSE = NON_BLOCKING
 ## Next action
 
 DEV:
-- create/use the mandatory P1-C branch;
-- implement only the bounded P1-C workpack;
+- create/use the mandatory P1-D branch;
+- implement only the bounded P1-D workpack;
 - run focused QA;
 - update branch-local `ACTIVE/INK_DEV_PROGRESS.md`;
 - hand off exact HEAD;
 - STOP.
 
 MR:
-- P1-C exact HEAD reviewed and MODULE_READY = PASS;
-- next promote/reconcile P1-C onto latest main;
-- only then authorize P1-D.
+- P1-C MODULE_READY and promotion are closed;
+- wait for exact P1-D handoff;
+- review P1-D before authorizing P1-E.
 
 UR:
 - remain on HOLD.
