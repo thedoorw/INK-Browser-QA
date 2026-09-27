@@ -1,6 +1,7 @@
 const clamp=(v,a=0,b=255)=>Math.max(a,Math.min(b,v));
 const clamp01=v=>clamp(Number(v)||0,0,1);
 const byte=v=>clamp(Math.round(Number(v)||0),0,255);
+const numberOr=(value,fallback)=>{if(value==null)return fallback;const n=Number(value);return Number.isNaN(n)?fallback:n;};
 const cloneData=data=>new Uint8ClampedArray(data);
 
 function assertImageData(imageData){
@@ -73,7 +74,7 @@ export function applyAdvancedAdjustment(imageData,{type,params={},opacity=1,mask
       const weights=params.weights||{},wr=Number(weights.r??.3),wg=Number(weights.g??.59),wb=Number(weights.b??.11),sum=Math.abs(wr)+Math.abs(wg)+Math.abs(wb)||1,v=(r*wr+g*wg+b*wb)/sum;
       rgb=[v,v,v];
     }else if(type==='photoFilter'){
-      const color=normalizeColor(params.color,[255,180,80]),density=clamp01((Number(params.density)||25)/100),preserve=params.preserveLuminosity!==false,baseLum=luminance(r,g,b);
+      const color=normalizeColor(params.color,[255,180,80]),density=clamp01(numberOr(params.density,25)/100),preserve=params.preserveLuminosity!==false,baseLum=luminance(r,g,b);
       rgb=rgb.map((v,c)=>v+(color[c]-v)*density);if(preserve){const newLum=luminance(...rgb)||1,rating=baseLum/newLum;rgb=rgb.map(v=>v*rating);}
     }else if(type==='channelMixer'){
       const m=params.matrix||[[1,0,0],[0,1,0],[0,0,1]],k=params.constant||[0,0,0];
@@ -83,7 +84,7 @@ export function applyAdvancedAdjustment(imageData,{type,params={},opacity=1,mask
     else if(type==='posterize'){
       const levels=clamp(Math.round(Number(params.levels)||4),2,256),step=255/(levels-1);rgb=rgb.map(v=>Math.round(v/step)*step);
     }else if(type==='threshold'){
-      const level=clamp(Number(params.level)||128,0,255),v=luminance(r,g,b)>=level?255:0;rgb=[v,v,v];
+      const level=clamp(numberOr(params.level,128),0,255),v=luminance(r,g,b)>=level?255:0;rgb=[v,v,v];
     }else if(type==='selectiveColor'){
       const corrections=params.corrections||{},max=Math.max(r,g,b),min=Math.min(r,g,b),range=max-min,target=max<64?'blacks':min>192?'whites':range<24?'neutrals':max===r?'reds':max===g?'greens':'blues',c=corrections[target]||corrections.neutrals||{};
       rgb=[r+(Number(c.red)||0)*2.55,g+(Number(c.green)||0)*2.55,b+(Number(c.blue)||0)*2.55];
@@ -107,13 +108,13 @@ export function applyAdvancedFilter(imageData,{type,params={},opacity=1,mask=nul
   }else if(type==='median'||type==='minimum'||type==='maximum'){
     const r=clamp(Math.round(Number(params.radius)||1),1,6),out=cloneData(data);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const o=(y*w+x)*4;for(let c=0;c<3;c++){const values=neighborhoodValues(data,w,h,x,y,c,r);if(type==='median'){values.sort((a,b)=>a-b);out[o+c]=values[values.length>>1];}else out[o+c]=type==='minimum'?Math.min(...values):Math.max(...values);}out[o+3]=data[o+3];}result={width:w,height:h,data:out};
   }else if(type==='unsharpMask'){
-    const radius=clamp(Math.round(Number(params.radius)||1),1,8),amount=clamp(Number(params.amount)||100,0,500)/100,threshold=clamp(Number(params.threshold)||0,0,255),blur=boxBlur(imageData,radius),out=cloneData(data);for(let i=0;i<w*h;i++){const o=i*4;for(let c=0;c<3;c++){const d=data[o+c]-blur.data[o+c];out[o+c]=Math.abs(d)>=threshold?byte(data[o+c]+d*amount):data[o+c];}}result={width:w,height:h,data:out};
+    const radius=clamp(Math.round(Number(params.radius)||1),1,8),amount=clamp(numberOr(params.amount,100),0,500)/100,threshold=clamp(Number(params.threshold)||0,0,255),blur=boxBlur(imageData,radius),out=cloneData(data);for(let i=0;i<w*h;i++){const o=i*4;for(let c=0;c<3;c++){const d=data[o+c]-blur.data[o+c];out[o+c]=Math.abs(d)>=threshold?byte(data[o+c]+d*amount):data[o+c];}}result={width:w,height:h,data:out};
   }else if(type==='emboss'){
-    const strength=clamp(Number(params.strength)||1,0,4),kernel=[-2,-1,0,-1,1,1,0,1,2].map(v=>v*strength);result=convolveRgb(imageData,kernel,3,128,1);
+    const strength=clamp(numberOr(params.strength,1),0,4),kernel=[-2,-1,0,-1,1,1,0,1,2].map(v=>v*strength);result=convolveRgb(imageData,kernel,3,128,1);
   }else if(type==='mosaic'){
     const size=clamp(Math.round(Number(params.size)||4),1,64),out=cloneData(data);for(let by=0;by<h;by+=size)for(let bx=0;bx<w;bx+=size){const sums=[0,0,0],pixels=[];for(let y=by;y<Math.min(h,by+size);y++)for(let x=bx;x<Math.min(w,bx+size);x++){pixels.push(y*w+x);const o=(y*w+x)*4;for(let c=0;c<3;c++)sums[c]+=data[o+c];}const avg=sums.map(v=>byte(v/pixels.length));for(const i of pixels){const o=i*4;for(let c=0;c<3;c++)out[o+c]=avg[c];}}result={width:w,height:h,data:out};
   }else if(type==='reduceNoise'){
-    const radius=clamp(Math.round(Number(params.radius)||1),1,4),strength=clamp01((Number(params.strength)||50)/100),preserve=clamp(Number(params.preserveEdges)||24,0,255),blur=boxBlur(imageData,radius),out=cloneData(data);for(let i=0;i<w*h;i++){const o=i*4;for(let c=0;c<3;c++){const d=Math.abs(data[o+c]-blur.data[o+c]),local=d>preserve?strength*.25:strength;out[o+c]=byte(data[o+c]+(blur.data[o+c]-data[o+c])*local);}}result={width:w,height:h,data:out};
+    const radius=clamp(Math.round(Number(params.radius)||1),1,4),strength=clamp01(numberOr(params.strength,50)/100),preserve=clamp(numberOr(params.preserveEdges,24),0,255),blur=boxBlur(imageData,radius),out=cloneData(data);for(let i=0;i<w*h;i++){const o=i*4;for(let c=0;c<3;c++){const d=Math.abs(data[o+c]-blur.data[o+c]),local=d>preserve?strength*.25:strength;out[o+c]=byte(data[o+c]+(blur.data[o+c]-data[o+c])*local);}}result={width:w,height:h,data:out};
   }
   return mixProcessed(imageData,result,{opacity,mask});
 }
@@ -131,7 +132,7 @@ export function liquifyRaster(imageData,{operations=[],freezeMask=null,maxWork=n
       if(op.type==='forwardWarp'){dx[i]+=vx*strength*falloff;dy[i]+=vy*strength*falloff;}
       else if(op.type==='twirl'){const a=angle*falloff,cs=Math.cos(a),sn=Math.sin(a),nx=rx*cs-ry*sn,ny=rx*sn+ry*cs;dx[i]+=nx-rx;dy[i]+=ny-ry;}
       else if(op.type==='pucker'||op.type==='bloat'){const sign=op.type==='pucker'?-1:1,scale=1+sign*strength*.35*falloff;dx[i]+=rx*(scale-1);dy[i]+=ry*(scale-1);}
-      else if(op.type==='reconstruct'){const amount=clamp01(Math.abs(strength)||.5)*falloff;dx[i]*=1-amount;dy[i]*=1-amount;}
+      else if(op.type==='reconstruct'){const amount=clamp01(Math.abs(strength))*falloff;dx[i]*=1-amount;dy[i]*=1-amount;}
     }
   }
   const out=new Uint8ClampedArray(data.length);for(let y=0;y<h;y++)for(let x=0;x<w;x++){consume();const i=y*w+x,o=i*4,sx=x-dx[i],sy=y-dy[i];for(let c=0;c<4;c++)out[o+c]=byte(bilinear(data,w,h,sx,sy,c));}
