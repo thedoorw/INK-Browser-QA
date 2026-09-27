@@ -34,7 +34,7 @@ P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
 P1_H = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PROMOTION_MERGE = 4eb9a8f18781840219217a7cc767ed73aebe3989
-P1_INTEGRATION = AUTHORIZED / DEV_OWNED_EXECUTION / AWAITING_BRANCH_CUT
+P1_INTEGRATION = AUTHORIZED / DEV_OWNED_EXECUTION / DEV_NOT_STARTED
 P1_RUNTIME = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_INTEGRATION
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
@@ -127,5 +127,7 @@ P1 Integration activation checkpoint:
 - all P1 A-H = promoted;
 - execution owner = DEV;
 - workpack = `working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`;
-- branch cut exact SHA will be recorded before DEV begins;
+- activation main = `87f57980a071ff8f009f3aa354951d81025fecf0`;
+- branch = `work/ink-p1-integration-001`;
+- branch progress initialization = `f9e4a012a4dfd1f805981d0b4f94b1238bacd50f`;
 - integrated Runtime remains prohibited until Integration MR_PASS/promoted.
