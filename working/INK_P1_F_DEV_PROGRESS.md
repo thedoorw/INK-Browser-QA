@@ -6,7 +6,7 @@ BRANCH: `work/ink-p1-f-raster-processing-expansion-001`
 
 BASELINE_MAIN: `dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f`
 
-STATUS: `BOUNDED_CORRECTION_HANDOFF_READY / STOP_FOR_MR`
+STATUS: `FINAL_NORMALIZATION_BOUNDED_CORRECTION_HANDOFF_READY / STOP_FOR_MR`
 
 WORKPACK:
 `working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md`
@@ -317,6 +317,112 @@ FORMAT_VERSION
 SCOPE_CORRECTION_COMMIT = 2bc3214d6cee22294398b57948737aa5e54a5d76
 AUTHORIZED_ZERO_ENDPOINTS = 6
 FULL_P1_F_QA = PASS 39/39 / FAIL 0 / SKIP 0
+RUNTIME = NOT RUN
+DEV_HANDOFF = YES
+NEXT_ACTION = STOP FOR MR REVIEW
+```
+
+DEV stops here.
+
+
+## MR final normalization bounded correction — 2026-09-27
+
+Gate:
+`P1_F = MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION`
+
+FINAL_NORMALIZATION_COMMIT:
+`48a54869fc2e104e317d858db0fec2cd7bf4adf9`
+
+FINAL_NORMALIZATION_TREE:
+`b83010e7521b24cd723ddf7bb73b7f706514281b`
+
+### numberOr() normalization
+
+`numberOr(value, fallback)` now accepts only values satisfying:
+
+```text
+typeof value === 'number'
+Number.isFinite(value) === true
+```
+
+Therefore:
+
+- finite numeric `0` remains `0`
+- other finite numbers remain unchanged
+- `NaN` -> fallback
+- `+Infinity` -> fallback
+- `-Infinity` -> fallback
+- non-number values -> fallback
+
+The six MR-authorized legal-zero endpoints remain unchanged:
+
+1. `photoFilter.density`
+2. `threshold.level`
+3. `unsharpMask.amount`
+4. `emboss.strength`
+5. `reduceNoise.strength`
+6. `reduceNoise.preserveEdges`
+
+No Liquify behavior was modified.
+
+### Regression coverage
+
+Existing six legal-zero regressions remain.
+
+Added non-finite normalization regression across all six endpoints. Each endpoint is verified for:
+
+- `NaN`
+- `+Infinity`
+- `-Infinity`
+
+Each non-finite result must exactly match the existing omitted-parameter fallback behavior.
+
+### Full P1-F QA rerun
+
+```text
+tests = 40
+pass = 40
+fail = 0
+skip = 0
+```
+
+### Exact blobs
+
+- `product/source/src/image/raster-processing-advanced.js`
+  - `1ede3198687ee0a92a54f7c77a2020d55e34ad2c`
+- `qa/ink-p1-f-raster-processing-expansion.test.mjs`
+  - `66982fdb7783ed0e236698cd071dccbd4e06f55f`
+
+### Isolation
+
+Correction commit changed only:
+
+- `product/source/src/image/raster-processing-advanced.js`
+- `qa/ink-p1-f-raster-processing-expansion.test.mjs`
+
+```text
+OTHER_CAPABILITY_MUTATION = 0
+LIQUIFY_MUTATION = 0
+IMAGE_CORE_MUTATION = 0
+P1_G_MUTATION = 0
+P1_H_MUTATION = 0
+DOCUMENT_MODEL_MUTATION = 0
+RENDERER_MUTATION = 0
+HISTORY_MUTATION = 0
+INTEGRATION_MUTATION = 0
+RUNTIME_RUN = 0
+UI_MUTATION = 0
+FORMAT_VERSION_MUTATION = 0
+DEPENDENCIES_ADDED = 0
+```
+
+### Final handoff
+
+```text
+FINAL_NORMALIZATION_COMMIT = 48a54869fc2e104e317d858db0fec2cd7bf4adf9
+AUTHORIZED_ZERO_ENDPOINTS = 6
+NON_FINITE_REGRESSION = PASS
+FULL_P1_F_QA = PASS 40/40 / FAIL 0 / SKIP 0
 RUNTIME = NOT RUN
 DEV_HANDOFF = YES
 NEXT_ACTION = STOP FOR MR REVIEW
