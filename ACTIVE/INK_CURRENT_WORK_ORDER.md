@@ -7,7 +7,7 @@ DATE: 2026-09-27
 ## Current program
 
 ```text
-PRIMARY_TASKS = INK-P1-F-RASTER-PROCESSING-EXPANSION-001
+PRIMARY_TASKS = INK-P1-INTEGRATION-001
 PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
@@ -29,8 +29,10 @@ P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_MR_REVIEW = working/INK_P1_G_MR_REVIEW_v1.0.md
 P1_H_WORKPACK = working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md
 P1_INTEGRATION_WORKPACK = working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md
+P1_INTEGRATION_BRANCH = work/ink-p1-integration-001
 P1_RUNTIME_WORKPACK = working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
+P1_F_PROMOTION_MERGE = 5bb74c1c0ad655dac8ae00b5474da52b58db18db
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
 
 FORMAT_VERSION = 4
@@ -66,57 +68,35 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current DEV authorization — P1-F + P1-H PARALLEL
+## Current DEV authorization — P1 Integration
 
-P1-A through P1-E:
-`MODULE_READY / MR_PASS / PROMOTED`
+All P1 capability packages A through H are now `MODULE_READY / MR_PASS / PROMOTED`.
 
-P1-G:
-`MODULE_READY / MR_PASS / PROMOTED`
-
-P1-G reviewed HEAD:
-`d90985320989607c527199e9c31d75fb6614bfca`
-
-P1-G promotion merge:
-`fff2e6961a5f72d42134ca2fedca533be0aa31c7`
-
-MR review:
-`working/INK_P1_G_MR_REVIEW_v1.0.md`
-
-Two independent DEV lanes may now proceed in parallel:
-
-### P1-F — Raster Processing Expansion
-
-Task:
-`INK-P1-F-RASTER-PROCESSING-EXPANSION-001`
-
-Branch:
-`work/ink-p1-f-raster-processing-expansion-001`
+Current task:
+`INK-P1-INTEGRATION-001`
 
 Workpack:
-`working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`
 
-### P1-H — Format Interoperability
+Mandatory DEV branch:
+`work/ink-p1-integration-001`
 
-Task:
-`INK-P1-H-FORMAT-INTEROPERABILITY-001`
+Execution owner:
+`DEV`
 
-Scope:
-- PSD
-- PSB
-- TIFF
-- RAW adapter boundary
-- EXR
+MR owns:
+- exact activation-main SHA;
+- scope/authority review;
+- handoff acceptance or bounded revision;
+- promotion.
 
-Branch:
-`work/ink-p1-h-format-interoperability-001`
+DEV owns:
+- complete technical integration of accepted P1 A-H capabilities;
+- focused/integrated QA;
+- exact handoff evidence;
+- STOP for MR.
 
-Workpack:
-`working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md`
-
-P1-H must consume the frozen P1-G color/bit-depth/ICC/channel contract and may not modify P1-G files.
-
-P1-H may run concurrently with remaining P1-F work because their product-source boundaries are disjoint.
+The integrated Runtime remains prohibited inside this workpack.
 
 ## P1/P2 execution sequence
 
@@ -186,13 +166,13 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_F_FINAL_NORMALIZATION_CORRECTION
+CURRENT_GATE = P1_INTEGRATION_DEV_AUTHORIZED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_F_PRODUCT_IMPLEMENTATION = MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION
+P1_F_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
@@ -202,41 +182,21 @@ INK_MANUAL_PROSE = NON_BLOCKING
 
 ## Next action
 
-DEV-F:
-- continue on `work/ink-p1-f-raster-processing-expansion-001`;
-- six legal-zero endpoints at HEAD `56d8dab73f34eba58132c03a389b4fc04637bed4` pass MR source review;
-- perform only the final non-finite fallback correction in `working/INK_P1_F_MR_REVIEW_v1.0.md`;
-- add non-finite regression coverage;
-- rerun the full P1-F focused QA;
-- update lane progress;
-- hand off a new exact HEAD;
-- STOP for MR re-review.
-
-DEV-H:
-- STOP;
-- final reviewed HEAD `89cb4d3569bd2ac0833627a415c2eeb6d58a0c00` = MODULE_READY / MR_PASS;
-- promotion merge = `4eb9a8f18781840219217a7cc767ed73aebe3989`;
-- no further P1-H mutation is authorized.
+DEV-Integration:
+- use only `work/ink-p1-integration-001`;
+- follow `working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`;
+- perform the technical wiring for accepted P1 A-H, including the mandatory ruler/guide/snapping technical integration;
+- run focused/integrated QA;
+- do not run the integrated Runtime;
+- hand off exact HEAD and evidence;
+- STOP for MR review.
 
 MR:
-- P1-H final reviewed HEAD `89cb4d3569bd2ac0833627a415c2eeb6d58a0c00` = MODULE_READY / MR_PASS / PROMOTED; review record `working/INK_P1_H_MR_REVIEW_v1.0.md`;
-- P1-F reviewed HEAD `5abe3d8c696f6eb74a56da415587d9f4834121f5` = MR_REVISE; review record `working/INK_P1_F_MR_REVIEW_v1.0.md`;
-- re-review P1-F after bounded correction;
-- re-review P1-H after bounded correction;
-- when both are MR_PASS/promoted, activate `INK-P1-INTEGRATION-001` for DEV;
-- review/promote exact Integration DEV handoff;
-- after Integration MR_PASS/promoted, activate `INK-P1-INTEGRATED-RUNTIME-001` for DEV;
-- review exact-SHA Runtime evidence and close/pass/revise the Runtime gate.
-
-Future execution ownership:
-```text
-P1_INTEGRATION_IMPLEMENTATION = DEV
-P1_INTEGRATION_REVIEW = MR
-P1_INTEGRATED_RUNTIME_EXECUTION = DEV
-P1_INTEGRATED_RUNTIME_REVIEW = MR
-```
-
-Integration and Runtime workpacks are predeclared but remain BLOCKED until their activation gates are satisfied.
+- record exact activation-main SHA;
+- review exact Integration handoff;
+- promote only after `P1_INTEGRATION_QA = PASS / FAIL 0 / SKIP 0`;
+- only after Integration MR_PASS/promoted, authorize `INK-P1-INTEGRATED-RUNTIME-001` for DEV.
 
 UR:
 - remain on HOLD.
+
