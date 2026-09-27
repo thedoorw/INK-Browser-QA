@@ -48,7 +48,7 @@ test('select-and-mask refinement reuses raster-mask authority for smooth feather
   const feathered = refineRasterSelection(single, { feather:1 });
   assert.ok(feathered.alpha[1] > 0 && feathered.alpha[1] < 255);
   const smoothed = refineRasterSelection({ width:5, height:1, alpha:[0,255,0,255,0] }, { smooth:1 });
-  assert.equal(smoothed.alpha.length, 5);
+  assert.deepEqual(smoothed.alpha, [0,0,255,0,0]);
 });
 
 test('eyedropper samples exact RGBA and averages safely at canvas edge', () => {
@@ -64,6 +64,12 @@ test('linear gradient hits endpoints and midpoint deterministically', () => {
   assert.deepEqual(rgbaAt(gradient,0,0), [0,0,0,255]);
   assert.deepEqual(rgbaAt(gradient,1,0), [128,128,128,255]);
   assert.deepEqual(rgbaAt(gradient,2,0), [255,255,255,255]);
+  const multi = gradientFill(5, 1, { type:'linear', start:{x:0,y:0}, end:{x:4,y:0}, stops:[{offset:0,color:'#000000'},{offset:0.5,color:'#ff0000'},{offset:1,color:'#ffffff'}] });
+  assert.deepEqual(rgbaAt(multi,1,0), [128,0,0,255]);
+  assert.deepEqual(rgbaAt(multi,2,0), [255,0,0,255]);
+  assert.deepEqual(rgbaAt(multi,3,0), [255,128,128,255]);
+  const halfOpacity = gradientFill(1, 1, { type:'linear', stops:[{offset:0,color:'#204060'},{offset:1,color:'#204060'}], opacity:0.5 });
+  assert.deepEqual(rgbaAt(halfOpacity,0,0), [32,64,96,128]);
 });
 
 test('radial gradient maps center to first stop and radius edge to last stop', () => {
