@@ -173,7 +173,7 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_INTEGRATED_RUNTIME_READY_FOR_MR_QUEUE
+CURRENT_GATE = P1_INTEGRATED_RUNTIME_RUNNING
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
@@ -182,23 +182,34 @@ P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_F_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-INTEGRATED_RUNTIME = READY_FOR_MR_QUEUE / EXACT_TARGET_PRESERVED
+INTEGRATED_RUNTIME = RUNNING / EXACT_TARGET_PRESERVED
 RUNTIME_HARNESS_COVERAGE = MR_PASS / PROMOTED
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
 ```
 
+## Active Runtime execution
+
+```text
+QUEUE_COMMIT = 164119a59ff6733aec418bccb2c0775ea0f6282c
+RUN_ID = 36330300446
+CONTROLLER_JOB = 108650821763 / SUCCESS
+WINDOWS_JOB = 108650842187 / IN_PROGRESS
+WINDOWS_RUNNER = DESKTOP-NSOQH69
+PRODUCT_TARGET = d1269334338531228ddfdd9383761cd419e58738
+```
+
+No Runtime PASS / FAIL is declared until the Windows job, artifact and exact-target evidence complete.
+
 ## Next action
 
 MR:
-- update `ACTIVE/INK_RUNTIME_QUEUE.json` on main to `READY`;
-- target exactly `d1269334338531228ddfdd9383761cd419e58738`;
-- use the existing high-risk/immediate single-work-order path for the one final P1 gate;
-- observe the resulting run, jobs, logs and artifact;
-- decide Runtime PASS / FAIL / HOLD from exact evidence.
+- review Run `36330300446` after completion;
+- verify P1 A-H + integration test evidence, Closure/P0/browser results, artifact, tested SHA and skips/failures;
+- decide Runtime PASS / FAIL / HOLD.
 
 DEV:
-- no action unless Runtime exposes a defect and MR issues a separate bounded correction Work Order.
+- no action unless MR issues a separate correction Work Order.
 
 UR:
 - remain on HOLD.
