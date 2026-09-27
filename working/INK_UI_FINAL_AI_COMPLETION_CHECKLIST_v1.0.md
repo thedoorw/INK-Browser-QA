@@ -767,6 +767,19 @@ Authority:
 - [ ] AO09 exact Photoshop 21.2.12 Light-theme RGB is not a closure prerequisite unless USER explicitly requests binary color replication.
 - [ ] AO10 USER visual review approves the final light-gray token set.
 
+# AP. Current Photoshop-on-the-web Light reference audit
+
+Authority:
+`working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md`
+
+- [ ] AP01 INK light workspace uses a structural-gray role comparable to the measured current Photoshop web `#E9E9E9` anchor.
+- [ ] AP02 elevated/light tool and panel surfaces use a near-white/white role comparable to the measured `#FFFFFF` anchor.
+- [ ] AP03 active accent uses a restrained Adobe-like blue role; `#3B63FB` is the current measured Adobe web reference.
+- [ ] AP04 browser/OS anti-aliasing grays are not promoted into arbitrary standalone design tokens.
+- [ ] AP05 current Photoshop web color hierarchy informs palette only; it does not replace desktop Photoshop geometry/layout authority.
+- [ ] AP06 central user artwork/content inside the reference screenshot is excluded from UI color measurement.
+- [ ] AP07 final token values are Runtime-reviewed in the denser desktop INK workstation before closure.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.
