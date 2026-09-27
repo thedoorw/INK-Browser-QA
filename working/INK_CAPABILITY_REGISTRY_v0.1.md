@@ -1,6 +1,6 @@
 # INK Normalized Capability Registry v0.1
 
-STATUS: `MR_NORMALIZATION_DRAFT / SOURCE_CORROBORATED / NO_PRODUCT_MUTATION`
+STATUS: `MR_FROZEN / SOURCE_CORROBORATED / NO_PRODUCT_MUTATION`
 
 TASK: `INK-CAPABILITY-BASELINE-MANUAL-001`
 
@@ -186,15 +186,32 @@ For P1/P2 planning:
 - do not implement a P1/P2 item if an equivalent existing atomic capability already exists under another family;
 - P1/P2 implementation may begin only after final MR disposition records are written.
 
-## 7. Next normalization checks before freeze
+## 7. MR closure evidence
 
-The normalized list is structurally complete enough for gap disposition, but MR must still perform these final evidence checks before publishing the refreshed ACTIVE baseline:
+MR closure checks completed:
 
-1. cross-check all 496 product atomics against the current Function Placement Map / Static Control Ledger;
-2. cross-check all current public CHAT descriptors so no named tool or 34 bounded operation creates an untracked product atomic;
-3. check Program Import binary detection vs actual translation support and label detect-only formats correctly;
-4. check current runtime/QA evidence per family and mark PASS / PARTIAL / NOT_DIRECTLY_EXERCISED;
-5. publish the P1/P2 disposition table;
-6. then refresh `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`.
+- 496 normalized product atomics cross-checked at family/route level against the current Function Placement Map and the 212-button / 29-select Static Control Ledger;
+- current CHAT source re-counted directly: 22 named tools / 34 bounded edit operations;
+- CHAT exposure creates no second product-capability count;
+- Program Import binary formats are explicitly detect/metadata-only where parser source marks binary translation rejected; text/script formats proceed through supported parsers/compiler;
+- original 61-family ledger retains 61/61 source authority and QA pointers and passed the first rebaseline integrated Runtime on exact SHA `f911f777f770cbe290e290c4b0cbc3692b36641e`;
+- C62 Asset lifecycle is classified headless/platform support and is not falsely represented as browser-runtime UI;
+- C63 PWA/update is instantiated in the current app but remains normal-origin/browser-environment dependent;
+- C64 Product health/diagnostics is installed, with GPU/physical-device/external-browser portions explicitly environment dependent;
+- P1/P2 disposition is recorded in `working/INK_P1_P2_GAP_DISPOSITION_v1.0.md`;
+- UI reconciliation gaps are recorded in `working/INK_UI_CAPABILITY_RECONCILIATION_GAPS_v0.1.md`.
+
+Result:
+
+```text
+CANONICAL_CAPABILITY_FAMILIES = 64
+PRODUCT_ATOMIC_CAPABILITIES = 496
+HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5
+EXPLICIT_PARTIAL_BOUNDED_ITEMS = 8
+CHAT_NAMED_TOOLS = 22
+CHAT_BOUNDED_EDIT_OPERATIONS = 34
+FULL_ATOMIC_CAPABILITY_CENSUS = MR_FROZEN
+PRODUCT_SOURCE_MUTATION = 0
+```
 
 Manual prose remains non-blocking.
