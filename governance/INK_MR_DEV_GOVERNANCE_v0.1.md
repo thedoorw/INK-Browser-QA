@@ -471,7 +471,7 @@ current main exact SHA
 → UR_PASS / CLOSED
 ```
 
-Cross-lane technical Runtime remains MR-owned when it validates Core or multiple technical lanes together. That does not replace UR's responsibility for the UI result on main.
+Cross-lane technical Runtime remains MR-owned as a governance and acceptance gate when it validates Core or multiple technical lanes together. "MR-owned" does not require MR to be the Runtime operator. When an explicit MR Work Order assigns execution to DEV, DEV runs the exact-SHA Runtime and returns evidence; MR pins the target, reviews the evidence, and owns PASS / REVISE / HOLD. That does not replace UR's responsibility for the UI result on main.
 
 
 ## Core Module lane — MR supervised
