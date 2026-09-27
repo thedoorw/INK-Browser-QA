@@ -16,6 +16,7 @@ Related authorities:
 - `working/INK_UI_FINAL_PHOTOSHOP_ALIGNMENT_SPEC_v1.0.md`
 - `working/INK_UI_PS_PANEL_AND_STATUS_DETAIL_SPEC_v0.1.md`
 - `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
+- `working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`
 - `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
 
 Fixed USER reference pack:
@@ -237,17 +238,18 @@ MENU_LABEL_NORMAL_CONTRAST = REFERENCE_MISSING
 MENU_LABEL_HOVER_BACKGROUND = REFERENCE_MISSING
 MENU_LABEL_OPEN_BACKGROUND = REFERENCE_MISSING
 MENU_LABEL_FOCUS_RING = REFERENCE_MISSING
-MENU_DROPDOWN_TOP_OFFSET = REFERENCE_MISSING
-MENU_DROPDOWN_MIN_WIDTH = REFERENCE_MISSING
-MENU_ITEM_HEIGHT = REFERENCE_MISSING
+MENU_DROPDOWN_TOP_OFFSET = application Edit-menu reference begins at y=20 against 24 px top bar / REFERENCE_STATE_ONLY
+MENU_DROPDOWN_MIN_WIDTH = 219 px observed Edit-menu outer width / REFERENCE_STATE_ONLY
+MENU_ITEM_HEIGHT = compact repeated text pitch ≈19–20 px / OBSERVED_DENSITY; true hitbox REFERENCE_MISSING
 MENU_ITEM_HORIZONTAL_PADDING = REFERENCE_MISSING
 MENU_ICON_CHECK_COLUMN_WIDTH = REFERENCE_MISSING
 MENU_SHORTCUT_COLUMN_ALIGNMENT = REQUIRED
 MENU_SUBMENU_ARROW_POSITION = REFERENCE_MISSING
-MENU_SEPARATOR_HEIGHT = REFERENCE_MISSING
+MENU_SEPARATOR_HEIGHT = 1 px / MEASURED
+MENU_SEPARATOR_HORIZONTAL_INSET = 2 px each side / MEASURED
 MENU_DISABLED_CONTRAST = REFERENCE_MISSING
 MENU_SHADOW = REFERENCE_MISSING
-MENU_BORDER = REFERENCE_MISSING
+MENU_BORDER = 1 px / MEASURED
 MENU_RADIUS = Photoshop-like minimal / exact value REFERENCE_MISSING
 ```
 
@@ -493,7 +495,7 @@ Original detail area 6.
 Audit fields:
 
 ```text
-HISTORY_ROW_HEIGHT
+HISTORY_ROW_HEIGHT = ≈23 px repeated pitch / OBSERVED_DENSITY
 STATE_ICON_BOX
 STATE_TEXT_INDENT
 CURRENT_STATE_INDICATOR
@@ -524,6 +526,9 @@ Original detail area 7.
 Audit fields:
 
 ```text
+NAVIGATOR_HEADER_HEIGHT = 28 px / MEASURED_REFERENCE_STATE
+NAVIGATOR_BODY_HEIGHT = 208 px / REFERENCE_STATE_ONLY
+NAVIGATOR_FOOTER_HEIGHT = 33 px / REFERENCE_STATE_ONLY
 NAV_THUMBNAIL_MARGIN
 NAV_THUMBNAIL_BACKGROUND
 NAV_THUMBNAIL_BORDER
@@ -937,7 +942,17 @@ HIDDEN_EMPTY_WORKSPACE_GEOMETRY
 ACTIVE_DOCUMENT_TRANSITION
 ```
 
-All exact pixel values remain `REFERENCE_MISSING` until active-document Photoshop reference is measured.
+Active-document reference is now measured in `working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`.
+
+Current locked/reference values:
+- Document tab band = 28 px;
+- Rulers = 17 px horizontal / 17 px vertical;
+- Ruler origin corner = 17×17 px;
+- Document Status content band = 16 px + 1 px bottom boundary;
+- Status left zoom region ≈48 px reference;
+- Status document-info region ≈184 px reference.
+
+Remaining status popup/item micro-geometry remains `REFERENCE_MISSING`.
 
 Decision:
 - if only zoom/view data is useful, use a compact bottom view cluster rather than a full-width bar;
