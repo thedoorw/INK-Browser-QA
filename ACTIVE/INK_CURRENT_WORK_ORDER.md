@@ -7,7 +7,7 @@ DATE: 2026-09-27
 ## Current program
 
 ```text
-PRIMARY_TASKS = INK-P1-RUNTIME-HARNESS-COVERAGE-001
+PRIMARY_TASKS = INK-P1-INTEGRATED-RUNTIME-001
 PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
@@ -42,6 +42,9 @@ P1_RUNTIME_MR_REVIEW = working/INK_P1_INTEGRATED_RUNTIME_MR_REVIEW_v1.0.md
 P1_RUNTIME_STATUS = BLOCKED_BEFORE_RUN / MR_REVIEWED
 P1_RUNTIME_HARNESS_WORKPACK = working/INK_P1_RUNTIME_HARNESS_COVERAGE_DEV_WORKPACK_v1.0.md
 P1_RUNTIME_HARNESS_BRANCH = work/ink-p1-runtime-harness-coverage-001
+P1_RUNTIME_HARNESS_MR_REVIEW = working/INK_P1_RUNTIME_HARNESS_COVERAGE_MR_REVIEW_v1.0.md
+P1_RUNTIME_HARNESS_PROMOTION = f112089764b4dc3600ce76ff916c50ca3798456d
+P1_RUNTIME_HARNESS_STATUS = MR_PASS / PROMOTED
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_F_PROMOTION_MERGE = 5bb74c1c0ad655dac8ae00b5474da52b58db18db
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
@@ -79,47 +82,28 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current DEV authorization — P1 Runtime Harness Coverage
+## Current gate — P1 Integrated Runtime Ready
 
-The first P1 integrated Runtime attempt STOPped before execution and was independently reviewed by MR.
+The blocked-before-run evidence was accepted by MR. The central Runtime harness correction has now passed MR review and is promoted.
 
-Runtime result:
+Harness review:
+`working/INK_P1_RUNTIME_HARNESS_COVERAGE_MR_REVIEW_v1.0.md`
 
-`BLOCKED_BEFORE_RUN / NO PASS OR FAIL CLAIMED`
+Harness promotion:
+`f112089764b4dc3600ce76ff916c50ca3798456d`
+
+The final integrated Runtime is ready to be queued by MR.
 
 Exact product target remains:
-
 `d1269334338531228ddfdd9383761cd419e58738`
 
-MR review:
-
-`working/INK_P1_INTEGRATED_RUNTIME_MR_REVIEW_v1.0.md`
-
-Current task:
-
-`INK-P1-RUNTIME-HARNESS-COVERAGE-001`
-
-Workpack:
-
-`working/INK_P1_RUNTIME_HARNESS_COVERAGE_DEV_WORKPACK_v1.0.md`
-
-Mandatory DEV branch:
-
-`work/ink-p1-runtime-harness-coverage-001`
-
-Execution owner:
-
-`DEV`
-
-Scope:
-- extend the single central Runtime workflow only;
-- materialize and execute exact-target P1 A–H focused tests plus `qa/ink-p1-integration-001.test.mjs`;
-- preserve the existing browser/Closure/P0 Runtime batch;
-- product source mutation = 0;
-- DEV must not mutate the main Runtime queue;
-- UI / P2 / FORMAT_VERSION remain untouched.
-
-After MR accepts/promotes the harness correction, MR will use the authoritative main Runtime queue to trigger one exact-SHA run.
+Execution authority:
+- MR mutates the existing main Runtime queue;
+- central workflow resolves the queue target to the exact product SHA;
+- workflow bytes come from current main Runtime infrastructure;
+- product bytes/tests come from the pinned target SHA;
+- one final P1 Runtime only;
+- UI remains HOLD until MR accepts its evidence.
 
 ## P1/P2 execution sequence
 
@@ -189,7 +173,7 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_RUNTIME_HARNESS_COVERAGE_DEV_AUTHORIZED
+CURRENT_GATE = P1_INTEGRATED_RUNTIME_READY_FOR_MR_QUEUE
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
@@ -198,28 +182,23 @@ P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_F_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-INTEGRATED_RUNTIME = HOLD / BLOCKED_BEFORE_RUN / EXACT_TARGET_PRESERVED
-RUNTIME_HARNESS_COVERAGE = DEV_AUTHORIZED
+INTEGRATED_RUNTIME = READY_FOR_MR_QUEUE / EXACT_TARGET_PRESERVED
+RUNTIME_HARNESS_COVERAGE = MR_PASS / PROMOTED
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
 ```
 
 ## Next action
 
-DEV-Harness:
-- execute `INK-P1-RUNTIME-HARNESS-COVERAGE-001`;
-- branch = `work/ink-p1-runtime-harness-coverage-001`;
-- use `working/INK_P1_RUNTIME_HARNESS_COVERAGE_DEV_WORKPACK_v1.0.md`;
-- extend only `.github/workflows/ink-runtime-batch-windows.yml`;
-- product source mutation = 0;
-- main Runtime queue mutation = 0;
-- STOP for MR after focused harness QA.
-
 MR:
-- review harness diff and focused evidence;
-- promote only if central exact-SHA semantics and existing browser batch are preserved;
-- then set `ACTIVE/INK_RUNTIME_QUEUE.json` on main to READY for exact target `d1269334338531228ddfdd9383761cd419e58738`;
-- review the resulting single integrated Runtime run/artifact.
+- update `ACTIVE/INK_RUNTIME_QUEUE.json` on main to `READY`;
+- target exactly `d1269334338531228ddfdd9383761cd419e58738`;
+- use the existing high-risk/immediate single-work-order path for the one final P1 gate;
+- observe the resulting run, jobs, logs and artifact;
+- decide Runtime PASS / FAIL / HOLD from exact evidence.
+
+DEV:
+- no action unless Runtime exposes a defect and MR issues a separate bounded correction Work Order.
 
 UR:
 - remain on HOLD.
