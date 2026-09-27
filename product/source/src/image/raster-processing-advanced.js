@@ -132,7 +132,7 @@ export function liquifyRaster(imageData,{operations=[],freezeMask=null,maxWork=n
       if(op.type==='forwardWarp'){dx[i]+=vx*strength*falloff;dy[i]+=vy*strength*falloff;}
       else if(op.type==='twirl'){const a=angle*falloff,cs=Math.cos(a),sn=Math.sin(a),nx=rx*cs-ry*sn,ny=rx*sn+ry*cs;dx[i]+=nx-rx;dy[i]+=ny-ry;}
       else if(op.type==='pucker'||op.type==='bloat'){const sign=op.type==='pucker'?-1:1,scale=1+sign*strength*.35*falloff;dx[i]+=rx*(scale-1);dy[i]+=ry*(scale-1);}
-      else if(op.type==='reconstruct'){const amount=clamp01(Math.abs(strength))*falloff;dx[i]*=1-amount;dy[i]*=1-amount;}
+      else if(op.type==='reconstruct'){const amount=clamp01(Math.abs(strength)||.5)*falloff;dx[i]*=1-amount;dy[i]*=1-amount;}
     }
   }
   const out=new Uint8ClampedArray(data.length);for(let y=0;y<h;y++)for(let x=0;x<w;x++){consume();const i=y*w+x,o=i*4,sx=x-dx[i],sy=y-dy[i];for(let c=0;c<4;c++)out[o+c]=byte(bilinear(data,w,h,sx,sy,c));}
