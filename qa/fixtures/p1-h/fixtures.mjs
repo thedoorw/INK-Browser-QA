@@ -16,3 +16,16 @@ export function tiff16AlphaIcc(){const payload=createNormalizedPayload({format:'
 export function exrFloat(){const p=createNormalizedPayload({format:'fixture',width:2,height:1,bitDepth:32,colorMode:'RGB',data:Float32Array.from([2.5,.5,.25,4,3,2]),alpha:Float32Array.from([1,.5]),metadata:{exr:{chromaticities:[.64,.33,.3,.6,.15,.06,.3127,.329]}}});return encodeBasicExr(p,{pixelType:'FLOAT'});}
 export function exrHalf(){const p=createNormalizedPayload({format:'fixture',width:1,height:1,bitDepth:32,colorMode:'RGB',data:Float32Array.from([1.5,.5,.25])});return encodeBasicExr(p,{pixelType:'HALF'});}
 export const rawBytes=Uint8Array.from([82,65,87,84,1,2,3,4]);
+
+function findTiffEntry(bytes,tag){const v=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength),le=bytes[0]===73,ifd=v.getUint32(4,le),n=v.getUint16(ifd,le);for(let i=0;i<n;i++){const e=ifd+2+i*12;if(v.getUint16(e,le)===tag)return{v,e,le};}throw new Error('FIXTURE_TIFF_TAG_MISSING:'+tag);}
+export function tiffUnspecifiedExtra(){const b=encodeBaselineTiff(rgb8Payload({alpha:true})),x=findTiffEntry(b,338);x.v.setUint16(x.e+8,0,x.le);return b;}
+export function tiffAssociatedAlpha(){const p=createNormalizedPayload({format:'fixture',width:1,height:1,bitDepth:8,colorMode:'RGB',data:Uint8Array.from([60,120,180]),alpha:Uint8Array.from([85])}),b=encodeBaselineTiff(p),xs=findTiffEntry(b,338),xo=findTiffEntry(b,273),off=xo.v.getUint32(xo.e+8,xo.le);xs.v.setUint16(xs.e+8,1,xs.le);b.set([20,40,60,85],off);return b;}
+function exrZ(s){return Uint8Array.from([...s].map(c=>c.charCodeAt(0)&255).concat(0));}
+function exrU32(n){const b=new Uint8Array(4);new DataView(b.buffer).setUint32(0,n,true);return b;}
+function exrI32(n){const b=new Uint8Array(4);new DataView(b.buffer).setInt32(0,n,true);return b;}
+function exrU64(n){const b=new Uint8Array(8);new DataView(b.buffer).setBigUint64(0,BigInt(n),true);return b;}
+function exrF32(vals){const b=new Uint8Array(vals.length*4),v=new DataView(b.buffer);vals.forEach((x,i)=>v.setFloat32(i*4,x,true));return b;}
+function exrAttr(name,type,data){return concatBytes([exrZ(name),exrZ(type),exrU32(data.length),data]);}
+function exrBox(){return concatBytes([exrI32(0),exrI32(0),exrI32(0),exrI32(0)]);}
+function exrChannelList(names){const p=[];for(const name of names){const d=new Uint8Array(16),v=new DataView(d.buffer);v.setInt32(0,2,true);v.setInt32(8,1,true);v.setInt32(12,1,true);p.push(exrZ(name),d);}p.push(Uint8Array.of(0));return concatBytes(p);}
+export function exrAdditionalChannel(){const names=['A','B','G','R','Z'],attrs=[exrAttr('channels','chlist',exrChannelList(names)),exrAttr('compression','compression',Uint8Array.of(0)),exrAttr('dataWindow','box2i',exrBox()),exrAttr('displayWindow','box2i',exrBox()),exrAttr('lineOrder','lineOrder',Uint8Array.of(0)),exrAttr('pixelAspectRatio','float',exrF32([1])),exrAttr('screenWindowCenter','v2f',exrF32([0,0])),exrAttr('screenWindowWidth','float',exrF32([1]))],head=concatBytes([exrU32(20000630),exrU32(2),...attrs,Uint8Array.of(0)]),row=exrF32([.75,.25,.5,1.5,42]),block=concatBytes([exrI32(0),exrU32(row.length),row]),off=head.length+8;return concatBytes([head,exrU64(off),block]);}

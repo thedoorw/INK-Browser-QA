@@ -7,7 +7,7 @@ import {createRawAdapterRegistry} from '../product/source/src/image/formats/adap
 import {probeFormat,decodeFormat,encodeFormat,rawAdapters} from '../product/source/src/image/format-interoperability.js';
 import {createNormalizedPayload} from '../product/source/src/image/formats/normalized-payload.js';
 import {decodePackBits,encodePackBits,asBytes} from '../product/source/src/image/formats/binary.js';
-import {minimalIcc,rgb8Payload,psdFlat,psbFlat,layeredPsd,tiffBE,tiffPackBits,tiff16AlphaIcc,exrFloat,exrHalf,rawBytes} from './fixtures/p1-h/fixtures.mjs';
+import {minimalIcc,rgb8Payload,psdFlat,psbFlat,layeredPsd,tiffBE,tiffPackBits,tiff16AlphaIcc,tiffUnspecifiedExtra,tiffAssociatedAlpha,exrFloat,exrHalf,exrAdditionalChannel,rawBytes} from './fixtures/p1-h/fixtures.mjs';
 
 const clone=b=>new Uint8Array(b);
 
@@ -64,3 +64,10 @@ test('facade decode routes PSD',async()=>assert.equal((await decodeFormat(psdFla
 test('facade encode routes TIFF',()=>assert.equal(probeTiff(encodeFormat('TIFF',rgb8Payload())).matched,true));
 test('PSB encode explicitly adapter-required',()=>assert.throws(()=>encodeFormat('PSB',rgb8Payload()),/ADAPTER_REQUIRED/));
 test('32-bit normalized payload uses Float32Array without hidden 8-bit conversion',()=>{const p=createNormalizedPayload({format:'x',width:1,height:1,bitDepth:32,colorMode:'RGB',data:Float32Array.from([5,-1,.5])});assert.ok(p.compositeRaster.data instanceof Float32Array);assert.deepEqual([...p.compositeRaster.data],[5,-1,.5]);});
+
+test('TIFF ExtraSamples=0 stays non-alpha additional data',()=>{const d=parseTiff(tiffUnspecifiedExtra());assert.equal(d.compositeRaster.alpha,null);assert.equal(d.channelLayout.auxiliary.length,0);assert.equal(d.additionalChannels.length,1);assert.equal(d.additionalChannels[0].semantics,'tiff-extra-unspecified');assert.deepEqual([...d.additionalChannels[0].data],[255,128]);assert.deepEqual(d.metadata.tiff.extraSamples,[0]);});
+test('TIFF ExtraSamples=1 associated alpha is normalized to straight alpha',()=>{const d=parseTiff(tiffAssociatedAlpha());assert.deepEqual([...d.compositeRaster.data],[60,120,180]);assert.deepEqual([...d.compositeRaster.alpha],[85]);assert.equal(d.metadata.tiff.alphaAssociation,'associated');assert.match(d.warnings.join(' '),/associated alpha/);assert.equal(d.losses.length,1);});
+test('TIFF ExtraSamples=2 remains unassociated alpha',()=>{const d=parseTiff(tiff16AlphaIcc());assert.equal(d.metadata.tiff.alphaAssociation,'unassociated');assert.equal(d.additionalChannels.length,0);});
+test('TIFF encoder refuses unspecified additional channels instead of dropping them',()=>{const d=parseTiff(tiffUnspecifiedExtra());assert.throws(()=>encodeBaselineTiff(d),/ADDITIONAL_CHANNELS_UNSUPPORTED/);});
+test('EXR additional channel is preserved without alpha misclassification',()=>{const d=parseExr(exrAdditionalChannel());assert.deepEqual([...d.compositeRaster.alpha],[.75]);assert.equal(d.channelLayout.auxiliary.length,1);assert.equal(d.channelLayout.auxiliary[0].kind,'alpha');assert.equal(d.additionalChannels.length,1);assert.equal(d.additionalChannels[0].name,'Z');assert.equal(d.additionalChannels[0].semantics,'exr-channel');assert.deepEqual([...d.additionalChannels[0].data],[42]);assert.equal(d.metadata.exr.additionalChannels[0].name,'Z');});
+test('EXR encoder refuses additional channels instead of silently dropping them',()=>{const d=parseExr(exrAdditionalChannel());assert.throws(()=>encodeBasicExr(d),/ADDITIONAL_CHANNELS_UNSUPPORTED/);});
