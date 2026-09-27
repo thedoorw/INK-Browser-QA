@@ -1,6 +1,6 @@
 # INK P1 Integration — DEV Workpack v1.0
 
-STATUS: `PLANNED / BLOCKED_UNTIL_P1_F_AND_P1_H_MR_PASS_PROMOTED`
+STATUS: `AUTHORIZED / DEV_NOT_STARTED / AWAITING_BRANCH_CUT`
 
 TASK: `INK-P1-INTEGRATION-001`
 
@@ -16,6 +16,8 @@ RUNTIME STATUS: `NOT AUTHORIZED INSIDE THIS WORKPACK`
 
 ## 1. Activation gate
 
+Gate status: `SATISFIED`
+
 This workpack may start only when:
 
 ```text
@@ -29,7 +31,7 @@ P1-G = MODULE_READY / MR_PASS / PROMOTED
 P1-H = MODULE_READY / MR_PASS / PROMOTED
 ```
 
-MR records the exact activation main SHA before DEV starts.
+All P1-A through P1-H gates are now MR_PASS / PROMOTED. MR must record the exact activation main SHA and cut `work/ink-p1-integration-001` before DEV starts.
 
 ## 2. Goal
 
