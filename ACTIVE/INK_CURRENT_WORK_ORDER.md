@@ -192,7 +192,7 @@ P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_F_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
+P1_F_PRODUCT_IMPLEMENTATION = MR_REVISE / BOUNDED_CORRECTION_AUTHORIZED
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
@@ -203,8 +203,13 @@ INK_MANUAL_PROSE = NON_BLOCKING
 ## Next action
 
 DEV-F:
-- continue only the bounded P1-F lane;
-- STOP independently for MR review.
+- continue on `work/ink-p1-f-raster-processing-expansion-001`;
+- perform only the bounded zero/default parameter normalization correction in `working/INK_P1_F_MR_REVIEW_v1.0.md`;
+- add legal-zero endpoint regressions;
+- rerun the full P1-F focused QA;
+- update lane progress;
+- hand off a new exact HEAD;
+- STOP for MR re-review.
 
 DEV-H:
 - STOP;
@@ -214,7 +219,8 @@ DEV-H:
 
 MR:
 - P1-H final reviewed HEAD `89cb4d3569bd2ac0833627a415c2eeb6d58a0c00` = MODULE_READY / MR_PASS / PROMOTED; review record `working/INK_P1_H_MR_REVIEW_v1.0.md`;
-- review F independently as its handoff arrives;
+- P1-F reviewed HEAD `5abe3d8c696f6eb74a56da415587d9f4834121f5` = MR_REVISE; review record `working/INK_P1_F_MR_REVIEW_v1.0.md`;
+- re-review P1-F after bounded correction;
 - re-review P1-H after bounded correction;
 - when both are MR_PASS/promoted, activate `INK-P1-INTEGRATION-001` for DEV;
 - review/promote exact Integration DEV handoff;
