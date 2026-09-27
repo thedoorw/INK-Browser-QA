@@ -28,7 +28,7 @@ P1_D_PROMOTED_MAIN = 206f027785c04e56e91293e439fef8fb0cdd8521
 P1_E = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PROMOTED_MAIN = fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74
 P1_PARALLEL_BRANCH_CUT = dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f
-P1_F = AUTHORIZED / PARALLEL
+P1_F = MR_REVISE / BOUNDED_CORRECTION_AUTHORIZED
 P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
 P1_H = MODULE_READY / MR_PASS / PROMOTED
@@ -73,7 +73,7 @@ P1-D passed MR MODULE_READY review and is promoted on main `206f027785c04e56e912
 
 P1-E passed MR MODULE_READY review and is promoted on main `fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`.
 
-P1-G passed MR re-review and is promoted. P1-H final handoff `89cb4d3569bd2ac0833627a415c2eeb6d58a0c00` passed MR MODULE_READY review and was promoted through MR-controlled merge `4eb9a8f18781840219217a7cc767ed73aebe3989`. The multiple-ExtraSamples regression gate is closed.
+P1-G and P1-H are MODULE_READY / MR_PASS / promoted. P1-F reached DEV handoff at `5abe3d8c696f6eb74a56da415587d9f4834121f5`; MR found one bounded parameter-normalization defect: legal numeric zero values are replaced by defaults for several adjustment/filter controls. P1-F is authorized only for the correction recorded in `working/INK_P1_F_MR_REVIEW_v1.0.md`.
 
 ## UI release sequence
 
