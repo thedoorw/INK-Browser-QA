@@ -6,7 +6,7 @@ BRANCH: `work/ink-p1-h-format-interoperability-001`
 
 BASELINE_MAIN: `136ca9c961ff0f2e543e196e74a3ae0983faaf78`
 
-STATUS: `BOUNDED_CORRECTION_HANDOFF_READY / STOP_FOR_MR / PARALLEL_WITH_P1_F`
+STATUS: `QA_ONLY_CORRECTION_HANDOFF_READY / STOP_FOR_MR / PARALLEL_WITH_P1_F`
 
 WORKPACK:
 `working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md`
@@ -302,6 +302,108 @@ Correction delta before progress update contained only:
 ```text
 CORRECTION_COMMIT = 5ed7f3a8506b25156be12e8a91df0a4bbf5e1546
 FULL_P1_H_QA = PASS 54/54 / FAIL 0 / SKIP 0
+RUNTIME = NOT RUN
+DEV_HANDOFF = YES
+NEXT_ACTION = STOP FOR MR REVIEW
+```
+
+DEV does not self-merge, promote, enter Integration, run Runtime, or begin another package.
+
+
+## MR QA-only correction — TIFF multiple ExtraSamples regression gate — 2026-09-27
+
+MR REVIEW REFERENCE:
+- `working/INK_P1_H_MR_REVIEW_v1.0.md`
+- The updated review file was still not visible on the P1-H branch or repository search surface when DEV executed this gate.
+- DEV therefore followed the explicit user-authorized QA-only scope in-chat.
+
+QA_ONLY_COMMIT:
+`c1f3e258481a16153dba8d188491297992468a33`
+
+QA_ONLY_TREE:
+`f7e88d6ab7d7fa34f8f60a81e9c2c08b0e0d2e1a`
+
+### Added regression fixture
+
+A single classic little-endian TIFF fixture now contains, in one image:
+
+```text
+sample order = R, G, B, unspecified-extra, alpha
+ExtraSamples = [0, 2]
+pixel values = [10, 20, 30, 77, 128]
+```
+
+This directly verifies that simultaneous ExtraSamples do not cross-wire sample ordering.
+
+### Regression assertions
+
+The added test verifies all of the following from the same TIFF:
+
+- process RGB remains `[10,20,30]`
+- unspecified extra remains an `additionalChannel`
+- unspecified extra retains `sampleIndex = 3`
+- unspecified extra data remains `[77]`
+- alpha remains `[128]`
+- metadata preserves `ExtraSamples = [0,2]` in the original order
+- alpha association remains `unassociated`
+- normalized channel layout contains exactly one alpha auxiliary channel
+
+### Full P1-H QA rerun
+
+Result:
+
+```text
+tests = 55
+pass = 55
+fail = 0
+skip = 0
+```
+
+The new multiple-ExtraSamples regression passed against the existing Core without modification.
+
+### QA-only exact blobs
+
+- `qa/fixtures/p1-h/fixtures.mjs`
+  - `caf052fd3c048b84701b250d0d4885129ef510b5`
+- `qa/ink-p1-h-format-interoperability.test.mjs`
+  - `1e2aefc020b6987a125cf60b468e88bafd7bc4b2`
+
+Core blobs remained unchanged:
+
+- `product/source/src/image/formats/tiff.js`
+  - `871c3afb929d7cad6437c4dcd22ec2cd9818ac31`
+- `product/source/src/image/formats/normalized-payload.js`
+  - `52b11f397c362b122a8cd800ab4487c5bb0f6d7f`
+- `product/source/src/image/color-management-core.js`
+  - `5e56e219e964912e85c68b644004f1b5c14dcbef`
+- `product/source/src/image/channel-core.js`
+  - `c3d5540f97af3c9fec94e6ac2a3e9b9053aa8bc1`
+
+### QA-only isolation
+
+Before this progress update, the delta from the prior handoff HEAD contained only:
+
+- `qa/fixtures/p1-h/fixtures.mjs`
+- `qa/ink-p1-h-format-interoperability.test.mjs`
+
+```text
+TIFF_CORE_MUTATION = 0
+NORMALIZED_PAYLOAD_CORE_MUTATION = 0
+P1_G_CORE_MUTATION = 0
+P1_F_MUTATION = 0
+DOCUMENT_MODEL_MUTATION = 0
+RENDERER_MUTATION = 0
+INTEGRATION_MUTATION = 0
+RUNTIME_RUN = 0
+DEPENDENCIES_ADDED = 0
+```
+
+### QA-only handoff
+
+```text
+QA_ONLY_COMMIT = c1f3e258481a16153dba8d188491297992468a33
+FULL_P1_H_QA = PASS 55/55 / FAIL 0 / SKIP 0
+CORE_CHANGE_REQUIRED = NO
 RUNTIME = NOT RUN
 DEV_HANDOFF = YES
 NEXT_ACTION = STOP FOR MR REVIEW
