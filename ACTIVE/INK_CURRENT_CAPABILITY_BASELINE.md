@@ -14,7 +14,7 @@ FIRST_REBASELINE_RUNTIME: `PASS`
 
 P0_PROMOTION: `CLOSED`
 
-UI_STATUS: `HOLD — UNTIL AUTHORIZED PRE-UI P1/P2 PACKAGES CLOSE AND UR RECONCILES THIS BASELINE`
+UI_STATUS: `HOLD — UNTIL ALL NATIVE P1 A-H CLOSE, ONE INTEGRATED RUNTIME PASSES, AND UR RECONCILES THIS BASELINE`
 
 ---
 
@@ -284,18 +284,29 @@ CHAT does not own a second Document, History, Renderer, Selection, Transform, Re
 Authority:
 `working/INK_P1_P2_GAP_DISPOSITION_v1.0.md`
 
-Pre-UI implementation is intentionally bounded into:
+All native P1 work is now required before the next integrated Runtime:
 
 1. P1-A — Raster Selection / Fill / Sampling
 2. P1-B — Local Raster Retouch
 3. P1-C — Vector / Text / Precision Layout
 4. P1-D — Layer Effects Completion
+5. P1-E — Advanced Selection
+6. P1-F — Raster Processing Expansion
+7. P1-G — Color / Bit Depth / Channels
+8. P1-H — Format Interoperability
 
-One P2 capability, Color Replacement Brush, is allowed opportunistically inside P1-B because it shares the same local-raster/sampling infrastructure.
+One P2 capability, Color Replacement Brush, remains opportunistically inside P1-B because it shares the same local-raster/sampling infrastructure.
 
-Strategic color-management, bit-depth, channels, broader format interoperability, Liquify and similar large systems are explicitly after-UI work and do not keep UI on HOLD indefinitely.
+Sequencing rule:
 
-Generative/content-aware/RAW/neural families remain Adapter-class unless later reauthorized.
+```text
+NO INTEGRATED RUNTIME BETWEEN P1 PACKAGES
+ALL P1 A-H COMPLETE + INTEGRATED
+→ ONE exact-SHA integrated Runtime
+→ UR reconciliation / UI
+```
+
+Generative/content-aware/RAW/neural families remain Adapter-class unless later reauthorized. P2 does not block this P1 Runtime gate.
 
 ---
 
@@ -355,15 +366,22 @@ P1_P2_GAP_DISPOSITION = RECORDED
 REFRESHED_CAPABILITY_BASELINE = PREPARED_ON_MR_BRANCH
 
 NEXT =
-  PROMOTE THIS REFRESHED AUTHORITY
-  → AUTHORIZE P1-A DEV
+  P1-A
   → P1-B
   → P1-C
   → P1-D
-  → FINAL P1/P2 INTEGRATED QA/RUNTIME
+  → P1-E
+  → P1-F
+  → P1-G
+  → P1-H
+  → P1 INTEGRATION
+  → FOCUSED/INTEGRATED QA
+  → ONE exact-SHA integrated Runtime
   → UR RECONCILIATION
   → UI HOLD CLEARED
 
-P1/P2 PRODUCT IMPLEMENTATION = NOT YET STARTED
+P1-A PRODUCT IMPLEMENTATION = AUTHORIZED / IN PROGRESS OR HANDOFF
+P1-B THROUGH P1-H = SEPARATE BOUNDED AUTHORIZATION REQUIRED
+P2 = AFTER P1 RUNTIME GATE
 UI IMPLEMENTATION = HOLD
 ```
