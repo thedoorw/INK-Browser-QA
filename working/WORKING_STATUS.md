@@ -6,9 +6,9 @@ DATE: 2026-09-27
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PRIMARY_TASK = INK-P1-E-ADVANCED-SELECTION-001
+CURRENT_PRIMARY_TASKS = P1-F + P1-G PARALLEL
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_E_DEV_AUTHORIZED
+CURRENT_GATE = P1_F_G_PARALLEL_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -25,8 +25,12 @@ P1_C = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PROMOTED_MAIN = b214c177972be2e6175459005720bb72e697cec2
 P1_D = MODULE_READY / MR_PASS / PROMOTED
 P1_D_PROMOTED_MAIN = 206f027785c04e56e91293e439fef8fb0cdd8521
-P1_E_WORKPACK = working/INK_P1_E_ADVANCED_SELECTION_DEV_WORKPACK_v1.0.md
-P1_E_BRANCH = work/ink-p1-e-advanced-selection-001
+P1_E = MODULE_READY / MR_PASS / PROMOTED
+P1_E_PROMOTED_MAIN = fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74
+P1_F = AUTHORIZED / PARALLEL
+P1_G = AUTHORIZED / PARALLEL
+P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
+P1_G_BRANCH = work/ink-p1-g-color-bitdepth-channels-001
 
 FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
@@ -61,7 +65,9 @@ P1-C passed MR MODULE_READY review and is promoted on main `b214c177972be2e61754
 
 P1-D passed MR MODULE_READY review and is promoted on main `206f027785c04e56e91293e439fef8fb0cdd8521`.
 
-P1-E is now authorized for Advanced Selection Core + focused QA. P1-F through P1-H remain queued and each requires separate bounded MR authorization.
+P1-E passed MR MODULE_READY review and is promoted on main `fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`.
+
+P1-F and P1-G are now authorized as parallel, non-overlapping Core lanes. P1-H waits for P1-G MR_PASS because format interoperability depends on the frozen color/bit-depth/channel contract.
 
 ## UI release sequence
 
@@ -71,8 +77,7 @@ P1-A MODULE_READY
 → P1-C MODULE_READY
 → P1-D MODULE_READY
 → P1-E MODULE_READY
-→ P1-F MODULE_READY
-→ P1-G MODULE_READY
+→ [P1-F MODULE_READY || P1-G MODULE_READY]
 → P1-H MODULE_READY
 → P1 INTEGRATION
 → focused/integrated QA
