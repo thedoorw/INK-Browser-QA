@@ -7,7 +7,7 @@ import {createRawAdapterRegistry} from '../product/source/src/image/formats/adap
 import {probeFormat,decodeFormat,encodeFormat,rawAdapters} from '../product/source/src/image/format-interoperability.js';
 import {createNormalizedPayload} from '../product/source/src/image/formats/normalized-payload.js';
 import {decodePackBits,encodePackBits,asBytes} from '../product/source/src/image/formats/binary.js';
-import {minimalIcc,rgb8Payload,psdFlat,psbFlat,layeredPsd,tiffBE,tiffPackBits,tiff16AlphaIcc,tiffUnspecifiedExtra,tiffAssociatedAlpha,exrFloat,exrHalf,exrAdditionalChannel,rawBytes} from './fixtures/p1-h/fixtures.mjs';
+import {minimalIcc,rgb8Payload,psdFlat,psbFlat,layeredPsd,tiffBE,tiffPackBits,tiff16AlphaIcc,tiffUnspecifiedExtra,tiffAssociatedAlpha,tiffMultipleExtraSamples,exrFloat,exrHalf,exrAdditionalChannel,rawBytes} from './fixtures/p1-h/fixtures.mjs';
 
 const clone=b=>new Uint8Array(b);
 
@@ -71,3 +71,5 @@ test('TIFF ExtraSamples=2 remains unassociated alpha',()=>{const d=parseTiff(tif
 test('TIFF encoder refuses unspecified additional channels instead of dropping them',()=>{const d=parseTiff(tiffUnspecifiedExtra());assert.throws(()=>encodeBaselineTiff(d),/ADDITIONAL_CHANNELS_UNSUPPORTED/);});
 test('EXR additional channel is preserved without alpha misclassification',()=>{const d=parseExr(exrAdditionalChannel());assert.deepEqual([...d.compositeRaster.alpha],[.75]);assert.equal(d.channelLayout.auxiliary.length,1);assert.equal(d.channelLayout.auxiliary[0].kind,'alpha');assert.equal(d.additionalChannels.length,1);assert.equal(d.additionalChannels[0].name,'Z');assert.equal(d.additionalChannels[0].semantics,'exr-channel');assert.deepEqual([...d.additionalChannels[0].data],[42]);assert.equal(d.metadata.exr.additionalChannels[0].name,'Z');});
 test('EXR encoder refuses additional channels instead of silently dropping them',()=>{const d=parseExr(exrAdditionalChannel());assert.throws(()=>encodeBasicExr(d),/ADDITIONAL_CHANNELS_UNSUPPORTED/);});
+
+test('TIFF multiple ExtraSamples preserve unspecified and alpha sample ordering',()=>{const d=parseTiff(tiffMultipleExtraSamples());assert.deepEqual([...d.compositeRaster.data],[10,20,30]);assert.equal(d.additionalChannels.length,1);assert.equal(d.additionalChannels[0].semantics,'tiff-extra-unspecified');assert.equal(d.additionalChannels[0].sampleIndex,3);assert.deepEqual([...d.additionalChannels[0].data],[77]);assert.deepEqual([...d.compositeRaster.alpha],[128]);assert.deepEqual(d.metadata.tiff.extraSamples,[0,2]);assert.equal(d.metadata.tiff.alphaAssociation,'unassociated');assert.equal(d.channelLayout.auxiliary.length,1);assert.equal(d.channelLayout.auxiliary[0].kind,'alpha');});
