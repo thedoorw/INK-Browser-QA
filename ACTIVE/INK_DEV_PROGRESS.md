@@ -1,0 +1,41 @@
+# INK DEV Progress
+
+TASK: `INK-P0-PROMOTION-RECONCILE-001`
+
+BRANCH: `work/ink-p0-promotion-reconcile-001`
+
+BASELINE_MAIN: `27b5ab481d4181a3117faf1d05f45b027e3368ad`
+
+RUNTIME_VERIFIED_PRODUCT_SHA: `f911f777f770cbe290e290c4b0cbc3692b36641e`
+
+STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+
+WORKPACK:
+`working/INK_P0_PROMOTION_RECONCILIATION_DEV_WORKPACK_v1.0.md`
+
+RUNTIME: `PROHIBITED`
+
+P1_P2_EXPANSION: `PROHIBITED`
+
+UI_IMPLEMENTATION: `PROHIBITED`
+
+## Goal
+
+Reconcile the exact Runtime-verified P0 source payload onto latest main without behavior change.
+
+## Handoff target
+
+```text
+PRODUCT_FILES_SOURCE_EQUIVALENT = 4 / 4
+FOCUSED_TEST_EQUIVALENT = PASS
+SECTION_4_LEDGER = 61 / 61
+UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
+NEWER_MAIN_AUTHORITY_PRESERVED = PASS
+→ DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP
+```
+
+## Result
+
+The exact four Runtime-verified product blobs, focused regression, and original 61-row ledger and DEV handoff have been reconciled onto the named main baseline. The newer main authority and Runtime harness remain unchanged. Focused regression: 4 / 4 pass; product-source syntax and whitespace checks: pass. No Runtime or queue submission was performed.
+
+Evidence: `working/INK_P0_PROMOTION_RECONCILIATION_DEV_HANDOFF_v1.0.md`.
