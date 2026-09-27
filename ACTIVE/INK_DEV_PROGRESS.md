@@ -1,41 +1,54 @@
 # INK DEV Progress
 
-TASK: `INK-P0-PROMOTION-RECONCILE-001`
+TASK: `INK-P1-A-RASTER-SELECTION-FILL-SAMPLING-001`
 
-BRANCH: `work/ink-p0-promotion-reconcile-001`
+BRANCH: `work/ink-p1-a-raster-selection-fill-sampling-001`
 
-BASELINE_MAIN: `27b5ab481d4181a3117faf1d05f45b027e3368ad`
+BASELINE_MAIN: `0f3a5b099c77f5ff1f6860ddfdb333276b65a2fe`
 
-RUNTIME_VERIFIED_PRODUCT_SHA: `f911f777f770cbe290e290c4b0cbc3692b36641e`
-
-STATUS: `DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP`
+STATUS: `AUTHORIZED / DEV_NOT_STARTED`
 
 WORKPACK:
-`working/INK_P0_PROMOTION_RECONCILIATION_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_A_RASTER_SELECTION_FILL_SAMPLING_DEV_WORKPACK_v1.0.md`
 
-RUNTIME: `PROHIBITED`
-
-P1_P2_EXPANSION: `PROHIBITED`
+RUNTIME: `DEFERRED / NOT AUTHORIZED FOR MODULE_READY`
 
 UI_IMPLEMENTATION: `PROHIBITED`
 
-## Goal
+CHAT_EXPANSION: `PROHIBITED`
 
-Reconcile the exact Runtime-verified P0 source payload onto latest main without behavior change.
+FORMAT_VERSION_CHANGE: `PROHIBITED`
 
-## Handoff target
+## Scope
+
+1. Polygonal Lasso Core
+2. Quick Selection Core
+3. Magic Wand / tolerance selection Core
+4. Select-and-Mask refinement Core
+5. Gradient fill Core
+6. Paint Bucket / tolerance flood fill Core
+7. Eyedropper / Color Sampler Core
+
+## Allowed source boundary
+
+May add:
+- `product/source/src/image/raster-selection-tools.js`
+- `product/source/src/image/raster-fill-tools.js`
+
+May modify only if strictly necessary:
+- `product/source/src/image/image-core.js`
+- `product/source/src/editor/selection.js`
+
+Focused QA:
+- `qa/ink-p1-a-raster-selection-fill-sampling.test.mjs`
+
+## Initial checkpoint
 
 ```text
-PRODUCT_FILES_SOURCE_EQUIVALENT = 4 / 4
-FOCUSED_TEST_EQUIVALENT = PASS
-SECTION_4_LEDGER = 61 / 61
-UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
-NEWER_MAIN_AUTHORITY_PRESERVED = PASS
-→ DEV_HANDOFF / MR_REVIEW_REQUIRED / STOP
+LATEST_CHECKPOINT_SHA = branch creation baseline
+PRODUCT_SOURCE_CHANGES = 0
+FOCUSED_QA = NOT RUN
+DEV_HANDOFF = NO
 ```
 
-## Result
-
-The exact four Runtime-verified product blobs, focused regression, and original 61-row ledger and DEV handoff have been reconciled onto the named main baseline. The newer main authority and Runtime harness remain unchanged. Focused regression: 4 / 4 pass; product-source syntax and whitespace checks: pass. No Runtime or queue submission was performed.
-
-Evidence: `working/INK_P0_PROMOTION_RECONCILIATION_DEV_HANDOFF_v1.0.md`.
+DEV must update this file with each meaningful checkpoint and STOP after final handoff for MR review.
