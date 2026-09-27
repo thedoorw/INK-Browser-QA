@@ -194,7 +194,7 @@ P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_F_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_H_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
+P1_H_PRODUCT_IMPLEMENTATION = MR_REVISE / BOUNDED_CORRECTION_AUTHORIZED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
@@ -207,15 +207,19 @@ DEV-F:
 - STOP independently for MR review.
 
 DEV-H:
-- create/use `work/ink-p1-h-format-interoperability-001`;
-- implement only the bounded P1-H interoperability workpack;
-- consume P1-G Core without modifying it;
-- run focused QA;
-- hand off exact HEAD;
-- STOP for MR.
+- continue on `work/ink-p1-h-format-interoperability-001`;
+- perform only the bounded correction in `working/INK_P1_H_MR_REVIEW_v1.0.md`;
+- correct EXR additional-channel semantics and TIFF ExtraSamples semantics;
+- add the missing focused fixtures;
+- rerun the full P1-H focused QA;
+- update lane progress;
+- hand off a new exact HEAD;
+- STOP for MR re-review.
 
 MR:
-- review F and H independently as handoffs arrive;
+- P1-H reviewed HEAD `5c5481c8a93e9a1edea486237677f253c348b4a9` = MR_REVISE; review record `working/INK_P1_H_MR_REVIEW_v1.0.md`;
+- review F independently as its handoff arrives;
+- re-review P1-H after bounded correction;
 - when both are MR_PASS/promoted, activate `INK-P1-INTEGRATION-001` for DEV;
 - review/promote exact Integration DEV handoff;
 - after Integration MR_PASS/promoted, activate `INK-P1-INTEGRATED-RUNTIME-001` for DEV;
