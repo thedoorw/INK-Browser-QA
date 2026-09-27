@@ -38,6 +38,8 @@ P1_INTEGRATION = MR_PASS / PROMOTED
 P1_INTEGRATION_PROMOTION_MERGE = d1269334338531228ddfdd9383761cd419e58738
 P1_RUNTIME = AUTHORIZED / DEV_OWNED_EXECUTION / DEV_NOT_STARTED
 P1_RUNTIME_TARGET_SHA = d1269334338531228ddfdd9383761cd419e58738
+P1_RUNTIME_BRANCH = work/ink-p1-integrated-runtime-001
+P1_RUNTIME_PROGRESS_INIT = 3ebefa880eecc58fa12355fad3daf57fcdedf2ea
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
 
@@ -150,3 +152,10 @@ P1 Integrated Runtime activation checkpoint:
 - product source mutation during Runtime = prohibited;
 - any Runtime defect must be preserved and returned to MR without in-lane repair;
 - UI remains HOLD.
+
+
+Runtime evidence lane:
+- branch = `work/ink-p1-integrated-runtime-001`;
+- progress initialization = `3ebefa880eecc58fa12355fad3daf57fcdedf2ea`;
+- exact execution target remains `d1269334338531228ddfdd9383761cd419e58738`;
+- branch HEAD is not an accepted substitute for the exact target.
