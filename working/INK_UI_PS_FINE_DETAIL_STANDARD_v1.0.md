@@ -670,6 +670,13 @@ CHROME_PALETTE != CANVAS_WORKBENCH_PALETTE
 COMPONENT_LOCAL_RANDOM_GRAYS = 0
 ```
 
+Current Photoshop-on-the-web Light reference anchors:
+- workspace structural gray = `#E9E9E9`;
+- primary elevated surface = `#FFFFFF`;
+- active accent = `#3B63FB`.
+
+These are directly measured from the USER-supplied current Photoshop-on-the-web screenshot and align with Adobe Spectrum Light values. They are high-confidence starting anchors for INK, not a claim about Photoshop Desktop 21.2.12 exact chrome RGB.
+
 Adobe-native prototype range:
 - very-light chrome: 248–255;
 - light structural gray: 233–248;
