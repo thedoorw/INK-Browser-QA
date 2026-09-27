@@ -6,7 +6,7 @@ BRANCH: `work/ink-p1-f-raster-processing-expansion-001`
 
 BASELINE_MAIN: `dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f`
 
-STATUS: `MODULE_READY / DEV_HANDOFF / STOP_FOR_MR`
+STATUS: `BOUNDED_CORRECTION_HANDOFF_READY / STOP_FOR_MR`
 
 WORKPACK:
 `working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md`
@@ -136,3 +136,104 @@ DEV_ACTION = STOP
 ```
 
 DEV-F stops here for independent MR review.
+
+
+## MR bounded correction — zero/default normalization — 2026-09-27
+
+MR REVIEW REFERENCE:
+- `working/INK_P1_F_MR_REVIEW_v1.0.md`
+- The review file was not visible on the P1-F branch or repository search surface when DEV executed this correction.
+- DEV followed the explicit user-authorized bounded correction scope in-chat only.
+
+CORRECTION_COMMIT:
+`dac5dce2ad6c57c7ec91ce3524bfb6ad86810e1f`
+
+CORRECTION_TREE:
+`6d09f1f07f06ab1e08eb516fa8ae4c105f6926e5`
+
+### Zero/default normalization correction
+
+Replaced truthy-default normalization only where zero is a legal value.
+
+Corrected legal-zero parameters:
+
+- Photo Filter `density = 0`
+- Threshold `level = 0`
+- Unsharp Mask `amount = 0`
+- Emboss `strength = 0`
+- Reduce Noise `strength = 0`
+- Reduce Noise `preserveEdges = 0`
+- Liquify Reconstruct `strength = 0`
+
+A bounded numeric default helper now distinguishes:
+- missing / NaN => configured default
+- explicit numeric zero => zero
+
+Parameters whose bounded domain excludes zero were not widened or redefined.
+
+### Regression coverage added
+
+- Photo Filter density zero is exact identity.
+- Threshold level zero remains zero and maps black to white at the threshold boundary.
+- Unsharp Mask amount zero is exact identity.
+- Emboss strength zero remains zero rather than defaulting to one.
+- Reduce Noise strength zero is exact identity.
+- Reduce Noise preserveEdges zero remains zero rather than defaulting to 24.
+- Liquify Reconstruct strength zero preserves the existing displacement rather than applying the default reconstruction amount.
+
+### Full P1-F QA rerun
+
+Command target:
+
+```text
+node --test qa/ink-p1-f-raster-processing-expansion.test.mjs
+```
+
+Result:
+
+```text
+tests = 40
+pass = 40
+fail = 0
+skip = 0
+```
+
+### Correction exact blobs
+
+- `product/source/src/image/raster-processing-advanced.js`
+  - `4234e2aacbd8febf6870f635888336e728f461d3`
+- `qa/ink-p1-f-raster-processing-expansion.test.mjs`
+  - `a23bf1f036ac04a118bfb91eb4dd58576ffd7c19`
+
+### Bounded correction isolation
+
+Before this progress update, the delta from the prior P1-F handoff HEAD contained only:
+
+- `product/source/src/image/raster-processing-advanced.js`
+- `qa/ink-p1-f-raster-processing-expansion.test.mjs`
+
+```text
+IMAGE_CORE_MUTATION = 0
+P1_G_MUTATION = 0
+P1_H_MUTATION = 0
+DOCUMENT_MODEL_MUTATION = 0
+RENDERER_MUTATION = 0
+HISTORY_MUTATION = 0
+INTEGRATION_MUTATION = 0
+RUNTIME_RUN = 0
+UI_MUTATION = 0
+FORMAT_VERSION_MUTATION = 0
+DEPENDENCIES_ADDED = 0
+```
+
+### Correction handoff
+
+```text
+CORRECTION_COMMIT = dac5dce2ad6c57c7ec91ce3524bfb6ad86810e1f
+FULL_P1_F_QA = PASS 40/40 / FAIL 0 / SKIP 0
+RUNTIME = NOT RUN
+DEV_HANDOFF = YES
+NEXT_ACTION = STOP FOR MR REVIEW
+```
+
+DEV does not self-merge, promote, enter Integration, run Runtime, or begin another package.
