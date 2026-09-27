@@ -12,8 +12,10 @@ PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
 OWNER = MR / MAIN REVIEW
 DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
 FIRST_PRIORITY = RESTORE_ALL_EXISTING_INK_CAPABILITIES
-FIRST_REBASELINE_RUNTIME = AUTHORIZED AFTER MR REVIEW
+FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
+FIRST_REBASELINE_RUNTIME_RUN = 36255595714
+FIRST_REBASELINE_RUNTIME_ARTIFACT = 10910238715
 MR_PRE_RUNTIME_REVIEW = working/INK_P0_EXISTING_CAPABILITY_RESTORE_MR_REVIEW_v1.0.md
 
 SECONDARY_UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
@@ -95,9 +97,10 @@ MR
 → run focused non-integrated QA, History safety and save/load checks
 → require UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
 → MR pre-Runtime review PASS recorded
-→ FIRST_REBASELINE_RUNTIME_AUTHORIZED = YES
-→ run the first integrated Runtime on exact SHA f911f777f770cbe290e290c4b0cbc3692b36641e
-→ only after that Runtime, disposition/implement Photoshop and mature-platform P1/P2 gaps
+→ FIRST_REBASELINE_RUNTIME = PASS on exact SHA f911f777f770cbe290e290c4b0cbc3692b36641e
+→ cleanly reconcile/promote the Runtime-verified P0 payload onto latest main
+→ verify promoted product-source equivalence
+→ only after P0 promotion authority is closed, disposition/implement Photoshop and mature-platform P1/P2 gaps
 → republish ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md as full-product truth
 → provide final exact promoted/runtime-verified authority
 
@@ -110,14 +113,15 @@ UR
 → only then issue bounded UI implementation Work Order(s)
 ```
 
-Existing-capability restoration gate has passed MR pre-Runtime review.
+Existing-capability restoration gate and first rebaseline Runtime have passed.
 
 Current gate:
 
 ```text
-FIRST REBASELINE INTEGRATED RUNTIME = AUTHORIZED
-TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
-NO P1/P2 NEW CAPABILITY IMPLEMENTATION UNTIL RUNTIME PASS
+P0_PROMOTION_RECONCILIATION = REQUIRED
+RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
+RUNTIME_RUN = 36255595714
+NO P1/P2 NEW CAPABILITY IMPLEMENTATION UNTIL P0 PROMOTION CLOSES
 NO UI DEV
 NO UI IMPLEMENTATION WORK ORDER
 NO FINAL FUNCTION LOCK

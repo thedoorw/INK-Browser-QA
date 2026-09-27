@@ -20,11 +20,13 @@ CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
 CURRENT_PRIMARY_REMEDIATION = INK-FULL-CAPABILITY-REBASELINE-001
 CURRENT_PROGRAM = Full Product Capability Rebaseline / Preservation Recovery
 FIRST_PRIORITY = Restore all existing INK capabilities
-FIRST_REBASELINE_RUNTIME = PROHIBITED until all existing P0 capabilities are restored
-P1_P2_EXPANSION = AFTER first restored-capability Runtime
+P0_RESTORE = 61 / 61
+FIRST_REBASELINE_RUNTIME = PASS
+RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
+CURRENT_GATE = Clean P0 promotion / reconciliation
+P1_P2_EXPANSION = BLOCKED until P0 promotion closes
 UI_PROGRAM = Photoshop-aligned final UI rebuild
 UI_STATUS = HOLD
-CURRENT_GATE = Restore-all-before-first-Runtime
 ```
 
 Current primary remediation authority:
@@ -49,7 +51,7 @@ inventory existing INK
 → later UI reconciliation
 ```
 
-Do not submit a rebaseline Runtime before the restore-all gate passes.
+The restore-all gate and first rebaseline Runtime have passed. Do not begin P1/P2 or UI work until the Runtime-verified P0 payload is cleanly reconciled/promoted onto latest main.
 
 Current task/gate:
 
@@ -204,7 +206,7 @@ Document lifecycle:
 
 ## Runtime authority
 
-For `INK-FULL-CAPABILITY-REBASELINE-001`, integrated Runtime execution is currently gated and must not run until all existing P0 capabilities are restored and the pre-Runtime self-check passes.
+For `INK-FULL-CAPABILITY-REBASELINE-001`, the first restored-capability Runtime passed on exact product SHA `f911f777f770cbe290e290c4b0cbc3692b36641e` in run `36255595714`.
 
 Current executable Windows Runtime workflow:
 

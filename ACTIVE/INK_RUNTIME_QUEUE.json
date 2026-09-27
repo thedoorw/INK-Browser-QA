@@ -1,11 +1,9 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "f911f777f770cbe290e290c4b0cbc3692b36641e",
-  "pending_work_orders": [
-    "INK-P0-RESTORE-ALL-001"
-  ],
+  "pending_work_orders": [],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
@@ -25,11 +23,12 @@
     "INK-CHAT-CONNECTOR-003",
     "INK-CHAT-CONNECTOR-004",
     "INK-CHAT-CLOSED-LOOP-001",
-    "INK-UI-REBUILD-001-TECH-DEBT-CLEANUP"
+    "INK-UI-REBUILD-001-TECH-DEBT-CLEANUP",
+    "INK-P0-RESTORE-ALL-001"
   ],
   "high_risk": {
-    "enabled": true,
-    "reason": "Retry first P0 restored-capability Runtime on the same exact product SHA after fixing only the Node semantic Boolean UMD preload in the central harness. Attempt 1 product P0 focused tests passed; semantic harness preload failed before browser batch."
+    "enabled": false,
+    "reason": ""
   },
   "batch_policy": {
     "default_target": 3,
@@ -37,8 +36,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36240038654,
-    "tested_sha": "5d6e6bd81f1bcc65ed9d52cc0249f29f199ffa8f",
-    "result": "FOCUSED_32_PASS / UI_PASS / CLOSURE_PASS / GEOMETRY_PASS / CREATIVE_PASS / CONNECTOR_005_BROWSER_PASS / PROMOTED_SOURCE_EQUIVALENT_MAIN_6ab67fe355b787d251c4431fe55b9d4f4990384b"
+    "run_id": 36255595714,
+    "tested_sha": "f911f777f770cbe290e290c4b0cbc3692b36641e",
+    "result": "FOCUSED_38_PASS / SEMANTIC_REGION_PASS / UI_PASS / CLOSURE_PASS / GEOMETRY_PASS / CREATIVE_PASS / P0_RESTORE_RUNTIME_PASS / ARTIFACT_10910238715 / sha256:4cce35a64a7b7c717bbb5020d7c5fa760d5410466918f9f950ed81623b3f312b"
   }
 }

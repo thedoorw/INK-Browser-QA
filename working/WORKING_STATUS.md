@@ -10,9 +10,11 @@ CURRENT_PRIMARY_TASK = INK-FULL-CAPABILITY-REBASELINE-001
 CURRENT_PROGRAM = FULL_PRODUCT_CAPABILITY_REBASELINE / PRESERVATION_RECOVERY
 DEVELOPMENT_BASIS = ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md
 FIRST_PRIORITY = RESTORE_ALL_EXISTING_INK_CAPABILITIES
-CURRENT_GATE = FIRST_REBASELINE_RUNTIME_AUTHORIZED
-FIRST_REBASELINE_RUNTIME = AUTHORIZED
+CURRENT_GATE = P0_PROMOTION_RECONCILIATION_REQUIRED
+FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
+FIRST_REBASELINE_RUNTIME_RUN = 36255595714
+FIRST_REBASELINE_RUNTIME_ARTIFACT = 10910238715
 MR_PRE_RUNTIME_REVIEW = PASS
 UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 UI_STATUS = HOLD
@@ -39,7 +41,7 @@ RUNTIME_QUEUE =
 
 ## Current next step
 
-MR reviewed exact DEV HEAD `f911f777f770cbe290e290c4b0cbc3692b36641e`: Section 4 = 61/61, unresolved existing capability loss = 0 identified, and the pre-Runtime gate passed. The first rebaseline integrated Runtime is now authorized for that exact SHA. P1/P2 implementation and UI implementation remain blocked until this Runtime passes.
+Exact DEV HEAD `f911f777f770cbe290e290c4b0cbc3692b36641e` passed the first rebaseline integrated Runtime in run `36255595714`: focused 38/38 PASS, semantic-region PASS, UI/Closure/Geometry/Creative PASS. Current next step is clean P0 promotion/reconciliation onto latest main. P1/P2 and UI implementation remain blocked until that promotion closes.
 
 ## Historical technical milestone
 
