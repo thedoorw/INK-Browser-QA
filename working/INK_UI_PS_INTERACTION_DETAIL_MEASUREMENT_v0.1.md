@@ -111,10 +111,44 @@ RULER_ORIGIN_DRAG = OPTIONAL / NON-BLOCKING
 ## Remaining targeted reference gaps
 
 No additional generic Photoshop screenshots are required. Only targeted states remain if pixel-level evidence is desired:
-1. Navigator proxy while actively dragging
-2. Panel width resize while actively dragging
-3. keyboard-focus visual
-4. disabled control close-up
-5. scrollbar hover/drag close-up
-6. equal-spacing / smart-snap feedback
-7. optional ruler-origin drag
+1. keyboard-focus visual
+2. disabled control close-up
+3. scrollbar hover/drag close-up
+4. equal-spacing / smart-snap feedback
+5. optional ruler-origin drag
+
+## Cursor-reference closure
+
+USER notes that Navigator proxy dragging and Panel resizing had already been demonstrated during the supplied Photoshop interaction references.
+
+Review result:
+- Navigator viewport proxy visual states are already captured, including high-zoom proxy geometry.
+- Panel resizability is already established by the Photoshop panel system references and existing expanded/collapsed/elastic states.
+- the mouse-pointer glyph itself is not consistently embedded in the screenshots and is therefore **not** a pixel-reference requirement.
+
+Cursor behavior is now specified semantically:
+
+```text
+Navigator proxy hover/drag
+→ grab / grabbing
+
+vertical panel-width divider
+→ ew-resize
+
+horizontal stacked-panel splitter
+→ ns-resize
+```
+
+These are interaction semantics, not Photoshop raster-asset measurements.
+
+Therefore:
+
+```text
+NAVIGATOR_DRAG_CURSOR_SCREENSHOT = NOT_REQUIRED
+PANEL_RESIZE_CURSOR_SCREENSHOT = NOT_REQUIRED
+NAVIGATOR_DRAG_RUNTIME_QA = REQUIRED_LATER
+PANEL_RESIZE_RUNTIME_QA = REQUIRED_LATER
+```
+
+The distinction is deliberate:
+Photoshop reference acquisition is closed for these cursor states; INK Runtime must still prove that the interactions work.
