@@ -1,15 +1,15 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / MR_AUTHORIZED / UI_HOLD`
+STATUS: `CURRENT / MR_AUTHORIZED / UI_RECONCILIATION_ACTIVE`
 
 DATE: 2026-09-27
 
 ## Current program
 
 ```text
-PRIMARY_TASKS = INK-P1-INTEGRATED-RUNTIME-001
-PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-OWNER = MR / MAIN REVIEW
+PRIMARY_TASKS = INK-UI-FULL-CAPABILITY-RECONCILIATION-001
+PROGRAM = FULL_CAPABILITY_UI_RECONCILIATION
+OWNER = UR / UI REVIEW
 
 BASELINE_MAIN = dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
@@ -39,7 +39,7 @@ P1_RUNTIME_PROGRESS = working/INK_P1_INTEGRATED_RUNTIME_DEV_PROGRESS.md
 P1_RUNTIME_PROGRESS_INIT = 3ebefa880eecc58fa12355fad3daf57fcdedf2ea
 P1_RUNTIME_WORKPACK = working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md
 P1_RUNTIME_MR_REVIEW = working/INK_P1_INTEGRATED_RUNTIME_MR_REVIEW_v1.0.md
-P1_RUNTIME_STATUS = BLOCKED_BEFORE_RUN / MR_REVIEWED
+P1_RUNTIME_STATUS = MR_PASS / RUNTIME_GATE_CLOSED
 P1_RUNTIME_HARNESS_WORKPACK = working/INK_P1_RUNTIME_HARNESS_COVERAGE_DEV_WORKPACK_v1.0.md
 P1_RUNTIME_HARNESS_BRANCH = work/ink-p1-runtime-harness-coverage-001
 P1_RUNTIME_HARNESS_MR_REVIEW = working/INK_P1_RUNTIME_HARNESS_COVERAGE_MR_REVIEW_v1.0.md
@@ -55,7 +55,7 @@ CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
 
 UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 UI_OWNER = UR / UI REVIEW
-UI_STATUS = HOLD
+UI_STATUS = RECONCILIATION_AUTHORIZED / IMPLEMENTATION_HOLD
 ```
 
 ## Completed upstream gates
@@ -82,28 +82,30 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current gate — P1 Integrated Runtime Ready
+## Current gate — Full-capability UI reconciliation
 
-The blocked-before-run evidence was accepted by MR. The central Runtime harness correction has now passed MR review and is promoted.
+P1 Integrated Runtime has passed MR review and the Runtime gate is closed.
 
-Harness review:
-`working/INK_P1_RUNTIME_HARNESS_COVERAGE_MR_REVIEW_v1.0.md`
+Final Runtime review:
+`working/INK_P1_INTEGRATED_RUNTIME_FINAL_MR_REVIEW_v1.0.md`
 
-Harness promotion:
-`f112089764b4dc3600ce76ff916c50ca3798456d`
-
-The final integrated Runtime is ready to be queued by MR.
-
-Exact product target remains:
+Exact tested product SHA:
 `d1269334338531228ddfdd9383761cd419e58738`
 
-Execution authority:
-- MR mutates the existing main Runtime queue;
-- central workflow resolves the queue target to the exact product SHA;
-- workflow bytes come from current main Runtime infrastructure;
-- product bytes/tests come from the pinned target SHA;
-- one final P1 Runtime only;
-- UI remains HOLD until MR accepts its evidence.
+Runtime evidence:
+- Run `36330300446`, attempt 2 = SUCCESS;
+- P1 A-H + integration = 234/234 PASS, fail 0, skip 0;
+- Closure focused = 38 PASS, fail 0;
+- browser UI / closure / geometry / creative suites = PASS;
+- artifact = `10936541218`;
+- artifact digest = `sha256:009cac80f1e11aca065c1ce0ab91014ffccac6427d9e788051ffcb78bb83c1f0`.
+
+The next authorized lane is:
+`INK-UI-FULL-CAPABILITY-RECONCILIATION-001`
+
+UR may perform capability-to-UI placement reconciliation and planning.
+
+Formal UI implementation remains HOLD until UR outputs return to MR review.
 
 ## P1/P2 execution sequence
 
@@ -173,7 +175,7 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_INTEGRATED_RUNTIME_RUNNING
+CURRENT_GATE = UI_FULL_CAPABILITY_RECONCILIATION_UR_AUTHORIZED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
@@ -182,34 +184,42 @@ P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_F_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-INTEGRATED_RUNTIME = RUNNING / EXACT_TARGET_PRESERVED
+INTEGRATED_RUNTIME = MR_PASS / RUNTIME_GATE_CLOSED
 RUNTIME_HARNESS_COVERAGE = MR_PASS / PROMOTED
+UI_RECONCILIATION = AUTHORIZED
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
 ```
 
-## Active Runtime execution
+## Final Runtime closure
 
 ```text
-QUEUE_COMMIT = 164119a59ff6733aec418bccb2c0775ea0f6282c
 RUN_ID = 36330300446
-CONTROLLER_JOB = 108650821763 / SUCCESS
-WINDOWS_JOB = 108650842187 / IN_PROGRESS
+SUCCESSFUL_ATTEMPT = 2
+WINDOWS_JOB = 108656605134 / SUCCESS
 WINDOWS_RUNNER = DESKTOP-NSOQH69
 PRODUCT_TARGET = d1269334338531228ddfdd9383761cd419e58738
+P1_TESTS = 234 / 234 PASS
+P1_FAIL = 0
+P1_SKIP = 0
+BROWSER_RUNTIME = PASS
+ARTIFACT = 10936541218
+RUNTIME_GATE = CLOSED
 ```
-
-No Runtime PASS / FAIL is declared until the Windows job, artifact and exact-target evidence complete.
 
 ## Next action
 
+UR:
+- execute `INK-UI-FULL-CAPABILITY-RECONCILIATION-001`;
+- use the refreshed 64-family / 496-product-atomic capability baseline;
+- reconcile Top Menu / Left Toolbar / Tool Flyout / Contextual Options Bar / Right Panels / Properties / Dialog / Specialist / Help-Settings-Diagnostics / Headless-only placement;
+- update the UI control and gap architecture;
+- do not modify `product/source/**`;
+- STOP back to MR for review.
+
 MR:
-- review Run `36330300446` after completion;
-- verify P1 A-H + integration test evidence, Closure/P0/browser results, artifact, tested SHA and skips/failures;
-- decide Runtime PASS / FAIL / HOLD.
+- review UR reconciliation outputs;
+- decide whether UI implementation HOLD can be cleared.
 
 DEV:
-- no action unless MR issues a separate correction Work Order.
-
-UR:
-- remain on HOLD.
+- no action.
