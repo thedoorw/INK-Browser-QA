@@ -572,13 +572,48 @@ This section verifies that every major Photoshop workstation concept was either 
 - [ ] AG28 Revision panel disposition satisfied.
 - [ ] AG29 fullscreen/screen-mode disposition satisfied.
 - [ ] AG30 zoom/status disposition satisfied.
-- [ ] AG31 no fake full ruler/guide system was invented.
+- [ ] AG31 ruler / guide / snapping workstation surface satisfies the dedicated mandatory audit below and uses existing P1-C/C08 authorities. [SRC][INT][PIX]
 - [ ] AG32 no Photoshop notification/account bell UI was copied.
 - [ ] AG33 no Discover/tutorial panel was copied as a required editor feature.
 - [ ] AG34 no Photoshop Generative Contextual UI was duplicated over CHAT.
 - [ ] AG35 no general Filter menu was created under current baseline.
 - [ ] AG36 no historical 3D menu was created.
 - [ ] AG37 no Adobe proprietary logo/icon asset was copied.
+
+# AI. Ruler / guide / snapping mandatory audit
+
+This is a high-priority workstation requirement. P1-C Core existence is necessary but not sufficient for UI closure.
+
+- [ ] AI01 top ruler is present, aligned to the active canvas/workspace coordinate system, and updates correctly with pan/zoom. [DOM][INT][PIX]
+- [ ] AI02 left ruler is present, aligned to the same coordinate authority, and updates correctly with pan/zoom. [DOM][INT][PIX]
+- [ ] AI03 horizontal guides can be created by dragging directly from the ruler. [INT][PIX]
+- [ ] AI04 vertical guides can be created by dragging directly from the ruler. [INT][PIX]
+- [ ] AI05 guides can be moved, deleted, locked, shown and hidden through one guide authority. [SRC][INT]
+- [ ] AI06 object edges and centers snap to guides with visible snap feedback. [INT][PIX]
+- [ ] AI07 object edges and centers snap to other objects using the accepted smart-snap authority. [INT][PIX]
+- [ ] AI08 grid snapping works and converges with the same global snap state. [INT]
+- [ ] AI09 angle snapping works and does not conflict with positional snapping. [INT]
+- [ ] AI10 equal-distance / equal-spacing snapping works on X/Y and displays actionable visual spacing feedback. [INT][PIX]
+- [ ] AI11 movement displays useful live distance / position information without becoming persistent UI noise. [INT][PIX][USER]
+- [ ] AI12 global Snap on/off control exists and immediately governs the accepted snap authority. [INT]
+- [ ] AI13 Snap To category controls exist for the supported targets rather than requiring all snap classes at once. [INT]
+- [ ] AI14 temporary snap bypass works during direct manipulation without changing the saved global setting. [INT]
+- [ ] AI15 one documented snap tolerance / hysteresis policy is used across guide/object/grid/equal-distance snapping. [SRC][INT]
+- [ ] AI16 snapping does not visibly jitter, oscillate between competing candidates, or trap the pointer near threshold boundaries. [INT][USER]
+- [ ] AI17 persistent guides survive accepted save/load/reopen flow after P1 Integration wiring. [INT]
+- [ ] AI18 guide mutations that are document mutations converge with existing History/Undo/Redo semantics. [SRC][INT]
+- [ ] AI19 snapping changes object transforms through existing transform/direct-manipulation authority; no second transform state owner exists. [SRC]
+- [ ] AI20 no second guide/snap/layout engine was introduced for UI convenience. [SRC][HEALTH]
+
+Required closure:
+
+```text
+RULER_GUIDE_SNAP_12_REQUIRED_BEHAVIORS = PASS
+GUIDE_PERSISTENCE = PASS
+GUIDE_HISTORY_CONVERGENCE = PASS
+SNAP_AUTHORITY_COUNT = 1
+SNAP_JITTER_REGRESSION = 0
+```
 
 # AH. Panel tabs / panel menu / status-strip audit
 
