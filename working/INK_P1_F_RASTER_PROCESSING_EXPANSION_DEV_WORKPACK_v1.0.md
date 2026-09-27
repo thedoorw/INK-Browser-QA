@@ -10,7 +10,7 @@ MANDATORY_DEV_BRANCH: `work/ink-p1-f-raster-processing-expansion-001`
 
 PARALLEL_WITH: `INK-P1-G-COLOR-BITDEPTH-CHANNELS-001`
 
-BASELINE_MAIN: `TO_BE_FILLED_AFTER_AUTHORIZATION_DOCS`
+BASELINE_MAIN: `PARALLEL_BRANCH_CUT — exact SHA recorded in lane progress file`
 
 UPSTREAM:
 - P1-A = MODULE_READY / MR_PASS / PROMOTED
@@ -118,6 +118,9 @@ DEV must not modify during this lane:
 - CHAT
 - Recipe
 - FORMAT_VERSION
+
+Lane progress authority:
+- `working/INK_P1_F_DEV_PROGRESS.md`
 
 This no-overlap rule is mandatory so P1-F and P1-G can execute in parallel from the same baseline.
 
