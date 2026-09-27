@@ -31,7 +31,7 @@ P1_PARALLEL_BRANCH_CUT = dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f
 P1_F = AUTHORIZED / PARALLEL
 P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
-P1_H = MR_REVISE / QA_ONLY_BOUNDED_CORRECTION
+P1_H = MODULE_READY / MR_PASS / AWAITING_PROMOTION
 P1_INTEGRATION = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_F_H
 P1_RUNTIME = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_INTEGRATION
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
@@ -72,7 +72,7 @@ P1-D passed MR MODULE_READY review and is promoted on main `206f027785c04e56e912
 
 P1-E passed MR MODULE_READY review and is promoted on main `fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`.
 
-P1-G passed MR re-review and is promoted. P1-H bounded Core correction reached `61193d695c17bb7c59aee3bf3f736662244e7510`; MR verified the EXR additional-channel and TIFF ExtraSamples semantic defects are corrected. P1-H remains unpromoted only because the explicitly required bounded multiple-ExtraSamples regression fixture is still missing. The next correction is QA-only unless that fixture exposes a Core defect.
+P1-G passed MR re-review and is promoted. P1-H final handoff `89cb4d3569bd2ac0833627a415c2eeb6d58a0c00` passed MR MODULE_READY review. The multiple-ExtraSamples regression gate is closed with a simultaneous unspecified-extra + alpha fixture. P1-H is awaiting MR-controlled promotion because the branch and current main have diverged.
 
 ## UI release sequence
 
