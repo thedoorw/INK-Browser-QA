@@ -8,7 +8,7 @@ DATE: 2026-09-27
 CURRENT_MAIN = repository current main
 CURRENT_PRIMARY_TASK = INK-P1-A-RASTER-SELECTION-FILL-SAMPLING-001
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_A_DEV_AUTHORIZED
+CURRENT_GATE = P1_A_MODULE_READY_AWAIT_PROMOTION
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -43,20 +43,13 @@ CONNECTOR_005 = CLOSED
 
 The full capability census is closed and the refreshed capability baseline is published on main.
 
-MR has authorized P1-A as the first pre-UI mature-platform completion module.
+P1-A has passed MR MODULE_READY review on exact DEV head `21918c7e47ab1f31f70ff77816a6179fda4e2800`.
 
-P1-A scope:
-- Polygonal Lasso Core
-- Quick Selection Core
-- Magic Wand
-- Select/Mask refinement
-- Gradient fill
-- Paint Bucket
-- Eyedropper / Color Sampler
+P1-A MODULE_READY = PASS. Product branch is not yet promoted to current main.
 
-Final UI wiring remains prohibited in this task.
+Final UI wiring remains prohibited.
 
-P1-B through P1-H remain queued and each requires a separate bounded MR authorization.
+Next: promote/reconcile P1-A onto latest main, then authorize P1-B. P1-B through P1-H each require a separate bounded MR authorization.
 
 ## UI release sequence
 
