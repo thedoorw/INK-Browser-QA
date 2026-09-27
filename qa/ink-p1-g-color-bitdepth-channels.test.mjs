@@ -1,0 +1,59 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {
+  BIT_DEPTHS,COLOR_MODES,BUILT_IN_PROFILES,getColorModeDescriptor,createColorRaster,cloneColorRaster,convertBitDepth,
+  readNormalizedSample,writeNormalizedSample,rgbToLab,labToRgb,rgbToCmyk,cmykToRgb,convertColor,parseIccProfile,inspectIccProfile,transformRgbWithIcc
+} from '../product/source/src/image/color-management-core.js';
+import {
+  createChannelSet,addAlphaChannel,addSpotChannel,removeAuxiliaryChannel,renameAuxiliaryChannel,reorderAuxiliaryChannel,
+  renameMultichannelProcess,reorderMultichannelProcess,extractChannelPlane,replaceChannelPlane,channelSerializationDescriptor,validateChannelSet
+} from '../product/source/src/image/channel-core.js';
+
+const near=(a,b,t=1e-4)=>assert.ok(Math.abs(a-b)<=t,`${a} != ${b}`);
+const putSig=(bytes,offset,s)=>{for(let i=0;i<4;i++)bytes[offset+i]=s.charCodeAt(i)||32;};
+const putU32=(bytes,offset,v)=>new DataView(bytes.buffer).setUint32(offset,v,false);
+const putS15=(bytes,offset,v)=>new DataView(bytes.buffer).setInt32(offset,Math.round(v*65536),false);
+const xyzTag=(x,y,z)=>{const b=new Uint8Array(20);putSig(b,0,'XYZ ');putS15(b,8,x);putS15(b,12,y);putS15(b,16,z);return b;};
+const gammaTag=g=>{const b=new Uint8Array(14);putSig(b,0,'curv');putU32(b,8,1);new DataView(b.buffer).setUint16(12,Math.round(g*256),false);return b;};
+const sf32Tag=m=>{const b=new Uint8Array(44);putSig(b,0,'sf32');for(let r=0;r<3;r++)for(let c=0;c<3;c++)putS15(b,8+(r*3+c)*4,m[r][c]);return b;};
+function makeIcc({version=4,colorSpace='RGB ',pcs='XYZ ',tags={}}={}){
+  const entries=Object.entries(tags),tableSize=132+entries.length*12;let offset=tableSize,total=tableSize;
+  for(const [,data] of entries)total+=data.length;
+  const b=new Uint8Array(total);putU32(b,0,total);b[8]=version;putSig(b,12,'mntr');putSig(b,16,colorSpace);putSig(b,20,pcs);putSig(b,36,'acsp');putU32(b,128,entries.length);
+  entries.forEach(([name,data],i)=>{const base=132+i*12;putSig(b,base,name);putU32(b,base+4,offset);putU32(b,base+8,data.length);b.set(data,offset);offset+=data.length;});return b;
+}
+const matrixProfile=(extra={})=>makeIcc({tags:{
+  rXYZ:xyzTag(1,0,0),gXYZ:xyzTag(0,1,0),bXYZ:xyzTag(0,0,1),rTRC:gammaTag(1),gTRC:gammaTag(1),bTRC:gammaTag(1),wtpt:xyzTag(.96422,1,.82521),...extra
+}});
+
+test('bit-depth registry and color-mode registry are explicit',()=>{assert.deepEqual(BIT_DEPTHS,[8,16,32]);assert.deepEqual(COLOR_MODES.RGB.channels,['R','G','B']);assert.equal(BUILT_IN_PROFILES.sRGB.colorSpace,'RGB ');});
+test('8 -> 16 -> 8 integer endpoints are exact',()=>{const a=createColorRaster({width:2,height:1,bitDepth:8,colorMode:'RGB',data:[0,255,128,255,0,64]}),b=convertBitDepth(a,16),c=convertBitDepth(b,8);assert.equal(b.data[0],0);assert.equal(b.data[1],65535);assert.deepEqual([...c.data],[...a.data]);});
+test('16 -> 32 conversion uses normalized values',()=>{const a=createColorRaster({width:1,height:1,bitDepth:16,colorMode:'RGB',data:[0,32768,65535]}),b=convertBitDepth(a,32);near(b.data[0],0);near(b.data[1],32768/65535,1e-6);near(b.data[2],1);});
+test('32-bit policy preserves finite HDR when target remains 32-bit',()=>{const a=createColorRaster({width:1,height:1,bitDepth:32,colorMode:'RGB',data:[-0.25,1.5,4]}),b=convertBitDepth(a,32);assert.deepEqual([...b.data],[-0.25,1.5,4]);assert.match(b.float32Policy,/HDR/);});
+test('32 -> integer clamps HDR and negatives at export boundary',()=>{const a=createColorRaster({width:1,height:1,bitDepth:32,colorMode:'RGB',data:[-1,.5,2]}),b=convertBitDepth(a,8);assert.deepEqual([...b.data],[0,128,255]);});
+test('non-finite 32-bit samples are rejected',()=>assert.throws(()=>createColorRaster({width:1,height:1,bitDepth:32,colorMode:'RGB',data:[0,Infinity,0]}),/INK_COLOR_NONFINITE/));
+test('normalized read/write is explicit and alpha remains separate',()=>{const r=createColorRaster({width:1,height:1,bitDepth:8,colorMode:'RGB',data:[0,0,0],alpha:[128]});writeNormalizedSample(r,0,1,.5);near(readNormalizedSample(r,0,1),128/255,1e-9);assert.equal(r.alpha[0],128);});
+test('mode/channel validation rejects mismatch and Multichannel requires count',()=>{assert.throws(()=>getColorModeDescriptor('RGB',4),/CHANNEL_COUNT_MISMATCH/);assert.throws(()=>getColorModeDescriptor('Multichannel'),/REQUIRES_CHANNEL_COUNT/);assert.deepEqual(getColorModeDescriptor('Multichannel',2,['A','B']).channels,['A','B']);});
+
+test('RGB <-> Lab deterministic round trip stays within tolerance',()=>{const rgb=[.2,.4,.7],lab=rgbToLab(rgb),back=labToRgb(lab);rgb.forEach((v,i)=>near(back[i],v,2e-5));});
+test('Lab reference white and black are bounded reference fixtures',()=>{const white=rgbToLab([1,1,1]),black=rgbToLab([0,0,0]);near(white[0],100,0.02);near(black[0],0,1e-6);});
+test('RGB <-> CMYK fallback round trip is deterministic and bounded',()=>{const rgb=[.15,.6,.9],cmyk=rgbToCmyk(rgb),back=cmykToRgb(cmyk);assert.ok(cmyk.every(v=>v>=0&&v<=1));rgb.forEach((v,i)=>near(back[i],v,1e-12));assert.deepEqual(convertColor(rgb,'RGB','CMYK'),cmyk);});
+
+test('ICC v2 and v4 valid headers parse',()=>{for(const version of [2,4]){const p=parseIccProfile(makeIcc({version}));assert.equal(p.versionMajor,version);assert.equal(p.profileClass,'mntr');assert.equal(p.colorSpace,'RGB ');}});
+test('ICC malformed signature is rejected',()=>{const b=makeIcc();putSig(b,36,'nope');assert.throws(()=>parseIccProfile(b),/SIGNATURE_INVALID/);});
+test('ICC out-of-bounds declared tag is rejected',()=>{const b=makeIcc({tags:{rXYZ:xyzTag(1,0,0)}});const view=new DataView(b.buffer);view.setUint32(136,b.length+10,false);assert.throws(()=>parseIccProfile(b),/TAG_OUT_OF_BOUNDS/);});
+test('ICC fingerprint and embedded bytes are deterministic/preserved',()=>{const b=matrixProfile(),a=parseIccProfile(b),c=parseIccProfile(b),info=inspectIccProfile(a);assert.equal(a.fingerprint,c.fingerprint);assert.deepEqual([...a.embeddedBytes],[...b]);assert.equal(info.embeddedByteLength,b.length);assert.ok(info.tagSignatures.includes('rXYZ'));});
+test('matrix/TRC RGB profile executes bounded native transform',()=>{const p=parseIccProfile(matrixProfile()),r=transformRgbWithIcc(p,[.2,.4,.6]);assert.equal(r.status,'ok');near(r.values[0],.2,2e-5);near(r.values[1],.4,2e-5);near(r.values[2],.6,2e-5);assert.deepEqual(r.whitePoint.map(v=>+v.toFixed(4)),[.9642,1,.8252]);});
+test('ICC chad matrix is applied when present',()=>{const chad=sf32Tag([[.5,0,0],[0,.5,0],[0,0,.5]]),r=transformRgbWithIcc(parseIccProfile(matrixProfile({chad})),[.4,.6,.8]);assert.equal(r.chromaticAdaptationApplied,true);near(r.values[0],.2,2e-5);near(r.values[1],.3,2e-5);near(r.values[2],.4,2e-5);});
+test('complex/non-RGB ICC transform returns explicit unsupported status',()=>{const p=parseIccProfile(makeIcc({colorSpace:'CMYK'})),r=transformRgbWithIcc(p,[.2,.3,.4]);assert.equal(r.status,'unsupported-transform');assert.equal(r.reason,'non-rgb-profile');});
+test('RGB profile lacking matrix/TRC tags returns explicit unsupported status',()=>{const r=transformRgbWithIcc(parseIccProfile(makeIcc()),[.2,.3,.4]);assert.equal(r.status,'unsupported-transform');assert.match(r.reason,/matrix-trc/);});
+
+test('channel core derives process channels from RGB mode',()=>{const s=createChannelSet({width:2,height:2,bitDepth:8,colorMode:'RGB'});assert.deepEqual(s.process.map(p=>p.name),['R','G','B']);assert.equal(validateChannelSet(s),true);});
+test('alpha channel add/extract is deterministic and source immutable',()=>{const s=createChannelSet({width:2,height:1,bitDepth:8,colorMode:'RGB'}),a=addAlphaChannel(s,{name:'Mask',data:[0,255]}),p=extractChannelPlane(a,'Mask');assert.equal(s.auxiliary.length,0);assert.deepEqual([...p.data],[0,255]);assert.equal(p.kind,'alpha');});
+test('channel plane replacement validates and replaces exact typed plane',()=>{let s=createChannelSet({width:2,height:1,bitDepth:16,colorMode:'RGB'});s=addAlphaChannel(s,{name:'A',data:[1,2]});const r=replaceChannelPlane(s,'A',{width:2,height:1,bitDepth:16,data:[100,65535]});assert.deepEqual([...extractChannelPlane(r,'A').data],[100,65535]);assert.deepEqual([...extractChannelPlane(s,'A').data],[1,2]);});
+test('spot channel preserves preview color and solidity metadata',()=>{const s=addSpotChannel(createChannelSet({width:1,height:1,colorMode:'RGB'}),{name:'PANTONE X',data:[200],previewColor:[12,34,56],solidity:.42}),p=extractChannelPlane(s,'PANTONE X');assert.deepEqual(p.previewColor,[12,34,56]);near(p.solidity,.42);assert.equal(p.kind,'spot');});
+test('auxiliary add/rename/reorder/remove remains outside process channels',()=>{let s=createChannelSet({width:1,height:1,colorMode:'RGB'});s=addAlphaChannel(s,{name:'A'});s=addSpotChannel(s,{name:'B'});s=renameAuxiliaryChannel(s,'A','AA');s=reorderAuxiliaryChannel(s,1,0);assert.deepEqual(s.auxiliary.map(p=>p.name),['B','AA']);s=removeAuxiliaryChannel(s,'AA');assert.deepEqual(s.auxiliary.map(p=>p.name),['B']);assert.deepEqual(s.process.map(p=>p.name),['R','G','B']);});
+test('Multichannel supports arbitrary named channel ordering',()=>{let s=createChannelSet({width:1,height:1,bitDepth:8,colorMode:'Multichannel',multichannelNames:['Ink A','Ink B','Ink C']});s=renameMultichannelProcess(s,1,'Ink X');s=reorderMultichannelProcess(s,2,0);assert.deepEqual(s.process.map(p=>p.name),['Ink C','Ink A','Ink X']);assert.deepEqual(s.multichannelNames,['Ink C','Ink A','Ink X']);});
+test('channel dimension/bit-depth mismatch is rejected',()=>{let s=addAlphaChannel(createChannelSet({width:2,height:2,bitDepth:8,colorMode:'RGB'}),{name:'A'});assert.throws(()=>replaceChannelPlane(s,'A',{width:1,height:2,bitDepth:8,data:[0,0]}),/DIMENSION_MISMATCH/);assert.throws(()=>replaceChannelPlane(s,'A',{width:2,height:2,bitDepth:16,data:[0,0,0,0]}),/BIT_DEPTH_MISMATCH/);});
+test('channel serialization descriptor is deterministic metadata, not a save format',()=>{let s=createChannelSet({width:1,height:1,colorMode:'RGB'});s=addSpotChannel(s,{name:'Spot',previewColor:[1,2,3],solidity:.5});const a=channelSerializationDescriptor(s),b=channelSerializationDescriptor(s);assert.deepEqual(a,b);assert.equal(a.type,'channel-layout');assert.equal(a.auxiliary[0].kind,'spot');assert.equal(a.auxiliary[0].data,undefined);});
+test('color raster conversions are input immutable and repeat deterministic',()=>{const src=createColorRaster({width:1,height:1,bitDepth:8,colorMode:'RGB',data:[12,34,56],alpha:[78]}),before=cloneColorRaster(src),a=convertBitDepth(src,16),b=convertBitDepth(src,16);assert.deepEqual([...src.data],[...before.data]);assert.deepEqual([...src.alpha],[...before.alpha]);assert.deepEqual([...a.data],[...b.data]);assert.deepEqual([...a.alpha],[...b.alpha]);});
