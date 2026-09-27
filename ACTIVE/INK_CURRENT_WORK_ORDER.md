@@ -186,13 +186,13 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_F_BOUNDED_CORRECTION_DEV_AUTHORIZED
+CURRENT_GATE = P1_F_FINAL_NORMALIZATION_CORRECTION
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_F_PRODUCT_IMPLEMENTATION = MR_REVISE / BOUNDED_CORRECTION_AUTHORIZED
+P1_F_PRODUCT_IMPLEMENTATION = MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
@@ -204,8 +204,9 @@ INK_MANUAL_PROSE = NON_BLOCKING
 
 DEV-F:
 - continue on `work/ink-p1-f-raster-processing-expansion-001`;
-- perform only the bounded zero/default parameter normalization correction in `working/INK_P1_F_MR_REVIEW_v1.0.md`;
-- add legal-zero endpoint regressions;
+- six legal-zero endpoints at HEAD `56d8dab73f34eba58132c03a389b4fc04637bed4` pass MR source review;
+- perform only the final non-finite fallback correction in `working/INK_P1_F_MR_REVIEW_v1.0.md`;
+- add non-finite regression coverage;
 - rerun the full P1-F focused QA;
 - update lane progress;
 - hand off a new exact HEAD;
