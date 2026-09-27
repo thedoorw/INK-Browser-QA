@@ -1,6 +1,6 @@
 # INK UI Updated Control Ledger v1.0
 
-STATUS: `UR_COMPLETE / MR_REVIEW_REQUIRED / UI_HOLD`
+STATUS: `UR_REVISION_COMPLETE / MR_REVIEW_REQUIRED / UI_IMPLEMENTATION_HOLD`
 
 TASK: `INK-UI-FULL-CAPABILITY-RECONCILIATION-001`
 
@@ -285,7 +285,119 @@ No ordinary UI control is planned for:
 
 These remain automatic, CHAT-internal, or Specialist diagnostics.
 
-## 11. Updated ledger result
+## 11. Stable planned-control identity
+
+These `PUI-xxx` values are planning identities only. They are stable reconciliation references and **must not be treated as DOM IDs, implementation selectors, component IDs, or command IDs**.
+
+Every row below has implementation status `PLANNED`. Existing predecessor IDs 1–212 and the existing select names remain unchanged.
+
+| Planning ID | Disposition | Capability / atomic source | Planned control / surface requirement | Primary surface | Implementation status |
+|---|---|---|---|---|---|
+| PUI-001 | RELOCATE | C23 / predecessor #159 maskAdd | Mask add/create authority | Layers local action; Layer > Mask secondary | PLANNED |
+| PUI-002 | RELOCATE | C24 / predecessor #160 adjustmentAdd | Adjustment add/create authority | Adjustments panel; Image > Adjustments secondary | PLANNED |
+| PUI-003 | RELOCATE | C25 / predecessor #161 filterAdd | Filter add/create authority | Filter top menu; stack readout secondary | PLANNED |
+| PUI-004 | RELOCATE | C25 / predecessor #162 filterMoveUp | Filter stack reorder authority | Properties/Layers contextual stack | PLANNED |
+| PUI-005 | RETIRE_DUPLICATE | C01 / predecessor duplicate New | Duplicate desktop New control | Retire duplicate; File/top shell remains authority | PLANNED |
+| PUI-006 | RETIRE_DUPLICATE | C01 / predecessor duplicate Open | Duplicate desktop Open control | Retire duplicate; File/top shell remains authority | PLANNED |
+| PUI-007 | RETIRE_DUPLICATE | C01 / predecessor duplicate Save | Duplicate desktop Save control | Retire duplicate; File/top shell remains authority | PLANNED |
+| PUI-008 | RETIRE_DUPLICATE | C43 / predecessor desktop Undo | Duplicate desktop Undo control | Retire duplicate; Edit/History/shortcut remains authority | PLANNED |
+| PUI-009 | RETIRE_DUPLICATE | C43 / predecessor desktop Redo | Duplicate desktop Redo control | Retire duplicate; Edit/History/shortcut remains authority | PLANNED |
+| PUI-010 | EXPAND_FLYOUT | C29/C33 | Draw flyout expansion | Left toolbar Draw: Pen/Pencil/Marker/Brush/Airbrush/Blender/Smudge | PLANNED |
+| PUI-011 | EXPAND_FLYOUT | C07 + P1-A/P1-E | Lasso flyout expansion | Left toolbar Lasso: Lasso/Polygonal/Magnetic | PLANNED |
+| PUI-012 | NEW | P1-A/P1-E | Smart Selection tool group | Left toolbar: Quick Selection/Magic Wand/Object Selection | PLANNED |
+| PUI-013 | NEW | P1-A | Fill tool group | Left toolbar: Gradient/Paint Bucket | PLANNED |
+| PUI-014 | NEW | P1-A | Sampling tool group | Left toolbar: Eyedropper/Color Sampler | PLANNED |
+| PUI-015 | NEW | P1-B | Retouch Clone group | Left toolbar: Clone Stamp/Pattern Stamp | PLANNED |
+| PUI-016 | NEW | P1-B | Retouch Healing group | Left toolbar: Healing/Spot Healing/Patch | PLANNED |
+| PUI-017 | NEW | P1-B | Retouch Tone group | Left toolbar: Dodge/Burn/Sponge | PLANNED |
+| PUI-018 | NEW | P1-B | Retouch Detail group | Left toolbar: Local Blur/Local Sharpen | PLANNED |
+| PUI-019 | CONTEXTUAL_ONLY | P1-B | Color Replacement Brush route | Shared Brush/Retouch flyout; no dedicated persistent slot | PLANNED |
+| PUI-020 | EXPAND_FLYOUT | C11 | Shape flyout normalization | Left toolbar Shape: all supported primitives | PLANNED |
+| PUI-021 | EXPAND_FLYOUT | C20 + P1-C | Text tool expansion | Text tool: paragraph/horizontal + vertical; Text on Path contextual | PLANNED |
+| PUI-022 | CONTEXTUAL_ONLY | P1-C ruler/measurement | Measure/ruler interaction route | Ruler/direct interaction; Sampling-group fallback only if needed | PLANNED |
+| PUI-023 | CONTEXTUAL_ONLY | C07 + P1-A/P1-E | Selection Options controls | Options Bar: mode/tolerance/contiguous/ROI/bounded Magnetic settings | PLANNED |
+| PUI-024 | CONTEXTUAL_ONLY | P1-A/P1-C gradient | Gradient Options controls | Options Bar: target-aware type/preview/opacity | PLANNED |
+| PUI-025 | CONTEXTUAL_ONLY | P1-B | Retouch Options controls | Options Bar: size/strength/source/pattern by active tool | PLANNED |
+| PUI-026 | CONTEXTUAL_ONLY | C30-C32 | Brush Options controls | Options Bar high-frequency preset/color/size/opacity/dynamics subset | PLANNED |
+| PUI-027 | CONTEXTUAL_ONLY | C13/C14 + P1-C | Advanced Transform Options | Options Bar/canvas: mode + apply/cancel + numeric quick fields | PLANNED |
+| PUI-028 | PANEL | C06 / G-04 | Navigator panel normalization | Right dock / Window > Navigator | PLANNED |
+| PUI-029 | PANEL | P1-G | Color panel | Right dock / Window > Color | PLANNED |
+| PUI-030 | PANEL | P1-G | Channels panel | Right dock / Window > Channels | PLANNED |
+| PUI-031 | PANEL | C24 + P1-F | Adjustments panel | Right dock / Window > Adjustments | PLANNED |
+| PUI-032 | PANEL | C03/C13/C19/C20/C23/C28/C30-C32/C38 | Properties target-aware sections | Right dock / Window > Properties | PLANNED |
+| PUI-033 | PANEL | C03/C23-C28 | Layers capability expansion | Right dock: blend/mask/fx/adjustment-filter state | PLANNED |
+| PUI-034 | PANEL | C43 | History normalization | Right dock / Window > History | PLANNED |
+| PUI-035 | PANEL | C02 / G-01 | Pages normalization | Right dock / Window > Pages | PLANNED |
+| PUI-036 | PANEL | C59 | Libraries normalization | Right dock / Window > Libraries | PLANNED |
+| PUI-037 | PANEL | C40/C41 | Reference normalization | Right dock / Window > Reference | PLANNED |
+| PUI-038 | PANEL | C42/C55/C60/C61 | Compose normalization | Right dock / Window > Compose | PLANNED |
+| PUI-039 | PANEL | C57/C60 | CHAT normalization | Right dock / Window > CHAT | PLANNED |
+| PUI-040 | PANEL | C44-C46 | Revision/Compare normalization | Right dock / Window > Revision | PLANNED |
+| PUI-041 | DIALOG/WORKSPACE | P1-A / C23 | Select and Mask dialog | Select menu / Properties > Mask | PLANNED |
+| PUI-042 | DIALOG/WORKSPACE | C27 + P1-D | Layer Effects dialog | Layers fx / Layer > Layer Effects | PLANNED |
+| PUI-043 | DIALOG/WORKSPACE | C25 + P1-F | Filter parameter dialog | Filter command-specific modal | PLANNED |
+| PUI-044 | DIALOG/WORKSPACE | P1-F | Filter Gallery | Filter > Filter Gallery | PLANNED |
+| PUI-045 | DIALOG/WORKSPACE | P1-F | Liquify temporary workspace | Filter > Liquify | PLANNED |
+| PUI-046 | DIALOG/WORKSPACE | P1-A/P1-C | Gradient editor | Gradient Options / Properties; target-aware dispatch | PLANNED |
+| PUI-047 | DIALOG/WORKSPACE | P1-C | Pattern fill editor | Properties > Appearance | PLANNED |
+| PUI-048 | DIALOG/WORKSPACE | P1-G | Color Profile dialog | Image > Color Profile | PLANNED |
+| PUI-049 | DIALOG/WORKSPACE | C52/C53 + P1-H | Export dialog | File > Export | PLANNED |
+| PUI-050 | DIALOG/WORKSPACE | C37 | Pen Calibration dialog | Settings/Help > Pen Calibration | PLANNED |
+| PUI-051 | DIALOG/WORKSPACE | C48 | Recovery modal | Automatic/contextual when recoverable state exists | PLANNED |
+| PUI-052 | NEW | C25 + P1-F | Top-level Filter menu | Top Menu > Filter | PLANNED |
+| PUI-053 | NEW | P1-G | Image > Mode hierarchy | Top Menu > Image > Mode | PLANNED |
+| PUI-054 | NEW | P1-G | Image > Color Profile entry | Top Menu > Image > Color Profile | PLANNED |
+| PUI-055 | NEW | C08 + P1-C | Ruler/Guide/Snap workstation controls | View + top/left rulers + direct guide/snap feedback | PLANNED |
+| PUI-056 | NEW | P1-H / C53 | External format availability/loss disclosure | File Open/Import + Export dialog | PLANNED |
+| PUI-057 | HEADLESS_NO_CONTROL | C47 | Storage implementation internals | No normal control; Help health readout only | PLANNED |
+| PUI-058 | HEADLESS_NO_CONTROL | C49 | Renderer implementation internals | No normal creative control; Specialist diagnostics only | PLANNED |
+| PUI-059 | HEADLESS_NO_CONTROL | C50 | Natural-media renderer internals | No normal creative control | PLANNED |
+| PUI-060 | HEADLESS_NO_CONTROL | C51 | GPU/tile/cache infrastructure | No normal creative control; Specialist diagnostics only | PLANNED |
+| PUI-061 | HEADLESS_NO_CONTROL | C54 | Dependency/recompute internals | No normal creative control; reports may be read-only | PLANNED |
+| PUI-062 | HEADLESS_NO_CONTROL | C58 | Semantic grounding internals | No semantic-grounding panel; CHAT readout only | PLANNED |
+| PUI-063 | HEADLESS_NO_CONTROL | C62 / 5 platform-support atomics | Asset lifecycle support | No normal control; Specialist diagnostic readout only | PLANNED |
+| PUI-064 | HEADLESS_NO_CONTROL | C53 output-handle lifecycle | Output handle inspect/release lifecycle | No ordinary Export control | PLANNED |
+| PUI-065 | HEADLESS_NO_CONTROL | C36 automatic stylus signals | Pressure/tilt/altitude/azimuth/twist/event pipeline | No dedicated controls; diagnostics/readouts only | PLANNED |
+| PUI-066 | HEADLESS_NO_CONTROL | C63 automatic update lifecycle | Service-worker registration/detection/install tracking | No direct control; status/activation handled separately | PLANNED |
+| PUI-067 | NEW | C63 / G-34 | Help > Updates surface | Help/Settings update status + activate waiting update | PLANNED |
+| PUI-068 | NEW | C64 | Help > Diagnostics normalization | Help/Specialist health, device, bundle, benchmark routes | PLANNED |
+| PUI-069 | CONTEXTUAL_ONLY | C52 / G-30 | High-resolution export progress controls | Export progress: cancel/resume/state | PLANNED |
+| PUI-070 | CONTEXTUAL_ONLY | C30 / G-19 | Brush Package import/export actions | Brush preset menu / Libraries; no persistent toolbar slot | PLANNED |
+| PUI-071 | CONTEXTUAL_ONLY | C22 | Raster image histogram/snapshot/compare readouts | Properties/Revision; no permanent Image subpanel | PLANNED |
+| PUI-072 | CONTEXTUAL_ONLY | C46 / G-28 | Compare mode controls | Revision/canvas compare mode; shared authority | PLANNED |
+| PUI-073 | CONTEXTUAL_ONLY | C60 / G-33 | Memory/Research advisory controls | CHAT/Compose readout + explicit promotion candidate action | PLANNED |
+| PUI-074 | CONTEXTUAL_ONLY | C64 | Diagnostics/benchmark execution controls | Help/Specialist only when diagnostic context is invoked | PLANNED |
+
+### Planning-ID totals
+
+```text
+PLANNED_CONTROL_IDENTITIES = 74
+NEW = 14
+RELOCATE = 4
+EXPAND_FLYOUT = 4
+RETIRE_DUPLICATE = 5
+CONTEXTUAL_ONLY = 13
+PANEL = 13
+DIALOG_WORKSPACE = 11
+HEADLESS_NO_CONTROL = 10
+IMPLEMENTATION_STATUS = PLANNED_ONLY
+DOM_ID_PRESCRIPTION = NONE
+```
+
+### Gap-to-planning-ID reconciliation
+
+| Gap range | Planning identity coverage |
+|---|---|
+| G-01–G-04 | PUI-035, PUI-032, PUI-028 plus existing artboard/workspace shell controls retained by predecessor ledger |
+| G-05–G-11 | PUI-011–PUI-014, PUI-020–PUI-027, PUI-041, PUI-055 plus retained Object/Type routes |
+| G-12–G-18 | PUI-001–PUI-004, PUI-031–PUI-033, PUI-041–PUI-042, PUI-071 |
+| G-19–G-25 | PUI-010, PUI-019, PUI-026, PUI-050, PUI-065, PUI-070 plus Properties/Media planning |
+| G-26–G-29 | PUI-037–PUI-040, PUI-051, PUI-072 |
+| G-30–G-34 | PUI-049, PUI-053–PUI-056, PUI-067, PUI-069, PUI-073 |
+
+Headless PUI rows are negative-control planning records. They deliberately prevent internal atomics from being converted into visible chrome.
+
+## 12. Updated ledger result
 
 ```text
 PREDECESSOR_STATIC_BUTTONS_ACCOUNTED = 212 / 212
@@ -296,6 +408,15 @@ NEW_P1_TOOL_GROUPS_DEFINED = YES
 NEW_REQUIRED_PANELS = Color / Channels / Adjustments
 NEW_REQUIRED_DIALOGS_WORKSPACES = SelectAndMask / LayerEffects / Filter / FilterGallery / Liquify / ColorProfile
 FILTER_TOP_MENU = REQUIRED
+PLANNED_CONTROL_IDENTITIES = 74
+PLANNED_NEW = 14
+PLANNED_RELOCATE = 4
+PLANNED_EXPAND_FLYOUT = 4
+PLANNED_RETIRE_DUPLICATE = 5
+PLANNED_CONTEXTUAL_ONLY = 13
+PLANNED_PANELS = 13
+PLANNED_DIALOG_WORKSPACES = 11
+PLANNED_HEADLESS_NO_CONTROL = 10
 HEADLESS_NORMAL_UI_CONTROLS = 0
 IMPLEMENTATION = 0
 NEXT = MR REVIEW
