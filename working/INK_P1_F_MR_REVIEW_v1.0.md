@@ -1,158 +1,129 @@
 # INK P1-F MR Review v1.0
 
-STATUS: `MR_REVISE / P1_F_NOT_MODULE_READY / BOUNDED_PARAMETER_NORMALIZATION_CORRECTION`
+STATUS: `MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION`
 
 TASK: `INK-P1-F-RASTER-PROCESSING-EXPANSION-001`
 
 REVIEWED_BRANCH: `work/ink-p1-f-raster-processing-expansion-001`
 
-REVIEWED_HEAD: `5abe3d8c696f6eb74a56da415587d9f4834121f5`
+INITIAL_REVIEWED_HEAD: `5abe3d8c696f6eb74a56da415587d9f4834121f5`
 
-IMPLEMENTATION_COMMIT: `f176143be363c134f9b35fecb2c6d34be7391f26`
+CURRENT_REVIEWED_HEAD: `56d8dab73f34eba58132c03a389b4fc04637bed4`
+
+ZERO_SCOPE_CORRECTION_COMMIT: `2bc3214d6cee22294398b57948737aa5e54a5d76`
 
 DATE: 2026-09-27
 
-## MR verdict
+## Re-review verdict
 
 ```text
 P1_F_SCOPE = PASS
 P1_F_AUTHORITY_ISOLATION = PASS
 P1_F_ALGORITHM_BREADTH = PASS
-P1_F_LIQUIFY_BOUNDARY = PASS
-P1_F_FOCUSED_QA_REPORTED = PASS 33/33
-P1_F_PARAMETER_ZERO_SEMANTICS = REVISE
+P1_F_SIX_LEGAL_ZERO_ENDPOINTS = PASS
+P1_F_DEV_REPORTED_QA = PASS 39/39
+P1_F_NONFINITE_DEFAULT_SEMANTICS = REVISE
 P1_F_MODULE_READY = NO
 PROMOTION = BLOCKED
 RUNTIME = NOT RUN
 ```
 
-## Verified scope
+## Six authorized zero endpoints
 
-Baseline `dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f` → handoff contains only:
+The six MR-authorized zero endpoints are correctly fixed and regression-covered:
 
+1. Photo Filter `density=0` = PASS
+2. Threshold `level=0` = PASS
+3. Unsharp Mask `amount=0` = PASS
+4. Emboss `strength=0` = PASS
+5. Reduce Noise `strength=0` = PASS
+6. Reduce Noise `preserveEdges=0` = PASS
+
+Liquify Reconstruct was explicitly restored to its prior behavior and is outside this correction scope.
+
+## Remaining blocker — non-finite fallback
+
+The current helper is:
+
+```js
+const numberOr=(value,fallback)=>{
+  if(value==null)return fallback;
+  const n=Number(value);
+  return Number.isNaN(n)?fallback:n;
+};
+```
+
+This preserves legal numeric zero correctly, but it treats `Infinity` and `-Infinity` as valid numbers.
+
+The prior MR correction authorization explicitly required:
+
+```text
+keep omitted/non-finite values on the existing documented defaults
+```
+
+Current behavior instead clamps infinity to parameter extrema, e.g.:
+- Photo Filter density Infinity → 100 instead of default 25;
+- Threshold Infinity → 255 instead of default 128;
+- Unsharp amount Infinity → 500 instead of default 100;
+- Emboss strength Infinity → 4 instead of default 1;
+- Reduce Noise strength Infinity → 100 instead of default 50;
+- Preserve Edges Infinity → 255 instead of default 24.
+
+Therefore the normalization contract is not yet closed.
+
+## Final bounded correction authorization
+
+DEV may continue on the same P1-F branch only for:
+
+1. change the numeric helper so only finite numeric values are accepted;
+2. preserve explicit finite zero exactly;
+3. keep missing / NaN / +Infinity / -Infinity on the documented defaults;
+4. add deterministic regression coverage proving non-finite fallback for the affected helper/parameters;
+5. rerun the full P1-F focused QA with fail=0 / skip=0;
+6. update `working/INK_P1_F_DEV_PROGRESS.md`;
+7. STOP for MR re-review.
+
+Expected helper behavior:
+
+```text
+finite number, including 0 → preserve
+missing/null/undefined → fallback
+NaN → fallback
++Infinity → fallback
+-Infinity → fallback
+```
+
+Allowed files only:
 - `product/source/src/image/raster-processing-advanced.js`
 - `qa/ink-p1-f-raster-processing-expansion.test.mjs`
 - `working/INK_P1_F_DEV_PROGRESS.md`
 
-No image-core, P1-G, P1-H, Document, Renderer, History, CHAT, Recipe, FORMAT_VERSION or UI mutation was found.
+No other capability, algorithm, parameter domain, Liquify behavior, Integration, Runtime, UI or FORMAT_VERSION change is authorized.
 
-Exact blobs reviewed:
-
-```text
-raster-processing-advanced.js = 7c62d46a36e177142d18e0d1ddd16929ce4c6b14
-focused QA                    = d8bc46c7960bb7c789e6095cb43f0738134581b8
-```
-
-## Capability breadth
-
-Required P1-F breadth is present:
-
-- 10 advanced adjustments;
-- 8 advanced filters;
-- Filter Gallery descriptor foundation;
-- Liquify Forward Warp / Twirl / Pucker / Bloat / Reconstruct;
-- freeze/protect mask;
-- deterministic source-immutable processing;
-- opacity/mask composition;
-- hard Liquify work limit.
-
-The module remains an algorithm provider rather than a second Adjustment/Filter stack, as required.
-
-## Blocking finding — legal zero parameters are replaced by defaults
-
-Several parameter normalization paths use:
+## Exact reviewed blobs
 
 ```text
-Number(value) || default
+raster-processing-advanced.js = 8aca747a0825d37d79241fd0f666aa9a030a7619
+focused QA                    = 21ada9d8a1815bb468084dc336bff9742ff60215
 ```
-
-This makes numeric zero indistinguishable from an omitted/invalid value.
-
-The following accepted parameter ranges explicitly include zero and therefore currently produce incorrect endpoint semantics:
-
-1. Photo Filter `density=0`
-   - current code falls back to 25;
-   - expected bounded behavior: zero density is a valid no-effect endpoint.
-
-2. Threshold `level=0`
-   - current code falls back to 128;
-   - expected bounded behavior: threshold zero must remain zero.
-
-3. Unsharp Mask `amount=0`
-   - current code falls back to 100;
-   - expected bounded behavior: zero amount is a valid no-effect endpoint.
-
-4. Emboss `strength=0`
-   - current code falls back to 1;
-   - expected bounded behavior: zero must remain zero rather than silently becoming the default.
-
-5. Reduce Noise `strength=0`
-   - current code falls back to 50;
-   - expected bounded behavior: zero strength is a valid no-effect endpoint.
-
-6. Reduce Noise `preserveEdges=0`
-   - current code falls back to 24;
-   - expected bounded behavior: zero is a valid edge-threshold endpoint.
-
-This is user-visible and would make future UI sliders incorrect at their lower bound.
-
-Other parameters whose defined valid domain starts above zero, such as radius/distance/size, are not part of this blocker.
-
-## QA gap
 
 DEV reports:
 
 ```text
-P1_F_FOCUSED_QA = PASS
-TESTS = 33
-PASS = 33
-FAIL = 0
-SKIP = 0
+tests = 39
+pass = 39
+fail = 0
+skip = 0
 ```
 
-The checked-in test source has zero skip tokens, but it does not contain regression coverage for the legal-zero endpoints above.
+The checked-in QA has six legal-zero regression cases and no non-finite regression case.
 
-## Bounded correction authorization
-
-DEV may continue on the same P1-F branch only for:
-
-1. fix number/default normalization so a finite numeric `0` is preserved when zero is in the valid domain;
-2. keep omitted/non-finite values on the existing documented defaults;
-3. add deterministic regression coverage for at minimum:
-   - Photo Filter `density=0`;
-   - Threshold `level=0`;
-   - Unsharp Mask `amount=0`;
-   - Emboss `strength=0`;
-   - Reduce Noise `strength=0`;
-   - Reduce Noise `preserveEdges=0`;
-4. rerun full P1-F focused QA with fail=0 / skip=0;
-5. update `working/INK_P1_F_DEV_PROGRESS.md`;
-6. STOP for MR re-review.
-
-Allowed files:
-- `product/source/src/image/raster-processing-advanced.js`
-- `qa/ink-p1-f-raster-processing-expansion.test.mjs`
-- `working/INK_P1_F_DEV_PROGRESS.md`
-
-Prohibited:
-- `image-core.js`;
-- P1-G / P1-H files;
-- Document / Renderer / History / UI;
-- FORMAT_VERSION;
-- P1 Integration;
-- Runtime.
-
-No architecture expansion is authorized.
-
-## Promotion safety
-
-Current main has advanced well beyond the P1-F branch cut. After final PASS, promotion must use an MR-controlled reconcile/merge preserving the reviewed P1-F payload.
-
-Until then:
+## Current gate
 
 ```text
-P1_F = MR_REVISE / BOUNDED_CORRECTION
-P1_H = MODULE_READY / MR_PASS / PROMOTED
+P1_F = MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION
+P1_G = PROMOTED
+P1_H = PROMOTED
 P1_INTEGRATION = BLOCKED_PENDING_P1_F
 RUNTIME = PROHIBITED
 ```
