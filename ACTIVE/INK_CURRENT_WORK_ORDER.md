@@ -7,11 +7,11 @@ DATE: 2026-09-27
 ## Current program
 
 ```text
-PRIMARY_TASK = INK-P1-E-ADVANCED-SELECTION-001
+PRIMARY_TASKS = INK-P1-F-RASTER-PROCESSING-EXPANSION-001 + INK-P1-G-COLOR-BITDEPTH-CHANNELS-001
 PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
-BASELINE_MAIN = 206f027785c04e56e91293e439fef8fb0cdd8521
+BASELINE_MAIN = PARALLEL_BRANCH_CUT_SHA_TO_BE_RECORDED
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
 PRODUCT_ATOMIC_CAPABILITIES = 496
@@ -23,8 +23,11 @@ P1_A = MODULE_READY / PROMOTED
 P1_B = MODULE_READY / PROMOTED
 P1_C = MODULE_READY / PROMOTED
 P1_D = MODULE_READY / PROMOTED
-P1_E_WORKPACK = working/INK_P1_E_ADVANCED_SELECTION_DEV_WORKPACK_v1.0.md
-MANDATORY_DEV_BRANCH = work/ink-p1-e-advanced-selection-001
+P1_E = MODULE_READY / PROMOTED
+P1_F_WORKPACK = working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md
+P1_G_WORKPACK = working/INK_P1_G_COLOR_BITDEPTH_CHANNELS_DEV_WORKPACK_v1.0.md
+P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
+P1_G_BRANCH = work/ink-p1-g-color-bitdepth-channels-001
 
 FORMAT_VERSION = 4
 CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
@@ -59,43 +62,58 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current DEV authorization — P1-E
+## Current DEV authorization — P1-F + P1-G PARALLEL
 
-P1-A:
+P1-A through P1-E:
 `MODULE_READY / MR_PASS / PROMOTED`
 
-P1-B:
-`MODULE_READY / MR_PASS / PROMOTED`
-
-P1-C:
-`MODULE_READY / MR_PASS / PROMOTED`
-
-P1-D:
-`MODULE_READY / MR_PASS / PROMOTED`
-
-P1-D reviewed/promoted product main:
-`206f027785c04e56e91293e439fef8fb0cdd8521`
+P1-E reviewed/promoted product main:
+`fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`
 
 MR review:
-`working/INK_P1_D_MR_REVIEW_v1.0.md`
+`working/INK_P1_E_MR_REVIEW_v1.0.md`
 
-DEV is now authorized only for P1-E:
+Two independent DEV lanes are now authorized in parallel:
 
-1. Magnetic Lasso Core
-2. Object Selection Core
+### P1-F — Raster Processing Expansion
 
-Mandatory branch:
-`work/ink-p1-e-advanced-selection-001`
+Task:
+`INK-P1-F-RASTER-PROCESSING-EXPANSION-001`
 
-Authoritative workpack:
-`working/INK_P1_E_ADVANCED_SELECTION_DEV_WORKPACK_v1.0.md`
+Scope:
+- Adjustment breadth;
+- Filter / Filter Gallery breadth;
+- Liquify Core.
 
-P1-E extends the P1-A raster Selection authority:
-`product/source/src/image/raster-selection-tools.js`
+Branch:
+`work/ink-p1-f-raster-processing-expansion-001`
 
-Object Selection here means bounded classical raster-region segmentation. It does not replace INK document-object selection and does not authorize ML/network semantic recognition.
+Workpack:
+`working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md`
 
-No P1-F through P1-H implementation is authorized by this Work Order.
+### P1-G — Color / Bit Depth / Channels
+
+Task:
+`INK-P1-G-COLOR-BITDEPTH-CHANNELS-001`
+
+Scope:
+- 8/16/32-bit raster Core;
+- RGB / CMYK / Lab / Multichannel;
+- bounded ICC Core;
+- channels / alpha / spot channels.
+
+Branch:
+`work/ink-p1-g-color-bitdepth-channels-001`
+
+Workpack:
+`working/INK_P1_G_COLOR_BITDEPTH_CHANNELS_DEV_WORKPACK_v1.0.md`
+
+Parallel rule:
+- both branches start from the same main SHA;
+- P1-F and P1-G product-source boundaries may not overlap;
+- neither lane may modify `image-core.js`, document schema, Renderer or FORMAT_VERSION;
+- accepted Core is wired only during P1 Integration;
+- P1-H is not authorized until P1-G color/bit-depth/channel contract is MR-frozen.
 
 ## P1/P2 execution sequence
 
@@ -110,10 +128,8 @@ P1-A Raster Selection / Fill / Sampling
 → MR MODULE_READY review
 → P1-E Advanced Selection
 → MR MODULE_READY review
-→ P1-F Raster Processing Expansion
-→ MR MODULE_READY review
-→ P1-G Color / Bit Depth / Channels
-→ MR MODULE_READY review
+→ [P1-F Raster Processing Expansion || P1-G Color / Bit Depth / Channels]
+→ independent MR MODULE_READY reviews
 → P1-H Format Interoperability
 → MR MODULE_READY review
 → P1 INTEGRATION WORK ORDER
@@ -164,13 +180,15 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_E_DEV_AUTHORIZED
+CURRENT_GATE = P1_F_G_PARALLEL_DEV_AUTHORIZED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_E_PRODUCT_IMPLEMENTATION = AUTHORIZED
-P1_F_G_H = NOT YET AUTHORIZED
+P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
+P1_F_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
+P1_G_PRODUCT_IMPLEMENTATION = AUTHORIZED / PARALLEL
+P1_H = NOT YET AUTHORIZED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
@@ -178,18 +196,24 @@ INK_MANUAL_PROSE = NON_BLOCKING
 
 ## Next action
 
-DEV:
-- create/use the mandatory P1-E branch;
-- implement only the bounded P1-E workpack;
+DEV-F:
+- use `work/ink-p1-f-raster-processing-expansion-001`;
+- implement only P1-F bounded algorithm Core;
 - run focused QA;
-- update branch-local `ACTIVE/INK_DEV_PROGRESS.md`;
 - hand off exact HEAD;
-- STOP.
+- STOP for MR.
+
+DEV-G:
+- use `work/ink-p1-g-color-bitdepth-channels-001`;
+- implement only P1-G bounded color/channel Core;
+- run focused QA;
+- hand off exact HEAD;
+- STOP for MR.
 
 MR:
-- P1-D MODULE_READY review and promotion are closed;
-- wait for exact P1-E handoff;
-- review P1-E before authorizing P1-F.
+- review F and G independently as each handoff arrives;
+- do not authorize P1-H until P1-G is MR_PASS;
+- no integrated Runtime.
 
 UR:
 - remain on HOLD.
