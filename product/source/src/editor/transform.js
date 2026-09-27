@@ -1,4 +1,5 @@
 import { Matrix } from '../core/index.js';
+import { normalizeSnapSettings, resolveAngleSnap, resolveManipulationSnap } from './precision-layout.js';
 
 function transformError(code, details = {}) {
   return Object.assign(new Error(`INK_TRANSFORM_${code}`), { code, ...details });
@@ -73,4 +74,34 @@ export function cloneInitialMatrices(selected) {
     parentWorldMatrix: [...(found.parentWorldMatrix || Matrix.identity())],
     worldMatrix: [...worldMatrixForFound(found)]
   }));
+}
+
+
+export function resolveSnappedTranslation({
+  movingBounds,
+  delta = { x: 0, y: 0 },
+  peerBounds = [],
+  guides = [],
+  gridSize = null,
+  snapSettings = {},
+  cameraScale = 1,
+  previousEvidence = null,
+  bypass = false
+} = {}) {
+  const settings = normalizeSnapSettings(snapSettings);
+  const scale = Math.max(0.03, Number(cameraScale) || 1);
+  return resolveManipulationSnap(movingBounds, peerBounds, {
+    delta,
+    guides,
+    gridSize,
+    settings,
+    tolerance: settings.tolerance / scale,
+    hysteresis: settings.hysteresis / scale,
+    previousEvidence,
+    bypass
+  });
+}
+
+export function resolveSnappedRotation(angleRadians, { snapSettings = {}, bypass = false, force = false } = {}) {
+  return resolveAngleSnap(angleRadians, { settings: snapSettings, bypass, force });
 }
