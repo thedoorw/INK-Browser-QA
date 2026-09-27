@@ -8,7 +8,7 @@ BRANCH_BASE: `c96a89b0131081600b0f39ffcd0d00dc4951e1d4`
 
 WORKPACK_BASELINE_MAIN: `c750b8f2803d87c369edcf9c320a531a32f92d62`
 
-STATUS: `DEV_COMPLETE / MODULE_READY_HANDOFF / WAITING_MR`
+STATUS: `DEV_COMPLETE / REAL_P1_A_UPSTREAM_QA_PASS / MODULE_READY_HANDOFF / WAITING_MR`
 
 WORKPACK:
 `working/INK_P1_B_LOCAL_RASTER_RETOUCH_DEV_WORKPACK_v1.0.md`
@@ -84,9 +84,10 @@ No existing product source file was modified.
 NODE_SYNTAX_CHECK = PASS
 COMMAND = node --test qa/ink-p1-b-local-raster-retouch.test.mjs
 P1_B_FOCUSED_QA = PASS
-TESTS = 13 / 13 PASS
+TESTS = 14 / 14 PASS
 FAIL = 0
 SKIP = 0
+REAL_P1_A_UPSTREAM = YES
 ```
 
 Coverage includes:
@@ -95,6 +96,7 @@ Coverage includes:
 - Clone source/target edge clipping
 - Clone opacity and source immutability
 - Pattern deterministic tile/origin mapping
+- Pattern opacity direct assertion (`opacity: 0.5` -> deterministic 50% blend)
 - Healing structure transfer + target-tone adaptation + determinism
 - Spot Healing bounded neighbor replacement + outside preservation
 - Patch mapping + boundary clipping + invalid geometry guard
@@ -110,8 +112,10 @@ Coverage includes:
 - repeated-input determinism
 - invalid dimensions/options predictable failure
 - Node parse/import of the P1-B module in the focused isolated harness
+- direct import and execution of promoted P1-A `raster-selection-tools.js`
+- direct import and execution of promoted P1-A `raster-fill-tools.js`
 
-Focused QA was executed in an isolated Node harness containing the exact committed P1-B source/QA blobs and API-compatible P1-A import stubs. The branch P1-A upstream export names/blobs were separately verified from GitHub before implementation.
+Focused QA was rerun with the actual promoted P1-A module bytes directly imported by the test/module graph. No API-compatible P1-A stubs were used. The exact loaded P1-A blobs match the promoted branch blobs: selection `181fafbabff7d71e05015e8479a664880291551d`, fill `4881e9ecd7929500d6f307a0d379ac33e99ac81e`. The P1-B Core blob remained unchanged.
 
 ## Implementation checkpoint
 
@@ -121,12 +125,17 @@ Exact committed blobs:
 
 ```text
 raster-retouch-tools.js = f2b63749ecbeffe753ae33608410695772f9b0a3
-focused QA              = 9889bcfdc4d421233bcd2b1584e3b522c27ffade
+focused QA              = 594243a9a64f9c30daae99d4f0cc5dccd2f7ee41
 P1-A selection upstream = 181fafbabff7d71e05015e8479a664880291551d
 P1-A fill upstream      = 4881e9ecd7929500d6f307a0d379ac33e99ac81e
 ```
 
-The committed P1-B source/QA blob SHAs match the exact locally tested files.
+The committed P1-B Core and revised QA blob SHAs match the exact locally tested files.
+
+QA-only upstream rerun checkpoint:
+`796989ca7db2fad0df067e6f8924c98e33f41c68`
+
+Current QA revision changed only `qa/ink-p1-b-local-raster-retouch.test.mjs`; P1-B Core source was not modified.
 
 ## Bounded limitations / deferred integration
 
@@ -148,6 +157,7 @@ History/save-load integration = 0
 P1-C/D/E/F/G/H scope intrusion = 0
 second raster/image authority = 0
 Runtime = NOT RUN
+REAL_P1_A_UPSTREAM = YES
 P1_B_FOCUSED_QA = PASS
 DEV_HANDOFF = YES
 NEXT = STOP / WAIT_MR
