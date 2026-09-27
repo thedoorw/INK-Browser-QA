@@ -1,6 +1,6 @@
 # INK UI Full Capability Placement Matrix v1.0
 
-STATUS: `UR_COMPLETE / MR_REVIEW_REQUIRED / UI_IMPLEMENTATION_HOLD`
+STATUS: `UR_REVISION_COMPLETE / MR_REVIEW_REQUIRED / UI_IMPLEMENTATION_HOLD`
 
 TASK: `INK-UI-FULL-CAPABILITY-RECONCILIATION-001`
 
@@ -42,6 +42,23 @@ DUPLICATE_AUTHORITIES = 0
 ```
 
 Every normalized atomic capability inherits the placement rule of its canonical family unless an explicit atomic exception is listed in section 4. No atomic capability is omitted merely because it has no dedicated button.
+
+## Atomic-level authority
+
+The 64-family matrix below remains the high-level architecture. It is no longer the only disposition evidence.
+
+Authoritative atomic companion:
+`working/INK_UI_ATOMIC_CAPABILITY_DISPOSITION_v1.0.md`
+
+Coverage:
+```text
+PRODUCT_ATOMICS = 496 / 496
+HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5 / 5
+TOTAL_NORMALIZED_ATOMICS = 501 / 501
+ATOMIC_AUDIT_NEW_GAPS = 0
+```
+
+Every normalized atomic has its own explicit row. `INHERIT:Cxx` is used only where the atomic genuinely shares the family placement; heterogeneous families are split atomically. Promoted P1 A-H placement remains an explicit overlay in the atomic companion.
 
 ## 2. Placement vocabulary
 
@@ -278,6 +295,7 @@ No engineering/Runtime menu.
 
 ```text
 FAMILY_ROWS_RECONCILED = 64 / 64
+ATOMIC_ROWS_RECONCILED = 501 / 501
 P1_A_H_EXPLICITLY_PLACED = YES
 RASTER_MASK_ADJUSTMENT_FILTER_NORMAL_UI = RESTORED
 FILTER_TOP_MENU = NOW_JUSTIFIED
