@@ -7,16 +7,18 @@ import { HistoryManager } from '../product/source/src/history/index.js';
 import {
   addRulerGuide, moveRulerGuide, setRulerGuideLocked, setRulerGuideVisibility,
   resolveSnappedTranslation, resolveSnappedRotation,
-  createProjectiveTransform, layoutParagraphText
+  createProjectiveTransform, layoutParagraphText, measurePoints, measureBounds,
+  normalizeGradientFill, normalizePatternFill
 } from '../product/source/src/editor/index.js';
 import {
   IMAGE_CAPABILITIES, createAdjustment, createFilter, createLiquifyFilter, renderImageStack,
-  magicWandSelection, gradientFill, cloneStamp,
+  createLayerEffect, applyLayerEffects, magicWandSelection, objectSelection, gradientFill, cloneStamp,
   createColorRaster, serializeColorRaster, deserializeColorRaster, colorRasterToRgba8,
   createNormalizedPayload, formatPayloadToDocumentImageState, documentImageStateToFormatPayload,
   encodeFormat, decodeFormat
 } from '../product/source/src/image/image-core.js';
 import { installStudioCore } from '../product/source/src/studio-core.js';
+import { readFileSync } from 'node:fs';
 
 const rgba=(values,width=2,height=1)=>({width,height,data:new Uint8ClampedArray(values)});
 
@@ -105,11 +107,38 @@ test('P1-C advanced transform and text layout are exposed by editor facade',()=>
   assert.equal(layout.mode,'paragraph');
 });
 
+test('P1-C measurement and vector fill appearance are exposed by editor facade',()=>{
+  const point=measurePoints({x:0,y:0},{x:3,y:4});
+  assert.equal(point.distance,5);
+  const bounds=measureBounds({x:2,y:3,w:40,h:20});
+  assert.equal(bounds.width,40);
+  assert.equal(bounds.height,20);
+  const gradient=normalizeGradientFill({type:'linear',start:{x:0,y:0},end:{x:1,y:0},stops:[{offset:0,color:'#000000'},{offset:1,color:'#ffffff'}]});
+  assert.equal(gradient.mode,'gradient');
+  const pattern=normalizePatternFill({patternRef:'pattern:1',origin:{x:1,y:2},scale:{x:2,y:3},rotation:15,repeat:'repeat'});
+  assert.equal(pattern.mode,'pattern');
+});
+
+test('persistent Document guides are wired into renderer overlay',()=>{
+  const source=readFileSync(new URL('../product/source/src/ink.js',import.meta.url),'utf8');
+  assert.match(source,/page\.guides\|\|\[\]/);
+  assert.match(source,/guide\.orientation==='vertical'\?'x':'y'/);
+});
+
 test('P1 A/B/E raster providers are exposed through the existing image authority',()=>{
   const image=rgba([10,10,10,255,240,240,240,255]);
   assert.equal(magicWandSelection(image,{x:0,y:0,tolerance:1}).width,2);
   assert.equal(gradientFill(2,1,{from:{x:0,y:0},to:{x:1,y:0},stops:[{offset:0,color:[0,0,0,255]},{offset:1,color:[255,255,255,255]}]}).width,2);
   assert.equal(cloneStamp(image,{sourcePoint:{x:0,y:0},targetPoint:{x:1,y:0},radius:0}).width,2);
+});
+
+test('P1-D effects and P1-E advanced selection remain on the existing image authority',()=>{
+  const source=rgba([10,20,30,255,40,50,60,255]);
+  const effect=createLayerEffect('colorOverlay',{color:'#ff0000'});
+  const rendered=applyLayerEffects(source,[effect]);
+  assert.equal(rendered.width,2);
+  const selected=objectSelection(source,{roi:{x:0,y:0,w:2,h:1},seed:{x:0,y:0},colorThreshold:64,edgeThreshold:255,alphaThreshold:1,minComponentSize:1});
+  assert.equal(selected.width,2);
 });
 
 test('P1-F advanced adjustment/filter and Liquify register in the existing stack',()=>{
