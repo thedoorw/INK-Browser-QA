@@ -1430,6 +1430,148 @@ Current source-confirmed product-operations sub-capabilities include:
 
 This section is a hard anti-omission gate. The refreshed baseline must either map every item into an existing canonical family or add an explicit additional family/section. Nothing may disappear merely because the 61-row P0 restore ledger did not use a separate row for it.
 
+## 3C. Installed Specialist / advanced workstation routes that must not disappear
+
+Current `studio-core.js` is installed by `ink.js` and directly wires existing advanced/specialist capabilities. These routes are product evidence, not merely dormant source.
+
+Mapped existing routes:
+
+| Installed route/capability | Canonical family target |
+|---|---|
+| Brush Package import/reload/export | C30 Brush engine |
+| Drawing Workflow detect/import/preview | C30 Brush engine / C56 Program Import; final canonical owner to normalize |
+| Drawing Quality evaluation / replay comparison | C29 Drawing tools / C35 Stroke Session; Specialist QA exposure |
+| Stroke Session create/record/pause/resume/replay/export | C35 Stroke Session |
+| Pressure Curve Editor | C37 Device calibration / C32 Brush dynamics |
+| Stylus test start/pattern/finish/report | C36 Stylus |
+| Calibration profile select/save/reset/import/export | C37 Device calibration |
+| Natural Media State Map | C31 Natural media / C50 renderer |
+| Mask add/invert/feather/expand controls | C23 Masks |
+| Adjustment add/type/amount | C24 Adjustment stack |
+| Filter add/type/amount/reorder | C25 Filter stack |
+| Layer manifest diagnostic export | C22/C53 plus diagnostics classification |
+| Repeat radial/mirror/grid/expand | C17 Repeat |
+| SVG Studio import | C21 SVG |
+| Recipe fixture/load/run/replay/breakpoint/rollback/report | C55 Recipe / automation |
+| Program asset detect/translate/trial/step/breakpoint/report/save recipe/attach | C56 Program Import |
+| External Reference runner/manual kit/evidence/package/compare | C40 Reference + C56 Program Import evidence path |
+| Browser Interactive Benchmark | Product Diagnostics candidate |
+| Artwork QA benchmark/score/notes/export | Product Diagnostics candidate |
+| AI Command Layer install/config/validation/preview/audit | C57 CHAT control |
+| Program safety mode | C56 Program Import |
+| renderer/GPU diagnostics | C49/C51 plus Product Diagnostics candidate |
+
+These functions may remain in Specialist rather than ordinary creative UI, but they must remain explicitly accounted for in the final Function Placement Map.
+
+## 3D. Current-source top-level module coverage
+
+Current `product/source/src/` contains 201 files across the following top-level groups. Every group must map to a canonical capability or an explicit infrastructure/support classification.
+
+| Source group | Census mapping |
+|---|---|
+| root assembly/config | product assembly/support; `ink.js`, `studio-core.js`, config |
+| `agent/` | C53 Output + C57 CHAT + C59 Creative Library |
+| `ai/` | C40 Reference + C57 CHAT + C58 Semantic + C60 Memory/Research |
+| `assets/` | family-expansion candidate: Asset lifecycle; Document/Storage relationship |
+| `compare/` | C46 Compare |
+| `composition/` | C55 Recipe/Compose; constraint evaluation must remain explicit |
+| `core/` | shared infrastructure contract; no independent user count |
+| `document/` | C01–C05, C16, C18–C19, C28, C38, C44, C47–C48 |
+| `editor/` | C07–C10, C13, C15–C20, C34, C39, C57 |
+| `export/` | C52–C53 |
+| `extraction/` | C41–C42 |
+| `flora/` | C61 specialization |
+| `history/` | C43 History |
+| `image/` | C22–C28 |
+| `input/` | C36–C37 |
+| `material/` | C39 Material |
+| `memory/` | C60 Creative Memory |
+| `paint/` | C29–C35 plus drawing-quality/import/vector-watercolor sub-capabilities |
+| `program-import/` | C56 Program Import |
+| `provenance/` | C45 Provenance |
+| `pwa/` | family-expansion candidate: PWA/offline/update |
+| `recipe/` | C55 Recipe/automation |
+| `recompute/` | C54 Recompute |
+| `release/` | family-expansion candidate: Product health/diagnostics |
+| `render/` | C38, C49–C52 |
+| `repeat/` | C17 Repeat |
+| `research/` | C60 Research → Creation |
+| `semantic/` | C58 Semantic grounding |
+| `spatial/` | supporting editor infrastructure for hit/selection/navigation; preserve without inflating normal feature count |
+| `stroke/` | C34 Stroke editing |
+| `structure/` | C42 Structure reconstruction |
+| `vector/` | C10–C14, C17, C21 plus Geometry Kernel/appearance contracts |
+| `vendor/` | third-party bounded dependencies; not INK product capabilities |
+
+Coverage result at this stage:
+
+```text
+TOP_LEVEL_SOURCE_GROUPS_UNSEEN = 0
+UNMAPPED_PRODUCT_CAPABILITY_CANDIDATES =
+  Asset lifecycle
+  PWA / offline / update management
+  Product health / diagnostics
+NORMAL_CREATIVE_TOOL_FAMILY_OMISSION_IDENTIFIED_FROM_EXTRA_GROUPS = 0 so far
+```
+
+The three family-expansion candidates above must receive explicit final classification before census closure.
+
+## 3E. Additional source-confirmed sub-capabilities found outside the original 61-row authority pointers
+
+These current modules are actively imported or reachable and must be merged into the normalized atomic inventory:
+
+### Drawing / paint
+- drawing workflow detection;
+- drawing workflow import;
+- drawing gap-frequency ranking;
+- stroke-quality evaluation;
+- stroke replay comparison;
+- professional stroke processing;
+- local stroke-quality edit;
+- pressure-curve editor;
+- natural-media state map;
+- watercolor edge classification;
+- vector brush library;
+- vector watercolor stroke;
+- watercolor petal;
+- watercolor leaf;
+- watercolor stem;
+- watercolor wash;
+- vector/natural splatter;
+- paper texture reference / overlay material.
+
+### Vector Geometry Kernel
+- Path segment intersections;
+- project point to Path;
+- split Path segment geometry;
+- robust offset Path;
+- line fitting;
+- circle fitting;
+- path geometry measurement;
+- apply normalized geometry result;
+- SVG ID inspection/normalization;
+- expressive-stroke normalize/validate;
+- expressive width/opacity profile evaluation;
+- expressive stroke from brush preset;
+- path paint/material appearance normalization and resolution.
+
+### Semantic
+- semantic query from text;
+- semantic target resolution;
+- semantic document migration;
+- semantic document validation;
+- relationship graph construction.
+
+### Bounds / transform support with product behavior
+- frame local geometry bounds;
+- frame world geometry bounds;
+- group world geometry bounds;
+- selection world geometry bounds;
+- collapse transform roots;
+- resize frame geometry.
+
+These are not automatically counted one-for-one as final user features; they are source-corroborated candidates to be normalized under their canonical family.
+
 ## 4. CHAT exposure index — separate from product inventory
 
 Current accepted metrics:
