@@ -202,3 +202,32 @@ Still open only when needed for final pixel-fidelity closure:
 - [ ] scrollbar hover/drag
 - [ ] panel resize
 - [ ] empty workspace after last document closes
+
+
+## G. Interaction-reference closure — 2026-09-27
+
+Closed by USER-supplied matched reference captures:
+
+- [x] standard Tooltip visible
+- [x] Tool flyout open
+- [x] horizontal guide drag + live coordinate readout
+- [x] vertical guide drag + live coordinate readout
+- [x] Status information popup
+- [x] empty workspace after last document closes
+- [x] active-document horizontal/vertical scrollbar reference
+- [x] Navigator high-zoom proxy reference
+- [x] Layers drag reorder
+
+Measurement authority:
+`working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md`
+
+Ruler origin drag:
+`OPTIONAL / NON-CLOSURE-BLOCKING`
+
+Remaining targeted references are optional unless later visual QA exposes a gap:
+- Navigator proxy while actively dragging;
+- panel width resize while actively dragging;
+- keyboard-focus visual;
+- disabled control close-up;
+- scrollbar hover/drag close-up;
+- equal-spacing/smart-snap feedback.
