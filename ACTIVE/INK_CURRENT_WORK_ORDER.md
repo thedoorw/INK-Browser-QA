@@ -28,6 +28,8 @@ P1_F_WORKPACK = working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.m
 P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_MR_REVIEW = working/INK_P1_G_MR_REVIEW_v1.0.md
 P1_H_WORKPACK = working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md
+P1_INTEGRATION_WORKPACK = working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md
+P1_RUNTIME_WORKPACK = working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_H_BRANCH = work/ink-p1-h-format-interoperability-001
 
@@ -133,9 +135,12 @@ P1-A Raster Selection / Fill / Sampling
 → independent MR MODULE_READY reviews
 → P1-H Format Interoperability
 → MR MODULE_READY review
-→ P1 INTEGRATION WORK ORDER
-→ focused/integrated QA
-→ ONE exact-SHA integrated Runtime
+→ P1 INTEGRATION DEV WORK ORDER
+→ DEV technical integration + focused/integrated QA
+→ MR review / promotion
+→ P1 INTEGRATED RUNTIME DEV WORK ORDER
+→ DEV executes ONE exact-SHA integrated Runtime
+→ MR Runtime evidence review
 → refreshed promoted capability authority
 → UR full-capability reconciliation
 → UI_HOLD may be cleared
@@ -211,8 +216,20 @@ DEV-H:
 
 MR:
 - review F and H independently as handoffs arrive;
-- P1 Integration remains blocked until both F and H are MR_PASS/promoted;
-- no integrated Runtime.
+- when both are MR_PASS/promoted, activate `INK-P1-INTEGRATION-001` for DEV;
+- review/promote exact Integration DEV handoff;
+- after Integration MR_PASS/promoted, activate `INK-P1-INTEGRATED-RUNTIME-001` for DEV;
+- review exact-SHA Runtime evidence and close/pass/revise the Runtime gate.
+
+Future execution ownership:
+```text
+P1_INTEGRATION_IMPLEMENTATION = DEV
+P1_INTEGRATION_REVIEW = MR
+P1_INTEGRATED_RUNTIME_EXECUTION = DEV
+P1_INTEGRATED_RUNTIME_REVIEW = MR
+```
+
+Integration and Runtime workpacks are predeclared but remain BLOCKED until their activation gates are satisfied.
 
 UR:
 - remain on HOLD.
