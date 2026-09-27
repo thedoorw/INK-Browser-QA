@@ -6,9 +6,9 @@ DATE: 2026-09-27
 
 ```text
 CURRENT_MAIN = repository current main
-CURRENT_PRIMARY_TASK = INK-P1-A-RASTER-SELECTION-FILL-SAMPLING-001
+CURRENT_PRIMARY_TASK = INK-P1-B-LOCAL-RASTER-RETOUCH-001
 CURRENT_PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
-CURRENT_GATE = P1_A_MODULE_READY_AWAIT_PROMOTION
+CURRENT_GATE = P1_B_DEV_AUTHORIZED
 
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
@@ -17,8 +17,10 @@ HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5
 EXPLICIT_PARTIAL_BOUNDED_ITEMS = 8
 
 P1_P2_DISPOSITION = RECORDED
-P1_A_WORKPACK = working/INK_P1_A_RASTER_SELECTION_FILL_SAMPLING_DEV_WORKPACK_v1.0.md
-P1_A_BRANCH = work/ink-p1-a-raster-selection-fill-sampling-001
+P1_A = MODULE_READY / MR_PASS / PROMOTED
+P1_A_PROMOTED_MAIN = c750b8f2803d87c369edcf9c320a531a32f92d62
+P1_B_WORKPACK = working/INK_P1_B_LOCAL_RASTER_RETOUCH_DEV_WORKPACK_v1.0.md
+P1_B_BRANCH = work/ink-p1-b-local-raster-retouch-001
 
 FIRST_REBASELINE_RUNTIME = PASS
 FIRST_REBASELINE_RUNTIME_TARGET = f911f777f770cbe290e290c4b0cbc3692b36641e
@@ -43,13 +45,13 @@ CONNECTOR_005 = CLOSED
 
 The full capability census is closed and the refreshed capability baseline is published on main.
 
-P1-A has passed MR MODULE_READY review on exact DEV head `21918c7e47ab1f31f70ff77816a6179fda4e2800`.
+P1-A passed MR MODULE_READY review and is promoted on main `c750b8f2803d87c369edcf9c320a531a32f92d62`.
 
-P1-A MODULE_READY = PASS. Product branch is not yet promoted to current main.
+P1-B is now authorized for Local Raster Retouch Core + focused QA.
 
 Final UI wiring remains prohibited.
 
-Next: promote/reconcile P1-A onto latest main, then authorize P1-B. P1-B through P1-H each require a separate bounded MR authorization.
+P1-C through P1-H remain queued and each requires separate bounded MR authorization.
 
 ## UI release sequence
 
