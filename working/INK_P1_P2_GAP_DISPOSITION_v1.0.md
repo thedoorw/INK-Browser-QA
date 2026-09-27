@@ -1,6 +1,6 @@
 # INK P1/P2 Gap Disposition v1.0
 
-STATUS: `MR_DISPOSITION_DRAFT / NO_IMPLEMENTATION_YET`
+STATUS: `MR_DISPOSITION_FROZEN / ALL_P1_BEFORE_RUNTIME`
 
 TASK: `INK-FULL-CAPABILITY-REBASELINE-001`
 
@@ -14,7 +14,7 @@ DATE: 2026-09-27
 
 The refreshed 64-family / 496-atomic registry is checked before opening any gap work. Existing INK capabilities are reused; P1/P2 is not allowed to create duplicate Document, History, Renderer, Selection, Transform, Recipe, CHAT or storage authorities.
 
-The purpose of the pre-UI implementation set is to close mature creative-workstation gaps that materially affect the final UI taxonomy. It is not to clone Photoshop feature-for-feature.
+The P1 implementation set closes all native P1 mature-workstation gaps before the next integrated Runtime. Module-level focused/unit QA remains required, but integrated Runtime is deferred until all P1 packages are complete. It is not a Photoshop feature-for-feature clone.
 
 ## 2. Final disposition table
 
@@ -24,10 +24,10 @@ The purpose of the pre-UI implementation set is to close mature creative-worksta
 | Smart Objects | **DEFER WITH REASON** | C28 reusable raster source + C18 Components already cover current editable reuse; revisit only for Photoshop interoperability semantics. |
 | Marquee / Lasso | **P0 PRESERVE** | C07. |
 | Polygonal Lasso | **IMPLEMENT NOW** | Foundational selection tool; bounded deterministic geometry. |
-| Magnetic Lasso | **IMPLEMENT AFTER UI BASELINE** | Depends on pixel-edge/selection maturity; not needed to place UI taxonomy. |
+| Magnetic Lasso | **IMPLEMENT BEFORE RUNTIME** | Depends on pixel-edge/selection maturity; not needed to place UI taxonomy. |
 | Quick Selection | **IMPLEMENT NOW** | Core mature raster-selection need. |
 | Magic Wand | **IMPLEMENT NOW** | Tolerance flood selection is deterministic and foundational. |
-| Object Selection | **IMPLEMENT AFTER UI BASELINE** | Requires pixel segmentation/object-recognition decision; semantic grounding is not a substitute. |
+| Object Selection | **IMPLEMENT BEFORE RUNTIME** | Requires pixel segmentation/object-recognition decision; semantic grounding is not a substitute. |
 | Layer / vector / raster masks | **P0 PRESERVE** | C23 already restored. |
 | Select and Mask edge refinement | **IMPLEMENT NOW** | Completes the new raster-selection foundation and existing mask stack. |
 | Crop / image resize | **P0 RECONCILE / UI EXPOSURE** | C22 exists; no duplicate Core implementation. |
@@ -51,10 +51,10 @@ The purpose of the pre-UI implementation set is to close mature creative-worksta
 | Text on Path | **IMPLEMENT NOW** | Vector/text integration gap; directly relevant to Illustrator-class direction. |
 | Advanced glyph typography | **DEFER WITH REASON** | P2; font-engine breadth can follow UI baseline. |
 | Gradient / Pattern fills | **IMPLEMENT NOW** | Fundamental vector/raster appearance capability. |
-| Adjustment Layers breadth | **IMPLEMENT AFTER UI BASELINE** | Current non-destructive stack + six adjustments are usable; expand breadth in later image-processing phase. |
-| Filter Stack breadth / Filter Gallery | **IMPLEMENT AFTER UI BASELINE** | Current stack + six filters are usable; breadth does not block UI. |
+| Adjustment Layers breadth | **IMPLEMENT BEFORE RUNTIME** | Current non-destructive stack + six adjustments are usable; expand breadth in later image-processing phase. |
+| Filter Stack breadth / Filter Gallery | **IMPLEMENT BEFORE RUNTIME** | Current stack + six filters are usable; breadth does not block UI. |
 | Blur Gallery | **DEFER WITH REASON** | P2. |
-| Liquify | **IMPLEMENT AFTER UI BASELINE** | Valuable P1 but large specialized deformation UI/runtime; not a pre-UI gate. |
+| Liquify | **IMPLEMENT BEFORE RUNTIME** | Valuable P1 but large specialized deformation UI/runtime; not a pre-UI gate. |
 | Lens correction | **ADAPTER / DEFER** | Better handled in later photo/RAW phase or adapter. |
 | Smart Filters | **P0 PRESERVE** | Existing non-destructive filter stack is current authority. |
 | Neural Filters | **ADAPTER** | External/AI adapter only. |
@@ -65,23 +65,23 @@ The purpose of the pre-UI implementation set is to close mature creative-worksta
 | Equal-distance smart snapping | **IMPLEMENT NOW** | Directly improves layout/vector editing; extends current snapping authority. |
 | Ruler / measurement | **IMPLEMENT NOW** | Needed for print/layout precision and final UI. |
 | History / Snapshots / Revision / Provenance | **P0 PRESERVE** | C43-C45 and raster snapshot. |
-| 8/16/32-bit image workflow | **IMPLEMENT AFTER UI BASELINE** | Strategic architecture change; requires storage/render/export/color-policy design. |
-| RGB / CMYK / Lab / Multichannel | **IMPLEMENT AFTER UI BASELINE** | Strategic print/color phase; do not block workstation UI. |
-| ICC color management | **IMPLEMENT AFTER UI BASELINE** | Strategic print phase, coupled to color modes/export. |
-| Channels / alpha / spot channels | **IMPLEMENT AFTER UI BASELINE** | Strategic image/print phase. |
+| 8/16/32-bit image workflow | **IMPLEMENT BEFORE RUNTIME** | Strategic architecture change; requires storage/render/export/color-policy design. |
+| RGB / CMYK / Lab / Multichannel | **IMPLEMENT BEFORE RUNTIME** | Strategic print/color phase; do not block workstation UI. |
+| ICC color management | **IMPLEMENT BEFORE RUNTIME** | Strategic print phase, coupled to color modes/export. |
+| Channels / alpha / spot channels | **IMPLEMENT BEFORE RUNTIME** | Strategic image/print phase. |
 | Camera Raw | **ADAPTER** | Use external/raw-processing adapter rather than rebuild full RAW engine now. |
 | Photomerge / panorama | **DEFER WITH REASON** | P2 expansion; outside pre-UI need. |
 | Actions | **P0 PRESERVE / INTEROP LATER** | Recipe/Program/CHAT remain INK automation authority. |
 | Batch / Image Processor | **DEFER WITH REASON** | P2; Recipe automation exists and general batch UX can follow UI. |
 | Generative Fill / Expand / Harmonize / Upscale | **ADAPTER** | Keep native core non-generative; optional external image adapter. |
 | Animation / Timeline / Video | **OUTSIDE CURRENT CORE** | No current drawing-workstation requirement. |
-| PSD / PSB / TIFF / RAW / EXR breadth | **IMPLEMENT AFTER UI BASELINE** | Format interoperability phase; prioritize exact import/export contracts after UI baseline. |
+| PSD / PSB / TIFF / RAW / EXR breadth | **IMPLEMENT BEFORE RUNTIME** | Format interoperability phase; prioritize exact import/export contracts after UI baseline. |
 | PNG / SVG / PDF / Print | **P0 PRESERVE** | C53. |
 | Plugin ecosystem | **DEFER WITH REASON** | P2; Program Import is not a plugin SDK and a full SDK is not required pre-UI. |
 
-## 3. Pre-UI implementation set
+## 3. P1 implementation set — ALL BEFORE RUNTIME
 
-The `IMPLEMENT NOW` work is grouped into four bounded development packages.
+All native P1 work is now completed before the next integrated Runtime.
 
 ### P1-A — Raster Selection / Fill / Sampling
 
@@ -141,27 +141,60 @@ Render the already-existing layer-effect models:
 
 Color Overlay is already rendered and remains P0.
 
-## 4. Not a UI blocker
-
-The following are explicitly deferred until after the final UI baseline and therefore must not keep UI on HOLD once the pre-UI packages and refreshed capability truth close:
+### P1-E — Advanced Selection
 
 - Magnetic Lasso;
-- Object Selection;
-- Adjustment breadth;
-- Filter Gallery breadth;
-- Liquify;
-- 8/16/32-bit workflow;
-- RGB/CMYK/Lab/Multichannel;
+- Object Selection.
+
+Core rule:
+extend the P1-A Selection authority; Object Selection may use bounded segmentation/analysis but may not create a second selection model.
+
+### P1-F — Raster Processing Expansion
+
+- Adjustment Layers breadth;
+- Filter Stack / Filter Gallery breadth;
+- Liquify.
+
+Core rule:
+extend the existing non-destructive Adjustment/Filter/Image authorities; Liquify must converge on existing Image/History/save-load behavior.
+
+### P1-G — Color / Bit Depth / Channels
+
+- 8/16/32-bit image workflow;
+- RGB / CMYK / Lab / Multichannel;
 - ICC color management;
-- Channels/alpha/spot channels;
-- broader PSD/PSB/TIFF/RAW/EXR interoperability;
-- Advanced glyph typography;
+- Channels / alpha / spot channels.
+
+Core rule:
+one document/image color-management authority. FORMAT_VERSION may change only under a separately authorized bounded Work Order if required.
+
+### P1-H — Format Interoperability
+
+- PSD / PSB / TIFF / RAW / EXR breadth.
+
+Core rule:
+format support must preserve INK document truth and may use adapters where a format requires an external decoder, but the P1 interoperability contract must be closed before Runtime.
+
+## 4. P2 / Adapter / Outside — NOT REQUIRED BEFORE P1 RUNTIME
+
+The following remain outside the all-P1-before-Runtime gate:
+
 - Puppet Warp;
-- History/Art History Brush;
+- History Brush / Art History Brush;
+- Advanced glyph typography;
 - Blur Gallery;
-- Photomerge;
-- general Batch/Image Processor;
-- plugin SDK/ecosystem.
+- Lens correction where kept Adapter/Deferred;
+- Neural Filters;
+- Camera Raw native engine;
+- Photomerge / panorama;
+- general Batch / Image Processor;
+- Generative Fill / Expand / Harmonize / Upscale native engine;
+- plugin SDK/ecosystem;
+- Animation / Timeline / Video.
+
+Smart Objects remain resolved by existing Reusable Raster Source + Components unless a later interoperability case requires additional semantics.
+
+Remove/content-aware repair remains Adapter-class unless later reauthorized as native.
 
 ## 5. Adapter boundary
 
@@ -176,21 +209,41 @@ These remain adapter-class capabilities unless later product evidence justifies 
 ## 6. Counts
 
 ```text
-IMPLEMENT_NOW_ROWS = 20
-IMPLEMENT_AFTER_UI_ROWS = 10
+IMPLEMENT_BEFORE_RUNTIME_ROWS = 30
+  previous IMPLEMENT_NOW rows = 20
+  previous after-UI P1 rows moved before Runtime = 10
 ADAPTER_ROWS = 5
 DEFER_ROWS = 8
 OUTSIDE_ROWS = 1
+
+P1_PACKAGES_BEFORE_RUNTIME = 8 (P1-A through P1-H)
 ```
+
+These are comparator/gap-row counts, not final atomic-feature counts for breadth work such as Adjustment, Filter, Color Mode or Format interoperability.
 
 Rows classified P0 preserve/reconcile are not counted as new implementation.
 
-## 7. Gate to DEV authorization
+## 7. Runtime gate
 
-Before the first P1-A DEV Work Order is issued:
-- normalized registry receives final MR evidence check;
-- current UI reconciliation gaps are recorded;
-- ACTIVE capability baseline refresh is prepared/published at the accepted checkpoint;
-- exact DEV branch and bounded source modules are named.
+```text
+P1-A MODULE_READY
+→ P1-B MODULE_READY
+→ P1-C MODULE_READY
+→ P1-D MODULE_READY
+→ P1-E MODULE_READY
+→ P1-F MODULE_READY
+→ P1-G MODULE_READY
+→ P1-H MODULE_READY
+→ P1 INTEGRATION
+→ focused/integrated QA
+→ ONE exact-SHA integrated Runtime
+→ MR promotion/review
+→ UR reconciliation / UI
+```
 
-P1/P2 implementation is not authorized merely by this disposition document.
+Rules:
+- each P1 package requires focused/unit QA and MR MODULE_READY review;
+- no integrated Runtime between P1 packages;
+- Runtime is authorized only after all P1 packages and integration are complete;
+- P2 implementation is not part of this Runtime gate;
+- P1-A is currently the only DEV package authorized; later packages still require separate bounded Work Orders.
