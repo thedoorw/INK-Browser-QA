@@ -119,3 +119,5 @@ export * from './raster-retouch-tools.js';
 export * from './color-management-core.js';
 export * from './channel-core.js';
 export * from './format-interoperability.js';
+
+export * from './formats/normalized-payload.js';
