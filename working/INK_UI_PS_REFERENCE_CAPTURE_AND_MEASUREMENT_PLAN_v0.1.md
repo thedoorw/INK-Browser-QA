@@ -257,3 +257,24 @@ otherwise
 
 Therefore:
 `ADDITIONAL_DARK_THEME_PS_SCREENSHOTS_REQUIRED = 0`
+
+
+## I. Light-theme web-reference closure — 2026-09-27
+
+Public web research now provides:
+- official Photoshop UXP confirmation of Darkest / Dark / Light / Lightest themes;
+- official Photoshop theme-aware semantic host CSS variables;
+- Adobe Photoshop UXP design guidance for Light/Lightest panel UI;
+- public full-workstation Photoshop Light/Lightest screenshots;
+- current Adobe Spectrum light-theme numeric token references.
+
+Authority:
+`working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md`
+
+Result:
+
+```text
+ADDITIONAL_USER_LIGHT_THEME_SCREENSHOT_REQUIRED = NO
+EXACT_PS_21_2_12_LIGHT_RGB = NOT_REQUIRED
+FINAL_INK_LIGHT_TOKENS = UR_ADAPTATION_REQUIRED
+```
