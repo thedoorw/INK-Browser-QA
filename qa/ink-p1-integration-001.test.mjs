@@ -17,7 +17,7 @@ import {
   createNormalizedPayload, formatPayloadToDocumentImageState, documentImageStateToFormatPayload,
   encodeFormat, decodeFormat
 } from '../product/source/src/image/image-core.js';
-import { installStudioCore } from '../product/source/src/studio-core.js';
+import { installRenderer, installStudioCore } from '../product/source/src/studio-core.js';
 import { readFileSync } from 'node:fs';
 
 const rgba=(values,width=2,height=1)=>({width,height,data:new Uint8ClampedArray(values)});
@@ -199,6 +199,44 @@ test('JSON save/load + sanitize preserves P1 document state and raster payload',
   assert.equal(reopened.pages[0].guides[0].position,10);
   assert.equal(reopened.pages[0].layers[0].objects[0].rasterState.colorRaster.data[2],3);
   assert.equal(reopened.colorState.colorMode,'RGB');
+});
+
+test('rasterState-only images dispatch through integrated renderer while ordinary src images retain legacy path',()=>{
+  const previousDocument=globalThis.document,previousImageData=globalThis.ImageData;
+  const makeCanvas=()=>{const context={putImageData(){},drawImage(){}};return{width:0,height:0,getContext:()=>context};};
+  globalThis.document={createElement:tag=>{assert.equal(tag,'canvas');return makeCanvas();}};
+  globalThis.ImageData=class ImageData{constructor(data,width,height){this.data=data;this.width=width;this.height=height;}};
+  try{
+    const calls={legacyObject:0,legacyImage:0,output:0};
+    const renderer={
+      drawObject(){calls.legacyObject++;},
+      objectWorldBounds(){return{x:0,y:0,w:1,h:1};},
+      drawLayerObjects(){},
+      drawSelectionOverlay(){},
+      drawImage(){calls.legacyImage++;},
+      getImage(){throw new Error('legacy src lookup must not run for rasterState-only image');}
+    };
+    const app={renderer,doc:{modifiedAt:'qa'},objectToSVG(){return'';},hitObject(){return false;},page(){return{};}};
+    installRenderer(app);
+    const ctx={globalAlpha:1,save(){},restore(){},transform(){},drawImage(){calls.output++;}};
+    const supported=createColorRaster({width:1,height:1,bitDepth:16,colorMode:'RGB',data:[65535,32768,0],alpha:[65535]});
+    renderer.drawObject(ctx,{id:'raster-only',type:'image',w:1,h:1,rasterState:{colorRaster:serializeColorRaster(supported)}});
+    assert.equal(calls.legacyObject,0);
+    assert.equal(calls.legacyImage,0);
+    assert.equal(calls.output,1);
+
+    renderer.drawObject(ctx,{id:'src-only',type:'image',src:'ordinary.png',w:1,h:1});
+    assert.equal(calls.legacyObject,1);
+    assert.equal(calls.legacyImage,0);
+
+    const unsupported=createColorRaster({width:1,height:1,bitDepth:8,colorMode:'Multichannel',channelCount:2,channelNames:['A','B'],data:[1,2]});
+    renderer.drawObject(ctx,{id:'unsupported-raster',type:'image',w:1,h:1,rasterState:{colorRaster:serializeColorRaster(unsupported)}});
+    assert.equal(renderer.lastColorDiagnostic.status,'unsupported-render');
+    assert.equal(calls.legacyImage,1);
+  }finally{
+    if(previousDocument===undefined)delete globalThis.document;else globalThis.document=previousDocument;
+    if(previousImageData===undefined)delete globalThis.ImageData;else globalThis.ImageData=previousImageData;
+  }
 });
 
 test('renderer module imports with the existing renderer authority',()=>assert.equal(typeof installStudioCore,'function'));
