@@ -7,6 +7,69 @@ import { createFrame } from './hierarchy.js';
 import { normalizeObjectLayout } from './layout.js';
 import { normalizeExpressiveStroke } from '../vector/stroke-appearance.js';
 import { normalizePathMaterialAppearance } from '../vector/paint-appearance.js';
+import { getColorModeDescriptor, inspectIccProfile, parseIccProfile, validateBitDepth } from '../image/color-management-core.js';
+import { normalizeSnapSettings } from '../editor/precision-layout.js';
+
+export function normalizeDocumentColorState(raw = {}) {
+  const source = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  let bitDepth = 8;
+  try { bitDepth = validateBitDepth(source.bitDepth ?? 8); } catch {}
+  let colorMode = ['RGB','CMYK','Lab','Multichannel'].includes(source.colorMode) ? source.colorMode : 'RGB';
+  let channelNames = Array.isArray(source.channelNames) ? source.channelNames.map(String) : null;
+  if (colorMode === 'Multichannel' && !channelNames?.length) {
+    channelNames = Array.isArray(source.channelLayout?.process)
+      ? source.channelLayout.process.map(channel => String(channel?.name || '')).filter(Boolean)
+      : ['Channel 1'];
+  }
+  let descriptor;
+  try { descriptor = getColorModeDescriptor(colorMode, colorMode === 'Multichannel' ? channelNames.length : null, channelNames); }
+  catch {
+    colorMode = 'RGB';
+    descriptor = getColorModeDescriptor('RGB');
+  }
+  const bytesSource = source.icc?.bytes ?? source.iccBytes ?? null;
+  const bytes = bytesSource == null ? null : Array.from(bytesSource, value => Math.max(0, Math.min(255, Math.trunc(Number(value) || 0))));
+  let inspection = source.icc?.inspection && typeof source.icc.inspection === 'object' ? deepClone(source.icc.inspection) : null;
+  let iccStatus = bytes?.length ? 'preserved-unverified' : 'none';
+  if (bytes?.length) {
+    try {
+      inspection = inspectIccProfile(parseIccProfile(Uint8Array.from(bytes)));
+      iccStatus = 'verified';
+    } catch {
+      iccStatus = 'preserved-unsupported-or-invalid';
+    }
+  }
+  const channelLayout = source.channelLayout && typeof source.channelLayout === 'object'
+    ? deepClone(source.channelLayout)
+    : {
+        type: 'channel-layout',
+        bitDepth,
+        colorMode,
+        process: descriptor.channels.map((name, index) => ({ index, id: `process:${index}:${name}`, name, kind: 'process' })),
+        auxiliary: []
+      };
+  return {
+    bitDepth,
+    colorMode,
+    channelCount: descriptor.channelCount,
+    channelNames: [...descriptor.channels],
+    icc: { bytes, inspection, status: iccStatus },
+    channelLayout
+  };
+}
+
+export function documentColorStateFromPayload(payload = {}) {
+  return normalizeDocumentColorState({
+    bitDepth: payload.bitDepth,
+    colorMode: payload.colorMode,
+    channelNames: payload.channelNames,
+    channelLayout: payload.channelLayout,
+    icc: {
+      bytes: payload.icc?.bytes ? Array.from(payload.icc.bytes) : null,
+      inspection: payload.icc?.inspection || null
+    }
+  });
+}
 
 export const DEFAULT_RECENT = [
   '#202020', '#ffffff', '#b63c36', '#d18b2f',
@@ -27,6 +90,8 @@ export function defaultPage(index = 1) {
     workspace,
     paper: { type: 'blank', color: '#fffef9', gridSize: 32, absorbency: .58, roughness: .42, fiberStrength: .36, fiberAngle: 0, sizing: .28, granulation: .32, seed: 1337, textureVisible: true },
     camera: workspace.cameras.creation,
+    guides: [],
+    snap: normalizeSnapSettings(),
     layers: [layer],
     activeLayerId: layer.id
   };
@@ -42,6 +107,7 @@ export function defaultDocument() {
     title: '未命名作品',
     createdAt: nowISO(),
     modifiedAt: nowISO(),
+    colorState: normalizeDocumentColorState(),
     activePageId: page.id,
     pages: [page],
     programAssets: [],
