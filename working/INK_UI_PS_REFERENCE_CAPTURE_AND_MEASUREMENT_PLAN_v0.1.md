@@ -231,3 +231,29 @@ Remaining targeted references are optional unless later visual QA exposes a gap:
 - equal-spacing/smart-snap feedback.
 
 Navigator proxy drag and Panel resize no longer require additional Photoshop screenshots. Their cursor semantics are specified as `grab/grabbing`, `ew-resize`, and `ns-resize`; functional proof belongs to later INK Runtime QA rather than Photoshop pixel-reference acquisition.
+
+
+## H. Official-source closure — 2026-09-27
+
+The following no longer require additional Photoshop screenshots:
+
+- Navigator proxy drag — current Photoshop documentation explicitly confirms dragging the colored proxy area moves the document view.
+- Panel edge resize — current Photoshop documentation explicitly confirms dragging any panel edge resizes it.
+- Equal-spacing / Smart Guide behavior — Adobe documentation confirms dynamic pink Smart Guides, edge/center/boundary alignment, pixel-distance readouts, and equal-spacing support.
+- Ruler-origin behavior — Adobe documentation confirms crosshairs, Shift-to-ruler-tick snapping, and double-click reset; INK keeps this optional/non-blocking.
+- keyboard focus visual — governed by web accessibility authority rather than Photoshop pixel-copy.
+- disabled controls — already visible in existing matched Photoshop captures.
+- scrollbar hover/drag raster — not required as a Photoshop-specific pixel target; geometry is already captured.
+
+Remaining reference acquisition need:
+
+```text
+CONTROLLED_DESKTOP_PHOTOSHOP_LIGHT_THEME
+→ only if UR wants exact light-gray RGB/token derivation
+
+otherwise
+→ explicit UR-approved INK light-gray adaptation
+```
+
+Therefore:
+`ADDITIONAL_DARK_THEME_PS_SCREENSHOTS_REQUIRED = 0`
