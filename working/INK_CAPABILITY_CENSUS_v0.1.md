@@ -56,7 +56,8 @@ Current top-level state:
 
 ```text
 CAPABILITY_FAMILIES = 61 / 61
-ATOMIC_CAPABILITY_TOTAL = OPEN — census not yet closed
+RAW_SOURCE_CORROBORATED_CANDIDATE_ENTRIES = 696
+ATOMIC_CAPABILITY_TOTAL = OPEN — normalize/deduplicate before freeze
 CHAT_NAMED_TOOLS = 22
 CHAT_BOUNDED_EDIT_OPERATIONS = 34
 PRODUCT_SOURCE_MUTATION_IN_THIS_TASK = 0
@@ -1158,6 +1159,221 @@ Preserved specialization capabilities include:
 
 FLORA is preserved as specialization and must not redefine generic Document/History/Renderer/Recipe authorities.
 
+## 3A. Exact current-source vocabularies already closed
+
+The following formerly-open details are now directly confirmed from current source and must be used during normalization rather than inferred from historical prose.
+
+### Image / blend / adjustment / filter vocabulary
+
+From `image/image-core.js`:
+
+```text
+selection classes =
+  region, vector-path, raster-alpha
+
+mask classes =
+  layer, clipping, group, invert, feather, expand, contract
+
+blend modes =
+  source-over, multiply, screen, overlay, soft-light, hard-light,
+  darken, lighten, color-dodge, color-burn, difference, exclusion,
+  hue, saturation, color, luminosity
+
+adjustments =
+  brightnessContrast, levels, curves, hueSaturation, colorBalance, gradientMap
+
+filters =
+  gaussianBlur, sharpen, highPass, edgeDetection, noiseGrain, textureOverlay
+
+workflow =
+  rasterLayer, group, smartSource, crop, resize, transform,
+  layerEffects, histogram, snapshot, beforeAfter
+```
+
+### Stroke Session recorder vocabulary
+
+Current `StrokeSessionRecorder` directly exposes:
+
+```text
+record
+pause
+resume
+setBrush
+setColor
+setLayer
+setMask
+setBlend
+checkpoint
+beginStroke
+addSample
+endStroke
+erase
+smudge
+transform
+undo
+redo
+finish
+```
+
+### Recipe capability vocabulary
+
+Current `recipe/recipe-engine.js` declares:
+
+```text
+inputs =
+  document, layer, path, region, mask, object, selection
+
+operation families =
+  document, layer, group, object, path, pathpoint, selection,
+  transform, deformation, style, mask, adjustment, filter, texture,
+  boolean, repeat, material, hierarchy, dependency, paint, brush,
+  composition, expression, import, export, input, snapshot, qa, checkpoint
+
+control =
+  condition, repeatOver, localReplay, resume, breakpoint, stepByStep,
+  rollback, cancel, deterministicReplay, replayDiff
+
+expressions =
+  arithmetic, comparison, boolean, min, max, abs, clamp, round,
+  sin, cos, pi, deterministicRandom, indexedVariation, expressionLog
+```
+
+### Program Import format vocabulary
+
+Current detector recognizes:
+
+```text
+PHOTOSHOP_ACTION
+PHOTOSHOP_JSX
+ILLUSTRATOR_JSX
+SVG_EXTENSION
+INKSCAPE_EXTENSION_DESCRIPTOR
+INKSCAPE_PYTHON_EXTENSION
+GIMP_SCRIPT_FU
+GIMP_PYTHON_PLUGIN
+KRITA_PYTHON_PLUGIN
+CORELDRAW_MACRO
+PAINTSHOP_PRO_SCRIPT
+CLIP_STUDIO_AUTO_ACTION
+COREL_PAINTER_SCRIPT
+JSON_PROGRAM
+XML_PROGRAM
+JAVASCRIPT_PROGRAM
+PYTHON_PROGRAM
+TEXT_MACRO
+UNKNOWN
+```
+
+Current parser paths explicitly reference executable/text parsing for Photoshop JSX, Illustrator JSX, SVG, Inkscape descriptor/Python, GIMP Script-Fu/Python, Krita Python, PaintShop Pro script, CorelDRAW macro, Corel Painter script, JSON, XML, JavaScript, Python and text macro families.
+
+Binary formats recognized by detection must not be described as fully translated unless their downstream parser/compiler path is separately proven.
+
+### Semantic vocabularies
+
+Current semantic model relations:
+
+```text
+parent, children, group, attachedTo, surrounds, overlaps, occludes, behind
+```
+
+Current semantic-region relations:
+
+```text
+contains, inside, intersects, overlaps, adjacent, crossing, gap, bridge
+```
+
+### Creative Memory vocabularies
+
+Current categories:
+
+```text
+SHAPE_VOCABULARY
+COMPOSITION_RULE
+LINE_BEHAVIOR
+MATERIAL_TREATMENT
+COLOR_LOGIC
+METHOD
+CREATIVE_DECISION
+APPROACH_RESULT
+```
+
+Dispositions:
+
+```text
+ACCEPTED, REJECTED, UNRESOLVED
+```
+
+Evidence strengths:
+
+```text
+DIRECT, CORROBORATED, PARTIAL, UNRESOLVED
+```
+
+### Research → Creation vocabularies
+
+Current evidence classes:
+
+```text
+VISUAL_REFERENCE
+ARTWORK_DESIGN_EXAMPLE
+TECHNIQUE_PROCESS_NOTE
+COMPOSITION_OBSERVATION
+GEOMETRY_OBSERVATION
+PALETTE_COLOR_OBSERVATION
+LINE_STROKE_OBSERVATION
+MATERIAL_SURFACE_OBSERVATION
+USER_RESEARCH_NOTE
+```
+
+Current principle categories:
+
+```text
+GEOMETRY
+COMPOSITION
+SHAPE_VOCABULARY
+LINE_BEHAVIOR
+COLOR_LOGIC
+MATERIAL_TREATMENT
+SPACING_RHYTHM
+HIERARCHY
+REPETITION_VARIATION
+METHOD
+```
+
+Current constraint classes:
+
+```text
+GEOMETRY
+COMPOSITION
+PALETTE_COLOR
+LINE_STROKE
+MATERIAL
+SPACING_RHYTHM
+HIERARCHY
+REPETITION_VARIATION
+METHOD_GUIDANCE
+```
+
+Research states:
+
+```text
+RESOLVED, UNRESOLVED, CONFLICTING
+```
+
+### Human source routes corroborated in `ink.js`
+
+Current source directly confirms:
+- page add / delete / duplicate / rename / switch;
+- layer add / duplicate / delete / drag reorder / opacity;
+- draw-tool stack = Pen / Pencil / Marker / Brush / Airbrush;
+- separate Eraser / Select / Lasso / Shape / Text / Image / Pan tools;
+- paper types = blank / grid / ruled / dots;
+- paper grid size and natural-media paper parameters;
+- History retention preference `ink-history-limit`;
+- Fullscreen API toggle;
+- creation/layout workspace switching;
+- content/artboard/layout-viewport fit/reset routes.
+
 ## 4. CHAT exposure index — separate from product inventory
 
 Current accepted metrics:
@@ -1173,27 +1389,27 @@ These remain valid CHAT-surface counts only. They are not added to the product t
 
 The following must be completed before `ATOMIC_CAPABILITY_TOTAL` is frozen:
 
-1. extract exact `ink.js` human-UI command surface for Pages, Layers, Navigation, Shapes, Drawing tools and workspace controls;
-2. extract exact declared Blend Mode vocabulary from current image/source authority;
-3. pin current source for paper grid/ruled/dot presentation before counting those as atomic;
-4. verify exact pause/resume semantics of Stroke Session recorder;
-5. enumerate current Recipe breakpoint/rollback surface from source instead of relying on historical wording;
-6. enumerate exact Program Import supported format/sub-operation matrix from current parsers/compiler;
-7. enumerate exact Semantic relation vocabulary from current source enums;
-8. enumerate exact Creative Memory category/disposition vocabularies and Research bridge outputs;
-9. enumerate `agent/capability-registry.js` named tools and operation argument sub-actions without double-counting Core actions;
-10. cross-check the final atomic list against current QA filenames and UI static-control ledger;
-11. classify each atomic item by:
+1. normalize the 696 raw source-corroborated candidate entries into true product atomics:
+   - merge aliases;
+   - separate user/product capability from supporting implementation contract;
+   - avoid double-counting the same Core ability in Human UI, CHAT and Recipe surfaces;
+2. finish exhaustive `ink.js` / workstation static-control cross-check so no human-facing route is omitted;
+3. finish Program Import detector-vs-parser-vs-compiler matrix, especially recognized binary formats that may not have full translation;
+4. enumerate `agent/capability-registry.js` named-tool sub-actions and operation arguments only as exposure metadata, not duplicate Core capabilities;
+5. cross-check normalized atomics against current QA and the preserved UI static-control ledger;
+6. classify each normalized atomic item by:
     - Human UI = YES / NO / PARTIAL;
     - CHAT = READ / MUTATE / NO / DEFER;
     - History = YES / NO / N/A;
     - Save/load = YES / LOCAL / OUTPUT / N/A;
     - QA = PASS / PARTIAL / MISSING;
-    - Runtime = PASS / PARTIAL / NOT DIRECTLY EXERCISED.
+    - Runtime = PASS / PARTIAL / NOT DIRECTLY_EXERCISED.
 
 Until these are closed:
 
 `FULL_ATOMIC_CAPABILITY_CENSUS = IN_PROGRESS`
+
+The value `696` is a raw candidate-entry count, not the final number of INK product features.
 
 ## 6. P1/P2 boundary
 
