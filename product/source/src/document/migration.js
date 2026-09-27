@@ -1,12 +1,13 @@
 import { FORMAT_VERSION, INK_VERSION } from '../config.js';
 import { clamp, deepClone, uid } from '../core/index.js';
-import { DEFAULT_RECENT, createStructuralNormalizationState, defaultLayer, normalizeObject } from './model.js';
+import { DEFAULT_RECENT, createStructuralNormalizationState, defaultLayer, normalizeDocumentColorState, normalizeObject } from './model.js';
 import { normalizeArtboard } from './artboard.js';
 import { normalizeWorkspace } from './workspace.js';
 import { migrateStrokeSession } from '../paint/stroke-session.js';
 import { createBrushPackage } from '../paint/brush-engine.js';
 import { migrateSemanticDocument } from '../semantic/semantic-migration.js';
 import { migrateDocumentAssetManifest } from '../assets/asset-migration.js';
+import { normalizeRulerGuide, normalizeSnapSettings } from '../editor/precision-layout.js';
 
 export function migrateDocument(raw) {
   if (!raw || raw.format !== 'INK' || !Array.isArray(raw.pages)) {
@@ -20,6 +21,7 @@ export function migrateDocument(raw) {
   const structuralState = createStructuralNormalizationState();
   document.formatVersion = FORMAT_VERSION;
   document.appVersion = INK_VERSION;
+  document.colorState = normalizeDocumentColorState(document.colorState || {});
   document.programAssets = Array.isArray(document.programAssets)
     ? document.programAssets.filter(asset => asset && typeof asset === 'object' && asset.id).map(asset => deepClone(asset))
     : [];
@@ -101,6 +103,8 @@ export function migrateDocument(raw) {
       defaultSpace: 'creation'
     });
     page.camera = page.workspace.cameras[page.workspace.activeSpace];
+    page.guides = (Array.isArray(page.guides) ? page.guides : []).map(guide => normalizeRulerGuide(guide));
+    page.snap = normalizeSnapSettings(page.snap || {});
     page.layers = Array.isArray(page.layers) && page.layers.length
       ? page.layers
       : [defaultLayer()];

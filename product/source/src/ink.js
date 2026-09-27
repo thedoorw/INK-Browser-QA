@@ -7,7 +7,7 @@ import {
   uid, unionBounds
 } from './core/index.js';
 import {
-  InkStore, installRevision, activeLayer, activePage, allObjects, defaultDocument, defaultLayer, sanitizeDocument, inspectDocument,
+  InkStore, installRevision, activeLayer, activePage, allObjects, defaultDocument, defaultLayer, documentColorStateFromPayload, sanitizeDocument, inspectDocument,
   createFrame, comparePageObjectHitOrder, findPageObject, reparentPageObject, walkPageObjects,
   artboardTrimBounds, artboardBleedBounds, artboardSafeBounds, artboardExportGeometry, artboardPixelSize,
   describeArtboard, mmToWorld, normalizeArtboard, normalizeLayoutViewport, activateWorkspace, ensureWorkspace, workspaceDiagnostics, workspaceSpace
@@ -18,7 +18,7 @@ import { InputArbiter } from './input/input-arbiter.js';
 import { PenInputCalibrator, normalizePenProfile } from './input/pen-calibration.js';
 import { clearStrokeSegmentStyle, deleteStrokeNodes, eraseStrokeWithCircle, insertStrokeNode, moveStrokeHandle, nearestStrokeCurveSegment, nearestStrokeNode, sampleStrokePath, sampleStrokeSegment, segmentStyleAt, setStrokeNodeMode, setStrokeSegmentStyle, simplifyStrokePoints, splitStrokeAtSegment } from './stroke/index.js';
 import { PageSpatialIndex } from './spatial/index.js';
-import { applyObjectMatrices, applyWorldTransformBatch, assertFinitePathGeometry, cloneInitialMatrices, collapseTransformRoots, frameWorldGeometryBounds, groupWorldGeometryBounds, installChatBoundedEdit, installChatCreativePlan, installCreativeWorkspace, installExpressiveStroke, installPathEditing, installRepaintMaterial, inspectComposition, lassoCandidates, marqueeCandidates, nonSingularScaleComponent, polygonBounds, preflightObjectMatrices, regenerateCompositionIds, resolveCompositionSelection, resizeFrameGeometry, selectionWorldGeometryBounds } from './editor/index.js';
+import { addRulerGuide, applyObjectMatrices, applyWorldTransformBatch, assertFinitePathGeometry, cloneInitialMatrices, collapseTransformRoots, frameWorldGeometryBounds, groupWorldGeometryBounds, installChatBoundedEdit, installChatCreativePlan, installCreativeWorkspace, installExpressiveStroke, installPathEditing, installRepaintMaterial, inspectComposition, lassoCandidates, marqueeCandidates, moveRulerGuide, nonSingularScaleComponent, normalizeSnapSettings, polygonBounds, preflightObjectMatrices, regenerateCompositionIds, removeRulerGuide, resolveCompositionSelection, resolveSnappedRotation, resolveSnappedTranslation, resizeFrameGeometry, selectionWorldGeometryBounds, setRulerGuideLocked, setRulerGuideVisibility, setSnapCategory, setSnapEnabled } from './editor/index.js';
 import { LiveCanvasTileRenderer, NaturalMediaController, PersistentTileAtlas, TiledExportCancelledError, TiledExportJob, createTilePlan, paperProfileFingerprint, paperSampleAt, renderTiledCanvas } from './render/index.js';
 import { canvasToPdfBlob } from './export/index.js';
 import { ExternalValidationRecorder, RuntimeHealthMonitor, buildExternalDiagnosticBundle } from './release/index.js';
@@ -32,6 +32,7 @@ import { drawExpressivePathStroke, flattenSubpath, moveAnchor as movePathAnchor,
 import { resolvePathPaintAppearance } from './vector/paint-appearance.js';
 import { PNGWorkerEncoder } from './export/png-worker-encoder.js';
 import { BUILTIN_BRUSH_PRESETS as ENGINE_BRUSH_PRESETS } from './paint/brush-engine.js';
+import { decodeFormat as decodeImageFormatCore, documentImageStateToFormatPayload, encodeFormat as encodeImageFormatCore, formatPayloadToDocumentImageState, probeFormat as probeImageFormat } from './image/image-core.js';
 
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -146,7 +147,7 @@ class Renderer{
       for(const layer of page.layers){if(!layer.visible)continue;ctx.save();ctx.globalAlpha*=layer.opacity;this.drawLayerObjects(ctx,layer,page);ctx.restore();}this.drawFloraInspectionOverlay(ctx,page);
     }
     if(this.app.draft?.object)this.drawObject(ctx,this.app.draft.object,{draft:true});ctx.restore();
-    if(this.app.draft?.lasso)this.drawLassoOverlay(ctx,this.app.draft.lasso);if(this.app.draft?.marquee)this.drawMarqueeOverlay(ctx,this.app.draft.marquee);if(this.app.draft?.guides)this.drawGuides(ctx,this.app.draft.guides);this.drawSelectionOverlay(ctx);this.drawStrokeEditOverlay(ctx);this.drawPathEditOverlay(ctx);this.drawBrushCursor(ctx);this.app.updateStatus();
+    if(this.app.draft?.lasso)this.drawLassoOverlay(ctx,this.app.draft.lasso);if(this.app.draft?.marquee)this.drawMarqueeOverlay(ctx,this.app.draft.marquee);this.drawGuides(ctx,(page.guides||[]).filter(guide=>guide.visible!==false).map(guide=>({axis:guide.orientation==='vertical'?'x':'y',value:guide.position,persistent:true,id:guide.id,locked:Boolean(guide.locked)})));if(this.app.draft?.guides)this.drawGuides(ctx,this.app.draft.guides);this.drawSelectionOverlay(ctx);this.drawStrokeEditOverlay(ctx);this.drawPathEditOverlay(ctx);this.drawBrushCursor(ctx);this.app.updateStatus();
   }
   drawArtboardFrameWorld(ctx,page,trim=artboardTrimBounds(page),bleed=artboardBleedBounds(page,true)){
     ctx.save();ctx.shadowColor='rgba(0,0,0,.42)';ctx.shadowBlur=18/Math.max(.05,page.camera.scale);ctx.shadowOffsetY=5/Math.max(.05,page.camera.scale);ctx.fillStyle=page.paper.color;ctx.fillRect(bleed.x,bleed.y,bleed.w,bleed.h);ctx.restore();
@@ -282,6 +283,20 @@ class InkApp{
   }
   page(){return activePage(this.doc)}
   layer(){return activeLayer(this.doc)}
+  get snapAngles(){return normalizeSnapSettings(this.page()?.snap||{}).categories.angle}
+  set snapAngles(value){if(this.page())this.page().snap=setSnapCategory(this.page().snap||{},'angle',value)}
+  get smartGuides(){const c=normalizeSnapSettings(this.page()?.snap||{}).categories;return Boolean(c.guides||c.edges||c.centers||c.equalDistance)}
+  set smartGuides(value){if(!this.page())return;let next=normalizeSnapSettings(this.page().snap||{});for(const category of ['guides','edges','centers','equalDistance'])next=setSnapCategory(next,category,value);this.page().snap=next}
+  get gridSnap(){return normalizeSnapSettings(this.page()?.snap||{}).categories.grid}
+  set gridSnap(value){if(this.page())this.page().snap=setSnapCategory(this.page().snap||{},'grid',value)}
+  pageStatePath(key){const index=this.doc.pages.indexOf(this.page());if(index<0)throw new Error('INK_ACTIVE_PAGE_NOT_FOUND');return['pages',index,key]}
+  addGuide(guide){let created=null;this.history.pushScoped('新增參考線',[this.pageStatePath('guides')],()=>{const next=addRulerGuide(this.page().guides||[],guide);created=next.at(-1);this.page().guides=next;});this.renderer.render();return created}
+  moveGuide(id,position){this.history.pushScoped('移動參考線',[this.pageStatePath('guides')],()=>{this.page().guides=moveRulerGuide(this.page().guides||[],id,position);});this.renderer.render();return true}
+  removeGuide(id){this.history.pushScoped('刪除參考線',[this.pageStatePath('guides')],()=>{this.page().guides=removeRulerGuide(this.page().guides||[],id);});this.renderer.render();return true}
+  setGuideLocked(id,locked=true){this.history.pushScoped('鎖定參考線',[this.pageStatePath('guides')],()=>{this.page().guides=setRulerGuideLocked(this.page().guides||[],id,locked);});this.renderer.render();return true}
+  setGuideVisible(id,visible=true){this.history.pushScoped('顯示參考線',[this.pageStatePath('guides')],()=>{this.page().guides=setRulerGuideVisibility(this.page().guides||[],id,visible);});this.renderer.render();return true}
+  setSnapEnabledState(enabled){this.history.pushScoped('吸附設定',[this.pageStatePath('snap')],()=>{this.page().snap=setSnapEnabled(this.page().snap||{},enabled);});return this.page().snap}
+  setSnapCategoryState(category,enabled){this.history.pushScoped('吸附設定',[this.pageStatePath('snap')],()=>{this.page().snap=setSnapCategory(this.page().snap||{},category,enabled);});return this.page().snap}
   spaceMode(){return workspaceSpace(this.page())}
   workspace(){return ensureWorkspace(this.page())}
   fullscreenElement(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
@@ -595,6 +610,21 @@ class InkApp{
 
   async saveProject(){this.doc.title=$('#docTitle').value.trim()||this.doc.title;this.doc.modifiedAt=nowISO();const integrity=inspectDocument(this.doc);if(!integrity.passed){this.toast(`無法儲存：文件完整性錯誤 ${integrity.errors.length} 項`,3000);return false;}const json=JSON.stringify(this.doc,null,2);this.download(new Blob([json],{type:'application/json'}),`${fileSafe(this.doc.title)}.ink`);this.dirty=false;this.toast('INK 專案檔已建立');}
   async openProjectFile(file){$('#projectInput').value='';if(!file)return;try{const text=await file.text();const doc=sanitizeDocument(JSON.parse(text));const integrity=inspectDocument(doc);if(!integrity.passed)throw new Error(`文件完整性錯誤 ${integrity.errors.length} 項`);this.replaceDocument(doc);this.history.clear();this.dirty=false;await this.store.save('autosave',this.doc);this.toast('專案已開啟');}catch(e){console.error(e);this.toast(`無法開啟：${e.message}`,3000);}}
+  imageFormatProbe(input){return probeImageFormat(input)}
+  async decodeImageFormat(input,options={}){return decodeImageFormatCore(input,options)}
+  async importImageFormat(input,{name='Imported image',matrix=null,...decodeOptions}={}){
+    const payload=await decodeImageFormatCore(input,decodeOptions),layer=this.layer();
+    if(layer.locked)throw new Error('INK_ACTIVE_LAYER_LOCKED');
+    const rasterState=formatPayloadToDocumentImageState(payload),object={id:uid(),type:'image',name,matrix:Array.isArray(matrix)?[...matrix]:M.identity(),opacity:1,w:payload.width,h:payload.height,rasterState};
+    this.history.pushScoped('匯入格式影像',[this.layerObjectsPath(layer),['colorState']],()=>{layer.objects.push(object);this.doc.colorState=documentColorStateFromPayload(payload);this.selection=[{layerId:layer.id,objectId:object.id}];});
+    this.spatialDirty=true;this.refreshAll();return object;
+  }
+  exportImageFormat(format,refOrObject=null,options={}){
+    const object=refOrObject?.type==='image'?refOrObject:refOrObject?this.findObject(refOrObject)?.object:this.selectedObjects().find(item=>item.object.type==='image')?.object;
+    if(!object?.rasterState)throw new Error('INK_IMAGE_RASTER_STATE_REQUIRED');
+    const payload=documentImageStateToFormatPayload(object.rasterState,{format});
+    return encodeImageFormatCore(format,payload,options);
+  }
   async importImage(file){$('#imageInput').value='';if(!file)return;if(!file.type.startsWith('image/')){this.toast('請選擇圖片檔');return;}try{const src=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.readAsDataURL(file);});const img=await new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src;});const max=900,scale=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight)),w=img.naturalWidth*scale,h=img.naturalHeight*scale,center=this.renderer.screenToWorld(this.renderer.width/2,this.renderer.height/2,this.page().camera,{left:0,top:0});const layer=this.layer();if(layer.locked){this.toast('目前圖層已鎖定');return;}let object;this.history.pushScoped('匯入圖片',[this.layerObjectsPath(layer)],()=>{object={id:uid(),type:'image',name:file.name,matrix:M.translate(center.x-w/2,center.y-h/2),opacity:1,src,w,h};layer.objects.push(object);this.selection=[{layerId:layer.id,objectId:object.id}];});this.setTool('select');this.refreshAll();this.revealObjectInspector();}catch(e){console.error(e);this.toast('圖片載入失敗');}}
 
   openTextEditor(clientX,clientY,world,editing=null){const editor=$('#textEditor'),input=$('#textInput'),rect=this.el.wrap.getBoundingClientRect();editor.hidden=false;editor.style.left=`${clamp(clientX-rect.left,8,this.renderer.width-240)}px`;editor.style.top=`${clamp(clientY-rect.top,8,this.renderer.height-120)}px`;editor.dataset.worldX=world.x;editor.dataset.worldY=world.y;editor.dataset.editId=editing?.object.id||'';editor.dataset.editLayer=editing?.layer.id||'';input.value=editing?.object.text||'';setTimeout(()=>{input.focus();input.select();},0);}
@@ -772,9 +802,16 @@ class InkApp{
     this.toast(message);
     return false;
   }
-  snapMove(dx,dy,it){let sx=dx,sy=dy,guides=[];const scale=this.page().camera.scale,threshold=7/Math.max(.03,scale),b=it.box;if(this.gridSnap){const step=this.page().paper.gridSize||32;sx+=Math.round((b.x+sx)/step)*step-(b.x+sx);sy+=Math.round((b.y+sy)/step)*step-(b.y+sy);}if(!this.smartGuides)return{dx:sx,dy:sy,guides};const selectedIds=new Set(it.initial.map(x=>x.ref.objectId)),xTargets=[0],yTargets=[0],index=this.ensureSpatialIndex();for(const item of index.items){if(selectedIds.has(item.object.id)||item.ancestorIds.some(id=>selectedIds.has(id)))continue;const ob=item.bounds;xTargets.push(ob.x,ob.x+ob.w/2,ob.x+ob.w);yTargets.push(ob.y,ob.y+ob.h/2,ob.y+ob.h);}const xFeatures=[b.x+sx,b.x+b.w/2+sx,b.x+b.w+sx],yFeatures=[b.y+sy,b.y+b.h/2+sy,b.y+b.h+sy];let bestX={d:Infinity},bestY={d:Infinity};for(const f of xFeatures)for(const target of xTargets){const d=target-f;if(Math.abs(d)<Math.abs(bestX.d)&&Math.abs(d)<=threshold)bestX={d,target};}for(const f of yFeatures)for(const target of yTargets){const d=target-f;if(Math.abs(d)<Math.abs(bestY.d)&&Math.abs(d)<=threshold)bestY={d,target};}if(Number.isFinite(bestX.d)){sx+=bestX.d;guides.push({axis:'x',value:bestX.target});}if(Number.isFinite(bestY.d)){sy+=bestY.d;guides.push({axis:'y',value:bestY.target});}return{dx:sx,dy:sy,guides};}
-  updateSelectionTransform(d,e){const it=this.interaction;try{if(it.type==='move'){let dx=d.world.x-it.start.x,dy=d.world.y-it.start.y;if(!e.altKey){const snapped=this.snapMove(dx,dy,it);dx=snapped.dx;dy=snapped.dy;this.draft={guides:snapped.guides};}applyObjectMatrices(it.initial,ref=>this.findObject(ref),matrix=>M.multiply(M.translate(dx,dy),matrix));}
-    else if(it.type==='rotate'){let delta=Math.atan2(d.world.y-it.center.y,d.world.x-it.center.x)-it.startAngle;if(e.shiftKey||this.snapAngles)delta=Math.round(delta/rad(15))*rad(15);const t=M.around(it.center.x,it.center.y,M.rotate(delta));applyObjectMatrices(it.initial,ref=>this.findObject(ref),matrix=>M.multiply(t,matrix));}
+  snapMove(dx,dy,it,{bypass=false}={}){
+    const selectedIds=new Set(it.initial.map(entry=>entry.ref.objectId)),peers=[];
+    for(const item of this.ensureSpatialIndex().items){if(selectedIds.has(item.object.id)||item.ancestorIds.some(id=>selectedIds.has(id)))continue;peers.push(item.bounds);}
+    const result=resolveSnappedTranslation({movingBounds:it.box,delta:{x:dx,y:dy},peerBounds:peers,guides:this.page().guides||[],gridSize:this.page().paper.gridSize||32,snapSettings:this.page().snap||{},cameraScale:this.page().camera.scale,previousEvidence:it.snapEvidence||null,bypass});
+    it.snapEvidence=result.evidence;
+    const guides=Object.values(result.evidence||{}).filter(Boolean).flatMap(evidence=>evidence.line?[evidence.line]:[]);
+    return{dx:result.delta.x,dy:result.delta.y,guides,evidence:result.evidence};
+  }
+  updateSelectionTransform(d,e){const it=this.interaction;try{if(it.type==='move'){let dx=d.world.x-it.start.x,dy=d.world.y-it.start.y;const snapped=this.snapMove(dx,dy,it,{bypass:e.altKey});dx=snapped.dx;dy=snapped.dy;this.draft={guides:snapped.guides};applyObjectMatrices(it.initial,ref=>this.findObject(ref),matrix=>M.multiply(M.translate(dx,dy),matrix));}
+    else if(it.type==='rotate'){let delta=Math.atan2(d.world.y-it.center.y,d.world.x-it.center.x)-it.startAngle;delta=resolveSnappedRotation(delta,{snapSettings:this.page().snap||{},bypass:e.altKey,force:e.shiftKey}).angle;const t=M.around(it.center.x,it.center.y,M.rotate(delta));applyObjectMatrices(it.initial,ref=>this.findObject(ref),matrix=>M.multiply(t,matrix));}
     else{const b=it.box,h=it.handle;let anchor={x:b.x+b.w/2,y:b.y+b.h/2};if(h.includes('w'))anchor.x=b.x+b.w;else if(h.includes('e'))anchor.x=b.x;else anchor.x=b.x+b.w/2;if(h.includes('n'))anchor.y=b.y+b.h;else if(h.includes('s'))anchor.y=b.y;else anchor.y=b.y+b.h/2;const startDx=it.start.x-anchor.x,startDy=it.start.y-anchor.y;let sx=h==='n'||h==='s'?1:(d.world.x-anchor.x)/(Math.abs(startDx)<1e-4?1:startDx),sy=h==='e'||h==='w'?1:(d.world.y-anchor.y)/(Math.abs(startDy)<1e-4?1:startDy);sx=clamp(sx,-100,100);sy=clamp(sy,-100,100);if(e.shiftKey||this.aspectLock){const uni=Math.abs(sx)>Math.abs(sy)?sx:sy;sx=h==='n'||h==='s'?1:uni;sy=h==='e'||h==='w'?1:uni;}sx=nonSingularScaleComponent(sx);sy=nonSingularScaleComponent(sy);const t=M.around(anchor.x,anchor.y,M.scale(sx,sy));applyObjectMatrices(it.initial,ref=>this.findObject(ref),matrix=>M.multiply(t,matrix));}
     this.refreshSelectionUI();this.renderer.render();}catch(error){if(error?.code==='NON_INVERTIBLE_PARENT'||error?.code==='NON_FINITE_MATRIX'){this.rejectSingularInteraction(it,'選取物件的父層轉換不可逆，變形已取消');return;}throw error;}}
 

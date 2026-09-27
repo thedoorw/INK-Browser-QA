@@ -105,3 +105,210 @@ export function measureBounds(bounds) {
   const value=normalizeBounds(bounds);
   return { ...clone(value), width:value.w, height:value.h, center:{x:value.x+value.w/2,y:value.y+value.h/2} };
 }
+
+
+export const SNAP_CATEGORIES = Object.freeze(['guides','edges','centers','grid','angle','equalDistance']);
+
+export function normalizeSnapSettings(raw = {}) {
+  const source = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+  const categories = source.categories && typeof source.categories === 'object' ? source.categories : {};
+  const tolerance = Number.isFinite(+source.tolerance) ? Math.max(0.1, Math.min(64, +source.tolerance)) : 7;
+  const hysteresis = Number.isFinite(+source.hysteresis) ? Math.max(0, Math.min(32, +source.hysteresis)) : 2;
+  const angleStep = Number.isFinite(+source.angleStep) ? Math.max(0.1, Math.min(180, +source.angleStep)) : 15;
+  return {
+    enabled: source.enabled !== false,
+    categories: {
+      guides: categories.guides !== false,
+      edges: categories.edges !== false,
+      centers: categories.centers !== false,
+      grid: categories.grid === true,
+      angle: categories.angle !== false,
+      equalDistance: categories.equalDistance !== false
+    },
+    tolerance,
+    hysteresis,
+    angleStep
+  };
+}
+
+export function setSnapEnabled(settings, enabled) {
+  const next = normalizeSnapSettings(settings);
+  next.enabled = Boolean(enabled);
+  return next;
+}
+
+export function setSnapCategory(settings, category, enabled) {
+  if (!SNAP_CATEGORIES.includes(category)) fail('SNAP_CATEGORY_INVALID', { category });
+  const next = normalizeSnapSettings(settings);
+  next.categories[category] = Boolean(enabled);
+  return next;
+}
+
+export function setRulerGuideLocked(guides = [], id, locked = true) {
+  if (!Array.isArray(guides)) fail('GUIDE_STATE_INVALID');
+  let found = false;
+  const next = guides.map(item => {
+    const guide = normalizeRulerGuide(item);
+    if (guide.id !== id) return guide;
+    found = true;
+    return { ...guide, locked: Boolean(locked) };
+  });
+  if (!found) fail('GUIDE_NOT_FOUND', { id });
+  return next;
+}
+
+export function setRulerGuideVisibility(guides = [], id, visible = true) {
+  if (!Array.isArray(guides)) fail('GUIDE_STATE_INVALID');
+  let found = false;
+  const next = guides.map(item => {
+    const guide = normalizeRulerGuide(item);
+    if (guide.id !== id) return guide;
+    found = true;
+    return { ...guide, visible: Boolean(visible) };
+  });
+  if (!found) fail('GUIDE_NOT_FOUND', { id });
+  return next;
+}
+
+function snapFeatures(bounds, axis) {
+  const values = axisValues(bounds, axis);
+  return [
+    { role: 'start', value: values.start },
+    { role: 'center', value: values.start + values.size / 2 },
+    { role: 'end', value: values.end }
+  ];
+}
+
+function snapCandidate(delta, targetValue, evidence) {
+  return { delta, targetValue, evidence };
+}
+
+function bestSnapCandidate(candidates, tolerance, previousEvidence = null, hysteresis = 0) {
+  const valid = candidates.filter(candidate => Number.isFinite(candidate?.delta) && Math.abs(candidate.delta) <= tolerance);
+  const previous = previousEvidence?.candidateKey;
+  if (previous) {
+    const held = candidates
+      .filter(candidate => candidate?.evidence?.candidateKey === previous && Math.abs(candidate.delta) <= tolerance + hysteresis)
+      .sort((a,b)=>Math.abs(a.delta)-Math.abs(b.delta))[0];
+    if (held) return held;
+  }
+  return valid.sort((a,b)=>
+    Math.abs(a.delta)-Math.abs(b.delta) ||
+    String(a.evidence?.candidateKey || '').localeCompare(String(b.evidence?.candidateKey || ''))
+  )[0] || null;
+}
+
+function axisSnapCandidates(moving, peers, guides, axis, settings, gridSize) {
+  const candidates = [];
+  const features = snapFeatures(moving, axis);
+  const addTarget = (targetValue, type, targetId = null, targetRole = null) => {
+    for (const feature of features) {
+      const delta = targetValue - feature.value;
+      candidates.push(snapCandidate(delta, targetValue, {
+        type,
+        axis,
+        sourceRole: feature.role,
+        targetRole,
+        targetId,
+        candidateKey: [type, axis, feature.role, targetId ?? targetValue, targetRole ?? ''].join(':')
+      }));
+    }
+  };
+  if (settings.categories.guides) {
+    for (const raw of guides || []) {
+      const guide = normalizeRulerGuide(raw);
+      if (!guide.visible) continue;
+      if ((axis === 'x' && guide.orientation !== 'vertical') || (axis === 'y' && guide.orientation !== 'horizontal')) continue;
+      addTarget(guide.position, 'guide', guide.id, 'guide');
+    }
+  }
+  if (settings.categories.edges || settings.categories.centers) {
+    addTarget(0, 'origin', 'document-origin', axis);
+    peers.forEach((bounds, index) => {
+      const values = axisValues(bounds, axis);
+      if (settings.categories.edges) {
+        addTarget(values.start, 'edge', index, 'start');
+        addTarget(values.end, 'edge', index, 'end');
+      }
+      if (settings.categories.centers) addTarget(values.start + values.size / 2, 'center', index, 'center');
+    });
+  }
+  if (settings.categories.grid && Number.isFinite(+gridSize) && +gridSize > 0) {
+    const step = +gridSize;
+    for (const feature of features) {
+      const targetValue = Math.round(feature.value / step) * step;
+      candidates.push(snapCandidate(targetValue - feature.value, targetValue, {
+        type: 'grid',
+        axis,
+        sourceRole: feature.role,
+        targetRole: 'grid',
+        targetId: String(Math.round(targetValue / step)),
+        candidateKey: ['grid',axis,feature.role,Math.round(targetValue / step)].join(':')
+      }));
+    }
+  }
+  return candidates;
+}
+
+export function resolveManipulationSnap(movingBounds, peerBounds = [], {
+  delta = { x: 0, y: 0 },
+  guides = [],
+  gridSize = null,
+  settings = {},
+  tolerance = null,
+  hysteresis = null,
+  previousEvidence = null,
+  bypass = false
+} = {}) {
+  const moving = normalizeBounds(movingBounds, 'moving');
+  const peers = Array.isArray(peerBounds) ? peerBounds.map((bounds,index)=>normalizeBounds(bounds, `peer:${index}`)) : [];
+  const normalized = normalizeSnapSettings(settings);
+  const threshold = tolerance == null ? normalized.tolerance : Math.max(0, +tolerance || 0);
+  const hold = hysteresis == null ? normalized.hysteresis : Math.max(0, +hysteresis || 0);
+  const proposed = { x: moving.x + (+delta.x || 0), y: moving.y + (+delta.y || 0), w: moving.w, h: moving.h };
+  if (bypass || !normalized.enabled) {
+    return { delta: { x: +delta.x || 0, y: +delta.y || 0 }, snapped: { x: false, y: false }, evidence: { x: null, y: null }, bypassed: Boolean(bypass) };
+  }
+  const xCandidates = axisSnapCandidates(proposed, peers, guides, 'x', normalized, gridSize);
+  const yCandidates = axisSnapCandidates(proposed, peers, guides, 'y', normalized, gridSize);
+  if (normalized.categories.equalDistance && peers.length >= 2) {
+    const equal = equalDistanceSmartSnap(proposed, peers, { tolerance: threshold });
+    if (equal.snapped.x) xCandidates.push(snapCandidate(equal.delta.x, proposed.x + equal.delta.x, {
+      ...equal.evidence.x, type: 'equal-distance', axis: 'x',
+      candidateKey: ['equal-distance','x',equal.evidence.x?.type,equal.evidence.x?.leftPeer,equal.evidence.x?.rightPeer].join(':')
+    }));
+    if (equal.snapped.y) yCandidates.push(snapCandidate(equal.delta.y, proposed.y + equal.delta.y, {
+      ...equal.evidence.y, type: 'equal-distance', axis: 'y',
+      candidateKey: ['equal-distance','y',equal.evidence.y?.type,equal.evidence.y?.leftPeer,equal.evidence.y?.rightPeer].join(':')
+    }));
+  }
+  const x = bestSnapCandidate(xCandidates, threshold, previousEvidence?.x, hold);
+  const y = bestSnapCandidate(yCandidates, threshold, previousEvidence?.y, hold);
+  const evidence = {
+    x: x ? { ...x.evidence, correction: x.delta, targetValue: x.targetValue, line: { axis: 'x', value: x.targetValue } } : null,
+    y: y ? { ...y.evidence, correction: y.delta, targetValue: y.targetValue, line: { axis: 'y', value: y.targetValue } } : null
+  };
+  return {
+    delta: { x: (+delta.x || 0) + (x?.delta || 0), y: (+delta.y || 0) + (y?.delta || 0) },
+    snapped: { x: Boolean(x), y: Boolean(y) },
+    evidence,
+    bypassed: false
+  };
+}
+
+export function resolveAngleSnap(angleRadians, { settings = {}, bypass = false, force = false } = {}) {
+  const normalized = normalizeSnapSettings(settings);
+  const angle = Number(angleRadians);
+  if (!Number.isFinite(angle)) fail('SNAP_ANGLE_INVALID');
+  if (bypass || (!force && (!normalized.enabled || !normalized.categories.angle))) {
+    return { angle, snapped: false, evidence: null, bypassed: Boolean(bypass) };
+  }
+  const step = normalized.angleStep * Math.PI / 180;
+  const snapped = Math.round(angle / step) * step;
+  return {
+    angle: snapped,
+    snapped: Math.abs(snapped - angle) > 1e-12,
+    evidence: { type: 'angle', stepDegrees: normalized.angleStep, sourceRadians: angle, snappedRadians: snapped },
+    bypassed: false
+  };
+}
