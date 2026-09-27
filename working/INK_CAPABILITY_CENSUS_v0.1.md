@@ -1374,6 +1374,62 @@ Current source directly confirms:
 - creation/layout workspace switching;
 - content/artboard/layout-viewport fit/reset routes.
 
+## 3B. Installed source capabilities not safely represented by the 61-row register
+
+The 61 Section-4 families remain the restored creative/product backbone, but a full current-source census shows installed modules that are not safely represented as standalone rows in that register.
+
+Therefore:
+
+```text
+61 = preserved Section-4 family register
+61 != proven final full-product family count
+```
+
+The following must be dispositioned before the refreshed baseline is published.
+
+| Candidate area | Current source evidence | Current classification | Required census action |
+|---|---|---|---|
+| Asset manifest / asset lifecycle | `assets/asset-manifest.js`, `assets/asset-migration.js` | installed supporting/product capability | decide whether to map under Document/Storage or add explicit Asset family |
+| PWA / update management | `pwa/update-manager.js` | installed product-operations capability; user-visible update diagnostics exist | add explicit family or explicit Product Operations section; do not omit |
+| Runtime health | `release/runtime-health.js` | installed product-operations capability | add explicit diagnostics/health capability classification |
+| External validation / diagnostic bundle | `release/external-diagnostics.js` | installed user-accessible Specialist/Help capability | add explicit diagnostics capability; retain hardware/GPU evidence boundary |
+| Spatial index / Quadtree | `spatial/page-spatial-index.js`, `spatial/quadtree.js` | installed supporting editor infrastructure | preserve as infrastructure contract; do not inflate user-facing feature count |
+| Composition constraint evaluation | `composition/composition-constraints.js` | installed creative/QA capability | determine whether it belongs under Compose/Recipe or merits its own capability row |
+| Output handle registry / preview lifecycle | `agent/output-handle-registry.js`, `agent/visual-feedback.js`, `agent/export-asset.js` | installed output/CHAT infrastructure with public behavior | map explicitly into Output + CHAT exposure; no duplicate count |
+| Public Creative API / capability descriptor system | `agent/public-creative-api.js`, `agent/capability-registry.js` | installed CHAT/public control capability | map explicitly into CHAT control; preserve descriptor/discovery behavior |
+| AI Command layer | `ai/ai-core.js`, `ai/install-ai.js` | installed USER × CHAT control/safety capability | expand C57 so command validation, plan compile, approval, sandbox, executor, preview and audit are not omitted |
+| Creative Intelligence context | `ai/creative-intelligence-context.js`, Document Bridge/grounded decision modules | installed read/grounding capability | map explicitly across CHAT control + Semantic grounding without duplicate count |
+
+Current source-confirmed AI Command sub-capabilities include:
+- capability manifest;
+- document state reader;
+- semantic target system;
+- command creation/validation;
+- plan generation/compilation;
+- approval policy;
+- security sandbox;
+- canonical executor;
+- preview engine;
+- audit log;
+- CHAT integration adapter;
+- local JSON command client;
+- deterministic test client;
+- manual command console;
+- permission/maturity model.
+
+Current source-confirmed product-operations sub-capabilities include:
+- Service Worker update manager;
+- runtime health monitoring;
+- WebGL capability probe;
+- platform capability collection;
+- external diagnostic bundle;
+- external validation recording;
+- asset manifest validation;
+- asset manager;
+- asset-manifest migration.
+
+This section is a hard anti-omission gate. The refreshed baseline must either map every item into an existing canonical family or add an explicit additional family/section. Nothing may disappear merely because the 61-row P0 restore ledger did not use a separate row for it.
+
 ## 4. CHAT exposure index — separate from product inventory
 
 Current accepted metrics:
@@ -1389,7 +1445,7 @@ These remain valid CHAT-surface counts only. They are not added to the product t
 
 The following must be completed before `ATOMIC_CAPABILITY_TOTAL` is frozen:
 
-1. normalize the 696 raw source-corroborated candidate entries into true product atomics:
+1. normalize the 696 raw Section-4 source-corroborated candidate entries into true product atomics, then add/map the Section-3B current-source capabilities:
    - merge aliases;
    - separate user/product capability from supporting implementation contract;
    - avoid double-counting the same Core ability in Human UI, CHAT and Recipe surfaces;
