@@ -170,3 +170,35 @@ LAYERS_HISTORY_NAVIGATOR_DETAIL_MEASURED = YES
 REFERENCE_MISSING_P0 = 0
 PRODUCT_MUTATION = 0
 ```
+
+
+## F. Capture progress — 2026-09-27
+
+Closed by USER-supplied matched 1280×1024 captures:
+
+- [x] active document / rulers OFF
+- [x] active document / rulers ON
+- [x] application menu open
+- [x] panel options menu open
+- [x] History populated
+- [x] Navigator visible
+- [x] Layers selected-state reference available in the active-document set
+
+Measured authority:
+`working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`
+
+Still open only when needed for final pixel-fidelity closure:
+- [ ] status information popup
+- [ ] tool flyout open
+- [ ] Layers drag reorder
+- [ ] Navigator proxy drag
+- [ ] guide drag from horizontal ruler
+- [ ] guide drag from vertical ruler
+- [ ] ruler-origin drag
+- [ ] snap/equal-spacing feedback
+- [ ] tooltip visible
+- [ ] disabled control
+- [ ] keyboard-focused control
+- [ ] scrollbar hover/drag
+- [ ] panel resize
+- [ ] empty workspace after last document closes

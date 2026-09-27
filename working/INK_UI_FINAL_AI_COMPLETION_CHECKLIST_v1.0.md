@@ -695,6 +695,28 @@ Authority:
 - [ ] AK13 `working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md` P0 set is closed before pixel-fidelity closure.
 - [ ] AK14 every internet/official screenshot with unknown scaling is treated as visual evidence only unless its environment is known.
 
+# AL. Active-document Photoshop measurement audit
+
+Authority:
+`working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`
+
+- [ ] AL01 active-document tab band matches the 28 px reference.
+- [ ] AL02 tab/workspace divider matches 1 px.
+- [ ] AL03 Rulers OFF document/workspace content origin matches y=90 reference geometry.
+- [ ] AL04 horizontal ruler matches 17 px reference thickness.
+- [ ] AL05 vertical ruler matches 17 px reference thickness.
+- [ ] AL06 ruler-origin corner matches 17×17 px reference.
+- [ ] AL07 active-document status content band matches 16 px reference.
+- [ ] AL08 active-document status bottom boundary matches 1 px reference.
+- [ ] AL09 status surface remains document-context-only and hidden in empty workspace.
+- [ ] AL10 Navigator header matches 28 px reference density.
+- [ ] AL11 Navigator body/footer values are treated as elastic reference states, not hard global locks.
+- [ ] AL12 History repeated row pitch is visually comparable to the ≈23 px reference.
+- [ ] AL13 Panel Options popup uses 1 px border/separator grammar with compact 2 px separator inset where the adopted platform grammar matches.
+- [ ] AL14 Application menu popup uses measured border/separator grammar without hard-locking content-dependent width/height.
+- [ ] AL15 menu visible text pitch is not mistaken for an exact pointer hitbox.
+- [ ] AL16 active-document reference hashes/roles remain recorded.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.
