@@ -1,114 +1,128 @@
 # INK P1-H MR Review v1.0
 
-STATUS: `MR_REVISE / P1_H_NOT_MODULE_READY / BOUNDED_CORRECTION_REQUIRED`
+STATUS: `MR_REVISE / QA_ONLY_BOUNDED_CORRECTION_REQUIRED / CORE_SEMANTICS_PASS`
 
 TASK: `INK-P1-H-FORMAT-INTEROPERABILITY-001`
 
 REVIEWED_BRANCH: `work/ink-p1-h-format-interoperability-001`
 
-REVIEWED_HEAD: `5c5481c8a93e9a1edea486237677f253c348b4a9`
+FIRST_REVIEWED_HEAD: `5c5481c8a93e9a1edea486237677f253c348b4a9`
 
-IMPLEMENTATION_COMMIT: `b47ab6c67665355a0ec41b0bda7332fffc7f0d45`
+CORRECTION_REVIEWED_HEAD: `61193d695c17bb7c59aee3bf3f736662244e7510`
+
+CORRECTION_COMMIT: `5ed7f3a8506b25156be12e8a91df0a4bbf5e1546`
 
 DATE: 2026-09-27
 
-## MR verdict
+## Re-review verdict
 
 ```text
 P1_H_SCOPE = PASS
 P1_H_AUTHORITY_ISOLATION = PASS
 P1_H_DEPENDENCY_BOUNDARY = PASS
-P1_H_FOCUSED_QA_REPORTED = PASS 48/48
-P1_H_CHANNEL_SEMANTICS = REVISE
+P1_H_EXR_ADDITIONAL_CHANNEL_SEMANTICS = PASS
+P1_H_TIFF_EXTRASAMPLES_SEMANTICS = PASS
+P1_H_FOCUSED_QA_REPORTED = PASS 54/54
+P1_H_REQUIRED_MULTIPLE_EXTRA_FIXTURE = MISSING
 P1_H_MODULE_READY = NO
 PROMOTION = BLOCKED
 RUNTIME = NOT RUN
 ```
 
-## Verified clean scope
+The two original Core blockers are corrected.
 
-Baseline `136ca9c961ff0f2e543e196e74a3ae0983faaf78` → handoff contains only:
-- P1-H format Core additions;
-- P1-H fixtures / focused QA;
-- P1-H lane progress.
+## Correction scope verification
 
-No P1-G / P1-F / image-core / Document / Renderer / History / CHAT / Recipe / FORMAT_VERSION / UI mutation was found.
+Previous reviewed HEAD `5c5481c8a93e9a1edea486237677f253c348b4a9` → correction handoff changes only:
+
+- `product/source/src/image/formats/normalized-payload.js`
+- `product/source/src/image/formats/exr.js`
+- `product/source/src/image/formats/tiff.js`
+- `qa/fixtures/p1-h/fixtures.mjs`
+- `qa/ink-p1-h-format-interoperability.test.mjs`
+- `working/INK_P1_H_DEV_PROGRESS.md`
+
+No P1-G, P1-F, Document, Renderer, History, UI, FORMAT_VERSION, Integration or Runtime mutation was found.
 
 Frozen P1-G authority blobs still match current main:
 - color-management-core = `5e56e219e964912e85c68b644004f1b5c14dcbef`
 - channel-core = `c3d5540f97af3c9fec94e6ac2a3e9b9053aa8bc1`
 
-## Blocking finding 1 — EXR additional channels are misclassified
+## Original blocker 1 — EXR additional channels
 
-Current EXR decode collects every channel not named R/G/B/A into `extra`, then passes:
+RESOLVED.
+
+Current EXR decode:
+- keeps true `A` as alpha;
+- keeps non-R/G/B/A channels in a distinct `additionalChannels` payload;
+- preserves descriptors/metadata;
+- does not inject arbitrary channels into P1-G alpha/spot semantics;
+- explicitly rejects encode when additional channels cannot be faithfully emitted.
+
+The new `Z` fixture verifies it is not alpha/spot and retains sample data.
+
+## Original blocker 2 — TIFF ExtraSamples
+
+RESOLVED at Core semantics level.
+
+Current TIFF decode:
+- `ExtraSamples=0` → unspecified additional channel, not alpha;
+- `ExtraSamples=1` → associated alpha, normalized to INK straight-alpha raster semantics;
+- `ExtraSamples=2` → unassociated alpha;
+- unsupported ExtraSamples values → explicit rejection;
+- more than one alpha semantic → explicit rejection;
+- unsupported additional-channel encode → explicit rejection rather than silent data loss.
+
+Focused QA includes distinct tests for 0 / 1 / 2 semantics.
+
+## Remaining QA-only blocker
+
+The prior MR correction authorization explicitly required:
 
 ```text
-alphaChannels: extra
+TIFF multiple extras where bounded
 ```
 
-The normalized payload converts every `alphaChannels` entry through P1-G `addAlphaChannel()`.
+The corrected implementation supports a bounded multiple-extra case, but the checked-in QA still contains no deterministic fixture where multiple extra samples coexist.
 
-Therefore an EXR channel such as `Z` / custom data channel is semantically changed into an alpha channel.
+Required final correction:
 
-This violates the P1-H contract requiring alpha/additional channel mapping through P1-G semantics without semantic fabrication.
+1. add one deterministic TIFF fixture with multiple extras in the same image, preferably:
+   - one `ExtraSamples=0` unspecified data channel; and
+   - one `ExtraSamples=2` unassociated alpha;
+2. assert:
+   - unspecified extra remains in `additionalChannels`;
+   - alpha remains the sole raster alpha;
+   - sample ordering/data are not cross-wired;
+   - metadata records both ExtraSamples values in order;
+3. rerun the full P1-H QA with fail=0 / skip=0;
+4. update lane progress;
+5. STOP for MR re-review.
 
-## Blocking finding 2 — TIFF ExtraSamples semantics are not interpreted
+This is a QA-only bounded correction unless the new fixture exposes a Core defect.
 
-Current TIFF path effectively does:
+## Exact corrected blobs reviewed
 
 ```text
-extras = ExtraSamples tag values
-alphaIndex = extras.length ? processChannelCount : null
+normalized-payload.js = 52b11f397c362b122a8cd800ab4487c5bb0f6d7f
+exr.js               = 0a63bdfa5c3c00067221cd8ac09191108fb71bd0
+tiff.js              = 871c3afb929d7cad6437c4dcd22ec2cd9818ac31
+fixtures.mjs          = c37ea00dcc216f9b573b0ddfaf1b0f94d93ffae9
+focused QA            = 226ab9caa910bcd07583da58ef7f6ff679163411
 ```
 
-and treats the first extra sample as alpha regardless of ExtraSamples value.
+DEV reported:
+```text
+tests = 54
+pass = 54
+fail = 0
+skip = 0
+```
 
-TIFF ExtraSamples distinguishes alpha from unspecified/non-alpha extra samples. Multiple extras are also possible.
-
-Current behavior can therefore misclassify a non-alpha extra sample as alpha and ignore remaining extras.
-
-## QA gap
-
-The checked-in focused QA has:
-- 48 test declarations;
-- 0 skip tokens;
-- EXR alpha fixture coverage;
-- no explicit EXR additional/custom channel fixture;
-- no TIFF non-alpha/multiple ExtraSamples semantics fixture.
-
-The workpack explicitly required an EXR alpha/additional-channel fixture and P1-G channel-semantic convergence.
-
-## Bounded correction authorization
-
-DEV may continue on the same P1-H branch only for:
-
-1. correct EXR non-R/G/B/A channel handling so arbitrary additional channels are not labeled alpha;
-2. correct TIFF ExtraSamples interpretation so only actual alpha semantics map to alpha;
-3. preserve unsupported/non-native additional-channel semantics explicitly when P1-G has no exact RGB auxiliary representation;
-4. add deterministic fixtures for:
-   - EXR custom/additional channel (for example Z);
-   - TIFF non-alpha ExtraSamples;
-   - TIFF multiple extras where bounded;
-5. rerun full P1-H focused QA with fail=0 / skip=0;
-6. update `working/INK_P1_H_DEV_PROGRESS.md`;
-7. STOP for MR re-review.
-
-Allowed source remains inside the original P1-H boundary.
-
-Prohibited:
-- P1-G Core mutation;
-- P1-F mutation;
-- image-core / Document / Renderer / History / UI;
-- FORMAT_VERSION;
-- Runtime;
-- Integration.
-
-## Environment note
-
-MR attempted an independent exact-branch clone/run, but the isolated review container could not resolve github.com. MR therefore does not claim a second Node execution. Source/QA review was performed against the exact GitHub branch blobs and handoff HEAD.
+MR reviewed the exact GitHub source and QA blobs. MR does not claim an independent second Node run.
 
 ## Current-main divergence
 
-Current main has advanced beyond the P1-H baseline; the P1-H branch is behind current main.
+Current main has advanced beyond the P1-H branch baseline.
 
-Promotion must therefore use an MR-controlled reconcile/merge after P1-H passes re-review. Do not force-update or rebase the DEV branch merely to match main.
+Promotion remains an MR-controlled reconcile/merge after final PASS. No DEV rebase/force-push is authorized.
