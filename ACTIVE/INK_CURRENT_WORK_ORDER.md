@@ -30,6 +30,8 @@ P1_G_MR_REVIEW = working/INK_P1_G_MR_REVIEW_v1.0.md
 P1_H_WORKPACK = working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md
 P1_INTEGRATION_WORKPACK = working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md
 P1_INTEGRATION_BRANCH = work/ink-p1-integration-001
+P1_INTEGRATION_ACTIVATION_MAIN = 87f57980a071ff8f009f3aa354951d81025fecf0
+P1_INTEGRATION_PROGRESS = working/INK_P1_INTEGRATION_DEV_PROGRESS.md
 P1_RUNTIME_WORKPACK = working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_F_PROMOTION_MERGE = 5bb74c1c0ad655dac8ae00b5474da52b58db18db
@@ -183,6 +185,9 @@ INK_MANUAL_PROSE = NON_BLOCKING
 ## Next action
 
 DEV-Integration:
+- activation main = `87f57980a071ff8f009f3aa354951d81025fecf0`;
+- branch = `work/ink-p1-integration-001`;
+- lane progress initialized at branch commit `f9e4a012a4dfd1f805981d0b4f94b1238bacd50f`;
 - use only `work/ink-p1-integration-001`;
 - follow `working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`;
 - perform the technical wiring for accepted P1 A-H, including the mandatory ruler/guide/snapping technical integration;
