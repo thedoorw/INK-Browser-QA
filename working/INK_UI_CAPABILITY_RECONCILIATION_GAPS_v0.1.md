@@ -138,6 +138,57 @@ Final home:
 
 No ordinary creative panel should be added.
 
+## 2F. Mandatory ruler / guide / snapping workstation surface
+
+PRIORITY: `HIGH / REQUIRED / NOT OPTIONAL`
+
+P1-C has already established the UI-neutral Core for:
+- persistent ruler guides;
+- equal-distance smart snapping;
+- ruler / measurement.
+
+Existing C08 also preserves:
+- smart edge snapping;
+- smart center snapping;
+- grid snapping;
+- angle snapping;
+- temporary smart-snap bypass.
+
+These Core capabilities are **not** considered final UI-complete until the Photoshop-aligned workstation exposes and verifies the following twelve behaviors:
+
+1. top ruler + left ruler;
+2. drag horizontal / vertical guides directly from the rulers;
+3. move / delete / lock / show-hide guides;
+4. object edge / center snapping to guides;
+5. object-to-object edge / center snapping;
+6. grid snapping;
+7. angle snapping;
+8. equal-distance / equal-spacing snapping with visible feedback;
+9. movement distance / position readout during manipulation;
+10. global Snap toggle + Snap To category controls;
+11. temporary snap bypass during manipulation;
+12. one coherent snap tolerance / hysteresis policy that avoids jitter and competing snap oscillation.
+
+Required responsibility chain:
+
+```text
+MR = requirement / authority lock
+P1 Integration DEV = connect Core to Document / History / save-load / manipulation where required
+UR = Photoshop-aligned ruler / guide / snap interaction and visual specification
+UI DEV = implement the accepted workstation UI
+UR = interaction + visual acceptance against all 12 items
+```
+
+Acceptance rules:
+- existing P1-C helpers do not by themselves satisfy this UI requirement;
+- no second guide/snap/layout authority may be introduced;
+- guide persistence must converge on accepted Document/save-load authority;
+- guide changes that mutate document state must converge on existing History;
+- snapping must converge on existing transform/direct-manipulation authority;
+- equal-distance feedback must be visible while it is actionable, not only available as hidden metadata;
+- this requirement is not Specialist-only and may not be omitted as a minor convenience feature;
+- UI closure is prohibited if any of the twelve behaviors is missing without an explicit MR-authorized exception.
+
 ## 3. Current pre-P1 UI gap state
 
 ```text
