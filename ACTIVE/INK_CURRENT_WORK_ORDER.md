@@ -7,11 +7,11 @@ DATE: 2026-09-27
 ## Current program
 
 ```text
-PRIMARY_TASK = INK-P1-D-LAYER-EFFECTS-COMPLETION-001
+PRIMARY_TASK = INK-P1-E-ADVANCED-SELECTION-001
 PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
-BASELINE_MAIN = b214c177972be2e6175459005720bb72e697cec2
+BASELINE_MAIN = 206f027785c04e56e91293e439fef8fb0cdd8521
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
 CAPABILITY_FAMILIES = 64
 PRODUCT_ATOMIC_CAPABILITIES = 496
@@ -22,8 +22,9 @@ P1_P2_DISPOSITION = working/INK_P1_P2_GAP_DISPOSITION_v1.0.md
 P1_A = MODULE_READY / PROMOTED
 P1_B = MODULE_READY / PROMOTED
 P1_C = MODULE_READY / PROMOTED
-P1_D_WORKPACK = working/INK_P1_D_LAYER_EFFECTS_COMPLETION_DEV_WORKPACK_v1.0.md
-MANDATORY_DEV_BRANCH = work/ink-p1-d-layer-effects-completion-001
+P1_D = MODULE_READY / PROMOTED
+P1_E_WORKPACK = working/INK_P1_E_ADVANCED_SELECTION_DEV_WORKPACK_v1.0.md
+MANDATORY_DEV_BRANCH = work/ink-p1-e-advanced-selection-001
 
 FORMAT_VERSION = 4
 CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
@@ -58,7 +59,7 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current DEV authorization — P1-D
+## Current DEV authorization — P1-E
 
 P1-A:
 `MODULE_READY / MR_PASS / PROMOTED`
@@ -69,27 +70,32 @@ P1-B:
 P1-C:
 `MODULE_READY / MR_PASS / PROMOTED`
 
-P1-C promoted main:
-`b214c177972be2e6175459005720bb72e697cec2`
+P1-D:
+`MODULE_READY / MR_PASS / PROMOTED`
 
-DEV is now authorized only for P1-D:
+P1-D reviewed/promoted product main:
+`206f027785c04e56e91293e439fef8fb0cdd8521`
 
-1. Drop Shadow
-2. Inner Shadow
-3. Outer Glow
-4. Stroke
+MR review:
+`working/INK_P1_D_MR_REVIEW_v1.0.md`
 
-Existing Color Overlay must remain operational and regression-tested.
+DEV is now authorized only for P1-E:
+
+1. Magnetic Lasso Core
+2. Object Selection Core
 
 Mandatory branch:
-`work/ink-p1-d-layer-effects-completion-001`
+`work/ink-p1-e-advanced-selection-001`
 
 Authoritative workpack:
-`working/INK_P1_D_LAYER_EFFECTS_COMPLETION_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_E_ADVANCED_SELECTION_DEV_WORKPACK_v1.0.md`
 
-P1-D completes the existing `image-core.js → applyLayerEffects()` renderer authority.
+P1-E extends the P1-A raster Selection authority:
+`product/source/src/image/raster-selection-tools.js`
 
-No P1-E through P1-H implementation is authorized by this Work Order.
+Object Selection here means bounded classical raster-region segmentation. It does not replace INK document-object selection and does not authorize ML/network semantic recognition.
+
+No P1-F through P1-H implementation is authorized by this Work Order.
 
 ## P1/P2 execution sequence
 
@@ -158,12 +164,13 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_D_DEV_AUTHORIZED
+CURRENT_GATE = P1_E_DEV_AUTHORIZED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-P1_D_PRODUCT_IMPLEMENTATION = AUTHORIZED
-P1_E_F_G_H = NOT YET AUTHORIZED
+P1_D_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
+P1_E_PRODUCT_IMPLEMENTATION = AUTHORIZED
+P1_F_G_H = NOT YET AUTHORIZED
 INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
@@ -172,17 +179,17 @@ INK_MANUAL_PROSE = NON_BLOCKING
 ## Next action
 
 DEV:
-- create/use the mandatory P1-D branch;
-- implement only the bounded P1-D workpack;
+- create/use the mandatory P1-E branch;
+- implement only the bounded P1-E workpack;
 - run focused QA;
 - update branch-local `ACTIVE/INK_DEV_PROGRESS.md`;
 - hand off exact HEAD;
 - STOP.
 
 MR:
-- P1-C MODULE_READY and promotion are closed;
-- wait for exact P1-D handoff;
-- review P1-D before authorizing P1-E.
+- P1-D MODULE_READY review and promotion are closed;
+- wait for exact P1-E handoff;
+- review P1-E before authorizing P1-F.
 
 UR:
 - remain on HOLD.
