@@ -281,3 +281,15 @@ Predeclared workpacks:
 Activation remains sequential:
 - Integration only after P1-F + P1-H are MR_PASS/promoted;
 - Runtime only after Integration is MR_PASS/promoted.
+
+
+## P1-H promotion closure
+
+```text
+P1_H_FINAL_REVIEWED_HEAD = 89cb4d3569bd2ac0833627a415c2eeb6d58a0c00
+P1_H_MR = PASS
+P1_H_PROMOTION_MERGE = 4eb9a8f18781840219217a7cc767ed73aebe3989
+P1_H_RUNTIME = NOT RUN
+```
+
+P1-H is closed at MODULE_READY / MR_PASS / PROMOTED. P1 Integration remains blocked only by any still-open P1-F gate.
