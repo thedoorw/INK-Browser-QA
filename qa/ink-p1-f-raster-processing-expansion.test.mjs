@@ -47,3 +47,40 @@ test('zero normalization: unsharpMask amount=0 is exact identity',()=>{const src
 test('zero normalization: emboss strength=0 remains zero',()=>{const src=image(1,1,[20,60,200,91]),out=applyAdvancedFilter(src,{type:'emboss',params:{strength:0}});assert.deepEqual(px(out,0,0),[128,128,128,91]);});
 test('zero normalization: reduceNoise strength=0 is exact identity',()=>{const src=impulse(),out=applyAdvancedFilter(src,{type:'reduceNoise',params:{radius:1,strength:0,preserveEdges:24}});assert.deepEqual([...out.data],[...src.data]);});
 test('zero normalization: reduceNoise preserveEdges=0 remains zero',()=>{const src=image(3,3,[100,100,100,255]);set(src,1,1,[110,110,110,255]);const out=applyAdvancedFilter(src,{type:'reduceNoise',params:{radius:1,strength:100,preserveEdges:0}});assert.deepEqual(px(out,1,1),[108,108,108,255]);});
+
+test('normalization: six bounded endpoints fallback on non-finite numbers',()=>{
+  const nonFinite=[NaN,Infinity,-Infinity];
+  const cases=[
+    {
+      name:'photoFilter.density',
+      run:value=>applyAdvancedAdjustment(image(2,1,[40,100,180,77]),{type:'photoFilter',params:{color:'#ff8000',density:value}}),
+      fallback:()=>applyAdvancedAdjustment(image(2,1,[40,100,180,77]),{type:'photoFilter',params:{color:'#ff8000'}})
+    },
+    {
+      name:'threshold.level',
+      run:value=>applyAdvancedAdjustment(image(2,1,[40,100,180,77]),{type:'threshold',params:{level:value}}),
+      fallback:()=>applyAdvancedAdjustment(image(2,1,[40,100,180,77]),{type:'threshold',params:{}})
+    },
+    {
+      name:'unsharpMask.amount',
+      run:value=>applyAdvancedFilter(impulse(),{type:'unsharpMask',params:{radius:1,amount:value,threshold:0}}),
+      fallback:()=>applyAdvancedFilter(impulse(),{type:'unsharpMask',params:{radius:1,threshold:0}})
+    },
+    {
+      name:'emboss.strength',
+      run:value=>applyAdvancedFilter(image(2,2,[20,60,200,91]),{type:'emboss',params:{strength:value}}),
+      fallback:()=>applyAdvancedFilter(image(2,2,[20,60,200,91]),{type:'emboss',params:{}})
+    },
+    {
+      name:'reduceNoise.strength',
+      run:value=>applyAdvancedFilter(impulse(),{type:'reduceNoise',params:{radius:1,strength:value,preserveEdges:24}}),
+      fallback:()=>applyAdvancedFilter(impulse(),{type:'reduceNoise',params:{radius:1,preserveEdges:24}})
+    },
+    {
+      name:'reduceNoise.preserveEdges',
+      run:value=>applyAdvancedFilter(impulse(),{type:'reduceNoise',params:{radius:1,strength:80,preserveEdges:value}}),
+      fallback:()=>applyAdvancedFilter(impulse(),{type:'reduceNoise',params:{radius:1,strength:80}})
+    }
+  ];
+  for(const c of cases)for(const value of nonFinite)assert.deepEqual([...c.run(value).data],[...c.fallback().data],`${c.name} should fallback for ${String(value)}`);
+});

@@ -1,7 +1,7 @@
 const clamp=(v,a=0,b=255)=>Math.max(a,Math.min(b,v));
 const clamp01=v=>clamp(Number(v)||0,0,1);
 const byte=v=>clamp(Math.round(Number(v)||0),0,255);
-const numberOr=(value,fallback)=>{if(value==null)return fallback;const n=Number(value);return Number.isNaN(n)?fallback:n;};
+const numberOr=(value,fallback)=>typeof value==='number'&&Number.isFinite(value)?value:fallback;
 const cloneData=data=>new Uint8ClampedArray(data);
 
 function assertImageData(imageData){
