@@ -717,6 +717,25 @@ Authority:
 - [ ] AL15 menu visible text pitch is not mistaken for an exact pointer hitbox.
 - [ ] AL16 active-document reference hashes/roles remain recorded.
 
+# AM. Photoshop interaction-detail measurement audit
+
+Authority:
+`working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md`
+
+- [ ] AM01 Tooltip placement and compact geometry follow the measured reference while allowing text-dependent sizing.
+- [ ] AM02 Tool flyout uses compact grouped-tool rows comparable to the ≈20 px reference pitch.
+- [ ] AM03 horizontal guide drag shows transient live Y-position feedback.
+- [ ] AM04 vertical guide drag shows transient live X-position feedback.
+- [ ] AM05 ruler-origin drag is not treated as a UI-closure blocker.
+- [ ] AM06 Status information menu, if implemented, remains document-local and uses compact popup grammar.
+- [ ] AM07 empty workspace has no Document tab/rulers/Status Strip or dead reserved bottom space.
+- [ ] AM08 document scrollbar thickness is visually comparable to the 16 px reference where native INK scrollbar presentation applies.
+- [ ] AM09 Navigator proxy remains synchronized and state-derived at high zoom.
+- [ ] AM10 Layers drag reorder shows a clear insertion target before drop.
+- [ ] AM11 Layers drag ghost/insertion feedback is visually distinct from ordinary selection.
+- [ ] AM12 Layers reorder converges with hierarchy authority and History semantics.
+- [ ] AM13 no remaining generic Photoshop screenshot is required for closure; any remaining targeted reference is explicitly classified optional or blocking.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.

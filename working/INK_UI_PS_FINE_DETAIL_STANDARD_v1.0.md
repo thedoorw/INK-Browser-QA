@@ -17,6 +17,7 @@ Related authorities:
 - `working/INK_UI_PS_PANEL_AND_STATUS_DETAIL_SPEC_v0.1.md`
 - `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
 - `working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`
+- `working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md`
 - `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
 
 Fixed USER reference pack:
@@ -355,8 +356,10 @@ FLYOUT_TRIANGLE_SIZE = 3×3 px visible marker / MEASURED
 FLYOUT_TRIANGLE_OFFSET = marker observed at tool-cell lower-right / exact inset REFERENCE_MISSING
 TOOL_SECTION_SEPARATOR
 TOOL_SECTION_GAP
+TOOL_FLYOUT_REFERENCE = ≈172×100 px / 5 rows / ≈20 px row pitch / MEASURED_REFERENCE_STATE
 TOOLTIP_DELAY
-TOOLTIP_OFFSET
+TOOLTIP_OFFSET = right of originating tool / VISUAL_REFERENCE
+TOOLTIP_BODY_REFERENCE = 152×53 px for supplied Magic Wand tooltip / MEASURED_REFERENCE_STATE
 TOOLTIP_SHORTCUT_FORMAT
 LAYOUT_TOGGLE_HITBOX
 TOOLBAR_COLLAPSE_GLYPH = 7×5 px visible / MEASURED
@@ -442,7 +445,7 @@ Original detail area 5.
 Audit fields:
 
 ```text
-LAYER_ROW_HEIGHT
+LAYER_ROW_HEIGHT = ≈35 px reference pitch / OBSERVED_DENSITY
 LAYER_ROW_HORIZONTAL_PADDING
 LAYER_INDENT_STEP
 DISCLOSURE_TRIANGLE_BOX
@@ -454,8 +457,8 @@ LAYER_NAME_FONT
 LAYER_METADATA_FONT
 SELECTED_ROW_BACKGROUND
 HOVER_ROW_BACKGROUND
-DRAG_INSERTION_LINE
-DRAG_GHOST
+DRAG_INSERTION_LINE = 1 px-class horizontal insertion target / VISUAL_REFERENCE; paired change at y≈798
+DRAG_GHOST = transient row ghost / paired interaction region ≈35 px high / VISUAL_REFERENCE
 NESTED_GROUP_GUIDE
 OPACITY_CONTROL_HEIGHT
 FOOTER_HEIGHT
@@ -659,7 +662,7 @@ Original detail area 10, expanded into four explicit submodules.
 
 Audit:
 ```text
-TRACK_WIDTH
+TRACK_WIDTH = 16 px document-scrollbar reference / MEASURED_REFERENCE_STATE
 THUMB_WIDTH
 MIN_THUMB_LENGTH
 TRACK_CONTRAST
@@ -668,6 +671,7 @@ THUMB_HOVER
 THUMB_DRAG
 CORNER_BEHAVIOR
 PANEL_VS_CANVAS_SCROLLBAR
+DOCUMENT_SCROLLBAR_THICKNESS = 16 px horizontal/vertical / MEASURED_REFERENCE_STATE
 ```
 
 Rule:
@@ -926,7 +930,8 @@ Prohibited:
 Fine-detail fields:
 
 ```text
-STATUS_HEIGHT
+STATUS_HEIGHT = 16 px content + 1 px bottom boundary / MEASURED
+STATUS_INFO_POPUP = 114×234 px outer reference / 1 px border / REFERENCE_STATE_ONLY
 STATUS_BACKGROUND
 STATUS_TOP_BORDER
 STATUS_TEXT_TOKEN
@@ -959,6 +964,9 @@ Decision:
 - if production telemetry justifies it, use a thin active-document-only strip.
 
 ---
+
+
+Ruler-origin drag is explicitly OPTIONAL / NON-CLOSURE-BLOCKING because USER reports it is rarely used. Ruler display, guide creation/movement, guide visibility/locking, snapping, and live position feedback remain mandatory.
 
 # 16. Buttons / Inputs / Selects — cross-component control standard
 
