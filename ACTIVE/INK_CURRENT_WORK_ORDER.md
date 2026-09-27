@@ -7,7 +7,7 @@ DATE: 2026-09-27
 ## Current program
 
 ```text
-PRIMARY_TASKS = INK-P1-INTEGRATION-001
+PRIMARY_TASKS = INK-P1-INTEGRATED-RUNTIME-001
 PROGRAM = ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION
 OWNER = MR / MAIN REVIEW
 
@@ -32,6 +32,9 @@ P1_INTEGRATION_WORKPACK = working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md
 P1_INTEGRATION_BRANCH = work/ink-p1-integration-001
 P1_INTEGRATION_ACTIVATION_MAIN = 87f57980a071ff8f009f3aa354951d81025fecf0
 P1_INTEGRATION_PROGRESS = working/INK_P1_INTEGRATION_DEV_PROGRESS.md
+P1_INTEGRATION_PROMOTION_MERGE = d1269334338531228ddfdd9383761cd419e58738
+P1_RUNTIME_TARGET_SHA = d1269334338531228ddfdd9383761cd419e58738
+P1_RUNTIME_BRANCH = work/ink-p1-integrated-runtime-001
 P1_RUNTIME_WORKPACK = working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
 P1_F_PROMOTION_MERGE = 5bb74c1c0ad655dac8ae00b5474da52b58db18db
@@ -70,35 +73,36 @@ The old 61-row P0 register remains preservation evidence, not the full product c
 The current full-product truth is:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-## Current DEV authorization — P1 Integration
+## Current DEV authorization — P1 Integrated Runtime
 
-All P1 capability packages A through H are now `MODULE_READY / MR_PASS / PROMOTED`.
+P1-A through P1-H are `MODULE_READY / MR_PASS / PROMOTED`.
+
+P1 Integration:
+`MR_PASS / PROMOTED`
+
+Promotion merge / exact Runtime target:
+`d1269334338531228ddfdd9383761cd419e58738`
 
 Current task:
-`INK-P1-INTEGRATION-001`
+`INK-P1-INTEGRATED-RUNTIME-001`
 
 Workpack:
-`working/INK_P1_INTEGRATION_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md`
 
-Mandatory DEV branch:
-`work/ink-p1-integration-001`
+Mandatory control/evidence branch:
+`work/ink-p1-integrated-runtime-001`
 
 Execution owner:
 `DEV`
 
-MR owns:
-- exact activation-main SHA;
-- scope/authority review;
-- handoff acceptance or bounded revision;
-- promotion.
+Runtime rule:
+- execute the established Runtime harness against exactly `d1269334338531228ddfdd9383761cd419e58738`;
+- collect run / artifact / environment / log evidence;
+- product source mutation = 0;
+- if any defect appears, record it and STOP;
+- do not fix product in the Runtime lane.
 
-DEV owns:
-- complete technical integration of accepted P1 A-H capabilities;
-- focused/integrated QA;
-- exact handoff evidence;
-- STOP for MR.
-
-The integrated Runtime remains prohibited inside this workpack.
+MR owns exact-SHA pinning and PASS / REVISE / HOLD acceptance.
 
 ## P1/P2 execution sequence
 
@@ -168,7 +172,7 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = P1_INTEGRATION_MR_REVISE_RENDERER
+CURRENT_GATE = P1_INTEGRATED_RUNTIME_DEV_AUTHORIZED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
@@ -177,31 +181,27 @@ P1_E_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_F_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
-INTEGRATED_RUNTIME = PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
+INTEGRATED_RUNTIME = AUTHORIZED / EXACT_SHA / DEV_EXECUTION
 UI_IMPLEMENTATION = HOLD
 INK_MANUAL_PROSE = NON_BLOCKING
 ```
 
 ## Next action
 
-DEV-Integration:
-- continue only on `work/ink-p1-integration-001`;
-- reviewed handoff HEAD `4c985ec692b2c1275ec23205c0823bb40283430a` = MR_REVISE;
-- perform only the bounded renderer dispatch correction in `working/INK_P1_INTEGRATION_MR_REVIEW_v1.0.md`;
-- ensure rasterState-only imported images route through the integrated color-raster renderer;
-- add the missing renderer regression;
-- rerun complete Integration QA with fail=0 / skip=0;
-- update lane progress;
-- do not run integrated Runtime;
-- hand off a new exact HEAD;
-- STOP for MR re-review.
+DEV-Runtime:
+- execute `INK-P1-INTEGRATED-RUNTIME-001`;
+- target exactly `d1269334338531228ddfdd9383761cd419e58738`;
+- use `working/INK_P1_INTEGRATED_RUNTIME_DEV_WORKPACK_v1.0.md`;
+- product mutation is prohibited;
+- collect exact Runtime run/artifact/log/environment evidence;
+- update Runtime progress/evidence;
+- STOP for MR.
 
 MR:
-- record exact activation-main SHA;
-- Integration reviewed HEAD `4c985ec692b2c1275ec23205c0823bb40283430a` = MR_REVISE; review record `working/INK_P1_INTEGRATION_MR_REVIEW_v1.0.md`;
-- re-review exact Integration handoff after bounded renderer correction;
-- promote only after `P1_INTEGRATION_QA = PASS / FAIL 0 / SKIP 0`;
-- only after Integration MR_PASS/promoted, authorize `INK-P1-INTEGRATED-RUNTIME-001` for DEV.
+- review that all Runtime evidence belongs to `d1269334338531228ddfdd9383761cd419e58738`;
+- verify required coverage, failures/skips, artifacts and product mutation=0;
+- decide PASS / REVISE / HOLD;
+- only after Runtime MR acceptance may capability authority refresh / UR reconciliation proceed.
 
 UR:
 - remain on HOLD.
