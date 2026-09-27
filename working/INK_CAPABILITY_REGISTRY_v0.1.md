@@ -1,79 +1,43 @@
-# INK Current Capability Baseline
+# INK Normalized Capability Registry v0.1
 
-STATUS: `CURRENT / REFRESHED FULL-PRODUCT AUTHORITY / MR`
+STATUS: `MR_FROZEN / SOURCE_CORROBORATED / NO_PRODUCT_MUTATION`
 
-DATE: 2026-09-27
+TASK: `INK-CAPABILITY-BASELINE-MANUAL-001`
 
-PROGRAM: `INK-FULL-CAPABILITY-REBASELINE-001`
+WORK_BRANCH: `work/ink-capability-baseline-manual-001`
 
-SOURCE_BASELINE_MAIN: `d3f73cdcc1f4e902f90e7eb3973cc64764fb05b3`
+BASELINE_MAIN: `d3f73cdcc1f4e902f90e7eb3973cc64764fb05b3`
 
-FIRST_REBASELINE_RUNTIME_TARGET: `f911f777f770cbe290e290c4b0cbc3692b36641e`
+## 1. Normalization result
 
-FIRST_REBASELINE_RUNTIME: `PASS`
+This registry converts the raw source census into product-level capabilities suitable for P1/P2 planning and later UI reconciliation.
 
-P0_PROMOTION: `CLOSED`
+Rules:
+- one underlying Core capability is counted once even when Human UI, CHAT, Recipe and Specialist expose it through different routes;
+- enumerated choices such as Blend Mode names or Program Import format IDs remain supported vocabulary under one capability unless they are materially separate tools/algorithms;
+- distinct image adjustments/filters and distinct drawing tools are counted separately because they are separate creative operations;
+- internal helper APIs, math primitives, serialization helpers and third-party adapters are preserved as platform contracts but do not inflate the product feature count;
+- a partial/data-model-only capability is explicit and is not counted as fully operational.
 
-UI_STATUS: `HOLD — UNTIL AUTHORIZED PRE-UI P1/P2 PACKAGES CLOSE AND UR RECONCILES THIS BASELINE`
-
----
-
-## 1. Purpose
-
-This document is the authoritative current answer to:
-
-> What capabilities does INK currently own, and what is their technical/product status?
-
-It replaces the earlier incomplete interpretation in which the CHAT public surface or the 61-row P0 restoration ledger could be mistaken for the whole product.
-
-Hard correction:
-
-```text
-INK PRODUCT CAPABILITY != 22 named CHAT tools + 34 bounded edit operations
-INK PRODUCT CAPABILITY != only the 61 Section-4 P0 restoration rows
-```
-
-The 61 rows remain the preserved existing-capability backbone. Full current-source census adds three explicit anti-omission families and normalizes the product into the model below.
-
----
-
-## 2. Current counts
+Current normalized counts:
 
 ```text
 CANONICAL_CAPABILITY_FAMILIES = 64
-
-  PRESERVED_SECTION4_BACKBONE = 61
-  ANTI_OMISSION_ADDITIONS = 3
-    C62 Asset lifecycle
-    C63 PWA / update management
-    C64 Product health / diagnostics
+  preserved Section-4 backbone = 61
+  explicit anti-omission additions = 3
 
 PRODUCT_ATOMIC_CAPABILITIES = 496
 HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5
-EXPLICIT_PARTIAL_BOUNDED_ITEMS = 8
+EXPLICIT_PARTIAL / BOUNDED ITEMS = 8
+RAW_SECTION4_CANDIDATE_ENTRIES = 696
 
-CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
-CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
-CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
+CHAT_NAMED_TOOLS = 22
+CHAT_BOUNDED_EDIT_OPERATIONS = 34
 ```
 
-Counting policy:
+The product atomic count is the number to use for capability planning. The 22/34 metrics remain exposure metrics only.
 
-- Product Atomic = one user/CHAT/Specialist-recognizable product behavior after aliases are deduplicated.
-- Platform Contract = internal support behavior preserved for product integrity but not counted as a user feature.
-- Enumerated options such as individual Blend Mode names or import-format identifiers remain vocabulary under the owning capability unless they are materially separate tools/algorithms.
-- Distinct adjustments, filters and drawing tools are separate atomics because they are separate creative operations.
-- One Core capability is counted once even when Human UI, CHAT, Recipe and Specialist all expose it.
-
-Detailed normalization evidence:
-`working/INK_CAPABILITY_REGISTRY_v0.1.md`
-
-Raw source census:
-`working/INK_CAPABILITY_CENSUS_v0.1.md`
-
----
-
-## 3. Current full-product capability inventory
+## 2. Canonical family registry
 
 | ID | Family | Class | Atomic count | Normalized atomic capabilities |
 |---|---|---:|---:|---|
@@ -142,228 +106,112 @@ Raw source census:
 | C63 | PWA / update management | PLATFORM_OPS | 5 | Service Worker registration; Update detection/check; Track installing update; Activate waiting update; Update status/diagnostics |
 | C64 | Product health / diagnostics | PLATFORM_OPS | 12 | Runtime error monitoring; Frame/long-frame monitoring; Operation timing; Runtime heartbeat/health assessment; WebGL capability probe; Platform capability collection; External diagnostic bundle; External pen/event/gate validation recording; Storage/offline health check; Release/update health readout; Browser interactive benchmark; Artwork QA benchmark/export |
 
----
+## 3. Explicit partial / bounded capabilities
 
-## 4. Explicit partial / bounded current capabilities
+### C27 — Layer effects
 
-These exist and must be preserved, but may not be represented as fully mature:
+- Drop Shadow data model only
+- Inner Shadow data model only
+- Outer Glow data model only
+- Stroke effect data model only
 
-### Layer Effects
-- Color Overlay rendering = current operational scope.
-- Drop Shadow = current data model exists; full rendering belongs to authorized P1-D completion.
-- Inner Shadow = current data model exists; full rendering belongs to authorized P1-D completion.
-- Outer Glow = current data model exists; full rendering belongs to authorized P1-D completion.
-- Stroke effect = current data model exists; full rendering belongs to authorized P1-D completion.
+### C46 — Compare / Variant
 
-### Visual Compare
-- structural comparison and existing Preview modes are real;
-- do not claim a general standalone renderer-backed wipe/overlay/difference system beyond accepted Preview surfaces.
+- General renderer-backed standalone wipe/overlay/difference workflow beyond existing Preview surface
 
-### Renderer / GPU
-- WebGL2 source/runtime path exists;
-- external browser/GPU execution remains environment dependent;
-- live WebGL tile-atlas completion is not claimed;
-- Canvas fallback remains authoritative compatibility behavior.
+### C49 — Renderer
 
-### FLORA
-- preserved specialization boundary;
-- does not replace generic Core authorities.
+- WebGL2 execution remains device/environment dependent
 
----
+### C51 — GPU / large-canvas infrastructure
 
-## 5. P0 restoration / Runtime evidence
+- Live WebGL atlas is not complete/runtime-proven
 
-The original 61 Section-4 capability families remain fully preserved at accepted historical/current scope:
+### C61 — FLORA specialization
 
-```text
-SECTION4_CAPABILITY_FAMILIES = 61
-LEDGER_COVERAGE = 61 / 61
-NATIVE_SOURCE_AUTHORITY_PATHS_MISSING = 0
-LEDGER_QA_POINTERS_MISSING = 0
-UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0 identified
-FIRST_REBASELINE_RUNTIME = PASS
-P0_PROMOTION = CLOSED
-```
+- Specialization scope is preserved separately from generic Core
 
-Primary evidence:
-- `working/INK_P0_EXISTING_CAPABILITY_RESTORE_LEDGER_v1.0.md`
-- `working/INK_P0_EXISTING_CAPABILITY_RESTORE_MR_REVIEW_v1.0.md`
-- `working/WORKING_STATUS.md`
+## 4. Supporting platform contracts — tracked, not counted as product features
 
-Runtime PASS is family/integration evidence. It is not a claim that every one of the 496 atomics has an isolated browser Runtime test.
+- stable ID / stable hashing
+- document snapshot helpers
+- bounds math / affine matrix math
+- world/local matrix conversion
+- quadtree
+- page spatial index
+- path flattening / metrics internals
+- paint appearance normalization
+- expressive-stroke normalization/validation
+- SVG parser helpers
+- dependency-graph internals
+- schema/version constants
+- migration helpers
+- cache fingerprints
+- vendor geometry/math adapters
+- output registry internals
+- agent result envelopes
+- error classes
+- QA-only deterministic clients
+- internal report serializers
 
----
+These contracts remain preservation requirements. Their exclusion from the product feature count does not authorize deletion or replacement.
 
-## 6. Three anti-omission additions
+## 5. Three additions beyond the old 61-row family register
+
+The current source census requires three explicit anti-omission families:
 
 ### C62 — Asset lifecycle
-
-Current source confirms:
-- asset manifest validation;
-- asset audit/check;
-- portable asset packaging;
-- linked-document asset descriptor;
-- asset-manifest migration.
-
-Classification:
-`HEADLESS / PLATFORM SUPPORT`
-
-It is tracked so asset integrity/portability cannot disappear by omission. It does not require a normal creative panel.
+Current implementation is principally packaging/headless infrastructure. It is kept explicit so asset portability, manifest integrity and linked/portable asset behavior cannot disappear by omission.
 
 ### C63 — PWA / update management
-
-Current product source and UI confirm:
-- Service Worker registration;
-- update check/detection;
-- install-state tracking;
-- activate waiting update;
-- update status/diagnostics.
-
-Classification:
-`PRODUCT OPERATIONS / ENVIRONMENT DEPENDENT`
-
-Normal origin/browser restrictions remain evidence boundaries.
+This is live product-operations behavior instantiated by the current app and visible through update/health UI. It must be included in final capability truth even though it is not a drawing tool.
 
 ### C64 — Product health / diagnostics
+This is user-accessible Specialist/Help functionality and release/runtime infrastructure. It includes runtime health, external diagnostic bundle, WebGL/platform capability probing, storage/offline/release diagnostics, benchmark and artwork QA routes.
 
-Current product source/UI confirm:
-- runtime error monitoring;
-- frame/performance monitoring;
-- operation timing;
-- health heartbeat/assessment;
-- WebGL capability probe;
-- platform capability collection;
-- external diagnostic bundle;
-- external pen/event/gate validation recording;
-- storage/offline health;
-- release/update health;
-- interactive benchmark;
-- artwork QA/export.
+Result:
 
-Classification:
-`SPECIALIST / HELP / PRODUCT OPERATIONS`
+`OLD_61_REGISTER_IS_NOT_THE_FINAL_FULL_PRODUCT_FAMILY_COUNT = TRUE`
 
-Hardware/GPU/cross-browser gates remain explicitly environment dependent.
+## 6. UI/P1-P2 use rule
 
----
+For UI planning:
+- every PRODUCT_ATOMIC capability must have a primary home, responsive duplicate, CHAT-internal route, Specialist route, or explicit headless/no-UI reason;
+- C62 may remain headless/platform-support where appropriate;
+- C63/C64 belong to Help/Specialist/Product Operations surfaces, not ordinary creative tool chrome;
+- partial items must not appear as complete user-facing functions.
 
-## 7. Program Import exact boundary
+For P1/P2 planning:
+- compare mature-platform gaps against this normalized registry, not the old 61-family list;
+- do not implement a P1/P2 item if an equivalent existing atomic capability already exists under another family;
+- P1/P2 implementation may begin only after final MR disposition records are written.
 
-Current detector recognizes multiple Photoshop/Illustrator/Inkscape/GIMP/Krita/Corel/PaintShop/JSON/XML/JavaScript/Python/Text formats.
+## 7. MR closure evidence
 
-Important distinction:
+MR closure checks completed:
 
-- text/script formats supported by current parser paths may proceed into canonical parsing/compilation;
-- opaque binary formats such as Photoshop Action and Clip Studio Auto Action currently use metadata-only binary parsing;
-- their binary operations are explicitly marked unsupported/rejected for translation and must not be described as full import/execution support.
+- 496 normalized product atomics cross-checked at family/route level against the current Function Placement Map and the 212-button / 29-select Static Control Ledger;
+- current CHAT source re-counted directly: 22 named tools / 34 bounded edit operations;
+- CHAT exposure creates no second product-capability count;
+- Program Import binary formats are explicitly detect/metadata-only where parser source marks binary translation rejected; text/script formats proceed through supported parsers/compiler;
+- original 61-family ledger retains 61/61 source authority and QA pointers and passed the first rebaseline integrated Runtime on exact SHA `f911f777f770cbe290e290c4b0cbc3692b36641e`;
+- C62 Asset lifecycle is classified headless/platform support and is not falsely represented as browser-runtime UI;
+- C63 PWA/update is instantiated in the current app but remains normal-origin/browser-environment dependent;
+- C64 Product health/diagnostics is installed, with GPU/physical-device/external-browser portions explicitly environment dependent;
+- P1/P2 disposition is recorded in `working/INK_P1_P2_GAP_DISPOSITION_v1.0.md`;
+- UI reconciliation gaps are recorded in `working/INK_UI_CAPABILITY_RECONCILIATION_GAPS_v0.1.md`.
 
-Detection != mature translation.
-
----
-
-## 8. CHAT surface
-
-Current source was re-counted directly:
+Result:
 
 ```text
-NAMED_TOOLS = 22
-BOUNDED_EDIT_OPERATIONS = 34
+CANONICAL_CAPABILITY_FAMILIES = 64
+PRODUCT_ATOMIC_CAPABILITIES = 496
+HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5
+EXPLICIT_PARTIAL_BOUNDED_ITEMS = 8
+CHAT_NAMED_TOOLS = 22
+CHAT_BOUNDED_EDIT_OPERATIONS = 34
+FULL_ATOMIC_CAPABILITY_CENSUS = MR_FROZEN
+PRODUCT_SOURCE_MUTATION = 0
 ```
 
-These are CHAT exposure metrics only.
-
-Every mutating CHAT route retains:
-`proposal → explicit approval → execution`
-
-CHAT does not own a second Document, History, Renderer, Selection, Transform, Recipe or storage authority.
-
----
-
-## 9. Current P1/P2 disposition
-
-Authority:
-`working/INK_P1_P2_GAP_DISPOSITION_v1.0.md`
-
-Pre-UI implementation is intentionally bounded into:
-
-1. P1-A — Raster Selection / Fill / Sampling
-2. P1-B — Local Raster Retouch
-3. P1-C — Vector / Text / Precision Layout
-4. P1-D — Layer Effects Completion
-
-One P2 capability, Color Replacement Brush, is allowed opportunistically inside P1-B because it shares the same local-raster/sampling infrastructure.
-
-Strategic color-management, bit-depth, channels, broader format interoperability, Liquify and similar large systems are explicitly after-UI work and do not keep UI on HOLD indefinitely.
-
-Generative/content-aware/RAW/neural families remain Adapter-class unless later reauthorized.
-
----
-
-## 10. UI reconciliation status
-
-The old Photoshop-aligned Function Placement Map remains useful but is no longer complete against this refreshed product truth.
-
-Primary required correction:
-
-```text
-Raster / Image / Masks / Adjustments / Filters / Blend Modes /
-Layer Effects / Reusable Raster Source
-```
-
-must be treated as real INK product capabilities, not merely legacy Specialist controls.
-
-Authority:
-`working/INK_UI_CAPABILITY_RECONCILIATION_GAPS_v0.1.md`
-
-Current state:
-
-```text
-OLD_UI_MAP_REUSABLE = YES
-OLD_UI_MAP_COMPLETE_AGAINST_REFRESHED_REGISTRY = NO
-UI_IMPLEMENTATION_AUTHORIZED = NO
-```
-
-UR must reconcile this full inventory after the authorized pre-UI P1/P2 packages close.
-
----
-
-## 11. Manual relationship
-
-Future `INK_MANUAL.md` consumes this capability inventory.
-
-The Manual answers:
-- what the capability is;
-- what creative problem it solves;
-- when to use it;
-- Human usage;
-- CHAT usage;
-- UI location;
-- limitations and related capabilities.
-
-The Manual does not maintain a second independent capability list.
-
-Manual prose is not a gate for P1/P2 implementation or UI restart.
-
----
-
-## 12. Current gate
-
-```text
-FULL_PRODUCT_CAPABILITY_CENSUS = CLOSED
-NORMALIZED_CAPABILITY_REGISTRY = MR_FROZEN
-P1_P2_GAP_DISPOSITION = RECORDED
-REFRESHED_CAPABILITY_BASELINE = PREPARED_ON_MR_BRANCH
-
-NEXT =
-  PROMOTE THIS REFRESHED AUTHORITY
-  → AUTHORIZE P1-A DEV
-  → P1-B
-  → P1-C
-  → P1-D
-  → FINAL P1/P2 INTEGRATED QA/RUNTIME
-  → UR RECONCILIATION
-  → UI HOLD CLEARED
-
-P1/P2 PRODUCT IMPLEMENTATION = NOT YET STARTED
-UI IMPLEMENTATION = HOLD
-```
+Manual prose remains non-blocking.
