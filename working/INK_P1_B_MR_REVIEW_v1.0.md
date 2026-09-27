@@ -1,12 +1,12 @@
 # INK P1-B MR Review v1.0
 
-STATUS: `MR_REVISE / QA_ONLY / CORE_SOURCE_PASS`
+STATUS: `MR_PASS / P1_B_MODULE_READY / NOT_YET_PROMOTED`
 
 TASK: `INK-P1-B-LOCAL-RASTER-RETOUCH-001`
 
 REVIEWED_BRANCH: `work/ink-p1-b-local-raster-retouch-001`
 
-REVIEWED_HEAD: `4524bbf458f8d8ffd77a80c801ba4acb5f99b2bc`
+REVIEWED_HEAD: `35252e8963b4bcf73180151fcc5a6b21258f8f87`
 
 IMPLEMENTATION_COMMIT: `3d1ee69a45535eb9046f1262d2b3c4f61c3b66b5`
 
@@ -19,10 +19,12 @@ P1_B_CORE_IMPLEMENTATION = PASS
 P1_B_SCOPE = PASS
 P1_B_SHARED_RASTER_AUTHORITY = PASS
 P1_B_SOURCE_REVIEW_11_OF_11 = PASS
-P1_B_REPORTED_FOCUSED_QA = 13 / 13 PASS
-P1_B_MODULE_READY = NOT YET
-REVISION_REQUIRED = QA_ONLY
-CORE_SOURCE_REWORK = NOT INDICATED
+P1_B_FOCUSED_QA = PASS (DEV 14/14)
+REAL_P1_A_UPSTREAM = YES
+P1_B_QA_ASSERTION_REVIEW = PASS
+P1_B_MODULE_READY = YES
+PRODUCT_BRANCH_PROMOTED = NO
+INTEGRATED_RUNTIME = NOT RUN / PROHIBITED UNTIL ALL P1 A-H + INTEGRATION CLOSE
 ```
 
 ## Exact diff reviewed
@@ -127,4 +129,38 @@ History/save-load integration = 0
 P1-C/D/E/F/G/H scope intrusion = 0
 second raster/image authority = 0
 Runtime = NOT RUN
+```
+
+
+## Final QA-only revision acceptance
+
+Reviewed QA revision:
+`796989ca7db2fad0df067e6f8924c98e33f41c68`
+
+Final handoff HEAD:
+`35252e8963b4bcf73180151fcc5a6b21258f8f87`
+
+Confirmed:
+- focused QA imports actual promoted `raster-selection-tools.js`;
+- focused QA imports actual promoted `raster-fill-tools.js`;
+- no P1-A API-compatible stubs remain in the final harness;
+- expected P1-A upstream blobs match:
+  - selection = `181fafbabff7d71e05015e8479a664880291551d`
+  - fill = `4881e9ecd7929500d6f307a0d379ac33e99ac81e`;
+- Pattern Stamp opacity has a direct deterministic assertion:
+  `100 -> 200 at opacity 0.5 = 150`;
+- P1-B Core blob remains unchanged:
+  `f2b63749ecbeffe753ae33608410695772f9b0a3`;
+- final QA blob:
+  `594243a9a64f9c30daae99d4f0cc5dccd2f7ee41`;
+- reported final focused QA:
+  `14 / 14 PASS`, `FAIL = 0`, `SKIP = 0`.
+
+## Final MR gate
+
+```text
+P1_B_MODULE_READY = YES
+NEXT = PROMOTE / RECONCILE P1-B ONTO LATEST MAIN
+P1_C = NOT YET AUTHORIZED
+RUNTIME = NOT AUTHORIZED
 ```
