@@ -273,3 +273,135 @@ USER_VISUAL_REVIEW = PASS
 ```
 
 No additional Photoshop Light screenshot is required unless USER wants exact visual comparison against a specific Photoshop version/theme state.
+
+
+# 9. USER-supplied current Photoshop on the web Light reference — 2026-09-27
+
+Reference file:
+`image(20260927-143801).png`
+
+SHA256:
+`5af28790a96ec7f0cf2d1bf979eaf852439b7cc63f8ccd6c5a5524f0e2325a7b`
+
+Capture:
+- URL host visibly indicates `photoshop.adobe.com`;
+- current Adobe Photoshop on the web;
+- Light interface;
+- browser-based Adobe workstation;
+- center selected object is user content and must **not** be mistaken for Photoshop UI.
+
+Adobe current documentation describes Photoshop on the web as a browser Photoshop with a streamlined interface and supports Dark / Light / system color themes.
+
+This reference is especially useful because it is:
+- current;
+- user-supplied;
+- full-window;
+- native Adobe Light UI;
+- visually consistent with current Adobe Spectrum light semantic colors.
+
+## 9.1 Direct pixel observations from the outer Photoshop-on-web UI
+
+Measured dominant colors from the visible Adobe application shell, excluding the central selected artwork:
+
+```text
+WORKSPACE_BACKGROUND      = rgb(233,233,233) = #E9E9E9
+PRIMARY_SURFACE           = rgb(255,255,255) = #FFFFFF
+ACCENT_BLUE               = rgb(59,99,251)   = #3B63FB
+```
+
+Additional frequently observed anti-alias/boundary/light-surface values include:
+```text
+#E1E1E1
+#E3E3E3
+#E4E4E4
+#E8E8E8
+#F3F3F3
+```
+
+These values are classified as:
+`MEASURED_CURRENT_PS_WEB_REFERENCE`
+
+Important:
+- these are Photoshop **web** Light-theme values, not a claim about Photoshop Desktop 21.2.12;
+- browser/OS anti-aliasing values should not become independent design tokens;
+- the exact repeated values #E9E9E9, #FFFFFF and #3B63FB align directly with Adobe Spectrum Light references, increasing confidence that the web UI is using Adobe's current semantic design system.
+
+## 9.2 Structural Light-theme hierarchy visible in the capture
+
+Outer Adobe UI shows:
+
+```text
+browser-independent Photoshop app header
+→ white / very-light surface
+
+workspace surrounding the active content
+→ #E9E9E9 light structural gray
+
+left primary tool rail
+→ white floating/edge-attached surface
+
+right contextual tool rail
+→ white floating surface
+
+selected/active control
+→ Adobe blue #3B63FB
+
+normal icons/text
+→ dark neutral
+
+dividers/boundaries
+→ subtle light gray
+```
+
+This is strong evidence for the intended INK Light hierarchy:
+
+```text
+WHITE / NEAR-WHITE CONTROLS AND PANELS
+over
+LIGHT-GRAY WORKSTATION FIELD
+with
+DARK NEUTRAL CONTENT
+and
+RESTRAINED BLUE ACTIVE ACCENT
+```
+
+## 9.3 Scope distinction
+
+For INK:
+
+```text
+DESKTOP PHOTOSHOP REFERENCE
+→ workstation geometry / dense editor grammar
+
+PHOTOSHOP ON THE WEB LIGHT REFERENCE
+→ current Adobe Light color hierarchy / web control treatment
+
+ADOBE SPECTRUM
+→ semantic numeric token reference
+```
+
+Do not copy Photoshop-on-web's simplified tool placement as the desktop INK layout. INK remains governed by the desktop Photoshop-aligned workstation structure already measured.
+
+## 9.4 Light-token confidence upgrade
+
+Previous:
+`INK_LIGHT_GRAY_TOKENS = UR_ADAPTATION_REQUIRED`
+
+Now:
+```text
+INK_LIGHT_GRAY_TOKENS
+= UR_ADAPTATION_FROM
+  CURRENT_PS_WEB_MEASUREMENTS
+  + ADOBE_SPECTRUM
+  + DESKTOP_PS_LIGHT_HIERARCHY
+```
+
+High-confidence starting anchors:
+
+```text
+workspace structural gray = #E9E9E9
+primary elevated surface  = #FFFFFF
+active accent             = #3B63FB
+```
+
+Final INK token refinement still requires Runtime visual review because desktop INK has denser panels, dividers and controls than Photoshop on the web.
