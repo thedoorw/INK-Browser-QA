@@ -736,6 +736,21 @@ Authority:
 - [ ] AM12 Layers reorder converges with hierarchy authority and History semantics.
 - [ ] AM13 no remaining generic Photoshop screenshot is required for closure; any remaining targeted reference is explicitly classified optional or blocking.
 
+# AN. Official-source behavior closure audit
+
+- [ ] AN01 Navigator proxy drag behavior is verified against Adobe Photoshop documentation and INK Runtime.
+- [ ] AN02 Panel edge resize behavior is verified; no Photoshop cursor-raster copy is required.
+- [ ] AN03 Smart Guides show edge/center/boundary alignment opportunities.
+- [ ] AN04 Smart Guides provide useful pixel-distance feedback during movement.
+- [ ] AN05 equal-spacing feedback is supported by the accepted snap/measurement authority.
+- [ ] AN06 Photoshop's documented ~8 screen px guide-snap proximity is treated as reference behavior, not an unreviewed hard Core constant.
+- [ ] AN07 ruler-origin drag remains optional/non-blocking; if implemented it shows appropriate crosshair/reset semantics.
+- [ ] AN08 keyboard focus uses visible web-accessible focus semantics; Photoshop pixel-copy is not required.
+- [ ] AN09 disabled controls are visually distinct and semantically disabled.
+- [ ] AN10 scrollbar geometry is verified; hover/drag styling does not require Adobe raster imitation.
+- [ ] AN11 no additional dark-theme Photoshop screenshots remain required.
+- [ ] AN12 light-gray palette is either based on a controlled desktop Photoshop light-theme reference or explicitly approved as an INK adaptation.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.
