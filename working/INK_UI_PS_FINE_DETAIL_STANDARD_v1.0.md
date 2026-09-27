@@ -18,6 +18,7 @@ Related authorities:
 - `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
 - `working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`
 - `working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md`
+- `working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md`
 - `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
 
 Fixed USER reference pack:
@@ -649,10 +650,34 @@ Rules:
 - accent restrained;
 - canvas visually distinct from chrome.
 
-All final RGB/hex values:
-`REFERENCE_MISSING` until a light-gray Photoshop reference or approved visual derivation is locked.
+Light-gray reference authority:
+`working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md`
+
+Photoshop Light/Lightest theme existence and semantic roles are now externally supported by Adobe UXP documentation. Adobe Spectrum provides a numeric light-theme reference palette, but those values are not claimed as exact Photoshop 21.2.12 chrome colors.
+
+Final RGB/hex values:
+`UR_ADAPTATION_REQUIRED` — choose one INK semantic token set from the Adobe/Photoshop reference hierarchy and validate it in Runtime. Exact Photoshop 21.2.12 Light-theme RGB is no longer a prerequisite.
 
 ---
+
+
+
+Light-gray implementation constraint:
+
+```text
+ONE_LIGHT_GRAY_TOKEN_AUTHORITY = REQUIRED
+CHROME_PALETTE != CANVAS_WORKBENCH_PALETTE
+COMPONENT_LOCAL_RANDOM_GRAYS = 0
+```
+
+Adobe-native prototype range:
+- very-light chrome: 248–255;
+- light structural gray: 233–248;
+- border gray: 198–218;
+- secondary/icon gray: 80–143;
+- primary text/icon: 19–41.
+
+These are reference ranges, not fixed final values.
 
 # 11. Scrollbar / Tooltip / Cursor / Focus — fine detail
 

@@ -751,6 +751,22 @@ Authority:
 - [ ] AN11 no additional dark-theme Photoshop screenshots remain required.
 - [ ] AN12 light-gray palette is either based on a controlled desktop Photoshop light-theme reference or explicitly approved as an INK adaptation.
 
+# AO. Photoshop light-theme web-reference audit
+
+Authority:
+`working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md`
+
+- [ ] AO01 final INK light-gray palette uses one semantic token authority.
+- [ ] AO02 application chrome and canvas/workbench use distinct palette roles.
+- [ ] AO03 no component-local random gray values bypass the token authority.
+- [ ] AO04 primary/secondary/disabled text contrast is verified.
+- [ ] AO05 icon normal/hover/active/disabled contrast is verified.
+- [ ] AO06 control borders and states are visibly distinct.
+- [ ] AO07 palette hierarchy is visually consistent with Photoshop Light/Lightest public references.
+- [ ] AO08 Adobe Spectrum numeric values are treated as Adobe-native reference, not falsely claimed as exact Photoshop 21.2.12 chrome values.
+- [ ] AO09 exact Photoshop 21.2.12 Light-theme RGB is not a closure prerequisite unless USER explicitly requests binary color replication.
+- [ ] AO10 USER visual review approves the final light-gray token set.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.
