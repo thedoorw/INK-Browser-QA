@@ -1,12 +1,10 @@
 # INK DEV Progress
 
-STATUS: `P1-F + P1-G PARALLEL / DEV_AUTHORIZED`
+STATUS: `P1-F + P1-H PARALLEL / DEV_AUTHORIZED`
 
 DATE: 2026-09-27
 
 PROGRAM: `ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION`
-
-PARALLEL_BRANCH_CUT: `dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f`
 
 UPSTREAM:
 - P1-A = MODULE_READY / MR_PASS / PROMOTED
@@ -14,6 +12,8 @@ UPSTREAM:
 - P1-C = MODULE_READY / MR_PASS / PROMOTED
 - P1-D = MODULE_READY / MR_PASS / PROMOTED
 - P1-E = MODULE_READY / MR_PASS / PROMOTED
+- P1-G = MODULE_READY / MR_PASS / PROMOTED
+- P1-G promotion merge = `fff2e6961a5f72d42134ca2fedca533be0aa31c7`
 
 ## Lane F
 
@@ -22,49 +22,40 @@ TASK: `INK-P1-F-RASTER-PROCESSING-EXPANSION-001`
 BRANCH:
 `work/ink-p1-f-raster-processing-expansion-001`
 
-WORKPACK:
-`working/INK_P1_F_RASTER_PROCESSING_EXPANSION_DEV_WORKPACK_v1.0.md`
-
 LANE_PROGRESS:
 `working/INK_P1_F_DEV_PROGRESS.md`
 
-Scope:
-- Adjustment breadth
-- Filter / Filter Gallery breadth
-- Liquify Core
+## Lane H
 
-## Lane G
-
-TASK: `INK-P1-G-COLOR-BITDEPTH-CHANNELS-001`
+TASK: `INK-P1-H-FORMAT-INTEROPERABILITY-001`
 
 BRANCH:
-`work/ink-p1-g-color-bitdepth-channels-001`
+`work/ink-p1-h-format-interoperability-001`
 
 WORKPACK:
-`working/INK_P1_G_COLOR_BITDEPTH_CHANNELS_DEV_WORKPACK_v1.0.md`
+`working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md`
 
 LANE_PROGRESS:
-`working/INK_P1_G_DEV_PROGRESS.md`
+`working/INK_P1_H_DEV_PROGRESS.md`
 
 Scope:
-- 8/16/32-bit raster Core
-- RGB / CMYK / Lab / Multichannel
-- bounded ICC Core
-- Channels / alpha / spot channels
+- PSD / PSB
+- TIFF
+- RAW decoder-adapter boundary
+- EXR
 
 ## Isolation / gate
 
 ```text
-P1-F/P1-G SHARED PRODUCT SOURCE = 0
-image-core.js mutation during parallel MODULE_READY = 0
+P1-H consumes P1-G Core = YES
+P1-G source mutation by H = 0
+P1-F/P1-H shared product source = 0
+image-core.js mutation = 0
 document schema mutation = 0
 Renderer mutation = 0
 FORMAT_VERSION mutation = 0
-P1-H = NOT YET AUTHORIZED
 RUNTIME = PROHIBITED
 UI = HOLD
 ```
 
-P1-H may be authorized only after P1-G is MR_PASS and the color/bit-depth/channel contract is frozen.
-
-Each DEV lane updates its own lane progress file and STOPs independently for MR review.
+P1 Integration is blocked until P1-F and P1-H are both MR_PASS/promoted.
