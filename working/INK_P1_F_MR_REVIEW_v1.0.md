@@ -1,6 +1,6 @@
 # INK P1-F MR Review v1.0
 
-STATUS: `MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION`
+STATUS: `MR_PASS / P1_F_MODULE_READY / AWAITING_PROMOTION`
 
 TASK: `INK-P1-F-RASTER-PROCESSING-EXPANSION-001`
 
@@ -8,7 +8,7 @@ REVIEWED_BRANCH: `work/ink-p1-f-raster-processing-expansion-001`
 
 INITIAL_REVIEWED_HEAD: `5abe3d8c696f6eb74a56da415587d9f4834121f5`
 
-CURRENT_REVIEWED_HEAD: `56d8dab73f34eba58132c03a389b4fc04637bed4`
+CURRENT_REVIEWED_HEAD: `39aa86906efb94ee8a9992d50802168d8467f802`
 
 ZERO_SCOPE_CORRECTION_COMMIT: `2bc3214d6cee22294398b57948737aa5e54a5d76`
 
@@ -22,9 +22,9 @@ P1_F_AUTHORITY_ISOLATION = PASS
 P1_F_ALGORITHM_BREADTH = PASS
 P1_F_SIX_LEGAL_ZERO_ENDPOINTS = PASS
 P1_F_DEV_REPORTED_QA = PASS 39/39
-P1_F_NONFINITE_DEFAULT_SEMANTICS = REVISE
-P1_F_MODULE_READY = NO
-PROMOTION = BLOCKED
+P1_F_NONFINITE_DEFAULT_SEMANTICS = PASS
+P1_F_MODULE_READY = YES
+PROMOTION = AWAITING_MR_CONTROLLED_MERGE
 RUNTIME = NOT RUN
 ```
 
@@ -125,5 +125,37 @@ P1_F = MR_REVISE / FINAL_NORMALIZATION_BOUNDED_CORRECTION
 P1_G = PROMOTED
 P1_H = PROMOTED
 P1_INTEGRATION = BLOCKED_PENDING_P1_F
+RUNTIME = PROHIBITED
+```
+
+
+## Final normalization closure
+
+Final normalization commit:
+`48a54869fc2e104e317d858db0fec2cd7bf4adf9`
+
+Final handoff:
+`39aa86906efb94ee8a9992d50802168d8467f802`
+
+Verified:
+- finite numeric zero remains zero;
+- NaN / +Infinity / -Infinity fall back to existing defaults;
+- six authorized zero endpoint regressions remain;
+- Liquify behavior is unchanged;
+- correction scope is limited to raster-processing Core, focused QA and lane progress;
+- DEV reports full focused QA = 40/40 PASS, 0 FAIL, 0 SKIP.
+
+Final exact blobs:
+
+```text
+raster-processing-advanced.js = 1ede3198687ee0a92a54f7c77a2020d55e34ad2c
+focused QA                    = 66982fdb7783ed0e236698cd071dccbd4e06f55f
+```
+
+Final verdict:
+
+```text
+P1_F = MODULE_READY / MR_PASS / AWAITING_PROMOTION
+P1_INTEGRATION = BLOCKED_UNTIL_P1_F_PROMOTION
 RUNTIME = PROHIBITED
 ```
