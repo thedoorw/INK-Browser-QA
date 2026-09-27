@@ -678,6 +678,23 @@ Authority:
 - [ ] AJ27 final audit table includes Component / Field / Target / Actual / Evidence / Result.
 - [ ] AJ28 `SILENTLY_UNSPECIFIED_DETAIL_CLASSES = 0`.
 
+# AK. Photoshop reference-environment / measurement audit
+
+- [ ] AK01 Photoshop reference version is recorded.
+- [ ] AK02 OS and screen resolution are recorded.
+- [ ] AK03 application window size is recorded.
+- [ ] AK04 Windows display scaling is recorded or explicitly UNKNOWN for legacy evidence.
+- [ ] AK05 Photoshop UI scaling is recorded or explicitly UNKNOWN for legacy evidence.
+- [ ] AK06 UI Font Size is recorded.
+- [ ] AK07 Scale UI To Font on/off is recorded.
+- [ ] AK08 language/theme are recorded.
+- [ ] AK09 numeric evidence from different scaling environments is not mixed silently.
+- [ ] AK10 visible glyph envelope is not misreported as CSS font size.
+- [ ] AK11 visible icon envelope is not misreported as pointer hitbox.
+- [ ] AK12 active-document reference exists before document-tab/ruler/status dimensions are locked.
+- [ ] AK13 `working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md` P0 set is closed before pixel-fidelity closure.
+- [ ] AK14 every internet/official screenshot with unknown scaling is treated as visual evidence only unless its environment is known.
+
 # AF. Final current-main closure
 
 - [ ] AF01 implementation branch source review = PASS.

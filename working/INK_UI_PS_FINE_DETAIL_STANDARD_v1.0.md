@@ -71,6 +71,90 @@ No component is “complete” if any applicable field is silently omitted.
 
 ---
 
+
+# 0A. Measurement environment lock
+
+Pixel measurements are valid only together with the capture environment.
+
+For every future Photoshop reference pack record:
+
+```text
+PHOTOSHOP_VERSION
+OS / OS VERSION
+SCREEN_RESOLUTION
+APPLICATION_WINDOW_SIZE
+WINDOWS_DISPLAY_SCALE
+PHOTOSHOP_UI_SCALING
+UI_FONT_SIZE
+SCALE_UI_TO_FONT
+LANGUAGE
+THEME
+DPR / CAPTURE_METHOD if known
+```
+
+Adobe current behavior authority confirms that Photoshop UI Font Size can be Tiny / Small / Medium / Large and that `Scale UI To Font` can resize the overall interface. Adobe also notes that UI font-size behavior can depend on system display settings.
+
+Therefore:
+
+```text
+UNKNOWN_SCALING_ENVIRONMENT
+→ screenshot may be visual evidence
+→ screenshot must not become cross-version numeric authority
+```
+
+Current fixed reference environment known from the files:
+
+```text
+PHOTOSHOP_VERSION = 21.2.12 (visible in ps-2 About dialog)
+SCREEN_CAPTURE = 1280×1024
+PHOTOSHOP_APP_AREA = 1280×994
+OS_FAMILY = Windows desktop / exact version not locked
+WINDOWS_DISPLAY_SCALE = UNKNOWN
+PHOTOSHOP_UI_SCALING = UNKNOWN
+UI_FONT_SIZE = UNKNOWN
+SCALE_UI_TO_FONT = UNKNOWN
+LANGUAGE = Traditional Chinese UI
+THEME = dark
+```
+
+Existing measurements remain internally valid for `ps-1 / ps-2`; they must not be assumed to equal a different Photoshop version/scaling configuration.
+
+---
+
+# 0B. Existing-reference fine measurement pass — 2026-09-27
+
+Additional measurements extracted from the fixed `ps-1 / ps-2` pack:
+
+| Detail | Measurement | Classification |
+|---|---:|---|
+| top menu visible glyph envelope | 11–13 px high, y≈5..17 | MEASURED |
+| visible whitespace between adjacent top-menu labels | 12–13 px | MEASURED |
+| common bordered Options field outer height | ≈21 px | MEASURED_REFERENCE_STATE |
+| selected Options segmented-control fill | ≈24×25 px | OBSERVED_DENSITY |
+| Panel tab/header band | 28 px | MEASURED_REFERENCE_STATE |
+| Panel tab visible text height | 11 px | MEASURED |
+| inactive two-character tab side whitespace | ≈9–10 px each side | MEASURED_OBSERVED |
+| Panel options visible menu glyph | 10×7 px | MEASURED |
+| Panel options glyph right inset | ≈6 px | MEASURED |
+| stacked Panel splitter | ≈3 px | OBSERVED_DENSITY |
+| Layers panel footer content | 24 px + 1 px bottom boundary | MEASURED_REFERENCE_STATE |
+| selected Tools visual fill | 31×24 px | MEASURED |
+| Tools row pitch | ≈26 px | OBSERVED_DENSITY |
+| Tools flyout marker | 3×3 px visible | MEASURED |
+| Tools collapse glyph | 7×5 px visible | MEASURED |
+| Tools top collapse/handle strip | 11 px | MEASURED |
+| foreground/background swatch | 18×18 px each | MEASURED_IN_PS2 |
+| swatch overlap offset | 10 px X / 10 px Y | MEASURED_IN_PS2 |
+| Quick Mask icon envelope | ≈17×13 px | MEASURED_IN_PS2 |
+| Screen Mode icon envelope | ≈17×13 px | MEASURED_IN_PS2 |
+
+Important:
+- visible glyph dimensions are raster evidence, not CSS font-size declarations;
+- a visible icon envelope is not automatically its pointer hitbox;
+- closed-state screenshots cannot reveal true hover/focus/hitbox geometry.
+
+---
+
 # 1. Global shell geometry
 
 ## 1.1 Top chrome
@@ -143,10 +227,11 @@ Audit fields:
 
 ```text
 MENU_BAR_HEIGHT = 24 px content / MEASURED
-MENU_LABEL_VERTICAL_ALIGNMENT = REFERENCE_MISSING
-MENU_LABEL_LEFT_RIGHT_PADDING = REFERENCE_MISSING
-MENU_LABEL_FONT_SIZE = REFERENCE_MISSING
-MENU_LABEL_WEIGHT = REFERENCE_MISSING
+MENU_LABEL_VISIBLE_GLYPH_Y = y 5..17 / 11–13 px visible envelope / MEASURED
+MENU_INTER_LABEL_VISIBLE_GAP = 12–13 px / MEASURED
+MENU_LABEL_LEFT_RIGHT_PADDING = REFERENCE_MISSING (item bounds not visible in closed state)
+MENU_LABEL_FONT_SIZE = REFERENCE_MISSING (visible glyph envelope is not CSS font size)
+MENU_LABEL_WEIGHT = VISUAL_REFERENCE_ONLY
 MENU_LABEL_LINE_HEIGHT = REFERENCE_MISSING
 MENU_LABEL_NORMAL_CONTRAST = REFERENCE_MISSING
 MENU_LABEL_HOVER_BACKGROUND = REFERENCE_MISSING
@@ -200,10 +285,10 @@ Audit fields:
 
 ```text
 OPTIONS_HEIGHT = 35 px / MEASURED
-CONTROL_HEIGHT = REFERENCE_MISSING
-ICON_BUTTON_BOX = REFERENCE_MISSING
-INPUT_HEIGHT = REFERENCE_MISSING
-SELECT_HEIGHT = REFERENCE_MISSING
+CONTROL_HEIGHT = 21 px common bordered field reference / MEASURED_IN_PS1_SELECTION_OPTIONS
+ICON_BUTTON_BOX = selected segmented-tool fill ≈24×25 px / OBSERVED_DENSITY
+INPUT_HEIGHT = 21 px common bordered field reference / MEASURED
+SELECT_HEIGHT = 21–23 px observed depending control treatment / OBSERVED_DENSITY
 NUMERIC_FIELD_MIN_WIDTH = REFERENCE_MISSING
 CONTROL_HORIZONTAL_GAP = REFERENCE_MISSING
 GROUP_SEPARATOR_WIDTH = REFERENCE_MISSING
@@ -264,15 +349,25 @@ TOOL_SELECTED_FILL
 TOOL_HOVER_FILL
 TOOL_FOCUS_RING
 TOOL_DISABLED_CONTRAST
-FLYOUT_TRIANGLE_SIZE
-FLYOUT_TRIANGLE_OFFSET
+FLYOUT_TRIANGLE_SIZE = 3×3 px visible marker / MEASURED
+FLYOUT_TRIANGLE_OFFSET = marker observed at tool-cell lower-right / exact inset REFERENCE_MISSING
 TOOL_SECTION_SEPARATOR
 TOOL_SECTION_GAP
 TOOLTIP_DELAY
 TOOLTIP_OFFSET
 TOOLTIP_SHORTCUT_FORMAT
 LAYOUT_TOGGLE_HITBOX
+TOOLBAR_COLLAPSE_GLYPH = 7×5 px visible / MEASURED
+TOOLBAR_TOP_HANDLE_STRIP = 11 px / MEASURED
+TOOLBAR_LOCAL_DIVIDER = 1 px / MEASURED
+FOREGROUND_SWATCH = 18×18 px visible / MEASURED_IN_PS2
+BACKGROUND_SWATCH = 18×18 px visible / MEASURED_IN_PS2
+SWATCH_OVERLAP_OFFSET = 10 px X / 10 px Y / MEASURED_IN_PS2
+QUICK_MASK_ICON_ENVELOPE ≈17×13 px / MEASURED_IN_PS2
+SCREEN_MODE_ICON_ENVELOPE ≈17×13 px / MEASURED_IN_PS2
 ```
+
+Tools utility controls (foreground/background swatches, default/swap colors, Quick Mask, screen mode) are part of the Photoshop tool-rail grammar and must be explicitly dispositioned in INK rather than silently omitted.
 
 All unspecified numeric values remain `REFERENCE_MISSING`.
 
@@ -316,10 +411,11 @@ PANEL_RESIZE_HANDLE_WIDTH
 PANEL_RESIZE_CURSOR
 PANEL_BORDER
 PANEL_BACKGROUND
-PANEL_HEADER_HEIGHT
+PANEL_HEADER_HEIGHT = 28 px band / MEASURED_REFERENCE_STATE
+PANEL_HEADER_VISIBLE_GLYPH_HEIGHT = 11 px in ps-1 / MEASURED
 PANEL_BODY_PADDING_X
 PANEL_BODY_PADDING_TOP
-PANEL_FOOTER_HEIGHT
+PANEL_FOOTER_HEIGHT = 24 px content + 1 px bottom boundary in Layers reference / MEASURED_REFERENCE_STATE
 PANEL_GROUP_SPLITTER_THICKNESS
 PANEL_GROUP_SPLITTER_HITBOX
 ```
@@ -685,9 +781,10 @@ Measured reference:
 Audit fields:
 
 ```text
-TAB_ROW_HEIGHT
-TAB_MIN_WIDTH
-TAB_HORIZONTAL_PADDING
+TAB_ROW_HEIGHT = 28 px / MEASURED_REFERENCE_STATE
+TAB_MIN_WIDTH = REFERENCE_MISSING
+TAB_HORIZONTAL_PADDING = ≈9–10 px around two-character inactive tabs in ps-1 / MEASURED_OBSERVED
+TAB_LABEL_VISIBLE_GLYPH_HEIGHT = 11 px / MEASURED
 TAB_LABEL_FONT_TOKEN
 TAB_ICON_BOX
 TAB_ACTIVE_INDICATOR
@@ -723,9 +820,9 @@ Every panel must declare:
 Audit fields:
 
 ```text
-PANEL_MENU_TRIGGER_BOX
-PANEL_MENU_ICON_SIZE
-PANEL_MENU_ICON_OFFSET
+PANEL_MENU_TRIGGER_BOX = REFERENCE_MISSING (closed state does not expose hitbox)
+PANEL_MENU_ICON_SIZE = 10×7 px visible four-line glyph in ps-1 / MEASURED
+PANEL_MENU_ICON_OFFSET = visible glyph right edge ≈6 px from panel inner right boundary / MEASURED
 PANEL_MENU_POPUP_ANCHOR
 PANEL_MENU_POPUP_OFFSET
 PANEL_MENU_MIN_WIDTH
@@ -1067,6 +1164,62 @@ To convert all `REFERENCE_MISSING` fields to measured values, acquire or capture
 These captures are evidence acquisition, not product implementation.
 
 ---
+
+
+# 23A. Official-behavior findings added during measurement pass
+
+Current Adobe documentation confirms:
+
+- the Photoshop Document window can be grouped or tabbed;
+- the Options bar displays settings for the currently selected tool;
+- Panels can be grouped, stacked, docked, undocked, reordered by tab, and may float;
+- a panel can be closed from its tab context menu;
+- Tooltips can be standard or rich; standard tooltips expose tool name/shortcut;
+- rulers appear on the top and left of the active window, expose pointer position, and share a draggable/resettable zero origin;
+- horizontal/vertical guides can be dragged directly from rulers and Shift-snapped to ruler ticks;
+- the document status bar belongs to each document window and can expose magnification/document information/tool guidance;
+- Photoshop UI Font Size and Scale UI To Font make capture environment part of numeric measurement authority.
+
+These are `BEHAVIOR_CONFIRMED` findings. They do not provide reliable pixel dimensions by themselves.
+
+---
+
+
+## 23.1 Next controlled reference pack — P0
+
+The highest-value next capture set is one matched-environment Photoshop session with an actual document open:
+
+1. active document, rulers OFF;
+2. active document, rulers ON;
+3. active document, status bar visible;
+4. active document with document-status popup open;
+5. application menu open;
+6. submenu open;
+7. tool flyout open;
+8. panel group with active + inactive tabs;
+9. panel options menu open;
+10. Layers populated, one layer selected;
+11. Layers drag reorder in progress;
+12. History with multiple states;
+13. History after reverting to an earlier state;
+14. Navigator visible with viewport proxy;
+15. Navigator proxy drag;
+16. guide being dragged from horizontal ruler;
+17. guide being dragged from vertical ruler;
+18. ruler-origin drag / zero-origin state;
+19. snap/equal-spacing feedback in action;
+20. tooltip visible;
+21. disabled control;
+22. keyboard-focused control;
+23. scrollbar hover/drag;
+24. panel resize in progress;
+25. empty workspace after closing the last document.
+
+For every capture:
+- keep Photoshop version, display scaling, UI Font Size and Scale UI To Font unchanged;
+- keep application window size recorded;
+- do not use browser-resized copies as pixel authority.
+
 
 # 24. Fine-detail completion gate
 

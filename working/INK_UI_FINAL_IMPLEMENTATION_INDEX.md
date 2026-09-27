@@ -95,3 +95,12 @@ Do not issue UI implementation Work Orders from this index until:
 3. every added/restored capability receives one Primary Home;
 4. all checklist counts and exclusions are refreshed;
 5. `UI_HOLD` is explicitly cleared.
+
+
+## Photoshop reference acquisition
+
+- `working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md`
+  - controlled capture environment requirements;
+  - active-document/ruler/status/menu/panel reference pack;
+  - P0 measurement closure criteria;
+  - internet/official screenshots with unknown scaling are behavior/visual evidence, not numeric pixel authority.
