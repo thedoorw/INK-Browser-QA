@@ -149,7 +149,7 @@ Comparison:
 ```text
 base = d1269334338531228ddfdd9383761cd419e58738
 head = work/ink-p1-integrated-runtime-001
-ahead = 5
+relationship = control/evidence commits only; commit count is not used as acceptance evidence
 behind = 0
 product/source/** changed files = 0
 ```
