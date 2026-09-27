@@ -1,6 +1,6 @@
 # INK UI Reconciliation Gap Register v1.0
 
-STATUS: `UR_COMPLETE / MR_REVIEW_REQUIRED / UI_IMPLEMENTATION_HOLD`
+STATUS: `UR_REVISION_COMPLETE / MR_REVIEW_REQUIRED / UI_IMPLEMENTATION_HOLD`
 
 TASK: `INK-UI-FULL-CAPABILITY-RECONCILIATION-001`
 
@@ -59,6 +59,38 @@ This register records UI gaps only. It does not authorize implementation.
 | G-32 | P2-UI | C55 | Recipe surface split between Compose and Specialist | distinguish normal Compose workflow from engineering Recipe controls | Compose/Specialist | UI DEV → UR |
 | G-33 | P2-UI | C60 | memory/research advisory state lacks clear human readout | CHAT/Compose advisory readout only; no autonomous write UI | CHAT/Compose | UI DEV → UR |
 | G-34 | P2-UI | C63 | update controls exist in settings/legacy surface | normalize Help > Updates + diagnostics state | Help/dialog | UI DEV → UR |
+
+## Atomic audit re-run
+
+Authority:
+`working/INK_UI_ATOMIC_CAPABILITY_DISPOSITION_v1.0.md`
+
+The required 501/501 atomic disposition was re-audited against this register. Atomic review did not reveal an additional real UI gap beyond G-01 through G-34.
+
+The following do **not** create gaps:
+- C47 storage implementation internals;
+- C49/C50 renderer internals;
+- C51 GPU/tile/cache infrastructure;
+- C53 output-handle inspect/release lifecycle;
+- C54 dependency/recompute internals;
+- automatic C36 stylus signal ingestion;
+- C58 semantic grounding internals;
+- C62 five headless platform-support atomics;
+- automatic C63 service-worker/update tracking internals.
+
+Their user-visible health/readout routes remain Help/Specialist/contextual where already planned.
+
+```text
+PRODUCT_ATOMIC_AUDIT = 496 / 496
+HEADLESS_PLATFORM_SUPPORT_AUDIT = 5 / 5
+TOTAL_NORMALIZED_ATOMIC_AUDIT = 501 / 501
+ATOMIC_AUDIT_NEW_GAPS = 0
+OPEN_UI_GAPS = 34
+P0_UI_GAPS = 14
+P1_UI_GAPS = 15
+P2_UI_GAPS = 5
+HEADLESS_FALSE_GAPS = 0
+```
 
 ## 3. Mandatory P1-A gap closure
 
