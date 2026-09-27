@@ -854,4 +854,6 @@ Status rule:
 - allowed candidates: zoom/view telemetry and production-critical document state such as color mode, bit depth and profile when technically authoritative;
 - diagnostics, GPU/QA/update/provider state and duplicated Properties/Navigator information are prohibited;
 - if only zoom/view remains useful, prefer a compact bottom view cluster;
+- the document-status surface is **active-document-only**: hidden with no document open, eligible only when a document is active, and hidden again when the last document closes;
+- empty workspace must not reserve dead bottom height for a hidden document-status surface;
 - final document-production telemetry is reconciled after P1-G/P1-H capability completion.

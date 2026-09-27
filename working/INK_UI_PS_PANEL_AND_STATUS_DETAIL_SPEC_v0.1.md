@@ -367,7 +367,8 @@ Current decision before MR completes P1:
 
 ```text
 FULL-WIDTH_GENERIC_STATUS_BAR = NOT YET REQUIRED
-DOCUMENT_STATUS_STRIP = CONDITIONAL / PURPOSE-DRIVEN
+DOCUMENT_STATUS_STRIP = CONDITIONAL / PURPOSE-DRIVEN / ACTIVE-DOCUMENT-ONLY
+EMPTY_WORKSPACE_STATUS_STRIP = HIDDEN
 BOTTOM_ZOOM_VIEW_CLUSTER = ALLOWED
 DIAGNOSTIC_CONTENT = PROHIBITED
 FINAL_DOCUMENT_TELEMETRY = WAIT_FOR_P1_G_REBASELINE
@@ -432,3 +433,55 @@ This document closes the conceptual gap by explicitly defining:
 - detail fields to measure.
 
 Status bar remains intentionally **not locked as a mandatory full-width bar**. INK will retain only a compact document/view status surface if its actual information value justifies the space after the refreshed capability baseline is complete.
+
+
+# 15. Document-open state — mandatory status-strip condition
+
+USER-observed Photoshop behavior:
+
+```text
+NO OPEN DOCUMENT
+→ NO DOCUMENT STATUS BAR
+
+ACTIVE OPEN DOCUMENT
+→ DOCUMENT STATUS BAR MAY APPEAR
+```
+
+INK adopts the same **state-dependent visibility grammar**.
+
+Required state model:
+
+```text
+APP / EMPTY WORKSPACE
+→ DOCUMENT_STATUS_STRIP = HIDDEN
+→ no reserved empty bottom bar
+→ canvas/workspace may use the released vertical space
+
+ACTIVE DOCUMENT
+→ DOCUMENT_STATUS_STRIP = ELIGIBLE
+→ render only the document/view telemetry that passes the purpose test
+
+NO ACTIVE DOCUMENT / ALL DOCUMENTS CLOSED
+→ DOCUMENT_STATUS_STRIP = HIDDEN
+```
+
+This is not merely a CSS visibility detail. It is a product-state rule:
+- the strip belongs to an active document/view context;
+- it is not global application chrome;
+- it must not leave a dead full-width region when no document is open;
+- empty-workspace geometry and active-document geometry must both be validated.
+
+If INK later supports multiple simultaneously open documents:
+- the strip follows the active document;
+- document-specific telemetry switches with active-document focus;
+- no second global document-status authority is introduced.
+
+Acceptance:
+
+```text
+EMPTY_WORKSPACE_STATUS_STRIP = HIDDEN
+ACTIVE_DOCUMENT_STATUS_STRIP = PURPOSE_DRIVEN
+ALL_DOCUMENTS_CLOSED_STATUS_STRIP = HIDDEN
+DEAD_BOTTOM_RESERVED_SPACE = 0
+DOCUMENT_STATUS_STATE_OWNER = 1
+```

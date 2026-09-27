@@ -637,6 +637,12 @@ SNAP_JITTER_REGRESSION = 0
 - [ ] AH18 status surface does not duplicate Properties or Navigator state ownership.
 - [ ] AH19 P1-G color mode/bit depth/profile placement is reconsidered after refreshed baseline.
 - [ ] AH20 if only zoom/view telemetry remains useful, compact view controls are used instead of an unnecessary full-width bar.
+- [ ] AH21 with no document open, the document status strip is completely hidden. [INT][PIX]
+- [ ] AH22 empty workspace does not reserve dead bottom height for a hidden status strip. [DOM][PIX]
+- [ ] AH23 opening a document makes the document-status surface eligible and binds it to that document/view context. [INT]
+- [ ] AH24 closing the last document hides the document-status surface again. [INT][PIX]
+- [ ] AH25 document-specific status telemetry follows the active document if multi-document behavior is later supported. [SRC][INT]
+- [ ] AH26 document status state has one authority and is not implemented as global always-on application chrome. [SRC][HEALTH]
 
 # AF. Final current-main closure
 
