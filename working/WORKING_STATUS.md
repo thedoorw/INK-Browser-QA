@@ -31,7 +31,7 @@ P1_PARALLEL_BRANCH_CUT = dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f
 P1_F = AUTHORIZED / PARALLEL
 P1_G = MODULE_READY / MR_PASS / PROMOTED
 P1_G_PROMOTION_MERGE = fff2e6961a5f72d42134ca2fedca533be0aa31c7
-P1_H = AUTHORIZED / PARALLEL
+P1_H = MR_REVISE / BOUNDED_CORRECTION_AUTHORIZED
 P1_INTEGRATION = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_F_H
 P1_RUNTIME = PLANNED / DEV_OWNED_EXECUTION / BLOCKED_PENDING_INTEGRATION
 P1_F_BRANCH = work/ink-p1-f-raster-processing-expansion-001
@@ -72,7 +72,7 @@ P1-D passed MR MODULE_READY review and is promoted on main `206f027785c04e56e912
 
 P1-E passed MR MODULE_READY review and is promoted on main `fd714bb4aa5f15db9d236ac93c9fc71d41cd4c74`.
 
-P1-G passed MR re-review and is promoted. P1-H is now authorized and may run in parallel with the independent P1-F lane. P1-H consumes the frozen P1-G color/bit-depth/ICC/channel contract.
+P1-G passed MR re-review and is promoted. P1-H reached DEV handoff at `5c5481c8a93e9a1edea486237677f253c348b4a9` but MR found bounded channel-semantic defects: EXR additional channels are currently classified as alpha, and TIFF ExtraSamples semantics are not distinguished. P1-H remains unpromoted and is authorized only for the bounded correction recorded in `working/INK_P1_H_MR_REVIEW_v1.0.md`.
 
 ## UI release sequence
 
