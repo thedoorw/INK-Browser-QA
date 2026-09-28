@@ -14,6 +14,7 @@ import { createSkewMatrix, createProjectiveTransform, mapProjectivePoint, create
 import { applyNonDestructiveDeformation } from '../src/vector/deformation.js';
 import { normalizeGradientFill, normalizePatternFill } from '../src/vector/fill-appearance.js';
 import { updateTextObject } from '../src/editor/text-object.js';
+import { verifyStorageRecord } from '../src/document/storage.js';
 import { UI_B_MENU_CONTRIBUTIONS, UI_B_TOOL_GROUPS, UI_B_DIALOGS, UI_B_CONTRIBUTION_REPORT } from './capability-contributions.js';
 import { createRasterToolController, UI_B_RASTER_TOOL_IDS } from './capability-raster-tools.js';
 
@@ -89,7 +90,7 @@ function dialogShell(id,title,body,wide=false){
 export function installFullCapabilityControls(app){
   if(app.uiBControls)return app.uiBControls;
   const shell=window.INK_WEB_SHELL;
-  const state={lastToolByGroup:new Map(),activeCapabilityTool:null,dialogContext:null,selectedChannel:null};
+  const state={lastToolByGroup:new Map(),activeCapabilityTool:null,dialogContext:null,selectedChannel:null,rasterSnapshot:null,recoveryCandidates:[]};
   const raster=createRasterToolController(app,{onStateChange:()=>refreshContextOptions()});
 
   function toast(message,time=2400){app.toast(message,time);}
@@ -264,7 +265,7 @@ export function installFullCapabilityControls(app){
       $('#uiBAdjustmentGrid').addEventListener('click',event=>{const type=event.target.closest('[data-ui-b-adjustment]')?.dataset.uiBAdjustment;if(type)addAdjustment(type);});
     }
     const channels=$('[data-shell-panel-section="channels"] .shell-panel-body');
-    if(channels)channels.innerHTML='<div id="uiBChannelsList" class="ui-b-stack-list"></div><div class="ui-b-panel-actions">'+button('Add Alpha','data-ui-b-channel="add-alpha"')+button('Add Spot','data-ui-b-channel="add-spot"')+button('Remove','data-ui-b-channel="remove"')+'</div>';
+    if(channels)channels.innerHTML='<div id="uiBChannelsList" class="ui-b-stack-list"></div><div class="ui-b-panel-actions">'+button('Add Alpha','data-ui-b-channel="add-alpha"')+button('Add Spot','data-ui-b-channel="add-spot"')+button('Rename','data-ui-b-channel="rename"')+button('Up','data-ui-b-channel="up"')+button('Down','data-ui-b-channel="down"')+button('Remove','data-ui-b-channel="remove"')+'</div>';
     channels?.addEventListener('click',event=>{const cmd=event.target.closest('[data-ui-b-channel]')?.dataset.uiBChannel;if(cmd)channelCommand(cmd);});
     const layers=$('[data-shell-panel-section="layers"] .shell-panel-body')||$('[data-content="layers"]');
     if(layers&&!$('#uiBLayerAppearance')){
@@ -274,8 +275,11 @@ export function installFullCapabilityControls(app){
       $('#uiBBlendMode').addEventListener('change',event=>{const found=selectedObject();if(found)mutateObject('Blend Mode',found,object=>object.blendMode=event.target.value);});
     }
     const objectPanel=$('[data-content="object"]');
-    if(objectPanel&&!$('#uiBRasterProperties'))objectPanel.appendChild(htmlNode('<div id="uiBRasterProperties" class="property-card ui-b-raster-properties"><div class="subpanel-title"><strong>Raster / Image</strong><span>UI-B</span></div><div id="uiBRasterStateReadout" class="shell-panel-note">No raster selected</div><div class="ui-b-panel-actions">'+button('Crop…','data-ui-b-command="image-crop"')+button('Resize…','data-ui-b-command="image-resize"')+button('Profile…','data-ui-b-command="color-profile"')+'</div><div id="uiBFilterStack" class="ui-b-stack-list"></div><div id="uiBEffectStack" class="ui-b-stack-list"></div></div>'));
-    objectPanel?.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);});
+    if(objectPanel&&!$('#uiBRasterProperties'))objectPanel.appendChild(htmlNode('<div id="uiBRasterProperties" class="property-card ui-b-raster-properties"><div class="subpanel-title"><strong>Raster / Image</strong><span>UI-B</span></div><div id="uiBRasterStateReadout" class="shell-panel-note">No raster selected</div><div id="uiBRasterSourceReadout" class="shell-panel-note"></div><div class="ui-b-panel-actions">'+button('Crop…','data-ui-b-command="image-crop"')+button('Resize…','data-ui-b-command="image-resize"')+button('Profile…','data-ui-b-command="color-profile"')+'</div><div class="ui-b-panel-actions">'+button('Histogram','data-ui-b-raster-insight="histogram"')+button('Snapshot','data-ui-b-raster-insight="snapshot"')+button('Compare','data-ui-b-raster-insight="compare"')+'</div><div id="uiBRasterAnalysis" class="shell-panel-note"></div><div id="uiBFilterStack" class="ui-b-stack-list"></div><div id="uiBEffectStack" class="ui-b-stack-list"></div></div>'));
+    objectPanel?.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);const insight=event.target.closest('[data-ui-b-raster-insight]')?.dataset.uiBRasterInsight;if(insight)runRasterInsight(insight);});
+    const geometryPanel=$('[data-content="geometry"]');
+    if(geometryPanel&&!$('#uiBVectorAppearance'))geometryPanel.appendChild(htmlNode('<div id="uiBVectorAppearance" class="property-card"><div class="subpanel-title"><strong>Vector Appearance</strong><span>P1-C</span></div><div id="uiBVectorAppearanceReadout" class="shell-panel-note">Select a Path</div><div class="ui-b-panel-actions">'+button('Gradient…','data-ui-b-command="gradient-editor"')+button('Pattern…','data-ui-b-command="pattern-editor"')+'</div></div>'));
+    geometryPanel?.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);});
     refreshPanels();
   }
 
@@ -287,6 +291,8 @@ export function installFullCapabilityControls(app){
       if(object?.rasterState?.colorRaster){const r=deserializeColorRaster(object.rasterState.colorRaster);readout.textContent=r.width+'×'+r.height+' · '+r.bitDepth+'-bit · '+r.colorMode+(object.rasterState.icc?.inspection?' · ICC':'');}
       else readout.textContent='No raster selected';
     }
+    const sourceReadout=$('#uiBRasterSourceReadout');if(sourceReadout)sourceReadout.textContent=object?.rasterState?.source?'Source: '+[object.rasterState.source.format,object.rasterState.source.compression].filter(Boolean).join(' · '):(object?.sourceId?'Reusable source: '+object.sourceId:'');
+    const vectorReadout=$('#uiBVectorAppearanceReadout');if(vectorReadout)vectorReadout.textContent=object?.type==='path'?(object.fillAppearance?.type?('Fill: '+object.fillAppearance.type):'Path fill: ordinary'):'Select a Path';
     const filterStack=$('#uiBFilterStack');if(filterStack)filterStack.innerHTML=(object?.filterStack||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><button data-ui-b-filter-remove="'+index+'">×</button></div>').join('');
     filterStack?.querySelectorAll('[data-ui-b-filter-remove]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const index=Number(button.dataset.uiBFilterRemove);mutateObject('移除 Filter',current,obj=>obj.filterStack.splice(index,1));}));
     const effectStack=$('#uiBEffectStack');if(effectStack)effectStack.innerHTML=(object?.effects||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>fx · '+esc(item.type)+'</span><button data-ui-b-effect-remove="'+index+'">×</button></div>').join('');
@@ -314,6 +320,11 @@ export function installFullCapabilityControls(app){
       else if(command==='add-spot')object.rasterState.spotChannels.push({id:'spot-'+Date.now().toString(36),name:'Spot '+(object.rasterState.spotChannels.length+1),kind:'spot',data:Array(length).fill(0),previewColor:[255,0,0],solidity:.5});
       else if(command==='remove'&&state.selectedChannel?.kind==='alpha')object.rasterState.alphaChannels.splice(state.selectedChannel.index,1);
       else if(command==='remove'&&state.selectedChannel?.kind==='spot')object.rasterState.spotChannels.splice(state.selectedChannel.index,1);
+      else if(['rename','up','down'].includes(command)&&['alpha','spot'].includes(state.selectedChannel?.kind)){
+        const key=state.selectedChannel.kind==='alpha'?'alphaChannels':'spotChannels',items=object.rasterState[key],index=state.selectedChannel.index;
+        if(command==='rename'){const next=prompt('Channel name',items[index]?.name||'Channel');if(next)items[index].name=next.trim()||items[index].name;}
+        else{const target=clamp(index+(command==='up'?-1:1),0,items.length-1);if(target!==index){const [item]=items.splice(index,1);items.splice(target,0,item);state.selectedChannel={...state.selectedChannel,index:target};}}
+      }
     });state.selectedChannel=null;refreshPanels();
   }
 
@@ -324,7 +335,7 @@ export function installFullCapabilityControls(app){
       ['layer-effects','Layer Effects','<label>Effect <select id="uiBEffectType">'+selectOptions(Object.keys(EFFECT_DEFAULTS))+'</select></label><label>Color <input id="uiBEffectColor" type="color" value="#000000"></label><label>Opacity <input id="uiBEffectOpacity" type="number" min="0" max="1" step=".05" value=".6"></label><label>Size/Radius <input id="uiBEffectSize" type="number" min="0" max="200" value="8"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="layer-effects">Add Effect</button></div>'],
       ['filter-params','Filter','<div id="uiBFilterName" class="ui-b-dialog-note"></div><label>Amount / Radius <input id="uiBFilterAmount" type="number" min="0" max="100" step=".1" value="2"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="filter-params">Add Filter</button></div>'],
       ['filter-gallery','Filter Gallery','<div id="uiBFilterGalleryList" class="ui-b-gallery"></div>'],
-      ['liquify','Liquify','<label>Operation <select id="uiBLiquifyType">'+selectOptions(['forwardWarp','twirl','pucker','bloat','reconstruct'])+'</select></label><label>Radius <input id="uiBLiquifyRadius" type="number" min="1" max="1000" value="80"></label><label>Strength <input id="uiBLiquifyStrength" type="number" min="-1" max="1" step=".05" value=".4"></label><label>dx <input id="uiBLiquifyDx" type="number" value="12"></label><label>dy <input id="uiBLiquifyDy" type="number" value="0"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="liquify">Add Liquify Filter</button></div>'],
+      ['liquify','Liquify','<label>Operation <select id="uiBLiquifyType">'+selectOptions(['forwardWarp','twirl','pucker','bloat','reconstruct'])+'</select></label><label>Radius <input id="uiBLiquifyRadius" type="number" min="1" max="1000" value="80"></label><label>Strength <input id="uiBLiquifyStrength" type="number" min="-1" max="1" step=".05" value=".4"></label><label>dx <input id="uiBLiquifyDx" type="number" value="12"></label><label>dy <input id="uiBLiquifyDy" type="number" value="0"></label><label><input id="uiBLiquifyFreezeSelection" type="checkbox"> Protect current raster selection</label><div class="button-row"><button class="primary-button" data-ui-b-apply="liquify">Add Liquify Filter</button></div>'],
       ['gradient-editor','Gradient Editor','<label>Type <select id="uiBGradientType">'+selectOptions(['linear','radial'])+'</select></label><label>Start <input id="uiBGradientStart" type="color" value="#202020"></label><label>End <input id="uiBGradientEnd" type="color" value="#ffffff"></label><label>Opacity <input id="uiBGradientOpacity" type="number" min="0" max="1" step=".05" value="1"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="gradient-editor">Apply to selected Path</button></div>'],
       ['pattern-editor','Pattern Fill','<label>Pattern ref <input id="uiBPatternRef" type="text" value="pattern-default"></label><label>Scale <input id="uiBPatternScale" type="number" step=".1" value="1"></label><label>Rotation <input id="uiBPatternRotation" type="number" value="0"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="pattern-editor">Apply to selected Path</button></div>'],
       ['color-profile','Color Profile','<div id="uiBProfileReadout" class="ui-b-dialog-note">No profile</div><input id="uiBProfileInput" type="file" accept=".icc,.icm" hidden><div class="button-row"><button data-ui-b-profile-load>Load ICC…</button></div>'],
@@ -333,7 +344,7 @@ export function installFullCapabilityControls(app){
       ['advanced-transform','Advanced Transform','<div id="uiBTransformMode" class="ui-b-dialog-note"></div><label>A <input id="uiBTransformA" type="number" step=".1" value="10"></label><label>B <input id="uiBTransformB" type="number" step=".1" value="0"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="advanced-transform">Apply</button></div>'],
       ['keyboard-shortcuts','Keyboard Shortcuts','<div class="ui-b-shortcuts"><p><kbd>V</kbd> Select</p><p><kbd>F</kbd> Fit</p><p><kbd>R</kbd> Rulers</p><p><kbd>Ctrl+Z</kbd> Undo</p><p><kbd>Ctrl+Shift+Z</kbd> Redo</p><p><kbd>Delete</kbd> Delete selection</p><p><kbd>Space</kbd> temporary Pan</p><p><kbd>Shift</kbd> constrained/angle snap</p></div>'],
       ['pen-calibration','Pen Calibration','<p class="ui-b-dialog-note">Calibration profile uses the existing device-validation authority.</p><div class="button-row"><button data-ui-b-pen-calibration-open>Open Specialist calibration controls</button></div>'],
-      ['recovery','Recovery','<p class="ui-b-dialog-note">Recovery uses the existing storage/checkpoint authority. No second autosave model is created.</p>']
+      ['recovery','Recovery','<p class="ui-b-dialog-note">Recovery uses the existing storage/checkpoint authority. No second autosave model is created.</p><div id="uiBRecoveryList" class="ui-b-stack-list">Loading…</div>']
     ];
     for(const [id,title,body] of specs)if(!$('#uiB-'+id))root.appendChild(dialogShell(id,title,body,['filter-gallery','liquify'].includes(id)));
     root.addEventListener('click',event=>{
@@ -341,6 +352,7 @@ export function installFullCapabilityControls(app){
       const apply=event.target.closest('[data-ui-b-apply]');if(apply){applyDialog(apply.dataset.uiBApply);return;}
       if(event.target.closest('[data-ui-b-profile-load]'))$('#uiBProfileInput')?.click();
       if(event.target.closest('[data-ui-b-pen-calibration-open]')){closeDialog('pen-calibration');openPanel('specialist');$('#calibrationProfileSelect')?.scrollIntoView({block:'center'});}
+      const recovery=event.target.closest('[data-ui-b-recovery-index]');if(recovery)restoreRecoveryCandidate(Number(recovery.dataset.uiBRecoveryIndex));
     });
     $('#uiBProfileInput')?.addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{const bytes=new Uint8Array(await file.arrayBuffer()),profile=parseIccProfile(bytes),inspection=inspectIccProfile(profile),found=selectedImage();if(!found)return;mutateObject('Assign ICC Profile',found,object=>{object.rasterState.icc={bytes:Array.from(bytes),inspection};});refreshProfileDialog();toast('ICC profile assigned');}catch(error){toast('ICC：'+error.message,3000);}});
   }
@@ -350,6 +362,7 @@ export function installFullCapabilityControls(app){
     const dialog=$('#uiB-'+id);if(!dialog){toast('Dialog unavailable: '+id);return;}
     if(id==='filter-gallery')refreshFilterGallery();
     if(id==='color-profile')refreshProfileDialog();
+    if(id==='recovery')refreshRecoveryDialog();
     if(id==='image-size'||id==='image-crop'){const found=selectedImage();if(!found)return;const raster=deserializeColorRaster(found.object.rasterState.colorRaster);if(id==='image-size'){$('#uiBImageWidth').value=raster.width;$('#uiBImageHeight').value=raster.height;}else{$('#uiBCropW').value=raster.width;$('#uiBCropH').value=raster.height;}}
     if(id==='filter-params')$('#uiBFilterName').textContent=context?.type||'Filter';
     if(id==='advanced-transform')$('#uiBTransformMode').textContent=context?.mode||'Transform';
@@ -383,7 +396,7 @@ export function installFullCapabilityControls(app){
       }else if(id==='liquify'){
         const found=selectedImage();if(!found)return;
         const type=$('#uiBLiquifyType').value,radius=number($('#uiBLiquifyRadius').value,80),strength=number($('#uiBLiquifyStrength').value,.4),dx=number($('#uiBLiquifyDx').value,12),dy=number($('#uiBLiquifyDy').value,0);
-        const object=found.object,rasterState=deserializeColorRaster(object.rasterState.colorRaster),x=rasterState.width/2,y=rasterState.height/2,filter=createLiquifyFilter([{type,x,y,radius,strength,dx,dy}],{maxWork:Math.max(4096,rasterState.width*rasterState.height*2)});
+        const object=found.object,rasterState=deserializeColorRaster(object.rasterState.colorRaster),x=rasterState.width/2,y=rasterState.height/2,freeze=$('#uiBLiquifyFreezeSelection')?.checked?raster.selection():null,filter=createLiquifyFilter([{type,x,y,radius,strength,dx,dy}],{freezeMask:freeze?.alpha||null,maxWork:Math.max(4096,rasterState.width*rasterState.height*2)});
         mutateObject('Liquify',found,obj=>{obj.filterStack=obj.filterStack||[];obj.filterStack.push(filter);});closeDialog(id);
       }else if(id==='gradient-editor'){
         const found=selectedFound(app,object=>object.type==='path');if(!found){toast('請先選取 Path');return;}
@@ -502,6 +515,8 @@ export function installFullCapabilityControls(app){
       if(command==='canvas-settings')return $('#canvasSettingsToggle')?.click();
       if(command==='image-adjustments')return openPanel('adjustments');
       if(command==='color-profile')return openDialog('color-profile');
+      if(command==='gradient-editor')return openDialog('gradient-editor');
+      if(command==='pattern-editor')return openDialog('pattern-editor');
       if(command==='image-crop')return openDialog('image-crop');
       if(command==='image-resize')return openDialog('image-size');
       if(command==='layer-new')return app.addLayer();
@@ -521,6 +536,7 @@ export function installFullCapabilityControls(app){
       if(command==='keyboard-shortcuts')return openDialog('keyboard-shortcuts');
       if(command==='updates'){openPanel('specialist');$('#checkUpdatesBtn')?.click();return;}
       if(command==='pen-calibration')return openDialog('pen-calibration');
+      if(command==='recovery')return openDialog('recovery');
       toast('UI-B route：'+command);
     }catch(error){console.error(error);toast(error.message||('UI-B command failed: '+command),3200);}
   }
