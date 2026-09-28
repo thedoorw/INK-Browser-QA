@@ -26,7 +26,10 @@ DEV also reads:
 = installed technical capability truth.
 
 `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
-= closed delegation record for the completed UI-B/UI-C Photoshop-aligned UI program.
+= closed delegation record for UI-B/UI-C implementation.
+
+`ACTIVE/INK_UI_FINAL_CHECKLIST_AUDIT_DIRECTIVE_v1.0.md`
+= current UR authority for the mandatory 592-item final UI completion audit.
 
 `ACTIVE/INK_RUNTIME_QUEUE.json`
 = central Windows Runtime queue state.
