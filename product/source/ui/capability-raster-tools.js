@@ -93,11 +93,13 @@ export function createRasterToolController(app,{onStateChange=()=>{}}={}){
     target.found.object.rasterState.colorRaster=rgbaToSerializedRaster(image);
     target.found.object.rasterState.source={...(target.found.object.rasterState.source||{}),format:'INK',uiBEdited:true};
     app.spatialDirty=true;
+    app.renderer?.studioImageCache?.clear?.();
+    app.renderer?.studioLayerCache?.clear?.();
   }
 
   function commitOne(label,target,image){
     app.history.pushScoped(label,[app.objectPath(target.found)],()=>writeRaster(target,image));
-    app.renderer.render();app.refreshSelectionUI();app.markDirty?.();
+    app.markDirty?.();app.renderer.render();app.refreshSelectionUI();
   }
 
   function requireRaster(){
