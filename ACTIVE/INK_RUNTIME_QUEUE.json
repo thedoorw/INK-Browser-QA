@@ -1,8 +1,8 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "FAIL",
-  "target_sha": "77ee44c94a848588aceeb7797fa8aa737c69b248",
+  "state": "READY",
+  "target_sha": "24d3b3f607a17b3cb9331ec3635b34d804ee445b",
   "pending_work_orders": [
     "INK-UI-A-PHOTOSHOP-SHELL-PANELS-001",
     "INK-UI-B-FULL-CAPABILITY-CONTROLS-001",
