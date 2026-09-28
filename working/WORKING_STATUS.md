@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = UI_A_DEV
+CURRENT_GATE = UI_A_UR_REVIEW
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -18,7 +18,7 @@ TOTAL_NORMALIZED_ATOMICS = 501
 PUI_IDENTITIES = 74
 UI_GAPS = 34
 
-UI_A = AUTHORIZED / DEV_NOT_STARTED
+UI_A = DEV_COMPLETE / MR_TECHNICAL_PASS / UR_REVIEW_REQUIRED
 UI_A_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
 UI_B = WAIT_FOR_UI_A_PROMOTION
 UI_C = WAIT_FOR_UI_B_PROMOTION
@@ -71,3 +71,23 @@ After UI-A, UI-B and UI-C are all MR_PASS / UR_PASS / promoted, MR authorizes on
 `DEV — UI-A`
 
 DEV must STOP after UI-A handoff. No automatic start of UI-B.
+
+
+## UI-A MR checkpoint
+
+```text
+DEV_HEAD = 9c1d1ef4c020603296154000cccaea5c9c111dc6
+MR_TECHNICAL = PASS
+UR_VISUAL_INTERACTION_REVIEW = REQUIRED
+PROMOTION = HOLD
+UI_B = HOLD
+FINAL_RUNTIME = DEFERRED
+```
+
+MR review:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_MR_REVIEW_v1.0.md`
+
+Additional future requirements recorded:
+- UI contribution/extension boundary in UI-B, without claiming a full Plugin SDK;
+- Logo/Favicon preservation and focused QA;
+- PWA installed-app icon redesign = out of scope.
