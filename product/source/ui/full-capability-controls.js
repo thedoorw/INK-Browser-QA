@@ -157,10 +157,10 @@ export function installFullCapabilityControls(app){
       existing.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,existing),420);});
       ['pointerup','pointercancel','pointerleave'].forEach(type=>existing.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
     }
-    const insertion=existingLasso?.nextElementSibling;
+    const toolHost=existingLasso?.parentElement||rail,insertion=existingLasso?.nextElementSibling||null;
     for(const group of UI_B_TOOL_GROUPS.filter(group=>!['draw','lasso','shape','text'].includes(group.id))){
       if($('[data-ui-b-tool-group="'+group.id+'"]'))continue;
-      const node=createToolButton(group);rail.insertBefore(node,insertion);
+      const node=createToolButton(group);toolHost.insertBefore(node,insertion);
       node.addEventListener('click',()=>activateTool(state.lastToolByGroup.get(group.id)||group.primary));
       node.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(group,node);});
       let timer=null;
