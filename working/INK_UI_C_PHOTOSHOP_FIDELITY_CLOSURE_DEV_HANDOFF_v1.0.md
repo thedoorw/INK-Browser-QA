@@ -375,3 +375,118 @@ DEV_NEXT = STOP_TO_UR
 ```
 
 **STOP → UR**
+
+
+## DEV bounded revision — UR Review Round 1
+
+Authority:
+`working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_v1.0.md`
+
+UR return head:
+`48c36674eb2ad60ad002a873e1e2151c9177c209`
+
+Revision source head before documentation-only handoff:
+`d736dc880dffdd7832b9cc37484616f3185d950a`
+
+### R1 — Dynamic rulers
+
+```text
+RESULT = SOURCE_AND_INTERACTION_PATH_READY
+TICK_NUMBER_SOURCE = EXISTING renderer.screenToWorld()
+PAN_ZOOM_SYNC = renderer render heartbeat + bounded shell view sync
+SECOND_COORDINATE_ENGINE = 0
+RULER_THICKNESS = 17 px PRESERVED
+GUIDE_COMMIT = existing app.addGuide() PRESERVED
+GUIDE_READOUT = X: / Y:
+GUIDE_PREVIEW = DISTINCT FROM ACTIVE ACCENT
+```
+
+Static repeating ruler gradients were removed from the final ruler authority. Horizontal and vertical ruler canvases derive their ticks and numeric labels from current renderer/camera world mapping.
+
+### R2 — Navigator synchronization
+
+```text
+RESULT = SOURCE_AND_INTERACTION_PATH_READY
+THUMBNAIL_WORLD_BOUNDS = renderer.contentBounds() + stable padding/aspect fit
+THUMBNAIL_RENDER = existing renderer.renderPageWorld()
+VIEWPORT_RECT = existing renderer.viewportWorldBounds()
+PROXY_SIZE = viewport bounds / thumbnail world bounds
+PROXY_POSITION = viewport origin / thumbnail world bounds
+CLICK_TO_PAN = existing page.camera only
+PROXY_DRAG = existing page.camera only
+HARD_CENTER_ON_RENDER = REMOVED
+CURRENT_VIEWPORT_SCREENSHOT_THUMBNAIL = REMOVED
+GRAB / GRABBING = PRESERVED
+```
+
+### R3 — selected Tools fill
+
+```text
+TOOLS_HIT_TARGET = 31 × 26 px PRESERVED
+TOOLS_ROW_PITCH = 26 px PRESERVED
+TOOLS_SELECTED_VISUAL_FILL = 31 × 24 px CENTERED
+```
+
+### R4 — popup separator
+
+One semantic popup-separator role was added without changing the general structural soft-border authority:
+
+```text
+--ink-ui-popup-separator = #C0C0C0
+SEPARATOR_HEIGHT = 1 px
+SEPARATOR_INSET = 2 px
+APPLICATION_POPUP = SAME TOKEN
+PANEL_OPTIONS_POPUP = SAME TOKEN
+--ink-ui-border-soft = #E2E2E2 UNCHANGED
+```
+
+### Focused source/static gate
+
+```text
+R1_R4_AND_REGRESSION_ASSERTIONS = 58 / 58 PASS
+web-shell.js PARSE = PASS
+PUI_001_074 = PRESERVED / 74 OF 74
+G_01_34 = PRESERVED / 34 OF 34
+FORMAT_VERSION = 4 / UNCHANGED
+BUILD_ID / SERVICE_WORKER_BUILD_ID = 20260928-ui-c-photoshop-fidelity-closure-r1 / SYNC
+RESPONSIVE_WIDTH_FAMILY = 760 / 761 / 1120 ONLY
+DUPLICATE_LITERAL_DOM_IDS = 0
+```
+
+Bounded diff from UR return head to revision source head:
+- `product/source/web-shell.js`
+- `product/source/styles.css`
+- `product/source/src/config.js`
+- `product/source/service-worker.js`
+- `qa/ink-ui-c-photoshop-fidelity-closure.test.mjs`
+
+No Core / Document / History / Renderer / Geometry / Recipe / CHAT authority file changed.
+
+Engineering-health delta from UR return head:
+
+```text
+styles.css chars = 184824 → 184692 (-132)
+!important total = 36 → 36
+new width thresholds = 0
+duplicate literal DOM ids = 0
+FORMAT_VERSION drift = 0
+```
+
+The central Runtime and authoritative browser smoke were not run. UR owns exact-SHA visual and interaction acceptance.
+
+### R1 return gate
+
+```text
+R1_DYNAMIC_RULERS = PASS
+R2_NAVIGATOR_SYNC = PASS
+R3_TOOL_ACTIVE_FILL = PASS
+R4_POPUP_SEPARATOR = PASS
+FOCUSED_QA = 58 / 58 SOURCE_STATIC PASS
+UI_HEALTH_DELTA = PASS
+CENTRAL_RUNTIME = NOT RUN
+INTEGRATION_REQUIRED = NO
+DEV_SELF_PROMOTION = NO
+DEV_NEXT = STOP_TO_UR
+```
+
+**STOP → UR**
