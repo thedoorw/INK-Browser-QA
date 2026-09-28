@@ -23,7 +23,7 @@ OPEN_UI_GAPS = 34
 ACTIVE_TASK = INK-UI-A-PHOTOSHOP-SHELL-PANELS-001
 ACTIVE_DEV_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
 
-UI_B = WAIT_FOR_UI_A_PROMOTION
+UI_B = HOLD_UNTIL_UI_A_R1_MR_UR_PASS_FOR_UI_A_PROMOTION
 UI_C = WAIT_FOR_UI_B_PROMOTION
 FINAL_UI_RUNTIME = DEFERRED_UNTIL_UI_A_B_C_PROMOTED
 
@@ -115,12 +115,12 @@ UI_RECONCILIATION_FINAL_MR_REVIEW = working/INK_UI_FULL_CAPABILITY_RECONCILIATIO
 ## Current gate
 
 ```text
-CURRENT_GATE = UI_A_UR_REVIEW
-UI_A = DEV_COMPLETE / MR_TECHNICAL_PASS / UR_REVIEW_REQUIRED
+CURRENT_GATE = UI_A_BOUNDED_REVISION_DEV
+UI_A = UR_BOUNDED_REVISION_REQUIRED / DEV_REVISION_AUTHORIZED
 UI_B = WAIT
 UI_C = WAIT
 FINAL_RUNTIME = HOLD_UNTIL_A_B_C_COMPLETE
-DEV_MAY_MODIFY_UI = NO / UI_A_STOPPED_FOR_REVIEW
+DEV_MAY_MODIFY_UI = YES / UI_A_R1_ONLY
 NEW_CORE_CAPABILITY = NO
 CORE_AUTHORITY_CHANGE = NO
 FORMAT_VERSION_CHANGE = NO
@@ -168,3 +168,36 @@ Added next-package requirements:
 - final extensibility audit in UI-C;
 - preserve approved visible INK logo + browser favicon;
 - PWA/App Icon work is out of current scope.
+
+
+## UI-A UR review disposition
+
+UR review:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_UR_REVIEW_v1.0.md`
+
+Result:
+`UR_BOUNDED_REVISION_REQUIRED`
+
+MR independently confirmed all three findings:
+
+```text
+UR-A-01 = expanded stacked-panel / splitter framework missing
+UR-A-02 = Light theme incomplete in core panel interiors
+UR-A-03 = Creative panels lack shared direct resize surface
+```
+
+Bounded revision workpack:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_BOUNDED_REVISION_WORKPACK_v1.0.md`
+
+Revision branch:
+`work/ink-ui-a-photoshop-shell-panels-001`
+
+Rules:
+- same branch only;
+- UI-A R1 only;
+- no UI-B;
+- no Core semantic change;
+- no FORMAT_VERSION change;
+- no P2;
+- no central Runtime;
+- STOP to MR after revision.
