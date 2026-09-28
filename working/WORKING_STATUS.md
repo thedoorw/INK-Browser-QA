@@ -68,10 +68,14 @@ After UI-A, UI-B and UI-C are all MR_PASS / UR_PASS / promoted, MR authorizes on
 
 ## Next owner
 
-`DEV — UI-A`
+`UR — UI-A-R1 bounded recheck`
 
-DEV must STOP after UI-A handoff. No automatic start of UI-B.
+Recheck only:
+- UR-A-01 expanded stacked panel-group / splitter framework;
+- UR-A-02 Light theme panel interiors;
+- UR-A-03 shared Creative / Inspector resize surface.
 
+DEV remains STOP. UI-A promotion, UI-B and central Runtime remain HOLD.
 
 ## UI-A MR checkpoint
 
