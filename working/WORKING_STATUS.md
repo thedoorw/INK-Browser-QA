@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = UI_A_R1_UR_BOUNDED_RECHECK
+CURRENT_GATE = POST_UI_A_PROMOTION / UI_B_NOT_STARTED
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -18,9 +18,9 @@ TOTAL_NORMALIZED_ATOMICS = 501
 PUI_IDENTITIES = 74
 UI_GAPS = 34
 
-UI_A = R1_DEV_COMPLETE / MR_TECHNICAL_PASS / UR_RECHECK_REQUIRED
+UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_A_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
-UI_B = HOLD_FOR_UI_A_R1_UR_PASS
+UI_B = ELIGIBLE / NOT_STARTED
 UI_C = WAIT_FOR_UI_B_PROMOTION
 
 CENTRAL_RUNTIME_BETWEEN_PACKAGES = NO
@@ -68,14 +68,14 @@ After UI-A, UI-B and UI-C are all MR_PASS / UR_PASS / promoted, MR authorizes on
 
 ## Next owner
 
-`UR — UI-A-R1 bounded recheck`
+`MR / USER — UI-B role and handoff structure decision`
 
-Recheck only:
-- UR-A-01 expanded stacked panel-group / splitter framework;
-- UR-A-02 Light theme panel interiors;
-- UR-A-03 shared Creative / Inspector resize surface.
-
-DEV remains STOP. UI-A promotion, UI-B and central Runtime remain HOLD.
+Current execution state:
+- UI-A is promoted.
+- UI-B is technically unblocked but has not started.
+- DEV is STOP.
+- UR is STOP.
+- central Runtime remains deferred.
 
 ## UI-A MR checkpoint
 
@@ -138,4 +138,24 @@ UI_A_R1_MR = PASS
 UI_A_PROMOTION = HOLD
 UI_B = HOLD
 NEXT_OWNER = UR
+```
+
+
+## UI-A promotion checkpoint
+
+```text
+UI_A_R1_UR = PASS
+UR_A_01 = CLOSED
+UR_A_02 = CLOSED
+UR_A_03 = CLOSED
+NEW_UI_A_BLOCKER = 0
+
+UI_A_PROMOTION_PR = 83
+UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
+UI_A = PROMOTED
+
+UI_B = ELIGIBLE / NOT_STARTED
+DEV = STOP
+UR = STOP
+CENTRAL_RUNTIME = NOT_RUN
 ```
