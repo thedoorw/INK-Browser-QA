@@ -8,7 +8,7 @@ PROGRAM:
 `INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001`
 
 UI OWNER:
-`UR / UI REVIEW`
+`NONE / DELEGATED UI PROGRAM CLOSED`
 
 ## 1. User directive
 
@@ -179,3 +179,24 @@ NEXT_ACTION = FINAL EXACT-SHA INTEGRATED RUNTIME
 ```
 
 If MR's final exact-SHA Runtime exposes a bounded UI-only regression, control may return to UR for one corrective review loop. Otherwise the Photoshop-aligned UI program remains closed.
+
+
+## 9. Delegation closure
+
+The delegated UI program completed successfully.
+
+```text
+UI_A = PROMOTED
+UI_B = UR_PASS / PROMOTED
+UI_C = UR_PASS / PROMOTED
+UR_DELEGATED_UI_WORK = CLOSED
+
+FINAL_RUNTIME_RUN = 36445204976
+FINAL_RUNTIME_TESTED_SHA = 24d3b3f607a17b3cb9331ec3635b34d804ee445b
+FINAL_RUNTIME = PASS
+UI_COMPLETE = YES
+```
+
+UR has no active UI work order after this closure.
+
+Any future UI expansion requires a new bounded Work Order and explicit ownership assignment.
