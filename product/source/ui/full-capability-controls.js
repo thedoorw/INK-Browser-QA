@@ -396,7 +396,7 @@ export function installFullCapabilityControls(app){
     if(current)sources.push({name:'current',record:current});
     if(previous)sources.push({name:'previous',record:previous});
     for(const [index,record] of (Array.isArray(checkpoints)?checkpoints:[]).entries())sources.push({name:'checkpoint-'+(index+1),record});
-    state.recoveryCandidates=sources.map(source=>({source,...verifyStorageRecord(source.record)}));
+    state.recoveryCandidates=sources.map(source=>({source:source.name,...verifyStorageRecord(source.record)}));
     if(!state.recoveryCandidates.length){list.innerHTML='<p class="shell-panel-note">No recovery records.</p>';return;}
     list.innerHTML=state.recoveryCandidates.map((item,index)=>'<div class="ui-b-stack-row"><span><strong>'+esc(item.source)+'</strong><small>'+(item.valid?'verified '+(item.verified?'yes':'legacy'):'invalid · '+esc(item.reason||'unknown'))+'</small></span><button type="button" data-ui-b-recovery-index="'+index+'" '+(item.valid?'':'disabled')+'>Restore</button></div>').join('');
   }
