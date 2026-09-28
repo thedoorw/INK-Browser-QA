@@ -59,8 +59,10 @@ export function createRasterToolController(app,{onStateChange=()=>{}}={}){
     measureStart:null,
     drag:null,
     stroke:null,
+    patternImage:null,
+    patternName:null,
     options:{
-      selectionMode:'new',tolerance:32,contiguous:true,edgeThreshold:40,
+      selectionMode:'new',tolerance:32,contiguous:true,edgeThreshold:40,searchRadius:8,
       radius:18,strength:.55,opacity:1,hardness:.85,sampleRadius:0,
       gradientType:'linear',gradientStart:'#202020',gradientEnd:'#ffffff',
       replacementColor:'#3b63fb',spongeMode:'saturate'
@@ -128,8 +130,8 @@ export function createRasterToolController(app,{onStateChange=()=>{}}={}){
       return cloneStamp(image,{...common,sourcePoint:state.sourcePoint});
     }
     if(tool==='patternStamp'){
-      const tile={width:2,height:2,data:new Uint8ClampedArray([32,32,32,255,240,240,240,255,240,240,240,255,32,32,32,255])};
-      return patternStamp(image,{...common,pattern:tile,origin:{x:0,y:0}});
+      if(!state.patternImage)throw new Error('請先載入 Pattern image');
+      return patternStamp(image,{...common,pattern:state.patternImage,origin:{x:0,y:0}});
     }
     if(tool==='healingBrush'){
       if(!state.sourcePoint)throw new Error('請先 Alt/Option 點擊設定來源');
@@ -167,7 +169,7 @@ export function createRasterToolController(app,{onStateChange=()=>{}}={}){
       if(state.tool==='polygonalLasso'||state.tool==='magneticLasso'){
         state.polygonPoints.push({x:point.x,y:point.y});
         if(event.detail>=2&&state.polygonPoints.length>=3){
-          const next=state.tool==='polygonalLasso'?polygonalLassoSelection(target.image.width,target.image.height,state.polygonPoints):magneticLassoSelection(target.image,{anchors:state.polygonPoints,close:true,searchRadius:8,edgeSensitivity:state.options.edgeThreshold});
+          const next=state.tool==='polygonalLasso'?polygonalLassoSelection(target.image.width,target.image.height,state.polygonPoints):magneticLassoSelection(target.image,{anchors:state.polygonPoints,close:true,searchRadius:state.options.searchRadius,edgeSensitivity:state.options.edgeThreshold});
           state.polygonPoints=[];setSelection(next);
         }else{app.toast('加入選取節點；雙擊完成');notify();}
         return true;
@@ -244,10 +246,11 @@ export function createRasterToolController(app,{onStateChange=()=>{}}={}){
 
   function clearTool(){state.tool=null;state.polygonPoints=[];state.drag=null;state.stroke=null;notify();}
   function setOption(key,value){if(Object.prototype.hasOwnProperty.call(state.options,key)){state.options[key]=value;notify();}}
+  function setPattern(imageData,name='Pattern'){if(!imageData?.width||!imageData?.height||!imageData?.data)throw new Error('INK_UI_B_PATTERN_INVALID');state.patternImage=copyImage(imageData);state.patternName=name;notify();return true;}
   function refineSelection(options={}){if(!state.selection)throw new Error('INK_UI_B_SELECTION_REQUIRED');state.selection=refineRasterSelection(state.selection,options);notify();return state.selection;}
   function selection(){return state.selection;}
   function options(){return{...state.options};}
   function activeTool(){return state.tool;}
 
-  return{state,setTool,clearTool,setOption,selection,options,activeTool,selectedRaster,pointForEvent,pointerDown,pointerMove,pointerUp,refineSelection};
+  return{state,setTool,clearTool,setOption,setPattern,selection,options,activeTool,selectedRaster,pointForEvent,pointerDown,pointerMove,pointerUp,refineSelection};
 }
