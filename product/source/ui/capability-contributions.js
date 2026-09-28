@@ -88,7 +88,8 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'help-shortcuts', menu:'help', section:'help', label:'Keyboard Shortcuts', command:'keyboard-shortcuts', authority:'UI help' },
   { id:'help-updates', menu:'help', section:'help', label:'Updates', command:'updates', authority:'PWA update manager' },
   { id:'help-diagnostics', menu:'help', section:'help', label:'Product Diagnostics', command:'panel:specialist', authority:'Product health' },
-  { id:'help-pen', menu:'help', section:'help', label:'Pen Calibration…', command:'pen-calibration', authority:'Device calibration' }
+  { id:'help-pen', menu:'help', section:'help', label:'Pen Calibration…', command:'pen-calibration', authority:'Device calibration' },
+  { id:'help-recovery', menu:'help', section:'recovery', label:'Recovery…', command:'recovery', authority:'Storage checkpoint recovery' }
 ]);
 
 export const UI_B_TOOL_GROUPS = Object.freeze([
