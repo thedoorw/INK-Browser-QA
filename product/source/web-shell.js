@@ -11,6 +11,8 @@
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
   const TOOLBAR_LAYOUT_KEY = 'ink.web.ui.toolbar-layout.v0.1';
   const DEFAULT_PRIMARY_PANEL_WIDTH = 252;
+  const MIN_PRIMARY_PANEL_WIDTH = 244;
+  const MAX_PRIMARY_PANEL_WIDTH = 420;
   const FILE_COMMAND_TARGETS = Object.freeze({
     new: 'newBtn',
     open: 'openBtn',
@@ -89,7 +91,9 @@
     contextualHost: null,
     contextRaf: 0,
     panelOptionsMenu: null,
-    documentChrome: null
+    documentChrome: null,
+    panelStackHost: null,
+    activePanelResizer: null
   };
 
   function runtime() {
@@ -588,6 +592,113 @@
     return true;
   }
 
+  function setPrimaryPanelWidth(width, { persist = true } = {}) {
+    const next = Math.max(MIN_PRIMARY_PANEL_WIDTH, Math.min(MAX_PRIMARY_PANEL_WIDTH, Math.round(Number(width) || DEFAULT_PRIMARY_PANEL_WIDTH)));
+    state.root?.style.setProperty('--inspector-w', next + 'px');
+    const app = runtime();
+    if (app) {
+      app.inspectorWide = next > 370;
+      if (!app.inspectorWide) app.inspectorNormalWidth = next;
+      document.querySelector('#inspectorSizeToggle')?.classList.toggle('active', app.inspectorWide);
+    }
+    if (persist && (!app || !app.inspectorWide)) {
+      try { localStorage.setItem('ink-inspector-width', String(next)); } catch {}
+    }
+    syncSoon();
+    return next;
+  }
+
+  function ensureActivePanelResizeEdge() {
+    if (state.activePanelResizer?.isConnected) return state.activePanelResizer;
+    const root = state.root || document.querySelector('#app');
+    if (!root) return null;
+    const edge = document.createElement('div');
+    edge.id = 'shellActivePanelResizer';
+    edge.className = 'active-panel-resizer';
+    edge.setAttribute('role', 'separator');
+    edge.setAttribute('aria-orientation', 'vertical');
+    edge.setAttribute('aria-label', '調整面板寬度');
+    edge.setAttribute('aria-valuemin', String(MIN_PRIMARY_PANEL_WIDTH));
+    edge.setAttribute('aria-valuemax', String(MAX_PRIMARY_PANEL_WIDTH));
+    let active = false;
+    const move = event => {
+      if (!active) return;
+      const rootRect = root.getBoundingClientRect();
+      setPrimaryPanelWidth(rootRect.right - event.clientX, { persist: false });
+      syncLayout();
+    };
+    const end = () => {
+      if (!active) return;
+      active = false;
+      root.classList.remove('panel-width-resizing');
+      const app = runtime();
+      if (!app?.inspectorWide && Number.isFinite(app?.inspectorNormalWidth)) {
+        try { localStorage.setItem('ink-inspector-width', String(Math.round(app.inspectorNormalWidth))); } catch {}
+      }
+      globalThis.removeEventListener('pointermove', move);
+      globalThis.removeEventListener('pointerup', end);
+      syncSoon();
+    };
+    edge.addEventListener('pointerdown', event => {
+      if (!isDesktop() || !root.classList.contains('panel-primary-open')) return;
+      event.preventDefault();
+      active = true;
+      root.classList.add('panel-width-resizing');
+      globalThis.addEventListener('pointermove', move);
+      globalThis.addEventListener('pointerup', end);
+    });
+    root.append(edge);
+    state.activePanelResizer = edge;
+    return edge;
+  }
+
+  function ensurePanelStackFramework() {
+    if (state.panelStackHost?.isConnected) return state.panelStackHost;
+    const root = state.root || document.querySelector('#app');
+    if (!root) return null;
+    const host = document.createElement('div');
+    host.id = 'shellPanelStackFramework';
+    host.className = 'panel-stack-framework';
+    host.dataset.panelRegistry = 'PANEL_GROUPS';
+    host.setAttribute('aria-label', 'Expanded panel groups');
+    host.innerHTML = PANEL_GROUPS.map((group, index) =>
+      (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
+      '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
+      '<button type="button" class="panel-stack-region-head" data-panel-stack-target="' + group.items[0].id + '">' +
+      '<span>' + group.label + '</span><span class="panel-stack-region-current" data-panel-stack-current></span></button></section>'
+    ).join('');
+    host.addEventListener('click', event => {
+      const trigger = event.target.closest('[data-panel-stack-target]');
+      if (!trigger) return;
+      event.preventDefault();
+      selectPanel(trigger.dataset.panelStackTarget);
+    });
+    host.hidden = true;
+    root.append(host);
+    state.panelStackHost = host;
+    return host;
+  }
+
+  function syncPanelStackFramework(active, panel, desktop) {
+    const host = ensurePanelStackFramework();
+    if (!host || !state.root) return;
+    const activeDef = active ? PANEL_DEFS.find(def => def.id === active) : null;
+    if (!desktop || !panel || !activeDef) {
+      host.hidden = true;
+      if (host.parentElement !== state.root) state.root.append(host);
+      return;
+    }
+    if (host.parentElement !== panel) panel.append(host);
+    host.hidden = false;
+    host.querySelectorAll('[data-panel-stack-group]').forEach(region => {
+      const group = PANEL_GROUPS.find(item => item.id === region.dataset.panelStackGroup);
+      const isActive = group?.id === activeDef.group;
+      region.classList.toggle('active', isActive);
+      const current = region.querySelector('[data-panel-stack-current]');
+      if (current) current.textContent = isActive ? activeDef.label : (group?.items?.[0]?.label || '');
+    });
+  }
+
   function createPanelOptionsMenu() {
     if (document.querySelector('#shellPanelOptionsMenu')) return document.querySelector('#shellPanelOptionsMenu');
     const root = document.querySelector('#app');
@@ -606,11 +717,7 @@
       const item = event.target.closest('[data-panel-option]');
       if (!item) return;
       if (item.dataset.panelOption === 'reset-width') {
-        state.root.style.setProperty('--inspector-w', DEFAULT_PRIMARY_PANEL_WIDTH + 'px');
-        const app = runtime();
-        if (app) app.inspectorNormalWidth = DEFAULT_PRIMARY_PANEL_WIDTH;
-        try { localStorage.setItem('ink-inspector-width', String(DEFAULT_PRIMARY_PANEL_WIDTH)); } catch {}
-        syncSoon();
+        setPrimaryPanelWidth(DEFAULT_PRIMARY_PANEL_WIDTH, { persist: true });
       } else if (item.dataset.panelOption === 'close') closePrimaryPanels();
       menu.hidden = true;
     });
@@ -879,6 +986,9 @@
       button.setAttribute('aria-pressed', String(pressed));
     });
     const activeDef = active ? PANEL_DEFS.find(def => def.id === active) : null;
+    syncPanelStackFramework(active, panel, desktop);
+    const sharedResizer = ensureActivePanelResizeEdge();
+    if (sharedResizer) sharedResizer.setAttribute('aria-valuenow', String(width || DEFAULT_PRIMARY_PANEL_WIDTH));
     state.dock?.querySelectorAll('[data-panel-group]').forEach(group => {
       group.classList.toggle('group-active', group.dataset.panelGroup === activeDef?.group);
     });
@@ -925,6 +1035,8 @@
       bindInspectorCloseControl();
       bindSupplementalPanelControls();
       ensurePanelOptionsTriggers();
+      ensurePanelStackFramework();
+      ensureActivePanelResizeEdge();
       const pagesToggle = document.querySelector('#pagesToggle');
       if (pagesToggle) pagesToggle.onclick = () => {
         if (isDesktop()) togglePanel('pages');
