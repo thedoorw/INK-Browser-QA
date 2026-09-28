@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "FAIL",
   "target_sha": "77ee44c94a848588aceeb7797fa8aa737c69b248",
   "pending_work_orders": [
     "INK-UI-A-PHOTOSHOP-SHELL-PANELS-001",
@@ -41,8 +41,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36330300446,
-    "tested_sha": "d1269334338531228ddfdd9383761cd419e58738",
-    "result": "ATTEMPT_2_PASS / P1_234_PASS_FAIL_0_SKIP_0 / CLOSURE_FOCUSED_38_PASS_FAIL_0 / UI_PASS / CLOSURE_PASS / GEOMETRY_PASS / CREATIVE_PASS / ARTIFACT_10936541218 / sha256:009cac80f1e11aca065c1ce0ab91014ffccac6427d9e788051ffcb78bb83c1f0"
+    "run_id": 36443008810,
+    "tested_sha": "77ee44c94a848588aceeb7797fa8aa737c69b248",
+    "result": "FAIL / UI_99_PASS_11_FAIL / CLOSURE_PASS / GEOMETRY_PASS / CREATIVE_PASS / P1_234_PASS_FAIL_0 / CLOSURE_FOCUSED_38_PASS_FAIL_0 / ARTIFACT_10979755694 / sha256:87a98758245a8341ec46072c918870b5f350cac76961bc7f573bfd4f6c950515 / MR_CLASSIFICATION=LEGACY_UI_RUNTIME_HARNESS_STALE"
   }
 }
