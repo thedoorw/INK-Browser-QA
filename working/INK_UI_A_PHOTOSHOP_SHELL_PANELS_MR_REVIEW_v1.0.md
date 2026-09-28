@@ -162,3 +162,35 @@ CENTRAL_RUNTIME = DEFERRED
 ```
 
 UR should review Photoshop position/form/interaction against the current reference documents and return PASS or bounded revision findings.
+
+
+## Post-UR disposition
+
+UR review:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_UR_REVIEW_v1.0.md`
+
+UR result:
+`UR_BOUNDED_REVISION_REQUIRED`
+
+MR independently verified the three findings against the reviewed UI-A branch and accepts them as valid UI-A blockers:
+
+1. expanded stacked panel-group / splitter framework is absent;
+2. dark panel-interior CSS remains authoritative under the Light shell for core panels;
+3. Creative panels do not expose the same direct resize surface as Inspector panels.
+
+Bounded revision authority:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_BOUNDED_REVISION_WORKPACK_v1.0.md`
+
+Current result therefore becomes:
+
+```text
+MR_TECHNICAL_INITIAL = PASS
+UR_VISUAL_INTERACTION = BOUNDED_REVISION_REQUIRED
+UI_A_FINAL = NOT_YET_PASS
+UI_A_PROMOTION = HOLD
+UI_A_R1_DEV = AUTHORIZED
+UI_B = HOLD
+CENTRAL_RUNTIME = DEFERRED
+```
+
+The initial MR technical PASS is preserved as evidence for the original handoff; it does not override the later UR blocker findings.
