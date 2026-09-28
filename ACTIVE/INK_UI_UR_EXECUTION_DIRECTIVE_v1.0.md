@@ -1,6 +1,6 @@
 # INK UI Photoshop Alignment — UR Execution Directive v1.0
 
-STATUS: `ACTIVE / UR_AUTHORIZED / UI-C_READY`
+STATUS: `CLOSED / UI_A_B_C_PROMOTED / STOP_TO_MR`
 
 DATE: 2026-09-28
 
@@ -106,15 +106,15 @@ Mandatory branch:
 `work/ink-ui-c-photoshop-fidelity-closure-001`
 
 Current state:
-`UR_AUTHORIZED / READY_FOR_DEV_HANDOFF`
+`UR_PASS / PROMOTED / PR_86`
 
 ## 6. Locked program rules
 
 ```text
 PACKAGES = 3 LARGE BOUNDED PACKAGES
 UI_A = PROMOTED
-UI_B = UR_OWNED
-UI_C = UR_OWNED
+UI_B = PROMOTED
+UI_C = PROMOTED
 CENTRAL_RUNTIME_AFTER_UI_B = NO
 CENTRAL_RUNTIME_DURING_UI_C = NO
 FINAL_CENTRAL_RUNTIME = ONE / AFTER_UI_A_B_C_PROMOTED
@@ -164,3 +164,18 @@ UR:
 UI-B is no longer active work.
 
 MR is not a routine intermediary during UI-C.
+
+## 9. Closure checkpoint
+
+```text
+UI_A = PROMOTED
+UI_B = UR_PASS / PROMOTED / PR_84
+UI_C = UR_PASS / PROMOTED / PR_86
+UI_C_PROMOTION_MERGE = 77ee44c94a848588aceeb7797fa8aa737c69b248
+UR_PROGRAM_ROLE = CLOSED
+CENTRAL_RUNTIME = NOT RUN
+NEXT_OWNER = MR
+NEXT_ACTION = FINAL EXACT-SHA INTEGRATED RUNTIME
+```
+
+If MR's final exact-SHA Runtime exposes a bounded UI-only regression, control may return to UR for one corrective review loop. Otherwise the Photoshop-aligned UI program remains closed.
