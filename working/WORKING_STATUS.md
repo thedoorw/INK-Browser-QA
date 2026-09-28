@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = UI_C_DEV_HANDOFF_READY
+CURRENT_GATE = STOP_TO_MR_FINAL_EXACT_SHA_RUNTIME
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -21,7 +21,7 @@ UI_GAPS = 34
 UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_A_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
 UI_B = UR_PASS / PROMOTED
-UI_C = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
+UI_C = UR_PASS / PROMOTED
 
 CENTRAL_RUNTIME_BETWEEN_PACKAGES = NO
 FINAL_RUNTIME = AFTER_UI_A_B_C_PROMOTED / ONE_EXACT_SHA_GATE
@@ -70,14 +70,14 @@ After UI-A, UI-B and UI-C are all promoted under their applicable review authori
 
 ## Next owner
 
-`UR → UI-C DEV → UR review`
+`MR → FINAL EXACT-SHA INTEGRATED RUNTIME`
 
 Current execution state:
 - UI-A is promoted.
 - UI-B is UR PASS and promoted by PR #84.
-- UI-C is authorized and ready for DEV handoff.
-- routine UI-C review/revision/promotion does not pass through MR.
-- MR re-enters only for Core/cross-lane escalation and the final exact-SHA Runtime.
+- UI-C is UR PASS and promoted by PR #86.
+- routine UI-C review/revision/promotion is complete.
+- MR now owns the final exact-SHA Runtime.
 - central Runtime remains deferred.
 
 ## UI-A MR checkpoint
@@ -193,4 +193,17 @@ GAPS = 34 / 34 DISPOSED
 EXACT_MAIN_HEALTH_RECHECK = PASS
 CENTRAL_RUNTIME = NOT RUN
 UI_C = READY_FOR_DEV_HANDOFF
+```
+
+
+## UI-C promotion checkpoint
+
+```text
+UI_C_UR_REVIEW = PASS
+UI_C_PROMOTION_PR = 86
+UI_C_PROMOTION_MERGE = 77ee44c94a848588aceeb7797fa8aa737c69b248
+R1_FINDINGS = 4 / 4 PASS
+CENTRAL_RUNTIME = NOT RUN
+NEXT_OWNER = MR
+FINAL_RUNTIME = RUN_ON_EXACT_MAIN_77ee44c94a848588aceeb7797fa8aa737c69b248
 ```
