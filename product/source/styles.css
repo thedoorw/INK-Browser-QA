@@ -38,6 +38,7 @@
   --ink-ui-accent:#3B63FB;
   --ink-ui-focus:#3B63FB;
   --ink-ui-tooltip-bg:#2B2B2B;
+  --ink-ui-popup-separator:#C0C0C0;
   --shadow-sm:0 4px 16px rgba(44,40,34,.08);
   --shadow:0 16px 42px rgba(44,40,34,.16),0 2px 8px rgba(44,40,34,.08);
   --radius:14px;
@@ -2960,7 +2961,7 @@ kbd,
   .application-command-menu button{height:20px;padding:0 6px;font-size:var(--ui-type-lg);color:var(--ink-ui-text)}
   .application-command-menu button:hover:not(:disabled),.application-command-menu button:focus-visible:not(:disabled){background:var(--ink-ui-control-hover);color:var(--ink-ui-text)}
   .application-command-menu button:disabled{color:var(--ink-ui-text-disabled);cursor:default}
-  .application-menu-separator{height:1px;margin:2px;background:var(--ink-ui-border-soft)}
+  .application-menu-separator,.workspace-menu-separator{height:1px;margin:2px;background:var(--ink-ui-popup-separator)}
   .application-command-menu kbd{color:#777}
 
   .document-shell-chrome{position:absolute;z-index:67;inset:0;pointer-events:none}
@@ -2974,19 +2975,16 @@ kbd,
   .document-tab{height:28px;min-width:150px;max-width:260px;padding:0 12px;border:0;border-right:1px solid var(--ink-ui-border);border-radius:0;background:#fff;color:#222;text-align:left}
   .document-tab span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:var(--ui-type-lg)}
   .document-ruler{
-    display:none;position:absolute;background:#f1f1f1;color:#666;border-color:var(--ink-ui-border);pointer-events:none;
-    background-image:repeating-linear-gradient(to right,#a9a9a9 0,#a9a9a9 1px,transparent 1px,transparent 10px)
+    display:none;position:absolute;background:#f1f1f1;color:#666;border-color:var(--ink-ui-border);pointer-events:none;overflow:hidden
   }
   .document-ruler-horizontal{
     top:calc(var(--topbar-h) + var(--document-tab-h));left:calc(var(--tool-w) + var(--ruler-size));right:var(--panel-dock-w);
-    height:var(--ruler-size);border-bottom:1px solid var(--ink-ui-border);background-size:10px 5px;background-position:0 12px
+    height:var(--ruler-size);border-bottom:1px solid var(--ink-ui-border)
   }
   .app.panel-primary-open .document-ruler-horizontal{right:var(--active-panel-w)}
   .document-ruler-vertical{
     top:calc(var(--topbar-h) + var(--document-tab-h) + var(--ruler-size));left:var(--tool-w);bottom:var(--document-status-h);
-    width:var(--ruler-size);border-right:1px solid var(--ink-ui-border);
-    background-image:repeating-linear-gradient(to bottom,#a9a9a9 0,#a9a9a9 1px,transparent 1px,transparent 10px);
-    background-size:5px 10px;background-position:12px 0
+    width:var(--ruler-size);border-right:1px solid var(--ink-ui-border)
   }
   .document-ruler-corner{
     display:none;position:absolute;top:calc(var(--topbar-h) + var(--document-tab-h));left:var(--tool-w);
@@ -3011,7 +3009,7 @@ kbd,
   .tool-rail .tool-label{display:none!important}
   .app.toolbar-layout-dual .tool-group{grid-template-columns:31px 31px;gap:2px}
   .app.toolbar-layout-dual .tool-rail .tool-button{width:31px}
-  .tool-button.active{color:var(--ink-ui-accent);background:var(--ink-ui-control-active);box-shadow:inset 0 0 0 1px var(--ink-ui-control-active-border)}
+  .tool-button.active{color:var(--ink-ui-accent);background:linear-gradient(var(--ink-ui-control-active),var(--ink-ui-control-active)) center/31px 24px no-repeat;box-shadow:none}
   .tool-layout-toggle[aria-pressed="true"]{background:var(--ink-ui-control-active);color:var(--ink-ui-accent)}
   .brush-family-popover{
     width:172px;padding:2px;border-radius:0;background:var(--ink-ui-surface);border:1px solid var(--ink-ui-border-strong);box-shadow:0 5px 14px rgba(0,0,0,.16)
@@ -3107,9 +3105,10 @@ kbd,
 
   /* UI-C interactive ruler/guide and Tooltip surfaces use the same shell authority. */
   .document-ruler{pointer-events:auto;user-select:none}
+  .document-ruler-canvas{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
   .document-ruler-horizontal{cursor:row-resize}
   .document-ruler-vertical{cursor:col-resize}
-  .shell-guide-preview{position:fixed;z-index:188;pointer-events:none;background:var(--ink-ui-accent)}
+  .shell-guide-preview{position:fixed;z-index:188;pointer-events:none;background:#2b7c72}
   .shell-guide-preview[data-axis="horizontal"]{height:1px}
   .shell-guide-preview[data-axis="vertical"]{width:1px}
   .shell-guide-readout{
