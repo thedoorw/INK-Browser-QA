@@ -1,6 +1,6 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / MR_AUTHORIZED / UI_A_DEV_READY`
+STATUS: `CURRENT / UI_A_R1_MR_TECHNICAL_PASS / UR_BOUNDED_RECHECK_REQUIRED`
 
 DATE: 2026-09-28
 
@@ -129,22 +129,21 @@ FORMAT_VERSION_CHANGE = NO
 ## Next action
 
 DEV:
-- work only on `work/ink-ui-a-photoshop-shell-panels-001`;
-- follow UI-A workpack and Photoshop measurement authority;
-- run focused/static QA only;
-- do not trigger central Runtime;
-- hand off exact HEAD and evidence;
-- STOP for MR.
+- STOP on `work/ink-ui-a-photoshop-shell-panels-001`;
+- do not make further UI-A changes unless a new bounded correction is issued after UR recheck;
+- do not start UI-B;
+- do not trigger central Runtime.
 
 MR:
-- review UI-A technical authority/health;
-- send accepted UI-A implementation to UR for Photoshop alignment review;
-- promote only after both gates pass.
+- UI-A-R1 technical re-review is complete at branch HEAD `74542bcff80017da04aca5a412f610f4810024f0`;
+- keep UI-A promotion HOLD until UR bounded recheck PASS;
+- keep UI-B HOLD;
+- keep final Runtime deferred.
 
 UR:
-- no new placement redesign;
-- review Photoshop position/form/interaction fidelity after DEV handoff.
-
+- bounded recheck only UR-A-01 / UR-A-02 / UR-A-03 against the R1 branch;
+- return PASS or new bounded findings to MR;
+- no full UI-A redesign and no UI-B work.
 
 ## UI-A MR technical review checkpoint
 
