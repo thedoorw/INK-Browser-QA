@@ -3216,6 +3216,16 @@ kbd,
   color:var(--ink-ui-text-muted);
   font-size:var(--ui-type-xs);
 }
+.ui-b-context-controls button{
+  height:21px;
+  padding:0 6px;
+  border:1px solid #c8c8c8;
+  background:#fff;
+  color:var(--ink-ui-text);
+  font-size:var(--ui-type-md);
+}
+.ui-b-context-controls button:hover{background:#f1f1f1}
+.ui-b-export-resume{margin-top:4px}
 .ui-b-panel-grid{
   display:grid;
   grid-template-columns:repeat(2,minmax(0,1fr));
@@ -3266,6 +3276,7 @@ kbd,
 .ui-b-channel-row>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ui-b-stack-row small,
 .ui-b-channel-row small{display:block;color:var(--ink-ui-text-muted);font-size:var(--ui-type-xs)}
+.ui-b-stack-actions{display:flex;align-items:center;gap:1px}
 .ui-b-stack-row button{
   flex:0 0 22px;
   width:22px;
