@@ -1,6 +1,6 @@
 # INK UI Photoshop Alignment — UR Execution Directive v1.0
 
-STATUS: `ACTIVE / UR_AUTHORIZED / UI-B_READY`
+STATUS: `ACTIVE / UR_AUTHORIZED / UI-C_READY`
 
 DATE: 2026-09-28
 
@@ -92,7 +92,7 @@ Mandatory branch:
 `work/ink-ui-b-full-capability-controls-001`
 
 Current state:
-`UR_AUTHORIZED / READY_FOR_UR_TO_HANDOFF_TO_DEV`
+`UR_PASS / PROMOTED / PR_84`
 
 ### UI-C
 
@@ -106,7 +106,7 @@ Mandatory branch:
 `work/ink-ui-c-photoshop-fidelity-closure-001`
 
 Current state:
-`UR_OWNED / WAIT_FOR_UI_B_PROMOTION`
+`UR_AUTHORIZED / READY_FOR_DEV_HANDOFF`
 
 ## 6. Locked program rules
 
@@ -153,12 +153,14 @@ UR must preserve the existing authority precedence:
 
 UR:
 
-1. read this directive and the current Work Order;
-2. read the UI-B workpack and current main;
-3. pin the exact current main baseline;
-4. hand UI-B to DEV on the mandatory branch;
-5. own the DEV → UR review / bounded revision / promotion loop;
-6. after UI-B promotion, proceed to UI-C under the same delegated authority;
-7. after UI-C promotion, STOP → MR for the one final exact-SHA integrated Runtime.
+1. use promoted main `2d14e3a80e16e0a0d41dc453786b34bebe53e866` as the UI-C activation baseline;
+2. hand `INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001` to DEV on `work/ink-ui-c-photoshop-fidelity-closure-001`;
+3. require Photoshop-reference-driven geometry, fine-detail, interaction and Light-theme closure;
+4. review DEV handoff visually and structurally;
+5. issue bounded revision directly to DEV as needed;
+6. promote UI-C;
+7. after UI-C promotion, STOP → MR for one final exact-SHA integrated Runtime.
 
-MR is not a routine intermediary in steps 4–6.
+UI-B is no longer active work.
+
+MR is not a routine intermediary during UI-C.

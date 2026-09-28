@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = UI_B_UR_HANDOFF_READY
+CURRENT_GATE = UI_C_DEV_HANDOFF_READY
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -20,8 +20,8 @@ UI_GAPS = 34
 
 UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_A_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
-UI_B = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
-UI_C = UR_OWNED / WAIT_FOR_UI_B_PROMOTION
+UI_B = UR_PASS / PROMOTED
+UI_C = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
 
 CENTRAL_RUNTIME_BETWEEN_PACKAGES = NO
 FINAL_RUNTIME = AFTER_UI_A_B_C_PROMOTED / ONE_EXACT_SHA_GATE
@@ -37,10 +37,10 @@ Master plan:
 Last completed Work Order:
 `working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_DEV_WORKPACK_v1.0.md`
 
-Active Work Order:
+Last completed Work Order:
 `working/INK_UI_B_FULL_CAPABILITY_CONTROLS_DEV_WORKPACK_v1.0.md`
 
-Next after UI-B promotion:
+Active Work Order:
 `working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
 
 ## Photoshop alignment rule
@@ -70,13 +70,13 @@ After UI-A, UI-B and UI-C are all promoted under their applicable review authori
 
 ## Next owner
 
-`UR — complete the remaining Photoshop-aligned UI program`
+`UR → UI-C DEV → UR review`
 
 Current execution state:
 - UI-A is promoted.
-- UI-B is authorized under UR and ready for UR → DEV handoff.
-- UI-C remains UR-owned after UI-B promotion.
-- routine UI review/revision/promotion no longer passes through MR.
+- UI-B is UR PASS and promoted by PR #84.
+- UI-C is authorized and ready for DEV handoff.
+- routine UI-C review/revision/promotion does not pass through MR.
 - MR re-enters only for Core/cross-lane escalation and the final exact-SHA Runtime.
 - central Runtime remains deferred.
 
@@ -179,4 +179,18 @@ UI_C_PROMOTION = UR
 ROUTINE_MR_UI_REVIEW = NO
 STOP_TO_MR = INTEGRATION_REQUIRED ONLY
 FINAL_CENTRAL_RUNTIME = MR AFTER UI_C_PROMOTION
+```
+
+
+## UI-B promotion checkpoint
+
+```text
+UI_B_UR_REVIEW = PASS
+UI_B_PROMOTION_PR = 84
+UI_B_PROMOTION_MERGE = 2d14e3a80e16e0a0d41dc453786b34bebe53e866
+PUI = 74 / 74 DISPOSED
+GAPS = 34 / 34 DISPOSED
+EXACT_MAIN_HEALTH_RECHECK = PASS
+CENTRAL_RUNTIME = NOT RUN
+UI_C = READY_FOR_DEV_HANDOFF
 ```

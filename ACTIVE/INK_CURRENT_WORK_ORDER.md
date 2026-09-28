@@ -1,6 +1,6 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / UI_B_UR_AUTHORIZED / PHOTOSHOP_UI_COMPLETION_ACTIVE`
+STATUS: `CURRENT / UI_C_DEV_HANDOFF_READY / PHOTOSHOP_UI_COMPLETION_ACTIVE`
 
 DATE: 2026-09-28
 
@@ -25,12 +25,14 @@ LAST_COMPLETED_TASK = INK-UI-A-PHOTOSHOP-SHELL-PANELS-001
 UI_A_PROMOTION_PR = 83
 UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
-ACTIVE_TASK = INK-UI-B-FULL-CAPABILITY-CONTROLS-001
+ACTIVE_TASK = INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md
-ACTIVE_UI_BRANCH = work/ink-ui-b-full-capability-controls-001
+ACTIVE_UI_BRANCH = work/ink-ui-c-photoshop-fidelity-closure-001
 
-UI_B = UR_AUTHORIZED / READY_FOR_UR_DEV_HANDOFF
-UI_C = UR_OWNED / WAIT_FOR_UI_B_PROMOTION
+UI_B = UR_PASS / PROMOTED
+UI_B_PROMOTION_PR = 84
+UI_B_PROMOTION_MERGE = 2d14e3a80e16e0a0d41dc453786b34bebe53e866
+UI_C = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
 FINAL_UI_RUNTIME = DEFERRED_UNTIL_UI_A_B_C_PROMOTED
 
 FORMAT_VERSION = 4
@@ -121,12 +123,12 @@ UI_RECONCILIATION_FINAL_MR_REVIEW = working/INK_UI_FULL_CAPABILITY_RECONCILIATIO
 ## Current gate
 
 ```text
-CURRENT_GATE = UI_B_UR_HANDOFF_READY
+CURRENT_GATE = UI_C_DEV_HANDOFF_READY
 UI_A = MR_PASS / UR_PASS / PROMOTED
-UI_B = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
-UI_C = UR_OWNED / WAIT_FOR_UI_B_PROMOTION
+UI_B = UR_PASS / PROMOTED
+UI_C = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
 FINAL_RUNTIME = HOLD_UNTIL_A_B_C_COMPLETE
-DEV_MAY_MODIFY_UI = ONLY_AFTER_UR_HANDOFF / NAMED_UI_B_BRANCH
+DEV_MAY_MODIFY_UI = ONLY_AFTER_UR_HANDOFF / NAMED_UI_C_BRANCH
 NEW_CORE_CAPABILITY = NO
 CORE_AUTHORITY_CHANGE = NO
 FORMAT_VERSION_CHANGE = NO
@@ -135,27 +137,25 @@ FORMAT_VERSION_CHANGE = NO
 ## Next action
 
 UR:
-- owns the remaining Photoshop-aligned UI program end to end;
-- read `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`;
-- take UI-B from the existing approved workpack;
-- hand UI-B to DEV on `work/ink-ui-b-full-capability-controls-001`;
-- own DEV → UR review → bounded revision → promotion;
-- after UI-B promotion, proceed directly to UI-C under the same UI authority;
+- owns UI-C through promotion;
+- hand UI-C to DEV on `work/ink-ui-c-photoshop-fidelity-closure-001`;
+- review Photoshop fidelity against the measured reference pack;
+- issue bounded revision directly to DEV as needed;
+- promote UI-C when visual/interaction/fidelity closure is accepted;
 - after UI-C promotion, STOP → MR for the one final exact-SHA integrated Runtime.
 
 DEV:
-- accepts routine UI work only from UR;
-- uses the exact branch and scope named by UR;
+- execute only `INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001`;
+- use the exact UI-C branch;
+- preserve UI-B capability wiring;
 - STOP → UR at handoff;
-- does not self-promote or start UI-C autonomously.
+- do not start central Runtime.
 
 MR:
-- is not a routine UI intermediary for UI-B/UI-C;
-- continues Core / technical development independently;
-- re-enters the UI lane only on `STOP → MR / INTEGRATION_REQUIRED` conditions defined by the UR directive;
-- retains final central Runtime authorization after UI-C promotion.
+- remains out of routine UI-C review;
+- re-enters only for `INTEGRATION_REQUIRED` or after UI-C promotion for final Runtime authorization.
 
-Central Runtime remains prohibited during UI-B and UI-C.
+Central Runtime remains prohibited during UI-C.
 
 ## UI-A MR technical review checkpoint
 
@@ -267,4 +267,19 @@ UI_ONLY_PROMOTION = UR
 MR_INTERMEDIARY = NO
 STOP_TO_MR = CORE / FORMAT_VERSION / P2 / CROSS-LANE / CENTRAL_RUNTIME ONLY
 FINAL_RUNTIME_OWNER = MR
+```
+
+
+## UI-B promotion checkpoint
+
+```text
+UI_B_REVIEW = working/INK_UI_B_FULL_CAPABILITY_CONTROLS_UR_REVIEW_v1.0.md
+UI_B_PUI = 74 / 74
+UI_B_GAPS = 34 / 34
+UI_B_UR = PASS
+UI_B_PROMOTION_PR = 84
+UI_B_PROMOTION_MERGE = 2d14e3a80e16e0a0d41dc453786b34bebe53e866
+INTEGRATED_MAIN_HEALTH_RECHECK = PASS
+CENTRAL_RUNTIME = NOT RUN
+NEXT = UI_C
 ```

@@ -1,6 +1,6 @@
 # INK UI-C Photoshop Fidelity & Final UI Closure — DEV Workpack v1.0
 
-STATUS: `PLANNED / UR_OWNED / WAIT_FOR_UI_B_PROMOTION`
+STATUS: `AUTHORIZED / UR_OWNED / READY_FOR_DEV_HANDOFF`
 
 TASK: `INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001`
 
@@ -216,3 +216,18 @@ POST_C_OWNER = MR / FINAL_EXACT_SHA_RUNTIME
 ```
 
 UR owns UI-C through promotion. MR re-enters only for an `INTEGRATION_REQUIRED` escalation or after C promotion for the final central Runtime.
+
+
+## 15. Activation checkpoint — 2026-09-28
+
+```text
+UI_A = PROMOTED
+UI_B = UR_PASS / PROMOTED
+UI_B_PROMOTION_PR = 84
+UI_B_PROMOTION_MERGE = 2d14e3a80e16e0a0d41dc453786b34bebe53e866
+UI_C = AUTHORIZED
+MANDATORY_DEV_BRANCH = work/ink-ui-c-photoshop-fidelity-closure-001
+CENTRAL_RUNTIME = PROHIBITED
+```
+
+DEV must preserve the UI-B contribution boundary and capability wiring while performing fidelity closure.
