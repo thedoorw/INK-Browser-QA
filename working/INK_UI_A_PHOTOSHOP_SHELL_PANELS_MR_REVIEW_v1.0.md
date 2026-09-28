@@ -1,6 +1,6 @@
 # INK UI-A Photoshop Shell & Panels — MR Review v1.0
 
-STATUS: `UI_A_R1_MR_TECHNICAL_PASS / UR_BOUNDED_RECHECK_REQUIRED / NOT_PROMOTED`
+STATUS: `UI_A_R1_MR_PASS / UR_PASS / PROMOTED`
 
 DATE: 2026-09-28
 
@@ -287,3 +287,30 @@ NEXT_OWNER = UR
 ```
 
 MR does not promote UI-A from this technical review alone. UR must recheck only the three bounded findings against the R1 branch.
+
+
+## UI-A promotion closure
+
+UR bounded recheck:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_UR_R1_RECHECK_v1.0.md`
+
+Final review result:
+```text
+UI_A_R1_MR_TECHNICAL = PASS
+UI_A_R1_UR = PASS
+UR_A_01 = CLOSED
+UR_A_02 = CLOSED
+UR_A_03 = CLOSED
+NEW_UI_A_BLOCKER = 0
+```
+
+Promotion:
+```text
+UI_A_PROMOTION_PR = 83
+UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
+UI_A = PROMOTED
+CENTRAL_RUNTIME_AFTER_UI_A = NOT_RUN / CORRECT
+UI_B = NOT_STARTED
+```
+
+UI-A is closed at the package gate. This promotion does not itself start UI-B.
