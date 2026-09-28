@@ -114,7 +114,7 @@ export function installFullCapabilityControls(app){
         const node=htmlNode('<button type="button" role="menuitem" data-ui-b-contribution="'+esc(item.id)+'" data-ui-b-command="'+esc(item.command)+'"><span>'+esc(item.label)+'</span>'+(item.shortcut?'<kbd>'+esc(item.shortcut)+'</kbd>':'')+'</button>');
         node.title=item.authority;menu.appendChild(node);lastSection=item.section;
       }
-      menu.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);});
+      menu.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command){event.preventDefault();closeMenus();dispatch(command);}});
     }
   }
 
@@ -457,6 +457,7 @@ export function installFullCapabilityControls(app){
       const recovery=event.target.closest('[data-ui-b-recovery-index]');if(recovery)restoreRecoveryCandidate(Number(recovery.dataset.uiBRecoveryIndex));
     });
     $('#uiBProfileInput')?.addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{const bytes=new Uint8Array(await file.arrayBuffer()),profile=parseIccProfile(bytes),inspection=inspectIccProfile(profile),found=selectedImage();if(!found)return;mutateObject('Assign ICC Profile',found,object=>{object.rasterState.icc={bytes:Array.from(bytes),inspection};});refreshProfileDialog();toast('ICC profile assigned');}catch(error){toast('ICC：'+error.message,3000);}});
+    document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;const open=$('.ui-b-dialog').find(dialog=>!dialog.hidden);if(!open)return;event.preventDefault();event.stopPropagation();closeDialog(open.dataset.uiBDialog);},true);
   }
 
   function openDialog(id,context=null){
@@ -595,7 +596,28 @@ export function installFullCapabilityControls(app){
   function installExportInterop(){
     const select=$('#exportFormat');if(!select)return;
     for(const [value,label] of [['psd','PSD（flattened bounded）'],['tiff','TIFF'],['exr','EXR'],['psb','PSB（需要 adapter）'],['raw','RAW（不可匯出）']])if(!select.querySelector('option[value="'+value+'"]'))select.appendChild(htmlNode('<option value="'+value+'">'+label+'</option>'));
-    const baseRun=app.runExport.bind(app),baseRefresh=app.refreshExportUI.bind(app);
+    const baseRun=app.runExport.bind(app),baseRefresh=app.refreshExportUI.bind(app),cancelButton=$('#cancelExportBtn');
+    let resumeButton=$('#uiBResumeExportBtn');
+    if(!resumeButton&&cancelButton){resumeButton=htmlNode('<button id="uiBResumeExportBtn" type="button" class="wide-button ui-b-export-resume" hidden>繼續分塊匯出</button>');cancelButton.parentElement?.appendChild(resumeButton);}
+    cancelButton?.addEventListener('click',()=>{
+      const job=app.activeExportJob;
+      if(!job||$('#exportFormat').value!=='png')return;
+      state.resumableExportJob=job;state.resumableExportName=fileSafe(app.doc.title)+'-'+fileSafe(app.page().name)+'.png';
+      if(resumeButton){resumeButton.hidden=false;resumeButton.disabled=true;}
+      const wait=()=>{if(!state.resumableExportJob||!resumeButton)return;if(state.resumableExportJob.state==='cancelled'){resumeButton.disabled=false;return;}if(['running','cancelling'].includes(state.resumableExportJob.state))setTimeout(wait,60);else{resumeButton.hidden=true;state.resumableExportJob=null;}};
+      setTimeout(wait,60);
+    },true);
+    resumeButton?.addEventListener('click',async()=>{
+      const job=state.resumableExportJob;if(!job)return;
+      if(job.state!=='cancelled'){toast('等待取消完成後再繼續');return;}
+      const status=$('#exportProgress');resumeButton.disabled=true;status.hidden=false;status.textContent='從 checkpoint 繼續分塊匯出…';
+      try{
+        const tiled=await job.resume({onProgress:progress=>status.textContent='繼續分塊匯出 '+progress.completed+'/'+progress.total+'（'+Math.round(progress.ratio*100)+'%）'});
+        const encoded=await app.pngWorkerEncoder.encode(tiled.canvas,{onProgress:progress=>status.textContent='PNG '+progress.phase+' · '+Math.round((progress.progress||0)*100)+'%'});
+        downloadBytes(app,encoded.blob,state.resumableExportName||'INK-resumed.png','image/png');
+        tiled.canvas.width=1;tiled.canvas.height=1;state.resumableExportJob=null;resumeButton.hidden=true;$('#exportDialog').hidden=true;toast('分塊匯出已從 checkpoint 完成');
+      }catch(error){console.error(error);resumeButton.disabled=false;toast('繼續匯出失敗：'+error.message,3200);}
+    });
     app.refreshExportUI=function(){baseRefresh();const format=$('#exportFormat').value;if(['psd','tiff','exr','psb','raw'].includes(format)){const summary=$('#exportSummary');if(format==='psb')summary.textContent='PSB encoder：adapter required；不會假裝成功';else if(format==='raw')summary.textContent='RAW export 不在 promoted P1-H contract';else summary.textContent=format.toUpperCase()+'：輸出目前選取的 Raster State；保留能力依 bounded codec disclosure';}};
     app.runExport=async function(){
       const format=$('#exportFormat').value;if(!['psd','tiff','exr','psb','raw'].includes(format))return baseRun();
@@ -604,7 +626,7 @@ export function installFullCapabilityControls(app){
       const found=selectedImage();if(!found)return;
       try{const bytes=app.exportImageFormat(format.toUpperCase(),found.object);downloadBytes(app,bytes,fileSafe(app.doc.title)+'.'+format);$('#exportDialog').hidden=true;toast(format.toUpperCase()+' 已建立');}catch(error){toast('匯出失敗：'+error.message,3600);}
     };
-    select.addEventListener('change',()=>app.refreshExportUI());
+    select.addEventListener('change',()=>{if(resumeButton&&select.value!=='png')resumeButton.hidden=true;app.refreshExportUI();});
   }
 
   async function dispatch(command){
