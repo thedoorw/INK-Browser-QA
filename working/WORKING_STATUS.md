@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = STOP_TO_MR_FINAL_EXACT_SHA_RUNTIME
+CURRENT_GATE = UI_COMPLETE / FINAL_RUNTIME_PASS
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -16,7 +16,7 @@ PRODUCT_ATOMICS = 496
 HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5
 TOTAL_NORMALIZED_ATOMICS = 501
 PUI_IDENTITIES = 74
-UI_GAPS = 34
+UI_GAP_REGISTER_ROWS = 34 / FINAL_DISPOSITION_COMPLETE
 
 UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_A_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
@@ -24,7 +24,7 @@ UI_B = UR_PASS / PROMOTED
 UI_C = UR_PASS / PROMOTED
 
 CENTRAL_RUNTIME_BETWEEN_PACKAGES = NO
-FINAL_RUNTIME = AFTER_UI_A_B_C_PROMOTED / ONE_EXACT_SHA_GATE
+FINAL_RUNTIME = PASS / RUN_36445204976 / TESTED_SHA_24d3b3f607a17b3cb9331ec3635b34d804ee445b
 
 FORMAT_VERSION = 4
 ```
@@ -40,8 +40,11 @@ Last completed Work Order:
 Last completed Work Order:
 `working/INK_UI_B_FULL_CAPABILITY_CONTROLS_DEV_WORKPACK_v1.0.md`
 
-Active Work Order:
+Last completed Work Order:
 `working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
+
+Active Work Order:
+`NONE / UI PROGRAM CLOSED`
 
 ## Photoshop alignment rule
 
@@ -66,19 +69,20 @@ No formal central Runtime occurs after UI-A or UI-B.
 
 UI-C also does not trigger the central Runtime during implementation.
 
-After UI-A, UI-B and UI-C are all promoted under their applicable review authority, MR authorizes one exact-SHA final integrated Runtime.
+UI-A, UI-B and UI-C are promoted. The final exact-SHA integrated Runtime has passed. No additional central Runtime is required for this program.
 
 ## Next owner
 
-`MR → FINAL EXACT-SHA INTEGRATED RUNTIME`
+`USER / MR — future direction discussion or new bounded Work Order`
 
 Current execution state:
-- UI-A is promoted.
-- UI-B is UR PASS and promoted by PR #84.
-- UI-C is UR PASS and promoted by PR #86.
-- routine UI-C review/revision/promotion is complete.
-- MR now owns the final exact-SHA Runtime.
-- central Runtime remains deferred.
+- UI-A = promoted.
+- UI-B = UR PASS / promoted.
+- UI-C = UR PASS / promoted.
+- final exact-SHA Runtime = PASS.
+- Runtime artifact = preserved.
+- UI program = CLOSED.
+- DEV and UR = STOP until a new Work Order exists.
 
 ## UI-A MR checkpoint
 
@@ -206,4 +210,31 @@ R1_FINDINGS = 4 / 4 PASS
 CENTRAL_RUNTIME = NOT RUN
 NEXT_OWNER = MR
 FINAL_RUNTIME = RUN_ON_EXACT_MAIN_77ee44c94a848588aceeb7797fa8aa737c69b248
+```
+
+
+## Final Runtime closure
+
+MR review:
+`working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md`
+
+```text
+UI_C_PRODUCT_SHA = 77ee44c94a848588aceeb7797fa8aa737c69b248
+RUNTIME_HARNESS_RECONCILE_PR = 88
+FINAL_RUNTIME_TESTED_SHA = 24d3b3f607a17b3cb9331ec3635b34d804ee445b
+PRODUCT_SOURCE_EQUIVALENCE = PASS
+
+FINAL_RUNTIME_RUN = 36445204976
+FINAL_RUNTIME_ARTIFACT = 10979718534
+ARTIFACT_SHA256 = e4d822f19aea910db3a19a583d95843c57b012bb8062a47ba20609dfa4d91aad
+
+UI_BROWSER = 110 / 110 PASS
+CLOSURE_BROWSER = PASS
+GEOMETRY_BROWSER = PASS
+CREATIVE_BROWSER = PASS
+P1_EXACT_TARGET = PASS
+CLOSURE_FOCUSED = PASS
+
+OPEN_BLOCKERS = 0
+UI_COMPLETE = YES
 ```
