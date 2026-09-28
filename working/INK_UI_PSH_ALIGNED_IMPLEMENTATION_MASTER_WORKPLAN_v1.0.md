@@ -307,3 +307,24 @@ PACKAGE_B = WAIT_FOR_A_PROMOTION
 PACKAGE_C = WAIT_FOR_B_PROMOTION
 FINAL_RUNTIME = DEFERRED_UNTIL_A_B_C_PROMOTED
 ```
+
+
+## 11. Added USER/MR requirements — extensibility + brand identity
+
+Future capability growth:
+- current architecture already has capability registry, Public Creative API, Connector/adapter boundaries, Program Import and Creative Library surfaces;
+- the current UI program must preserve a clean UI contribution/registration boundary for future native/adaptor capabilities;
+- this does not authorize a full third-party Plugin SDK, marketplace, remote package loader or arbitrary code execution;
+- full Plugin Ecosystem remains P2 expansion.
+
+Brand identity:
+- visible INK logo authority = `product/source/assets/INK_MARK_SOURCE_W-300.jpg`;
+- approved visible-logo SHA-256 = `08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8`;
+- browser favicon authority = `product/source/assets/favicon.svg`;
+- favicon contract = 32×32 / #69BFE3 background / white simplified Y;
+- Adobe logo/proprietary branding is prohibited.
+
+PWA / installed-desktop App Icon:
+`OUT_OF_SCOPE_FOR_CURRENT_UI_PROGRAM`
+
+Existing manifest behavior is preserved unless a future separate Work Order explicitly reopens it.
