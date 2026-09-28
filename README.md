@@ -18,7 +18,7 @@ CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
 CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
 
 CURRENT_PRIMARY_REMEDIATION = INK-FULL-CAPABILITY-REBASELINE-001
-CURRENT_PROGRAM = Full Product Capability Rebaseline / Preservation Recovery
+CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
 FIRST_PRIORITY = Restore all existing INK capabilities
 P0_RESTORE = 61 / 61
 FIRST_REBASELINE_RUNTIME = PASS
@@ -26,10 +26,11 @@ RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
 P0_PROMOTION = CLOSED
 PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
 PROMOTED_SOURCE_EQUIVALENCE = PASS
-CURRENT_GATE = P1 gap disposition + full-product capability baseline refresh
-P1_P2_IMPLEMENTATION = NOT AUTHORIZED until a new bounded Work Order
+CURRENT_GATE = POST_UI_A_PROMOTION / UI_B_NOT_STARTED
+P1_IMPLEMENTATION = CLOSED / PROMOTED
+P2_IMPLEMENTATION = NOT AUTHORIZED
 UI_PROGRAM = Photoshop-aligned final UI rebuild
-UI_STATUS = HOLD
+UI_STATUS = UI-A PROMOTED / UI-B NOT STARTED / FINAL RUNTIME DEFERRED
 ```
 
 Current primary remediation authority:
@@ -227,13 +228,23 @@ Do not recreate retired task-specific workflows merely because their historical 
 
 ## UI authority
 
-UI implementation is currently **HOLD** while MR rebuilds the full product capability baseline.
+The Photoshop-aligned final UI implementation program is active.
 
-Current remediation/development authority:
+Current gate:
+- UI-A = MR PASS / UR PASS / promoted via PR #83;
+- UI-B = eligible after UI-A promotion but not started;
+- UI-C = waits for UI-B promotion;
+- central Runtime remains deferred until A+B+C are promoted.
 
-`ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`
+Current authority:
 
-Previous UI capability snapshot, retained for diff but not sufficient to authorize final UI implementation:
+`ACTIVE/INK_CURRENT_WORK_ORDER.md`
+
+Master UI program:
+
+`working/INK_UI_PSH_ALIGNED_IMPLEMENTATION_MASTER_WORKPLAN_v1.0.md`
+
+Current capability baseline remains:
 
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
