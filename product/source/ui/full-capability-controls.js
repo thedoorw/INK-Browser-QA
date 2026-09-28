@@ -376,7 +376,7 @@ export function installFullCapabilityControls(app){
         if(command==='rename'){const next=prompt('Channel name',items[index]?.name||'Channel');if(next)items[index].name=next.trim()||items[index].name;}
         else{const target=clamp(index+(command==='up'?-1:1),0,items.length-1);if(target!==index){const [item]=items.splice(index,1);items.splice(target,0,item);state.selectedChannel={...state.selectedChannel,index:target};}}
       }
-    });state.selectedChannel=null;refreshPanels();
+    });if(['add-alpha','add-spot','remove'].includes(command))state.selectedChannel=null;refreshPanels();
   }
 
   function installDialogs(){
