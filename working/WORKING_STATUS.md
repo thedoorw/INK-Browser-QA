@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = POST_UI_A_PROMOTION / UI_B_NOT_STARTED
+CURRENT_GATE = UI_B_UR_HANDOFF_READY
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -20,8 +20,8 @@ UI_GAPS = 34
 
 UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_A_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
-UI_B = ELIGIBLE / NOT_STARTED
-UI_C = WAIT_FOR_UI_B_PROMOTION
+UI_B = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
+UI_C = UR_OWNED / WAIT_FOR_UI_B_PROMOTION
 
 CENTRAL_RUNTIME_BETWEEN_PACKAGES = NO
 FINAL_RUNTIME = AFTER_UI_A_B_C_PROMOTED / ONE_EXACT_SHA_GATE
@@ -70,13 +70,14 @@ After UI-A, UI-B and UI-C are all MR_PASS / UR_PASS / promoted, MR authorizes on
 
 ## Next owner
 
-`MR / USER — UI-B role and handoff structure decision`
+`UR — complete the remaining Photoshop-aligned UI program`
 
 Current execution state:
 - UI-A is promoted.
-- UI-B is technically unblocked but has not started.
-- DEV is STOP.
-- UR is STOP.
+- UI-B is authorized under UR and ready for UR → DEV handoff.
+- UI-C remains UR-owned after UI-B promotion.
+- routine UI review/revision/promotion no longer passes through MR.
+- MR re-enters only for Core/cross-lane escalation and the final exact-SHA Runtime.
 - central Runtime remains deferred.
 
 ## UI-A MR checkpoint
@@ -156,8 +157,26 @@ UI_A_PROMOTION_PR = 83
 UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 UI_A = PROMOTED
 
-UI_B = ELIGIBLE / NOT_STARTED
-DEV = STOP
-UR = STOP
+UI_B = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
+DEV = STOP_UNTIL_UR_HANDOFF
+UR = ACTIVE_UI_OWNER
 CENTRAL_RUNTIME = NOT_RUN
+```
+
+
+## UR UI completion authority
+
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+
+```text
+UI_OWNER = UR
+UI_B_DEV_HANDOFF = UR
+UI_B_REVIEW = UR
+UI_B_PROMOTION = UR
+UI_C_DEV_HANDOFF = UR
+UI_C_REVIEW = UR
+UI_C_PROMOTION = UR
+ROUTINE_MR_UI_REVIEW = NO
+STOP_TO_MR = INTEGRATION_REQUIRED ONLY
+FINAL_CENTRAL_RUNTIME = MR AFTER UI_C_PROMOTION
 ```
