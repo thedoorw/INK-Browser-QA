@@ -1,6 +1,6 @@
 # INK Photoshop-Aligned UI — Final Runtime MR Review v1.0
 
-STATUS: `MR_FINAL_RUNTIME_PASS / UI_COMPLETE`
+STATUS: `MR_FINAL_RUNTIME_PASS / UR_FULL_CHECKLIST_AUDIT_PENDING / UI_COMPLETE_HOLD`
 
 DATE: 2026-09-28
 
@@ -30,7 +30,7 @@ CLOSURE_FOCUSED = PASS
 FORMAT_VERSION = 4 / UNCHANGED
 PRODUCT_SOURCE_REGRESSION = 0
 OPEN_FINAL_RUNTIME_BLOCKERS = 0
-UI_COMPLETE = YES
+UI_COMPLETE = HOLD_PENDING_UR_FULL_CHECKLIST_AUDIT
 ```
 
 ## 2. Exact-SHA / product equivalence
@@ -222,7 +222,7 @@ Observed:
 
 The delivered first-paint contract also passes the Runtime harness.
 
-## 8. Final program closure
+## 8. Runtime closure / final UI audit handoff
 
 ```text
 UI_A_B_C_PROMOTED = YES
@@ -233,9 +233,22 @@ UI_RUNTIME_FAILURES = 0
 CORE_CROSS_LANE_REGRESSION = 0
 FORMAT_VERSION = 4
 RUNTIME_ARTIFACT = PRESERVED
-UI_COMPLETE = VERIFIED
+UI_COMPLETE = HOLD_PENDING_UR_FULL_CHECKLIST_AUDIT
 ```
 
-No additional UI mutation or central Runtime is required for this program.
+No additional central Runtime is required unless the UR checklist audit causes product changes that require revalidation.
 
-Future UI or technical expansion requires a new bounded Work Order.
+The Runtime gate is closed, but the UI program is not yet finally closed.
+
+Next mandatory gate:
+`working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
+
+UR must disposition every required checklist item and reach:
+```text
+UNREVIEWED_CHECKLIST_ITEMS = 0
+OPEN_CHECKLIST_ITEMS = 0
+FAIL_ITEMS = 0
+USER_VISUAL_ACCEPTANCE = COMPLETE
+```
+
+Only then may `UI_COMPLETE` be declared.
