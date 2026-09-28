@@ -1,6 +1,6 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / UI_COMPLETE / FINAL_RUNTIME_PASS`
+STATUS: `CURRENT / FINAL_UR_CHECKLIST_AUDIT_REQUIRED / FINAL_RUNTIME_PASS`
 
 DATE: 2026-09-28
 
@@ -8,7 +8,7 @@ DATE: 2026-09-28
 
 ```text
 PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-UI_OWNER = NONE / UI_PROGRAM_CLOSED
+UI_OWNER = UR / FINAL_FULL_CHECKLIST_AUDIT
 MR_OWNER = CORE / TECHNICAL / FUTURE_WORK
 
 TECHNICAL_BASELINE = CLOSED / P1_RUNTIME_PASS
@@ -25,9 +25,9 @@ LAST_COMPLETED_TASK = INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001
 UI_A_PROMOTION_PR = 83
 UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
-ACTIVE_TASK = NONE / UI_PROGRAM_CLOSED
+ACTIVE_TASK = INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md
-ACTIVE_UI_BRANCH = NONE / UI_C_PROMOTED
+ACTIVE_UI_BRANCH = NONE / AUDIT_ON_CURRENT_MAIN
 
 UI_B = UR_PASS / PROMOTED
 UI_B_PROMOTION_PR = 84
@@ -123,7 +123,7 @@ UI_RECONCILIATION_FINAL_MR_REVIEW = working/INK_UI_FULL_CAPABILITY_RECONCILIATIO
 ## Current gate
 
 ```text
-CURRENT_GATE = UI_COMPLETE / FINAL_RUNTIME_PASS
+CURRENT_GATE = FINAL_UR_FULL_CHECKLIST_AUDIT
 UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_B = UR_PASS / PROMOTED
 UI_C = UR_PASS / PROMOTED
@@ -131,29 +131,47 @@ FINAL_RUNTIME = PASS / RUN_36445204976
 FINAL_RUNTIME_TESTED_SHA = 24d3b3f607a17b3cb9331ec3635b34d804ee445b
 UI_C_PRODUCT_SHA = 77ee44c94a848588aceeb7797fa8aa737c69b248
 PRODUCT_SOURCE_EQUIVALENCE = PASS
-DEV_MAY_MODIFY_UI = NO / PROGRAM_CLOSED
+DEV_MAY_MODIFY_UI = NO / AUDIT_ONLY_UNLESS_UR_FINDS_BOUNDED_UI_DEFECT
 OPEN_FINAL_RUNTIME_BLOCKERS = 0
+UR_FULL_CHECKLIST_AUDIT = REQUIRED / NOT_YET_DONE
+UI_COMPLETE = HOLD
 FORMAT_VERSION = 4
 ```
 
 ## Next action
 
-The Photoshop-aligned UI implementation program is closed.
+UR owns the final full checklist audit on current main.
 
+Required authority:
+`working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
+
+Required rule:
 ```text
-UI_COMPLETE = YES
-UR = STOP / UI PROGRAM CLOSED
-DEV = STOP / NO ACTIVE UI WORK ORDER
-MR = AVAILABLE FOR FUTURE TECHNICAL / PRODUCT DIRECTION
-CENTRAL_RUNTIME = PASS
-NEW_UI_WORK = REQUIRES_NEW_BOUNDED_WORK_ORDER
+RUNTIME_PASS != UI_COMPLETE
+EVERY_REQUIRED_CHECKLIST_ITEM = PASS / FAIL / N_A
+UNREVIEWED_CHECKLIST_ITEMS = 0
+OPEN_CHECKLIST_ITEMS = 0
+USER_VISUAL_ACCEPTANCE = COMPLETE
+ONLY_THEN_UI_COMPLETE = YES
 ```
 
-Final MR review:
-`working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md`
+UR must:
+- review every checklist item, not a sample;
+- record PASS / FAIL / N/A and evidence/reason for every item;
+- treat any remaining unchecked or undispositioned item as OPEN;
+- issue bounded UI findings to DEV directly if needed;
+- recheck affected QA/Runtime only where required;
+- return final closure only when the checklist has zero open/unreviewed required items.
 
-Final Runtime artifact:
-`10979718534`
+DEV:
+- remains STOP unless UR issues a bounded correction.
+
+MR:
+- does not replace the UR checklist audit with Runtime PASS;
+- owns Core/cross-lane escalation only;
+- must not declare final program completion while the checklist gate is open.
+
+Final integrated Runtime remains PASS and does not need to be repeated unless the audit causes product changes requiring it.
 
 ## UI-A MR technical review checkpoint
 
@@ -326,3 +344,24 @@ UI_COMPLETE = VERIFIED
 
 MR final review:
 `working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md`
+
+
+## Completion-gate correction — 2026-09-28
+
+The earlier `UI_COMPLETE` declaration was premature.
+
+Reason:
+- final integrated Runtime passed;
+- however `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md` still contained undispositioned `[ ]` items;
+- UR had not performed the required full-item final audit.
+
+Corrected rule:
+
+```text
+FINAL_RUNTIME_PASS = runtime subgate only
+FULL_CHECKLIST_AUDIT = independent mandatory subgate
+USER_VISUAL_ACCEPTANCE = mandatory where checklist requires USER evidence
+UI_COMPLETE = all mandatory subgates closed
+```
+
+This correction is durable governance and must be automatically enforced in future programs.
