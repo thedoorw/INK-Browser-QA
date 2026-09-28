@@ -259,16 +259,16 @@ A DEV
 → UR Photoshop/interaction review
 → A promotion
 
-→ B DEV
-→ MR technical review
-→ UR placement/workflow review
-→ B promotion
+→ B DEV under UR
+→ UR placement/workflow/technical-boundary review
+→ bounded revision loop as needed
+→ B promotion by UR
 
-→ C DEV
-→ MR technical review
-→ UR visual/fidelity review
+→ C DEV under UR
+→ UR visual/fidelity/interaction review
 → USER visual revision if needed
-→ C promotion
+→ bounded revision loop as needed
+→ C promotion by UR
 
 → ONE final exact-SHA integrated Runtime
 → AI Completion Checklist
@@ -280,7 +280,7 @@ No central Runtime after A or B.
 
 ## 9. Final Runtime rule
 
-The final UI Runtime is not authorized until A/B/C are all MR_PASS and promoted.
+The final UI Runtime is not authorized until A/B/C are promoted under their applicable review authority. UI-B/UI-C are UR-owned; MR owns only the later central Runtime authorization.
 
 It must test the exact promoted product SHA and include:
 - existing Closure/P0/P1 suites;
@@ -303,9 +303,9 @@ There is exactly one final integrated UI Runtime gate unless that Runtime expose
 UI_RECONCILIATION = CLOSED / PROMOTED
 UI_IMPLEMENTATION_PROGRAM = AUTHORIZED
 PACKAGE_A = MR_PASS / UR_PASS / PROMOTED
-ACTIVE_PACKAGE = NONE / UI_B_NOT_STARTED
-PACKAGE_B = ELIGIBLE_AFTER_A_PROMOTION / NOT_STARTED
-PACKAGE_C = WAIT_FOR_B_PROMOTION
+ACTIVE_PACKAGE = B / UR_OWNED
+PACKAGE_B = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
+PACKAGE_C = UR_OWNED / WAIT_FOR_B_PROMOTION
 FINAL_RUNTIME = DEFERRED_UNTIL_A_B_C_PROMOTED
 ```
 
@@ -345,3 +345,24 @@ CENTRAL_RUNTIME_AFTER_A = NOT_RUN / CORRECT
 ```
 
 Package B does not start automatically from Package A promotion.
+
+
+## 13. UR delegation for remaining UI program
+
+Current authority:
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+
+The remaining UI program is delegated to UR end to end.
+
+```text
+UI_B_OWNER = UR
+UI_C_OWNER = UR
+UI_DEV_SUPERVISION = UR
+ROUTINE_UI_REVIEW = UR
+ROUTINE_UI_PROMOTION = UR
+MR_INTERMEDIARY_BETWEEN_DEV_AND_UR = NO
+STOP_TO_MR = CORE / CROSS-LANE / FORMAT_VERSION / P2 / CENTRAL_RUNTIME ONLY
+FINAL_EXACT_SHA_RUNTIME_OWNER = MR
+```
+
+This delegation allows MR to continue independent technical/Core R&D while UR completes the Photoshop-aligned UI program.
