@@ -1,6 +1,6 @@
 # INK Final UI — AI Completion Checklist v1.0
 
-STATUS: `FINAL_RUNTIME_PASS / UR_FULL_AUDIT_REQUIRED / UI_COMPLETE_HOLD`
+STATUS: `FINAL_RUNTIME_PASS / UR_FULL_AUDIT_RECORDED / FINDINGS_OPEN / UI_COMPLETE_HOLD`
 
 DATE: 2026-09-28
 
@@ -30,8 +30,8 @@ CLOSURE_BROWSER = PASS
 GEOMETRY_BROWSER = PASS
 CREATIVE_BROWSER = PASS
 UR_VISUAL_RUNTIME_REVIEW = PARTIAL / UI_C_PROMOTED
-UR_FULL_CHECKLIST_AUDIT = NOT_YET_DONE
-UNREVIEWED_CHECKLIST_ITEMS = 592
+UR_FULL_CHECKLIST_AUDIT = RECORDED / FINDINGS_OPEN
+UNREVIEWED_CHECKLIST_ITEMS = 0
 UI_COMPLETE = HOLD
 ```
 
@@ -899,3 +899,610 @@ UI_COMPLETE = VERIFIED
 The initial final Runtime run `36443008810` failed only because the legacy UI Runtime harness still encoded superseded pre-UI-A geometry/inventory assumptions. MR reconciled that QA harness through PR #88 without product/source mutation, then reran the exact product-equivalent revision successfully.
 
 This checklist is NOT closed. UR must now perform the full item-by-item audit on current main. It closes only after all required items have explicit disposition and open/unreviewed counts are zero.
+
+---
+
+## UR final full-item audit — current main 3608962c17ecbea864be18049462badfc7021a38
+
+TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
+
+`TOTAL=592 / PASS=384 / FAIL=207 / N_A=1 / UNREVIEWED=0 / OPEN=207`
+
+A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. Runtime run 36445204976 remains PASS for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b. Current main 3608962c changes no product source since that SHA; no new central Runtime was run.
+
+The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and AF10; eight are explicitly `[USER]`, two additional items demand USER approval/completion in their text. All remain FAIL until USER evidence is recorded.
+
+| ID | Disposition | Evidence / reason | Finding |
+|---|---|---|---|
+| A01 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md §2; working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §5 (FORMAT_VERSION=4). | — |
+| A02 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md §2; working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §5 (FORMAT_VERSION=4). | — |
+| A03 | FAIL | Placement/summary alone does not prove this exact item on current main (A03: No UI command claims capability outside the frozen baseline. [SRC]); source or targeted QA evidence needed. | UI-AUD-06 |
+| A04 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,4: UI-C source equivalent, QA-only PR #88; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md changed-files section. | — |
+| A05 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,4: UI-C source equivalent, QA-only PR #88; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md changed-files section. | — |
+| A06 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,5: integrated tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b and run 36445204976. | — |
+| B01 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md REFERENCE_PACK; attached 1280×1024 PNG SHA-256 9bb8f329df55f6e6617e32e60a138c6cd21451509465073d4821802482815f76 / df316d46821c2840acf1dad277dca6442b4b093034b9dd809d6cb4aa917860e2. | — |
+| B02 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md REFERENCE_PACK; attached 1280×1024 PNG SHA-256 9bb8f329df55f6e6617e32e60a138c6cd21451509465073d4821802482815f76 / df316d46821c2840acf1dad277dca6442b4b093034b9dd809d6cb4aa917860e2. | — |
+| B03 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§0–2, normalized 1280×994 app crop; reference-state classification. | — |
+| B04 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§0–2, normalized 1280×994 app crop; reference-state classification. | — |
+| B05 | FAIL | Behavior reference documents mention Adobe, but original official URLs and item-specific behavior comparison are not closed in the audit package. | UI-AUD-07 |
+| B06 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§0–2, normalized 1280×994 app crop; reference-state classification. | — |
+| C01 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| C02 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| C03 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| C04 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| C05 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| C06 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| C07 | FAIL | Current desktop capture is present but no normalized edge overlay/difference evidence for no gap/double divider. | UI-AUD-02 |
+| D01 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
+| D02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for D02: no dead top-level menu label exists. [INT] | UI-AUD-08 |
+| D03 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
+| D04 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
+| D05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for D05: promoted Filter menu is present and routes only accepted C25/P1-F filter authority; no unbacked filter chrome exists. [SRC][INT] | UI-AUD-08 |
+| D06 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
+| D07 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
+| D08 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
+| D09 | FAIL | ui.json #55 proves Escape closes menu, but does not assert focus restoration. | UI-AUD-05 |
+| D10 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for D10: keyboard navigation works for menu items. [INT] | UI-AUD-08 |
+| D11 | FAIL | Final screenshots do not show the required state/comparison for D11: separators/check/disabled states are visually coherent. [PIX][INT] | UI-AUD-02 |
+| D12 | FAIL | Final screenshots do not show the required state/comparison for D12: keyboard shortcut labels align/read correctly. [PIX] | UI-AUD-02 |
+| D13 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
+| E01 | PASS | artifact 10979718534 / ui.json checks #67–77; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md contextual Options evidence. | — |
+| E02 | PASS | artifact 10979718534 / ui.json checks #67–77; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md contextual Options evidence. | — |
+| E03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for E03: Draw color control routes to existing color authority. [INT] | UI-AUD-08 |
+| E04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for E04: Draw size control routes to existing tool setting. [INT] | UI-AUD-08 |
+| E05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for E05: Draw opacity/preset controls appear only where supported. [INT] | UI-AUD-08 |
+| E06 | PASS | artifact 10979718534 / ui.json checks #67–77; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md contextual Options evidence. | — |
+| E07 | PASS | artifact 10979718534 / ui.json checks #67–77; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md contextual Options evidence. | — |
+| E08 | PASS | artifact 10979718534 / ui.json checks #67–77; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md contextual Options evidence. | — |
+| E09 | PASS | artifact 10979718534 / ui.json checks #67–77; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md contextual Options evidence. | — |
+| E10 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for E10: Path/Node quick controls appear only during relevant edit state. [INT] | UI-AUD-08 |
+| E11 | PASS | artifact 10979718534 / ui.json checks #67–77; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md contextual Options evidence. | — |
+| E12 | FAIL | Final screenshots do not show the required state/comparison for E12: switching context produces no broken layout/overflow. [PIX][INT] | UI-AUD-02 |
+| F01 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| F02 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| F03 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| F04 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| F05 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F06 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F07 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F08 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F09 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F10 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F11 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F12 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F12: Select is present. [INT] | UI-AUD-08 |
+| F13 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F13: Lasso is present. [INT] | UI-AUD-08 |
+| F14 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F15 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F16 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F16: Image is present. [INT] | UI-AUD-08 |
+| F17 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F17: Pan is present. [INT] | UI-AUD-08 |
+| F18 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F18: five Draw tools share one flyout/group authority. [INT] | UI-AUD-08 |
+| F19 | FAIL | Final screenshots do not show the required state/comparison for F19: grouped tool shows a flyout indicator. [PIX] | UI-AUD-02 |
+| F20 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F21 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F21: hover/focus states work. [INT] | UI-AUD-08 |
+| F22 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. tool density is comparable to Photoshop reference. [PIX][USER] | USER-ACCEPT |
+| F23 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
+| F24 | FAIL | Placement/summary alone does not prove this exact item on current main (F24: mobile tool duplicates are classified only as responsive routes. [SRC][RESP]); source or targeted QA evidence needed. | UI-AUD-06 |
+| G01 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. canvas is visually dominant. [PIX][USER] | USER-ACCEPT |
+| G02 | PASS | artifact 10979718534 / ui.json checks #8, #10, #30–31, #65, #90–91; ui-1280x1024.png. | — |
+| G03 | PASS | artifact 10979718534 / ui.json checks #8, #10, #30–31, #65, #90–91; ui-1280x1024.png. | — |
+| G04 | PASS | artifact 10979718534 / ui.json checks #8, #10, #30–31, #65, #90–91; ui-1280x1024.png. | — |
+| G05 | PASS | artifact 10979718534 / ui.json checks #8, #10, #30–31, #65, #90–91; ui-1280x1024.png. | — |
+| G06 | FAIL | No current-main browser exercise of pan/zoom in infinite creation space in final UI suite. | UI-AUD-08 |
+| G07 | PASS | artifact 10979718534 / ui.json checks #8, #10, #30–31, #65, #90–91; ui-1280x1024.png. | — |
+| H01 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| H02 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
+| H03 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H04 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H05 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H06 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H07 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H08 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H09 | FAIL | Final screenshots do not show the required state/comparison for H09: active panel state is visible. [PIX] | UI-AUD-02 |
+| H10 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H11 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H12 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. panel header/tab density aligns with Photoshop grammar. [PIX][USER] | USER-ACCEPT |
+| H13 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| H14 | PASS | artifact 10979718534 / ui.json checks #27–32, #47, #50, #86–91; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §6; UI-A-R1 UR review. | — |
+| I01 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I02 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I03 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I04 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I05 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I06 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I07 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I08 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I09 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I10 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I11 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| I12 | PASS | artifact 10979718534 / ui.json checks #27, #36, #41–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md panel homes; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Window/Dock routing. | — |
+| J01 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J01: selected object state appears in Properties. [INT] | UI-AUD-08 |
+| J02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J02: transform values appear/refine existing transform state. [INT] | UI-AUD-08 |
+| J03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J03: fill/stroke/opacity appearance routes correctly. [INT] | UI-AUD-08 |
+| J04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J04: material apply/remove state routes correctly. [INT] | UI-AUD-08 |
+| J05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J05: Path/Node state appears when relevant. [INT] | UI-AUD-08 |
+| J06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J06: Frame/Layout state appears when relevant. [INT] | UI-AUD-08 |
+| J07 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J07: LayoutItem state appears when relevant. [INT] | UI-AUD-08 |
+| J08 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J08: Component instance state/allowed overrides appear when relevant. [INT] | UI-AUD-08 |
+| J09 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for J09: document/layout properties have a clear home. [INT] | UI-AUD-08 |
+| J10 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| K01 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K01: layer hierarchy displays correctly. [INT] | UI-AUD-08 |
+| K02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K02: canvas selection and Layers selection synchronize. [INT] | UI-AUD-08 |
+| K03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K03: visibility action works. [INT] | UI-AUD-08 |
+| K04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K04: lock action works where supported. [INT] | UI-AUD-08 |
+| K05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K05: opacity route works where supported. [INT] | UI-AUD-08 |
+| K06 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| K07 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| K08 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| K09 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K09: drag reorder works. [INT] | UI-AUD-08 |
+| K10 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K10: hierarchy/reparent interaction uses existing authority. [INT] | UI-AUD-08 |
+| K11 | FAIL | Final screenshots do not show the required state/comparison for K11: compact panel-local footer/actions follow Photoshop grammar. [PIX] | UI-AUD-02 |
+| K12 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K12: long list scroll behavior works. [INT] | UI-AUD-08 |
+| K13 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for K13: Layer menu and panel changes converge on one document state. [INT] | UI-AUD-08 |
+| L01 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| L02 | FAIL | Final screenshots do not show the required state/comparison for L02: older states are above newer states. [INT][PIX] | UI-AUD-02 |
+| L03 | FAIL | Final screenshots do not show the required state/comparison for L03: current state is visibly selected. [PIX] | UI-AUD-02 |
+| L04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for L04: clicking an earlier state restores it. [INT] | UI-AUD-08 |
+| L05 | FAIL | Final screenshots do not show the required state/comparison for L05: later states visually communicate their future/discard status. [PIX][INT] | UI-AUD-02 |
+| L06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for L06: subsequent editing from earlier state follows existing semantics. [INT] | UI-AUD-08 |
+| L07 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| L08 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| L09 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for L09: History limit control is panel-local/options. [INT] | UI-AUD-08 |
+| L10 | FAIL | Final screenshots do not show the required state/comparison for L10: History is not conflated with Revision. [SRC][PIX] | UI-AUD-02 |
+| L11 | FAIL | Placement/summary alone does not prove this exact item on current main (L11: no unsupported Photoshop snapshot/non-linear semantics were invented. [SRC]); source or targeted QA evidence needed. | UI-AUD-06 |
+| M01 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| M02 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| M03 | FAIL | Final screenshots do not show the required state/comparison for M03: thumbnail/overview renders meaningful current content extent. [INT][PIX] | UI-AUD-02 |
+| M04 | FAIL | Final screenshots do not show the required state/comparison for M04: viewport proxy rectangle is visible. [PIX] | UI-AUD-02 |
+| M05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M05: proxy reflects current main-canvas viewport. [INT] | UI-AUD-08 |
+| M06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M06: canvas pan updates proxy. [INT] | UI-AUD-08 |
+| M07 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M07: canvas zoom updates proxy. [INT] | UI-AUD-08 |
+| M08 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M08: dragging proxy pans canvas. [INT] | UI-AUD-08 |
+| M09 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M09: clicking thumbnail repositions canvas view. [INT] | UI-AUD-08 |
+| M10 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M10: zoom percentage/readout is present. [INT] | UI-AUD-08 |
+| M11 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M11: Zoom Out works. [INT] | UI-AUD-08 |
+| M12 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M12: zoom slider works. [INT] | UI-AUD-08 |
+| M13 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M13: Zoom In works. [INT] | UI-AUD-08 |
+| M14 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| M15 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| M16 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M16: infinite-canvas overview uses finite content/artboard extent logically. [INT] | UI-AUD-08 |
+| N01 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| N02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for N02: page list is usable. [INT] | UI-AUD-08 |
+| N03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for N03: page selection works. [INT] | UI-AUD-08 |
+| N04 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| N05 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| N06 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
+| O01 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| O02 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| O03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O03: search input works. [INT] | UI-AUD-08 |
+| O04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O04: family filtering works. [INT] | UI-AUD-08 |
+| O05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O05: Component results can be searched/inspected. [INT] | UI-AUD-08 |
+| O06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O06: Material results can be searched/inspected. [INT] | UI-AUD-08 |
+| O07 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O07: Recipe results can be searched/inspected. [INT] | UI-AUD-08 |
+| O08 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O08: Parametric-structure results can be searched/inspected. [INT] | UI-AUD-08 |
+| O09 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O09: Reference-derived-structure results can be searched/inspected. [INT] | UI-AUD-08 |
+| O10 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O10: result details/inspect are read-only where required. [INT] | UI-AUD-08 |
+| O11 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O11: component reuse routes to governed component instance creation. [INT] | UI-AUD-08 |
+| O12 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for O12: material reuse routes to governed material apply. [INT] | UI-AUD-08 |
+| O13 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| O14 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| O15 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| O16 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| P01 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for P01: Reference panel imports local reference through accepted authority. [INT] | UI-AUD-08 |
+| P02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for P02: reference decomposition/vectorization works through accepted authority. [INT] | UI-AUD-08 |
+| P03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for P03: advisory research/readout stays read-only where required. [INT] | UI-AUD-08 |
+| P04 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| Q01 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Q01: Compose shows structural/composition state clearly. [INT] | UI-AUD-08 |
+| Q02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Q02: Repeat/parametric state is visible where relevant. [INT] | UI-AUD-08 |
+| Q03 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| Q04 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| R01 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| R02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for R02: proposal route works. [INT] | UI-AUD-08 |
+| R03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for R03: approval route works. [INT] | UI-AUD-08 |
+| R04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for R04: execute route remains governed. [INT] | UI-AUD-08 |
+| R05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for R05: Creative Plan/use_ink route works at accepted scope. [INT] | UI-AUD-08 |
+| R06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for R06: History tools remain same authority when called by CHAT. [INT] | UI-AUD-08 |
+| R07 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for R07: Revision tools remain same authority when called by CHAT. [INT] | UI-AUD-08 |
+| R08 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for R08: Library search can be used from CHAT without creating second library. [INT] | UI-AUD-08 |
+| R09 | FAIL | Final screenshots do not show the required state/comparison for R09: provider/credential engineering settings are not ordinary CHAT clutter. [PIX] | UI-AUD-02 |
+| R10 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| S01 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for S01: Revision list works. [INT] | UI-AUD-08 |
+| S02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for S02: capture works. [INT] | UI-AUD-08 |
+| S03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for S03: restore works. [INT] | UI-AUD-08 |
+| S04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for S04: provenance/readout remains available. [INT] | UI-AUD-08 |
+| S05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for S05: accepted structural compare works. [INT] | UI-AUD-08 |
+| S06 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| S07 | PASS | ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md capability boundaries; artifact 10979718534 / ui.json checks #43–49. | — |
+| T01 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact path.repaint.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T02 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact path.material.apply.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T03 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact path.material.remove.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T04 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact object.translate.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T05 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact path.simplify.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T06 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact path.refine.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T07 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact path.create.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T08 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact path.edit.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T09 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact object.rotate.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T10 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact object.clone.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T11 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact repeat.radial.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T12 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact boolean.apply.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T13 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact group.create.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T14 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact object.reparent.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T15 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact frame.create.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T16 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact text.create.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T17 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact text.edit.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T18 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact svg.import.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T19 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact object.resize.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T20 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact object.scale.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T21 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact object.order.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T22 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact repeat.mirror.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T23 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact repeat.grid.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T24 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact layout.frame.set.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T25 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact layout.frame.remove.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T26 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact layout.item.set.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T27 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact layout.item.remove.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T28 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact component.register.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T29 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact component.instance.create.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T30 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact component.override.set.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T31 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact component.override.reset.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T32 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact component.instance.detach.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T33 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact component.definition.duplicate.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| T34 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact component.reference.repair.v1 disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U01 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact get_ink_capabilities disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U02 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact get_ink_context disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U03 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact get_ink_selection disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U04 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact inspect_ink_objects disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U05 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact decompose_ink_reference disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U06 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact propose_ink_edit disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U07 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact approve_ink_edit disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U08 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact execute_ink_edit disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U09 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact get_ink_history disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U10 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact undo_ink disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U11 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact redo_ink disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U12 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact get_ink_revisions disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U13 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact capture_ink_revision disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U14 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact restore_ink_revision disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U15 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact get_ink_preview disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U16 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact inspect_ink_output disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U17 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact release_ink_output disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U18 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact describe_ink_capability disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U19 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact use_ink disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U20 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact import_ink_reference disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U21 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact export_ink_asset disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| U22 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact search_ink_library disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V01 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact renderEngineMode disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V02 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact fontFamily disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V03 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact historyLimit disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V04 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact pathStrokePreset disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V05 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact aiStartupMode disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V06 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact aiProvider disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V07 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact aiAuthMethod disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V08 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact aiDataPolicy disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V09 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact aiImagePolicy disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V10 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact aiLoggingPolicy disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V11 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact aiPreviewQuality disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V12 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact programSafetyMode disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V13 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact referenceRunner disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V14 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact studioSkeleton disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V15 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact adjustmentType disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V16 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact filterType disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V17 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact paintBrush disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V18 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact stylusTestPattern disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V19 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact calibrationProfileSelect disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V20 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact artworkQaBenchmark disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V21 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact artboardPreset disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V22 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact artboardOrientation disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V23 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact artboardPpi disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V24 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact artboardUnit disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V25 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact paperType disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V26 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact exportFormat disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V27 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact exportScope disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V28 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact exportScale disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| V29 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md exact exportPpi disposition; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md frozen list; UI-B UR review §4, per-ID source placement verified. | — |
+| W01 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W02 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W03 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W04 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W05 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W06 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W07 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W08 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W09 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W10 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W11 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W12 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| W13 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30 Specialist routing; UI-B UR review §2; artifact 10979718534 / ui.json checks #41–42. | — |
+| X01 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X02 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X03 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X04 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X05 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X06 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X07 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X08 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X09 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X10 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X11 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X12 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X13 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| X14 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
+| Y01 | PASS | artifact 10979718534 / ui.json checks #63, #84–85, #92, #96; ui-1280x1024.png. USER acceptance remains separately pending where marked. | — |
+| Y02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y02: fit content works. [INT] | UI-AUD-08 |
+| Y03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y03: reset view works. [INT] | UI-AUD-08 |
+| Y04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y04: zoom in works. [INT] | UI-AUD-08 |
+| Y05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y05: zoom out works. [INT] | UI-AUD-08 |
+| Y06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y06: reset rotation works. [INT] | UI-AUD-08 |
+| Y07 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. status/readout is low-noise. [PIX][USER] | USER-ACCEPT |
+| Y08 | PASS | artifact 10979718534 / ui.json checks #63, #84–85, #92, #96; ui-1280x1024.png. USER acceptance remains separately pending where marked. | — |
+| Y09 | PASS | artifact 10979718534 / ui.json checks #63, #84–85, #92, #96; ui-1280x1024.png. USER acceptance remains separately pending where marked. | — |
+| Y10 | PASS | artifact 10979718534 / ui.json checks #63, #84–85, #92, #96; ui-1280x1024.png. USER acceptance remains separately pending where marked. | — |
+| Z01 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. target is a light-gray Photoshop-style workstation. [PIX][USER] | USER-ACCEPT |
+| Z02 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z03 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z04 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z05 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z06 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z07 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. normal command text is not too small/dim. [PIX][USER] | USER-ACCEPT |
+| Z08 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z09 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z10 | FAIL | Final screenshots do not show the required state/comparison for Z10: icons have consistent box/stroke grammar. [PIX] | UI-AUD-02 |
+| Z11 | FAIL | Final screenshots do not show the required state/comparison for Z11: active/hover/focus/disabled states are coherent. [INT][PIX] | UI-AUD-02 |
+| Z12 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z13 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z14 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| Z15 | PASS | artifact 10979718534 / ui.json checks #79–83, #103–104 and ui-first-paint.png; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/brand/first-paint review. | — |
+| AA01 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA02 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA03 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA04 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA05 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA06 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA07 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA08 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA09 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
+| AA10 | FAIL | Placement/summary alone does not prove this exact item on current main (AA10: touch targets remain usable. [RESP]); source or targeted QA evidence needed. | UI-AUD-06 |
+| AB01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB02 | FAIL | Current product/source/styles.css contains 36 !important occurrences (rg count); requirement explicitly demands total 0. Prior UI-C report also records 36. | UI-AUD-01 |
+| AB03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB05 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB06 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB07 | FAIL | No exhaustive current-main visible-Primary-Home inventory in final artifact; UI-B static result is narrower. | UI-AUD-06 |
+| AB08 | FAIL | No exhaustive current-main click-through inventory in final artifact; 110 Runtime tests cover a subset. | UI-AUD-06 |
+| AB09 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB10 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB11 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB12 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB13 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB14 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AB15 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
+| AC01 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
+| AC02 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
+| AC03 | FAIL | Final artifact contains only 1280×1024 and 960×800 UI screenshots; no compact/mobile screenshot. | UI-AUD-02 |
+| AC04 | FAIL | No separately labeled top-61px crop in final artifact. | UI-AUD-02 |
+| AC05 | FAIL | No separately labeled single-toolbar crop in final artifact. | UI-AUD-02 |
+| AC06 | FAIL | No separately labeled double-toolbar crop in final artifact. | UI-AUD-02 |
+| AC07 | FAIL | No separately labeled collapsed-Dock crop in final artifact. | UI-AUD-02 |
+| AC08 | FAIL | No separately labeled expanded-panel crop in final artifact. | UI-AUD-02 |
+| AC09 | FAIL | No History multi-state screenshot in final artifact. | UI-AUD-02 |
+| AC10 | FAIL | No Navigator normal screenshot in final artifact. | UI-AUD-02 |
+| AC11 | FAIL | No Navigator after pan/zoom screenshot in final artifact. | UI-AUD-02 |
+| AC12 | FAIL | No Libraries search/result screenshot in final artifact. | UI-AUD-02 |
+| AC13 | FAIL | No Photoshop/INK major-edge overlay in final artifact. | UI-AUD-02 |
+| AC14 | FAIL | No Photoshop/INK difference/edge image in final artifact. | UI-AUD-02 |
+| AC15 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
+| AC16 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
+| AD01 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD02 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD03 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD04 | FAIL | Placement/summary alone does not prove this exact item on current main (AD04: typography is sufficiently bright/large.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AD05 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD06 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD07 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD08 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD09 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD10 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AD11 | FAIL | Placement/summary alone does not prove this exact item on current main (AD11: tool icons/control density visually match the Photoshop target.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AD12 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
+| AE01 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md reconciliation totals; UI-B UR review §4. | — |
+| AE02 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md reconciliation totals; UI-B UR review §4. | — |
+| AE03 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md reconciliation totals; UI-B UR review §4. | — |
+| AE04 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md reconciliation totals; UI-B UR review §4. | — |
+| AE05 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md reconciliation totals; UI-B UR review §4. | — |
+| AE06 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md reconciliation totals; UI-B UR review §4. | — |
+| AE07 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md §§29–30; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md reconciliation totals; UI-B UR review §4. | — |
+| AE08 | FAIL | No exhaustive current-main visible-control click-through; earlier UI-B disposition cannot prove all current-main controls. | UI-AUD-06 |
+| AE09 | FAIL | No exhaustive current-main duplicate-Primary-Home inventory. | UI-AUD-06 |
+| AE10 | FAIL | No exhaustive current-main fake-visible-feature inventory. | UI-AUD-06 |
+| AG01 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG02 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG03 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG04 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG05 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG06 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG07 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG08 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG09 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG10 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG11 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG12 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG13 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG14 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG15 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG16 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG17 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG18 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG19 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG20 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG21 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG22 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG23 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG24 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG25 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG26 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG27 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG28 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG29 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG30 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG31 | FAIL | Final screenshots do not show the required state/comparison for AG31: ruler / guide / snapping workstation surface satisfies the dedicated mandatory audit below and uses existing P1-C/C08 authorities. [SRC][INT][PIX] | UI-AUD-02 |
+| AG32 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG33 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG34 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG35 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG36 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AG37 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md Photoshop adaptation/exclusion matrix; artifact 10979718534 / ui.json checks shell/panel checks #3–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md UI-C closure notes. | — |
+| AI01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
+| AI02 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
+| AI03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
+| AI04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
+| AI05 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI05: guides can be moved, deleted, locked, shown and hidden through one guide authority. [SRC][INT] | UI-AUD-09 |
+| AI06 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI06: object edges and centers snap to guides with visible snap feedback. [INT][PIX] | UI-AUD-09 |
+| AI07 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI07: object edges and centers snap to other objects using the accepted smart-snap authority. [INT][PIX] | UI-AUD-09 |
+| AI08 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI08: grid snapping works and converges with the same global snap state. [INT] | UI-AUD-09 |
+| AI09 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI09: angle snapping works and does not conflict with positional snapping. [INT] | UI-AUD-09 |
+| AI10 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI10: equal-distance / equal-spacing snapping works on X/Y and displays actionable visual spacing feedback. [INT][PIX] | UI-AUD-09 |
+| AI11 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. movement displays useful live distance / position information without becoming persistent UI noise. [INT][PIX][USER] | USER-ACCEPT |
+| AI12 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI12: global Snap on/off control exists and immediately governs the accepted snap authority. [INT] | UI-AUD-09 |
+| AI13 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI13: Snap To category controls exist for the supported targets rather than requiring all snap classes at once. [INT] | UI-AUD-09 |
+| AI14 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI14: temporary snap bypass works during direct manipulation without changing the saved global setting. [INT] | UI-AUD-09 |
+| AI15 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI15: one documented snap tolerance / hysteresis policy is used across guide/object/grid/equal-distance snapping. [SRC][INT] | UI-AUD-09 |
+| AI16 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. snapping does not visibly jitter, oscillate between competing candidates, or trap the pointer near threshold boundaries. [INT][USER] | USER-ACCEPT |
+| AI17 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI17: persistent guides survive accepted save/load/reopen flow after P1 Integration wiring. [INT] | UI-AUD-09 |
+| AI18 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AI18: guide mutations that are document mutations converge with existing History/Undo/Redo semantics. [SRC][INT] | UI-AUD-09 |
+| AI19 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
+| AI20 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
+| AH01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH02 | FAIL | Placement/summary alone does not prove this exact item on current main (AH02: panel tab hover/focus behavior is defined and verified.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH05 | FAIL | Placement/summary alone does not prove this exact item on current main (AH05: every visible panel-menu trigger opens real commands; dead triggers = 0.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH06 | FAIL | Placement/summary alone does not prove this exact item on current main (AH06: panel-local menus do not duplicate application-wide command authority.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH07 | FAIL | Placement/summary alone does not prove this exact item on current main (AH07: frequent panel actions remain body/footer actions rather than being hidden unnecessarily.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH08 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH09 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH10 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH11 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH12 | FAIL | Placement/summary alone does not prove this exact item on current main (AH12: panel body scrolling and footer boundaries are verified.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH13 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH14 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH15 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH16 | FAIL | Placement/summary alone does not prove this exact item on current main (AH16: persistent status content is limited to useful document/view telemetry.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH17 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH18 | FAIL | Placement/summary alone does not prove this exact item on current main (AH18: status surface does not duplicate Properties or Navigator state ownership.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH19 | FAIL | Placement/summary alone does not prove this exact item on current main (AH19: P1-G color mode/bit depth/profile placement is reconsidered after refreshed baseline.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH20 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH21 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH22 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH23 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH24 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AH25 | N_A | Multi-document behavior is conditional “if later supported”; current baseline has one active-document state. Recheck if multi-document authority is introduced. | — |
+| AH26 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
+| AJ01 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ01. | UI-AUD-03 |
+| AJ02 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ02. | UI-AUD-03 |
+| AJ03 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ03. | UI-AUD-03 |
+| AJ04 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ04. | UI-AUD-03 |
+| AJ05 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ05. | UI-AUD-03 |
+| AJ06 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ06. | UI-AUD-03 |
+| AJ07 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ07. | UI-AUD-03 |
+| AJ08 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
+| AJ09 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
+| AJ10 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ10. | UI-AUD-03 |
+| AJ11 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ11. | UI-AUD-03 |
+| AJ12 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ12. | UI-AUD-03 |
+| AJ13 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ13. | UI-AUD-03 |
+| AJ14 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ14. | UI-AUD-03 |
+| AJ15 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ15. | UI-AUD-03 |
+| AJ16 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ16. | UI-AUD-03 |
+| AJ17 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
+| AJ18 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
+| AJ19 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ19. | UI-AUD-03 |
+| AJ20 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ20. | UI-AUD-03 |
+| AJ21 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ21. | UI-AUD-03 |
+| AJ22 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ22. | UI-AUD-03 |
+| AJ23 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
+| AJ24 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ24. | UI-AUD-03 |
+| AJ25 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ25. | UI-AUD-03 |
+| AJ26 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ26. | UI-AUD-03 |
+| AJ27 | FAIL | Fine Detail Standard §25 requires Component/Field/Target/Actual/Evidence/Result implementation table; no complete final actual/evidence table located. | UI-AUD-03 |
+| AJ28 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
+| AK01 | FAIL | Reference environment field for AK01 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK02 | FAIL | Reference environment field for AK02 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK03 | FAIL | Reference environment field for AK03 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK04 | FAIL | Reference environment field for AK04 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK05 | FAIL | Reference environment field for AK05 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK06 | FAIL | Reference environment field for AK06 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK07 | FAIL | Reference environment field for AK07 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK08 | FAIL | Reference environment field for AK08 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK09 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
+| AK10 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
+| AK11 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
+| AK12 | FAIL | Reference environment field for AK12 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK13 | FAIL | Reference environment field for AK13 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK14 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
+| AL01 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL02 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL03 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL04 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL05 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL06 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL07 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL08 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL09 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL10 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL11 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL12 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL13 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL14 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL15 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AL16 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
+| AM01 | FAIL | Placement/summary alone does not prove this exact item on current main (AM01: Tooltip placement and compact geometry follow the measured reference while allowing text-dependent sizing.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM02 | FAIL | Placement/summary alone does not prove this exact item on current main (AM02: Tool flyout uses compact grouped-tool rows comparable to the ≈20 px reference pitch.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
+| AM04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
+| AM05 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
+| AM06 | FAIL | Placement/summary alone does not prove this exact item on current main (AM06: Status information menu, if implemented, remains document-local and uses compact popup grammar.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM07 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
+| AM08 | FAIL | Placement/summary alone does not prove this exact item on current main (AM08: document scrollbar thickness is visually comparable to the 16 px reference where native INK scrollbar presentation applies.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM09 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
+| AM10 | FAIL | Placement/summary alone does not prove this exact item on current main (AM10: Layers drag reorder shows a clear insertion target before drop.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM11 | FAIL | Placement/summary alone does not prove this exact item on current main (AM11: Layers drag ghost/insertion feedback is visually distinct from ordinary selection.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM12 | FAIL | Placement/summary alone does not prove this exact item on current main (AM12: Layers reorder converges with hierarchy authority and History semantics.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM13 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
+| AN01 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN01: Navigator proxy drag behavior is verified against Adobe Photoshop documentation and INK Runtime. | UI-AUD-09 |
+| AN02 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN02: Panel edge resize behavior is verified; no Photoshop cursor-raster copy is required. | UI-AUD-09 |
+| AN03 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN03: Smart Guides show edge/center/boundary alignment opportunities. | UI-AUD-09 |
+| AN04 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN04: Smart Guides provide useful pixel-distance feedback during movement. | UI-AUD-09 |
+| AN05 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN05: equal-spacing feedback is supported by the accepted snap/measurement authority. | UI-AUD-09 |
+| AN06 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
+| AN07 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
+| AN08 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
+| AN09 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN09: disabled controls are visually distinct and semantically disabled. | UI-AUD-09 |
+| AN10 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN10: scrollbar geometry is verified; hover/drag styling does not require Adobe raster imitation. | UI-AUD-09 |
+| AN11 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
+| AN12 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
+| AO01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AO02 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AO03 | FAIL | Placement/summary alone does not prove this exact item on current main (AO03: no component-local random gray values bypass the token authority.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AO04 | FAIL | Placement/summary alone does not prove this exact item on current main (AO04: primary/secondary/disabled text contrast is verified.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AO05 | FAIL | Placement/summary alone does not prove this exact item on current main (AO05: icon normal/hover/active/disabled contrast is verified.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AO06 | FAIL | Placement/summary alone does not prove this exact item on current main (AO06: control borders and states are visibly distinct.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AO07 | FAIL | Placement/summary alone does not prove this exact item on current main (AO07: palette hierarchy is visually consistent with Photoshop Light/Lightest public references.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AO08 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AO09 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AO10 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. USER visual review approves the final light-gray token set. | USER-ACCEPT |
+| AP01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AP02 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AP03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AP04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AP05 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AP06 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
+| AP07 | FAIL | Placement/summary alone does not prove this exact item on current main (AP07: final token values are Runtime-reviewed in the denser desktop INK workstation before closure.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AF01 | PASS | UI-A/B/C UR reviews; working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§5–7; captured desktop screenshot inspection. | — |
+| AF02 | PASS | UI-A/B/C UR reviews; working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§5–7; captured desktop screenshot inspection. | — |
+| AF03 | PASS | UI-A/B/C UR reviews; working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§5–7; captured desktop screenshot inspection. | — |
+| AF04 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,5: integrated tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b and run 36445204976. | — |
+| AF05 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,5: integrated tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b and run 36445204976. | — |
+| AF06 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,5: integrated tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b and run 36445204976. | — |
+| AF07 | PASS | UI-A/B/C UR reviews; working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§5–7; captured desktop screenshot inspection. | — |
+| AF08 | FAIL | Current-main focused QA invocation node --test qa/ink-ui-{a,b,c}*.test.mjs yielded 24 PASS / 1 FAIL: UI-A Navigator static assertion expects older camera string after UI-C ruler/Navigator refactor. QA contract requires reconciliation/recheck. | UI-AUD-10 |
+| AF09 | FAIL | Placement/summary alone does not prove this exact item on current main (AF09: Photoshop alignment review = PASS.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AF10 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. USER visual acceptance/revision completed. | USER-ACCEPT |
+| AF11 | FAIL | Other required checklist items have FAIL dispositions; closure predicate false. | UI-AUD-04 |
