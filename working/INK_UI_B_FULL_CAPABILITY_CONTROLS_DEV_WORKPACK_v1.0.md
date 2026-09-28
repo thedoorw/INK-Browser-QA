@@ -1,0 +1,245 @@
+# INK UI-B Full Capability Creative Controls — DEV Workpack v1.0
+
+STATUS: `PLANNED / WAIT_FOR_UI_A_PROMOTION`
+
+TASK: `INK-UI-B-FULL-CAPABILITY-CONTROLS-001`
+
+OWNER: `MR / MAIN REVIEW`
+
+MANDATORY_DEV_BRANCH: `work/ink-ui-b-full-capability-controls-001`
+
+MASTER_PLAN:
+`working/INK_UI_PSH_ALIGNED_IMPLEMENTATION_MASTER_WORKPLAN_v1.0.md`
+
+## 1. Goal
+
+Wire the promoted 501-atomic capability placement into the Photoshop-aligned shell from Package A, with primary emphasis on P1 A-H creative UI.
+
+This is one large capability-wiring package; do not split by individual tool family unless MR later finds a blocking defect.
+
+## 2. Final Tools membership/form
+
+Use Photoshop compact flyouts and last-used-member behavior where practical:
+
+- Draw: Pen/Pencil/Marker/Brush/Airbrush/Blender/Smudge.
+- Eraser.
+- Select.
+- Lasso: Lasso/Polygonal/Magnetic.
+- Smart Selection: Quick Selection/Magic Wand/Object Selection.
+- Fill: Gradient/Paint Bucket.
+- Sampling: Eyedropper/Color Sampler (+ Measure fallback if needed).
+- Clone: Clone Stamp/Pattern Stamp.
+- Healing: Healing/Spot Healing/Patch.
+- Tone: Dodge/Burn/Sponge.
+- Detail: Blur/Sharpen.
+- Color Replacement through shared Brush/Retouch route.
+- Shape family.
+- Text horizontal/paragraph + vertical; Text-on-Path contextual.
+- Image.
+- Pan.
+
+Flyout form follows Photoshop evidence:
+- icon column;
+- command label;
+- right-aligned shortcut when defined;
+- compact ~20 px reference pitch;
+- active member reflected in slot;
+- no second tool state authority.
+
+## 3. Contextual Options wiring
+
+Wire active context to one Options row:
+- Selection: new/add/subtract/intersect, tolerance/contiguous, ROI, bounded Magnetic settings.
+- Gradient: target-aware raster/vector route, linear/radial, preview, opacity.
+- Paint Bucket: color/tolerance/contiguous/opacity.
+- Sampling: radius/mode/readout.
+- Retouch: size/opacity/strength/source/pattern.
+- Draw: preset/color/size/opacity/high-frequency dynamics only.
+- Text: font/size/alignment/direction/commit/cancel.
+- Transform: skew/distort/perspective/warp mode + numeric quick fields + apply/cancel.
+- Path/Stroke: immediate editing controls only.
+
+Deep state goes to Properties/dialogs.
+
+## 4. Menu/command placement
+
+Complete functional mapping:
+
+File:
+- New/Open/Save;
+- external image open/import;
+- Reference/SVG import;
+- Export/Print.
+
+Image:
+- artboard/document operations;
+- crop/resize where supported;
+- Mode 8/16/32 + RGB/CMYK/Lab/Multichannel;
+- Color Profile;
+- Adjustments.
+
+Layer:
+- layer/group/hierarchy;
+- masks;
+- Layer Effects;
+- adjustment/filter stack secondary routes where appropriate.
+
+Type:
+- paragraph/horizontal;
+- vertical;
+- Text on Path contextual.
+
+Select:
+- selection routes;
+- Select and Mask;
+- alpha/path selection;
+- supported modifications.
+
+Filter:
+- supported existing/P1-F filters;
+- Filter Gallery;
+- Liquify.
+
+Object:
+- Transform;
+- Arrange;
+- Align/Distribute;
+- Path/Stroke;
+- Boolean;
+- Repeat;
+- Frame/Layout;
+- Component.
+
+View:
+- zoom/fit/reset/fullscreen;
+- Rulers/Guides/Grid;
+- Snap/Snap To;
+- visibility overlays.
+
+Window:
+- same panel authority only.
+
+Help:
+- updates/diagnostics/device/storage/release routes, de-emphasized.
+
+## 5. Required normal creative UI
+
+Close promoted reconciliation for:
+- Masks → Layers + Properties + Select and Mask.
+- Blend Modes → Layers/Appearance.
+- Adjustments → Adjustments panel + Image.
+- Filters → Filter menu + dialogs + stack readout.
+- Layer Effects → Layers fx + one Layer Effects dialog.
+- Raster source state → Layers/Properties without inventing Smart Object semantics.
+- Brush engine/dynamics/media → Options + Properties.
+- Color/bit depth/ICC → Image + Color/Channels/Properties.
+- Format interoperability → File/Open/Import/Export disclosure.
+
+## 6. Required dialogs/workspaces
+
+Implement/wire:
+- Select and Mask.
+- Layer Effects.
+- Filter parameter dialogs.
+- Filter Gallery.
+- Liquify temporary focused workspace/modal.
+- Gradient editor.
+- Pattern fill editor.
+- Color Profile.
+- Export.
+- Pen Calibration.
+- Recovery contextual modal.
+
+Liquify must expose only promoted bounded operations. No face-aware/generative controls.
+
+## 7. Guide/snap closure
+
+Close all required P1-C behaviors:
+1. rulers;
+2. drag guides;
+3. move/delete/lock/show-hide guides;
+4. guide edge/center snapping;
+5. object edge/center snapping;
+6. grid snap;
+7. angle snap;
+8. equal-distance/equal-spacing feedback;
+9. movement position/distance readout;
+10. Snap + Snap To;
+11. temporary bypass;
+12. coherent tolerance/hysteresis.
+
+Use existing Document/History/Transform authorities only.
+
+Guide drag must use transient cyan preview + compact coordinate readout per Photoshop interaction evidence.
+
+## 8. P1-H UI rule
+
+Show actual bounded support only:
+- PSD/PSB/TIFF/RAW/EXR import/open according to current adapters;
+- export only where current encoders exist;
+- RAW export absent;
+- unsupported compression/features are explicit;
+- bounded-loss warning is explicit;
+- no silent metadata/channel loss claim.
+
+## 9. Planning IDs/gaps
+
+Package B is responsible for functional completion of all PUI rows not fully closed by A, especially:
+- PUI-001..004;
+- PUI-010..027;
+- PUI-041..051;
+- PUI-052..056 functional wiring;
+- PUI-069..074.
+
+By B handoff:
+- all 74 PUI rows must be IMPLEMENTED / INTENTIONAL_HEADLESS / RETIRED_DUPLICATE / explicitly bounded;
+- G-01..G-34 must have a concrete implementation disposition;
+- remaining items may only be visual/fine-detail closure assigned to C.
+
+## 10. Allowed source boundary
+
+Primary UI wiring files:
+- `product/source/shell.template.html`
+- `product/source/styles.css`
+- `product/source/web-shell.js`
+- `product/source/src/ink.js`
+- `product/source/src/studio-core.js`
+- accepted shell generation files
+- QA/evidence/progress.
+
+Existing Core modules are READ/IMPORT authority. Do not alter them merely to simplify UI wiring.
+
+If a promoted UI route cannot be implemented without a Core semantic change:
+`STOP → MR`.
+
+## 11. Prohibited
+
+- no new Core algorithms/capabilities;
+- no second History/Selection/Mask/Renderer/Guide/Snap/Color/CHAT authority;
+- no generative/content-aware feature invention;
+- no P2 implementation;
+- no FORMAT_VERSION change;
+- no central Runtime;
+- no Photoshop feature that INK does not own.
+
+## 12. Package-B QA
+
+Required:
+- focused tool/menu/panel/dialog contract QA;
+- command reaches intended existing authority;
+- History/save-load preserved where applicable;
+- no dead menu/tool entries;
+- no duplicated mutation routes;
+- 74-PUI disposition report;
+- 34-gap implementation report;
+- local browser/manual interaction checks allowed;
+- central exact-SHA Runtime prohibited.
+
+Suggested focused QA:
+`qa/ink-ui-b-full-capability-controls.test.mjs`
+
+## 13. DEV handoff
+
+Provide exact HEAD, changed files, focused QA, PUI/gap closure tables, bounded limitations, health delta, and STOP to MR.
+
+MR obtains UR workflow/placement review before promotion.
