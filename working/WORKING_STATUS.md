@@ -37,10 +37,10 @@ Master plan:
 Last completed Work Order:
 `working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_DEV_WORKPACK_v1.0.md`
 
-Next package workpack, not started:
+Active Work Order:
 `working/INK_UI_B_FULL_CAPABILITY_CONTROLS_DEV_WORKPACK_v1.0.md`
 
-Later:
+Next after UI-B promotion:
 `working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
 
 ## Photoshop alignment rule
@@ -66,7 +66,7 @@ No formal central Runtime occurs after UI-A or UI-B.
 
 UI-C also does not trigger the central Runtime during implementation.
 
-After UI-A, UI-B and UI-C are all MR_PASS / UR_PASS / promoted, MR authorizes one exact-SHA final integrated Runtime.
+After UI-A, UI-B and UI-C are all promoted under their applicable review authority, MR authorizes one exact-SHA final integrated Runtime.
 
 ## Next owner
 
