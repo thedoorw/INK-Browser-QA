@@ -4,6 +4,9 @@ STATUS: `FINAL_RUNTIME_PASS / UR_FULL_AUDIT_REQUIRED / UI_COMPLETE_HOLD`
 
 DATE: 2026-09-28
 
+ACTIVE_AUDIT_DIRECTIVE:
+`ACTIVE/INK_UI_FINAL_CHECKLIST_AUDIT_DIRECTIVE_v1.0.md`
+
 ## UI-C DEV source checkpoint — 2026-09-28
 
 This checklist is the mandatory final UI audit gate. UI-C was reviewed and promoted by UR and MR final exact-SHA Runtime passed, but that does not substitute for a complete item-by-item checklist disposition. Every required item below must be explicitly classified PASS / FAIL / N/A with evidence or reason before UI_COMPLETE may be declared.
@@ -28,7 +31,7 @@ GEOMETRY_BROWSER = PASS
 CREATIVE_BROWSER = PASS
 UR_VISUAL_RUNTIME_REVIEW = PARTIAL / UI_C_PROMOTED
 UR_FULL_CHECKLIST_AUDIT = NOT_YET_DONE
-UNREVIEWED_CHECKLIST_ITEMS = >0
+UNREVIEWED_CHECKLIST_ITEMS = 592
 UI_COMPLETE = HOLD
 ```
 
