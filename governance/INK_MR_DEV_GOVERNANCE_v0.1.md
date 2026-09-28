@@ -536,3 +536,34 @@ DEV = stops to the owning Review authority
 UI-A/B/C were promoted and the final MR exact-SHA integrated Runtime passed in run `36445204976`.
 
 This section is retained as a governance reference case. It does not authorize future UI work by itself; future delegation requires a new bounded Work Order.
+
+
+### Mandatory program-completion reconciliation
+
+Durable standard:
+
+`governance/INK_PROGRAM_COMPLETION_GATE_STANDARD_v0.1.md`
+
+Before any role writes `COMPLETE`, `CLOSED`, `UI_COMPLETE`, or equivalent terminal state, it must reconcile every mandatory completion authority.
+
+```text
+RUNTIME_PASS != PROGRAM_COMPLETE
+SUBGATE_PASS != PROGRAM_COMPLETE
+```
+
+If a mandatory checklist exists, every required item must have explicit `PASS / FAIL / N_A` disposition plus evidence or reason.
+
+Any undispositioned required item is automatically OPEN.
+
+The terminal gate is blocked unless:
+
+```text
+UNREVIEWED_CHECKLIST_ITEMS = 0
+OPEN_CHECKLIST_ITEMS = 0
+FAIL_ITEMS = 0
+REQUIRED_USER_ACCEPTANCE = COMPLETE
+```
+
+This verification is the responsibility of the owning Review authority / supervisor. The user must not be required to discover a missing mandatory gate manually.
+
+The 2026-09-28 Photoshop UI closure is the reference failure case: final Runtime passed, but the full UI completion checklist had not been audited item by item. The premature `UI_COMPLETE` declaration was corrected and must not recur.
