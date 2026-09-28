@@ -233,7 +233,10 @@ export function createRasterToolController(app,{onStateChange=()=>{}}={}){
   function setTool(tool){
     state.tool=UI_B_RASTER_TOOL_IDS.has(tool)?tool:null;
     state.polygonPoints=[];state.drag=null;state.stroke=null;
-    if(state.tool){app.setTool('select');app.el.canvas.style.cursor=state.tool==='eyedropper'||state.tool==='colorSampler'?'copy':state.tool==='measure'?'crosshair':'crosshair';}
+    if(state.tool){
+      app.setTool('select');
+      app.el.canvas.style.cursor=(state.tool==='eyedropper'||state.tool==='colorSampler')?'copy':'crosshair';
+    }
     notify();
   }
 
