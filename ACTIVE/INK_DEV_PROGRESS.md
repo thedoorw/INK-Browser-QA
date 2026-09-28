@@ -1,61 +1,62 @@
 # INK DEV Progress
 
-STATUS: `P1-F + P1-H PARALLEL / DEV_AUTHORIZED`
+STATUS: `UI-A / DEV_AUTHORIZED / NOT_STARTED`
 
-DATE: 2026-09-27
+DATE: 2026-09-28
 
-PROGRAM: `ALL_P1_BEFORE_RUNTIME_CAPABILITY_COMPLETION`
+PROGRAM:
+`INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001`
 
-UPSTREAM:
-- P1-A = MODULE_READY / MR_PASS / PROMOTED
-- P1-B = MODULE_READY / MR_PASS / PROMOTED
-- P1-C = MODULE_READY / MR_PASS / PROMOTED
-- P1-D = MODULE_READY / MR_PASS / PROMOTED
-- P1-E = MODULE_READY / MR_PASS / PROMOTED
-- P1-G = MODULE_READY / MR_PASS / PROMOTED
-- P1-G promotion merge = `fff2e6961a5f72d42134ca2fedca533be0aa31c7`
-
-## Lane F
-
-TASK: `INK-P1-F-RASTER-PROCESSING-EXPANSION-001`
+TASK:
+`INK-UI-A-PHOTOSHOP-SHELL-PANELS-001`
 
 BRANCH:
-`work/ink-p1-f-raster-processing-expansion-001`
+`work/ink-ui-a-photoshop-shell-panels-001`
 
-LANE_PROGRESS:
-`working/INK_P1_F_DEV_PROGRESS.md`
-
-## Lane H
-
-TASK: `INK-P1-H-FORMAT-INTEROPERABILITY-001`
-
-BRANCH:
-`work/ink-p1-h-format-interoperability-001`
+BASELINE_MAIN:
+`9a4b374747c049d107b2525fb811faa1929a9770`
 
 WORKPACK:
-`working/INK_P1_H_FORMAT_INTEROPERABILITY_DEV_WORKPACK_v1.0.md`
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_DEV_WORKPACK_v1.0.md`
 
-LANE_PROGRESS:
-`working/INK_P1_H_DEV_PROGRESS.md`
+MASTER_PLAN:
+`working/INK_UI_PSH_ALIGNED_IMPLEMENTATION_MASTER_WORKPLAN_v1.0.md`
 
-Scope:
-- PSD / PSB
-- TIFF
-- RAW decoder-adapter boundary
-- EXR
+## Scope
 
-## Isolation / gate
+Large bounded Photoshop-workstation foundation package:
+- top application/menu + contextual Options shell;
+- active-document tab/ruler/status shell;
+- Light theme semantic authority;
+- single/double Tools host;
+- right Dock/panel authority;
+- panel tabs/options/stack/resize;
+- Properties/Layers/History/Navigator/Pages normalization;
+- Color/Channels/Adjustments panel homes;
+- duplicate desktop control retirement.
+
+## Gate
 
 ```text
-P1-H consumes P1-G Core = YES
-P1-G source mutation by H = 0
-P1-F/P1-H shared product source = 0
-image-core.js mutation = 0
-document schema mutation = 0
-Renderer mutation = 0
-FORMAT_VERSION mutation = 0
-RUNTIME = PROHIBITED
-UI = HOLD
+CORE_CAPABILITY_CHANGE = PROHIBITED
+SECOND_AUTHORITY = PROHIBITED
+FORMAT_VERSION_CHANGE = PROHIBITED
+P2 = PROHIBITED
+CENTRAL_RUNTIME = PROHIBITED
+FOCUSED_STATIC_QA = REQUIRED
+LOCAL_BROWSER_SMOKE = ALLOWED
+HANDOFF_TO_MR = REQUIRED
+AUTO_START_UI_B = PROHIBITED
 ```
 
-P1 Integration is blocked until P1-F and P1-H are both MR_PASS/promoted.
+## DEV completion fields
+
+```text
+HEAD = PENDING
+CHANGED_FILES = PENDING
+FOCUSED_QA = PENDING
+PUI_DISPOSITION_DELTA = PENDING
+GAP_DELTA = PENDING
+HEALTH_DELTA = PENDING
+MR_HANDOFF = PENDING
+```
