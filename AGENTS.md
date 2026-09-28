@@ -74,7 +74,11 @@ UI-only work follows:
 
 `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
 
-UI work may not silently change frozen Core/global authority.
+For the active Photoshop-aligned UI program, delegated execution authority is:
+
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+
+UR owns routine UI DEV handoff, review, bounded revision and UI-only promotion for UI-B/UI-C. MR is not a routine intermediary. UI work may not silently change frozen Core/global authority; any such requirement is `STOP → MR / INTEGRATION_REQUIRED`.
 
 ## Packaging
 
