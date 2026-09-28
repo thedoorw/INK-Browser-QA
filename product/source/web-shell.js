@@ -11,6 +11,8 @@
   const LAST_PANEL_KEY = 'ink.web.ui.last-panel.v0.1';
   const TOOLBAR_LAYOUT_KEY = 'ink.web.ui.toolbar-layout.v0.1';
   const DEFAULT_PRIMARY_PANEL_WIDTH = 252;
+  const MIN_PRIMARY_PANEL_WIDTH = 244;
+  const MAX_PRIMARY_PANEL_WIDTH = 420;
   const FILE_COMMAND_TARGETS = Object.freeze({
     new: 'newBtn',
     open: 'openBtn',
@@ -19,14 +21,16 @@
   });
   const APPLICATION_MENU_REGISTRY = Object.freeze([
     { id: 'file', label: '檔案', live: true },
-    { id: 'edit', label: '編輯', live: false },
-    { id: 'view', label: '檢視', live: false },
-    { id: 'select', label: '選取', live: false },
-    { id: 'object', label: '物件', live: false },
-    { id: 'layer', label: '圖層', live: false },
-    { id: 'brush', label: '筆刷', live: false },
+    { id: 'edit', label: '編輯', live: true },
+    { id: 'image', label: '影像', live: true },
+    { id: 'layer', label: '圖層', live: true },
+    { id: 'type', label: '文字', live: true },
+    { id: 'select', label: '選取', live: true },
+    { id: 'filter', label: '濾鏡', live: true },
+    { id: 'object', label: '物件', live: true },
+    { id: 'view', label: '檢視', live: true },
     { id: 'window', label: '視窗', live: true },
-    { id: 'help', label: '說明', live: false }
+    { id: 'help', label: '說明', live: true }
   ]);
   const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
   const CONTEXT_CONTROL_IDS = Object.freeze(['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar']);
@@ -48,6 +52,12 @@
     { id: 'properties', label: '屬性', icon: 'i-sliders', kind: 'inspector', group: 'editor' },
     { id: 'layers', label: '圖層', icon: 'i-layers', kind: 'inspector', tab: 'layers', group: 'editor' },
     { id: 'history', label: '歷史', icon: 'i-history', kind: 'inspector', tab: 'history', group: 'editor' },
+    { id: 'navigator', label: '導覽器', icon: 'i-pan', kind: 'inspector', tab: 'navigator', group: 'editor' },
+    { id: 'pages', label: '頁面', icon: 'i-pages', kind: 'inspector', tab: 'pages', group: 'editor' },
+    { id: 'color', label: '顏色', icon: 'i-brush', kind: 'inspector', tab: 'color', group: 'appearance' },
+    { id: 'channels', label: '色版', icon: 'i-layers', kind: 'inspector', tab: 'channels', group: 'appearance' },
+    { id: 'adjustments', label: '調整', icon: 'i-sliders', kind: 'inspector', tab: 'adjustments', group: 'appearance' },
+    { id: 'libraries', label: 'Libraries', icon: 'i-image', kind: 'inspector', tab: 'libraries', group: 'creative' },
     { id: 'reference', label: 'Reference', icon: 'i-image', kind: 'creative', stage: 'reference', group: 'creative' },
     { id: 'compose', label: 'Compose', icon: 'i-group', kind: 'creative', stage: 'compose', group: 'creative' },
     { id: 'chat', label: 'CHAT', icon: 'i-spark', kind: 'creative', stage: 'chat', group: 'creative' },
@@ -56,6 +66,7 @@
   ]);
   const PANEL_GROUPS = Object.freeze([
     { id: 'editor', label: 'Editor', items: PANEL_DEFS.filter(def => def.group === 'editor') },
+    { id: 'appearance', label: 'Color / Output', items: PANEL_DEFS.filter(def => def.group === 'appearance') },
     { id: 'creative', label: 'Creative Loop', items: PANEL_DEFS.filter(def => def.group === 'creative') },
     { id: 'specialist', label: 'Specialist', items: PANEL_DEFS.filter(def => def.group === 'specialist') }
   ]);
@@ -78,7 +89,11 @@
     contextObserver: null,
     contextualRoot: null,
     contextualHost: null,
-    contextRaf: 0
+    contextRaf: 0,
+    panelOptionsMenu: null,
+    documentChrome: null,
+    panelStackHost: null,
+    activePanelResizer: null
   };
 
   function runtime() {
@@ -108,12 +123,29 @@
 
   function applicationMenuElements(id) {
     const trigger = document.querySelector(`[data-application-menu-trigger="${id}"]`);
-    const menu = id === 'file'
-      ? document.querySelector('#fileMenu')
-      : id === 'window'
-        ? document.querySelector('#panelWindowMenu')
-        : null;
+    const menu = id === 'window'
+      ? document.querySelector('#panelWindowMenu')
+      : document.querySelector(`#${id}Menu`);
     return { trigger, menu };
+  }
+
+  function runShellAction(action) {
+    const app = runtime();
+    if (action === 'undo') document.querySelector('#undoBtn')?.click();
+    else if (action === 'redo') document.querySelector('#redoBtn')?.click();
+    else if (action === 'canvas-settings') document.querySelector('#settingsToggle')?.click();
+    else if (action === 'fit-current') document.querySelector('#fitBtn')?.click();
+    else if (action === 'fullscreen') document.querySelector('#fullscreenToggle')?.click();
+    else if (action === 'toggle-rulers') {
+      const enabled = state.root?.dataset.rulers !== 'true';
+      if (state.root) state.root.dataset.rulers = String(enabled);
+      const item = document.querySelector('[data-shell-action="toggle-rulers"]');
+      item?.setAttribute('aria-checked', String(enabled));
+      try { localStorage.setItem('ink.web.ui.rulers.v0.1', String(enabled)); } catch {}
+      syncSoon();
+    } else if (action === 'about') {
+      app?.toast?.('INK · Photoshop-aligned UI shell');
+    }
   }
 
   function closeApplicationMenus({ focus = false } = {}) {
@@ -179,12 +211,19 @@
       menu.addEventListener('click', event => {
         const fileItem = event.target.closest('[data-file-command]');
         const panelItem = event.target.closest('[data-shell-panel]');
-        if (!fileItem && !panelItem) return;
+        const actionItem = event.target.closest('[data-shell-action]');
+        if (!fileItem && !panelItem && !actionItem) return;
         event.preventDefault();
         if (fileItem) {
           const targetId = FILE_COMMAND_TARGETS[fileItem.dataset.fileCommand];
           closeApplicationMenus();
           if (targetId) document.getElementById(targetId)?.click();
+          return;
+        }
+        if (actionItem) {
+          const action = actionItem.dataset.shellAction;
+          closeApplicationMenus();
+          runShellAction(action);
           return;
         }
         const panelId = panelItem.dataset.shellPanel;
@@ -343,6 +382,383 @@
     return true;
   }
 
+  function createDocumentChrome() {
+    if (document.querySelector('#documentShellChrome')) return document.querySelector('#documentShellChrome');
+    const root = document.querySelector('#app');
+    if (!root) return null;
+    const chrome = document.createElement('div');
+    chrome.id = 'documentShellChrome';
+    chrome.className = 'document-shell-chrome';
+    chrome.setAttribute('aria-label', '作用中文件框架');
+    chrome.innerHTML =
+      '<div class="document-tab-band"><button type="button" class="document-tab active" aria-current="page"><span id="documentTabTitle">未命名作品</span></button></div>' +
+      '<div class="document-ruler-corner" aria-hidden="true"></div>' +
+      '<div class="document-ruler document-ruler-horizontal" aria-hidden="true"></div>' +
+      '<div class="document-ruler document-ruler-vertical" aria-hidden="true"></div>';
+    root.append(chrome);
+    state.documentChrome = chrome;
+    return chrome;
+  }
+
+  function ensureSupplementalInspectorSections() {
+    const inspector = document.querySelector('#inspector');
+    if (!inspector || inspector.querySelector('[data-content="navigator"]')) return true;
+    inspector.insertAdjacentHTML('beforeend', `
+      <section class="inspector-section tab-content shell-panel-section navigator-panel" data-content="navigator" aria-label="導覽器">
+        <div class="shell-panel-body">
+          <div id="shellNavigatorPreview" class="shell-navigator-preview" role="application" aria-label="導覽器縮圖；拖曳框可平移視圖">
+            <canvas id="shellNavigatorCanvas" width="220" height="150"></canvas>
+            <div id="shellNavigatorProxy" class="shell-navigator-proxy" tabindex="0"></div>
+          </div>
+        </div>
+        <div class="shell-panel-footer navigator-footer">
+          <button type="button" id="shellNavigatorFit">符合</button>
+          <button type="button" id="shellNavigatorZoomOut" aria-label="縮小">−</button>
+          <output id="shellNavigatorZoom">100%</output>
+          <button type="button" id="shellNavigatorZoomIn" aria-label="放大">＋</button>
+        </div>
+      </section>
+      <section class="inspector-section tab-content shell-panel-section pages-shell-panel" data-content="pages" aria-label="頁面">
+        <div id="shellPagesList" class="shell-pages-list" role="listbox" aria-label="頁面清單"></div>
+        <div class="shell-panel-footer">
+          <button type="button" id="shellPagesAdd">新增</button>
+          <button type="button" id="shellPagesDuplicate">複製</button>
+          <span class="shell-panel-footer-spacer"></span>
+          <button type="button" id="shellPagesDelete">刪除</button>
+        </div>
+      </section>
+      <section class="inspector-section tab-content shell-panel-section color-shell-panel" data-content="color" aria-label="顏色">
+        <div class="shell-panel-body">
+          <label class="shell-field"><span>目前顏色</span><input id="shellColorInput" type="color" value="#202020"></label>
+          <label class="shell-field"><span>HEX</span><input id="shellColorHex" type="text" value="#202020" maxlength="7"></label>
+          <p class="shell-panel-note">使用既有工具顏色 authority；此面板不建立第二份顏色狀態。</p>
+        </div>
+      </section>
+      <section class="inspector-section tab-content shell-panel-section" data-content="channels" aria-label="色版">
+        <div class="shell-panel-body"><p class="shell-panel-note">Channels 的正常 panel home 已建立；process／alpha／spot／Multichannel 控制由 UI-B 配線至既有 capability authority。</p></div>
+      </section>
+      <section class="inspector-section tab-content shell-panel-section" data-content="adjustments" aria-label="調整">
+        <div class="shell-panel-body"><p class="shell-panel-note">Adjustments 的正常 panel home 已建立；完整調整命令與參數控制由 UI-B 配線。</p></div>
+      </section>
+      <section class="inspector-section tab-content shell-panel-section" data-content="libraries" aria-label="Libraries">
+        <div class="shell-panel-body"><p class="shell-panel-note">Libraries 使用既有資產／匯入 authority；UI-A 僅建立 Photoshop-aligned placement home。</p></div>
+      </section>`);
+    return true;
+  }
+
+  function renderShellPages() {
+    const app = runtime();
+    const list = document.querySelector('#shellPagesList');
+    if (!app?.doc || !list) return;
+    list.innerHTML = '';
+    for (const page of app.doc.pages || []) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'shell-page-row' + (page.id === app.doc.activePageId ? ' active' : '');
+      button.dataset.pageId = page.id;
+      button.setAttribute('role', 'option');
+      button.setAttribute('aria-selected', String(page.id === app.doc.activePageId));
+      const preview = document.createElement('img');
+      preview.className = 'shell-page-thumb';
+      try { preview.src = app.renderer?.renderThumbnail?.(page) || ''; } catch {}
+      const copy = document.createElement('span');
+      copy.className = 'shell-page-copy';
+      const title = document.createElement('strong');
+      title.textContent = page.name || '頁面';
+      const meta = document.createElement('small');
+      meta.textContent = (page.layers || []).reduce((n, layer) => n + (layer.objects?.length || 0), 0) + ' 個物件';
+      copy.append(title, meta);
+      button.append(preview, copy);
+      list.append(button);
+    }
+  }
+
+  function renderShellNavigator() {
+    const app = runtime();
+    const canvas = document.querySelector('#shellNavigatorCanvas');
+    const proxy = document.querySelector('#shellNavigatorProxy');
+    const zoom = document.querySelector('#shellNavigatorZoom');
+    if (!app?.page?.() || !canvas || !proxy || !zoom) return;
+    const context = canvas.getContext('2d');
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = '#e9e9e9';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    const stage = document.querySelector('#stage');
+    try {
+      if (stage?.width && stage?.height) context.drawImage(stage, 0, 0, canvas.width, canvas.height);
+    } catch {}
+    const scale = Math.max(.03, Number(app.page().camera?.scale) || 1);
+    const proxyW = Math.max(18, Math.min(96, 70 / Math.sqrt(scale)));
+    const proxyH = Math.max(14, Math.min(90, 58 / Math.sqrt(scale)));
+    proxy.style.width = proxyW + '%';
+    proxy.style.height = proxyH + '%';
+    proxy.style.left = (50 - proxyW / 2) + '%';
+    proxy.style.top = (50 - proxyH / 2) + '%';
+    zoom.value = Math.round(scale * 100) + '%';
+  }
+
+  function syncSupplementalPanels() {
+    const app = runtime();
+    if (!state.root) return;
+    const hasDocument = Boolean(app?.doc);
+    state.root.dataset.documentActive = String(hasDocument);
+    const title = document.querySelector('#documentTabTitle');
+    if (title && hasDocument) title.textContent = app.doc.title || document.querySelector('#docTitle')?.value || '未命名作品';
+    const active = currentPanel();
+    if (active === 'pages') renderShellPages();
+    else if (active === 'navigator') renderShellNavigator();
+    else if (active === 'color') {
+      const current = document.querySelector('#colorInput')?.value || '#202020';
+      const color = document.querySelector('#shellColorInput');
+      const hex = document.querySelector('#shellColorHex');
+      if (color) color.value = current;
+      if (hex) hex.value = current.toUpperCase();
+    }
+  }
+
+  function bindSupplementalPanelControls() {
+    const app = runtime();
+    if (!app) return false;
+    const pageList = document.querySelector('#shellPagesList');
+    if (pageList && pageList.dataset.bound !== 'true') {
+      pageList.dataset.bound = 'true';
+      pageList.addEventListener('click', event => {
+        const row = event.target.closest('[data-page-id]');
+        if (!row) return;
+        app.switchPage?.(row.dataset.pageId);
+        renderShellPages();
+      });
+      pageList.addEventListener('dblclick', event => {
+        const row = event.target.closest('[data-page-id]');
+        const page = (app.doc.pages || []).find(item => item.id === row?.dataset.pageId);
+        if (page) app.pageContextMenu?.(page);
+        renderShellPages();
+      });
+    }
+    const bind = (id, fn) => {
+      const node = document.querySelector(id);
+      if (!node || node.dataset.bound === 'true') return;
+      node.dataset.bound = 'true';
+      node.addEventListener('click', fn);
+    };
+    bind('#shellPagesAdd', () => { app.addPage?.(); renderShellPages(); });
+    bind('#shellPagesDuplicate', () => { app.duplicatePage?.(); renderShellPages(); });
+    bind('#shellPagesDelete', () => { app.deletePage?.(); renderShellPages(); });
+    bind('#shellNavigatorFit', () => { app.fitContent?.(); renderShellNavigator(); });
+    bind('#shellNavigatorZoomOut', () => { app.zoomBy?.(1 / 1.2); renderShellNavigator(); });
+    bind('#shellNavigatorZoomIn', () => { app.zoomBy?.(1.2); renderShellNavigator(); });
+
+    const color = document.querySelector('#shellColorInput');
+    const hex = document.querySelector('#shellColorHex');
+    if (color && color.dataset.bound !== 'true') {
+      color.dataset.bound = 'true';
+      color.addEventListener('input', event => { app.setColor?.(event.target.value, false); if (hex) hex.value = event.target.value.toUpperCase(); });
+    }
+    if (hex && hex.dataset.bound !== 'true') {
+      hex.dataset.bound = 'true';
+      hex.addEventListener('change', event => { app.setColor?.(event.target.value, true); syncSupplementalPanels(); });
+    }
+
+    const proxy = document.querySelector('#shellNavigatorProxy');
+    const preview = document.querySelector('#shellNavigatorPreview');
+    if (proxy && preview && proxy.dataset.bound !== 'true') {
+      proxy.dataset.bound = 'true';
+      let start = null;
+      proxy.addEventListener('pointerdown', event => {
+        start = { x: event.clientX, y: event.clientY, camX: app.page().camera.x, camY: app.page().camera.y };
+        proxy.setPointerCapture?.(event.pointerId);
+        proxy.classList.add('dragging');
+        event.preventDefault();
+      });
+      proxy.addEventListener('pointermove', event => {
+        if (!start) return;
+        const rect = preview.getBoundingClientRect();
+        const camera = app.page().camera;
+        const scale = Math.max(.03, camera.scale || 1);
+        camera.x = start.camX - (event.clientX - start.x) / Math.max(1, rect.width) * (app.renderer?.width || rect.width) / scale;
+        camera.y = start.camY - (event.clientY - start.y) / Math.max(1, rect.height) * (app.renderer?.height || rect.height) / scale;
+        app.renderer?.render?.();
+        renderShellNavigator();
+      });
+      const end = event => {
+        if (!start) return;
+        start = null;
+        proxy.releasePointerCapture?.(event.pointerId);
+        proxy.classList.remove('dragging');
+      };
+      proxy.addEventListener('pointerup', end);
+      proxy.addEventListener('pointercancel', end);
+    }
+    return true;
+  }
+
+  function setPrimaryPanelWidth(width, { persist = true } = {}) {
+    const next = Math.max(MIN_PRIMARY_PANEL_WIDTH, Math.min(MAX_PRIMARY_PANEL_WIDTH, Math.round(Number(width) || DEFAULT_PRIMARY_PANEL_WIDTH)));
+    state.root?.style.setProperty('--inspector-w', next + 'px');
+    const app = runtime();
+    if (app) {
+      app.inspectorWide = next > 370;
+      if (!app.inspectorWide) app.inspectorNormalWidth = next;
+      document.querySelector('#inspectorSizeToggle')?.classList.toggle('active', app.inspectorWide);
+    }
+    if (persist && (!app || !app.inspectorWide)) {
+      try { localStorage.setItem('ink-inspector-width', String(next)); } catch {}
+    }
+    syncSoon();
+    return next;
+  }
+
+  function ensureActivePanelResizeEdge() {
+    if (state.activePanelResizer?.isConnected) return state.activePanelResizer;
+    const root = state.root || document.querySelector('#app');
+    if (!root) return null;
+    const edge = document.createElement('div');
+    edge.id = 'shellActivePanelResizer';
+    edge.className = 'active-panel-resizer';
+    edge.setAttribute('role', 'separator');
+    edge.setAttribute('aria-orientation', 'vertical');
+    edge.setAttribute('aria-label', '調整面板寬度');
+    edge.setAttribute('aria-valuemin', String(MIN_PRIMARY_PANEL_WIDTH));
+    edge.setAttribute('aria-valuemax', String(MAX_PRIMARY_PANEL_WIDTH));
+    let active = false;
+    const move = event => {
+      if (!active) return;
+      const rootRect = root.getBoundingClientRect();
+      setPrimaryPanelWidth(rootRect.right - event.clientX, { persist: false });
+      syncLayout();
+    };
+    const end = () => {
+      if (!active) return;
+      active = false;
+      root.classList.remove('panel-width-resizing');
+      const app = runtime();
+      if (!app?.inspectorWide && Number.isFinite(app?.inspectorNormalWidth)) {
+        try { localStorage.setItem('ink-inspector-width', String(Math.round(app.inspectorNormalWidth))); } catch {}
+      }
+      globalThis.removeEventListener('pointermove', move);
+      globalThis.removeEventListener('pointerup', end);
+      syncSoon();
+    };
+    edge.addEventListener('pointerdown', event => {
+      if (!isDesktop() || !root.classList.contains('panel-primary-open')) return;
+      event.preventDefault();
+      active = true;
+      root.classList.add('panel-width-resizing');
+      globalThis.addEventListener('pointermove', move);
+      globalThis.addEventListener('pointerup', end);
+    });
+    root.append(edge);
+    state.activePanelResizer = edge;
+    return edge;
+  }
+
+  function ensurePanelStackFramework() {
+    if (state.panelStackHost?.isConnected) return state.panelStackHost;
+    const root = state.root || document.querySelector('#app');
+    if (!root) return null;
+    const host = document.createElement('div');
+    host.id = 'shellPanelStackFramework';
+    host.className = 'panel-stack-framework';
+    host.dataset.panelRegistry = 'PANEL_GROUPS';
+    host.setAttribute('aria-label', 'Expanded panel groups');
+    host.innerHTML = PANEL_GROUPS.map((group, index) =>
+      (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
+      '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
+      '<button type="button" class="panel-stack-region-head" data-panel-stack-target="' + group.items[0].id + '">' +
+      '<span>' + group.label + '</span><span class="panel-stack-region-current" data-panel-stack-current></span></button></section>'
+    ).join('');
+    host.addEventListener('click', event => {
+      const trigger = event.target.closest('[data-panel-stack-target]');
+      if (!trigger) return;
+      event.preventDefault();
+      selectPanel(trigger.dataset.panelStackTarget);
+    });
+    host.hidden = true;
+    root.append(host);
+    state.panelStackHost = host;
+    return host;
+  }
+
+  function syncPanelStackFramework(active, panel, desktop) {
+    const host = ensurePanelStackFramework();
+    if (!host || !state.root) return;
+    const activeDef = active ? PANEL_DEFS.find(def => def.id === active) : null;
+    if (!desktop || !panel || !activeDef) {
+      host.hidden = true;
+      if (host.parentElement !== state.root) state.root.append(host);
+      return;
+    }
+    if (host.parentElement !== panel) panel.append(host);
+    host.hidden = false;
+    host.querySelectorAll('[data-panel-stack-group]').forEach(region => {
+      const group = PANEL_GROUPS.find(item => item.id === region.dataset.panelStackGroup);
+      const isActive = group?.id === activeDef.group;
+      region.classList.toggle('active', isActive);
+      const current = region.querySelector('[data-panel-stack-current]');
+      if (current) current.textContent = isActive ? activeDef.label : (group?.items?.[0]?.label || '');
+    });
+  }
+
+  function createPanelOptionsMenu() {
+    if (document.querySelector('#shellPanelOptionsMenu')) return document.querySelector('#shellPanelOptionsMenu');
+    const root = document.querySelector('#app');
+    if (!root) return null;
+    const menu = document.createElement('div');
+    menu.id = 'shellPanelOptionsMenu';
+    menu.className = 'panel-options-menu';
+    menu.setAttribute('role', 'menu');
+    menu.hidden = true;
+    menu.innerHTML =
+      '<button type="button" role="menuitem" data-panel-option="reset-width">重設面板寬度</button>' +
+      '<span class="application-menu-separator" aria-hidden="true"></span>' +
+      '<button type="button" role="menuitem" data-panel-option="close">關閉面板</button>';
+    root.append(menu);
+    menu.addEventListener('click', event => {
+      const item = event.target.closest('[data-panel-option]');
+      if (!item) return;
+      if (item.dataset.panelOption === 'reset-width') {
+        setPrimaryPanelWidth(DEFAULT_PRIMARY_PANEL_WIDTH, { persist: true });
+      } else if (item.dataset.panelOption === 'close') closePrimaryPanels();
+      menu.hidden = true;
+    });
+    document.addEventListener('pointerdown', event => {
+      if (menu.hidden || event.target.closest('#shellPanelOptionsMenu') || event.target.closest('[data-panel-options-trigger]')) return;
+      menu.hidden = true;
+    });
+    state.panelOptionsMenu = menu;
+    return menu;
+  }
+
+  function ensurePanelOptionsTriggers() {
+    const menu = createPanelOptionsMenu();
+    const heads = [
+      document.querySelector('#inspector .inspector-head'),
+      document.querySelector('#creativeWorkspace .creative-workspace-head')
+    ].filter(Boolean);
+    for (const head of heads) {
+      if (head.querySelector('[data-panel-options-trigger]')) continue;
+      const actions = head.querySelector('.header-actions') || head;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'mini-button panel-options-trigger';
+      button.dataset.panelOptionsTrigger = 'true';
+      button.setAttribute('aria-label', '面板選項');
+      button.title = '面板選項';
+      button.innerHTML = '<svg aria-hidden="true"><use href="#i-more"></use></svg>';
+      actions.append(button);
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const rootRect = state.root.getBoundingClientRect();
+        const rect = button.getBoundingClientRect();
+        menu.style.left = Math.max(4, Math.round(rect.right - rootRect.left - 162)) + 'px';
+        menu.style.top = Math.round(rect.bottom - rootRect.top + 1) + 'px';
+        menu.hidden = !menu.hidden;
+      });
+    }
+    return true;
+  }
+
   function createDock() {
     if (document.querySelector('#panelDock')) return document.querySelector('#panelDock');
     const appRoot = document.querySelector('#app');
@@ -418,7 +834,8 @@
     }
     if (state.root.classList.contains('inspector-open')) {
       const tab = state.root.dataset.panel;
-      if (tab === 'layers' || tab === 'history') return tab;
+      const direct = PANEL_DEFS.find(def => def.kind === 'inspector' && def.tab === tab && !['ai', 'studio'].includes(tab));
+      if (direct) return direct.id;
       if (tab === 'ai' || tab === 'studio') return 'specialist';
       return 'properties';
     }
@@ -452,7 +869,7 @@
     else if (def.id === 'specialist') {
       const currentTab = state.root?.dataset.panel;
       app.toggleInspector?.(true, currentTab === 'ai' || currentTab === 'studio' ? currentTab : def.tab);
-    } else app.toggleInspector?.(true, def.tab);
+    } else app.toggleInspector?.(true, def.tab || def.id);
     return true;
   }
 
@@ -540,7 +957,10 @@
     }
     if (active === 'properties') {
       title.textContent = tab === 'object' ? '物件屬性' : tab === 'geometry' ? 'Path／Repeat' : '工具屬性';
+      return;
     }
+    const def = PANEL_DEFS.find(item => item.id === active);
+    if (def) title.textContent = def.label;
   }
 
   function syncLayout() {
@@ -566,6 +986,9 @@
       button.setAttribute('aria-pressed', String(pressed));
     });
     const activeDef = active ? PANEL_DEFS.find(def => def.id === active) : null;
+    syncPanelStackFramework(active, panel, desktop);
+    const sharedResizer = ensureActivePanelResizeEdge();
+    if (sharedResizer) sharedResizer.setAttribute('aria-valuenow', String(width || DEFAULT_PRIMARY_PANEL_WIDTH));
     state.dock?.querySelectorAll('[data-panel-group]').forEach(group => {
       group.classList.toggle('group-active', group.dataset.panelGroup === activeDef?.group);
     });
@@ -573,6 +996,8 @@
     if (state.windowMenu && !state.windowMenu.hidden) positionWindowMenu();
     syncCreativePresentation();
     syncContextualOptions();
+    syncSupplementalPanels();
+    ensurePanelOptionsTriggers();
   }
 
   function syncSoon() {
@@ -608,6 +1033,27 @@
       }
       bindContextualOptions();
       bindInspectorCloseControl();
+      bindSupplementalPanelControls();
+      ensurePanelOptionsTriggers();
+      ensurePanelStackFramework();
+      ensureActivePanelResizeEdge();
+      const pagesToggle = document.querySelector('#pagesToggle');
+      if (pagesToggle) pagesToggle.onclick = () => {
+        if (isDesktop()) togglePanel('pages');
+        else {
+          document.querySelector('#pagesPanel')?.classList.toggle('open');
+          app.refreshScrim?.();
+        }
+      };
+      const closePages = document.querySelector('#closePagesBtn');
+      if (closePages) closePages.onclick = () => {
+        if (isDesktop()) closePrimaryPanels();
+        else {
+          document.querySelector('#pagesPanel')?.classList.remove('open');
+          app.refreshScrim?.();
+        }
+      };
+      document.querySelector('#docTitle')?.addEventListener('change', syncSoon);
 
       // Fresh entry is deliberately canvas-first. Only the last selected panel
       // identity is persisted; open/closed state is never restored.
@@ -655,6 +1101,14 @@
       if (PANEL_DEFS.some(def => def.id === last)) state.lastPanel = last;
     } catch {}
 
+    createDocumentChrome();
+    ensureSupplementalInspectorSections();
+    createPanelOptionsMenu();
+    try {
+      const rulers = localStorage.getItem('ink.web.ui.rulers.v0.1');
+      if (rulers === 'true' || rulers === 'false') appRoot.dataset.rulers = rulers;
+    } catch {}
+    document.querySelector('[data-shell-action="toggle-rulers"]')?.setAttribute('aria-checked', String(appRoot.dataset.rulers === 'true'));
     mountContextualControls();
     bindToolbarLayout();
     createDock();
