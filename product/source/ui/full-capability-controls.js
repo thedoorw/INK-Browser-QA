@@ -343,8 +343,9 @@ export function installFullCapabilityControls(app){
     }
     const sourceReadout=$('#uiBRasterSourceReadout');if(sourceReadout)sourceReadout.textContent=object?.rasterState?.source?'Source: '+[object.rasterState.source.format,object.rasterState.source.compression].filter(Boolean).join(' · '):(object?.sourceId?'Reusable source: '+object.sourceId:'');
     const vectorReadout=$('#uiBVectorAppearanceReadout');if(vectorReadout)vectorReadout.textContent=object?.type==='path'?(object.fillAppearance?.type?('Fill: '+object.fillAppearance.type):'Path fill: ordinary'):'Select a Path';
-    const filterStack=$('#uiBFilterStack');if(filterStack)filterStack.innerHTML=(object?.filterStack||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><button data-ui-b-filter-remove="'+index+'">×</button></div>').join('');
+    const filterStack=$('#uiBFilterStack');if(filterStack)filterStack.innerHTML=(object?.filterStack||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><span class="ui-b-stack-actions"><button title="上移" data-ui-b-filter-move="'+index+':-1">↑</button><button title="下移" data-ui-b-filter-move="'+index+':1">↓</button><button title="移除" data-ui-b-filter-remove="'+index+'">×</button></span></div>').join('');
     filterStack?.querySelectorAll('[data-ui-b-filter-remove]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const index=Number(button.dataset.uiBFilterRemove);mutateObject('移除 Filter',current,obj=>obj.filterStack.splice(index,1));}));
+    filterStack?.querySelectorAll('[data-ui-b-filter-move]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const [rawIndex,rawDelta]=button.dataset.uiBFilterMove.split(':').map(Number),target=clamp(rawIndex+rawDelta,0,(current.object.filterStack||[]).length-1);if(target===rawIndex)return;mutateObject('移動 Filter',current,obj=>{const [item]=obj.filterStack.splice(rawIndex,1);obj.filterStack.splice(target,0,item);});}));
     const effectStack=$('#uiBEffectStack');if(effectStack)effectStack.innerHTML=(object?.effects||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>fx · '+esc(item.type)+'</span><button data-ui-b-effect-remove="'+index+'">×</button></div>').join('');
     effectStack?.querySelectorAll('[data-ui-b-effect-remove]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const index=Number(button.dataset.uiBEffectRemove);mutateObject('移除 Effect',current,obj=>obj.effects.splice(index,1));}));
     const adjustmentStack=$('#uiBAdjustmentStack');if(adjustmentStack)adjustmentStack.innerHTML=(object?.adjustments||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><button data-ui-b-adjustment-remove="'+index+'">×</button></div>').join('');
@@ -491,17 +492,30 @@ export function installFullCapabilityControls(app){
         mutateObject('Select and Mask',found,object=>object.rasterMask=createRasterMask(selection.width,selection.height,selection.alpha,{feather:number($('#uiBMaskFeather').value),expand:number($('#uiBMaskExpand').value)}));closeDialog(id);
       }else if(id==='layer-effects'){
         const type=$('#uiBEffectType').value,color=$('#uiBEffectColor').value,opacity=number($('#uiBEffectOpacity').value,.6),size=number($('#uiBEffectSize').value,8);
-        const params={...(EFFECT_DEFAULTS[type]||{}),color,opacity};if(type==='stroke')params.size=size;else params.radius=size;addLayerEffect(type,params);closeDialog(id);
+        const params={...(EFFECT_DEFAULTS[type]||{}),color,opacity};
+        if(type==='stroke')params.size=size;
+        else if(type==='dropShadow'||type==='innerShadow')params.blur=size;
+        else if(type==='outerGlow')params.radius=size;
+        addLayerEffect(type,params);closeDialog(id);
       }else if(id==='filter-params'){
-        const type=state.dialogContext?.type;if(type){const amount=number($('#uiBFilterAmount').value,2),base={...(FILTER_DEFAULTS[type]||{})};if('radius' in base)base.radius=amount;else if('amount' in base)base.amount=amount;else if('size' in base)base.size=amount;addFilter(type,base);}closeDialog(id);
+        const type=state.dialogContext?.type;
+        if(type){
+          const amount=number($('#uiBFilterAmount').value,2),base={...(FILTER_DEFAULTS[type]||{})};
+          const key=type==='motionBlur'?'distance':type==='emboss'?'strength':type==='mosaic'?'size':type==='reduceNoise'?'strength':('radius' in base?'radius':('amount' in base?'amount':'radius'));
+          base[key]=amount;addFilter(type,base);
+        }closeDialog(id);
       }else if(id==='liquify'){
         const found=selectedImage();if(!found)return;
         const type=$('#uiBLiquifyType').value,radius=number($('#uiBLiquifyRadius').value,80),strength=number($('#uiBLiquifyStrength').value,.4),dx=number($('#uiBLiquifyDx').value,12),dy=number($('#uiBLiquifyDy').value,0);
         const object=found.object,rasterState=deserializeColorRaster(object.rasterState.colorRaster),x=rasterState.width/2,y=rasterState.height/2,freeze=$('#uiBLiquifyFreezeSelection')?.checked?raster.selection():null,filter=createLiquifyFilter([{type,x,y,radius,strength,dx,dy}],{freezeMask:freeze?.alpha||null,maxWork:Math.max(4096,rasterState.width*rasterState.height*2)});
         mutateObject('Liquify',found,obj=>{obj.filterStack=obj.filterStack||[];obj.filterStack.push(filter);});closeDialog(id);
       }else if(id==='gradient-editor'){
+        const type=$('#uiBGradientType').value,start=$('#uiBGradientStart').value,end=$('#uiBGradientEnd').value,opacity=number($('#uiBGradientOpacity').value,1);
+        if(state.dialogContext?.target==='raster'){
+          raster.setOption('gradientType',type);raster.setOption('gradientStart',start);raster.setOption('gradientEnd',end);raster.setOption('opacity',opacity);closeDialog(id);refreshContextOptions();toast('Raster Gradient options updated');return;
+        }
         const found=selectedFound(app,object=>object.type==='path');if(!found){toast('請先選取 Path');return;}
-        const descriptor=normalizeGradientFill({type:$('#uiBGradientType').value,start:{x:0,y:0},end:{x:1,y:0},center:{x:.5,y:.5},radius:.5,stops:[{offset:0,color:$('#uiBGradientStart').value},{offset:1,color:$('#uiBGradientEnd').value}],opacity:number($('#uiBGradientOpacity').value,1)});
+        const descriptor=normalizeGradientFill({type,start:{x:0,y:0},end:{x:1,y:0},center:{x:.5,y:.5},radius:.5,stops:[{offset:0,color:start},{offset:1,color:end}],opacity});
         mutateObject('Vector Gradient',found,object=>object.fillAppearance=descriptor);closeDialog(id);toast('Gradient descriptor 已套用；renderer fidelity 由既有 authority 決定');
       }else if(id==='pattern-editor'){
         const found=selectedFound(app,object=>object.type==='path');if(!found){toast('請先選取 Path');return;}
