@@ -169,12 +169,37 @@ export function installFullCapabilityControls(app){
     }
     if(existingDraw){
       const pop=$('#brushFamilyPopover .brush-family-list');
-      if(pop)for(const [id,label] of [['blender','Blender'],['smudge','Smudge']]){
-        if(pop.querySelector('[data-ui-b-tool="'+id+'"]'))continue;
-        const node=htmlNode('<button type="button" class="subtool-button" data-ui-b-tool="'+id+'"><span class="ui-b-glyph">•</span><span><strong>'+label+'</strong></span></button>');
-        pop.appendChild(node);node.addEventListener('click',()=>{activateTool(id);app.toggleBrushFamilyPopover(false);});
+      if(pop){
+        for(const [id,label] of [['blender','Blender'],['smudge','Smudge']]){
+          if(pop.querySelector('[data-ui-b-tool="'+id+'"]'))continue;
+          const node=htmlNode('<button type="button" class="subtool-button" data-ui-b-tool="'+id+'"><span class="ui-b-glyph">•</span><span><strong>'+label+'</strong></span></button>');
+          pop.appendChild(node);node.addEventListener('click',()=>{activateTool(id);app.toggleBrushFamilyPopover(false);});
+        }
+        if(!pop.querySelector('[data-ui-b-brush-package="import"]')){
+          const divider=htmlNode('<div class="application-menu-separator" role="separator"></div>'),importButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="import"><span class="ui-b-glyph">↓</span><span><strong>Import Brush Package…</strong></span></button>'),exportButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="export"><span class="ui-b-glyph">↑</span><span><strong>Export Brush Package…</strong></span></button>');
+          pop.append(divider,importButton,exportButton);
+          importButton.addEventListener('click',()=>pickBrushPackage());
+          exportButton.addEventListener('click',()=>{$('#brushPackageExport')?.click();app.toggleBrushFamilyPopover(false);});
+        }
       }
     }
+  }
+
+  function pickBrushPackage(){
+    let input=$('#uiBBrushPackageInput');
+    if(!input){
+      input=htmlNode('<input id="uiBBrushPackageInput" type="file" accept="application/json,.json,.inkbrush" hidden>');
+      $('.app')?.appendChild(input);
+      input.addEventListener('change',async event=>{
+        const file=event.target.files?.[0];event.target.value='';if(!file)return;
+        try{
+          const raw=JSON.parse(await file.text()),api=window.INK_STUDIO?.drawing;
+          if(!api?.importBrushPackage)throw new Error('Brush Package authority unavailable');
+          api.importBrushPackage(raw);toast('Brush Package 已匯入');
+        }catch(error){console.error(error);toast('Brush Package 匯入失敗：'+error.message,3200);}
+      });
+    }
+    input.click();app.toggleBrushFamilyPopover(false);
   }
 
   function activateTool(tool){
