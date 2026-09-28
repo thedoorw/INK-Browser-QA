@@ -1,10 +1,10 @@
 # INK UI-B Full Capability Creative Controls — DEV Workpack v1.0
 
-STATUS: `PLANNED / WAIT_FOR_UI_A_PROMOTION`
+STATUS: `AUTHORIZED / UR_OWNED / READY_FOR_DEV_HANDOFF`
 
 TASK: `INK-UI-B-FULL-CAPABILITY-CONTROLS-001`
 
-OWNER: `MR / MAIN REVIEW`
+OWNER: `UR / UI REVIEW`
 
 MANDATORY_DEV_BRANCH: `work/ink-ui-b-full-capability-controls-001`
 
@@ -15,7 +15,7 @@ MASTER_PLAN:
 
 Wire the promoted 501-atomic capability placement into the Photoshop-aligned shell from Package A, with primary emphasis on P1 A-H creative UI.
 
-This is one large capability-wiring package; do not split by individual tool family unless MR later finds a blocking defect.
+This is one large capability-wiring package; do not split by individual tool family unless UR records a bounded UI blocking reason.
 
 ## 2. Final Tools membership/form
 
@@ -240,9 +240,9 @@ Suggested focused QA:
 
 ## 13. DEV handoff
 
-Provide exact HEAD, changed files, focused QA, PUI/gap closure tables, bounded limitations, health delta, and STOP to MR.
+Provide exact HEAD, changed files, focused QA, PUI/gap closure tables, bounded limitations, health delta, and STOP to UR.
 
-MR obtains UR workflow/placement review before promotion.
+UR owns technical/UI review inside the delegated UI boundary, may issue bounded revisions directly to DEV, and promotes UI-B after UR PASS. MR is not a routine intermediary. STOP → MR only when the implementation requires a Core/global authority change under `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`.
 
 
 ## 14. Added MR requirement — future capability extensibility
@@ -310,3 +310,22 @@ Requirements:
 - add focused QA for visible-logo route + favicon route preservation.
 
 PWA / installed-desktop App Icon work is explicitly outside the current UI program and must not be expanded in this package.
+
+
+## 16. Current ownership override
+
+Current authority:
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+
+```text
+PACKAGE_B_OWNER = UR
+DEV_HANDOFF = STOP_TO_UR
+ROUTINE_REVIEW = UR
+BOUNDED_REVISION = UR → DEV → UR
+UI_B_PROMOTION = UR
+MR_INTERMEDIARY = NO
+STOP_TO_MR = INTEGRATION_REQUIRED ONLY
+CENTRAL_RUNTIME = PROHIBITED
+```
+
+After UI-B promotion, UR may activate UI-C without returning to MR, provided no Core/cross-lane escalation condition exists.
