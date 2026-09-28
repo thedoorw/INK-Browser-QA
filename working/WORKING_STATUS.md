@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = UI_COMPLETE / FINAL_RUNTIME_PASS
+CURRENT_GATE = FINAL_UR_FULL_CHECKLIST_AUDIT
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -44,7 +44,7 @@ Last completed Work Order:
 `working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
 
 Active Work Order:
-`NONE / UI PROGRAM CLOSED`
+`INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
 ## Photoshop alignment rule
 
@@ -69,20 +69,21 @@ No formal central Runtime occurs after UI-A or UI-B.
 
 UI-C also does not trigger the central Runtime during implementation.
 
-UI-A, UI-B and UI-C are promoted. The final exact-SHA integrated Runtime has passed. No additional central Runtime is required for this program.
+UI-A, UI-B and UI-C are promoted and the final exact-SHA integrated Runtime has passed. Final UI closure remains HOLD until UR completes the full completion checklist audit with zero open/unreviewed required items.
 
 ## Next owner
 
-`USER / MR — future direction discussion or new bounded Work Order`
+`UR → FINAL FULL COMPLETION CHECKLIST AUDIT`
 
 Current execution state:
 - UI-A = promoted.
 - UI-B = UR PASS / promoted.
 - UI-C = UR PASS / promoted.
 - final exact-SHA Runtime = PASS.
-- Runtime artifact = preserved.
-- UI program = CLOSED.
-- DEV and UR = STOP until a new Work Order exists.
+- final checklist full audit = NOT YET DONE.
+- UI_COMPLETE = HOLD.
+- DEV = STOP unless UR issues a bounded correction.
+- MR = STOP from declaring completion until checklist gate closes.
 
 ## UI-A MR checkpoint
 
@@ -238,3 +239,16 @@ CLOSURE_FOCUSED = PASS
 OPEN_BLOCKERS = 0
 UI_COMPLETE = YES
 ```
+
+
+## Completion-gate correction
+
+```text
+FINAL_RUNTIME = PASS
+UR_FULL_CHECKLIST_AUDIT = REQUIRED / OPEN
+UNREVIEWED_CHECKLIST_ITEMS = >0
+UI_COMPLETE = HOLD
+NEXT_OWNER = UR
+```
+
+The user must not be required to discover this missing gate manually. Future orchestration must detect any required checklist with undispositioned items and block completion automatically.
