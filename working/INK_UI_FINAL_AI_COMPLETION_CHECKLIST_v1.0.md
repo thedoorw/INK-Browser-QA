@@ -1,12 +1,12 @@
 # INK Final UI — AI Completion Checklist v1.0
 
-STATUS: `FINAL_RUNTIME_PASS / UI_COMPLETE / CHECKLIST_RECONCILED`
+STATUS: `FINAL_RUNTIME_PASS / UR_FULL_AUDIT_REQUIRED / UI_COMPLETE_HOLD`
 
 DATE: 2026-09-28
 
 ## UI-C DEV source checkpoint — 2026-09-28
 
-This checklist has completed its final integrated-Runtime role. UI-C was reviewed and promoted by UR, followed by MR exact-SHA integrated Runtime verification. The detailed checkbox matrix is retained as an audit template/history; current completion authority is the final closure evidence below rather than the visual state of legacy unchecked boxes.
+This checklist is the mandatory final UI audit gate. UI-C was reviewed and promoted by UR and MR final exact-SHA Runtime passed, but that does not substitute for a complete item-by-item checklist disposition. Every required item below must be explicitly classified PASS / FAIL / N/A with evidence or reason before UI_COMPLETE may be declared.
 
 ```text
 SOURCE_CLOSURE_HEAD = d5fccb906bce3201f0f9e829f71fb92d5dc786ef
@@ -26,15 +26,17 @@ UI_BROWSER = 110 / 110 PASS
 CLOSURE_BROWSER = PASS
 GEOMETRY_BROWSER = PASS
 CREATIVE_BROWSER = PASS
-UR_VISUAL_RUNTIME_REVIEW = PASS / UI_C_PROMOTED
-UI_COMPLETE = VERIFIED
+UR_VISUAL_RUNTIME_REVIEW = PARTIAL / UI_C_PROMOTED
+UR_FULL_CHECKLIST_AUDIT = NOT_YET_DONE
+UNREVIEWED_CHECKLIST_ITEMS = >0
+UI_COMPLETE = HOLD
 ```
 
 
 
-> **CLOSURE NOTICE**
+> **FINAL AUDIT HOLD**
 >
-> The former HOLD is resolved. Capability reconciliation, UI-A/B/C promotion, UR visual/interaction closure, and the final exact-SHA Runtime are complete. Unchecked legacy checklist boxes below are retained as the original audit matrix and are not current open tasks. Authoritative closure is recorded in `working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md`.
+> The final Runtime is PASS, but this checklist still contains undispositioned items. Any `[ ]` required item is OPEN until UR explicitly records PASS / FAIL / N/A with evidence or reason. Runtime PASS and summary closure evidence do not waive this gate.
 
 
 Use this document after implementation as the mandatory AI self-audit. No final UI closure may be declared from visual impression alone.
@@ -52,8 +54,26 @@ Completion rule:
 Every REQUIRED item = PASS
 Every exception = explicitly documented with authority/reason
 No visual-only PASS can override a failed source/runtime/interaction check
-UI_COMPLETE = VERIFIED_ON_FINAL_RUNTIME_TESTED_SHA / PRODUCT_SOURCE_EQUIVALENT_TO_UI_C_PROMOTION
+UI_COMPLETE = ONLY_AFTER_FULL_CHECKLIST_AUDIT + USER_VISUAL_ACCEPTANCE + REQUIRED_RUNTIME_EVIDENCE
 ```
+
+## Mandatory machine-enforceable closure rule
+
+```text
+RUNTIME_PASS != UI_COMPLETE
+
+FOR_EACH_REQUIRED_CHECKLIST_ITEM:
+  disposition MUST BE one of PASS / FAIL / N_A
+  evidence_or_reason MUST NOT BE EMPTY
+
+UNREVIEWED_CHECKLIST_ITEMS = 0
+OPEN_CHECKLIST_ITEMS = 0
+FAIL_ITEMS = 0
+USER_VISUAL_ACCEPTANCE = COMPLETE
+ONLY_THEN UI_COMPLETE = YES
+```
+
+Any automation, MR, UR or assistant must block completion if the checklist still contains required items without disposition.
 
 Evidence codes:
 - `SRC` source/static inspection
@@ -836,13 +856,13 @@ PHOTOSHOP_ALIGNMENT_REVIEW = PASS
 FUNCTIONAL_RUNTIME = PASS
 UI_HEALTH = PASS
 INTEGRATED_CURRENT_MAIN = PASS
-UI_COMPLETE = VERIFIED_ON_CURRENT_MAIN
+UI_COMPLETE = HOLD_PENDING_UR_FULL_CHECKLIST_AUDIT_ON_CURRENT_MAIN
 ```
 
 
 ---
 
-## Final closure record — 2026-09-28
+## Runtime closure evidence — 2026-09-28
 
 Authoritative MR review:
 `working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md`
@@ -875,4 +895,4 @@ UI_COMPLETE = VERIFIED
 
 The initial final Runtime run `36443008810` failed only because the legacy UI Runtime harness still encoded superseded pre-UI-A geometry/inventory assumptions. MR reconciled that QA harness through PR #88 without product/source mutation, then reran the exact product-equivalent revision successfully.
 
-This checklist is closed for `INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001`.
+This checklist is NOT closed. UR must now perform the full item-by-item audit on current main. It closes only after all required items have explicit disposition and open/unreviewed counts are zero.
