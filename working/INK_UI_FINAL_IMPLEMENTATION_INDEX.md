@@ -1,6 +1,6 @@
 # INK Final UI — Implementation Index
 
-STATUS: `IMPLEMENTATION_PROGRAM_AUTHORIZED / UI-A_PROMOTED / UI-B_NOT_STARTED / FINAL_RUNTIME_DEFERRED`
+STATUS: `IMPLEMENTATION_PROGRAM_AUTHORIZED / UI-A_PROMOTED / UI-B_UR_AUTHORIZED / FINAL_RUNTIME_DEFERRED`
 
 DATE: 2026-09-28
 
@@ -37,15 +37,13 @@ UI-A Photoshop Workstation Shell & Panels
 → promotion
 
 UI-B Full Capability Creative Controls
-→ MR review
-→ UR workflow/placement review
-→ promotion
+→ UR review / bounded revision loop
+→ promotion by UR
 
 UI-C Photoshop Fidelity & Final UI Closure
-→ MR review
-→ UR fidelity review
+→ UR fidelity/interaction review
 → USER visual revision if needed
-→ promotion
+→ promotion by UR
 
 ONE final exact-SHA integrated Runtime
 → completion checklist
@@ -89,8 +87,8 @@ PUI_PLANNING_IDENTITIES = 74
 OPEN_IMPLEMENTATION_GAPS = 34
 UI_IMPLEMENTATION_PROGRAM = AUTHORIZED
 UI-A = PROMOTED / PR_83 / f839f542d6da1eaa68791a0c8f3a5834b6ba0868
-UI-B = ELIGIBLE / NOT_STARTED
-UI-C = WAIT
+UI-B = UR_AUTHORIZED / READY_FOR_DEV_HANDOFF
+UI-C = UR_OWNED / WAIT_FOR_UI_B_PROMOTION
 FINAL_RUNTIME = DEFERRED
 ```
 
@@ -118,4 +116,16 @@ UI-A promotion record:
 - PR: `83`
 - merge: `f839f542d6da1eaa68791a0c8f3a5834b6ba0868`
 - central Runtime after UI-A: not run by policy
-- UI-B: not started
+- UI-B: UR authorized / ready for DEV handoff
+
+
+UR execution directive:
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+
+```text
+REMAINING_UI_OWNER = UR
+UI_B_REVIEW_PROMOTION = UR
+UI_C_REVIEW_PROMOTION = UR
+MR_ROUTINE_UI_INTERMEDIARY = NO
+POST_UI_C = MR / ONE_FINAL_EXACT_SHA_RUNTIME
+```
