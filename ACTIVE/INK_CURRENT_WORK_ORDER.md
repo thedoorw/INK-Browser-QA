@@ -9,7 +9,7 @@ DATE: 2026-09-27
 ```text
 PRIMARY_TASKS = INK-UI-FULL-CAPABILITY-RECONCILIATION-001
 PROGRAM = FULL_CAPABILITY_UI_RECONCILIATION
-OWNER = UR / UI REVIEW
+OWNER = MR / MAIN REVIEW
 
 BASELINE_MAIN = dcc41aa595bad8eaa73dce05a7b2fa988a7cce2f
 CAPABILITY_BASELINE = ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md
@@ -55,7 +55,7 @@ CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
 
 UI_PROGRAM = PHOTOSHOP_ALIGNED_FINAL_UI_REBUILD
 UI_OWNER = UR / UI REVIEW
-UI_STATUS = RECONCILIATION_AUTHORIZED / IMPLEMENTATION_HOLD
+UI_STATUS = RECONCILIATION_MR_PASS / IMPLEMENTATION_WORKPACK_REQUIRED
 ```
 
 ## Completed upstream gates
@@ -175,7 +175,7 @@ UR must not issue final UI implementation Work Orders yet.
 ## Current gate
 
 ```text
-CURRENT_GATE = UI_FULL_CAPABILITY_RECONCILIATION_UR_REVISION_REQUIRED
+CURRENT_GATE = UI_IMPLEMENTATION_WORKPACK_REQUIRED
 P1_A_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_B_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_C_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
@@ -186,8 +186,8 @@ P1_G_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 P1_H_PRODUCT_IMPLEMENTATION = MODULE_READY / MR_PASS / PROMOTED
 INTEGRATED_RUNTIME = MR_PASS / RUNTIME_GATE_CLOSED
 RUNTIME_HARNESS_COVERAGE = MR_PASS / PROMOTED
-UI_RECONCILIATION = MR_REVISE / ATOMIC_DISPOSITION_REQUIRED
-UI_IMPLEMENTATION = HOLD
+UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
+UI_IMPLEMENTATION = NOT_YET_AUTHORIZED / WORKPACK_REQUIRED
 INK_MANUAL_PROSE = NON_BLOCKING
 ```
 
@@ -207,41 +207,50 @@ ARTIFACT = 10936541218
 RUNTIME_GATE = CLOSED
 ```
 
-## MR review of UR handoff
+## Final MR review of UI full-capability reconciliation
 
-UR HEAD reviewed:
+Initial UR HEAD:
 `5eb8ab1703d2a2feb6dc8f0ab1ad2732702bd205`
 
-MR review:
+Bounded revision HEAD:
+`867aa95fed4a937c04e4132b34a5757408e16b70`
+
+Final MR review:
 `working/INK_UI_FULL_CAPABILITY_RECONCILIATION_MR_REVIEW_v1.0.md`
 
+Promotion:
+- PR `#82`
+- merge `f84d60c2b16449fd9957995d8f269cdbbd87b09f`
+
 Result:
-`MR_REVISE / BOUNDED_DOCUMENT_CORRECTION_REQUIRED`
 
-Accepted:
-- 64/64 family placement architecture;
-- P1 A-H placement direction;
-- 34-gap family-level register and internal counts;
-- Filter / Color / Channels / Adjustments / Effects / Liquify / ruler-guide-snap architecture;
-- headless boundary.
+```text
+FAMILY_PLACEMENT = 64 / 64 PASS
+PRODUCT_ATOMICS = 496 / 496 PASS
+HEADLESS_PLATFORM_SUPPORT_ATOMICS = 5 / 5 PASS
+TOTAL_NORMALIZED_ATOMICS = 501 / 501 PASS
+P1_A_H_PLACEMENT = PASS
+PLANNED_CONTROL_IDS = PUI-001 ... PUI-074 / PASS
+OPEN_UI_GAPS = 34
+ATOMIC_AUDIT_NEW_GAPS = 0
+PRODUCT_SOURCE_MUTATION = 0
+UI_IMPLEMENTATION_MUTATION = 0
+UI_RECONCILIATION = CLOSED / PROMOTED
+```
 
-Required before PASS:
-- explicit 501/501 atomic disposition evidence (496 product + 5 headless platform support);
-- stable planning IDs/counts for new planned controls/surfaces;
-- re-run gap audit after atomic reconciliation.
+The reconciliation HOLD is cleared for preparation of a bounded UI implementation Work Order.
 
-No product/UI implementation is authorized.
+DEV product mutation remains prohibited until MR issues that explicit Work Order.
 
 ## Next action
 
-UR:
-- revise `work/ink-ui-full-capability-reconciliation-001` only;
-- complete the bounded atomic-level disposition and planned-control ledger correction;
-- STOP again for MR review.
-
 MR:
-- re-review the revised UR branch;
-- only then decide UI reconciliation PASS / UI implementation HOLD clearance.
+- prepare the bounded UI implementation Work Order from the promoted reconciliation SSOT;
+- preserve the 64-family / 501-atomic placement authority and PUI planning identities;
+- define implementation sequencing and QA without creating duplicate Core authorities.
+
+UR:
+- no further reconciliation revision required unless MR discovers a new planning conflict.
 
 DEV:
-- no action.
+- no product/UI implementation until the new Work Order is explicitly authorized.
