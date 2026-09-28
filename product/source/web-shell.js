@@ -93,7 +93,11 @@
     panelOptionsMenu: null,
     documentChrome: null,
     panelStackHost: null,
-    activePanelResizer: null
+    activePanelResizer: null,
+    shellTooltip: null,
+    tooltipTarget: null,
+    guidePreview: null,
+    guideReadout: null
   };
 
   function runtime() {
@@ -393,11 +397,136 @@
     chrome.innerHTML =
       '<div class="document-tab-band"><button type="button" class="document-tab active" aria-current="page"><span id="documentTabTitle">未命名作品</span></button></div>' +
       '<div class="document-ruler-corner" aria-hidden="true"></div>' +
-      '<div class="document-ruler document-ruler-horizontal" aria-hidden="true"></div>' +
-      '<div class="document-ruler document-ruler-vertical" aria-hidden="true"></div>';
+      '<div class="document-ruler document-ruler-horizontal" data-ruler-axis="horizontal" role="button" tabindex="0" aria-label="水平尺；拖曳建立水平參考線"></div>' +
+      '<div class="document-ruler document-ruler-vertical" data-ruler-axis="vertical" role="button" tabindex="0" aria-label="垂直尺；拖曳建立垂直參考線"></div>';
     root.append(chrome);
     state.documentChrome = chrome;
     return chrome;
+  }
+
+  function ensureTooltipController() {
+    if (state.shellTooltip?.isConnected) return state.shellTooltip;
+    const root = state.root || document.querySelector('#app');
+    if (!root) return null;
+    const tooltip = document.createElement('div');
+    tooltip.id = 'shellTooltip';
+    tooltip.className = 'shell-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.hidden = true;
+    root.append(tooltip);
+    const show = target => {
+      if (!target || !isDesktop()) return;
+      const title = target.getAttribute('title') || target.dataset.shellTooltipTitle;
+      if (!title) return;
+      target.dataset.shellTooltipTitle = title;
+      target.removeAttribute('title');
+      state.tooltipTarget = target;
+      tooltip.textContent = title;
+      tooltip.hidden = false;
+      const rect = target.getBoundingClientRect();
+      const box = tooltip.getBoundingClientRect();
+      const left = Math.max(6, Math.min(globalThis.innerWidth - box.width - 6, rect.right + 8));
+      const top = Math.max(6, Math.min(globalThis.innerHeight - box.height - 6, rect.top + Math.max(0, (rect.height - box.height) / 2)));
+      tooltip.style.left = left + 'px';
+      tooltip.style.top = top + 'px';
+    };
+    const hide = target => {
+      const current = target || state.tooltipTarget;
+      if (current?.dataset?.shellTooltipTitle && !current.hasAttribute('title')) current.setAttribute('title', current.dataset.shellTooltipTitle);
+      if (current?.dataset) delete current.dataset.shellTooltipTitle;
+      state.tooltipTarget = null;
+      tooltip.hidden = true;
+    };
+    document.addEventListener('pointerover', event => {
+      const target = event.target.closest?.('[title]');
+      if (target && target !== state.tooltipTarget) show(target);
+    });
+    document.addEventListener('pointerout', event => {
+      if (!state.tooltipTarget) return;
+      if (event.relatedTarget && state.tooltipTarget.contains(event.relatedTarget)) return;
+      if (state.tooltipTarget.contains(event.target)) hide(state.tooltipTarget);
+    });
+    document.addEventListener('focusin', event => {
+      const target = event.target.closest?.('[title]');
+      if (target) show(target);
+    });
+    document.addEventListener('focusout', event => {
+      if (state.tooltipTarget?.contains(event.target)) hide(state.tooltipTarget);
+    });
+    state.shellTooltip = tooltip;
+    return tooltip;
+  }
+
+  function bindRulerGuideDrag() {
+    const root = state.root || document.querySelector('#app');
+    const app = runtime();
+    const chrome = createDocumentChrome();
+    if (!root || !app || !chrome || chrome.dataset.guideBound === 'true') return Boolean(chrome?.dataset.guideBound === 'true');
+    chrome.dataset.guideBound = 'true';
+    const preview = document.createElement('div');
+    preview.id = 'shellGuidePreview';
+    preview.className = 'shell-guide-preview';
+    preview.hidden = true;
+    const readout = document.createElement('output');
+    readout.id = 'shellGuideReadout';
+    readout.className = 'shell-guide-readout';
+    readout.hidden = true;
+    root.append(preview, readout);
+    state.guidePreview = preview;
+    state.guideReadout = readout;
+    let drag = null;
+    const move = event => {
+      if (!drag) return;
+      const stage = document.querySelector('#stageWrap')?.getBoundingClientRect();
+      if (!stage) return;
+      const world = app.renderer?.screenToWorld?.(event.clientX, event.clientY);
+      if (!world) return;
+      const value = drag.orientation === 'horizontal' ? world.y : world.x;
+      preview.dataset.axis = drag.orientation;
+      if (drag.orientation === 'horizontal') {
+        preview.style.left = stage.left + 'px';
+        preview.style.top = event.clientY + 'px';
+        preview.style.width = stage.width + 'px';
+        preview.style.height = '1px';
+      } else {
+        preview.style.left = event.clientX + 'px';
+        preview.style.top = stage.top + 'px';
+        preview.style.width = '1px';
+        preview.style.height = stage.height + 'px';
+      }
+      preview.hidden = false;
+      readout.value = (drag.orientation === 'horizontal' ? 'Y ' : 'X ') + value.toFixed(1);
+      readout.style.left = Math.max(6, Math.min(globalThis.innerWidth - 74, event.clientX + 10)) + 'px';
+      readout.style.top = Math.max(6, Math.min(globalThis.innerHeight - 28, event.clientY + 10)) + 'px';
+      readout.hidden = false;
+      drag.value = value;
+      drag.inside = event.clientX >= stage.left && event.clientX <= stage.right && event.clientY >= stage.top && event.clientY <= stage.bottom;
+      event.preventDefault();
+    };
+    const end = event => {
+      if (!drag) return;
+      const commit = drag.inside && Number.isFinite(drag.value);
+      const orientation = drag.orientation;
+      const value = drag.value;
+      drag = null;
+      preview.hidden = true;
+      readout.hidden = true;
+      globalThis.removeEventListener('pointermove', move);
+      globalThis.removeEventListener('pointerup', end);
+      globalThis.removeEventListener('pointercancel', end);
+      if (commit) app.addGuide?.({ orientation, position: value });
+    };
+    chrome.querySelectorAll('[data-ruler-axis]').forEach(ruler => {
+      ruler.addEventListener('pointerdown', event => {
+        if (!isDesktop() || root.dataset.rulers !== 'true' || root.dataset.documentActive === 'false' || event.button !== 0) return;
+        drag = { orientation: ruler.dataset.rulerAxis, value: NaN, inside: false };
+        globalThis.addEventListener('pointermove', move);
+        globalThis.addEventListener('pointerup', end);
+        globalThis.addEventListener('pointercancel', end);
+        move(event);
+      });
+    });
+    return true;
   }
 
   function ensureSupplementalInspectorSections() {
@@ -672,6 +801,43 @@
       if (!trigger) return;
       event.preventDefault();
       selectPanel(trigger.dataset.panelStackTarget);
+    });
+    let stackDrag = null;
+    const stackMove = event => {
+      if (!stackDrag) return;
+      const delta = event.clientY - stackDrag.startY;
+      const previous = Math.max(24, stackDrag.previousHeight + delta);
+      const next = Math.max(24, stackDrag.nextHeight - delta);
+      stackDrag.previous.style.flexBasis = previous + 'px';
+      stackDrag.next.style.flexBasis = next + 'px';
+      host.classList.add('stack-resizing');
+      event.preventDefault();
+    };
+    const stackEnd = () => {
+      if (!stackDrag) return;
+      stackDrag = null;
+      host.classList.remove('stack-resizing');
+      globalThis.removeEventListener('pointermove', stackMove);
+      globalThis.removeEventListener('pointerup', stackEnd);
+      globalThis.removeEventListener('pointercancel', stackEnd);
+    };
+    host.addEventListener('pointerdown', event => {
+      const splitter = event.target.closest('[data-panel-stack-splitter]');
+      if (!splitter || !isDesktop()) return;
+      const previous = splitter.previousElementSibling;
+      const next = splitter.nextElementSibling;
+      if (!previous?.matches('.panel-stack-region') || !next?.matches('.panel-stack-region')) return;
+      stackDrag = {
+        startY: event.clientY,
+        previous,
+        next,
+        previousHeight: previous.getBoundingClientRect().height,
+        nextHeight: next.getBoundingClientRect().height
+      };
+      globalThis.addEventListener('pointermove', stackMove);
+      globalThis.addEventListener('pointerup', stackEnd);
+      globalThis.addEventListener('pointercancel', stackEnd);
+      event.preventDefault();
     });
     host.hidden = true;
     root.append(host);
@@ -1034,6 +1200,8 @@
       bindContextualOptions();
       bindInspectorCloseControl();
       bindSupplementalPanelControls();
+      bindRulerGuideDrag();
+      ensureTooltipController();
       ensurePanelOptionsTriggers();
       ensurePanelStackFramework();
       ensureActivePanelResizeEdge();
@@ -1102,6 +1270,7 @@
     } catch {}
 
     createDocumentChrome();
+    ensureTooltipController();
     ensureSupplementalInspectorSections();
     createPanelOptionsMenu();
     try {
