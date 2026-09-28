@@ -162,3 +162,18 @@ DEV = STOP
 NEXT_OWNER = MR
 STOP = YES
 ```
+
+
+## 8. Post-UR MR promotion
+
+MR subsequently promoted the reviewed UI-A package without additional UI mutation.
+
+```text
+UI_A_PROMOTION_PR = 83
+UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
+UI_A = PROMOTED
+UI_B = NOT_STARTED
+CENTRAL_RUNTIME = NOT_RUN
+```
+
+This post-UR record does not change the UR decision; it records the later MR promotion outcome.
