@@ -243,3 +243,70 @@ Suggested focused QA:
 Provide exact HEAD, changed files, focused QA, PUI/gap closure tables, bounded limitations, health delta, and STOP to MR.
 
 MR obtains UR workflow/placement review before promotion.
+
+
+## 14. Added MR requirement — future capability extensibility
+
+This package must preserve and improve the workstation's ability to accept future registered capabilities without turning this task into a full Plugin SDK project.
+
+Current existing extension-related authorities include:
+- canonical capability registry;
+- INK Public Creative API;
+- Connector / adapter boundaries;
+- Program Import;
+- Creative Library reuse surfaces.
+
+UI-A centralized application menus and panels into built-in registries, but they remain frozen internal lists.
+
+UI-B must add or prepare a bounded UI contribution boundary so future native/adaptor capabilities can be registered without rewriting unrelated shell logic.
+
+Accepted scope:
+- one documented UI-contribution registration contract or equivalent centralized extension boundary;
+- capability-to-menu / toolbar-flyout / panel / dialog contribution metadata where appropriate;
+- validation against duplicate IDs/routes;
+- explicit mapping back to an existing capability/Core authority;
+- registered contributions remain subject to MR capability governance.
+
+Not required:
+- third-party package loader;
+- marketplace;
+- arbitrary remote code execution;
+- plugin sandbox;
+- plugin permissions system;
+- public third-party SDK completeness.
+
+```text
+FULL_PLUGIN_SDK = P2 / NOT_IN_UI_B
+UI_CONTRIBUTION_EXTENSION_BOUNDARY = REQUIRED
+SECOND_CORE_AUTHORITY = PROHIBITED
+```
+
+If a clean bounded extension boundary cannot be introduced without architectural expansion, STOP → MR rather than inventing a plugin system.
+
+## 15. Added MR requirement — INK brand identity preservation
+
+UI-B must preserve the existing brand authorities while adding new menus/tools/panels:
+
+Visible logo authority:
+`product/source/assets/INK_MARK_SOURCE_W-300.jpg`
+
+Approved visible-logo SHA-256:
+`08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8`
+
+Browser favicon authority:
+`product/source/assets/favicon.svg`
+
+Favicon contract:
+- 32×32;
+- background `#69BFE3`;
+- white simplified Y;
+- Web / Portable shell uses the same favicon;
+- no fallback to full `ink-mark.svg` as browser favicon.
+
+Requirements:
+- do not replace the INK logo with Adobe branding;
+- do not duplicate competing visible-logo asset authorities;
+- do not silently remove/change favicon routing;
+- add focused QA for visible-logo route + favicon route preservation.
+
+PWA / installed-desktop App Icon work is explicitly outside the current UI program and must not be expanded in this package.
