@@ -302,6 +302,57 @@ export function installFullCapabilityControls(app){
     refreshChannels();
   }
 
+  function rasterPreview(found=selectedFound(app,object=>object.type==='image'&&object.rasterState?.colorRaster)){
+    if(!found)return null;
+    const preview=colorRasterToRgba8(found.object.rasterState.colorRaster,{icc:found.object.rasterState.icc?.bytes||null});
+    if(preview.status!=='ok')return{found,preview,error:preview.reason||preview.status};
+    return{found,preview,image:preview.imageData};
+  }
+
+  function runRasterInsight(command){
+    const target=rasterPreview();if(!target){toast('請先選取 Raster 影像');return;}
+    if(target.error){toast('Raster readout unavailable: '+target.error,3000);return;}
+    const out=$('#uiBRasterAnalysis');
+    if(command==='histogram'){
+      const report=imageHistogram(target.image);
+      if(out)out.textContent='Histogram mean · R '+report.mean.red.toFixed(1)+' · G '+report.mean.green.toFixed(1)+' · B '+report.mean.blue.toFixed(1)+' · A '+report.mean.alpha.toFixed(1);
+      return;
+    }
+    if(command==='snapshot'){
+      state.rasterSnapshot=createImageSnapshot(target.image,{name:'UI-B compare baseline',stackState:{adjustments:target.found.object.adjustments||[],filters:target.found.object.filterStack||[],effects:target.found.object.effects||[]}});
+      if(out)out.textContent='Snapshot captured · '+state.rasterSnapshot.width+'×'+state.rasterSnapshot.height;
+      toast('Raster snapshot 已建立');return;
+    }
+    if(command==='compare'){
+      if(!state.rasterSnapshot){toast('請先建立 Snapshot');return;}
+      const before={width:state.rasterSnapshot.width,height:state.rasterSnapshot.height,data:Uint8ClampedArray.from(state.rasterSnapshot.data)};
+      if(before.width!==target.image.width||before.height!==target.image.height){toast('Snapshot 尺寸不同，無法直接比較');return;}
+      const report=compareImageStates(before,target.image);
+      if(out)out.textContent='Compare · changed '+(report.changedRatio*100).toFixed(2)+'% · MAE '+report.meanAbsoluteError.toFixed(2)+' · max '+report.maxError;
+      return;
+    }
+  }
+
+  async function refreshRecoveryDialog(){
+    const list=$('#uiBRecoveryList');if(!list)return;
+    list.textContent='Loading…';
+    const sources=[];
+    const current=await app.store.loadRecord('autosave'),previous=await app.store.loadRecord('autosave:previous'),checkpoints=await app.store.loadRecord('autosave:checkpoints');
+    if(current)sources.push({name:'current',record:current});
+    if(previous)sources.push({name:'previous',record:previous});
+    for(const [index,record] of (Array.isArray(checkpoints)?checkpoints:[]).entries())sources.push({name:'checkpoint-'+(index+1),record});
+    state.recoveryCandidates=sources.map(source=>({source,...verifyStorageRecord(source.record)}));
+    if(!state.recoveryCandidates.length){list.innerHTML='<p class="shell-panel-note">No recovery records.</p>';return;}
+    list.innerHTML=state.recoveryCandidates.map((item,index)=>'<div class="ui-b-stack-row"><span><strong>'+esc(item.source)+'</strong><small>'+(item.valid?'verified '+(item.verified?'yes':'legacy'):'invalid · '+esc(item.reason||'unknown'))+'</small></span><button type="button" data-ui-b-recovery-index="'+index+'" '+(item.valid?'':'disabled')+'>Restore</button></div>').join('');
+  }
+
+  function restoreRecoveryCandidate(index){
+    const candidate=state.recoveryCandidates[index];if(!candidate?.valid||!candidate.value)return;
+    if(!confirm('Restore '+candidate.source+'? Current unsaved view will be replaced.'))return;
+    try{app.replaceDocument(candidate.value);app.history.clear();app.dirty=false;closeDialog('recovery');toast('已從 '+candidate.source+' 恢復');}
+    catch(error){console.error(error);toast('Recovery failed: '+error.message,3200);}
+  }
+
   function refreshChannels(){
     const list=$('#uiBChannelsList');if(!list)return;
     const found=selectedFound(app,object=>object.type==='image'&&object.rasterState?.colorRaster);
