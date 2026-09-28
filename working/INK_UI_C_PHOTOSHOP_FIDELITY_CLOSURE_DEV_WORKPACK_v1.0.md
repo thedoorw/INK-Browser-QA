@@ -175,3 +175,24 @@ Only then MR may authorize:
 `INK-UI-FINAL-INTEGRATED-RUNTIME-001`
 
 The final Runtime must target the exact fully promoted UI SHA and is the first central Runtime after UI implementation begins.
+
+
+## 13. Added MR closure requirement — extensibility and brand audit
+
+Final UI closure must verify that the Photoshop-aligned shell remains extensible without claiming a completed third-party Plugin SDK.
+
+Required audit:
+- one centralized UI contribution/registration boundary exists or an MR-approved equivalent is documented;
+- future native/adaptor capabilities can add supported UI contributions without duplicating Core authorities;
+- duplicate menu/panel/tool contribution IDs are rejected or surfaced;
+- Plugin SDK / marketplace / remote plugin loading remains explicitly P2 and absent from current-product claims.
+
+Brand closure:
+- visible INK logo continues to use the single approved authority `assets/INK_MARK_SOURCE_W-300.jpg`;
+- browser favicon continues to use `assets/favicon.svg`;
+- favicon remains 32×32, `#69BFE3` background, white simplified Y;
+- Web/Portable favicon route parity is verified;
+- no Adobe logo/proprietary branding is copied;
+- no stale browser favicon route exists.
+
+PWA / installed-desktop App Icon is OUT OF SCOPE for the current UI program. Preserve existing manifest behavior unless a separate Work Order is later authorized; do not spend UI-C scope redesigning it.
