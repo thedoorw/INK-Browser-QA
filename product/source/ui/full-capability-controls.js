@@ -7,6 +7,7 @@ import {
   IMAGE_CAPABILITIES, FILTER_GALLERY,
   createAdjustment, createFilter, createLiquifyFilter, createLayerEffect, createRasterMask,
   cropImageData, resizeImageData, colorRasterToRgba8, createColorRaster, serializeColorRaster, deserializeColorRaster,
+  imageHistogram, createImageSnapshot, compareImageStates,
   convertBitDepth, convertColor, readNormalizedSample, writeNormalizedSample, inspectIccProfile, parseIccProfile
 } from '../src/image/image-core.js';
 import { createSkewMatrix, createProjectiveTransform, mapProjectivePoint, createWarpDeformationPlan } from '../src/editor/transform-advanced.js';
@@ -70,8 +71,9 @@ function convertRasterMode(serialized,targetMode){
   const out=createColorRaster({width:source.width,height:source.height,bitDepth:source.bitDepth,colorMode:targetMode});
   const count=source.width*source.height;
   for(let index=0;index<count;index++){
-    const converted=convertColor(readNormalizedSample(source,index),source.colorMode,targetMode);
-    writeNormalizedSample(out,index,converted);
+    const values=Array.from({length:source.channelCount},(_,channel)=>readNormalizedSample(source,index,channel));
+    const converted=convertColor(values,source.colorMode,targetMode);
+    for(let channel=0;channel<out.channelCount;channel++)writeNormalizedSample(out,index,channel,converted[channel]??0);
   }
   if(source.alpha&&out.alpha)out.alpha.set(source.alpha);
   return serializeColorRaster(out);
@@ -92,7 +94,7 @@ export function installFullCapabilityControls(app){
 
   function toast(message,time=2400){app.toast(message,time);}
   function closeMenus(){document.querySelectorAll('.application-menu.open').forEach(node=>node.classList.remove('open'));document.querySelectorAll('.application-command-menu').forEach(node=>node.hidden=true);}
-  function openPanel(id){if(shell?.toggle)shell.toggle(id);else toast('Panel route unavailable');}
+  function openPanel(id){if(shell?.open)shell.open(id);else if(shell?.toggle)shell.toggle(id);else toast('Panel route unavailable');}
 
   function installMenus(){
     const byMenu=new Map();
@@ -144,8 +146,18 @@ export function installFullCapabilityControls(app){
       if(!$('.stack-corner',existingLasso))existingLasso.appendChild(htmlNode('<span class="stack-corner" aria-hidden="true"></span>'));
       existingLasso.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(lassoGroup,existingLasso);});
     }
+    for(const [groupId,selector] of [['shape','[data-tool="shape"]'],['text','[data-tool="text"]']]){
+      const existing=$(selector),group=UI_B_TOOL_GROUPS.find(item=>item.id===groupId);
+      if(!existing||!group)continue;
+      existing.classList.add('tool-stack');existing.dataset.uiBToolGroup=groupId;existing.setAttribute('aria-haspopup','menu');
+      if(!$('.stack-corner',existing))existing.appendChild(htmlNode('<span class="stack-corner" aria-hidden="true"></span>'));
+      existing.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(group,existing);});
+      let timer=null;
+      existing.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,existing),420);});
+      ['pointerup','pointercancel','pointerleave'].forEach(type=>existing.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
+    }
     const insertion=existingLasso?.nextElementSibling;
-    for(const group of UI_B_TOOL_GROUPS.filter(group=>!['draw','lasso'].includes(group.id))){
+    for(const group of UI_B_TOOL_GROUPS.filter(group=>!['draw','lasso','shape','text'].includes(group.id))){
       if($('[data-ui-b-tool-group="'+group.id+'"]'))continue;
       const node=createToolButton(group);rail.insertBefore(node,insertion);
       node.addEventListener('click',()=>activateTool(state.lastToolByGroup.get(group.id)||group.primary));
@@ -167,12 +179,25 @@ export function installFullCapabilityControls(app){
   function activateTool(tool){
     state.activeCapabilityTool=tool;
     for(const group of UI_B_TOOL_GROUPS){if(group.tools.some(([id])=>id===tool))state.lastToolByGroup.set(group.id,tool);}
-    if(UI_B_RASTER_TOOL_IDS.has(tool)){raster.setTool(tool);}
-    else if(['blender','smudge'].includes(tool)){raster.clearTool();app.setTool(tool);}
-    else if(['pen','pencil','marker','brush','airbrush','lasso'].includes(tool)){raster.clearTool();app.setTool(tool);}
-    else raster.clearTool();
-    $$('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
-    refreshContextOptions();toast('工具：'+tool);
+    if(tool.startsWith('shape:')){
+      raster.clearTool();app.shapeType=tool.slice(6);app.setTool('shape');app.refreshToolUI?.();
+    }else if(tool.startsWith('text:')){
+      raster.clearTool();app.uiBTextMode=tool.slice(5);app.setTool('text');toast('文字模式：'+app.uiBTextMode+'；版面描述已啟用，實際 glyph/render 能力依既有 Text Renderer');
+    }else if(tool==='gradient'&&selectedFound(app,object=>object.type==='path')){
+      raster.clearTool();app.setTool('select');openDialog('gradient-editor');
+    }else if(UI_B_RASTER_TOOL_IDS.has(tool)){
+      raster.setTool(tool);
+    }else if(['blender','smudge'].includes(tool)){
+      raster.clearTool();app.setTool('select');
+      openPanel('specialist');
+      const preset=$('#paintBrush');if(preset){preset.value=tool;preset.scrollIntoView({block:'center'});}
+      toast((tool==='blender'?'Blender':'Smudge')+' 使用既有 Brush Engine / Stroke Session authority；由 Properties 重播或套用');
+    }else if(['pen','pencil','marker','brush','airbrush','lasso'].includes(tool)){
+      raster.clearTool();app.setTool(tool);
+    }else raster.clearTool();
+    $('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
+    refreshContextOptions();
+    if(!['blender','smudge'].includes(tool)&&!tool.startsWith('text:'))toast('工具：'+tool);
   }
 
   function ensureContextHost(){
