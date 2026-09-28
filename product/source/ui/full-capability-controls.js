@@ -25,16 +25,20 @@ const number=(value,fallback=0)=>Number.isFinite(Number(value))?Number(value):fa
 const clamp=(value,min,max)=>Math.max(min,Math.min(max,value));
 const fileSafe=value=>String(value||'INK').replace(/[\\/:*?"<>|]+/g,'-').trim()||'INK';
 
+const IDENTITY_LUT_2=Object.freeze({size:2,data:[
+    0,0,0, 1,0,0, 0,1,0, 1,1,0,
+    0,0,1, 1,0,1, 0,1,1, 1,1,1
+  ]});
 const ADJUSTMENT_DEFAULTS=Object.freeze({
   brightnessContrast:{brightness:0,contrast:0},levels:{black:0,white:255,gamma:1},curves:{points:[[0,0],[255,255]]},
-  hueSaturation:{hue:0,saturation:0,lightness:0},colorBalance:{cyanRed:0,magentaGreen:0,yellowBlue:0},gradientMap:{},
-  exposure:{exposure:0,offset:0,gamma:1},vibrance:{vibrance:0,saturation:0},blackWhite:{},photoFilter:{color:'#ffaa66',density:.25},
-  channelMixer:{},colorLookup:{},invert:{},posterize:{levels:4},threshold:{level:128},selectiveColor:{}
+  hueSaturation:{hue:0,saturation:0,lightness:0},colorBalance:{red:0,green:0,blue:0},gradientMap:{},
+  exposure:{exposure:0,offset:0,gamma:1},vibrance:{amount:0},blackWhite:{weights:{r:.3,g:.59,b:.11}},photoFilter:{color:'#ffaa66',density:25,preserveLuminosity:true},
+  channelMixer:{matrix:[[1,0,0],[0,1,0],[0,0,1]],constant:[0,0,0]},colorLookup:{lut:IDENTITY_LUT_2},invert:{},posterize:{levels:4},threshold:{level:128},selectiveColor:{corrections:{}}
 });
 const FILTER_DEFAULTS=Object.freeze({
-  gaussianBlur:{radius:2},sharpen:{amount:1},highPass:{radius:2},edgeDetection:{amount:1},noiseGrain:{amount:.12},
-  textureOverlay:{amount:.25},motionBlur:{radius:5,angle:0},median:{radius:2},unsharpMask:{radius:2,amount:1},
-  emboss:{amount:1,angle:135},mosaic:{size:8},minimum:{radius:1},maximum:{radius:1},reduceNoise:{amount:.35}
+  gaussianBlur:{radius:2},sharpen:{amount:1},highPass:{radius:2},edgeDetection:{amount:1},noiseGrain:{amount:12},
+  textureOverlay:{amount:18,scale:7},motionBlur:{distance:4,angle:0},median:{radius:2},unsharpMask:{radius:2,amount:100,threshold:0},
+  emboss:{strength:1,angle:135},mosaic:{size:8},minimum:{radius:1},maximum:{radius:1},reduceNoise:{radius:1,strength:50,preserveEdges:24}
 });
 const EFFECT_DEFAULTS=Object.freeze({
   dropShadow:{color:'#000000',opacity:.55,offsetX:8,offsetY:8,blur:12,spread:0},
@@ -241,14 +245,35 @@ export function installFullCapabilityControls(app){
     if(selectionTools.has(tool))markup+='<select data-ui-b-option="selectionMode">'+selectOptions(['new','add','subtract','intersect'],o.selectionMode)+'</select><label>Tol <input type="number" min="0" max="255" value="'+o.tolerance+'" data-ui-b-option="tolerance"></label>';
     if(['magicWand','paintBucket'].includes(tool))markup+='<label><input type="checkbox" '+(o.contiguous?'checked':'')+' data-ui-b-option="contiguous"> Contiguous</label>';
     if(['quickSelection','objectSelection','magneticLasso'].includes(tool))markup+='<label>Edge <input type="number" min="0" max="255" value="'+o.edgeThreshold+'" data-ui-b-option="edgeThreshold"></label>';
-    if(tool==='gradient')markup+='<select data-ui-b-option="gradientType">'+selectOptions(['linear','radial'],o.gradientType)+'</select><input type="color" value="'+o.gradientStart+'" data-ui-b-option="gradientStart"><input type="color" value="'+o.gradientEnd+'" data-ui-b-option="gradientEnd">';
+    if(tool==='magneticLasso')markup+='<label>Search <input type="number" min="2" max="64" value="'+o.searchRadius+'" data-ui-b-option="searchRadius"></label>';
+    if(tool==='gradient')markup+='<select data-ui-b-option="gradientType">'+selectOptions(['linear','radial'],o.gradientType)+'</select><input type="color" value="'+o.gradientStart+'" data-ui-b-option="gradientStart"><input type="color" value="'+o.gradientEnd+'" data-ui-b-option="gradientEnd"><button type="button" data-ui-b-context-action="gradient-editor">Edit…</button>';
     if(['cloneStamp','patternStamp','healingBrush','spotHealing','patch','dodge','burn','sponge','localBlur','localSharpen','colorReplacement'].includes(tool))markup+='<label>Size <input type="number" min="1" max="300" value="'+o.radius+'" data-ui-b-option="radius"></label><label>Strength <input type="number" min="0" max="1" step=".05" value="'+o.strength+'" data-ui-b-option="strength"></label>';
+    if(tool==='patternStamp')markup+='<button type="button" data-ui-b-context-action="pattern-image">Pattern…</button><span class="ui-b-context-hint">'+esc(raster.state.patternName||'No pattern')+'</span>';
     if(['eyedropper','colorSampler'].includes(tool))markup+='<label>Radius <input type="number" min="0" max="32" value="'+o.sampleRadius+'" data-ui-b-option="sampleRadius"></label>';
     if(tool==='colorReplacement')markup+='<input type="color" value="'+o.replacementColor+'" data-ui-b-option="replacementColor">';
     if(tool==='sponge')markup+='<select data-ui-b-option="spongeMode">'+selectOptions(['saturate','desaturate'],o.spongeMode)+'</select>';
     if(['blender','smudge'].includes(tool))markup+='<span class="ui-b-context-hint">Brush Dynamics / Media → Properties</span>';
     host.innerHTML=markup;
-    $$('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>raster.setOption(key,input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value);input.addEventListener('input',handler);input.addEventListener('change',handler);});
+    $('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>raster.setOption(key,input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value);input.addEventListener('input',handler);input.addEventListener('change',handler);});
+    $('[data-ui-b-context-action]',host).forEach(control=>control.addEventListener('click',()=>{const action=control.dataset.uiBContextAction;if(action==='gradient-editor')openDialog('gradient-editor',{target:'raster'});else if(action==='pattern-image')pickPatternImage();}));
+  }
+
+  function pickPatternImage(){
+    let input=$('#uiBPatternImageInput');
+    if(!input){
+      input=htmlNode('<input id="uiBPatternImageInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>');
+      $('.app')?.appendChild(input);
+      input.addEventListener('change',async event=>{
+        const file=event.target.files?.[0];event.target.value='';if(!file)return;
+        try{
+          const bitmap=await createImageBitmap(file),canvas=document.createElement('canvas'),max=256,scale=Math.min(1,max/Math.max(bitmap.width,bitmap.height));
+          canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+          const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close?.();
+          raster.setPattern(context.getImageData(0,0,canvas.width,canvas.height),file.name);toast('Pattern loaded: '+file.name);
+        }catch(error){console.error(error);toast('Pattern 載入失敗：'+error.message,3000);}
+      });
+    }
+    input.click();
   }
 
   function installPointerCapture(){
