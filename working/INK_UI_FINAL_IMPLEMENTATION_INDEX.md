@@ -1,106 +1,97 @@
 # INK Final UI — Implementation Index
 
-STATUS: `UI_HOLD / CAPABILITY_REBASELINE_REQUIRED`
+STATUS: `IMPLEMENTATION_PROGRAM_AUTHORIZED / UI-A_ACTIVE / FINAL_RUNTIME_DEFERRED`
 
-DATE: 2026-09-26
+DATE: 2026-09-28
 
-BASE_MAIN: `b1374ecec242b8206aa3000a784c7498e0044030`
-
-CAPABILITY_AUTHORITY:
+CURRENT_CAPABILITY_AUTHORITY:
 - `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
+- `working/INK_CAPABILITY_REGISTRY_v0.1.md`
 
-UI AUTHORITIES:
+PROMOTED_UI_RECONCILIATION:
+- `working/INK_UI_ATOMIC_CAPABILITY_DISPOSITION_v1.0.md`
+- `working/INK_UI_FULL_CAPABILITY_PLACEMENT_MATRIX_v1.0.md`
+- `working/INK_UI_UPDATED_CONTROL_LEDGER_v1.0.md`
+- `working/INK_UI_RECONCILIATION_GAP_REGISTER_v1.0.md`
+- `working/INK_UI_MENU_TOOLBAR_PANEL_ARCHITECTURE_v1.0.md`
+- final MR PASS: `working/INK_UI_FULL_CAPABILITY_RECONCILIATION_MR_REVIEW_v1.0.md`
 
+PHOTOSHOP_POSITION_FORM_AUTHORITIES:
 1. `working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md`
-   - Photoshop fixed/elastic geometry
-   - 61 px top chrome
-   - single/double Tools references
-   - collapsed/expanded right-side reference states
+2. `working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`
+3. `working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md`
+4. `working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md`
+5. `working/INK_UI_PS_PANEL_AND_STATUS_DETAIL_SPEC_v0.1.md`
+6. `working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md`
+7. `working/INK_UI_FINAL_PHOTOSHOP_ALIGNMENT_SPEC_v1.0.md` where not superseded by current capability placement.
 
-2. `working/INK_UI_FINAL_PHOTOSHOP_ALIGNMENT_SPEC_v1.0.md`
-   - all required/adapted/deferred Photoshop interface concepts
-   - shell/menu/options/tools/panel/visual/interaction requirements
-   - explicit exclusion matrix so “not implemented” cannot mean “forgotten”
+MASTER_IMPLEMENTATION_PLAN:
+`working/INK_UI_PSH_ALIGNED_IMPLEMENTATION_MASTER_WORKPLAN_v1.0.md`
 
-3. `working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md`
-   - final menu taxonomy
-   - final panel inventory
-   - 12/12 persistent tools
-   - 22/22 named tools
-   - 34/34 bounded edit operations
-   - 29/29 select controls
-   - 212/212 static-button ranges accounted
-   - C3_PENDING = 0
-
-4. `working/INK_UI_FINAL_STATIC_CONTROL_LEDGER_v1.0.md`
-   - every current static button individually enumerated
-   - every current select individually enumerated
-   - raw source audit against silent loss/duplicate routes
-
-5. `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
-   - mandatory post-implementation AI self-audit
-   - source + Runtime + interaction + screenshot + health + current-main closure
-   - all items must close before UI_COMPLETE
-
-
-
-6. `working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md`
-   - exhaustive Photoshop fine-detail authority
-   - original 12 detail areas + explicit Panel Tabs / Panel Options / Document Status Strip
-   - shared control/icon/spacing/border/transition/responsive/accessibility rules
-   - every unknown must be marked `REFERENCE_MISSING`; no silent DEV defaults
-
-Governance:
-- `governance/INK_PRODUCT_UX_PRINCIPLES_v1.0.md`
-- `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
-
-Sequence:
+## Work Order sequence
 
 ```text
-FINAL SPEC LOCK
-→ bounded UI implementation Work Order(s)
-→ UI DEV
-→ DEV handoff + health delta
-→ UR source/interaction/visual review
-→ clean integration
-→ exact integrated-main Runtime
-→ run AI Completion Checklist
-→ USER visual acceptance/revision
-→ OPEN_CHECKLIST_ITEMS = 0
-→ UI_COMPLETE = VERIFIED_ON_CURRENT_MAIN
+UI-A Photoshop Workstation Shell & Panels
+→ MR review
+→ UR Photoshop/interaction review
+→ promotion
+
+UI-B Full Capability Creative Controls
+→ MR review
+→ UR workflow/placement review
+→ promotion
+
+UI-C Photoshop Fidelity & Final UI Closure
+→ MR review
+→ UR fidelity review
+→ USER visual revision if needed
+→ promotion
+
+ONE final exact-SHA integrated Runtime
+→ completion checklist
+→ MR final Runtime review
 ```
 
-Current readiness:
+Workpacks:
+- `working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_DEV_WORKPACK_v1.0.md`
+- `working/INK_UI_B_FULL_CAPABILITY_CONTROLS_DEV_WORKPACK_v1.0.md`
+- `working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
+
+## Runtime policy
 
 ```text
-TECHNICAL_BASELINE_FROZEN = YES
-PHOTOSHOP_ALIGNMENT_ITEMS_RECORDED = YES
-FUNCTION_PLACEMENT_COMPLETE = SNAPSHOT_ONLY_PENDING_REBASELINE
-C3_PENDING = REOPENED_BY_CAPABILITY_AUDIT
-RAW_CONTROL_LEDGER_COMPLETE = CURRENT_SHELL_SNAPSHOT_ONLY
-AI_COMPLETION_CHECKLIST_READY = STRUCTURE_READY_COUNTS_PENDING_REFRESH
-PRODUCT_UI_MUTATION = 0
-UI_IMPLEMENTATION = HOLD
-NEXT = MR_REFRESHED_CAPABILITY_BASELINE
+CENTRAL_RUNTIME_AFTER_UI_A = NO
+CENTRAL_RUNTIME_AFTER_UI_B = NO
+CENTRAL_RUNTIME_DURING_UI_C = NO
+CENTRAL_RUNTIME_AFTER_UI_A_B_C_PROMOTED = ONE
 ```
 
+Each package still requires focused/unit/static QA and may use local browser/manual interaction checks. These do not substitute for the final central exact-SHA Runtime.
 
-## Capability-reopen hold
+## Supersession note
 
-The Photoshop reference package is retained, but capability-facing placement is no longer final because USER has reopened baseline completeness.
+Older pre-P1 UI references remain valid for Photoshop geometry/form but not for capability placement where superseded.
 
-Do not issue UI implementation Work Orders from this index until:
-1. MR republishes the authoritative capability baseline;
-2. UR diffs that baseline against the current placement map;
-3. every added/restored capability receives one Primary Home;
-4. all checklist counts and exclusions are refreshed;
-5. `UI_HOLD` is explicitly cleared.
+In particular:
+- top-level `Filter` is now REQUIRED;
+- `Color`, `Channels`, `Adjustments` are normal panels;
+- masks/adjustments/filters/effects are no longer Specialist-only;
+- P1 A-H placement follows the promoted reconciliation.
 
+## Current readiness
 
-## Photoshop reference acquisition
+```text
+TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
+UI_RECONCILIATION = CLOSED / MR_PASS / PROMOTED
+FAMILY_PLACEMENT = 64 / 64
+NORMALIZED_ATOMICS = 501 / 501
+PUI_PLANNING_IDENTITIES = 74
+OPEN_IMPLEMENTATION_GAPS = 34
+UI_IMPLEMENTATION_PROGRAM = AUTHORIZED
+ACTIVE_WORK_ORDER = INK-UI-A-PHOTOSHOP-SHELL-PANELS-001
+UI-B = WAIT
+UI-C = WAIT
+FINAL_RUNTIME = DEFERRED
+```
 
-- `working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md`
-  - controlled capture environment requirements;
-  - active-document/ruler/status/menu/panel reference pack;
-  - P0 measurement closure criteria;
-  - internet/official screenshots with unknown scaling are behavior/visual evidence, not numeric pixel authority.
+The old AI Completion Checklist remains a framework only until UI-C refreshes all pre-P1 capability/menu/panel wording. It must not override the promoted reconciliation.
