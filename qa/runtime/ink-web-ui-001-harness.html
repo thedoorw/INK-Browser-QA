@@ -132,15 +132,25 @@
       };
 
       record('Photoshop shell viewport is 1280 CSS px', near(geometry1280.viewport.width, 1280, 1), geometry1280);
-      record('menu row is 24 px', near(geometry1280.menu?.height, 24, 1) && near(geometry1280.menu?.top, 0, 1), geometry1280.menu);
-      record('shared options row is 36 px at y=24', near(geometry1280.options?.height, 36, 1) && near(geometry1280.options?.top, 24, 1), geometry1280.options);
+      record('menu outer row is 25 px (24 + 1)', near(geometry1280.menu?.height, 25, 1) && near(geometry1280.menu?.top, 0, 1), geometry1280.menu);
+      record('shared options outer row is 36 px at y=25', near(geometry1280.options?.height, 36, 1) && near(geometry1280.options?.top, 25, 1), geometry1280.options);
       record('contextual controls occupy the same second row', near(geometry1280.contextual?.top, geometry1280.options?.top, 1) && near(geometry1280.contextual?.bottom, geometry1280.options?.bottom, 1), { options: geometry1280.options, contextual: geometry1280.contextual });
-      record('workspace origin is y=60', near(geometry1280.stage?.top, 60, 1) && near(geometry1280.rail?.top, 60, 1) && near(geometry1280.dock?.top, 60, 1), geometry1280);
+      record('Photoshop shell origin is y=61 and active-document workspace begins at y=90', near(geometry1280.rail?.top, 61, 1) && near(geometry1280.dock?.top, 61, 1) && near(geometry1280.stage?.top, 90, 1), geometry1280);
       record('left rail is edge-attached 40 px', near(geometry1280.rail?.left, 0, 1) && near(geometry1280.rail?.width, 40, 1), geometry1280.rail);
       record('workspace begins immediately after left rail', near(geometry1280.stage?.left, geometry1280.rail?.right, 1), { stage: geometry1280.stage, rail: geometry1280.rail });
       record('right dock is edge-attached 40 px', near(geometry1280.dock?.right, 1280, 1) && near(geometry1280.dock?.width, 40, 1), geometry1280.dock);
       record('workspace ends immediately before compact dock', near(geometry1280.stage?.right, geometry1280.dock?.left, 1), { stage: geometry1280.stage, dock: geometry1280.dock });
-      record('document title is 220–240 px', geometry1280.docTitle?.width >= 220 && geometry1280.docTitle?.width <= 240, geometry1280.docTitle);
+      const documentTabGeometry = {
+        band: rectOf(doc, '.document-tab-band'),
+        tab: rectOf(doc, '.document-tab.active'),
+        title: rectOf(doc, '#documentTabTitle')
+      };
+      record('active document tab uses the 29 px band / 28 px tab authority',
+        near(documentTabGeometry.band?.top, 61, 1) &&
+        near(documentTabGeometry.band?.height, 29, 1) &&
+        near(documentTabGeometry.tab?.height, 28, 1) &&
+        documentTabGeometry.title?.width > 0,
+        documentTabGeometry);
 
       record('title identity is INK v0.1 · Web', doc.title === 'INK v0.1 · Web', doc.title);
       record('FORMAT_VERSION remains 4', test.architecture().formatVersion === 4, test.architecture().formatVersion);
@@ -168,10 +178,10 @@
       const dualShell = shell.state();
       const dualRail = rectOf(doc, '.tool-rail');
       const dualStage = rectOf(doc, '#stageWrap');
-      record('UI-006 Phase D dual-column layout expands only the rail and preserves canvas adjacency',
+      record('Photoshop-aligned dual-column layout uses the 73 px rail and preserves canvas adjacency',
         dualShell.toolbarLayout === 'dual' &&
         dualShell.toolbarLayoutPreference === 'dual' &&
-        near(dualRail?.width, 68, 1) &&
+        near(dualRail?.width, 73, 1) &&
         near(dualStage?.left, dualRail?.right, 1) &&
         dualShell.stageWidth < initialStageWidth - 20 &&
         localStorage.getItem('ink.web.ui.toolbar-layout.v0.1') === 'dual',
@@ -262,11 +272,11 @@
         dock: rectOf(doc, '#panelDock')
       };
       record('default primary panel is 252 ±8 px', layersState.panelWidth >= 244 && layersState.panelWidth <= 260, { shell: layersState, geometry: expandedGeometry });
-      record('primary panel fits exactly between canvas and dock', near(expandedGeometry.stage?.right, expandedGeometry.panel?.left, 1) && near(expandedGeometry.panel?.right, expandedGeometry.dock?.left, 1), expandedGeometry);
-      record('canvas resizes for expanded panel', layersState.stageWidth < initialStageWidth - 235, { initialStageWidth, expandedStageWidth: layersState.stageWidth });
+      record('expanded primary panel replaces collapsed dock width at the right edge', near(expandedGeometry.stage?.right, expandedGeometry.panel?.left, 1) && near(expandedGeometry.panel?.right, win.innerWidth, 1), expandedGeometry);
+      record('canvas reflow equals expanded panel width minus the collapsed dock width', near(initialStageWidth - layersState.stageWidth, layersState.panelWidth - initialShell.dockWidth, 3), { initialStageWidth, expandedStageWidth: layersState.stageWidth, panelWidth: layersState.panelWidth, collapsedDockWidth: initialShell.dockWidth });
 
-      const inspectorResizer = doc.querySelector('#inspectorResizer');
-      inspectorResizer?.dispatchEvent(new win.PointerEvent('pointerdown', { bubbles: true, clientX: 1018 }));
+      const inspectorResizer = doc.querySelector('#shellActivePanelResizer');
+      inspectorResizer?.dispatchEvent(new win.PointerEvent('pointerdown', { bubbles: true, clientX: 1028 }));
       win.dispatchEvent(new win.PointerEvent('pointermove', { bubbles: true, clientX: 940 }));
       win.dispatchEvent(new win.PointerEvent('pointerup', { bubbles: true, clientX: 940 }));
       await sleep(120);
@@ -277,8 +287,8 @@
         resizedPanel.stageWidth < layersState.stageWidth - 60,
         { before: layersState, after: resizedPanel });
       inspectorResizer?.dispatchEvent(new win.PointerEvent('pointerdown', { bubbles: true, clientX: 940 }));
-      win.dispatchEvent(new win.PointerEvent('pointermove', { bubbles: true, clientX: 1018 }));
-      win.dispatchEvent(new win.PointerEvent('pointerup', { bubbles: true, clientX: 1018 }));
+      win.dispatchEvent(new win.PointerEvent('pointermove', { bubbles: true, clientX: 1028 }));
+      win.dispatchEvent(new win.PointerEvent('pointerup', { bubbles: true, clientX: 1028 }));
       await sleep(120);
 
       const layerSection = doc.querySelector('.inspector-section.active');
@@ -422,12 +432,12 @@
         windowOpenState.windowVisible &&
         windowOpenState.shell.menuController === 'application-menu-registry' &&
         windowOpenState.shell.openApplicationMenu === 'window' &&
-        JSON.stringify(windowOpenState.shell.liveApplicationMenus) === JSON.stringify(['file','window']),
+        JSON.stringify(windowOpenState.shell.liveApplicationMenus) === JSON.stringify(['file','edit','image','layer','type','select','filter','object','view','window','help']),
         windowOpenState);
       record('Window menu coherently exposes Editor, Creative Loop and Specialist dock panels',
         visible(doc, '#panelWindowMenu') &&
-        doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 8 &&
-        doc.querySelectorAll('#panelWindowMenu [data-panel-group]').length === 3);
+        doc.querySelectorAll('#panelWindowMenu [data-shell-panel]').length === 14 &&
+        doc.querySelectorAll('#panelWindowMenu [data-panel-group]').length === 4);
       record('Panel Dock is Primary Home and Window menu is a secondary route to the same shell authority',
         doc.querySelector('#panelDock')?.dataset.uiRoute === 'PRIMARY_HOME' &&
         doc.querySelector('#panelDock')?.dataset.uiHome === 'panels' &&
@@ -809,7 +819,7 @@
 
       // UI-006 Phase H: every accepted primary panel must consume only its
       // measured right-side width and keep one coherent canvas boundary.
-      const phaseHPanelIds = ['properties','layers','history','reference','compose','chat','revision','specialist'];
+      const phaseHPanelIds = ['properties','layers','history','navigator','pages','color','channels','adjustments','libraries','reference','compose','chat','revision','specialist'];
       const phaseHPanelGeometry = [];
       let phaseHPanelGeometryPass = true;
       for (const panelId of phaseHPanelIds) {
@@ -833,13 +843,13 @@
           geometry.dock &&
           near(geometry.stage.left, geometry.rail.right, 1) &&
           near(geometry.stage.right, geometry.panel.left, 2) &&
-          near(geometry.panel.right, geometry.dock.left, 2) &&
+          near(geometry.panel.right, win.innerWidth, 2) &&
           geometry.stage.width > 520;
         geometry.pass = Boolean(coherent);
         phaseHPanelGeometryPass = phaseHPanelGeometryPass && Boolean(coherent);
         phaseHPanelGeometry.push(geometry);
       }
-      record('UI-006 Phase H every primary right panel preserves one coherent canvas boundary',
+      record('Photoshop-aligned primary right panels preserve one coherent canvas boundary',
         phaseHPanelGeometryPass,
         phaseHPanelGeometry);
 
@@ -847,7 +857,7 @@
       // must update --active-panel-w so the stage contracts by the same delta.
       shell.open('properties');
       await sleep(140);
-      const resizeHandle = doc.querySelector('#inspectorResizer');
+      const resizeHandle = doc.querySelector('#shellActivePanelResizer');
       const resizeBefore = {
         shell: shell.state(),
         stage: rectOf(doc, '#stageWrap'),
@@ -860,10 +870,10 @@
           bubbles: true, cancelable: true, pointerId, clientX: resizeBefore.panel.left + 2, clientY: resizeBefore.panel.top + 40
         }));
         win.dispatchEvent(new win.PointerEvent('pointermove', {
-          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth - 10, clientY: resizeBefore.panel.top + 40
+          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth, clientY: resizeBefore.panel.top + 40
         }));
         win.dispatchEvent(new win.PointerEvent('pointerup', {
-          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth - 10, clientY: resizeBefore.panel.top + 40
+          bubbles: true, cancelable: true, pointerId, clientX: win.innerWidth - targetPanelWidth, clientY: resizeBefore.panel.top + 40
         }));
       }
       await sleep(180);
@@ -874,12 +884,12 @@
         dock: rectOf(doc, '#panelDock')
       };
       const resizeDelta = resizeAfter.shell.panelWidth - resizeBefore.shell.panelWidth;
-      record('UI-006 Phase H Inspector resize updates canvas geometry through the existing shell authority',
+      record('shared primary-panel resizer updates canvas geometry through the existing shell authority',
         typeof win.PointerEvent === 'function' &&
         resizeDelta >= 35 &&
         resizeBefore.stage.width - resizeAfter.stage.width >= resizeDelta - 3 &&
         near(resizeAfter.stage.right, resizeAfter.panel.left, 2) &&
-        near(resizeAfter.panel.right, resizeAfter.dock.left, 2),
+        near(resizeAfter.panel.right, win.innerWidth, 2),
         { before: resizeBefore, after: resizeAfter, resizeDelta, targetPanelWidth });
 
       // Restore the accepted default width after the bounded resize exercise.
@@ -902,13 +912,13 @@
         dock: rectOf(doc, '#panelDock'),
         rootScroll: { width: doc.documentElement.scrollWidth, height: doc.documentElement.scrollHeight }
       };
-      record('UI-006 Phase H fullscreen presentation keeps chrome, panel and canvas contained',
+      record('Photoshop-aligned fullscreen presentation keeps chrome, panel and canvas contained',
         near(fullscreenPresentation.app?.left, 0, 1) &&
         near(fullscreenPresentation.app?.top, 0, 1) &&
         near(fullscreenPresentation.app?.width, win.innerWidth, 1) &&
         near(fullscreenPresentation.app?.height, win.innerHeight, 1) &&
         near(fullscreenPresentation.stage?.right, fullscreenPresentation.panel?.left, 2) &&
-        near(fullscreenPresentation.panel?.right, fullscreenPresentation.dock?.left, 2) &&
+        near(fullscreenPresentation.panel?.right, win.innerWidth, 2) &&
         fullscreenPresentation.rootScroll.width <= win.innerWidth + 1 &&
         fullscreenPresentation.rootScroll.height <= win.innerHeight + 1,
         fullscreenPresentation);
@@ -943,12 +953,12 @@
         panel: rectOf(doc, '#inspector'),
         dock: rectOf(doc, '#panelDock')
       };
-      record('UI-006 Phase H narrow desktop keeps a meaningful canvas with the primary panel open',
+      record('Photoshop-aligned narrow desktop keeps a meaningful canvas with the primary panel open',
         narrowOpenState.activePanel === 'properties' &&
         narrowOpenState.stageWidth >= 560 &&
         near(narrowOpenGeometry.stage?.left, narrowOpenGeometry.rail?.right, 1) &&
         near(narrowOpenGeometry.stage?.right, narrowOpenGeometry.panel?.left, 2) &&
-        near(narrowOpenGeometry.panel?.right, narrowOpenGeometry.dock?.left, 2),
+        near(narrowOpenGeometry.panel?.right, win.innerWidth, 2),
         { shell: narrowOpenState, geometry: narrowOpenGeometry });
 
       const narrowStatus = {
