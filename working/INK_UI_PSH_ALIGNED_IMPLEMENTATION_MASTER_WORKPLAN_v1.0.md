@@ -302,8 +302,9 @@ There is exactly one final integrated UI Runtime gate unless that Runtime expose
 ```text
 UI_RECONCILIATION = CLOSED / PROMOTED
 UI_IMPLEMENTATION_PROGRAM = AUTHORIZED
-ACTIVE_PACKAGE = A
-PACKAGE_B = WAIT_FOR_A_PROMOTION
+PACKAGE_A = MR_PASS / UR_PASS / PROMOTED
+ACTIVE_PACKAGE = NONE / UI_B_NOT_STARTED
+PACKAGE_B = ELIGIBLE_AFTER_A_PROMOTION / NOT_STARTED
 PACKAGE_C = WAIT_FOR_B_PROMOTION
 FINAL_RUNTIME = DEFERRED_UNTIL_A_B_C_PROMOTED
 ```
@@ -328,3 +329,19 @@ PWA / installed-desktop App Icon:
 `OUT_OF_SCOPE_FOR_CURRENT_UI_PROGRAM`
 
 Existing manifest behavior is preserved unless a future separate Work Order explicitly reopens it.
+
+
+## 12. Package A promotion record
+
+```text
+PACKAGE_A_TASK = INK-UI-A-PHOTOSHOP-SHELL-PANELS-001
+PACKAGE_A_MR = PASS
+PACKAGE_A_UR = PASS
+PACKAGE_A_PROMOTION_PR = 83
+PACKAGE_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
+PACKAGE_A = PROMOTED
+PACKAGE_B = ELIGIBLE / NOT_STARTED
+CENTRAL_RUNTIME_AFTER_A = NOT_RUN / CORRECT
+```
+
+Package B does not start automatically from Package A promotion.
