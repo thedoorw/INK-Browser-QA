@@ -115,12 +115,12 @@ UI_RECONCILIATION_FINAL_MR_REVIEW = working/INK_UI_FULL_CAPABILITY_RECONCILIATIO
 ## Current gate
 
 ```text
-CURRENT_GATE = UI_A_DEV
-UI_A = AUTHORIZED / DEV_NOT_STARTED
+CURRENT_GATE = UI_A_UR_REVIEW
+UI_A = DEV_COMPLETE / MR_TECHNICAL_PASS / UR_REVIEW_REQUIRED
 UI_B = WAIT
 UI_C = WAIT
 FINAL_RUNTIME = HOLD_UNTIL_A_B_C_COMPLETE
-DEV_MAY_MODIFY_UI = YES / ONLY_UI_A_WORKPACK
+DEV_MAY_MODIFY_UI = NO / UI_A_STOPPED_FOR_REVIEW
 NEW_CORE_CAPABILITY = NO
 CORE_AUTHORITY_CHANGE = NO
 FORMAT_VERSION_CHANGE = NO
@@ -144,3 +144,27 @@ MR:
 UR:
 - no new placement redesign;
 - review Photoshop position/form/interaction fidelity after DEV handoff.
+
+
+## UI-A MR technical review checkpoint
+
+DEV handoff HEAD:
+`9c1d1ef4c020603296154000cccaea5c9c111dc6`
+
+MR review:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_MR_REVIEW_v1.0.md`
+
+Result:
+```text
+UI_A_MR_TECHNICAL = PASS
+UI_A_UR_REVIEW = REQUIRED
+UI_A_PROMOTION = HOLD
+UI_B = HOLD
+CENTRAL_RUNTIME = DEFERRED
+```
+
+Added next-package requirements:
+- bounded UI contribution/extension boundary in UI-B;
+- final extensibility audit in UI-C;
+- preserve approved visible INK logo + browser favicon;
+- PWA/App Icon work is out of current scope.
