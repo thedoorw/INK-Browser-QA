@@ -65,7 +65,7 @@
   <symbol id="i-layout" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 11h8M8 15h5"/></symbol>
 </svg>
 
-<div id="app" class="app web-shell-v0-1" data-panel="brush" data-space="creation" data-shell-panel="collapsed" data-toolbar-layout="single" data-first-paint="ready" style="--active-panel-w:0px">
+<div id="app" class="app web-shell-v0-1" data-panel="brush" data-space="creation" data-shell-panel="collapsed" data-toolbar-layout="single" data-document-active="true" data-rulers="false" data-first-paint="ready" style="--active-panel-w:0px">
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
     <div class="menu-app-mark" aria-label="INK v0.1 · Portable"><img class="brand-source-mark" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong>INK</strong><small>0.1</small></div>
     <nav id="applicationMenus" class="application-menus" aria-label="主選單">
@@ -79,16 +79,67 @@
           <button type="button" role="menuitem" data-file-command="export"><span>匯出</span></button>
         </div>
       </div>
-      <span class="application-menu-label" data-application-menu-id="edit">編輯</span>
-      <span class="application-menu-label" data-application-menu-id="view">檢視</span>
-      <span class="application-menu-label" data-application-menu-id="select">選取</span>
-      <span class="application-menu-label" data-application-menu-id="object">物件</span>
-      <span class="application-menu-label" data-application-menu-id="layer">圖層</span>
-      <span class="application-menu-label" data-application-menu-id="brush">筆刷</span>
+      <div class="application-menu" data-application-menu="edit">
+        <button type="button" data-application-menu-trigger="edit" aria-haspopup="menu" aria-expanded="false">編輯</button>
+        <div id="editMenu" class="application-command-menu" role="menu" aria-label="編輯" hidden>
+          <button type="button" role="menuitem" data-shell-action="undo"><span>復原</span><kbd>Ctrl+Z</kbd></button>
+          <button type="button" role="menuitem" data-shell-action="redo"><span>重做</span><kbd>Ctrl+Shift+Z</kbd></button>
+        </div>
+      </div>
+      <div class="application-menu" data-application-menu="image">
+        <button type="button" data-application-menu-trigger="image" aria-haspopup="menu" aria-expanded="false">影像</button>
+        <div id="imageMenu" class="application-command-menu" role="menu" aria-label="影像" hidden>
+          <button type="button" role="menuitem" data-shell-action="canvas-settings"><span>畫布設定…</span></button>
+        </div>
+      </div>
+      <div class="application-menu" data-application-menu="layer">
+        <button type="button" data-application-menu-trigger="layer" aria-haspopup="menu" aria-expanded="false">圖層</button>
+        <div id="layerMenu" class="application-command-menu" role="menu" aria-label="圖層" hidden>
+          <button type="button" role="menuitem" data-shell-panel="layers"><span>圖層面板</span></button>
+        </div>
+      </div>
+      <div class="application-menu" data-application-menu="type">
+        <button type="button" data-application-menu-trigger="type" aria-haspopup="menu" aria-expanded="false">文字</button>
+        <div id="typeMenu" class="application-command-menu" role="menu" aria-label="文字" hidden>
+          <button type="button" role="menuitem" data-shell-panel="properties"><span>文字屬性</span></button>
+        </div>
+      </div>
+      <div class="application-menu" data-application-menu="select">
+        <button type="button" data-application-menu-trigger="select" aria-haspopup="menu" aria-expanded="false">選取</button>
+        <div id="selectMenu" class="application-command-menu" role="menu" aria-label="選取" hidden>
+          <button type="button" role="menuitem" data-shell-panel="properties"><span>選取屬性</span></button>
+        </div>
+      </div>
+      <div class="application-menu" data-application-menu="filter">
+        <button type="button" data-application-menu-trigger="filter" aria-haspopup="menu" aria-expanded="false">濾鏡</button>
+        <div id="filterMenu" class="application-command-menu" role="menu" aria-label="濾鏡" hidden>
+          <button type="button" role="menuitem" disabled><span>命令控制由 UI-B 配線</span></button>
+        </div>
+      </div>
+      <div class="application-menu" data-application-menu="object">
+        <button type="button" data-application-menu-trigger="object" aria-haspopup="menu" aria-expanded="false">物件</button>
+        <div id="objectMenu" class="application-command-menu" role="menu" aria-label="物件" hidden>
+          <button type="button" role="menuitem" data-shell-panel="properties"><span>物件屬性</span></button>
+        </div>
+      </div>
+      <div class="application-menu" data-application-menu="view">
+        <button type="button" data-application-menu-trigger="view" aria-haspopup="menu" aria-expanded="false">檢視</button>
+        <div id="viewMenu" class="application-command-menu" role="menu" aria-label="檢視" hidden>
+          <button type="button" role="menuitem" data-shell-action="fit-current"><span>符合目前內容</span><kbd>F</kbd></button>
+          <button type="button" role="menuitemcheckbox" data-shell-action="toggle-rulers" aria-checked="false"><span>標尺</span></button>
+          <span class="application-menu-separator" aria-hidden="true"></span>
+          <button type="button" role="menuitem" data-shell-action="fullscreen"><span>全螢幕</span><kbd>Ctrl+Shift+F</kbd></button>
+        </div>
+      </div>
       <div class="application-menu application-window-menu" data-application-menu="window">
         <button id="windowMenuToggle" type="button" data-application-menu-trigger="window" aria-haspopup="menu" aria-expanded="false">視窗</button>
       </div>
-      <span class="application-menu-label" data-application-menu-id="help">說明</span>
+      <div class="application-menu" data-application-menu="help">
+        <button type="button" data-application-menu-trigger="help" aria-haspopup="menu" aria-expanded="false">說明</button>
+        <div id="helpMenu" class="application-command-menu" role="menu" aria-label="說明" hidden>
+          <button type="button" role="menuitem" data-shell-action="about"><span>關於 INK 工作區</span></button>
+        </div>
+      </div>
     </nav>
     <div class="menu-workspace" aria-label="工作區狀態" data-ui-home="workspace" data-ui-route="SECONDARY_SHORTCUT"><span>繪畫與向量</span><button id="workspaceMenuToggle" type="button" title="工作區清單" aria-haspopup="menu" aria-expanded="false">▾</button>
       <div id="workspaceMenu" class="workspace-menu" role="menu" hidden>
@@ -641,9 +692,10 @@
     </div>
   </section>
 
-  <footer class="statusbar glass-surface">
-    <div class="status-cluster"><span class="status-dot"></span><span id="statusTool">鋼筆</span><span class="version-badge">v0.1 · Portable</span><span id="statusObjects">0 個物件</span><span id="statusSpace">版面空間</span><span id="statusArtboard">A4 直式</span><span id="selectionModeStatus">選取：框選</span><span id="autosaveStatus">自動儲存已啟用</span></div>
-    <div class="status-cluster view-controls"><button id="rotateResetBtn" title="重設旋轉">旋轉 0°</button><button id="fitBtn" title="符合內容（F）">符合內容</button><button id="zoomOutBtn">−</button><span id="zoomText">100%</span><button id="zoomInBtn">＋</button></div>
+  <footer id="documentStatusStrip" class="statusbar document-status-strip glass-surface" aria-label="作用中文件狀態">
+    <div class="status-cluster document-status-info"><span id="statusSpace">創作空間</span><span id="statusArtboard">A4 直式</span></div>
+    <div class="status-cluster status-hidden-telemetry" aria-hidden="true"><span class="status-dot"></span><span id="statusTool">鋼筆</span><span class="version-badge">v0.1 · Portable</span><span id="statusObjects">0 個物件</span><span id="selectionModeStatus">選取：框選</span><span id="autosaveStatus">自動儲存已啟用</span></div>
+    <div class="status-cluster view-controls"><button id="rotateResetBtn" title="重設旋轉">旋轉 0°</button><button id="fitBtn" title="符合內容（F）">符合內容</button><button id="zoomOutBtn" aria-label="縮小">−</button><span id="zoomText">100%</span><button id="zoomInBtn" aria-label="放大">＋</button></div>
   </footer>
 
   <input id="projectInput" type="file" accept=".ink,.json,application/json" hidden>
