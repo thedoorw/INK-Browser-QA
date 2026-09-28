@@ -56,16 +56,35 @@ test('UI-B controls inherit semantic Light grammar without a private gray palett
 test('UI-C closes required shell interaction surfaces on existing authorities',()=>{
   assert.match(webShell,/function ensureTooltipController\(\)/);
   assert.match(webShell,/function bindRulerGuideDrag\(\)/);
+  assert.match(webShell,/function renderDocumentRulers\(\)/);
+  assert.match(webShell,/renderer\.screenToWorld\(rect\.left, stageRect\.top\)/);
+  assert.match(webShell,/renderer\.screenToWorld\(stageRect\.left, rect\.top\)/);
+  assert.match(webShell,/data-ruler-canvas="horizontal"/);
+  assert.match(webShell,/data-ruler-canvas="vertical"/);
   assert.match(webShell,/app\.addGuide\?\.\(\{ orientation, position: value \}\)/);
+  assert.match(webShell,/\? 'Y: ' : 'X: '/);
   assert.match(webShell,/data-ruler-axis="horizontal"/);
   assert.match(webShell,/data-ruler-axis="vertical"/);
   assert.match(webShell,/const stackMove = event =>/);
   assert.match(webShell,/data-panel-stack-splitter/);
-  assert.match(webShell,/camera\.x = start\.camX/);
+  assert.match(webShell,/function navigatorDocumentBounds\(app, canvas\)/);
+  assert.match(webShell,/renderer\?\.contentBounds\?\.\(page\)/);
+  assert.match(webShell,/app\.renderer\.viewportWorldBounds\(\)/);
+  assert.match(webShell,/app\.renderer\?\.renderPageWorld\?\.\(context, app\.page\(\), \{ bounds, preferredScale: scale \}\)/);
+  assert.match(webShell,/proxy\.style\.left = proxyX \+ '%'/);
+  assert.match(webShell,/proxy\.style\.top = proxyY \+ '%'/);
+  assert.match(webShell,/function centerCameraOnWorld\(app, worldPoint\)/);
+  assert.doesNotMatch(webShell,/context\.drawImage\(stage/);
+  assert.doesNotMatch(webShell,/50 - proxyW \/ 2/);
   assert.match(webShell,/preview\.addEventListener\('pointerdown'/);
   assert.match(webShell,/event\.key === 'Escape'/);
   assert.match(css,/\.shell-tooltip\{/);
   assert.match(css,/\.shell-guide-readout\{/);
+  assert.match(css,/\.document-ruler-canvas\{/);
+  assert.match(css,/\.tool-button\.active\{color:var\(--ink-ui-accent\);background:linear-gradient\(var\(--ink-ui-control-active\),var\(--ink-ui-control-active\)\) center\/31px 24px no-repeat;box-shadow:none\}/);
+  assert.equal(css.split('--ink-ui-popup-separator:').length-1,1);
+  assert.match(css,/--ink-ui-popup-separator:#C0C0C0/);
+  assert.match(css,/\.application-menu-separator,\.workspace-menu-separator\{height:1px;margin:2px;background:var\(--ink-ui-popup-separator\)\}/);
   assert.match(css,/cursor:ns-resize/);
   assert.match(css,/\.layer-row\.drop-before::before,\.layer-row\.drop-after::after\{background:var\(--ink-ui-accent\)/);
 });
@@ -93,7 +112,7 @@ test('UI-B PUI/GAP coverage and contribution boundary remain intact',()=>{
 test('build/cache identity advances without FORMAT_VERSION or brand drift',()=>{
   const configBuild=config.match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
   const swBuild=serviceWorker.match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
-  assert.equal(configBuild,'20260928-ui-c-photoshop-fidelity-closure-001');
+  assert.equal(configBuild,'20260928-ui-c-photoshop-fidelity-closure-r1');
   assert.equal(swBuild,configBuild);
   assert.match(config,/FORMAT_VERSION\s*=\s*4\b/);
   assert.match(shell,/assets\/INK_MARK_SOURCE_W-300\.jpg\?v=0\.1/);
