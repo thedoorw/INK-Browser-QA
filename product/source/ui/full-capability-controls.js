@@ -285,8 +285,12 @@ export function installFullCapabilityControls(app){
   }
 
   function selectedImage(){
+    const found=selectedFound(app,object=>object.type==='image');
+    if(!found){toast('請先選取影像');return null;}return found;
+  }
+  function selectedRasterImage(){
     const found=selectedFound(app,object=>object.type==='image'&&object.rasterState?.colorRaster);
-    if(!found){toast('請先選取具有 Raster State 的影像');return null;}return found;
+    if(!found){toast('此操作需要具有 Raster State 的影像');return null;}return found;
   }
   function selectedObject(){const found=selectedFound(app);if(!found)toast('請先選取物件');return found;}
   function mutateObject(label,found,fn){if(!found)return;app.history.pushScoped(label,[objectTarget(app,found)],()=>fn(found.object,found));app.spatialDirty=true;app.refreshAll();app.renderer.render();}
@@ -414,7 +418,7 @@ export function installFullCapabilityControls(app){
     $$('[data-ui-b-channel-select]',list).forEach(button=>button.addEventListener('click',()=>{const [kind,index]=button.dataset.uiBChannelSelect.split(':');state.selectedChannel={kind,index:Number(index)};refreshChannels();}));
   }
   function channelCommand(command){
-    const found=selectedImage();if(!found)return;
+    const found=selectedRasterImage();if(!found)return;
     const stateImage=found.object.rasterState,raster=deserializeColorRaster(stateImage.colorRaster),length=raster.width*raster.height;
     mutateObject('Channel '+command,found,object=>{
       object.rasterState.alphaChannels=object.rasterState.alphaChannels||[];object.rasterState.spotChannels=object.rasterState.spotChannels||[];
@@ -456,7 +460,7 @@ export function installFullCapabilityControls(app){
       if(event.target.closest('[data-ui-b-pen-calibration-open]')){closeDialog('pen-calibration');openPanel('specialist');$('#calibrationProfileSelect')?.scrollIntoView({block:'center'});}
       const recovery=event.target.closest('[data-ui-b-recovery-index]');if(recovery)restoreRecoveryCandidate(Number(recovery.dataset.uiBRecoveryIndex));
     });
-    $('#uiBProfileInput')?.addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{const bytes=new Uint8Array(await file.arrayBuffer()),profile=parseIccProfile(bytes),inspection=inspectIccProfile(profile),found=selectedImage();if(!found)return;mutateObject('Assign ICC Profile',found,object=>{object.rasterState.icc={bytes:Array.from(bytes),inspection};});refreshProfileDialog();toast('ICC profile assigned');}catch(error){toast('ICC：'+error.message,3000);}});
+    $('#uiBProfileInput')?.addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{const bytes=new Uint8Array(await file.arrayBuffer()),profile=parseIccProfile(bytes),inspection=inspectIccProfile(profile),found=selectedRasterImage();if(!found)return;mutateObject('Assign ICC Profile',found,object=>{object.rasterState.icc={bytes:Array.from(bytes),inspection};});refreshProfileDialog();toast('ICC profile assigned');}catch(error){toast('ICC：'+error.message,3000);}});
     document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;const open=$('.ui-b-dialog').find(dialog=>!dialog.hidden);if(!open)return;event.preventDefault();event.stopPropagation();closeDialog(open.dataset.uiBDialog);},true);
   }
 
@@ -466,7 +470,7 @@ export function installFullCapabilityControls(app){
     if(id==='filter-gallery')refreshFilterGallery();
     if(id==='color-profile')refreshProfileDialog();
     if(id==='recovery')refreshRecoveryDialog();
-    if(id==='image-size'||id==='image-crop'){const found=selectedImage();if(!found)return;const raster=deserializeColorRaster(found.object.rasterState.colorRaster);if(id==='image-size'){$('#uiBImageWidth').value=raster.width;$('#uiBImageHeight').value=raster.height;}else{$('#uiBCropW').value=raster.width;$('#uiBCropH').value=raster.height;}}
+    if(id==='image-size'||id==='image-crop'){const found=selectedRasterImage();if(!found)return;const raster=deserializeColorRaster(found.object.rasterState.colorRaster);if(id==='image-size'){$('#uiBImageWidth').value=raster.width;$('#uiBImageHeight').value=raster.height;}else{$('#uiBCropW').value=raster.width;$('#uiBCropH').value=raster.height;}}
     if(id==='filter-params')$('#uiBFilterName').textContent=context?.type||'Filter';
     if(id==='advanced-transform')$('#uiBTransformMode').textContent=context?.mode||'Transform';
     dialog.hidden=false;closeMenus();
@@ -489,7 +493,7 @@ export function installFullCapabilityControls(app){
     try{
       if(id==='select-and-mask'){
         const selection=raster.refineSelection({smooth:number($('#uiBMaskSmooth').value),feather:number($('#uiBMaskFeather').value),expand:number($('#uiBMaskExpand').value)});
-        const found=selectedImage();if(!found)return;
+        const found=selectedRasterImage();if(!found)return;
         mutateObject('Select and Mask',found,object=>object.rasterMask=createRasterMask(selection.width,selection.height,selection.alpha,{feather:number($('#uiBMaskFeather').value),expand:number($('#uiBMaskExpand').value)}));closeDialog(id);
       }else if(id==='layer-effects'){
         const type=$('#uiBEffectType').value,color=$('#uiBEffectColor').value,opacity=number($('#uiBEffectOpacity').value,.6),size=number($('#uiBEffectSize').value,8);
@@ -506,7 +510,7 @@ export function installFullCapabilityControls(app){
           base[key]=amount;addFilter(type,base);
         }closeDialog(id);
       }else if(id==='liquify'){
-        const found=selectedImage();if(!found)return;
+        const found=selectedRasterImage();if(!found)return;
         const type=$('#uiBLiquifyType').value,radius=number($('#uiBLiquifyRadius').value,80),strength=number($('#uiBLiquifyStrength').value,.4),dx=number($('#uiBLiquifyDx').value,12),dy=number($('#uiBLiquifyDy').value,0);
         const object=found.object,rasterState=deserializeColorRaster(object.rasterState.colorRaster),x=rasterState.width/2,y=rasterState.height/2,freeze=$('#uiBLiquifyFreezeSelection')?.checked?raster.selection():null,filter=createLiquifyFilter([{type,x,y,radius,strength,dx,dy}],{freezeMask:freeze?.alpha||null,maxWork:Math.max(4096,rasterState.width*rasterState.height*2)});
         mutateObject('Liquify',found,obj=>{obj.filterStack=obj.filterStack||[];obj.filterStack.push(filter);});closeDialog(id);
@@ -529,14 +533,14 @@ export function installFullCapabilityControls(app){
   }
 
   function resizeSelectedImage(){
-    const found=selectedImage();if(!found)return;const raster=deserializeColorRaster(found.object.rasterState.colorRaster),preview=colorRasterToRgba8(found.object.rasterState.colorRaster,{icc:found.object.rasterState.icc?.bytes||null});
+    const found=selectedRasterImage();if(!found)return;const raster=deserializeColorRaster(found.object.rasterState.colorRaster),preview=colorRasterToRgba8(found.object.rasterState.colorRaster,{icc:found.object.rasterState.icc?.bytes||null});
     if(preview.status!=='ok'||raster.bitDepth!==8||raster.colorMode!=='RGB'){toast('目前 UI resize 僅對 8-bit RGB raster 啟用');return;}
     const width=Math.max(1,Math.floor(number($('#uiBImageWidth').value,raster.width))),height=Math.max(1,Math.floor(number($('#uiBImageHeight').value,raster.height))),result=resizeImageData(preview.imageData,width,height);
     const rgb=new Uint8Array(width*height*3),alpha=new Uint8Array(width*height);for(let i=0;i<width*height;i++){rgb[i*3]=result.data[i*4];rgb[i*3+1]=result.data[i*4+1];rgb[i*3+2]=result.data[i*4+2];alpha[i]=result.data[i*4+3];}
     mutateObject('Image Resize',found,object=>{object.rasterState.colorRaster=serializeColorRaster(createColorRaster({width,height,bitDepth:8,colorMode:'RGB',data:rgb,alpha}));object.w=width;object.h=height;});closeDialog('image-size');
   }
   function cropSelectedImage(){
-    const found=selectedImage();if(!found)return;const raster=deserializeColorRaster(found.object.rasterState.colorRaster),preview=colorRasterToRgba8(found.object.rasterState.colorRaster,{icc:found.object.rasterState.icc?.bytes||null});
+    const found=selectedRasterImage();if(!found)return;const raster=deserializeColorRaster(found.object.rasterState.colorRaster),preview=colorRasterToRgba8(found.object.rasterState.colorRaster,{icc:found.object.rasterState.icc?.bytes||null});
     if(preview.status!=='ok'||raster.bitDepth!==8||raster.colorMode!=='RGB'){toast('目前 UI crop 僅對 8-bit RGB raster 啟用');return;}
     const result=cropImageData(preview.imageData,{x:number($('#uiBCropX').value),y:number($('#uiBCropY').value),w:number($('#uiBCropW').value,raster.width),h:number($('#uiBCropH').value,raster.height)}),rgb=new Uint8Array(result.width*result.height*3),alpha=new Uint8Array(result.width*result.height);
     for(let i=0;i<result.width*result.height;i++){rgb[i*3]=result.data[i*4];rgb[i*3+1]=result.data[i*4+1];rgb[i*3+2]=result.data[i*4+2];alpha[i]=result.data[i*4+3];}
@@ -544,12 +548,13 @@ export function installFullCapabilityControls(app){
   }
 
   function setBitDepth(depth){
-    const found=selectedImage();if(!found)return;const target=Number(depth);
-    mutateObject('Bit Depth '+target,found,object=>{object.rasterState.colorRaster=serializeColorRaster(convertBitDepth(deserializeColorRaster(object.rasterState.colorRaster),target));app.doc.colorState={...(app.doc.colorState||{}),bitDepth:target};});refreshPanels();
+    const found=selectedRasterImage();if(!found)return;const target=Number(depth);
+    app.history.pushScoped('Bit Depth '+target,[objectTarget(app,found),['colorState']],()=>{found.object.rasterState.colorRaster=serializeColorRaster(convertBitDepth(deserializeColorRaster(found.object.rasterState.colorRaster),target));app.doc.colorState={...(app.doc.colorState||{}),bitDepth:target};});
+    app.refreshAll();app.renderer.render();refreshPanels();
   }
   function setColorMode(mode){
-    const found=selectedImage();if(!found)return;
-    try{mutateObject('Color Mode '+mode,found,object=>{object.rasterState.colorRaster=convertRasterMode(object.rasterState.colorRaster,mode);app.doc.colorState={...(app.doc.colorState||{}),colorMode:mode};});refreshPanels();}
+    const found=selectedRasterImage();if(!found)return;
+    try{app.history.pushScoped('Color Mode '+mode,[objectTarget(app,found),['colorState']],()=>{found.object.rasterState.colorRaster=convertRasterMode(found.object.rasterState.colorRaster,mode);app.doc.colorState={...(app.doc.colorState||{}),colorMode:mode};});app.refreshAll();app.renderer.render();refreshPanels();}
     catch(error){toast(error.message,3200);}
   }
 
@@ -584,7 +589,7 @@ export function installFullCapabilityControls(app){
   }
 
   function addMask(){
-    const found=selectedImage();if(!found)return;const selection=raster.selection(),r=deserializeColorRaster(found.object.rasterState.colorRaster);
+    const found=selectedRasterImage();if(!found)return;const selection=raster.selection(),r=deserializeColorRaster(found.object.rasterState.colorRaster);
     const alpha=selection?.alpha&&selection.width===r.width&&selection.height===r.height?selection.alpha:new Uint8ClampedArray(r.width*r.height).fill(255);
     mutateObject('建立 Mask',found,object=>object.rasterMask=createRasterMask(r.width,r.height,alpha));refreshPanels();
   }
@@ -623,7 +628,7 @@ export function installFullCapabilityControls(app){
       const format=$('#exportFormat').value;if(!['psd','tiff','exr','psb','raw'].includes(format))return baseRun();
       if(format==='raw')throw new Error('RAW export is not supported by the promoted P1-H contract');
       if(format==='psb')throw new Error('PSB encode requires a registered adapter');
-      const found=selectedImage();if(!found)return;
+      const found=selectedRasterImage();if(!found)return;
       try{const bytes=app.exportImageFormat(format.toUpperCase(),found.object);downloadBytes(app,bytes,fileSafe(app.doc.title)+'.'+format);$('#exportDialog').hidden=true;toast(format.toUpperCase()+' 已建立');}catch(error){toast('匯出失敗：'+error.message,3600);}
     };
     select.addEventListener('change',()=>{if(resumeButton&&select.value!=='png')resumeButton.hidden=true;app.refreshExportUI();});
