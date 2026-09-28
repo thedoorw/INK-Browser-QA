@@ -44,6 +44,38 @@ assert.ok(webShell.includes('app.setColor?.'), 'Color panel must route to existi
 assert.ok(webShell.includes('data-panel-option="reset-width"') && webShell.includes('data-panel-option="close"'), 'panel options menu requires reset width and close');
 assert.ok(ink.includes("globalThis.INK_WEB_SHELL?.toggle?.('pages')"), 'desktop Pages shortcut/opener must converge on shell router');
 
+// UI-A-R1 / UR-A-01 — one registry-derived stacked expanded-panel framework.
+assert.equal((webShell.match(/const PANEL_DEFS = Object\.freeze/g) || []).length, 1, 'must retain one PANEL_DEFS registry');
+assert.equal((webShell.match(/const PANEL_GROUPS = Object\.freeze/g) || []).length, 1, 'must retain one PANEL_GROUPS registry');
+assert.ok(webShell.includes("host.id = 'shellPanelStackFramework'") && webShell.includes('host.innerHTML = PANEL_GROUPS.map'), 'expanded stack framework must derive from PANEL_GROUPS');
+assert.ok(css.includes('--panel-splitter-size:3px') && css.includes('.panel-stack-splitter{'), '3 px stacked-panel splitter host missing');
+assert.ok(webShell.includes('syncPanelStackFramework(active, panel, desktop)'), 'stack framework must follow the existing active panel state');
+
+// UI-A-R1 / UR-A-02 — final Light rules override legacy dark panel interiors.
+const lightClosure = css.indexOf('/* UI-A-R1 Light interior closure */');
+assert.ok(lightClosure > css.indexOf('background:#303133'), 'Light interior closure must follow legacy dark rules');
+const lightCss = css.slice(lightClosure);
+for (const rule of [
+  '.inspector-section .property-card,.inspector-section .subpanel{',
+  '.layer-row{background:#fff',
+  '.layer-bottom-toolbar{background:#f2f2f2',
+  '.history-list{background:var(--ink-ui-surface)',
+  '.history-step{background:#fff',
+  '.creative-workspace-state{background:var(--ink-ui-border)',
+  '.creative-workspace-tabs{background:#f2f2f2',
+  '.creative-workspace-body strong{color:var(--ink-ui-text)'
+]) assert.ok(lightCss.includes(rule), `missing final Light panel interior override: ${rule}`);
+
+// UI-A-R1 / UR-A-03 — Inspector + Creative share one shell resize edge and width authority.
+assert.ok(webShell.includes("edge.id = 'shellActivePanelResizer'"), 'shared active-panel resize edge missing');
+assert.ok(webShell.includes("style.setProperty('--inspector-w'") && webShell.includes("localStorage.setItem('ink-inspector-width'"), 'shared resizer must use existing width/persistence authority');
+assert.ok(css.includes('.app.panel-primary-open .active-panel-resizer{display:block}') && css.includes('.app.panel-primary-open .inspector-resizer{display:none!important}'), 'desktop must expose only the shared shell resize edge');
+assert.ok(css.includes('.app.panel-primary-open .stage-wrap{right:var(--active-panel-w)}'), 'shared width must remain coupled to canvas reflow');
+
+// Regression / identity closure.
+assert.ok(shell.includes('assets/INK_MARK_SOURCE_W-300.jpg?v=0.1'), 'approved visible INK logo route must be preserved');
+assert.ok(shell.includes('assets/favicon.svg?v=0.1'), 'approved browser favicon route must be preserved');
+
 const generate = (template, delivery, manifest, badge, runtime) => template.replace(/\{\{([A-Z_]+)\}\}/g, (match, name) => {
   const substitutions = { DELIVERY: delivery, MANIFEST: manifest, WEB_BADGE: badge, RUNTIME_SCRIPT: runtime };
   if (!(name in substitutions)) throw new Error(`Unknown shell token: ${name}`);
