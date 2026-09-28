@@ -1,9 +1,13 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "PASS",
-  "target_sha": "d1269334338531228ddfdd9383761cd419e58738",
-  "pending_work_orders": [],
+  "state": "READY",
+  "target_sha": "77ee44c94a848588aceeb7797fa8aa737c69b248",
+  "pending_work_orders": [
+    "INK-UI-A-PHOTOSHOP-SHELL-PANELS-001",
+    "INK-UI-B-FULL-CAPABILITY-CONTROLS-001",
+    "INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001"
+  ],
   "covered_work_orders": [
     "INK-RUNTIME-AUTOMATION-001",
     "INK-CORE-INTEGRATION-004",
