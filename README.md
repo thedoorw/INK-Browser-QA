@@ -24,11 +24,11 @@ RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
 P0_PROMOTION = CLOSED
 PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
 PROMOTED_SOURCE_EQUIVALENCE = PASS
-CURRENT_GATE = POST_UI_A_PROMOTION / UI_B_NOT_STARTED
+CURRENT_GATE = UI_B_UR_HANDOFF_READY
 P1_IMPLEMENTATION = CLOSED / PROMOTED
 P2_IMPLEMENTATION = NOT AUTHORIZED
 UI_PROGRAM = Photoshop-aligned final UI rebuild
-UI_STATUS = UI-A PROMOTED / UI-B NOT STARTED / FINAL RUNTIME DEFERRED
+UI_STATUS = UI-A PROMOTED / UI-B UR AUTHORIZED / UI-C UR OWNED / FINAL RUNTIME DEFERRED
 ```
 
 Current program authority:
@@ -45,10 +45,9 @@ Current UI sequence:
 
 ```text
 UI-A = PROMOTED
-→ UI-B = NOT STARTED
-→ UI-B review / promotion
-→ UI-C implementation / review / promotion
-→ one final exact-SHA integrated Runtime
+→ UI-B = UR OWNED → DEV → UR review/revision → UR promotion
+→ UI-C = UR OWNED → DEV → UR review/revision → UR promotion
+→ STOP to MR → one final exact-SHA integrated Runtime
 ```
 
 P0/P1 technical remediation and capability reconciliation are already closed. P2 remains outside the current authorized UI program.
@@ -228,8 +227,8 @@ The Photoshop-aligned final UI implementation program is active.
 
 Current gate:
 - UI-A = MR PASS / UR PASS / promoted via PR #83;
-- UI-B = eligible after UI-A promotion but not started;
-- UI-C = waits for UI-B promotion;
+- UI-B = UR authorized and ready for UR → DEV handoff;
+- UI-C = UR-owned and waits for UI-B promotion;
 - central Runtime remains deferred until A+B+C are promoted.
 
 Current authority:
@@ -239,6 +238,10 @@ Current authority:
 Master UI program:
 
 `working/INK_UI_PSH_ALIGNED_IMPLEMENTATION_MASTER_WORKPLAN_v1.0.md`
+
+Current delegated UI execution authority:
+
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
 
 Current capability baseline remains:
 
