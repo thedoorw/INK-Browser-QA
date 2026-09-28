@@ -644,6 +644,12 @@ export function installFullCapabilityControls(app){
       if(command.startsWith('text-mode:'))return updateTextMode(command.slice(10));
       if(command.startsWith('transform:'))return openDialog('advanced-transform',{mode:command.slice(10)});
       if(command.startsWith('arrange:'))return app.reorderSelection(command.endsWith('front')?'front':'back');
+      if(command.startsWith('align:'))return app.alignSelection(command.slice(6));
+      if(command.startsWith('proxy:')){
+        const target=document.getElementById(command.slice(6));
+        if(!target){toast('UI route unavailable: '+command);return;}
+        target.click();return;
+      }
       if(command.startsWith('snap:')){
         const kind=command.slice(5);if(kind==='enabled')app.setSnapEnabledState(!app.page().snap?.enabled);else app.setSnapCategoryState(kind,!app.page().snap?.categories?.[kind]);return;
       }
@@ -666,6 +672,7 @@ export function installFullCapabilityControls(app){
       if(command==='layer-delete')return app.deleteLayer();
       if(command==='group')return app.groupSelection();
       if(command==='ungroup')return app.ungroupSelection();
+      if(command==='frame-selection')return app.frameSelection();
       if(command==='mask-add')return addMask();
       if(command==='select-and-mask')return openDialog('select-and-mask');
       if(command==='layer-effects')return openDialog('layer-effects');
