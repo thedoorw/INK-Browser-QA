@@ -95,3 +95,20 @@ FINAL_RUNTIME = DEFERRED
 ```
 
 The old AI Completion Checklist remains a framework only until UI-C refreshes all pre-P1 capability/menu/panel wording. It must not override the promoted reconciliation.
+
+
+## Added current-program constraints
+
+```text
+UI_EXTENSION_BOUNDARY = REQUIRED_IN_UI_B / FINAL_AUDIT_IN_UI_C
+FULL_PLUGIN_SDK = P2 / NOT_CURRENT_SCOPE
+VISIBLE_LOGO_AUTHORITY = assets/INK_MARK_SOURCE_W-300.jpg
+BROWSER_FAVICON_AUTHORITY = assets/favicon.svg
+PWA_APP_ICON_WORK = OUT_OF_SCOPE
+```
+
+UI-A MR technical review:
+`working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_MR_REVIEW_v1.0.md`
+
+Current UI-A state:
+`MR_TECHNICAL_PASS / UR_REVIEW_REQUIRED / NOT_PROMOTED`
