@@ -25,6 +25,9 @@ DEV also reads:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 = installed technical capability truth.
 
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+= current delegated authority for UR to complete UI-B/UI-C without routine MR intermediation.
+
 `ACTIVE/INK_RUNTIME_QUEUE.json`
 = central Windows Runtime queue state.
 
