@@ -517,13 +517,15 @@ Core-module ordering is task/program state and belongs in the current Work Order
 This governance defines the module development pattern only; it does not preserve a historical "current sequence".
 
 
-## Current Photoshop UI delegation
+## Completed Photoshop UI delegation — reference case
 
-For `INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001`, the current delegated UI authority is:
+`INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001` is closed.
+
+Its delegation record is:
 
 `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
 
-After UI-A promotion, UI-B and UI-C are owned by UR end to end while they remain UI-bounded.
+The completed operating model was:
 
 ```text
 UR = UI workpack / DEV supervision / UI review / bounded revision / UI-only promotion
@@ -531,6 +533,6 @@ MR = Core / technical / cross-lane escalation / FORMAT_VERSION / central Runtime
 DEV = stops to the owning Review authority
 ```
 
-MR is not inserted between UI DEV and UR for routine UI work. UR escalates to MR only when correct UI completion requires a frozen Core/global authority change, new capability, P2 expansion, `FORMAT_VERSION` change, cross-lane architecture decision, or central Runtime authorization.
+UI-A/B/C were promoted and the final MR exact-SHA integrated Runtime passed in run `36445204976`.
 
-After UI-C promotion, UR returns control to MR for the one final exact-SHA integrated Runtime gate.
+This section is retained as a governance reference case. It does not authorize future UI work by itself; future delegation requires a new bounded Work Order.
