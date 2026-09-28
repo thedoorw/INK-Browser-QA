@@ -1,6 +1,6 @@
 # INK DEV Progress
 
-STATUS: `UI-A-R1 / DEV_BOUNDED_REVISION_COMPLETE / STOP_TO_MR`
+STATUS: `UI-A / PROMOTED / DEV_STOP / UI-B_NOT_STARTED`
 TASK: `INK-UI-A-PHOTOSHOP-SHELL-PANELS-001 / UI-A-R1`
 BRANCH: `work/ink-ui-a-photoshop-shell-panels-001`
 
@@ -143,3 +143,19 @@ DEV = STOP
 ```
 
 MR should technically re-review this exact R1 branch, then return accepted UI-A-R1 to UR for the bounded recheck.
+
+
+## Promotion result
+
+```text
+UI_A_R1_MR = PASS
+UI_A_R1_UR = PASS
+UI_A_PROMOTION_PR = 83
+UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
+UI_A = PROMOTED
+UI_B = NOT_STARTED
+DEV = STOP
+CENTRAL_RUNTIME = NOT_RUN
+```
+
+No UI-B implementation is authorized by this progress update.
