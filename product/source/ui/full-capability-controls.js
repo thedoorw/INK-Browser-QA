@@ -94,7 +94,7 @@ export function installFullCapabilityControls(app){
   const raster=createRasterToolController(app,{onStateChange:()=>refreshContextOptions()});
 
   function toast(message,time=2400){app.toast(message,time);}
-  function closeMenus(){document.querySelectorAll('.application-menu.open').forEach(node=>node.classList.remove('open'));document.querySelectorAll('.application-command-menu').forEach(node=>node.hidden=true);}
+  function closeMenus(){if(shell?.closeMenus)shell.closeMenus();}
   function openPanel(id){if(shell?.open)shell.open(id);else if(shell?.toggle)shell.toggle(id);else toast('Panel route unavailable');}
 
   function installMenus(){
