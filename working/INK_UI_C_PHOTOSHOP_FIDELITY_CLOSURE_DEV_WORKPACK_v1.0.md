@@ -1,10 +1,10 @@
 # INK UI-C Photoshop Fidelity & Final UI Closure — DEV Workpack v1.0
 
-STATUS: `PLANNED / WAIT_FOR_UI_B_PROMOTION`
+STATUS: `PLANNED / UR_OWNED / WAIT_FOR_UI_B_PROMOTION`
 
 TASK: `INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001`
 
-OWNER: `MR / MAIN REVIEW`
+OWNER: `UR / UI REVIEW`
 
 MANDATORY_DEV_BRANCH: `work/ink-ui-c-photoshop-fidelity-closure-001`
 
@@ -99,7 +99,7 @@ Before handoff:
 - 64/64 family placement preserved;
 - 501/501 atomic disposition preserved;
 - PUI-001..074 each final-state classified;
-- G-01..G-34 each closed or explicitly bounded with MR-approved reason;
+- G-01..G-34 each closed or explicitly bounded with UR-approved UI reason; Core/capability-authority exceptions require MR;
 - predecessor 212 buttons / 29 selects accounted;
 - 22 CHAT named tools preserved;
 - 34 bounded edit operations preserved;
@@ -169,9 +169,9 @@ Suggested focused QA:
 
 ## 12. Handoff and next gate
 
-After MR + UR acceptance, promote C.
+After UR acceptance, UR promotes C inside the delegated UI boundary.
 
-Only then MR may authorize:
+Only after UI-C promotion does UR STOP → MR. MR may then authorize:
 `INK-UI-FINAL-INTEGRATED-RUNTIME-001`
 
 The final Runtime must target the exact fully promoted UI SHA and is the first central Runtime after UI implementation begins.
@@ -196,3 +196,23 @@ Brand closure:
 - no stale browser favicon route exists.
 
 PWA / installed-desktop App Icon is OUT OF SCOPE for the current UI program. Preserve existing manifest behavior unless a separate Work Order is later authorized; do not spend UI-C scope redesigning it.
+
+
+## 14. Current ownership override
+
+Current authority:
+`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+
+```text
+PACKAGE_C_OWNER = UR
+DEV_HANDOFF = STOP_TO_UR
+ROUTINE_REVIEW = UR
+BOUNDED_REVISION = UR → DEV → UR
+USER_VISUAL_REVISION = UR_COORDINATES
+UI_C_PROMOTION = UR
+MR_INTERMEDIARY = NO
+CENTRAL_RUNTIME_DURING_C = PROHIBITED
+POST_C_OWNER = MR / FINAL_EXACT_SHA_RUNTIME
+```
+
+UR owns UI-C through promotion. MR re-enters only for an `INTEGRATION_REQUIRED` escalation or after C promotion for the final central Runtime.
