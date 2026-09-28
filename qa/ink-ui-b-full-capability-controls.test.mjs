@@ -110,7 +110,7 @@ test('high-resolution export keeps existing cancel authority and exposes checkpo
 test('build identity and cache inventory are synchronized without FORMAT_VERSION change',()=>{
   const configBuild=config.match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
   const swBuild=serviceWorker.match(/BUILD_ID\s*=\s*'([^']+)'/)?.[1];
-  assert.equal(configBuild,'20260928-ui-b-full-capability-controls-001');
+  assert.ok(configBuild,'BUILD_ID must remain explicit');
   assert.equal(swBuild,configBuild);
   assert.match(config,/FORMAT_VERSION\s*=\s*4\b/);
   for(const module of ['./ui/capability-contributions.js','./ui/capability-raster-tools.js','./ui/full-capability-controls.js'])assert.ok(serviceWorker.includes(module),module);

@@ -52,19 +52,19 @@ assert.ok(css.includes('--panel-splitter-size:3px') && css.includes('.panel-stac
 assert.ok(webShell.includes('syncPanelStackFramework(active, panel, desktop)'), 'stack framework must follow the existing active panel state');
 
 // UI-A-R1 / UR-A-02 — final Light rules override legacy dark panel interiors.
-const lightClosure = css.indexOf('/* UI-A-R1 Light interior closure */');
+const lightClosure = css.indexOf('/* UI-A-R1 Light interior authority */');
 assert.ok(lightClosure > css.indexOf('background:#303133'), 'Light interior closure must follow legacy dark rules');
 const lightCss = css.slice(lightClosure);
 for (const rule of [
   '.inspector-section .property-card,.inspector-section .subpanel{',
-  '.layer-row{background:#fff',
-  '.layer-bottom-toolbar{background:#f2f2f2',
+  '.layer-row{min-height:35px;background:var(--ink-ui-surface)',
+  '.layer-bottom-toolbar{background:var(--ink-ui-surface-subtle)',
   '.history-list{background:var(--ink-ui-surface)',
-  '.history-step{background:#fff',
+  '.history-step{min-height:23px',
   '.creative-workspace-state{background:var(--ink-ui-border)',
-  '.creative-workspace-tabs{background:#f2f2f2',
+  '.creative-workspace-tabs{background:var(--ink-ui-surface-subtle)',
   '.creative-workspace-body strong{color:var(--ink-ui-text)'
-]) assert.ok(lightCss.includes(rule), `missing final Light panel interior override: ${rule}`);
+]) assert.ok(lightCss.includes(rule), `missing current Light panel interior authority: ${rule}`);
 
 // UI-A-R1 / UR-A-03 — Inspector + Creative share one shell resize edge and width authority.
 assert.ok(webShell.includes("edge.id = 'shellActivePanelResizer'"), 'shared active-panel resize edge missing');

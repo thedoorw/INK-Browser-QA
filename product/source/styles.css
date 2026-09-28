@@ -3334,7 +3334,7 @@ kbd,
   border:1px solid transparent;
   color:var(--ink-ui-text-muted);
 }
-.ui-b-stack-row button:hover{background:var(--ink-ui-control-hover);border-color:#ccc;color:var(--ink-ui-text)}
+.ui-b-stack-row button:hover{background:var(--ink-ui-control-hover);border-color:var(--ink-ui-border);color:var(--ink-ui-text)}
 .ui-b-channel-row:hover{background:var(--ink-ui-surface-subtle)}
 .ui-b-channel-row.active{background:var(--ink-ui-control-active);box-shadow:inset 2px 0 0 var(--ink-ui-accent)}
 .ui-b-layer-appearance{
