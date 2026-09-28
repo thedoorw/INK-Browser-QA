@@ -62,6 +62,7 @@ test('UI-C closes required shell interaction surfaces on existing authorities',(
   assert.match(webShell,/const stackMove = event =>/);
   assert.match(webShell,/data-panel-stack-splitter/);
   assert.match(webShell,/camera\.x = start\.camX/);
+  assert.match(webShell,/preview\.addEventListener\('pointerdown'/);
   assert.match(webShell,/event\.key === 'Escape'/);
   assert.match(css,/\.shell-tooltip\{/);
   assert.match(css,/\.shell-guide-readout\{/);
@@ -70,7 +71,8 @@ test('UI-C closes required shell interaction surfaces on existing authorities',(
 });
 
 test('responsive taxonomy remains exactly the authorized width family',()=>{
-  const widths=[...css.matchAll(/(?:min|max)-width\s*:\s*(\d+)px/g)].map(match=>Number(match[1]));
+  const preludes=[...css.matchAll(/@media([^\{]+)\{/g)].map(match=>match[1]);
+  const widths=preludes.flatMap(prelude=>[...prelude.matchAll(/(?:min|max)-width\s*:\s*(\d+)px/g)].map(match=>Number(match[1])));
   for(const width of new Set(widths)) assert.ok([760,761,1120].includes(width),'unauthorized width '+width);
   assert.ok(widths.includes(760));
   assert.ok(widths.includes(761));

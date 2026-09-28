@@ -690,6 +690,22 @@
 
     const proxy = document.querySelector('#shellNavigatorProxy');
     const preview = document.querySelector('#shellNavigatorPreview');
+    if (preview && preview.dataset.clickBound !== 'true') {
+      preview.dataset.clickBound = 'true';
+      preview.addEventListener('pointerdown', event => {
+        if (event.button !== 0 || event.target.closest?.('#shellNavigatorProxy')) return;
+        const rect = preview.getBoundingClientRect();
+        const camera = app.page().camera;
+        const scale = Math.max(.03, camera.scale || 1);
+        const dx = event.clientX - (rect.left + rect.width / 2);
+        const dy = event.clientY - (rect.top + rect.height / 2);
+        camera.x -= dx / Math.max(1, rect.width) * (app.renderer?.width || rect.width) / scale;
+        camera.y -= dy / Math.max(1, rect.height) * (app.renderer?.height || rect.height) / scale;
+        app.renderer?.render?.();
+        renderShellNavigator();
+        event.preventDefault();
+      });
+    }
     if (proxy && preview && proxy.dataset.bound !== 'true') {
       proxy.dataset.bound = 'true';
       let start = null;
