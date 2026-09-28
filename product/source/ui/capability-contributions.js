@@ -118,6 +118,12 @@ export const UI_B_TOOL_GROUPS = Object.freeze([
   ]},
   { id:'detail', label:'Detail', icon:'◌', primary:'localBlur', tools:[
     ['localBlur','Blur'],['localSharpen','Sharpen'],['colorReplacement','Color Replacement']
+  ]},
+  { id:'shape', label:'Shape', icon:'◇', primary:'shape:line', tools:[
+    ['shape:line','Line'],['shape:arrow','Arrow'],['shape:rect','Rectangle'],['shape:ellipse','Ellipse'],['shape:triangle','Triangle']
+  ]},
+  { id:'text', label:'Type', icon:'T', primary:'text:horizontal-tb', tools:[
+    ['text:horizontal-tb','Horizontal / Paragraph'],['text:vertical-rl','Vertical Right-to-Left'],['text:vertical-lr','Vertical Left-to-Right']
   ]}
 ]);
 
