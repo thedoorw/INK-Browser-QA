@@ -24,11 +24,11 @@ RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
 P0_PROMOTION = CLOSED
 PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
 PROMOTED_SOURCE_EQUIVALENCE = PASS
-CURRENT_GATE = UI_COMPLETE / FINAL_RUNTIME_PASS
+CURRENT_GATE = FINAL_UR_FULL_CHECKLIST_AUDIT / FINAL_RUNTIME_PASS
 P1_IMPLEMENTATION = CLOSED / PROMOTED
 P2_IMPLEMENTATION = NOT AUTHORIZED
 UI_PROGRAM = Photoshop-aligned final UI rebuild
-UI_STATUS = UI_COMPLETE / UI-A_B_C PROMOTED / FINAL RUNTIME PASS
+UI_STATUS = UI-A_B_C PROMOTED / FINAL RUNTIME PASS / UI_COMPLETE HOLD
 FINAL_UI_RUNTIME_TESTED_SHA = 24d3b3f607a17b3cb9331ec3635b34d804ee445b
 FINAL_UI_RUNTIME_RUN = 36445204976
 FINAL_UI_RUNTIME_ARTIFACT = 10979718534
@@ -51,7 +51,8 @@ UI-A = PROMOTED
 → UI-B = UR PASS / PROMOTED
 → UI-C = UR PASS / PROMOTED
 → final exact-SHA integrated Runtime = PASS
-→ UI_COMPLETE
+→ UR full completion checklist audit
+→ UI_COMPLETE only after zero open/unreviewed items + required USER acceptance
 ```
 
 P0/P1 technical remediation and capability reconciliation are already closed. P2 remains outside the current authorized UI program.
@@ -98,6 +99,10 @@ DEV does not self-promote, self-merge main, change global authority, certify rel
 Full rules:
 
 `governance/INK_MR_DEV_GOVERNANCE_v0.1.md`
+
+Program completion guardrail:
+
+`governance/INK_PROGRAM_COMPLETION_GATE_STANDARD_v0.1.md`
 
 ## New-window read order
 
@@ -235,7 +240,9 @@ Final gate:
 - UI-C = UR PASS / promoted via PR #86;
 - final Runtime = PASS, run #36445204976;
 - final Runtime tested SHA = `24d3b3f607a17b3cb9331ec3635b34d804ee445b`;
-- UI_COMPLETE = verified.
+- final Runtime = verified;
+- UR full completion checklist audit = still required;
+- UI_COMPLETE = HOLD until that audit closes.
 
 Current authority:
 
