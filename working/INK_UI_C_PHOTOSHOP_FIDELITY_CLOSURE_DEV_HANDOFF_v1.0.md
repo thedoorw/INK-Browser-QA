@@ -1,6 +1,6 @@
 # INK UI-C Photoshop Fidelity & Final UI Closure — DEV Handoff v1.0
 
-STATUS: `AUTHORIZED / DEV_ACTIVE / STOP_TO_UR`
+STATUS: `DEV_COMPLETE / UR_REVIEW_REQUIRED / STOP_TO_UR`
 
 TASK: `INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001`
 
@@ -221,3 +221,157 @@ DEV_NEXT = STOP_TO_UR
 ```
 
 Final authoritative integrated Runtime occurs only after UR promotes UI-C and returns control to MR.
+
+## DEV completion evidence — 2026-09-28
+
+Source closure commit before documentation-only handoff update:
+
+`d5fccb906bce3201f0f9e829f71fb92d5dc786ef`
+
+### Changed product / QA source
+
+- `product/source/styles.css`
+- `product/source/web-shell.js`
+- `product/source/src/config.js`
+- `product/source/service-worker.js`
+- `qa/ink-ui-a-photoshop-shell-panels.test.mjs`
+- `qa/ink-ui-b-full-capability-controls.test.mjs`
+- `qa/ink-ui-c-photoshop-fidelity-closure.test.mjs`
+
+No Core / Document / History / Renderer / Geometry / Recipe / CHAT authority file was changed.
+
+### Focused QA
+
+```text
+UI_C_SOURCE_STATIC_ASSERTIONS = 50 / 50 PASS
+FORMAT_VERSION = 4 / UNCHANGED
+BUILD_ID = 20260928-ui-c-photoshop-fidelity-closure-001
+SERVICE_WORKER_BUILD_ID_SYNC = PASS
+WEB_PORTABLE_SHELL_PARITY = PASS
+DUPLICATE_LITERAL_DOM_IDS = 0
+RESPONSIVE_WIDTH_FAMILY = 760 / 761 / 1120 ONLY
+HARD_CODED_NORMAL_UI_PX_FONT_SIZE = 0
+```
+
+The central Runtime was not started. Interaction closure was checked at source/event-path level only; UR owns browser visual/interaction acceptance.
+
+### Local interaction/source smoke
+
+```text
+APPLICATION_MENU_KEYBOARD_ESCAPE_OUTSIDE_CLICK = SOURCE_PATH_PASS
+TOOL_FLYOUT_DENSITY_AND_EXISTING_SELECTION_PATH = SOURCE_PATH_PASS
+PANEL_WIDTH_RESIZE = EXISTING_AUTHORITY_PRESERVED
+PANEL_STACK_SPLITTER_RESIZE = SOURCE_PATH_PASS
+LAYERS_DRAG_INSERTION_FEEDBACK = SOURCE_PATH_PASS
+NAVIGATOR_PROXY_DRAG = SOURCE_PATH_PASS
+NAVIGATOR_CLICK_TO_PAN = SOURCE_PATH_PASS
+NAVIGATOR_ZOOM_SYNC = SOURCE_PATH_PASS
+RULER_GUIDE_DRAG = SOURCE_PATH_PASS
+RULER_GUIDE_LIVE_XY_READOUT = SOURCE_PATH_PASS
+SNAP_AUTHORITY = EXISTING_CORE_AUTHORITY_PRESERVED
+TOOLTIP = SOURCE_PATH_PASS
+FOCUS_DISABLED_HOVER = SOURCE_STYLE_PASS
+AUTHORITATIVE_BROWSER_RUNTIME_SMOKE = NOT RUN
+```
+
+### Photoshop geometry / fine detail
+
+```text
+TOP_SHELL = 24 + 1 + 35 + 1 = 61 px
+DOCUMENT_TAB = 28 + 1 px band
+RULERS = 17 px
+DOCUMENT_STATUS = 16 + 1 px
+TOOLS_SINGLE = 39 + 1 reference
+TOOLS_DOUBLE = 72 + 1 reference
+DOCK_COLLAPSED = 39 + 1 reference
+PANEL_REFERENCE = 252 px / ELASTIC
+PANEL_HEADER_TAB = 28 px
+STACK_SPLITTER = 3 px
+TOOL_SELECTED_FILL = 31 px width / 26 px pitch authority retained
+FLYOUT_ROW = 20 px
+LAYERS_ROW = 35 px
+HISTORY_ROW = 23 px
+SCROLLBAR = 16 px
+```
+
+### Light theme semantic authority
+
+| Token | Final value |
+| --- | --- |
+| `--ink-ui-bg-base` | `#E9E9E9` |
+| `--ink-ui-surface` | `#FFFFFF` |
+| `--ink-ui-surface-subtle` | `#F4F4F4` |
+| `--ink-ui-text` | `#222222` |
+| `--ink-ui-text-muted` | `#666666` |
+| `--ink-ui-text-disabled` | `#919191` |
+| `--ink-ui-border` | `#CFCFCF` |
+| `--ink-ui-control-hover` | `#EEEEEE` |
+| `--ink-ui-control-active` | `#E8EDFF` |
+| `--ink-ui-accent` | `#3B63FB` |
+
+UI-B controls now consume the same semantic Light grammar; the UI-B CSS section has no private hard-coded hex palette and no presentation `!important`.
+
+### Engineering health delta
+
+Compared with base main `fe0ad7dd8aec3cb51314378d4b6b628f5bfbab56`:
+
+```text
+styles.css chars = 178767 → 184824  (+6057 / +3.39%)
+!important total = 49 → 36  (-13)
+new presentation !important = 0
+hard-coded normal UI px font-size = 0 → 0
+media width thresholds = 760 / 761 / 1120 → unchanged
+tracked shell selector definition counts = unchanged
+duplicate literal DOM ids = 0 → 0
+FORMAT_VERSION = 4 → 4
+frozen Core mutation = 0
+```
+
+Tracked definitions unchanged:
+`.topbar`, `.tool-rail`, `.inspector`, `.stage-wrap`, `.statusbar`, `.control-row`, `.inspector-tab`, `.creative-workspace-panel`.
+
+### Final reconciliation preservation
+
+```text
+FAMILY_PLACEMENT = 64 / 64 PRESERVED
+NORMALIZED_ATOMICS = 501 / 501 PRESERVED
+PUI_RANGE = PUI-001 .. PUI-074 / 74 PRESERVED
+GAP_RANGE = G-01 .. G-34 / 34 PRESERVED
+PREDECESSOR_STATIC_BUTTON_FAMILIES = 212 ACCOUNTED
+SELECT_CONTROLS = 29 / 29 ACCOUNTED
+CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22 / 22 PRESERVED
+CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34 / 34 PRESERVED
+```
+
+### Contribution / brand audit
+
+```text
+UI_B_CONTRIBUTION_BOUNDARY = PRESERVED
+SECOND_MUTATION_AUTHORITY = 0
+PLUGIN_SDK_MARKETPLACE_REMOTE_LOADING = NOT CLAIMED / P2 NOT STARTED
+VISIBLE_LOGO = assets/INK_MARK_SOURCE_W-300.jpg
+FAVICON = assets/favicon.svg
+ADOBE_BRANDING_ASSET_COPY = 0
+WEB_PORTABLE_FAVICON_ROUTE_PARITY = PASS
+```
+
+### Visual evidence handoff
+
+The capture matrix required by the workpack is retained for UR:
+1280×994 desktop, single/double Tools, collapsed/expanded panel, active document rulers off/on, Navigator/History, Layers reorder, flyout, tooltip, popup, guide drag, empty workspace and final Light theme.
+
+Authoritative exact-SHA screenshots are intentionally **not** produced by DEV because the central Runtime is prohibited during UI-C.
+
+### Gate
+
+```text
+PHOTOSHOP_FIDELITY_RESULT = DEV_SOURCE_CLOSURE_PASS / UR_VISUAL_REVIEW_REQUIRED
+LIGHT_THEME_RESULT = SOURCE_STATIC_PASS / UR_VISUAL_REVIEW_REQUIRED
+UI_HEALTH_DELTA = PASS
+CENTRAL_RUNTIME = NOT RUN
+INTEGRATION_REQUIRED = NO
+DEV_SELF_PROMOTION = NO
+DEV_NEXT = STOP_TO_UR
+```
+
+**STOP → UR**
