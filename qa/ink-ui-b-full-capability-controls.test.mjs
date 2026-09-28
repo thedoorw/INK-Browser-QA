@@ -129,3 +129,40 @@ test('shell markup keeps unique literal DOM ids',()=>{
   for(const id of ids){if(seen.has(id)&&!duplicates.includes(id))duplicates.push(id);seen.add(id);}
   assert.deepEqual(duplicates,[]);
 });
+
+test('UI-B contribution boundary remains bounded and P2-free',()=>{
+  const contributionSource=read('product/source/ui/capability-contributions.js');
+  assert.match(contributionSource,/validateUiBContributions/);
+  assert.match(contributionSource,/INK_UI_B_DUPLICATE_CONTRIBUTION_ID/);
+  assert.doesNotMatch(controls,/remote plugin|marketplace|plugin sandbox|permission system/i);
+});
+
+test('Object menu proxy routes target existing source controls',()=>{
+  const commands=UI_B_MENU_CONTRIBUTIONS.map(item=>item.command).filter(command=>command.startsWith('proxy:'));
+  for(const command of commands){
+    const id=command.slice(6);
+    assert.ok(shell.includes('id="'+id+'"'),id);
+  }
+  assert.ok(UI_B_MENU_CONTRIBUTIONS.some(item=>item.command==='align:distributeX'));
+  assert.ok(UI_B_MENU_CONTRIBUTIONS.some(item=>item.command==='frame-selection'));
+});
+
+test('brand and favicon authorities remain unchanged',()=>{
+  const web=read('product/source/index.html');
+  const portable=read('product/source/index-standalone.html');
+  const favicon=read('product/source/assets/favicon.svg');
+  for(const source of [shell,web,portable]){
+    assert.match(source,/assets\/INK_MARK_SOURCE_W-300\.jpg\?v=0\.1/);
+    assert.match(source,/assets\/favicon\.svg\?v=0\.1/);
+  }
+  assert.match(favicon,/width="32" height="32"/);
+  assert.match(favicon,/#69BFE3/i);
+  assert.match(favicon,/#FFFFFF/i);
+  assert.doesNotMatch(shell,/Adobe/i);
+});
+
+test('review findings for recovery and dialog Escape are closed',()=>{
+  assert.match(controls,/source:source\.name,\.\.\.verifyStorageRecord/);
+  assert.match(controls,/Array\.from\(document\.querySelectorAll\('\.ui-b-dialog'\)\)\.find/);
+  assert.doesNotMatch(controls,/const open=\$\('\.ui-b-dialog'\)\.find/);
+});
