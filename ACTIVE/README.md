@@ -31,6 +31,9 @@ DEV also reads:
 `ACTIVE/INK_RUNTIME_QUEUE.json`
 = central Windows Runtime queue state.
 
+`governance/INK_PROGRAM_COMPLETION_GATE_STANDARD_v0.1.md`
+= mandatory terminal-state guardrail; Runtime/subgate PASS cannot bypass open checklists or required user acceptance.
+
 `working/WORKING_STATUS.md`
 = compact cross-window current checkpoint.
 
