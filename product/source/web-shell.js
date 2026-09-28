@@ -97,7 +97,10 @@
     shellTooltip: null,
     tooltipTarget: null,
     guidePreview: null,
-    guideReadout: null
+    guideReadout: null,
+    viewSyncObserver: null,
+    viewSyncRaf: 0,
+    navigatorBounds: null
   };
 
   function runtime() {
@@ -397,11 +400,140 @@
     chrome.innerHTML =
       '<div class="document-tab-band"><button type="button" class="document-tab active" aria-current="page"><span id="documentTabTitle">未命名作品</span></button></div>' +
       '<div class="document-ruler-corner" aria-hidden="true"></div>' +
-      '<div class="document-ruler document-ruler-horizontal" data-ruler-axis="horizontal" role="button" tabindex="0" aria-label="水平尺；拖曳建立水平參考線"></div>' +
-      '<div class="document-ruler document-ruler-vertical" data-ruler-axis="vertical" role="button" tabindex="0" aria-label="垂直尺；拖曳建立垂直參考線"></div>';
+      '<div class="document-ruler document-ruler-horizontal" data-ruler-axis="horizontal" role="button" tabindex="0" aria-label="水平尺；拖曳建立水平參考線"><canvas class="document-ruler-canvas" data-ruler-canvas="horizontal" aria-hidden="true"></canvas></div>' +
+      '<div class="document-ruler document-ruler-vertical" data-ruler-axis="vertical" role="button" tabindex="0" aria-label="垂直尺；拖曳建立垂直參考線"><canvas class="document-ruler-canvas" data-ruler-canvas="vertical" aria-hidden="true"></canvas></div>';
     root.append(chrome);
     state.documentChrome = chrome;
     return chrome;
+  }
+
+
+  function niceRulerStep(worldPerPixel, targetPixels = 72) {
+    const target = Math.max(Number.EPSILON, Math.abs(worldPerPixel) * targetPixels);
+    const exponent = 10 ** Math.floor(Math.log10(target));
+    const fraction = target / exponent;
+    const nice = fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10;
+    return nice * exponent;
+  }
+
+  function formatRulerLabel(value, majorStep) {
+    const normalized = Math.abs(value) < majorStep * 1e-6 ? 0 : value;
+    const decimals = majorStep < 1 ? Math.min(3, Math.max(1, Math.ceil(-Math.log10(majorStep)))) : majorStep < 10 ? 1 : 0;
+    return Number(normalized.toFixed(decimals)).toString();
+  }
+
+  function renderDocumentRuler(ruler, axis, app) {
+    const renderer = app?.renderer;
+    const canvas = ruler?.querySelector('[data-ruler-canvas]');
+    const stageRect = document.querySelector('#stageWrap')?.getBoundingClientRect();
+    const rect = ruler?.getBoundingClientRect();
+    if (!renderer?.screenToWorld || !canvas || !stageRect || !rect) return false;
+    const length = axis === 'horizontal' ? rect.width : rect.height;
+    if (!(length > 1)) return false;
+    const dpr = Math.max(1, Math.min(3, Number(globalThis.devicePixelRatio) || 1));
+    const cssWidth = Math.max(1, Math.round(rect.width));
+    const cssHeight = Math.max(1, Math.round(rect.height));
+    const pixelWidth = Math.max(1, Math.round(cssWidth * dpr));
+    const pixelHeight = Math.max(1, Math.round(cssHeight * dpr));
+    if (canvas.width !== pixelWidth) canvas.width = pixelWidth;
+    if (canvas.height !== pixelHeight) canvas.height = pixelHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return false;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssWidth, cssHeight);
+    ctx.fillStyle = '#f1f1f1';
+    ctx.fillRect(0, 0, cssWidth, cssHeight);
+
+    const sampleStart = axis === 'horizontal'
+      ? renderer.screenToWorld(rect.left, stageRect.top)
+      : renderer.screenToWorld(stageRect.left, rect.top);
+    const sampleEnd = axis === 'horizontal'
+      ? renderer.screenToWorld(rect.right, stageRect.top)
+      : renderer.screenToWorld(stageRect.left, rect.bottom);
+    if (!sampleStart || !sampleEnd) return false;
+    const startValue = axis === 'horizontal' ? sampleStart.x : sampleStart.y;
+    const endValue = axis === 'horizontal' ? sampleEnd.x : sampleEnd.y;
+    const span = endValue - startValue;
+    if (!Number.isFinite(span) || Math.abs(span) < Number.EPSILON) return false;
+
+    const worldPerPixel = Math.abs(span) / length;
+    const major = niceRulerStep(worldPerPixel);
+    const subdivisions = major / worldPerPixel >= 70 ? 10 : 5;
+    const minor = major / subdivisions;
+    const minValue = Math.min(startValue, endValue);
+    const maxValue = Math.max(startValue, endValue);
+    const first = Math.floor(minValue / minor) * minor;
+    const count = Math.min(600, Math.ceil((maxValue - first) / minor) + 2);
+
+    ctx.strokeStyle = '#8c8c8c';
+    ctx.fillStyle = '#5f5f5f';
+    ctx.lineWidth = 1;
+    ctx.font = '9px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.textBaseline = 'top';
+    for (let index = 0; index < count; index += 1) {
+      const value = first + index * minor;
+      if (value < minValue - minor || value > maxValue + minor) continue;
+      const pixel = (value - startValue) / span * length;
+      const majorRatio = value / major;
+      const isMajor = Math.abs(majorRatio - Math.round(majorRatio)) < 1e-5;
+      const halfRatio = value / (major / 2);
+      const isHalf = !isMajor && Math.abs(halfRatio - Math.round(halfRatio)) < 1e-5;
+      ctx.beginPath();
+      if (axis === 'horizontal') {
+        ctx.moveTo(pixel + .5, isMajor ? 7 : isHalf ? 10 : 13);
+        ctx.lineTo(pixel + .5, cssHeight);
+      } else {
+        ctx.moveTo(isMajor ? 7 : isHalf ? 10 : 13, pixel + .5);
+        ctx.lineTo(cssWidth, pixel + .5);
+      }
+      ctx.stroke();
+      if (!isMajor) continue;
+      const label = formatRulerLabel(value, major);
+      if (axis === 'horizontal') {
+        ctx.fillText(label, pixel + 2, 0);
+      } else {
+        ctx.save();
+        ctx.translate(1, pixel - 2);
+        ctx.rotate(-Math.PI / 2);
+        ctx.fillText(label, 0, 0);
+        ctx.restore();
+      }
+    }
+    return true;
+  }
+
+  function renderDocumentRulers() {
+    const app = runtime();
+    const root = state.root || document.querySelector('#app');
+    if (!app?.renderer || !root || root.dataset.rulers !== 'true' || root.dataset.documentActive === 'false' || !isDesktop()) return false;
+    document.querySelectorAll('[data-ruler-axis]').forEach(ruler => renderDocumentRuler(ruler, ruler.dataset.rulerAxis, app));
+    return true;
+  }
+
+  function syncViewOverlaysSoon() {
+    if (state.viewSyncRaf) cancelAnimationFrame(state.viewSyncRaf);
+    state.viewSyncRaf = requestAnimationFrame(() => {
+      state.viewSyncRaf = 0;
+      renderDocumentRulers();
+      if (currentPanel() === 'navigator') renderShellNavigator();
+    });
+  }
+
+  function bindRendererViewObserver() {
+    if (state.viewSyncObserver) return true;
+    const heartbeat = document.querySelector('#zoomText');
+    if (!heartbeat || !('MutationObserver' in globalThis)) return false;
+    state.viewSyncObserver = new MutationObserver(syncViewOverlaysSoon);
+    state.viewSyncObserver.observe(heartbeat, { childList: true, subtree: true, characterData: true });
+    const stage = document.querySelector('#stageWrap');
+    if (stage && stage.dataset.shellViewSyncBound !== 'true') {
+      stage.dataset.shellViewSyncBound = 'true';
+      stage.addEventListener('pointermove', syncViewOverlaysSoon, { passive: true });
+      stage.addEventListener('pointerup', syncViewOverlaysSoon, { passive: true });
+      stage.addEventListener('wheel', syncViewOverlaysSoon, { passive: true });
+    }
+    renderDocumentRulers();
+    return true;
   }
 
   function ensureTooltipController() {
@@ -495,7 +627,7 @@
         preview.style.height = stage.height + 'px';
       }
       preview.hidden = false;
-      readout.value = (drag.orientation === 'horizontal' ? 'Y ' : 'X ') + value.toFixed(1);
+      readout.value = (drag.orientation === 'horizontal' ? 'Y: ' : 'X: ') + value.toFixed(1);
       readout.style.left = Math.max(6, Math.min(globalThis.innerWidth - 74, event.clientX + 10)) + 'px';
       readout.style.top = Math.max(6, Math.min(globalThis.innerHeight - 28, event.clientY + 10)) + 'px';
       readout.hidden = false;
@@ -602,27 +734,87 @@
     }
   }
 
+  function fitNavigatorBoundsToAspect(bounds, aspect) {
+    const centerX = bounds.x + bounds.w / 2;
+    const centerY = bounds.y + bounds.h / 2;
+    let width = Math.max(1, bounds.w);
+    let height = Math.max(1, bounds.h);
+    if (width / height < aspect) width = height * aspect;
+    else height = width / aspect;
+    return { x: centerX - width / 2, y: centerY - height / 2, w: width, h: height };
+  }
+
+  function navigatorDocumentBounds(app, canvas) {
+    const page = app?.page?.();
+    const renderer = app?.renderer;
+    const content = renderer?.contentBounds?.(page);
+    let bounds = content && [content.x, content.y, content.w, content.h].every(Number.isFinite) && content.w > 0 && content.h > 0
+      ? { x: content.x, y: content.y, w: content.w, h: content.h }
+      : { x: -400, y: -300, w: 800, h: 600 };
+    const extent = Math.max(1, bounds.w, bounds.h);
+    const pad = Math.max(24, extent * .08);
+    bounds = { x: bounds.x - pad, y: bounds.y - pad, w: bounds.w + pad * 2, h: bounds.h + pad * 2 };
+    return fitNavigatorBoundsToAspect(bounds, Math.max(.1, canvas.width / Math.max(1, canvas.height)));
+  }
+
+  function drawNavigatorDocument(app, canvas, bounds) {
+    const context = canvas.getContext('2d');
+    if (!context) return false;
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = '#d8d8d8';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    const scale = canvas.width / Math.max(1, bounds.w);
+    context.save();
+    context.setTransform(scale, 0, 0, scale, -bounds.x * scale, -bounds.y * scale);
+    try {
+      app.renderer?.renderPageWorld?.(context, app.page(), { bounds, preferredScale: scale });
+    } catch {
+      context.fillStyle = app.page()?.paper?.color || '#fff';
+      context.fillRect(bounds.x, bounds.y, bounds.w, bounds.h);
+    }
+    context.restore();
+    return true;
+  }
+
+  function centerCameraOnWorld(app, worldPoint) {
+    const renderer = app?.renderer;
+    const camera = app?.page?.()?.camera;
+    if (!renderer?.worldToScreen || !camera || !worldPoint) return false;
+    const screen = renderer.worldToScreen(worldPoint);
+    if (!screen) return false;
+    camera.x += renderer.width / 2 - screen.x;
+    camera.y += renderer.height / 2 - screen.y;
+    return true;
+  }
+
+  function navigatorWorldFromClient(preview, bounds, clientX, clientY) {
+    const rect = preview.getBoundingClientRect();
+    return {
+      x: bounds.x + (clientX - rect.left) / Math.max(1, rect.width) * bounds.w,
+      y: bounds.y + (clientY - rect.top) / Math.max(1, rect.height) * bounds.h
+    };
+  }
+
   function renderShellNavigator() {
     const app = runtime();
     const canvas = document.querySelector('#shellNavigatorCanvas');
     const proxy = document.querySelector('#shellNavigatorProxy');
     const zoom = document.querySelector('#shellNavigatorZoom');
-    if (!app?.page?.() || !canvas || !proxy || !zoom) return;
-    const context = canvas.getContext('2d');
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = '#e9e9e9';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    const stage = document.querySelector('#stage');
-    try {
-      if (stage?.width && stage?.height) context.drawImage(stage, 0, 0, canvas.width, canvas.height);
-    } catch {}
-    const scale = Math.max(.03, Number(app.page().camera?.scale) || 1);
-    const proxyW = Math.max(18, Math.min(96, 70 / Math.sqrt(scale)));
-    const proxyH = Math.max(14, Math.min(90, 58 / Math.sqrt(scale)));
+    if (!app?.page?.() || !app.renderer?.viewportWorldBounds || !canvas || !proxy || !zoom) return;
+    const bounds = navigatorDocumentBounds(app, canvas);
+    state.navigatorBounds = bounds;
+    drawNavigatorDocument(app, canvas, bounds);
+    const viewport = app.renderer.viewportWorldBounds();
+    const proxyW = viewport.w / bounds.w * 100;
+    const proxyH = viewport.h / bounds.h * 100;
+    const proxyX = (viewport.x - bounds.x) / bounds.w * 100;
+    const proxyY = (viewport.y - bounds.y) / bounds.h * 100;
     proxy.style.width = proxyW + '%';
     proxy.style.height = proxyH + '%';
-    proxy.style.left = (50 - proxyW / 2) + '%';
-    proxy.style.top = (50 - proxyH / 2) + '%';
+    proxy.style.left = proxyX + '%';
+    proxy.style.top = proxyY + '%';
+    const scale = Math.max(.03, Number(app.page().camera?.scale) || 1);
     zoom.value = Math.round(scale * 100) + '%';
   }
 
@@ -694,15 +886,10 @@
       preview.dataset.clickBound = 'true';
       preview.addEventListener('pointerdown', event => {
         if (event.button !== 0 || event.target.closest?.('#shellNavigatorProxy')) return;
-        const rect = preview.getBoundingClientRect();
-        const camera = app.page().camera;
-        const scale = Math.max(.03, camera.scale || 1);
-        const dx = event.clientX - (rect.left + rect.width / 2);
-        const dy = event.clientY - (rect.top + rect.height / 2);
-        camera.x -= dx / Math.max(1, rect.width) * (app.renderer?.width || rect.width) / scale;
-        camera.y -= dy / Math.max(1, rect.height) * (app.renderer?.height || rect.height) / scale;
-        app.renderer?.render?.();
-        renderShellNavigator();
+        const bounds = state.navigatorBounds || navigatorDocumentBounds(app, document.querySelector('#shellNavigatorCanvas'));
+        const target = navigatorWorldFromClient(preview, bounds, event.clientX, event.clientY);
+        if (centerCameraOnWorld(app, target)) app.renderer?.render?.();
+        syncViewOverlaysSoon();
         event.preventDefault();
       });
     }
@@ -710,7 +897,16 @@
       proxy.dataset.bound = 'true';
       let start = null;
       proxy.addEventListener('pointerdown', event => {
-        start = { x: event.clientX, y: event.clientY, camX: app.page().camera.x, camY: app.page().camera.y };
+        const viewport = app.renderer?.viewportWorldBounds?.();
+        const bounds = state.navigatorBounds || navigatorDocumentBounds(app, document.querySelector('#shellNavigatorCanvas'));
+        if (!viewport || !bounds) return;
+        start = {
+          x: event.clientX,
+          y: event.clientY,
+          centerX: viewport.x + viewport.w / 2,
+          centerY: viewport.y + viewport.h / 2,
+          bounds: { ...bounds }
+        };
         proxy.setPointerCapture?.(event.pointerId);
         proxy.classList.add('dragging');
         event.preventDefault();
@@ -718,18 +914,19 @@
       proxy.addEventListener('pointermove', event => {
         if (!start) return;
         const rect = preview.getBoundingClientRect();
-        const camera = app.page().camera;
-        const scale = Math.max(.03, camera.scale || 1);
-        camera.x = start.camX - (event.clientX - start.x) / Math.max(1, rect.width) * (app.renderer?.width || rect.width) / scale;
-        camera.y = start.camY - (event.clientY - start.y) / Math.max(1, rect.height) * (app.renderer?.height || rect.height) / scale;
-        app.renderer?.render?.();
-        renderShellNavigator();
+        const target = {
+          x: start.centerX + (event.clientX - start.x) / Math.max(1, rect.width) * start.bounds.w,
+          y: start.centerY + (event.clientY - start.y) / Math.max(1, rect.height) * start.bounds.h
+        };
+        if (centerCameraOnWorld(app, target)) app.renderer?.render?.();
+        syncViewOverlaysSoon();
       });
       const end = event => {
         if (!start) return;
         start = null;
         proxy.releasePointerCapture?.(event.pointerId);
         proxy.classList.remove('dragging');
+        syncViewOverlaysSoon();
       };
       proxy.addEventListener('pointerup', end);
       proxy.addEventListener('pointercancel', end);
@@ -1179,6 +1376,7 @@
     syncCreativePresentation();
     syncContextualOptions();
     syncSupplementalPanels();
+    renderDocumentRulers();
     ensurePanelOptionsTriggers();
   }
 
@@ -1217,6 +1415,7 @@
       bindInspectorCloseControl();
       bindSupplementalPanelControls();
       bindRulerGuideDrag();
+      bindRendererViewObserver();
       ensureTooltipController();
       ensurePanelOptionsTriggers();
       ensurePanelStackFramework();
