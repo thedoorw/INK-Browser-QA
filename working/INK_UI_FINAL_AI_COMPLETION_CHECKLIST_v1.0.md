@@ -1,8 +1,28 @@
 # INK Final UI — AI Completion Checklist v1.0
 
-STATUS: `UI_HOLD / CHECKLIST_FRAMEWORK_RETAINED / CAPABILITY_COUNTS_REQUIRE_REFRESH`
+STATUS: `UI_C_DEV_SOURCE_REFRESHED / UR_RUNTIME_AND_VISUAL_CLOSURE_PENDING`
 
 DATE: 2026-09-26
+
+## UI-C DEV source checkpoint — 2026-09-28
+
+This checklist remains a final integrated-Runtime checklist. DEV has refreshed stale pre-P1 wording and completed source/static closure only; DOM/INT/PIX/RESP/USER items remain for UR/final Runtime and are intentionally not auto-checked here.
+
+```text
+SOURCE_CLOSURE_HEAD = d5fccb906bce3201f0f9e829f71fb92d5dc786ef
+SOURCE_STATIC_QA = 50 / 50 PASS
+FAMILY_PLACEMENT = 64 / 64 PRESERVED
+NORMALIZED_ATOMICS = 501 / 501 PRESERVED
+PUI = 74 / 74 PRESERVED
+GAPS = 34 / 34 PRESERVED
+PREDECESSOR_STATIC_BUTTON_FAMILIES = 212 ACCOUNTED
+SELECT_CONTROLS = 29 / 29 ACCOUNTED
+NAMED_TOOLS = 22 / 22 PRESERVED
+BOUNDED_EDIT_OPERATIONS = 34 / 34 PRESERVED
+FORMAT_VERSION = 4 / UNCHANGED
+CENTRAL_RUNTIME = NOT RUN
+UR_VISUAL_RUNTIME_REVIEW = REQUIRED
+```
 
 
 
@@ -70,11 +90,11 @@ Evidence codes:
 
 # D. Application menus
 
-- [ ] D01 final top menus are File/Edit/Image/Layer/Type/Select/Object/View/Window/Help. [SRC][INT]
+- [ ] D01 final top menus are File/Edit/Image/Layer/Type/Select/Filter/Object/View/Window/Help. [SRC][INT]
 - [ ] D02 no dead top-level menu label exists. [INT]
 - [ ] D03 obsolete top-level Brush menu is absent. [SRC][PIX]
 - [ ] D04 no fake 3D menu exists. [SRC]
-- [ ] D05 no normal Filter menu exists unless technical baseline is separately updated. [SRC]
+- [ ] D05 promoted Filter menu is present and routes only accepted C25/P1-F filter authority; no unbacked filter chrome exists. [SRC][INT]
 - [ ] D06 one shared menu state controller owns all application menus. [SRC][HEALTH]
 - [ ] D07 only one menu is open at a time. [INT]
 - [ ] D08 outside click closes an open menu. [INT]
@@ -380,8 +400,8 @@ No UI refactor may silently remove or rename these tool authorities.
 - [ ] V12 programSafetyMode remains Specialist.
 - [ ] V13 referenceRunner remains Specialist evidence tooling.
 - [ ] V14 studioSkeleton is Compose/Recipe advanced.
-- [ ] V15 adjustmentType is not promoted to normal UI under current baseline.
-- [ ] V16 filterType is not promoted to normal UI under current baseline.
+- [ ] V15 Adjustments normal UI is provided by the promoted Adjustments panel/Image route; legacy adjustmentType must not create a second authority.
+- [ ] V16 Filter normal UI is provided by the promoted Filter menu/dialog/gallery routes; legacy filterType must not create a second authority.
 - [ ] V17 paintBrush stays advanced Stroke Session/appropriate brush route.
 - [ ] V18 stylusTestPattern remains Specialist.
 - [ ] V19 calibrationProfileSelect remains Specialist.
@@ -410,7 +430,7 @@ No UI refactor may silently remove or rename these tool authorities.
 - [ ] W10 artwork QA export is Specialist.
 - [ ] W11 release/storage/update diagnostics are Specialist/Help diagnostics.
 - [ ] W12 component reference repair is Specialist.
-- [ ] W13 legacy Mask/Adjustment/Filter controls do not create ordinary UI authority.
+- [ ] W13 legacy Mask/Adjustment/Filter controls do not create a second authority beside the promoted normal UI routes.
 
 # X. Explicitly absent features
 
@@ -576,7 +596,7 @@ This section verifies that every major Photoshop workstation concept was either 
 - [ ] AG32 no Photoshop notification/account bell UI was copied.
 - [ ] AG33 no Discover/tutorial panel was copied as a required editor feature.
 - [ ] AG34 no Photoshop Generative Contextual UI was duplicated over CHAT.
-- [ ] AG35 no general Filter menu was created under current baseline.
+- [ ] AG35 promoted Filter menu is reconciled to Photoshop grammar and exposes only accepted C25/P1-F capability.
 - [ ] AG36 no historical 3D menu was created.
 - [ ] AG37 no Adobe proprietary logo/icon asset was copied.
 
