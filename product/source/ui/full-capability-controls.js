@@ -461,7 +461,7 @@ export function installFullCapabilityControls(app){
       const recovery=event.target.closest('[data-ui-b-recovery-index]');if(recovery)restoreRecoveryCandidate(Number(recovery.dataset.uiBRecoveryIndex));
     });
     $('#uiBProfileInput')?.addEventListener('change',async event=>{const file=event.target.files?.[0];if(!file)return;try{const bytes=new Uint8Array(await file.arrayBuffer()),profile=parseIccProfile(bytes),inspection=inspectIccProfile(profile),found=selectedRasterImage();if(!found)return;mutateObject('Assign ICC Profile',found,object=>{object.rasterState.icc={bytes:Array.from(bytes),inspection};});refreshProfileDialog();toast('ICC profile assigned');}catch(error){toast('ICC：'+error.message,3000);}});
-    document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;const open=$('.ui-b-dialog').find(dialog=>!dialog.hidden);if(!open)return;event.preventDefault();event.stopPropagation();closeDialog(open.dataset.uiBDialog);},true);
+    document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;const open=Array.from(document.querySelectorAll('.ui-b-dialog')).find(dialog=>!dialog.hidden);if(!open)return;event.preventDefault();event.stopPropagation();closeDialog(open.dataset.uiBDialog);},true);
   }
 
   function openDialog(id,context=null){
