@@ -194,3 +194,96 @@ CENTRAL_RUNTIME = DEFERRED
 ```
 
 The initial MR technical PASS is preserved as evidence for the original handoff; it does not override the later UR blocker findings.
+
+
+## UI-A-R1 MR technical re-review
+
+DEV R1 handoff HEAD:
+`74542bcff80017da04aca5a412f610f4810024f0`
+
+Exact R1 implementation / focused-QA HEAD:
+`1b3df1f61f52fd373f082b6780118440b099e5a7`
+
+MR independently verified the bounded diff from the original DEV handoff `9c1d1ef4c020603296154000cccaea5c9c111dc6`.
+
+Changed product/QA files in R1:
+- `product/source/styles.css`
+- `product/source/web-shell.js`
+- `qa/ink-ui-a-photoshop-shell-panels.test.mjs`
+
+The handoff HEAD adds only `ACTIVE/INK_DEV_PROGRESS.md` beyond the exact implementation/QA HEAD.
+
+### UR-A-01
+
+```text
+STACK_FRAMEWORK = PRESENT
+SOURCE_REGISTRY = EXISTING PANEL_GROUPS / PANEL_DEFS
+SECOND_PANEL_REGISTRY = 0
+SPLITTER_HOST = PRESENT / 3 PX REFERENCE TOKEN
+ACTIVE_PANEL_STATE = EXISTING AUTHORITY
+CANVAS_REFLOW = PRESERVED
+MR = PASS
+```
+
+### UR-A-02
+
+Final desktop Light overrides now follow the legacy dark CSS and cover:
+- Properties / Specialist property cards and controls;
+- Layers body / rows / footer;
+- History body / rows / footer;
+- Creative Workspace state / tabs / body / controls / status.
+
+```text
+SECOND_THEME_AUTHORITY = 0
+LIGHT_PANEL_INTERIOR_CLOSURE = PASS_STATIC
+MR = PASS
+```
+
+Final visual fidelity remains UR-owned.
+
+### UR-A-03
+
+The new shell-owned `shellActivePanelResizer`:
+- applies whenever the existing active Inspector or Creative panel produces a desktop primary panel;
+- writes only the existing `--inspector-w` authority;
+- preserves `ink-inspector-width` persistence;
+- keeps the 244–420 px elastic bounds;
+- preserves `--active-panel-w` canvas reflow;
+- hides the legacy Inspector resize edge while the shared primary-panel edge is active.
+
+```text
+SECOND_PANEL_WIDTH_AUTHORITY = 0
+CREATIVE_WORKSPACE_CORE_MUTATION = 0
+SHARED_DIRECT_RESIZE_SURFACE = PASS_STATIC
+MR = PASS
+```
+
+### Regression boundary
+
+```text
+CORE_SEMANTIC_MUTATION = 0
+FORMAT_VERSION_CHANGE = 0
+P2_CAPABILITY_IMPLEMENTATION = 0
+UI_B = NOT_STARTED
+CENTRAL_RUNTIME = NOT_RUN / CORRECT
+LOGO_ROUTE = PRESERVED
+FAVICON_ROUTE = PRESERVED
+MENU_ORDER = PRESERVED
+PANEL_INVENTORY = PRESERVED
+```
+
+### R1 MR gate
+
+```text
+UI_A_R1_MR_TECHNICAL = PASS
+UR_A_01 = TECHNICALLY_CLOSED
+UR_A_02 = TECHNICALLY_CLOSED / VISUAL_RECHECK_REQUIRED
+UR_A_03 = TECHNICALLY_CLOSED
+UI_A_UR_BOUNDED_RECHECK = REQUIRED
+UI_A_PROMOTION = HOLD
+UI_B = HOLD
+CENTRAL_RUNTIME = DEFERRED
+NEXT_OWNER = UR
+```
+
+MR does not promote UI-A from this technical review alone. UR must recheck only the three bounded findings against the R1 branch.
