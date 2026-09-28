@@ -1130,6 +1130,7 @@
     select: selectPanel,
     toggle: togglePanel,
     close: closePrimaryPanels,
+    closeMenus: closeApplicationMenus,
     state() {
       const active = currentPanel();
       const panel = activePanelElement();
