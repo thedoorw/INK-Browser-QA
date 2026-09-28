@@ -26,7 +26,7 @@ DEV also reads:
 = installed technical capability truth.
 
 `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
-= current delegated authority for UR to complete UI-B/UI-C without routine MR intermediation.
+= closed delegation record for the completed UI-B/UI-C Photoshop-aligned UI program.
 
 `ACTIVE/INK_RUNTIME_QUEUE.json`
 = central Windows Runtime queue state.
