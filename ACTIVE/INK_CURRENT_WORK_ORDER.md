@@ -1,6 +1,6 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / UI_A_R1_MR_TECHNICAL_PASS / UR_BOUNDED_RECHECK_REQUIRED`
+STATUS: `CURRENT / UI_A_PROMOTED / UI_B_NOT_STARTED`
 
 DATE: 2026-09-28
 
@@ -20,10 +20,11 @@ TOTAL_NORMALIZED_ATOMICS = 501
 PUI_PLANNING_IDENTITIES = 74
 OPEN_UI_GAPS = 34
 
-ACTIVE_TASK = INK-UI-A-PHOTOSHOP-SHELL-PANELS-001
-ACTIVE_DEV_BRANCH = work/ink-ui-a-photoshop-shell-panels-001
+LAST_COMPLETED_TASK = INK-UI-A-PHOTOSHOP-SHELL-PANELS-001
+UI_A_PROMOTION_PR = 83
+UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
-UI_B = HOLD_UNTIL_UI_A_R1_UR_PASS_AND_PROMOTION
+UI_B = ELIGIBLE_AFTER_UI_A_PROMOTION / NOT_STARTED
 UI_C = WAIT_FOR_UI_B_PROMOTION
 FINAL_UI_RUNTIME = DEFERRED_UNTIL_UI_A_B_C_PROMOTED
 
@@ -115,12 +116,12 @@ UI_RECONCILIATION_FINAL_MR_REVIEW = working/INK_UI_FULL_CAPABILITY_RECONCILIATIO
 ## Current gate
 
 ```text
-CURRENT_GATE = UI_A_R1_UR_BOUNDED_RECHECK
-UI_A = R1_DEV_COMPLETE / MR_TECHNICAL_PASS / UR_RECHECK_REQUIRED
-UI_B = WAIT
-UI_C = WAIT
+CURRENT_GATE = POST_UI_A_PROMOTION / UI_B_NOT_STARTED
+UI_A = MR_PASS / UR_PASS / PROMOTED
+UI_B = ELIGIBLE / NOT_STARTED
+UI_C = WAIT_FOR_UI_B_PROMOTION
 FINAL_RUNTIME = HOLD_UNTIL_A_B_C_COMPLETE
-DEV_MAY_MODIFY_UI = NO / STOP_FOR_UR_RECHECK
+DEV_MAY_MODIFY_UI = NO / NO_UI_B_HANDOFF_YET
 NEW_CORE_CAPABILITY = NO
 CORE_AUTHORITY_CHANGE = NO
 FORMAT_VERSION_CHANGE = NO
@@ -128,22 +129,16 @@ FORMAT_VERSION_CHANGE = NO
 
 ## Next action
 
-DEV:
-- STOP on `work/ink-ui-a-photoshop-shell-panels-001`;
-- do not make further UI-A changes unless a new bounded correction is issued after UR recheck;
-- do not start UI-B;
-- do not trigger central Runtime.
+```text
+UI_A = CLOSED / PROMOTED
+UI_B = NOT_STARTED
+DEV = STOP
+UR = STOP
+CENTRAL_RUNTIME = NOT_RUN
+NEXT_OWNER = MR / USER — confirm UI-B role and handoff structure before execution
+```
 
-MR:
-- UI-A-R1 technical re-review is complete at branch HEAD `74542bcff80017da04aca5a412f610f4810024f0`;
-- keep UI-A promotion HOLD until UR bounded recheck PASS;
-- keep UI-B HOLD;
-- keep final Runtime deferred.
-
-UR:
-- bounded recheck only UR-A-01 / UR-A-02 / UR-A-03 against the R1 branch;
-- return PASS or new bounded findings to MR;
-- no full UI-A redesign and no UI-B work.
+Do not start UI-B until the next ownership/workflow decision is recorded. No central Runtime is authorized between packages.
 
 ## UI-A MR technical review checkpoint
 
@@ -223,3 +218,18 @@ UR bounded recheck scope:
 3. Creative panels shared resize surface.
 
 No full UI-A re-review is required unless UR finds regression outside those three items.
+
+
+## UI-A promotion checkpoint
+
+```text
+UI_A_R1_DEV_HEAD = 74542bcff80017da04aca5a412f610f4810024f0
+UI_A_R1_IMPLEMENTATION_QA_HEAD = 1b3df1f61f52fd373f082b6780118440b099e5a7
+UI_A_R1_MR = PASS
+UI_A_R1_UR = PASS
+UI_A_PROMOTION_PR = 83
+UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
+UI_A = PROMOTED
+UI_B = NOT_STARTED
+CENTRAL_RUNTIME = NOT_RUN
+```
