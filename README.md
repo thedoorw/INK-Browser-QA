@@ -17,9 +17,7 @@ CHAT_PUBLIC_SURFACE_NAMED_TOOLS = 22
 CHAT_PUBLIC_SURFACE_BOUNDED_EDIT_OPERATIONS = 34
 CHAT_PUBLIC_SURFACE_IS_NOT_FULL_PRODUCT_CAPABILITY = TRUE
 
-CURRENT_PRIMARY_REMEDIATION = INK-FULL-CAPABILITY-REBASELINE-001
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-FIRST_PRIORITY = Restore all existing INK capabilities
 P0_RESTORE = 61 / 61
 FIRST_REBASELINE_RUNTIME = PASS
 RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
@@ -33,29 +31,27 @@ UI_PROGRAM = Photoshop-aligned final UI rebuild
 UI_STATUS = UI-A PROMOTED / UI-B NOT STARTED / FINAL RUNTIME DEFERRED
 ```
 
-Current primary remediation authority:
+Current program authority:
 
-`ACTIVE/INK_FULL_PRODUCT_CAPABILITY_REBASELINE_PLAN_v1.0.md`
+`ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-Previous capability baseline under active rebaseline:
+Current capability baseline:
 
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
 The 22 named tools / 34 bounded edit operations recorded there are the current CHAT public/control surface subset. They must not be interpreted as the complete INK product capability inventory.
 
-Current hard sequence:
+Current UI sequence:
 
 ```text
-inventory existing INK
-→ restore/reconcile ALL existing P0 capabilities
-→ focused/unit non-integrated QA + History/save-load checks
-→ UNRESOLVED_EXISTING_CAPABILITY_LOSS = 0
-→ first rebaseline integrated Runtime
-→ only then P1/P2 Photoshop/mature-platform expansion
-→ later UI reconciliation
+UI-A = PROMOTED
+→ UI-B = NOT STARTED
+→ UI-B review / promotion
+→ UI-C implementation / review / promotion
+→ one final exact-SHA integrated Runtime
 ```
 
-The restore-all gate, first rebaseline Runtime, and clean source-equivalent P0 promotion have passed. P1/P2 implementation and UI work still require new explicit bounded authorization.
+P0/P1 technical remediation and capability reconciliation are already closed. P2 remains outside the current authorized UI program.
 
 Current task/gate:
 
