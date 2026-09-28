@@ -24,11 +24,14 @@ RUNTIME_VERIFIED_PRODUCT_SHA = f911f777f770cbe290e290c4b0cbc3692b36641e
 P0_PROMOTION = CLOSED
 PROMOTED_MAIN = 7e3c14004489a816a4163476161626c6fb3d56c2
 PROMOTED_SOURCE_EQUIVALENCE = PASS
-CURRENT_GATE = UI_B_UR_HANDOFF_READY
+CURRENT_GATE = UI_COMPLETE / FINAL_RUNTIME_PASS
 P1_IMPLEMENTATION = CLOSED / PROMOTED
 P2_IMPLEMENTATION = NOT AUTHORIZED
 UI_PROGRAM = Photoshop-aligned final UI rebuild
-UI_STATUS = UI-A PROMOTED / UI-B UR AUTHORIZED / UI-C UR OWNED / FINAL RUNTIME DEFERRED
+UI_STATUS = UI_COMPLETE / UI-A_B_C PROMOTED / FINAL RUNTIME PASS
+FINAL_UI_RUNTIME_TESTED_SHA = 24d3b3f607a17b3cb9331ec3635b34d804ee445b
+FINAL_UI_RUNTIME_RUN = 36445204976
+FINAL_UI_RUNTIME_ARTIFACT = 10979718534
 ```
 
 Current program authority:
@@ -45,9 +48,10 @@ Current UI sequence:
 
 ```text
 UI-A = PROMOTED
-→ UI-B = UR OWNED → DEV → UR review/revision → UR promotion
-→ UI-C = UR OWNED → DEV → UR review/revision → UR promotion
-→ STOP to MR → one final exact-SHA integrated Runtime
+→ UI-B = UR PASS / PROMOTED
+→ UI-C = UR PASS / PROMOTED
+→ final exact-SHA integrated Runtime = PASS
+→ UI_COMPLETE
 ```
 
 P0/P1 technical remediation and capability reconciliation are already closed. P2 remains outside the current authorized UI program.
@@ -223,13 +227,15 @@ Do not recreate retired task-specific workflows merely because their historical 
 
 ## UI authority
 
-The Photoshop-aligned final UI implementation program is active.
+The Photoshop-aligned final UI implementation program is closed and Runtime-verified.
 
-Current gate:
+Final gate:
 - UI-A = MR PASS / UR PASS / promoted via PR #83;
-- UI-B = UR authorized and ready for UR → DEV handoff;
-- UI-C = UR-owned and waits for UI-B promotion;
-- central Runtime remains deferred until A+B+C are promoted.
+- UI-B = UR PASS / promoted via PR #84;
+- UI-C = UR PASS / promoted via PR #86;
+- final Runtime = PASS, run #36445204976;
+- final Runtime tested SHA = `24d3b3f607a17b3cb9331ec3635b34d804ee445b`;
+- UI_COMPLETE = verified.
 
 Current authority:
 
@@ -246,6 +252,10 @@ Current delegated UI execution authority:
 Current capability baseline remains:
 
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
+
+Final UI Runtime review:
+
+`working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md`
 
 UI engineering health:
 
