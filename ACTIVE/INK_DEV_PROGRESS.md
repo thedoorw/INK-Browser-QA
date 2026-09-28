@@ -1,152 +1,145 @@
 # INK DEV Progress
 
-STATUS: `UI-A / DEV_COMPLETE / STOP_TO_MR`
-TASK: `INK-UI-A-PHOTOSHOP-SHELL-PANELS-001`
+STATUS: `UI-A-R1 / DEV_BOUNDED_REVISION_COMPLETE / STOP_TO_MR`
+TASK: `INK-UI-A-PHOTOSHOP-SHELL-PANELS-001 / UI-A-R1`
 BRANCH: `work/ink-ui-a-photoshop-shell-panels-001`
 
-BASELINE_MAIN: `9a4b374747c049d107b2525fb811faa1929a9770`
-DEV_START_HEAD: `840b0e37001c2546c37bbe66dcd942703e54716c`
-EXACT_IMPLEMENTATION_QA_HEAD: `7ca7045b1de50173d33dee187a962b840419410a`
+UPSTREAM_DEV_HANDOFF_HEAD: `9c1d1ef4c020603296154000cccaea5c9c111dc6`
+UPSTREAM_EXACT_IMPLEMENTATION_QA_HEAD: `7ca7045b1de50173d33dee187a962b840419410a`
+R1_EXACT_IMPLEMENTATION_QA_HEAD: `1b3df1f61f52fd373f082b6780118440b099e5a7`
 
-> The implementation/QA HEAD above is the exact code tree reviewed before this progress-only commit. The current branch HEAD is the commit containing this report and must be read from GitHub at handoff.
+Authority read from current GitHub SSOT:
+- `working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_BOUNDED_REVISION_WORKPACK_v1.0.md`
+- `working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_UR_REVIEW_v1.0.md`
+- `working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_MR_REVIEW_v1.0.md`
 
-## Scope completed
+The three revision authority files are current on the default branch and were not merged/rebased into the existing DEV branch. R1 was executed directly on the mandatory original branch.
 
-UI-A only:
+## UI-A-R1 bounded closure
 
-- Photoshop-aligned desktop shell geometry normalized to the measured 61 px top shell.
-- exact top-level menu host order established:
-  - File / Edit / Image / Layer / Type / Select / Filter / Object / View / Window / Help.
-- top application menu popup grammar normalized; top-level Brush menu retired.
-- active-document shell host added:
-  - 28+1 document tab band;
-  - optional 17 px top/left rulers + 17×17 origin corner;
-  - 16+1 active-document status strip;
-  - empty-document CSS state removes document tab/rulers/status reservation.
-- Tools shell normalized:
-  - 39+1 single-column authority;
-  - 72+1 double-column authority;
-  - compact 31×26 tool cells;
-  - existing draw-tool flyout retained and normalized to compact Photoshop-like popup density.
-- right panel authority normalized:
-  - 39+1 collapsed Dock;
-  - 252 px expanded reference width, edge-attached and resizable;
-  - expanded panel reflows canvas without adding the collapsed Dock width;
-  - shared panel options menu with reset-width / close;
-  - Window menu and Dock use the same panel registry/state.
-- final UI-A panel homes exposed through the existing Inspector / Creative Workspace authority:
-  - Properties;
-  - Layers;
-  - History;
-  - Navigator;
-  - Pages;
-  - Color;
-  - Channels;
-  - Adjustments;
-  - Libraries;
-  - Reference;
-  - Compose;
-  - CHAT;
-  - Revision;
-  - Specialist.
-- Navigator uses existing viewport/camera/render authority for thumbnail proxy, drag-pan, fit and zoom controls.
-- Pages desktop route uses existing document/page APIs for add/duplicate/delete/switch/rename path; legacy mobile Pages sheet remains the compact responsive route.
-- Color panel proxy calls existing `setColor` authority; no duplicate color state was created.
-- Channels / Adjustments / Libraries receive normal UI placement homes only; full capability command wiring remains UI-B where required.
-- desktop duplicate New/Open/Save, Undo/Redo, Pages opener and legacy inspector opener are retired from visible desktop chrome while existing handler endpoints remain available to menu/shortcut routing.
-- existing light shell authority normalized around current Photoshop Web anchors:
-  - structural `#E9E9E9`;
-  - primary surface `#FFFFFF`;
-  - accent `#3B63FB`.
+Only the three authorized UR blockers were changed.
 
-## Changed files
+### UR-A-01 — expanded stacked panel-group / splitter framework
 
-- `product/source/shell.template.html`
-- `product/source/index.html`
-- `product/source/index-standalone.html`
+CLOSED.
+
+- `PANEL_DEFS` and `PANEL_GROUPS` remain the only panel registries.
+- Added one shell-owned `shellPanelStackFramework`.
+- Stack regions are generated directly from `PANEL_GROUPS`; no second panel registry/state machine exists.
+- Added a `3 px` splitter structural token/host.
+- The framework follows the existing active panel and moves between Inspector / Creative presentation without duplicating their authorities.
+- Existing right-edge attachment and `--active-panel-w` canvas reflow are preserved.
+- Detailed splitter drag/cursor fidelity remains UI-C as authorized.
+
+### UR-A-02 — Light theme panel interiors
+
+CLOSED.
+
+Final UI-A Light overrides now cover:
+- Properties / Specialist property cards, rows, form controls;
+- Layers list/rows/footer;
+- History list/rows/footer;
+- Creative Workspace state, tabs, body, fields, status and CHAT/structure surfaces.
+
+The closure uses the existing semantic Light tokens:
+- `--ink-ui-surface`
+- `--ink-ui-surface-subtle`
+- `--ink-ui-border`
+- `--ink-ui-text`
+- `--ink-ui-text-muted`
+- `--ink-ui-accent`
+
+Legacy dark rules remain only as upstream historical CSS and are overridden later in the final UI-A desktop Light block. No second theme authority was created.
+
+### UR-A-03 — shared Creative / Inspector resize authority
+
+CLOSED.
+
+- Added one shell-owned `shellActivePanelResizer` for the currently active expanded panel.
+- Inspector's legacy direct resize edge is hidden in desktop primary-panel state so only the shared shell edge is interactive.
+- Inspector and Creative panels both route width changes through the existing `--inspector-w` authority.
+- Existing persistence key remains `ink-inspector-width`.
+- Default remains `252 px`.
+- Elastic bounds remain `244–420 px`.
+- Canvas reflow remains coupled to measured `--active-panel-w`.
+- No Creative Workspace Core/source authority was modified.
+
+## Changed files — R1 only
+
+From `9c1d1ef4c020603296154000cccaea5c9c111dc6` through the implementation/QA HEAD:
+
 - `product/source/styles.css`
 - `product/source/web-shell.js`
-- `product/source/src/ink.js`
 - `qa/ink-ui-a-photoshop-shell-panels.test.mjs`
-- `ACTIVE/INK_DEV_PROGRESS.md` (this report)
 
-Generated delivery HTML was regenerated from `shell.template.html` using the substitutions defined by `product/source/generate-shell.mjs`; exact output parity was verified.
+Plus:
+- `ACTIVE/INK_DEV_PROGRESS.md` — this handoff report.
 
-## Focused QA results
+No other product source file was changed in UI-A-R1.
 
-Central Runtime: **NOT RUN — forbidden by UI-A gate.**
+## Focused/static QA
 
-Focused/static QA against GitHub branch blobs:
+Central Runtime: **NOT RUN — prohibited.**
 
-- PASS — `web-shell.js` syntax compilation.
-- PASS — exact 11-menu order and no top-level Brush menu.
-- PASS — exact 14-panel placement inventory.
-- PASS — measured geometry contract:
-  - 24+1 menu;
-  - 35+1 options;
-  - y=61 workbench origin;
-  - 28+1 active document tab;
-  - 17 px rulers;
-  - 16+1 active-document status;
-  - 39+1 / 72+1 Tools;
-  - 39+1 collapsed Dock;
-  - 252 px expanded reference;
-  - 28 px panel header.
-- PASS — expanded panel is edge-attached and canvas-reflowing.
-- PASS — active-document status gating exists.
-- PASS — desktop duplicate File/History/panel openers are not visible.
-- PASS — Pages desktop route converges on `INK_WEB_SHELL`.
-- PASS — Navigator calls existing camera / renderer authority.
-- PASS — Pages calls existing document/page APIs.
-- PASS — Color calls existing color authority.
-- PASS — panel options menu has real reset-width / close actions.
-- PASS — light semantic anchors are present.
-- PASS — `index.html` equals the Web generation of `shell.template.html`.
-- PASS — `index-standalone.html` equals the Portable generation of `shell.template.html`.
-- ADDED — `qa/ink-ui-a-photoshop-shell-panels.test.mjs` with the same focused source/static contract.
-- LOCAL BROWSER SMOKE — not executed in this DEV environment; no central/runtime substitute was used.
+PASS:
+- `web-shell.js` syntax compilation.
+- exact 11 top-level menu order retained.
+- exact 14 panel homes retained.
+- exactly one `PANEL_DEFS` registry retained.
+- exactly one `PANEL_GROUPS` registry retained.
+- stacked expanded-panel framework derives from `PANEL_GROUPS`.
+- `3 px` splitter framework exists.
+- Light closure occurs after legacy dark rules.
+- Properties Light interior coverage.
+- Layers Light rows/footer coverage.
+- History Light list/rows/footer coverage.
+- Creative Workspace Light state/tabs/body coverage.
+- one shared shell active-panel resize edge.
+- shared `--inspector-w` + `ink-inspector-width` authority.
+- elastic `244–420 px` width bounds.
+- canvas reflow via `--active-panel-w` retained.
+- `index.html` generation parity retained.
+- `index-standalone.html` generation parity retained.
+- focused QA file contains explicit UR-A-01 / UR-A-02 / UR-A-03 assertions.
+- approved visible Logo route preserved.
+- approved browser Favicon route preserved.
 
-## PUI disposition delta
+Local browser smoke: **NOT RUN**. The workpack marks browser smoke as allowed, not required; no central/runtime substitute was started.
 
-Authoritative PUI register is **not rewritten by DEV**. Candidate disposition delta for MR/UR review:
+## Regression / mutation boundary
 
-- `PUI-005..009`: desktop duplicate file/history chrome → **RETIRE_VISIBLE_DESKTOP / handler endpoints retained**.
-- `PUI-028..040`: UI-A-owned shell/panel placement homes → **HOST_NORMALIZED / command completion remains package-specific**.
-- `PUI-052`: host framework → **IMPLEMENTED_UI_A**.
-- `PUI-053..055`: host/menu/ruler framework → **IMPLEMENTED_UI_A**.
-- `PUI-057..068`: negative-control / Help-host architecture → **NO_P2_PROMOTION / host only where applicable**.
+```text
+CORE_SEMANTIC_MUTATION = 0
+FORMAT_VERSION_CHANGE = 0
+P2_CAPABILITY_IMPLEMENTATION = 0
+SECOND_PANEL_STATE_AUTHORITY = 0
+SECOND_PANEL_WIDTH_AUTHORITY = 0
+SECOND_THEME_AUTHORITY = 0
+CREATIVE_WORKSPACE_CORE_FILE_MUTATION = 0
+LOGO_ROUTE = PRESERVED
+FAVICON_ROUTE = PRESERVED
+CENTRAL_RUNTIME = NOT_RUN
+UI_B = NOT_STARTED
+```
 
-No P1/P2 disposition is promoted to final acceptance by DEV.
+Visible INK logo remains:
+`assets/INK_MARK_SOURCE_W-300.jpg?v=0.1`
 
-## Gap delta
-
-Authoritative gap register remains unchanged until MR/UR acceptance; `OPEN_UI_GAPS = 34` is therefore not decremented here.
-
-Candidate UI-A implementation delta:
-
-- `G-01 Pages`: **IMPLEMENTED_UI_A / MR_UR_PENDING** — one desktop docked Pages route using existing page authority.
-- `G-02 Workspaces`: **PARTIAL_UI_A** — shell/View secondary route host normalized; downstream command completion remains bounded by later package ownership.
-- `G-04 Navigator`: **IMPLEMENTED_UI_A / MR_UR_PENDING** — normal panel home with thumbnail/proxy, drag-pan, fit/zoom.
-- `G-05 Select/Lasso`: **HOST_ONLY_UI_A** — Select menu host exists; full selection command/flyout completion remains UI-B.
-- `G-14 Adjustments`: **PLACEMENT_HOME_UI_A** — normal Adjustments panel home exists; full adjustment command wiring remains UI-B.
-- `G-15 Filter`: **MENU_HOST_UI_A** — required top-level Filter host exists; filter commands/dialogs remain UI-B.
-
-## Health delta
-
-- `FORMAT_VERSION`: unchanged.
-- Core semantics: unchanged.
-- second state/authority: not introduced; shell proxies route to existing document/view/color/Inspector/Creative Workspace authorities.
-- P2 capability: not added.
-- central Runtime: not started.
-- source/static shell health: PASS.
-- generated shell parity: PASS.
-- runtime health baseline: **UNCHANGED / NOT RE-EVALUATED BY DESIGN**.
+Browser favicon remains:
+`assets/favicon.svg?v=0.1`
 
 ## Gate / handoff
 
-- UI-B: **HOLD**.
-- UI-C: **HOLD**.
-- central Runtime: **HOLD**.
-- next owner: **MR**.
-- MR action: review UI-A diff, focused QA contract, PUI candidate delta and gap candidate delta.
-- DEV: **STOP**.
+```text
+UI_A_R1_DEV = COMPLETE
+UR_A_01 = CLOSED_BY_DEV / MR_UR_RECHECK_REQUIRED
+UR_A_02 = CLOSED_BY_DEV / MR_UR_RECHECK_REQUIRED
+UR_A_03 = CLOSED_BY_DEV / MR_UR_RECHECK_REQUIRED
+NEXT_OWNER = MR
+UI_A_PROMOTION = HOLD
+UI_B = HOLD
+CENTRAL_RUNTIME = HOLD
+DEV = STOP
+```
+
+MR should technically re-review this exact R1 branch, then return accepted UI-A-R1 to UR for the bounded recheck.
