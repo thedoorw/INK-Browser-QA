@@ -21,7 +21,7 @@
     "scrollbar"
   ],
   "central_runtime": false,
-  "run_generation": 3,
+  "run_generation": 4,
   "browser_environment": "GitHub-hosted Windows / installed Chrome-or-Edge / exact DPR 1",
-  "qa_harness_correction": "retry DOM/CSS probe; sample disabled pre-history; scope dock selectors; compare inactive dock semantic token"
+  "qa_harness_correction": "syntax-safe inactive dock selector; disabled sampled before mutations; script-disabled orphan-context-control first-paint assertion"
 }

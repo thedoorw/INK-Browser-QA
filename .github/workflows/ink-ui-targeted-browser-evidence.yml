@@ -82,6 +82,7 @@ jobs:
         continue-on-error: true
         shell: pwsh
         run: |
+          node --check "$env:INK_UI_TARGETED_ROOT\qa\runtime\run-ink-ui-targeted-browser-evidence.mjs"
           node "$env:INK_UI_TARGETED_ROOT\qa\runtime\run-ink-ui-targeted-browser-evidence.mjs" "$env:INK_UI_TARGETED_ROOT"
 
       - name: Publish evidence to GitHub SSOT
@@ -104,7 +105,7 @@ jobs:
             const baseSha = branch.commit.sha;
             const { data: baseCommit } = await github.rest.git.getCommit({ owner, repo, commit_sha:baseSha });
             const elements = [];
-            const prefix = 'qa/evidence/ink-ui-final-checklist-pr93-targeted-c0c3ddacd07b-hosted-r3/';
+            const prefix = 'qa/evidence/ink-ui-final-checklist-pr93-targeted-c0c3ddacd07b-hosted-r4/';
             for (const name of keep) {
               const bytes = await fs.readFile(path.join(evidenceDir, name));
               const { data: blob } = await github.rest.git.createBlob({

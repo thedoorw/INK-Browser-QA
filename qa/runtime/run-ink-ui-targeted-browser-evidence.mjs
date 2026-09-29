@@ -270,8 +270,25 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
   const styled = await waitStyled(cdp, first.sessionId);
   viewport.captures.push(await capture(cdp, first.sessionId, evidenceDir, 'first-paint-' + width + 'x' + height, width, height));
   const firstBg = styled.computed['background-color'] || '';
-  viewport.facts.firstPaint = { appBackground:firstBg, matchedRules:styled.matchedRules };
+  const fpDoc = await cdp.send('DOM.getDocument', { depth:1, pierce:false }, first.sessionId);
+  const fpQuick = await cdp.send('DOM.querySelector', { nodeId:fpDoc.root.nodeId, selector:'#quickControls' }, first.sessionId);
+  let quickPaint = null;
+  if (fpQuick.nodeId) {
+    const quickComputed = await cdp.send('CSS.getComputedStyleForNode', { nodeId:fpQuick.nodeId }, first.sessionId);
+    const map = Object.fromEntries((quickComputed.computedStyle || []).map(item => [item.name,item.value]));
+    let box = null;
+    if (map.display !== 'none' && map.visibility !== 'hidden') {
+      try {
+        const model = await cdp.send('DOM.getBoxModel', { nodeId:fpQuick.nodeId }, first.sessionId);
+        const q = model.model && model.model.border;
+        if (Array.isArray(q) && q.length === 8) box = { x:Math.min(q[0],q[2],q[4],q[6]), y:Math.min(q[1],q[3],q[5],q[7]), w:Math.max(q[0],q[2],q[4],q[6])-Math.min(q[0],q[2],q[4],q[6]), h:Math.max(q[1],q[3],q[5],q[7])-Math.min(q[1],q[3],q[5],q[7]) };
+      } catch {}
+    }
+    quickPaint = { display:map.display, visibility:map.visibility, backgroundColor:map['background-color'], box };
+  }
+  viewport.facts.firstPaint = { appBackground:firstBg, matchedRules:styled.matchedRules, quickControls:quickPaint };
   add('first-paint-light-shell', !isDarkBlack(firstBg), viewport.facts.firstPaint);
+  add('first-paint-orphan-context-controls-hidden', !quickPaint || quickPaint.display === 'none' || quickPaint.visibility === 'hidden' || !quickPaint.box || quickPaint.box.w <= 0 || quickPaint.box.h <= 0, quickPaint);
   await cdp.send('Target.closeTarget', { targetId:first.targetId });
 
   const normal = await newTarget(cdp, width, height, true);
@@ -289,6 +306,11 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
   add('status-and-document-chrome-visible', shell && shell.status && shell.status.w > 0 && shell.status.h > 0 && shell.doc && shell.doc.w > 0 && shell.doc.h > 0 && shell.tab && shell.tab.w > 0, shell);
   add('no-shell-horizontal-overflow', shell && shell.overflow && shell.overflow.html <= width + 1 && shell.overflow.body <= width + 1, shell && shell.overflow);
   viewport.captures.push(await capture(cdp, normal.sessionId, evidenceDir, 'normal-' + width + 'x' + height, width, height));
+
+  const disabled = await evaluate(cdp, normal.sessionId,
+    "(()=>{const d=document.querySelector('#undoBtn'),e=document.querySelector('#saveBtn'),sd=getComputedStyle(d),se=getComputedStyle(e);return{disabled:d.disabled,disabledStyle:{opacity:sd.opacity,color:sd.color,bg:sd.backgroundColor},enabledStyle:{opacity:se.opacity,color:se.color,bg:se.backgroundColor},different:sd.opacity!==se.opacity||sd.color!==se.color||sd.backgroundColor!==se.backgroundColor}})()");
+  viewport.facts.disabled = disabled;
+  add('disabled-state-distinct', disabled && disabled.disabled === true && disabled.different === true, disabled);
 
   const cascade = await evaluate(cdp, normal.sessionId,
     "(()=>{const one=(s,p)=>{const e=document.querySelector(s);return e?getComputedStyle(e)[p]:null};const many=[...document.querySelectorAll('.tool-rail .tool-label')].map(e=>getComputedStyle(e).display);return{toolLabels:many,emptyMark:one('.empty-hint .empty-mark','display'),statusGap:one('.document-status-info','gap'),brushHead:one('.brush-family-head','display')}})()");
@@ -357,11 +379,6 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
   add('panel-menu-focus-state', menuFocus && menuFocus.active === true && menuFocus.focus === true, menuFocus);
   viewport.captures.push(await capture(cdp, normal.sessionId, evidenceDir, 'panel-options-' + width + 'x' + height, width, height));
 
-  const disabled = await evaluate(cdp, normal.sessionId,
-    "(()=>{const d=document.querySelector('#undoBtn'),e=document.querySelector('#saveBtn'),sd=getComputedStyle(d),se=getComputedStyle(e);return{disabled:d.disabled,disabledStyle:{opacity:sd.opacity,color:sd.color,bg:sd.backgroundColor},enabledStyle:{opacity:se.opacity,color:se.color,bg:se.backgroundColor},different:sd.opacity!==se.opacity||sd.color!==se.color||sd.backgroundColor!==se.backgroundColor}})()");
-  viewport.facts.disabled = disabled;
-  add('disabled-state-distinct', disabled && disabled.disabled === true && disabled.different === true, disabled);
-
   await evaluate(cdp, normal.sessionId, "window.INK_WEB_SHELL.close()");
   await sleep(120);
   const dockNormal = await evaluate(cdp, normal.sessionId,
@@ -390,7 +407,7 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
   const tokens = await evaluate(cdp, normal.sessionId,
     "(()=>{const r=getComputedStyle(document.documentElement);const names=['--ink-ui-bg-base','--ink-ui-surface','--ink-ui-surface-subtle','--ink-ui-text','--ink-ui-text-muted','--ink-ui-text-disabled','--ink-ui-control-hover','--ink-ui-control-active','--ink-ui-border','--ink-ui-border-soft','--ink-ui-border-strong','--ink-ui-scrollbar-thumb'];return Object.fromEntries(names.map(n=>[n,r.getPropertyValue(n).trim()]))})()");
   const roleMatch = await evaluate(cdp, normal.sessionId,
-    "(()=>{const root=getComputedStyle(document.documentElement),val=n=>root.getPropertyValue(n).trim(),norm=s=>{const d=document.createElement('i');d.style.color=s;document.body.append(d);const c=getComputedStyle(d).color;d.remove();return c};const h=document.querySelector('.inspector-head strong'),dock=document.querySelector('#panelDock [data-shell-panel="layers"]'),footer=document.querySelector('.shell-panel-footer button');const sh=h&&getComputedStyle(h),sd=dock&&getComputedStyle(dock),sf=footer&&getComputedStyle(footer);return{head:{actual:sh&&sh.color,token:norm(val('--ink-ui-text'))},dock:{actual:sd&&sd.color,token:norm(val('--ink-ui-text-muted'))},footer:{border:sf&&sf.borderTopColor,token:norm(val('--ink-ui-border'))}}})()");
+    "(()=>{const root=getComputedStyle(document.documentElement),val=n=>root.getPropertyValue(n).trim(),norm=s=>{const d=document.createElement('i');d.style.color=s;document.body.append(d);const c=getComputedStyle(d).color;d.remove();return c};const h=document.querySelector('.inspector-head strong'),dock=document.querySelector('#panelDock [data-shell-panel=layers]'),footer=document.querySelector('.shell-panel-footer button');const sh=h&&getComputedStyle(h),sd=dock&&getComputedStyle(dock),sf=footer&&getComputedStyle(footer);return{head:{actual:sh&&sh.color,token:norm(val('--ink-ui-text'))},dock:{actual:sd&&sd.color,token:norm(val('--ink-ui-text-muted'))},footer:{border:sf&&sf.borderTopColor,token:norm(val('--ink-ui-border'))}}})()");
   viewport.facts.tokens = tokens;
   viewport.facts.roleMatch = roleMatch;
   add('semantic-light-token-authority-rendered', tokens && Object.values(tokens).every(Boolean) && roleMatch && roleMatch.head.actual === roleMatch.head.token && roleMatch.dock.actual === roleMatch.dock.token && (!roleMatch.footer.border || roleMatch.footer.border === roleMatch.footer.token), {tokens,roleMatch});
