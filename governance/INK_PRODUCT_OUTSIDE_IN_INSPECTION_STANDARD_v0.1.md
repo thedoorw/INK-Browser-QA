@@ -135,6 +135,39 @@ USER inspection is the final authority for whether the product satisfies the int
 
 AI may establish technical evidence but may not substitute another PASS for USER acceptance where USER acceptance is required.
 
+## Reference-difference rule for reference-led UI work
+
+When the USER supplies a concrete UI reference and designates it as visual authority, inspection uses a difference-first model.
+
+```text
+REFERENCE_DIFFERENCE = DEFECT
+unless
+EXPLICIT_USER_EXCEPTION
+```
+
+For the current Photoshop-aligned INK UI, the allowed exceptions are only:
+
+1. color/palette where the USER has explicitly chosen a different INK palette;
+2. Photoshop capabilities that do not exist in the authoritative INK capability baseline (for example, do not invent missing 3D features merely to copy Photoshop);
+3. another deviation explicitly approved by the USER.
+
+Everything else is compared against the reference by default, including:
+
+- region topology;
+- toolbar row/column structure;
+- panel grouping and stacking;
+- dock segmentation;
+- control placement and hierarchy;
+- menu organization;
+- spacing, density and dimensions;
+- icon/control duplication;
+- interaction grammar;
+- expanded/collapsed panel behavior.
+
+Do not reinterpret a visible difference as an acceptable abstraction merely because all capabilities can still be reached.
+
+A duplicated or competing visible control is a defect unless the reference itself intentionally uses the same duplication pattern or the USER explicitly authorizes it.
+
 ## Gate dependency
 
 A deeper layer may not be used to close an unresolved outer layer.
