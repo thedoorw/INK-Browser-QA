@@ -1,6 +1,6 @@
 # INK MR / DEV Governance v0.1
 
-STATUS: `ACTIVE / AUTHORITATIVE_WORKFLOW`
+STATUS: `ACTIVE / AUTHORITATIVE_WORKFLOW / CURRENT_UI_LANE_USER_DIRECT_OVERRIDE`
 
 ## Purpose
 
@@ -567,3 +567,22 @@ REQUIRED_USER_ACCEPTANCE = COMPLETE
 This verification is the responsibility of the owning Review authority / supervisor. The user must not be required to discover a missing mandatory gate manually.
 
 The 2026-09-28 Photoshop UI closure is the reference failure case: final Runtime passed, but the full UI completion checklist had not been audited item by item. The premature `UI_COMPLETE` declaration was corrected and must not recur.
+
+## Current USER direct UI override
+
+For the current INK UI reconstruction lane only, the normal MR / UR / DEV UI gating is superseded by:
+
+`ACTIVE/INK_UI_USER_DIRECT_EXECUTION_DIRECTIVE_v1.0.md`
+
+Current rule:
+
+```text
+USER instruction
+→ direct UI source edit
+→ bounded Git commit / rollback point
+→ USER views deployed/current result
+→ repeat
+```
+
+No UR/DEV role split, MR pre-approval, promotion review, or Runtime gate is inserted between USER instruction and visible UI iteration.
+Normal technical reconciliation returns only after USER explicitly freezes/accepts the UI.
