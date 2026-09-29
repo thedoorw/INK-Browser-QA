@@ -8,5 +8,6 @@
     "visual-fine-detail"
   ],
   "central_runtime": false,
-  "run_generation": 1
+  "run_generation": 2,
+  "note": "adds context-tools, keyboard-focus, and CHAT ordinary-surface evidence"
 }
