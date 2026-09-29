@@ -19,6 +19,9 @@ for (const { selector, property, value } of importantRules) {
 
 assert.match(css, /\.document-status-info\{gap:8px\}/);
 assert.match(css, /\.shell-panel-section\{padding:0;overflow:hidden\}/);
+const orphanContextHide = '#quickControls,#selectionBar,#eraserOptions,#shapeOptions,#textOptions{display:none}';
+assert.ok(css.includes(orphanContextHide), 'legacy contextual controls must be hidden before JS mount');
+assert.ok(css.indexOf(orphanContextHide) < css.indexOf('.contextual-options #quickControls'), 'mounted contextual authority must follow first-paint concealment');
 for (const rule of [
   '.panel-dock-button{color:var(--ink-ui-text-muted)}',
   '.inspector-head strong,.creative-workspace-head strong{color:var(--ink-ui-text)}',

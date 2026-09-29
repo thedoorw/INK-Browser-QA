@@ -77,3 +77,20 @@ No shell/JS/Core/global file changed. The UI-A/B/C tests include generated Web/P
 This CSS product-byte delta requires the owning review authority to decide exact-SHA integrated Runtime revalidation under the repository policy. DEV did not launch central Runtime and did not promote the branch.
 
 Changed files: `product/source/styles.css`, `qa/ink-ui-final-checklist-css.test.mjs`, this handoff. UR rechecks AB02, AO03 and adjacent affected IDs; USER acceptance remains separate.
+
+
+## Bounded first-paint correction — 2026-09-29
+
+UR browser evidence against exact candidate `c0c3ddacd07b3022685990352b93335a8a6bd7eb` reproduced one UI-only defect at both required viewports:
+
+- `#quickControls` remained outside `#contextualOptions` before `web-shell.js` mount and painted as a dark 39×98 legacy block during script-disabled first-paint capture.
+- Evidence: `qa/evidence/ink-ui-final-checklist-pr93-targeted-c0c3ddacd07b-hosted-r4/report.json`.
+- Scope is presentation-only CSS. No Core/global authority, JS behavior, schema or FORMAT_VERSION change.
+
+Bounded correction:
+
+- Add an unmounted first-paint concealment rule for `#quickControls/#selectionBar/#eraserOptions/#shapeOptions/#textOptions`.
+- Existing later mounted-context selectors remain more specific and restore the authoritative active controls after shell mount.
+- Focused CSS QA now asserts both first-paint concealment and ordering before mounted contextual rules.
+
+UR must re-run the 26-test focused source suite plus 1280×1024 and 960×800 browser evidence on the new exact SHA. Central Runtime remains deferred.

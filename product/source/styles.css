@@ -1453,6 +1453,12 @@ kbd{font-size:var(--ui-type-xs);padding:2px 4px;border-radius:3px}
 }
 .contextual-advanced-button:hover{background:#fff;color:var(--accent);border-color:var(--line-strong)}
 
+/* First-paint safety: legacy contextual controls start outside their shell in
+   static HTML and are mounted into #contextualControlHost by web-shell.js.
+   Keep orphan controls hidden until that mount; mounted mode selectors below
+   are more specific and restore only the authoritative active controls. */
+#quickControls,#selectionBar,#eraserOptions,#shapeOptions,#textOptions{display:none}
+
 .contextual-options #quickControls,
 .contextual-options #selectionBar,
 .contextual-options #eraserOptions,
