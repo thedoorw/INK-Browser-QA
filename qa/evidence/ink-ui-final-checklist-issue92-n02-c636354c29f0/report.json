@@ -1,0 +1,11 @@
+{
+  "schema": "INK-UI-ISSUE92-N02-REPORT",
+  "targetSha": "c636354c29f0dfc5e379088de169d083e3df4ce5",
+  "centralRuntimeExecuted": false,
+  "status": "FAIL",
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1
+  }
+}

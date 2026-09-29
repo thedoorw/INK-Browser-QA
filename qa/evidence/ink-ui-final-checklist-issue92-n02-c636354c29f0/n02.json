@@ -1,0 +1,110 @@
+{
+  "schema": "INK-UI-ISSUE92-N02",
+  "version": 1,
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "N02",
+      "pass": false,
+      "detail": {
+        "before": {
+          "opened": true,
+          "shell": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "pages",
+            "activePanel": "pages",
+            "lastPanel": "pages",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "reference",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "appClass": "app web-shell-v0-1 inspector-open panel-primary-open active",
+          "sectionClass": "inspector-section tab-content shell-panel-section pages-shell-panel active",
+          "sectionVisible": true,
+          "listVisible": true,
+          "addVisible": true,
+          "addBound": "true",
+          "pages": 1,
+          "rows": 1
+        },
+        "after": {
+          "pages": 1,
+          "rows": 1,
+          "rowVisible": [
+            true
+          ],
+          "activePageId": "ec05946a-ac7d-426f-b3f7-83938332fa62",
+          "rowIds": [
+            "ec05946a-ac7d-426f-b3f7-83938332fa62"
+          ],
+          "shell": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "pages",
+            "activePanel": "pages",
+            "lastPanel": "pages",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "reference",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1
+  }
+}
