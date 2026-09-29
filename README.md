@@ -91,6 +91,21 @@ If correct UI work requires a frozen Core/global authority change:
 
 `STOP → MR / INTEGRATION_REQUIRED`
 
+### WR — Web Review
+Owns the portfolio website research / reproduction / review lane:
+- mature portfolio website discovery and reference selection;
+- information architecture, grid, typography, navigation and responsive analysis;
+- WEB DEV workpacks;
+- visual / responsive / browser QA;
+- GitHub Pages portfolio review;
+- reusable website-reproduction workflow and lessons.
+
+WR does not own INK Core, Connector authority, workstation UI, Document / History / Revision implementation or `FORMAT_VERSION`.
+
+If website work requires an INK product change:
+
+`STOP → MR / relevant INK authority`
+
 ### DEV / UI DEV
 Works only on the branch and bounded scope named by the owning Review authority.
 
@@ -213,6 +228,45 @@ Program specification:
 `research/INK_CREATIVE_REPRODUCTION_BENCHMARK_v0.1.md`
 
 This research direction does not itself authorize product mutation. Current implementation authority remains `ACTIVE/INK_CURRENT_WORK_ORDER.md`.
+
+
+## Web portfolio / WR program
+
+A separate **WR — Web Review** lane owns the portfolio website program.
+
+First program:
+
+```text
+INK-WEB-PORTFOLIO-001
+— Mature Portfolio Reference & First Reproduction
+```
+
+Sequence:
+
+```text
+mature portfolio-site research
+→ select one strong reference
+→ reproduce the first portfolio website
+→ visual / responsive QA
+→ GitHub Pages deployment
+→ record lessons
+→ establish reusable Web reproduction workflow
+```
+
+WR should accumulate:
+
+```text
+Web Reference Library
+Web Pattern / Component Library
+Web Development Lessons
+```
+
+The first site is intentionally reproduction-first rather than original-design-first. Once the shell is stable, it can present the Creative Reproduction Benchmark cases and results.
+
+Program specification:
+
+`research/INK_WEB_PORTFOLIO_WR_PLAN_v0.1.md`
+
 
 ## Repository map
 
