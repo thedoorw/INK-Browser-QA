@@ -1,0 +1,8 @@
+{
+  "schema": "ink-ui-issue92-properties-layers-target",
+  "version": 1,
+  "target_sha": "182e73e071e20404c8394f6e883304b5c102b831",
+  "scope": "J03 J04 J06 J07 J08 J09 K10 K13 baseline interaction / no central Runtime",
+  "central_runtime": false,
+  "run_generation": 1
+}
