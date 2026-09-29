@@ -15,6 +15,15 @@ Current work authority:
 - `INK_TECHNICAL_CAPABILITY_MASTER_v1.0.md`
 - `INK_CHAT_CONNECTOR_PLAN_INTEGRITY_AUDIT_v0.1.md`
 
+
+### Creative reproduction / portfolio benchmark
+- `INK_CREATIVE_REPRODUCTION_BENCHMARK_v0.1.md`
+  - 100+ mature-case candidate library;
+  - Figma / Penpot / Adobe source ecosystems;
+  - CHAT-operated INK reproduction;
+  - capability coverage / gap classification;
+  - GitHub portfolio direction.
+
 Current promoted CHAT architecture:
 `governance/INK_CHAT_INTEGRATION_ARCHITECTURE_v1.0.md`
 
