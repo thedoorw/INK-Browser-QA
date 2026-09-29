@@ -7,7 +7,7 @@ import {
   uid, unionBounds
 } from './core/index.js';
 import {
-  InkStore, installRevision, activeLayer, activePage, allObjects, defaultDocument, defaultLayer, documentColorStateFromPayload, sanitizeDocument, inspectDocument,
+  InkStore, installRevision, activeLayer, activePage, allObjects, defaultDocument, defaultPage, defaultLayer, documentColorStateFromPayload, sanitizeDocument, inspectDocument,
   createFrame, comparePageObjectHitOrder, findPageObject, reparentPageObject, walkPageObjects,
   artboardTrimBounds, artboardBleedBounds, artboardSafeBounds, artboardExportGeometry, artboardPixelSize,
   describeArtboard, mmToWorld, normalizeArtboard, normalizeLayoutViewport, activateWorkspace, ensureWorkspace, workspaceDiagnostics, workspaceSpace
