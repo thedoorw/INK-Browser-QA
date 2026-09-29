@@ -1,7 +1,7 @@
 const PRODUCT_VERSION = '0.1';
 // Deployment identity belongs to the worker script, never to the controlled app.
 // Change this token for every published source change, independent of product v0.1.
-const BUILD_ID = '20260929-direct-ui-branding-r1';
+const BUILD_ID = '20260929-direct-ui-branding-r2-runtime-restore';
 const CACHE_PREFIX = 'ink-build-';
 const SHELL_CACHE = `${CACHE_PREFIX}${BUILD_ID}-shell`;
 const RUNTIME_CACHE = `${CACHE_PREFIX}${BUILD_ID}-runtime`;
