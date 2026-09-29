@@ -1,8 +1,9 @@
 {
   "schema": "ink-ui-issue92-libraries-target",
   "version": 1,
-  "target_sha": "30ddbbfa45644807b65b5eb23cb2fa396b30baa8",
+  "target_sha": "e73d2fa2cfc71487e04d4ad813dc357dfc7ee7c3",
   "scope": "O03-O12 Libraries exact-candidate interaction / no central Runtime",
   "central_runtime": false,
-  "run_generation": 3
+  "run_generation": 4,
+  "note": "O11 candidate adds current pageId/layerId to existing component.instance.create.v1 proposal arguments."
 }
