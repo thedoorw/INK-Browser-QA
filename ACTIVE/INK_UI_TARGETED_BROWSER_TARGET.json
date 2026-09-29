@@ -20,5 +20,7 @@
     "light-theme-token-contrast",
     "scrollbar"
   ],
-  "central_runtime": false
+  "central_runtime": false,
+  "run_generation": 2,
+  "browser_environment": "GitHub-hosted Windows / installed Chrome-or-Edge / exact DPR 1"
 }
