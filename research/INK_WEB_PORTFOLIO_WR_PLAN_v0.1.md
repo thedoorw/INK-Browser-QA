@@ -378,3 +378,16 @@ Rules:
 
 This startup protocol exists so future WR windows can be opened with a short instruction while preserving consistent authority recovery and status reporting.
 
+
+
+## 10. Current WR status pointer
+
+Current Web Portfolio execution state is recorded in:
+
+`working/INK_WEB_PORTFOLIO_001_WR_STATUS_v0.1.md`
+
+Current bounded WEB DEV task is:
+
+`working/INK_WEB_PORTFOLIO_001_WEB_DEV_WORK_ORDER_v0.1.md`
+
+The status file is the current-phase pointer for future WR window recovery. The durable authority and workflow remain this plan.

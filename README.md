@@ -288,6 +288,14 @@ Program specification:
 
 `research/INK_WEB_PORTFOLIO_WR_PLAN_v0.1.md`
 
+Current WR status:
+
+`working/INK_WEB_PORTFOLIO_001_WR_STATUS_v0.1.md`
+
+Current Web reproduction Work Order:
+
+`working/INK_WEB_PORTFOLIO_001_WEB_DEV_WORK_ORDER_v0.1.md`
+
 
 ## Repository map
 
