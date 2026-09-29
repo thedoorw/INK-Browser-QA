@@ -1,0 +1,150 @@
+<!doctype html><meta charset="utf-8"><title>INK Guide Snap Evidence</title>
+<iframe id="f" src="/?fresh=1" style="width:1280px;height:800px;border:0"></iframe>
+<script type="module">
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const frame=document.querySelector('#f');
+const post=e=>fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(e)});
+try{
+  await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve()};});
+  const w=frame.contentWindow,d=frame.contentDocument;
+  for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+  const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
+  const mod=await import('/src/editor/precision-layout.js');
+  const {normalizeSnapSettings,resolveManipulationSnap,resolveAngleSnap}=mod;
+  const q=s=>d.querySelector(s),qa=s=>[...d.querySelectorAll(s)];
+  const visible=e=>{if(!e||e.hidden)return false;const cs=w.getComputedStyle(e),r=e.getBoundingClientRect();return cs.display!=='none'&&cs.visibility!=='hidden'&&r.width>0&&r.height>0};
+  const checks=[];
+
+  // AI05 / AI18 — one page.guides authority with History/Undo/Redo.
+  app.page().guides=[];
+  const historyStart=app.history.undoStack.length;
+  const g=app.addGuide({id:'qa-guide',orientation:'vertical',position:40});
+  app.moveGuide(g.id,52);
+  app.setGuideLocked(g.id,true);
+  app.setGuideVisible(g.id,false);
+  const afterMutations=JSON.parse(JSON.stringify(app.page().guides));
+  const historyAfter=app.history.undoStack.length;
+  const visibleMenu=q('[data-ui-b-command="guides:toggle"]');
+  const sameAuthority=afterMutations.length===1&&afterMutations[0].id===g.id&&afterMutations[0].position===52&&afterMutations[0].locked===true&&afterMutations[0].visible===false;
+  app.history.undo();const undoVisible=app.page().guides.find(x=>x.id===g.id)?.visible===true;
+  app.history.redo();const redoVisible=app.page().guides.find(x=>x.id===g.id)?.visible===false;
+  app.removeGuide(g.id);
+  const removed=app.page().guides.length===0;
+  checks.push({id:'AI05',pass:Boolean(sameAuthority&&removed&&visibleMenu),detail:{sameAuthority,removed,visibilityMenu:Boolean(visibleMenu),historyDelta:historyAfter-historyStart}});
+  checks.push({id:'AI18',pass:Boolean(historyAfter>=historyStart+4&&undoVisible&&redoVisible),detail:{historyStart,historyAfter,undoVisible,redoVisible}});
+
+  const baseSettings=normalizeSnapSettings({enabled:true,categories:{guides:true,edges:true,centers:true,grid:true,angle:true,equalDistance:true},tolerance:7,hysteresis:2,angleStep:15});
+
+  // Instrument the actual renderer guide-drawing path used by direct-manipulation snap feedback.
+  const visualCalls=[];
+  const originalDrawGuides=app.renderer.drawGuides;
+  app.renderer.drawGuides=function(ctx,guides){if(Array.isArray(guides)&&guides.length)visualCalls.push(guides.map(x=>({...x})));return originalDrawGuides.call(this,ctx,guides);};
+
+  // AI06 — guide snap and rendered feedback line.
+  const guideSnap=resolveManipulationSnap({x:10,y:10,w:20,h:20},[],{delta:{x:0,y:0},guides:[{id:'guide-x',orientation:'vertical',position:32,visible:true}],settings:{...baseSettings,categories:{guides:true,edges:false,centers:false,grid:false,angle:false,equalDistance:false}}});
+  app.draft={guides:Object.values(guideSnap.evidence).filter(Boolean).flatMap(e=>e.line?[e.line]:[])};
+  app.renderer.render();await sleep(40);
+  const guideRendered=visualCalls.some(call=>call.some(line=>line.axis==='x'&&Math.abs(line.value-32)<1e-6));
+  checks.push({id:'AI06',pass:Boolean(guideSnap.snapped.x&&guideSnap.evidence.x?.type==='guide'&&guideSnap.evidence.x?.line&&guideRendered),detail:{guideSnap,guideRendered}});
+
+  // AI07 / AN03 — separate edge and center opportunities.
+  const edgeSettings={...baseSettings,categories:{guides:false,edges:true,centers:false,grid:false,angle:false,equalDistance:false}};
+  const edgeSnap=resolveManipulationSnap({x:40,y:0,w:10,h:10},[{x:55,y:0,w:10,h:10}],{delta:{x:4,y:0},settings:edgeSettings});
+  const centerSettings={...baseSettings,categories:{guides:false,edges:false,centers:true,grid:false,angle:false,equalDistance:false}};
+  const centerSnap=resolveManipulationSnap({x:51,y:20,w:10,h:10},[{x:55,y:20,w:10,h:10}],{delta:{x:0,y:0},settings:centerSettings});
+  app.draft={guides:[
+    ...Object.values(edgeSnap.evidence).filter(Boolean).flatMap(e=>e.line?[e.line]:[]),
+    ...Object.values(centerSnap.evidence).filter(Boolean).flatMap(e=>e.line?[e.line]:[])
+  ]};
+  app.renderer.render();await sleep(40);
+  const objectVisual=visualCalls.some(call=>call.some(line=>line.axis==='x'));
+  const objectSnapPass=edgeSnap.evidence.x?.type==='edge'&&centerSnap.evidence.x?.type==='center'&&objectVisual;
+  checks.push({id:'AI07',pass:Boolean(objectSnapPass),detail:{edgeSnap,centerSnap,objectVisual}});
+  checks.push({id:'AN03',pass:Boolean(objectSnapPass),detail:{edgeType:edgeSnap.evidence.x?.type||null,centerType:centerSnap.evidence.x?.type||null}});
+
+  // AI08 — grid snap is governed by the same normalized page.snap authority.
+  const gridSettings={...baseSettings,categories:{guides:false,edges:false,centers:false,grid:true,angle:false,equalDistance:false}};
+  const gridSnap=resolveManipulationSnap({x:29,y:29,w:10,h:10},[],{delta:{x:0,y:0},gridSize:10,settings:gridSettings});
+  checks.push({id:'AI08',pass:Boolean(gridSnap.evidence.x?.type==='grid'&&gridSnap.evidence.y?.type==='grid'&&gridSettings.enabled===true),detail:{gridSnap}});
+
+  // AI09 — angle snap works while positional snap remains independently available.
+  const angleSnap=resolveAngleSnap(14*Math.PI/180,{settings:baseSettings});
+  const positionalSnap=resolveManipulationSnap({x:10,y:10,w:20,h:20},[],{delta:{x:0,y:0},guides:[{id:'guide-angle-independent',orientation:'vertical',position:32,visible:true}],settings:baseSettings});
+  checks.push({id:'AI09',pass:Boolean(angleSnap.snapped&&Math.abs(angleSnap.angle-15*Math.PI/180)<1e-9&&positionalSnap.snapped.x),detail:{angleSnap,positionalSnap}});
+
+  // AI10 / AN05 — equal-distance authority on both axes plus actual visual spacing readout requirement.
+  const equalSettings={...baseSettings,categories:{guides:false,edges:false,centers:false,grid:false,angle:false,equalDistance:true}};
+  const equalSnap=resolveManipulationSnap({x:56,y:56,w:10,h:10},[{x:0,y:0,w:10,h:10},{x:30,y:30,w:10,h:10}],{delta:{x:0,y:0},settings:equalSettings});
+  app.draft={guides:Object.values(equalSnap.evidence).filter(Boolean).flatMap(e=>e.line?[e.line]:[])};
+  app.renderer.render();await sleep(40);
+  const equalLineRendered=visualCalls.some(call=>call.length>=1);
+  const spacingReadout=q('#shellSnapReadout');
+  const spacingVisual=Boolean(spacingReadout&&visible(spacingReadout)&&/\d/.test(spacingReadout.textContent||spacingReadout.value||''));
+  const equalAuthority=equalSnap.evidence.x?.type==='equal-distance'&&equalSnap.evidence.y?.type==='equal-distance'&&Number.isFinite(equalSnap.evidence.x?.gap)&&Number.isFinite(equalSnap.evidence.y?.gap);
+  checks.push({id:'AI10',pass:Boolean(equalAuthority&&equalLineRendered&&spacingVisual),detail:{equalSnap,equalLineRendered,spacingReadout:Boolean(spacingReadout),spacingVisual}});
+  checks.push({id:'AN05',pass:Boolean(equalAuthority&&spacingVisual),detail:{equalAuthority,spacingReadout:Boolean(spacingReadout),spacingVisual}});
+
+  // AI12 / AI13 — visible View menu controls immediately mutate the same page.snap state.
+  const viewTrigger=q('[data-application-menu-trigger="view"]');
+  viewTrigger?.click();await sleep(30);
+  const globalSnap=q('[data-ui-b-command="snap:enabled"]');
+  const categorySelectors=['guides','edges','centers','grid','angle','equalDistance'].map(x=>'[data-ui-b-command="snap:'+x+'"]');
+  const categoryButtons=categorySelectors.map(s=>q(s));
+  const globalVisible=Boolean(globalSnap&&visible(globalSnap));
+  const beforeGlobal=app.page().snap.enabled;
+  globalSnap?.click();await sleep(30);
+  const globalOff=app.page().snap.enabled===!beforeGlobal;
+  q('[data-application-menu-trigger="view"]')?.click();await sleep(20);
+  q('[data-ui-b-command="snap:enabled"]')?.click();await sleep(30);
+  const globalRestored=app.page().snap.enabled===beforeGlobal;
+  const offResult=resolveManipulationSnap({x:10,y:10,w:20,h:20},[],{guides:[{id:'off-guide',orientation:'vertical',position:32,visible:true}],settings:{...baseSettings,enabled:false}});
+  checks.push({id:'AI12',pass:Boolean(globalVisible&&globalOff&&globalRestored&&!offResult.snapped.x&&!offResult.snapped.y),detail:{globalVisible,beforeGlobal,globalOff,globalRestored,offResult}});
+
+  q('[data-application-menu-trigger="view"]')?.click();await sleep(20);
+  const categoryVisible=categoryButtons.every(btn=>btn&&visible(btn));
+  const beforeCats=JSON.parse(JSON.stringify(app.page().snap.categories));
+  const guideButton=q('[data-ui-b-command="snap:guides"]');
+  guideButton?.click();await sleep(30);
+  const afterGuideToggle=JSON.parse(JSON.stringify(app.page().snap.categories));
+  const isolatedToggle=afterGuideToggle.guides===!beforeCats.guides&&['edges','centers','grid','angle','equalDistance'].every(k=>afterGuideToggle[k]===beforeCats[k]);
+  q('[data-application-menu-trigger="view"]')?.click();await sleep(20);
+  q('[data-ui-b-command="snap:guides"]')?.click();await sleep(30);
+  checks.push({id:'AI13',pass:Boolean(categoryVisible&&isolatedToggle),detail:{categoryVisible,beforeCats,afterGuideToggle}});
+
+  // AI14 — direct-manipulation temporary bypass does not alter saved/global settings.
+  const beforeBypass=JSON.stringify(app.page().snap);
+  const bypass=resolveManipulationSnap({x:10,y:10,w:20,h:20},[],{guides:[{id:'bypass-guide',orientation:'vertical',position:32,visible:true}],settings:app.page().snap,bypass:true});
+  const afterBypass=JSON.stringify(app.page().snap);
+  checks.push({id:'AI14',pass:Boolean(bypass.bypassed&&!bypass.snapped.x&&!bypass.snapped.y&&beforeBypass===afterBypass),detail:{bypass,settingUnchanged:beforeBypass===afterBypass}});
+
+  // AI15 — one tolerance/hysteresis policy is normalized and reused across guide/object/grid/equal-distance.
+  const normalized=normalizeSnapSettings({tolerance:9,hysteresis:3,categories:{guides:true,edges:true,centers:true,grid:true,angle:true,equalDistance:true}});
+  const policyPass=normalized.tolerance===9&&normalized.hysteresis===3&&['guides','edges','centers','grid','equalDistance'].every(k=>normalized.categories[k]===true);
+  checks.push({id:'AI15',pass:Boolean(policyPass),detail:{normalized}});
+
+  // AI17 — page guides/snap survive accepted storage save/load.
+  app.page().guides=[];
+  const persisted=app.addGuide({id:'persist-guide',orientation:'horizontal',position:123});
+  app.setSnapCategoryState('grid',true);
+  await app.store.save('qa-guide-snap',app.doc);
+  const loaded=await app.store.load('qa-guide-snap');
+  const loadedPage=(loaded?.pages||[]).find(p=>p.id===loaded.activePageId)||loaded?.pages?.[0];
+  const persistPass=Boolean(loadedPage?.guides?.some(x=>x.id===persisted.id&&x.position===123)&&loadedPage?.snap?.categories?.grid===true);
+  await app.store.remove('qa-guide-snap');
+  checks.push({id:'AI17',pass:persistPass,detail:{guide:loadedPage?.guides?.find(x=>x.id===persisted.id)||null,snap:loadedPage?.snap||null,backend:app.store.lastBackend}});
+
+  // AN04 — actual movement must expose a live pixel-distance readout, not merely internal snap evidence.
+  const snapReadout=q('#shellSnapReadout');
+  const pixelFeedback=Boolean(snapReadout&&visible(snapReadout)&&/\d/.test(snapReadout.textContent||snapReadout.value||''));
+  checks.push({id:'AN04',pass:pixelFeedback,detail:{readoutExists:Boolean(snapReadout),visible:Boolean(snapReadout&&visible(snapReadout)),text:snapReadout?.textContent||snapReadout?.value||null}});
+
+  app.renderer.drawGuides=originalDrawGuides;
+  app.draft=null;
+  app.renderer.render();
+
+  const failed=checks.filter(x=>!x.pass);
+  await post({schema:'INK-UI-ISSUE92-GUIDE-SNAP',version:1,status:failed.length?'FAIL':'PASS',checks,summary:{total:15,passed:15-failed.length,failed:failed.length}});
+}catch(error){
+  await post({schema:'INK-UI-ISSUE92-GUIDE-SNAP',version:1,status:'ERROR',checks:[],summary:{total:15,passed:0,failed:15},error:String(error?.stack||error)});
+}
+</script>
