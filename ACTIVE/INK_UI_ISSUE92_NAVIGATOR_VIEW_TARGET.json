@@ -2,7 +2,9 @@
   "schema": "ink-ui-issue92-navigator-view-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "306ff4e5364eeebe66fd811f5d93693bc96a3575",
+  "target_sha": "3ca17e54239b30641de724e38ceb449125ced3d5",
   "central_runtime": false,
-  "run_generation": 2
+  "run_generation": 3,
+  "scope": "Issue #92 / M12 bounded-correction exact-candidate Navigator recheck",
+  "pull_request": 97
 }
