@@ -10,6 +10,15 @@ Current work authority:
 
 ## Current reference set
 
+### AI development orchestration / software reproduction
+- `INK_AI_DEVELOPMENT_ORCHESTRATION_AND_SOFTWARE_REPRODUCTION_FRAMEWORK_v0.1.md`
+  - GitHub machine-state / Supervisor / role-routing concept;
+  - reference-driven capability and interaction census;
+  - deterministic gates vs AI reasoning;
+  - dependency-driven bounded Work Orders;
+  - failure-to-guardrail learning;
+  - `AI_DEV_ORCHESTRATOR_v0.1` prototype target.
+
 ### CHAT / tool integration
 - `CHAT_TOOL_VISUAL_ASSET_INTERCHANGE_STANDARD_v0.1.md`
 - `INK_TECHNICAL_CAPABILITY_MASTER_v1.0.md`
