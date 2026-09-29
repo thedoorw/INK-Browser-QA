@@ -1,0 +1,87 @@
+name: INK Creative Checklist Evidence Batch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ACTIVE/INK_UI_CHECKLIST_CREATIVE_EVIDENCE_TARGET.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ink-ui-checklist-creative-evidence
+  cancel-in-progress: false
+
+jobs:
+  creative-evidence:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Materialize exact product and focused creative QA
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs=require('node:fs/promises'),path=require('node:path'),crypto=require('node:crypto');
+            const {owner,repo}=context.repo;
+            const {data:tf}=await github.rest.repos.getContent({owner,repo,path:'ACTIVE/INK_UI_CHECKLIST_CREATIVE_EVIDENCE_TARGET.json',ref:context.sha});
+            const d=JSON.parse(Buffer.from(tf.content,'base64').toString('utf8'));
+            if(d.schema!=='ink-ui-checklist-creative-evidence-target'||d.task!=='INK-UI-FINAL-CHECKLIST-CLOSURE-001'||!/^[a-f0-9]{40}$/.test(d.target_sha||''))throw new Error('Invalid target descriptor');
+            const targetSha=d.target_sha;
+            const {data:commit}=await github.rest.repos.getCommit({owner,repo,ref:targetSha});
+            if(commit.sha!==targetSha)throw new Error('Exact target mismatch');
+            const {data:tree}=await github.rest.git.getTree({owner,repo,tree_sha:commit.commit.tree.sha,recursive:'1'});
+            if(tree.truncated)throw new Error('Truncated target tree');
+            const product=tree.tree.filter(x=>x.type==='blob'&&x.path.startsWith('product/source/'));
+            for(const p of ['product/source/index.html','product/source/styles.css','product/source/src/ink.js'])if(!product.some(x=>x.path===p))throw new Error('Missing '+p);
+            const root=await fs.mkdtemp(path.join(process.env.RUNNER_TEMP,'ink-creative-issue92-'));
+            core.exportVariable('INK_CREATIVE_EVIDENCE_ROOT',root);core.exportVariable('INK_TESTED_SHA',targetSha);core.exportVariable('INK_WORKFLOW_SHA',context.sha);
+            let cursor=0;
+            await Promise.all(Array.from({length:4},async()=>{while(cursor<product.length){const item=product[cursor++];const {data}=await github.rest.git.getBlob({owner,repo,file_sha:item.sha});const bytes=Buffer.from(data.content,'base64');const sha=crypto.createHash('sha1').update('blob '+bytes.length+'\0').update(bytes).digest('hex');if(sha!==item.sha)throw new Error('Blob integrity '+item.path);const dest=path.join(root,item.path);await fs.mkdir(path.dirname(dest),{recursive:true});await fs.writeFile(dest,bytes);}}));
+            for(const p of ['qa/runtime/run-ink-runtime-batch.mjs','qa/runtime/ink-cloud-018-browser-harness.html','qa/runtime/run-ink-creative-checklist-evidence-batch.mjs','qa/fixtures/rose-window/rose-window-primary.png']){
+              const {data:f}=await github.rest.repos.getContent({owner,repo,path:p,ref:context.sha});
+              if(Array.isArray(f)||f.type!=='file'||f.encoding!=='base64')throw new Error('QA file unavailable '+p);
+              const dest=path.join(root,p);await fs.mkdir(path.dirname(dest),{recursive:true});await fs.writeFile(dest,Buffer.from(f.content,'base64'));
+            }
+            await fs.mkdir(path.join(root,'evidence'),{recursive:true});
+            await fs.writeFile(path.join(root,'evidence','target-descriptor.json'),JSON.stringify(d,null,2));
+      - name: Run creative browser suite only
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          node --check "$env:INK_CREATIVE_EVIDENCE_ROOT\qa\runtime\run-ink-creative-checklist-evidence-batch.mjs"
+          node "$env:INK_CREATIVE_EVIDENCE_ROOT\qa\runtime\run-ink-creative-checklist-evidence-batch.mjs" "$env:INK_CREATIVE_EVIDENCE_ROOT"
+      - name: Publish focused evidence to GitHub SSOT
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs=require('node:fs/promises'),path=require('node:path');const {owner,repo}=context.repo;
+            const root=process.env.INK_CREATIVE_EVIDENCE_ROOT,targetSha=process.env.INK_TESTED_SHA;if(!root||!targetSha)throw new Error('Missing evidence root');
+            const dir=path.join(root,'evidence'),names=(await fs.readdir(dir)).filter(n=>/\.(json|png|log)$/.test(n)).sort();
+            if(!names.includes('creative.json')||!names.includes('report.json'))throw new Error('Creative evidence missing');
+            const blobs=[];
+            for(const name of names){const bytes=await fs.readFile(path.join(dir,name)),binary=name.endsWith('.png');const {data:b}=await github.rest.git.createBlob({owner,repo,content:binary?bytes.toString('base64'):bytes.toString('utf8'),encoding:binary?'base64':'utf-8'});blobs.push({name,sha:b.sha});}
+            const prefix='qa/evidence/ink-ui-final-checklist-issue92-creative-suite-'+targetSha.slice(0,12)+'/';
+            let published=null;
+            for(let attempt=0;attempt<5&&!published;attempt++){
+              const {data:branch}=await github.rest.repos.getBranch({owner,repo,branch:'main'}),baseSha=branch.commit.sha;
+              const {data:baseCommit}=await github.rest.git.getCommit({owner,repo,commit_sha:baseSha});
+              const {data:t}=await github.rest.git.createTree({owner,repo,base_tree:baseCommit.tree.sha,tree:blobs.map(b=>({path:prefix+b.name,mode:'100644',type:'blob',sha:b.sha}))});
+              const {data:c}=await github.rest.git.createCommit({owner,repo,message:'qa(ui): record Issue 92 creative-only browser evidence',tree:t.sha,parents:[baseSha]});
+              try{await github.rest.git.updateRef({owner,repo,ref:'heads/main',sha:c.sha,force:false});published=c.sha;}catch(e){if(attempt===4)throw e;await new Promise(r=>setTimeout(r,800));}
+            }
+            core.notice('Evidence commit '+published);
+      - name: Gate focused creative evidence
+        shell: pwsh
+        run: |
+          $r=Get-Content "$env:INK_CREATIVE_EVIDENCE_ROOT\evidence\report.json" -Raw | ConvertFrom-Json
+          if($r.status -ne "PASS"){Write-Error $r.error;exit 1}
+      - name: Cleanup
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs=require('node:fs/promises'),path=require('node:path'),root=process.env.INK_CREATIVE_EVIDENCE_ROOT;
+            if(root&&path.basename(root).startsWith('ink-creative-issue92-'))await fs.rm(root,{recursive:true,force:true,maxRetries:3});
