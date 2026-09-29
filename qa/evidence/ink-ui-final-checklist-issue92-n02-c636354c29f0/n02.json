@@ -1,6 +1,6 @@
 {
   "schema": "INK-UI-ISSUE92-N02",
-  "version": 1,
+  "version": 2,
   "status": "FAIL",
   "checks": [
     {
@@ -59,9 +59,9 @@
           "rowVisible": [
             true
           ],
-          "activePageId": "ec05946a-ac7d-426f-b3f7-83938332fa62",
+          "activePageId": "2276d4ea-9112-4d60-9dbd-c1f70dec5275",
           "rowIds": [
-            "ec05946a-ac7d-426f-b3f7-83938332fa62"
+            "2276d4ea-9112-4d60-9dbd-c1f70dec5275"
           ],
           "shell": {
             "version": "0.1",
@@ -98,6 +98,12 @@
               "help"
             ]
           }
+        },
+        "direct": {
+          "attempted": true,
+          "error": "ReferenceError: defaultPage is not defined\n    at http://127.0.0.1:61150/src/ink.js?v=0.1:555:86\n    at HistoryManager.push (http://127.0.0.1:61150/src/history/history.js:220:7)\n    at HistoryManager.pushScoped (http://127.0.0.1:61150/src/history/history.js:229:17)\n    at InkApp.addPage (http://127.0.0.1:61150/src/ink.js?v=0.1:555:26)\n    at http://127.0.0.1:61150/__qa_harness.html:18:62",
+          "pagesBefore": 1,
+          "pagesAfter": 1
         }
       }
     }
