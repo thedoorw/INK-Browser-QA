@@ -1,0 +1,64 @@
+<!doctype html><meta charset="utf-8"><title>INK Issue 92 Layers History</title>
+<iframe id="appframe" src="/" style="width:1280px;height:800px;border:0"></iframe>
+<script type="module">
+const results=[];
+const record=(name,pass,detail=null)=>results.push({name,pass:Boolean(pass),detail});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const frame=document.querySelector('#appframe');
+await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();};});
+const win=frame.contentWindow,doc=frame.contentDocument;
+for(let i=0;i<200&&!(win.INK_APP&&win.INK_WEB_SHELL);i++)await sleep(100);
+const app=win.INK_APP,shell=win.INK_WEB_SHELL;
+if(!app||!shell)throw new Error('INK runtime unavailable');
+const ids=()=>app.page().layers.map(l=>l.id);
+while(app.page().layers.length<4)app.addLayer();
+shell.open('layers'); await sleep(120);
+let rows=[...doc.querySelectorAll('.layer-row')];
+record('K01 layer hierarchy row count matches document layers',rows.length===app.page().layers.length,{rows:rows.length,layers:app.page().layers.length});
+
+let row=rows[0],layer=app.page().layers.find(l=>l.id===row.dataset.layerId);
+const vis=row.querySelector('button[aria-label*="圖層"]')||row.querySelector('button');
+const beforeVisible=layer.visible;vis.click();await sleep(60);layer=app.page().layers.find(l=>l.id===row.dataset.layerId);
+record('K03 visibility action works',layer.visible!==beforeVisible,{before:beforeVisible,after:layer.visible});
+
+rows=[...doc.querySelectorAll('.layer-row')];row=rows[0];layer=app.page().layers.find(l=>l.id===row.dataset.layerId);
+const lock=[...row.querySelectorAll('button')].find(b=>/鎖定/.test(b.getAttribute('aria-label')||b.title||''));
+const beforeLocked=layer.locked;lock?.click();await sleep(60);layer=app.page().layers.find(l=>l.id===row.dataset.layerId);
+record('K04 lock action works',Boolean(lock)&&layer.locked!==beforeLocked,{before:beforeLocked,after:layer.locked});
+
+rows=[...doc.querySelectorAll('.layer-row')];row=rows[0];row.querySelector('.layer-name')?.click();await sleep(40);
+const active=app.layer(),opacity=doc.querySelector('#layerOpacity');opacity.value='55';opacity.dispatchEvent(new win.Event('input',{bubbles:true}));opacity.dispatchEvent(new win.Event('change',{bubbles:true}));await sleep(60);
+record('K05 opacity route works',Math.abs(active.opacity-.55)<.001,{opacity:active.opacity});
+
+rows=[...doc.querySelectorAll('.layer-row')];const source=rows[0],target=rows[1],beforeOrder=ids(),dt=new win.DataTransfer(),tr=target.getBoundingClientRect();
+source.dispatchEvent(new win.DragEvent('dragstart',{bubbles:true,cancelable:true,dataTransfer:dt,clientX:tr.left+20,clientY:tr.top+4}));
+target.dispatchEvent(new win.DragEvent('dragover',{bubbles:true,cancelable:true,dataTransfer:dt,clientX:tr.left+20,clientY:tr.top+1}));
+await sleep(40);
+const srcStyle=win.getComputedStyle(source),beforePseudo=win.getComputedStyle(target,'::before');
+record('AM10 insertion target visible before drop',target.classList.contains('drop-before')&&parseFloat(beforePseudo.height)>=2&&beforePseudo.backgroundColor!=='rgba(0, 0, 0, 0)',{className:target.className,pseudoHeight:beforePseudo.height,pseudoBackground:beforePseudo.backgroundColor});
+record('AM11 drag feedback distinct from ordinary selection',source.classList.contains('dragging')&&source.getAttribute('aria-grabbed')==='true'&&parseFloat(srcStyle.opacity)<1,{className:source.className,ariaGrabbed:source.getAttribute('aria-grabbed'),opacity:srcStyle.opacity});
+target.dispatchEvent(new win.DragEvent('drop',{bubbles:true,cancelable:true,dataTransfer:dt,clientX:tr.left+20,clientY:tr.top+1}));await sleep(100);
+source.dispatchEvent(new win.DragEvent('dragend',{bubbles:true,cancelable:true,dataTransfer:dt}));
+const afterOrder=ids(),lastHistory=app.history.timeline().entries.at(-1)?.label||null;
+record('K09 layer drag reorder works',JSON.stringify(afterOrder)!==JSON.stringify(beforeOrder),{beforeOrder,afterOrder});
+record('AM12 reorder enters History authority',lastHistory==='拖曳移動圖層',{lastHistory});
+const orderAfterDrop=[...afterOrder];app.history.undo();await sleep(50);const undoOrder=ids();app.history.redo();await sleep(50);const redoOrder=ids();
+record('AM12 reorder Undo Redo converge',JSON.stringify(undoOrder)===JSON.stringify(beforeOrder)&&JSON.stringify(redoOrder)===JSON.stringify(orderAfterDrop),{undoOrder,redoOrder});
+
+while(app.page().layers.length<28)app.addLayer();shell.open('layers');await sleep(80);
+const section=doc.querySelector('.inspector-section.active'),scrollBefore=section.scrollTop;section.scrollTop=section.scrollHeight;section.dispatchEvent(new win.Event('scroll'));await sleep(40);
+record('K12 long layer list scroll works',section.scrollHeight>section.clientHeight&&section.scrollTop>scrollBefore,{scrollHeight:section.scrollHeight,clientHeight:section.clientHeight,scrollTop:section.scrollTop});
+
+app.history.clear();app.updateHistoryUI();const baseLayers=app.page().layers.length;app.addLayer();app.addLayer();app.addLayer();shell.open('history');await sleep(80);
+const prior=doc.querySelector('[data-history-position="1"]');prior?.click();await sleep(80);
+const afterJump=app.page().layers.length,redoAfterJump=app.history.redoStack.length;
+record('L04 clicking earlier History state restores it',Boolean(prior)&&afterJump===baseLayers+1&&redoAfterJump===2,{baseLayers,afterJump,redoAfterJump});
+app.addLayer();await sleep(60);
+record('L06 edit after earlier History state follows linear semantics',app.history.redoStack.length===0&&app.history.timeline().entries.length===2,{redo:app.history.redoStack.length,timeline:app.history.timeline()});
+
+shell.open('history');await sleep(50);const limit=doc.querySelector('#historyLimit');limit.value='20';limit.dispatchEvent(new win.Event('change',{bubbles:true}));await sleep(40);
+record('L09 History limit is panel-local and functional',app.history.limit===20&&limit.closest('[data-content="history"]')!==null,{limit:app.history.limit,panel:Boolean(limit.closest('[data-content="history"]'))});
+
+const failed=results.filter(x=>!x.pass);
+await fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({schema:'INK-UI-ISSUE92-LAYERS-HISTORY',version:1,status:failed.length?'FAIL':'PASS',checks:results,summary:{total:results.length,passed:results.length-failed.length,failed:failed.length}})});
+</script>
