@@ -73,6 +73,22 @@ USER_UI_FREEZE
 
 The final technical reconciliation happens after the visual/UI work is complete, not between UI iterations.
 
+## 5A. Mandatory HTML/CSS assembly check
+
+Current direct UI work must follow:
+`governance/INK_UI_HTML_CSS_ASSEMBLY_VERIFICATION_RULE_v0.1.md`
+
+For every visible UI correction, the active CHAT must inspect the assembled current-main HTML/post-Runtime DOM together with effective CSS.
+
+```text
+SOURCE_PRESENT != UI_PRESENT
+RUNTIME_PASS != UI_ASSEMBLY_PASS
+CHECKLIST_PASS != UI_ASSEMBLY_PASS
+```
+
+A visible item is not considered implemented merely because its JavaScript contribution, capability registry, Runtime assertion, or checklist entry exists.
+
+
 ## 6. Supersession
 
 For this current UI correction lane, this directive supersedes:
