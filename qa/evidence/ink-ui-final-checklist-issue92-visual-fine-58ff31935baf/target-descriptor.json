@@ -1,0 +1,13 @@
+{
+  "schema": "ink-ui-issue92-visual-fine-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "58ff31935bafedc9f1c67a0fac808cc4dd5129ec",
+  "scope": "AJ20 rebased exact-candidate semantic spacing token visual regression / no central Runtime",
+  "suites": [
+    "visual-fine-detail"
+  ],
+  "central_runtime": false,
+  "run_generation": 4,
+  "note": "same 17 current-product states; rebased semantic token correction must preserve accepted geometry"
+}
