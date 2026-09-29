@@ -1,8 +1,8 @@
 # INK UI final checklist CSS — DEV handoff v1.0
 
-TASK: `INK-UI-FINAL-CHECKLIST-CSS-001`  
-BASE: `0e49341ac24aedd53d903606d5e2c256628bc1c7`  
-BRANCH: `work/ink-ui-final-checklist-css-001`  
+TASK: `INK-UI-FINAL-CHECKLIST-CSS-001`
+BASE: `0e49341ac24aedd53d903606d5e2c256628bc1c7`
+BRANCH: `work/ink-ui-final-checklist-css-001`
 RESULT: `CSS_SOURCE_AND_STATIC_QA_READY / VISUAL_RECHECK_REQUIRED / STOP → UR`
 
 ## AB02: complete before/after importance inventory
