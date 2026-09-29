@@ -2,8 +2,11 @@
   "schema": "ink-ui-issue92-health-detail-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "7a86ef6124fb18c6d05c0c520020663f65882c5a",
+  "target_sha": "8ae252f195d1ea539873dffb52ec6c1e36c0c9fc",
+  "scope": "Issue #92 AB07/AE09 exact-candidate recheck / no central Runtime",
+  "suites": [
+    "health-detail"
+  ],
   "central_runtime": false,
-  "run_generation": 3,
-  "qa_harness_revision": "self-contained runner + required report publish"
+  "run_generation": 4
 }
