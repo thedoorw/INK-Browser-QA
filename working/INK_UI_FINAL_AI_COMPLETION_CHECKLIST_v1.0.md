@@ -23,7 +23,8 @@ SELECT_CONTROLS = 29 / 29 ACCOUNTED
 NAMED_TOOLS = 22 / 22 PRESERVED
 BOUNDED_EDIT_OPERATIONS = 34 / 34 PRESERVED
 FORMAT_VERSION = 4 / UNCHANGED
-CENTRAL_RUNTIME = PASS / RUN_36445204976
+CENTRAL_RUNTIME = PASS / RUN_36445204976 / HISTORICAL_TESTED_SHA_24d3b3f607a17b3cb9331ec3635b34d804ee445b
+RUNTIME_DEBT = DEFERRED_TO_FINAL_CHECKLIST_BATCH / CURRENT_PRODUCT_PROMOTION_c66b1eba2376f01cfba14f71b6f29d7e2fa022e4
 FINAL_RUNTIME_TESTED_SHA = 24d3b3f607a17b3cb9331ec3635b34d804ee445b
 UI_BROWSER = 110 / 110 PASS
 CLOSURE_BROWSER = PASS
@@ -906,9 +907,9 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=406 / FAIL=185 / N_A=1 / UNREVIEWED=0 / OPEN=185`
+`TOTAL=592 / PASS=420 / FAIL=171 / N_A=1 / UNREVIEWED=0 / OPEN=171`
 
-A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. Runtime run 36445204976 remains PASS for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b. Current main 3608962c changes no product source since that SHA; no new central Runtime was run.
+A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. The prior central Runtime run 36445204976 remains historical evidence for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b; PR #93 promoted new product CSS at c66b1eba2376f01cfba14f71b6f29d7e2fa022e4, so current-product Runtime debt is DEFERRED_TO_FINAL_CHECKLIST_BATCH and no central Runtime was run in this closure batch.
 
 The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and AF10; eight are explicitly `[USER]`, two additional items demand USER approval/completion in their text. All remain FAIL until USER evidence is recorded.
 
@@ -978,7 +979,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | F18 | PASS | artifact 10979718534 ui.json checks #20 and #67–71 exercise one Draw stack and pen/pencil/marker/brush/airbrush contextual routes; qa/ink-ui-b-full-capability-controls.test.mjs validates the draw group registry. | — |
 | F19 | FAIL | Final screenshots do not show the required state/comparison for F19: grouped tool shows a flyout indicator. [PIX] | UI-AUD-02 |
 | F20 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
-| F21 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F21: hover/focus states work. [INT] | UI-AUD-08 |
+| F21 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: panel-menu-hover-state, panel-menu-focus-state and panel-tab-hover-focus interaction checks PASS at both required viewports. | — |
 | F22 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. tool density is comparable to Photoshop reference. [PIX][USER] | USER-ACCEPT |
 | F23 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
 | F24 | FAIL | Placement/summary alone does not prove this exact item on current main (F24: mobile tool duplicates are classified only as responsive routes. [SRC][RESP]); source or targeted QA evidence needed. | UI-AUD-06 |
@@ -1260,7 +1261,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AA09 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
 | AA10 | FAIL | Placement/summary alone does not prove this exact item on current main (AA10: touch targets remain usable. [RESP]); source or targeted QA evidence needed. | UI-AUD-06 |
 | AB01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
-| AB02 | FAIL | The requirement is presentation !important total=0, not all !important total=0. product/source/styles.css has 36 total; at least .document-status-info gap:8px!important (line 3004) and .shell-panel-section padding:0!important (line 3046) are presentation uses. State-visibility and reduced-motion uses require separate semantic classification. | UI-AUD-01 |
+| AB02 | PASS | working/INK_UI_FINAL_CHECKLIST_CSS_UR_BROWSER_RECHECK_v1.0.md; exact PR #93 head b7dc5971768893c2d690eed22bf2801fc0aec4ae; focused source QA 26/26 PASS; targeted browser cascade checks PASS at 1280×1024 and 960×800; presentation !important finding closed after promotion c66b1eba2376f01cfba14f71b6f29d7e2fa022e4. | — |
 | AB03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
 | AB04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
 | AB05 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
@@ -1281,7 +1282,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AC05 | PASS | qa/evidence/ink-ui-final-checklist-closure-001/ink-left-single-tools.png; final Runtime x=[0,40), y=[61,994), manifest.json SHA. | — |
 | AC06 | FAIL | No separately labeled double-toolbar crop in final artifact. | UI-AUD-02 |
 | AC07 | PASS | qa/evidence/ink-ui-final-checklist-closure-001/ink-right-collapsed-dock.png; final Runtime x=[1240,1280), y=[61,994), manifest.json SHA. | — |
-| AC08 | FAIL | No separately labeled expanded-panel crop in final artifact. | UI-AUD-02 |
+| AC08 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/expanded-layers-1280x1024.png and expanded-layers-960x800.png are separately labeled expanded-panel browser captures for exact candidate b7dc5971768893c2d690eed22bf2801fc0aec4ae. | — |
 | AC09 | FAIL | No History multi-state screenshot in final artifact. | UI-AUD-02 |
 | AC10 | FAIL | No Navigator normal screenshot in final artifact. | UI-AUD-02 |
 | AC11 | FAIL | No Navigator after pan/zoom screenshot in final artifact. | UI-AUD-02 |
@@ -1370,23 +1371,23 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AI19 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
 | AI20 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md dynamic ruler and guide source paths; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local source smoke; product/source shell and renderer. | — |
 | AH01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
-| AH02 | FAIL | Placement/summary alone does not prove this exact item on current main (AH02: panel tab hover/focus behavior is defined and verified.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH02 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: panel-tab-hover-focus PASS at 1280×1024 and 960×800. | — |
 | AH03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH05 | FAIL | Placement/summary alone does not prove this exact item on current main (AH05: every visible panel-menu trigger opens real commands; dead triggers = 0.); source or targeted QA evidence needed. | UI-AUD-06 |
-| AH06 | FAIL | Placement/summary alone does not prove this exact item on current main (AH06: panel-local menus do not duplicate application-wide command authority.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH06 | PASS | working/INK_UI_FINAL_CHECKLIST_EVIDENCE_ONLY_UR_R3_SOURCE_CLOSURE_v1.0.md: product/source/web-shell.js panel options menu exposes only reset panel width and close panel, dispatched to panel-local authorities; no application-wide command proxy is present in that menu. | — |
 | AH07 | FAIL | Placement/summary alone does not prove this exact item on current main (AH07: frequent panel actions remain body/footer actions rather than being hidden unnecessarily.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AH08 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH09 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH10 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH11 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
-| AH12 | FAIL | Placement/summary alone does not prove this exact item on current main (AH12: panel body scrolling and footer boundaries are verified.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH12 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: expanded-panel-visible, panel-body-scrolling, splitter-drag-interaction and chrome-fit PASS at both viewports; labeled expanded/scrolled screenshots retained in the same evidence directory. | — |
 | AH13 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH14 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH15 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
-| AH16 | FAIL | Placement/summary alone does not prove this exact item on current main (AH16: persistent status content is limited to useful document/view telemetry.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH16 | PASS | working/INK_UI_FINAL_CHECKLIST_EVIDENCE_ONLY_UR_R3_SOURCE_CLOSURE_v1.0.md: product/source/index.html documentStatusStrip exposes document space/artboard plus view controls; secondary tool/object/autosave telemetry is aria-hidden and CSS .status-hidden-telemetry is display:none!important. | — |
 | AH17 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
-| AH18 | FAIL | Placement/summary alone does not prove this exact item on current main (AH18: status surface does not duplicate Properties or Navigator state ownership.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AH18 | PASS | working/INK_UI_FINAL_CHECKLIST_EVIDENCE_ONLY_UR_R3_SOURCE_CLOSURE_v1.0.md: documentStatusStrip markup contains document/view telemetry only and no Properties/Navigator state owner or control; panel state remains owned by shell panel authorities. | — |
 | AH19 | FAIL | Placement/summary alone does not prove this exact item on current main (AH19: P1-G color mode/bit depth/profile placement is reconsidered after refreshed baseline.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AH20 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
 | AH21 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md 28px panel headers, 3px splitter, status geometry; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source smoke; artifact 10979718534 / ui.json checks #11, #31, #86–91. | — |
@@ -1460,7 +1461,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AM05 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
 | AM06 | FAIL | Placement/summary alone does not prove this exact item on current main (AM06: Status information menu, if implemented, remains document-local and uses compact popup grammar.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AM07 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
-| AM08 | FAIL | Placement/summary alone does not prove this exact item on current main (AM08: document scrollbar thickness is visually comparable to the 16 px reference where native INK scrollbar presentation applies.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM08 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: native INK scrollbar computed width/height = 16px at both 1280×1024 and 960×800; tokenized track/thumb also recorded. | — |
 | AM09 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
 | AM10 | FAIL | Placement/summary alone does not prove this exact item on current main (AM10: Layers drag reorder shows a clear insertion target before drop.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AM11 | FAIL | Placement/summary alone does not prove this exact item on current main (AM11: Layers drag ghost/insertion feedback is visually distinct from ordinary selection.); source or targeted QA evidence needed. | UI-AUD-06 |
@@ -1474,16 +1475,16 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AN06 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
 | AN07 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
 | AN08 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
-| AN09 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN09: disabled controls are visually distinct and semantically disabled. | UI-AUD-09 |
-| AN10 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN10: scrollbar geometry is verified; hover/drag styling does not require Adobe raster imitation. | UI-AUD-09 |
+| AN09 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: disabled-state-distinct PASS at both viewports; #undoBtn disabled=true with opacity 0.42 versus enabled control opacity 1. | — |
+| AN10 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: scrollbar geometry = 16×16 px and actual panel scroll range exercised at both required viewports; no Adobe-raster imitation requirement added. | — |
 | AN11 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
 | AN12 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
 | AO01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
 | AO02 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
-| AO03 | FAIL | Reproduced component-local grays in final Light UI rules: product/source/styles.css .panel-dock-button color:#555; .inspector-head strong color:#303030; .panel-options-menu button:hover background:#ddd; .shell-panel-footer button border:1px solid #c9c9c9. These bypass the named semantic gray roles and require bounded UI token reconciliation. | UI-AUD-06 |
+| AO03 | PASS | working/INK_UI_FINAL_CHECKLIST_CSS_UR_BROWSER_RECHECK_v1.0.md; qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: semantic Light token authority rendered PASS at both required viewports; panel heading/dock/footer roles resolve to named tokens; scrollbar uses --ink-ui-scrollbar-thumb; promoted by PR #93 c66b1eba2376f01cfba14f71b6f29d7e2fa022e4. | — |
 | AO04 | FAIL | Placement/summary alone does not prove this exact item on current main (AO04: primary/secondary/disabled text contrast is verified.); source or targeted QA evidence needed. | UI-AUD-06 |
-| AO05 | FAIL | Placement/summary alone does not prove this exact item on current main (AO05: icon normal/hover/active/disabled contrast is verified.); source or targeted QA evidence needed. | UI-AUD-06 |
-| AO06 | FAIL | Placement/summary alone does not prove this exact item on current main (AO06: control borders and states are visibly distinct.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AO05 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: dock icon normal/hover/active states PASS at both viewports (normal muted, hover dark/light-gray, active blue/light-blue); disabled-state-distinct also PASS. | — |
+| AO06 | PASS | qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json: panel menu normal/hover/focus, dock normal/hover/active, semantic border token rendering and expanded-panel state checks PASS at both required viewports. | — |
 | AO07 | FAIL | Placement/summary alone does not prove this exact item on current main (AO07: palette hierarchy is visually consistent with Photoshop Light/Lightest public references.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AO08 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
 | AO09 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
