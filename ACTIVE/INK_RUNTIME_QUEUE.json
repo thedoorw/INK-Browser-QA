@@ -2,7 +2,7 @@
   "schema": "ink-runtime-queue",
   "version": 1,
   "state": "READY",
-  "target_sha": "ffefff26d541fb1c2c3d15b52121a2667f488de0",
+  "target_sha": "9be510886df2ff4b6c1ad4b12534e49667ee8483",
   "pending_work_orders": [
     "INK-UI-FINAL-CHECKLIST-CLOSURE-001"
   ],
@@ -34,7 +34,7 @@
   ],
   "high_risk": {
     "enabled": true,
-    "reason": "One final exact-SHA integrated Runtime after all checklist-driven UI product mutations are complete."
+    "reason": "MR R29: one QA-reconciled final exact-SHA Runtime after R28 failed on a stale central UI assertion plus an unreproduced Creative harness timeout; product/source remains unchanged."
   },
   "batch_policy": {
     "default_target": 3,
@@ -42,8 +42,8 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36445204976,
-    "tested_sha": "24d3b3f607a17b3cb9331ec3635b34d804ee445b",
-    "result": "PASS / historical pre-final-checklist Runtime; superseded for UI closure by final target ffefff26d541fb1c2c3d15b52121a2667f488de0"
+    "run_id": 36554403375,
+    "tested_sha": "ffefff26d541fb1c2c3d15b52121a2667f488de0",
+    "result": "FAIL / UI stale central QA assertion + Creative unreproduced harness timeout after 74 PASS; no product defect reproduced"
   }
 }
