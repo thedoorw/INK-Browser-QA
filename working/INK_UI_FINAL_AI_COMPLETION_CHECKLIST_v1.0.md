@@ -1,4 +1,4 @@
-# INK Final UI — AI Completion Checklist v1.0
+# INK Final UI — AI Completion Checklist v1.0| K01 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: current browser check verifies rendered layer-row count equals current document layer count after live mutations. | — || K03 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: clicking the rendered visibility control changes the authoritative layer.visible state true → false. | — || K04 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: clicking the rendered lock control changes the authoritative layer.locked state false → true. | — || K05 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: rendered layer opacity control commits 55% to authoritative layer.opacity = 0.55. | — || L04 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: clicking History position 1 restores the earlier document state; layer count returns to base+1 and two later entries move to redo. | — || L06 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: editing after jumping to an earlier state clears redo and continues as one linear History timeline. | — || L09 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: History limit control is rendered inside the History panel and changing it commits history.limit = 20. | — || AM10 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: real dragover before drop produces layer-row.drop-before with rendered 2px insertion marker using rgb(59,99,251). | — || AM11 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: dragstart produces class=dragging, aria-grabbed=true and opacity 0.48, visibly distinct from ordinary selected state. | — |
 
 STATUS: `FINAL_RUNTIME_PASS / UR_FULL_AUDIT_RECORDED / FINDINGS_OPEN / UI_COMPLETE_HOLD`
 
@@ -908,7 +908,7 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=434 / FAIL=157 / N_A=1 / UNREVIEWED=0 / OPEN=157`
+`TOTAL=592 / PASS=443 / FAIL=148 / N_A=1 / UNREVIEWED=0 / OPEN=148`
 
 A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. The prior central Runtime run 36445204976 remains historical evidence for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b; PR #93 promoted new product CSS at c66b1eba2376f01cfba14f71b6f29d7e2fa022e4, so current-product Runtime debt is DEFERRED_TO_FINAL_CHECKLIST_BATCH and no central Runtime was run in this closure batch.
 
