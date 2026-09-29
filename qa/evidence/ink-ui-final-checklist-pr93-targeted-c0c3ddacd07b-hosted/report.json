@@ -1,0 +1,1166 @@
+{
+  "schema": "INK-UI-FINAL-TARGETED-BROWSER-EVIDENCE",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "targetSha": "c0c3ddacd07b3022685990352b93335a8a6bd7eb",
+  "workflowSha": "f984ca23b9c231a15bf1bd6ed7e95610c1af10cd",
+  "runner": "GitHub Actions 1000003562",
+  "centralRuntimeExecuted": false,
+  "status": "FAIL",
+  "failures": [
+    "1280x1024 runner-error: DOM.querySelector: Could not find node with given id",
+    "960x800 disabled-state-distinct",
+    "960x800 icon-normal-hover-active-states",
+    "960x800 semantic-light-token-authority-rendered"
+  ],
+  "sourceChecks": {
+    "scrollbar16": true,
+    "scrollbarToken": true
+  },
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 1024,
+      "dpr": 1,
+      "status": "FAIL",
+      "error": "Error: DOM.querySelector: Could not find node with given id\n    at Socket.<anonymous> (file:///D:/a/_temp/ink-ui-targeted-6VtqVp/qa/runtime/run-ink-ui-targeted-browser-evidence.mjs:111:39)\n    at Socket.emit (node:events:519:28)\n    at addChunk (node:internal/streams/readable:561:12)\n    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n    at Readable.push (node:internal/streams/readable:392:5)\n    at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)"
+    },
+    {
+      "width": 960,
+      "height": 800,
+      "dpr": 1,
+      "checks": [
+        {
+          "name": "first-paint-light-shell",
+          "pass": true,
+          "detail": {
+            "appBackground": "rgb(231, 231, 231)",
+            "matchedRules": 10
+          }
+        },
+        {
+          "name": "viewport-and-dpr",
+          "pass": true,
+          "detail": {
+            "dpr": 1,
+            "w": 960,
+            "h": 800,
+            "ready": "complete"
+          }
+        },
+        {
+          "name": "normal-first-runtime-state",
+          "pass": true,
+          "detail": {
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_NARROW",
+              "primaryState": "collapsed",
+              "activePanel": null,
+              "lastPanel": null,
+              "collapsed": true,
+              "inspectorOpen": false,
+              "creativeOpen": false,
+              "panelWidth": 0,
+              "stageWidth": 880,
+              "dockWidth": 40,
+              "panelGroup": null,
+              "creativeStage": "reference",
+              "contextMode": "draw",
+              "contextTool": "pen",
+              "toolbarLayout": "single",
+              "toolbarLayoutPreference": "single",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "app": {
+              "x": 0,
+              "y": 0,
+              "w": 960,
+              "h": 800,
+              "display": "block",
+              "visibility": "visible"
+            },
+            "tool": {
+              "x": 0,
+              "y": 61,
+              "w": 40,
+              "h": 739,
+              "display": "flex",
+              "visibility": "visible"
+            },
+            "status": {
+              "x": 40,
+              "y": 783,
+              "w": 880,
+              "h": 17,
+              "display": "flex",
+              "visibility": "visible"
+            },
+            "doc": {
+              "x": 0,
+              "y": 0,
+              "w": 960,
+              "h": 800,
+              "display": "block",
+              "visibility": "visible"
+            },
+            "tab": {
+              "x": 40,
+              "y": 61,
+              "w": 880,
+              "h": 29,
+              "display": "flex",
+              "visibility": "visible"
+            },
+            "overflow": {
+              "html": 960,
+              "body": 960,
+              "inner": 960
+            }
+          }
+        },
+        {
+          "name": "status-and-document-chrome-visible",
+          "pass": true,
+          "detail": {
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_NARROW",
+              "primaryState": "collapsed",
+              "activePanel": null,
+              "lastPanel": null,
+              "collapsed": true,
+              "inspectorOpen": false,
+              "creativeOpen": false,
+              "panelWidth": 0,
+              "stageWidth": 880,
+              "dockWidth": 40,
+              "panelGroup": null,
+              "creativeStage": "reference",
+              "contextMode": "draw",
+              "contextTool": "pen",
+              "toolbarLayout": "single",
+              "toolbarLayoutPreference": "single",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "app": {
+              "x": 0,
+              "y": 0,
+              "w": 960,
+              "h": 800,
+              "display": "block",
+              "visibility": "visible"
+            },
+            "tool": {
+              "x": 0,
+              "y": 61,
+              "w": 40,
+              "h": 739,
+              "display": "flex",
+              "visibility": "visible"
+            },
+            "status": {
+              "x": 40,
+              "y": 783,
+              "w": 880,
+              "h": 17,
+              "display": "flex",
+              "visibility": "visible"
+            },
+            "doc": {
+              "x": 0,
+              "y": 0,
+              "w": 960,
+              "h": 800,
+              "display": "block",
+              "visibility": "visible"
+            },
+            "tab": {
+              "x": 40,
+              "y": 61,
+              "w": 880,
+              "h": 29,
+              "display": "flex",
+              "visibility": "visible"
+            },
+            "overflow": {
+              "html": 960,
+              "body": 960,
+              "inner": 960
+            }
+          }
+        },
+        {
+          "name": "no-shell-horizontal-overflow",
+          "pass": true,
+          "detail": {
+            "html": 960,
+            "body": 960,
+            "inner": 960
+          }
+        },
+        {
+          "name": "tool-labels-remain-hidden-without-important",
+          "pass": true,
+          "detail": {
+            "toolLabels": [
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none"
+            ],
+            "emptyMark": "none",
+            "statusGap": "8px",
+            "brushHead": "none"
+          }
+        },
+        {
+          "name": "status-gap-cascade",
+          "pass": true,
+          "detail": {
+            "toolLabels": [
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none",
+              "none"
+            ],
+            "emptyMark": "none",
+            "statusGap": "8px",
+            "brushHead": "none"
+          }
+        },
+        {
+          "name": "brush-flyout-visible-and-heading-hidden",
+          "pass": true,
+          "detail": {
+            "hidden": false,
+            "aria": "true",
+            "rect": {
+              "w": 172,
+              "h": 191,
+              "x": 48,
+              "y": 63
+            },
+            "headDisplay": "none",
+            "subtoolDisplay": "grid"
+          }
+        },
+        {
+          "name": "expanded-panel-visible",
+          "pass": true,
+          "detail": {
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_NARROW",
+              "primaryState": "layers",
+              "activePanel": "layers",
+              "lastPanel": "layers",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 668,
+              "dockWidth": 40,
+              "panelGroup": "editor",
+              "creativeStage": "reference",
+              "contextMode": "draw",
+              "contextTool": "pen",
+              "toolbarLayout": "single",
+              "toolbarLayoutPreference": "single",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "panel": {
+              "x": 708,
+              "y": 61,
+              "w": 252,
+              "h": 739
+            },
+            "framework": {
+              "hidden": false,
+              "x": 709,
+              "y": 694,
+              "w": 251,
+              "h": 106
+            },
+            "regions": 4,
+            "splitters": 3,
+            "section": [
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stacking-framework-present",
+          "pass": true,
+          "detail": {
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_NARROW",
+              "primaryState": "layers",
+              "activePanel": "layers",
+              "lastPanel": "layers",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 668,
+              "dockWidth": 40,
+              "panelGroup": "editor",
+              "creativeStage": "reference",
+              "contextMode": "draw",
+              "contextTool": "pen",
+              "toolbarLayout": "single",
+              "toolbarLayoutPreference": "single",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "panel": {
+              "x": 708,
+              "y": 61,
+              "w": 252,
+              "h": 739
+            },
+            "framework": {
+              "hidden": false,
+              "x": 709,
+              "y": 694,
+              "w": 251,
+              "h": 106
+            },
+            "regions": 4,
+            "splitters": 3,
+            "section": [
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              },
+              {
+                "padding": "0px",
+                "overflow": "hidden",
+                "display": "none"
+              }
+            ]
+          }
+        },
+        {
+          "name": "panel-section-cascade-without-important",
+          "pass": true,
+          "detail": [
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            }
+          ]
+        },
+        {
+          "name": "splitter-drag-interaction",
+          "pass": true,
+          "detail": {
+            "before": {
+              "split": {
+                "x": 834.5,
+                "y": 720.5
+              },
+              "a": 24,
+              "b": 24
+            },
+            "after": {
+              "a": 48,
+              "b": 24,
+              "resizing": false,
+              "cursor": "ns-resize"
+            }
+          }
+        },
+        {
+          "name": "panel-body-scrolling",
+          "pass": true,
+          "detail": {
+            "clientHeight": 436,
+            "scrollHeight": 1046,
+            "before": 0,
+            "after": 610,
+            "max": 610
+          }
+        },
+        {
+          "name": "scrollbar-tokenized-browser-state",
+          "pass": true,
+          "detail": {
+            "width": "16px",
+            "height": "16px",
+            "scrollbarColor": "rgb(184, 184, 184) rgb(244, 244, 244)",
+            "thumbBackground": "rgb(184, 184, 184)",
+            "tokenThumb": "#B8B8B8",
+            "tokenSubtle": "#F4F4F4"
+          }
+        },
+        {
+          "name": "panel-menu-hover-state",
+          "pass": true,
+          "detail": {
+            "normal": {
+              "hidden": false,
+              "button": {
+                "x": 797,
+                "y": 91,
+                "w": 156,
+                "h": 20,
+                "bg": "rgba(0, 0, 0, 0)",
+                "color": "rgb(34, 34, 34)"
+              }
+            },
+            "hover": {
+              "hidden": false,
+              "bg": "rgb(238, 238, 238)",
+              "color": "rgb(34, 34, 34)",
+              "hover": true,
+              "tokenHover": "#EEEEEE",
+              "tokenText": "#222222"
+            },
+            "focus": {
+              "active": true,
+              "focus": true,
+              "focusVisible": true,
+              "bg": "rgb(238, 238, 238)",
+              "outline": "none"
+            }
+          }
+        },
+        {
+          "name": "panel-menu-focus-state",
+          "pass": true,
+          "detail": {
+            "active": true,
+            "focus": true,
+            "focusVisible": true,
+            "bg": "rgb(238, 238, 238)",
+            "outline": "none"
+          }
+        },
+        {
+          "name": "disabled-state-distinct",
+          "pass": false,
+          "detail": {
+            "disabled": false,
+            "disabledStyle": {
+              "opacity": "1",
+              "color": "rgb(86, 86, 86)",
+              "bg": "rgba(0, 0, 0, 0)"
+            },
+            "enabledStyle": {
+              "opacity": "1",
+              "color": "rgb(74, 74, 74)",
+              "bg": "rgba(0, 0, 0, 0)"
+            },
+            "different": true
+          }
+        },
+        {
+          "name": "icon-normal-hover-active-states",
+          "pass": false,
+          "detail": {
+            "normal": {
+              "x": 0,
+              "y": 0,
+              "w": 0,
+              "h": 0,
+              "color": "rgb(34, 34, 34)",
+              "bg": "rgba(0, 0, 0, 0)",
+              "active": false
+            },
+            "hover": {
+              "hover": false,
+              "color": "rgb(34, 34, 34)",
+              "bg": "rgba(0, 0, 0, 0)"
+            },
+            "active": {
+              "active": false,
+              "pressed": "false",
+              "color": "rgb(34, 34, 34)",
+              "bg": "rgba(0, 0, 0, 0)"
+            }
+          }
+        },
+        {
+          "name": "panel-tab-hover-focus",
+          "pass": true,
+          "detail": {
+            "normal": {
+              "selector": "brush",
+              "x": 713,
+              "y": 91,
+              "w": 81,
+              "h": 26,
+              "bg": "rgb(255, 255, 255)",
+              "color": "rgb(59, 99, 251)"
+            },
+            "hover": {
+              "hover": true,
+              "bg": "rgb(255, 255, 255)",
+              "color": "rgb(59, 99, 251)"
+            },
+            "focus": {
+              "active": true,
+              "focus": true,
+              "focusVisible": true,
+              "bg": "rgb(255, 255, 255)",
+              "outline": "solid"
+            }
+          }
+        },
+        {
+          "name": "semantic-light-token-authority-rendered",
+          "pass": false,
+          "detail": {
+            "tokens": {
+              "--ink-ui-bg-base": "#E9E9E9",
+              "--ink-ui-surface": "#FFFFFF",
+              "--ink-ui-surface-subtle": "#F4F4F4",
+              "--ink-ui-text": "#222222",
+              "--ink-ui-text-muted": "#666666",
+              "--ink-ui-text-disabled": "#919191",
+              "--ink-ui-control-hover": "#EEEEEE",
+              "--ink-ui-control-active": "#E8EDFF",
+              "--ink-ui-border": "#CFCFCF",
+              "--ink-ui-border-soft": "#E2E2E2",
+              "--ink-ui-border-strong": "#A0A0A0",
+              "--ink-ui-scrollbar-thumb": "#B8B8B8"
+            },
+            "roleMatch": {
+              "head": {
+                "actual": "rgb(34, 34, 34)",
+                "token": "rgb(34, 34, 34)"
+              },
+              "dock": {
+                "actual": "rgb(59, 99, 251)",
+                "token": "rgb(102, 102, 102)"
+              },
+              "footer": {
+                "border": "rgb(207, 207, 207)",
+                "token": "rgb(207, 207, 207)"
+              }
+            }
+          }
+        },
+        {
+          "name": "primary-secondary-text-contrast",
+          "pass": true,
+          "detail": {
+            "head": {
+              "text": "rgb(34, 34, 34)",
+              "bg": "rgb(244, 244, 244)",
+              "ratio": 14.465375640172933
+            },
+            "tab": {
+              "text": "rgb(59, 99, 251)",
+              "bg": "rgb(244, 244, 244)",
+              "ratio": 4.375462197221441
+            }
+          }
+        },
+        {
+          "name": "expanded-panel-does-not-overlap-document-chrome",
+          "pass": true,
+          "detail": {
+            "panelLeft": 708,
+            "statusRight": 708,
+            "tabRight": 708,
+            "viewport": 960,
+            "statusInside": true,
+            "tabInside": true
+          }
+        }
+      ],
+      "captures": [
+        {
+          "file": "first-paint-960x800.png",
+          "width": 960,
+          "height": 800,
+          "bytes": 23070,
+          "sha256": "c08bfbdf38535658944e606f26e0a3be70da2c1fe5b3f5a9d141ec659257b1ee"
+        },
+        {
+          "file": "normal-960x800.png",
+          "width": 960,
+          "height": 800,
+          "bytes": 33248,
+          "sha256": "0bfdec9de6e16ad1858e7ff9ed92d104842e2969a02f841496d1a1dd1a452d52"
+        },
+        {
+          "file": "brush-flyout-960x800.png",
+          "width": 960,
+          "height": 800,
+          "bytes": 40501,
+          "sha256": "b23d0330fe1944a91b18401988c46a07417e280f3970e07f512bab73fc63b1c9"
+        },
+        {
+          "file": "expanded-layers-960x800.png",
+          "width": 960,
+          "height": 800,
+          "bytes": 39207,
+          "sha256": "047d5b2fc20f0cd15bc8d1d70b14d86f1aaaa595677fba2bbfc07ca8c2700d8c"
+        },
+        {
+          "file": "scrolled-layers-960x800.png",
+          "width": 960,
+          "height": 800,
+          "bytes": 53570,
+          "sha256": "b4aafbeeb03ef4fb6194f2b0f74bc9e2cb94ff9c3bbc172d5bf65aa0e99febe3"
+        },
+        {
+          "file": "panel-options-960x800.png",
+          "width": 960,
+          "height": 800,
+          "bytes": 55191,
+          "sha256": "96df2eaaa2100d44064fc09a654aacb87760932032e7f91bb4277b73957da0bf"
+        }
+      ],
+      "facts": {
+        "firstPaint": {
+          "appBackground": "rgb(231, 231, 231)",
+          "matchedRules": 10
+        },
+        "device": {
+          "dpr": 1,
+          "w": 960,
+          "h": 800,
+          "ready": "complete"
+        },
+        "normalShell": {
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_NARROW",
+            "primaryState": "collapsed",
+            "activePanel": null,
+            "lastPanel": null,
+            "collapsed": true,
+            "inspectorOpen": false,
+            "creativeOpen": false,
+            "panelWidth": 0,
+            "stageWidth": 880,
+            "dockWidth": 40,
+            "panelGroup": null,
+            "creativeStage": "reference",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "app": {
+            "x": 0,
+            "y": 0,
+            "w": 960,
+            "h": 800,
+            "display": "block",
+            "visibility": "visible"
+          },
+          "tool": {
+            "x": 0,
+            "y": 61,
+            "w": 40,
+            "h": 739,
+            "display": "flex",
+            "visibility": "visible"
+          },
+          "status": {
+            "x": 40,
+            "y": 783,
+            "w": 880,
+            "h": 17,
+            "display": "flex",
+            "visibility": "visible"
+          },
+          "doc": {
+            "x": 0,
+            "y": 0,
+            "w": 960,
+            "h": 800,
+            "display": "block",
+            "visibility": "visible"
+          },
+          "tab": {
+            "x": 40,
+            "y": 61,
+            "w": 880,
+            "h": 29,
+            "display": "flex",
+            "visibility": "visible"
+          },
+          "overflow": {
+            "html": 960,
+            "body": 960,
+            "inner": 960
+          }
+        },
+        "cascade": {
+          "toolLabels": [
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none",
+            "none"
+          ],
+          "emptyMark": "none",
+          "statusGap": "8px",
+          "brushHead": "none"
+        },
+        "flyout": {
+          "hidden": false,
+          "aria": "true",
+          "rect": {
+            "w": 172,
+            "h": 191,
+            "x": 48,
+            "y": 63
+          },
+          "headDisplay": "none",
+          "subtoolDisplay": "grid"
+        },
+        "expanded": {
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_NARROW",
+            "primaryState": "layers",
+            "activePanel": "layers",
+            "lastPanel": "layers",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 668,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "reference",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "panel": {
+            "x": 708,
+            "y": 61,
+            "w": 252,
+            "h": 739
+          },
+          "framework": {
+            "hidden": false,
+            "x": 709,
+            "y": 694,
+            "w": 251,
+            "h": 106
+          },
+          "regions": 4,
+          "splitters": 3,
+          "section": [
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            },
+            {
+              "padding": "0px",
+              "overflow": "hidden",
+              "display": "none"
+            }
+          ]
+        },
+        "splitter": {
+          "before": {
+            "split": {
+              "x": 834.5,
+              "y": 720.5
+            },
+            "a": 24,
+            "b": 24
+          },
+          "after": {
+            "a": 48,
+            "b": 24,
+            "resizing": false,
+            "cursor": "ns-resize"
+          }
+        },
+        "scroll": {
+          "clientHeight": 436,
+          "scrollHeight": 1046,
+          "before": 0,
+          "after": 610,
+          "max": 610
+        },
+        "scrollbar": {
+          "width": "16px",
+          "height": "16px",
+          "scrollbarColor": "rgb(184, 184, 184) rgb(244, 244, 244)",
+          "thumbBackground": "rgb(184, 184, 184)",
+          "tokenThumb": "#B8B8B8",
+          "tokenSubtle": "#F4F4F4"
+        },
+        "menuStates": {
+          "normal": {
+            "hidden": false,
+            "button": {
+              "x": 797,
+              "y": 91,
+              "w": 156,
+              "h": 20,
+              "bg": "rgba(0, 0, 0, 0)",
+              "color": "rgb(34, 34, 34)"
+            }
+          },
+          "hover": {
+            "hidden": false,
+            "bg": "rgb(238, 238, 238)",
+            "color": "rgb(34, 34, 34)",
+            "hover": true,
+            "tokenHover": "#EEEEEE",
+            "tokenText": "#222222"
+          },
+          "focus": {
+            "active": true,
+            "focus": true,
+            "focusVisible": true,
+            "bg": "rgb(238, 238, 238)",
+            "outline": "none"
+          }
+        },
+        "disabled": {
+          "disabled": false,
+          "disabledStyle": {
+            "opacity": "1",
+            "color": "rgb(86, 86, 86)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          "enabledStyle": {
+            "opacity": "1",
+            "color": "rgb(74, 74, 74)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          "different": true
+        },
+        "dockStates": {
+          "normal": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0,
+            "color": "rgb(34, 34, 34)",
+            "bg": "rgba(0, 0, 0, 0)",
+            "active": false
+          },
+          "hover": {
+            "hover": false,
+            "color": "rgb(34, 34, 34)",
+            "bg": "rgba(0, 0, 0, 0)"
+          },
+          "active": {
+            "active": false,
+            "pressed": "false",
+            "color": "rgb(34, 34, 34)",
+            "bg": "rgba(0, 0, 0, 0)"
+          }
+        },
+        "tabStates": {
+          "normal": {
+            "selector": "brush",
+            "x": 713,
+            "y": 91,
+            "w": 81,
+            "h": 26,
+            "bg": "rgb(255, 255, 255)",
+            "color": "rgb(59, 99, 251)"
+          },
+          "hover": {
+            "hover": true,
+            "bg": "rgb(255, 255, 255)",
+            "color": "rgb(59, 99, 251)"
+          },
+          "focus": {
+            "active": true,
+            "focus": true,
+            "focusVisible": true,
+            "bg": "rgb(255, 255, 255)",
+            "outline": "solid"
+          }
+        },
+        "tokens": {
+          "--ink-ui-bg-base": "#E9E9E9",
+          "--ink-ui-surface": "#FFFFFF",
+          "--ink-ui-surface-subtle": "#F4F4F4",
+          "--ink-ui-text": "#222222",
+          "--ink-ui-text-muted": "#666666",
+          "--ink-ui-text-disabled": "#919191",
+          "--ink-ui-control-hover": "#EEEEEE",
+          "--ink-ui-control-active": "#E8EDFF",
+          "--ink-ui-border": "#CFCFCF",
+          "--ink-ui-border-soft": "#E2E2E2",
+          "--ink-ui-border-strong": "#A0A0A0",
+          "--ink-ui-scrollbar-thumb": "#B8B8B8"
+        },
+        "roleMatch": {
+          "head": {
+            "actual": "rgb(34, 34, 34)",
+            "token": "rgb(34, 34, 34)"
+          },
+          "dock": {
+            "actual": "rgb(59, 99, 251)",
+            "token": "rgb(102, 102, 102)"
+          },
+          "footer": {
+            "border": "rgb(207, 207, 207)",
+            "token": "rgb(207, 207, 207)"
+          }
+        },
+        "contrast": {
+          "head": {
+            "text": "rgb(34, 34, 34)",
+            "bg": "rgb(244, 244, 244)",
+            "ratio": 14.465375640172933
+          },
+          "tab": {
+            "text": "rgb(59, 99, 251)",
+            "bg": "rgb(244, 244, 244)",
+            "ratio": 4.375462197221441
+          }
+        },
+        "chromeFit": {
+          "panelLeft": 708,
+          "statusRight": 708,
+          "tabRight": 708,
+          "viewport": 960,
+          "statusInside": true,
+          "tabInside": true
+        }
+      },
+      "status": "FAIL"
+    }
+  ],
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.53",
+    "revision": "@792bf6722e73a45aa9e47c163b9901bdc17f3230",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.13"
+  },
+  "browserPath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "completedAt": "2026-09-29T02:04:47.955Z"
+}
