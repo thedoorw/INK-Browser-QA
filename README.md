@@ -174,6 +174,46 @@ Current architecture:
 
 `governance/INK_CHAT_INTEGRATION_ARCHITECTURE_v1.0.md`
 
+
+## Creative reproduction benchmark
+
+The next creative-validation direction is to test INK against mature finished works rather than rely only on isolated capability claims.
+
+Primary source ecosystems:
+
+```text
+Figma
+Penpot
+Adobe
+```
+
+Phase 1 goal:
+
+```text
+mature finished work / tutorial
+→ CHAT inspects the target
+→ CHAT operates authoritative INK capabilities
+→ Preview / compare / correct
+→ History / Revision / operation evidence
+→ finished reproduction
+→ classify real capability gaps
+→ bounded INK correction when authorized
+→ rerun
+→ publish the case/result to a GitHub portfolio
+```
+
+The first major catalog target is **100+ qualified mature cases** across concrete work categories such as poster, logo/brand mark, typography/layout, pattern/print, vector illustration, packaging, composite, social/marketing graphics, icon/symbol systems and related complete works.
+
+The benchmark set as a whole, not every individual case, should progressively cover the practical INK capability surface.
+
+Phase 1 specifically tests whether CHAT can actually use INK to reproduce mature work. Learning and generalizing the original creator's methodology is a later phase.
+
+Program specification:
+
+`research/INK_CREATIVE_REPRODUCTION_BENCHMARK_v0.1.md`
+
+This research direction does not itself authorize product mutation. Current implementation authority remains `ACTIVE/INK_CURRENT_WORK_ORDER.md`.
+
 ## Repository map
 
 ```text
