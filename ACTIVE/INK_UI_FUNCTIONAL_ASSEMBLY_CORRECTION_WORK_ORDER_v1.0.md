@@ -147,13 +147,24 @@ FORMAT_VERSION = 4
 
 Do not create second Core authorities.
 
-## Visual restriction for this pass
+## USER-locked CSS / visual rule
 
-Keep current styling stable enough to inspect the functional assembly.
+The USER explicitly requires a **LIGHT CSS workstation**.
 
-Do not declare Photoshop visual alignment in this task.
+```text
+CSS_THEME = LIGHT / USER_LOCKED
+DARK_WORKSTATION_THEME = REJECTED
+```
 
-Visual reconstruction will be handled only after USER confirms that the workstation functionality and placement are actually assembled.
+The dark CSS layer introduced by the rejected assembly is not authoritative and must not remain as the target theme.
+
+Use `ps-1.png / ps-2.png` for workstation structure, density, hierarchy, toolbar/panel grammar, spacing and control proportions — **not for dark palette inheritance**.
+
+For this functional-assembly pass:
+- restore/maintain a light professional CSS system;
+- keep contrast and density suitable for a mature desktop graphics workstation;
+- do not switch the product to a dark Photoshop palette;
+- do not claim final visual fidelity yet; functional placement/assembly remains the main objective.
 
 ## Required verification
 
