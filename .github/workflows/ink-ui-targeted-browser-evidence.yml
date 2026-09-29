@@ -74,6 +74,19 @@ jobs:
             const qaDest = path.join(root, 'qa/runtime/run-ink-ui-targeted-browser-evidence.mjs');
             await fs.mkdir(path.dirname(qaDest), { recursive:true });
             await fs.writeFile(qaDest, Buffer.from(qaFile.content, 'base64'));
+
+            for (const qaPath of [
+              'qa/ink-ui-final-checklist-css.test.mjs',
+              'qa/ink-ui-a-photoshop-shell-panels.test.mjs',
+              'qa/ink-ui-b-full-capability-controls.test.mjs',
+              'qa/ink-ui-c-photoshop-fidelity-closure.test.mjs'
+            ]) {
+              const { data: targetQa } = await github.rest.repos.getContent({ owner, repo, path:qaPath, ref:targetSha });
+              if (Array.isArray(targetQa) || targetQa.type !== 'file' || targetQa.encoding !== 'base64') throw new Error('Target QA file unavailable: ' + qaPath);
+              const targetQaDest = path.join(root, qaPath);
+              await fs.mkdir(path.dirname(targetQaDest), { recursive:true });
+              await fs.writeFile(targetQaDest, Buffer.from(targetQa.content, 'base64'));
+            }
             await fs.mkdir(path.join(root, 'evidence'), { recursive:true });
             await fs.writeFile(path.join(root, 'evidence', 'target-descriptor.json'), JSON.stringify(descriptor, null, 2));
             await core.summary.addHeading('INK targeted UI browser evidence').addRaw('Exact product SHA: ' + targetSha + '\n\nCentral Runtime: NOT EXECUTED\n').write();
@@ -82,6 +95,9 @@ jobs:
         continue-on-error: true
         shell: pwsh
         run: |
+          Push-Location "$env:INK_UI_TARGETED_ROOT"
+          node --test qa/ink-ui-final-checklist-css.test.mjs qa/ink-ui-a-photoshop-shell-panels.test.mjs qa/ink-ui-b-full-capability-controls.test.mjs qa/ink-ui-c-photoshop-fidelity-closure.test.mjs
+          Pop-Location
           node --check "$env:INK_UI_TARGETED_ROOT\qa\runtime\run-ink-ui-targeted-browser-evidence.mjs"
           node "$env:INK_UI_TARGETED_ROOT\qa\runtime\run-ink-ui-targeted-browser-evidence.mjs" "$env:INK_UI_TARGETED_ROOT"
 
@@ -105,7 +121,7 @@ jobs:
             const baseSha = branch.commit.sha;
             const { data: baseCommit } = await github.rest.git.getCommit({ owner, repo, commit_sha:baseSha });
             const elements = [];
-            const prefix = 'qa/evidence/ink-ui-final-checklist-pr93-targeted-c0c3ddacd07b-hosted-r4/';
+            const prefix = 'qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/';
             for (const name of keep) {
               const bytes = await fs.readFile(path.join(evidenceDir, name));
               const { data: blob } = await github.rest.git.createBlob({

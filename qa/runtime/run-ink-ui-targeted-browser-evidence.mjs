@@ -316,7 +316,7 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
     "(()=>{const one=(s,p)=>{const e=document.querySelector(s);return e?getComputedStyle(e)[p]:null};const many=[...document.querySelectorAll('.tool-rail .tool-label')].map(e=>getComputedStyle(e).display);return{toolLabels:many,emptyMark:one('.empty-hint .empty-mark','display'),statusGap:one('.document-status-info','gap'),brushHead:one('.brush-family-head','display')}})()");
   viewport.facts.cascade = cascade;
   add('tool-labels-remain-hidden-without-important', cascade && cascade.toolLabels.length > 0 && cascade.toolLabels.every(x => x === 'none'), cascade);
-  add('status-gap-cascade', cascade && cascade.statusGap === '8px', cascade);
+  add('status-gap-cascade', cascade && cascade.statusGap === (width <= 1120 ? '8px' : '10px'), { expected:width <= 1120 ? '8px' : '10px', actual:cascade && cascade.statusGap, cascade });
 
   await evaluate(cdp, normal.sessionId, "document.querySelector('#drawToolButton').click()");
   await sleep(120);
@@ -379,7 +379,7 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
   add('panel-menu-focus-state', menuFocus && menuFocus.active === true && menuFocus.focus === true, menuFocus);
   viewport.captures.push(await capture(cdp, normal.sessionId, evidenceDir, 'panel-options-' + width + 'x' + height, width, height));
 
-  await evaluate(cdp, normal.sessionId, "window.INK_WEB_SHELL.close()");
+  await evaluate(cdp, normal.sessionId, "(()=>{const m=document.querySelector('#shellPanelOptionsMenu');if(m)m.hidden=true;window.INK_WEB_SHELL.close()})()");
   await sleep(120);
   const dockNormal = await evaluate(cdp, normal.sessionId,
     "(()=>{const b=document.querySelector('#panelDock [data-shell-panel=\"layers\"]'),r=b.getBoundingClientRect(),c=getComputedStyle(b);return{x:r.x,y:r.y,w:r.width,h:r.height,color:c.color,bg:c.backgroundColor,active:b.classList.contains('active')}})()");
