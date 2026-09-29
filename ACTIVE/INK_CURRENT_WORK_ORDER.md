@@ -26,9 +26,9 @@ LAST_COMPLETED_TASK = INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001
 UI_A_PROMOTION_PR = 83
 UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
-ACTIVE_TASK = INK-UI-FUNCTIONAL-ASSEMBLY-CORRECTION-001
+ACTIVE_TASK = INK-UI-PS-REFERENCE-REASSEMBLY-001
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_DIRECT_MR_NEW_WINDOW_HANDOFF_v1.0.md
-ACTIVE_UI_ASSEMBLY_WORK_ORDER = ACTIVE/INK_UI_FUNCTIONAL_ASSEMBLY_CORRECTION_WORK_ORDER_v1.0.md
+ACTIVE_UI_ASSEMBLY_WORK_ORDER = ACTIVE/INK_UI_PS_REFERENCE_REASSEMBLY_WORK_ORDER_v1.0.md
 ACTIVE_UI_BRANCH = main / bounded direct commits
 
 UI_B = UR_PASS / PROMOTED
@@ -157,7 +157,7 @@ PREVIOUS_GENERIC_SPARSE_LIGHT_UI = REJECTED
 UI_COMPLETE = USER_NOT_YET_DECLARED
 
 NEXT_OWNER = USER + UI_TASK_AUTHOR_CHAT
-NEXT_ACTION = DIRECT_MR_READ_FUNCTIONAL_ASSEMBLY_CORRECTION_AND_EXECUTE
+NEXT_ACTION = DIRECT_MR_READ_PS_REFERENCE_REASSEMBLY_AND_EXECUTE
 ```
 
 R31 USER rejection remains authoritative. The previous UI-A/B/C visual closure and UR visual PASS do not constrain the new reconstruction.
@@ -626,3 +626,21 @@ PS_REFERENCE_COLOR_PALETTE = NOT AUTHORITATIVE
 ```
 
 Current UI assembly and correction tasks must use a professional light CSS workstation. The earlier dark-theme implementation on current main does not represent USER direction and must not be treated as a target.
+
+
+## PS reference reassembly correction — 2026-09-29
+
+The historical Photoshop alignment records and USER-supplied interaction screenshots are implementation authority, not archival decoration.
+
+Active task:
+`ACTIVE/INK_UI_PS_REFERENCE_REASSEMBLY_WORK_ORDER_v1.0.md`
+
+This pass explicitly restores:
+- true double-column desktop Tools;
+- Photoshop-like three-group expanded right panel stack;
+- collapsed right icon Dock as a distinct state;
+- panel tabs/options/splitter/resize grammar;
+- rulers/guides/Navigator/Layers interaction states already captured by USER;
+- removal/re-homing of redundant or low-sense visible controls.
+
+Prior checklist PASS labels do not override visible mismatch to the primary reference.
