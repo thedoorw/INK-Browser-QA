@@ -1,0 +1,77 @@
+<!doctype html><meta charset="utf-8"><title>INK Issue92 Navigator View</title>
+<iframe id="appframe" src="/" style="width:1280px;height:800px;border:0"></iframe>
+<script type="module">
+const results=[];const record=(name,pass,detail=null)=>results.push({name,pass:Boolean(pass),detail});
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const frame=document.querySelector('#appframe');
+await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();};});
+const w=frame.contentWindow,d=frame.contentDocument;
+for(let i=0;i<200&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('runtime unavailable');
+const cam=()=>({...app.page().camera});
+const rect=e=>{const r=e.getBoundingClientRect();return{x:r.x,y:r.y,w:r.width,h:r.height,left:r.left,top:r.top,right:r.right,bottom:r.bottom};};
+const proxyState=()=>{const p=d.querySelector('#shellNavigatorProxy'),r=rect(p);return{rect:r,left:p.style.left,top:p.style.top,width:p.style.width,height:p.style.height,cursor:w.getComputedStyle(p).cursor,dragging:p.classList.contains('dragging')};};
+shell.open('navigator');await sleep(120);
+const preview=d.querySelector('#shellNavigatorPreview'),proxy=d.querySelector('#shellNavigatorProxy'),zoom=d.querySelector('#shellNavigatorZoom'),stage=d.querySelector('#stage');
+const initialProxy=proxyState(),initialCam=cam();
+record('M05 proxy reflects current viewport',Boolean(proxy&&preview&&initialProxy.rect.w>0&&initialProxy.rect.h>0&&Number.isFinite(parseFloat(initialProxy.left))&&Number.isFinite(parseFloat(initialProxy.width))),{cam:initialCam,proxy:initialProxy,zoom:zoom?.value});
+
+const beforePan=proxyState(),camBeforePan=cam();
+stage.dispatchEvent(new w.WheelEvent('wheel',{bubbles:true,cancelable:true,shiftKey:true,deltaY:120,deltaX:0,clientX:400,clientY:300}));
+await sleep(100);
+const afterPan=proxyState(),camAfterPan=cam();
+record('M06 canvas pan updates proxy',(camAfterPan.x!==camBeforePan.x||camAfterPan.y!==camBeforePan.y)&&(afterPan.left!==beforePan.left||afterPan.top!==beforePan.top),{beforeCam:camBeforePan,afterCam:camAfterPan,beforeProxy:beforePan,afterProxy:afterPan});
+
+const beforeWheelZoom=proxyState(),scaleBeforeWheel=app.page().camera.scale;
+stage.dispatchEvent(new w.WheelEvent('wheel',{bubbles:true,cancelable:true,deltaY:-240,clientX:400,clientY:300}));
+await sleep(100);
+const afterWheelZoom=proxyState(),scaleAfterWheel=app.page().camera.scale;
+record('M07 canvas zoom updates proxy',scaleAfterWheel>scaleBeforeWheel&&(afterWheelZoom.width!==beforeWheelZoom.width||afterWheelZoom.height!==beforeWheelZoom.height),{beforeScale:scaleBeforeWheel,afterScale:scaleAfterWheel,beforeProxy:beforeWheelZoom,afterProxy:afterWheelZoom,readout:zoom?.value});
+
+proxy.setPointerCapture=()=>{};proxy.releasePointerCapture=()=>{};
+const pr=proxy.getBoundingClientRect(),camBeforeDrag=cam();
+proxy.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerId:91,button:0,buttons:1,clientX:pr.left+pr.width/2,clientY:pr.top+pr.height/2}));
+const dragState=proxyState();
+proxy.dispatchEvent(new w.PointerEvent('pointermove',{bubbles:true,cancelable:true,pointerId:91,button:0,buttons:1,clientX:pr.left+pr.width/2+24,clientY:pr.top+pr.height/2+12}));
+await sleep(100);
+const camAfterDrag=cam(),proxyAfterDrag=proxyState();
+proxy.dispatchEvent(new w.PointerEvent('pointerup',{bubbles:true,cancelable:true,pointerId:91,button:0,clientX:pr.left+pr.width/2+24,clientY:pr.top+pr.height/2+12}));
+record('M08 proxy drag pans canvas',(camAfterDrag.x!==camBeforeDrag.x||camAfterDrag.y!==camBeforeDrag.y),{before:camBeforeDrag,after:camAfterDrag,dragState,afterProxy:proxyAfterDrag});
+record('AN01 Navigator proxy drag runtime and cursor semantics',dragState.dragging===true&&dragState.cursor==='grabbing'&&(camAfterDrag.x!==camBeforeDrag.x||camAfterDrag.y!==camBeforeDrag.y),{dragState,before:camBeforeDrag,after:camAfterDrag});
+
+const pv=preview.getBoundingClientRect(),camBeforeClick=cam();
+preview.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerId:92,button:0,clientX:pv.left+pv.width*.82,clientY:pv.top+pv.height*.75}));
+await sleep(100);
+const camAfterClick=cam();
+record('M09 thumbnail click repositions canvas view',camAfterClick.x!==camBeforeClick.x||camAfterClick.y!==camBeforeClick.y,{before:camBeforeClick,after:camAfterClick});
+
+record('M10 zoom percentage readout is present',Boolean(zoom&&/%$/.test(String(zoom.value||zoom.textContent||''))),{readout:zoom?.value||zoom?.textContent});
+const navOut=d.querySelector('#shellNavigatorZoomOut'),navIn=d.querySelector('#shellNavigatorZoomIn');
+const scaleBeforeOut=app.page().camera.scale;navOut.click();await sleep(50);const scaleAfterOut=app.page().camera.scale;
+record('M11 Navigator Zoom Out works',scaleAfterOut<scaleBeforeOut,{before:scaleBeforeOut,after:scaleAfterOut,readout:zoom?.value});
+const slider=d.querySelector('[data-content="navigator"] input[type="range"],#shellNavigatorZoomSlider');
+let sliderDetail={exists:Boolean(slider)};
+if(slider){const before=app.page().camera.scale;slider.value=String(Math.max(Number(slider.min||3),Math.min(Number(slider.max||2400),Math.round(before*100*1.3))));slider.dispatchEvent(new w.Event('input',{bubbles:true}));slider.dispatchEvent(new w.Event('change',{bubbles:true}));await sleep(60);sliderDetail={exists:true,before,after:app.page().camera.scale,value:slider.value};}
+record('M12 Navigator zoom slider works',Boolean(slider)&&sliderDetail.after!==sliderDetail.before,sliderDetail);
+const scaleBeforeIn=app.page().camera.scale;navIn.click();await sleep(50);const scaleAfterIn=app.page().camera.scale;
+record('M13 Navigator Zoom In works',scaleAfterIn>scaleBeforeIn,{before:scaleBeforeIn,after:scaleAfterIn,readout:zoom?.value});
+const finite=proxyState();
+record('M16 infinite canvas overview uses finite extent',[finite.left,finite.top,finite.width,finite.height,finite.rect.w,finite.rect.h].every(v=>Number.isFinite(typeof v==='number'?v:parseFloat(v))),finite);
+
+app.page().camera.x=160;app.page().camera.y=-90;app.page().camera.scale=2;app.page().camera.rotation=.35;app.updateStatus();const fit=d.querySelector('#fitBtn');fit.click();await sleep(80);
+const afterFit=cam();
+record('Y02 fit content works',Math.abs(afterFit.x)<1e-6&&Math.abs(afterFit.y)<1e-6&&Math.abs(afterFit.scale-1)<1e-6&&Math.abs(afterFit.rotation)<1e-6,{afterFit});
+
+app.page().camera.x=140;app.page().camera.y=70;app.page().camera.scale=1.7;app.page().camera.rotation=.5;app.updateStatus();
+d.querySelector('#workspaceMenuToggle').click();await sleep(20);const resetItem=d.querySelector('[data-workspace-command="reset-current"]');const resetVisible=resetItem&&!resetItem.closest('[hidden]')&&!resetItem.hidden;resetItem?.click();await sleep(60);
+const afterReset=cam();
+record('Y03 reset view works',Boolean(resetItem)&&Math.abs(afterReset.x)<1e-6&&Math.abs(afterReset.y)<1e-6&&Math.abs(afterReset.scale-1)<1e-6&&Math.abs(afterReset.rotation)<1e-6,{resetVisible,afterReset});
+
+const zi=d.querySelector('#zoomInBtn'),zo=d.querySelector('#zoomOutBtn');
+const y4b=app.page().camera.scale;zi.click();await sleep(40);const y4a=app.page().camera.scale;record('Y04 zoom in works',y4a>y4b,{before:y4b,after:y4a});
+const y5b=app.page().camera.scale;zo.click();await sleep(40);const y5a=app.page().camera.scale;record('Y05 zoom out works',y5a<y5b,{before:y5b,after:y5a});
+app.page().camera.rotation=.7;app.updateStatus();d.querySelector('#rotateResetBtn').click();await sleep(40);record('Y06 reset rotation works',Math.abs(app.page().camera.rotation)<1e-9,{rotation:app.page().camera.rotation,label:d.querySelector('#rotateResetBtn').textContent});
+
+const failed=results.filter(x=>!x.pass);
+await fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({schema:'INK-UI-ISSUE92-NAVIGATOR-VIEW',version:1,status:failed.length?'FAIL':'PASS',checks:results,summary:{total:results.length,passed:results.length-failed.length,failed:failed.length}})});
+</script>
