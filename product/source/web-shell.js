@@ -71,6 +71,14 @@
     { id: 'specialist', label: 'Specialist', items: PANEL_DEFS.filter(def => def.group === 'specialist') }
   ]);
   const PRIMARY_PANEL_STATES = Object.freeze(['collapsed', ...PANEL_DEFS.map(def => def.id)]);
+  const LIBRARY_TYPES = Object.freeze(['component', 'material', 'recipe', 'parametric-structure', 'reference-derived-structure']);
+  const LIBRARY_TYPE_LABELS = Object.freeze({
+    component: 'Components',
+    material: 'Materials',
+    recipe: 'Recipes',
+    'parametric-structure': 'Parametric',
+    'reference-derived-structure': 'Reference-derived'
+  });
 
   const state = {
     root: null,
@@ -100,7 +108,12 @@
     guideReadout: null,
     viewSyncObserver: null,
     viewSyncRaf: 0,
-    navigatorBounds: null
+    navigatorBounds: null,
+    libraryTypes: new Set(LIBRARY_TYPES),
+    libraryResults: [],
+    librarySelectedRef: null,
+    libraryLastProposal: null,
+    libraryProposalSequence: 0
   };
 
   function runtime() {
@@ -702,8 +715,20 @@
       <section class="inspector-section tab-content shell-panel-section" data-content="adjustments" aria-label="調整">
         <div class="shell-panel-body"><p class="shell-panel-note">Adjustments 的正常 panel home 已建立；完整調整命令與參數控制由 UI-B 配線。</p></div>
       </section>
-      <section class="inspector-section tab-content shell-panel-section" data-content="libraries" aria-label="Libraries">
-        <div class="shell-panel-body"><p class="shell-panel-note">Libraries 使用既有資產／匯入 authority；UI-A 僅建立 Photoshop-aligned placement home。</p></div>
+      <section class="inspector-section tab-content shell-panel-section shell-library-panel" data-content="libraries" aria-label="Libraries">
+        <div class="shell-panel-body">
+          <label class="shell-library-search-label" for="shellLibrarySearch"><span>Search</span><input id="shellLibrarySearch" type="search" autocomplete="off" placeholder="Search library"></label>
+          <div id="shellLibraryFilters" class="shell-library-filters" role="group" aria-label="Library families">
+            <button type="button" data-library-type="component" aria-pressed="true">Components</button>
+            <button type="button" data-library-type="material" aria-pressed="true">Materials</button>
+            <button type="button" data-library-type="recipe" aria-pressed="true">Recipes</button>
+            <button type="button" data-library-type="parametric-structure" aria-pressed="true">Parametric</button>
+            <button type="button" data-library-type="reference-derived-structure" aria-pressed="true">Reference</button>
+          </div>
+          <p id="shellLibraryStatus" class="shell-panel-note shell-library-status">Library ready</p>
+          <div id="shellLibraryResults" class="shell-library-results" role="listbox" aria-label="Library results"></div>
+          <label class="shell-library-inspect-label" for="shellLibraryInspect"><span>Inspect · read-only</span><textarea id="shellLibraryInspect" class="shell-library-inspect" readonly aria-readonly="true" spellcheck="false"></textarea></label>
+        </div>
       </section>`);
     return true;
   }
@@ -823,6 +848,114 @@
     slider.setAttribute('aria-valuetext', zoom.value);
   }
 
+  function libraryTools(app = runtime()) {
+    return app?.inkPublicApi?.tools?.invoke ? app.inkPublicApi.tools : null;
+  }
+
+  function setLibraryStatus(message, stateName = 'ready') {
+    const node = document.querySelector('#shellLibraryStatus');
+    if (!node) return;
+    node.textContent = String(message || '');
+    node.dataset.state = stateName;
+  }
+
+  function selectedLibraryTargets(app) {
+    const pageId = app?.page?.()?.id || app?.doc?.activePageId || '';
+    return (app?.selection || []).map(ref => ({
+      pageId,
+      layerId: String(ref?.layerId || ''),
+      objectId: String(ref?.objectId || '')
+    })).filter(ref => ref.pageId && ref.layerId && ref.objectId);
+  }
+
+  function inspectLibraryItem(item) {
+    const tools = libraryTools();
+    const inspect = document.querySelector('#shellLibraryInspect');
+    if (!tools || !inspect || !item?.ref) return false;
+    const response = tools.invoke('search_ink_library', { action: 'inspect', ref: item.ref });
+    const inspected = response?.result?.item || response?.result || null;
+    inspect.value = JSON.stringify(inspected, null, 2);
+    inspect.dataset.libraryInspectType = item.type || '';
+    inspect.dataset.libraryInspectId = item.ref?.id || '';
+    state.librarySelectedRef = item.ref;
+    setLibraryStatus(response?.status === 'COMPLETED' ? 'Inspect · ' + (item.label || item.type) + ' · read-only' : 'Inspect failed', response?.status === 'COMPLETED' ? 'ready' : 'error');
+    return response?.status === 'COMPLETED';
+  }
+
+  function proposeLibraryReuse(item) {
+    const app = runtime();
+    const tools = libraryTools(app);
+    const reuse = item?.reuse;
+    if (!app || !tools || reuse?.classification !== 'REUSE_AVAILABLE_EXISTING_AUTHORITY' || !reuse.operation) return null;
+    const targets = reuse.operation === 'component.instance.create.v1' ? [] : selectedLibraryTargets(app);
+    if (reuse.operation === 'path.material.apply.v1' && !targets.length) {
+      setLibraryStatus('Select a Path before proposing material reuse', 'warn');
+      return null;
+    }
+    const task = {
+      taskId: 'library-panel-' + (++state.libraryProposalSequence),
+      operation: reuse.operation,
+      targets,
+      arguments: reuse.arguments || {}
+    };
+    const response = tools.invoke(reuse.namedTool || 'propose_ink_edit', { task });
+    state.libraryLastProposal = response;
+    const proposed = response?.status === 'PROPOSED';
+    setLibraryStatus(proposed ? 'Proposal created · ' + reuse.operation + ' · not executed' : 'Proposal failed · ' + reuse.operation, proposed ? 'proposal' : 'error');
+    return response;
+  }
+
+  function renderShellLibraries() {
+    const app = runtime();
+    const tools = libraryTools(app);
+    const search = document.querySelector('#shellLibrarySearch');
+    const root = document.querySelector('#shellLibraryResults');
+    if (!app || !tools || !search || !root) return false;
+    const types = [...state.libraryTypes];
+    document.querySelectorAll('[data-library-type]').forEach(button => button.setAttribute('aria-pressed', String(state.libraryTypes.has(button.dataset.libraryType))));
+    const response = tools.invoke('search_ink_library', { action: 'search', query: search.value || '', types, limit: 50 });
+    const results = Array.isArray(response?.result?.results) ? response.result.results : [];
+    state.libraryResults = results;
+    root.innerHTML = '';
+    for (const item of results) {
+      const row = document.createElement('div');
+      row.className = 'shell-library-result';
+      row.dataset.libraryResultType = item.type || '';
+      row.dataset.libraryResultId = item.ref?.id || '';
+      row.setAttribute('role', 'option');
+      const head = document.createElement('div');
+      head.className = 'shell-library-result-head';
+      const copy = document.createElement('span');
+      const strong = document.createElement('strong');
+      strong.textContent = item.label || item.ref?.id || item.type || 'Library item';
+      const small = document.createElement('small');
+      small.textContent = LIBRARY_TYPE_LABELS[item.type] || item.type || '';
+      copy.append(strong, small);
+      const actions = document.createElement('span');
+      actions.className = 'shell-library-result-actions';
+      const inspectButton = document.createElement('button');
+      inspectButton.type = 'button';
+      inspectButton.textContent = 'Inspect';
+      inspectButton.addEventListener('click', () => inspectLibraryItem(item));
+      actions.append(inspectButton);
+      if (item.reuse?.classification === 'REUSE_AVAILABLE_EXISTING_AUTHORITY' && item.reuse?.operation) {
+        const reuseButton = document.createElement('button');
+        reuseButton.type = 'button';
+        reuseButton.textContent = 'Use / Propose';
+        reuseButton.dataset.libraryReuseType = item.type || '';
+        reuseButton.dataset.libraryReuseOperation = item.reuse.operation;
+        reuseButton.addEventListener('click', () => proposeLibraryReuse(item));
+        actions.append(reuseButton);
+      }
+      head.append(copy, actions);
+      row.append(head);
+      root.append(row);
+    }
+    const matched = Number(response?.result?.totalMatched ?? results.length);
+    setLibraryStatus(response?.status === 'COMPLETED' ? matched + ' matched · ' + results.length + ' shown' : 'Library search failed', response?.status === 'COMPLETED' ? 'ready' : 'error');
+    return response?.status === 'COMPLETED';
+  }
+
   function syncSupplementalPanels() {
     const app = runtime();
     if (!state.root) return;
@@ -833,6 +966,7 @@
     const active = currentPanel();
     if (active === 'pages') renderShellPages();
     else if (active === 'navigator') renderShellNavigator();
+    else if (active === 'libraries') renderShellLibraries();
     else if (active === 'color') {
       const current = document.querySelector('#colorInput')?.value || '#202020';
       const color = document.querySelector('#shellColorInput');
@@ -845,6 +979,23 @@
   function bindSupplementalPanelControls() {
     const app = runtime();
     if (!app) return false;
+    const librarySearch = document.querySelector('#shellLibrarySearch');
+    if (librarySearch && librarySearch.dataset.bound !== 'true') {
+      librarySearch.dataset.bound = 'true';
+      librarySearch.addEventListener('input', renderShellLibraries);
+    }
+    document.querySelectorAll('[data-library-type]').forEach(button => {
+      if (button.dataset.bound === 'true') return;
+      button.dataset.bound = 'true';
+      button.addEventListener('click', () => {
+        const type = button.dataset.libraryType;
+        if (!LIBRARY_TYPES.includes(type)) return;
+        if (state.libraryTypes.has(type)) {
+          if (state.libraryTypes.size > 1) state.libraryTypes.delete(type);
+        } else state.libraryTypes.add(type);
+        renderShellLibraries();
+      });
+    });
     const pageList = document.querySelector('#shellPagesList');
     if (pageList && pageList.dataset.bound !== 'true') {
       pageList.dataset.bound = 'true';
