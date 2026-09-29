@@ -906,7 +906,7 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=399 / FAIL=192 / N_A=1 / UNREVIEWED=0 / OPEN=192`
+`TOTAL=592 / PASS=406 / FAIL=185 / N_A=1 / UNREVIEWED=0 / OPEN=185`
 
 A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. Runtime run 36445204976 remains PASS for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b. Current main 3608962c changes no product source since that SHA; no new central Runtime was run.
 
@@ -934,10 +934,10 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | C06 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
 | C07 | PASS | artifact 10979718534 ui.json checks #3–10 plus qa/evidence/ink-ui-final-checklist-closure-001/ink-top-61px.png and ps-ink-major-edge-overlay.png show 24+1+35+1 shell without gap/double divider. | — |
 | D01 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
-| D02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for D02: no dead top-level menu label exists. [INT] | UI-AUD-08 |
+| D02 | PASS | artifact 10979718534 ui.json checks #51–56 verifies live menu controller; qa/ink-ui-a-photoshop-shell-panels.test.mjs asserts all 11 top-level triggers; qa/ink-ui-b-full-capability-controls.test.mjs verifies every visible UI-B menu command has a dispatch path. | — |
 | D03 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
 | D04 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
-| D05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for D05: promoted Filter menu is present and routes only accepted C25/P1-F filter authority; no unbacked filter chrome exists. [SRC][INT] | UI-AUD-08 |
+| D05 | PASS | qa/ink-ui-b-full-capability-controls.test.mjs asserts Filter > filter-gallery and all visible contributions route; working/INK_UI_B_FULL_CAPABILITY_CONTROLS_UR_REVIEW_v1.0.md §2 confirms accepted P1-F authority and no unhandled visible commands. | — |
 | D06 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
 | D07 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
 | D08 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
@@ -969,13 +969,13 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | F09 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
 | F10 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
 | F11 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
-| F12 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F12: Select is present. [INT] | UI-AUD-08 |
-| F13 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F13: Lasso is present. [INT] | UI-AUD-08 |
+| F12 | PASS | artifact 10979718534 ui.json check #20 records Select in frozen visible tool order; product/source/web-shell.js CONTEXT_TOOL_META select. | — |
+| F13 | PASS | artifact 10979718534 ui.json check #20 records Lasso in frozen visible tool order; product/source/web-shell.js CONTEXT_TOOL_META lasso. | — |
 | F14 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
 | F15 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
-| F16 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F16: Image is present. [INT] | UI-AUD-08 |
-| F17 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F17: Pan is present. [INT] | UI-AUD-08 |
-| F18 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F18: five Draw tools share one flyout/group authority. [INT] | UI-AUD-08 |
+| F16 | PASS | artifact 10979718534 ui.json check #20 records Image in frozen visible tool order; product/source/web-shell.js CONTEXT_TOOL_META image. | — |
+| F17 | PASS | artifact 10979718534 ui.json check #20 records Pan in frozen visible tool order; product/source/web-shell.js CONTEXT_TOOL_META pan. | — |
+| F18 | PASS | artifact 10979718534 ui.json checks #20 and #67–71 exercise one Draw stack and pen/pencil/marker/brush/airbrush contextual routes; qa/ink-ui-b-full-capability-controls.test.mjs validates the draw group registry. | — |
 | F19 | FAIL | Final screenshots do not show the required state/comparison for F19: grouped tool shows a flyout indicator. [PIX] | UI-AUD-02 |
 | F20 | PASS | artifact 10979718534 / ui.json checks #20–24, #67–74; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md selected tool fill; working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md tool disposition. | — |
 | F21 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for F21: hover/focus states work. [INT] | UI-AUD-08 |
