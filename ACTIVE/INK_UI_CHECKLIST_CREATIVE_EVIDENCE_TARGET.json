@@ -2,12 +2,12 @@
   "schema": "ink-ui-checklist-creative-evidence-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "7a86ef6124fb18c6d05c0c520020663f65882c5a",
+  "target_sha": "c636354c29f0dfc5e379088de169d083e3df4ce5",
   "scope": "Issue #92 evidence-only / creative browser suite only / current promoted product",
   "suites": [
     "creative"
   ],
   "central_runtime": false,
-  "run_generation": 3,
-  "retrigger_reason": "no evidence commit after initial workflow timeout window"
+  "run_generation": 4,
+  "retrigger_reason": "materialize large binary fixture via Git Blob API; retarget current promoted product"
 }
