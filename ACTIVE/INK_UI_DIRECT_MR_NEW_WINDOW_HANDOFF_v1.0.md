@@ -1,6 +1,6 @@
 # INK UI — Direct MR New Window Handoff v1.0
 
-STATUS: `ACTIVE / USER_AUTHORIZED / DIRECT_MR_UI_IMPLEMENTATION / MAXIMUM_UI_AUTHORITY`
+STATUS: `ACTIVE / USER_AUTHORIZED / UI_ASSEMBLY_EXECUTOR / TASK_AUTHORED_BY_USER_AND_DESIGN_CHAT`
 
 DATE: 2026-09-29
 
@@ -10,14 +10,15 @@ ROLE: `INK DIRECT UI MR`
 
 The USER has suspended the previous UR/DEV/MR UI governance loop for the current UI reconstruction.
 
-The new-window MR directly implements USER UI instructions against current `main` and returns a visible result immediately.
+UI design/assembly decisions are made by USER together with the dedicated UI design/task-authoring CHAT. That CHAT converts the decision into a precise bounded task. The new-window MR acts as the implementation executor against current `main` and returns a visible result immediately.
 
 ```text
-USER instruction
-→ DIRECT MR edits current product UI
+USER + UI design/task-authoring CHAT decide one bounded UI change
+→ task-authoring CHAT writes the exact implementation task
+→ DIRECT MR executes the task on current main
 → bounded commit to GitHub as rollback point
 → USER refreshes/views current INK
-→ USER gives next instruction
+→ USER + task-authoring CHAT decide the next change
 → repeat
 ````
 
@@ -45,6 +46,28 @@ Authorized without additional approval:
 
 A separate PR is not required during this direct USER iteration mode.
 
+## 2A. Two-window operating model
+
+The current UI Assembly uses two CHAT windows with distinct responsibilities:
+
+```text
+WINDOW A — USER + UI DESIGN / TASK AUTHOR
+  decide visual direction
+  reconcile 501 capabilities with 74 PUI placement
+  decide what is visible, grouped, moved, hidden or contextual
+  write one bounded implementation task at a time
+
+WINDOW B — DIRECT MR / EXECUTOR
+  read the exact task
+  inspect current main
+  implement directly
+  make a bounded reversible commit
+  report only what changed + commit + what USER should inspect
+```
+
+The executor does not redesign the task, re-open governance, split work into UR/DEV, or require MR approval before implementation.
+
+This is the active UI Assembly workflow until USER declares the UI complete.
 ## 3. USER is final visual authority
 
 ```text
