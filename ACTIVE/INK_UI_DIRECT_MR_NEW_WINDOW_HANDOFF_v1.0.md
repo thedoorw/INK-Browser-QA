@@ -26,6 +26,16 @@ There is no UR handoff, DEV handoff, MR pre-approval gate, promotion review, or 
 
 Only after USER explicitly says the UI is finished/accepted does the project return to final technical reconciliation and release decision.
 
+## 1A. Current mandatory execution task
+
+Read and execute:
+
+`ACTIVE/INK_UI_PS_REFERENCE_REASSEMBLY_WORK_ORDER_v1.0.md`
+
+This task supersedes any assumption that the current visible single-rail / category-bar / duplicate-icon arrangement should be preserved merely because routes exist.
+
+The historical Photoshop reference measurements, USER interaction captures and checklist requirements named in that work order are active implementation evidence.
+
 ## 2. Authority
 
 The Direct UI MR has the broadest implementation authority inside the UI lane.
