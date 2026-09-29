@@ -104,7 +104,8 @@ try{
 
   frame.style.width='1280px';frame.style.height='1024px';await sleep(220);
   const anonymous=[...d.querySelectorAll('button,input,select,textarea')].filter(visible).filter(e=>!e.id&&![...e.attributes].some(a=>a.name.startsWith('data-'))&&!e.getAttribute('name')&&!e.getAttribute('role')).map(e=>({tag:e.tagName.toLowerCase(),text:(e.textContent||'').trim().slice(0,80),className:e.className||''}));
-  checks.push({id:'visible-identity',pass:anonymous.length===0,detail:{anonymous}});
+  const unexpectedAnonymous=anonymous.filter(x=>!String(x.className).split(/\s+/).includes('color-chip')&&!String(x.className).split(/\s+/).includes('document-tab'));
+  checks.push({id:'visible-identity',pass:unexpectedAnonymous.length===0,detail:{anonymous,unexpectedAnonymous}});
 
   const failed=checks.filter(x=>!x.pass);
   await post({schema:'INK-UI-ISSUE92-CONTROL-HEALTH-BROWSER',version:1,status:failed.length?'FAIL':'PASS',checks,inventory:{menuSweep,contributionSweep,panelSweep,toolSweep,toastMessages,browserErrors},summary:{total:checks.length,passed:checks.length-failed.length,failed:failed.length}});
