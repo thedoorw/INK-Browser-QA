@@ -1,12 +1,88 @@
 {
   "schema": "INK-UI-ISSUE92-LIBRARIES",
   "version": 1,
-  "status": "ERROR",
-  "checks": [],
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "O03",
+      "pass": false,
+      "detail": {
+        "exists": false
+      }
+    },
+    {
+      "id": "O04",
+      "pass": false,
+      "detail": {
+        "familyCount": 0
+      }
+    },
+    {
+      "id": "O05",
+      "pass": false,
+      "detail": {
+        "type": "component",
+        "exists": false
+      }
+    },
+    {
+      "id": "O06",
+      "pass": false,
+      "detail": {
+        "type": "material",
+        "exists": false
+      }
+    },
+    {
+      "id": "O07",
+      "pass": false,
+      "detail": {
+        "type": "recipe",
+        "exists": false
+      }
+    },
+    {
+      "id": "O08",
+      "pass": false,
+      "detail": {
+        "type": "parametric-structure",
+        "exists": false
+      }
+    },
+    {
+      "id": "O09",
+      "pass": false,
+      "detail": {
+        "type": "reference-derived-structure",
+        "exists": false
+      }
+    },
+    {
+      "id": "O10",
+      "pass": false,
+      "detail": {
+        "inspectExists": false,
+        "readOnly": null
+      }
+    },
+    {
+      "id": "O11",
+      "pass": false,
+      "detail": {
+        "exists": false
+      }
+    },
+    {
+      "id": "O12",
+      "pass": false,
+      "detail": {
+        "exists": false
+      }
+    }
+  ],
   "summary": {
     "total": 10,
     "passed": 0,
     "failed": 10
-  },
-  "error": "TypeError: Cannot read properties of undefined (reading 'visible')\n    at renderer.drawObject (http://127.0.0.1:49999/src/studio-core.js:34:55)\n    at drawObject (http://127.0.0.1:49999/src/studio-core.js:34:399)\n    at drawVectorObject (http://127.0.0.1:49999/src/vector/vector-core.js:193:114)\n    at renderer.drawObject (http://127.0.0.1:49999/src/studio-core.js:34:344)\n    at Renderer.drawLayerObjects (http://127.0.0.1:49999/src/ink.js?v=0.1:173:852)\n    at renderer.drawLayerObjects (http://127.0.0.1:49999/src/studio-core.js:64:2001)\n    at Renderer.render (http://127.0.0.1:49999/src/ink.js?v=0.1:148:113)\n    at InkApp.refreshAll (http://127.0.0.1:49999/src/ink.js?v=0.1:459:332)\n    at http://127.0.0.1:49999/__qa_harness.html:19:7"
+  }
 }

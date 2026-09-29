@@ -2,7 +2,7 @@
   "schema": "INK-UI-ISSUE92-LIBRARIES-REPORT",
   "targetSha": "182e73e071e20404c8394f6e883304b5c102b831",
   "centralRuntimeExecuted": false,
-  "status": "ERROR",
+  "status": "FAIL",
   "summary": {
     "total": 10,
     "passed": 0,
