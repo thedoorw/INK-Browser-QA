@@ -1,6 +1,6 @@
 # INK UI Assembly Completion Work Order v1.0
 
-STATUS: `ACTIVE / USER_AUTHORIZED / DIRECT_IMPLEMENTATION`
+STATUS: `USER_REJECTED / ASSEMBLY_NOT_COMPLETE / SUPERSEDED_BY_CORRECTION`
 
 TASK: `INK-UI-ASSEMBLY-COMPLETION-001`
 
@@ -845,3 +845,33 @@ Only USER may decide final UI completion.
 This task exists to do one thing:
 
 **assemble the already-installed INK capability base into the complete visible and operable INK workstation UI.**
+
+
+## USER rejection — 2026-09-29
+
+The delivered result is rejected.
+
+Repository inspection at current main `32b446a662a6f2269333433dd0c3ac1c4b08d2a8` proves the task was not completed as specified.
+
+Observed current UI:
+
+```text
+File menu = 4 commands
+Edit = 3
+Image = 1
+Layer = 1
+Type = 1
+Select = 1
+Filter = 0
+Object = 1
+View = 3
+Help = 1
+
+panel tabs = brush / object / geometry / ai / studio
+dialogs = aiTransmissionDialog only
+toolbar tool identities = 12
+```
+
+The implementation mostly changed shell labels/routing and added a dark CSS layer. It did not complete the required PUI assembly.
+
+This work order is superseded. Do not continue it.
