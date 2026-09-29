@@ -1,0 +1,12 @@
+{
+  "schema": "ink-ui-issue92-visual-fine-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "e107555fb99255a05d4056aa1db572e534c9763b",
+  "scope": "UI-AUD-02 screenshot states + UI-AUD-03 fine-detail actual geometry / no central Runtime",
+  "suites": [
+    "visual-fine-detail"
+  ],
+  "central_runtime": false,
+  "run_generation": 1
+}
