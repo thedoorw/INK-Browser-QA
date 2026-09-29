@@ -1,8 +1,8 @@
 {
   "schema": "ink-ui-issue92-properties-layers-target",
   "version": 1,
-  "target_sha": "182e73e071e20404c8394f6e883304b5c102b831",
-  "scope": "J03 J04 J06 J07 J08 J09 K10 K13 baseline interaction / no central Runtime",
+  "target_sha": "d2e3aad0bab179d1318cf28796ed317be7fe97f9",
+  "scope": "J03 J04 J06 J07 J08 K10 exact-candidate mutation + J09 K13 regression / no central Runtime",
   "central_runtime": false,
-  "run_generation": 1
+  "run_generation": 2
 }

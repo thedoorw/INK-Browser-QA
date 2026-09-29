@@ -1,4 +1,4 @@
-<!doctype html><meta charset="utf-8"><title>INK Properties Layers Interaction</title>
+<!doctype html><meta charset="utf-8"><title>INK Properties Layers Exact Candidate</title>
 <iframe id="f" src="/?fresh=1" style="width:1280px;height:800px;border:0"></iframe>
 <script type="module">
 const sleep=ms=>new Promise(r=>setTimeout(r,ms)),frame=document.querySelector('#f');
@@ -8,46 +8,94 @@ try{
   const w=frame.contentWindow,d=frame.contentDocument;
   for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
   const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
-  const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0};
   const q=s=>d.querySelector(s),qa=s=>[...d.querySelectorAll(s)];
+  const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0};
+  const change=(node,value)=>{node.value=value;node.dispatchEvent(new w.Event('input',{bubbles:true}));node.dispatchEvent(new w.Event('change',{bubbles:true}));};
+
   const path={id:'prop-path',type:'path',name:'Property Path',matrix:[1,0,0,1,100,100],opacity:.8,visible:true,fill:'#d7889b',stroke:'#55343d',strokeWidth:2,subpaths:[{closed:true,anchors:[{x:0,y:0,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},{x:40,y:0,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},{x:40,y:40,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},{x:0,y:40,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'}]}]};
-  app.layer().objects.push(path);app.refreshAll();app.selectOnly(app.layer().id,path.id);shell.open('properties');await sleep(100);
-  const j03=visible(q('#objectOpacity'))&&Boolean(q('#shellPathFill')&&visible(q('#shellPathFill')))&&Boolean(q('#shellPathStroke')&&visible(q('#shellPathStroke')));
-  const j04=Boolean(q('#shellMaterialSelect')&&visible(q('#shellMaterialSelect'))&&q('#shellMaterialApply')&&q('#shellMaterialRemove')&&q('#shellMaterialState'));
+  app.layer().objects.push(path);
+  app.doc.materialLibrary={format:'INK-MATERIAL-LIBRARY',version:'1.0',templates:[{templateId:'material:test',templateVersion:'1.0.0',name:'Test Material',materialType:'paint',semanticRole:'test',pathAppearance:{fill:'#abcdef',stroke:'#123456'}}]};
+  app.refreshAll();app.selectOnly(app.layer().id,path.id);shell.open('properties');await sleep(120);
+
+  const fill=q('#shellPathFill'),stroke=q('#shellPathStroke'),opacity=q('#shellPathOpacity');
+  const h0=app.history.undoStack.length;
+  if(fill) change(fill,'#112233');await sleep(60);
+  if(stroke) change(stroke,'#445566');await sleep(60);
+  if(opacity) change(opacity,'55');await sleep(60);
+  const j03=Boolean(fill&&stroke&&opacity&&visible(fill)&&visible(stroke)&&visible(opacity)&&path.fill==='#112233'&&path.stroke==='#445566'&&Math.abs(path.opacity-.55)<1e-6&&app.history.undoStack.length>=h0+3);
+
+  const materialSelect=q('#shellMaterialSelect'),materialApply=q('#shellMaterialApply'),materialRemove=q('#shellMaterialRemove'),materialState=q('#shellMaterialState');
+  if(materialSelect) materialSelect.value='material:test';
+  const materialHistory=app.history.undoStack.length;
+  materialApply?.click();await sleep(80);
+  const applied=path.materialAppearance?.templateId==='material:test'&&/Applied/.test(materialState?.textContent||'');
+  materialRemove?.click();await sleep(80);
+  const removed=!path.materialAppearance&&/No material/.test(materialState?.textContent||'');
+  const j04=Boolean(materialSelect&&visible(materialSelect)&&materialApply&&materialRemove&&applied&&removed&&app.history.undoStack.length>=materialHistory+2);
+
+  app.selectOnly(app.layer().id,path.id);
   const frameObj=app.frameSelection({name:'Property Frame',padding:10});
-  frameObj.layout={schema:'INK-LAYOUT-1',mode:'horizontal',gap:8,padding:{top:4,right:4,bottom:4,left:4},align:{main:'start',cross:'center'},sizing:{horizontal:'fixed',vertical:'fixed'}};
-  const child=frameObj.children[0];child.layoutItem={schema:'INK-LAYOUT-ITEM-1',participation:'flow',sizing:{horizontal:'hug',vertical:'hug'},fixedSize:{width:40,height:40},constraints:{horizontal:'start',vertical:'start'}};
-  app.refreshAll();app.selectOnly(app.layer().id,frameObj.id);shell.open('properties');await sleep(60);
-  const j06=Boolean(q('#shellFrameLayout')&&visible(q('#shellFrameLayout')));
-  app.selectOnly(app.layer().id,child.id);shell.open('properties');await sleep(60);
-  const j07=Boolean(q('#shellLayoutItem')&&visible(q('#shellLayoutItem')));
+  app.selectOnly(app.layer().id,frameObj.id);shell.open('properties');await sleep(80);
+  const frameCard=q('#shellFrameLayout'),frameMode=q('#shellFrameLayoutMode'),frameGap=q('#shellFrameLayoutGap'),framePadding=q('#shellFrameLayoutPadding');
+  const frameHistory=app.history.undoStack.length;
+  if(frameMode) change(frameMode,'vertical');await sleep(60);
+  if(frameGap) change(frameGap,'12');await sleep(60);
+  if(framePadding) change(framePadding,'6');await sleep(60);
+  const j06=Boolean(frameCard&&visible(frameCard)&&frameObj.layout?.schema==='INK-LAYOUT-1'&&frameObj.layout?.mode==='vertical'&&frameObj.layout?.gap===12&&frameObj.layout?.padding?.top===6&&app.history.undoStack.length>=frameHistory+3);
+
+  const child=frameObj.children[0];
+  app.selectOnly(app.layer().id,child.id);shell.open('properties');await sleep(80);
+  const itemCard=q('#shellLayoutItem'),participation=q('#shellLayoutParticipation'),horizontal=q('#shellLayoutHorizontal'),vertical=q('#shellLayoutVertical');
+  const itemHistory=app.history.undoStack.length;
+  if(participation) change(participation,'absolute');await sleep(60);
+  if(horizontal) change(horizontal,'fixed');await sleep(60);
+  if(vertical) change(vertical,'fill');await sleep(60);
+  const j07=Boolean(itemCard&&visible(itemCard)&&child.layoutItem?.schema==='INK-LAYOUT-ITEM-1'&&child.layoutItem?.participation==='absolute'&&child.layoutItem?.sizing?.horizontal==='fixed'&&child.layoutItem?.sizing?.vertical==='fill'&&app.history.undoStack.length>=itemHistory+3);
+
   const definition=app.registerComponent(frameObj.id,'Property Component');
   const instance=app.createInstance(definition.id,{matrix:[1,0,0,1,260,120]});
-  app.refreshAll();app.selectOnly(app.layer().id,instance.id);shell.open('properties');await sleep(60);
-  const j08=Boolean(q('#shellComponentState')&&visible(q('#shellComponentState')));
+  app.selectOnly(app.layer().id,instance.id);shell.open('properties');await sleep(100);
+  const componentCard=q('#shellComponentState'),nodeSelect=q('#shellComponentOverrideNode'),componentOpacity=q('#shellComponentOverrideOpacity'),componentApply=q('#shellComponentOverrideApply'),componentReset=q('#shellComponentOverrideReset');
+  const nodeId=[...nodeSelect?.options||[]].map(o=>o.value).includes(child.id)?child.id:nodeSelect?.value;
+  if(nodeSelect&&nodeId) nodeSelect.value=nodeId;
+  if(componentOpacity) componentOpacity.value='65';
+  componentApply?.click();await sleep(80);
+  const overrideApplied=Boolean(nodeId&&Math.abs((instance.overrides?.[nodeId]?.opacity??-1)-.65)<1e-6);
+  componentReset?.click();await sleep(80);
+  const overrideReset=Boolean(nodeId&&!instance.overrides?.[nodeId]);
+  const j08=Boolean(componentCard&&visible(componentCard)&&nodeSelect&&componentApply&&componentReset&&overrideApplied&&overrideReset);
+
   q('#settingsToggle')?.click();await sleep(30);
   const settings=q('#canvasSettings');
   const j09=Boolean(settings&&!settings.hidden&&q('#artboardPreset')&&q('#layoutViewportScale')&&q('#layoutViewportX')&&q('#layoutViewportY'));
   q('#settingsToggle')?.click();
-  shell.open('layers');await sleep(80);
-  const childRow=q('#layersList [data-object-id="'+child.id+'"]');
-  const k10=Boolean(childRow&&childRow.querySelector('[data-reparent-action]'));
+
+  shell.open('layers');await sleep(100);
+  const childRow=q('#layersList [data-object-id="'+child.id+'"]'),reparent=childRow?.querySelector('[data-reparent-action]');
+  const reparentHistory=app.history.undoStack.length;
+  reparent?.click();await sleep(100);
+  const moved=app.findObject({objectId:child.id});
+  const k10=Boolean(childRow&&reparent&&moved&&!moved.parentObject&&app.history.undoStack.length>=reparentHistory+1);
+
   const beforeLayers=app.page().layers.length;
   const layerNew=q('[data-ui-b-command="layer-new"]');
   layerNew?.click();await sleep(80);
   const afterLayers=app.page().layers.length,renderedLayers=qa('#layersList .layer-row').length;
   const k13=Boolean(layerNew&&afterLayers===beforeLayers+1&&renderedLayers===afterLayers);
+
   const checks=[
-    {id:'J03',pass:j03,detail:{opacity:visible(q('#objectOpacity')),fill:Boolean(q('#shellPathFill')),stroke:Boolean(q('#shellPathStroke'))}},
-    {id:'J04',pass:j04,detail:{select:Boolean(q('#shellMaterialSelect')),apply:Boolean(q('#shellMaterialApply')),remove:Boolean(q('#shellMaterialRemove')),state:Boolean(q('#shellMaterialState'))}},
-    {id:'J06',pass:j06,detail:{frameLayout:Boolean(q('#shellFrameLayout'))}},
-    {id:'J07',pass:j07,detail:{layoutItem:Boolean(q('#shellLayoutItem'))}},
-    {id:'J08',pass:j08,detail:{componentState:Boolean(q('#shellComponentState'))}},
+    {id:'J03',pass:j03,detail:{fill:path.fill,stroke:path.stroke,opacity:path.opacity,history:app.history.undoStack.length}},
+    {id:'J04',pass:j04,detail:{applied,removed}},
+    {id:'J06',pass:j06,detail:{layout:frameObj.layout}},
+    {id:'J07',pass:j07,detail:{layoutItem:child.layoutItem}},
+    {id:'J08',pass:j08,detail:{nodeId,overrideApplied,overrideReset}},
     {id:'J09',pass:j09,detail:{settings:Boolean(settings),artboard:Boolean(q('#artboardPreset')),viewport:Boolean(q('#layoutViewportScale'))}},
-    {id:'K10',pass:k10,detail:{childRow:Boolean(childRow),reparent:Boolean(childRow?.querySelector('[data-reparent-action]'))}},
+    {id:'K10',pass:k10,detail:{reparent:Boolean(reparent),parentAfter:moved?.parentObject?.id||null}},
     {id:'K13',pass:k13,detail:{layerNew:Boolean(layerNew),beforeLayers,afterLayers,renderedLayers}}
   ];
   const failed=checks.filter(x=>!x.pass);
-  await post({schema:'INK-UI-ISSUE92-PROPERTIES-LAYERS',version:1,status:failed.length?'FAIL':'PASS',checks,summary:{total:8,passed:8-failed.length,failed:failed.length}});
-}catch(error){await post({schema:'INK-UI-ISSUE92-PROPERTIES-LAYERS',version:1,status:'ERROR',checks:[],summary:{total:8,passed:0,failed:8},error:String(error?.stack||error)});}
+  await post({schema:'INK-UI-ISSUE92-PROPERTIES-LAYERS',version:2,status:failed.length?'FAIL':'PASS',checks,summary:{total:8,passed:8-failed.length,failed:failed.length}});
+}catch(error){
+  await post({schema:'INK-UI-ISSUE92-PROPERTIES-LAYERS',version:2,status:'ERROR',checks:[],summary:{total:8,passed:0,failed:8},error:String(error?.stack||error)});
+}
 </script>

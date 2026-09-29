@@ -1,4 +1,4 @@
-name: INK Issue92 Properties Layers Evidence
+name: INK Issue92 Properties Layers Exact Candidate Evidence
 on:
   push:
     branches: [main]
@@ -35,4 +35,4 @@ jobs:
         shell: pwsh
         run: |
           $r=Get-Content "$env:INK_EVIDENCE_ROOT\evidence\report.json" -Raw | ConvertFrom-Json
-          if($r.status -eq "ERROR"){Write-Error $r.error;exit 1}
+          if($r.status -ne "PASS"){Write-Error ("Properties/Layers gate: "+$r.status);exit 1}
