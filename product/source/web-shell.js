@@ -675,6 +675,7 @@
         <div class="shell-panel-footer navigator-footer">
           <button type="button" id="shellNavigatorFit">符合</button>
           <button type="button" id="shellNavigatorZoomOut" aria-label="縮小">−</button>
+          <input id="shellNavigatorZoomSlider" type="range" min="3" max="2400" step="1" value="100" aria-label="導覽器縮放">
           <output id="shellNavigatorZoom">100%</output>
           <button type="button" id="shellNavigatorZoomIn" aria-label="放大">＋</button>
         </div>
@@ -801,7 +802,8 @@
     const canvas = document.querySelector('#shellNavigatorCanvas');
     const proxy = document.querySelector('#shellNavigatorProxy');
     const zoom = document.querySelector('#shellNavigatorZoom');
-    if (!app?.page?.() || !app.renderer?.viewportWorldBounds || !canvas || !proxy || !zoom) return;
+    const slider = document.querySelector('#shellNavigatorZoomSlider');
+    if (!app?.page?.() || !app.renderer?.viewportWorldBounds || !canvas || !proxy || !zoom || !slider) return;
     const bounds = navigatorDocumentBounds(app, canvas);
     state.navigatorBounds = bounds;
     drawNavigatorDocument(app, canvas, bounds);
@@ -814,8 +816,11 @@
     proxy.style.height = proxyH + '%';
     proxy.style.left = proxyX + '%';
     proxy.style.top = proxyY + '%';
-    const scale = Math.max(.03, Number(app.page().camera?.scale) || 1);
-    zoom.value = Math.round(scale * 100) + '%';
+    const scale = Math.min(24, Math.max(.03, Number(app.page().camera?.scale) || 1));
+    const percent = Math.round(scale * 100);
+    zoom.value = percent + '%';
+    slider.value = String(percent);
+    slider.setAttribute('aria-valuetext', zoom.value);
   }
 
   function syncSupplementalPanels() {
@@ -868,6 +873,16 @@
     bind('#shellNavigatorFit', () => { app.fitContent?.(); renderShellNavigator(); });
     bind('#shellNavigatorZoomOut', () => { app.zoomBy?.(1 / 1.2); renderShellNavigator(); });
     bind('#shellNavigatorZoomIn', () => { app.zoomBy?.(1.2); renderShellNavigator(); });
+    const zoomSlider = document.querySelector('#shellNavigatorZoomSlider');
+    if (zoomSlider && zoomSlider.dataset.bound !== 'true') {
+      zoomSlider.dataset.bound = 'true';
+      zoomSlider.addEventListener('input', event => {
+        const requested = Math.min(24, Math.max(.03, Number(event.target.value) / 100 || 1));
+        const current = Math.min(24, Math.max(.03, Number(app.page?.().camera?.scale) || 1));
+        if (Math.abs(requested - current) > 1e-6) app.zoomBy?.(requested / current);
+        renderShellNavigator();
+      });
+    }
 
     const color = document.querySelector('#shellColorInput');
     const hex = document.querySelector('#shellColorHex');
