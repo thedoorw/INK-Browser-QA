@@ -76,4 +76,17 @@ test('Creative regression suite no longer owns Closure proof and accepts append-
   assert.doesNotMatch(creative, /C2C_GATE_PASS/);
 });
 
+
+test('central UI Runtime harness follows the R14 single Primary Home contract', async () => {
+  const harness = await readFile(path.join(root, 'qa/runtime/ink-web-ui-001-harness.html'), 'utf8');
+
+  assert.match(harness, /doc\.querySelector\('#contextualOptions'\)\?\.dataset\.uiRoute === 'PRIMARY_HOME'/);
+  assert.match(harness, /!doc\.querySelector\('#quickControls'\)\?\.dataset\.uiHome/);
+  assert.match(harness, /doc\.querySelector\('#quickControls'\)\?\.dataset\.uiRoute !== 'PRIMARY_HOME'/);
+  assert.doesNotMatch(
+    harness,
+    /doc\.querySelector\('#quickControls'\)\?\.dataset\.uiRoute === 'PRIMARY_HOME'/
+  );
+});
+
 console.log('INK-TECH-CLOSURE-001 final Runtime prep focused QA: PASS');
