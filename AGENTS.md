@@ -74,6 +74,12 @@ UI-only work follows:
 
 `governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
 
+Visible UI verification must also follow:
+
+`governance/INK_UI_HTML_CSS_ASSEMBLY_VERIFICATION_RULE_v0.1.md`
+
+For any visible UI PASS, inspect the assembled current-main HTML/post-Runtime DOM together with effective CSS. Source registries, Runtime PASS, capability ledgers, and checklist counts cannot substitute for HTML/CSS assembly evidence.
+
 The Photoshop-aligned UI-A/B/C program is closed. Its completed delegation record is:
 
 `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
