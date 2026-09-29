@@ -3605,7 +3605,12 @@ kbd,
   .panel-stack-region[data-stack-panel="libraries"] #creativeWorkspace{display:none!important}
   .panel-stack-body #creativeWorkspace .creative-workspace-head{display:none}
   .panel-stack-body #creativeWorkspace .creative-workspace-state{display:none}
+  .panel-stack-body #creativeWorkspace .creative-workspace-tabs button:not([data-workspace-stage="edit"]){display:none}
+  .panel-stack-body #creativeWorkspace .creative-workspace-tabs{justify-content:flex-start}
   .panel-stack-body #creativeWorkspace .creative-workspace-body{min-height:0;overflow:auto}
+  .navigator-footer{flex-wrap:nowrap;gap:1px;padding:0 3px}
+  .navigator-footer button{flex:0 0 auto;min-width:24px;height:21px;padding:0 3px;white-space:nowrap}
+  .navigator-footer output{min-width:35px}
   #inspector{display:none!important}
   .panel-stack-splitter{z-index:2;flex:0 0 3px;height:3px;min-height:3px;background:var(--ink-ui-border-strong);cursor:ns-resize}
   .panel-stack-splitter:hover{background:var(--ink-ui-accent)}
