@@ -1,0 +1,79 @@
+{
+  "schema": "INK-UI-ISSUE92-PROPERTIES-LAYERS",
+  "version": 1,
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "J03",
+      "pass": false,
+      "detail": {
+        "opacity": false,
+        "fill": false,
+        "stroke": false
+      }
+    },
+    {
+      "id": "J04",
+      "pass": false,
+      "detail": {
+        "select": false,
+        "apply": false,
+        "remove": false,
+        "state": false
+      }
+    },
+    {
+      "id": "J06",
+      "pass": false,
+      "detail": {
+        "frameLayout": false
+      }
+    },
+    {
+      "id": "J07",
+      "pass": false,
+      "detail": {
+        "layoutItem": false
+      }
+    },
+    {
+      "id": "J08",
+      "pass": false,
+      "detail": {
+        "componentState": false
+      }
+    },
+    {
+      "id": "J09",
+      "pass": true,
+      "detail": {
+        "settings": true,
+        "artboard": true,
+        "viewport": true
+      }
+    },
+    {
+      "id": "K10",
+      "pass": false,
+      "detail": {
+        "childRow": true,
+        "reparent": false
+      }
+    },
+    {
+      "id": "K13",
+      "pass": true,
+      "detail": {
+        "layerNew": true,
+        "beforeLayers": 1,
+        "afterLayers": 2,
+        "renderedLayers": 2
+      }
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 2,
+    "failed": 6
+  }
+}
