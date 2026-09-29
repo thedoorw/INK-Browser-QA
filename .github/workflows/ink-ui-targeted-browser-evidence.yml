@@ -1,0 +1,150 @@
+name: INK UI Targeted Browser Evidence
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ACTIVE/INK_UI_TARGETED_BROWSER_TARGET.json
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ink-ui-targeted-browser-evidence
+  cancel-in-progress: false
+
+jobs:
+  targeted-browser-evidence:
+    name: Exact-SHA targeted UI browser evidence
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 15
+    steps:
+      - name: Materialize exact target and targeted QA runner
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const crypto = require('node:crypto');
+            const { owner, repo } = context.repo;
+            const exact = /^[a-f0-9]{40}$/;
+            const { data: targetFile } = await github.rest.repos.getContent({
+              owner, repo, path: 'ACTIVE/INK_UI_TARGETED_BROWSER_TARGET.json', ref: context.sha
+            });
+            if (Array.isArray(targetFile) || targetFile.type !== 'file' || targetFile.encoding !== 'base64') throw new Error('Target descriptor invalid');
+            const descriptor = JSON.parse(Buffer.from(targetFile.content, 'base64').toString('utf8'));
+            if (descriptor.schema !== 'ink-ui-targeted-browser-target' || descriptor.version !== 1) throw new Error('Unsupported target descriptor');
+            if (descriptor.task !== 'INK-UI-FINAL-CHECKLIST-CLOSURE-001' || !exact.test(descriptor.target_sha || '')) throw new Error('Exact PR93 target required');
+
+            const targetSha = descriptor.target_sha;
+            const { data: targetCommit } = await github.rest.repos.getCommit({ owner, repo, ref: targetSha });
+            if (targetCommit.sha !== targetSha) throw new Error('Target SHA did not resolve exactly');
+            const { data: tree } = await github.rest.git.getTree({ owner, repo, tree_sha: targetCommit.commit.tree.sha, recursive: '1' });
+            if (tree.truncated) throw new Error('Refuse truncated target tree');
+            const files = tree.tree.filter(item => item.type === 'blob' && item.path.startsWith('product/source/'));
+            const required = new Set(['product/source/index.html','product/source/styles.css','product/source/web-shell.js']);
+            const productPaths = new Set(files.map(file => file.path));
+            for (const p of required) if (!productPaths.has(p)) throw new Error('Missing target product input: ' + p);
+
+            const root = await fs.mkdtemp(path.join(process.env.RUNNER_TEMP, 'ink-ui-targeted-'));
+            core.exportVariable('INK_UI_TARGETED_ROOT', root);
+            core.exportVariable('INK_TARGET_SHA', targetSha);
+            core.exportVariable('INK_WORKFLOW_SHA', context.sha);
+
+            let cursor = 0;
+            await Promise.all(Array.from({ length: 4 }, async () => {
+              while (cursor < files.length) {
+                const item = files[cursor++];
+                const { data } = await github.rest.git.getBlob({ owner, repo, file_sha:item.sha });
+                if (data.encoding !== 'base64') throw new Error('Unsupported blob encoding: ' + item.path);
+                const bytes = Buffer.from(data.content, 'base64');
+                const blobSha = crypto.createHash('sha1').update('blob ' + bytes.length + '\0').update(bytes).digest('hex');
+                if (blobSha !== item.sha) throw new Error('Blob integrity failure: ' + item.path);
+                const dest = path.join(root, item.path);
+                await fs.mkdir(path.dirname(dest), { recursive:true });
+                await fs.writeFile(dest, bytes);
+              }
+            }));
+
+            const { data: qaFile } = await github.rest.repos.getContent({
+              owner, repo, path: 'qa/runtime/run-ink-ui-targeted-browser-evidence.mjs', ref: context.sha
+            });
+            if (Array.isArray(qaFile) || qaFile.type !== 'file' || qaFile.encoding !== 'base64') throw new Error('Targeted QA runner unavailable');
+            const qaDest = path.join(root, 'qa/runtime/run-ink-ui-targeted-browser-evidence.mjs');
+            await fs.mkdir(path.dirname(qaDest), { recursive:true });
+            await fs.writeFile(qaDest, Buffer.from(qaFile.content, 'base64'));
+            await fs.mkdir(path.join(root, 'evidence'), { recursive:true });
+            await fs.writeFile(path.join(root, 'evidence', 'target-descriptor.json'), JSON.stringify(descriptor, null, 2));
+            await core.summary.addHeading('INK targeted UI browser evidence').addRaw('Exact product SHA: ' + targetSha + '\n\nCentral Runtime: NOT EXECUTED\n').write();
+
+      - name: Run targeted browser evidence only
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          node "$env:INK_UI_TARGETED_ROOT\qa\runtime\run-ink-ui-targeted-browser-evidence.mjs" "$env:INK_UI_TARGETED_ROOT"
+
+      - name: Publish evidence to GitHub SSOT
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const { owner, repo } = context.repo;
+            const root = process.env.INK_UI_TARGETED_ROOT;
+            const targetSha = process.env.INK_TARGET_SHA;
+            if (!root || !targetSha) throw new Error('Targeted evidence root unavailable');
+            const evidenceDir = path.join(root, 'evidence');
+            const names = await fs.readdir(evidenceDir);
+            const keep = names.filter(name => name.endsWith('.json') || name.endsWith('.png')).sort();
+            if (!keep.includes('report.json')) throw new Error('Targeted report missing');
+
+            const { data: branch } = await github.rest.repos.getBranch({ owner, repo, branch:'main' });
+            const baseSha = branch.commit.sha;
+            const { data: baseCommit } = await github.rest.git.getCommit({ owner, repo, commit_sha:baseSha });
+            const elements = [];
+            const prefix = 'qa/evidence/ink-ui-final-checklist-pr93-targeted-c0c3ddacd07b/';
+            for (const name of keep) {
+              const bytes = await fs.readFile(path.join(evidenceDir, name));
+              const { data: blob } = await github.rest.git.createBlob({
+                owner, repo,
+                content:bytes.toString(name.endsWith('.png') ? 'base64' : 'utf8'),
+                encoding:name.endsWith('.png') ? 'base64' : 'utf-8'
+              });
+              elements.push({ path:prefix + name, mode:'100644', type:'blob', sha:blob.sha });
+            }
+            const { data: tree } = await github.rest.git.createTree({
+              owner, repo, base_tree:baseCommit.tree.sha, tree:elements
+            });
+            const { data: commit } = await github.rest.git.createCommit({
+              owner, repo,
+              message:'qa(ui): record PR93 exact-SHA browser evidence',
+              tree:tree.sha,
+              parents:[baseSha]
+            });
+            await github.rest.git.updateRef({
+              owner, repo, ref:'heads/main', sha:commit.sha, force:false
+            });
+            core.notice('Evidence commit ' + commit.sha);
+
+      - name: Gate targeted evidence result
+        shell: pwsh
+        run: |
+          $report = Get-Content "$env:INK_UI_TARGETED_ROOT\evidence\report.json" -Raw | ConvertFrom-Json
+          if ($report.status -ne "PASS") {
+            Write-Error ("Targeted UI browser evidence FAIL: " + ($report.failures -join "; "))
+            exit 1
+          }
+
+      - name: Remove this run's temporary source
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('node:fs/promises');
+            const path = require('node:path');
+            const root = process.env.INK_UI_TARGETED_ROOT;
+            if (root && path.dirname(root) === path.resolve(process.env.RUNNER_TEMP) && path.basename(root).startsWith('ink-ui-targeted-')) {
+              await fs.rm(root, { recursive:true, force:true, maxRetries:3 });
+            }
