@@ -1,0 +1,12 @@
+{
+  "schema": "ink-ui-issue92-workstation-interaction-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "c636354c29f0dfc5e379088de169d083e3df4ce5",
+  "scope": "Issue #92 D10/E03/E04/E05/E10/G06/J01/J02/J05/K02/N02/N03 focused browser evidence / no central Runtime",
+  "suites": [
+    "workstation-interactions"
+  ],
+  "central_runtime": false,
+  "run_generation": 1
+}
