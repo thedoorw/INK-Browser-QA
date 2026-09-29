@@ -18,6 +18,8 @@ test('Libraries reuse remains governed proposal-only',()=>{
   const body=shell.slice(start,end);
   assert.match(body,/reuse\.namedTool \|\| 'propose_ink_edit'/);
   assert.match(body,/operation: reuse\.operation/);
+  assert.match(body,/argumentsPayload\.pageId = pageId/);
+  assert.match(body,/argumentsPayload\.layerId = layerId/);
   assert.doesNotMatch(body,/approve_ink_edit|execute_ink_edit|\.approve\(|\.execute\(/);
   assert.doesNotMatch(body,/doc\.components\s*=|doc\.materialLibrary\s*=/);
 });

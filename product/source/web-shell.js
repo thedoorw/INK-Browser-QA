@@ -887,16 +887,28 @@
     const tools = libraryTools(app);
     const reuse = item?.reuse;
     if (!app || !tools || reuse?.classification !== 'REUSE_AVAILABLE_EXISTING_AUTHORITY' || !reuse.operation) return null;
-    const targets = reuse.operation === 'component.instance.create.v1' ? [] : selectedLibraryTargets(app);
+    const componentCreate = reuse.operation === 'component.instance.create.v1';
+    const targets = componentCreate ? [] : selectedLibraryTargets(app);
     if (reuse.operation === 'path.material.apply.v1' && !targets.length) {
       setLibraryStatus('Select a Path before proposing material reuse', 'warn');
       return null;
+    }
+    const argumentsPayload = { ...(reuse.arguments || {}) };
+    if (componentCreate) {
+      const pageId = app.page?.()?.id || app.doc?.activePageId || '';
+      const layerId = app.layer?.()?.id || app.page?.()?.activeLayerId || '';
+      if (!pageId || !layerId) {
+        setLibraryStatus('Active page/layer unavailable for component reuse', 'error');
+        return null;
+      }
+      argumentsPayload.pageId = pageId;
+      argumentsPayload.layerId = layerId;
     }
     const task = {
       taskId: 'library-panel-' + (++state.libraryProposalSequence),
       operation: reuse.operation,
       targets,
-      arguments: reuse.arguments || {}
+      arguments: argumentsPayload
     };
     const response = tools.invoke(reuse.namedTool || 'propose_ink_edit', { task });
     state.libraryLastProposal = response;
