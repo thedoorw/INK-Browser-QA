@@ -2,12 +2,11 @@
   "schema": "INK-UI-ISSUE92-LAYERS-HISTORY-REPORT",
   "targetSha": "306ff4e5364eeebe66fd811f5d93693bc96a3575",
   "centralRuntimeExecuted": false,
-  "status": "FAIL",
-  "profile": "D:\\a\\_temp\\ink-lh-kXC3Qz\\profile-lh-iScRDT",
+  "status": "PASS",
+  "profile": "D:\\a\\_temp\\ink-lh-wtHtq3\\profile-lh-Kq9GKh",
   "summary": {
     "total": 13,
-    "passed": 10,
-    "failed": 3
-  },
-  "error": "Error: EBUSY: resource busy or locked, unlink 'D:\\a\\_temp\\ink-lh-kXC3Qz\\profile-lh-iScRDT\\lockfile'"
+    "passed": 13,
+    "failed": 0
+  }
 }

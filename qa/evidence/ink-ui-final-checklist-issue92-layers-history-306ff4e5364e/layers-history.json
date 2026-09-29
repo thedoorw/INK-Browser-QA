@@ -1,7 +1,7 @@
 {
   "schema": "INK-UI-ISSUE92-LAYERS-HISTORY",
   "version": 1,
-  "status": "FAIL",
+  "status": "PASS",
   "checks": [
     {
       "name": "K01 layer hierarchy row count matches document layers",
@@ -54,27 +54,27 @@
     },
     {
       "name": "K09 layer drag reorder works",
-      "pass": false,
+      "pass": true,
       "detail": {
         "beforeOrder": [
-          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
-          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
-          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
-          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
+          "26be192c-6a2b-4c42-bfd9-5c051ea4e9ef",
+          "7f737ee3-a0af-4bf8-a2c4-a2b3e4cf2147",
+          "da87e3c2-1ba0-4294-a918-9802f78f5624",
+          "a689fc08-807a-466f-9105-71e4a146418f"
         ],
         "afterOrder": [
-          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
-          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
-          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
-          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
+          "26be192c-6a2b-4c42-bfd9-5c051ea4e9ef",
+          "7f737ee3-a0af-4bf8-a2c4-a2b3e4cf2147",
+          "a689fc08-807a-466f-9105-71e4a146418f",
+          "da87e3c2-1ba0-4294-a918-9802f78f5624"
         ]
       }
     },
     {
       "name": "AM12 reorder enters History authority",
-      "pass": false,
+      "pass": true,
       "detail": {
-        "lastHistory": "調整圖層透明度"
+        "lastHistory": "拖曳移動圖層"
       }
     },
     {
@@ -82,26 +82,26 @@
       "pass": true,
       "detail": {
         "undoOrder": [
-          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
-          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
-          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
-          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
+          "26be192c-6a2b-4c42-bfd9-5c051ea4e9ef",
+          "7f737ee3-a0af-4bf8-a2c4-a2b3e4cf2147",
+          "da87e3c2-1ba0-4294-a918-9802f78f5624",
+          "a689fc08-807a-466f-9105-71e4a146418f"
         ],
         "redoOrder": [
-          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
-          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
-          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
-          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
+          "26be192c-6a2b-4c42-bfd9-5c051ea4e9ef",
+          "7f737ee3-a0af-4bf8-a2c4-a2b3e4cf2147",
+          "a689fc08-807a-466f-9105-71e4a146418f",
+          "da87e3c2-1ba0-4294-a918-9802f78f5624"
         ]
       }
     },
     {
       "name": "K12 long layer list scroll works",
-      "pass": false,
+      "pass": true,
       "detail": {
-        "scrollHeight": 605,
-        "clientHeight": 605,
-        "scrollTop": 0
+        "scrollHeight": 1010,
+        "clientHeight": 460,
+        "scrollTop": 550
       }
     },
     {
@@ -130,7 +130,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "1c04cbd4-8a64-477f-a56b-cda95f285003"
+                  "value": "e277aff9-8883-4fba-bc6f-ca16e612ea25"
                 },
                 {
                   "op": "array-insert",
@@ -141,7 +141,7 @@
                   ],
                   "index": 28,
                   "value": {
-                    "id": "1c04cbd4-8a64-477f-a56b-cda95f285003",
+                    "id": "e277aff9-8883-4fba-bc6f-ca16e612ea25",
                     "name": "圖層 29",
                     "visible": true,
                     "locked": false,
@@ -159,7 +159,7 @@
                     "layers"
                   ],
                   "index": 28,
-                  "id": "1c04cbd4-8a64-477f-a56b-cda95f285003"
+                  "id": "e277aff9-8883-4fba-bc6f-ca16e612ea25"
                 },
                 {
                   "op": "set",
@@ -168,7 +168,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "8df7c5ad-fb45-4ff3-ab21-6bdae8823218"
+                  "value": "9606f8b8-63f3-4eeb-b6f4-c6a909d34f35"
                 }
               ],
               "captureMode": "scoped",
@@ -177,7 +177,7 @@
               "patchCount": 2,
               "storedBytes": 486,
               "objectIds": [
-                "1c04cbd4-8a64-477f-a56b-cda95f285003"
+                "e277aff9-8883-4fba-bc6f-ca16e612ea25"
               ]
             },
             {
@@ -190,7 +190,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "d77c9659-670a-40f1-9189-fe9e14d7952d"
+                  "value": "833c93cc-c958-4264-aa71-a142278ce8dc"
                 },
                 {
                   "op": "array-insert",
@@ -201,7 +201,7 @@
                   ],
                   "index": 29,
                   "value": {
-                    "id": "d77c9659-670a-40f1-9189-fe9e14d7952d",
+                    "id": "833c93cc-c958-4264-aa71-a142278ce8dc",
                     "name": "圖層 30",
                     "visible": true,
                     "locked": false,
@@ -219,7 +219,7 @@
                     "layers"
                   ],
                   "index": 29,
-                  "id": "d77c9659-670a-40f1-9189-fe9e14d7952d"
+                  "id": "833c93cc-c958-4264-aa71-a142278ce8dc"
                 },
                 {
                   "op": "set",
@@ -228,7 +228,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "1c04cbd4-8a64-477f-a56b-cda95f285003"
+                  "value": "e277aff9-8883-4fba-bc6f-ca16e612ea25"
                 }
               ],
               "captureMode": "scoped",
@@ -237,7 +237,7 @@
               "patchCount": 2,
               "storedBytes": 486,
               "objectIds": [
-                "d77c9659-670a-40f1-9189-fe9e14d7952d"
+                "833c93cc-c958-4264-aa71-a142278ce8dc"
               ]
             }
           ],
@@ -257,7 +257,7 @@
   ],
   "summary": {
     "total": 13,
-    "passed": 10,
-    "failed": 3
+    "passed": 13,
+    "failed": 0
   }
 }
