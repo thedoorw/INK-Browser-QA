@@ -135,11 +135,11 @@ DEV_MAY_MODIFY_UI = BOUNDED_CSS_FINDINGS_ONLY / WORKPACK_IN_WORKING
 OPEN_FINAL_RUNTIME_BLOCKERS = 0
 UR_FULL_CHECKLIST_AUDIT = MR_PASS_AS_AUDIT_RECORD
 CHECKLIST_TOTAL = 592
-CHECKLIST_PASS = 399
-CHECKLIST_FAIL = 192
+CHECKLIST_PASS = 406
+CHECKLIST_FAIL = 185
 CHECKLIST_N_A = 1
 UNREVIEWED_CHECKLIST_ITEMS = 0
-OPEN_CHECKLIST_ITEMS = 192
+OPEN_CHECKLIST_ITEMS = 185
 USER_ACCEPTANCE_PENDING = 10
 UI_COMPLETE = HOLD
 FORMAT_VERSION = 4
@@ -412,3 +412,8 @@ No product source changed in R1. Final integrated Runtime remains valid for unch
 - Evidence-only QA backlog: [issue #92](https://github.com/thedoorw/INK-Browser-QA/issues/92), branch `work/ink-ui-final-checklist-evidence-002`, workpack `working/INK_UI_FINAL_CHECKLIST_EVIDENCE_ONLY_QA_WORKPACK_v1.0.md`.
 
 UR owns both rechecks. Neither issue authorizes Core/global mutation or automatic central Runtime. `UI_COMPLETE = HOLD`.
+
+
+## Final checklist closure R2 — 2026-09-29
+
+`working/INK_UI_FINAL_CHECKLIST_CLOSURE_UR_EVIDENCE_R2_v1.0.md` closes `D02 D05 F12 F13 F16 F17 F18` from exact Runtime/source evidence. Current: `592 / 406 PASS / 185 FAIL / 1 N_A / 0 UNREVIEWED / 185 OPEN`. USER acceptance 10 pending; `UI_COMPLETE = HOLD`. No product source change or central Runtime rerun.
