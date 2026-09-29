@@ -1,0 +1,132 @@
+{
+  "schema": "INK-UI-ISSUE92-LIBRARIES",
+  "version": 2,
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "O05",
+      "pass": true,
+      "detail": {
+        "initialTypes": [
+          "component",
+          "material",
+          "recipe",
+          "parametric-structure",
+          "reference-derived-structure"
+        ]
+      }
+    },
+    {
+      "id": "O06",
+      "pass": true,
+      "detail": {
+        "initialTypes": [
+          "component",
+          "material",
+          "recipe",
+          "parametric-structure",
+          "reference-derived-structure"
+        ]
+      }
+    },
+    {
+      "id": "O07",
+      "pass": true,
+      "detail": {
+        "initialTypes": [
+          "component",
+          "material",
+          "recipe",
+          "parametric-structure",
+          "reference-derived-structure"
+        ]
+      }
+    },
+    {
+      "id": "O08",
+      "pass": true,
+      "detail": {
+        "initialTypes": [
+          "component",
+          "material",
+          "recipe",
+          "parametric-structure",
+          "reference-derived-structure"
+        ]
+      }
+    },
+    {
+      "id": "O09",
+      "pass": true,
+      "detail": {
+        "initialTypes": [
+          "component",
+          "material",
+          "recipe",
+          "parametric-structure",
+          "reference-derived-structure"
+        ]
+      }
+    },
+    {
+      "id": "O03",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "searchPass": true,
+        "restoredTypes": [
+          "component",
+          "material",
+          "recipe",
+          "parametric-structure",
+          "reference-derived-structure"
+        ]
+      }
+    },
+    {
+      "id": "O04",
+      "pass": true,
+      "detail": {
+        "familyCount": 5,
+        "filterPass": true
+      }
+    },
+    {
+      "id": "O10",
+      "pass": true,
+      "detail": {
+        "readOnly": true,
+        "ariaReadonly": "true",
+        "containsRef": true,
+        "documentUnchanged": true
+      }
+    },
+    {
+      "id": "O11",
+      "pass": false,
+      "detail": {
+        "exists": true,
+        "operation": "component.instance.create.v1",
+        "status": "Proposal failed · component.instance.create.v1",
+        "state": "error",
+        "documentUnchanged": true
+      }
+    },
+    {
+      "id": "O12",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "operation": "path.material.apply.v1",
+        "status": "Proposal created · path.material.apply.v1 · not executed",
+        "state": "proposal",
+        "documentUnchanged": true
+      }
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "passed": 9,
+    "failed": 1
+  }
+}
