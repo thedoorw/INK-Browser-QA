@@ -8,5 +8,6 @@
     "workstation-interactions"
   ],
   "central_runtime": false,
-  "run_generation": 1
+  "run_generation": 2,
+  "diagnostic_note": "N02 page panel mount/binding/visibility split; N03 forced non-trivial two-page selection"
 }

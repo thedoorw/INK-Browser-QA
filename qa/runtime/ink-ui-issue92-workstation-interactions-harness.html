@@ -79,14 +79,24 @@ const childRow=d.querySelector('#layersList [data-object-id="'+path.id+'"]');chi
 const childSynced=Boolean(childRow&&app.selection[0]?.objectId===path.id&&d.querySelector('#layersList [data-object-id="'+path.id+'"]')?.classList.contains('active'));
 record('K02',frameSynced&&childSynced,{frameId:frameObject?.id,frameSynced,childSynced,selection:app.selection});
 
-// N02 / N03 — Pages list is usable and selection changes the canonical activePageId.
-shell.open('pages');await sleep(40);const list=d.querySelector('#shellPagesList'),initialRows=[...list.querySelectorAll('[data-page-id]')],initialCount=initialRows.length;
-d.querySelector('#shellPagesAdd').click();await sleep(50);const rows=[...list.querySelectorAll('[data-page-id]')],added=rows.length===initialCount+1;
-const firstId=rows[0]?.dataset.pageId,lastId=rows.at(-1)?.dataset.pageId;
-rows[0]?.click();await sleep(30);const firstSelected=app.doc.activePageId===firstId&&d.querySelector('[data-page-id="'+firstId+'"]')?.getAttribute('aria-selected')==='true';
-d.querySelector('[data-page-id="'+lastId+'"]')?.click();await sleep(30);const lastSelected=app.doc.activePageId===lastId&&d.querySelector('[data-page-id="'+lastId+'"]')?.getAttribute('aria-selected')==='true';
-record('N02',initialCount>=1&&added&&rows.every(r=>visible(r)),{initialCount,afterAdd:rows.length,visible:rows.map(r=>visible(r))});
-record('N03',Boolean(firstId&&lastId&&firstSelected&&lastSelected),{firstId,lastId,firstSelected,lastSelected,active:app.doc.activePageId});
+// N02 / N03 — diagnostic split: shell binding/visibility vs canonical page authority.
+const openResult=shell.open('pages');await sleep(120);
+const list=d.querySelector('#shellPagesList'),pagesSection=d.querySelector('.pages-shell-panel'),addButton=d.querySelector('#shellPagesAdd');
+const beforePages=app.doc.pages.length,initialRows=[...list.querySelectorAll('[data-page-id]')],initialCount=initialRows.length;
+const beforeDiag={openResult,shell:shell.state(),inspectorOpen:d.querySelector('#app').classList.contains('inspector-open'),sectionActive:pagesSection?.classList.contains('active'),sectionVisible:visible(pagesSection),listVisible:visible(list),addVisible:visible(addButton),addBound:addButton?.dataset.bound||null,beforePages,initialCount};
+addButton?.click();await sleep(120);
+let afterButtonPages=app.doc.pages.length,rows=[...list.querySelectorAll('[data-page-id]')];
+const shellAddWorked=afterButtonPages===beforePages+1&&rows.length===initialCount+1;
+record('N02',Boolean(beforeDiag.sectionActive&&beforeDiag.sectionVisible&&beforeDiag.listVisible&&beforeDiag.addVisible&&beforeDiag.addBound==='true'&&shellAddWorked&&rows.every(r=>visible(r))),{beforeDiag,afterButtonPages,afterRows:rows.length,rowVisible:rows.map(r=>visible(r)),shellAddWorked});
+
+// If Add failed, seed a second page through the canonical app authority only to make N03 non-trivial.
+let diagnosticSeeded=false;
+if(app.doc.pages.length<2){app.addPage();diagnosticSeeded=true;shell.close();await sleep(30);shell.open('pages');await sleep(120);}
+rows=[...list.querySelectorAll('[data-page-id]')];
+const firstId=rows[0]?.dataset.pageId,lastId=rows.at(-1)?.dataset.pageId,distinct=Boolean(firstId&&lastId&&firstId!==lastId);
+rows[0]?.click();await sleep(40);const firstSelected=app.doc.activePageId===firstId&&d.querySelector('[data-page-id="'+firstId+'"]')?.getAttribute('aria-selected')==='true';
+d.querySelector('[data-page-id="'+lastId+'"]')?.click();await sleep(40);const lastSelected=app.doc.activePageId===lastId&&d.querySelector('[data-page-id="'+lastId+'"]')?.getAttribute('aria-selected')==='true';
+record('N03',distinct&&firstSelected&&lastSelected,{diagnosticSeeded,rows:rows.length,firstId,lastId,distinct,firstSelected,lastSelected,active:app.doc.activePageId});
 
 const failed=results.filter(x=>!x.pass);
 await fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({schema:'INK-UI-ISSUE92-WORKSTATION-INTERACTIONS',version:1,status:failed.length?'FAIL':'PASS',checks:results,summary:{total:results.length,passed:results.length-failed.length,failed:failed.length}})});
