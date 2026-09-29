@@ -3472,3 +3472,26 @@ kbd,
     min-height:27px;
   }
 }
+
+/* Issue #92 AJ20 — semantic spacing roles. Values preserve the current
+   accepted visual rhythm; this block classifies existing spacing rather than
+   introducing new Photoshop-derived dimensions. */
+:root{
+  --ui-space-1:2px;
+  --ui-space-2:3px;
+  --ui-space-3:4px;
+  --ui-space-4:6px;
+  --ui-control-gap:var(--ui-space-2);
+  --ui-group-gap:var(--ui-space-3);
+  --ui-section-gap:var(--ui-space-4);
+  --ui-panel-padding:8px;
+  --ui-menu-padding:var(--ui-space-1);
+  --ui-panel-pad:var(--ui-panel-padding);
+}
+.application-menu-separator,.workspace-menu-separator{margin:var(--ui-menu-padding)}
+.inspector-section{padding:var(--ui-panel-padding)}
+.shell-library-panel .shell-panel-body,.shell-property-supplement{gap:var(--ui-section-gap)}
+.shell-library-search-label,.shell-library-inspect-label,.shell-library-filters,.shell-library-result-actions{gap:var(--ui-control-gap)}
+.shell-library-results,.shell-property-actions{gap:var(--ui-group-gap)}
+@media(min-width:761px){.topbar>.contextual-options .contextual-control-host{gap:var(--ui-space-1)}}
+@media(max-width:760px){.contextual-control-host{gap:var(--ui-control-gap)}}
