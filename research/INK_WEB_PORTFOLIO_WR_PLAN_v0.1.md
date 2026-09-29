@@ -28,11 +28,13 @@ mature portfolio references
 → repeat for future sites
 ```
 
-## 2. Role boundary
+## 2. Role authority and boundary
 
 ### WR — Web Review
 
-WR owns:
+WR is the complete autonomous Review authority for the Web portfolio lane.
+
+WR owns end to end:
 
 - mature portfolio website discovery and research;
 - reference selection;
@@ -41,14 +43,45 @@ WR owns:
 - responsive behavior analysis;
 - project / case-study page structure;
 - visual interaction and motion analysis where relevant;
-- WEB DEV workpacks;
-- browser / responsive / visual QA;
-- GitHub Pages portfolio review;
+- Web planning and task decomposition;
+- issuance of Web-only Work Orders;
+- WEB DEV branch/scope control;
+- browser / responsive / visual / source QA;
+- review decisions: `WR_PASS / WR_REVISE / WR_HOLD`;
+- Web-only reconciliation and promotion;
+- merge to the portfolio/site branch or main when the change is Web-portfolio-only;
+- GitHub Pages deployment and deployed-site verification;
 - website-reproduction methodology;
-- reusable Web pattern / component / lesson records.
+- reusable Web pattern / component / lesson records;
+- authorization of the next Web-only task.
+
+For Web-portfolio-only work:
+
+```text
+MR_REVIEW_REQUIRED = NO
+MR_ACCEPTANCE_REQUIRED = NO
+MR_PROMOTION_APPROVAL_REQUIRED = NO
+```
+
+WR may independently complete:
+
+```text
+research
+→ reference selection
+→ plan / Work Order
+→ WEB DEV
+→ WR review
+→ bounded revision
+→ WR PASS
+→ merge / promotion
+→ GitHub Pages deploy
+→ deployed-site verification
+→ next Web task
+```
 
 WR does not own:
 
+- INK product source;
 - INK Core;
 - INK Connector authority;
 - INK workstation UI;
@@ -66,6 +99,14 @@ WR
 
 WR must not modify INK product behavior merely to make the website easier to build.
 
+Only when a Web requirement genuinely requires changing INK product authority does WR leave its lane:
+
+```text
+INK_PRODUCT_CHANGE_REQUIRED
+→ STOP
+→ MR / relevant INK authority
+```
+
 ## 3. Working relationship
 
 ```text
@@ -77,14 +118,25 @@ WEB DEV
   ↓
 WR REVIEW
   ↓
+WR PASS / REVISE / HOLD
+  ↓
+merge / promotion
+  ↓
 GitHub Pages / Portfolio
+  ↓
+WR deployed-site verification
+  ↓
+next Web task
 ```
 
-If a website requirement implies a change to INK itself:
+This lane is intentionally independent of MR during normal Web work.
+
+MR enters only on the exceptional boundary:
 
 ```text
-STOP
-→ return finding to MR / relevant INK authority
+actual INK product/Core/Connector/workstation change required
+→ STOP
+→ MR / relevant INK authority
 ```
 
 ## 4. Program phases
