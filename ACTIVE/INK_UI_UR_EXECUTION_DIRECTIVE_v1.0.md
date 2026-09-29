@@ -1,6 +1,6 @@
 # INK UI Photoshop Alignment — UR Execution Directive v1.0
 
-STATUS: `CLOSED / UI_A_B_C_PROMOTED / STOP_TO_MR`
+STATUS: `SUPERSEDED_FOR_CURRENT_UI_LANE / USER_DIRECT_UI_MODE`
 
 DATE: 2026-09-28
 
@@ -200,3 +200,10 @@ UI_COMPLETE = YES
 UR has no active UI work order after this closure.
 
 Any future UI expansion requires a new bounded Work Order and explicit ownership assignment.
+
+## Superseded by USER direct mode
+
+For the current UI reconstruction lane, this directive is superseded by:
+`ACTIVE/INK_UI_USER_DIRECT_EXECUTION_DIRECTIVE_v1.0.md`
+
+UR routing resumes only if USER explicitly restores it after USER UI freeze.
