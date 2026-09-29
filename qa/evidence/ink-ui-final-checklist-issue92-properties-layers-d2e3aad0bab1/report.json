@@ -1,0 +1,11 @@
+{
+  "schema": "INK-UI-ISSUE92-PROPERTIES-LAYERS-REPORT",
+  "targetSha": "d2e3aad0bab179d1318cf28796ed317be7fe97f9",
+  "centralRuntimeExecuted": false,
+  "status": "PASS",
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0
+  }
+}

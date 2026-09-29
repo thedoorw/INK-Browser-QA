@@ -1,0 +1,113 @@
+{
+  "schema": "INK-UI-ISSUE92-PROPERTIES-LAYERS",
+  "version": 2,
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "J03",
+      "pass": true,
+      "detail": {
+        "fill": "#112233",
+        "stroke": "#445566",
+        "opacity": 0.55,
+        "history": 18
+      }
+    },
+    {
+      "id": "J04",
+      "pass": true,
+      "detail": {
+        "applied": true,
+        "removed": true
+      }
+    },
+    {
+      "id": "J06",
+      "pass": true,
+      "detail": {
+        "layout": {
+          "schema": "INK-LAYOUT-1",
+          "mode": "vertical",
+          "gap": 12,
+          "padding": {
+            "top": 6,
+            "right": 6,
+            "bottom": 6,
+            "left": 6
+          },
+          "align": {
+            "main": "start",
+            "cross": "start"
+          },
+          "sizing": {
+            "horizontal": "fixed",
+            "vertical": "fixed"
+          }
+        }
+      }
+    },
+    {
+      "id": "J07",
+      "pass": true,
+      "detail": {
+        "layoutItem": {
+          "schema": "INK-LAYOUT-ITEM-1",
+          "participation": "absolute",
+          "sizing": {
+            "horizontal": "fixed",
+            "vertical": "fill"
+          },
+          "fixedSize": {
+            "width": 1,
+            "height": 1
+          },
+          "constraints": {
+            "horizontal": "start",
+            "vertical": "start"
+          }
+        }
+      }
+    },
+    {
+      "id": "J08",
+      "pass": true,
+      "detail": {
+        "nodeId": "prop-path",
+        "overrideApplied": true,
+        "overrideReset": true
+      }
+    },
+    {
+      "id": "J09",
+      "pass": true,
+      "detail": {
+        "settings": true,
+        "artboard": true,
+        "viewport": true
+      }
+    },
+    {
+      "id": "K10",
+      "pass": true,
+      "detail": {
+        "reparent": true,
+        "parentAfter": null
+      }
+    },
+    {
+      "id": "K13",
+      "pass": true,
+      "detail": {
+        "layerNew": true,
+        "beforeLayers": 1,
+        "afterLayers": 2,
+        "renderedLayers": 2
+      }
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0
+  }
+}
