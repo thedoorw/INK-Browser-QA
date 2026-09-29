@@ -106,6 +106,7 @@
     tooltipTarget: null,
     guidePreview: null,
     guideReadout: null,
+    snapReadout: null,
     viewSyncObserver: null,
     viewSyncRaf: 0,
     navigatorBounds: null,
@@ -546,6 +547,75 @@
       stage.addEventListener('wheel', syncViewOverlaysSoon, { passive: true });
     }
     renderDocumentRulers();
+    return true;
+  }
+
+  function ensureSnapReadout() {
+    const root = state.root || document.querySelector('#app');
+    if (!root) return null;
+    if (state.snapReadout?.isConnected) return state.snapReadout;
+    const readout = document.createElement('output');
+    readout.id = 'shellSnapReadout';
+    readout.className = 'shell-guide-readout shell-snap-readout';
+    readout.hidden = true;
+    readout.setAttribute('aria-live', 'polite');
+    readout.setAttribute('aria-label', 'Snap feedback');
+    root.append(readout);
+    state.snapReadout = readout;
+    return readout;
+  }
+
+  function snapFeedbackText(evidence = {}) {
+    const parts = [];
+    for (const axis of ['x', 'y']) {
+      const item = evidence?.[axis];
+      if (!item) continue;
+      const label = axis.toUpperCase();
+      if (item.type === 'equal-distance' && Number.isFinite(Number(item.gap))) {
+        parts.push(label + ' gap ' + Number(item.gap).toFixed(Math.abs(Number(item.gap)) < 10 ? 1 : 0) + ' px');
+        continue;
+      }
+      if (Number.isFinite(Number(item.correction)) && Math.abs(Number(item.correction)) > 1e-9) {
+        parts.push('Δ' + label + ' ' + Number(item.correction).toFixed(Math.abs(Number(item.correction)) < 10 ? 1 : 0) + ' px');
+        continue;
+      }
+      if (Number.isFinite(Number(item.targetValue))) {
+        parts.push(label + ' ' + Number(item.targetValue).toFixed(Math.abs(Number(item.targetValue)) < 10 ? 1 : 0) + ' px');
+      }
+    }
+    return parts.join(' · ');
+  }
+
+  function showSnapFeedback(evidence = {}, point = {}) {
+    const readout = ensureSnapReadout();
+    if (!readout) return false;
+    const text = snapFeedbackText(evidence);
+    if (!text) {
+      readout.hidden = true;
+      readout.value = '';
+      readout.textContent = '';
+      delete readout.dataset.mode;
+      return false;
+    }
+    readout.value = text;
+    readout.textContent = text;
+    readout.dataset.mode = Object.values(evidence || {}).some(item => item?.type === 'equal-distance') ? 'equal-spacing' : 'snap';
+    const fallback = document.querySelector('#stageWrap')?.getBoundingClientRect();
+    const x = Number.isFinite(Number(point.clientX)) ? Number(point.clientX) : (fallback ? fallback.left + 24 : 24);
+    const y = Number.isFinite(Number(point.clientY)) ? Number(point.clientY) : (fallback ? fallback.top + 24 : 24);
+    readout.style.left = Math.max(6, Math.min(globalThis.innerWidth - 180, x + 12)) + 'px';
+    readout.style.top = Math.max(6, Math.min(globalThis.innerHeight - 28, y + 12)) + 'px';
+    readout.hidden = false;
+    return true;
+  }
+
+  function clearSnapFeedback() {
+    const readout = state.snapReadout || document.querySelector('#shellSnapReadout');
+    if (!readout) return false;
+    readout.hidden = true;
+    readout.value = '';
+    readout.textContent = '';
+    delete readout.dataset.mode;
     return true;
   }
 
@@ -2009,6 +2079,7 @@
 
     createDocumentChrome();
     ensureTooltipController();
+    ensureSnapReadout();
     ensureSupplementalInspectorSections();
     createPanelOptionsMenu();
     try {
@@ -2038,6 +2109,8 @@
     toggle: togglePanel,
     close: closePrimaryPanels,
     closeMenus: closeApplicationMenus,
+    showSnapFeedback,
+    clearSnapFeedback,
     state() {
       const active = currentPanel();
       const panel = activePanelElement();
