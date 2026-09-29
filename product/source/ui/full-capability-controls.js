@@ -680,6 +680,7 @@ export function installFullCapabilityControls(app){
       if(command==='print'){app.openExport();$('#exportFormat').value='print';app.refreshExportUI();return;}
       if(command==='duplicate')return app.duplicateSelection();
       if(command==='delete')return app.deleteSelection();
+      if(command==='preferences')return globalThis.dispatchEvent(new CustomEvent('ink:branding-open'));
       if(command==='canvas-settings')return $('#settingsToggle')?.click();
       if(command==='image-adjustments')return openPanel('adjustments');
       if(command==='color-profile')return openDialog('color-profile');

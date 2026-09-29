@@ -182,6 +182,10 @@
     applyBranding(initial);
 
     globalThis.addEventListener('ink:branding-open', openDialog);
+    document.querySelector('#brandingCanvasSettings')?.addEventListener('click', () => {
+      closeDialog();
+      document.querySelector('#settingsToggle')?.click();
+    });
     els.close.addEventListener('click', closeDialog);
     els.dialog.addEventListener('click', event => {
       if (event.target === els.dialog) closeDialog();

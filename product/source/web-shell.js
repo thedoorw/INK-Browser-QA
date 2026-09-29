@@ -65,11 +65,11 @@
     { id: 'specialist', label: 'Specialist', icon: 'i-settings', kind: 'inspector', tab: 'studio', group: 'specialist' }
   ]);
   const PANEL_GROUPS = Object.freeze([
-    { id: 'editor', label: 'Editor', items: PANEL_DEFS.filter(def => def.group === 'editor') },
-    { id: 'appearance', label: 'Color / Output', items: PANEL_DEFS.filter(def => def.group === 'appearance') },
-    { id: 'creative', label: 'Creative Loop', items: PANEL_DEFS.filter(def => def.group === 'creative') },
-    { id: 'specialist', label: 'Specialist', items: PANEL_DEFS.filter(def => def.group === 'specialist') }
+    { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'adjustments', 'specialist'].map(id => PANEL_DEFS.find(def => def.id === id)) },
+    { id: 'creative', label: '創作', items: ['libraries', 'reference', 'compose', 'chat', 'revision'].map(id => PANEL_DEFS.find(def => def.id === id)) },
+    { id: 'structure', label: '文件', items: ['layers', 'history', 'channels', 'pages'].map(id => PANEL_DEFS.find(def => def.id === id)) }
   ]);
+  const STACK_DEFAULTS = Object.freeze({ overview: 'navigator', creative: 'reference', structure: 'layers' });
   const PRIMARY_PANEL_STATES = Object.freeze(['collapsed', ...PANEL_DEFS.map(def => def.id)]);
   const LIBRARY_TYPES = Object.freeze(['component', 'material', 'recipe', 'parametric-structure', 'reference-derived-structure']);
   const LIBRARY_TYPE_LABELS = Object.freeze({
@@ -88,7 +88,7 @@
     applicationMenus: new Map(),
     openApplicationMenu: null,
     applicationMenuBound: false,
-    toolbarLayout: 'single',
+    toolbarLayout: 'dual',
     runtimeBound: false,
     activePanel: 'collapsed',
     lastPanel: null,
@@ -101,6 +101,7 @@
     panelOptionsMenu: null,
     documentChrome: null,
     panelStackHost: null,
+    stackPanels: { ...STACK_DEFAULTS },
     activePanelResizer: null,
     shellTooltip: null,
     tooltipTarget: null,
@@ -302,8 +303,8 @@
   function bindToolbarLayout() {
     const button = document.querySelector('#toolbarLayoutToggle');
     if (!button) return false;
-    let stored = 'single';
-    try { stored = localStorage.getItem(TOOLBAR_LAYOUT_KEY) || 'single'; } catch {}
+    let stored = 'dual';
+    try { stored = localStorage.getItem(TOOLBAR_LAYOUT_KEY) || 'dual'; } catch {}
     applyToolbarLayout(stored);
     if (button.dataset.shellToolbarLayoutBound !== 'true') {
       button.dataset.shellToolbarLayoutBound = 'true';
@@ -455,7 +456,6 @@
     chrome.className = 'document-shell-chrome';
     chrome.setAttribute('aria-label', '作用中文件框架');
     chrome.innerHTML =
-      '<div class="document-tab-band"><button type="button" class="document-tab active" aria-current="page"><span id="documentTabTitle">未命名作品</span></button></div>' +
       '<div class="document-ruler-corner" aria-hidden="true"></div>' +
       '<div class="document-ruler document-ruler-horizontal" data-ruler-axis="horizontal" role="button" tabindex="0" aria-label="水平尺；拖曳建立水平參考線"><canvas class="document-ruler-canvas" data-ruler-canvas="horizontal" aria-hidden="true"></canvas></div>' +
       '<div class="document-ruler document-ruler-vertical" data-ruler-axis="vertical" role="button" tabindex="0" aria-label="垂直尺；拖曳建立垂直參考線"><canvas class="document-ruler-canvas" data-ruler-canvas="vertical" aria-hidden="true"></canvas></div>';
@@ -1642,10 +1642,22 @@
     host.innerHTML = PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
       '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
-      '<button type="button" class="panel-stack-region-head" data-panel-stack-target="' + group.items[0].id + '">' +
-      '<span>' + group.label + '</span><span class="panel-stack-region-current" data-panel-stack-current></span></button></section>'
+      '<div class="panel-stack-tabs" role="tablist" aria-label="' + group.label + '">' +
+      group.items.filter(def => def.id !== 'specialist').map(def => '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="' + def.id + '" aria-selected="false">' + def.label + '</button>').join('') +
+      '<button type="button" class="panel-stack-options" data-stack-options="' + group.id + '" title="面板選項" aria-label="面板選項">☰</button></div>' +
+      '<div class="panel-stack-body" data-panel-stack-body="' + group.id + '"></div></section>'
     ).join('');
     host.addEventListener('click', event => {
+      const options = event.target.closest('[data-stack-options]');
+      if (options) {
+        const menu = createPanelOptionsMenu();
+        const rect = options.getBoundingClientRect();
+        const rootRect = root.getBoundingClientRect();
+        menu.style.left = Math.max(4, Math.round(rect.right - rootRect.left - 162)) + 'px';
+        menu.style.top = Math.round(rect.bottom - rootRect.top + 1) + 'px';
+        menu.hidden = !menu.hidden;
+        return;
+      }
       const trigger = event.target.closest('[data-panel-stack-target]');
       if (!trigger) return;
       event.preventDefault();
@@ -1655,8 +1667,8 @@
     const stackMove = event => {
       if (!stackDrag) return;
       const delta = event.clientY - stackDrag.startY;
-      const previous = Math.max(24, stackDrag.previousHeight + delta);
-      const next = Math.max(24, stackDrag.nextHeight - delta);
+      const previous = Math.max(95, Math.min(stackDrag.total - 95, stackDrag.previousHeight + delta));
+      const next = stackDrag.total - previous;
       stackDrag.previous.style.flexBasis = previous + 'px';
       stackDrag.next.style.flexBasis = next + 'px';
       host.classList.add('stack-resizing');
@@ -1681,14 +1693,25 @@
         previous,
         next,
         previousHeight: previous.getBoundingClientRect().height,
-        nextHeight: next.getBoundingClientRect().height
+        nextHeight: next.getBoundingClientRect().height,
+        total: previous.getBoundingClientRect().height + next.getBoundingClientRect().height
       };
       globalThis.addEventListener('pointermove', stackMove);
       globalThis.addEventListener('pointerup', stackEnd);
       globalThis.addEventListener('pointercancel', stackEnd);
       event.preventDefault();
     });
-    host.hidden = true;
+    // Reuse the live inspector sections and creative controller. No mirrored
+    // content or second document/panel authority is created for the stack.
+    for (const section of document.querySelectorAll('#inspector > .inspector-section')) {
+      const content = section.dataset.content;
+      const group = ['layers', 'history', 'channels', 'pages'].includes(content) ? 'structure'
+        : content === 'libraries' ? 'creative' : 'overview';
+      host.querySelector('[data-panel-stack-body="' + group + '"]')?.append(section);
+    }
+    const creative = document.querySelector('#creativeWorkspace');
+    if (creative) host.querySelector('[data-panel-stack-body="creative"]')?.append(creative);
+    host.hidden = !isDesktop();
     root.append(host);
     state.panelStackHost = host;
     return host;
@@ -1697,20 +1720,29 @@
   function syncPanelStackFramework(active, panel, desktop) {
     const host = ensurePanelStackFramework();
     if (!host || !state.root) return;
-    const activeDef = active ? PANEL_DEFS.find(def => def.id === active) : null;
-    if (!desktop || !panel || !activeDef) {
-      host.hidden = true;
-      if (host.parentElement !== state.root) state.root.append(host);
-      return;
-    }
-    if (host.parentElement !== panel) panel.append(host);
-    host.hidden = false;
+    host.hidden = !desktop || !active;
     host.querySelectorAll('[data-panel-stack-group]').forEach(region => {
       const group = PANEL_GROUPS.find(item => item.id === region.dataset.panelStackGroup);
-      const isActive = group?.id === activeDef.group;
-      region.classList.toggle('active', isActive);
-      const current = region.querySelector('[data-panel-stack-current]');
-      if (current) current.textContent = isActive ? activeDef.label : (group?.items?.[0]?.label || '');
+      const selected = state.stackPanels[group.id];
+      region.dataset.stackPanel = selected;
+      region.classList.toggle('active', group.items.some(def => def.id === active));
+      region.querySelectorAll('[data-panel-stack-target]').forEach(tab => {
+        const chosen = tab.dataset.panelStackTarget === selected;
+        tab.classList.toggle('active', chosen);
+        tab.setAttribute('aria-selected', String(chosen));
+      });
+      region.querySelectorAll('.inspector-section').forEach(section => {
+        const visible = selected === 'properties'
+          ? ['brush', 'object', 'geometry'].includes(section.dataset.content) && section.dataset.content === (state.root.dataset.panel === 'object' ? 'object' : state.root.dataset.panel === 'geometry' ? 'geometry' : 'brush')
+          : selected === 'specialist'
+            ? ['ai', 'studio'].includes(section.dataset.content) && section.dataset.content === state.root.dataset.panel
+            : section.dataset.content === selected;
+        section.classList.toggle('stack-visible', visible);
+      });
+      if (group.id === 'creative') {
+        const creative = region.querySelector('#creativeWorkspace');
+        creative?.setAttribute('aria-hidden', String(selected === 'libraries'));
+      }
     });
   }
 
@@ -1906,6 +1938,8 @@
   function selectPanel(id) {
     const def = PANEL_DEFS.find(item => item.id === id);
     if (!def || !runtime()) return false;
+    const group = PANEL_GROUPS.find(item => item.items.includes(def));
+    if (group) state.stackPanels[group.id] = id;
     if (isPanelOpen(id)) {
       rememberPanel(id);
       syncSoon();
@@ -1921,7 +1955,7 @@
   }
 
   function togglePanel(id) {
-    if (isPanelOpen(id)) {
+    if (isPanelOpen(id) && !isDesktop()) {
       closePrimaryPanels();
       return true;
     }
@@ -1931,6 +1965,7 @@
   function activePanelElement() {
     const app = runtime();
     if (!app) return null;
+    if (isDesktop() && state.activePanel !== 'collapsed') return state.panelStackHost;
     if (app.creativeWorkspace?.open) return document.querySelector('#creativeWorkspace');
     if (state.root?.classList.contains('inspector-open')) return document.querySelector('#inspector');
     return null;
@@ -2005,7 +2040,7 @@
     const sharedResizer = ensureActivePanelResizeEdge();
     if (sharedResizer) sharedResizer.setAttribute('aria-valuenow', String(width || DEFAULT_PRIMARY_PANEL_WIDTH));
     state.dock?.querySelectorAll('[data-panel-group]').forEach(group => {
-      group.classList.toggle('group-active', group.dataset.panelGroup === activeDef?.group);
+      group.classList.toggle('group-active', PANEL_GROUPS.some(entry => entry.id === group.dataset.panelGroup && entry.items.includes(activeDef)));
     });
     syncInspectorPresentation(active);
     if (state.windowMenu && !state.windowMenu.hidden) positionWindowMenu();
@@ -2074,11 +2109,10 @@
       };
       document.querySelector('#docTitle')?.addEventListener('change', syncSoon);
 
-      // Fresh entry is deliberately canvas-first. Only the last selected panel
-      // identity is persisted; open/closed state is never restored.
-      state.activePanel = 'collapsed';
+      // The expanded three-group workstation is the default desktop state.
+      state.activePanel = isDesktop() ? 'layers' : 'collapsed';
       app.creativeWorkspace?.setOpen?.(false);
-      app.toggleInspector?.(false);
+      app.toggleInspector?.(isDesktop(), 'layers');
 
       const creativeRoot = document.querySelector('#creativeWorkspace');
       state.mutationObserver = new MutationObserver(records => {
@@ -2091,7 +2125,11 @@
       if (creativeRoot) {
         state.mutationObserver.observe(creativeRoot, { attributes: true, attributeFilter: ['class', 'data-stage'] });
         creativeRoot.addEventListener('click', event => {
-          if (event.target.closest('[data-workspace-stage]')) syncSoon();
+          if (event.target.closest('[data-workspace-stage]')) {
+            const stage = app.creativeWorkspace?.stage;
+            if (PANEL_DEFS.some(def => def.kind === 'creative' && def.stage === stage)) state.stackPanels.creative = stage;
+            syncSoon();
+          }
         });
       }
 

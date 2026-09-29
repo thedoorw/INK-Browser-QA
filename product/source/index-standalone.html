@@ -65,7 +65,7 @@
   <symbol id="i-layout" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 11h8M8 15h5"/></symbol>
 </svg>
 
-<div id="app" class="app web-shell-v0-1" data-panel="brush" data-space="creation" data-shell-panel="collapsed" data-toolbar-layout="single" data-document-active="true" data-rulers="false" data-first-paint="ready" style="--active-panel-w:0px">
+<div id="app" class="app web-shell-v0-1 toolbar-layout-dual" data-panel="brush" data-space="creation" data-shell-panel="layers" data-toolbar-layout="dual" data-document-active="true" data-rulers="false" data-first-paint="ready" style="--active-panel-w:252px">
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
     <div class="menu-app-mark" aria-label="INK v0.1 · Portable"><img class="brand-source-mark" data-brand-logo src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong data-brand-app-name>INK</strong><small>0.1</small></div>
     <nav id="applicationMenus" class="application-menus" aria-label="主選單">
@@ -86,8 +86,7 @@
           <button type="button" role="menuitem" data-shell-action="undo"><span>復原</span><kbd>Ctrl+Z</kbd></button>
           <button type="button" role="menuitem" data-shell-action="redo"><span>重做</span><kbd>Ctrl+Shift+Z</kbd></button>
           <span class="application-menu-separator" aria-hidden="true"></span>
-          <button type="button" role="menuitem" data-shell-action="branding-settings"><span>Preferences / Settings…</span></button>
-          <button type="button" role="menuitem" data-ui-b-contribution="edit-duplicate" data-ui-b-command="duplicate"><span>複製</span><kbd>Ctrl+D</kbd></button><button type="button" role="menuitem" data-ui-b-contribution="edit-delete" data-ui-b-command="delete"><span>刪除</span><kbd>Delete</kbd></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="edit-settings" data-ui-b-command="canvas-settings"><span>偏好設定／畫布設定…</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="edit-duplicate" data-ui-b-command="duplicate"><span>複製</span><kbd>Ctrl+D</kbd></button><button type="button" role="menuitem" data-ui-b-contribution="edit-delete" data-ui-b-command="delete"><span>刪除</span><kbd>Delete</kbd></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="edit-settings" data-ui-b-command="preferences"><span>偏好設定…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="image">
@@ -200,7 +199,7 @@
       <button id="exportBtn" class="primary-button mobile-file-export" data-ui-home="file" data-ui-route="RESPONSIVE_ALTERNATIVE"><svg><use href="#i-export"/></svg><span>匯出</span></button>
       <button id="fullscreenToggle" class="icon-button" title="進入全螢幕 Ctrl+Shift+F" aria-label="進入全螢幕" aria-pressed="false"><svg><use href="#i-expand"/></svg></button>
       <button id="inspectorToggle" class="icon-button legacy-inspector-toggle" title="開啟檢查器" aria-label="開啟檢查器" aria-expanded="false"><svg><use href="#i-sliders"/></svg></button>
-      <button id="settingsToggle" class="icon-button" title="畫布設定" aria-label="畫布設定"><svg><use href="#i-settings"/></svg></button>
+      <button id="settingsToggle" class="icon-button" title="畫布設定" aria-label="畫布設定" hidden><svg><use href="#i-settings"/></svg></button>
     </div>
   </header>
 
@@ -222,9 +221,6 @@
       <button id="drawToolButton" class="tool-button tool-stack active" data-tool-stack="draw" data-tool="pen" title="繪圖工具；再按一次或長按可切換筆種（W）" aria-haspopup="true" aria-expanded="false">
         <span class="tool-icon"><svg><use id="drawToolUse" href="#i-pen"/></svg></span><span id="drawToolLabel" class="tool-label">鋼筆</span><span class="stack-corner" aria-hidden="true"></span>
       </button>
-    </div>
-    <div class="tool-separator"></div>
-    <div class="tool-group">
       <button class="tool-button" data-tool="eraser" title="橡皮擦（E）"><span class="tool-icon"><svg><use href="#i-eraser"/></svg></span><span class="tool-label">橡皮擦</span></button>
       <button class="tool-button emphasis" data-tool="select" title="選取（V）"><span class="tool-icon"><svg><use href="#i-select"/></svg></span><span class="tool-label">選取</span></button>
       <button class="tool-button" data-tool="lasso" title="套索（L）"><span class="tool-icon"><svg><use href="#i-lasso"/></svg></span><span class="tool-label">套索</span></button>
@@ -692,10 +688,11 @@
   <section id="brandingSettingsDialog" class="dialog-backdrop branding-settings-backdrop" role="dialog" aria-modal="true" aria-labelledby="brandingSettingsTitle" hidden>
     <div class="dialog elevated-panel branding-settings-dialog">
       <div class="panel-header">
-        <div><span class="eyebrow">PREFERENCES</span><strong id="brandingSettingsTitle">Branding</strong></div>
+        <div><span class="eyebrow">INK</span><strong id="brandingSettingsTitle">偏好設定</strong></div>
         <button id="closeBrandingSettings" class="mini-button panel-close-button" title="關閉 Branding 設定" aria-label="關閉 Branding 設定"><svg><use href="#i-close"/></svg></button>
       </div>
       <div class="branding-settings-body">
+        <button id="brandingCanvasSettings" type="button" class="branding-canvas-settings">畫布與輸入設定…</button>
         <p class="branding-settings-note">Title / Name、Logo 與 Favicon 會即時預覽並自動保留，重新載入後仍維持。</p>
         <div class="branding-preview" aria-label="Branding 即時預覽">
           <img id="brandingPreviewLogo" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="">

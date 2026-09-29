@@ -11,7 +11,7 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
 
   { id:'edit-duplicate', menu:'edit', section:'object', label:'複製', command:'duplicate', shortcut:'Ctrl+D', authority:'Document object authority' },
   { id:'edit-delete', menu:'edit', section:'object', label:'刪除', command:'delete', shortcut:'Delete', authority:'Document object authority' },
-  { id:'edit-settings', menu:'edit', section:'settings', label:'偏好設定／畫布設定…', command:'canvas-settings', authority:'UI settings' },
+  { id:'edit-settings', menu:'edit', section:'settings', label:'偏好設定…', command:'preferences', authority:'UI settings' },
 
   { id:'image-mode-8', menu:'image', section:'mode', label:'模式：8-bit', command:'bit-depth:8', authority:'P1-G color management' },
   { id:'image-mode-16', menu:'image', section:'mode', label:'模式：16-bit', command:'bit-depth:16', authority:'P1-G color management' },
