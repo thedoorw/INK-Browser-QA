@@ -1,6 +1,6 @@
 # INK Current Work Order
 
-STATUS: `CURRENT / FINAL_UR_CHECKLIST_AUDIT_REQUIRED / FINAL_RUNTIME_PASS`
+STATUS: `CURRENT / FINAL_CHECKLIST_CLOSURE_ACTIVE / FINAL_RUNTIME_PASS`
 
 DATE: 2026-09-28
 
@@ -25,9 +25,9 @@ LAST_COMPLETED_TASK = INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001
 UI_A_PROMOTION_PR = 83
 UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
-ACTIVE_TASK = INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001
+ACTIVE_TASK = INK-UI-FINAL-CHECKLIST-CLOSURE-001
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_FINAL_CHECKLIST_AUDIT_DIRECTIVE_v1.0.md
-ACTIVE_UI_BRANCH = NONE / AUDIT_ON_CURRENT_MAIN
+ACTIVE_UI_BRANCH = TO_BE_NAMED_BY_UR_FOR_BOUNDED_CLOSURE
 
 UI_B = UR_PASS / PROMOTED
 UI_B_PROMOTION_PR = 84
@@ -123,7 +123,7 @@ UI_RECONCILIATION_FINAL_MR_REVIEW = working/INK_UI_FULL_CAPABILITY_RECONCILIATIO
 ## Current gate
 
 ```text
-CURRENT_GATE = FINAL_UR_FULL_CHECKLIST_AUDIT
+CURRENT_GATE = FINAL_CHECKLIST_FINDINGS_CLOSURE
 UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_B = UR_PASS / PROMOTED
 UI_C = UR_PASS / PROMOTED
@@ -133,46 +133,61 @@ UI_C_PRODUCT_SHA = 77ee44c94a848588aceeb7797fa8aa737c69b248
 PRODUCT_SOURCE_EQUIVALENCE = PASS
 DEV_MAY_MODIFY_UI = NO / AUDIT_ONLY_UNLESS_UR_FINDS_BOUNDED_UI_DEFECT
 OPEN_FINAL_RUNTIME_BLOCKERS = 0
-UR_FULL_CHECKLIST_AUDIT = REQUIRED / NOT_YET_DONE
-UNREVIEWED_CHECKLIST_ITEMS = 592
+UR_FULL_CHECKLIST_AUDIT = MR_PASS_AS_AUDIT_RECORD
+CHECKLIST_TOTAL = 592
+CHECKLIST_PASS = 384
+CHECKLIST_FAIL = 207
+CHECKLIST_N_A = 1
+UNREVIEWED_CHECKLIST_ITEMS = 0
+OPEN_CHECKLIST_ITEMS = 207
+USER_ACCEPTANCE_PENDING = 10
 UI_COMPLETE = HOLD
 FORMAT_VERSION = 4
 ```
 
 ## Next action
 
-UR owns the final full checklist audit on current main.
+MR review:
+`working/INK_UI_FINAL_FULL_CHECKLIST_MR_REVIEW_v1.0.md`
 
-Required authority:
-`working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md`
+UR audit:
+`working/INK_UI_FINAL_FULL_CHECKLIST_UR_AUDIT_v1.0.md`
 
-Required rule:
+PR #89 audit record:
+`MERGED / ee81475fafde2b8eaf082cd64b0a3c7e090f240b`
+
+Current disposition:
+
 ```text
-RUNTIME_PASS != UI_COMPLETE
-EVERY_REQUIRED_CHECKLIST_ITEM = PASS / FAIL / N_A
-UNREVIEWED_CHECKLIST_ITEMS = 0
-OPEN_CHECKLIST_ITEMS = 0
-USER_VISUAL_ACCEPTANCE = COMPLETE
-ONLY_THEN_UI_COMPLETE = YES
+AUDIT_RECORD = MR_PASS
+TOTAL = 592
+PASS = 384
+FAIL = 207
+N_A = 1
+UNREVIEWED = 0
+OPEN = 207
+USER_ACCEPTANCE = 10 / PENDING
+UI_COMPLETE = HOLD
 ```
 
-UR must:
-- review every checklist item, not a sample;
-- record PASS / FAIL / N/A and evidence/reason for every item;
-- treat any remaining unchecked or undispositioned item as OPEN;
-- issue bounded UI findings to DEV directly if needed;
-- recheck affected QA/Runtime only where required;
-- return final closure only when the checklist has zero open/unreviewed required items.
+UR now owns bounded checklist closure.
 
-DEV:
-- remains STOP unless UR issues a bounded correction.
+Important:
+- do not treat 207 FAIL as 207 product bugs;
+- confirmed product/UI-health mismatch currently = AB02 only;
+- stale QA contract = AF08;
+- most remaining FAIL items are missing targeted evidence/QA and must be proved before product mutation;
+- USER items remain separate and may not be self-passed.
 
-MR:
-- does not replace the UR checklist audit with Runtime PASS;
-- owns Core/cross-lane escalation only;
-- must not declare final program completion while the checklist gate is open.
+Closure order:
+1. evidence/QA closure and reproduced UI-only defects;
+2. bounded DEV correction only where an actual defect is established;
+3. STOP → MR if Core/global authority is required;
+4. UR recheck affected IDs;
+5. USER acceptance set after AI/QA-verifiable findings are closed;
+6. UI_COMPLETE only at FAIL=0 / OPEN=0 / UNREVIEWED=0 and USER acceptance complete.
 
-Final integrated Runtime remains PASS and does not need to be repeated unless the audit causes product changes requiring it.
+Final central Runtime remains PASS for unchanged product bytes. Revalidate only if resulting product changes require it.
 
 ## UI-A MR technical review checkpoint
 
