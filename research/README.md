@@ -24,6 +24,16 @@ Current work authority:
   - capability coverage / gap classification;
   - GitHub portfolio direction.
 
+
+### Web portfolio / WR
+- `INK_WEB_PORTFOLIO_WR_PLAN_v0.1.md`
+  - WR — Web Review role;
+  - mature portfolio-site research;
+  - first-site reproduction;
+  - visual / responsive QA;
+  - GitHub Pages deployment;
+  - reusable Web reproduction workflow.
+
 Current promoted CHAT architecture:
 `governance/INK_CHAT_INTEGRATION_ARCHITECTURE_v1.0.md`
 
