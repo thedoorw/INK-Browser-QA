@@ -1,22 +1,34 @@
-<!doctype html><meta charset="utf-8"><title>INK N02 Pages Diagnostic</title>
+<!doctype html><meta charset="utf-8"><title>INK N02/N03 Pages Exact Candidate</title>
 <iframe id="f" src="/?fresh=1" style="width:1280px;height:800px;border:0"></iframe>
 <script type="module">
 const sleep=ms=>new Promise(r=>setTimeout(r,ms)),frame=document.querySelector('#f');
-const post=async evidence=>fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(evidence)});
+const post=e=>fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(e)});
 try{
-await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve()};});
-const w=frame.contentWindow,d=frame.contentDocument;for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
-const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
-const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0};
-const opened=shell.open('pages');await sleep(150);
-const section=d.querySelector('.pages-shell-panel'),list=d.querySelector('#shellPagesList'),add=d.querySelector('#shellPagesAdd');
-const before={opened,shell:shell.state(),appClass:d.querySelector('#app')?.className||'',sectionClass:section?.className||'',sectionVisible:visible(section),listVisible:visible(list),addVisible:visible(add),addBound:add?.dataset.bound||null,pages:app.doc.pages.length,rows:list?.querySelectorAll('[data-page-id]').length||0};
-add?.click();await sleep(300);
-const rows=[...d.querySelectorAll('#shellPagesList [data-page-id]')];
-const after={pages:app.doc.pages.length,rows:rows.length,rowVisible:rows.map(visible),activePageId:app.doc.activePageId,rowIds:rows.map(r=>r.dataset.pageId),shell:shell.state()};
-let direct={attempted:false,error:null,pagesBefore:app.doc.pages.length,pagesAfter:null};
-if(after.pages===before.pages){direct.attempted=true;try{app.addPage();await sleep(250);direct.pagesAfter=app.doc.pages.length;}catch(error){direct.error=String(error?.stack||error);direct.pagesAfter=app.doc.pages.length;}}
-const pass=before.opened===true&&before.sectionVisible&&before.listVisible&&before.addVisible&&before.addBound==='true'&&after.pages===before.pages+1&&after.rows===before.rows+1&&after.rowVisible.every(Boolean);
-await post({schema:'INK-UI-ISSUE92-N02',version:2,status:pass?'PASS':'FAIL',checks:[{id:'N02',pass,detail:{before,after,direct}}],summary:{total:1,passed:pass?1:0,failed:pass?0:1}});
-}catch(error){await post({schema:'INK-UI-ISSUE92-N02',version:1,status:'ERROR',checks:[],summary:{total:1,passed:0,failed:1},error:String(error?.stack||error)});}
+  await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve()};});
+  const w=frame.contentWindow,d=frame.contentDocument;
+  for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+  const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
+  const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0};
+  shell.open('pages');await sleep(120);
+  const section=d.querySelector('.pages-shell-panel'),list=d.querySelector('#shellPagesList'),add=d.querySelector('#shellPagesAdd');
+  const before={pages:app.doc.pages.length,rows:list.querySelectorAll('[data-page-id]').length,sectionVisible:visible(section),listVisible:visible(list),addVisible:visible(add),addBound:add?.dataset.bound||null};
+  add.click();await sleep(180);
+  let rows=[...list.querySelectorAll('[data-page-id]')];
+  const afterAdd={pages:app.doc.pages.length,rows:rows.length,rowVisible:rows.map(visible),activePageId:app.doc.activePageId,rowIds:rows.map(r=>r.dataset.pageId)};
+  const n02=before.pages===1&&before.rows===1&&before.sectionVisible&&before.listVisible&&before.addVisible&&before.addBound==='true'&&afterAdd.pages===2&&afterAdd.rows===2&&afterAdd.rowVisible.every(Boolean);
+  const firstId=rows[0]?.dataset.pageId,lastId=rows[1]?.dataset.pageId,distinct=Boolean(firstId&&lastId&&firstId!==lastId);
+  rows[0]?.click();await sleep(60);
+  const firstSelected=app.doc.activePageId===firstId&&list.querySelector('[data-page-id="'+firstId+'"]')?.getAttribute('aria-selected')==='true';
+  list.querySelector('[data-page-id="'+lastId+'"]')?.click();await sleep(60);
+  const lastSelected=app.doc.activePageId===lastId&&list.querySelector('[data-page-id="'+lastId+'"]')?.getAttribute('aria-selected')==='true';
+  const n03=distinct&&firstSelected&&lastSelected;
+  const checks=[
+    {id:'N02',pass:n02,detail:{before,afterAdd}},
+    {id:'N03',pass:n03,detail:{firstId,lastId,distinct,firstSelected,lastSelected,activePageId:app.doc.activePageId}}
+  ];
+  const failed=checks.filter(x=>!x.pass);
+  await post({schema:'INK-UI-ISSUE92-PAGES',version:3,status:failed.length?'FAIL':'PASS',checks,summary:{total:2,passed:2-failed.length,failed:failed.length}});
+}catch(error){
+  await post({schema:'INK-UI-ISSUE92-PAGES',version:3,status:'ERROR',checks:[],summary:{total:2,passed:0,failed:2},error:String(error?.stack||error)});
+}
 </script>
