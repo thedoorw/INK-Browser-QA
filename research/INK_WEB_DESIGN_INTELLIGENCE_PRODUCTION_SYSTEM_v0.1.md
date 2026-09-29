@@ -28,6 +28,28 @@ Website
 → Produce new original websites
 ```
 
+## Operating identity
+
+The system should be developed as a combined:
+
+**設計研究員 + 系統設計師 + 前端生產團隊**
+
+These are three distinct but connected responsibilities:
+
+```text
+Design Researcher
+→ studies mature references, user preferences, patterns and design grammar
+
+System Designer
+→ converts findings into information architecture, tokens, components,
+   reusable rules and coherent design systems
+
+Frontend Production Team
+→ implements, verifies, corrects, deploys and accumulates reusable production knowledge
+```
+
+The objective is not merely faster page generation. The objective is to connect research, design-system reasoning and production into one compounding workflow.
+
 ## Four high-value capabilities
 
 ### 1. Not page cloning — extract the website grammar
