@@ -1,0 +1,13 @@
+{
+  "schema": "ink-ui-checklist-creative-evidence-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "c636354c29f0dfc5e379088de169d083e3df4ce5",
+  "scope": "Issue #92 evidence-only / creative browser suite only / current promoted product",
+  "suites": [
+    "creative"
+  ],
+  "central_runtime": false,
+  "run_generation": 4,
+  "retrigger_reason": "materialize large binary fixture via Git Blob API; retarget current promoted product"
+}

@@ -1,0 +1,943 @@
+{
+  "targetSha": "c636354c29f0dfc5e379088de169d083e3df4ce5",
+  "latest": {
+    "sequence": 155,
+    "marker": "HARNESS_FINAL_EVIDENCE_READY",
+    "atMs": 198710,
+    "checkCount": 154,
+    "status": "PASS"
+  },
+  "trace": [
+    {
+      "sequence": 1,
+      "marker": "WORKSTATION_SHELL_AVAILABLE",
+      "atMs": 2813,
+      "checkCount": 1
+    },
+    {
+      "sequence": 2,
+      "marker": "WORKSTATION_PANEL_REFERENCE_AUTHORITY",
+      "atMs": 2982,
+      "checkCount": 2
+    },
+    {
+      "sequence": 3,
+      "marker": "FORMAT_VERSION_4",
+      "atMs": 2982,
+      "checkCount": 3
+    },
+    {
+      "sequence": 4,
+      "marker": "CANVAS_EDITOR_RENDERED",
+      "atMs": 2982,
+      "checkCount": 4
+    },
+    {
+      "sequence": 5,
+      "marker": "CREATIVE_WORKSPACE_VISIBLE",
+      "atMs": 2983,
+      "checkCount": 5
+    },
+    {
+      "sequence": 6,
+      "marker": "REFERENCE_IMPORT_VISIBLE",
+      "atMs": 2983,
+      "checkCount": 6
+    },
+    {
+      "sequence": 7,
+      "marker": "CHAT_PROMPT_VISIBLE",
+      "atMs": 2983,
+      "checkCount": 7
+    },
+    {
+      "sequence": 8,
+      "marker": "STRUCTURE_AWARE_OPTION_VISIBLE",
+      "atMs": 2984,
+      "checkCount": 8
+    },
+    {
+      "sequence": 9,
+      "marker": "WORKSTATION_PANEL_PROPERTIES_AUTHORITY",
+      "atMs": 3086,
+      "checkCount": 9
+    },
+    {
+      "sequence": 10,
+      "marker": "WORKSTATION_PROPERTIES_UNAVAILABLE_STATE_EXPLICIT",
+      "atMs": 3086,
+      "checkCount": 10
+    },
+    {
+      "sequence": 11,
+      "marker": "WORKSTATION_PANEL_REFERENCE_AUTHORITY",
+      "atMs": 3187,
+      "checkCount": 11
+    },
+    {
+      "sequence": 12,
+      "marker": "WORKSTATION_REFERENCE_RESEARCH_ENTRY_VISIBLE",
+      "atMs": 3187,
+      "checkCount": 12
+    },
+    {
+      "sequence": 13,
+      "marker": "WORKSTATION_PANEL_REVISION_AUTHORITY",
+      "atMs": 3287,
+      "checkCount": 13
+    },
+    {
+      "sequence": 14,
+      "marker": "WORKSTATION_REVISION_UNAVAILABLE_STATE_EXPLICIT",
+      "atMs": 3288,
+      "checkCount": 14
+    },
+    {
+      "sequence": 15,
+      "marker": "WORKSTATION_PANEL_REFERENCE_AUTHORITY",
+      "atMs": 3386,
+      "checkCount": 15
+    },
+    {
+      "sequence": 16,
+      "marker": "SMART_CAPABILITY_reference.import",
+      "atMs": 3389,
+      "checkCount": 16
+    },
+    {
+      "sequence": 17,
+      "marker": "SMART_CAPABILITY_reference.decompose",
+      "atMs": 3390,
+      "checkCount": 17
+    },
+    {
+      "sequence": 18,
+      "marker": "SMART_CAPABILITY_preview.capture",
+      "atMs": 3390,
+      "checkCount": 18
+    },
+    {
+      "sequence": 19,
+      "marker": "SMART_CAPABILITY_composition.programmable",
+      "atMs": 3391,
+      "checkCount": 19
+    },
+    {
+      "sequence": 20,
+      "marker": "SMART_CAPABILITY_path.repaint.v1",
+      "atMs": 3391,
+      "checkCount": 20
+    },
+    {
+      "sequence": 21,
+      "marker": "SMART_CAPABILITY_history.inspect",
+      "atMs": 3392,
+      "checkCount": 21
+    },
+    {
+      "sequence": 22,
+      "marker": "SMART_CAPABILITY_revision.list",
+      "atMs": 3392,
+      "checkCount": 22
+    },
+    {
+      "sequence": 23,
+      "marker": "SMART_CAPABILITY_library.search",
+      "atMs": 3393,
+      "checkCount": 23
+    },
+    {
+      "sequence": 24,
+      "marker": "SMART_LOOP_CAPABILITIES_DISCOVERED",
+      "atMs": 3393,
+      "checkCount": 24
+    },
+    {
+      "sequence": 25,
+      "marker": "CONNECTOR_005_LIBRARY_SEARCH_BROWSER_READ_ONLY",
+      "atMs": 3395,
+      "checkCount": 25
+    },
+    {
+      "sequence": 26,
+      "marker": "CONNECTOR_005_LIBRARY_SEARCH_MUTATION_NEUTRAL",
+      "atMs": 3395,
+      "checkCount": 26
+    },
+    {
+      "sequence": 27,
+      "marker": "ROSE_WINDOW_FIXTURE_HTTP",
+      "atMs": 3482,
+      "checkCount": 27
+    },
+    {
+      "sequence": 28,
+      "marker": "CHAT_REFERENCE_HANDOFF_API_VISIBLE",
+      "atMs": 3489,
+      "checkCount": 28
+    },
+    {
+      "sequence": 29,
+      "marker": "CHAT_REFERENCE_HANDOFF_FILE_INPUT_UNTOUCHED_BEFORE",
+      "atMs": 3489,
+      "checkCount": 29
+    },
+    {
+      "sequence": 30,
+      "marker": "CHAT_REFERENCE_HANDOFF_CROSS_REALM_BINARY_CONFIRMED",
+      "atMs": 3489,
+      "checkCount": 30
+    },
+    {
+      "sequence": 31,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_INPUT_CONFIRMED",
+      "atMs": 3490,
+      "checkCount": 31
+    },
+    {
+      "sequence": 32,
+      "marker": "CHAT_REFERENCE_HANDOFF_INVALID_OBJECT_REJECTED",
+      "atMs": 3491,
+      "checkCount": 32
+    },
+    {
+      "sequence": 33,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_SHORT_TIMEOUT_BOUND",
+      "atMs": 3492,
+      "checkCount": 33
+    },
+    {
+      "sequence": 34,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_NORMALIZATION_RETURNED",
+      "atMs": 3500,
+      "checkCount": 34
+    },
+    {
+      "sequence": 35,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_DECODER_ENTERED",
+      "atMs": 3500,
+      "checkCount": 35
+    },
+    {
+      "sequence": 36,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_DECODER_RETURNED",
+      "atMs": 3566,
+      "checkCount": 36
+    },
+    {
+      "sequence": 37,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_REFERENCE_IMPORT_COMMITTED",
+      "atMs": 3614,
+      "checkCount": 37
+    },
+    {
+      "sequence": 38,
+      "marker": "SMART_LOOP_REFERENCE_IMPORTED",
+      "atMs": 3708,
+      "checkCount": 38
+    },
+    {
+      "sequence": 39,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_RECEIPT_RETURNED",
+      "atMs": 3708,
+      "checkCount": 39
+    },
+    {
+      "sequence": 40,
+      "marker": "CHAT_REFERENCE_HANDOFF_NORMALIZED_LOCAL_FILE",
+      "atMs": 3708,
+      "checkCount": 40
+    },
+    {
+      "sequence": 41,
+      "marker": "CHAT_REFERENCE_HANDOFF_LIVENESS_SEQUENCE_COMPLETE",
+      "atMs": 3709,
+      "checkCount": 41
+    },
+    {
+      "sequence": 42,
+      "marker": "CHAT_REFERENCE_HANDOFF_COMPLETED",
+      "atMs": 3709,
+      "checkCount": 42
+    },
+    {
+      "sequence": 43,
+      "marker": "CHAT_REFERENCE_HANDOFF_FILE_INPUT_UNTOUCHED_AFTER",
+      "atMs": 3710,
+      "checkCount": 43
+    },
+    {
+      "sequence": 44,
+      "marker": "CHAT_REFERENCE_HANDOFF_OPERATION_RECORDED",
+      "atMs": 3710,
+      "checkCount": 44
+    },
+    {
+      "sequence": 45,
+      "marker": "CHAT_REFERENCE_HANDOFF_REFERENCE_OBJECT_VISIBLE",
+      "atMs": 3710,
+      "checkCount": 45
+    },
+    {
+      "sequence": 46,
+      "marker": "CHAT_REFERENCE_HANDOFF_ACTOR_CHANNEL_METADATA",
+      "atMs": 3711,
+      "checkCount": 46
+    },
+    {
+      "sequence": 47,
+      "marker": "CHAT_REFERENCE_HANDOFF_SOURCE_IDENTITY_RETAINED",
+      "atMs": 3711,
+      "checkCount": 47
+    },
+    {
+      "sequence": 48,
+      "marker": "CHAT_REFERENCE_HANDOFF_HISTORY_EXACTLY_ONE",
+      "atMs": 3712,
+      "checkCount": 48
+    },
+    {
+      "sequence": 49,
+      "marker": "CHAT_REFERENCE_HANDOFF_NO_AUTO_REVISION",
+      "atMs": 3712,
+      "checkCount": 49
+    },
+    {
+      "sequence": 50,
+      "marker": "CHAT_REFERENCE_HANDOFF_NO_DOCUMENT_REPLACEMENT",
+      "atMs": 3712,
+      "checkCount": 50
+    },
+    {
+      "sequence": 51,
+      "marker": "CHAT_REFERENCE_HANDOFF_AUDIT_INSPECTABLE",
+      "atMs": 3713,
+      "checkCount": 51
+    },
+    {
+      "sequence": 52,
+      "marker": "CHAT_REFERENCE_HANDOFF_PROVENANCE_INSPECTABLE",
+      "atMs": 3713,
+      "checkCount": 52
+    },
+    {
+      "sequence": 53,
+      "marker": "CHAT_REFERENCE_HANDOFF_RECEIPT_INSPECTABLE",
+      "atMs": 3714,
+      "checkCount": 53
+    },
+    {
+      "sequence": 54,
+      "marker": "SMART_LOOP_IMPORT_HISTORY_PROVENANCE_RECORDED",
+      "atMs": 3714,
+      "checkCount": 54
+    },
+    {
+      "sequence": 55,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_API_VISIBLE",
+      "atMs": 3715,
+      "checkCount": 55
+    },
+    {
+      "sequence": 56,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_BOUNDED_TRACE_RUNTIME",
+      "atMs": 5292,
+      "checkCount": 56
+    },
+    {
+      "sequence": 57,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_SOURCE_COORDINATE_MAPPING",
+      "atMs": 5293,
+      "checkCount": 57
+    },
+    {
+      "sequence": 58,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_COMPLETED",
+      "atMs": 5294,
+      "checkCount": 58
+    },
+    {
+      "sequence": 59,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_SOURCE_REFERENCE_RETAINED",
+      "atMs": 5296,
+      "checkCount": 59
+    },
+    {
+      "sequence": 60,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_REFERENCE_REMAINS",
+      "atMs": 5299,
+      "checkCount": 60
+    },
+    {
+      "sequence": 61,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_SEPARATE_LAYERS",
+      "atMs": 5300,
+      "checkCount": 61
+    },
+    {
+      "sequence": 62,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_LAYER_ORDER",
+      "atMs": 5302,
+      "checkCount": 62
+    },
+    {
+      "sequence": 63,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_EDITABLE_COLOR_REGIONS",
+      "atMs": 5304,
+      "checkCount": 63
+    },
+    {
+      "sequence": 64,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_EDITABLE_BOUNDARY_LINES",
+      "atMs": 5306,
+      "checkCount": 64
+    },
+    {
+      "sequence": 65,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_BOUNDED_POST_COMMIT_SELECTION",
+      "atMs": 5307,
+      "checkCount": 65
+    },
+    {
+      "sequence": 66,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_ALIGNED_REGION_GEOMETRY",
+      "atMs": 5310,
+      "checkCount": 66
+    },
+    {
+      "sequence": 67,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_PROVENANCE_LINKAGE",
+      "atMs": 5311,
+      "checkCount": 67
+    },
+    {
+      "sequence": 68,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_RECEIPT_INSPECTABLE",
+      "atMs": 5313,
+      "checkCount": 68
+    },
+    {
+      "sequence": 69,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_HISTORY_RECORDED",
+      "atMs": 5314,
+      "checkCount": 69
+    },
+    {
+      "sequence": 70,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_NO_AUTO_REVISION",
+      "atMs": 5316,
+      "checkCount": 70
+    },
+    {
+      "sequence": 71,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_AUDIT_INSPECTABLE",
+      "atMs": 5318,
+      "checkCount": 71
+    },
+    {
+      "sequence": 72,
+      "marker": "CHAT_REFERENCE_DECOMPOSITION_PROVENANCE_INSPECTABLE",
+      "atMs": 5320,
+      "checkCount": 72
+    },
+    {
+      "sequence": 73,
+      "marker": "SMART_LOOP_COLOR_LINE_DECOMPOSED",
+      "atMs": 5321,
+      "checkCount": 73
+    },
+    {
+      "sequence": 74,
+      "marker": "SMART_LOOP_STABLE_REFS_RETURNED",
+      "atMs": 7784,
+      "checkCount": 74
+    },
+    {
+      "sequence": 75,
+      "marker": "SMART_LOOP_PREVIEW_BEFORE_CAPTURED",
+      "atMs": 8948,
+      "checkCount": 75
+    },
+    {
+      "sequence": 76,
+      "marker": "SMART_PREVIEW_BEFORE_PNG_PAYLOAD",
+      "atMs": 8989,
+      "checkCount": 76
+    },
+    {
+      "sequence": 77,
+      "marker": "SMART_LOOP_PREVIEW_BEFORE_MATERIALIZED",
+      "atMs": 9130,
+      "checkCount": 77
+    },
+    {
+      "sequence": 78,
+      "marker": "SMART_MATCHED_COLOR_LINE_TARGETS",
+      "atMs": 26800,
+      "checkCount": 78
+    },
+    {
+      "sequence": 79,
+      "marker": "SMART_LOOP_USE_INK_PROPOSE_MUTATION_NEUTRAL",
+      "atMs": 27239,
+      "checkCount": 79
+    },
+    {
+      "sequence": 80,
+      "marker": "SMART_LOOP_USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL",
+      "atMs": 27293,
+      "checkCount": 80
+    },
+    {
+      "sequence": 81,
+      "marker": "SMART_LOOP_USE_INK_APPROVED",
+      "atMs": 27454,
+      "checkCount": 81
+    },
+    {
+      "sequence": 82,
+      "marker": "SMART_LOOP_TWO_STEP_REPAINT_EXECUTED",
+      "atMs": 33584,
+      "checkCount": 82
+    },
+    {
+      "sequence": 83,
+      "marker": "SMART_LOOP_HISTORY_RECORDED",
+      "atMs": 33586,
+      "checkCount": 83
+    },
+    {
+      "sequence": 84,
+      "marker": "SMART_LOOP_FINAL_REVISION_CAPTURED",
+      "atMs": 33588,
+      "checkCount": 84
+    },
+    {
+      "sequence": 85,
+      "marker": "SMART_LOOP_PREVIEW_AFTER_CAPTURED",
+      "atMs": 34202,
+      "checkCount": 85
+    },
+    {
+      "sequence": 86,
+      "marker": "SMART_PREVIEW_AFTER_PNG_PAYLOAD",
+      "atMs": 34240,
+      "checkCount": 86
+    },
+    {
+      "sequence": 87,
+      "marker": "SMART_LOOP_PREVIEW_AFTER_MATERIALIZED",
+      "atMs": 34250,
+      "checkCount": 87
+    },
+    {
+      "sequence": 88,
+      "marker": "SMART_LOOP_RENDER_FINGERPRINT_CHANGED",
+      "atMs": 34251,
+      "checkCount": 88
+    },
+    {
+      "sequence": 89,
+      "marker": "SMART_LOOP_QA_RESOLVER_CLEANED_UP",
+      "atMs": 34253,
+      "checkCount": 89
+    },
+    {
+      "sequence": 90,
+      "marker": "SMART_LOOP_ARTIFACT_EVIDENCE_READY",
+      "atMs": 34257,
+      "checkCount": 90
+    },
+    {
+      "sequence": 91,
+      "marker": "MANUAL_REFERENCE_FILE_INPUT_STILL_AVAILABLE",
+      "atMs": 34262,
+      "checkCount": 91
+    },
+    {
+      "sequence": 92,
+      "marker": "WORKSTATION_PANEL_REFERENCE_AUTHORITY",
+      "atMs": 34480,
+      "checkCount": 92
+    },
+    {
+      "sequence": 93,
+      "marker": "DIRECT_EXTRACTION_EXECUTED",
+      "atMs": 127242,
+      "checkCount": 93
+    },
+    {
+      "sequence": 94,
+      "marker": "DIRECT_EXTRACTION_PATHS",
+      "atMs": 127246,
+      "checkCount": 94
+    },
+    {
+      "sequence": 95,
+      "marker": "REFERENCE_IMAGE_DISPLAYED",
+      "atMs": 127253,
+      "checkCount": 95
+    },
+    {
+      "sequence": 96,
+      "marker": "EDITABLE_PATH_RESULT_VISIBLE",
+      "atMs": 127259,
+      "checkCount": 96
+    },
+    {
+      "sequence": 97,
+      "marker": "REFERENCE_OVERLAY_CONTROLLABLE",
+      "atMs": 127763,
+      "checkCount": 97
+    },
+    {
+      "sequence": 98,
+      "marker": "PATH_EDIT_ENTERED",
+      "atMs": 128055,
+      "checkCount": 98
+    },
+    {
+      "sequence": 99,
+      "marker": "WORKSTATION_PANEL_PROPERTIES_AUTHORITY",
+      "atMs": 130183,
+      "checkCount": 99
+    },
+    {
+      "sequence": 100,
+      "marker": "WORKSTATION_PROPERTIES_PANEL_OPEN_READ_ONLY",
+      "atMs": 130289,
+      "checkCount": 100
+    },
+    {
+      "sequence": 101,
+      "marker": "WORKSTATION_READ_ONLY_BOUNDARY_HISTORY_IDLE",
+      "atMs": 131245,
+      "checkCount": 101
+    },
+    {
+      "sequence": 102,
+      "marker": "WORKSTATION_PROPERTIES_GROUNDED_ENTRY_VISIBLE",
+      "atMs": 131334,
+      "checkCount": 102
+    },
+    {
+      "sequence": 103,
+      "marker": "WORKSTATION_PROPERTIES_GROUNDED_READOUT",
+      "atMs": 132924,
+      "checkCount": 103
+    },
+    {
+      "sequence": 104,
+      "marker": "WORKSTATION_PROPERTIES_GROUNDED_NO_DIRTY_WRITER",
+      "atMs": 132929,
+      "checkCount": 104
+    },
+    {
+      "sequence": 105,
+      "marker": "WORKSTATION_PROPERTIES_GROUNDED_READ_ONLY",
+      "atMs": 133019,
+      "checkCount": 105
+    },
+    {
+      "sequence": 106,
+      "marker": "WORKSTATION_PANEL_REFERENCE_AUTHORITY",
+      "atMs": 133320,
+      "checkCount": 106
+    },
+    {
+      "sequence": 107,
+      "marker": "WORKSTATION_REFERENCE_RESEARCH_READOUT",
+      "atMs": 133477,
+      "checkCount": 107
+    },
+    {
+      "sequence": 108,
+      "marker": "WORKSTATION_REFERENCE_RESEARCH_READ_ONLY",
+      "atMs": 133572,
+      "checkCount": 108
+    },
+    {
+      "sequence": 109,
+      "marker": "WORKSTATION_PANEL_COMPOSE_AUTHORITY",
+      "atMs": 133802,
+      "checkCount": 109
+    },
+    {
+      "sequence": 110,
+      "marker": "WORKSTATION_COMPOSE_UNAVAILABLE_STATE_EXPLICIT",
+      "atMs": 133806,
+      "checkCount": 110
+    },
+    {
+      "sequence": 111,
+      "marker": "WORKSTATION_PANEL_REVISION_AUTHORITY",
+      "atMs": 134085,
+      "checkCount": 111
+    },
+    {
+      "sequence": 112,
+      "marker": "REVISION_BASELINE_CAPTURED",
+      "atMs": 142226,
+      "checkCount": 112
+    },
+    {
+      "sequence": 113,
+      "marker": "WORKSTATION_PANEL_CHAT_AUTHORITY",
+      "atMs": 142483,
+      "checkCount": 113
+    },
+    {
+      "sequence": 114,
+      "marker": "WORKSTATION_CHAT_ADVISORY_ENTRIES_VISIBLE",
+      "atMs": 142566,
+      "checkCount": 114
+    },
+    {
+      "sequence": 115,
+      "marker": "WORKSTATION_CHAT_GROUNDED_READOUT",
+      "atMs": 144436,
+      "checkCount": 115
+    },
+    {
+      "sequence": 116,
+      "marker": "WORKSTATION_CHAT_MEMORY_READOUT",
+      "atMs": 144440,
+      "checkCount": 116
+    },
+    {
+      "sequence": 117,
+      "marker": "WORKSTATION_CHAT_RESEARCH_READOUT",
+      "atMs": 144443,
+      "checkCount": 117
+    },
+    {
+      "sequence": 118,
+      "marker": "WORKSTATION_CHAT_ADVISORY_READ_ONLY",
+      "atMs": 144528,
+      "checkCount": 118
+    },
+    {
+      "sequence": 119,
+      "marker": "BOUNDED_CHAT_INSPECTED",
+      "atMs": 144860,
+      "checkCount": 119
+    },
+    {
+      "sequence": 120,
+      "marker": "BOUNDED_EDIT_PROPOSED",
+      "atMs": 145225,
+      "checkCount": 120
+    },
+    {
+      "sequence": 121,
+      "marker": "MUTATION_BLOCKED_BEFORE_APPROVAL",
+      "atMs": 145430,
+      "checkCount": 121
+    },
+    {
+      "sequence": 122,
+      "marker": "BOUNDED_EDIT_APPROVED",
+      "atMs": 145545,
+      "checkCount": 122
+    },
+    {
+      "sequence": 123,
+      "marker": "BOUNDED_EDIT_EXECUTED",
+      "atMs": 145993,
+      "checkCount": 123
+    },
+    {
+      "sequence": 124,
+      "marker": "USE_INK_TOOL_AVAILABLE",
+      "atMs": 145997,
+      "checkCount": 124
+    },
+    {
+      "sequence": 125,
+      "marker": "USE_INK_PROPOSE_MUTATION_NEUTRAL",
+      "atMs": 146774,
+      "checkCount": 125
+    },
+    {
+      "sequence": 126,
+      "marker": "USE_INK_EXECUTE_BLOCKED_BEFORE_APPROVAL",
+      "atMs": 146948,
+      "checkCount": 126
+    },
+    {
+      "sequence": 127,
+      "marker": "USE_INK_APPROVAL_TOKEN_ISSUED",
+      "atMs": 147236,
+      "checkCount": 127
+    },
+    {
+      "sequence": 128,
+      "marker": "USE_INK_TWO_STEP_EXECUTION_ORDERED",
+      "atMs": 161938,
+      "checkCount": 128
+    },
+    {
+      "sequence": 129,
+      "marker": "USE_INK_HISTORY_RECORDED",
+      "atMs": 161942,
+      "checkCount": 129
+    },
+    {
+      "sequence": 130,
+      "marker": "USE_INK_FINAL_REVISION_CAPTURED",
+      "atMs": 161946,
+      "checkCount": 130
+    },
+    {
+      "sequence": 131,
+      "marker": "USE_INK_UNSUPPORTED_ACTION_REJECTED",
+      "atMs": 161950,
+      "checkCount": 131
+    },
+    {
+      "sequence": 132,
+      "marker": "USE_INK_FORBIDDEN_OPERATION_REJECTED",
+      "atMs": 162413,
+      "checkCount": 132
+    },
+    {
+      "sequence": 133,
+      "marker": "USE_INK_NO_AUTO_PREVIEW",
+      "atMs": 162418,
+      "checkCount": 133
+    },
+    {
+      "sequence": 134,
+      "marker": "CHAT_DOCUMENT_CONTEXT_BOUND",
+      "atMs": 164747,
+      "checkCount": 134
+    },
+    {
+      "sequence": 135,
+      "marker": "CHAT_NATURAL_LANGUAGE_RESPONSE",
+      "atMs": 168947,
+      "checkCount": 135
+    },
+    {
+      "sequence": 136,
+      "marker": "CHAT_DISCUSSION_NON_MUTATING",
+      "atMs": 169037,
+      "checkCount": 136
+    },
+    {
+      "sequence": 137,
+      "marker": "WORKSTATION_PANEL_REFERENCE_AUTHORITY",
+      "atMs": 169258,
+      "checkCount": 137
+    },
+    {
+      "sequence": 138,
+      "marker": "STRUCTURE_AWARE_EXECUTED",
+      "atMs": 171035,
+      "checkCount": 138
+    },
+    {
+      "sequence": 139,
+      "marker": "STRUCTURE_AWARE_VISIBLE_RESULT",
+      "atMs": 171039,
+      "checkCount": 139
+    },
+    {
+      "sequence": 140,
+      "marker": "WORKSTATION_REPEAT_RESULT_AVAILABLE",
+      "atMs": 171045,
+      "checkCount": 140
+    },
+    {
+      "sequence": 141,
+      "marker": "WORKSTATION_PANEL_COMPOSE_AUTHORITY",
+      "atMs": 171456,
+      "checkCount": 141
+    },
+    {
+      "sequence": 142,
+      "marker": "WORKSTATION_COMPOSE_PARAMETRIC_STATUS",
+      "atMs": 171460,
+      "checkCount": 142
+    },
+    {
+      "sequence": 143,
+      "marker": "WORKSTATION_PANEL_REVISION_AUTHORITY",
+      "atMs": 173078,
+      "checkCount": 143
+    },
+    {
+      "sequence": 144,
+      "marker": "REVISION_STRUCTURE_CAPTURED",
+      "atMs": 184201,
+      "checkCount": 144
+    },
+    {
+      "sequence": 145,
+      "marker": "WORKSTATION_REVISION_COMPARE_ENTRY_ENABLED",
+      "atMs": 184287,
+      "checkCount": 145
+    },
+    {
+      "sequence": 146,
+      "marker": "WORKSTATION_REVISION_STRUCTURAL_COMPARE",
+      "atMs": 190176,
+      "checkCount": 146
+    },
+    {
+      "sequence": 147,
+      "marker": "WORKSTATION_REVISION_PROVENANCE_VISIBLE",
+      "atMs": 190181,
+      "checkCount": 147
+    },
+    {
+      "sequence": 148,
+      "marker": "WORKSTATION_REVISION_COMPARE_READ_ONLY",
+      "atMs": 190272,
+      "checkCount": 148
+    },
+    {
+      "sequence": 149,
+      "marker": "REVISION_RESTORE_EXECUTED",
+      "atMs": 194438,
+      "checkCount": 149
+    },
+    {
+      "sequence": 150,
+      "marker": "DOCUMENT_INTEGRITY_AFTER_RESTORE",
+      "atMs": 194882,
+      "checkCount": 150
+    },
+    {
+      "sequence": 151,
+      "marker": "PROJECT_SAVE_SERIALIZED",
+      "atMs": 195643,
+      "checkCount": 151
+    },
+    {
+      "sequence": 152,
+      "marker": "PROJECT_RELOAD_INTEGRITY",
+      "atMs": 197656,
+      "checkCount": 152
+    },
+    {
+      "sequence": 153,
+      "marker": "NO_FATAL_RUNTIME_HEALTH_ERRORS",
+      "atMs": 197661,
+      "checkCount": 153
+    },
+    {
+      "sequence": 154,
+      "marker": "WORKSTATION_SINGLE_PANEL_AUTHORITY",
+      "atMs": 197665,
+      "checkCount": 154
+    },
+    {
+      "sequence": 155,
+      "marker": "HARNESS_FINAL_EVIDENCE_READY",
+      "atMs": 198710,
+      "checkCount": 154,
+      "status": "PASS"
+    }
+  ]
+}
