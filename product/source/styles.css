@@ -3559,6 +3559,8 @@ kbd,
   .topbar-center{display:none!important}
   .document-tab-band{display:none!important}
   .tool-rail{padding:0 2px;background:var(--ink-ui-surface)}
+  .tool-rail .tool-button{color:var(--ink-ui-text-muted)}
+  .tool-rail .tool-button.active{color:var(--ink-ui-accent)}
   .tool-rail .tool-group{display:grid;grid-template-columns:repeat(2,31px);gap:0 2px;justify-content:center;align-content:start}
   .app[data-toolbar-layout="single"] .tool-rail .tool-group{grid-template-columns:31px}
   .tool-layout-controls{order:-1;margin:0 0 3px;padding:0;height:11px;min-height:11px;border:0;border-bottom:1px solid var(--ink-ui-border);justify-content:flex-end}

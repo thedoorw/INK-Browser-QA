@@ -1720,6 +1720,11 @@
   function syncPanelStackFramework(active, panel, desktop) {
     const host = ensurePanelStackFramework();
     if (!host || !state.root) return;
+    // Creative Workspace is mounted by the runtime after the shell may have
+    // initialized. Rehome it when it appears, preserving its live controller.
+    const creative = document.querySelector('#creativeWorkspace');
+    const creativeBody = host.querySelector('[data-panel-stack-body="creative"]');
+    if (creative && creativeBody && creative.parentElement !== creativeBody) creativeBody.append(creative);
     host.hidden = !desktop || !active;
     host.querySelectorAll('[data-panel-stack-group]').forEach(region => {
       const group = PANEL_GROUPS.find(item => item.id === region.dataset.panelStackGroup);
@@ -2121,7 +2126,7 @@
         enforceSinglePrimary(source);
         syncSoon();
       });
-      state.mutationObserver.observe(state.root, { attributes: true, attributeFilter: ['class', 'data-panel'] });
+      state.mutationObserver.observe(state.root, { attributes: true, attributeFilter: ['class', 'data-panel'], childList: true });
       if (creativeRoot) {
         state.mutationObserver.observe(creativeRoot, { attributes: true, attributeFilter: ['class', 'data-stage'] });
         creativeRoot.addEventListener('click', event => {
