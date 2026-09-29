@@ -1,0 +1,36 @@
+name: INK Issue92 Workstation Interaction Evidence
+on:
+  push:
+    branches: [main]
+    paths: [ACTIVE/INK_UI_ISSUE92_WORKSTATION_INTERACTION_TARGET.json]
+permissions: { contents: write }
+jobs:
+  evidence:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/github-script@v7
+        name: Materialize exact target
+        with:
+          script: |
+            const fs=require('node:fs/promises'),path=require('node:path'),crypto=require('node:crypto'),{owner,repo}=context.repo;
+            const {data:tf}=await github.rest.repos.getContent({owner,repo,path:'ACTIVE/INK_UI_ISSUE92_WORKSTATION_INTERACTION_TARGET.json',ref:context.sha});const d=JSON.parse(Buffer.from(tf.content,'base64').toString()),sha=d.target_sha;if(!/^[a-f0-9]{40}$/.test(sha))throw new Error('bad target');
+            const {data:c}=await github.rest.repos.getCommit({owner,repo,ref:sha}),{data:t}=await github.rest.git.getTree({owner,repo,tree_sha:c.commit.tree.sha,recursive:'1'});const paths=t.tree.filter(x=>x.type==='blob'&&x.path.startsWith('product/source/'));const root=await fs.mkdtemp(path.join(process.env.RUNNER_TEMP,'ink-workstation-'));core.exportVariable('INK_EVIDENCE_ROOT',root);core.exportVariable('INK_TESTED_SHA',sha);
+            let i=0;await Promise.all(Array.from({length:4},async()=>{while(i<paths.length){const x=paths[i++],{data:b}=await github.rest.git.getBlob({owner,repo,file_sha:x.sha}),bytes=Buffer.from(b.content,'base64'),h=crypto.createHash('sha1').update('blob '+bytes.length+'\0').update(bytes).digest('hex');if(h!==x.sha)throw new Error('integrity');const dst=path.join(root,x.path);await fs.mkdir(path.dirname(dst),{recursive:true});await fs.writeFile(dst,bytes);}}));
+            for(const p of ['qa/runtime/run-ink-ui-issue92-workstation-interactions.mjs','qa/runtime/ink-ui-issue92-workstation-interactions-harness.html']){const {data:f}=await github.rest.repos.getContent({owner,repo,path:p,ref:context.sha});const dst=path.join(root,p);await fs.mkdir(path.dirname(dst),{recursive:true});await fs.writeFile(dst,Buffer.from(f.content,'base64'));}
+            await fs.mkdir(path.join(root,'evidence'),{recursive:true});await fs.writeFile(path.join(root,'evidence','target-descriptor.json'),JSON.stringify(d,null,2));
+      - name: Run focused browser evidence
+        continue-on-error: true
+        shell: pwsh
+        run: node "$env:INK_EVIDENCE_ROOT\qa\runtime\run-ink-ui-issue92-workstation-interactions.mjs" "$env:INK_EVIDENCE_ROOT"
+      - uses: actions/github-script@v7
+        name: Publish evidence
+        if: always()
+        with:
+          script: |
+            const fs=require('node:fs/promises'),path=require('node:path'),{owner,repo}=context.repo,root=process.env.INK_EVIDENCE_ROOT,sha=process.env.INK_TESTED_SHA,dir=path.join(root,'evidence'),names=(await fs.readdir(dir)).filter(n=>n.endsWith('.json'));if(!names.includes('report.json')||!names.includes('workstation-interactions.json'))throw new Error('workstation evidence incomplete: '+names.join(','));const blobs=[];for(const n of names){const bytes=await fs.readFile(path.join(dir,n));const {data:b}=await github.rest.git.createBlob({owner,repo,content:bytes.toString(),encoding:'utf-8'});blobs.push({n,sha:b.sha});}const prefix='qa/evidence/ink-ui-final-checklist-issue92-workstation-'+sha.slice(0,12)+'/';for(let a=0;a<5;a++){const {data:br}=await github.rest.repos.getBranch({owner,repo,branch:'main'}),base=br.commit.sha,{data:bc}=await github.rest.git.getCommit({owner,repo,commit_sha:base}),{data:t}=await github.rest.git.createTree({owner,repo,base_tree:bc.tree.sha,tree:blobs.map(x=>({path:prefix+x.n,mode:'100644',type:'blob',sha:x.sha}))}),{data:c}=await github.rest.git.createCommit({owner,repo,message:'qa(ui): record Issue 92 workstation interaction evidence',tree:t.sha,parents:[base]});try{await github.rest.git.updateRef({owner,repo,ref:'heads/main',sha:c.sha,force:false});break;}catch(e){if(a===4)throw e;await new Promise(r=>setTimeout(r,700));}}
+      - name: Gate
+        shell: pwsh
+        run: |
+          $r=Get-Content "$env:INK_EVIDENCE_ROOT\evidence\report.json" -Raw | ConvertFrom-Json
+          if($r.status -ne "PASS"){Write-Error $r.error;exit 1}

@@ -1,0 +1,93 @@
+<!doctype html><meta charset="utf-8"><title>INK Issue92 Workstation Interactions</title>
+<iframe id="desktop" src="/?fresh=1" style="width:1280px;height:800px;border:0"></iframe>
+<script type="module">
+const results=[],sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const record=(id,pass,detail=null)=>results.push({id,pass:Boolean(pass),detail});
+const frame=document.querySelector('#desktop');
+await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();};});
+const w=frame.contentWindow,d=frame.contentDocument;
+for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
+const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0;};
+const event=(el,type)=>el.dispatchEvent(new w.Event(type,{bubbles:true}));
+const key=(el,k)=>el.dispatchEvent(new w.KeyboardEvent('keydown',{key:k,bubbles:true,cancelable:true}));
+
+// D10 — application-menu keyboard navigation.
+const editTrigger=d.querySelector('[data-application-menu-trigger="edit"]'),editMenu=d.querySelector('#editMenu');
+editTrigger.focus();key(editTrigger,'ArrowDown');await sleep(30);
+const first=[...editMenu.querySelectorAll('button,[role="menuitem"]')].find(visible),firstFocused=d.activeElement===first;
+key(d.activeElement,'ArrowDown');await sleep(15);const secondFocused=d.activeElement!==first&&editMenu.contains(d.activeElement);
+key(d.activeElement,'Escape');await sleep(15);
+record('D10',firstFocused&&secondFocused&&editMenu.hidden&&d.activeElement===editTrigger,{firstFocused,secondFocused,closed:editMenu.hidden,focusReturned:d.activeElement===editTrigger});
+
+// E03 / E04 / E05 — contextual draw controls use existing tool settings and state-gating.
+app.clearSelection();app.setTool('pen');await sleep(50);
+const color=d.querySelector('#quickColorInput'),size=d.querySelector('#quickSizeInput'),opacity=d.querySelector('#quickOpacityInput');
+color.value='#123456';event(color,'input');await sleep(15);
+record('E03',app.toolSettings.pen.color==='#123456'&&d.querySelector('#colorInput').value==='#123456',{toolColor:app.toolSettings.pen.color,main:d.querySelector('#colorInput').value});
+size.value='17.5';event(size,'input');await sleep(15);
+record('E04',Number(app.toolSettings.pen.size)===17.5&&Number(d.querySelector('#sizeInput').value)===17.5,{toolSize:app.toolSettings.pen.size,mainSize:d.querySelector('#sizeInput').value});
+opacity.value='63';event(opacity,'input');await sleep(15);
+const drawState={mode:d.querySelector('#contextualOptions').dataset.contextMode,quick:visible(d.querySelector('#quickControls')),color:visible(color.closest('[data-context-control]')),size:visible(size.closest('[data-context-control]')),opacity:visible(opacity.closest('[data-context-control]')),value:app.toolSettings.pen.opacity};
+app.setTool('eraser');await sleep(50);
+const eraserState={mode:d.querySelector('#contextualOptions').dataset.contextMode,quick:visible(d.querySelector('#quickControls')),color:visible(color.closest('[data-context-control]')),size:visible(size.closest('[data-context-control]')),opacity:visible(opacity.closest('[data-context-control]')),specific:visible(d.querySelector('#eraserOptions'))};
+app.setTool('shape');await sleep(50);
+const shapeState={mode:d.querySelector('#contextualOptions').dataset.contextMode,color:visible(color.closest('[data-context-control]')),size:visible(size.closest('[data-context-control]')),opacity:visible(opacity.closest('[data-context-control]')),specific:visible(d.querySelector('#shapeOptions'))};
+app.setTool('text');await sleep(50);
+const textState={mode:d.querySelector('#contextualOptions').dataset.contextMode,color:visible(color.closest('[data-context-control]')),size:visible(size.closest('[data-context-control]')),opacity:visible(opacity.closest('[data-context-control]')),specific:visible(d.querySelector('#textOptions'))};
+record('E05',drawState.mode==='draw'&&drawState.quick&&drawState.color&&drawState.size&&drawState.opacity&&Math.abs(drawState.value-.63)<.001&&eraserState.mode==='eraser'&&eraserState.quick&&!eraserState.color&&eraserState.size&&!eraserState.opacity&&eraserState.specific&&shapeState.mode==='shape'&&shapeState.color&&!shapeState.size&&!shapeState.opacity&&shapeState.specific&&textState.mode==='text'&&textState.color&&!textState.size&&!textState.opacity&&textState.specific,{drawState,eraserState,shapeState,textState});
+
+// G06 — creation-space camera remains unbounded by an artboard.
+app.switchWorkspace('creation');await sleep(20);
+const cam=app.page().camera;cam.x=5000;cam.y=-3500;cam.scale=.2;app.renderer.render();const before={x:cam.x,y:cam.y,scale:cam.scale};app.zoomBy(1.2);await sleep(20);
+const summary=d.querySelector('#artboardSummary')?.textContent||'';
+record('G06',app.spaceMode()==='creation'&&before.x===5000&&before.y===-3500&&Math.abs(cam.scale-.24)<.0001&&summary.includes('創作空間（無框）'),{before,after:{x:cam.x,y:cam.y,scale:cam.scale},summary});
+
+// Seed a real editable Path into the ephemeral QA document.
+const path={id:'qa-path-001',type:'path',name:'QA Path',matrix:[1,0,0,1,120,100],opacity:1,visible:true,fill:'#d7a78f',stroke:'#202020',strokeWidth:2,subpaths:[{closed:true,anchors:[
+{x:0,y:0,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},
+{x:80,y:0,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},
+{x:80,y:60,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},
+{x:0,y:60,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'}
+]}]};
+app.layer().objects.push(path);app.spatialDirty=true;app.refreshAll();app.selectOnly(app.layer().id,path.id);shell.open('properties');app.setInspectorTab('object');await sleep(60);
+
+// J01 — selected object state appears in Properties.
+record('J01',shell.state().activePanel==='properties'&&!d.querySelector('#selectionControls').hidden&&d.querySelector('#selectionCount').textContent==='1'&&d.querySelector('#noSelection').hidden,{panel:shell.state().activePanel,count:d.querySelector('#selectionCount').textContent});
+
+// J02 — transform field reads and mutates existing transform authority.
+const xInput=d.querySelector('#transformX'),xBefore=Number(xInput.value),historyBefore=app.history.undoStack.length;
+xInput.value=String(xBefore+25);event(xInput,'change');await sleep(30);
+const xAfter=Number(d.querySelector('#transformX').value),historyAfter=app.history.undoStack.length,foundAfter=app.findObject({objectId:path.id});
+record('J02',Number.isFinite(xBefore)&&Math.abs(xAfter-(xBefore+25))<.01&&historyAfter===historyBefore+1&&Boolean(foundAfter),{xBefore,xAfter,historyBefore,historyAfter,matrix:foundAfter?.object?.matrix});
+
+// J05 + E10 — Path/Node controls appear only for relevant Path/edit state.
+const pathCard=d.querySelector('#pathEditCard'),actions=d.querySelector('#pathEditActions');
+const beforeEdit={card:visible(pathCard),actions:visible(actions)};
+const entered=app.enterPathEdit({layerId:app.layer().id,objectId:path.id});await sleep(30);
+const duringEdit={card:visible(pathCard),actions:visible(actions),status:d.querySelector('#pathEditStatus').textContent};
+app.exitPathEdit();app.clearSelection();await sleep(30);
+const afterClear={card:visible(pathCard),actions:visible(actions)};
+record('J05',beforeEdit.card&&!beforeEdit.actions&&entered&&duringEdit.card&&duringEdit.actions&&!afterClear.card&&!afterClear.actions,{beforeEdit,duringEdit,afterClear});
+record('E10',!beforeEdit.actions&&duringEdit.actions&&!afterClear.actions,{beforeEdit,duringEdit,afterClear});
+
+// K02 — canvas selection and Layers selection synchronize through the same selection state.
+app.selectOnly(app.layer().id,path.id);const frameObject=app.frameSelection({name:'QA Frame',padding:8});await sleep(30);shell.open('layers');await sleep(40);
+const frameRow=d.querySelector('#layersList [data-object-id="'+frameObject?.id+'"]');
+const frameSynced=Boolean(frameObject&&frameRow?.classList.contains('active')&&app.selection[0]?.objectId===frameObject.id);
+const childRow=d.querySelector('#layersList [data-object-id="'+path.id+'"]');childRow?.click();await sleep(30);
+const childSynced=Boolean(childRow&&app.selection[0]?.objectId===path.id&&d.querySelector('#layersList [data-object-id="'+path.id+'"]')?.classList.contains('active'));
+record('K02',frameSynced&&childSynced,{frameId:frameObject?.id,frameSynced,childSynced,selection:app.selection});
+
+// N02 / N03 — Pages list is usable and selection changes the canonical activePageId.
+shell.open('pages');await sleep(40);const list=d.querySelector('#shellPagesList'),initialRows=[...list.querySelectorAll('[data-page-id]')],initialCount=initialRows.length;
+d.querySelector('#shellPagesAdd').click();await sleep(50);const rows=[...list.querySelectorAll('[data-page-id]')],added=rows.length===initialCount+1;
+const firstId=rows[0]?.dataset.pageId,lastId=rows.at(-1)?.dataset.pageId;
+rows[0]?.click();await sleep(30);const firstSelected=app.doc.activePageId===firstId&&d.querySelector('[data-page-id="'+firstId+'"]')?.getAttribute('aria-selected')==='true';
+d.querySelector('[data-page-id="'+lastId+'"]')?.click();await sleep(30);const lastSelected=app.doc.activePageId===lastId&&d.querySelector('[data-page-id="'+lastId+'"]')?.getAttribute('aria-selected')==='true';
+record('N02',initialCount>=1&&added&&rows.every(r=>visible(r)),{initialCount,afterAdd:rows.length,visible:rows.map(r=>visible(r))});
+record('N03',Boolean(firstId&&lastId&&firstSelected&&lastSelected),{firstId,lastId,firstSelected,lastSelected,active:app.doc.activePageId});
+
+const failed=results.filter(x=>!x.pass);
+await fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({schema:'INK-UI-ISSUE92-WORKSTATION-INTERACTIONS',version:1,status:failed.length?'FAIL':'PASS',checks:results,summary:{total:results.length,passed:results.length-failed.length,failed:failed.length}})});
+</script>
