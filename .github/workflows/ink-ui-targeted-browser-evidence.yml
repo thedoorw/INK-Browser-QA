@@ -104,7 +104,7 @@ jobs:
             const baseSha = branch.commit.sha;
             const { data: baseCommit } = await github.rest.git.getCommit({ owner, repo, commit_sha:baseSha });
             const elements = [];
-            const prefix = 'qa/evidence/ink-ui-final-checklist-pr93-targeted-c0c3ddacd07b-hosted/';
+            const prefix = 'qa/evidence/ink-ui-final-checklist-pr93-targeted-c0c3ddacd07b-hosted-r3/';
             for (const name of keep) {
               const bytes = await fs.readFile(path.join(evidenceDir, name));
               const { data: blob } = await github.rest.git.createBlob({

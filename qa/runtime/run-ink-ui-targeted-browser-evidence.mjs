@@ -189,20 +189,24 @@ async function waitStyled(cdp, sessionId) {
   const started = Date.now();
   let last = null;
   while (Date.now() - started < 15000) {
-    const doc = await cdp.send('DOM.getDocument', { depth:1, pierce:false }, sessionId);
-    const rootId = doc.root && doc.root.nodeId;
-    if (rootId) {
-      const q = await cdp.send('DOM.querySelector', { nodeId:rootId, selector:'#app' }, sessionId);
-      if (q.nodeId) {
-        const matched = await cdp.send('CSS.getMatchedStylesForNode', { nodeId:q.nodeId }, sessionId);
-        const computed = await cdp.send('CSS.getComputedStyleForNode', { nodeId:q.nodeId }, sessionId);
-        last = {
-          nodeId:q.nodeId,
-          matchedRules:Array.isArray(matched.matchedCSSRules) ? matched.matchedCSSRules.length : 0,
-          computed:Object.fromEntries((computed.computedStyle || []).map(item => [item.name, item.value]))
-        };
-        if (last.matchedRules > 0 && last.computed.display !== 'none') return last;
+    try {
+      const doc = await cdp.send('DOM.getDocument', { depth:1, pierce:false }, sessionId);
+      const rootId = doc.root && doc.root.nodeId;
+      if (rootId) {
+        const q = await cdp.send('DOM.querySelector', { nodeId:rootId, selector:'#app' }, sessionId);
+        if (q.nodeId) {
+          const matched = await cdp.send('CSS.getMatchedStylesForNode', { nodeId:q.nodeId }, sessionId);
+          const computed = await cdp.send('CSS.getComputedStyleForNode', { nodeId:q.nodeId }, sessionId);
+          last = {
+            nodeId:q.nodeId,
+            matchedRules:Array.isArray(matched.matchedCSSRules) ? matched.matchedCSSRules.length : 0,
+            computed:Object.fromEntries((computed.computedStyle || []).map(item => [item.name, item.value]))
+          };
+          if (last.matchedRules > 0 && last.computed.display !== 'none') return last;
+        }
       }
+    } catch (error) {
+      last = { retry:String(error && error.message ? error.message : error) };
     }
     await sleep(100);
   }
@@ -361,13 +365,13 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
   await evaluate(cdp, normal.sessionId, "window.INK_WEB_SHELL.close()");
   await sleep(120);
   const dockNormal = await evaluate(cdp, normal.sessionId,
-    "(()=>{const b=document.querySelector('[data-shell-panel=\"layers\"]'),r=b.getBoundingClientRect(),c=getComputedStyle(b);return{x:r.x,y:r.y,w:r.width,h:r.height,color:c.color,bg:c.backgroundColor,active:b.classList.contains('active')}})()");
+    "(()=>{const b=document.querySelector('#panelDock [data-shell-panel=\"layers\"]'),r=b.getBoundingClientRect(),c=getComputedStyle(b);return{x:r.x,y:r.y,w:r.width,h:r.height,color:c.color,bg:c.backgroundColor,active:b.classList.contains('active')}})()");
   if (dockNormal) await moveMouse(cdp, normal.sessionId, dockNormal.x + dockNormal.w/2, dockNormal.y + dockNormal.h/2);
   const dockHover = await evaluate(cdp, normal.sessionId,
-    "(()=>{const b=document.querySelector('[data-shell-panel=\"layers\"]'),c=getComputedStyle(b);return{hover:b.matches(':hover'),color:c.color,bg:c.backgroundColor}})()");
+    "(()=>{const b=document.querySelector('#panelDock [data-shell-panel=\"layers\"]'),c=getComputedStyle(b);return{hover:b.matches(':hover'),color:c.color,bg:c.backgroundColor}})()");
   if (dockNormal) await clickPoint(cdp, normal.sessionId, dockNormal.x + dockNormal.w/2, dockNormal.y + dockNormal.h/2);
   const dockActive = await evaluate(cdp, normal.sessionId,
-    "(()=>{const b=document.querySelector('[data-shell-panel=\"layers\"]'),c=getComputedStyle(b);return{active:b.classList.contains('active'),pressed:b.getAttribute('aria-pressed'),color:c.color,bg:c.backgroundColor}})()");
+    "(()=>{const b=document.querySelector('#panelDock [data-shell-panel=\"layers\"]'),c=getComputedStyle(b);return{active:b.classList.contains('active'),pressed:b.getAttribute('aria-pressed'),color:c.color,bg:c.backgroundColor}})()");
   viewport.facts.dockStates = { normal:dockNormal, hover:dockHover, active:dockActive };
   add('icon-normal-hover-active-states', dockNormal && dockHover && dockActive && dockHover.hover === true && dockActive.active === true && dockActive.pressed === 'true' && (dockHover.bg !== dockNormal.bg || dockHover.color !== dockNormal.color) && (dockActive.bg !== dockNormal.bg || dockActive.color !== dockNormal.color), viewport.facts.dockStates);
 
@@ -386,7 +390,7 @@ async function browserViewportEvidence(cdp, width, height, origin, evidenceDir, 
   const tokens = await evaluate(cdp, normal.sessionId,
     "(()=>{const r=getComputedStyle(document.documentElement);const names=['--ink-ui-bg-base','--ink-ui-surface','--ink-ui-surface-subtle','--ink-ui-text','--ink-ui-text-muted','--ink-ui-text-disabled','--ink-ui-control-hover','--ink-ui-control-active','--ink-ui-border','--ink-ui-border-soft','--ink-ui-border-strong','--ink-ui-scrollbar-thumb'];return Object.fromEntries(names.map(n=>[n,r.getPropertyValue(n).trim()]))})()");
   const roleMatch = await evaluate(cdp, normal.sessionId,
-    "(()=>{const root=getComputedStyle(document.documentElement),val=n=>root.getPropertyValue(n).trim(),norm=s=>{const d=document.createElement('i');d.style.color=s;document.body.append(d);const c=getComputedStyle(d).color;d.remove();return c};const h=document.querySelector('.inspector-head strong'),dock=document.querySelector('.panel-dock-button'),footer=document.querySelector('.shell-panel-footer button');const sh=h&&getComputedStyle(h),sd=dock&&getComputedStyle(dock),sf=footer&&getComputedStyle(footer);return{head:{actual:sh&&sh.color,token:norm(val('--ink-ui-text'))},dock:{actual:sd&&sd.color,token:norm(val('--ink-ui-text-muted'))},footer:{border:sf&&sf.borderTopColor,token:norm(val('--ink-ui-border'))}}})()");
+    "(()=>{const root=getComputedStyle(document.documentElement),val=n=>root.getPropertyValue(n).trim(),norm=s=>{const d=document.createElement('i');d.style.color=s;document.body.append(d);const c=getComputedStyle(d).color;d.remove();return c};const h=document.querySelector('.inspector-head strong'),dock=document.querySelector('#panelDock [data-shell-panel="layers"]'),footer=document.querySelector('.shell-panel-footer button');const sh=h&&getComputedStyle(h),sd=dock&&getComputedStyle(dock),sf=footer&&getComputedStyle(footer);return{head:{actual:sh&&sh.color,token:norm(val('--ink-ui-text'))},dock:{actual:sd&&sd.color,token:norm(val('--ink-ui-text-muted'))},footer:{border:sf&&sf.borderTopColor,token:norm(val('--ink-ui-border'))}}})()");
   viewport.facts.tokens = tokens;
   viewport.facts.roleMatch = roleMatch;
   add('semantic-light-token-authority-rendered', tokens && Object.values(tokens).every(Boolean) && roleMatch && roleMatch.head.actual === roleMatch.head.token && roleMatch.dock.actual === roleMatch.dock.token && (!roleMatch.footer.border || roleMatch.footer.border === roleMatch.footer.token), {tokens,roleMatch});
