@@ -87,7 +87,7 @@ function convertRasterMode(serialized,targetMode){
 function dialogShell(id,title,body,wide=false){
   return htmlNode('<section id="uiB-'+esc(id)+'" class="dialog-backdrop ui-b-dialog" data-ui-b-dialog="'+esc(id)+'" hidden>'+
     '<div class="dialog elevated-panel'+(wide?' ui-b-dialog-wide':'')+'">'+
-    '<div class="panel-header"><div><span class="eyebrow">UI-B</span><strong>'+esc(title)+'</strong></div><button class="mini-button" data-ui-b-close="'+esc(id)+'" aria-label="關閉">×</button></div>'+
+    '<div class="panel-header"><div><span class="eyebrow">INK</span><strong>'+esc(title)+'</strong></div><button class="mini-button" data-ui-b-close="'+esc(id)+'" aria-label="關閉">×</button></div>'+
     '<div class="ui-b-dialog-body">'+body+'</div></div></section>');
 }
 
@@ -312,13 +312,13 @@ export function installFullCapabilityControls(app){
   }
 
   function installPanels(){
-    const adjustments=$('[data-shell-panel-section="adjustments"] .shell-panel-body');
+    const adjustments=$('[data-shell-panel-section="adjustments"] .shell-panel-body')||$('[data-content="adjustments"] .shell-panel-body');
     if(adjustments){
       adjustments.innerHTML='<div class="ui-b-panel-grid" id="uiBAdjustmentGrid"></div><div id="uiBAdjustmentStack" class="ui-b-stack-list"></div>';
       $('#uiBAdjustmentGrid').innerHTML=Object.keys(ADJUSTMENT_DEFAULTS).map(type=>button(type,'data-ui-b-adjustment="'+esc(type)+'"')).join('');
       $('#uiBAdjustmentGrid').addEventListener('click',event=>{const type=event.target.closest('[data-ui-b-adjustment]')?.dataset.uiBAdjustment;if(type)addAdjustment(type);});
     }
-    const channels=$('[data-shell-panel-section="channels"] .shell-panel-body');
+    const channels=$('[data-shell-panel-section="channels"] .shell-panel-body')||$('[data-content="channels"] .shell-panel-body');
     if(channels)channels.innerHTML='<div id="uiBChannelsList" class="ui-b-stack-list"></div><div class="ui-b-panel-actions">'+button('Add Alpha','data-ui-b-channel="add-alpha"')+button('Add Spot','data-ui-b-channel="add-spot"')+button('Rename','data-ui-b-channel="rename"')+button('Up','data-ui-b-channel="up"')+button('Down','data-ui-b-channel="down"')+button('Remove','data-ui-b-channel="remove"')+'</div>';
     channels?.addEventListener('click',event=>{const cmd=event.target.closest('[data-ui-b-channel]')?.dataset.uiBChannel;if(cmd)channelCommand(cmd);});
     const layers=$('[data-shell-panel-section="layers"] .shell-panel-body')||$('[data-content="layers"]');
@@ -329,7 +329,7 @@ export function installFullCapabilityControls(app){
       $('#uiBBlendMode').addEventListener('change',event=>{const found=selectedObject();if(found)mutateObject('Blend Mode',found,object=>object.blendMode=event.target.value);});
     }
     const objectPanel=$('[data-content="object"]');
-    if(objectPanel&&!$('#uiBRasterProperties'))objectPanel.appendChild(htmlNode('<div id="uiBRasterProperties" class="property-card ui-b-raster-properties"><div class="subpanel-title"><strong>Raster / Image</strong><span>UI-B</span></div><div id="uiBRasterStateReadout" class="shell-panel-note">No raster selected</div><div id="uiBRasterSourceReadout" class="shell-panel-note"></div><div class="ui-b-panel-actions">'+button('Crop…','data-ui-b-command="image-crop"')+button('Resize…','data-ui-b-command="image-resize"')+button('Profile…','data-ui-b-command="color-profile"')+'</div><div class="ui-b-panel-actions">'+button('Histogram','data-ui-b-raster-insight="histogram"')+button('Snapshot','data-ui-b-raster-insight="snapshot"')+button('Compare','data-ui-b-raster-insight="compare"')+'</div><div id="uiBRasterAnalysis" class="shell-panel-note"></div><div id="uiBFilterStack" class="ui-b-stack-list"></div><div id="uiBEffectStack" class="ui-b-stack-list"></div></div>'));
+    if(objectPanel&&!$('#uiBRasterProperties'))objectPanel.appendChild(htmlNode('<div id="uiBRasterProperties" class="property-card ui-b-raster-properties"><div class="subpanel-title"><strong>Raster / Image</strong><span>RASTER</span></div><div id="uiBRasterStateReadout" class="shell-panel-note">No raster selected</div><div id="uiBRasterSourceReadout" class="shell-panel-note"></div><div class="ui-b-panel-actions">'+button('Crop…','data-ui-b-command="image-crop"')+button('Resize…','data-ui-b-command="image-resize"')+button('Profile…','data-ui-b-command="color-profile"')+'</div><div class="ui-b-panel-actions">'+button('Histogram','data-ui-b-raster-insight="histogram"')+button('Snapshot','data-ui-b-raster-insight="snapshot"')+button('Compare','data-ui-b-raster-insight="compare"')+'</div><div id="uiBRasterAnalysis" class="shell-panel-note"></div><div id="uiBFilterStack" class="ui-b-stack-list"></div><div id="uiBEffectStack" class="ui-b-stack-list"></div></div>'));
     objectPanel?.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);const insight=event.target.closest('[data-ui-b-raster-insight]')?.dataset.uiBRasterInsight;if(insight)runRasterInsight(insight);});
     const geometryPanel=$('[data-content="geometry"]');
     if(geometryPanel&&!$('#uiBVectorAppearance'))geometryPanel.appendChild(htmlNode('<div id="uiBVectorAppearance" class="property-card"><div class="subpanel-title"><strong>Vector Appearance</strong><span>P1-C</span></div><div id="uiBVectorAppearanceReadout" class="shell-panel-note">Select a Path</div><div class="ui-b-panel-actions">'+button('Gradient…','data-ui-b-command="gradient-editor"')+button('Pattern…','data-ui-b-command="pattern-editor"')+'</div></div>'));
@@ -374,7 +374,7 @@ export function installFullCapabilityControls(app){
       return;
     }
     if(command==='snapshot'){
-      state.rasterSnapshot=createImageSnapshot(target.image,{name:'UI-B compare baseline',stackState:{adjustments:target.found.object.adjustments||[],filters:target.found.object.filterStack||[],effects:target.found.object.effects||[]}});
+      state.rasterSnapshot=createImageSnapshot(target.image,{name:'Raster compare baseline',stackState:{adjustments:target.found.object.adjustments||[],filters:target.found.object.filterStack||[],effects:target.found.object.effects||[]}});
       if(out)out.textContent='Snapshot captured · '+state.rasterSnapshot.width+'×'+state.rasterSnapshot.height;
       toast('Raster snapshot 已建立');return;
     }
@@ -529,7 +529,7 @@ export function installFullCapabilityControls(app){
       }else if(id==='image-size')resizeSelectedImage();
       else if(id==='image-crop')cropSelectedImage();
       else if(id==='advanced-transform')applyAdvancedTransform(state.dialogContext?.mode);
-    }catch(error){console.error(error);toast(error.message||('UI-B '+id+' failed'),3200);}
+    }catch(error){console.error(error);toast(error.message||('Operation '+id+' failed'),3200);}
   }
 
   function resizeSelectedImage(){
@@ -660,7 +660,7 @@ export function installFullCapabilityControls(app){
       if(command==='print'){app.openExport();$('#exportFormat').value='print';app.refreshExportUI();return;}
       if(command==='duplicate')return app.duplicateSelection();
       if(command==='delete')return app.deleteSelection();
-      if(command==='canvas-settings')return $('#canvasSettingsToggle')?.click();
+      if(command==='canvas-settings')return $('#settingsToggle')?.click();
       if(command==='image-adjustments')return openPanel('adjustments');
       if(command==='color-profile')return openDialog('color-profile');
       if(command==='gradient-editor')return openDialog('gradient-editor');
@@ -683,11 +683,11 @@ export function installFullCapabilityControls(app){
       if(command==='liquify')return openDialog('liquify');
       if(command==='guides:toggle'){const guides=app.page().guides||[];const visible=guides.some(guide=>guide.visible!==false);for(const guide of guides)app.setGuideVisible(guide.id,!visible);return;}
       if(command==='keyboard-shortcuts')return openDialog('keyboard-shortcuts');
-      if(command==='updates'){openPanel('specialist');$('#checkUpdatesBtn')?.click();return;}
+      if(command==='updates'){openPanel('specialist');$('#checkUpdateBtn')?.click();return;}
       if(command==='pen-calibration')return openDialog('pen-calibration');
       if(command==='recovery')return openDialog('recovery');
-      toast('UI-B route：'+command);
-    }catch(error){console.error(error);toast(error.message||('UI-B command failed: '+command),3200);}
+      toast('Command route unavailable：'+command);
+    }catch(error){console.error(error);toast(error.message||('Command failed: '+command),3200);}
   }
 
   function bridgeLegacySpecialist(){
