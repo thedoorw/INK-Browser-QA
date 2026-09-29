@@ -230,6 +230,33 @@ Preserve the existing valid Photoshop-aligned shell measurements unless the actu
 
 Do not create duplicate Undo/Redo/File controls if Edit/File/menu/shortcut/History remain the primary authority.
 
+## 8A. Edit-menu settings consolidation
+
+Current Edit menu has two settings entries:
+- `Preferences / Settings…` for Branding;
+- the existing localized settings/canvas entry.
+
+Required correction:
+- use one localized Edit-menu Preferences/Settings entry as the primary home;
+- integrate Application Title / Name, Logo and Favicon into that existing settings surface;
+- preserve Branding live preview, reload persistence, Reset and Product Default behavior;
+- remove the separate English Branding-only menu entry;
+- do not keep two competing primary settings commands.
+
+## 8B. Document-tab behavior
+
+Current desktop shell shows a persistent `document-tab-band` containing the document title, but current INK does not expose a full multi-document tab/window authority.
+
+Required correction:
+- do not show a persistent Photoshop-style document tab unless it represents real document switching/closing/reordering behavior;
+- for the current single-document baseline, remove that extra visual row from the normal desktop shell;
+- keep the document title through the existing document title authority;
+- keep ruler/workspace layout tied to the real active-document state;
+- do not invent multi-document state only to reproduce the reference appearance;
+- if real multi-document support is added later, reuse the historical 28 px tab reference for a real tab implementation.
+
+Existing checklist authority `AG09` remains applicable: multi-document tabs are not added without baseline authority.
+
 ## 9. Capability preservation
 
 Preserve:
