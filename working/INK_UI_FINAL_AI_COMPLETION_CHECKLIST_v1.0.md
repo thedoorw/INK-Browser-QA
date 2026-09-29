@@ -908,7 +908,7 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=431 / FAIL=160 / N_A=1 / UNREVIEWED=0 / OPEN=160`
+`TOTAL=592 / PASS=434 / FAIL=157 / N_A=1 / UNREVIEWED=0 / OPEN=157`
 
 A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. The prior central Runtime run 36445204976 remains historical evidence for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b; PR #93 promoted new product CSS at c66b1eba2376f01cfba14f71b6f29d7e2fa022e4, so current-product Runtime debt is DEFERRED_TO_FINAL_CHECKLIST_BATCH and no central Runtime was run in this closure batch.
 
@@ -943,7 +943,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | D06 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
 | D07 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
 | D08 | PASS | artifact 10979718534 / ui.json checks #51, #56, #58–59; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md local interaction/source smoke. | — |
-| D09 | FAIL | ui.json #55 proves Escape closes menu, but does not assert focus restoration. | UI-AUD-05 |
+| D09 | PASS | qa/evidence/ink-ui-final-checklist-issue92-ui-suite-306ff4e5364e/ui.json check #55: Escape closes the active application menu through the DOM keyboard path and records activeElement=fileMenuToggle, directly proving focus restoration to the trigger. | — |
 | D10 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for D10: keyboard navigation works for menu items. [INT] | UI-AUD-08 |
 | D11 | FAIL | Final screenshots do not show the required state/comparison for D11: separators/check/disabled states are visually coherent. [PIX][INT] | UI-AUD-02 |
 | D12 | FAIL | Final screenshots do not show the required state/comparison for D12: keyboard shortcut labels align/read correctly. [PIX] | UI-AUD-02 |
@@ -1295,7 +1295,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AD01 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
 | AD02 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
 | AD03 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
-| AD04 | FAIL | Placement/summary alone does not prove this exact item on current main (AD04: typography is sufficiently bright/large.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AD04 | PASS | qa/evidence/ink-ui-final-checklist-issue92-ui-suite-306ff4e5364e/ui.json checks #26 and #79–83: normal interactive text is >=10px, panel titles 11px, metadata >=9px; measured contrast includes 6.91 contextual text, 14.47 panel title, 4.81 tab and 5.55 context label. | — |
 | AD05 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
 | AD06 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
 | AD07 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
@@ -1456,7 +1456,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AL15 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
 | AL16 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
 | AM01 | FAIL | Placement/summary alone does not prove this exact item on current main (AM01: Tooltip placement and compact geometry follow the measured reference while allowing text-dependent sizing.); source or targeted QA evidence needed. | UI-AUD-06 |
-| AM02 | FAIL | Placement/summary alone does not prove this exact item on current main (AM02: Tool flyout uses compact grouped-tool rows comparable to the ≈20 px reference pitch.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AM02 | PASS | product/source/styles.css final workstation rule sets .subtool-button height/min-height=20px; qa/evidence/ink-ui-final-checklist-pr93-targeted-b7dc59717688-hosted-r5/report.json confirms the grouped brush flyout is rendered and visible at both required desktop viewports. | — |
 | AM03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
 | AM04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
 | AM05 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
