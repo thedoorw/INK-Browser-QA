@@ -1,0 +1,114 @@
+<!doctype html><meta charset="utf-8"><title>INK Control Health Inventory</title>
+<style>html,body{margin:0}iframe{display:block;width:1280px;height:1024px;border:0}</style>
+<iframe id="f" src="/?fresh=1"></iframe>
+<script type="module">
+const sleep=ms=>new Promise(r=>setTimeout(r,ms)),frame=document.querySelector('#f');
+const post=e=>fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(e)});
+const rect=e=>{const r=e?.getBoundingClientRect?.();return r?{left:r.left,top:r.top,right:r.right,bottom:r.bottom,width:r.width,height:r.height}:null};
+try{
+  await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve()};});
+  const w=frame.contentWindow,d=frame.contentDocument;
+  for(let i=0;i<300&&!(w.INK_APP&&w.INK_WEB_SHELL&&w.INK_APP.uiBControls);i++)await sleep(100);
+  const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell||!app.uiBControls)throw new Error('INK/UI-B unavailable');
+  const registry=await import('/ui/capability-contributions.js');
+  const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&Number(s.opacity)!==0&&r.width>0&&r.height>0};
+  const near=(a,b,t=1)=>Math.abs(Number(a)-Number(b))<=t;
+  const browserErrors=[],toastMessages=[];
+  w.addEventListener('error',e=>browserErrors.push(String(e.error?.stack||e.message||'error')));
+  w.addEventListener('unhandledrejection',e=>browserErrors.push(String(e.reason?.stack||e.reason||'rejection')));
+  const originalToast=app.toast?.bind(app);
+  if(originalToast)app.toast=(message,...rest)=>{toastMessages.push(String(message));return originalToast(message,...rest)};
+  w.prompt=()=>null;w.confirm=()=>true;w.alert=()=>{};
+
+  const checks=[];
+  const geometry={
+    viewport:[w.innerWidth,w.innerHeight],
+    menu:rect(d.querySelector('.menu-strip')),
+    topbar:rect(d.querySelector('.topbar')),
+    rail:rect(d.querySelector('.tool-rail')),
+    dock:rect(d.querySelector('#panelDock')),
+    band:rect(d.querySelector('.document-tab-band')),
+    tab:rect(d.querySelector('.document-tab.active')),
+    stage:rect(d.querySelector('#stageWrap')),
+    status:rect(d.querySelector('.statusbar'))
+  };
+  const toolRects=[...d.querySelectorAll('.tool-rail button')].filter(visible).map(e=>({id:e.id||null,group:e.dataset.uiBToolGroup||null,tool:e.dataset.tool||null,...rect(e)}));
+  const densityPass=toolRects.length>=8&&toolRects.every(r=>r.width>=24&&r.height>=24&&r.width<=40&&r.height<=36)&&near(geometry.rail?.width,40,1);
+  checks.push({id:'AD11',pass:densityPass,detail:{toolCount:toolRects.length,rail:geometry.rail,toolRects}});
+  const alignmentPass=near(geometry.menu?.height,25,1)&&near(geometry.topbar?.height,36,1)&&near(geometry.rail?.width,40,1)&&near(geometry.dock?.width,40,1)&&near(geometry.band?.height,29,1)&&near(geometry.tab?.height,28,1)&&near(geometry.stage?.top,90,1);
+  checks.push({id:'AF09',pass:alignmentPass,detail:geometry});
+
+  // Application menus: every live top-level trigger must open its mapped menu.
+  const menuSweep=[];
+  for(const trigger of [...d.querySelectorAll('[data-application-menu-trigger]')]){
+    const id=trigger.dataset.applicationMenuTrigger;
+    trigger.click();await sleep(12);
+    const menu=id==='window'?d.querySelector('#panelWindowMenu'):d.querySelector('#'+id+'Menu');
+    menuSweep.push({id,opened:Boolean(menu&&!menu.hidden&&visible(menu))});
+    shell.closeMenus?.();
+  }
+
+  // Every registered UI-B contribution is present and receives a browser click.
+  const contributionSweep=[];
+  for(const item of registry.UI_B_MENU_CONTRIBUTIONS){
+    const node=d.querySelector('[data-ui-b-contribution="'+item.id+'"]');
+    let clicked=false,error=null;
+    try{
+      if(node){node.click();clicked=true;await sleep(8);}
+    }catch(e){error=String(e?.stack||e);}
+    contributionSweep.push({id:item.id,command:item.command,found:Boolean(node),clicked,error});
+    d.querySelectorAll('.ui-b-dialog').forEach(dialog=>dialog.hidden=true);
+    const exportDialog=d.querySelector('#exportDialog');if(exportDialog)exportDialog.hidden=true;
+    shell.closeMenus?.();
+  }
+
+  // Every primary panel route is actually selected in-browser.
+  const panelSweep=[];
+  for(const id of registry.UI_B_REQUIRED_PANELS){
+    let opened=false,state=null,error=null;
+    try{opened=Boolean(shell.open?.(id));await sleep(18);state=shell.state?.();}catch(e){error=String(e?.stack||e);}
+    const active=state?.activePanel===id||state?.creativeStage===id||(id==='chat'&&state?.creativeStage==='chat');
+    panelSweep.push({id,opened,active:Boolean(active),state,error});
+  }
+  shell.close?.();
+
+  // Every promoted tool group has a browser surface and can receive a click.
+  const toolSweep=[];
+  for(const group of registry.UI_B_TOOL_GROUPS){
+    const node=d.querySelector('[data-ui-b-tool-group="'+group.id+'"]');
+    let clicked=false,error=null;
+    try{if(node){node.click();clicked=true;await sleep(8);}}catch(e){error=String(e?.stack||e);}
+    toolSweep.push({id:group.id,primary:group.primary,found:Boolean(node),clicked,error});
+  }
+
+  const routeFallbacks=toastMessages.filter(x=>/UI-B route|UI route unavailable|Panel route unavailable/i.test(x));
+  const livePass=menuSweep.every(x=>x.opened)&&contributionSweep.every(x=>x.found&&x.clicked&&!x.error)&&panelSweep.every(x=>x.opened&&x.active&&!x.error)&&toolSweep.every(x=>x.found&&x.clicked&&!x.error)&&browserErrors.length===0;
+  checks.push({id:'AB08',pass:livePass,detail:{menus:menuSweep,contributions:{total:contributionSweep.length,failed:contributionSweep.filter(x=>!x.found||!x.clicked||x.error)},panels:panelSweep,tools:toolSweep,browserErrors}});
+  checks.push({id:'AE08',pass:livePass&&routeFallbacks.length===0,detail:{routeFallbacks,browserErrors,menuCount:menuSweep.length,contributionCount:contributionSweep.length,panelCount:panelSweep.length,toolGroupCount:toolSweep.length}});
+  checks.push({id:'AE10-browser',pass:routeFallbacks.length===0&&browserErrors.length===0,detail:{routeFallbacks,browserErrors,toastCount:toastMessages.length}});
+
+  // Compact/touch health: use effective label target for form controls.
+  frame.style.width='760px';frame.style.height='900px';await sleep(300);
+  shell.close?.();await sleep(30);
+  const compact=[...d.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[role="button"],[role="menuitem"]')].filter(visible);
+  const targets=compact.map(e=>{
+    const type=(e.getAttribute('type')||'').toLowerCase();
+    const label=(e.matches('input,select,textarea')?e.closest('label'):null);
+    const effective=label&&visible(label)?label:e;
+    const r=rect(effective);
+    return {tag:e.tagName.toLowerCase(),id:e.id||null,type:type||null,role:e.getAttribute('role'),effectiveTag:effective.tagName.toLowerCase(),width:r?.width||0,height:r?.height||0};
+  });
+  const undersized=targets.filter(x=>x.width<24||x.height<24);
+  const compactFits=d.documentElement.scrollWidth<=w.innerWidth+1&&d.body.scrollWidth<=w.innerWidth+1;
+  checks.push({id:'AA10',pass:targets.length>0&&undersized.length===0&&compactFits,detail:{viewport:[w.innerWidth,w.innerHeight],targetCount:targets.length,minWidth:Math.min(...targets.map(x=>x.width)),minHeight:Math.min(...targets.map(x=>x.height)),undersized,compactFits,scrollWidth:d.documentElement.scrollWidth}});
+
+  frame.style.width='1280px';frame.style.height='1024px';await sleep(220);
+  const anonymous=[...d.querySelectorAll('button,input,select,textarea')].filter(visible).filter(e=>!e.id&&![...e.attributes].some(a=>a.name.startsWith('data-'))&&!e.getAttribute('name')&&!e.getAttribute('role')).map(e=>({tag:e.tagName.toLowerCase(),text:(e.textContent||'').trim().slice(0,80),className:e.className||''}));
+  checks.push({id:'visible-identity',pass:anonymous.length===0,detail:{anonymous}});
+
+  const failed=checks.filter(x=>!x.pass);
+  await post({schema:'INK-UI-ISSUE92-CONTROL-HEALTH-BROWSER',version:1,status:failed.length?'FAIL':'PASS',checks,inventory:{menuSweep,contributionSweep,panelSweep,toolSweep,toastMessages,browserErrors},summary:{total:checks.length,passed:checks.length-failed.length,failed:failed.length}});
+}catch(error){
+  await post({schema:'INK-UI-ISSUE92-CONTROL-HEALTH-BROWSER',version:1,status:'ERROR',checks:[],summary:{total:7,passed:0,failed:7},error:String(error?.stack||error)});
+}
+</script>
