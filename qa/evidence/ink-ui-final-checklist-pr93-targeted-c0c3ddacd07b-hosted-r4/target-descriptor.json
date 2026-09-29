@@ -1,0 +1,27 @@
+{
+  "schema": "ink-ui-targeted-browser-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "c0c3ddacd07b3022685990352b93335a8a6bd7eb",
+  "pull_request": 93,
+  "viewports": [
+    "1280x1024@1",
+    "960x800@1"
+  ],
+  "scope": [
+    "first-paint",
+    "normal-shell",
+    "expanded-panel",
+    "panel-stacking-splitter",
+    "panel-scrolling",
+    "hover-focus-disabled",
+    "brush-flyout-tool-labels",
+    "status-document-chrome",
+    "light-theme-token-contrast",
+    "scrollbar"
+  ],
+  "central_runtime": false,
+  "run_generation": 4,
+  "browser_environment": "GitHub-hosted Windows / installed Chrome-or-Edge / exact DPR 1",
+  "qa_harness_correction": "syntax-safe inactive dock selector; disabled sampled before mutations; script-disabled orphan-context-control first-paint assertion"
+}
