@@ -3434,3 +3434,12 @@ kbd,
 .shell-library-result-actions{display:flex;gap:3px;flex:0 0 auto}
 .shell-library-result-actions button{height:22px;padding:0 5px;border:1px solid var(--ink-ui-border);border-radius:1px;background:var(--ink-ui-surface-subtle);color:var(--ink-ui-text);font-size:var(--ui-type-xs)}
 .shell-library-inspect{box-sizing:border-box;width:100%;min-height:108px;resize:vertical;padding:5px;border:1px solid var(--ink-ui-border);background:var(--ink-ui-surface-subtle);color:var(--ink-ui-text);font:11px/1.35 ui-monospace,SFMono-Regular,Consolas,monospace}
+
+/* Issue #92 Properties/Layers bounded interaction correction. */
+.shell-property-supplement{display:flex;flex-direction:column;gap:6px}
+.shell-property-supplement [hidden]{display:none!important}
+.shell-property-card{margin-top:0}
+.shell-property-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;margin-top:5px}
+.shell-property-actions button{min-height:24px;border:1px solid var(--ink-ui-border);background:var(--ink-ui-surface);color:var(--ink-ui-text);border-radius:1px;font-size:var(--ui-type-xs)}
+.shell-property-actions button:disabled{opacity:.45}
+.shell-reparent-button{margin-left:auto;min-width:22px;height:20px;padding:0 4px}

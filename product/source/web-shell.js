@@ -674,9 +674,52 @@
     return true;
   }
 
+  function ensurePropertyInspectorSupplement() {
+    const selection = document.querySelector('#selectionControls');
+    if (!selection) return false;
+    if (document.querySelector('#shellPropertySupplement')) return true;
+    selection.insertAdjacentHTML('beforeend', `
+      <div id="shellPropertySupplement" class="shell-property-supplement">
+        <div id="shellPathAppearance" class="property-card shell-property-card" hidden>
+          <div class="subpanel-title"><strong>Appearance</strong><span>PATH</span></div>
+          <label class="control-row"><span>Fill</span><input id="shellPathFill" type="color" value="#202020"></label>
+          <label class="control-row"><span>Stroke</span><input id="shellPathStroke" type="color" value="#202020"></label>
+          <label class="control-row range-row"><span>Opacity</span><input id="shellPathOpacity" type="range" min="0" max="100" step="1" value="100"><output id="shellPathOpacityOutput">100%</output></label>
+        </div>
+        <div id="shellMaterialCard" class="property-card shell-property-card" hidden>
+          <div class="subpanel-title"><strong>Material</strong><span>EXISTING AUTHORITY</span></div>
+          <label class="control-row"><span>Template</span><select id="shellMaterialSelect"></select></label>
+          <div class="shell-property-actions"><button type="button" id="shellMaterialApply">Apply</button><button type="button" id="shellMaterialRemove">Remove</button></div>
+          <p id="shellMaterialState" class="shell-panel-note">No material</p>
+        </div>
+        <div id="shellFrameLayout" class="property-card shell-property-card" hidden>
+          <div class="subpanel-title"><strong>Frame / Layout</strong><span>INK-LAYOUT-1</span></div>
+          <label class="control-row"><span>Mode</span><select id="shellFrameLayoutMode"><option value="manual">Manual</option><option value="horizontal">Horizontal</option><option value="vertical">Vertical</option></select></label>
+          <label class="control-row"><span>Gap</span><input id="shellFrameLayoutGap" type="number" min="0" step="1" value="0"></label>
+          <label class="control-row"><span>Padding</span><input id="shellFrameLayoutPadding" type="number" min="0" step="1" value="0"></label>
+        </div>
+        <div id="shellLayoutItem" class="property-card shell-property-card" hidden>
+          <div class="subpanel-title"><strong>Layout Item</strong><span>INK-LAYOUT-ITEM-1</span></div>
+          <label class="control-row"><span>Flow</span><select id="shellLayoutParticipation"><option value="flow">Flow</option><option value="absolute">Absolute</option></select></label>
+          <label class="control-row"><span>Width</span><select id="shellLayoutHorizontal"><option value="hug">Hug</option><option value="fixed">Fixed</option><option value="fill">Fill</option></select></label>
+          <label class="control-row"><span>Height</span><select id="shellLayoutVertical"><option value="hug">Hug</option><option value="fixed">Fixed</option><option value="fill">Fill</option></select></label>
+        </div>
+        <div id="shellComponentState" class="property-card shell-property-card" hidden>
+          <div class="subpanel-title"><strong>Component Instance</strong><span>OVERRIDES</span></div>
+          <p id="shellComponentReadout" class="shell-panel-note"></p>
+          <label class="control-row"><span>Node</span><select id="shellComponentOverrideNode"></select></label>
+          <label class="control-row range-row"><span>Opacity</span><input id="shellComponentOverrideOpacity" type="range" min="0" max="100" step="1" value="100"><output id="shellComponentOverrideOpacityOutput">100%</output></label>
+          <div class="shell-property-actions"><button type="button" id="shellComponentOverrideApply">Apply override</button><button type="button" id="shellComponentOverrideReset">Reset</button></div>
+        </div>
+      </div>`);
+    return true;
+  }
+
   function ensureSupplementalInspectorSections() {
     const inspector = document.querySelector('#inspector');
-    if (!inspector || inspector.querySelector('[data-content="navigator"]')) return true;
+    if (!inspector) return false;
+    ensurePropertyInspectorSupplement();
+    if (inspector.querySelector('[data-content="navigator"]')) return true;
     inspector.insertAdjacentHTML('beforeend', `
       <section class="inspector-section tab-content shell-panel-section navigator-panel" data-content="navigator" aria-label="導覽器">
         <div class="shell-panel-body">
@@ -968,6 +1011,220 @@
     return response?.status === 'COMPLETED';
   }
 
+  function propertySelection(app = runtime()) {
+    const selected = app?.selectedObjects?.() || [];
+    return selected.length === 1 ? selected[0] : null;
+  }
+
+  function shellHex(value, fallback = '#202020') {
+    const text = String(value || '');
+    return /^#[0-9a-f]{6}$/i.test(text) ? text : fallback;
+  }
+
+  function defaultFrameLayout(object) {
+    const current = object?.layout;
+    if (current?.schema === 'INK-LAYOUT-1') return current;
+    return {
+      schema: 'INK-LAYOUT-1',
+      mode: 'manual',
+      gap: 0,
+      padding: { top: 0, right: 0, bottom: 0, left: 0 },
+      align: { main: 'start', cross: 'start' },
+      sizing: { horizontal: 'fixed', vertical: 'fixed' }
+    };
+  }
+
+  function defaultLayoutItem(object) {
+    const current = object?.layoutItem;
+    if (current?.schema === 'INK-LAYOUT-ITEM-1') return current;
+    return {
+      schema: 'INK-LAYOUT-ITEM-1',
+      participation: 'flow',
+      sizing: { horizontal: 'hug', vertical: 'hug' },
+      fixedSize: { width: Math.max(1, Number(object?.w ?? object?.width) || 1), height: Math.max(1, Number(object?.h ?? object?.height) || 1) },
+      constraints: { horizontal: 'start', vertical: 'start' }
+    };
+  }
+
+  function componentSourceNodes(root, output = []) {
+    if (!root || typeof root !== 'object') return output;
+    if (root.id) output.push(root);
+    for (const child of root.children || []) componentSourceNodes(child, output);
+    return output;
+  }
+
+  function renderShellProperties() {
+    const app = runtime();
+    const found = propertySelection(app);
+    const object = found?.object || null;
+
+    const pathCard = document.querySelector('#shellPathAppearance');
+    const materialCard = document.querySelector('#shellMaterialCard');
+    const pathActive = object?.type === 'path';
+    if (pathCard) pathCard.hidden = !pathActive;
+    if (materialCard) materialCard.hidden = !pathActive;
+    if (pathActive) {
+      const fill = document.querySelector('#shellPathFill');
+      const stroke = document.querySelector('#shellPathStroke');
+      const opacity = document.querySelector('#shellPathOpacity');
+      const opacityOutput = document.querySelector('#shellPathOpacityOutput');
+      if (fill) fill.value = shellHex(object.fill, '#202020');
+      if (stroke) stroke.value = shellHex(object.stroke, '#202020');
+      const opacityPercent = Math.round(Math.min(1, Math.max(0, Number(object.opacity ?? 1))) * 100);
+      if (opacity) opacity.value = String(opacityPercent);
+      if (opacityOutput) opacityOutput.value = opacityPercent + '%';
+
+      const materialSelect = document.querySelector('#shellMaterialSelect');
+      if (materialSelect) {
+        const selected = materialSelect.value;
+        materialSelect.innerHTML = '';
+        for (const template of app?.doc?.materialLibrary?.templates || []) {
+          if (!template?.templateId) continue;
+          const option = document.createElement('option');
+          option.value = template.templateId;
+          option.textContent = template.name || template.label || template.semanticRole || template.templateId;
+          materialSelect.append(option);
+        }
+        if ([...materialSelect.options].some(option => option.value === selected)) materialSelect.value = selected;
+        else if (object.materialAppearance?.templateId && [...materialSelect.options].some(option => option.value === object.materialAppearance.templateId)) materialSelect.value = object.materialAppearance.templateId;
+      }
+      const stateNode = document.querySelector('#shellMaterialState');
+      if (stateNode) stateNode.textContent = object.materialAppearance?.templateId ? 'Applied · ' + object.materialAppearance.templateId : 'No material';
+      const apply = document.querySelector('#shellMaterialApply');
+      if (apply) apply.disabled = !(materialSelect?.value);
+      const remove = document.querySelector('#shellMaterialRemove');
+      if (remove) remove.disabled = !object.materialAppearance;
+    }
+
+    const frameCard = document.querySelector('#shellFrameLayout');
+    const frameActive = object?.type === 'frame';
+    if (frameCard) frameCard.hidden = !frameActive;
+    if (frameActive) {
+      const layout = defaultFrameLayout(object);
+      const mode = document.querySelector('#shellFrameLayoutMode');
+      const gap = document.querySelector('#shellFrameLayoutGap');
+      const padding = document.querySelector('#shellFrameLayoutPadding');
+      if (mode) mode.value = layout.mode;
+      if (gap) gap.value = String(layout.gap ?? 0);
+      if (padding) padding.value = String(layout.padding?.top ?? 0);
+    }
+
+    const itemCard = document.querySelector('#shellLayoutItem');
+    const itemActive = Boolean(object && found?.parentObject?.type === 'frame');
+    if (itemCard) itemCard.hidden = !itemActive;
+    if (itemActive) {
+      const item = defaultLayoutItem(object);
+      const participation = document.querySelector('#shellLayoutParticipation');
+      const horizontal = document.querySelector('#shellLayoutHorizontal');
+      const vertical = document.querySelector('#shellLayoutVertical');
+      if (participation) participation.value = item.participation;
+      if (horizontal) horizontal.value = item.sizing.horizontal;
+      if (vertical) vertical.value = item.sizing.vertical;
+    }
+
+    const componentCard = document.querySelector('#shellComponentState');
+    const componentActive = object?.type === 'component-instance';
+    if (componentCard) componentCard.hidden = !componentActive;
+    if (componentActive) {
+      const definition = (app?.doc?.components?.definitions || []).find(item => item?.id === object.definitionId) || null;
+      const source = definition ? app.findObject?.({ objectId: definition.sourceRootId }) : null;
+      const nodes = componentSourceNodes(source?.object);
+      const readout = document.querySelector('#shellComponentReadout');
+      if (readout) readout.textContent = (definition?.name || object.definitionId || 'Component') + ' · ' + Object.keys(object.overrides || {}).length + ' override(s)';
+      const select = document.querySelector('#shellComponentOverrideNode');
+      if (select) {
+        const selected = select.value;
+        select.innerHTML = '';
+        for (const node of nodes) {
+          const option = document.createElement('option');
+          option.value = node.id;
+          option.textContent = node.name || node.id;
+          select.append(option);
+        }
+        if ([...select.options].some(option => option.value === selected)) select.value = selected;
+      }
+      const apply = document.querySelector('#shellComponentOverrideApply');
+      const reset = document.querySelector('#shellComponentOverrideReset');
+      if (apply) apply.disabled = !select?.value;
+      if (reset) reset.disabled = !select?.value;
+    }
+  }
+
+  function mutateFrameLayoutFromShell() {
+    const app = runtime();
+    const found = propertySelection(app);
+    if (!app || found?.object?.type !== 'frame') return false;
+    const current = defaultFrameLayout(found.object);
+    const mode = document.querySelector('#shellFrameLayoutMode')?.value || current.mode;
+    const gap = Math.max(0, Number(document.querySelector('#shellFrameLayoutGap')?.value) || 0);
+    const pad = Math.max(0, Number(document.querySelector('#shellFrameLayoutPadding')?.value) || 0);
+    const next = {
+      ...current,
+      schema: 'INK-LAYOUT-1',
+      mode,
+      gap,
+      padding: { top: pad, right: pad, bottom: pad, left: pad }
+    };
+    const target = app.objectPath?.(found);
+    if (!target || !app.history?.pushScoped) return false;
+    app.history.pushScoped('調整 Frame Layout', [target], () => { found.object.layout = next; });
+    app.refreshAll?.();
+    renderShellProperties();
+    return true;
+  }
+
+  function mutateLayoutItemFromShell() {
+    const app = runtime();
+    const found = propertySelection(app);
+    if (!app || !found?.object || found?.parentObject?.type !== 'frame') return false;
+    const current = defaultLayoutItem(found.object);
+    const next = {
+      ...current,
+      schema: 'INK-LAYOUT-ITEM-1',
+      participation: document.querySelector('#shellLayoutParticipation')?.value || current.participation,
+      sizing: {
+        ...current.sizing,
+        horizontal: document.querySelector('#shellLayoutHorizontal')?.value || current.sizing.horizontal,
+        vertical: document.querySelector('#shellLayoutVertical')?.value || current.sizing.vertical
+      }
+    };
+    const target = app.objectPath?.(found);
+    if (!target || !app.history?.pushScoped) return false;
+    app.history.pushScoped('調整 Layout Item', [target], () => { found.object.layoutItem = next; });
+    app.refreshAll?.();
+    renderShellProperties();
+    return true;
+  }
+
+  function renderShellLayerHierarchyControls() {
+    const app = runtime();
+    if (!app) return false;
+    document.querySelectorAll('#layersList [data-object-id]').forEach(row => {
+      const found = app.findObject?.({ objectId: row.dataset.objectId });
+      const existing = row.querySelector('[data-reparent-action]');
+      if (found?.parentObject?.type !== 'frame') {
+        existing?.remove();
+        return;
+      }
+      if (existing) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'tree-state-button shell-reparent-button';
+      button.dataset.reparentAction = 'root';
+      button.title = '移出 Frame';
+      button.setAttribute('aria-label', '移出 Frame');
+      button.textContent = '↱';
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        app.reparentObjectToFrame?.(found.object.id, null);
+        requestAnimationFrame(renderShellLayerHierarchyControls);
+      });
+      row.append(button);
+    });
+    return true;
+  }
+
   function syncSupplementalPanels() {
     const app = runtime();
     if (!state.root) return;
@@ -979,6 +1236,8 @@
     if (active === 'pages') renderShellPages();
     else if (active === 'navigator') renderShellNavigator();
     else if (active === 'libraries') renderShellLibraries();
+    else if (active === 'properties') renderShellProperties();
+    else if (active === 'layers') renderShellLayerHierarchyControls();
     else if (active === 'color') {
       const current = document.querySelector('#colorInput')?.value || '#202020';
       const color = document.querySelector('#shellColorInput');
@@ -991,6 +1250,92 @@
   function bindSupplementalPanelControls() {
     const app = runtime();
     if (!app) return false;
+    const bindChange = (selector, handler) => {
+      const node = document.querySelector(selector);
+      if (!node || node.dataset.shellChangeBound === 'true') return;
+      node.dataset.shellChangeBound = 'true';
+      node.addEventListener('change', handler);
+    };
+    bindChange('#shellPathFill', event => { app.repaintSelectedPaths?.({ fill: event.target.value }); renderShellProperties(); });
+    bindChange('#shellPathStroke', event => { app.repaintSelectedPaths?.({ stroke: event.target.value }); renderShellProperties(); });
+    const shellPathOpacity = document.querySelector('#shellPathOpacity');
+    if (shellPathOpacity && shellPathOpacity.dataset.shellOpacityBound !== 'true') {
+      shellPathOpacity.dataset.shellOpacityBound = 'true';
+      shellPathOpacity.addEventListener('input', event => {
+        const output = document.querySelector('#shellPathOpacityOutput');
+        if (output) output.value = event.target.value + '%';
+      });
+      shellPathOpacity.addEventListener('change', event => { app.repaintSelectedPaths?.({ opacity: Number(event.target.value) / 100 }); renderShellProperties(); });
+    }
+    bindChange('#shellFrameLayoutMode', mutateFrameLayoutFromShell);
+    bindChange('#shellFrameLayoutGap', mutateFrameLayoutFromShell);
+    bindChange('#shellFrameLayoutPadding', mutateFrameLayoutFromShell);
+    bindChange('#shellLayoutParticipation', mutateLayoutItemFromShell);
+    bindChange('#shellLayoutHorizontal', mutateLayoutItemFromShell);
+    bindChange('#shellLayoutVertical', mutateLayoutItemFromShell);
+
+    const materialApply = document.querySelector('#shellMaterialApply');
+    if (materialApply && materialApply.dataset.bound !== 'true') {
+      materialApply.dataset.bound = 'true';
+      materialApply.addEventListener('click', () => {
+        const found = propertySelection(app);
+        const templateId = document.querySelector('#shellMaterialSelect')?.value;
+        const template = (app.doc?.materialLibrary?.templates || []).find(item => item?.templateId === templateId);
+        if (!found || found.object?.type !== 'path' || !templateId) return;
+        app.applySelectedPathMaterial?.({
+          templateId,
+          ...(template?.templateVersion ? { templateVersion: template.templateVersion } : {})
+        });
+        renderShellProperties();
+      });
+    }
+    const materialRemove = document.querySelector('#shellMaterialRemove');
+    if (materialRemove && materialRemove.dataset.bound !== 'true') {
+      materialRemove.dataset.bound = 'true';
+      materialRemove.addEventListener('click', () => { app.clearSelectedPathMaterial?.(); renderShellProperties(); });
+    }
+
+    const componentOpacity = document.querySelector('#shellComponentOverrideOpacity');
+    if (componentOpacity && componentOpacity.dataset.shellOpacityBound !== 'true') {
+      componentOpacity.dataset.shellOpacityBound = 'true';
+      componentOpacity.addEventListener('input', event => {
+        const output = document.querySelector('#shellComponentOverrideOpacityOutput');
+        if (output) output.value = event.target.value + '%';
+      });
+    }
+    const componentApply = document.querySelector('#shellComponentOverrideApply');
+    if (componentApply && componentApply.dataset.bound !== 'true') {
+      componentApply.dataset.bound = 'true';
+      componentApply.addEventListener('click', () => {
+        const found = propertySelection(app);
+        const nodeId = document.querySelector('#shellComponentOverrideNode')?.value;
+        const opacity = Number(document.querySelector('#shellComponentOverrideOpacity')?.value) / 100;
+        if (found?.object?.type !== 'component-instance' || !nodeId || !Number.isFinite(opacity)) return;
+        app.overrideInstance?.(found.object.id, nodeId, Math.min(1, Math.max(0, opacity)));
+        renderShellProperties();
+      });
+    }
+    const componentReset = document.querySelector('#shellComponentOverrideReset');
+    if (componentReset && componentReset.dataset.bound !== 'true') {
+      componentReset.dataset.bound = 'true';
+      componentReset.addEventListener('click', () => {
+        const found = propertySelection(app);
+        const nodeId = document.querySelector('#shellComponentOverrideNode')?.value;
+        if (found?.object?.type !== 'component-instance' || !nodeId) return;
+        app.overrideInstance?.(found.object.id, nodeId, null);
+        renderShellProperties();
+      });
+    }
+
+    const propertyRefreshHost = document.querySelector('#selectionControls');
+    if (propertyRefreshHost && propertyRefreshHost.dataset.shellPropertyRefreshBound !== 'true') {
+      propertyRefreshHost.dataset.shellPropertyRefreshBound = 'true';
+      document.addEventListener('pointerup', () => {
+        if (currentPanel() === 'properties') requestAnimationFrame(renderShellProperties);
+        else if (currentPanel() === 'layers') requestAnimationFrame(renderShellLayerHierarchyControls);
+      }, { passive: true });
+    }
+
     const librarySearch = document.querySelector('#shellLibrarySearch');
     if (librarySearch && librarySearch.dataset.bound !== 'true') {
       librarySearch.dataset.bound = 'true';
