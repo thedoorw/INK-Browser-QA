@@ -906,7 +906,7 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=384 / FAIL=207 / N_A=1 / UNREVIEWED=0 / OPEN=207`
+`TOTAL=592 / PASS=399 / FAIL=192 / N_A=1 / UNREVIEWED=0 / OPEN=192`
 
 A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. Runtime run 36445204976 remains PASS for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b. Current main 3608962c changes no product source since that SHA; no new central Runtime was run.
 
@@ -924,7 +924,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | B02 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md REFERENCE_PACK; attached 1280×1024 PNG SHA-256 9bb8f329df55f6e6617e32e60a138c6cd21451509465073d4821802482815f76 / df316d46821c2840acf1dad277dca6442b4b093034b9dd809d6cb4aa917860e2. | — |
 | B03 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§0–2, normalized 1280×994 app crop; reference-state classification. | — |
 | B04 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§0–2, normalized 1280×994 app crop; reference-state classification. | — |
-| B05 | FAIL | Behavior reference documents mention Adobe, but original official URLs and item-specific behavior comparison are not closed in the audit package. | UI-AUD-07 |
+| B05 | PASS | Adobe official Photoshop documentation: viewing-images.html (Navigator), positioning-elements-snapping.html (Snap/Snap To), desktop/get-started/learn-the-basics/dock-undock-panels.html (panel behavior); original URLs recorded in closure UR evidence R1. | — |
 | B06 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§0–2, normalized 1280×994 app crop; reference-state classification. | — |
 | C01 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
 | C02 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
@@ -932,7 +932,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | C04 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
 | C05 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
 | C06 | PASS | artifact 10979718534 / ui.json checks #3–10, #22–24; working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §§2–4; ui-1280x1024.png. | — |
-| C07 | FAIL | Current desktop capture is present but no normalized edge overlay/difference evidence for no gap/double divider. | UI-AUD-02 |
+| C07 | PASS | artifact 10979718534 ui.json checks #3–10 plus qa/evidence/ink-ui-final-checklist-closure-001/ink-top-61px.png and ps-ink-major-edge-overlay.png show 24+1+35+1 shell without gap/double divider. | — |
 | D01 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
 | D02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for D02: no dead top-level menu label exists. [INT] | UI-AUD-08 |
 | D03 | PASS | product/source/web-shell.js application menu registry; artifact 10979718534 / ui.json checks #51–59; ui-1280x1024.png (11 menus; Brush/3D absent). | — |
@@ -1260,7 +1260,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AA09 | PASS | artifact 10979718534 / ui.json checks #93–102; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs responsive taxonomy assertion. | — |
 | AA10 | FAIL | Placement/summary alone does not prove this exact item on current main (AA10: touch targets remain usable. [RESP]); source or targeted QA evidence needed. | UI-AUD-06 |
 | AB01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
-| AB02 | FAIL | Current product/source/styles.css contains 36 !important occurrences (rg count); requirement explicitly demands total 0. Prior UI-C report also records 36. | UI-AUD-01 |
+| AB02 | FAIL | The requirement is presentation !important total=0, not all !important total=0. product/source/styles.css has 36 total; at least .document-status-info gap:8px!important (line 3004) and .shell-panel-section padding:0!important (line 3046) are presentation uses. State-visibility and reduced-motion uses require separate semantic classification. | UI-AUD-01 |
 | AB03 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
 | AB04 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
 | AB05 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md engineering health delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #1, #78, #105–110. | — |
@@ -1277,17 +1277,17 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AC01 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
 | AC02 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
 | AC03 | FAIL | Final artifact contains only 1280×1024 and 960×800 UI screenshots; no compact/mobile screenshot. | UI-AUD-02 |
-| AC04 | FAIL | No separately labeled top-61px crop in final artifact. | UI-AUD-02 |
-| AC05 | FAIL | No separately labeled single-toolbar crop in final artifact. | UI-AUD-02 |
+| AC04 | PASS | qa/evidence/ink-ui-final-checklist-closure-001/ink-top-61px.png, derived from final Runtime ui-1280x1024.png (artifact 10979718534); manifest.json SHA. | — |
+| AC05 | PASS | qa/evidence/ink-ui-final-checklist-closure-001/ink-left-single-tools.png; final Runtime x=[0,40), y=[61,994), manifest.json SHA. | — |
 | AC06 | FAIL | No separately labeled double-toolbar crop in final artifact. | UI-AUD-02 |
-| AC07 | FAIL | No separately labeled collapsed-Dock crop in final artifact. | UI-AUD-02 |
+| AC07 | PASS | qa/evidence/ink-ui-final-checklist-closure-001/ink-right-collapsed-dock.png; final Runtime x=[1240,1280), y=[61,994), manifest.json SHA. | — |
 | AC08 | FAIL | No separately labeled expanded-panel crop in final artifact. | UI-AUD-02 |
 | AC09 | FAIL | No History multi-state screenshot in final artifact. | UI-AUD-02 |
 | AC10 | FAIL | No Navigator normal screenshot in final artifact. | UI-AUD-02 |
 | AC11 | FAIL | No Navigator after pan/zoom screenshot in final artifact. | UI-AUD-02 |
 | AC12 | FAIL | No Libraries search/result screenshot in final artifact. | UI-AUD-02 |
-| AC13 | FAIL | No Photoshop/INK major-edge overlay in final artifact. | UI-AUD-02 |
-| AC14 | FAIL | No Photoshop/INK difference/edge image in final artifact. | UI-AUD-02 |
+| AC13 | PASS | qa/evidence/ink-ui-final-checklist-closure-001/ps-ink-major-edge-overlay.png; PS ps-2 geometry plus final Runtime DOM/screenshot major edges; manifest.json states state difference. | — |
+| AC14 | PASS | qa/evidence/ink-ui-final-checklist-closure-001/ps-ink-edge-difference.png; structural edge comparison only, excluding Dark/Light color difference; manifest.json. | — |
 | AC15 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
 | AC16 | PASS | artifact 10979718534: ui-1280x1024.png, ui-960x800.png, ui.json geometry and viewport/DPR. | — |
 | AD01 | PASS | artifact 10979718534 / ui.json checks #1, #18, #25–31, #50, #84–85, #93–104; ui-first-paint.png / desktop captures. | — |
@@ -1423,18 +1423,18 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AJ26 | FAIL | Fine Detail Standard specifies the field, but no item-specific final Target/Actual/Evidence/Result record establishes AJ26. | UI-AUD-03 |
 | AJ27 | FAIL | Fine Detail Standard §25 requires Component/Field/Target/Actual/Evidence/Result implementation table; no complete final actual/evidence table located. | UI-AUD-03 |
 | AJ28 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
-| AK01 | FAIL | Reference environment field for AK01 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK01 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §A records Photoshop 21.2.12. | — |
 | AK02 | FAIL | Reference environment field for AK02 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
-| AK03 | FAIL | Reference environment field for AK03 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
-| AK04 | FAIL | Reference environment field for AK04 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
-| AK05 | FAIL | Reference environment field for AK05 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK03 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §1 records 1280×994 application crop from 1280×1024 capture. | — |
+| AK04 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md §1 explicitly says Windows display scale UNKNOWN for legacy evidence. | — |
+| AK05 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md §1 explicitly says Photoshop UI scaling UNKNOWN for legacy evidence. | — |
 | AK06 | FAIL | Reference environment field for AK06 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
 | AK07 | FAIL | Reference environment field for AK07 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
-| AK08 | FAIL | Reference environment field for AK08 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK08 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §A records Traditional Chinese and dark theme. | — |
 | AK09 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
 | AK10 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
 | AK11 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
-| AK12 | FAIL | Reference environment field for AK12 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK12 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md §1 identifies five active-document captures and hashes, including rulers ON/OFF. | — |
 | AK13 | FAIL | Reference environment field for AK13 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
 | AK14 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
 | AL01 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
@@ -1467,7 +1467,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AM12 | FAIL | Placement/summary alone does not prove this exact item on current main (AM12: Layers reorder converges with hierarchy authority and History semantics.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AM13 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
 | AN01 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN01: Navigator proxy drag behavior is verified against Adobe Photoshop documentation and INK Runtime. | UI-AUD-09 |
-| AN02 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN02: Panel edge resize behavior is verified; no Photoshop cursor-raster copy is required. | UI-AUD-09 |
+| AN02 | PASS | Adobe Photoshop dock/resize behavior: https://helpx.adobe.com/photoshop/desktop/get-started/learn-the-basics/stack-floating-panels.html describes dragging a panel edge; final artifact 10979718534 ui.json checks #31 and #91 verify INK shared right-panel resize and canvas reflow. | — |
 | AN03 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN03: Smart Guides show edge/center/boundary alignment opportunities. | UI-AUD-09 |
 | AN04 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN04: Smart Guides provide useful pixel-distance feedback during movement. | UI-AUD-09 |
 | AN05 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN05: equal-spacing feedback is supported by the accepted snap/measurement authority. | UI-AUD-09 |
@@ -1480,7 +1480,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AN12 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md; working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md reference/adaptation policy; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md light tokens. | — |
 | AO01 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
 | AO02 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md semantic token table; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs. | — |
-| AO03 | FAIL | Placement/summary alone does not prove this exact item on current main (AO03: no component-local random gray values bypass the token authority.); source or targeted QA evidence needed. | UI-AUD-06 |
+| AO03 | FAIL | Reproduced component-local grays in final Light UI rules: product/source/styles.css .panel-dock-button color:#555; .inspector-head strong color:#303030; .panel-options-menu button:hover background:#ddd; .shell-panel-footer button border:1px solid #c9c9c9. These bypass the named semantic gray roles and require bounded UI token reconciliation. | UI-AUD-06 |
 | AO04 | FAIL | Placement/summary alone does not prove this exact item on current main (AO04: primary/secondary/disabled text contrast is verified.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AO05 | FAIL | Placement/summary alone does not prove this exact item on current main (AO05: icon normal/hover/active/disabled contrast is verified.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AO06 | FAIL | Placement/summary alone does not prove this exact item on current main (AO06: control borders and states are visibly distinct.); source or targeted QA evidence needed. | UI-AUD-06 |
@@ -1502,7 +1502,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AF05 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,5: integrated tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b and run 36445204976. | — |
 | AF06 | PASS | working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§2,5: integrated tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b and run 36445204976. | — |
 | AF07 | PASS | UI-A/B/C UR reviews; working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md §§5–7; captured desktop screenshot inspection. | — |
-| AF08 | FAIL | Current-main focused QA invocation node --test qa/ink-ui-{a,b,c}*.test.mjs yielded 24 PASS / 1 FAIL: UI-A Navigator static assertion expects older camera string after UI-C ruler/Navigator refactor. QA contract requires reconciliation/recheck. | UI-AUD-10 |
+| AF08 | PASS | Current-main UI-A static assertion corrected on closure branch to renderer.viewportWorldBounds() + existing page camera; focused UI-A/B/C suite 25/25 PASS. No product source edit. | — |
 | AF09 | FAIL | Placement/summary alone does not prove this exact item on current main (AF09: Photoshop alignment review = PASS.); source or targeted QA evidence needed. | UI-AUD-06 |
 | AF10 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. USER visual acceptance/revision completed. | USER-ACCEPT |
 | AF11 | FAIL | Other required checklist items have FAIL dispositions; closure predicate false. | UI-AUD-04 |

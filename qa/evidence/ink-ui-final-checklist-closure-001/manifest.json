@@ -1,0 +1,56 @@
+{
+  "artifact_id": 10979718534,
+  "runtime_file": "ui-1280x1024.png",
+  "runtime_sha256": "acedcb2b2db74843a1bc832a49df788955d15cd882ea502dbc765004780d6ceb",
+  "photoshop_file": "ps-2.png",
+  "photoshop_sha256": "df316d46821c2840acf1dad277dca6442b4b093034b9dd809d6cb4aa917860e2",
+  "reference_crop": [
+    0,
+    0,
+    1280,
+    994
+  ],
+  "warning": "Derived images provide boundary evidence only; they do not prove color fidelity, interaction, double-toolbar or expanded-panel state.",
+  "files": {
+    "ink-top-61px.png": {
+      "size": [
+        1280,
+        61
+      ],
+      "sha256": "d4901d6cca65b730aec5eb1438fa1b4718a5bc2626d7a051f1ff6586b48aecdc",
+      "detail": "Final Runtime UI capture top shell, x=[0,1280), y=[0,61)."
+    },
+    "ink-left-single-tools.png": {
+      "size": [
+        40,
+        933
+      ],
+      "sha256": "9300cc792cd7408186eee3a6368dcbf96ebf35046f243eb735db3d6c79dc8c28",
+      "detail": "Single-column Tools and boundary, x=[0,40), y=[61,994)."
+    },
+    "ink-right-collapsed-dock.png": {
+      "size": [
+        40,
+        933
+      ],
+      "sha256": "a8875dd4103b7678b366fc98033feb95cba3524ceb34ced4de6c7e0f59b36113",
+      "detail": "Collapsed right Dock and boundary, x=[1240,1280), y=[61,994)."
+    },
+    "ps-ink-major-edge-overlay.png": {
+      "size": [
+        1280,
+        994
+      ],
+      "sha256": "f6564b741058a40305168bce2fd746a4694a4e3e9402dab5ae3de9c915064483",
+      "detail": "Measured Photoshop ps-2 versus INK major shell edges; red PS, blue INK. Active-document tab edge is INK-only because ps-2 is empty."
+    },
+    "ps-ink-edge-difference.png": {
+      "size": [
+        1280,
+        994
+      ],
+      "sha256": "7a8741677d4903c737b0f427d0d4d966f066dbb556198a702632729630588d0f",
+      "detail": "Structural edge difference only. Dark/Light theme pixel colors intentionally excluded; ps-2 empty versus INK active document yields y=89 difference."
+    }
+  }
+}
