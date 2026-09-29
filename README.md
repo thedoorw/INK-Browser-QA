@@ -92,17 +92,38 @@ If correct UI work requires a frozen Core/global authority change:
 `STOP → MR / INTEGRATION_REQUIRED`
 
 ### WR — Web Review
-Owns the portfolio website research / reproduction / review lane:
+WR is the autonomous authority for the portfolio website lane end to end.
+
+WR owns:
 - mature portfolio website discovery and reference selection;
 - information architecture, grid, typography, navigation and responsive analysis;
-- WEB DEV workpacks;
-- visual / responsive / browser QA;
-- GitHub Pages portfolio review;
-- reusable website-reproduction workflow and lessons.
+- Web planning and bounded Work Orders;
+- WEB DEV supervision;
+- source / browser / visual / responsive QA;
+- review decisions;
+- branch reconciliation, promotion and merge for Web-portfolio-only work;
+- GitHub Pages deployment and verification;
+- reusable website-reproduction workflow, component/pattern knowledge and development lessons.
 
-WR does not own INK Core, Connector authority, workstation UI, Document / History / Revision implementation or `FORMAT_VERSION`.
+For Web-portfolio-only work, WR does **not** require MR review, MR acceptance or MR promotion approval.
 
-If website work requires an INK product change:
+WR may close the full loop:
+
+```text
+research
+→ plan
+→ WEB DEV
+→ WR review
+→ revise as needed
+→ merge / promote
+→ deploy
+→ verify
+→ next Web task
+```
+
+WR does not own INK product source, Core, Connector authority, workstation UI, Document / History / Revision implementation or `FORMAT_VERSION`.
+
+Only if Web work actually requires an INK product change:
 
 `STOP → MR / relevant INK authority`
 
