@@ -202,23 +202,7 @@ The first gate is:
 
 Only after the shell is stable should the content be replaced or extended with the user's own portfolio data.
 
-### D. Portfolio Content Integration
-
-The site should later present the INK Creative Reproduction Benchmark:
-
-- source/tutorial context;
-- work category;
-- original reference;
-- CHAT × INK reproduction result;
-- intermediate states where useful;
-- process/evidence;
-- capability coverage;
-- gaps / lessons;
-- final result.
-
-The portfolio is the presentation layer. GitHub remains the evidence/source layer.
-
-### E. Visual / Responsive QA
+### D. Visual / Responsive QA
 
 WR should verify at least:
 
@@ -237,7 +221,7 @@ WR should verify at least:
 
 Where possible, use reference screenshots and measured comparison rather than subjective inspection alone.
 
-### F. GitHub Pages Deployment
+### E. GitHub Pages Deployment
 
 The first portfolio should be deployed from GitHub and remain reproducible from repository state.
 
@@ -247,6 +231,48 @@ Deployment should preserve:
 - repeatable build/deploy path;
 - traceable reference assets and licenses;
 - stable case URLs where practical.
+
+### F. Web Reproduction Workflow v0.1
+
+The first completed reproduction must be converted into a reusable production method rather than remain a one-off site.
+
+The canonical loop is:
+
+```text
+WEB-REF
+→ Capture
+→ Measure
+→ Structure
+→ Tokens
+→ Components
+→ Build
+→ Visual Diff
+→ Responsive QA
+→ Deploy
+→ Lessons
+```
+
+The workflow should be refined after each completed website and feed the three durable WR knowledge sets:
+
+- Web Reference Library;
+- Web Pattern / Component Library;
+- Web Development Lessons.
+
+### After the first shell — Portfolio Content Integration
+
+After the reproduced shell is stable, the site may be adapted to present the INK Creative Reproduction Benchmark:
+
+- source/tutorial context;
+- work category;
+- original reference;
+- CHAT × INK reproduction result;
+- intermediate states where useful;
+- process/evidence;
+- capability coverage;
+- gaps / lessons;
+- final result.
+
+The portfolio is the presentation layer. GitHub remains the evidence/source layer.
 
 ## 5. Reusable Web reproduction workflow
 
