@@ -278,3 +278,45 @@ ADDITIONAL_USER_LIGHT_THEME_SCREENSHOT_REQUIRED = NO
 EXACT_PS_21_2_12_LIGHT_RGB = NOT_REQUIRED
 FINAL_INK_LIGHT_TOKENS = UR_ADAPTATION_REQUIRED
 ```
+
+
+## J. Final legacy-reference environment disposition — 2026-09-29
+
+This section closes the remaining environment fields without reverse-inference from screenshots.
+
+```text
+PHOTOSHOP_VERSION = 21.2.12
+REFERENCE_SCREEN_RESOLUTION = 1280×1024
+REFERENCE_APPLICATION_AREA = 1280×994
+REFERENCE_OS = UNKNOWN
+WINDOWS_DISPLAY_SCALE = UNKNOWN
+PHOTOSHOP_UI_SCALING = UNKNOWN
+PHOTOSHOP_UI_FONT_SIZE = UNKNOWN
+SCALE_UI_TO_FONT = UNKNOWN
+UI_LANGUAGE = Traditional Chinese
+THEME = dark
+```
+
+Rules:
+- `UNKNOWN` is an explicit evidence disposition, not a guessed value.
+- visible glyph height is not used to infer Photoshop UI Font Size.
+- capture pixels are not used to infer Windows version, display scaling, Photoshop UI scaling or Scale UI To Font.
+- numeric measurements from uncontrolled web/public references remain visual/reference-only unless their environment is independently known.
+
+### P0 reference-pack closure
+
+The P0 set is now `DISPOSITION_COMPLETE` rather than "all screenshots physically acquired".
+
+- captured/measured: active document rulers OFF/ON, menu, panel options, Layers selected state, History populated, Navigator, Tooltip, tool flyout, status information popup, empty workspace, scrollbars, Layers drag reference, guide drags, Navigator high-zoom proxy;
+- official-source behavior closure: Navigator proxy drag, panel resize, equal-spacing / Smart Guides, ruler-origin behavior;
+- accessibility/INK-semantic closure rather than Photoshop raster-copy: keyboard focus and disabled-state treatment;
+- explicitly optional/non-blocking: additional cursor/raster close-ups and ruler-origin screenshot;
+- additional dark-theme Photoshop screenshots required: `0`.
+
+Therefore:
+
+```text
+P0_REFERENCE_PACK_COMPLETE = YES / DISPOSITION_COMPLETE
+ENVIRONMENT_METADATA_COMPLETE = YES / KNOWN_VALUES_PLUS_EXPLICIT_UNKNOWN
+PRODUCT_MUTATION = 0
+```

@@ -908,7 +908,7 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=420 / FAIL=171 / N_A=1 / UNREVIEWED=0 / OPEN=171`
+`TOTAL=592 / PASS=424 / FAIL=167 / N_A=1 / UNREVIEWED=0 / OPEN=167`
 
 A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. The prior central Runtime run 36445204976 remains historical evidence for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b; PR #93 promoted new product CSS at c66b1eba2376f01cfba14f71b6f29d7e2fa022e4, so current-product Runtime debt is DEFERRED_TO_FINAL_CHECKLIST_BATCH and no central Runtime was run in this closure batch.
 
@@ -1426,18 +1426,18 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AJ27 | FAIL | Fine Detail Standard §25 requires Component/Field/Target/Actual/Evidence/Result implementation table; no complete final actual/evidence table located. | UI-AUD-03 |
 | AJ28 | PASS | working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md specified fields; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md token/geometry delta; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; qa/ink-ui-c-photoshop-fidelity-closure.test.mjs for token and responsive fields. | — |
 | AK01 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §A records Photoshop 21.2.12. | — |
-| AK02 | FAIL | Reference environment field for AK02 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK02 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §J: reference OS is explicitly UNKNOWN; source capture resolution is recorded as 1280×1024. No OS value is inferred from pixels. | — |
 | AK03 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md §1 records 1280×994 application crop from 1280×1024 capture. | — |
 | AK04 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md §1 explicitly says Windows display scale UNKNOWN for legacy evidence. | — |
 | AK05 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md §1 explicitly says Photoshop UI scaling UNKNOWN for legacy evidence. | — |
-| AK06 | FAIL | Reference environment field for AK06 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
-| AK07 | FAIL | Reference environment field for AK07 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK06 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §J records Photoshop UI Font Size = UNKNOWN for the legacy matched reference environment; no glyph-to-font-size inference is used. | — |
+| AK07 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §J records Scale UI To Font = UNKNOWN for the legacy matched reference environment. | — |
 | AK08 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §A records Traditional Chinese and dark theme. | — |
 | AK09 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
 | AK10 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
 | AK11 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
 | AK12 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md §1 identifies five active-document captures and hashes, including rulers ON/OFF. | — |
-| AK13 | FAIL | Reference environment field for AK13 has no controlled final capture value or explicit UNKNOWN disposition in cited evidence. | UI-AUD-07 |
+| AK13 | PASS | working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md §§F–J: P0 reference set is explicitly DISPOSITION_COMPLETE; captured items, official-source closures and optional/non-blocking items are individually classified, with additional dark-theme screenshots required = 0. | — |
 | AK14 | PASS | working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md measurement policy, observed density versus hitbox; working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md environment caution. | — |
 | AL01 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
 | AL02 | PASS | working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md static gate; artifact 10979718534 / ui.json checks #3–11 where geometry exercised. | — |
