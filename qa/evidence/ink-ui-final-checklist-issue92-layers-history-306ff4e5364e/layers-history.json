@@ -57,16 +57,16 @@
       "pass": false,
       "detail": {
         "beforeOrder": [
-          "737824db-23b7-4bcd-9682-ae9f3cd8f9b9",
-          "31bda083-63ed-4179-965f-a521df4bc483",
-          "756dfd4f-7b05-42a4-a907-493be750bb0c",
-          "aba9796b-f967-4e20-9d53-128269f38404"
+          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
+          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
+          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
+          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
         ],
         "afterOrder": [
-          "737824db-23b7-4bcd-9682-ae9f3cd8f9b9",
-          "31bda083-63ed-4179-965f-a521df4bc483",
-          "756dfd4f-7b05-42a4-a907-493be750bb0c",
-          "aba9796b-f967-4e20-9d53-128269f38404"
+          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
+          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
+          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
+          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
         ]
       }
     },
@@ -82,16 +82,16 @@
       "pass": true,
       "detail": {
         "undoOrder": [
-          "737824db-23b7-4bcd-9682-ae9f3cd8f9b9",
-          "31bda083-63ed-4179-965f-a521df4bc483",
-          "756dfd4f-7b05-42a4-a907-493be750bb0c",
-          "aba9796b-f967-4e20-9d53-128269f38404"
+          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
+          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
+          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
+          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
         ],
         "redoOrder": [
-          "737824db-23b7-4bcd-9682-ae9f3cd8f9b9",
-          "31bda083-63ed-4179-965f-a521df4bc483",
-          "756dfd4f-7b05-42a4-a907-493be750bb0c",
-          "aba9796b-f967-4e20-9d53-128269f38404"
+          "da386bb0-6fc3-41fb-a269-45d01fe5129c",
+          "75e1843d-75e4-4f56-b36e-3dd1cb2d2cb4",
+          "25744730-08d8-48cb-9b1c-3cb25f7bb7dc",
+          "5567ad17-36ec-4ad6-a453-947ea4683e4a"
         ]
       }
     },
@@ -130,7 +130,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "8f14a668-ad3f-4160-8302-2773a61debff"
+                  "value": "1c04cbd4-8a64-477f-a56b-cda95f285003"
                 },
                 {
                   "op": "array-insert",
@@ -141,7 +141,7 @@
                   ],
                   "index": 28,
                   "value": {
-                    "id": "8f14a668-ad3f-4160-8302-2773a61debff",
+                    "id": "1c04cbd4-8a64-477f-a56b-cda95f285003",
                     "name": "圖層 29",
                     "visible": true,
                     "locked": false,
@@ -159,7 +159,7 @@
                     "layers"
                   ],
                   "index": 28,
-                  "id": "8f14a668-ad3f-4160-8302-2773a61debff"
+                  "id": "1c04cbd4-8a64-477f-a56b-cda95f285003"
                 },
                 {
                   "op": "set",
@@ -168,7 +168,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "24636005-155e-4f10-9225-ef74e57a5c8e"
+                  "value": "8df7c5ad-fb45-4ff3-ab21-6bdae8823218"
                 }
               ],
               "captureMode": "scoped",
@@ -177,7 +177,7 @@
               "patchCount": 2,
               "storedBytes": 486,
               "objectIds": [
-                "8f14a668-ad3f-4160-8302-2773a61debff"
+                "1c04cbd4-8a64-477f-a56b-cda95f285003"
               ]
             },
             {
@@ -190,7 +190,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "daaadcdb-9412-4fe9-867b-d01d5619e9df"
+                  "value": "d77c9659-670a-40f1-9189-fe9e14d7952d"
                 },
                 {
                   "op": "array-insert",
@@ -201,7 +201,7 @@
                   ],
                   "index": 29,
                   "value": {
-                    "id": "daaadcdb-9412-4fe9-867b-d01d5619e9df",
+                    "id": "d77c9659-670a-40f1-9189-fe9e14d7952d",
                     "name": "圖層 30",
                     "visible": true,
                     "locked": false,
@@ -219,7 +219,7 @@
                     "layers"
                   ],
                   "index": 29,
-                  "id": "daaadcdb-9412-4fe9-867b-d01d5619e9df"
+                  "id": "d77c9659-670a-40f1-9189-fe9e14d7952d"
                 },
                 {
                   "op": "set",
@@ -228,7 +228,7 @@
                     0,
                     "activeLayerId"
                   ],
-                  "value": "8f14a668-ad3f-4160-8302-2773a61debff"
+                  "value": "1c04cbd4-8a64-477f-a56b-cda95f285003"
                 }
               ],
               "captureMode": "scoped",
@@ -237,7 +237,7 @@
               "patchCount": 2,
               "storedBytes": 486,
               "objectIds": [
-                "daaadcdb-9412-4fe9-867b-d01d5619e9df"
+                "d77c9659-670a-40f1-9189-fe9e14d7952d"
               ]
             }
           ],
