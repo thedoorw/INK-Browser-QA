@@ -1,0 +1,447 @@
+{
+  "schema": "INK-UI-ISSUE92-GUIDE-SNAP",
+  "version": 1,
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "AI05",
+      "pass": true,
+      "detail": {
+        "sameAuthority": true,
+        "removed": true,
+        "visibilityMenu": true,
+        "historyDelta": 4
+      }
+    },
+    {
+      "id": "AI18",
+      "pass": true,
+      "detail": {
+        "historyStart": 0,
+        "historyAfter": 4,
+        "undoVisible": true,
+        "redoVisible": true
+      }
+    },
+    {
+      "id": "AI06",
+      "pass": true,
+      "detail": {
+        "guideSnap": {
+          "delta": {
+            "x": 2,
+            "y": 0
+          },
+          "snapped": {
+            "x": true,
+            "y": false
+          },
+          "evidence": {
+            "x": {
+              "type": "guide",
+              "axis": "x",
+              "sourceRole": "end",
+              "targetRole": "guide",
+              "targetId": "guide-x",
+              "candidateKey": "guide:x:end:guide-x:guide",
+              "correction": 2,
+              "targetValue": 32,
+              "line": {
+                "axis": "x",
+                "value": 32
+              }
+            },
+            "y": null
+          },
+          "bypassed": false
+        },
+        "guideRendered": true
+      }
+    },
+    {
+      "id": "AI07",
+      "pass": true,
+      "detail": {
+        "edgeSnap": {
+          "delta": {
+            "x": 5,
+            "y": 0
+          },
+          "snapped": {
+            "x": true,
+            "y": true
+          },
+          "evidence": {
+            "x": {
+              "type": "edge",
+              "axis": "x",
+              "sourceRole": "end",
+              "targetRole": "start",
+              "targetId": 0,
+              "candidateKey": "edge:x:end:0:start",
+              "correction": 1,
+              "targetValue": 55,
+              "line": {
+                "axis": "x",
+                "value": 55
+              }
+            },
+            "y": {
+              "type": "edge",
+              "axis": "y",
+              "sourceRole": "end",
+              "targetRole": "end",
+              "targetId": 0,
+              "candidateKey": "edge:y:end:0:end",
+              "correction": 0,
+              "targetValue": 10,
+              "line": {
+                "axis": "y",
+                "value": 10
+              }
+            }
+          },
+          "bypassed": false
+        },
+        "centerSnap": {
+          "delta": {
+            "x": -1,
+            "y": 0
+          },
+          "snapped": {
+            "x": true,
+            "y": true
+          },
+          "evidence": {
+            "x": {
+              "type": "center",
+              "axis": "x",
+              "sourceRole": "end",
+              "targetRole": "center",
+              "targetId": 0,
+              "candidateKey": "center:x:end:0:center",
+              "correction": -1,
+              "targetValue": 60,
+              "line": {
+                "axis": "x",
+                "value": 60
+              }
+            },
+            "y": {
+              "type": "center",
+              "axis": "y",
+              "sourceRole": "center",
+              "targetRole": "center",
+              "targetId": 0,
+              "candidateKey": "center:y:center:0:center",
+              "correction": 0,
+              "targetValue": 25,
+              "line": {
+                "axis": "y",
+                "value": 25
+              }
+            }
+          },
+          "bypassed": false
+        },
+        "objectVisual": true
+      }
+    },
+    {
+      "id": "AN03",
+      "pass": true,
+      "detail": {
+        "edgeType": "edge",
+        "centerType": "center"
+      }
+    },
+    {
+      "id": "AI08",
+      "pass": true,
+      "detail": {
+        "gridSnap": {
+          "delta": {
+            "x": 1,
+            "y": 1
+          },
+          "snapped": {
+            "x": true,
+            "y": true
+          },
+          "evidence": {
+            "x": {
+              "type": "grid",
+              "axis": "x",
+              "sourceRole": "end",
+              "targetRole": "grid",
+              "targetId": "4",
+              "candidateKey": "grid:x:end:4",
+              "correction": 1,
+              "targetValue": 40,
+              "line": {
+                "axis": "x",
+                "value": 40
+              }
+            },
+            "y": {
+              "type": "grid",
+              "axis": "y",
+              "sourceRole": "end",
+              "targetRole": "grid",
+              "targetId": "4",
+              "candidateKey": "grid:y:end:4",
+              "correction": 1,
+              "targetValue": 40,
+              "line": {
+                "axis": "y",
+                "value": 40
+              }
+            }
+          },
+          "bypassed": false
+        }
+      }
+    },
+    {
+      "id": "AI09",
+      "pass": true,
+      "detail": {
+        "angleSnap": {
+          "angle": 0.2617993877991494,
+          "snapped": true,
+          "evidence": {
+            "type": "angle",
+            "stepDegrees": 15,
+            "sourceRadians": 0.24434609527920614,
+            "snappedRadians": 0.2617993877991494
+          },
+          "bypassed": false
+        },
+        "positionalSnap": {
+          "delta": {
+            "x": 2,
+            "y": 0
+          },
+          "snapped": {
+            "x": true,
+            "y": false
+          },
+          "evidence": {
+            "x": {
+              "type": "guide",
+              "axis": "x",
+              "sourceRole": "end",
+              "targetRole": "guide",
+              "targetId": "guide-angle-independent",
+              "candidateKey": "guide:x:end:guide-angle-independent:guide",
+              "correction": 2,
+              "targetValue": 32,
+              "line": {
+                "axis": "x",
+                "value": 32
+              }
+            },
+            "y": null
+          },
+          "bypassed": false
+        }
+      }
+    },
+    {
+      "id": "AI10",
+      "pass": true,
+      "detail": {
+        "equalSnap": {
+          "delta": {
+            "x": 4,
+            "y": 4
+          },
+          "snapped": {
+            "x": true,
+            "y": true
+          },
+          "evidence": {
+            "x": {
+              "type": "equal-distance",
+              "axis": "x",
+              "leftPeer": 0,
+              "rightPeer": 1,
+              "gap": 20,
+              "candidateKey": "equal-distance:x:match-existing-gap-after:0:1",
+              "correction": 4,
+              "targetValue": 60,
+              "line": {
+                "axis": "x",
+                "value": 60
+              }
+            },
+            "y": {
+              "type": "equal-distance",
+              "axis": "y",
+              "leftPeer": 0,
+              "rightPeer": 1,
+              "gap": 20,
+              "candidateKey": "equal-distance:y:match-existing-gap-after:0:1",
+              "correction": 4,
+              "targetValue": 60,
+              "line": {
+                "axis": "y",
+                "value": 60
+              }
+            }
+          },
+          "bypassed": false
+        },
+        "equalLineRendered": true,
+        "snapFeedbackShown": true,
+        "spacingReadout": true,
+        "spacingVisual": true,
+        "spacingText": "X gap 20 px · Y gap 20 px"
+      }
+    },
+    {
+      "id": "AN05",
+      "pass": true,
+      "detail": {
+        "equalAuthority": true,
+        "snapFeedbackShown": true,
+        "spacingReadout": true,
+        "spacingVisual": true,
+        "spacingText": "X gap 20 px · Y gap 20 px"
+      }
+    },
+    {
+      "id": "AI12",
+      "pass": true,
+      "detail": {
+        "globalVisible": true,
+        "beforeGlobal": true,
+        "globalOff": true,
+        "globalRestored": true,
+        "offResult": {
+          "delta": {
+            "x": 0,
+            "y": 0
+          },
+          "snapped": {
+            "x": false,
+            "y": false
+          },
+          "evidence": {
+            "x": null,
+            "y": null
+          },
+          "bypassed": false
+        }
+      }
+    },
+    {
+      "id": "AI13",
+      "pass": true,
+      "detail": {
+        "categoryVisible": true,
+        "beforeCats": {
+          "guides": true,
+          "edges": true,
+          "centers": true,
+          "grid": false,
+          "angle": true,
+          "equalDistance": true
+        },
+        "afterGuideToggle": {
+          "guides": false,
+          "edges": true,
+          "centers": true,
+          "grid": false,
+          "angle": true,
+          "equalDistance": true
+        }
+      }
+    },
+    {
+      "id": "AI14",
+      "pass": true,
+      "detail": {
+        "bypass": {
+          "delta": {
+            "x": 0,
+            "y": 0
+          },
+          "snapped": {
+            "x": false,
+            "y": false
+          },
+          "evidence": {
+            "x": null,
+            "y": null
+          },
+          "bypassed": true
+        },
+        "settingUnchanged": true
+      }
+    },
+    {
+      "id": "AI15",
+      "pass": true,
+      "detail": {
+        "normalized": {
+          "enabled": true,
+          "categories": {
+            "guides": true,
+            "edges": true,
+            "centers": true,
+            "grid": true,
+            "angle": true,
+            "equalDistance": true
+          },
+          "tolerance": 9,
+          "hysteresis": 3,
+          "angleStep": 15
+        }
+      }
+    },
+    {
+      "id": "AI17",
+      "pass": true,
+      "detail": {
+        "guide": {
+          "id": "persist-guide",
+          "orientation": "horizontal",
+          "position": 123,
+          "locked": false,
+          "visible": true
+        },
+        "snap": {
+          "enabled": true,
+          "categories": {
+            "guides": true,
+            "edges": true,
+            "centers": true,
+            "grid": true,
+            "angle": true,
+            "equalDistance": true
+          },
+          "tolerance": 7,
+          "hysteresis": 2,
+          "angleStep": 15
+        },
+        "backend": "indexeddb"
+      }
+    },
+    {
+      "id": "AN04",
+      "pass": true,
+      "detail": {
+        "readoutExists": true,
+        "wasVisible": true,
+        "text": "X gap 20 px · Y gap 20 px",
+        "transientCleared": true
+      }
+    }
+  ],
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0
+  }
+}

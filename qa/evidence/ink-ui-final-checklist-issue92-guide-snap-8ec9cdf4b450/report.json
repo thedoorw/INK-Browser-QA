@@ -1,0 +1,11 @@
+{
+  "schema": "INK-UI-ISSUE92-GUIDE-SNAP-REPORT",
+  "targetSha": "8ec9cdf4b450ba2e2be01534a23d0cec898c9ab9",
+  "centralRuntimeExecuted": false,
+  "status": "PASS",
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0
+  }
+}
