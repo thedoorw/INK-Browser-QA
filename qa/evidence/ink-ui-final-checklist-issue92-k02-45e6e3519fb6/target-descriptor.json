@@ -1,0 +1,8 @@
+{
+  "schema": "ink-ui-issue92-k02-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "45e6e3519fb6f0222f67354cc2cc9494e8dbd9e9",
+  "scope": "K02 exact-candidate selection sync / no central Runtime",
+  "central_runtime": false
+}
