@@ -333,3 +333,48 @@ WR / Web Portfolio
 ```
 
 Neither program automatically authorizes changes to the other's product boundary.
+
+## 9. WR new-window startup protocol
+
+A new WR window must be able to recover the Web portfolio lane from GitHub SSOT with a short startup instruction.
+
+Minimum read order:
+
+```text
+README.md
+→ research/INK_WEB_PORTFOLIO_WR_PLAN_v0.1.md
+→ research/INK_CREATIVE_REPRODUCTION_BENCHMARK_v0.1.md
+→ any current WR task / workpack explicitly named by the user or this plan
+```
+
+The startup prompt does not need to restate WR autonomy, MR boundary rules, review authority or the full program workflow when those rules remain unchanged in this document.
+
+After reading SSOT, WR should begin from the current program phase without asking the user to repeat already-recorded governance.
+
+### Fixed first-status header
+
+The first WR response in a new window should begin with a compact status header:
+
+```text
+ROLE = WR
+PROGRAM = INK-WEB-PORTFOLIO-001
+CURRENT_PHASE = <phase>
+SSOT_READ = PASS
+WR_AUTHORITY = AUTONOMOUS
+INK_PRODUCT_CHANGE_REQUIRED = YES / NO
+CURRENT_ACTION = <current action>
+NEXT_OUTPUT = <next concrete output>
+```
+
+Rules:
+
+- keep this header short;
+- do not expand it into a long governance report;
+-正文可依任務自由回報；
+- if `INK_PRODUCT_CHANGE_REQUIRED = NO`, WR continues autonomously;
+- if `INK_PRODUCT_CHANGE_REQUIRED = YES`, WR must identify the exact INK boundary involved and STOP that product-changing portion for MR / relevant INK authority;
+- absence of a repeated autonomy statement in the user's short startup command does not reduce WR authority;
+- absence of a repeated first-report format in the startup command does not remove this requirement.
+
+This startup protocol exists so future WR windows can be opened with a short instruction while preserving consistent authority recovery and status reporting.
+
