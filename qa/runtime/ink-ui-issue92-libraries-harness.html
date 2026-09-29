@@ -1,4 +1,4 @@
-<!doctype html><meta charset="utf-8"><title>INK Libraries Interaction</title>
+<!doctype html><meta charset="utf-8"><title>INK Libraries Exact Candidate</title>
 <iframe id="f" src="/?fresh=1" style="width:1280px;height:800px;border:0"></iframe>
 <script type="module">
 const sleep=ms=>new Promise(r=>setTimeout(r,ms)),frame=document.querySelector('#f');
@@ -8,6 +8,7 @@ try{
   const w=frame.contentWindow,d=frame.contentDocument;
   for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
   const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
+
   const child={id:'lib-path',type:'path',name:'Library Petal',parentId:'lib-frame',matrix:[1,0,0,1,0,0],opacity:1,visible:true,fill:'#d7889b',stroke:'#55343d',strokeWidth:1,subpaths:[]};
   const frameObj={id:'lib-frame',type:'frame',name:'Petal Emblem Source',matrix:[1,0,0,1,100,100],opacity:1,visible:true,width:100,height:100,children:[child]};
   const repeat={id:'lib-repeat',type:'repeat',name:'Petal Repeat',matrix:[1,0,0,1,0,0],opacity:1,visible:true,mode:'radial',count:8,sourceObjectId:'lib-path'};
@@ -16,25 +17,73 @@ try{
   app.doc.components={schema:'INK-COMPONENTS-1',definitions:[{id:'component:petal',name:'Petal Emblem',sourceRootId:'lib-frame'}]};
   app.doc.materialLibrary={format:'INK-MATERIAL-LIBRARY',version:'1.0',templates:[{templateId:'material:petal',templateVersion:'1.0.0',name:'Petal Material',materialType:'paint',semanticRole:'petal'}]};
   app.page().floraRecipeState={schemaVersion:'0.1',recipes:{'recipe:petal':{recipe:{recipeId:'recipe:petal',schemaVersion:'0.2',operation:'Transparent Glaze',metadata:{label:'Petal Recipe'}},revision:1}}};
-  shell.open('libraries');await sleep(120);
+
+  shell.open('libraries');await sleep(150);
   const q=s=>d.querySelector(s),qa=s=>[...d.querySelectorAll(s)];
   const visible=e=>{if(!e||e.hidden)return false;const cs=w.getComputedStyle(e),r=e.getBoundingClientRect();return cs.display!=='none'&&cs.visibility!=='hidden'&&r.width>0&&r.height>0};
-  const search=q('#shellLibrarySearch'),families=qa('[data-library-type]'),inspect=q('#shellLibraryInspect');
-  const checks=[
-    {id:'O03',pass:Boolean(search&&visible(search)),detail:{exists:Boolean(search)}},
-    {id:'O04',pass:families.length>=5&&families.every(visible),detail:{familyCount:families.length}}
-  ];
-  for(const pair of [['O05','component'],['O06','material'],['O07','recipe'],['O08','parametric-structure'],['O09','reference-derived-structure']]){
-    const row=q('[data-library-result-type="'+pair[1]+'"]');
-    checks.push({id:pair[0],pass:Boolean(row&&visible(row)),detail:{type:pair[1],exists:Boolean(row)}});
+  const search=q('#shellLibrarySearch'),families=qa('[data-library-type]'),inspect=q('#shellLibraryInspect'),status=q('#shellLibraryStatus');
+  const checks=[];
+
+  const allTypes=()=>qa('[data-library-result-type]').filter(visible).map(x=>x.dataset.libraryResultType);
+  const row=type=>q('[data-library-result-type="'+type+'"]');
+
+  const initialTypes=allTypes();
+  checks.push({id:'O05',pass:Boolean(row('component')&&visible(row('component'))),detail:{initialTypes}});
+  checks.push({id:'O06',pass:Boolean(row('material')&&visible(row('material'))),detail:{initialTypes}});
+  checks.push({id:'O07',pass:Boolean(row('recipe')&&visible(row('recipe'))),detail:{initialTypes}});
+  checks.push({id:'O08',pass:Boolean(row('parametric-structure')&&visible(row('parametric-structure'))),detail:{initialTypes}});
+  checks.push({id:'O09',pass:Boolean(row('reference-derived-structure')&&visible(row('reference-derived-structure'))),detail:{initialTypes}});
+
+  let searchPass=false;
+  if(search){
+    search.value='Petal Material';
+    search.dispatchEvent(new w.Event('input',{bubbles:true}));
+    await sleep(80);
+    const searched=allTypes();
+    searchPass=searched.length===1&&searched[0]==='material';
+    search.value='';
+    search.dispatchEvent(new w.Event('input',{bubbles:true}));
+    await sleep(80);
   }
-  checks.push({id:'O10',pass:Boolean(inspect&&visible(inspect)&&(inspect.readOnly===true||inspect.getAttribute('aria-readonly')==='true')),detail:{inspectExists:Boolean(inspect),readOnly:inspect?.readOnly??inspect?.getAttribute('aria-readonly')??null}});
-  const componentUse=q('[data-library-reuse-type="component"]'),materialUse=q('[data-library-reuse-type="material"]');
-  checks.push({id:'O11',pass:Boolean(componentUse&&visible(componentUse)),detail:{exists:Boolean(componentUse)}});
-  checks.push({id:'O12',pass:Boolean(materialUse&&visible(materialUse)),detail:{exists:Boolean(materialUse)}});
+  checks.push({id:'O03',pass:Boolean(search&&visible(search)&&searchPass),detail:{exists:Boolean(search),searchPass,restoredTypes:allTypes()}});
+
+  const componentFilter=q('[data-library-type="component"]');
+  let filterPass=false;
+  if(componentFilter){
+    componentFilter.click();await sleep(80);
+    const offTypes=allTypes();
+    const off=!offTypes.includes('component')&&componentFilter.getAttribute('aria-pressed')==='false';
+    componentFilter.click();await sleep(80);
+    const on=allTypes().includes('component')&&componentFilter.getAttribute('aria-pressed')==='true';
+    filterPass=off&&on;
+  }
+  checks.push({id:'O04',pass:families.length===5&&families.every(visible)&&filterPass,detail:{familyCount:families.length,filterPass}});
+
+  const beforeInspect=JSON.stringify(app.doc);
+  const inspectButton=row('component')?.querySelector('button');
+  inspectButton?.click();await sleep(80);
+  const inspectUnchanged=JSON.stringify(app.doc)===beforeInspect;
+  const inspectPass=Boolean(inspect&&visible(inspect)&&inspect.readOnly===true&&inspect.getAttribute('aria-readonly')==='true'&&inspect.value.includes('component:petal')&&inspectUnchanged);
+  checks.push({id:'O10',pass:inspectPass,detail:{readOnly:inspect?.readOnly??null,ariaReadonly:inspect?.getAttribute('aria-readonly')??null,containsRef:inspect?.value.includes('component:petal')??false,documentUnchanged:inspectUnchanged}});
+
+  const componentUse=q('[data-library-reuse-type="component"]');
+  const beforeComponent=JSON.stringify(app.doc);
+  componentUse?.click();await sleep(100);
+  const componentUnchanged=JSON.stringify(app.doc)===beforeComponent;
+  const componentPass=Boolean(componentUse&&visible(componentUse)&&componentUse.dataset.libraryReuseOperation==='component.instance.create.v1'&&status?.dataset.state==='proposal'&&/Proposal created/.test(status?.textContent||'')&&componentUnchanged);
+  checks.push({id:'O11',pass:componentPass,detail:{exists:Boolean(componentUse),operation:componentUse?.dataset.libraryReuseOperation||null,status:status?.textContent||null,state:status?.dataset.state||null,documentUnchanged:componentUnchanged}});
+
+  app.selection=[{layerId:app.layer().id,objectId:'lib-path'}];
+  const materialUse=q('[data-library-reuse-type="material"]');
+  const beforeMaterial=JSON.stringify(app.doc);
+  materialUse?.click();await sleep(100);
+  const materialUnchanged=JSON.stringify(app.doc)===beforeMaterial;
+  const materialPass=Boolean(materialUse&&visible(materialUse)&&materialUse.dataset.libraryReuseOperation==='path.material.apply.v1'&&status?.dataset.state==='proposal'&&/Proposal created/.test(status?.textContent||'')&&materialUnchanged);
+  checks.push({id:'O12',pass:materialPass,detail:{exists:Boolean(materialUse),operation:materialUse?.dataset.libraryReuseOperation||null,status:status?.textContent||null,state:status?.dataset.state||null,documentUnchanged:materialUnchanged}});
+
   const failed=checks.filter(x=>!x.pass);
-  await post({schema:'INK-UI-ISSUE92-LIBRARIES',version:1,status:failed.length?'FAIL':'PASS',checks,summary:{total:10,passed:10-failed.length,failed:failed.length}});
+  await post({schema:'INK-UI-ISSUE92-LIBRARIES',version:2,status:failed.length?'FAIL':'PASS',checks,summary:{total:10,passed:10-failed.length,failed:failed.length}});
 }catch(error){
-  await post({schema:'INK-UI-ISSUE92-LIBRARIES',version:1,status:'ERROR',checks:[],summary:{total:10,passed:0,failed:10},error:String(error?.stack||error)});
+  await post({schema:'INK-UI-ISSUE92-LIBRARIES',version:2,status:'ERROR',checks:[],summary:{total:10,passed:0,failed:10},error:String(error?.stack||error)});
 }
 </script>

@@ -1,9 +1,8 @@
 {
   "schema": "ink-ui-issue92-libraries-target",
   "version": 1,
-  "target_sha": "182e73e071e20404c8394f6e883304b5c102b831",
-  "scope": "O03-O12 Libraries baseline reproduction / no central Runtime",
+  "target_sha": "30ddbbfa45644807b65b5eb23cb2fa396b30baa8",
+  "scope": "O03-O12 Libraries exact-candidate interaction / no central Runtime",
   "central_runtime": false,
-  "run_generation": 2,
-  "diagnostic_note": "Seed library document state without rendering malformed synthetic Repeat geometry; open Libraries directly."
+  "run_generation": 3
 }
