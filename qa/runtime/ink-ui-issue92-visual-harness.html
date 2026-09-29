@@ -146,6 +146,30 @@ try{
     seedLibraries(app);shell.open('libraries');await sleep(160);
   }else if(mode==='compact'){
     seedCanvas(app);shell.close();await sleep(120);
+  }else if(mode==='context-tools'){
+    seedCanvas(app);app.clearSelection();shell.close();await sleep(60);
+    const contexts=[];
+    for(const tool of ['pen','eraser','shape','text','select']){
+      if(tool==='select') app.clearSelection();
+      app.setTool(tool);await sleep(80);
+      const root=d.querySelector('#contextualOptions');
+      contexts.push({tool,mode:root?.dataset.contextMode||null,toolState:root?.dataset.contextTool||null,rect:rect(root),clientWidth:root?.clientWidth||0,scrollWidth:root?.scrollWidth||0,overflow:Boolean(root&&root.scrollWidth>root.clientWidth+1),visibleControls:[...root?.querySelectorAll('input,select,button,[data-context-control]')||[]].filter(e=>visible(w,e)).map(e=>e.id||e.dataset.contextControl||e.tagName)});
+    }
+    extra.contexts=contexts;app.clearSelection();app.setTool('shape');await sleep(100);
+  }else if(mode==='keyboard-focus'){
+    seedCanvas(app);shell.open('navigator');await sleep(100);
+    const target=d.querySelector('#shellNavigatorZoomSlider');
+    try{target?.focus({focusVisible:true});}catch{target?.focus();}
+    await sleep(100);
+    extra.focusVisible=Boolean(target?.matches?.(':focus-visible'));
+    extra.focusTarget=target?elementSummary(w,target):null;
+  }else if(mode==='chat'){
+    const objects=seedCanvas(app);app.selectOnly(app.layer().id,objects[0].id);shell.open('chat');await sleep(180);
+    const root=d.querySelector('#creativeWorkspace');
+    const textContent=safeText(root);
+    const forbidden=['provider','credential','api key','api-key','base url','endpoint','model provider','provider model'];
+    const lower=textContent.toLowerCase();
+    extra.chat={rect:rect(root),visible:visible(w,root),stage:app.creativeWorkspace?.stage||null,text:textContent.slice(0,1600),forbiddenMatches:forbidden.filter(term=>lower.includes(term)),visibleInputs:[...root?.querySelectorAll('input,select,textarea,button')||[]].filter(e=>visible(w,e)).map(e=>({tag:e.tagName.toLowerCase(),name:e.getAttribute('name'),id:e.id||null,label:e.getAttribute('aria-label')||safeText(e).slice(0,80)}))};
   }else if(mode==='guides'){
     seedCanvas(app);d.querySelector('#app').dataset.rulers='true';d.querySelector('[data-shell-action="toggle-rulers"]')?.setAttribute('aria-checked','true');app.addGuide?.({id:'visual-guide-x',orientation:'vertical',position:150});app.addGuide?.({id:'visual-guide-y',orientation:'horizontal',position:120});app.updateStatus?.();shell.showSnapFeedback?.({x:{type:'equal-distance',gap:20},y:{type:'equal-distance',gap:20}},{clientX:430,clientY:300});w.dispatchEvent(new w.Event('resize'));await sleep(180);
   }else if(mode==='tooltip'){

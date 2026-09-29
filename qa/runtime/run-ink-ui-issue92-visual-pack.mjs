@@ -22,6 +22,9 @@ const STATES=[
   {mode:'navigator-zoom',width:1280,height:1024},
   {mode:'libraries',width:1280,height:1024},
   {mode:'compact',width:760,height:900},
+  {mode:'context-tools',width:1280,height:1024},
+  {mode:'keyboard-focus',width:1280,height:1024},
+  {mode:'chat',width:1280,height:1024},
   {mode:'guides',width:1280,height:1024},
   {mode:'tooltip',width:1280,height:1024},
   {mode:'focus',width:1280,height:1024}
