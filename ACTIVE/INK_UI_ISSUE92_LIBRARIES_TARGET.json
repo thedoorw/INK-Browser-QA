@@ -4,5 +4,6 @@
   "target_sha": "182e73e071e20404c8394f6e883304b5c102b831",
   "scope": "O03-O12 Libraries baseline reproduction / no central Runtime",
   "central_runtime": false,
-  "run_generation": 1
+  "run_generation": 2,
+  "diagnostic_note": "Seed library document state without rendering malformed synthetic Repeat geometry; open Libraries directly."
 }

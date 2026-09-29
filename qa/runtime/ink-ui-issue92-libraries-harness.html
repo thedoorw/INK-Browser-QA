@@ -16,7 +16,7 @@ try{
   app.doc.components={schema:'INK-COMPONENTS-1',definitions:[{id:'component:petal',name:'Petal Emblem',sourceRootId:'lib-frame'}]};
   app.doc.materialLibrary={format:'INK-MATERIAL-LIBRARY',version:'1.0',templates:[{templateId:'material:petal',templateVersion:'1.0.0',name:'Petal Material',materialType:'paint',semanticRole:'petal'}]};
   app.page().floraRecipeState={schemaVersion:'0.1',recipes:{'recipe:petal':{recipe:{recipeId:'recipe:petal',schemaVersion:'0.2',operation:'Transparent Glaze',metadata:{label:'Petal Recipe'}},revision:1}}};
-  app.refreshAll();shell.open('libraries');await sleep(120);
+  shell.open('libraries');await sleep(120);
   const q=s=>d.querySelector(s),qa=s=>[...d.querySelectorAll(s)];
   const visible=e=>{if(!e||e.hidden)return false;const cs=w.getComputedStyle(e),r=e.getBoundingClientRect();return cs.display!=='none'&&cs.visibility!=='hidden'&&r.width>0&&r.height>0};
   const search=q('#shellLibrarySearch'),families=qa('[data-library-type]'),inspect=q('#shellLibraryInspect');
