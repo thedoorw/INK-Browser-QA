@@ -584,7 +584,8 @@
         });
       record('UI-006 Phase F immediate contextual controls and deep Properties controls are explicitly separated',
         doc.querySelector('#contextualOptions')?.dataset.uiRoute === 'PRIMARY_HOME' &&
-        doc.querySelector('#quickControls')?.dataset.uiRoute === 'PRIMARY_HOME' &&
+        !doc.querySelector('#quickControls')?.dataset.uiHome &&
+        doc.querySelector('#quickControls')?.dataset.uiRoute !== 'PRIMARY_HOME' &&
         ['brush','object','geometry'].every(tab =>
           doc.querySelector('.inspector-section[data-content="' + tab + '"]')?.dataset.uiRoute === 'DEEP_SETTINGS') &&
         doc.querySelector('.align-card')?.dataset.uiRoute === 'DEEP_SETTINGS',
