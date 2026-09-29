@@ -1,0 +1,477 @@
+{
+  "schema": "INK-UI-ISSUE92-HEALTH-DETAIL",
+  "version": 1,
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "AB07 visible duplicate Primary Homes = 0",
+      "pass": false,
+      "detail": [
+        {
+          "label": "default",
+          "items": [
+            {
+              "home": "immediate-context",
+              "id": "contextualOptions",
+              "tag": "SECTION"
+            },
+            {
+              "home": "immediate-context",
+              "id": "quickControls",
+              "tag": "SECTION"
+            },
+            {
+              "home": "workspace",
+              "id": "workspaceSwitch",
+              "tag": "DIV"
+            },
+            {
+              "home": "tool-selection",
+              "id": "tool-rail glass-surface",
+              "tag": "NAV"
+            },
+            {
+              "home": "panels",
+              "id": "panelDock",
+              "tag": "NAV"
+            }
+          ],
+          "duplicates": [
+            [
+              "immediate-context",
+              [
+                {
+                  "home": "immediate-context",
+                  "id": "contextualOptions",
+                  "tag": "SECTION"
+                },
+                {
+                  "home": "immediate-context",
+                  "id": "quickControls",
+                  "tag": "SECTION"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "label": "layers-open",
+          "items": [
+            {
+              "home": "immediate-context",
+              "id": "contextualOptions",
+              "tag": "SECTION"
+            },
+            {
+              "home": "immediate-context",
+              "id": "quickControls",
+              "tag": "SECTION"
+            },
+            {
+              "home": "workspace",
+              "id": "workspaceSwitch",
+              "tag": "DIV"
+            },
+            {
+              "home": "tool-selection",
+              "id": "tool-rail glass-surface",
+              "tag": "NAV"
+            }
+          ],
+          "duplicates": [
+            [
+              "immediate-context",
+              [
+                {
+                  "home": "immediate-context",
+                  "id": "contextualOptions",
+                  "tag": "SECTION"
+                },
+                {
+                  "home": "immediate-context",
+                  "id": "quickControls",
+                  "tag": "SECTION"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "label": "reference-open",
+          "items": [
+            {
+              "home": "immediate-context",
+              "id": "contextualOptions",
+              "tag": "SECTION"
+            },
+            {
+              "home": "immediate-context",
+              "id": "quickControls",
+              "tag": "SECTION"
+            },
+            {
+              "home": "workspace",
+              "id": "workspaceSwitch",
+              "tag": "DIV"
+            },
+            {
+              "home": "tool-selection",
+              "id": "tool-rail glass-surface",
+              "tag": "NAV"
+            }
+          ],
+          "duplicates": [
+            [
+              "immediate-context",
+              [
+                {
+                  "home": "immediate-context",
+                  "id": "contextualOptions",
+                  "tag": "SECTION"
+                },
+                {
+                  "home": "immediate-context",
+                  "id": "quickControls",
+                  "tag": "SECTION"
+                }
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AE09 duplicate Primary Home inventory = 0",
+      "pass": false,
+      "detail": [
+        {
+          "label": "default",
+          "items": [
+            {
+              "home": "immediate-context",
+              "id": "contextualOptions",
+              "tag": "SECTION"
+            },
+            {
+              "home": "immediate-context",
+              "id": "quickControls",
+              "tag": "SECTION"
+            },
+            {
+              "home": "workspace",
+              "id": "workspaceSwitch",
+              "tag": "DIV"
+            },
+            {
+              "home": "tool-selection",
+              "id": "tool-rail glass-surface",
+              "tag": "NAV"
+            },
+            {
+              "home": "panels",
+              "id": "panelDock",
+              "tag": "NAV"
+            }
+          ],
+          "duplicates": [
+            [
+              "immediate-context",
+              [
+                {
+                  "home": "immediate-context",
+                  "id": "contextualOptions",
+                  "tag": "SECTION"
+                },
+                {
+                  "home": "immediate-context",
+                  "id": "quickControls",
+                  "tag": "SECTION"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "label": "layers-open",
+          "items": [
+            {
+              "home": "immediate-context",
+              "id": "contextualOptions",
+              "tag": "SECTION"
+            },
+            {
+              "home": "immediate-context",
+              "id": "quickControls",
+              "tag": "SECTION"
+            },
+            {
+              "home": "workspace",
+              "id": "workspaceSwitch",
+              "tag": "DIV"
+            },
+            {
+              "home": "tool-selection",
+              "id": "tool-rail glass-surface",
+              "tag": "NAV"
+            }
+          ],
+          "duplicates": [
+            [
+              "immediate-context",
+              [
+                {
+                  "home": "immediate-context",
+                  "id": "contextualOptions",
+                  "tag": "SECTION"
+                },
+                {
+                  "home": "immediate-context",
+                  "id": "quickControls",
+                  "tag": "SECTION"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "label": "reference-open",
+          "items": [
+            {
+              "home": "immediate-context",
+              "id": "contextualOptions",
+              "tag": "SECTION"
+            },
+            {
+              "home": "immediate-context",
+              "id": "quickControls",
+              "tag": "SECTION"
+            },
+            {
+              "home": "workspace",
+              "id": "workspaceSwitch",
+              "tag": "DIV"
+            },
+            {
+              "home": "tool-selection",
+              "id": "tool-rail glass-surface",
+              "tag": "NAV"
+            }
+          ],
+          "duplicates": [
+            [
+              "immediate-context",
+              [
+                {
+                  "home": "immediate-context",
+                  "id": "contextualOptions",
+                  "tag": "SECTION"
+                },
+                {
+                  "home": "immediate-context",
+                  "id": "quickControls",
+                  "tag": "SECTION"
+                }
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AH05 every visible panel-menu trigger opens real commands",
+      "pass": true,
+      "detail": {
+        "panelIds": [
+          "properties",
+          "layers",
+          "history",
+          "navigator",
+          "pages",
+          "color",
+          "channels",
+          "adjustments",
+          "libraries",
+          "reference",
+          "compose",
+          "chat",
+          "revision",
+          "specialist"
+        ],
+        "panelMenu": [
+          {
+            "id": "properties",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "layers",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "history",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "navigator",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "pages",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "color",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "channels",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "adjustments",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "libraries",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "reference",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "compose",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "chat",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "revision",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          },
+          {
+            "id": "specialist",
+            "pass": true,
+            "commands": [
+              "reset-width",
+              "close"
+            ]
+          }
+        ],
+        "closeWorks": true
+      }
+    },
+    {
+      "name": "AM01 Tooltip placement and compact geometry",
+      "pass": true,
+      "detail": {
+        "target": {
+          "left": 4,
+          "right": 35,
+          "top": 63,
+          "width": 31,
+          "height": 26
+        },
+        "tooltip": {
+          "left": 43,
+          "right": 240.421875,
+          "top": 63,
+          "width": 197.421875,
+          "height": 26.140625
+        },
+        "style": {
+          "position": "fixed",
+          "maxWidth": "220px",
+          "minHeight": "26px"
+        }
+      }
+    },
+    {
+      "name": "AO04 primary secondary disabled text contrast verified",
+      "pass": true,
+      "detail": {
+        "background": "#F4F4F4",
+        "primary": {
+          "token": "#222222",
+          "ratio": 14.465375640172933
+        },
+        "secondary": {
+          "token": "#666666",
+          "ratio": 5.220484150997109
+        },
+        "disabled": {
+          "token": "#919191",
+          "ratio": 2.8655704150613834
+        },
+        "adobeSpectrumDisabledReference": {
+          "token": "#C6C6C6",
+          "ratio": 1.553023110078895
+        },
+        "disabledState": {
+          "disabled": true,
+          "opacity": "0.42",
+          "enabledOpacity": "1",
+          "different": true
+        }
+      }
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "passed": 3,
+    "failed": 2
+  }
+}
