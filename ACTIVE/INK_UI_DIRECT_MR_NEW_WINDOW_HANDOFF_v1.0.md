@@ -36,7 +36,7 @@ Authorized without additional approval:
 - edit UI-facing JavaScript and interaction wiring;
 - move, regroup, rename, show/hide, resize, dock, collapse or expand visible controls;
 - restructure menus, toolbars, panels, tabs, dialogs, status areas and workspace shell;
-- replace the rejected light visual system;
+- preserve/implement the USER-locked light CSS workstation theme;
 - implement Photoshop-reference shell/panel/tool density directly;
 - correct icons, typography, spacing, hit targets, state styling and visual hierarchy;
 - expose already-existing Core capabilities through new UI routes;
@@ -73,7 +73,7 @@ This is the active UI Assembly workflow until USER declares the UI complete.
 ```text
 USER > prior UR visual PASS
 USER > prior checklist closure
-USER > prior light-theme interpretation
+USER current LIGHT CSS instruction > prior dark-theme interpretation
 USER > prior UI-A/B/C fidelity claims
 ```
 
@@ -96,9 +96,17 @@ Important correction:
 
 The captures are NOT geometry-only references. Their workstation identity, hierarchy, density, contrast, toolbar grammar, panel grammar, shell continuity and default visual impression are authoritative for this reconstruction.
 
-`working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md` must NOT override the supplied USER screenshots.
+Current USER override:
 
-Do not reproduce the rejected generic light/white UI merely because an older document says Photoshop Light.
+```text
+CSS_THEME = LIGHT / USER_LOCKED
+PS_SCREENSHOTS = STRUCTURE / DENSITY / HIERARCHY AUTHORITY
+PS_DARK_PALETTE = NOT AUTHORITATIVE
+```
+
+The supplied Photoshop screenshots remain authoritative for workstation structure, density, hierarchy, toolbar/panel grammar, shell continuity, spacing and control proportions. They do **not** require a dark CSS palette.
+
+Do not return to the rejected generic sparse white UI; build a professional **light** workstation with the same mature density and hierarchy.
 
 ## 5. Core protection baseline
 
