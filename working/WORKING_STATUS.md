@@ -81,7 +81,7 @@ Current execution state:
 - UI-C = UR PASS / promoted.
 - final exact-SHA Runtime = PASS.
 - final checklist audit = COMPLETE / MR PASS AS AUDIT RECORD.
-- checklist = 592 total / 399 PASS / 192 FAIL / 1 N_A / 0 UNREVIEWED.
+- checklist = 592 total / 406 PASS / 185 FAIL / 1 N_A / 0 UNREVIEWED.
 - USER acceptance = 10 IDs pending.
 - UI_COMPLETE = HOLD.
 - DEV acts only on UR-bounded reproduced defects/evidence work.
@@ -302,3 +302,8 @@ FINAL_RUNTIME = PASS / REVALIDATION_NOT_TRIGGERED_BY_R1
 UI_COMPLETE = HOLD
 NEXT_OWNER = UR
 ```
+
+
+## Final checklist closure R2
+
+`working/INK_UI_FINAL_CHECKLIST_CLOSURE_UR_EVIDENCE_R2_v1.0.md`: 7 direct menu/tool IDs closed. `592 / 406 PASS / 185 FAIL / 1 N_A / 0 UNREVIEWED / 185 OPEN`; USER acceptance 10 pending; `UI_COMPLETE = HOLD`.
