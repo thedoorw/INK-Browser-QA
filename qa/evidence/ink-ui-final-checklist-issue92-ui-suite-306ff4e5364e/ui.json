@@ -1,0 +1,3853 @@
+{
+  "schema": "INK-WEB-UI-001-BROWSER-QA-TRANSPORT",
+  "version": 1,
+  "status": "PASS",
+  "formatVersion": 4,
+  "summary": {
+    "total": 110,
+    "passed": 110,
+    "failed": 0
+  },
+  "fatal": null,
+  "checks": [
+    {
+      "name": "G3 delivered first-paint contract is present before Runtime-state assertions",
+      "pass": true,
+      "detail": {
+        "body": "workstation",
+        "app": {
+          "firstPaint": "ready",
+          "space": "creation",
+          "shellPanel": "collapsed",
+          "toolbarLayout": "single"
+        },
+        "style": "html,body{margin:0;background:#e7e7e7;color:#262626}\n    body{min-height:100vh}\n    #app{background:#e7e7e7;color:#262626}"
+      }
+    },
+    {
+      "name": "Photoshop shell viewport is 1280 CSS px",
+      "pass": true,
+      "detail": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "dpr": 1
+        },
+        "menu": {
+          "left": 0,
+          "top": 0,
+          "right": 1280,
+          "bottom": 25,
+          "width": 1280,
+          "height": 25
+        },
+        "options": {
+          "left": 0,
+          "top": 25,
+          "right": 1280,
+          "bottom": 61,
+          "width": 1280,
+          "height": 36
+        },
+        "contextual": {
+          "left": 4,
+          "top": 25,
+          "right": 1105.59375,
+          "bottom": 60,
+          "width": 1101.59375,
+          "height": 35
+        },
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1240,
+          "bottom": 783,
+          "width": 1200,
+          "height": 693
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 40,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "docTitle": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 0,
+          "height": 0
+        }
+      }
+    },
+    {
+      "name": "menu outer row is 25 px (24 + 1)",
+      "pass": true,
+      "detail": {
+        "left": 0,
+        "top": 0,
+        "right": 1280,
+        "bottom": 25,
+        "width": 1280,
+        "height": 25
+      }
+    },
+    {
+      "name": "shared options outer row is 36 px at y=25",
+      "pass": true,
+      "detail": {
+        "left": 0,
+        "top": 25,
+        "right": 1280,
+        "bottom": 61,
+        "width": 1280,
+        "height": 36
+      }
+    },
+    {
+      "name": "contextual controls occupy the same second row",
+      "pass": true,
+      "detail": {
+        "options": {
+          "left": 0,
+          "top": 25,
+          "right": 1280,
+          "bottom": 61,
+          "width": 1280,
+          "height": 36
+        },
+        "contextual": {
+          "left": 4,
+          "top": 25,
+          "right": 1105.59375,
+          "bottom": 60,
+          "width": 1101.59375,
+          "height": 35
+        }
+      }
+    },
+    {
+      "name": "Photoshop shell origin is y=61 and active-document workspace begins at y=90",
+      "pass": true,
+      "detail": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "dpr": 1
+        },
+        "menu": {
+          "left": 0,
+          "top": 0,
+          "right": 1280,
+          "bottom": 25,
+          "width": 1280,
+          "height": 25
+        },
+        "options": {
+          "left": 0,
+          "top": 25,
+          "right": 1280,
+          "bottom": 61,
+          "width": 1280,
+          "height": 36
+        },
+        "contextual": {
+          "left": 4,
+          "top": 25,
+          "right": 1105.59375,
+          "bottom": 60,
+          "width": 1101.59375,
+          "height": 35
+        },
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1240,
+          "bottom": 783,
+          "width": 1200,
+          "height": 693
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 40,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "docTitle": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 0,
+          "height": 0
+        }
+      }
+    },
+    {
+      "name": "left rail is edge-attached 40 px",
+      "pass": true,
+      "detail": {
+        "left": 0,
+        "top": 61,
+        "right": 40,
+        "bottom": 800,
+        "width": 40,
+        "height": 739
+      }
+    },
+    {
+      "name": "workspace begins immediately after left rail",
+      "pass": true,
+      "detail": {
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1240,
+          "bottom": 783,
+          "width": 1200,
+          "height": 693
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 40,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "right dock is edge-attached 40 px",
+      "pass": true,
+      "detail": {
+        "left": 1240,
+        "top": 61,
+        "right": 1280,
+        "bottom": 800,
+        "width": 40,
+        "height": 739
+      }
+    },
+    {
+      "name": "workspace ends immediately before compact dock",
+      "pass": true,
+      "detail": {
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1240,
+          "bottom": 783,
+          "width": 1200,
+          "height": 693
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "active document tab uses the 29 px band / 28 px tab authority",
+      "pass": true,
+      "detail": {
+        "band": {
+          "left": 40,
+          "top": 61,
+          "right": 1240,
+          "bottom": 90,
+          "width": 1200,
+          "height": 29
+        },
+        "tab": {
+          "left": 40,
+          "top": 61,
+          "right": 190,
+          "bottom": 89,
+          "width": 150,
+          "height": 28
+        },
+        "title": {
+          "left": 52,
+          "top": 67.5,
+          "right": 177,
+          "bottom": 82.5,
+          "width": 125,
+          "height": 15
+        }
+      }
+    },
+    {
+      "name": "title identity is INK v0.1 · Web",
+      "pass": true,
+      "detail": "INK v0.1 · Web"
+    },
+    {
+      "name": "FORMAT_VERSION remains 4",
+      "pass": true,
+      "detail": 4
+    },
+    {
+      "name": "active runtime display version is 0.1",
+      "pass": true,
+      "detail": "0.1"
+    },
+    {
+      "name": "historical product identity absent from active shell",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "initial Web view is canvas-first",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "collapsed",
+        "activePanel": null,
+        "lastPanel": null,
+        "collapsed": true,
+        "inspectorOpen": false,
+        "creativeOpen": false,
+        "panelWidth": 0,
+        "stageWidth": 1200,
+        "dockWidth": 40,
+        "panelGroup": null,
+        "creativeStage": "reference",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "left tool rail remains visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "right panel dock starts compact",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "collapsed",
+        "activePanel": null,
+        "lastPanel": null,
+        "collapsed": true,
+        "inspectorOpen": false,
+        "creativeOpen": false,
+        "panelWidth": 0,
+        "stageWidth": 1200,
+        "dockWidth": 40,
+        "panelGroup": null,
+        "creativeStage": "reference",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "initial stage reserves 40 px rail and 40 px dock",
+      "pass": true,
+      "detail": {
+        "frameWidth": 1280,
+        "stageWidth": 1200,
+        "dockWidth": 40
+      }
+    },
+    {
+      "name": "UI-006 Phase D preserves frozen tool order",
+      "pass": true,
+      "detail": [
+        "draw",
+        "eraser",
+        "select",
+        "lasso",
+        "shape",
+        "text",
+        "image",
+        "pan"
+      ]
+    },
+    {
+      "name": "UI-006 Phase D defaults to single-column desktop toolbar",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": null,
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 1200,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "reference",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 40,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "Photoshop-aligned dual-column layout uses the 73 px rail and preserves canvas adjacency",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": null,
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 1167,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "reference",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 73,
+          "bottom": 800,
+          "width": 73,
+          "height": 739
+        },
+        "stage": {
+          "left": 73,
+          "top": 90,
+          "right": 1240,
+          "bottom": 783,
+          "width": 1167,
+          "height": 693
+        }
+      }
+    },
+    {
+      "name": "UI-006 Phase D dual-column mode exposes no extra tools",
+      "pass": true,
+      "detail": [
+        "draw",
+        "eraser",
+        "select",
+        "lasso",
+        "shape",
+        "text",
+        "image",
+        "pan"
+      ]
+    },
+    {
+      "name": "UI-006 Phase D single-dual switch restores stage geometry",
+      "pass": true,
+      "detail": {
+        "initialStageWidth": 1200,
+        "restored": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": null,
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 1200,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "reference",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UI-DEBT-001 1280x1024 collapsed shell remains fully contained",
+      "pass": true,
+      "detail": {
+        "viewport": [
+          1280,
+          1024
+        ],
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1240,
+          "bottom": 1007,
+          "width": 1200,
+          "height": 917
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 1024,
+          "width": 40,
+          "height": 963
+        },
+        "status": {
+          "left": 40,
+          "top": 1007,
+          "right": 1240,
+          "bottom": 1024,
+          "width": 1200,
+          "height": 17
+        }
+      }
+    },
+    {
+      "name": "UI-MAINT-002 desktop typography readability lift is active",
+      "pass": true,
+      "detail": {
+        "advanced": {
+          "fontSize": 10,
+          "contrast": 6.911036601862105
+        },
+        "inspectorTitle": {
+          "fontSize": 11,
+          "contrast": 14.465375640172933
+        },
+        "inspectorTab": {
+          "fontSize": 10,
+          "contrast": 4.8124250051465225
+        },
+        "contextLabel": {
+          "fontSize": 10,
+          "contrast": 5.545881163354674
+        }
+      }
+    },
+    {
+      "name": "Layers opens as primary Inspector panel",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "layers",
+        "activePanel": "layers",
+        "lastPanel": "layers",
+        "collapsed": false,
+        "inspectorOpen": true,
+        "creativeOpen": false,
+        "panelWidth": 252,
+        "stageWidth": 988,
+        "dockWidth": 40,
+        "panelGroup": "editor",
+        "creativeStage": "reference",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "default primary panel is 252 ±8 px",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": "layers",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "geometry": {
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          }
+        }
+      }
+    },
+    {
+      "name": "expanded primary panel replaces collapsed dock width at the right edge",
+      "pass": true,
+      "detail": {
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1028,
+          "bottom": 783,
+          "width": 988,
+          "height": 693
+        },
+        "panel": {
+          "left": 1028,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 252,
+          "height": 739
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "canvas reflow equals expanded panel width minus the collapsed dock width",
+      "pass": true,
+      "detail": {
+        "initialStageWidth": 1200,
+        "expandedStageWidth": 988,
+        "panelWidth": 252,
+        "collapsedDockWidth": 40
+      }
+    },
+    {
+      "name": "UI-006 Phase E active Inspector remains resizable and canvas follows its width",
+      "pass": true,
+      "detail": {
+        "before": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": "layers",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "after": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": "layers",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 340,
+          "stageWidth": 900,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UI-MAINT-002 primary Inspector owns vertical scroll without horizontal overflow",
+      "pass": true,
+      "detail": {
+        "inspector": {
+          "left": 1028,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 252,
+          "height": 739
+        },
+        "section": {
+          "left": 1029,
+          "top": 89,
+          "right": 1280,
+          "bottom": 694,
+          "width": 251,
+          "height": 605
+        },
+        "inspectorOverflow": "hidden",
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "clientWidth": 251,
+        "scrollWidth": 251
+      }
+    },
+    {
+      "name": "Layers add operation works",
+      "pass": true,
+      "detail": {
+        "layersBefore": 1,
+        "afterAdd": 2
+      }
+    },
+    {
+      "name": "Layers duplicate operation works",
+      "pass": true,
+      "detail": {
+        "afterDuplicate": 3
+      }
+    },
+    {
+      "name": "Layers delete operation works",
+      "pass": true,
+      "detail": {
+        "afterDelete": 2
+      }
+    },
+    {
+      "name": "History directly reachable",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "history",
+        "activePanel": "history",
+        "lastPanel": "history",
+        "collapsed": false,
+        "inspectorOpen": true,
+        "creativeOpen": false,
+        "panelWidth": 252,
+        "stageWidth": 988,
+        "dockWidth": 40,
+        "panelGroup": "editor",
+        "creativeStage": "reference",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "History undo works",
+      "pass": true,
+      "detail": {
+        "beforeUndo": {
+          "title": "未命名作品",
+          "pages": 1,
+          "layers": 2,
+          "objects": 0,
+          "tool": "pen",
+          "selection": 0,
+          "undo": 3,
+          "redo": 0,
+          "historyLimit": 30,
+          "historyMode": "hybrid-target-scoped-id-aware-patches",
+          "inputPointers": 0
+        },
+        "afterUndo": {
+          "title": "未命名作品",
+          "pages": 1,
+          "layers": 3,
+          "objects": 0,
+          "tool": "pen",
+          "selection": 0,
+          "undo": 2,
+          "redo": 1,
+          "historyLimit": 30,
+          "historyMode": "hybrid-target-scoped-id-aware-patches",
+          "inputPointers": 0
+        }
+      }
+    },
+    {
+      "name": "History redo works",
+      "pass": true,
+      "detail": {
+        "title": "未命名作品",
+        "pages": 1,
+        "layers": 2,
+        "objects": 0,
+        "tool": "pen",
+        "selection": 0,
+        "undo": 3,
+        "redo": 0,
+        "historyLimit": 30,
+        "historyMode": "hybrid-target-scoped-id-aware-patches",
+        "inputPointers": 0
+      }
+    },
+    {
+      "name": "UI-006 Phase E Properties shows only normal property families on desktop",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "properties",
+          "activePanel": "properties",
+          "lastPanel": "properties",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "propertyTabs": [
+          "brush",
+          "object",
+          "geometry"
+        ],
+        "specialistTabs": [
+          "ai",
+          "studio"
+        ]
+      }
+    },
+    {
+      "name": "UI-006 Phase E Path Boolean and Repeat remain under Properties without duplicate endpoints",
+      "pass": true,
+      "detail": {
+        "panel": "geometry"
+      }
+    },
+    {
+      "name": "UI-006 Phase E Specialist uses the existing Inspector as one primary panel",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "specialist",
+        "activePanel": "specialist",
+        "lastPanel": "specialist",
+        "collapsed": false,
+        "inspectorOpen": true,
+        "creativeOpen": false,
+        "panelWidth": 252,
+        "stageWidth": 988,
+        "dockWidth": 40,
+        "panelGroup": "specialist",
+        "creativeStage": "reference",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "UI-006 Phase E engineering and diagnostic endpoints remain reachable only from Specialist",
+      "pass": true,
+      "detail": {
+        "panel": "studio"
+      }
+    },
+    {
+      "name": "reference dock entry reaches existing Creative Workspace stage",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "reference",
+        "activePanel": "reference",
+        "lastPanel": "reference",
+        "collapsed": false,
+        "inspectorOpen": false,
+        "creativeOpen": true,
+        "panelWidth": 252,
+        "stageWidth": 988,
+        "dockWidth": 40,
+        "panelGroup": "creative",
+        "creativeStage": "reference",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "compose dock entry reaches existing Creative Workspace stage",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "compose",
+        "activePanel": "compose",
+        "lastPanel": "compose",
+        "collapsed": false,
+        "inspectorOpen": false,
+        "creativeOpen": true,
+        "panelWidth": 252,
+        "stageWidth": 988,
+        "dockWidth": 40,
+        "panelGroup": "creative",
+        "creativeStage": "compose",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "chat dock entry reaches existing Creative Workspace stage",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "chat",
+        "activePanel": "chat",
+        "lastPanel": "chat",
+        "collapsed": false,
+        "inspectorOpen": false,
+        "creativeOpen": true,
+        "panelWidth": 252,
+        "stageWidth": 988,
+        "dockWidth": 40,
+        "panelGroup": "creative",
+        "creativeStage": "chat",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "revision dock entry reaches existing Creative Workspace stage",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "revision",
+        "activePanel": "revision",
+        "lastPanel": "revision",
+        "collapsed": false,
+        "inspectorOpen": false,
+        "creativeOpen": true,
+        "panelWidth": 252,
+        "stageWidth": 988,
+        "dockWidth": 40,
+        "panelGroup": "creative",
+        "creativeStage": "revision",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "primary-panel state owner remembers and can restore the last active panel without a legacy presenter dependency",
+      "pass": true,
+      "detail": {
+        "collapsed": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": "revision",
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 1200,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "revision",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "restored": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "revision",
+          "activePanel": "revision",
+          "lastPanel": "revision",
+          "collapsed": false,
+          "inspectorOpen": false,
+          "creativeOpen": true,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "creative",
+          "creativeStage": "revision",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        }
+      }
+    },
+    {
+      "name": "CHAT close preserves underlying controller",
+      "pass": true,
+      "detail": {
+        "installed": true
+      }
+    },
+    {
+      "name": "Revision close preserves underlying controller",
+      "pass": true,
+      "detail": {
+        "installed": true
+      }
+    },
+    {
+      "name": "panel collapse restores canvas width",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "collapsed",
+        "activePanel": null,
+        "lastPanel": "chat",
+        "collapsed": true,
+        "inspectorOpen": false,
+        "creativeOpen": false,
+        "panelWidth": 0,
+        "stageWidth": 1200,
+        "dockWidth": 40,
+        "panelGroup": null,
+        "creativeStage": "chat",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "one application-menu controller keeps only one menu open at a time",
+      "pass": true,
+      "detail": {
+        "fileVisible": false,
+        "windowVisible": true,
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": "chat",
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 1200,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": "window",
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Window menu coherently exposes Editor, Creative Loop and Specialist dock panels",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Panel Dock is Primary Home and Window menu is a secondary route to the same shell authority",
+      "pass": true,
+      "detail": {
+        "dock": "PRIMARY_HOME",
+        "window": "SECONDARY_ROUTE"
+      }
+    },
+    {
+      "name": "Window panel route converges on the same toggle authority as the Dock",
+      "pass": true,
+      "detail": {
+        "opened": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "properties",
+          "activePanel": "properties",
+          "lastPanel": "properties",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "closed": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": "properties",
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 1200,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        }
+      }
+    },
+    {
+      "name": "application-menu controller closes the active menu on Escape through the DOM keyboard path",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": "properties",
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 1200,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "activeElement": "fileMenuToggle"
+      }
+    },
+    {
+      "name": "application-menu controller closes the active menu on outside click",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "collapsed",
+        "activePanel": null,
+        "lastPanel": "properties",
+        "collapsed": true,
+        "inspectorOpen": false,
+        "creativeOpen": false,
+        "panelWidth": 0,
+        "stageWidth": 1200,
+        "dockWidth": 40,
+        "panelGroup": null,
+        "creativeStage": "chat",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "New/Open/Save/Export/Fullscreen command bindings remain wired",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "UI-006 Phase C removes equal-status permanent desktop file commands",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "UI-006 Phase C File menu is the primary desktop home for New/Open/Save/Export",
+      "pass": true,
+      "detail": [
+        {
+          "command": "new",
+          "label": "新增Ctrl+N"
+        },
+        {
+          "command": "open",
+          "label": "開啟Ctrl+O"
+        },
+        {
+          "command": "save",
+          "label": "儲存Ctrl+S"
+        },
+        {
+          "command": "export",
+          "label": "匯出"
+        }
+      ]
+    },
+    {
+      "name": "UI-006 Phase F File routes are explicitly Primary Home vs Responsive Alternative",
+      "pass": true,
+      "detail": {
+        "primary": "PRIMARY_HOME",
+        "responsive": [
+          [
+            "newBtn",
+            "RESPONSIVE_ALTERNATIVE"
+          ],
+          [
+            "openBtn",
+            "RESPONSIVE_ALTERNATIVE"
+          ],
+          [
+            "saveBtn",
+            "RESPONSIVE_ALTERNATIVE"
+          ],
+          [
+            "exportBtn",
+            "RESPONSIVE_ALTERNATIVE"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "UI-006 Phase F workspace and tool selection have one declared Primary Home",
+      "pass": true,
+      "detail": {
+        "workspace": "PRIMARY_HOME",
+        "workspaceMenu": "SECONDARY_SHORTCUT",
+        "tools": "PRIMARY_HOME"
+      }
+    },
+    {
+      "name": "UI-006 Phase C File menu proxies the existing Export command endpoint",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Fullscreen API remains supported and command surface wired",
+      "pass": true,
+      "detail": {
+        "supported": true,
+        "active": false
+      }
+    },
+    {
+      "name": "keyboard workspace shortcuts preserved",
+      "pass": true,
+      "detail": {
+        "shortcutLayout": "layout",
+        "shortcutCreation": "creation"
+      }
+    },
+    {
+      "name": "Layout shows dark workbench around real A4 paper",
+      "pass": true,
+      "detail": {
+        "corner": [
+          43,
+          44,
+          46,
+          255
+        ],
+        "center": [
+          254,
+          253,
+          248,
+          255
+        ],
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1240,
+          "bottom": 783,
+          "width": 1200,
+          "height": 693
+        },
+        "artboard": {
+          "mode": "fixed",
+          "preset": "A4",
+          "orientation": "portrait",
+          "widthMm": 210,
+          "heightMm": 297,
+          "ppi": 300,
+          "bleedMm": 0,
+          "safeMarginMm": 10,
+          "unit": "mm",
+          "showBleed": true,
+          "showSafeArea": true,
+          "showCenter": true,
+          "clipContent": true,
+          "pixels": {
+            "width": 2480,
+            "height": 3508,
+            "widthMm": 210,
+            "heightMm": 297,
+            "ppi": 300,
+            "trimWidth": 2480,
+            "trimHeight": 3508
+          },
+          "trim": {
+            "x": -396.85039370078744,
+            "y": -561.2598425196851,
+            "w": 793.7007874015749,
+            "h": 1122.5196850393702
+          },
+          "bleed": {
+            "x": -396.85039370078744,
+            "y": -561.2598425196851,
+            "w": 793.7007874015749,
+            "h": 1122.5196850393702
+          }
+        }
+      }
+    },
+    {
+      "name": "keyboard tool shortcut sample preserved",
+      "pass": true,
+      "detail": "select"
+    },
+    {
+      "name": "contextual tool route: pen",
+      "pass": true,
+      "detail": {
+        "key": "b",
+        "tool": "pen",
+        "contextTool": "pen",
+        "mode": "draw"
+      }
+    },
+    {
+      "name": "contextual tool route: pencil",
+      "pass": true,
+      "detail": {
+        "key": "n",
+        "tool": "pencil",
+        "contextTool": "pencil",
+        "mode": "draw"
+      }
+    },
+    {
+      "name": "contextual tool route: marker",
+      "pass": true,
+      "detail": {
+        "key": "m",
+        "tool": "marker",
+        "contextTool": "marker",
+        "mode": "draw"
+      }
+    },
+    {
+      "name": "contextual tool route: brush",
+      "pass": true,
+      "detail": {
+        "key": "i",
+        "tool": "brush",
+        "contextTool": "brush",
+        "mode": "draw"
+      }
+    },
+    {
+      "name": "contextual tool route: airbrush",
+      "pass": true,
+      "detail": {
+        "key": "a",
+        "tool": "airbrush",
+        "contextTool": "airbrush",
+        "mode": "draw"
+      }
+    },
+    {
+      "name": "contextual tool route: eraser",
+      "pass": true,
+      "detail": {
+        "key": "e",
+        "tool": "eraser",
+        "contextTool": "eraser",
+        "mode": "eraser"
+      }
+    },
+    {
+      "name": "contextual tool route: shape",
+      "pass": true,
+      "detail": {
+        "key": "s",
+        "tool": "shape",
+        "contextTool": "shape",
+        "mode": "shape"
+      }
+    },
+    {
+      "name": "contextual tool route: text",
+      "pass": true,
+      "detail": {
+        "key": "t",
+        "tool": "text",
+        "contextTool": "text",
+        "mode": "text"
+      }
+    },
+    {
+      "name": "Selection actions become the contextual surface",
+      "pass": true,
+      "detail": {
+        "mode": "selection",
+        "count": 3
+      }
+    },
+    {
+      "name": "UI-006 Phase F removes the equal-status Properties selection action strip while preserving handlers",
+      "pass": true,
+      "detail": {
+        "contextual": "CONTEXTUAL_SHORTCUT",
+        "hiddenProxyContainer": true,
+        "hiddenProxyIds": [
+          "duplicateSelectionBtn",
+          "groupSelectionBtn",
+          "frontSelectionBtn",
+          "deleteSelectionBtn"
+        ],
+        "deeper": [
+          "ungroupSelectionBtn",
+          "backSelectionBtn"
+        ]
+      }
+    },
+    {
+      "name": "UI-006 Phase F immediate contextual controls and deep Properties controls are explicitly separated",
+      "pass": true,
+      "detail": {
+        "contextual": "PRIMARY_HOME",
+        "quick": "PRIMARY_HOME",
+        "properties": [
+          [
+            "brush",
+            "DEEP_SETTINGS"
+          ],
+          [
+            "object",
+            "DEEP_SETTINGS"
+          ],
+          [
+            "geometry",
+            "DEEP_SETTINGS"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "UI-006 Phase F introduces no duplicate DOM command IDs",
+      "pass": true,
+      "detail": {
+        "ids": 555,
+        "unique": 555
+      }
+    },
+    {
+      "name": "UI-006 Phase G exposes one named typography token authority",
+      "pass": true,
+      "detail": {
+        "xs": "9px",
+        "sm": "9.5px",
+        "md": "10px",
+        "lg": "11px",
+        "brand": "10px"
+      }
+    },
+    {
+      "name": "UI-006 Phase G normal interactive/control text stays at or above UI-MD",
+      "pass": true,
+      "detail": [
+        {
+          "node": "contextualAdvancedBtn",
+          "size": 10,
+          "weight": "650"
+        },
+        {
+          "node": "inspector-tab properties-subtab active",
+          "size": 10,
+          "weight": "600"
+        },
+        {
+          "node": "control-row color-row",
+          "size": 10,
+          "weight": "400"
+        },
+        {
+          "node": "BUTTON",
+          "size": 10,
+          "weight": "650"
+        }
+      ]
+    },
+    {
+      "name": "UI-006 Phase G metadata-only text never falls below UI-XS",
+      "pass": true,
+      "detail": [
+        {
+          "node": "panel-window-group-label",
+          "size": 9
+        },
+        {
+          "node": "SPAN",
+          "size": 9
+        },
+        {
+          "node": "version-badge",
+          "size": 9
+        },
+        {
+          "node": "KBD",
+          "size": 9
+        },
+        {
+          "node": "tool-label",
+          "size": 10
+        }
+      ]
+    },
+    {
+      "name": "UI-006 Phase G panel titles and tabs share the common hierarchy",
+      "pass": true,
+      "detail": {
+        "panelTitleSizes": [
+          11,
+          11
+        ],
+        "panelTabSizes": [
+          10,
+          10
+        ],
+        "tokens": {
+          "xs": "9px",
+          "sm": "9.5px",
+          "md": "10px",
+          "lg": "11px",
+          "brand": "10px"
+        }
+      }
+    },
+    {
+      "name": "UI-006 Phase G CJK Latin and numeric UI text share the current --ui-font authority",
+      "pass": true,
+      "detail": {
+        "token": "\"Segoe UI\",\"Noto Sans TC\",\"PingFang TC\",\"Microsoft JhengHei\",system-ui,sans-serif",
+        "computedAuthority": "\"Segoe UI\", \"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", system-ui, sans-serif",
+        "samples": [
+          {
+            "script": "cjk",
+            "size": "10px",
+            "family": "\"Segoe UI\", \"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", system-ui, sans-serif"
+          },
+          {
+            "script": "latin",
+            "size": "10px",
+            "family": "\"Segoe UI\", \"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", system-ui, sans-serif"
+          },
+          {
+            "script": "numeric",
+            "size": "10px",
+            "family": "\"Segoe UI\", \"Noto Sans TC\", \"PingFang TC\", \"Microsoft JhengHei\", system-ui, sans-serif"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UI-MAINT-002 Advanced opens Properties and exposes active state",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "properties",
+          "activePanel": "properties",
+          "lastPanel": "properties",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "pressed": "true",
+        "expanded": "true",
+        "active": true
+      }
+    },
+    {
+      "name": "Contextual Advanced remains navigation to Properties and cannot close the primary panel",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "properties",
+          "activePanel": "properties",
+          "lastPanel": "properties",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "pressed": "true",
+        "expanded": "true",
+        "active": true
+      }
+    },
+    {
+      "name": "same active Dock item closes the primary panel through the shared toggle authority",
+      "pass": true,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "collapsed",
+        "activePanel": null,
+        "lastPanel": "properties",
+        "collapsed": true,
+        "inspectorOpen": false,
+        "creativeOpen": false,
+        "panelWidth": 0,
+        "stageWidth": 1200,
+        "dockWidth": 40,
+        "panelGroup": null,
+        "creativeStage": "chat",
+        "contextMode": "draw",
+        "contextTool": "pen",
+        "toolbarLayout": "single",
+        "toolbarLayoutPreference": "single",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "different Dock item switches the active primary panel without a second state owner",
+      "pass": true,
+      "detail": {
+        "properties": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "properties",
+          "activePanel": "properties",
+          "lastPanel": "properties",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "layers": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": "layers",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "chat",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UI-MAINT-002 short-height Inspector keeps all content reachable by vertical scroll",
+      "pass": true,
+      "detail": {
+        "viewport": [
+          1280,
+          520
+        ],
+        "inspector": {
+          "x": 1028,
+          "y": 61,
+          "width": 252,
+          "height": 459,
+          "top": 61,
+          "right": 1280,
+          "bottom": 520,
+          "left": 1028
+        },
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "clientHeight": 297,
+        "scrollHeight": 3011,
+        "clientWidth": 241,
+        "scrollWidth": 241,
+        "scrollBefore": 0,
+        "scrollAfter": 2714
+      }
+    },
+    {
+      "name": "UI-MAINT-002 short-height Creative Loop remains vertically contained without horizontal overflow",
+      "pass": true,
+      "detail": {
+        "viewport": [
+          1280,
+          520
+        ],
+        "panel": {
+          "x": 1028,
+          "y": 61,
+          "width": 252,
+          "height": 459,
+          "top": 61,
+          "right": 1280,
+          "bottom": 520,
+          "left": 1028
+        },
+        "overflowY": "auto",
+        "overflowX": "hidden",
+        "clientWidth": 236,
+        "scrollWidth": 236
+      }
+    },
+    {
+      "name": "Photoshop-aligned primary right panels preserve one coherent canvas boundary",
+      "pass": true,
+      "detail": [
+        {
+          "id": "properties",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "properties",
+            "activePanel": "properties",
+            "lastPanel": "properties",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "layers",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "layers",
+            "activePanel": "layers",
+            "lastPanel": "layers",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "history",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "history",
+            "activePanel": "history",
+            "lastPanel": "history",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "navigator",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "navigator",
+            "activePanel": "navigator",
+            "lastPanel": "navigator",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "pages",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "pages",
+            "activePanel": "pages",
+            "lastPanel": "pages",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "color",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "color",
+            "activePanel": "color",
+            "lastPanel": "color",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "appearance",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "channels",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "channels",
+            "activePanel": "channels",
+            "lastPanel": "channels",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "appearance",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "adjustments",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "adjustments",
+            "activePanel": "adjustments",
+            "lastPanel": "adjustments",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "appearance",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "libraries",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "libraries",
+            "activePanel": "libraries",
+            "lastPanel": "libraries",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "creative",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "reference",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "reference",
+            "activePanel": "reference",
+            "lastPanel": "reference",
+            "collapsed": false,
+            "inspectorOpen": false,
+            "creativeOpen": true,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "creative",
+            "creativeStage": "reference",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "compose",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "compose",
+            "activePanel": "compose",
+            "lastPanel": "compose",
+            "collapsed": false,
+            "inspectorOpen": false,
+            "creativeOpen": true,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "creative",
+            "creativeStage": "compose",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "chat",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "chat",
+            "activePanel": "chat",
+            "lastPanel": "chat",
+            "collapsed": false,
+            "inspectorOpen": false,
+            "creativeOpen": true,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "creative",
+            "creativeStage": "chat",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "revision",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "revision",
+            "activePanel": "revision",
+            "lastPanel": "revision",
+            "collapsed": false,
+            "inspectorOpen": false,
+            "creativeOpen": true,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "creative",
+            "creativeStage": "revision",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        },
+        {
+          "id": "specialist",
+          "state": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "specialist",
+            "activePanel": "specialist",
+            "lastPanel": "specialist",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "specialist",
+            "creativeStage": "revision",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "pass": true
+        }
+      ]
+    },
+    {
+      "name": "shared primary-panel resizer updates canvas geometry through the existing shell authority",
+      "pass": true,
+      "detail": {
+        "before": {
+          "shell": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "properties",
+            "activePanel": "properties",
+            "lastPanel": "properties",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 988,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "revision",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 1028,
+            "bottom": 783,
+            "width": 988,
+            "height": 693
+          },
+          "panel": {
+            "left": 1028,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          }
+        },
+        "after": {
+          "shell": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "properties",
+            "activePanel": "properties",
+            "lastPanel": "properties",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 316,
+            "stageWidth": 924,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "revision",
+            "contextMode": "draw",
+            "contextTool": "pen",
+            "toolbarLayout": "single",
+            "toolbarLayoutPreference": "single",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 964,
+            "bottom": 783,
+            "width": 924,
+            "height": 693
+          },
+          "panel": {
+            "left": 964,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 316,
+            "height": 739
+          },
+          "dock": {
+            "left": 1240,
+            "top": 61,
+            "right": 1280,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          }
+        },
+        "resizeDelta": 64,
+        "targetPanelWidth": 316
+      }
+    },
+    {
+      "name": "Photoshop-aligned fullscreen presentation keeps chrome, panel and canvas contained",
+      "pass": true,
+      "detail": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "app": {
+          "left": 0,
+          "top": 0,
+          "right": 1280,
+          "bottom": 800,
+          "width": 1280,
+          "height": 800
+        },
+        "stage": {
+          "left": 40,
+          "top": 90,
+          "right": 1028,
+          "bottom": 783,
+          "width": 988,
+          "height": 693
+        },
+        "panel": {
+          "left": 1028,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 252,
+          "height": 739
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "rootScroll": {
+          "width": 1280,
+          "height": 800
+        }
+      }
+    },
+    {
+      "name": "narrow desktop containment remains stable",
+      "pass": true,
+      "detail": {
+        "viewport": 960,
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_NARROW",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": "properties",
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 880,
+          "dockWidth": 40,
+          "panelGroup": null,
+          "creativeStage": "revision",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "geometry": {
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 920,
+            "bottom": 783,
+            "width": 880,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "dock": {
+            "left": 920,
+            "top": 61,
+            "right": 960,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "topbar": {
+            "left": 0,
+            "top": 25,
+            "right": 960,
+            "bottom": 61,
+            "width": 960,
+            "height": 36
+          }
+        }
+      }
+    },
+    {
+      "name": "UI-006 Phase G narrow desktop typography does not overflow persistent chrome",
+      "pass": true,
+      "detail": {
+        "topbar": {
+          "client": 960,
+          "scroll": 960
+        },
+        "propertiesTabs": {
+          "client": 0,
+          "scroll": 0
+        },
+        "status": {
+          "client": 880,
+          "scroll": 880
+        }
+      }
+    },
+    {
+      "name": "Photoshop-aligned narrow desktop keeps a meaningful canvas with the primary panel open",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_NARROW",
+          "primaryState": "properties",
+          "activePanel": "properties",
+          "lastPanel": "properties",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 668,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "revision",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "geometry": {
+          "stage": {
+            "left": 40,
+            "top": 90,
+            "right": 708,
+            "bottom": 783,
+            "width": 668,
+            "height": 693
+          },
+          "rail": {
+            "left": 0,
+            "top": 61,
+            "right": 40,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          },
+          "panel": {
+            "left": 708,
+            "top": 61,
+            "right": 960,
+            "bottom": 800,
+            "width": 252,
+            "height": 739
+          },
+          "dock": {
+            "left": 920,
+            "top": 61,
+            "right": 960,
+            "bottom": 800,
+            "width": 40,
+            "height": 739
+          }
+        }
+      }
+    },
+    {
+      "name": "UI-006 Phase H narrow desktop compresses secondary status before viewport controls",
+      "pass": true,
+      "detail": {
+        "autosaveDisplay": "none",
+        "artboardDisplay": "none",
+        "selectionDisplay": "none",
+        "client": 668,
+        "scroll": 668,
+        "rotateVisible": true,
+        "fitVisible": true,
+        "zoomOutVisible": true,
+        "zoomTextVisible": true,
+        "zoomInVisible": true
+      }
+    },
+    {
+      "name": "compact shell activates without desktop dock overlap or horizontal overflow",
+      "pass": true,
+      "detail": {
+        "mobileMedia": true,
+        "mobileDockHidden": true,
+        "compactShellFits": true,
+        "viewport": 720
+      }
+    },
+    {
+      "name": "UI-006 Phase F responsive File alternative remains available on mobile",
+      "pass": true,
+      "detail": {
+        "exportVisible": true,
+        "exportRoute": "RESPONSIVE_ALTERNATIVE",
+        "hiddenDesktopCopies": [
+          [
+            "newBtn",
+            "none"
+          ],
+          [
+            "openBtn",
+            "none"
+          ],
+          [
+            "saveBtn",
+            "none"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "UI-006 Phase D compact toolbar resolves to effective single mode without requiring legacy rail hiding",
+      "pass": true,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "COMPACT",
+          "primaryState": "collapsed",
+          "activePanel": null,
+          "lastPanel": "properties",
+          "collapsed": true,
+          "inspectorOpen": false,
+          "creativeOpen": false,
+          "panelWidth": 0,
+          "stageWidth": 720,
+          "dockWidth": 0,
+          "panelGroup": null,
+          "creativeStage": "revision",
+          "contextMode": "draw",
+          "contextTool": "pen",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "rail": {
+          "left": 6,
+          "top": 100,
+          "right": 60,
+          "bottom": 772,
+          "width": 54,
+          "height": 672
+        },
+        "compactShellFits": true,
+        "viewport": 720
+      }
+    },
+    {
+      "name": "compact mode keeps essential command access without requiring a legacy Inspector opener or bottom-dock grammar",
+      "pass": true,
+      "detail": {
+        "exportVisible": true,
+        "moreToolsVisible": true,
+        "panelDockDisplay": "none",
+        "rootScrollWidth": 720,
+        "bodyScrollWidth": 720
+      }
+    },
+    {
+      "name": "mobile Inspector remains within viewport",
+      "pass": true,
+      "detail": {
+        "viewport": [
+          720,
+          800
+        ],
+        "rect": {
+          "x": 7,
+          "y": 54,
+          "width": 704,
+          "height": 576,
+          "top": 54,
+          "right": 711,
+          "bottom": 630,
+          "left": 7
+        }
+      }
+    },
+    {
+      "name": "UI-006 Phase H mobile Inspector overlays rather than permanently shrinking the compact canvas",
+      "pass": true,
+      "detail": {
+        "stage": {
+          "left": 0,
+          "top": 92,
+          "right": 720,
+          "bottom": 728,
+          "width": 720,
+          "height": 636
+        },
+        "viewport": [
+          720,
+          800
+        ],
+        "scrollWidth": 720
+      }
+    },
+    {
+      "name": "dedicated SVG favicon resolves successfully in fresh context",
+      "pass": true,
+      "detail": {
+        "href": "http://127.0.0.1:60389/assets/favicon.svg?v=0.1",
+        "status": 200
+      }
+    },
+    {
+      "name": "visible shell mark resolves from a local declared brand asset without pinning a retired file-format contract",
+      "pass": true,
+      "detail": {
+        "src": "http://127.0.0.1:60389/assets/INK_MARK_SOURCE_W-300.jpg?v=0.1",
+        "status": 200
+      }
+    },
+    {
+      "name": "service worker activates in loopback Web runtime",
+      "pass": true,
+      "detail": {
+        "swReady": true,
+        "swScriptURL": "http://127.0.0.1:60389/service-worker.js"
+      }
+    },
+    {
+      "name": "service worker owns build identity independent of stale app query",
+      "pass": true,
+      "detail": {
+        "swProductVersion": "0.1",
+        "appBuildId": "20260928-ui-c-photoshop-fidelity-closure-r1",
+        "workerBuildId": "20260928-ui-c-photoshop-fidelity-closure-r1",
+        "swScriptURL": "http://127.0.0.1:60389/service-worker.js",
+        "cacheKeys": [
+          "ink-build-20260928-ui-c-photoshop-fidelity-closure-r1-shell",
+          "ink-build-20260928-ui-c-photoshop-fidelity-closure-r1-runtime"
+        ]
+      }
+    },
+    {
+      "name": "service worker update check bypasses script HTTP cache",
+      "pass": true,
+      "detail": {
+        "swUpdateViaCache": "none",
+        "swUpdateChecked": true
+      }
+    },
+    {
+      "name": "service-worker activation removed historical cache without storage reset",
+      "pass": true,
+      "detail": {
+        "cacheKeys": [
+          "ink-build-20260928-ui-c-photoshop-fidelity-closure-r1-shell",
+          "ink-build-20260928-ui-c-photoshop-fidelity-closure-r1-runtime"
+        ]
+      }
+    },
+    {
+      "name": "document integrity remains valid",
+      "pass": true,
+      "detail": {
+        "passed": true,
+        "errors": [],
+        "warnings": [],
+        "stats": {
+          "pages": 1,
+          "layers": 2,
+          "objects": 3,
+          "groups": 0,
+          "frames": 0,
+          "paths": 0,
+          "expressiveStrokes": 0,
+          "strokes": 1,
+          "points": 5,
+          "duplicateIds": 0,
+          "duplicateOwnership": 0,
+          "structuralCycles": 0,
+          "staleParentIds": 0,
+          "byteLength": 3822
+        },
+        "fingerprint": "fnv1a32:20fe2018"
+      }
+    },
+    {
+      "name": "no fatal runtime health failure",
+      "pass": true,
+      "detail": {
+        "startedAt": "2026-09-29T03:33:58.031Z",
+        "uptimeMs": 13235.300000000017,
+        "attached": true,
+        "frames": 0,
+        "averageFrameMs": 0,
+        "longFrames": 0,
+        "operations": [],
+        "errors": [],
+        "heartbeat": null,
+        "status": "pass",
+        "reasons": [],
+        "errorCount": 0,
+        "longFrameRatio": 0,
+        "unfinishedOperations": 0
+      }
+    }
+  ],
+  "fatalDetail": null
+}
