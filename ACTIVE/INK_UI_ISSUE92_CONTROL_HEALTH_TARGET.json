@@ -1,8 +1,9 @@
 {
   "schema": "ink-ui-issue92-control-health-target",
   "version": 1,
-  "target_sha": "1c5006c66c1d840cca1d629488c40e5be85f72fd",
-  "scope": "A03 AA10 AB08 AD11 AE08 AE10 AF09 current-product source + live control health inventory / no central Runtime",
+  "target_sha": "c70b649777e879d939ef9368044e69f0b1d81742",
+  "scope": "A03 AA10 AB08 AD11 AE08 AE10 AF09 exact-candidate source + live control health inventory / no central Runtime",
   "central_runtime": false,
-  "run_generation": 1
+  "run_generation": 2,
+  "note": "AB08/AE08 closure authority is current-runtime browser click-through; static unbound scan remains diagnostic because it includes inactive template/standalone surfaces and generic bindings."
 }

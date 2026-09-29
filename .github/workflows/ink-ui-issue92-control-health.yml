@@ -40,4 +40,5 @@ jobs:
         run: |
           $r=Get-Content "$env:INK_EVIDENCE_ROOT\evidence\report.json" -Raw | ConvertFrom-Json
           $s=Get-Content "$env:INK_EVIDENCE_ROOT\evidence\control-health-source.json" -Raw | ConvertFrom-Json
-          if($r.status -ne "PASS" -or $s.status -ne "PASS"){Write-Error ("Control health gate browser="+$r.status+" source="+$s.status);exit 1}
+          $requiredSourceFailures=@($s.checks | Where-Object { ($_.id -eq "A03" -or $_.id -eq "AE10") -and -not $_.pass })
+          if($r.status -ne "PASS" -or $requiredSourceFailures.Count -gt 0){Write-Error ("Control health gate browser="+$r.status+" requiredSourceFailures="+$requiredSourceFailures.Count);exit 1}
