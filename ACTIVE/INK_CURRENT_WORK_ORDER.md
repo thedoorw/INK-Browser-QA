@@ -143,8 +143,10 @@ CORE_PROTECTION = 64 FAMILIES / 496 PRODUCT ATOMICS / 5 HEADLESS ATOMICS
 CHAT_SURFACE = 22 NAMED TOOLS / 34 BOUNDED EDIT OPERATIONS
 FORMAT_VERSION = 4 / PRESERVE
 
-PRIMARY_VISUAL_AUTHORITY = USER_SUPPLIED ps-1.png + ps-2.png
-PREVIOUS_LIGHT_UI_ACCEPTANCE = REJECTED
+PRIMARY_VISUAL_AUTHORITY = USER_SUPPLIED ps-1.png + ps-2.png / STRUCTURE_DENSITY_HIERARCHY
+CSS_THEME = LIGHT / USER_LOCKED
+PS_DARK_PALETTE = NOT_AUTHORITY
+PREVIOUS_GENERIC_SPARSE_LIGHT_UI = REJECTED
 UI_COMPLETE = USER_NOT_YET_DECLARED
 
 NEXT_OWNER = USER + UI_TASK_AUTHOR_CHAT
@@ -605,3 +607,15 @@ NEXT_OWNER = MR
 ```
 
 The supplied `ps-1.png / ps-2.png` reference pack is restored as primary visual authority for the correction pass. The previous light-theme abstraction may not override direct USER reference fidelity.
+
+
+## USER CSS override — 2026-09-29
+
+```text
+CSS_THEME = LIGHT / USER_LOCKED
+DARK_WORKSTATION_THEME = REJECTED
+PS_REFERENCE_USE = STRUCTURE / DENSITY / HIERARCHY / TOOLBAR-PANEL GRAMMAR
+PS_REFERENCE_COLOR_PALETTE = NOT AUTHORITATIVE
+```
+
+Current UI assembly and correction tasks must use a professional light CSS workstation. The earlier dark-theme implementation on current main does not represent USER direction and must not be treated as a target.
