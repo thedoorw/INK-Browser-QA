@@ -326,12 +326,41 @@
       const node = document.getElementById(id);
       if (node && node.parentElement !== host) host.append(node);
     }
+    let editing = document.querySelector('#shellEditingContextControls');
+    if (!editing) {
+      editing = document.createElement('div');
+      editing.id = 'shellEditingContextControls';
+      editing.className = 'contextual-edit-controls';
+      editing.hidden = true;
+      editing.innerHTML =
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="exitPathEditBtn">Done</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathCornerBtn">Corner</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathSmoothBtn">Smooth</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathSymmetricBtn">Symmetric</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="insertPathAnchorBtn">Insert</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="deletePathAnchorsBtn">Delete</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="exitStrokeEditBtn">Done</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeCornerBtn">Corner</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeSmoothBtn">Smooth</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeSymmetricBtn">Symmetric</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="simplifyStrokeBtn">Simplify</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="deleteStrokeNodesBtn">Delete</button>';
+      editing.addEventListener('click', event => {
+        const proxy = event.target.closest('[data-edit-proxy]');
+        if (!proxy) return;
+        document.getElementById(proxy.dataset.editProxy)?.click();
+        syncContextualSoon();
+      });
+      host.append(editing);
+    }
     state.contextualRoot = root;
     state.contextualHost = host;
     return true;
   }
 
   function contextualDescriptor(app) {
+    if (app?.pathEditing?.active) return { mode: 'path-edit', tool: 'path-edit', label: 'Path / Node', icon: 'i-pen' };
+    if (app?.strokeEdit) return { mode: 'stroke-edit', tool: 'stroke-edit', label: 'Stroke / Node', icon: 'i-brush' };
     const selected = Array.isArray(app?.selection) ? app.selection.length : 0;
     if (selected > 0) return { mode: 'selection', tool: 'select', label: `選取 · ${selected} 個物件`, icon: 'i-select' };
     const tool = app?.tool || 'pen';
@@ -353,9 +382,22 @@
     const advanced = document.querySelector('#contextualAdvancedBtn');
     if (use) use.setAttribute('href', '#' + descriptor.icon);
     if (name) name.textContent = descriptor.label;
+    const editing = document.querySelector('#shellEditingContextControls');
+    if (editing) {
+      const activeEdit = descriptor.mode === 'path-edit' || descriptor.mode === 'stroke-edit';
+      editing.hidden = !activeEdit;
+      editing.querySelectorAll('[data-edit-mode]').forEach(button => {
+        const visible = button.dataset.editMode === descriptor.mode;
+        button.hidden = !visible;
+        if (visible) {
+          const target = document.getElementById(button.dataset.editProxy);
+          button.disabled = Boolean(target?.disabled);
+        }
+      });
+    }
     if (advanced) {
       const propertiesOpen = currentPanel() === 'properties';
-      const available = ['draw', 'eraser', 'shape', 'text', 'selection'].includes(descriptor.mode);
+      const available = ['draw', 'eraser', 'shape', 'text', 'selection', 'path-edit', 'stroke-edit'].includes(descriptor.mode);
       advanced.hidden = !available;
       advanced.textContent = descriptor.mode === 'selection' ? '物件' : '進階';
       advanced.classList.toggle('active', propertiesOpen);
