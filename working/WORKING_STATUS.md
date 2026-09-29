@@ -6,7 +6,7 @@ DATE: 2026-09-28
 
 ```text
 CURRENT_PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-CURRENT_GATE = FINAL_UR_FULL_CHECKLIST_AUDIT
+CURRENT_GATE = FINAL_CHECKLIST_FINDINGS_CLOSURE
 
 TECHNICAL_BASELINE = CLOSED / RUNTIME_PASS
 UI_RECONCILIATION = MR_PASS / CLOSED / PROMOTED
@@ -44,7 +44,7 @@ Last completed Work Order:
 `working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
 
 Active Work Order:
-`INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
+`INK-UI-FINAL-CHECKLIST-CLOSURE-001`
 
 ## Photoshop alignment rule
 
@@ -73,17 +73,19 @@ UI-A, UI-B and UI-C are promoted and the final exact-SHA integrated Runtime has 
 
 ## Next owner
 
-`UR → FINAL FULL COMPLETION CHECKLIST AUDIT`
+`UR → FINAL CHECKLIST FINDINGS CLOSURE`
 
 Current execution state:
 - UI-A = promoted.
 - UI-B = UR PASS / promoted.
 - UI-C = UR PASS / promoted.
 - final exact-SHA Runtime = PASS.
-- final checklist full audit = NOT YET DONE.
+- final checklist audit = COMPLETE / MR PASS AS AUDIT RECORD.
+- checklist = 592 total / 384 PASS / 207 FAIL / 1 N_A / 0 UNREVIEWED.
+- USER acceptance = 10 IDs pending.
 - UI_COMPLETE = HOLD.
-- DEV = STOP unless UR issues a bounded correction.
-- MR = STOP from declaring completion until checklist gate closes.
+- DEV acts only on UR-bounded reproduced defects/evidence work.
+- MR re-enters only for Core/global escalation or final terminal-gate review.
 
 ## UI-A MR checkpoint
 
@@ -253,3 +255,33 @@ NEXT_OWNER = UR
 ```
 
 The user must not be required to discover this missing gate manually. Future orchestration must detect any required checklist with undispositioned items and block completion automatically.
+
+
+## Full checklist MR review
+
+UR audit:
+`working/INK_UI_FINAL_FULL_CHECKLIST_UR_AUDIT_v1.0.md`
+
+MR review:
+`working/INK_UI_FINAL_FULL_CHECKLIST_MR_REVIEW_v1.0.md`
+
+PR #89:
+`MERGED / ee81475fafde2b8eaf082cd64b0a3c7e090f240b`
+
+```text
+AUDIT_RECORD = MR_PASS
+TOTAL = 592
+PASS = 384
+FAIL = 207
+N_A = 1
+UNREVIEWED = 0
+OPEN = 207
+
+CONFIRMED_PRODUCT_UI_HEALTH_MISMATCH = 1 / AB02
+STALE_QA_CONTRACT = 1 / AF08
+USER_ACCEPTANCE_PENDING = 10
+UI_COMPLETE = HOLD
+NEXT_OWNER = UR
+```
+
+The 207 FAIL rows are a closure backlog, not a count of independently reproduced product defects.
