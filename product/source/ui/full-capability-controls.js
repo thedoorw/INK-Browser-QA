@@ -225,7 +225,7 @@ export function installFullCapabilityControls(app){
     }else if(['pen','pencil','marker','brush','airbrush','lasso'].includes(tool)){
       raster.clearTool();app.setTool(tool);
     }else raster.clearTool();
-    $('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
+    $$('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
     refreshContextOptions();
     if(!['blender','smudge'].includes(tool)&&!tool.startsWith('text:'))toast('工具：'+tool);
   }

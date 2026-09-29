@@ -12,6 +12,10 @@ test('context option refresh queries collections with $$',()=>{
   assert.equal((ui.match(/\$\$\('\[data-ui-b-context-action\]',host\)\.forEach/g)||[]).length,1);
 });
 
+test('no single-element selector is used as a collection',()=>{
+  assert.doesNotMatch(ui,/(?<!\\$)\\$\\([^;\\n]+?\\)\\.forEach/);
+});
+
 test('compact interactive controls retain 24px effective target floor',()=>{
   assert.match(css,/@media\(max-width:760px\)[\s\S]*?\.app button:not\(\[disabled\]\)[\s\S]*?min-width:24px;[\s\S]*?min-height:24px;/);
   assert.match(css,/\.app label:has\(input:not\(\[disabled\]\)\)[\s\S]*?min-height:24px;/);
