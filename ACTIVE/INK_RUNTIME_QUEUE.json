@@ -1,7 +1,7 @@
 {
   "schema": "ink-runtime-queue",
   "version": 1,
-  "state": "READY",
+  "state": "PASS",
   "target_sha": "9be510886df2ff4b6c1ad4b12534e49667ee8483",
   "pending_work_orders": [
     "INK-UI-FINAL-CHECKLIST-CLOSURE-001"
@@ -42,8 +42,11 @@
     "allowed_max": 4
   },
   "last_run": {
-    "run_id": 36554403375,
-    "tested_sha": "ffefff26d541fb1c2c3d15b52121a2667f488de0",
-    "result": "FAIL / UI stale central QA assertion + Creative unreproduced harness timeout after 74 PASS; no product defect reproduced"
+    "run_id": 36562032098,
+    "tested_sha": "9be510886df2ff4b6c1ad4b12534e49667ee8483",
+    "workflow_sha": "a2e95f73a368c399c3cdf343b66c1f0778f9b856",
+    "result": "PASS / UI PASS / Closure PASS / Geometry PASS / Creative PASS 154 checks",
+    "artifact_id": 11030807111,
+    "artifact_digest": "sha256:a7ebbba29440a99aa3107d85a1d1e055ffb05c4be495ee6190bde42afe988fd8"
   }
 }
