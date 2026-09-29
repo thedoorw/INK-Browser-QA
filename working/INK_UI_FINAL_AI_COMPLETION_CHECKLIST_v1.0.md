@@ -908,7 +908,7 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=450 / FAIL=141 / N_A=1 / UNREVIEWED=0 / OPEN=141`
+`TOTAL=592 / PASS=465 / FAIL=126 / N_A=1 / UNREVIEWED=0 / OPEN=126`
 
 A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. The prior central Runtime run 36445204976 remains historical evidence for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b; PR #93 promoted new product CSS at c66b1eba2376f01cfba14f71b6f29d7e2fa022e4, so current-product Runtime debt is DEFERRED_TO_FINAL_CHECKLIST_BATCH and no central Runtime was run in this closure batch.
 
@@ -1055,18 +1055,18 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | M02 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
 | M03 | FAIL | Final screenshots do not show the required state/comparison for M03: thumbnail/overview renders meaningful current content extent. [INT][PIX] | UI-AUD-02 |
 | M04 | FAIL | Final screenshots do not show the required state/comparison for M04: viewport proxy rectangle is visible. [PIX] | UI-AUD-02 |
-| M05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M05: proxy reflects current main-canvas viewport. [INT] | UI-AUD-08 |
-| M06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M06: canvas pan updates proxy. [INT] | UI-AUD-08 |
-| M07 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M07: canvas zoom updates proxy. [INT] | UI-AUD-08 |
-| M08 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M08: dragging proxy pans canvas. [INT] | UI-AUD-08 |
-| M09 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M09: clicking thumbnail repositions canvas view. [INT] | UI-AUD-08 |
-| M10 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M10: zoom percentage/readout is present. [INT] | UI-AUD-08 |
-| M11 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M11: Zoom Out works. [INT] | UI-AUD-08 |
-| M12 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M12: zoom slider works. [INT] | UI-AUD-08 |
-| M13 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M13: Zoom In works. [INT] | UI-AUD-08 |
+| M05 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: rendered Navigator proxy is present, finite, and derived from the current viewport at 100% camera state. | — |
+| M06 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: real stage wheel-pan changes camera x 0→-120 and the Navigator proxy left position 3.73%→14.97%. | — |
+| M07 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: real stage wheel-zoom changes camera scale 1→1.4333 and proxy width 92.53%→64.56%, with readout 143%. | — |
+| M08 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Navigator proxy pointer drag changes camera position and updates proxy geometry through the Runtime handler. | — |
+| M09 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: pointerdown on Navigator thumbnail changes camera center from (-270.23,-19.00) to (-489.73,-260.87). | — |
+| M10 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Navigator zoom percentage output is rendered and reports 143%. | — |
+| M11 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Navigator Zoom Out button changes scale 1.4333→1.1944 and readout to 119%. | — |
+| M12 | FAIL | REPRODUCED_UI_DEFECT: exact-product browser evidence qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json finds no Navigator input[type=range] / #shellNavigatorZoomSlider; checklist requires “zoom slider works”. Current footer has Fit / − / percentage / ＋ only. | UI-DEFECT-NAV-001 |
+| M13 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Navigator Zoom In button changes scale 1.1944→1.4333 and readout to 143%. | — |
 | M14 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
 | M15 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
-| M16 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for M16: infinite-canvas overview uses finite content/artboard extent logically. [INT] | UI-AUD-08 |
+| M16 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: infinite-canvas Navigator overview resolves to finite proxy percentages and finite rendered geometry using content/fallback extent. | — |
 | N01 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
 | N02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for N02: page list is usable. [INT] | UI-AUD-08 |
 | N03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for N03: page selection works. [INT] | UI-AUD-08 |
@@ -1227,11 +1227,11 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | X13 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
 | X14 | PASS | working/INK_UI_FINAL_FUNCTION_PLACEMENT_MAP_v1.0.md excluded/deferred inventory around lines 790–810; ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md capability boundary. Negative UI claims checked against placement. | — |
 | Y01 | PASS | artifact 10979718534 / ui.json checks #63, #84–85, #92, #96; ui-1280x1024.png. USER acceptance remains separately pending where marked. | — |
-| Y02 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y02: fit content works. [INT] | UI-AUD-08 |
-| Y03 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y03: reset view works. [INT] | UI-AUD-08 |
-| Y04 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y04: zoom in works. [INT] | UI-AUD-08 |
-| Y05 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y05: zoom out works. [INT] | UI-AUD-08 |
-| Y06 | FAIL | Final 110-case UI Runtime and cited reviews do not exercise this exact current-main interaction for Y06: reset rotation works. [INT] | UI-AUD-08 |
+| Y02 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: visible Fit Content control returns a non-default camera to x=0,y=0,scale=1,rotation=0 in the empty-content fixture. | — |
+| Y03 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: visible workspace Reset Current View route resets x/y/scale/rotation to 0/0/1/0. | — |
+| Y04 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: bottom view Zoom In changes scale 1→1.2. | — |
+| Y05 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: bottom view Zoom Out changes scale 1.2→1. | — |
+| Y06 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Reset Rotation changes camera rotation 0.7→0 and label becomes 旋轉 0°. | — |
 | Y07 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. status/readout is low-noise. [PIX][USER] | USER-ACCEPT |
 | Y08 | PASS | artifact 10979718534 / ui.json checks #63, #84–85, #92, #96; ui-1280x1024.png. USER acceptance remains separately pending where marked. | — |
 | Y09 | PASS | artifact 10979718534 / ui.json checks #63, #84–85, #92, #96; ui-1280x1024.png. USER acceptance remains separately pending where marked. | — |
@@ -1468,7 +1468,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AM11 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: dragstart produces class=dragging, aria-grabbed=true and opacity 0.48, visibly distinct from ordinary selection. | — |
 | AM12 | PASS | qa/evidence/ink-ui-final-checklist-issue92-layers-history-306ff4e5364e/layers-history.json: reorder commits through History label '拖曳移動圖層'; Undo restores the exact prior layer order and Redo restores the reordered state. | — |
 | AM13 | PASS | working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_UR_REVIEW_R1_CLOSURE_v1.0.md ruler live X/Y and Navigator source closure; artifact 10979718534 / ui.json checks #11; working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md optional classifications. | — |
-| AN01 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN01: Navigator proxy drag behavior is verified against Adobe Photoshop documentation and INK Runtime. | UI-AUD-09 |
+| AN01 | PASS | working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md behavior authority + qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: proxy drag uses grab→grabbing semantics and pans the Runtime camera. | — |
 | AN02 | PASS | Adobe Photoshop dock/resize behavior: https://helpx.adobe.com/photoshop/desktop/get-started/learn-the-basics/stack-floating-panels.html describes dragging a panel edge; final artifact 10979718534 ui.json checks #31 and #91 verify INK shared right-panel resize and canvas reflow. | — |
 | AN03 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN03: Smart Guides show edge/center/boundary alignment opportunities. | UI-AUD-09 |
 | AN04 | FAIL | Final UI artifact lacks a direct current-main browser interaction/visual assertion for AN04: Smart Guides provide useful pixel-distance feedback during movement. | UI-AUD-09 |
