@@ -155,6 +155,7 @@
     if (action === 'undo') document.querySelector('#undoBtn')?.click();
     else if (action === 'redo') document.querySelector('#redoBtn')?.click();
     else if (action === 'canvas-settings') document.querySelector('#settingsToggle')?.click();
+    else if (action === 'branding-settings') globalThis.dispatchEvent(new CustomEvent('ink:branding-open'));
     else if (action === 'fit-current') document.querySelector('#fitBtn')?.click();
     else if (action === 'fullscreen') document.querySelector('#fullscreenToggle')?.click();
     else if (action === 'toggle-rulers') {

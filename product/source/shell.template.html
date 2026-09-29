@@ -67,7 +67,7 @@
 
 <div id="app" class="app web-shell-v0-1" data-panel="brush" data-space="creation" data-shell-panel="collapsed" data-toolbar-layout="single" data-document-active="true" data-rulers="false" data-first-paint="ready" style="--active-panel-w:0px">
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
-    <div class="menu-app-mark" aria-label="INK v0.1 · {{DELIVERY}}"><img class="brand-source-mark" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong>INK</strong><small>0.1</small></div>
+    <div class="menu-app-mark" aria-label="INK v0.1 · {{DELIVERY}}"><img class="brand-source-mark" data-brand-logo src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong data-brand-app-name>INK</strong><small>0.1</small></div>
     <nav id="applicationMenus" class="application-menus" aria-label="主選單">
       <div class="application-menu application-file-menu" data-application-menu="file">
         <button id="fileMenuToggle" type="button" data-application-menu-trigger="file" aria-haspopup="menu" aria-expanded="false">檔案</button>
@@ -84,6 +84,8 @@
         <div id="editMenu" class="application-command-menu" role="menu" aria-label="編輯" hidden>
           <button type="button" role="menuitem" data-shell-action="undo"><span>復原</span><kbd>Ctrl+Z</kbd></button>
           <button type="button" role="menuitem" data-shell-action="redo"><span>重做</span><kbd>Ctrl+Shift+Z</kbd></button>
+          <span class="application-menu-separator" aria-hidden="true"></span>
+          <button type="button" role="menuitem" data-shell-action="branding-settings"><span>Preferences / Settings…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="image">
@@ -155,7 +157,7 @@
   <header class="topbar glass-surface">
     <div class="topbar-leading">
       <button id="pagesToggle" class="icon-button" title="頁面（P）" aria-label="頁面"><svg><use href="#i-pages"/></svg></button>
-      <div class="brand" aria-label="INK v0.1 · {{DELIVERY}}"><img class="brand-source-mark" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong>INK</strong><span class="version">0.1</span>{{WEB_BADGE}}</div>
+      <div class="brand" aria-label="INK v0.1 · {{DELIVERY}}"><img class="brand-source-mark" data-brand-logo src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong data-brand-app-name>INK</strong><span class="version">0.1</span>{{WEB_BADGE}}</div>
       <span class="top-divider"></span>
       <input id="docTitle" class="doc-title" value="未命名作品" aria-label="作品名稱">
     </div>
@@ -677,6 +679,40 @@
     <button id="resetViewBtn" class="wide-button">重設視圖</button><button id="storageHealthBtn" class="wide-button">檢查儲存與離線狀態</button><p id="storageHealthStatus" class="storage-health-status">尚未檢查</p><button id="releaseHealthBtn" class="wide-button">執行發布健康檢查</button><p id="releaseHealthStatus" class="storage-health-status">尚未檢查</p><button id="downloadDiagnosticsBtn" class="wide-button">下載外部測試診斷包</button><div class="button-row"><button id="checkUpdateBtn">檢查更新</button><button id="activateUpdateBtn">啟用更新</button></div><p id="updateStatus" class="storage-health-status">更新服務尚未初始化</p>
   </section>
 
+  <section id="brandingSettingsDialog" class="dialog-backdrop branding-settings-backdrop" role="dialog" aria-modal="true" aria-labelledby="brandingSettingsTitle" hidden>
+    <div class="dialog elevated-panel branding-settings-dialog">
+      <div class="panel-header">
+        <div><span class="eyebrow">PREFERENCES</span><strong id="brandingSettingsTitle">Branding</strong></div>
+        <button id="closeBrandingSettings" class="mini-button panel-close-button" title="關閉 Branding 設定" aria-label="關閉 Branding 設定"><svg><use href="#i-close"/></svg></button>
+      </div>
+      <div class="branding-settings-body">
+        <p class="branding-settings-note">Title / Name、Logo 與 Favicon 會即時預覽並自動保留，重新載入後仍維持。</p>
+        <div class="branding-preview" aria-label="Branding 即時預覽">
+          <img id="brandingPreviewLogo" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="">
+          <div><strong id="brandingPreviewName">INK</strong><span id="brandingPreviewTitle">INK v0.1 · {{DELIVERY}}</span></div>
+        </div>
+        <label class="branding-field"><span>Application Name</span><input id="brandingAppName" type="text" maxlength="40" autocomplete="off" spellcheck="false"></label>
+        <label class="branding-field"><span>Application Title</span><input id="brandingAppTitle" type="text" maxlength="100" autocomplete="off" spellcheck="false"></label>
+        <div class="branding-asset-row">
+          <div class="branding-asset-copy"><strong>Logo</strong><span>PNG / JPG / WEBP / SVG · ≤ 768 KB</span></div>
+          <button id="brandingLogoChoose" type="button">選擇檔案…</button>
+          <input id="brandingLogoInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+        </div>
+        <div class="branding-asset-row">
+          <div class="branding-asset-copy"><strong>Favicon</strong><span>PNG / JPG / WEBP / SVG · ≤ 256 KB</span></div>
+          <button id="brandingFaviconChoose" type="button">選擇檔案…</button>
+          <input id="brandingFaviconInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/x-icon" hidden>
+        </div>
+        <p id="brandingSettingsStatus" class="branding-settings-status" role="status" aria-live="polite">使用目前 Product Default</p>
+        <div class="branding-settings-actions">
+          <button id="brandingReset" type="button">Reset</button>
+          <button id="brandingPromoteDefault" type="button" class="primary-button">Promote as Product Default</button>
+          <button id="brandingRestoreFactory" type="button">Restore Factory INK</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="exportDialog" class="dialog-backdrop" hidden>
     <div class="dialog elevated-panel">
       <div class="panel-header"><div><span class="eyebrow">EXPORT</span><strong>匯出作品</strong></div><button id="closeExport" class="mini-button"><svg><use href="#i-close"/></svg></button></div>
@@ -708,6 +744,7 @@
   <input id="referenceEvidenceInput" type="file" accept="application/json,.json" hidden>
 </div>
 <script src="web-shell.js?v=0.1"></script>
+<script src="ui/branding-settings.js?v=0.1"></script>
 {{RUNTIME_SCRIPT}}
 
 </body>
