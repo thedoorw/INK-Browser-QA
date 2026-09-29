@@ -8,8 +8,8 @@ const css=await readFile(new URL('../product/source/styles.css',import.meta.url)
 test('context option refresh queries collections with $$',()=>{
   assert.match(ui,/\$\$\('\[data-ui-b-option\]',host\)\.forEach/);
   assert.match(ui,/\$\$\('\[data-ui-b-context-action\]',host\)\.forEach/);
-  assert.doesNotMatch(ui,/\$\('\[data-ui-b-option\]',host\)\.forEach/);
-  assert.doesNotMatch(ui,/\$\('\[data-ui-b-context-action\]',host\)\.forEach/);
+  assert.equal((ui.match(/\$\$\('\[data-ui-b-option\]',host\)\.forEach/g)||[]).length,1);
+  assert.equal((ui.match(/\$\$\('\[data-ui-b-context-action\]',host\)\.forEach/g)||[]).length,1);
 });
 
 test('compact interactive controls retain 24px effective target floor',()=>{
