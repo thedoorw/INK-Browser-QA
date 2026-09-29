@@ -1,0 +1,11 @@
+{
+  "schema": "INK-UI-ISSUE92-HEALTH-DETAIL-REPORT",
+  "targetSha": "8ae252f195d1ea539873dffb52ec6c1e36c0c9fc",
+  "centralRuntimeExecuted": false,
+  "status": "PASS",
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  }
+}
