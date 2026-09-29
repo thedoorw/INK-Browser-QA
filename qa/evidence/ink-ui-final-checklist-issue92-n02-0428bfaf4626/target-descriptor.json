@@ -1,0 +1,8 @@
+{
+  "schema": "ink-ui-issue92-pages-target",
+  "version": 1,
+  "target_sha": "0428bfaf46260574d3399f96324232eccb4a6182",
+  "scope": "N02/N03 exact-candidate Pages interaction / no central Runtime",
+  "central_runtime": false,
+  "run_generation": 3
+}

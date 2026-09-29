@@ -1,0 +1,51 @@
+{
+  "schema": "INK-UI-ISSUE92-PAGES",
+  "version": 3,
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "N02",
+      "pass": true,
+      "detail": {
+        "before": {
+          "pages": 1,
+          "rows": 1,
+          "sectionVisible": true,
+          "listVisible": true,
+          "addVisible": true,
+          "addBound": "true"
+        },
+        "afterAdd": {
+          "pages": 2,
+          "rows": 2,
+          "rowVisible": [
+            true,
+            true
+          ],
+          "activePageId": "69a6493e-6a1f-460b-b0f3-bace0b118a5e",
+          "rowIds": [
+            "f682ea9c-c442-4c01-a5f9-7581ba7db38b",
+            "69a6493e-6a1f-460b-b0f3-bace0b118a5e"
+          ]
+        }
+      }
+    },
+    {
+      "id": "N03",
+      "pass": true,
+      "detail": {
+        "firstId": "f682ea9c-c442-4c01-a5f9-7581ba7db38b",
+        "lastId": "69a6493e-6a1f-460b-b0f3-bace0b118a5e",
+        "distinct": true,
+        "firstSelected": true,
+        "lastSelected": true,
+        "activePageId": "69a6493e-6a1f-460b-b0f3-bace0b118a5e"
+      }
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0
+  }
+}
