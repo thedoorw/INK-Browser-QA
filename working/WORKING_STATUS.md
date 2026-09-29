@@ -81,7 +81,7 @@ Current execution state:
 - UI-C = UR PASS / promoted.
 - final exact-SHA Runtime = PASS.
 - final checklist audit = COMPLETE / MR PASS AS AUDIT RECORD.
-- checklist = 592 total / 384 PASS / 207 FAIL / 1 N_A / 0 UNREVIEWED.
+- checklist = 592 total / 399 PASS / 192 FAIL / 1 N_A / 0 UNREVIEWED.
 - USER acceptance = 10 IDs pending.
 - UI_COMPLETE = HOLD.
 - DEV acts only on UR-bounded reproduced defects/evidence work.
