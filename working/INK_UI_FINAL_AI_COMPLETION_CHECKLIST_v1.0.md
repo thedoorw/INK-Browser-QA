@@ -1,8 +1,8 @@
 # INK Final UI — AI Completion Checklist v1.0
 
-STATUS: `FINAL_RUNTIME_PASS / UR_FULL_AUDIT_RECORDED / FINDINGS_OPEN / UI_COMPLETE_HOLD`
+STATUS: `FINAL_EXACT_SHA_RUNTIME_FAIL / MR_GOVERNANCE_DISPOSITION_REQUIRED / USER_ACCEPTANCE_HOLD / UI_COMPLETE_HOLD`
 
-DATE: 2026-09-28
+DATE: 2026-09-29
 
 ACTIVE_AUDIT_DIRECTIVE:
 `ACTIVE/INK_UI_FINAL_CHECKLIST_AUDIT_DIRECTIVE_v1.0.md`
@@ -1508,3 +1508,42 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | AF09 | PASS | Promoted product `e107555fb99255a05d4056aa1db572e534c9763b`: Current-product browser geometry confirms 25px menu, 36px options/topbar, 40px left rail/dock, 29px document band, 28px tab, and 17px status geometry against the accepted Photoshop alignment authority. Evidence: `qa/evidence/ink-ui-final-checklist-issue92-control-health-d48b754f9b99/`. Candidate `d48b754f9b9964e7680c03afebc77a4f2b9b5154`; browser 7/7 PASS; central Runtime not run. | — |
 | AF10 | FAIL | USER visual/ergonomic acceptance has not been recorded; AI cannot mark PASS. USER visual acceptance/revision completed. | USER-ACCEPT |
 | AF11 | FAIL | Other required checklist items have FAIL dispositions; closure predicate false. | UI-AUD-04 |
+
+
+## R28 terminal exact-SHA Runtime failure overlay — 2026-09-29
+
+Authority:
+`working/INK_UI_FINAL_RUNTIME_UR_FAILURE_INTAKE_R28_v1.0.md`
+
+```text
+FINAL_PRODUCT_SHA = ffefff26d541fb1c2c3d15b52121a2667f488de0
+RUNTIME_RUN = 36554403375
+RUNTIME_RESULT = FAIL
+ARTIFACT_ID = 11026936322
+ARTIFACT_DIGEST = sha256:0896c1a97dd9cd574b43c887d00446cc797710561695be99709c8be7be5e7632
+P1_EXACT_TARGET = PASS
+CLOSURE_FOCUSED_CONTRACT = PASS
+UI_BROWSER = FAIL / 109 PASS / 1 STALE_QA_ASSERTION
+CLOSURE_BROWSER = PASS
+GEOMETRY_BROWSER = PASS
+CREATIVE_BROWSER = FAIL / HARNESS_FAILURE / RUNTIME_CONDITION_TIMEOUT_AFTER_74_PASS
+FORMAT_VERSION = 4
+
+CHECKLIST_TOTAL = 592
+CHECKLIST_PASS = 580
+CHECKLIST_FAIL = 11
+CHECKLIST_N_A = 1
+OPEN_CHECKLIST_ITEMS = 11
+USER_ACCEPTANCE = 10 / HOLD
+AF11 = FAIL / TERMINAL_PREDICATE_FALSE
+PENDING_PRODUCT_MUTATIONS = 0
+PRODUCT_DEFECT_REPRODUCED_BY_R28 = NO
+SECOND_FINAL_RUNTIME_AUTHORIZED = NO
+NEXT_OWNER = MR
+UI_COMPLETE = HOLD
+```
+
+R28 changes no checklist row dispositions. The UI failure is a stale central-harness
+assertion contradicted by the authoritative R14 Primary Home closure. Creative stopped
+on an unreproduced QA-harness timeout after 74 passing checks. Missing/failing Runtime
+evidence is not by itself a product defect; no product mutation is authorized.
