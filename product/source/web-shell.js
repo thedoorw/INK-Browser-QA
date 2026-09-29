@@ -62,7 +62,7 @@
     { id: 'compose', label: 'Compose', icon: 'i-group', kind: 'creative', stage: 'compose', group: 'creative' },
     { id: 'chat', label: 'CHAT', icon: 'i-spark', kind: 'creative', stage: 'chat', group: 'creative' },
     { id: 'revision', label: 'Revision', icon: 'i-history', kind: 'creative', stage: 'revision', group: 'creative' },
-    { id: 'specialist', label: 'Specialist', icon: 'i-settings', kind: 'inspector', tab: 'ai', group: 'specialist' }
+    { id: 'specialist', label: 'Specialist', icon: 'i-settings', kind: 'inspector', tab: 'studio', group: 'specialist' }
   ]);
   const PANEL_GROUPS = Object.freeze([
     { id: 'editor', label: 'Editor', items: PANEL_DEFS.filter(def => def.group === 'editor') },
@@ -823,11 +823,11 @@
           <p class="shell-panel-note">使用既有工具顏色 authority；此面板不建立第二份顏色狀態。</p>
         </div>
       </section>
-      <section class="inspector-section tab-content shell-panel-section" data-content="channels" aria-label="色版">
-        <div class="shell-panel-body"><p class="shell-panel-note">Channels 的正常 panel home 已建立；process／alpha／spot／Multichannel 控制由 UI-B 配線至既有 capability authority。</p></div>
+      <section class="inspector-section tab-content shell-panel-section" data-content="channels" data-shell-panel-section="channels" aria-label="色版">
+        <div class="shell-panel-body"></div>
       </section>
-      <section class="inspector-section tab-content shell-panel-section" data-content="adjustments" aria-label="調整">
-        <div class="shell-panel-body"><p class="shell-panel-note">Adjustments 的正常 panel home 已建立；完整調整命令與參數控制由 UI-B 配線。</p></div>
+      <section class="inspector-section tab-content shell-panel-section" data-content="adjustments" data-shell-panel-section="adjustments" aria-label="調整">
+        <div class="shell-panel-body"></div>
       </section>
       <section class="inspector-section tab-content shell-panel-section shell-library-panel" data-content="libraries" aria-label="Libraries">
         <div class="shell-panel-body">
@@ -1841,7 +1841,7 @@
     if (def.id === 'properties') app.toggleInspector?.(true, app.selection?.length ? 'object' : 'brush');
     else if (def.id === 'specialist') {
       const currentTab = state.root?.dataset.panel;
-      app.toggleInspector?.(true, currentTab === 'ai' || currentTab === 'studio' ? currentTab : def.tab);
+      app.toggleInspector?.(true, currentTab === 'studio' ? currentTab : def.tab);
     } else app.toggleInspector?.(true, def.tab || def.id);
     return true;
   }
