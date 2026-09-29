@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8"><title>INK K02 Selection Sync</title>
+<iframe id="f" src="/?fresh=1" style="width:1280px;height:800px;border:0"></iframe>
+<script type="module">
+const sleep=ms=>new Promise(r=>setTimeout(r,ms)),frame=document.querySelector('#f');
+await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();};});
+const w=frame.contentWindow,d=frame.contentDocument;
+for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
+const path={id:'qa-k02-path',type:'path',name:'K02 Path',matrix:[1,0,0,1,120,100],opacity:1,visible:true,fill:'#d7a78f',stroke:'#202020',strokeWidth:2,subpaths:[{closed:true,anchors:[{x:0,y:0,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},{x:80,y:0,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},{x:80,y:60,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'},{x:0,y:60,in:{x:0,y:0},out:{x:0,y:0},mode:'corner'}]}]};
+app.layer().objects.push(path);app.spatialDirty=true;app.refreshAll();app.selectOnly(app.layer().id,path.id);
+const frameObject=app.frameSelection({name:'K02 Frame',padding:8});await sleep(30);shell.open('layers');await sleep(80);
+const frameRow=d.querySelector('#layersList [data-object-id="'+frameObject?.id+'"]');
+const frameSynced=Boolean(frameObject&&frameRow?.classList.contains('active')&&app.selection[0]?.objectId===frameObject.id);
+const childRow=d.querySelector('#layersList [data-object-id="'+path.id+'"]');childRow?.click();await sleep(50);
+const childNow=d.querySelector('#layersList [data-object-id="'+path.id+'"]');
+const childSynced=Boolean(childRow&&app.selection[0]?.objectId===path.id&&childNow?.classList.contains('active'));
+const evidence={schema:'INK-UI-ISSUE92-K02',version:1,status:frameSynced&&childSynced?'PASS':'FAIL',checks:[{id:'K02',pass:frameSynced&&childSynced,detail:{frameId:frameObject?.id,frameSynced,childSynced,selection:app.selection,childClasses:childNow?.className||null}}],summary:{total:1,passed:frameSynced&&childSynced?1:0,failed:frameSynced&&childSynced?0:1}};
+await fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(evidence)});
+</script>
