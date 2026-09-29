@@ -78,11 +78,14 @@ try{
   app.draft={guides:Object.values(equalSnap.evidence).filter(Boolean).flatMap(e=>e.line?[e.line]:[])};
   app.renderer.render();await sleep(40);
   const equalLineRendered=visualCalls.some(call=>call.length>=1);
+  const snapFeedbackShown=Boolean(shell.showSnapFeedback?.(equalSnap.evidence,{clientX:160,clientY:160}));
+  await sleep(30);
   const spacingReadout=q('#shellSnapReadout');
-  const spacingVisual=Boolean(spacingReadout&&visible(spacingReadout)&&/\d/.test(spacingReadout.textContent||spacingReadout.value||''));
+  const spacingText=spacingReadout?.textContent||spacingReadout?.value||'';
+  const spacingVisual=Boolean(spacingReadout&&visible(spacingReadout)&&/gap\s+20(?:\.0)?\s+px/i.test(spacingText));
   const equalAuthority=equalSnap.evidence.x?.type==='equal-distance'&&equalSnap.evidence.y?.type==='equal-distance'&&Number.isFinite(equalSnap.evidence.x?.gap)&&Number.isFinite(equalSnap.evidence.y?.gap);
-  checks.push({id:'AI10',pass:Boolean(equalAuthority&&equalLineRendered&&spacingVisual),detail:{equalSnap,equalLineRendered,spacingReadout:Boolean(spacingReadout),spacingVisual}});
-  checks.push({id:'AN05',pass:Boolean(equalAuthority&&spacingVisual),detail:{equalAuthority,spacingReadout:Boolean(spacingReadout),spacingVisual}});
+  checks.push({id:'AI10',pass:Boolean(equalAuthority&&equalLineRendered&&snapFeedbackShown&&spacingVisual),detail:{equalSnap,equalLineRendered,snapFeedbackShown,spacingReadout:Boolean(spacingReadout),spacingVisual,spacingText}});
+  checks.push({id:'AN05',pass:Boolean(equalAuthority&&snapFeedbackShown&&spacingVisual),detail:{equalAuthority,snapFeedbackShown,spacingReadout:Boolean(spacingReadout),spacingVisual,spacingText}});
 
   // AI12 / AI13 — visible View menu controls immediately mutate the same page.snap state.
   const viewTrigger=q('[data-application-menu-trigger="view"]');
@@ -136,7 +139,9 @@ try{
   // AN04 — actual movement must expose a live pixel-distance readout, not merely internal snap evidence.
   const snapReadout=q('#shellSnapReadout');
   const pixelFeedback=Boolean(snapReadout&&visible(snapReadout)&&/\d/.test(snapReadout.textContent||snapReadout.value||''));
-  checks.push({id:'AN04',pass:pixelFeedback,detail:{readoutExists:Boolean(snapReadout),visible:Boolean(snapReadout&&visible(snapReadout)),text:snapReadout?.textContent||snapReadout?.value||null}});
+  shell.clearSnapFeedback?.();await sleep(10);
+  const transientCleared=Boolean(snapReadout?.hidden);
+  checks.push({id:'AN04',pass:Boolean(pixelFeedback&&transientCleared),detail:{readoutExists:Boolean(snapReadout),wasVisible:pixelFeedback,text:spacingText||null,transientCleared}});
 
   app.renderer.drawGuides=originalDrawGuides;
   app.draft=null;
