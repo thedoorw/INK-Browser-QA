@@ -3443,3 +3443,32 @@ kbd,
 .shell-property-actions button{min-height:24px;border:1px solid var(--ink-ui-border);background:var(--ink-ui-surface);color:var(--ink-ui-text);border-radius:1px;font-size:var(--ui-type-xs)}
 .shell-property-actions button:disabled{opacity:.45}
 .shell-reparent-button{margin-left:auto;min-width:22px;height:20px;padding:0 4px}
+
+
+/* Issue #92 Control Health: preserve >=24px effective compact hit targets without changing desktop density. */
+@media(max-width:760px){
+  .app button:not([disabled]),
+  .app [role="button"],
+  .app [role="menuitem"]{
+    min-width:24px;
+    min-height:24px;
+  }
+  .app input:not([type="hidden"]):not([disabled]),
+  .app select:not([disabled]),
+  .app textarea:not([disabled]){
+    min-height:24px;
+  }
+  .app input[type="color"]:not([disabled]){
+    min-width:24px;
+  }
+  .app label:has(input:not([disabled])),
+  .app label:has(select:not([disabled])),
+  .app label:has(textarea:not([disabled])){
+    min-height:24px;
+  }
+  .quick-controls #quickColor,
+  .quick-controls #quickColorInput{
+    min-width:27px;
+    min-height:27px;
+  }
+}

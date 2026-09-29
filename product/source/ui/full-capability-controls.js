@@ -225,7 +225,7 @@ export function installFullCapabilityControls(app){
     }else if(['pen','pencil','marker','brush','airbrush','lasso'].includes(tool)){
       raster.clearTool();app.setTool(tool);
     }else raster.clearTool();
-    $('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
+    $$('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
     refreshContextOptions();
     if(!['blender','smudge'].includes(tool)&&!tool.startsWith('text:'))toast('工具：'+tool);
   }
@@ -254,8 +254,8 @@ export function installFullCapabilityControls(app){
     if(tool==='sponge')markup+='<select data-ui-b-option="spongeMode">'+selectOptions(['saturate','desaturate'],o.spongeMode)+'</select>';
     if(['blender','smudge'].includes(tool))markup+='<span class="ui-b-context-hint">Brush Dynamics / Media → Properties</span>';
     host.innerHTML=markup;
-    $('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>raster.setOption(key,input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value);input.addEventListener('input',handler);input.addEventListener('change',handler);});
-    $('[data-ui-b-context-action]',host).forEach(control=>control.addEventListener('click',()=>{const action=control.dataset.uiBContextAction;if(action==='gradient-editor')openDialog('gradient-editor',{target:'raster'});else if(action==='pattern-image')pickPatternImage();}));
+    $$('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>raster.setOption(key,input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value);input.addEventListener('input',handler);input.addEventListener('change',handler);});
+    $$('[data-ui-b-context-action]',host).forEach(control=>control.addEventListener('click',()=>{const action=control.dataset.uiBContextAction;if(action==='gradient-editor')openDialog('gradient-editor',{target:'raster'});else if(action==='pattern-image')pickPatternImage();}));
   }
 
   function pickPatternImage(){
