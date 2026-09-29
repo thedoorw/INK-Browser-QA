@@ -211,6 +211,29 @@ Current architecture:
 `governance/INK_CHAT_INTEGRATION_ARCHITECTURE_v1.0.md`
 
 
+## AI development orchestration / software reproduction
+
+Reusable development-method research derived from INK:
+
+`research/INK_AI_DEVELOPMENT_ORCHESTRATION_AND_SOFTWARE_REPRODUCTION_FRAMEWORK_v0.1.md`
+
+Current target:
+
+```text
+reference software
+→ capability / interaction / authority census
+→ dependency-driven Work Orders
+→ GitHub machine state
+→ event-triggered Supervisor
+→ MR / UR / DEV role routing
+→ deterministic completion gates
+→ automatic next-owner transition
+```
+
+The USER should set direction and acceptance, not manually transport cross-role handoffs or rediscover missing completion gates.
+
+First prototype target: `AI_DEV_ORCHESTRATOR_v0.1`.
+
 ## Creative reproduction benchmark
 
 The next creative-validation direction is to test INK against mature finished works rather than rely only on isolated capability claims.
