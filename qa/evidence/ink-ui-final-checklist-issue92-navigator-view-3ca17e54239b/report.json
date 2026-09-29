@@ -1,0 +1,11 @@
+{
+  "schema": "INK-UI-ISSUE92-NAVIGATOR-VIEW-REPORT",
+  "targetSha": "3ca17e54239b30641de724e38ceb449125ced3d5",
+  "centralRuntimeExecuted": false,
+  "status": "PASS",
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0
+  }
+}

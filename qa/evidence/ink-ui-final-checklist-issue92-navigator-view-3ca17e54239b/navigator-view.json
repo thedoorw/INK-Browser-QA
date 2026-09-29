@@ -1,0 +1,356 @@
+{
+  "schema": "INK-UI-ISSUE92-NAVIGATOR-VIEW",
+  "version": 1,
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "M05 proxy reflects current viewport",
+      "pass": true,
+      "detail": {
+        "cam": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "proxy": {
+          "rect": {
+            "x": 1046.3125,
+            "y": 101.625,
+            "w": 206.34375,
+            "h": 144.125,
+            "left": 1046.3125,
+            "top": 101.625,
+            "right": 1252.65625,
+            "bottom": 245.75
+          },
+          "left": "3.73377%",
+          "top": "2.40385%",
+          "width": "92.5325%",
+          "height": "95.1923%",
+          "cursor": "grab",
+          "dragging": false
+        },
+        "zoom": "100%"
+      }
+    },
+    {
+      "name": "M06 canvas pan updates proxy",
+      "pass": true,
+      "detail": {
+        "beforeCam": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "afterCam": {
+          "x": -120,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "beforeProxy": {
+          "rect": {
+            "x": 1046.3125,
+            "y": 101.625,
+            "w": 206.34375,
+            "h": 144.125,
+            "left": 1046.3125,
+            "top": 101.625,
+            "right": 1252.65625,
+            "bottom": 245.75
+          },
+          "left": "3.73377%",
+          "top": "2.40385%",
+          "width": "92.5325%",
+          "height": "95.1923%",
+          "cursor": "grab",
+          "dragging": false
+        },
+        "afterProxy": {
+          "rect": {
+            "x": 1071.375,
+            "y": 101.625,
+            "w": 206.34375,
+            "h": 144.125,
+            "left": 1071.375,
+            "top": 101.625,
+            "right": 1277.71875,
+            "bottom": 245.75
+          },
+          "left": "14.9725%",
+          "top": "2.40385%",
+          "width": "92.5325%",
+          "height": "95.1923%",
+          "cursor": "grab",
+          "dragging": false
+        }
+      }
+    },
+    {
+      "name": "M07 canvas zoom updates proxy",
+      "pass": true,
+      "detail": {
+        "beforeScale": 1,
+        "afterScale": 1.4333294145603401,
+        "beforeProxy": {
+          "rect": {
+            "x": 1071.375,
+            "y": 101.625,
+            "w": 206.34375,
+            "h": 144.125,
+            "left": 1071.375,
+            "top": 101.625,
+            "right": 1277.71875,
+            "bottom": 245.75
+          },
+          "left": "14.9725%",
+          "top": "2.40385%",
+          "width": "92.5325%",
+          "height": "95.1923%",
+          "cursor": "grab",
+          "dragging": false
+        },
+        "afterProxy": {
+          "rect": {
+            "x": 1094.109375,
+            "y": 114.828125,
+            "w": 143.953125,
+            "h": 100.546875,
+            "left": 1094.109375,
+            "top": 114.828125,
+            "right": 1238.0625,
+            "bottom": 215.375
+          },
+          "left": "25.1658%",
+          "top": "11.1247%",
+          "width": "64.5577%",
+          "height": "66.4134%",
+          "cursor": "grab",
+          "dragging": false
+        },
+        "readout": "143%"
+      }
+    },
+    {
+      "name": "M08 proxy drag pans canvas",
+      "pass": true,
+      "detail": {
+        "before": {
+          "x": -113.93338819615525,
+          "y": 59.14946508748642,
+          "scale": 1.4333294145603401,
+          "rotation": 0
+        },
+        "after": {
+          "x": -277.1775048439661,
+          "y": -22.474104784009228,
+          "scale": 1.4333294145603401,
+          "rotation": 0
+        },
+        "dragState": {
+          "rect": {
+            "x": 1094.109375,
+            "y": 114.828125,
+            "w": 143.953125,
+            "h": 100.546875,
+            "left": 1094.109375,
+            "top": 114.828125,
+            "right": 1238.0625,
+            "bottom": 215.375
+          },
+          "left": "25.1658%",
+          "top": "11.1247%",
+          "width": "64.5577%",
+          "height": "66.4134%",
+          "cursor": "grabbing",
+          "dragging": true
+        },
+        "afterProxy": {
+          "rect": {
+            "x": 1117.90625,
+            "y": 126.671875,
+            "w": 143.953125,
+            "h": 100.546875,
+            "left": 1117.90625,
+            "top": 126.671875,
+            "right": 1261.859375,
+            "bottom": 227.21875
+          },
+          "left": "35.8324%",
+          "top": "18.9471%",
+          "width": "64.5577%",
+          "height": "66.4134%",
+          "cursor": "grabbing",
+          "dragging": true
+        }
+      }
+    },
+    {
+      "name": "AN01 Navigator proxy drag runtime and cursor semantics",
+      "pass": true,
+      "detail": {
+        "dragState": {
+          "rect": {
+            "x": 1094.109375,
+            "y": 114.828125,
+            "w": 143.953125,
+            "h": 100.546875,
+            "left": 1094.109375,
+            "top": 114.828125,
+            "right": 1238.0625,
+            "bottom": 215.375
+          },
+          "left": "25.1658%",
+          "top": "11.1247%",
+          "width": "64.5577%",
+          "height": "66.4134%",
+          "cursor": "grabbing",
+          "dragging": true
+        },
+        "before": {
+          "x": -113.93338819615525,
+          "y": 59.14946508748642,
+          "scale": 1.4333294145603401,
+          "rotation": 0
+        },
+        "after": {
+          "x": -277.1775048439661,
+          "y": -22.474104784009228,
+          "scale": 1.4333294145603401,
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "name": "M09 thumbnail click repositions canvas view",
+      "pass": true,
+      "detail": {
+        "before": {
+          "x": -277.1775048439661,
+          "y": -22.474104784009228,
+          "scale": 1.4333294145603401,
+          "rotation": 0
+        },
+        "after": {
+          "x": -489.73234994343267,
+          "y": -260.86595344998193,
+          "scale": 1.4333294145603401,
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "name": "M10 zoom percentage readout is present",
+      "pass": true,
+      "detail": {
+        "readout": "143%"
+      }
+    },
+    {
+      "name": "M11 Navigator Zoom Out works",
+      "pass": true,
+      "detail": {
+        "before": 1.4333294145603401,
+        "after": 1.1944411788002836,
+        "readout": "119%"
+      }
+    },
+    {
+      "name": "M12 Navigator zoom slider works",
+      "pass": true,
+      "detail": {
+        "exists": true,
+        "before": 1.1944411788002836,
+        "after": 1.55,
+        "value": "155"
+      }
+    },
+    {
+      "name": "M13 Navigator Zoom In works",
+      "pass": true,
+      "detail": {
+        "before": 1.55,
+        "after": 1.8599999999999999,
+        "readout": "186%"
+      }
+    },
+    {
+      "name": "M16 infinite canvas overview uses finite extent",
+      "pass": true,
+      "detail": {
+        "rect": {
+          "x": 1165.375,
+          "y": 172.796875,
+          "w": 110.9375,
+          "h": 77.484375,
+          "left": 1165.375,
+          "top": 172.796875,
+          "right": 1276.3125,
+          "bottom": 250.28125
+        },
+        "left": "57.1257%",
+        "top": "49.4107%",
+        "width": "49.7486%",
+        "height": "51.1787%",
+        "cursor": "grab",
+        "dragging": false
+      }
+    },
+    {
+      "name": "Y02 fit content works",
+      "pass": true,
+      "detail": {
+        "afterFit": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "name": "Y03 reset view works",
+      "pass": true,
+      "detail": {
+        "resetVisible": true,
+        "afterReset": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "name": "Y04 zoom in works",
+      "pass": true,
+      "detail": {
+        "before": 1,
+        "after": 1.2
+      }
+    },
+    {
+      "name": "Y05 zoom out works",
+      "pass": true,
+      "detail": {
+        "before": 1.2,
+        "after": 1
+      }
+    },
+    {
+      "name": "Y06 reset rotation works",
+      "pass": true,
+      "detail": {
+        "rotation": 0,
+        "label": "旋轉 0°"
+      }
+    }
+  ],
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0
+  }
+}
