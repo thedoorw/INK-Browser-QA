@@ -1,0 +1,54 @@
+<!doctype html><meta charset="utf-8"><title>INK Issue92 Health Detail</title>
+<iframe id="desktop" src="/" style="width:1280px;height:800px;border:0"></iframe>
+<script type="module">
+const results=[],sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const record=(name,pass,detail=null)=>results.push({name,pass:Boolean(pass),detail});
+const frame=document.querySelector('#desktop');
+await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();};});
+const w=frame.contentWindow,d=frame.contentDocument;
+for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
+const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0;};
+const primary=label=>{const items=[...d.querySelectorAll('[data-ui-home][data-ui-route="PRIMARY_HOME"]')].filter(visible).map(e=>({home:e.dataset.uiHome,id:e.id||e.className,tag:e.tagName}));const groups={};for(const x of items)(groups[x.home]??=[]).push(x);const duplicates=Object.entries(groups).filter(([,v])=>v.length>1);return{label,items,duplicates};};
+const p0=primary('default');shell.open('layers');await sleep(80);const p1=primary('layers-open');shell.open('reference');await sleep(80);const p2=primary('reference-open');
+record('AB07 visible duplicate Primary Homes = 0',[p0,p1,p2].every(x=>x.duplicates.length===0),[p0,p1,p2]);
+record('AE09 duplicate Primary Home inventory = 0',[p0,p1,p2].every(x=>x.duplicates.length===0),[p0,p1,p2]);
+
+const panelIds=[...new Set([...d.querySelectorAll('#panelDock [data-shell-panel]')].map(b=>b.dataset.shellPanel))];
+const panelMenu=[];
+for(const id of panelIds){
+  shell.open(id);await sleep(35);
+  const trigger=[...d.querySelectorAll('[data-panel-options-trigger]')].find(visible);
+  if(!trigger){panelMenu.push({id,pass:false,reason:'no-visible-trigger'});continue;}
+  trigger.click();await sleep(25);
+  const menu=d.querySelector('#shellPanelOptionsMenu'),commands=[...menu.querySelectorAll('[data-panel-option]')];
+  const opened=visible(menu)&&commands.length===2&&commands.some(b=>b.dataset.panelOption==='reset-width')&&commands.some(b=>b.dataset.panelOption==='close');
+  panelMenu.push({id,pass:opened,commands:commands.map(b=>b.dataset.panelOption)});
+  trigger.click();await sleep(10);
+}
+shell.open('layers');await sleep(30);const trig=[...d.querySelectorAll('[data-panel-options-trigger]')].find(visible);trig.click();await sleep(15);d.querySelector('#shellPanelOptionsMenu [data-panel-option="close"]').click();await sleep(30);
+const closeWorks=shell.state().collapsed===true;
+record('AH05 every visible panel-menu trigger opens real commands',panelMenu.length===panelIds.length&&panelMenu.every(x=>x.pass)&&closeWorks,{panelIds,panelMenu,closeWorks});
+
+shell.close();await sleep(20);
+const tipTarget=[...d.querySelectorAll('.tool-rail [title]')].find(visible);
+tipTarget?.dispatchEvent(new w.PointerEvent('pointerover',{bubbles:true,pointerType:'mouse'}));await sleep(40);
+const tip=d.querySelector('#shellTooltip'),tr=tipTarget?.getBoundingClientRect(),br=tip?.getBoundingClientRect(),tipStyle=tip&&w.getComputedStyle(tip);
+const tooltipPass=Boolean(tipTarget&&visible(tip)&&br&&tr&&br.left>=tr.right+6&&br.width<=220.5&&br.height>=25.5&&tipStyle.position==='fixed');
+record('AM01 Tooltip placement and compact geometry',tooltipPass,{target:tr&&{left:tr.left,right:tr.right,top:tr.top,width:tr.width,height:tr.height},tooltip:br&&{left:br.left,right:br.right,top:br.top,width:br.width,height:br.height},style:tipStyle&&{position:tipStyle.position,maxWidth:tipStyle.maxWidth,minHeight:tipStyle.minHeight}});
+
+shell.open('layers');await sleep(30);
+const root=w.getComputedStyle(d.documentElement),tok=n=>root.getPropertyValue(n).trim();
+const parse=s=>{const m=String(s).match(/#([0-9a-f]{6})/i);if(m){return[0,2,4].map(i=>parseInt(m[1].slice(i,i+2),16));}const q=String(s).match(/rgba?\((\d+(?:\.\d+)?)[,\s]+(\d+(?:\.\d+)?)[,\s]+(\d+(?:\.\d+)?)/);return q?q.slice(1,4).map(Number):null;};
+const lum=rgb=>{const a=rgb.map(v=>{v/=255;return v<=.04045?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*a[0]+.7152*a[1]+.0722*a[2];};
+const ratio=(a,b)=>{a=parse(a);b=parse(b);if(!a||!b)return null;const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+const bg=tok('--ink-ui-surface-subtle'),primaryText=tok('--ink-ui-text'),secondary=tok('--ink-ui-text-muted'),disabled=tok('--ink-ui-text-disabled');
+const spectrumDisabled='#C6C6C6';
+const contrast={background:bg,primary:{token:primaryText,ratio:ratio(primaryText,bg)},secondary:{token:secondary,ratio:ratio(secondary,bg)},disabled:{token:disabled,ratio:ratio(disabled,bg)},adobeSpectrumDisabledReference:{token:spectrumDisabled,ratio:ratio(spectrumDisabled,bg)}};
+const undo=d.querySelector('#undoBtn'),save=d.querySelector('#saveBtn'),du=w.getComputedStyle(undo),se=w.getComputedStyle(save);
+contrast.disabledState={disabled:undo.disabled,opacity:du.opacity,enabledOpacity:se.opacity,different:du.opacity!==se.opacity||du.color!==se.color};
+record('AO04 primary secondary disabled text contrast verified',contrast.primary.ratio>=4.5&&contrast.secondary.ratio>=4.5&&contrast.disabled.ratio>contrast.adobeSpectrumDisabledReference.ratio&&contrast.disabledState.disabled&&contrast.disabledState.different,contrast);
+
+const failed=results.filter(x=>!x.pass);
+await fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({schema:'INK-UI-ISSUE92-HEALTH-DETAIL',version:1,status:failed.length?'FAIL':'PASS',checks:results,summary:{total:results.length,passed:results.length-failed.length,failed:failed.length}})});
+</script>
