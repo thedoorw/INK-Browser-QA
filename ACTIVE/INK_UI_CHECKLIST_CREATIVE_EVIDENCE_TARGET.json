@@ -1,0 +1,11 @@
+{
+  "schema": "ink-ui-checklist-creative-evidence-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "306ff4e5364eeebe66fd811f5d93693bc96a3575",
+  "scope": "Issue #92 evidence-only / creative browser suite only",
+  "suites": [
+    "creative"
+  ],
+  "central_runtime": false
+}
