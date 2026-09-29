@@ -908,7 +908,7 @@ This checklist is NOT closed. UR must now perform the full item-by-item audit on
 
 TASK: `INK-UI-FINAL-FULL-CHECKLIST-AUDIT-001`
 
-`TOTAL=592 / PASS=465 / FAIL=126 / N_A=1 / UNREVIEWED=0 / OPEN=126`
+`TOTAL=592 / PASS=466 / FAIL=125 / N_A=1 / UNREVIEWED=0 / OPEN=125`
 
 A FAIL records an unmet requirement or missing direct audit evidence; it does not by itself assert a product defect. Findings separate known product mismatch, QA evidence gaps, and USER acceptance. The prior central Runtime run 36445204976 remains historical evidence for tested SHA 24d3b3f607a17b3cb9331ec3635b34d804ee445b; PR #93 promoted new product CSS at c66b1eba2376f01cfba14f71b6f29d7e2fa022e4, so current-product Runtime debt is DEFERRED_TO_FINAL_CHECKLIST_BATCH and no central Runtime was run in this closure batch.
 
@@ -1062,7 +1062,7 @@ The USER acceptance list is F22, G01, H12, Y07, Z01, Z07, AI11, AI16, AO10 and A
 | M09 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: pointerdown on Navigator thumbnail changes camera center from (-270.23,-19.00) to (-489.73,-260.87). | — |
 | M10 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Navigator zoom percentage output is rendered and reports 143%. | — |
 | M11 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Navigator Zoom Out button changes scale 1.4333→1.1944 and readout to 119%. | — |
-| M12 | FAIL | REPRODUCED_UI_DEFECT: exact-product browser evidence qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json finds no Navigator input[type=range] / #shellNavigatorZoomSlider; checklist requires “zoom slider works”. Current footer has Fit / − / percentage / ＋ only. | UI-DEFECT-NAV-001 |
+| M12 | PASS | Reproduced defect UI-DEFECT-NAV-001 corrected by PR #97 exact candidate 3ca17e54239b30641de724e38ceb449125ced3d5. Focused Navigator browser evidence qa/evidence/ink-ui-final-checklist-issue92-navigator-view-3ca17e54239b/navigator-view.json = 16/16 PASS; M12 slider exists and changes the existing camera scale from 1.1944× to 1.55× through app.zoomBy(). Promoted merge = 7a86ef6124fb18c6d05c0c520020663f65882c5a. | — |
 | M13 | PASS | qa/evidence/ink-ui-final-checklist-issue92-navigator-view-306ff4e5364e/navigator-view.json: Navigator Zoom In button changes scale 1.1944→1.4333 and readout to 143%. | — |
 | M14 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
 | M15 | PASS | artifact 10979718534 / ui.json checks #33–40, #47, #52–54; working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_HANDOFF_v1.0.md source authority review. | — |
