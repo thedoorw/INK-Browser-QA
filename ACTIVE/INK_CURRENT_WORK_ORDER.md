@@ -404,3 +404,11 @@ UI_COMPLETE = HOLD
 ```
 
 No product source changed in R1. Final integrated Runtime remains valid for unchanged product bytes. Additional evidence and actual reproduced UI defects are reconciled before any further product edits.
+
+
+## Bounded closure handoffs — 2026-09-29
+
+- UI-only reproduced CSS findings `AB02 / AO03`: [issue #91](https://github.com/thedoorw/INK-Browser-QA/issues/91), branch `work/ink-ui-final-checklist-css-001`, workpack `working/INK_UI_FINAL_CHECKLIST_CSS_BOUNDED_DEV_WORKPACK_v1.0.md`.
+- Evidence-only QA backlog: [issue #92](https://github.com/thedoorw/INK-Browser-QA/issues/92), branch `work/ink-ui-final-checklist-evidence-002`, workpack `working/INK_UI_FINAL_CHECKLIST_EVIDENCE_ONLY_QA_WORKPACK_v1.0.md`.
+
+UR owns both rechecks. Neither issue authorizes Core/global mutation or automatic central Runtime. `UI_COMPLETE = HOLD`.
