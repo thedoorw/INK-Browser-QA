@@ -30,7 +30,7 @@ rows=[...doc.querySelectorAll('.layer-row')];row=rows[0];row.querySelector('.lay
 const active=app.layer(),opacity=doc.querySelector('#layerOpacity');opacity.value='55';opacity.dispatchEvent(new win.Event('input',{bubbles:true}));opacity.dispatchEvent(new win.Event('change',{bubbles:true}));await sleep(60);
 record('K05 opacity route works',Math.abs(active.opacity-.55)<.001,{opacity:active.opacity});
 
-rows=[...doc.querySelectorAll('.layer-row')];const source=rows[0],target=rows[1],beforeOrder=ids(),dt=new win.DataTransfer(),tr=target.getBoundingClientRect();
+rows=[...doc.querySelectorAll('.layer-row')];const source=rows[0],target=rows[2],beforeOrder=ids(),dt=new win.DataTransfer(),tr=target.getBoundingClientRect();
 source.dispatchEvent(new win.DragEvent('dragstart',{bubbles:true,cancelable:true,dataTransfer:dt,clientX:tr.left+20,clientY:tr.top+4}));
 target.dispatchEvent(new win.DragEvent('dragover',{bubbles:true,cancelable:true,dataTransfer:dt,clientX:tr.left+20,clientY:tr.top+1}));
 await sleep(40);
@@ -46,7 +46,7 @@ const orderAfterDrop=[...afterOrder];app.history.undo();await sleep(50);const un
 record('AM12 reorder Undo Redo converge',JSON.stringify(undoOrder)===JSON.stringify(beforeOrder)&&JSON.stringify(redoOrder)===JSON.stringify(orderAfterDrop),{undoOrder,redoOrder});
 
 while(app.page().layers.length<28)app.addLayer();shell.open('layers');await sleep(80);
-const section=doc.querySelector('.inspector-section.active'),scrollBefore=section.scrollTop;section.scrollTop=section.scrollHeight;section.dispatchEvent(new win.Event('scroll'));await sleep(40);
+const section=doc.querySelector('#layersList'),scrollBefore=section.scrollTop;section.scrollTop=section.scrollHeight;section.dispatchEvent(new win.Event('scroll'));await sleep(40);
 record('K12 long layer list scroll works',section.scrollHeight>section.clientHeight&&section.scrollTop>scrollBefore,{scrollHeight:section.scrollHeight,clientHeight:section.clientHeight,scrollTop:section.scrollTop});
 
 app.history.clear();app.updateHistoryUI();const baseLayers=app.page().layers.length;app.addLayer();app.addLayer();app.addLayer();shell.open('history');await sleep(80);
