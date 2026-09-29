@@ -1,0 +1,8 @@
+{
+  "schema": "ink-ui-issue92-libraries-target",
+  "version": 1,
+  "target_sha": "182e73e071e20404c8394f6e883304b5c102b831",
+  "scope": "O03-O12 Libraries baseline reproduction / no central Runtime",
+  "central_runtime": false,
+  "run_generation": 1
+}
