@@ -3064,6 +3064,8 @@ kbd,
   .shell-navigator-preview canvas{display:block;width:100%;height:100%}
   .shell-navigator-proxy{position:absolute;border:1px solid #e53935;background:rgba(229,57,53,.035);cursor:grab;touch-action:none}
   .shell-navigator-proxy.dragging{cursor:grabbing}
+  .navigator-footer input[type="range"]{flex:1 1 auto;min-width:48px;height:18px;margin:0 2px;padding:0;accent-color:var(--ink-ui-accent)}
+  .navigator-footer input[type="range"]:focus-visible{outline:1px solid var(--ink-ui-focus);outline-offset:1px}
   .navigator-footer output{min-width:42px;text-align:center;font-size:var(--ui-type-sm)}
 
   .shell-pages-list{flex:1 1 auto;min-height:0;overflow:auto;padding:2px;background:var(--ink-ui-surface)}
