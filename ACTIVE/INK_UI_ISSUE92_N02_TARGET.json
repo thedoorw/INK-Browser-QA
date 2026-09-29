@@ -1,0 +1,7 @@
+{
+  "schema": "ink-ui-issue92-n02-target",
+  "version": 1,
+  "target_sha": "c636354c29f0dfc5e379088de169d083e3df4ce5",
+  "scope": "N02 Pages diagnostic only / no central Runtime",
+  "central_runtime": false
+}

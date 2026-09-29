@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>INK N02 Pages Diagnostic</title>
+<iframe id="f" src="/?fresh=1" style="width:1280px;height:800px;border:0"></iframe>
+<script type="module">
+const sleep=ms=>new Promise(r=>setTimeout(r,ms)),frame=document.querySelector('#f');
+const post=async evidence=>fetch('/__qa_result',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(evidence)});
+try{
+await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve()};});
+const w=frame.contentWindow,d=frame.contentDocument;for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+const app=w.INK_APP,shell=w.INK_WEB_SHELL;if(!app||!shell)throw new Error('INK unavailable');
+const visible=e=>{if(!e||e.hidden)return false;const s=w.getComputedStyle(e),r=e.getBoundingClientRect();return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0};
+const opened=shell.open('pages');await sleep(150);
+const section=d.querySelector('.pages-shell-panel'),list=d.querySelector('#shellPagesList'),add=d.querySelector('#shellPagesAdd');
+const before={opened,shell:shell.state(),appClass:d.querySelector('#app')?.className||'',sectionClass:section?.className||'',sectionVisible:visible(section),listVisible:visible(list),addVisible:visible(add),addBound:add?.dataset.bound||null,pages:app.doc.pages.length,rows:list?.querySelectorAll('[data-page-id]').length||0};
+add?.click();await sleep(300);
+const rows=[...d.querySelectorAll('#shellPagesList [data-page-id]')];
+const after={pages:app.doc.pages.length,rows:rows.length,rowVisible:rows.map(visible),activePageId:app.doc.activePageId,rowIds:rows.map(r=>r.dataset.pageId),shell:shell.state()};
+const pass=before.opened===true&&before.sectionVisible&&before.listVisible&&before.addVisible&&before.addBound==='true'&&after.pages===before.pages+1&&after.rows===before.rows+1&&after.rowVisible.every(Boolean);
+await post({schema:'INK-UI-ISSUE92-N02',version:1,status:pass?'PASS':'FAIL',checks:[{id:'N02',pass,detail:{before,after}}],summary:{total:1,passed:pass?1:0,failed:pass?0:1}});
+}catch(error){await post({schema:'INK-UI-ISSUE92-N02',version:1,status:'ERROR',checks:[],summary:{total:1,passed:0,failed:1},error:String(error?.stack||error)});}
+</script>
