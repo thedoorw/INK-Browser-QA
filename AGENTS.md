@@ -95,3 +95,15 @@ Follow:
 `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
 
 The branch plus GitHub evidence is the durable implementation record. Chat history is supplementary, not authoritative.
+
+## Current USER-direct UI mode
+
+The current UI reconstruction is governed by:
+`ACTIVE/INK_UI_USER_DIRECT_EXECUTION_DIRECTIVE_v1.0.md`
+
+This current Work Order overrides the normal UI role/gate language above for this lane:
+- do not require UR/DEV role separation;
+- do not require MR approval before each UI edit;
+- do not insert Runtime status/gates into the USER UI iteration list;
+- execute explicit USER UI instructions directly, commit them as rollback points, and return the visible result for inspection;
+- after USER declares the UI finished, return to technical reconciliation / MR final decision.
