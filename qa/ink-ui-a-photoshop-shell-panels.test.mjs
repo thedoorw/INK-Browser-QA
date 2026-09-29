@@ -39,7 +39,7 @@ assert.ok(css.includes('--ink-ui-bg-base:#E9E9E9') && css.includes('--ink-ui-sur
 
 assert.ok(webShell.includes("action === 'toggle-rulers'"), 'View > Rulers route missing');
 assert.ok(webShell.includes('app.switchPage?.') && webShell.includes('app.addPage?.') && webShell.includes('app.duplicatePage?.') && webShell.includes('app.deletePage?.'), 'Pages panel must route to existing document APIs');
-assert.ok(webShell.includes('const camera = app.page().camera') && webShell.includes('app.renderer?.render?.()'), 'Navigator panel must route to existing viewport authority');
+assert.ok(webShell.includes('app.renderer.viewportWorldBounds()') && webShell.includes('const camera = app?.page?.()?.camera') && webShell.includes('app.renderer?.render?.()'), 'Navigator panel must route through existing renderer viewport and page camera authority');
 assert.ok(webShell.includes('app.setColor?.'), 'Color panel must route to existing color authority');
 assert.ok(webShell.includes('data-panel-option="reset-width"') && webShell.includes('data-panel-option="close"'), 'panel options menu requires reset width and close');
 assert.ok(ink.includes("globalThis.INK_WEB_SHELL?.toggle?.('pages')"), 'desktop Pages shortcut/opener must converge on shell router');
