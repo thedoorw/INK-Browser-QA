@@ -1,9 +1,9 @@
 {
   "schema": "ink-ui-issue92-control-health-target",
   "version": 1,
-  "target_sha": "63e905fbd03fb51915f80c6cd5773045e483b822",
+  "target_sha": "d48b754f9b9964e7680c03afebc77a4f2b9b5154",
   "scope": "A03 AA10 AB08 AD11 AE08 AE10 AF09 exact-candidate source + live control health inventory / no central Runtime",
   "central_runtime": false,
-  "run_generation": 3,
-  "note": "Known anonymous color-chip/document-tab controls are real bound runtime controls and remain diagnostic; only unexpected anonymous visible controls fail identity."
+  "run_generation": 4,
+  "note": "Candidate v3 removes all remaining scalar $().forEach collection misuse; browser click-through is authoritative for current visible controls."
 }
