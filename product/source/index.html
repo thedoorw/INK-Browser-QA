@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <meta name="theme-color" content="#e7e7e7">
+  <meta name="theme-color" content="#535353">
   <meta name="application-name" content="INK v0.1 · Web">
   <meta name="description" content="INK — editable drawing with infinite creation space and print layout space">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'">
@@ -11,11 +11,11 @@
   <link rel="icon" href="assets/favicon.svg?v=0.1" type="image/svg+xml" sizes="32x32">
   <title>INK v0.1 · Web</title>
   <style id="inkFirstPaintStyle">
-    html,body{margin:0;background:#e7e7e7;color:#262626}
+    html,body{margin:0;background:#262626;color:#e8e8e8}
     body{min-height:100vh}
-    #app{background:#e7e7e7;color:#262626}
+    #app{background:#262626;color:#e8e8e8}
   </style>
-  <link rel="stylesheet" href="styles.css?v=0.1">
+  <link rel="stylesheet" href="styles.css?v=0.1-assembly1">
 </head>
 <body data-ink-first-paint="workstation">
 <svg class="svg-sprite" aria-hidden="true">
@@ -70,7 +70,7 @@
     <div class="menu-app-mark" aria-label="INK v0.1 · Web"><img class="brand-source-mark" data-brand-logo src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong data-brand-app-name>INK</strong><small>0.1</small></div>
     <nav id="applicationMenus" class="application-menus" aria-label="主選單">
       <div class="application-menu application-file-menu" data-application-menu="file">
-        <button id="fileMenuToggle" type="button" data-application-menu-trigger="file" aria-haspopup="menu" aria-expanded="false">檔案</button>
+        <button id="fileMenuToggle" type="button" data-application-menu-trigger="file" aria-haspopup="menu" aria-expanded="false">File</button>
         <div id="fileMenu" class="application-command-menu" role="menu" aria-label="檔案" data-ui-home="file" data-ui-route="PRIMARY_HOME" hidden>
           <button type="button" role="menuitem" data-file-command="new"><span>新增</span><kbd>Ctrl+N</kbd></button>
           <button type="button" role="menuitem" data-file-command="open"><span>開啟</span><kbd>Ctrl+O</kbd></button>
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="application-menu" data-application-menu="edit">
-        <button type="button" data-application-menu-trigger="edit" aria-haspopup="menu" aria-expanded="false">編輯</button>
+        <button type="button" data-application-menu-trigger="edit" aria-haspopup="menu" aria-expanded="false">Edit</button>
         <div id="editMenu" class="application-command-menu" role="menu" aria-label="編輯" hidden>
           <button type="button" role="menuitem" data-shell-action="undo"><span>復原</span><kbd>Ctrl+Z</kbd></button>
           <button type="button" role="menuitem" data-shell-action="redo"><span>重做</span><kbd>Ctrl+Shift+Z</kbd></button>
@@ -89,43 +89,43 @@
         </div>
       </div>
       <div class="application-menu" data-application-menu="image">
-        <button type="button" data-application-menu-trigger="image" aria-haspopup="menu" aria-expanded="false">影像</button>
+        <button type="button" data-application-menu-trigger="image" aria-haspopup="menu" aria-expanded="false">Image</button>
         <div id="imageMenu" class="application-command-menu" role="menu" aria-label="影像" hidden>
           <button type="button" role="menuitem" data-shell-action="canvas-settings"><span>畫布設定…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="layer">
-        <button type="button" data-application-menu-trigger="layer" aria-haspopup="menu" aria-expanded="false">圖層</button>
+        <button type="button" data-application-menu-trigger="layer" aria-haspopup="menu" aria-expanded="false">Layer</button>
         <div id="layerMenu" class="application-command-menu" role="menu" aria-label="圖層" hidden>
           <button type="button" role="menuitem" data-shell-panel="layers"><span>圖層面板</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="type">
-        <button type="button" data-application-menu-trigger="type" aria-haspopup="menu" aria-expanded="false">文字</button>
+        <button type="button" data-application-menu-trigger="type" aria-haspopup="menu" aria-expanded="false">Type</button>
         <div id="typeMenu" class="application-command-menu" role="menu" aria-label="文字" hidden>
           <button type="button" role="menuitem" data-shell-panel="properties"><span>文字屬性</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="select">
-        <button type="button" data-application-menu-trigger="select" aria-haspopup="menu" aria-expanded="false">選取</button>
+        <button type="button" data-application-menu-trigger="select" aria-haspopup="menu" aria-expanded="false">Select</button>
         <div id="selectMenu" class="application-command-menu" role="menu" aria-label="選取" hidden>
           <button type="button" role="menuitem" data-shell-panel="properties"><span>選取屬性</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="filter">
-        <button type="button" data-application-menu-trigger="filter" aria-haspopup="menu" aria-expanded="false">濾鏡</button>
+        <button type="button" data-application-menu-trigger="filter" aria-haspopup="menu" aria-expanded="false">Filter</button>
         <div id="filterMenu" class="application-command-menu" role="menu" aria-label="濾鏡" hidden>
-          <button type="button" role="menuitem" disabled><span>命令控制由 UI-B 配線</span></button>
+          
         </div>
       </div>
       <div class="application-menu" data-application-menu="object">
-        <button type="button" data-application-menu-trigger="object" aria-haspopup="menu" aria-expanded="false">物件</button>
+        <button type="button" data-application-menu-trigger="object" aria-haspopup="menu" aria-expanded="false">Object</button>
         <div id="objectMenu" class="application-command-menu" role="menu" aria-label="物件" hidden>
           <button type="button" role="menuitem" data-shell-panel="properties"><span>物件屬性</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="view">
-        <button type="button" data-application-menu-trigger="view" aria-haspopup="menu" aria-expanded="false">檢視</button>
+        <button type="button" data-application-menu-trigger="view" aria-haspopup="menu" aria-expanded="false">View</button>
         <div id="viewMenu" class="application-command-menu" role="menu" aria-label="檢視" hidden>
           <button type="button" role="menuitem" data-shell-action="fit-current"><span>符合目前內容</span><kbd>F</kbd></button>
           <button type="button" role="menuitemcheckbox" data-shell-action="toggle-rulers" aria-checked="false"><span>標尺</span></button>
@@ -134,10 +134,10 @@
         </div>
       </div>
       <div class="application-menu application-window-menu" data-application-menu="window">
-        <button id="windowMenuToggle" type="button" data-application-menu-trigger="window" aria-haspopup="menu" aria-expanded="false">視窗</button>
+        <button id="windowMenuToggle" type="button" data-application-menu-trigger="window" aria-haspopup="menu" aria-expanded="false">Window</button>
       </div>
       <div class="application-menu" data-application-menu="help">
-        <button type="button" data-application-menu-trigger="help" aria-haspopup="menu" aria-expanded="false">說明</button>
+        <button type="button" data-application-menu-trigger="help" aria-haspopup="menu" aria-expanded="false">Help</button>
         <div id="helpMenu" class="application-command-menu" role="menu" aria-label="說明" hidden>
           <button type="button" role="menuitem" data-shell-action="about"><span>關於 INK 工作區</span></button>
         </div>
@@ -743,9 +743,9 @@
   <input id="calibrationProfileInput" type="file" accept=".json,.inkprofile" hidden>
   <input id="referenceEvidenceInput" type="file" accept="application/json,.json" hidden>
 </div>
-<script src="web-shell.js?v=0.1"></script>
-<script src="ui/branding-settings.js?v=0.1"></script>
-<script type="module" src="src/ink.js?v=0.1"></script>
+<script src="web-shell.js?v=0.1-assembly1"></script>
+<script src="ui/branding-settings.js?v=0.1-assembly1"></script>
+<script type="module" src="src/ink.js?v=0.1-assembly1"></script>
 
 </body>
 </html>
