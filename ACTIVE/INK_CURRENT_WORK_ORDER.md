@@ -8,7 +8,7 @@ DATE: 2026-09-28
 
 ```text
 PROGRAM = INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
-UI_OWNER = UR / FINAL_FULL_CHECKLIST_AUDIT
+UI_OWNER = UR / FINAL_CHECKLIST_CLOSURE
 MR_OWNER = CORE / TECHNICAL / FUTURE_WORK
 
 TECHNICAL_BASELINE = CLOSED / P1_RUNTIME_PASS
@@ -27,7 +27,7 @@ UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
 ACTIVE_TASK = INK-UI-FINAL-CHECKLIST-CLOSURE-001
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_FINAL_CHECKLIST_AUDIT_DIRECTIVE_v1.0.md
-ACTIVE_UI_BRANCH = TO_BE_NAMED_BY_UR_FOR_BOUNDED_CLOSURE
+ACTIVE_UI_BRANCH = work/ink-ui-final-checklist-css-001 + evidence-only closure branch
 
 UI_B = UR_PASS / PROMOTED
 UI_B_PROMOTION_PR = 84
@@ -123,7 +123,7 @@ UI_RECONCILIATION_FINAL_MR_REVIEW = working/INK_UI_FULL_CAPABILITY_RECONCILIATIO
 ## Current gate
 
 ```text
-CURRENT_GATE = FINAL_CHECKLIST_FINDINGS_CLOSURE
+CURRENT_GATE = PR93_TARGETED_BROWSER_EVIDENCE + EVIDENCE_ONLY_CLOSURE
 UI_A = MR_PASS / UR_PASS / PROMOTED
 UI_B = UR_PASS / PROMOTED
 UI_C = UR_PASS / PROMOTED
@@ -133,6 +133,7 @@ UI_C_PRODUCT_SHA = 77ee44c94a848588aceeb7797fa8aa737c69b248
 PRODUCT_SOURCE_EQUIVALENCE = PASS
 DEV_MAY_MODIFY_UI = BOUNDED_CSS_FINDINGS_ONLY / WORKPACK_IN_WORKING
 OPEN_FINAL_RUNTIME_BLOCKERS = 0
+RUNTIME_DEBT_AFTER_NEXT_PRODUCT_PROMOTION = DEFERRED_TO_FINAL_CHECKLIST_BATCH
 UR_FULL_CHECKLIST_AUDIT = MR_PASS_AS_AUDIT_RECORD
 CHECKLIST_TOTAL = 592
 CHECKLIST_PASS = 406
@@ -147,47 +148,37 @@ FORMAT_VERSION = 4
 
 ## Next action
 
-MR review:
-`working/INK_UI_FINAL_FULL_CHECKLIST_MR_REVIEW_v1.0.md`
+MR CSS review:
+`working/INK_UI_FINAL_CHECKLIST_CSS_MR_REVIEW_v1.0.md`
 
-UR audit:
-`working/INK_UI_FINAL_FULL_CHECKLIST_UR_AUDIT_v1.0.md`
-
-PR #89 audit record:
-`MERGED / ee81475fafde2b8eaf082cd64b0a3c7e090f240b`
-
-Current disposition:
-
+Current:
 ```text
-AUDIT_RECORD = MR_PASS
 TOTAL = 592
-PASS = 384
-FAIL = 207
+PASS = 406
+FAIL = 185
 N_A = 1
 UNREVIEWED = 0
-OPEN = 207
+OPEN = 185
 USER_ACCEPTANCE = 10 / PENDING
+
+PR_93 = DRAFT / HOLD_FOR_EXACT_CANDIDATE_BROWSER_EVIDENCE
+PR_94 = MERGED / a0cb94de9fe56b23f56faa852bbd2f0e183700f8
+ISSUE_92 = ACTIVE / EVIDENCE_ONLY_QA
 UI_COMPLETE = HOLD
 ```
 
-UR now owns bounded checklist closure.
+UR next:
+- obtain exact candidate `c0c3ddacd07b3022685990352b93335a8a6bd7eb` browser evidence at 1280×1024 and 960×800;
+- inspect first paint, expanded panel, stacking/splitter, scrolling, hover/focus/disabled, brush flyout/tool labels, status/document chrome and Light-theme contrast;
+- recheck AB02/AO03 and adjacent affected IDs;
+- reproduce before modifying any additional product behavior;
+- keep issue #92 evidence-only unless a real defect is established.
 
-Important:
-- do not treat 207 FAIL as 207 product bugs;
-- confirmed product/UI-health mismatch currently = AB02 only;
-- stale QA contract = AF08;
-- most remaining FAIL items are missing targeted evidence/QA and must be proved before product mutation;
-- USER items remain separate and may not be self-passed.
-
-Closure order:
-1. evidence/QA closure and reproduced UI-only defects;
-2. bounded DEV correction only where an actual defect is established;
-3. STOP → MR if Core/global authority is required;
-4. UR recheck affected IDs;
-5. USER acceptance set after AI/QA-verifiable findings are closed;
-6. UI_COMPLETE only at FAIL=0 / OPEN=0 / UNREVIEWED=0 and USER acceptance complete.
-
-Final central Runtime remains PASS for unchanged product bytes. Revalidate only if resulting product changes require it.
+MR Runtime decision:
+- no central Runtime now;
+- if PR #93 passes targeted browser QA, it may be promoted with Runtime debt deferred;
+- after ALL checklist-driven product mutations finish, run ONE new final exact-SHA integrated Runtime on final product bytes before `UI_COMPLETE`;
+- previous final Runtime remains valid only while product bytes remain unchanged.
 
 ## UI-A MR technical review checkpoint
 
