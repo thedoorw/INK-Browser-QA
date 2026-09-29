@@ -140,6 +140,35 @@ Program completion guardrail:
 
 `governance/INK_PROGRAM_COMPLETION_GATE_STANDARD_v0.1.md`
 
+## Mandatory outside-in product inspection
+
+INK must be inspected as an assembled product from the USER-visible exterior inward, not as a pile of internal parts.
+
+Required order:
+
+```text
+LOOK
+→ HTML / post-Runtime DOM
+→ effective CSS
+→ INTERACTION
+→ FUNCTION
+→ RENDER
+→ CORE / DATA
+→ CAPABILITY
+→ END-TO-END WORKFLOW
+→ USER
+```
+
+Do not use capability counts, source registries, Runtime PASS, or checklist totals to close an unresolved outer product layer.
+
+Durable standard:
+
+`governance/INK_PRODUCT_OUTSIDE_IN_INSPECTION_STANDARD_v0.1.md`
+
+UI assembly evidence rule:
+
+`governance/INK_UI_HTML_CSS_ASSEMBLY_VERIFICATION_RULE_v0.1.md`
+
 ## New-window read order
 
 All roles:
