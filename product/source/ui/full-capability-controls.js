@@ -127,14 +127,18 @@ export function installFullCapabilityControls(app){
     let flyout=$('#uiBToolFlyout');if(flyout)return flyout;
     flyout=htmlNode('<div id="uiBToolFlyout" class="brush-family-popover elevated-panel ui-b-tool-flyout" role="menu" hidden><div class="brush-family-list"></div></div>');
     $('.app')?.appendChild(flyout);
-    flyout.addEventListener('click',event=>{const button=event.target.closest('[data-ui-b-tool]');if(!button)return;activateTool(button.dataset.uiBTool);flyout.hidden=true;});
+    flyout.addEventListener('click',event=>{const button=event.target.closest('[data-ui-b-tool]');if(!button)return;activateTool(button.dataset.uiBTool);flyout.hidden=true;document.querySelector('[data-ui-b-tool-group][aria-expanded="true"]')?.setAttribute('aria-expanded','false');});
     window.addEventListener('pointerdown',event=>{if(!flyout.hidden&&!flyout.contains(event.target)&&!event.target.closest('[data-ui-b-tool-group]'))flyout.hidden=true;});
     return flyout;
   }
   function openToolGroup(group,anchor){
     const flyout=ensureToolFlyout(),list=$('.brush-family-list',flyout);
     list.innerHTML=group.tools.map(([id,label])=>'<button type="button" class="subtool-button" data-ui-b-tool="'+esc(id)+'"><span class="ui-b-glyph" aria-hidden="true">•</span><span><strong>'+esc(label)+'</strong></span></button>').join('');
-    const rect=anchor.getBoundingClientRect();flyout.style.left=Math.max(40,rect.right+2)+'px';flyout.style.top=Math.max(61,rect.top)+'px';flyout.hidden=false;
+    const rect=anchor.getBoundingClientRect();
+    flyout.style.left=(app.isMobile()?Math.max(8,Math.min(innerWidth-204,rect.left)):Math.max(40,rect.right+2))+'px';
+    flyout.style.top=(app.isMobile()?Math.max(58,Math.min(innerHeight-320,rect.top-260)):Math.max(61,rect.top))+'px';flyout.hidden=false;
+    document.querySelectorAll('[data-ui-b-tool-group][aria-expanded="true"]').forEach(node=>node.setAttribute('aria-expanded','false'));
+    anchor.setAttribute('aria-expanded','true');
   }
   function installTools(){
     const rail=$('.tool-group');if(!rail)return;
@@ -150,6 +154,7 @@ export function installFullCapabilityControls(app){
       existingLasso.classList.add('tool-stack');existingLasso.dataset.uiBToolGroup='lasso';existingLasso.setAttribute('aria-haspopup','menu');
       if(!$('.stack-corner',existingLasso))existingLasso.appendChild(htmlNode('<span class="stack-corner" aria-hidden="true"></span>'));
       existingLasso.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(lassoGroup,existingLasso);});
+      existingLasso.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();openToolGroup(lassoGroup,existingLasso);},true);
     }
     for(const [groupId,selector] of [['shape','[data-tool="shape"]'],['text','[data-tool="text"]']]){
       const existing=$(selector),group=UI_B_TOOL_GROUPS.find(item=>item.id===groupId);
@@ -157,6 +162,7 @@ export function installFullCapabilityControls(app){
       existing.classList.add('tool-stack');existing.dataset.uiBToolGroup=groupId;existing.setAttribute('aria-haspopup','menu');
       if(!$('.stack-corner',existing))existing.appendChild(htmlNode('<span class="stack-corner" aria-hidden="true"></span>'));
       existing.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(group,existing);});
+      existing.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();openToolGroup(group,existing);},true);
       let timer=null;
       existing.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,existing),420);});
       ['pointerup','pointercancel','pointerleave'].forEach(type=>existing.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
@@ -165,11 +171,19 @@ export function installFullCapabilityControls(app){
     for(const group of UI_B_TOOL_GROUPS.filter(group=>!['draw','lasso','shape','text'].includes(group.id))){
       if($('[data-ui-b-tool-group="'+group.id+'"]'))continue;
       const node=createToolButton(group);toolHost.insertBefore(node,insertion);
-      node.addEventListener('click',()=>activateTool(state.lastToolByGroup.get(group.id)||group.primary));
+      node.addEventListener('click',()=>openToolGroup(group,node));
+      node.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowDown'){event.preventDefault();openToolGroup(group,node);}});
       node.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(group,node);});
       let timer=null;
       node.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,node),420);});
       ['pointerup','pointercancel','pointerleave'].forEach(type=>node.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
+    }
+    const mobileHost=$('#mobileToolSheet .mobile-tool-grid');
+    for(const group of UI_B_TOOL_GROUPS){
+      if(!mobileHost||mobileHost.querySelector('[data-ui-b-mobile-group="'+group.id+'"]'))continue;
+      const node=htmlNode('<button type="button" class="tool-button ui-b-mobile-group" data-ui-b-mobile-group="'+esc(group.id)+'" aria-haspopup="menu" aria-expanded="false"><span class="tool-icon ui-b-glyph" aria-hidden="true">'+esc(group.icon)+'</span><span class="tool-label">'+esc(group.label)+'</span></button>');
+      mobileHost.appendChild(node);
+      node.addEventListener('click',()=>openToolGroup(group,node));
     }
     if(existingDraw){
       const pop=$('#brushFamilyPopover .brush-family-list');
@@ -207,6 +221,7 @@ export function installFullCapabilityControls(app){
   }
 
   function activateTool(tool){
+    app.openMobileToolSheet?.(false);
     state.activeCapabilityTool=tool;
     for(const group of UI_B_TOOL_GROUPS){if(group.tools.some(([id])=>id===tool))state.lastToolByGroup.set(group.id,tool);}
     if(tool.startsWith('shape:')){
@@ -296,13 +311,17 @@ export function installFullCapabilityControls(app){
   function mutateObject(label,found,fn){if(!found)return;app.history.pushScoped(label,[objectTarget(app,found)],()=>fn(found.object,found));app.spatialDirty=true;app.refreshAll();app.renderer.render();}
 
   function addAdjustment(type){
-    const found=selectedImage();if(!found)return;
-    mutateObject('新增 Adjustment：'+type,found,object=>{object.adjustments=object.adjustments||[];object.adjustments.push(createAdjustment(type,ADJUSTMENT_DEFAULTS[type]||{}));});
+    const found=selectedFound(app,object=>object.type==='image'),target=found?.object||app.layer();
+    if(!target)return;
+    app.history.pushScoped('新增 Adjustment：'+type,[found?app.objectPath(found):app.layerPath(target)],()=>{target.adjustments=target.adjustments||[];target.adjustments.push(createAdjustment(type,ADJUSTMENT_DEFAULTS[type]||{}));});
+    app.refreshAll();app.renderer.render();
     refreshPanels();toast('Adjustment：'+type);
   }
   function addFilter(type,params=null){
-    const found=selectedImage();if(!found)return;
-    mutateObject('新增 Filter：'+type,found,object=>{object.filterStack=object.filterStack||[];object.filterStack.push(createFilter(type,params||FILTER_DEFAULTS[type]||{}));});
+    const found=selectedFound(app,object=>object.type==='image'),target=found?.object||app.layer();
+    if(!target)return;
+    app.history.pushScoped('新增 Filter：'+type,[found?app.objectPath(found):app.layerPath(target)],()=>{target.filterStack=target.filterStack||[];target.filterStack.push(createFilter(type,params||FILTER_DEFAULTS[type]||{}));});
+    app.refreshAll();app.renderer.render();
     refreshPanels();toast('Filter：'+type);
   }
   function addLayerEffect(type,params){
@@ -338,7 +357,7 @@ export function installFullCapabilityControls(app){
   }
 
   function refreshPanels(){
-    const found=selectedFound(app),object=found?.object;
+    const found=selectedFound(app),object=found?.object,stackTarget=object?.type==='image'?object:app.layer();
     const blend=$('#uiBBlendMode');if(blend)blend.value=object?.blendMode||'source-over';
     const readout=$('#uiBRasterStateReadout');
     if(readout){
@@ -347,13 +366,14 @@ export function installFullCapabilityControls(app){
     }
     const sourceReadout=$('#uiBRasterSourceReadout');if(sourceReadout)sourceReadout.textContent=object?.rasterState?.source?'Source: '+[object.rasterState.source.format,object.rasterState.source.compression].filter(Boolean).join(' · '):(object?.sourceId?'Reusable source: '+object.sourceId:'');
     const vectorReadout=$('#uiBVectorAppearanceReadout');if(vectorReadout)vectorReadout.textContent=object?.type==='path'?(object.fillAppearance?.type?('Fill: '+object.fillAppearance.type):'Path fill: ordinary'):'Select a Path';
-    const filterStack=$('#uiBFilterStack');if(filterStack)filterStack.innerHTML=(object?.filterStack||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><span class="ui-b-stack-actions"><button title="上移" data-ui-b-filter-move="'+index+':-1">↑</button><button title="下移" data-ui-b-filter-move="'+index+':1">↓</button><button title="移除" data-ui-b-filter-remove="'+index+'">×</button></span></div>').join('');
-    filterStack?.querySelectorAll('[data-ui-b-filter-remove]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const index=Number(button.dataset.uiBFilterRemove);mutateObject('移除 Filter',current,obj=>obj.filterStack.splice(index,1));}));
-    filterStack?.querySelectorAll('[data-ui-b-filter-move]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const [rawIndex,rawDelta]=button.dataset.uiBFilterMove.split(':').map(Number),target=clamp(rawIndex+rawDelta,0,(current.object.filterStack||[]).length-1);if(target===rawIndex)return;mutateObject('移動 Filter',current,obj=>{const [item]=obj.filterStack.splice(rawIndex,1);obj.filterStack.splice(target,0,item);});}));
+    const filterStack=$('#uiBFilterStack');if(filterStack)filterStack.innerHTML=(stackTarget?.filterStack||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><span class="ui-b-stack-actions"><button title="上移" data-ui-b-filter-move="'+index+':-1">↑</button><button title="下移" data-ui-b-filter-move="'+index+':1">↓</button><button title="移除" data-ui-b-filter-remove="'+index+'">×</button></span></div>').join('');
+    const mutateStack=(label,operation)=>{const current=selectedFound(app,item=>item.type==='image'),target=current?.object||app.layer();if(!target)return;app.history.pushScoped(label,[current?app.objectPath(current):app.layerPath(target)],()=>operation(target));app.refreshAll();app.renderer.render();};
+    filterStack?.querySelectorAll('[data-ui-b-filter-remove]').forEach(button=>button.addEventListener('click',()=>{const index=Number(button.dataset.uiBFilterRemove);mutateStack('移除 Filter',target=>target.filterStack.splice(index,1));}));
+    filterStack?.querySelectorAll('[data-ui-b-filter-move]').forEach(button=>button.addEventListener('click',()=>{const [rawIndex,rawDelta]=button.dataset.uiBFilterMove.split(':').map(Number),target=clamp(rawIndex+rawDelta,0,(stackTarget?.filterStack||[]).length-1);if(target===rawIndex)return;mutateStack('移動 Filter',object=>{const [item]=object.filterStack.splice(rawIndex,1);object.filterStack.splice(target,0,item);});}));
     const effectStack=$('#uiBEffectStack');if(effectStack)effectStack.innerHTML=(object?.effects||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>fx · '+esc(item.type)+'</span><button data-ui-b-effect-remove="'+index+'">×</button></div>').join('');
     effectStack?.querySelectorAll('[data-ui-b-effect-remove]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const index=Number(button.dataset.uiBEffectRemove);mutateObject('移除 Effect',current,obj=>obj.effects.splice(index,1));}));
-    const adjustmentStack=$('#uiBAdjustmentStack');if(adjustmentStack)adjustmentStack.innerHTML=(object?.adjustments||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><button data-ui-b-adjustment-remove="'+index+'">×</button></div>').join('');
-    adjustmentStack?.querySelectorAll('[data-ui-b-adjustment-remove]').forEach(button=>button.addEventListener('click',()=>{const current=selectedImage();if(!current)return;const index=Number(button.dataset.uiBAdjustmentRemove);mutateObject('移除 Adjustment',current,obj=>obj.adjustments.splice(index,1));}));
+    const adjustmentStack=$('#uiBAdjustmentStack');if(adjustmentStack)adjustmentStack.innerHTML=(stackTarget?.adjustments||[]).map((item,index)=>'<div class="ui-b-stack-row"><span>'+esc(item.type)+'</span><button data-ui-b-adjustment-remove="'+index+'">×</button></div>').join('');
+    adjustmentStack?.querySelectorAll('[data-ui-b-adjustment-remove]').forEach(button=>button.addEventListener('click',()=>{const index=Number(button.dataset.uiBAdjustmentRemove);mutateStack('移除 Adjustment',target=>target.adjustments.splice(index,1));}));
     refreshChannels();
   }
 
@@ -626,7 +646,7 @@ export function installFullCapabilityControls(app){
     app.refreshExportUI=function(){baseRefresh();const format=$('#exportFormat').value;if(['psd','tiff','exr','psb','raw'].includes(format)){const summary=$('#exportSummary');if(format==='psb')summary.textContent='PSB：需要已註冊的格式 adapter';else if(format==='raw')summary.textContent='RAW export 目前不可用';else summary.textContent=format.toUpperCase()+'：輸出目前選取的 Raster State';}};
     app.runExport=async function(){
       const format=$('#exportFormat').value;if(!['psd','tiff','exr','psb','raw'].includes(format))return baseRun();
-      if(format==='raw')throw new Error('RAW export is not available in the current format contract');
+      if(format==='raw')throw new Error('RAW export is not supported in the current format contract');
       if(format==='psb')throw new Error('PSB encode requires a registered adapter');
       const found=selectedRasterImage();if(!found)return;
       try{const bytes=app.exportImageFormat(format.toUpperCase(),found.object);downloadBytes(app,bytes,fileSafe(app.doc.title)+'.'+format);$('#exportDialog').hidden=true;toast(format.toUpperCase()+' 已建立');}catch(error){toast('匯出失敗：'+error.message,3600);}

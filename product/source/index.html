@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-  <meta name="theme-color" content="#535353">
+  <meta name="theme-color" content="#e7e7e7">
   <meta name="application-name" content="INK v0.1 · Web">
   <meta name="description" content="INK — editable drawing with infinite creation space and print layout space">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'self'">
@@ -11,11 +11,11 @@
   <link rel="icon" href="assets/favicon.svg?v=0.1" type="image/svg+xml" sizes="32x32">
   <title>INK v0.1 · Web</title>
   <style id="inkFirstPaintStyle">
-    html,body{margin:0;background:#262626;color:#e8e8e8}
+    html,body{margin:0;background:#e7e7e7;color:#262626}
     body{min-height:100vh}
-    #app{background:#262626;color:#e8e8e8}
+    #app{background:#e7e7e7;color:#262626}
   </style>
-  <link rel="stylesheet" href="styles.css?v=0.1-assembly1">
+  <link rel="stylesheet" href="styles.css?v=0.1-assembly2">
 </head>
 <body data-ink-first-paint="workstation">
 <svg class="svg-sprite" aria-hidden="true">
@@ -70,76 +70,86 @@
     <div class="menu-app-mark" aria-label="INK v0.1 · Web"><img class="brand-source-mark" data-brand-logo src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong data-brand-app-name>INK</strong><small>0.1</small></div>
     <nav id="applicationMenus" class="application-menus" aria-label="主選單">
       <div class="application-menu application-file-menu" data-application-menu="file">
-        <button id="fileMenuToggle" type="button" data-application-menu-trigger="file" aria-haspopup="menu" aria-expanded="false">File</button>
+        <button id="fileMenuToggle" type="button" data-application-menu-trigger="file" aria-haspopup="menu" aria-expanded="false">檔案</button>
         <div id="fileMenu" class="application-command-menu" role="menu" aria-label="檔案" data-ui-home="file" data-ui-route="PRIMARY_HOME" hidden>
           <button type="button" role="menuitem" data-file-command="new"><span>新增</span><kbd>Ctrl+N</kbd></button>
           <button type="button" role="menuitem" data-file-command="open"><span>開啟</span><kbd>Ctrl+O</kbd></button>
           <button type="button" role="menuitem" data-file-command="save"><span>儲存</span><kbd>Ctrl+S</kbd></button>
           <span class="application-menu-separator" aria-hidden="true"></span>
           <button type="button" role="menuitem" data-file-command="export"><span>匯出</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="file-external-open" data-ui-b-command="external-open"><span>開啟／匯入外部影像…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="file-import-reference" data-ui-b-command="reference-import"><span>匯入 Reference…</span></button><button type="button" role="menuitem" data-ui-b-contribution="file-import-svg" data-ui-b-command="svg-import"><span>匯入 SVG…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="file-print" data-ui-b-command="print"><span>列印…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="edit">
-        <button type="button" data-application-menu-trigger="edit" aria-haspopup="menu" aria-expanded="false">Edit</button>
+        <button type="button" data-application-menu-trigger="edit" aria-haspopup="menu" aria-expanded="false">編輯</button>
         <div id="editMenu" class="application-command-menu" role="menu" aria-label="編輯" hidden>
           <button type="button" role="menuitem" data-shell-action="undo"><span>復原</span><kbd>Ctrl+Z</kbd></button>
           <button type="button" role="menuitem" data-shell-action="redo"><span>重做</span><kbd>Ctrl+Shift+Z</kbd></button>
           <span class="application-menu-separator" aria-hidden="true"></span>
           <button type="button" role="menuitem" data-shell-action="branding-settings"><span>Preferences / Settings…</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="edit-duplicate" data-ui-b-command="duplicate"><span>複製</span><kbd>Ctrl+D</kbd></button><button type="button" role="menuitem" data-ui-b-contribution="edit-delete" data-ui-b-command="delete"><span>刪除</span><kbd>Delete</kbd></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="edit-settings" data-ui-b-command="canvas-settings"><span>偏好設定／畫布設定…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="image">
-        <button type="button" data-application-menu-trigger="image" aria-haspopup="menu" aria-expanded="false">Image</button>
+        <button type="button" data-application-menu-trigger="image" aria-haspopup="menu" aria-expanded="false">影像</button>
         <div id="imageMenu" class="application-command-menu" role="menu" aria-label="影像" hidden>
           <button type="button" role="menuitem" data-shell-action="canvas-settings"><span>畫布設定…</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="image-mode-8" data-ui-b-command="bit-depth:8"><span>模式：8-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-16" data-ui-b-command="bit-depth:16"><span>模式：16-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-32" data-ui-b-command="bit-depth:32"><span>模式：32-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-rgb" data-ui-b-command="color-mode:RGB"><span>色彩模式：RGB</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-cmyk" data-ui-b-command="color-mode:CMYK"><span>色彩模式：CMYK</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-lab" data-ui-b-command="color-mode:Lab"><span>色彩模式：Lab</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-multi" data-ui-b-command="color-mode:Multichannel"><span>色彩模式：Multichannel</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-profile" data-ui-b-command="color-profile"><span>Color Profile…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-adjustments" data-ui-b-command="panel:adjustments"><span>Adjustments…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-crop" data-ui-b-command="image-crop"><span>裁切選取影像…</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-resize" data-ui-b-command="image-resize"><span>影像尺寸…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="layer">
-        <button type="button" data-application-menu-trigger="layer" aria-haspopup="menu" aria-expanded="false">Layer</button>
+        <button type="button" data-application-menu-trigger="layer" aria-haspopup="menu" aria-expanded="false">圖層</button>
         <div id="layerMenu" class="application-command-menu" role="menu" aria-label="圖層" hidden>
           <button type="button" role="menuitem" data-shell-panel="layers"><span>圖層面板</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="layer-new" data-ui-b-command="layer-new"><span>新增圖層</span></button><button type="button" role="menuitem" data-ui-b-contribution="layer-duplicate" data-ui-b-command="layer-duplicate"><span>複製圖層</span></button><button type="button" role="menuitem" data-ui-b-contribution="layer-delete" data-ui-b-command="layer-delete"><span>刪除圖層</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="layer-group" data-ui-b-command="group"><span>群組選取</span></button><button type="button" role="menuitem" data-ui-b-contribution="layer-ungroup" data-ui-b-command="ungroup"><span>解散群組</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="layer-mask-add" data-ui-b-command="mask-add"><span>建立 Mask</span></button><button type="button" role="menuitem" data-ui-b-contribution="layer-mask-select" data-ui-b-command="select-and-mask"><span>Select and Mask…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="layer-effects" data-ui-b-command="layer-effects"><span>Layer Effects…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="type">
-        <button type="button" data-application-menu-trigger="type" aria-haspopup="menu" aria-expanded="false">Type</button>
+        <button type="button" data-application-menu-trigger="type" aria-haspopup="menu" aria-expanded="false">文字</button>
         <div id="typeMenu" class="application-command-menu" role="menu" aria-label="文字" hidden>
           <button type="button" role="menuitem" data-shell-panel="properties"><span>文字屬性</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="type-horizontal" data-ui-b-command="text-mode:horizontal-tb"><span>水平／段落文字</span></button><button type="button" role="menuitem" data-ui-b-contribution="type-vertical-rl" data-ui-b-command="text-mode:vertical-rl"><span>垂直文字（右至左）</span></button><button type="button" role="menuitem" data-ui-b-contribution="type-vertical-lr" data-ui-b-command="text-mode:vertical-lr"><span>垂直文字（左至右）</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="type-path" data-ui-b-command="text-on-path"><span>文字沿路徑…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="select">
-        <button type="button" data-application-menu-trigger="select" aria-haspopup="menu" aria-expanded="false">Select</button>
+        <button type="button" data-application-menu-trigger="select" aria-haspopup="menu" aria-expanded="false">選取</button>
         <div id="selectMenu" class="application-command-menu" role="menu" aria-label="選取" hidden>
           <button type="button" role="menuitem" data-shell-panel="properties"><span>選取屬性</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="select-all" data-ui-b-command="select-all"><span>全部選取</span><kbd>Ctrl+A</kbd></button><button type="button" role="menuitem" data-ui-b-contribution="select-clear" data-ui-b-command="select-clear"><span>取消選取</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="select-polygon" data-ui-b-command="tool:polygonalLasso"><span>多邊形套索</span></button><button type="button" role="menuitem" data-ui-b-contribution="select-magnetic" data-ui-b-command="tool:magneticLasso"><span>磁性套索</span></button><button type="button" role="menuitem" data-ui-b-contribution="select-quick" data-ui-b-command="tool:quickSelection"><span>快速選取</span></button><button type="button" role="menuitem" data-ui-b-contribution="select-magic" data-ui-b-command="tool:magicWand"><span>魔術棒</span></button><button type="button" role="menuitem" data-ui-b-contribution="select-object" data-ui-b-command="tool:objectSelection"><span>物件選取</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="select-refine" data-ui-b-command="select-and-mask"><span>Select and Mask…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="filter">
-        <button type="button" data-application-menu-trigger="filter" aria-haspopup="menu" aria-expanded="false">Filter</button>
+        <button type="button" data-application-menu-trigger="filter" aria-haspopup="menu" aria-expanded="false">濾鏡</button>
         <div id="filterMenu" class="application-command-menu" role="menu" aria-label="濾鏡" hidden>
-          
+          <button type="button" role="menuitem" disabled><span>命令控制由 UI-B 配線</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="filter-gallery" data-ui-b-command="filter-gallery"><span>Filter Gallery…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-gaussian" data-ui-b-command="filter:gaussianBlur"><span>Gaussian Blur…</span></button><button type="button" role="menuitem" data-ui-b-contribution="filter-motion" data-ui-b-command="filter:motionBlur"><span>Motion Blur…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-median" data-ui-b-command="filter:median"><span>Median…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-sharpen" data-ui-b-command="filter:sharpen"><span>Sharpen</span></button><button type="button" role="menuitem" data-ui-b-contribution="filter-unsharp" data-ui-b-command="filter:unsharpMask"><span>Unsharp Mask…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-highpass" data-ui-b-command="filter:highPass"><span>High Pass…</span></button><button type="button" role="menuitem" data-ui-b-contribution="filter-edge" data-ui-b-command="filter:edgeDetection"><span>Edge Detection…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-noise" data-ui-b-command="filter:noiseGrain"><span>Noise / Grain…</span></button><button type="button" role="menuitem" data-ui-b-contribution="filter-reduce-noise" data-ui-b-command="filter:reduceNoise"><span>Reduce Noise…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-texture" data-ui-b-command="filter:textureOverlay"><span>Texture Overlay…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-emboss" data-ui-b-command="filter:emboss"><span>Emboss…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-mosaic" data-ui-b-command="filter:mosaic"><span>Mosaic / Pixelate…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-minimum" data-ui-b-command="filter:minimum"><span>Minimum…</span></button><button type="button" role="menuitem" data-ui-b-contribution="filter-maximum" data-ui-b-command="filter:maximum"><span>Maximum…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="filter-liquify" data-ui-b-command="liquify"><span>Liquify…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="object">
-        <button type="button" data-application-menu-trigger="object" aria-haspopup="menu" aria-expanded="false">Object</button>
+        <button type="button" data-application-menu-trigger="object" aria-haspopup="menu" aria-expanded="false">物件</button>
         <div id="objectMenu" class="application-command-menu" role="menu" aria-label="物件" hidden>
           <button type="button" role="menuitem" data-shell-panel="properties"><span>物件屬性</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="object-skew" data-ui-b-command="transform:skew"><span>Transform：Skew…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distort" data-ui-b-command="transform:distort"><span>Transform：Distort…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-perspective" data-ui-b-command="transform:perspective"><span>Transform：Perspective…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-warp" data-ui-b-command="transform:warp"><span>Transform：Warp…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-front" data-ui-b-command="arrange:front"><span>移至最上</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-back" data-ui-b-command="arrange:back"><span>移至最下</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-group" data-ui-b-command="group"><span>群組</span><kbd>Ctrl+G</kbd></button><button type="button" role="menuitem" data-ui-b-contribution="object-ungroup" data-ui-b-command="ungroup"><span>解散群組</span><kbd>Ctrl+Shift+G</kbd></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-align-left" data-ui-b-command="align:left"><span>對齊：靠左</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-center-x" data-ui-b-command="align:centerX"><span>對齊：水平置中</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-right" data-ui-b-command="align:right"><span>對齊：靠右</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-top" data-ui-b-command="align:top"><span>對齊：靠上</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-center-y" data-ui-b-command="align:centerY"><span>對齊：垂直置中</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-bottom" data-ui-b-command="align:bottom"><span>對齊：靠下</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distribute-x" data-ui-b-command="align:distributeX"><span>分布：水平等距</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distribute-y" data-ui-b-command="align:distributeY"><span>分布：垂直等距</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-frame-selection" data-ui-b-command="frame-selection"><span>建立 Frame</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-path-edit" data-ui-b-command="proxy:pathEditToggle"><span>Path／Node 編輯</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-union" data-ui-b-command="proxy:booleanUnion"><span>Path Boolean：Union</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-difference" data-ui-b-command="proxy:booleanDifference"><span>Path Boolean：Difference</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-intersection" data-ui-b-command="proxy:booleanIntersection"><span>Path Boolean：Intersection</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-xor" data-ui-b-command="proxy:booleanXor"><span>Path Boolean：XOR</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-radial" data-ui-b-command="proxy:repeatRadial"><span>Repeat：Radial</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-mirror" data-ui-b-command="proxy:repeatMirror"><span>Repeat：Mirror</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-grid" data-ui-b-command="proxy:repeatGrid"><span>Repeat：Grid</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-expand" data-ui-b-command="proxy:repeatExpand"><span>Repeat：展開 Path</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="view">
-        <button type="button" data-application-menu-trigger="view" aria-haspopup="menu" aria-expanded="false">View</button>
+        <button type="button" data-application-menu-trigger="view" aria-haspopup="menu" aria-expanded="false">檢視</button>
         <div id="viewMenu" class="application-command-menu" role="menu" aria-label="檢視" hidden>
           <button type="button" role="menuitem" data-shell-action="fit-current"><span>符合目前內容</span><kbd>F</kbd></button>
           <button type="button" role="menuitemcheckbox" data-shell-action="toggle-rulers" aria-checked="false"><span>標尺</span></button>
           <span class="application-menu-separator" aria-hidden="true"></span>
           <button type="button" role="menuitem" data-shell-action="fullscreen"><span>全螢幕</span><kbd>Ctrl+Shift+F</kbd></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="view-grid" data-ui-b-command="snap:grid"><span>Grid Snap</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-snap" data-ui-b-command="snap:enabled"><span>Snap</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-guides" data-ui-b-command="snap:guides"><span>Snap To：Guides</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-edges" data-ui-b-command="snap:edges"><span>Snap To：Object Edges</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-centers" data-ui-b-command="snap:centers"><span>Snap To：Object Centers</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-angle" data-ui-b-command="snap:angle"><span>Snap To：Angles</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-equal" data-ui-b-command="snap:equalDistance"><span>Snap To：Equal Distance</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-guides-show" data-ui-b-command="guides:toggle"><span>顯示／隱藏 Guides</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-workspace-creation" data-ui-b-command="workspace:creation"><span>Workspace：Creation</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-workspace-layout" data-ui-b-command="workspace:layout"><span>Workspace：Layout</span></button>
         </div>
       </div>
       <div class="application-menu application-window-menu" data-application-menu="window">
-        <button id="windowMenuToggle" type="button" data-application-menu-trigger="window" aria-haspopup="menu" aria-expanded="false">Window</button>
+        <button id="windowMenuToggle" type="button" data-application-menu-trigger="window" aria-haspopup="menu" aria-expanded="false">視窗</button>
       </div>
       <div class="application-menu" data-application-menu="help">
-        <button type="button" data-application-menu-trigger="help" aria-haspopup="menu" aria-expanded="false">Help</button>
+        <button type="button" data-application-menu-trigger="help" aria-haspopup="menu" aria-expanded="false">說明</button>
         <div id="helpMenu" class="application-command-menu" role="menu" aria-label="說明" hidden>
           <button type="button" role="menuitem" data-shell-action="about"><span>關於 INK 工作區</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="help-shortcuts" data-ui-b-command="keyboard-shortcuts"><span>Keyboard Shortcuts</span></button><button type="button" role="menuitem" data-ui-b-contribution="help-updates" data-ui-b-command="updates"><span>Updates</span></button><button type="button" role="menuitem" data-ui-b-contribution="help-diagnostics" data-ui-b-command="panel:specialist"><span>Product Diagnostics</span></button><button type="button" role="menuitem" data-ui-b-contribution="help-pen" data-ui-b-command="pen-calibration"><span>Pen Calibration…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="help-recovery" data-ui-b-command="recovery"><span>Recovery…</span></button>
         </div>
       </div>
     </nav>
@@ -743,9 +753,9 @@
   <input id="calibrationProfileInput" type="file" accept=".json,.inkprofile" hidden>
   <input id="referenceEvidenceInput" type="file" accept="application/json,.json" hidden>
 </div>
-<script src="web-shell.js?v=0.1-assembly1"></script>
-<script src="ui/branding-settings.js?v=0.1-assembly1"></script>
-<script type="module" src="src/ink.js?v=0.1-assembly1"></script>
+<script src="web-shell.js?v=0.1-assembly2"></script>
+<script src="ui/branding-settings.js?v=0.1-assembly2"></script>
+<script type="module" src="src/ink.js?v=0.1-assembly2"></script>
 
 </body>
 </html>

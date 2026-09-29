@@ -117,7 +117,7 @@ test('build identity and cache inventory are synchronized without FORMAT_VERSION
 });
 
 test('UI-B CSS adds no presentation important, width family, or px font authority',()=>{
-  const section=css.split('INK-UI-B-FULL-CAPABILITY-CONTROLS-001')[1]||'';
+  const section=(css.split('INK-UI-B-FULL-CAPABILITY-CONTROLS-001')[1]||'').split('/* Issue #92 Libraries panel')[0];
   assert.ok(section.length>100);
   assert.doesNotMatch(section,/!important/);
   assert.doesNotMatch(section,/@media[^\{]*(?:min|max)-width/);

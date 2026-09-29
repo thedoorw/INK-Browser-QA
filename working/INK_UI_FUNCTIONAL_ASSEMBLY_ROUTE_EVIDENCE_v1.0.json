@@ -1,0 +1,525 @@
+{
+  "task": "INK-UI-FUNCTIONAL-ASSEMBLY-CORRECTION-001",
+  "basis": "working/INK_UI_UPDATED_CONTROL_LEDGER_v1.0.md",
+  "verification": "Source selectors and existing dispatch/install paths; browser execution still requires live inspection.",
+  "pui_routes": [
+    {
+      "id": "PUI-001",
+      "disposition": "RELOCATE",
+      "capability": "Mask add/create authority",
+      "planned_primary": "Layers local action; Layer > Mask secondary",
+      "route": "[data-ui-b-command=\"mask-add\"]"
+    },
+    {
+      "id": "PUI-002",
+      "disposition": "RELOCATE",
+      "capability": "Adjustment add/create authority",
+      "planned_primary": "Adjustments panel; Image > Adjustments secondary",
+      "route": "#uiBAdjustmentGrid"
+    },
+    {
+      "id": "PUI-003",
+      "disposition": "RELOCATE",
+      "capability": "Filter add/create authority",
+      "planned_primary": "Filter top menu; stack readout secondary",
+      "route": "#filterMenu [data-ui-b-command^=\"filter:\"]"
+    },
+    {
+      "id": "PUI-004",
+      "disposition": "RELOCATE",
+      "capability": "Filter stack reorder authority",
+      "planned_primary": "Properties/Layers contextual stack",
+      "route": "[data-ui-b-filter-move]"
+    },
+    {
+      "id": "PUI-005",
+      "disposition": "RETIRE_DUPLICATE",
+      "capability": "Duplicate desktop New control",
+      "planned_primary": "Retire duplicate; File/top shell remains authority",
+      "route": "#fileMenu [data-file-command=\"new\"]"
+    },
+    {
+      "id": "PUI-006",
+      "disposition": "RETIRE_DUPLICATE",
+      "capability": "Duplicate desktop Open control",
+      "planned_primary": "Retire duplicate; File/top shell remains authority",
+      "route": "#fileMenu [data-file-command=\"open\"]"
+    },
+    {
+      "id": "PUI-007",
+      "disposition": "RETIRE_DUPLICATE",
+      "capability": "Duplicate desktop Save control",
+      "planned_primary": "Retire duplicate; File/top shell remains authority",
+      "route": "#fileMenu [data-file-command=\"save\"]"
+    },
+    {
+      "id": "PUI-008",
+      "disposition": "RETIRE_DUPLICATE",
+      "capability": "Duplicate desktop Undo control",
+      "planned_primary": "Retire duplicate; Edit/History/shortcut remains authority",
+      "route": "#editMenu [data-shell-action=\"undo\"]"
+    },
+    {
+      "id": "PUI-009",
+      "disposition": "RETIRE_DUPLICATE",
+      "capability": "Duplicate desktop Redo control",
+      "planned_primary": "Retire duplicate; Edit/History/shortcut remains authority",
+      "route": "#editMenu [data-shell-action=\"redo\"]"
+    },
+    {
+      "id": "PUI-010",
+      "disposition": "EXPAND_FLYOUT",
+      "capability": "Draw flyout expansion",
+      "planned_primary": "Left toolbar Draw: Pen/Pencil/Marker/Brush/Airbrush/Blender/Smudge",
+      "route": "[data-ui-b-tool-group=\"draw\"]"
+    },
+    {
+      "id": "PUI-011",
+      "disposition": "EXPAND_FLYOUT",
+      "capability": "Lasso flyout expansion",
+      "planned_primary": "Left toolbar Lasso: Lasso/Polygonal/Magnetic",
+      "route": "[data-ui-b-tool-group=\"lasso\"]"
+    },
+    {
+      "id": "PUI-012",
+      "disposition": "NEW",
+      "capability": "Smart Selection tool group",
+      "planned_primary": "Left toolbar: Quick Selection/Magic Wand/Object Selection",
+      "route": "[data-ui-b-tool-group=\"smart-selection\"]"
+    },
+    {
+      "id": "PUI-013",
+      "disposition": "NEW",
+      "capability": "Fill tool group",
+      "planned_primary": "Left toolbar: Gradient/Paint Bucket",
+      "route": "[data-ui-b-tool-group=\"fill\"]"
+    },
+    {
+      "id": "PUI-014",
+      "disposition": "NEW",
+      "capability": "Sampling tool group",
+      "planned_primary": "Left toolbar: Eyedropper/Color Sampler",
+      "route": "[data-ui-b-tool-group=\"sampling\"]"
+    },
+    {
+      "id": "PUI-015",
+      "disposition": "NEW",
+      "capability": "Retouch Clone group",
+      "planned_primary": "Left toolbar: Clone Stamp/Pattern Stamp",
+      "route": "[data-ui-b-tool-group=\"clone\"]"
+    },
+    {
+      "id": "PUI-016",
+      "disposition": "NEW",
+      "capability": "Retouch Healing group",
+      "planned_primary": "Left toolbar: Healing/Spot Healing/Patch",
+      "route": "[data-ui-b-tool-group=\"healing\"]"
+    },
+    {
+      "id": "PUI-017",
+      "disposition": "NEW",
+      "capability": "Retouch Tone group",
+      "planned_primary": "Left toolbar: Dodge/Burn/Sponge",
+      "route": "[data-ui-b-tool-group=\"tone\"]"
+    },
+    {
+      "id": "PUI-018",
+      "disposition": "NEW",
+      "capability": "Retouch Detail group",
+      "planned_primary": "Left toolbar: Local Blur/Local Sharpen",
+      "route": "[data-ui-b-tool-group=\"detail\"]"
+    },
+    {
+      "id": "PUI-019",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Color Replacement Brush route",
+      "planned_primary": "Shared Brush/Retouch flyout; no dedicated persistent slot",
+      "route": "[data-ui-b-tool=\"colorReplacement\"]"
+    },
+    {
+      "id": "PUI-020",
+      "disposition": "EXPAND_FLYOUT",
+      "capability": "Shape flyout normalization",
+      "planned_primary": "Left toolbar Shape: all supported primitives",
+      "route": "[data-ui-b-tool-group=\"shape\"]"
+    },
+    {
+      "id": "PUI-021",
+      "disposition": "EXPAND_FLYOUT",
+      "capability": "Text tool expansion",
+      "planned_primary": "Text tool: paragraph/horizontal + vertical; Text on Path contextual",
+      "route": "[data-ui-b-tool-group=\"text\"]"
+    },
+    {
+      "id": "PUI-022",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Measure/ruler interaction route",
+      "planned_primary": "Ruler/direct interaction; Sampling-group fallback only if needed",
+      "route": "[data-ui-b-tool=\"measure\"]"
+    },
+    {
+      "id": "PUI-023",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Selection Options controls",
+      "planned_primary": "Options Bar: mode/tolerance/contiguous/ROI/bounded Magnetic settings",
+      "route": "[data-ui-b-option=\"selectionMode\"]"
+    },
+    {
+      "id": "PUI-024",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Gradient Options controls",
+      "planned_primary": "Options Bar: target-aware type/preview/opacity",
+      "route": "[data-ui-b-option=\"gradientType\"]"
+    },
+    {
+      "id": "PUI-025",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Retouch Options controls",
+      "planned_primary": "Options Bar: size/strength/source/pattern by active tool",
+      "route": "[data-ui-b-option=\"strength\"]"
+    },
+    {
+      "id": "PUI-026",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Brush Options controls",
+      "planned_primary": "Options Bar high-frequency preset/color/size/opacity/dynamics subset",
+      "route": "#quickControls"
+    },
+    {
+      "id": "PUI-027",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Advanced Transform Options",
+      "planned_primary": "Options Bar/canvas: mode + apply/cancel + numeric quick fields",
+      "route": "#uiB-advanced-transform"
+    },
+    {
+      "id": "PUI-028",
+      "disposition": "PANEL",
+      "capability": "Navigator panel normalization",
+      "planned_primary": "Right dock / Window > Navigator",
+      "route": "[data-shell-panel=\"navigator\"]"
+    },
+    {
+      "id": "PUI-029",
+      "disposition": "PANEL",
+      "capability": "Color panel",
+      "planned_primary": "Right dock / Window > Color",
+      "route": "[data-shell-panel=\"color\"]"
+    },
+    {
+      "id": "PUI-030",
+      "disposition": "PANEL",
+      "capability": "Channels panel",
+      "planned_primary": "Right dock / Window > Channels",
+      "route": "[data-shell-panel=\"channels\"]"
+    },
+    {
+      "id": "PUI-031",
+      "disposition": "PANEL",
+      "capability": "Adjustments panel",
+      "planned_primary": "Right dock / Window > Adjustments",
+      "route": "[data-shell-panel=\"adjustments\"]"
+    },
+    {
+      "id": "PUI-032",
+      "disposition": "PANEL",
+      "capability": "Properties target-aware sections",
+      "planned_primary": "Right dock / Window > Properties",
+      "route": "[data-shell-panel=\"properties\"]"
+    },
+    {
+      "id": "PUI-033",
+      "disposition": "PANEL",
+      "capability": "Layers capability expansion",
+      "planned_primary": "Right dock: blend/mask/fx/adjustment-filter state",
+      "route": "[data-shell-panel=\"layers\"]"
+    },
+    {
+      "id": "PUI-034",
+      "disposition": "PANEL",
+      "capability": "History normalization",
+      "planned_primary": "Right dock / Window > History",
+      "route": "[data-shell-panel=\"history\"]"
+    },
+    {
+      "id": "PUI-035",
+      "disposition": "PANEL",
+      "capability": "Pages normalization",
+      "planned_primary": "Right dock / Window > Pages",
+      "route": "[data-shell-panel=\"pages\"]"
+    },
+    {
+      "id": "PUI-036",
+      "disposition": "PANEL",
+      "capability": "Libraries normalization",
+      "planned_primary": "Right dock / Window > Libraries",
+      "route": "[data-shell-panel=\"libraries\"]"
+    },
+    {
+      "id": "PUI-037",
+      "disposition": "PANEL",
+      "capability": "Reference normalization",
+      "planned_primary": "Right dock / Window > Reference",
+      "route": "[data-shell-panel=\"reference\"]"
+    },
+    {
+      "id": "PUI-038",
+      "disposition": "PANEL",
+      "capability": "Compose normalization",
+      "planned_primary": "Right dock / Window > Compose",
+      "route": "[data-shell-panel=\"compose\"]"
+    },
+    {
+      "id": "PUI-039",
+      "disposition": "PANEL",
+      "capability": "CHAT normalization",
+      "planned_primary": "Right dock / Window > CHAT",
+      "route": "[data-shell-panel=\"chat\"]"
+    },
+    {
+      "id": "PUI-040",
+      "disposition": "PANEL",
+      "capability": "Revision/Compare normalization",
+      "planned_primary": "Right dock / Window > Revision",
+      "route": "[data-shell-panel=\"revision\"]"
+    },
+    {
+      "id": "PUI-041",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Select and Mask dialog",
+      "planned_primary": "Select menu / Properties > Mask",
+      "route": "[data-ui-b-command=\"select-and-mask\"]"
+    },
+    {
+      "id": "PUI-042",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Layer Effects dialog",
+      "planned_primary": "Layers fx / Layer > Layer Effects",
+      "route": "[data-ui-b-command=\"layer-effects\"]"
+    },
+    {
+      "id": "PUI-043",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Filter parameter dialog",
+      "planned_primary": "Filter command-specific modal",
+      "route": "[data-ui-b-command^=\"filter:\"]"
+    },
+    {
+      "id": "PUI-044",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Filter Gallery",
+      "planned_primary": "Filter > Filter Gallery",
+      "route": "[data-ui-b-command=\"filter-gallery\"]"
+    },
+    {
+      "id": "PUI-045",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Liquify temporary workspace",
+      "planned_primary": "Filter > Liquify",
+      "route": "[data-ui-b-command=\"liquify\"]"
+    },
+    {
+      "id": "PUI-046",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Gradient editor",
+      "planned_primary": "Gradient Options / Properties; target-aware dispatch",
+      "route": "[data-ui-b-context-action=\"gradient-editor\"]"
+    },
+    {
+      "id": "PUI-047",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Pattern fill editor",
+      "planned_primary": "Properties > Appearance",
+      "route": "[data-ui-b-command=\"pattern-editor\"]"
+    },
+    {
+      "id": "PUI-048",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Color Profile dialog",
+      "planned_primary": "Image > Color Profile",
+      "route": "[data-ui-b-command=\"color-profile\"]"
+    },
+    {
+      "id": "PUI-049",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Export dialog",
+      "planned_primary": "File > Export",
+      "route": "#fileMenu [data-file-command=\"export\"]"
+    },
+    {
+      "id": "PUI-050",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Pen Calibration dialog",
+      "planned_primary": "Settings/Help > Pen Calibration",
+      "route": "[data-ui-b-command=\"pen-calibration\"]"
+    },
+    {
+      "id": "PUI-051",
+      "disposition": "DIALOG/WORKSPACE",
+      "capability": "Recovery modal",
+      "planned_primary": "Automatic/contextual when recoverable state exists",
+      "route": "[data-ui-b-command=\"recovery\"]"
+    },
+    {
+      "id": "PUI-052",
+      "disposition": "NEW",
+      "capability": "Top-level Filter menu",
+      "planned_primary": "Top Menu > Filter",
+      "route": "#filterMenu"
+    },
+    {
+      "id": "PUI-053",
+      "disposition": "NEW",
+      "capability": "Image > Mode hierarchy",
+      "planned_primary": "Top Menu > Image > Mode",
+      "route": "[data-ui-b-command^=\"bit-depth:\"]"
+    },
+    {
+      "id": "PUI-054",
+      "disposition": "NEW",
+      "capability": "Image > Color Profile entry",
+      "planned_primary": "Top Menu > Image > Color Profile",
+      "route": "[data-ui-b-command=\"color-profile\"]"
+    },
+    {
+      "id": "PUI-055",
+      "disposition": "NEW",
+      "capability": "Ruler/Guide/Snap workstation controls",
+      "planned_primary": "View + top/left rulers + direct guide/snap feedback",
+      "route": "[data-ui-b-command^=\"snap:\"]"
+    },
+    {
+      "id": "PUI-056",
+      "disposition": "NEW",
+      "capability": "External format availability/loss disclosure",
+      "planned_primary": "File Open/Import + Export dialog",
+      "route": "[data-ui-b-command=\"external-open\"]"
+    },
+    {
+      "id": "PUI-057",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Storage implementation internals",
+      "planned_primary": "No normal control; Help health readout only",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-058",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Renderer implementation internals",
+      "planned_primary": "No normal creative control; Specialist diagnostics only",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-059",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Natural-media renderer internals",
+      "planned_primary": "No normal creative control",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-060",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "GPU/tile/cache infrastructure",
+      "planned_primary": "No normal creative control; Specialist diagnostics only",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-061",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Dependency/recompute internals",
+      "planned_primary": "No normal creative control; reports may be read-only",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-062",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Semantic grounding internals",
+      "planned_primary": "No semantic-grounding panel; CHAT readout only",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-063",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Asset lifecycle support",
+      "planned_primary": "No normal control; Specialist diagnostic readout only",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-064",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Output handle inspect/release lifecycle",
+      "planned_primary": "No ordinary Export control",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-065",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Pressure/tilt/altitude/azimuth/twist/event pipeline",
+      "planned_primary": "No dedicated controls; diagnostics/readouts only",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-066",
+      "disposition": "HEADLESS_NO_CONTROL",
+      "capability": "Service-worker registration/detection/install tracking",
+      "planned_primary": "No direct control; status/activation handled separately",
+      "route": "HEADLESS_NO_CONTROL"
+    },
+    {
+      "id": "PUI-067",
+      "disposition": "NEW",
+      "capability": "Help > Updates surface",
+      "planned_primary": "Help/Settings update status + activate waiting update",
+      "route": "[data-ui-b-command=\"updates\"]"
+    },
+    {
+      "id": "PUI-068",
+      "disposition": "NEW",
+      "capability": "Help > Diagnostics normalization",
+      "planned_primary": "Help/Specialist health, device, bundle, benchmark routes",
+      "route": "[data-ui-b-command=\"panel:specialist\"]"
+    },
+    {
+      "id": "PUI-069",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "High-resolution export progress controls",
+      "planned_primary": "Export progress: cancel/resume/state",
+      "route": "#uiBResumeExportBtn"
+    },
+    {
+      "id": "PUI-070",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Brush Package import/export actions",
+      "planned_primary": "Brush preset menu / Libraries; no persistent toolbar slot",
+      "route": "[data-ui-b-brush-package=\"import\"]"
+    },
+    {
+      "id": "PUI-071",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Raster image histogram/snapshot/compare readouts",
+      "planned_primary": "Properties/Revision; no permanent Image subpanel",
+      "route": "[data-ui-b-raster-insight=\"histogram\"]"
+    },
+    {
+      "id": "PUI-072",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Compare mode controls",
+      "planned_primary": "Revision/canvas compare mode; shared authority",
+      "route": "[data-shell-panel=\"revision\"]"
+    },
+    {
+      "id": "PUI-073",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Memory/Research advisory controls",
+      "planned_primary": "CHAT/Compose readout + explicit promotion candidate action",
+      "route": "[data-shell-panel=\"chat\"]"
+    },
+    {
+      "id": "PUI-074",
+      "disposition": "CONTEXTUAL_ONLY",
+      "capability": "Diagnostics/benchmark execution controls",
+      "planned_primary": "Help/Specialist only when diagnostic context is invoked",
+      "route": "[data-ui-b-command=\"panel:specialist\"]"
+    }
+  ]
+}
