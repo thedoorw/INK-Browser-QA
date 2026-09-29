@@ -17,14 +17,14 @@ const required={
 
 test('Fine Detail spacing roles are explicit',()=>{
   for(const [name,value] of Object.entries(required)){
-    assert.match(css,new RegExp(name.replace(/[.*+?^${}()|[\\]\\]/g,'\\$&')+'\\s*:\\s*'+value.replace(/[.*+?^${}()|[\\]\\]/g,'\\$&')));
+    assert.ok(css.includes(name+':'+value),name+' missing or changed');
   }
 });
 
 test('Final shell consumes semantic spacing roles without changing accepted values',()=>{
-  assert.match(css,/application-menu-separator,.workspace-menu-separator\{margin:var\(--ui-menu-padding\)\}/);
-  assert.match(css,/\.inspector-section\{padding:var\(--ui-panel-padding\)\}/);
-  assert.match(css,/shell-library-panel \.shell-panel-body,.shell-property-supplement\{gap:var\(--ui-section-gap\)\}/);
-  assert.match(css,/shell-library-results,.shell-property-actions\{gap:var\(--ui-group-gap\)\}/);
-  assert.match(css,/contextual-control-host\{gap:var\(--ui-control-gap\)\}/);
+  assert.ok(css.includes('.application-menu-separator,.workspace-menu-separator{margin:var(--ui-menu-padding)}'));
+  assert.ok(css.includes('.inspector-section{padding:var(--ui-panel-padding)}'));
+  assert.ok(css.includes('.shell-library-panel .shell-panel-body,.shell-property-supplement{gap:var(--ui-section-gap)}'));
+  assert.ok(css.includes('.shell-library-results,.shell-property-actions{gap:var(--ui-group-gap)}'));
+  assert.ok(css.includes('@media(max-width:760px){.contextual-control-host{gap:var(--ui-control-gap)}}'));
 });
