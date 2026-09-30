@@ -1,0 +1,9 @@
+{
+  "schema": "ink-ui-issue92-navigator-view-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "7f76011779a7d903ea5ec63f25ced9efedcca9d4",
+  "central_runtime": false,
+  "run_generation": 4,
+  "scope": "PvsI package 04 Navigator/panel exact-candidate recheck"
+}
