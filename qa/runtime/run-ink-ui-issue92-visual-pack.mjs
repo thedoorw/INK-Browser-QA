@@ -106,7 +106,8 @@ async function waitLiveProduct(root,timeoutMs=180000){
   const localCreative=await readFile(path.join(root,'product/source/src/editor/creative-workspace.js'));
   const localBranding=await readFile(path.join(root,'product/source/ui/branding-settings.js'));
   const localFullControls=await readFile(path.join(root,'product/source/ui/full-capability-controls.js'));
-  const expected={styles:digest(localCss),webShell:digest(localShell),index:digest(localIndex),creative:digest(localCreative),branding:digest(localBranding),fullControls:digest(localFullControls)};
+  const localLiveHarness=await readFile(path.join(root,LIVE_HARNESS));
+  const expected={styles:digest(localCss),webShell:digest(localShell),index:digest(localIndex),creative:digest(localCreative),branding:digest(localBranding),fullControls:digest(localFullControls),liveHarness:digest(localLiveHarness)};
   const started=Date.now();let last={};
   while(Date.now()-started<timeoutMs){
     try{
@@ -126,12 +127,13 @@ async function waitLiveProduct(root,timeoutMs=180000){
       const creative=creativeRes.ok?Buffer.from(await creativeRes.arrayBuffer()):Buffer.alloc(0);
       const branding=brandingRes.ok?Buffer.from(await brandingRes.arrayBuffer()):Buffer.alloc(0);
       const fullControls=fullControlsRes.ok?Buffer.from(await fullControlsRes.arrayBuffer()):Buffer.alloc(0);
+      const liveHarness=harnessRes.ok?Buffer.from(await harnessRes.arrayBuffer()):Buffer.alloc(0);
       last={
         stylesStatus:cssRes.status,webShellStatus:shellRes.status,indexStatus:indexRes.status,creativeStatus:creativeRes.status,brandingStatus:brandingRes.status,fullControlsStatus:fullControlsRes.status,harnessStatus:harnessRes.status,
         styles:css.length?digest(css):null,webShell:shell.length?digest(shell):null,index:index.length?digest(index):null,
-        creative:creative.length?digest(creative):null,branding:branding.length?digest(branding):null,fullControls:fullControls.length?digest(fullControls):null
+        creative:creative.length?digest(creative):null,branding:branding.length?digest(branding):null,fullControls:fullControls.length?digest(fullControls):null,liveHarness:liveHarness.length?digest(liveHarness):null
       };
-      if(cssRes.ok&&shellRes.ok&&indexRes.ok&&creativeRes.ok&&brandingRes.ok&&fullControlsRes.ok&&harnessRes.ok&&last.styles===expected.styles&&last.webShell===expected.webShell&&last.index===expected.index&&last.creative===expected.creative&&last.branding===expected.branding&&last.fullControls===expected.fullControls){
+      if(cssRes.ok&&shellRes.ok&&indexRes.ok&&creativeRes.ok&&brandingRes.ok&&fullControlsRes.ok&&harnessRes.ok&&last.styles===expected.styles&&last.webShell===expected.webShell&&last.index===expected.index&&last.creative===expected.creative&&last.branding===expected.branding&&last.fullControls===expected.fullControls&&last.liveHarness===expected.liveHarness){
         return {baseUrl:LIVE_BASE,expected,observed:last,waitMs:Date.now()-started};
       }
     }catch(error){last={error:String(error?.message||error)};}
