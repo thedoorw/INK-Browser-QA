@@ -1,0 +1,109 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>INK PvsI Pack 5 Live Evidence</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
+#liveFrame{position:fixed;inset:0;width:100vw;height:100vh;border:0;background:#e7e7e7}
+#pvsiMetrics{display:none}
+</style>
+<iframe id="liveFrame" src="../../product/source/?pvsi-pack5=1"></iframe>
+<pre id="pvsiMetrics">{}</pre>
+<script>
+(async()=>{
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const mode=new URL(location.href).searchParams.get('mode')||'prefs-general';
+  const frame=document.querySelector('#liveFrame');
+  const waitFrame=()=>new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();}});
+  await waitFrame();
+  let w=frame.contentWindow,d=frame.contentDocument;
+  for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+  if(!(w.INK_APP&&w.INK_WEB_SHELL))throw new Error('INK unavailable');
+  const rect=e=>{if(!e)return null;const r=e.getBoundingClientRect(),s=w.getComputedStyle(e);return {x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom,display:s.display,visibility:s.visibility,backgroundColor:s.backgroundColor,color:s.color,border:s.border,borderRadius:s.borderRadius,padding:s.padding,fontSize:s.fontSize,lineHeight:s.lineHeight,boxShadow:s.boxShadow,backdropFilter:s.backdropFilter||s.webkitBackdropFilter||'none'}};
+  const visible=e=>{if(!e||e.hidden)return false;const r=e.getBoundingClientRect(),s=w.getComputedStyle(e);return s.display!=='none'&&s.visibility!=='hidden'&&r.width>0&&r.height>0};
+  const safeText=e=>String(e?.textContent||e?.value||'').replace(/\s+/g,' ').trim();
+  const q=s=>d.querySelector(s),qa=s=>[...d.querySelectorAll(s)];
+  const shell=w.INK_WEB_SHELL;
+  const prefCategory=async category=>{w.dispatchEvent(new w.CustomEvent('ink:branding-open',{detail:{category}}));await sleep(140);q('[data-preference-category="'+category+'"]')?.click();await sleep(80);};
+  const panel=async id=>{shell.open(id);await sleep(140);};
+
+  const prefMap={
+    'prefs-general':'general','prefs-interface':'interface','prefs-tools':'tools','prefs-canvas':'canvas',
+    'prefs-guides':'guides','prefs-performance':'performance','prefs-storage':'storage','prefs-branding':'branding'
+  };
+  const panelMap={
+    'creative-reference':'reference','panel-libraries':'libraries','creative-compose':'compose','creative-chat':'chat','creative-revision':'revision',
+    'panel-properties':'properties','panel-color':'color','panel-adjustments':'adjustments','panel-history':'history','panel-channels':'channels','panel-pages':'pages'
+  };
+
+  if(prefMap[mode]) await prefCategory(prefMap[mode]);
+  else if(panelMap[mode]) await panel(panelMap[mode]);
+
+  if(mode!=='audit'){
+    document.querySelector('#pvsiMetrics').textContent=JSON.stringify({status:'PASS',mode});
+    document.documentElement.dataset.qaReady='true';document.title='QA_READY';return;
+  }
+
+  const prefs={};
+  for(const category of ['general','interface','tools','canvas','guides','performance','storage','branding']){
+    await prefCategory(category);
+    const dialog=q('.branding-settings-dialog'),title=q('.branding-settings-dialog>.panel-header'),nav=q('.preferences-categories'),content=q('.preferences-content');
+    const active=q('[data-preference-category="'+category+'"]'),page=q('[data-preference-page="'+category+'"]');
+    prefs[category]={
+      dialog:rect(dialog),titlebar:rect(title),nav:rect(nav),content:rect(content),active:rect(active),heading:rect(page?.querySelector('h2')),
+      visibleRows:qa('[data-preference-page="'+category+'"] .control-row,[data-preference-page="'+category+'"] .toggle-row,[data-preference-page="'+category+'"] .branding-field,[data-preference-page="'+category+'"] .branding-asset-row').filter(visible).slice(0,12).map(e=>({text:safeText(e).slice(0,120),rect:rect(e)}))
+    };
+  }
+  q('#closeBrandingSettings')?.click();await sleep(50);
+
+  const creative={};
+  for(const id of ['reference','compose','chat','revision']){
+    await panel(id);
+    const root=q('#creativeWorkspace'),body=root?.querySelector('.creative-workspace-body');
+    creative[id]={
+      root:rect(root),body:rect(body),nativeVisibleFiles:qa('#creativeWorkspace input[type="file"]').filter(visible).length,
+      picker:rect(root?.querySelector('.creative-file-picker')),
+      status:rect(root?.querySelector('.creative-workspace-status')),
+      controls:qa('#creativeWorkspace button,#creativeWorkspace input,#creativeWorkspace select,#creativeWorkspace output').filter(visible).slice(0,24).map(e=>({tag:e.tagName.toLowerCase(),text:safeText(e).slice(0,80),rect:rect(e)})
+      )
+    };
+  }
+
+  const panels={};
+  for(const id of ['libraries','properties','color','adjustments','history','channels','pages']){
+    await panel(id);
+    panels[id]={state:shell.state(),visibleControls:qa('.panel-stack-framework button,.panel-stack-framework input,.panel-stack-framework select').filter(visible).slice(0,40).map(e=>({tag:e.tagName.toLowerCase(),text:safeText(e).slice(0,80),rect:rect(e)}))};
+  }
+
+  await prefCategory('branding');
+  const name=q('#brandingAppName'),title=q('#brandingAppTitle');
+  name.value='INK QA PERSIST';name.dispatchEvent(new w.Event('input',{bubbles:true}));
+  title.value='INK QA Persist Window';title.dispatchEvent(new w.Event('input',{bubbles:true}));
+  await sleep(80);
+  const activeBeforeReload=JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null');
+  q('#brandingPromoteDefault')?.click();await sleep(40);
+  const promoted=JSON.parse(w.localStorage.getItem('ink.web.branding.product-default.v1')||'null');
+  q('#brandingRestoreFactory')?.click();await sleep(40);
+  const restored={active:w.localStorage.getItem('ink.web.branding.active.v1'),productDefault:w.localStorage.getItem('ink.web.branding.product-default.v1'),name:q('#brandingAppName')?.value};
+  name.value='INK QA PERSIST';name.dispatchEvent(new w.Event('input',{bubbles:true}));
+  title.value='INK QA Persist Window';title.dispatchEvent(new w.Event('input',{bubbles:true}));
+  await sleep(50);
+
+  const firstPaint={styleText:q('#inkFirstPaintStyle')?.textContent||'',body:rect(d.body),app:rect(q('#app'))};
+  frame.src='../../product/source/?pvsi-pack5-reload=1';
+  await waitFrame();w=frame.contentWindow;d=frame.contentDocument;
+  for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+  const reloadApplied={title:d.title,brandName:d.querySelector('[data-brand-app-name]')?.textContent?.trim()||null,stored:JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null')};
+
+  const metrics={status:'PASS',mode,target:new URL(location.href).searchParams.get('target')||null,viewport:{width:w.innerWidth,height:w.innerHeight,dpr:w.devicePixelRatio},prefs,creative,panels,persistence:{activeBeforeReload,promoted,restored,reloadApplied},firstPaint};
+  const g=prefs.general;
+  if(Math.round(g.dialog.width)!==826||Math.round(g.dialog.height)!==624)throw new Error('Preferences outer geometry drift '+JSON.stringify(g.dialog));
+  if(Math.round(g.titlebar.height)!==31||Math.round(g.nav.width)!==125)throw new Error('Preferences title/nav geometry drift');
+  if(Object.values(prefs).some(v=>Math.round(v.active.height)!==20))throw new Error('Preferences category row pitch drift');
+  if(creative.reference.nativeVisibleFiles!==0||!creative.reference.picker)throw new Error('native reference file picker still visible');
+  if(Object.values(creative).some(v=>v.status?.display!=='none'))throw new Error('engineering workspace status visible');
+  if(activeBeforeReload?.name!=='INK QA PERSIST'||promoted?.name!=='INK QA PERSIST')throw new Error('branding persistence/promote failed');
+  if(restored.active!==null||restored.productDefault!==null)throw new Error('branding restore-factory failed');
+  if(reloadApplied.stored?.name!=='INK QA PERSIST'||reloadApplied.title!=='INK QA Persist Window')throw new Error('branding reload persistence failed');
+  document.querySelector('#pvsiMetrics').textContent=JSON.stringify(metrics);document.documentElement.dataset.qaReady='true';document.title='QA_READY';
+})().catch(error=>{document.querySelector('#pvsiMetrics').textContent=JSON.stringify({status:'ERROR',mode,error:String(error?.stack||error)});document.documentElement.dataset.qaReady='error';document.title='QA_ERROR'});
+</script>
