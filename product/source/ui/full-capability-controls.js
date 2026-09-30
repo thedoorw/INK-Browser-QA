@@ -56,6 +56,7 @@ const UI_LABELS = Object.freeze({
   'source-over':'正常',multiply:'色彩增值',screen:'濾色',overlay:'覆蓋','soft-light':'柔光','hard-light':'實光',darken:'變暗',lighten:'變亮','color-dodge':'加亮顏色','color-burn':'加深顏色',difference:'差異化',exclusion:'排除',hue:'色相',saturation:'飽和度',color:'顏色',luminosity:'明度',
   new:'新增',add:'增加',subtract:'減去',intersect:'交集',linear:'線性',radial:'放射',saturate:'增加飽和度',desaturate:'降低飽和度',
   brightnessContrast:'亮度／對比',levels:'色階',curves:'曲線',hueSaturation:'色相／飽和度',colorBalance:'色彩平衡',gradientMap:'漸層對應',exposure:'曝光度',vibrance:'自然飽和度',blackWhite:'黑白',photoFilter:'相片濾鏡',channelMixer:'混合色版',colorLookup:'顏色查詢',invert:'負片效果',posterize:'色調分離',threshold:'臨界值',selectiveColor:'選取顏色',
+  gaussianBlur:'高斯模糊',sharpen:'銳利化',highPass:'高反差保留',edgeDetection:'邊緣偵測',noiseGrain:'雜訊／顆粒',textureOverlay:'紋理覆蓋',motionBlur:'動態模糊',median:'中間值',unsharpMask:'遮色片銳利化',emboss:'浮雕',mosaic:'馬賽克',minimum:'最小值',maximum:'最大值',reduceNoise:'減少雜訊',
   dropShadow:'陰影',innerShadow:'內陰影',outerGlow:'外光暈',innerGlow:'內光暈',bevelEmboss:'斜角與浮雕',colorOverlay:'顏色覆蓋',gradientOverlay:'漸層覆蓋',patternOverlay:'圖樣覆蓋',stroke:'筆畫'
 });
 function uiLabel(value){return UI_LABELS[value] || UI_B_TOOL_GROUPS.flatMap(group=>group.tools).find(([id])=>id===value)?.[1] || String(value);}
@@ -366,9 +367,9 @@ export function installFullCapabilityControls(app){
     channels?.addEventListener('click',event=>{const cmd=event.target.closest('[data-ui-b-channel]')?.dataset.uiBChannel;if(cmd)channelCommand(cmd);});
     const layers=$('[data-shell-panel-section="layers"] .shell-panel-body')||$('[data-content="layers"]');
     if(layers&&!$('#uiBLayerAppearance')){
-      const filterOptions=Object.keys(FILTER_DEFAULTS).map(type=>'<option value="'+esc(type)+'">'+esc(type)+'</option>').join('');
+      const filterOptions=Object.keys(FILTER_DEFAULTS).map(type=>'<option value="'+esc(type)+'">'+esc(uiLabel(type))+'</option>').join('');
       const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance">'+
-        '<details class="ui-b-layer-filter-menu"><summary>圖層濾鏡</summary><div class="ui-b-layer-filter"><span>濾鏡</span><select id="uiBLayerFilterType">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" title="新增圖層濾鏡">＋</button></div></details>'+
+        '<details class="ui-b-layer-filter-menu"><summary>圖層濾鏡</summary><div class="ui-b-layer-filter"><span>濾鏡</span><select id="uiBLayerFilterType" aria-label="圖層濾鏡種類">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" aria-label="新增圖層濾鏡" title="新增圖層濾鏡">＋</button></div></details>'+
         '<div class="ui-b-layer-blend"><span>混合</span><select disabled title="目前文件模型沒有 layer blendMode authority"><option>正常</option></select><span class="ui-b-capability-note">Layer blend N/A</span></div>'+
         '<div class="ui-b-layer-lock"><span>鎖定</span><button type="button" data-layer-action="toggle-lock" aria-pressed="false"><svg><use href="#i-lock"/></svg></button></div>'+
       '</div>');

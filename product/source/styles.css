@@ -4278,3 +4278,16 @@ html,body,#app{background:#e7e7e7}
  .navigator-panel>.shell-panel-body{padding:10px 5px 7px}
  .panel-stack-body>.layers-panel{padding:5px 7px 0!important}
 }
+
+@media(min-width:761px){
+ .tool-colors{height:44px;margin-top:8px;transform:translateX(1px)}
+ .tool-bottom-utilities{width:68px;padding-right:7px;box-sizing:border-box;justify-content:flex-end}
+ .app[data-toolbar-layout="single"] .tool-bottom-utilities{width:31px;padding-right:0;justify-content:center}
+ .layer-bottom-toolbar [data-ui-b-layer-footer="fx"]{order:-2}
+ .layer-bottom-toolbar [data-ui-b-layer-footer="mask"]{order:-1}
+ .layer-bottom-toolbar .ui-b-layer-filter-menu{order:0}
+ .layer-bottom-toolbar .layer-toolbar-spacer{order:1}
+ .layer-bottom-toolbar #duplicateLayerBtn{order:2}
+ .layer-bottom-toolbar #addLayerBtn{order:3}
+ .layer-bottom-toolbar #deleteLayerBtn{order:4}
+}
