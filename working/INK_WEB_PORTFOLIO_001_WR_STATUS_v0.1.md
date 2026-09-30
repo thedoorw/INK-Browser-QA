@@ -4,74 +4,82 @@
 ROLE = WR
 PROGRAM = INK-WEB-REPRODUCTION-PRODUCTION-LINE-001
 CASE = CASE-001 / THE-MINIMALISTS
-CURRENT_PHASE = WRPL-001-A/B/C — executable census / classify / capture validation
+CURRENT_PHASE = WRPL-001-C — reference acquisition validity
 SSOT_READ = PASS
 WR_AUTHORITY = AUTONOMOUS
 INK_PRODUCT_CHANGE_REQUIRED = NO
 CURRENT_BRANCH = work/web-reproduction-production-line-001
-CURRENT_ACTION = GitHub Actions Runtime validation of CASE-001 R1 pipeline
-NEXT_OUTPUT = census artifact + page-family proposal + capture manifest + WR review
+CURRENT_ACTION = self-hosted Windows reference validity probe queued
+NEXT_OUTPUT = valid reference probe evidence or explicit acquisition-path failure
 ```
 
-## Direction change
-
-The prior Anthony Burrill single-site reproduction is superseded as the active first execution case.
-
-Current direction:
+## Active direction
 
 ```text
-build reusable Web Reproduction Production Line first
-→ use The Minimalists as CASE-001
-→ reconstruct website system rather than content
-→ deploy later to GitHub Pages
-→ convert each case into reusable Web Design Intelligence
+reusable Web Reproduction Production Line
+→ CASE-001 The Minimalists
+→ website system reproduction, not content copying
+→ later GitHub Pages deployment
+→ accumulate Web Design Intelligence
 ```
 
-Anthony Burrill remains a valid reference-library item but is not the current CASE-001 target.
+Anthony Burrill remains a Web Reference Library item and is not the active CASE-001 target.
 
-## Current authority
+## Current implemented production-line slice
 
-Production-line specification:
+- Site Census engine;
+- deterministic structural page-family classifier;
+- multi-viewport Playwright capture / measurement engine;
+- mandatory Reference Validity Gate;
+- hosted census smoke workflow;
+- self-hosted Windows reference probe workflow;
+- transient screenshot artifact policy;
+- sanitized JSON evidence publication to GitHub.
 
-`research/INK_WEB_REPRODUCTION_PRODUCTION_LINE_v0.1.md`
+## Runtime findings
 
-Long-term design-intelligence direction:
+Hosted smoke evidence:
 
-`research/INK_WEB_DESIGN_INTELLIGENCE_PRODUCTION_SYSTEM_v0.1.md`
+```text
+RUN = 36678136249
+EVIDENCE_COMMIT = 5a6823ae12afde49a53615b26b86628d7c5291d4
+R1 CENSUS ENGINE = PASS
+R2 CLASSIFIER ENGINE = PASS
+R3 CAPTURE EXECUTION = PASS
+R3 REFERENCE VALIDITY = FAIL
+CAUSE = HTTP 403 block/interstitial on all 18 hosted captures
+```
 
-CASE-001 work order:
+The 403 capture measurements are rejected and must not enter the blueprint.
 
-`working/INK_WEB_REPRODUCTION_CASE_001_THE_MINIMALISTS_WORK_ORDER_v0.1.md`
+Current Windows probe:
 
-Executable tools:
-
-`engineering/web-reproduction/`
-
-Runtime workflow:
-
-`.github/workflows/web-reproduction-case-001-r1.yml`
-
-## Implemented
-
-- clean branch created from current main;
-- current public The Minimalists structure rechecked;
-- production-line stages R0–R9 defined;
-- CASE-001 boundary and acceptance rules defined;
-- Site Census engine implemented;
-- deterministic page-family classifier implemented;
-- multi-viewport capture/measurement engine implemented;
-- reference evidence excluded from Git tracking;
-- hosted GitHub Actions Runtime validation started.
+```text
+RUN = 36678529425
+RUNNER = [self-hosted, Windows, X64]
+STATE = QUEUED
+SCOPE = homepage only / desktop + mobile
+```
 
 ## Current gate
 
 ```text
-WRPL-001-A_SITE_CENSUS = RUNTIME_VALIDATION
-WRPL-001-B_PAGE_FAMILY_CLASSIFIER = IMPLEMENTED / AWAITING RUNTIME INPUT
-WRPL-001-C_CAPTURE_MEASUREMENT = IMPLEMENTED / AWAITING RUNTIME
-WRPL-001-D_BLUEPRINT = NOT YET AUTHORIZED
-FINAL_RECONSTRUCTION = NOT YET
-PAGES_DEPLOYMENT = NOT YET
+WRPL-001-A_SITE_CENSUS = ENGINE_PASS / FULL_INVENTORY_PENDING
+WRPL-001-B_PAGE_FAMILY_CLASSIFIER = ENGINE_PASS / CLUSTER_QUALITY_PENDING
+WRPL-001-C_CAPTURE_MEASUREMENT = REFERENCE_VALIDITY_HOLD
+WRPL-001-D_BLUEPRINT = NOT AUTHORIZED
+FINAL_RECONSTRUCTION = NOT AUTHORIZED
+PAGES_DEPLOYMENT = NOT AUTHORIZED
 ```
 
-Do not start final page reconstruction until A/B/C evidence passes WR review.
+Current WR review:
+
+`working/INK_WEB_REPRODUCTION_CASE_001_WR_RUNTIME_REVIEW_v0.1.md`
+
+Production-line authority:
+
+`research/INK_WEB_REPRODUCTION_PRODUCTION_LINE_v0.1.md`
+
+CASE-001 authority:
+
+`working/INK_WEB_REPRODUCTION_CASE_001_THE_MINIMALISTS_WORK_ORDER_v0.1.md`
