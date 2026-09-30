@@ -7,19 +7,32 @@ CURRENT_PHASE = C — First Website Reproduction / capture & measurement
 SSOT_READ = PASS
 WR_AUTHORITY = AUTONOMOUS
 INK_PRODUCT_CHANGE_REQUIRED = NO
-CURRENT_ACTION = Anthony Burrill reference selected; C1 capture/measurement authorized
-NEXT_OUTPUT = WEB DEV C1 measurement + component/token handoff
+CURRENT_ACTION = The Minimalists selected by USER as first reference; editorial/book-like C1 capture authorized
+NEXT_OUTPUT = Reference measurements + structure/content-model/token handoff
 ```
 
-## Completed this session
+## Current direction
 
-- recovered WR authority and boundary from SSOT;
-- completed initial Phase A landscape pass;
-- created the initial Web Reference Library;
-- completed Phase B reference selection;
-- selected Anthony Burrill portfolio shell as the first reproduction target;
-- bounded the scope to portfolio pages only;
-- issued Phase C WEB DEV Work Order v0.1.
+The first portfolio will be developed as an editorial / book-like micro-site rather than a full-screen gallery.
+
+Key characteristics:
+
+```text
+non-full-width
+image + text narrative
+continuous publishing
+entry-by-entry reading
+previous / next continuity
+archive / pagination
+finished-looking even with a small initial body of work
+```
+
+## Reference change
+
+- Previous primary reference: Anthony Burrill.
+- Current primary reference: The Minimalists — https://www.theminimalists.com/
+- Anthony Burrill remains a secondary Web Reference Library case.
+- The reference change affects only the Web portfolio lane.
 
 ## Current gate
 
