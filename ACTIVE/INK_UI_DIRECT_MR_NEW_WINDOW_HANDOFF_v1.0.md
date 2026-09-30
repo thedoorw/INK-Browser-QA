@@ -34,11 +34,13 @@ Read the consolidated design/inspection authority first:
 
 Then execute the current bounded task.
 
+Mandatory visual attachments in the execution CHAT: `PvsI-1.png`, `PvsI-2.png`, `PvsI-3.png`. If absent, stop and request them before visual mutation.
+
 Read and execute:
 
-`ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md`
+`ACTIVE/INK_UI_PVSI_STRUCTURE_DENSITY_REALIGNMENT_DISPATCH_v1.0.md`
 
-This task is the current PS visual-detail conformance pass. It requires actual-page correction of typography, contrast, collapse grammar, global color placement, contextual Options Bar discipline, panel detail cleanup and categorized Preferences structure. Source-route existence is not acceptance.
+This task is the current PvsI structure / size / density realignment pass. The executor must directly inspect the three USER-supplied PvsI comparison images before editing; text summaries, source routes and prior PASS claims are not substitutes.
 
 The historical Photoshop reference measurements, USER interaction captures and checklist requirements named in that work order are active implementation evidence.
 
