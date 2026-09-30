@@ -38,9 +38,9 @@ Mandatory visual authority is stored in GitHub: `reference/ui/photoshop/PvsI-1.p
 
 Read and execute:
 
-`ACTIVE/INK_UI_PVSI_STRUCTURE_DENSITY_REALIGNMENT_DISPATCH_v1.0.md`
+`ACTIVE/INK_UI_PVSI_PIXEL_ALIGNMENT_DEV_DISPATCH_v1.0.md`
 
-This task is the current PvsI structure / size / density realignment pass. The executor must directly inspect the three USER-supplied PvsI comparison images before editing; text summaries, source routes and prior PASS claims are not substitutes.
+This task is the current PvsI pixel-alignment DEV pass. Measure normalized reference/current geometry numerically, use overlay/difference inspection, and revise current INK until shared UI structure/density is within the dispatch tolerance. Do not substitute source claims for rendered evidence.
 
 The historical Photoshop reference measurements, USER interaction captures and checklist requirements named in that work order are active implementation evidence.
 
