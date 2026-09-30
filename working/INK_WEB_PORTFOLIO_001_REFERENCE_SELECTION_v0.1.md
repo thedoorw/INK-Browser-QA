@@ -56,9 +56,6 @@ The current reference provides the required structural ideas:
 - previous/next continuity;
 - secondary indexes/resources that remain within the same shell.
 
-This makes it a stronger first reference for the user's portfolio direction than the previously selected Anthony Burrill portfolio shell.
-
-Anthony Burrill remains in the Web Reference Library but is no longer the primary reproduction target.
 
 ## Portfolio translation
 
