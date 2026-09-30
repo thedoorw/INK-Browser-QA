@@ -3920,3 +3920,18 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   .shell-snap-readout{border-color:#a51fc5;box-shadow:0 0 0 1px rgba(209,47,255,.18)}
   .document-ruler-canvas{image-rendering:auto}
 }
+
+
+/* INK-UI-PVSI-PACK-03 — Tools / global color exact-alignment */
+@media(min-width:761px){
+  .tool-button .tool-icon svg,.ui-b-tool-group .tool-icon svg{width:19px;height:19px;stroke-width:1.45}
+  .ui-b-tool-flyout .subtool-button svg,.brush-family-popover .subtool-button svg{width:15px;height:15px;stroke-width:1.45}
+  .edge-chevron{width:9px;height:8px;display:grid;place-items:center}.edge-chevron svg{width:9px!important;height:8px!important;stroke-width:1.6}.edge-chevron[data-direction="collapse"] svg{transform:rotate(180deg)}
+  .color-utility svg{width:12px;height:12px;stroke-width:1.5}
+  .tool-bottom-utilities{flex:0 0 24px;height:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 4px}
+  .tool-bottom-utilities button{width:24px;height:22px;padding:0;border:0;background:transparent;color:var(--ink-ui-text-muted)}
+  .tool-bottom-utilities button:hover,.tool-bottom-utilities button:focus-visible{background:var(--ink-ui-control-hover);color:var(--ink-ui-text);outline:1px solid var(--ink-ui-focus);outline-offset:-1px}
+  .tool-bottom-utilities svg{width:16px;height:16px;stroke-width:1.45}
+  .tool-button.active{background:var(--ink-ui-control-active);color:var(--ink-ui-text);box-shadow:inset 2px 0 0 var(--ink-ui-accent)}
+  .tool-button:hover{background:var(--ink-ui-control-hover);color:var(--ink-ui-text)}.tool-button[disabled]{opacity:.38}
+}

@@ -63,6 +63,16 @@
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-infinite" viewBox="0 0 24 24"><path d="M8.2 8.1c-2.3 0-4.2 1.7-4.2 3.9s1.9 3.9 4.2 3.9c2.8 0 4.7-2.7 7.6-6 1-1.2 2.1-1.8 3.1-1.8 1.8 0 3.1 1.7 3.1 3.9s-1.3 3.9-3.1 3.9c-1.1 0-2.2-.6-3.2-1.8L12 10c-1.3-1.3-2.5-1.9-3.8-1.9Z"/></symbol>
   <symbol id="i-layout" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 11h8M8 15h5"/></symbol>
+  <symbol id="i-quick-selection" viewBox="0 0 24 24"><path d="M4 4h5M15 4h5M4 20h5M15 20h5M4 4v5M4 15v5M20 4v5M20 15v5"/><path d="m10 8 7 7M14 7l3 3-7 7-3 1 1-3 6-8Z"/></symbol>
+  <symbol id="i-fill" viewBox="0 0 24 24"><path d="m6 5 8 8-6 6-5-5 6-6"/><path d="M14 13h6l1 7H9"/><path d="M16 5h4M18 3v4"/></symbol>
+  <symbol id="i-eyedropper" viewBox="0 0 24 24"><path d="m14 4 6 6-3 3-2-2-7.5 7.5L4 20l1.5-3.5L13 9l-2-2 3-3Z"/><path d="M6 17h4"/></symbol>
+  <symbol id="i-clone-stamp" viewBox="0 0 24 24"><path d="M9 4h6l1 5 3 2v3H5v-3l3-2 1-5Z"/><path d="M6 14v5h12v-5M8 17h8"/></symbol>
+  <symbol id="i-healing" viewBox="0 0 24 24"><path d="m6 17 11-11M4 10l10 10M10 4l10 10"/><path d="M6 6h4v4H6zM14 14h4v4h-4z"/></symbol>
+  <symbol id="i-dodge" viewBox="0 0 24 24"><circle cx="10" cy="10" r="5"/><path d="m14 14 6 6M4 10h2M10 4V2M16 10h2M10 16v2"/></symbol>
+  <symbol id="i-blur" viewBox="0 0 24 24"><path d="M12 3c4 5 7 8.5 7 12a7 7 0 1 1-14 0c0-3.5 3-7 7-12Z"/><path d="M9 17c1.5 1.5 4.5 1.5 6 0"/></symbol>
+  <symbol id="i-color-reset" viewBox="0 0 24 24"><rect x="5" y="5" width="9" height="9"/><rect x="10" y="10" width="9" height="9"/><path d="M4 18v2h2M20 6V4h-2"/></symbol>
+  <symbol id="i-color-swap" viewBox="0 0 24 24"><path d="M5 8h12l-3-3M19 16H7l3 3"/><path d="m14 5 3 3-3 3M10 13l-3 3 3 3"/></symbol>
+  <symbol id="i-screen-mode" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 21h8M12 18v3"/></symbol>
 </svg>
 
 <div id="app" class="app web-shell-v0-1 toolbar-layout-dual" data-panel="brush" data-space="creation" data-shell-panel="layers" data-toolbar-layout="dual" data-document-active="true" data-rulers="false" data-first-paint="ready" style="--active-panel-w:252px">
@@ -231,15 +241,16 @@
     </div>
     <div class="tool-layout-controls" aria-label="工具列版面">
       <button id="toolbarLayoutToggle" class="tool-layout-toggle" type="button" title="切換為雙欄工具列" aria-label="切換為雙欄工具列" aria-pressed="false">
-        <span class="edge-chevron" aria-hidden="true">‹</span>
+        <span class="edge-chevron" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span>
       </button>
     </div>
     <div class="tool-colors" aria-label="前景與背景色">
-      <button id="resetToolColors" class="color-utility color-reset" aria-label="重設前景與背景色">▣</button>
-      <button id="swapToolColors" class="color-utility color-swap" aria-label="交換前景與背景色">⇄</button>
+      <button id="resetToolColors" class="color-utility color-reset" aria-label="重設前景與背景色"><svg><use href="#i-color-reset"/></svg></button>
+      <button id="swapToolColors" class="color-utility color-swap" aria-label="交換前景與背景色"><svg><use href="#i-color-swap"/></svg></button>
       <input id="toolBackgroundColor" class="tool-color background-swatch" type="color" value="#ffffff" aria-label="背景色">
       <input id="toolForegroundColor" class="tool-color foreground-swatch" type="color" value="#202020" aria-label="前景色">
     </div>
+    <div class="tool-bottom-utilities" aria-label="工具列顯示"><button id="toolScreenMode" type="button" data-shell-action="fullscreen" title="切換螢幕模式" aria-label="切換螢幕模式"><svg><use href="#i-screen-mode"/></svg></button></div>
   </nav>
 
   <section id="brushFamilyPopover" class="brush-family-popover elevated-panel" hidden aria-label="繪圖子工具">

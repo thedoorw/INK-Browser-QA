@@ -125,10 +125,11 @@ export function installFullCapabilityControls(app){
     }
   }
 
+  const TOOL_GROUP_ICON_IDS=Object.freeze({draw:'i-pen',lasso:'i-lasso','smart-selection':'i-quick-selection',fill:'i-fill',sampling:'i-eyedropper',clone:'i-clone-stamp',healing:'i-healing',tone:'i-dodge',detail:'i-blur',shape:'i-shape',text:'i-text'});
+  function toolGroupIcon(group){return TOOL_GROUP_ICON_IDS[group.id]||'i-select';}
+  function toolSvg(icon){return '<span class="tool-icon" aria-hidden="true"><svg><use href="#'+icon+'"/></svg></span>';}
   function createToolButton(group){
-    const node=htmlNode('<button type="button" class="tool-button tool-stack ui-b-tool-group" data-ui-b-tool-group="'+esc(group.id)+'" aria-haspopup="menu" aria-expanded="false" title="'+esc(group.label)+'">'+
-      '<span class="tool-icon ui-b-glyph" aria-hidden="true">'+esc(group.icon)+'</span><span class="tool-label">'+esc(group.label)+'</span><span class="stack-corner" aria-hidden="true"></span></button>');
-    return node;
+    return htmlNode('<button type="button" class="tool-button tool-stack ui-b-tool-group" data-ui-b-tool-group="'+esc(group.id)+'" aria-haspopup="menu" aria-expanded="false" title="'+esc(group.label)+'">'+toolSvg(toolGroupIcon(group))+'<span class="tool-label">'+esc(group.label)+'</span><span class="stack-corner" aria-hidden="true"></span></button>');
   }
   function ensureToolFlyout(){
     let flyout=$('#uiBToolFlyout');if(flyout)return flyout;
@@ -140,7 +141,7 @@ export function installFullCapabilityControls(app){
   }
   function openToolGroup(group,anchor){
     const flyout=ensureToolFlyout(),list=$('.brush-family-list',flyout);
-    list.innerHTML=group.tools.map(([id,label])=>'<button type="button" class="subtool-button" data-ui-b-tool="'+esc(id)+'"><span class="ui-b-glyph" aria-hidden="true">•</span><span><strong>'+esc(label)+'</strong></span></button>').join('');
+    list.innerHTML=group.tools.map(([id,label])=>'<button type="button" class="subtool-button" data-ui-b-tool="'+esc(id)+'">'+toolSvg(toolGroupIcon(group))+'<span><strong>'+esc(label)+'</strong></span></button>').join('');
     const rect=anchor.getBoundingClientRect();
     flyout.style.left=(app.isMobile()?Math.max(8,Math.min(innerWidth-204,rect.left)):Math.max(40,rect.right+2))+'px';
     flyout.style.top=(app.isMobile()?Math.max(58,Math.min(innerHeight-320,rect.top-260)):Math.max(61,rect.top))+'px';flyout.hidden=false;
@@ -185,10 +186,13 @@ export function installFullCapabilityControls(app){
       node.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,node),420);});
       ['pointerup','pointercancel','pointerleave'].forEach(type=>node.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
     }
+    const psCapabilityOrder=['[data-tool="select"]','[data-ui-b-tool-group="smart-selection"]','[data-tool="lasso"]','[data-ui-b-tool-group="sampling"]','[data-ui-b-tool-group="healing"]','#drawToolButton','[data-ui-b-tool-group="clone"]','[data-tool="eraser"]','[data-ui-b-tool-group="fill"]','[data-ui-b-tool-group="detail"]','[data-ui-b-tool-group="tone"]','[data-tool="shape"]','[data-tool="text"]','[data-tool="pan"]','[data-tool="image"]'];
+    for(const selector of psCapabilityOrder){const node=$(selector);if(node&&node.parentElement===rail)rail.appendChild(node);}
+    rail.querySelectorAll('.ui-b-glyph').forEach(node=>node.classList.remove('ui-b-glyph'));
     const mobileHost=$('#mobileToolSheet .mobile-tool-grid');
     for(const group of UI_B_TOOL_GROUPS){
       if(!mobileHost||mobileHost.querySelector('[data-ui-b-mobile-group="'+group.id+'"]'))continue;
-      const node=htmlNode('<button type="button" class="tool-button ui-b-mobile-group" data-ui-b-mobile-group="'+esc(group.id)+'" aria-haspopup="menu" aria-expanded="false"><span class="tool-icon ui-b-glyph" aria-hidden="true">'+esc(group.icon)+'</span><span class="tool-label">'+esc(group.label)+'</span></button>');
+      const node=htmlNode('<button type="button" class="tool-button ui-b-mobile-group" data-ui-b-mobile-group="'+esc(group.id)+'" aria-haspopup="menu" aria-expanded="false">'+toolSvg(toolGroupIcon(group))+'<span class="tool-label">'+esc(group.label)+'</span></button>');
       mobileHost.appendChild(node);
       node.addEventListener('click',()=>openToolGroup(group,node));
     }
@@ -197,11 +201,11 @@ export function installFullCapabilityControls(app){
       if(pop){
         for(const [id,label] of [['blender','混色'],['smudge','塗抹']]){
           if(pop.querySelector('[data-ui-b-tool="'+id+'"]'))continue;
-          const node=htmlNode('<button type="button" class="subtool-button" data-ui-b-tool="'+id+'"><span class="ui-b-glyph">•</span><span><strong>'+label+'</strong></span></button>');
+          const node=htmlNode('<button type="button" class="subtool-button" data-ui-b-tool="'+id+'">'+toolSvg('i-brush')+'<span><strong>'+label+'</strong></span></button>');
           pop.appendChild(node);node.addEventListener('click',()=>{activateTool(id);app.toggleBrushFamilyPopover(false);});
         }
         if(!pop.querySelector('[data-ui-b-brush-package="import"]')){
-          const divider=htmlNode('<div class="application-menu-separator" role="separator"></div>'),importButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="import"><span class="ui-b-glyph">↓</span><span><strong>匯入筆刷套件…</strong></span></button>'),exportButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="export"><span class="ui-b-glyph">↑</span><span><strong>匯出筆刷套件…</strong></span></button>');
+          const divider=htmlNode('<div class="application-menu-separator" role="separator"></div>'),importButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="import">'+toolSvg('i-export')+'<span><strong>匯入筆刷套件…</strong></span></button>'),exportButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="export">'+toolSvg('i-export')+'<span><strong>匯出筆刷套件…</strong></span></button>');
           pop.append(divider,importButton,exportButton);
           importButton.addEventListener('click',()=>pickBrushPackage());
           exportButton.addEventListener('click',()=>{$('#brushPackageExport')?.click();app.toggleBrushFamilyPopover(false);});

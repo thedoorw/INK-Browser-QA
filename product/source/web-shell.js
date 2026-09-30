@@ -324,7 +324,7 @@
       const dual = effective === 'dual';
       button.setAttribute('aria-pressed', String(dual));
       button.setAttribute('aria-label', dual ? '切換為單欄工具列' : '切換為雙欄工具列');
-      button.querySelector('.edge-chevron').textContent = dual ? '‹' : '›';
+      const edge=button.querySelector('.edge-chevron');if(edge)edge.dataset.direction=dual?'collapse':'expand';
     }
     if (persist) {
       try { localStorage.setItem(TOOLBAR_LAYOUT_KEY, normalized); } catch {}
