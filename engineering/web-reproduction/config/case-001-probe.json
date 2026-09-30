@@ -1,0 +1,15 @@
+{
+  "caseId": "CASE-001-THE-MINIMALISTS-REFERENCE-PROBE",
+  "targetRoot": "https://www.theminimalists.com/",
+  "captureCandidates": ["/"],
+  "viewports": [
+    { "name": "desktop", "width": 1440, "height": 900 },
+    { "name": "mobile", "width": 390, "height": 844 }
+  ],
+  "referenceValidation": {
+    "require2xx": true,
+    "expectedTitleContains": "The Minimalists",
+    "expectedHomeLinks": ["/podcast/", "/books/", "/films/", "/tour/", "/resources/"]
+  },
+  "artifactsDir": "artifacts/case-001-reference-probe"
+}
