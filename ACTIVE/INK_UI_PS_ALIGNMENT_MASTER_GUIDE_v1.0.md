@@ -24,9 +24,16 @@ Generic reusable rules are in:
 
 ### Primary visible authority
 
-- USER-supplied `ps-1.png`
-- USER-supplied `ps-2.png`
-- USER current visual instructions and acceptance/rejection
+Durable GitHub reference assets:
+
+- `reference/ui/photoshop/ps-1.png`
+- `reference/ui/photoshop/PS-2.png`
+- `reference/ui/photoshop/PS-3.png`
+- `reference/ui/photoshop/PvsI-1.png`
+- `reference/ui/photoshop/PvsI-2.png`
+- `reference/ui/photoshop/PvsI-3.png`
+
+USER current visual instructions and acceptance/rejection remain the highest current authority.
 
 ### Target-product authority
 
@@ -740,7 +747,7 @@ The current bounded implementation pass uses:
 - `PvsI-2.png`
 - `PvsI-3.png`
 
-These three images must be present in the execution CHAT window unless they are later stored as durable GitHub reference assets.
+These images are now stored as durable GitHub reference assets. A USER re-upload is not required as the authority source; the executor must inspect the exact repository assets, retrieving/materializing them when necessary.
 
 They are immediate comparison authority for:
 
