@@ -177,7 +177,7 @@ async function captureLivePages(root,identity){
     }
     const auditUrl=LIVE_BASE+LIVE_HARNESS+'?mode=audit&target='+encodeURIComponent(TARGET_SHA);
     urls.audit=auditUrl;
-    const dump=await browserCommand(executable,[...common,'--dump-dom',auditUrl],120000);
+    const dump=await browserCommand(executable,[...common,'--virtual-time-budget=30000','--dump-dom',auditUrl],120000);
     const match=dump.stdout.match(/<pre id="pvsiMetrics"[^>]*>([\s\S]*?)<\/pre>/i);
     if(!match)throw new Error('live metrics marker missing from audit dump');
     const unescape=s=>s.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');

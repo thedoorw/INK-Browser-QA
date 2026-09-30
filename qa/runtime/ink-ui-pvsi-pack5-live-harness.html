@@ -23,7 +23,12 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
   const safeText=e=>String(e?.textContent||e?.value||'').replace(/\s+/g,' ').trim();
   const q=s=>d.querySelector(s),qa=s=>[...d.querySelectorAll(s)];
   const shell=w.INK_WEB_SHELL;
-  const prefCategory=async category=>{w.dispatchEvent(new w.CustomEvent('ink:branding-open',{detail:{category}}));await sleep(140);q('[data-preference-category="'+category+'"]')?.click();await sleep(80);};
+  const prefCategory=async category=>{
+    for(let i=0;i<200&&!q('[data-preference-category]');i++)await sleep(50);
+    if(!q('[data-preference-category]'))throw new Error('Preferences controller unavailable');
+    w.dispatchEvent(new w.CustomEvent('ink:branding-open',{detail:{category}}));await sleep(180);
+    q('[data-preference-category="'+category+'"]')?.click();await sleep(100);
+  };
   const panel=async id=>{shell.open(id);await sleep(140);};
 
   const prefMap={
