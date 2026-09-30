@@ -710,6 +710,8 @@ export function installFullCapabilityControls(app){
       if(command==='filter-gallery')return openDialog('filter-gallery');
       if(command==='liquify')return openDialog('liquify');
       if(command==='guides:toggle'){const guides=app.page().guides||[];const visible=guides.some(guide=>guide.visible!==false);for(const guide of guides)app.setGuideVisible(guide.id,!visible);return;}
+      if(command==='guides:lock'){const guides=app.page().guides||[];const lock=guides.some(guide=>!guide.locked);for(const guide of guides)app.setGuideLocked(guide.id,lock);return;}
+      if(command==='guides:clear'){for(const guide of [...(app.page().guides||[])])app.removeGuide(guide.id);return;}
       if(command==='keyboard-shortcuts')return openDialog('keyboard-shortcuts');
       if(command==='updates'){globalThis.dispatchEvent(new CustomEvent('ink:branding-open',{detail:{category:'storage'}}));$('#checkUpdateBtn')?.click();return;}
       if(command==='pen-calibration')return globalThis.dispatchEvent(new CustomEvent('ink:branding-open',{detail:{category:'tools'}}));

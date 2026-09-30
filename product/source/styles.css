@@ -3911,3 +3911,12 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   .subtool-button:focus-visible,
   .panel-options-menu button:focus-visible{outline:1px solid var(--ink-ui-focus);outline-offset:-1px}
 }
+
+
+/* INK-UI-PVSI-PACK-02 — ruler / guide / snap exact-alignment */
+@media(min-width:761px){
+  .shell-guide-preview{background:#00a8ff}
+  .shell-guide-preview[data-kind="placed"]{background:#00a8ff}
+  .shell-snap-readout{border-color:#a51fc5;box-shadow:0 0 0 1px rgba(209,47,255,.18)}
+  .document-ruler-canvas{image-rendering:auto}
+}

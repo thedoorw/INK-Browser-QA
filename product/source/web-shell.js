@@ -511,6 +511,20 @@
     return Number(normalized.toFixed(decimals)).toString();
   }
 
+  function rulerUnitInfo(app) {
+    const unit = app?.page?.()?.artboard?.unit === 'px' ? 'px' : 'mm';
+    return { unit, factor: unit === 'mm' ? 25.4 / 96 : 1, suffix: unit };
+  }
+
+  function drawVerticalRulerLabel(ctx, label, pixel) {
+    const chars = String(label).split('');
+    ctx.save();
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    chars.forEach((char, index) => ctx.fillText(char, 1, pixel - 2 + index * 7));
+    ctx.restore();
+  }
+
   function renderDocumentRuler(ruler, axis, app) {
     const renderer = app?.renderer;
     const canvas = ruler?.querySelector('[data-ruler-canvas]');
@@ -540,14 +554,18 @@
       ? renderer.screenToWorld(rect.right, stageRect.top)
       : renderer.screenToWorld(stageRect.left, rect.bottom);
     if (!sampleStart || !sampleEnd) return false;
-    const startValue = axis === 'horizontal' ? sampleStart.x : sampleStart.y;
-    const endValue = axis === 'horizontal' ? sampleEnd.x : sampleEnd.y;
+    const unitInfo = rulerUnitInfo(app);
+    const startWorld = axis === 'horizontal' ? sampleStart.x : sampleStart.y;
+    const endWorld = axis === 'horizontal' ? sampleEnd.x : sampleEnd.y;
+    const startValue = startWorld * unitInfo.factor;
+    const endValue = endWorld * unitInfo.factor;
     const span = endValue - startValue;
     if (!Number.isFinite(span) || Math.abs(span) < Number.EPSILON) return false;
+    ruler.dataset.unit = unitInfo.unit;
 
-    const worldPerPixel = Math.abs(span) / length;
-    const major = niceRulerStep(worldPerPixel);
-    const subdivisions = major / worldPerPixel >= 70 ? 10 : 5;
+    const displayPerPixel = Math.abs(span) / length;
+    const major = niceRulerStep(displayPerPixel);
+    const subdivisions = major / displayPerPixel >= 70 ? 10 : 5;
     const minor = major / subdivisions;
     const minValue = Math.min(startValue, endValue);
     const maxValue = Math.max(startValue, endValue);
@@ -581,11 +599,7 @@
       if (axis === 'horizontal') {
         ctx.fillText(label, pixel + 2, 0);
       } else {
-        ctx.save();
-        ctx.translate(1, pixel - 2);
-        ctx.rotate(-Math.PI / 2);
-        ctx.fillText(label, 0, 0);
-        ctx.restore();
+        drawVerticalRulerLabel(ctx, label, pixel);
       }
     }
     return true;
@@ -620,6 +634,11 @@
       stage.addEventListener('pointermove', syncViewOverlaysSoon, { passive: true });
       stage.addEventListener('pointerup', syncViewOverlaysSoon, { passive: true });
       stage.addEventListener('wheel', syncViewOverlaysSoon, { passive: true });
+    }
+    const artboardUnit = document.querySelector('#artboardUnit');
+    if (artboardUnit && artboardUnit.dataset.shellRulerBound !== 'true') {
+      artboardUnit.dataset.shellRulerBound = 'true';
+      artboardUnit.addEventListener('change', syncViewOverlaysSoon);
     }
     renderDocumentRulers();
     return true;
@@ -721,8 +740,10 @@
     const root = state.root || document.querySelector('#app');
     const app = runtime();
     const chrome = createDocumentChrome();
-    if (!root || !app || !chrome || chrome.dataset.guideBound === 'true') return Boolean(chrome?.dataset.guideBound === 'true');
+    const stageNode = document.querySelector('#stageWrap');
+    if (!root || !app || !chrome || !stageNode || chrome.dataset.guideBound === 'true') return Boolean(chrome?.dataset.guideBound === 'true');
     chrome.dataset.guideBound = 'true';
+
     const preview = document.createElement('div');
     preview.id = 'shellGuidePreview';
     preview.className = 'shell-guide-preview';
@@ -734,15 +755,36 @@
     root.append(preview, readout);
     state.guidePreview = preview;
     state.guideReadout = readout;
+
     let drag = null;
-    const move = event => {
-      if (!drag) return;
-      const stage = document.querySelector('#stageWrap')?.getBoundingClientRect();
-      if (!stage) return;
-      const world = app.renderer?.screenToWorld?.(event.clientX, event.clientY);
-      if (!world) return;
-      const value = drag.orientation === 'horizontal' ? world.y : world.x;
+    const unitText = value => {
+      const info = rulerUnitInfo(app);
+      const shown = value * info.factor;
+      const decimals = info.unit === 'mm' ? 1 : (Math.abs(shown) < 10 ? 1 : 0);
+      return shown.toFixed(decimals) + ' ' + info.suffix;
+    };
+    const guideScreenPosition = guide => {
+      const point = app.renderer?.worldToScreen?.(
+        guide.orientation === 'vertical' ? { x: guide.position, y: 0 } : { x: 0, y: guide.position }
+      );
+      return guide.orientation === 'vertical' ? point?.x : point?.y;
+    };
+    const hitGuide = event => {
+      let best = null;
+      for (const guide of app.page()?.guides || []) {
+        if (guide.visible === false || guide.locked) continue;
+        const pixel = guideScreenPosition(guide);
+        if (!Number.isFinite(pixel)) continue;
+        const cursor = guide.orientation === 'vertical' ? event.clientX : event.clientY;
+        const distance = Math.abs(cursor - pixel);
+        if (distance <= 4 && (!best || distance < best.distance)) best = { guide, distance };
+      }
+      return best?.guide || null;
+    };
+    const updatePreview = (event, value) => {
+      const stage = stageNode.getBoundingClientRect();
       preview.dataset.axis = drag.orientation;
+      preview.dataset.kind = drag.source;
       if (drag.orientation === 'horizontal') {
         preview.style.left = stage.left + 'px';
         preview.style.top = event.clientY + 'px';
@@ -755,37 +797,63 @@
         preview.style.height = stage.height + 'px';
       }
       preview.hidden = false;
-      readout.value = (drag.orientation === 'horizontal' ? 'Y: ' : 'X: ') + value.toFixed(1);
-      readout.style.left = Math.max(6, Math.min(globalThis.innerWidth - 74, event.clientX + 10)) + 'px';
+      readout.value = (drag.orientation === 'horizontal' ? 'Y: ' : 'X: ') + unitText(value);
+      readout.textContent = readout.value;
+      readout.style.left = Math.max(6, Math.min(globalThis.innerWidth - 92, event.clientX + 10)) + 'px';
       readout.style.top = Math.max(6, Math.min(globalThis.innerHeight - 28, event.clientY + 10)) + 'px';
       readout.hidden = false;
       drag.value = value;
       drag.inside = event.clientX >= stage.left && event.clientX <= stage.right && event.clientY >= stage.top && event.clientY <= stage.bottom;
+    };
+    const move = event => {
+      if (!drag) return;
+      const world = app.renderer?.screenToWorld?.(event.clientX, event.clientY);
+      if (!world) return;
+      updatePreview(event, drag.orientation === 'horizontal' ? world.y : world.x);
       event.preventDefault();
     };
     const end = event => {
       if (!drag) return;
-      const commit = drag.inside && Number.isFinite(drag.value);
-      const orientation = drag.orientation;
-      const value = drag.value;
+      const current = drag;
+      const commit = current.inside && Number.isFinite(current.value);
       drag = null;
       preview.hidden = true;
       readout.hidden = true;
-      globalThis.removeEventListener('pointermove', move);
-      globalThis.removeEventListener('pointerup', end);
-      globalThis.removeEventListener('pointercancel', end);
-      if (commit) app.addGuide?.({ orientation, position: value });
+      globalThis.removeEventListener('pointermove', move, true);
+      globalThis.removeEventListener('pointerup', end, true);
+      globalThis.removeEventListener('pointercancel', end, true);
+      if (current.source === 'ruler') {
+        if (commit) app.addGuide?.({ orientation: current.orientation, position: current.value });
+      } else if (current.source === 'placed') {
+        if (commit) app.moveGuide?.(current.id, current.value);
+        else app.removeGuide?.(current.id);
+      }
+      syncViewOverlaysSoon();
+      event?.preventDefault?.();
     };
+    const begin = (event, initial) => {
+      drag = initial;
+      globalThis.addEventListener('pointermove', move, true);
+      globalThis.addEventListener('pointerup', end, true);
+      globalThis.addEventListener('pointercancel', end, true);
+      move(event);
+    };
+
     chrome.querySelectorAll('[data-ruler-axis]').forEach(ruler => {
       ruler.addEventListener('pointerdown', event => {
         if (!isDesktop() || root.dataset.rulers !== 'true' || root.dataset.documentActive === 'false' || event.button !== 0) return;
-        drag = { orientation: ruler.dataset.rulerAxis, value: NaN, inside: false };
-        globalThis.addEventListener('pointermove', move);
-        globalThis.addEventListener('pointerup', end);
-        globalThis.addEventListener('pointercancel', end);
-        move(event);
+        begin(event, { source: 'ruler', orientation: ruler.dataset.rulerAxis, value: NaN, inside: false });
       });
     });
+
+    stageNode.addEventListener('pointerdown', event => {
+      if (!isDesktop() || root.dataset.rulers !== 'true' || event.button !== 0) return;
+      const guide = hitGuide(event);
+      if (!guide) return;
+      event.preventDefault();
+      event.stopPropagation();
+      begin(event, { source: 'placed', id: guide.id, orientation: guide.orientation, value: guide.position, inside: true });
+    }, true);
     return true;
   }
 

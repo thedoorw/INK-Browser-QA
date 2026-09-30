@@ -100,6 +100,8 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'view-snap-angle', menu:'view', section:'snap', label:'吸附至角度', command:'snap:angle', authority:'page.snap' },
   { id:'view-snap-equal', menu:'view', section:'snap', label:'吸附至等距', command:'snap:equalDistance', authority:'page.snap' },
   { id:'view-guides-show', menu:'view', section:'guide', label:'顯示／隱藏參考線', command:'guides:toggle', authority:'Document guides' },
+  { id:'view-guides-lock', menu:'view', section:'guide', label:'鎖定／解鎖參考線', command:'guides:lock', authority:'Document guides' },
+  { id:'view-guides-clear', menu:'view', section:'guide', label:'清除參考線', command:'guides:clear', authority:'Document guides' },
   { id:'view-workspace-creation', menu:'view', section:'workspace', label:'工作區：創作', command:'workspace:creation', authority:'Workspace' },
   { id:'view-workspace-layout', menu:'view', section:'workspace', label:'工作區：版面', command:'workspace:layout', authority:'Workspace' },
 
