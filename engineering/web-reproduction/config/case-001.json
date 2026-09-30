@@ -19,9 +19,32 @@
     "/resources/"
   ],
   "viewports": [
-    { "name": "desktop", "width": 1440, "height": 900 },
-    { "name": "compact", "width": 1024, "height": 768 },
-    { "name": "mobile", "width": 390, "height": 844 }
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "compact",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    }
   ],
-  "artifactsDir": "artifacts/case-001"
+  "artifactsDir": "artifacts/case-001",
+  "referenceValidation": {
+    "require2xx": true,
+    "expectedTitleContains": "The Minimalists",
+    "expectedHomeLinks": [
+      "/podcast/",
+      "/books/",
+      "/films/",
+      "/tour/",
+      "/resources/"
+    ]
+  }
 }
