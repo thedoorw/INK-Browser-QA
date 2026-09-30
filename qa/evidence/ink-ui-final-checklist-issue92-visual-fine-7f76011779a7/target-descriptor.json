@@ -1,0 +1,14 @@
+{
+  "schema": "ink-ui-issue92-visual-fine-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "7f76011779a7d903ea5ec63f25ced9efedcca9d4",
+  "scope": "PvsI package 04 P01-P06 N01-N04 L01-L06 S01-S02 visual evidence / no central Runtime",
+  "suites": [
+    "visual-fine-detail",
+    "panels-navigator-layers-status"
+  ],
+  "central_runtime": false,
+  "run_generation": 9,
+  "note": "Adds exact 1280x994 panel geometry state, panel resize persistence, layer state topology, Navigator order, and high-zoom document scrollbar/status evidence."
+}
