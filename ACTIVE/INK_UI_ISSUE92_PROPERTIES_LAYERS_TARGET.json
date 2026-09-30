@@ -1,8 +1,8 @@
 {
   "schema": "ink-ui-issue92-properties-layers-target",
   "version": 1,
-  "target_sha": "d2e3aad0bab179d1318cf28796ed317be7fe97f9",
-  "scope": "J03 J04 J06 J07 J08 K10 exact-candidate mutation + J09 K13 regression / no central Runtime",
+  "target_sha": "7f76011779a7d903ea5ec63f25ced9efedcca9d4",
+  "scope": "PvsI package 04 Layers topology + supported appearance exact-candidate recheck / no central Runtime",
   "central_runtime": false,
-  "run_generation": 2
+  "run_generation": 3
 }

@@ -148,6 +148,36 @@ try{
     seedCanvas(app);app.fitContent?.();shell.open('navigator');await sleep(150);
   }else if(mode==='navigator-zoom'){
     seedCanvas(app);app.fitContent?.();app.zoomBy?.(1.8);app.page().camera.x+=70;app.page().camera.y-=45;app.renderer.render();app.updateStatus?.();shell.open('navigator');await sleep(160);
+    extra.navigatorOrder=[...d.querySelector('.navigator-footer')?.children||[]].map(e=>e.id);
+    extra.navigatorFooter=rect(d.querySelector('.navigator-footer'));
+  }else if(mode==='panel-exact'){
+    seedCanvas(app);shell.open('layers');await sleep(160);
+    const host=d.querySelector('#shellPanelStackFramework');
+    extra.panelExact={
+      viewport:{width:w.innerWidth,height:w.innerHeight},
+      host:rect(host),
+      regions:[...host?.querySelectorAll('[data-panel-stack-group]')||[]].map(e=>({group:e.dataset.panelStackGroup,rect:rect(e)})),
+      splitters:[...host?.querySelectorAll('.panel-stack-splitter')||[]].map(rect),
+      tabs:[...host?.querySelectorAll('.panel-stack-tabs')||[]].map(rect),
+      optionsUses:[...host?.querySelectorAll('.panel-stack-options use')||[]].map(e=>e.getAttribute('href')),
+      edgeUse:host?.querySelector('.panel-edge-toggle use')?.getAttribute('href')||null
+    };
+  }else if(mode==='panel-resize'){
+    seedCanvas(app);shell.open('layers');await sleep(120);
+    const edge=d.querySelector('#shellActivePanelResizer'),before=shell.state().panelWidth,root=d.querySelector('#app'),rr=root.getBoundingClientRect();
+    if(edge){edge.dispatchEvent(new w.PointerEvent('pointerdown',{bubbles:true,pointerId:41,pointerType:'mouse',button:0,clientX:rr.right-before,clientY:300}));w.dispatchEvent(new w.PointerEvent('pointermove',{bubbles:true,pointerId:41,pointerType:'mouse',buttons:1,clientX:rr.right-310,clientY:300}));w.dispatchEvent(new w.PointerEvent('pointerup',{bubbles:true,pointerId:41,pointerType:'mouse',button:0,clientX:rr.right-310,clientY:300}));await sleep(120);}
+    extra.panelResize={before,after:shell.state().panelWidth,stored:w.localStorage.getItem('ink-inspector-width'),edge:rect(edge)};
+  }else if(mode==='layers-states'){
+    const page=app.page();page.layers.splice(0,page.layers.length);
+    const layerA={id:'qa-layer-a',name:'圖層 1',visible:true,locked:false,opacity:1,objects:[pathObject('qa-la','A',60,70,100,90)]};
+    const layerB={id:'qa-layer-b',name:'這是一個非常長的圖層名稱用來驗證 Photoshop 截斷狀態',visible:false,locked:false,opacity:.72,objects:[pathObject('qa-lb','B',220,100,100,90)]};
+    const layerC={id:'qa-layer-c',name:'鎖定圖層',visible:true,locked:true,opacity:1,objects:[pathObject('qa-lc','C',360,130,100,90)]};
+    page.layers.push(layerA,layerB,layerC);page.activeLayerId=layerB.id;app.refreshAll();shell.open('layers');await sleep(180);
+    const rows=[...d.querySelectorAll('#layersList .layer-row')];
+    extra.layerStates={rows:rows.map(e=>({id:e.dataset.layerId,rect:rect(e),selected:e.getAttribute('aria-selected'),text:safeText(e),eyeUse:e.querySelector('.layer-visibility use')?.getAttribute('href')||null,thumbUse:e.querySelector('.layer-thumb use')?.getAttribute('href')||null,lockUse:e.querySelector('.layer-lock use')?.getAttribute('href')||null})),appearance:rect(d.querySelector('#uiBLayerAppearance')),opacity:rect(d.querySelector('.layer-opacity-card')),footer:rect(d.querySelector('.layer-bottom-toolbar')),footerUses:[...d.querySelectorAll('.layer-bottom-toolbar use')].map(e=>e.getAttribute('href'))};
+  }else if(mode==='status-scrollbars'){
+    seedCanvas(app);app.fitContent?.();app.zoomBy?.(4);app.page().camera.x+=120;app.page().camera.y+=80;app.renderer.render();app.updateStatus?.();w.dispatchEvent(new w.Event('resize'));await sleep(180);
+    extra.statusScrollbars={status:rect(d.querySelector('#documentStatusStrip')),viewControls:rect(d.querySelector('#documentStatusStrip .view-controls')),documentInfo:rect(d.querySelector('#documentStatusStrip .document-status-info')),x:rect(d.querySelector('.document-scrollbar-horizontal')),y:rect(d.querySelector('.document-scrollbar-vertical')),corner:rect(d.querySelector('.document-scrollbar-corner')),xValue:d.querySelector('#shellDocumentScrollX')?.value,yValue:d.querySelector('#shellDocumentScrollY')?.value};
   }else if(mode==='libraries'){
     seedLibraries(app);shell.open('libraries');await sleep(160);
   }else if(mode==='compact'){

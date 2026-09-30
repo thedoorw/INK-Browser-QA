@@ -2,8 +2,8 @@
   "schema": "ink-ui-issue92-layers-history-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "306ff4e5364eeebe66fd811f5d93693bc96a3575",
+  "target_sha": "7f76011779a7d903ea5ec63f25ced9efedcca9d4",
   "central_runtime": false,
-  "run_generation": 3,
-  "qa_harness_correction": "reorder across two rows; #layersList scroll container; stop browser before profile cleanup"
+  "run_generation": 4,
+  "scope": "PvsI package 04 Layers reorder/state exact-candidate recheck"
 }
