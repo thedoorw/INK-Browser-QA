@@ -1,0 +1,28 @@
+{
+  "schema": "ai-dev-state-transitions",
+  "version": "0.1",
+  "terminal_states": ["ACCEPTED", "CANCELLED"],
+  "states": {
+    "PLANNED": ["BUILDING", "BLOCKED", "CANCELLED"],
+    "BUILDING": ["ARTIFACT_READY", "BLOCKED", "CANCELLED"],
+    "ARTIFACT_READY": ["REVIEWING", "BUILDING", "BLOCKED", "CANCELLED"],
+    "REVIEWING": ["USER_CHECKPOINT", "ACCEPTED", "REVISE", "BLOCKED", "CANCELLED"],
+    "REVISE": ["BUILDING", "BLOCKED", "CANCELLED"],
+    "USER_CHECKPOINT": ["ACCEPTED", "REVISE", "BLOCKED", "CANCELLED"],
+    "BLOCKED": ["PLANNED", "BUILDING", "ARTIFACT_READY", "REVIEWING", "REVISE", "USER_CHECKPOINT", "CANCELLED"],
+    "ACCEPTED": [],
+    "CANCELLED": []
+  },
+  "transition_requirements": {
+    "PLANNED->BUILDING": ["task_id", "authority.work_order", "identity.base_sha", "current_owner"],
+    "BUILDING->ARTIFACT_READY": ["identity.target_sha", "identity.artifact.status=VERIFIED", "identity.artifact.sha256"],
+    "ARTIFACT_READY->REVIEWING": ["evidence_plan", "next_owner"],
+    "REVIEWING->USER_CHECKPOINT": ["all_non_user_required_evidence_verified", "user_checkpoint.required=true"],
+    "REVIEWING->ACCEPTED": ["all_required_evidence_verified", "user_checkpoint.required=false"],
+    "REVIEWING->REVISE": ["review_findings_present"],
+    "USER_CHECKPOINT->ACCEPTED": ["user_checkpoint.status=ACCEPTED", "USER_evidence_verified"],
+    "USER_CHECKPOINT->REVISE": ["user_checkpoint.status=REJECTED_OR_REVISION"],
+    "ANY->BLOCKED": ["open_blockers_nonempty", "blocker_owner_defined"],
+    "BLOCKED->ANY_NONTERMINAL": ["resume_state_matches", "blocking_condition_cleared"]
+  }
+}
