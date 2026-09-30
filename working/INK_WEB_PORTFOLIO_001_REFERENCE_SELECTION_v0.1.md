@@ -7,83 +7,92 @@ PROGRAM = INK-WEB-PORTFOLIO-001
 PHASE = B — Reference Selection
 OWNER = WR
 STATUS = SELECTED
-PRIMARY_REFERENCE = Anthony Burrill
-REFERENCE_URL = https://anthonyburrill.com/
-REPRODUCTION_SCOPE = PORTFOLIO SHELL ONLY
+PRIMARY_REFERENCE = The Minimalists
+REFERENCE_URL = https://www.theminimalists.com/
+REPRODUCTION_SCOPE = INFORMATION ARCHITECTURE + LAYOUT GRAMMAR + INTERACTION PATTERNS
+CONTENT_COPY = PROHIBITED
 INK_PRODUCT_CHANGE_REQUIRED = NO
 ```
 
 ## Selected target
 
-The first reproduction target is the current Anthony Burrill portfolio shell.
+The first reproduction target is the current public presentation system of The Minimalists.
 
 Primary public evidence:
-- https://anthonyburrill.com/
-- https://anthonyburrill.com/archive/
-- https://anthonyburrill.com/profile/
-- representative project page: https://anthonyburrill.com/showcase/ampersand_chair/
+- https://www.theminimalists.com/
+- https://www.theminimalists.com/start/
+- https://www.theminimalists.com/resources/
+- https://www.theminimalists.com/archives/
+
+Anthony Burrill remains in the reference library but is no longer the first reproduction target.
 
 ## Why this target
 
-It satisfies the first-program criteria with a bounded surface:
+It directly matches the intended first portfolio direction:
 
-- mature, finished creative portfolio;
-- clear navigation and project hierarchy;
-- project index → project detail pattern;
-- separate Archive and Profile structures;
-- typography-led presentation suitable for measurement;
-- no private backend is required for the portfolio portion;
-- structure can later accept INK Creative Reproduction Benchmark cases.
+- non-full-width editorial reading experience;
+- continuously extensible article/feed structure that never looks unfinished;
+- strong text hierarchy with restrained imagery;
+- index/feed → detail-page reading pattern;
+- pagination/archive structures suitable for a growing portfolio;
+- resource/index pages that can later become portfolio categories;
+- bounded interaction surface suitable for a static GitHub Pages implementation.
 
 ## First-reproduction scope
 
 Include:
-- global shell / navigation;
-- Showcase index;
-- representative project-detail template;
-- Archive index;
-- Profile page;
-- footer/contact structure;
-- desktop / narrower desktop-tablet / mobile responsive states.
+- global shell / header / navigation;
+- narrow editorial content column;
+- homepage feed/list rhythm;
+- MORE-style detail navigation;
+- article/project detail template;
+- pagination / archive navigation;
+- Start/guide-style long-form index pattern;
+- Resources-style repeated card/list pattern;
+- footer;
+- desktop / tablet / mobile responsive behavior;
+- material hover/focus/navigation interactions.
 
 Exclude:
-- Shop;
-- cart;
-- checkout;
-- payment;
-- newsletter backend;
-- analytics;
-- any third-party commerce behavior.
+- reference text, images, logos and brand identity assets;
+- email/newsletter backend;
+- commerce, membership, analytics or private services;
+- copied proprietary source code.
 
-## Reproduction method
+## Fast-path reproduction method
 
 ```text
-observe / capture
-→ measure
-→ infer layout tokens
-→ decompose components
-→ independently implement
-→ visual compare
-→ responsive compare
-→ correct
+LIVE URL
+→ AI URL/screenshot reconstruction for first scaffold
+→ immediately replace reference content/assets with neutral placeholders
+→ GitHub-controlled implementation
+→ WR visual/interaction correction
+→ responsive QA
+→ GitHub Pages
 ```
 
-Do not copy the reference site's source code.
+Primary accelerator candidate:
+- Replit Design / Agent: live URL import or screenshot recreation, then Git/GitHub workflow.
 
-Third-party images, logos or other protected reference assets must not be committed as portfolio assets unless their reuse is clearly permitted. Reference URLs may be retained as evidence. The deployed reproduction should use user-owned, repository-owned or otherwise licensed-safe content.
+Secondary evaluation-only fallback:
+- 10Web Clone Agent can rapidly generate a page-level editable clone, but its current output is WordPress-oriented and should not become the production architecture for this program.
+
+Manual research is no longer a prerequisite for implementation. Research is only used to resolve a visible mismatch or unknown interaction encountered during reproduction.
 
 ## Acceptance direction
 
-The first pass is not judged by artistic originality. It is judged by whether the reproduction process can reliably recover and rebuild:
+The first pass is judged by whether it recovers and reproduces:
 - shell geometry;
+- editorial content width;
 - typography hierarchy;
-- project grid behavior;
-- content rhythm;
-- project-detail structure;
-- responsive transformations.
+- feed/list rhythm;
+- detail-page reading flow;
+- pagination/archive behavior;
+- responsive transformations;
+- interaction behavior that materially affects navigation or reading.
 
-Exact measurements remain pending browser capture.
+Exact reference content is not part of acceptance.
 
 ## Next
 
-Issue Phase C WEB DEV Work Order.
+Execute Phase C using the fast-path Work Order.
