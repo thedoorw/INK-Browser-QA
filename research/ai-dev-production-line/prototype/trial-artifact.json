@@ -1,0 +1,7 @@
+{
+  "trial_id": "AI-DEV-TRIAL-STATE-HANDOFF-001",
+  "scope": "R_AND_D_ONLY_NO_INK_PRODUCT_MUTATION",
+  "purpose": "Prove that an exact GitHub state record can hand an artifact to an isolated reviewer without USER relaying role history.",
+  "source_main_sha": "f10acf3384e27becb6a5eb54e009077e0d7da7a0",
+  "result": "ARTIFACT_CREATED_FOR_IDENTITY_AND_HANDOFF_TEST"
+}
