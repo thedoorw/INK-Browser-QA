@@ -532,3 +532,28 @@ USER DECISION NEEDED
 ```
 
 Do not mix these stages into one vague PASS/FAIL narrative.
+
+## 25. Exact-fidelity measurement and evidence discipline
+
+When USER requires exact similarity, shared geometry targets zero delta in the matched reference environment/state. An approximate token, estimated dimension or numeric tolerance must not silently weaken that instruction. Record measurement precision and raster/platform uncertainty separately; unknown values stay unverified.
+
+Separate coordinate systems:
+- application/OS chrome;
+- document content under document zoom;
+- embedded screenshots inside that document;
+- target browser CSS pixels and screenshot raster pixels.
+
+Document zoom is not UI scaling. Normalize using multiple independent chrome anchors and original capture metadata. Do not assume one composite-wide scale from a zoom label. If a scale is unresolved, retain the evidence gap rather than manufacture an exact measurement.
+
+For every item preserve:
+requirement ID, reference artifact/hash/crop, coordinate system, viewport/DPR/zoom/OS scale, UI state, source/artifact/deployment/browser identity, before/after rendered evidence, reference/current values and deltas, measurement uncertainty, interaction result and explicit exception authority.
+
+Keep verification status separate from delta disposition. Unobserved state and missing reference are evidence gaps, not fifth exception categories. PLATFORM_RENDERING, REFERENCE_SCALE_LIMIT and VALID_USER_STATE cannot waive an observed delta.
+
+Distinguish SOURCE_COMPUTED, DOM_MEASURED, RENDERED_MEASURED and INTERACTION_OBSERVED. A theoretical layout residual is not a screenshot residual; matching a container does not verify its contents, and a normal/empty state does not verify other states.
+
+Same-class inspection requires an enumerated member list and a per-member state/evidence matrix. Verify stable rendered state after interactions; accessibility transitions and screenshots may initially describe different animation frames. Keep first-paint evidence separate from stable-state evidence.
+
+A reviewer who has already read previous conclusions may perform a delta-first sweep, but must not claim fully blind independent review. Record input exposure and preserve unreviewed-reference/render-only discovery where practical.
+
+HTTP asset identity plus DOM resource URLs does not prove browser-executed bytes or all transitive modules. State partial identity chains accurately rather than closing them from a source SHA alone.

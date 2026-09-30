@@ -1,0 +1,11 @@
+{
+  "scripts": [
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/web-shell.js?v=0.1-ps-detail2",
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/ui/branding-settings.js?v=0.1-ps-detail2",
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/src/ink.js?v=0.1-ps-reassembly2"
+  ],
+  "styles": [
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/styles.css?v=0.1-ps-detail2"
+  ],
+  "title": "INK v0.1 · Web"
+}

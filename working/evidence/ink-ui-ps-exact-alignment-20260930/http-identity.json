@@ -1,0 +1,14 @@
+[
+  {
+    "file": "styles.css",
+    "source_sha256": "18ece7b37d1f214cda1c3a568f9d98bf1d70bafdc6d9dd8b0f04feba1281dcc2",
+    "deployed_http_sha256": "18ece7b37d1f214cda1c3a568f9d98bf1d70bafdc6d9dd8b0f04feba1281dcc2",
+    "equal": true
+  },
+  {
+    "file": "web-shell.js",
+    "source_sha256": "4b84874ebde8c0b66cea40cb75f9eac0b25f3d78c7959ade1572e703ab0bdfc5",
+    "deployed_http_sha256": "4b84874ebde8c0b66cea40cb75f9eac0b25f3d78c7959ade1572e703ab0bdfc5",
+    "equal": true
+  }
+]

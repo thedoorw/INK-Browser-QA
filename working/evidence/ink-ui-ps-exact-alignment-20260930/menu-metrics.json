@@ -1,0 +1,1077 @@
+[
+  {
+    "name": "檔案",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 213,
+      "id": "fileMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "新增Ctrl+N"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "開啟Ctrl+O"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "儲存Ctrl+S"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "匯出"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "開啟／匯入外部影像…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "匯入參考圖…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "匯入 SVG…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "列印…"
+        }
+      ],
+      "width": 196,
+      "x": 84.453125,
+      "y": 24
+    }
+  },
+  {
+    "name": "編輯",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 138,
+      "id": "editMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "復原Ctrl+Z"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "重做Ctrl+Shift+Z"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "複製Ctrl+D"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "刪除Delete"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "偏好設定…"
+        }
+      ],
+      "width": 196,
+      "x": 122.46875,
+      "y": 24
+    }
+  },
+  {
+    "name": "影像",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 301,
+      "id": "imageMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "畫布設定…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "模式：8-bit"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "模式：16-bit"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "模式：32-bit"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "色彩模式：RGB"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "色彩模式：CMYK"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "色彩模式：Lab"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "色彩模式：多色版"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "色彩描述檔…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "調整…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "裁切選取影像…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "影像尺寸…"
+        }
+      ],
+      "width": 196,
+      "x": 160.484375,
+      "y": 24
+    }
+  },
+  {
+    "name": "圖層",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 235,
+      "id": "layerMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "圖層面板"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "新增圖層"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "複製圖層"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "刪除圖層"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "群組選取"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "解散群組"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "建立遮色片"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "選取並遮住…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "圖層效果…"
+        }
+      ],
+      "width": 196,
+      "x": 198.5,
+      "y": 24
+    }
+  },
+  {
+    "name": "文字",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 129,
+      "id": "typeMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "文字屬性"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "水平／段落文字"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "垂直文字（右至左）"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "垂直文字（左至右）"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "文字沿路徑…"
+        }
+      ],
+      "width": 196,
+      "x": 236.515625,
+      "y": 24
+    }
+  },
+  {
+    "name": "選取",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 226,
+      "id": "selectMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "選取屬性"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "全部選取Ctrl+A"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "取消選取"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "多邊形套索"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "磁性套索"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "快速選取"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "魔術棒"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "物件選取"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "選取並遮住…"
+        }
+      ],
+      "width": 196,
+      "x": 274.53125,
+      "y": 24
+    }
+  },
+  {
+    "name": "濾鏡",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 452,
+      "id": "filterMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "濾鏡收藏館…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "高斯模糊…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "動態模糊…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "中間值…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "銳利化"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "遮色片銳利化…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "顏色快調…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "邊緣偵測…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "雜訊／顆粒…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "減少雜訊…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "紋理疊加…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "浮雕…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "馬賽克／像素化…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "最小值…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "最大值…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "液化…"
+        }
+      ],
+      "width": 196,
+      "x": 312.546875,
+      "y": 24
+    }
+  },
+  {
+    "name": "物件",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 658,
+      "id": "objectMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "物件屬性"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "變形：傾斜…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "Transform：Distort…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "變形：透視…"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "變形：彎曲…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "移至最上"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "移至最下"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "群組Ctrl+G"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "解散群組Ctrl+Shift+G"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "對齊：靠左"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "對齊：水平置中"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "對齊：靠右"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "對齊：靠上"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "對齊：垂直置中"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "對齊：靠下"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "分布：水平等距"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "分布：垂直等距"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "建立框架"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "路徑／節點編輯"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "路徑布林：聯集"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "路徑布林：差集"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "路徑布林：交集"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "路徑布林：互斥"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "重複：放射"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "重複：鏡射"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "重複：格狀"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "重複：展開路徑"
+        }
+      ],
+      "width": 196,
+      "x": 350.5625,
+      "y": 24
+    }
+  },
+  {
+    "name": "檢視",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 332,
+      "id": "viewMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "符合目前內容F"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "標尺"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "全螢幕Ctrl+Shift+F"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "格線吸附"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "吸附"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "吸附至參考線"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "吸附至物件邊緣"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "吸附至物件中心"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "吸附至角度"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "吸附至等距"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "顯示／隱藏參考線"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "工作區：創作"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "工作區：版面"
+        }
+      ],
+      "width": 196,
+      "x": 388.578125,
+      "y": 24
+    }
+  },
+  {
+    "name": "視窗",
+    "metrics": {
+      "background": "rgb(56, 57, 59)",
+      "color": "rgb(38, 38, 38)",
+      "font": "12px",
+      "height": 477,
+      "id": "panelWindowMenu",
+      "lineHeight": "15.6px",
+      "padding": "3px 0px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 38)",
+          "height": 161,
+          "text": "外觀導覽器屬性顏色調整專業工具"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 38)",
+          "height": 165,
+          "text": "創作資料庫參考構成CHAT修訂"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(38, 38, 38)",
+          "height": 137,
+          "text": "文件圖層歷史色版頁面"
+        }
+      ],
+      "width": 184,
+      "x": 427,
+      "y": 24
+    }
+  },
+  {
+    "name": "說明",
+    "metrics": {
+      "background": "rgb(255, 255, 255)",
+      "color": "rgb(34, 34, 34)",
+      "font": "12px",
+      "height": 151,
+      "id": "helpMenu",
+      "lineHeight": "15.6px",
+      "padding": "4px",
+      "rows": [
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "關於 INK 工作區"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "鍵盤快捷鍵"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "更新"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "產品診斷"
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "觸控筆校準…"
+        },
+        {
+          "background": "rgb(192, 192, 192)",
+          "color": "rgb(34, 34, 34)",
+          "height": 1,
+          "text": ""
+        },
+        {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(34, 34, 34)",
+          "height": 22,
+          "text": "復原…"
+        }
+      ],
+      "width": 196,
+      "x": 464.609375,
+      "y": 24
+    }
+  }
+]

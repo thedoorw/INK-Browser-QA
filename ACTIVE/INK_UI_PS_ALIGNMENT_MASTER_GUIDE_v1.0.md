@@ -759,3 +759,24 @@ They are immediate comparison authority for:
 - same-class consistency.
 
 The Photoshop originals remain upstream authority. The INK light palette remains the explicit USER theme override.
+
+## 33. USER exact-fidelity clarification — 2026-09-30
+
+USER explicitly requires absolute similarity rather than approximate similarity before developing an individual INK style.
+
+The current inspection checklist and proposed modification packages are:
+`working/INK_UI_PS_EXACT_ALIGNMENT_CHECKLIST_v1.0.md`.
+Machine-readable checklist mirror:
+`working/INK_UI_PS_EXACT_ALIGNMENT_CHECKLIST_v1.0.csv`.
+
+Shared geometry targets delta=0 at the matched reference environment/state. The previous dispatch's <=1 CSS px residual is not permission to waive a visible discrepancy. Record measurement/raster uncertainty separately and keep unresolved fidelity open. Existing explicit Light-palette, authoritatively absent capability and USER overrides remain named exceptions.
+
+Photoshop document zoom does not scale application chrome. In PvsI composites, outer Photoshop chrome and the embedded INK document image occupy different coordinate systems. Never normalize all chrome from the document's 66.67% zoom. Cross-check multiple chrome anchors against the original reference and record any remaining scale uncertainty.
+
+Ruler thickness alone cannot establish ruler fidelity. Required ruler details include glyph envelope/baseline, vertical label orientation, tick hierarchy/spacing/length, unit conversion, origin and camera synchronization. Placed guides, drag preview and smart guides/snap feedback require separate state references and visual rules. Restore the named original interaction captures before claiming exact guide color/style measurements.
+
+The current rendered sweep identifies the dark Window popup, mixed glyph/SVG tool icons, Navigator zoom-row topology, Layers control homes, Preferences layout and Reference form density as open differences. These are recorded observations, not claims that all unobserved states are defective.
+
+Theoretical flex-ratio residuals are not rendered residuals. SOURCE_COMPUTED and RENDERED_MEASURED must be distinct evidence labels. PLATFORM_RENDERING, REFERENCE_SCALE_LIMIT and VALID_USER_STATE describe evidence conditions; they do not create additional delta dispositions.
+
+This checklist is a supervision/modification plan. It does not alter the active executor task or independently authorize product mutation.
