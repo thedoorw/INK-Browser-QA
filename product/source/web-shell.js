@@ -65,7 +65,7 @@
     { id: 'specialist', label: '專業工具', icon: 'i-settings', kind: 'inspector', tab: 'studio', group: 'specialist' }
   ]);
   const PANEL_GROUPS = Object.freeze([
-    { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'specialist'].map(id => PANEL_DEFS.find(def => def.id === id)) },
+    { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'adjustments', 'specialist'].map(id => PANEL_DEFS.find(def => def.id === id)) },
     { id: 'creative', label: '創作', items: ['libraries', 'reference', 'compose', 'chat', 'revision'].map(id => PANEL_DEFS.find(def => def.id === id)) },
     { id: 'structure', label: '文件', items: ['layers', 'history', 'channels', 'pages'].map(id => PANEL_DEFS.find(def => def.id === id)) }
   ]);
@@ -1767,7 +1767,7 @@
       (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
       '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
       '<div class="panel-stack-tabs" role="tablist" aria-label="' + group.label + '">' +
-      group.items.filter(def => def.id !== 'specialist').map(def => '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="' + def.id + '" aria-selected="false">' + def.label + '</button>').join('') +
+      group.items.filter(def => !['specialist', 'adjustments'].includes(def.id)).map(def => '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="' + def.id + '" aria-selected="false">' + def.label + '</button>').join('') +
       '<button type="button" class="panel-stack-options" data-stack-options="' + group.id + '" title="面板選項" aria-label="面板選項"><svg><use href="#i-more"/></svg></button></div>' +
       '<div class="panel-stack-body" data-panel-stack-body="' + group.id + '"></div></section>'
     ).join('');
