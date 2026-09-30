@@ -15,7 +15,7 @@
     body{min-height:100vh}
     #app{background:#e7e7e7;color:#262626}
   </style>
-  <link rel="stylesheet" href="styles.css?v=0.1-ps-detail2">
+  <link rel="stylesheet" href="styles.css?v=0.1-ui-20260930-2210">
 </head>
 <body data-ink-first-paint="workstation">
 <svg class="svg-sprite" aria-hidden="true">
@@ -99,6 +99,7 @@
       <div class="application-menu" data-application-menu="edit">
         <button type="button" data-application-menu-trigger="edit" aria-haspopup="menu" aria-expanded="false">編輯(E)</button>
         <div id="editMenu" class="application-command-menu" role="menu" aria-label="編輯" hidden>
+<button type="button" role="menuitem" data-ui-b-contribution="image-adjustments" data-ui-b-command="panel:adjustments"><span>調整…</span></button>
           <button type="button" role="menuitem" data-shell-action="undo"><span>復原</span><kbd>Ctrl+Z</kbd></button>
           <button type="button" role="menuitem" data-shell-action="redo"><span>重做</span><kbd>Ctrl+Shift+Z</kbd></button>
           <span class="application-menu-separator" aria-hidden="true"></span>
@@ -108,8 +109,9 @@
       <div class="application-menu" data-application-menu="image">
         <button type="button" data-application-menu-trigger="image" aria-haspopup="menu" aria-expanded="false">影像(I)</button>
         <div id="imageMenu" class="application-command-menu" role="menu" aria-label="影像" hidden>
+<button type="button" role="menuitem" data-ui-b-command="workspace:creation"><span>繪畫與向量：創作空間</span><kbd>Ctrl+1</kbd></button><button type="button" role="menuitem" data-ui-b-command="workspace:layout"><span>繪畫與向量：版面空間</span><kbd>Ctrl+2</kbd></button><span class="application-menu-separator" role="separator"></span>
           <button type="button" role="menuitem" data-shell-action="canvas-settings"><span>畫布設定…</span></button>
-          <button type="button" role="menuitem" data-ui-b-contribution="image-mode-8" data-ui-b-command="bit-depth:8"><span>模式：8-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-16" data-ui-b-command="bit-depth:16"><span>模式：16-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-32" data-ui-b-command="bit-depth:32"><span>模式：32-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-rgb" data-ui-b-command="color-mode:RGB"><span>色彩模式：RGB</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-cmyk" data-ui-b-command="color-mode:CMYK"><span>色彩模式：CMYK</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-lab" data-ui-b-command="color-mode:Lab"><span>色彩模式：Lab</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-multi" data-ui-b-command="color-mode:Multichannel"><span>色彩模式：多色版</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-profile" data-ui-b-command="color-profile"><span>色彩描述檔…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-adjustments" data-ui-b-command="panel:adjustments"><span>調整…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-crop" data-ui-b-command="image-crop"><span>裁切選取影像…</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-resize" data-ui-b-command="image-resize"><span>影像尺寸…</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="image-mode-8" data-ui-b-command="bit-depth:8"><span>模式：8-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-16" data-ui-b-command="bit-depth:16"><span>模式：16-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-32" data-ui-b-command="bit-depth:32"><span>模式：32-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-rgb" data-ui-b-command="color-mode:RGB"><span>色彩模式：RGB</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-cmyk" data-ui-b-command="color-mode:CMYK"><span>色彩模式：CMYK</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-lab" data-ui-b-command="color-mode:Lab"><span>色彩模式：Lab</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-multi" data-ui-b-command="color-mode:Multichannel"><span>色彩模式：多色版</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-profile" data-ui-b-command="color-profile"><span>色彩描述檔…</span></button><span class="application-menu-separator" role="separator"></span><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-crop" data-ui-b-command="image-crop"><span>裁切選取影像…</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-resize" data-ui-b-command="image-resize"><span>影像尺寸…</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="layer">
@@ -777,9 +779,9 @@
   <input id="calibrationProfileInput" type="file" accept=".json,.inkprofile" hidden>
   <input id="referenceEvidenceInput" type="file" accept="application/json,.json" hidden>
 </div>
-<script src="web-shell.js?v=0.1-ps-detail2"></script>
-<script src="ui/branding-settings.js?v=0.1-ps-detail2"></script>
-<script type="module" src="src/ink.js?v=0.1-ps-reassembly2"></script>
+<script src="web-shell.js?v=0.1-ui-20260930-2210"></script>
+<script src="ui/branding-settings.js?v=0.1-ui-20260930-2210"></script>
+<script type="module" src="src/ink.js?v=0.1-ui-20260930-2210"></script>
 
 </body>
 </html>

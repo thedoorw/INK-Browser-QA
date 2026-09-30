@@ -21,7 +21,7 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'image-mode-lab', menu:'image', section:'mode', label:'色彩模式：Lab', command:'color-mode:Lab', authority:'P1-G color management' },
   { id:'image-mode-multi', menu:'image', section:'mode', label:'色彩模式：多色版', command:'color-mode:Multichannel', authority:'P1-G color management', guarded:true },
   { id:'image-profile', menu:'image', section:'color', label:'色彩描述檔…', command:'color-profile', authority:'P1-G ICC' },
-  { id:'image-adjustments', menu:'image', section:'adjustment', label:'調整…', command:'panel:adjustments', authority:'C24 adjustment stack' },
+  { id:'image-adjustments', menu:'edit', section:'adjustment', label:'調整…', command:'panel:adjustments', authority:'C24 adjustment stack' },
   { id:'image-crop', menu:'image', section:'raster', label:'裁切選取影像…', command:'image-crop', authority:'C22 raster image' },
   { id:'image-resize', menu:'image', section:'raster', label:'影像尺寸…', command:'image-resize', authority:'C22 raster image' },
 

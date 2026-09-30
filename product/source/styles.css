@@ -4162,3 +4162,15 @@ html,body,#app{background:#e7e7e7}
 @media(min-width:761px){
   .ui-b-layer-appearance .ui-b-capability-note{display:none!important}
 }
+}
+
+
+/* USER 2026-09-30: compact chrome and single panel boundaries. */
+.menu-workspace,#contextualAdvancedBtn{display:none!important}
+@media(min-width:761px){
+ .tool-layout-controls{justify-content:flex-start;padding-left:3px;box-sizing:border-box}
+ .panel-stack-framework>.panel-edge-strip,.panel-dock>.panel-edge-strip{justify-content:flex-end;padding-right:3px;box-sizing:border-box}
+ .panel-stack-splitter{position:relative;flex:0 0 1px;height:1px;min-height:1px;border:0;background:var(--ink-ui-border);overflow:visible}
+ .panel-stack-splitter::after{content:"";position:absolute;left:0;right:0;top:-2px;height:5px;cursor:ns-resize}
+ .panel-stack-region{border-top:0;border-bottom:0;box-shadow:none}
+}

@@ -65,7 +65,7 @@
     { id: 'specialist', label: '專業工具', icon: 'i-settings', kind: 'inspector', tab: 'studio', group: 'specialist' }
   ]);
   const PANEL_GROUPS = Object.freeze([
-    { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'adjustments', 'specialist'].map(id => PANEL_DEFS.find(def => def.id === id)) },
+    { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'specialist'].map(id => PANEL_DEFS.find(def => def.id === id)) },
     { id: 'creative', label: '創作', items: ['libraries', 'reference', 'compose', 'chat', 'revision'].map(id => PANEL_DEFS.find(def => def.id === id)) },
     { id: 'structure', label: '文件', items: ['layers', 'history', 'channels', 'pages'].map(id => PANEL_DEFS.find(def => def.id === id)) }
   ]);
