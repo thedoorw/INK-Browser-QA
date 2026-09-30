@@ -1,0 +1,27 @@
+{
+  "caseId": "CASE-001-THE-MINIMALISTS",
+  "targetRoot": "https://www.theminimalists.com/",
+  "maxRequests": 150,
+  "sameDomainDelaySecs": 1,
+  "maxConcurrency": 2,
+  "excludedPathPrefixes": [
+    "/wp-admin/",
+    "/wp-login.php",
+    "/wp-json/",
+    "/feed/"
+  ],
+  "captureCandidates": [
+    "/",
+    "/archives/",
+    "/start/",
+    "/podcast/",
+    "/books/",
+    "/resources/"
+  ],
+  "viewports": [
+    { "name": "desktop", "width": 1440, "height": 900 },
+    { "name": "compact", "width": 1024, "height": 768 },
+    { "name": "mobile", "width": 390, "height": 844 }
+  ],
+  "artifactsDir": "artifacts/case-001"
+}
