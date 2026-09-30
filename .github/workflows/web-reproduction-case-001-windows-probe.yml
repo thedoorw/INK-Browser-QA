@@ -1,0 +1,55 @@
+name: Web Reproduction CASE-001 Windows Reference Probe
+
+on:
+  push:
+    branches:
+      - work/web-reproduction-production-line-001
+    paths:
+      - engineering/web-reproduction/src/capture.mjs
+      - engineering/web-reproduction/config/case-001-probe.json
+      - .github/workflows/web-reproduction-case-001-windows-probe.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: web-reproduction-case-001-windows-probe
+  cancel-in-progress: true
+
+jobs:
+  reference-probe:
+    name: Validate The Minimalists reference on Windows
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 12
+
+    defaults:
+      run:
+        working-directory: engineering/web-reproduction
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install chromium
+
+      - name: Probe reference validity
+        run: npm run capture -- --config config/case-001-probe.json
+
+      - name: Upload probe evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-reproduction-case-001-windows-probe
+          path: engineering/web-reproduction/artifacts/case-001-reference-probe
+          if-no-files-found: error
+          retention-days: 3
