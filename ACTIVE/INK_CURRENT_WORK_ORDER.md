@@ -646,4 +646,4 @@ USER-visible priorities: automatic tooltip/hint clutter off; matching left/right
 
 ## PvsI comparison authority — 2026-09-30
 
-The current visual implementation pass requires the USER-supplied `PvsI-1.png / PvsI-2.png / PvsI-3.png` to be attached in the execution CHAT window. They are immediate comparison authority for structure / dimensions / density. If the executor cannot see those three images, it must not perform visual mutation from text alone.
+The current visual implementation pass uses the durable GitHub references `reference/ui/photoshop/PvsI-1.png`, `reference/ui/photoshop/PvsI-2.png`, `reference/ui/photoshop/PvsI-3.png` as immediate comparison authority for structure / dimensions / density. The executor must inspect those exact assets before visual mutation; a USER re-upload is optional only as an exact viewing mirror when repository-binary rendering is unavailable.
