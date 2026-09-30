@@ -186,6 +186,9 @@ export function installFullCapabilityControls(app){
       node.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,node),420);});
       ['pointerup','pointercancel','pointerleave'].forEach(type=>node.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
     }
+    const brushButton=$('#psBrushTool');
+    brushButton?.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();activateTool('brush');},true);
+    existingDraw?.addEventListener('click',event=>{if(app.tool==='brush'){event.preventDefault();event.stopImmediatePropagation();activateTool('pen');}},true);
     const zoomTrigger=$('#psZoomControls');
     if(zoomTrigger && !$('#psZoomMenu')){
       const menu=htmlNode('<div id="psZoomMenu" class="application-command-menu ps-tool-zoom-menu" role="menu" aria-label="縮放控制" hidden><button type="button" role="menuitem" data-zoom-action="in">放大</button><button type="button" role="menuitem" data-zoom-action="out">縮小</button><button type="button" role="menuitem" data-zoom-action="fit">符合內容</button></div>');
@@ -793,13 +796,15 @@ export function installFullCapabilityControls(app){
     }
   }
   function installLifecycleRefresh(){
+    const originalToolUI=app.refreshToolUI.bind(app);
+    app.refreshToolUI=function(){const result=originalToolUI();if(app.tool==='brush'){const draw=$('#drawToolButton');draw?.classList.remove('active');if(draw)draw.dataset.tool='pen';$('#drawToolUse')?.setAttribute('href','#i-pen');const label=$('#drawToolLabel');if(label)label.textContent='鋼筆';}return result;};
     const originalLayers=app.refreshLayers.bind(app);
     app.refreshLayers=function(){const result=originalLayers();renderLayerThumbnails();return result;};
     const original=app.refreshSelectionUI.bind(app);
     app.refreshSelectionUI=function(){const result=original();refreshPanels();return result;};
   }
 
-  installMenus();installTools();installPointerCapture();installPanels();installDialogs();installExportInterop();bridgeLegacySpecialist();installLifecycleRefresh();refreshContextOptions();refreshPanels();renderLayerThumbnails();
+  installMenus();installTools();installPointerCapture();installPanels();installDialogs();installExportInterop();bridgeLegacySpecialist();installLifecycleRefresh();app.refreshToolUI();refreshContextOptions();refreshPanels();renderLayerThumbnails();
 
   const api={
     version:'1.0',app,state,raster,registry:UI_B_CONTRIBUTION_REPORT,
