@@ -4,9 +4,9 @@
   "mode": "R_AND_D_PROTOTYPE_NO_PRODUCT_AUTHORITY",
   "program_id": "AI-DEV-PRODUCTION-LINE-v0.1",
   "task_id": "AI-DEV-TRIAL-STATE-HANDOFF-001",
-  "state": "BUILDING",
-  "current_owner": "BUILDER",
-  "next_owner": "BUILDER",
+  "state": "ARTIFACT_READY",
+  "current_owner": "AI_DEVELOPMENT_PRODUCTION_LINE_MR",
+  "next_owner": "SOURCE_REVIEWER",
   "authority": {
     "ssot": "GitHub",
     "repo": "thedoorw/INK-Browser-QA",
@@ -17,11 +17,13 @@
   },
   "identity": {
     "base_sha": "f10acf3384e27becb6a5eb54e009077e0d7da7a0",
-    "target_sha": null,
+    "target_sha": "5fb1e3fd891a378503adfe9527108556214f1ab4",
     "artifact": {
-      "status": "PENDING_PIN",
+      "status": "VERIFIED",
       "path": "research/ai-dev-production-line/prototype/trial-artifact.json",
-      "sha256": "d4c41c8a8c682f3cc09f6367b035dae4304af548ee41eed11ae87f5d84d6305d"
+      "artifact_commit_sha": "5fb1e3fd891a378503adfe9527108556214f1ab4",
+      "sha256": "d4c41c8a8c682f3cc09f6367b035dae4304af548ee41eed11ae87f5d84d6305d",
+      "generated_from_commit": "f10acf3384e27becb6a5eb54e009077e0d7da7a0"
     },
     "deployment": {
       "status": "UNVERIFIED",
@@ -32,7 +34,10 @@
       "reason": "Prototype stops before deployment/browser identity testing."
     }
   },
-  "required_artifacts": ["research/ai-dev-production-line/prototype/trial-artifact.json"],
+  "required_artifacts": [
+    "research/ai-dev-production-line/prototype/trial-artifact.json",
+    "research/ai-dev-production-line/prototype/evidence-manifest.json"
+  ],
   "required_evidence_layers": ["SOURCE", "ARTIFACT"],
   "evidence_plan": [
     {"claim_id": "TRIAL_SOURCE_PINNED", "layer": "SOURCE"},
@@ -62,7 +67,14 @@
       "actor": "AI_DEVELOPMENT_PRODUCTION_LINE_MR",
       "at_commit": "f10acf3384e27becb6a5eb54e009077e0d7da7a0",
       "reason": "USER authorized production-line R&D prototype."
+    },
+    {
+      "from": "BUILDING",
+      "to": "ARTIFACT_READY",
+      "actor": "BUILDER",
+      "at_commit": "5fb1e3fd891a378503adfe9527108556214f1ab4",
+      "reason": "Research-only artifact was committed and byte-pinned for reviewer handoff."
     }
   ],
-  "allowed_transitions": ["ARTIFACT_READY", "BLOCKED", "CANCELLED"]
+  "allowed_transitions": ["REVIEWING", "BUILDING", "BLOCKED", "CANCELLED"]
 }
