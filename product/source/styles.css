@@ -3731,3 +3731,32 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   .preferences-category .range-row{grid-template-columns:1fr 64px}
   .preferences-category .range-row>span{grid-column:1/-1}
 }
+/* Effective-CSS follow-up: retire legacy dark-theme descendant colors. */
+.app .control-row>span:first-child,.app .toggle-row>span,.preferences-category .subpanel-title strong{
+  color:var(--ink-ui-text);font-size:var(--ui-type-md)
+}
+.app .layer-row .layer-name strong{color:var(--ink-ui-text);font-size:var(--ui-type-md);font-weight:var(--ui-weight-control)}
+.preferences-category .control-row,.preferences-category .branding-asset-row{border-color:var(--ink-ui-border-soft)}
+.preferences-category .number-unit input{flex:1 1 0;width:0;min-width:0;border:1px solid var(--ink-ui-border);border-radius:1px}
+.preferences-category .number-unit>span{flex:none;color:var(--ink-ui-text-muted)}
+.app .creative-workspace-body output,.app .creative-workspace-body pre{
+  background:var(--ink-ui-surface-subtle);color:var(--ink-ui-text-muted);border:1px solid var(--ink-ui-border-soft);font-size:var(--ui-type-sm)
+}
+.app .creative-workspace-field>span,.app .creative-workspace-body strong{color:var(--ink-ui-text);font-size:var(--ui-type-md)}
+.app .creative-workspace-actions button{min-height:var(--ui-control-height);font-size:var(--ui-type-md)}
+#zoomHud{display:none!important}
+@media(min-width:761px){
+  .topbar #fullscreenToggle{display:none!important}
+  .tool-layout-toggle[aria-pressed="true"]{color:var(--ink-ui-text-muted)}
+  .ui-b-layer-appearance{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:var(--ui-control-gap);align-items:center}
+  .ui-b-layer-appearance>label{grid-column:1/-1;display:flex;gap:var(--ui-control-gap);align-items:center;color:var(--ink-ui-text)}
+  .ui-b-layer-appearance select{flex:1;min-width:0;height:var(--ui-select-height)}
+  .ui-b-layer-appearance>button{height:var(--ui-small-button-height);padding:0 5px;font-size:var(--ui-type-sm)}
+  .ui-b-layer-appearance>button[data-ui-b-command="select-and-mask"]{white-space:nowrap}
+}
+@media(min-width:761px){
+  .panel-dock-group.creative{margin-top:0}
+  .panel-dock-group{flex:none;padding:2px 3px}
+  .panel-dock-separator{flex:0 0 1px}
+  .panel-dock-button{height:28px;min-height:28px}
+}

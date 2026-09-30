@@ -230,8 +230,8 @@ export class CreativeWorkspaceController {
     this.toggle.id = 'creativeWorkspaceToggle';
     this.toggle.type = 'button';
     this.toggle.className = 'icon-button creative-workspace-toggle';
-    this.toggle.title = 'Creative Workspace';
-    this.toggle.setAttribute('aria-label', 'Creative Workspace');
+    this.toggle.title = '創作工作區';
+    this.toggle.setAttribute('aria-label', '創作工作區');
     this.toggle.setAttribute('aria-expanded', 'false');
     this.toggle.textContent = 'CW';
     const anchor = document.querySelector('#inspectorToggle');
@@ -244,14 +244,14 @@ export class CreativeWorkspaceController {
     root.setAttribute('aria-hidden', 'true');
     root.innerHTML = `
       <div class="creative-workspace-head">
-        <div><span class="eyebrow">INK WEB · CREATIVE LOOP</span><strong>Creative Workspace</strong></div>
-        <button type="button" class="mini-button" data-workspace-action="close" aria-label="關閉 Creative Workspace">×</button>
+        <div><span class="eyebrow">INK WEB · CREATIVE LOOP</span><strong>創作工作區</strong></div>
+        <button type="button" class="mini-button" data-workspace-action="close" aria-label="關閉創作工作區">×</button>
       </div>
       <div class="creative-workspace-state" aria-label="Workspace state">
         <div><span>Document</span><strong data-workspace-value="document">—</strong></div>
         <div><span>Page</span><strong data-workspace-value="page">—</strong></div>
         <div><span>Context</span><strong data-workspace-value="context">—</strong></div>
-        <div><span>Revision</span><strong data-workspace-value="revision">—</strong></div>
+        <div><span>修訂</span><strong data-workspace-value="revision">—</strong></div>
         <div class="wide"><span>Selection</span><strong data-workspace-value="selection">未選取</strong></div>
         <div class="wide"><span>Source</span><strong data-workspace-value="provenance">—</strong></div>
         <div class="wide"><span>CHAT</span><strong data-workspace-value="chat">—</strong></div>
@@ -282,95 +282,95 @@ export class CreativeWorkspaceController {
           </details>
         </section>
         <section data-workspace-pane="edit" hidden>
-          <strong>Path Edit + Expressive Stroke</strong>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="enter-path-edit">Enter Path Edit</button><button type="button" data-workspace-action="exit-path-edit">Exit</button></div>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="simplify-path">Simplify</button><button type="button" data-workspace-action="refine-path">Refine</button></div>
-          <label class="creative-workspace-field"><span>Stroke color</span><input type="color" data-workspace-input="stroke-color" value="#202020"></label>
-          <label class="creative-workspace-field"><span>Base width</span><input type="number" data-workspace-input="stroke-width" min="0.5" max="128" step="0.5" value="2"></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-expressive-stroke">Apply expressive</button><button type="button" data-workspace-action="clear-expressive-stroke">Clear expressive</button></div>
-          <output data-workspace-output="edit">Select one editable Path.</output>
+          <strong>路徑編輯與表現筆畫</strong>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="enter-path-edit">編輯路徑</button><button type="button" data-workspace-action="exit-path-edit">結束</button></div>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="simplify-path">簡化</button><button type="button" data-workspace-action="refine-path">細化</button></div>
+          <label class="creative-workspace-field"><span>筆畫顏色</span><input type="color" data-workspace-input="stroke-color" value="#202020"></label>
+          <label class="creative-workspace-field"><span>基本寬度</span><input type="number" data-workspace-input="stroke-width" min="0.5" max="128" step="0.5" value="2"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-expressive-stroke">套用表現筆畫</button><button type="button" data-workspace-action="clear-expressive-stroke">移除表現筆畫</button></div>
+          <output data-workspace-output="edit">請選取一個可編輯路徑。</output>
         </section>
         <section data-workspace-pane="compose" hidden>
-          <strong>Compose → Repaint / Material</strong>
+          <strong>構成 → 重繪／材質</strong>
           <div class="creative-workspace-action-grid">
-            <button type="button" data-workspace-action="duplicate">Duplicate</button>
-            <button type="button" data-workspace-action="group">Group</button>
-            <button type="button" data-workspace-action="frame">Frame</button>
-            <button type="button" data-workspace-action="front">Front</button>
-            <button type="button" data-workspace-action="back">Back</button>
+            <button type="button" data-workspace-action="duplicate">複製</button>
+            <button type="button" data-workspace-action="group">群組</button>
+            <button type="button" data-workspace-action="frame">框架</button>
+            <button type="button" data-workspace-action="front">移至最上</button>
+            <button type="button" data-workspace-action="back">移至最下</button>
           </div>
-          <label class="creative-workspace-field"><span>Fill</span><input type="color" data-workspace-input="fill" value="#f0d9c8"></label>
-          <button type="button" class="creative-workspace-primary" data-workspace-action="repaint">Repaint selected Path</button>
-          <label class="creative-workspace-field"><span>Material ID</span><input type="text" data-workspace-input="material-id" value="workspace-material"></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-material">Apply material</button><button type="button" data-workspace-action="clear-material">Clear material</button></div>
-          <output data-workspace-output="compose">Composition commands preserve structured objects.</output>
+          <label class="creative-workspace-field"><span>填色</span><input type="color" data-workspace-input="fill" value="#f0d9c8"></label>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="repaint">重繪選取路徑</button>
+          <label class="creative-workspace-field"><span>材質 ID</span><input type="text" data-workspace-input="material-id" value="workspace-material"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-material">套用材質</button><button type="button" data-workspace-action="clear-material">移除材質</button></div>
+          <output data-workspace-output="compose">構成操作保留物件結構。</output>
           <details class="creative-structure-option workstation-capability-card">
-            <summary>Parametric Structure <span>EXISTING AUTHORITY</span></summary>
+            <summary>Parametric Structure <span>既有結構</span></summary>
             <p>Selected Repeat status is shown here. Repeat/Transform mutation remains on the existing Core controls; CHAT accepts explicit deterministic structure descriptors.</p>
             <output data-workspace-output="parametric-context">Select a Repeat to inspect deterministic structure state.</output>
           </details>
         </section>
         <section data-workspace-pane="chat" hidden>
-          <strong>Natural-language CHAT</strong>
+          <strong>自然語言 CHAT</strong>
           <div class="creative-chat-runtime">
             <span data-workspace-value="chat-runtime">LOCAL · manual-json</span>
-            <button type="button" data-workspace-action="chat-conversation-inspect">Inspect context</button>
+            <button type="button" data-workspace-action="chat-conversation-inspect">查看內容</button>
           </div>
           <div class="creative-chat-transcript" data-workspace-output="chat-conversation" aria-live="polite"></div>
-          <label class="creative-workspace-field creative-workspace-prompt"><span>Prompt</span><textarea data-workspace-input="chat-prompt" rows="3" placeholder="Discuss the current artwork…"></textarea></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-conversation-send">Send</button><button type="button" data-workspace-action="chat-conversation-clear">Clear</button></div>
-          <button type="button" class="creative-workspace-primary" data-workspace-action="chat-conversation-transmit" hidden>Approve external transmission</button>
-          <output data-workspace-output="chat-context">Context not inspected.</output>
+          <label class="creative-workspace-field creative-workspace-prompt"><span>提示詞</span><textarea data-workspace-input="chat-prompt" rows="3" placeholder="討論目前的作品…"></textarea></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-conversation-send">送出</button><button type="button" data-workspace-action="chat-conversation-clear">清除</button></div>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="chat-conversation-transmit" hidden>同意傳送外部內容</button>
+          <output data-workspace-output="chat-context">尚未查看內容。</output>
           <details class="creative-structure-option workstation-capability-card" open>
             <summary>Grounded Core context <span>唯讀</span></summary>
-            <div class="creative-workspace-actions"><button type="button" data-workspace-action="grounded-context-refresh">Grounded context</button><button type="button" data-workspace-action="creative-memory-refresh">Creative Memory</button><button type="button" data-workspace-action="research-context-refresh">Research</button></div>
+            <div class="creative-workspace-actions"><button type="button" data-workspace-action="grounded-context-refresh">查看 Core 內容</button><button type="button" data-workspace-action="creative-memory-refresh">Creative Memory</button><button type="button" data-workspace-action="research-context-refresh">研究</button></div>
             <output data-workspace-output="grounded-context">Grounded context not inspected.</output>
             <output data-workspace-output="creative-memory-context">Creative Memory advisory not inspected.</output>
           </details>
           <hr>
-          <strong>Bounded mutation</strong>
-          <label class="creative-workspace-field"><span>Operation</span>
+          <strong>限定編輯</strong>
+          <label class="creative-workspace-field"><span>操作</span>
             <select data-workspace-input="chat-operation">
-              <option value="path.repaint.v1">Repaint Path</option>
-              <option value="object.translate.v1">Translate object</option>
-              <option value="path.simplify.v1">Simplify Path</option>
-              <option value="path.refine.v1">Refine Path</option>
-              <option value="path.material.apply.v1">Apply material</option>
-              <option value="path.material.remove.v1">Remove material</option>
+              <option value="path.repaint.v1">重繪路徑</option>
+              <option value="object.translate.v1">移動物件</option>
+              <option value="path.simplify.v1">簡化路徑</option>
+              <option value="path.refine.v1">細化路徑</option>
+              <option value="path.material.apply.v1">套用材質</option>
+              <option value="path.material.remove.v1">移除材質</option>
             </select>
           </label>
-          <label class="creative-workspace-field"><span>Color</span><input type="color" data-workspace-input="chat-color" value="#d7a78f"></label>
+          <label class="creative-workspace-field"><span>顏色</span><input type="color" data-workspace-input="chat-color" value="#d7a78f"></label>
           <label class="creative-workspace-field"><span>ΔX / ΔY</span><span class="creative-workspace-inline"><input type="number" data-workspace-input="chat-dx" value="12"><input type="number" data-workspace-input="chat-dy" value="0"></span></label>
-          <label class="creative-workspace-field"><span>Material ID</span><input type="text" data-workspace-input="chat-material-id" value="workspace-material"></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-inspect">Inspect</button><button type="button" data-workspace-action="chat-propose">Propose</button></div>
+          <label class="creative-workspace-field"><span>材質 ID</span><input type="text" data-workspace-input="chat-material-id" value="workspace-material"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-inspect">查看</button><button type="button" data-workspace-action="chat-propose">提出建議</button></div>
           <div class="creative-workspace-action-grid">
-            <button type="button" data-workspace-action="chat-approve">Approve</button>
-            <button type="button" data-workspace-action="chat-reject">Reject</button>
-            <button type="button" data-workspace-action="chat-execute">Execute</button>
+            <button type="button" data-workspace-action="chat-approve">同意</button>
+            <button type="button" data-workspace-action="chat-reject">拒絕</button>
+            <button type="button" data-workspace-action="chat-execute">執行</button>
           </div>
-          <output data-workspace-output="chat">No proposal.</output>
+          <output data-workspace-output="chat">尚無建議。</output>
           <hr>
-          <strong>Multi-step creative plan</strong>
-          <label class="creative-workspace-field"><span>Intent</span><input type="text" data-workspace-input="chat-plan-intent" value="Refine selected artwork"></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-plan-add-step">Add current step</button><button type="button" data-workspace-action="chat-plan-clear">Clear steps</button></div>
-          <button type="button" class="creative-workspace-primary" data-workspace-action="chat-plan-propose">Propose plan</button>
+          <strong>多步驟創作計畫</strong>
+          <label class="creative-workspace-field"><span>目標</span><input type="text" data-workspace-input="chat-plan-intent" value="Refine selected artwork"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="chat-plan-add-step">新增目前步驟</button><button type="button" data-workspace-action="chat-plan-clear">清除步驟</button></div>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="chat-plan-propose">提出計畫</button>
           <div class="creative-workspace-action-grid">
-            <button type="button" data-workspace-action="chat-plan-approve">Approve plan</button>
-            <button type="button" data-workspace-action="chat-plan-reject">Reject plan</button>
-            <button type="button" data-workspace-action="chat-plan-execute">Execute plan</button>
+            <button type="button" data-workspace-action="chat-plan-approve">同意計畫</button>
+            <button type="button" data-workspace-action="chat-plan-reject">拒絕計畫</button>
+            <button type="button" data-workspace-action="chat-plan-execute">執行計畫</button>
           </div>
-          <pre data-workspace-output="chat-plan">No plan. Add at least two ordered steps.</pre>
+          <pre data-workspace-output="chat-plan">尚無計畫。請新增至少兩個依序執行的步驟。</pre>
         </section>
         <section data-workspace-pane="revision" hidden>
-          <strong>Revision capture / restore</strong>
-          <label class="creative-workspace-field"><span>Label</span><input type="text" data-workspace-input="revision-label" value="Workspace checkpoint"></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="revision-capture">Capture</button><button type="button" data-workspace-action="revision-list">Refresh list</button></div>
-          <label class="creative-workspace-field"><span>Revision</span><select data-workspace-input="revision-id"><option value="">No revisions</option></select></label>
-          <button type="button" class="creative-workspace-primary" data-workspace-action="revision-restore">Restore selected Revision</button>
-          <button type="button" class="creative-workspace-primary" data-workspace-action="revision-compare">Compare structure with current</button>
-          <output data-workspace-output="revision">Current revision: none</output>
-          <output data-workspace-output="revision-compare">Comparison not executed.</output>
-          <output data-workspace-output="revision-provenance">Provenance not inspected.</output>
+          <strong>修訂擷取／還原</strong>
+          <label class="creative-workspace-field"><span>標籤</span><input type="text" data-workspace-input="revision-label" value="Workspace checkpoint"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="revision-capture">擷取</button><button type="button" data-workspace-action="revision-list">更新清單</button></div>
+          <label class="creative-workspace-field"><span>修訂</span><select data-workspace-input="revision-id"><option value="">尚無修訂</option></select></label>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="revision-restore">還原選取修訂</button>
+          <button type="button" class="creative-workspace-primary" data-workspace-action="revision-compare">與目前結構比較</button>
+          <output data-workspace-output="revision">目前沒有修訂</output>
+          <output data-workspace-output="revision-compare">尚未比較。</output>
+          <output data-workspace-output="revision-provenance">尚未查看來源。</output>
         </section>
       </div>
       <div class="creative-workspace-status" data-workspace-value="status" role="status">創作工作區就緒</div>
@@ -711,7 +711,7 @@ export class CreativeWorkspaceController {
     const path = this.selectedPath();
     const editOutput = this.root.querySelector('[data-workspace-output="edit"]');
     if (editOutput) {
-      if (!path) editOutput.textContent = 'Select one editable Path.';
+      if (!path) editOutput.textContent = '請選取一個可編輯路徑。';
       else {
         const nodes = path.object.subpaths?.reduce((sum, subpath) => sum + (subpath.anchors?.length || 0), 0) || 0;
         editOutput.textContent = `${path.object.id} · ${nodes} nodes · ${this.app.pathEditing?.active ? 'EDIT MODE' : 'OBJECT MODE'} · ${path.object.expressiveStroke ? 'EXPRESSIVE' : 'VECTOR'}`;
@@ -1073,7 +1073,7 @@ export class CreativeWorkspaceController {
       } else if (this.lastConversationContext) {
         contextOutput.textContent = `${this.lastConversationContext.format} · ${this.lastConversationContext.level} · source ${this.lastConversationContext.sourceVersion} · ~${this.lastConversationContext.estimatedTokens} tokens`;
       } else {
-        contextOutput.textContent = 'Context not inspected.';
+        contextOutput.textContent = '尚未查看內容。';
       }
     }
     const send = this.root.querySelector('[data-workspace-action="chat-conversation-send"]');
@@ -1148,7 +1148,7 @@ export class CreativeWorkspaceController {
       } else if (this.lastChatInspection) {
         output.textContent = `INSPECTED · ${this.lastChatInspection.objects?.length || 0} objects · rev ${this.lastChatInspection.revision?.revisionId || 'none'}`;
       } else {
-        output.textContent = 'No proposal.';
+        output.textContent = '尚無建議。';
       }
     }
     const state = proposal?.state || null;
@@ -1248,13 +1248,13 @@ export class CreativeWorkspaceController {
         if (!this.revisionItems.length) {
           const option = document.createElement('option');
           option.value = '';
-          option.textContent = 'No revisions';
+          option.textContent = '尚無修訂';
           select.append(option);
         } else {
           for (const item of [...this.revisionItems].sort((a, b) => b.sequence - a.sequence)) {
             const option = document.createElement('option');
             option.value = item.revisionId;
-            option.textContent = `#${item.sequence} · ${item.label || item.reason || 'Revision'} · ${item.revisionId}`;
+            option.textContent = `#${item.sequence} · ${item.label || item.reason || '修訂'} · ${item.revisionId}`;
             select.append(option);
           }
           const current = this.app.revisions.revisionIdFor?.(this.app.doc?.id);
@@ -1298,7 +1298,7 @@ export class CreativeWorkspaceController {
     const compareOutput = this.root.querySelector('[data-workspace-output="revision-compare"]');
     if (compareOutput) {
       const evidence = this.lastRevisionComparison;
-      if (!evidence) compareOutput.textContent = 'Comparison not executed.';
+      if (!evidence) compareOutput.textContent = '尚未比較。';
       else if (evidence.status === 'UNAVAILABLE') compareOutput.textContent = 'Visual Compare · UNAVAILABLE';
       else {
         const structural = evidence.structural || {};
@@ -1309,7 +1309,7 @@ export class CreativeWorkspaceController {
     const provenanceOutput = this.root.querySelector('[data-workspace-output="revision-provenance"]');
     if (provenanceOutput) {
       const provenance = this.lastGroundedContext?.modules?.provenance;
-      if (!provenance) provenanceOutput.textContent = 'Provenance not inspected.';
+      if (!provenance) provenanceOutput.textContent = '尚未查看來源。';
       else provenanceOutput.textContent = `Provenance ${provenance.status} · ${provenance.context?.events?.length || 0} event(s) · ${provenance.context?.edges?.length || 0} edge(s) · read-only`;
     }
   }

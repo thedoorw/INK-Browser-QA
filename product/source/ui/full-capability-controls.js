@@ -52,8 +52,15 @@ const BLEND_MODES=Object.freeze(IMAGE_CAPABILITIES.blendModes||['source-over','m
 function htmlNode(markup){
   const template=document.createElement('template');template.innerHTML=markup.trim();return template.content.firstElementChild;
 }
-function button(label,attrs=''){return '<button type="button" '+attrs+'><span>'+esc(label)+'</span></button>';}
-function selectOptions(values,current=null){return values.map(value=>'<option value="'+esc(value)+'"'+(String(value)===String(current)?' selected':'')+'>'+esc(value)+'</option>').join('');}
+const UI_LABELS = Object.freeze({
+  'source-over':'正常',multiply:'色彩增值',screen:'濾色',overlay:'覆蓋','soft-light':'柔光','hard-light':'實光',darken:'變暗',lighten:'變亮','color-dodge':'加亮顏色','color-burn':'加深顏色',difference:'差異化',exclusion:'排除',hue:'色相',saturation:'飽和度',color:'顏色',luminosity:'明度',
+  new:'新增',add:'增加',subtract:'減去',intersect:'交集',linear:'線性',radial:'放射',saturate:'增加飽和度',desaturate:'降低飽和度',
+  brightnessContrast:'亮度／對比',levels:'色階',curves:'曲線',hueSaturation:'色相／飽和度',colorBalance:'色彩平衡',gradientMap:'漸層對應',exposure:'曝光度',vibrance:'自然飽和度',blackWhite:'黑白',photoFilter:'相片濾鏡',channelMixer:'混合色版',colorLookup:'顏色查詢',invert:'負片效果',posterize:'色調分離',threshold:'臨界值',selectiveColor:'選取顏色',
+  dropShadow:'陰影',innerShadow:'內陰影',outerGlow:'外光暈',innerGlow:'內光暈',bevelEmboss:'斜角與浮雕',colorOverlay:'顏色覆蓋',gradientOverlay:'漸層覆蓋',patternOverlay:'圖樣覆蓋',stroke:'筆畫'
+});
+function uiLabel(value){return UI_LABELS[value] || UI_B_TOOL_GROUPS.flatMap(group=>group.tools).find(([id])=>id===value)?.[1] || String(value);}
+function button(label,attrs=''){return '<button type="button" '+attrs+'><span>'+esc(uiLabel(label))+'</span></button>';}
+function selectOptions(values,current=null){return values.map(value=>'<option value="'+esc(value)+'"'+(String(value)===String(current)?' selected':'')+'>'+esc(uiLabel(value))+'</option>').join('');}
 function downloadBytes(app,bytes,name,type='application/octet-stream'){
   const blob=bytes instanceof Blob?bytes:new Blob([bytes],{type});app.download(blob,name);
 }
@@ -256,7 +263,7 @@ export function installFullCapabilityControls(app){
     host.hidden=false;
     const o=raster.options();
     const selectionTools=new Set(['polygonalLasso','magneticLasso','quickSelection','magicWand','objectSelection']);
-    let markup='<span class="ui-b-context-name">'+esc(tool)+'</span>';
+    let markup='<span class="ui-b-context-name">'+esc(uiLabel(tool))+'</span>';
     if(selectionTools.has(tool))markup+='<select data-ui-b-option="selectionMode">'+selectOptions(['new','add','subtract','intersect'],o.selectionMode)+'</select><label>容差 <input type="number" min="0" max="255" value="'+o.tolerance+'" data-ui-b-option="tolerance"></label>';
     if(['magicWand','paintBucket'].includes(tool))markup+='<label><input type="checkbox" '+(o.contiguous?'checked':'')+' data-ui-b-option="contiguous"> Contiguous</label>';
     if(['quickSelection','objectSelection','magneticLasso'].includes(tool))markup+='<label>邊緣 <input type="number" min="0" max="255" value="'+o.edgeThreshold+'" data-ui-b-option="edgeThreshold"></label>';

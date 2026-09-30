@@ -670,7 +670,7 @@
       if (node.hasAttribute('title')) nodes.push(node);
       for (const target of nodes) {
         const title = target.getAttribute('title');
-        if (title && !target.hasAttribute('aria-label') && !target.textContent.trim()) target.setAttribute('aria-label', title);
+        if (title && !target.hasAttribute('aria-label') && target.matches('button,input,select,textarea,[role="button"],[tabindex]')) target.setAttribute('aria-label', title);
         target.removeAttribute('title');
       }
     };
@@ -841,7 +841,7 @@
       <section class="inspector-section tab-content shell-panel-section" data-content="adjustments" data-shell-panel-section="adjustments" aria-label="調整">
         <div class="shell-panel-body"></div>
       </section>
-      <section class="inspector-section tab-content shell-panel-section shell-library-panel" data-content="libraries" aria-label="Libraries">
+      <section class="inspector-section tab-content shell-panel-section shell-library-panel" data-content="libraries" aria-label="資料庫">
         <div class="shell-panel-body">
           <label class="shell-library-search-label" for="shellLibrarySearch"><span>Search</span><input id="shellLibrarySearch" type="search" autocomplete="off" placeholder="Search library"></label>
           <div id="shellLibraryFilters" class="shell-library-filters" role="group" aria-label="Library families">
@@ -1879,6 +1879,7 @@
   }
 
   function isPanelOpen(id) {
+    if (isDesktop() && state.activePanel !== 'collapsed') return Object.values(state.stackPanels).includes(id);
     return currentPanel() === id;
   }
 
@@ -1924,7 +1925,7 @@
     if (!def || !runtime()) return false;
     const group = PANEL_GROUPS.find(item => item.items.includes(def));
     if (group) state.stackPanels[group.id] = id;
-    if (isPanelOpen(id) && !(def.kind === 'creative' && runtime()?.creativeWorkspace?.stage !== def.stage)) {
+    if (currentPanel() === id && !(def.kind === 'creative' && runtime()?.creativeWorkspace?.stage !== def.stage)) {
       rememberPanel(id);
       syncSoon();
       return true;
@@ -1975,7 +1976,7 @@
     const stage = app.creativeWorkspace.stage || 'reference';
     creative.dataset.shellStage = stage;
     const def = PANEL_DEFS.find(item => item.kind === 'creative' && item.stage === stage);
-    const label = def?.label || (stage === 'edit' ? 'Edit' : 'Creative Workspace');
+    const label = def?.label || (stage === 'edit' ? '編輯' : '創作工作區');
     const title = creative.querySelector('.creative-workspace-head strong');
     if (title) title.textContent = label;
     creative.setAttribute('aria-label', 'INK ' + label);
@@ -2015,7 +2016,7 @@
     const responsiveInspectorToggle = document.querySelector('#inspectorToggle');
     responsiveInspectorToggle?.setAttribute('aria-expanded', String(Boolean(state.root.classList.contains('inspector-open'))));
     document.querySelectorAll('[data-shell-panel]').forEach(button => {
-      const pressed = button.dataset.shellPanel === active;
+      const pressed = isPanelOpen(button.dataset.shellPanel);
       button.classList.toggle('active', pressed);
       button.setAttribute('aria-pressed', String(pressed));
     });
