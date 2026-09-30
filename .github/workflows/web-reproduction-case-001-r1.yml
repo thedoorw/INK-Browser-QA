@@ -1,13 +1,14 @@
-name: Web Reproduction CASE-001 Smoke
+name: Web Reproduction CASE-001 Census Smoke
 
 on:
   push:
     branches:
       - work/web-reproduction-production-line-001
     paths:
-      - engineering/web-reproduction/**
-      - research/INK_WEB_REPRODUCTION_PRODUCTION_LINE_v0.1.md
-      - working/INK_WEB_REPRODUCTION_CASE_001_THE_MINIMALISTS_WORK_ORDER_v0.1.md
+      - engineering/web-reproduction/package.json
+      - engineering/web-reproduction/src/census.mjs
+      - engineering/web-reproduction/src/classify.mjs
+      - engineering/web-reproduction/config/case-001-smoke.json
       - .github/workflows/web-reproduction-case-001-r1.yml
   workflow_dispatch:
 
@@ -15,14 +16,14 @@ permissions:
   contents: write
 
 concurrency:
-  group: web-reproduction-case-001
+  group: web-reproduction-case-001-census-smoke
   cancel-in-progress: true
 
 jobs:
-  census-capture:
-    name: Smoke census, classify, capture The Minimalists
+  census-classify:
+    name: Smoke census and classify The Minimalists
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 15
 
     defaults:
       run:
@@ -49,14 +50,13 @@ jobs:
       - name: Classify page families
         run: npm run classify -- --config config/case-001-smoke.json
 
-      - name: Capture representative viewports
-        run: npm run capture -- --config config/case-001-smoke.json
-
-      - name: Upload reference evidence
+      - name: Upload census evidence
         uses: actions/upload-artifact@v4
         with:
-          name: web-reproduction-case-001-r1
-          path: engineering/web-reproduction/artifacts/case-001-smoke
+          name: web-reproduction-case-001-census-smoke
+          path: |
+            engineering/web-reproduction/artifacts/case-001-smoke/census
+            engineering/web-reproduction/artifacts/case-001-smoke/families
           if-no-files-found: error
           retention-days: 3
 
@@ -65,13 +65,14 @@ jobs:
         run: |
           cd "$GITHUB_WORKSPACE"
           SRC="engineering/web-reproduction/artifacts/case-001-smoke"
-          DEST="qa/evidence/web-reproduction/case-001-smoke/$GITHUB_SHA"
+          DEST="qa/evidence/web-reproduction/case-001-census-smoke/$GITHUB_SHA"
           mkdir -p "$DEST"
-          while IFS= read -r -d '' file; do
-            rel="${file#"$SRC/"}"
-            mkdir -p "$DEST/$(dirname "$rel")"
-            cp "$file" "$DEST/$rel"
-          done < <(find "$SRC" -type f -name '*.json' -print0)
+          for part in census families; do
+            if [ -d "$SRC/$part" ]; then
+              mkdir -p "$DEST/$part"
+              find "$SRC/$part" -type f -name '*.json' -exec cp {} "$DEST/$part/" \;
+            fi
+          done
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$DEST"
@@ -79,5 +80,5 @@ jobs:
             echo "No JSON evidence to publish"
             exit 0
           fi
-          git commit -m "qa(web): record CASE-001 smoke evidence"
+          git commit -m "qa(web): record CASE-001 census smoke evidence"
           git push origin "HEAD:$GITHUB_REF_NAME"
