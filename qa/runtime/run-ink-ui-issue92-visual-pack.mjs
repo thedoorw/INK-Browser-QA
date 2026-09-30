@@ -13,6 +13,8 @@ assert.match(TARGET_SHA,/^[a-f0-9]{40}$/);
 
 const STATES=[
   {mode:'desktop-layers',width:1280,height:1024},
+  {mode:'tools-dual',width:1280,height:1024},
+  {mode:'tools-single',width:1280,height:1024},
   {mode:'menu-edit',width:1280,height:1024},
   {mode:'menu-view',width:1280,height:1024},
   {mode:'menu-filter',width:1280,height:1024},

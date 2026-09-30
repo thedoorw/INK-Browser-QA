@@ -77,7 +77,7 @@ function elementSummary(w,e){
 function collectCommon(w,d,shell,extra={}){
   const q=s=>d.querySelector(s),qa=s=>[...d.querySelectorAll(s)];
   const menu=q('.menu-strip'),top=q('.topbar'),tools=q('.tool-rail'),dock=q('.panel-dock'),stage=q('#stageWrap'),status=q('.statusbar'),inspector=q('#inspector');
-  const toolButtons=qa('.tool-rail .tool-button').filter(e=>visible(w,e)).map(e=>({id:e.id||null,tool:e.dataset.tool||e.dataset.toolStack||null,active:e.classList.contains('active'),rect:rect(e),icon:rect(e.querySelector('.tool-icon svg')),stroke:w.getComputedStyle(e.querySelector('.tool-icon svg')||e).strokeWidth,hasFlyout:Boolean(e.querySelector('.stack-corner'))}));
+  const toolButtons=qa('.tool-rail .tool-button').filter(e=>visible(w,e)).map(e=>({id:e.id||null,tool:e.dataset.tool||e.dataset.toolStack||null,group:e.dataset.uiBToolGroup||null,active:e.classList.contains('active'),rect:rect(e),icon:rect(e.querySelector('.tool-icon svg')),use:e.querySelector('.tool-icon use')?.getAttribute('href')||null,stroke:w.getComputedStyle(e.querySelector('.tool-icon svg')||e).strokeWidth,hasFlyout:Boolean(e.querySelector('.stack-corner'))}));
   const activeMenu=qa('.application-command-menu').find(e=>visible(w,e));
   const menuData=activeMenu?{id:activeMenu.id,rect:rect(activeMenu),items:[...activeMenu.children].map(e=>elementSummary(w,e))}:null;
   const tabs=qa('.inspector-tab').filter(e=>visible(w,e)).map(e=>elementSummary(w,e));
@@ -119,6 +119,12 @@ try{
 
   if(mode==='desktop-layers'){
     const objects=seedCanvas(app);app.selectOnly(app.layer().id,objects[0].id);shell.open('layers');await sleep(120);
+  }else if(mode==='tools-dual'){
+    shell.close();const root=d.querySelector('#app'),toggle=d.querySelector('#toolbarLayoutToggle');if(root.dataset.toolbarLayout!=='dual')toggle?.click();await sleep(120);
+    extra.toolsAudit={layout:root.dataset.toolbarLayout,visibleTextGlyphs:[...d.querySelectorAll('.tool-rail .ui-b-glyph')].filter(e=>visible(w,e)).map(e=>safeText(e)),screenMode:Boolean(d.querySelector('#toolScreenMode')),resetSvg:Boolean(d.querySelector('#resetToolColors svg use')),swapSvg:Boolean(d.querySelector('#swapToolColors svg use')),edgeSvg:Boolean(d.querySelector('#toolbarLayoutToggle svg use'))};
+  }else if(mode==='tools-single'){
+    shell.close();const root=d.querySelector('#app'),toggle=d.querySelector('#toolbarLayoutToggle');if(root.dataset.toolbarLayout!=='single')toggle?.click();await sleep(120);
+    extra.toolsAudit={layout:root.dataset.toolbarLayout,visibleTextGlyphs:[...d.querySelectorAll('.tool-rail .ui-b-glyph')].filter(e=>visible(w,e)).map(e=>safeText(e)),screenMode:Boolean(d.querySelector('#toolScreenMode')),resetSvg:Boolean(d.querySelector('#resetToolColors svg use')),swapSvg:Boolean(d.querySelector('#swapToolColors svg use')),edgeSvg:Boolean(d.querySelector('#toolbarLayoutToggle svg use'))};
   }else if(mode==='menu-edit'){
     const objects=seedCanvas(app);app.selectOnly(app.layer().id,objects[0].id);app.translateSelection(8,0,'移動物件');shell.close();d.querySelector('[data-application-menu-trigger="edit"]')?.click();await sleep(100);
   }else if(mode==='menu-view'){

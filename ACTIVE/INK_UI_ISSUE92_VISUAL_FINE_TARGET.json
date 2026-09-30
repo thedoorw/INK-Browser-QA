@@ -2,13 +2,13 @@
   "schema": "ink-ui-issue92-visual-fine-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "77e273d2228a97b5fde906ceb34fd7962b9bea1f",
-  "scope": "PvsI package 02 ruler guide snap visual evidence / no central Runtime",
+  "target_sha": "55472ab114a06147b320caa7e33f11c236b2bcd8",
+  "scope": "PvsI package 03 T01-T08 tools global-color visual evidence / no central Runtime",
   "suites": [
     "visual-fine-detail",
-    "ruler-guide-snap"
+    "tools-dual-single-flyout"
   ],
   "central_runtime": false,
-  "run_generation": 7,
-  "note": "Adds guides-px alongside default-mm guides screenshot."
+  "run_generation": 8,
+  "note": "Fresh dual/single/full toolbar and flyout evidence; SVG icon inventory required."
 }
