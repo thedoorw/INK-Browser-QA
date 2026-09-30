@@ -3814,3 +3814,39 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     min-height:21px;
   }
 }
+
+
+/* INK-UI-PVSI-PACK-01 — common chrome / popup exact-alignment overrides */
+@media(min-width:761px){
+  .menu-app-mark{gap:0;padding:0 6px}
+  .menu-app-mark strong,.menu-app-mark small{display:none!important}
+
+  #app .panel-window-menu{
+    width:196px;padding:4px;background:var(--ink-ui-surface);color:var(--ink-ui-text);
+    border:1px solid var(--ink-ui-border-strong);box-shadow:0 5px 14px rgba(0,0,0,.16)
+  }
+  #app .panel-window-group + .panel-window-group{
+    margin:4px 0 0;padding:4px 0 0;border-top:1px solid var(--ink-ui-popup-separator)
+  }
+  #app .panel-window-group-label{display:none}
+  #app .panel-window-item{
+    width:100%;height:22px;min-height:22px;display:grid;
+    grid-template-columns:14px minmax(0,1fr);align-items:center;gap:4px;padding:0 6px;
+    border:0;border-radius:0;background:transparent;color:var(--ink-ui-text);text-align:left;
+    font-size:var(--ui-type-lg);font-weight:var(--ui-weight-regular);line-height:var(--ui-line-control)
+  }
+  #app .panel-window-item:hover,#app .panel-window-item:focus-visible{
+    background:var(--ink-ui-control-hover);color:var(--ink-ui-text);outline:none
+  }
+  #app .panel-window-item.active{background:transparent;color:var(--ink-ui-text);box-shadow:none}
+  #app .panel-window-item.active:hover,#app .panel-window-item.active:focus-visible{background:var(--ink-ui-control-hover)}
+  #app .window-menu-check{
+    position:relative;width:12px;height:12px;display:block;color:var(--ink-ui-text)
+  }
+  #app .window-menu-check::before{
+    content:"";position:absolute;left:3px;top:0;width:4px;height:8px;
+    border-right:1px solid currentColor;border-bottom:1px solid currentColor;
+    transform:rotate(45deg);opacity:0
+  }
+  #app .panel-window-item.active .window-menu-check::before{opacity:1}
+}

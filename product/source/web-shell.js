@@ -137,10 +137,14 @@
   }
 
   function buttonMarkup(def, menu = false) {
-    return '<button type="button" class="' + (menu ? 'panel-window-item' : 'panel-dock-button') +
-      '" data-shell-panel="' + def.id + '" title="' + def.label +
-      '" aria-label="' + def.label + '" aria-pressed="false">' +
-      svgIcon(def.icon) + (menu ? '<span>' + def.label + '</span>' : '') + '</button>';
+    if (menu) {
+      return '<button type="button" class="panel-window-item" data-shell-panel="' + def.id +
+        '" title="' + def.label + '" aria-label="' + def.label + '" aria-pressed="false">' +
+        '<span class="window-menu-check" aria-hidden="true"></span><span>' + def.label + '</span></button>';
+    }
+    return '<button type="button" class="panel-dock-button" data-shell-panel="' + def.id +
+      '" title="' + def.label + '" aria-label="' + def.label + '" aria-pressed="false">' +
+      svgIcon(def.icon) + '</button>';
   }
 
   function applicationMenuElements(id) {
