@@ -173,8 +173,11 @@ for (const candidate of config.captureCandidates ?? []) {
       await fs.writeFile(metricsPath, JSON.stringify({
         url: target.href,
         status,
-        title: await page.title(),
+        title,
         viewport,
+        referenceValid,
+        validityFailures,
+        foundHomeLinks,
         metrics
       }, null, 2));
 
@@ -182,6 +185,9 @@ for (const candidate of config.captureCandidates ?? []) {
         path: target.pathname,
         viewport: viewport.name,
         status,
+        referenceValid,
+        validityFailures,
+        foundHomeLinks,
         screenshot: path.relative(outRoot, screenshotPath).replaceAll('\\', '/'),
         metrics: path.relative(outRoot, metricsPath).replaceAll('\\', '/')
       });
