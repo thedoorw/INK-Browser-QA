@@ -105,17 +105,19 @@ async function waitLiveProduct(root,timeoutMs=180000){
   const localIndex=await readFile(path.join(root,'product/source/index.html'));
   const localCreative=await readFile(path.join(root,'product/source/src/editor/creative-workspace.js'));
   const localBranding=await readFile(path.join(root,'product/source/ui/branding-settings.js'));
-  const expected={styles:digest(localCss),webShell:digest(localShell),index:digest(localIndex),creative:digest(localCreative),branding:digest(localBranding)};
+  const localFullControls=await readFile(path.join(root,'product/source/ui/full-capability-controls.js'));
+  const expected={styles:digest(localCss),webShell:digest(localShell),index:digest(localIndex),creative:digest(localCreative),branding:digest(localBranding),fullControls:digest(localFullControls)};
   const started=Date.now();let last={};
   while(Date.now()-started<timeoutMs){
     try{
       const bust='?pvsi='+encodeURIComponent(TARGET_SHA)+'&t='+Date.now();
-      const [cssRes,shellRes,indexRes,creativeRes,brandingRes,harnessRes]=await Promise.all([
+      const [cssRes,shellRes,indexRes,creativeRes,brandingRes,fullControlsRes,harnessRes]=await Promise.all([
         fetch(LIVE_BASE+'product/source/styles.css'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
         fetch(LIVE_BASE+'product/source/web-shell.js'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
         fetch(LIVE_BASE+'product/source/index.html'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
         fetch(LIVE_BASE+'product/source/src/editor/creative-workspace.js'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
         fetch(LIVE_BASE+'product/source/ui/branding-settings.js'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
+        fetch(LIVE_BASE+'product/source/ui/full-capability-controls.js'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
         fetch(LIVE_BASE+LIVE_HARNESS+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)})
       ]);
       const css=cssRes.ok?Buffer.from(await cssRes.arrayBuffer()):Buffer.alloc(0);
@@ -123,12 +125,13 @@ async function waitLiveProduct(root,timeoutMs=180000){
       const index=indexRes.ok?Buffer.from(await indexRes.arrayBuffer()):Buffer.alloc(0);
       const creative=creativeRes.ok?Buffer.from(await creativeRes.arrayBuffer()):Buffer.alloc(0);
       const branding=brandingRes.ok?Buffer.from(await brandingRes.arrayBuffer()):Buffer.alloc(0);
+      const fullControls=fullControlsRes.ok?Buffer.from(await fullControlsRes.arrayBuffer()):Buffer.alloc(0);
       last={
-        stylesStatus:cssRes.status,webShellStatus:shellRes.status,indexStatus:indexRes.status,creativeStatus:creativeRes.status,brandingStatus:brandingRes.status,harnessStatus:harnessRes.status,
+        stylesStatus:cssRes.status,webShellStatus:shellRes.status,indexStatus:indexRes.status,creativeStatus:creativeRes.status,brandingStatus:brandingRes.status,fullControlsStatus:fullControlsRes.status,harnessStatus:harnessRes.status,
         styles:css.length?digest(css):null,webShell:shell.length?digest(shell):null,index:index.length?digest(index):null,
-        creative:creative.length?digest(creative):null,branding:branding.length?digest(branding):null
+        creative:creative.length?digest(creative):null,branding:branding.length?digest(branding):null,fullControls:fullControls.length?digest(fullControls):null
       };
-      if(cssRes.ok&&shellRes.ok&&indexRes.ok&&creativeRes.ok&&brandingRes.ok&&harnessRes.ok&&last.styles===expected.styles&&last.webShell===expected.webShell&&last.index===expected.index&&last.creative===expected.creative&&last.branding===expected.branding){
+      if(cssRes.ok&&shellRes.ok&&indexRes.ok&&creativeRes.ok&&brandingRes.ok&&fullControlsRes.ok&&harnessRes.ok&&last.styles===expected.styles&&last.webShell===expected.webShell&&last.index===expected.index&&last.creative===expected.creative&&last.branding===expected.branding&&last.fullControls===expected.fullControls){
         return {baseUrl:LIVE_BASE,expected,observed:last,waitMs:Date.now()-started};
       }
     }catch(error){last={error:String(error?.message||error)};}

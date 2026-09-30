@@ -48,64 +48,91 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
     document.documentElement.dataset.qaReady='true';document.title='QA_READY';return;
   }
 
-  const prefs={};
-  for(const category of ['general','interface','tools','canvas','guides','performance','storage','branding']){
-    await prefCategory(category);
-    const dialog=q('.branding-settings-dialog'),title=q('.branding-settings-dialog>.panel-header'),nav=q('.preferences-categories'),content=q('.preferences-content');
-    const active=q('[data-preference-category="'+category+'"]'),page=q('[data-preference-page="'+category+'"]');
-    prefs[category]={
-      dialog:rect(dialog),titlebar:rect(title),nav:rect(nav),content:rect(content),active:rect(active),heading:rect(page?.querySelector('h2')),
-      visibleRows:qa('[data-preference-page="'+category+'"] .control-row,[data-preference-page="'+category+'"] .toggle-row,[data-preference-page="'+category+'"] .branding-field,[data-preference-page="'+category+'"] .branding-asset-row').filter(visible).slice(0,12).map(e=>({text:safeText(e).slice(0,120),rect:rect(e)}))
-    };
-  }
-  q('#closeBrandingSettings')?.click();await sleep(50);
+  /* Compact audit: individual screenshot modes already cover every category/panel.
+     Keep the machine audit focused on invariant geometry, Light surfaces,
+     encapsulated native controls, keyboard close and persistence/reload. */
+  await prefCategory('general');
+  const dialog=q('.branding-settings-dialog'),titlebar=q('.branding-settings-dialog>.panel-header'),nav=q('.preferences-categories');
+  const navRows=qa('.preferences-categories button').map(e=>({text:safeText(e),rect:rect(e)}));
+  const preferences={
+    dialog:rect(dialog),titlebar:rect(titlebar),nav:rect(nav),
+    activeGeneral:rect(q('[data-preference-category="general"]')),
+    navRows
+  };
+  const closeButton=q('#closeBrandingSettings');
+  closeButton?.focus();
+  d.dispatchEvent(new w.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));
+  await sleep(40);
+  const escapeClosed=Boolean(q('#brandingSettingsDialog')?.hidden);
 
-  const creative={};
-  for(const id of ['reference','compose','chat','revision']){
-    await panel(id);
-    const root=q('#creativeWorkspace'),body=root?.querySelector('.creative-workspace-body');
-    creative[id]={
-      root:rect(root),body:rect(body),nativeVisibleFiles:qa('#creativeWorkspace input[type="file"]').filter(visible).length,
-      picker:rect(root?.querySelector('.creative-file-picker')),
-      status:rect(root?.querySelector('.creative-workspace-status')),
-      controls:qa('#creativeWorkspace button,#creativeWorkspace input,#creativeWorkspace select,#creativeWorkspace output').filter(visible).slice(0,24).map(e=>({tag:e.tagName.toLowerCase(),text:safeText(e).slice(0,80),rect:rect(e)})
-      )
-    };
-  }
-
-  const panels={};
-  for(const id of ['libraries','properties','color','adjustments','history','channels','pages']){
-    await panel(id);
-    panels[id]={state:shell.state(),visibleControls:qa('.panel-stack-framework button,.panel-stack-framework input,.panel-stack-framework select').filter(visible).slice(0,40).map(e=>({tag:e.tagName.toLowerCase(),text:safeText(e).slice(0,80),rect:rect(e)}))};
-  }
+  await panel('reference');
+  let root=q('#creativeWorkspace');
+  const reference={
+    nativeVisibleFiles:qa('#creativeWorkspace input[type="file"]').filter(visible).length,
+    picker:rect(root?.querySelector('.creative-file-picker')),
+    status:rect(root?.querySelector('.creative-workspace-status'))
+  };
+  await panel('chat');
+  root=q('#creativeWorkspace');
+  const chat={
+    transcript:rect(root?.querySelector('.creative-chat-transcript')),
+    prompt:rect(root?.querySelector('.creative-workspace-prompt textarea')),
+    emptyText:safeText(root?.querySelector('.creative-chat-empty'))
+  };
+  await panel('libraries');
+  const libraries={
+    searchLabel:safeText(q('.shell-library-search-label span')),
+    placeholder:q('#shellLibrarySearch')?.getAttribute('placeholder')||'',
+    status:safeText(q('#shellLibraryStatus')),
+    inspectLabel:safeText(q('.shell-library-inspect-label span'))
+  };
+  await panel('channels');
+  const channels={empty:safeText(q('#uiBChannelsList'))};
 
   await prefCategory('branding');
   const name=q('#brandingAppName'),title=q('#brandingAppTitle');
   name.value='INK QA PERSIST';name.dispatchEvent(new w.Event('input',{bubbles:true}));
   title.value='INK QA Persist Window';title.dispatchEvent(new w.Event('input',{bubbles:true}));
-  await sleep(80);
+  await sleep(70);
   const activeBeforeReload=JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null');
-  q('#brandingPromoteDefault')?.click();await sleep(40);
+  q('#brandingPromoteDefault')?.click();await sleep(30);
   const promoted=JSON.parse(w.localStorage.getItem('ink.web.branding.product-default.v1')||'null');
-  q('#brandingRestoreFactory')?.click();await sleep(40);
-  const restored={active:JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null'),productDefault:w.localStorage.getItem('ink.web.branding.product-default.v1'),name:q('#brandingAppName')?.value};
+  q('#brandingRestoreFactory')?.click();await sleep(30);
+  const restored={
+    active:JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null'),
+    productDefault:w.localStorage.getItem('ink.web.branding.product-default.v1'),
+    name:q('#brandingAppName')?.value
+  };
   name.value='INK QA PERSIST';name.dispatchEvent(new w.Event('input',{bubbles:true}));
   title.value='INK QA Persist Window';title.dispatchEvent(new w.Event('input',{bubbles:true}));
-  await sleep(50);
-
+  await sleep(40);
   const firstPaint={styleText:q('#inkFirstPaintStyle')?.textContent||'',body:rect(d.body),app:rect(q('#app'))};
-  frame.src='../../product/source/?pvsi-pack5-reload=1';
-  await waitFrame();w=frame.contentWindow;d=frame.contentDocument;
-  for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
-  const reloadApplied={title:d.title,brandName:d.querySelector('[data-brand-app-name]')?.textContent?.trim()||null,stored:JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null')};
 
-  const metrics={status:'PASS',mode,target:new URL(location.href).searchParams.get('target')||null,viewport:{width:w.innerWidth,height:w.innerHeight,dpr:w.devicePixelRatio},prefs,creative,panels,persistence:{activeBeforeReload,promoted,restored,reloadApplied},firstPaint};
-  const g=prefs.general;
-  if(Math.round(g.dialog.width)!==826||Math.round(g.dialog.height)!==624)throw new Error('Preferences outer geometry drift '+JSON.stringify(g.dialog));
-  if(Math.round(g.titlebar.height)!==31||Math.round(g.nav.width)!==125)throw new Error('Preferences title/nav geometry drift');
-  if(Object.values(prefs).some(v=>Math.round(v.active.height)!==20))throw new Error('Preferences category row pitch drift');
-  if(creative.reference.nativeVisibleFiles!==0||!creative.reference.picker)throw new Error('native reference file picker still visible');
-  if(Object.values(creative).some(v=>v.status?.display!=='none'))throw new Error('engineering workspace status visible');
+  const reloadWait=waitFrame();
+  frame.src='../../product/source/?pvsi-pack5-reload=1';
+  await reloadWait;
+  w=frame.contentWindow;d=frame.contentDocument;
+  for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(50);
+  const reloadApplied={
+    title:d.title,
+    brandName:d.querySelector('[data-brand-app-name]')?.textContent?.trim()||null,
+    stored:JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null')
+  };
+
+  const metrics={
+    status:'PASS',mode,target:new URL(location.href).searchParams.get('target')||null,
+    viewport:{width:w.innerWidth,height:w.innerHeight,dpr:w.devicePixelRatio},
+    preferences,escapeClosed,reference,chat,libraries,channels,
+    persistence:{activeBeforeReload,promoted,restored,reloadApplied},firstPaint
+  };
+  if(Math.round(preferences.dialog.width)!==826||Math.round(preferences.dialog.height)!==624)throw new Error('Preferences outer geometry drift '+JSON.stringify(preferences.dialog));
+  if(Math.round(preferences.titlebar.height)!==31||Math.round(preferences.nav.width)!==125)throw new Error('Preferences title/nav geometry drift '+JSON.stringify({titlebar:preferences.titlebar,nav:preferences.nav}));
+  if(preferences.navRows.length!==8||preferences.navRows.some(v=>Math.round(v.rect.height)!==20))throw new Error('Preferences category row pitch/count drift '+JSON.stringify(preferences.navRows));
+  if(!escapeClosed)throw new Error('Preferences Escape close failed');
+  if(reference.nativeVisibleFiles!==0||!reference.picker||reference.status?.display!=='none')throw new Error('Reference encapsulation/status drift '+JSON.stringify(reference));
+  if(chat.transcript?.backgroundColor!=='rgb(255, 255, 255)'||chat.prompt?.backgroundColor!=='rgb(255, 255, 255)')throw new Error('CHAT Light surface drift '+JSON.stringify(chat));
+  if(libraries.searchLabel!=='搜尋'||libraries.placeholder!=='搜尋資料庫'||!libraries.inspectLabel.includes('唯讀'))throw new Error('Libraries visible localization drift '+JSON.stringify(libraries));
+  if(!channels.empty.includes('選取點陣影像'))throw new Error('Channels visible localization drift '+JSON.stringify(channels));
   if(activeBeforeReload?.name!=='INK QA PERSIST'||promoted?.name!=='INK QA PERSIST')throw new Error('branding persistence/promote failed');
   if(restored.productDefault!==null||restored.active?.name!=='INK'||restored.name!=='INK')throw new Error('branding restore-factory failed '+JSON.stringify(restored));
   if(reloadApplied.stored?.name!=='INK QA PERSIST'||reloadApplied.title!=='INK QA Persist Window')throw new Error('branding reload persistence failed');
