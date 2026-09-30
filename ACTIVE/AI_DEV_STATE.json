@@ -1,0 +1,68 @@
+{
+  "schema": "ai-dev-state",
+  "schema_version": "0.1",
+  "mode": "R_AND_D_PROTOTYPE_NO_PRODUCT_AUTHORITY",
+  "program_id": "AI-DEV-PRODUCTION-LINE-v0.1",
+  "task_id": "AI-DEV-TRIAL-STATE-HANDOFF-001",
+  "state": "BUILDING",
+  "current_owner": "BUILDER",
+  "next_owner": "BUILDER",
+  "authority": {
+    "ssot": "GitHub",
+    "repo": "thedoorw/INK-Browser-QA",
+    "work_order": "research/AI_DEV_PRODUCTION_LINE_PROTOTYPE_v0.1.md",
+    "transition_authority": "governance/AI_DEV_STATE_TRANSITIONS_v0.1.json",
+    "evidence_model": "research/AI_DEV_EVIDENCE_MANIFEST_MODEL_v0.1.json",
+    "product_mutation_authorized": false
+  },
+  "identity": {
+    "base_sha": "f10acf3384e27becb6a5eb54e009077e0d7da7a0",
+    "target_sha": null,
+    "artifact": {
+      "status": "PENDING_PIN",
+      "path": "research/ai-dev-production-line/prototype/trial-artifact.json",
+      "sha256": "d4c41c8a8c682f3cc09f6367b035dae4304af548ee41eed11ae87f5d84d6305d"
+    },
+    "deployment": {
+      "status": "UNVERIFIED",
+      "reason": "Prototype does not mutate/deploy INK product."
+    },
+    "browser_loaded": {
+      "status": "UNVERIFIED",
+      "reason": "Prototype stops before deployment/browser identity testing."
+    }
+  },
+  "required_artifacts": ["research/ai-dev-production-line/prototype/trial-artifact.json"],
+  "required_evidence_layers": ["SOURCE", "ARTIFACT"],
+  "evidence_plan": [
+    {"claim_id": "TRIAL_SOURCE_PINNED", "layer": "SOURCE"},
+    {"claim_id": "TRIAL_ARTIFACT_PINNED", "layer": "ARTIFACT"}
+  ],
+  "reviewer_isolation": {
+    "next_review_role": "SOURCE_REVIEWER",
+    "packet": [
+      "ACTIVE/AI_DEV_STATE.json",
+      "governance/AI_DEV_STATE_TRANSITIONS_v0.1.json",
+      "research/ai-dev-production-line/prototype/evidence-manifest.json",
+      "research/ai-dev-production-line/prototype/trial-artifact.json"
+    ],
+    "exclude_builder_narrative": true,
+    "independence_requirement": "FRESH_CHAT_FOR_STRONG_REVIEW"
+  },
+  "user_checkpoint": {
+    "required": false,
+    "status": "NOT_REQUIRED",
+    "reason": "Research-only deterministic state/artifact handoff; no visible product direction change."
+  },
+  "open_blockers": [],
+  "transition_history": [
+    {
+      "from": "PLANNED",
+      "to": "BUILDING",
+      "actor": "AI_DEVELOPMENT_PRODUCTION_LINE_MR",
+      "at_commit": "f10acf3384e27becb6a5eb54e009077e0d7da7a0",
+      "reason": "USER authorized production-line R&D prototype."
+    }
+  ],
+  "allowed_transitions": ["ARTIFACT_READY", "BLOCKED", "CANCELLED"]
+}
