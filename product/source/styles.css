@@ -4162,9 +4162,6 @@ html,body,#app{background:#e7e7e7}
 @media(min-width:761px){
   .ui-b-layer-appearance .ui-b-capability-note{display:none!important}
 }
-}
-
-
 /* USER 2026-09-30: compact chrome and single panel boundaries. */
 .menu-workspace,#contextualAdvancedBtn{display:none!important}
 @media(min-width:761px){
