@@ -4171,3 +4171,23 @@ html,body,#app{background:#e7e7e7}
  .panel-stack-splitter::after{content:"";position:absolute;left:0;right:0;top:-2px;height:5px;cursor:ns-resize}
  .panel-stack-region{border-top:0;border-bottom:0;box-shadow:none}
 }
+
+/* Reference slots keep unsupported PS tools empty rather than invent capabilities. */
+@media(min-width:761px){
+ .app[data-toolbar-layout="dual"] .tool-rail .tool-group{grid-template-rows:repeat(10,26px);grid-auto-flow:row}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-tool="select"]{grid-area:1/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-tool="lasso"]{grid-area:2/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-ui-b-tool-group="smart-selection"]{grid-area:2/2}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-ui-b-tool-group="sampling"]{grid-area:4/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-ui-b-tool-group="healing"]{grid-area:4/2}
+ .app[data-toolbar-layout="dual"] .tool-group>#drawToolButton{grid-area:5/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-ui-b-tool-group="clone"]{grid-area:5/2}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-tool="eraser"]{grid-area:6/2}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-ui-b-tool-group="fill"]{grid-area:7/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-ui-b-tool-group="detail"]{grid-area:7/2}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-ui-b-tool-group="tone"]{grid-area:8/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-tool="text"]{grid-area:9/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-tool="shape"]{grid-area:10/1}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-tool="pan"]{grid-area:10/2}
+ .app[data-toolbar-layout="dual"] .tool-group>[data-tool="image"]{grid-area:11/1}
+}
