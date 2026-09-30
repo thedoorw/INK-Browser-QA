@@ -353,12 +353,40 @@ export function installFullCapabilityControls(app){
     channels?.addEventListener('click',event=>{const cmd=event.target.closest('[data-ui-b-channel]')?.dataset.uiBChannel;if(cmd)channelCommand(cmd);});
     const layers=$('[data-shell-panel-section="layers"] .shell-panel-body')||$('[data-content="layers"]');
     if(layers&&!$('#uiBLayerAppearance')){
-      const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance"><label>混合 <select id="uiBBlendMode">'+selectOptions(BLEND_MODES)+'</select></label><button type="button" data-ui-b-command="mask-add">遮色片</button><button type="button" data-ui-b-command="layer-effects">fx</button><button type="button" data-ui-b-command="select-and-mask">選取並遮住</button></div>');
+      const filterOptions=Object.keys(FILTER_DEFAULTS).map(type=>'<option value="'+esc(type)+'">'+esc(type)+'</option>').join('');
+      const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance">'+
+        '<div class="ui-b-layer-filter"><span>種類</span><select id="uiBLayerFilterType">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" title="新增 Filter">＋</button></div>'+
+        '<div class="ui-b-layer-blend"><span>混合</span><select disabled title="目前文件模型沒有 layer blendMode authority"><option>正常</option></select><span class="ui-b-capability-note">Layer blend N/A</span></div>'+
+        '<div class="ui-b-layer-lock"><span>鎖定</span><button type="button" data-layer-action="toggle-lock" aria-pressed="false"><svg><use href="#i-lock"/></svg></button></div>'+
+      '</div>');
       layers.prepend(block);
-      block.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);});
-      $('#uiBBlendMode').addEventListener('change',event=>{const found=selectedObject();if(found)mutateObject('Blend Mode',found,object=>object.blendMode=event.target.value);});
+      const opacity=layers.querySelector('.layer-opacity-card');if(opacity)block.after(opacity);
+      block.addEventListener('click',event=>{
+        const action=event.target.closest('[data-layer-action]')?.dataset.layerAction;
+        if(action==='add-filter'){
+          const layer=app.layer(),type=$('#uiBLayerFilterType')?.value;if(!layer||!type)return;
+          app.history.pushScoped('新增 Layer Filter：'+type,[app.layerPath(layer)],()=>{layer.filterStack=layer.filterStack||[];layer.filterStack.push(createFilter(type,FILTER_DEFAULTS[type]||{}));});
+          app.refreshAll();app.renderer.render();refreshPanels();
+        }else if(action==='toggle-lock'){
+          const layer=app.layer();if(!layer)return;
+          app.history.pushScoped(layer.locked?'解除圖層鎖定':'鎖定圖層',[app.layerPath(layer)],()=>layer.locked=!layer.locked);
+          app.refreshLayers();refreshPanels();
+        }
+      });
+      const footer=layers.querySelector('.layer-bottom-toolbar'),spacer=footer?.querySelector('.layer-toolbar-spacer');
+      if(footer&&spacer&&!footer.querySelector('[data-ui-b-layer-footer="mask"]')){
+        const mask=htmlNode('<button type="button" class="layer-tool-button" data-ui-b-layer-footer="mask" data-ui-b-command="mask-add" title="新增遮色片" aria-label="新增遮色片"><svg><use href="#i-mask"/></svg></button>');
+        const fx=htmlNode('<button type="button" class="layer-tool-button" data-ui-b-layer-footer="fx" data-ui-b-command="layer-effects" title="圖層效果" aria-label="圖層效果"><svg><use href="#i-fx"/></svg></button>');
+        footer.insertBefore(mask,spacer);footer.insertBefore(fx,spacer);
+        for(const node of [mask,fx])node.addEventListener('click',()=>dispatch(node.dataset.uiBCommand));
+      }
     }
     const objectPanel=$('[data-content="object"]');
+    if(objectPanel&&!$('#uiBObjectBlend')){
+      const blendBlock=htmlNode('<div id="uiBObjectBlend" class="property-card ui-b-object-blend"><label class="control-row"><span>混合</span><select id="uiBBlendMode">'+selectOptions(BLEND_MODES)+'</select></label></div>');
+      objectPanel.prepend(blendBlock);
+      $('#uiBBlendMode').addEventListener('change',event=>{const found=selectedObject();if(found)mutateObject('Blend Mode',found,object=>object.blendMode=event.target.value);});
+    }
     if(objectPanel&&!$('#uiBRasterProperties'))objectPanel.appendChild(htmlNode('<div id="uiBRasterProperties" class="property-card ui-b-raster-properties"><div class="subpanel-title"><strong>Raster / Image</strong><span>RASTER</span></div><div id="uiBRasterStateReadout" class="shell-panel-note">No raster selected</div><div id="uiBRasterSourceReadout" class="shell-panel-note"></div><div class="ui-b-panel-actions">'+button('Crop…','data-ui-b-command="image-crop"')+button('Resize…','data-ui-b-command="image-resize"')+button('Profile…','data-ui-b-command="color-profile"')+'</div><div class="ui-b-panel-actions">'+button('Histogram','data-ui-b-raster-insight="histogram"')+button('Snapshot','data-ui-b-raster-insight="snapshot"')+button('Compare','data-ui-b-raster-insight="compare"')+'</div><div id="uiBRasterAnalysis" class="shell-panel-note"></div><div id="uiBFilterStack" class="ui-b-stack-list"></div><div id="uiBEffectStack" class="ui-b-stack-list"></div></div>'));
     objectPanel?.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);const insight=event.target.closest('[data-ui-b-raster-insight]')?.dataset.uiBRasterInsight;if(insight)runRasterInsight(insight);});
     const geometryPanel=$('[data-content="geometry"]');
@@ -370,6 +398,7 @@ export function installFullCapabilityControls(app){
   function refreshPanels(){
     const found=selectedFound(app),object=found?.object,stackTarget=object?.type==='image'?object:app.layer();
     const blend=$('#uiBBlendMode');if(blend)blend.value=object?.blendMode||'source-over';
+    const layerLock=$('[data-layer-action="toggle-lock"]');if(layerLock){const locked=Boolean(app.layer()?.locked);layerLock.setAttribute('aria-pressed',String(locked));layerLock.classList.toggle('active',locked);}
     const readout=$('#uiBRasterStateReadout');
     if(readout){
       if(object?.rasterState?.colorRaster){const r=deserializeColorRaster(object.rasterState.colorRaster);readout.textContent=r.width+'×'+r.height+' · '+r.bitDepth+'-bit · '+r.colorMode+(object.rasterState.icc?.inspection?' · ICC':'');}

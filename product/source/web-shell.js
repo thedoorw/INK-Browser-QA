@@ -490,12 +490,62 @@
     chrome.innerHTML =
       '<div class="document-ruler-corner" aria-hidden="true"></div>' +
       '<div class="document-ruler document-ruler-horizontal" data-ruler-axis="horizontal" role="button" tabindex="0" aria-label="水平尺；拖曳建立水平參考線"><canvas class="document-ruler-canvas" data-ruler-canvas="horizontal" aria-hidden="true"></canvas></div>' +
-      '<div class="document-ruler document-ruler-vertical" data-ruler-axis="vertical" role="button" tabindex="0" aria-label="垂直尺；拖曳建立垂直參考線"><canvas class="document-ruler-canvas" data-ruler-canvas="vertical" aria-hidden="true"></canvas></div>';
+      '<div class="document-ruler document-ruler-vertical" data-ruler-axis="vertical" role="button" tabindex="0" aria-label="垂直尺；拖曳建立垂直參考線"><canvas class="document-ruler-canvas" data-ruler-canvas="vertical" aria-hidden="true"></canvas></div>' +
+      '<label class="document-scrollbar document-scrollbar-horizontal" aria-label="水平捲動"><input id="shellDocumentScrollX" type="range" min="0" max="1000" value="500"></label>' +
+      '<label class="document-scrollbar document-scrollbar-vertical" aria-label="垂直捲動"><input id="shellDocumentScrollY" type="range" min="0" max="1000" value="500"></label>' +
+      '<div class="document-scrollbar-corner" aria-hidden="true"></div>';
     root.append(chrome);
     state.documentChrome = chrome;
     return chrome;
   }
 
+
+  function documentScrollBounds(app) {
+    const renderer = app?.renderer;
+    const page = app?.page?.();
+    const view = renderer?.viewportWorldBounds?.();
+    const content = renderer?.contentBounds?.(page);
+    if (!view) return null;
+    let bounds = content && [content.x,content.y,content.w,content.h].every(Number.isFinite) && content.w>0 && content.h>0
+      ? {x:content.x,y:content.y,w:content.w,h:content.h}
+      : {x:view.x-view.w,y:view.y-view.h,w:view.w*3,h:view.h*3};
+    const pad=Math.max(48,Math.max(bounds.w,bounds.h)*.12);
+    bounds={x:bounds.x-pad,y:bounds.y-pad,w:bounds.w+pad*2,h:bounds.h+pad*2};
+    return {view,bounds};
+  }
+
+  function syncDocumentScrollbars() {
+    const app=runtime(),stateBounds=documentScrollBounds(app);
+    const x=document.querySelector('#shellDocumentScrollX'),y=document.querySelector('#shellDocumentScrollY');
+    if(!stateBounds||!x||!y)return false;
+    const {view,bounds}=stateBounds;
+    const cx=view.x+view.w/2,cy=view.y+view.h/2;
+    const minX=bounds.x,maxX=bounds.x+bounds.w,minY=bounds.y,maxY=bounds.y+bounds.h;
+    x.value=String(Math.round(Math.max(0,Math.min(1,(cx-minX)/Math.max(1,maxX-minX)))*1000));
+    y.value=String(Math.round(Math.max(0,Math.min(1,(cy-minY)/Math.max(1,maxY-minY)))*1000));
+    x.dataset.viewportRatio=String(Math.max(.05,Math.min(1,view.w/Math.max(view.w,bounds.w))));
+    y.dataset.viewportRatio=String(Math.max(.05,Math.min(1,view.h/Math.max(view.h,bounds.h))));
+    return true;
+  }
+
+  function bindDocumentScrollbars() {
+    const app=runtime();
+    const x=document.querySelector('#shellDocumentScrollX'),y=document.querySelector('#shellDocumentScrollY');
+    if(!app||!x||!y)return false;
+    const bind=(input,axis)=>{
+      if(input.dataset.bound==='true')return;
+      input.dataset.bound='true';
+      input.addEventListener('input',()=>{
+        const current=documentScrollBounds(app);if(!current)return;
+        const {view,bounds}=current,t=Number(input.value)/1000;
+        const center={x:view.x+view.w/2,y:view.y+view.h/2};
+        if(axis==='x')center.x=bounds.x+bounds.w*t;else center.y=bounds.y+bounds.h*t;
+        if(centerCameraOnWorld(app,center))app.renderer?.render?.();
+        syncViewOverlaysSoon();
+      });
+    };
+    bind(x,'x');bind(y,'y');syncDocumentScrollbars();return true;
+  }
 
   function niceRulerStep(worldPerPixel, targetPixels = 72) {
     const target = Math.max(Number.EPSILON, Math.abs(worldPerPixel) * targetPixels);
@@ -618,6 +668,7 @@
     state.viewSyncRaf = requestAnimationFrame(() => {
       state.viewSyncRaf = 0;
       renderDocumentRulers();
+      syncDocumentScrollbars();
       if (currentPanel() === 'navigator') renderShellNavigator();
     });
   }
@@ -640,7 +691,9 @@
       artboardUnit.dataset.shellRulerBound = 'true';
       artboardUnit.addEventListener('change', syncViewOverlaysSoon);
     }
+    bindDocumentScrollbars();
     renderDocumentRulers();
+    syncDocumentScrollbars();
     return true;
   }
 
@@ -909,14 +962,14 @@
           <div id="shellNavigatorPreview" class="shell-navigator-preview" role="application" aria-label="導覽器縮圖；拖曳框可平移視圖">
             <canvas id="shellNavigatorCanvas" width="220" height="150"></canvas>
             <div id="shellNavigatorProxy" class="shell-navigator-proxy" tabindex="0"></div>
+            <button type="button" id="shellNavigatorFit" class="shell-navigator-fit-overlay" title="符合內容" aria-label="符合內容"><svg><use href="#i-expand"/></svg></button>
           </div>
         </div>
         <div class="shell-panel-footer navigator-footer">
-          <button type="button" id="shellNavigatorFit">符合</button>
-          <button type="button" id="shellNavigatorZoomOut" aria-label="縮小">−</button>
+          <output id="shellNavigatorZoom" class="navigator-zoom-field">100%</output>
+          <button type="button" id="shellNavigatorZoomOut" class="navigator-zoom-icon" aria-label="縮小"><svg><use href="#i-zoom-out"/></svg></button>
           <input id="shellNavigatorZoomSlider" type="range" min="3" max="2400" step="1" value="100" aria-label="導覽器縮放">
-          <output id="shellNavigatorZoom">100%</output>
-          <button type="button" id="shellNavigatorZoomIn" aria-label="放大">＋</button>
+          <button type="button" id="shellNavigatorZoomIn" class="navigator-zoom-icon" aria-label="放大"><svg><use href="#i-zoom-in"/></svg></button>
         </div>
       </section>
       <section class="inspector-section tab-content shell-panel-section pages-shell-panel" data-content="pages" aria-label="頁面">
@@ -1710,12 +1763,12 @@
     host.dataset.panelRegistry = 'PANEL_GROUPS';
     host.setAttribute('aria-label', '展開的面板群組');
     host.addEventListener('click', event => { if (event.target.closest('[data-panel-edge-toggle]')) closePrimaryPanels(); });
-    host.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="收合面板"><span class="edge-chevron" aria-hidden="true">›</span></button></div>' + PANEL_GROUPS.map((group, index) =>
+    host.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="收合面板"><span class="edge-chevron" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></button></div>' + PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
       '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
       '<div class="panel-stack-tabs" role="tablist" aria-label="' + group.label + '">' +
       group.items.filter(def => def.id !== 'specialist').map(def => '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="' + def.id + '" aria-selected="false">' + def.label + '</button>').join('') +
-      '<button type="button" class="panel-stack-options" data-stack-options="' + group.id + '" title="面板選項" aria-label="面板選項">☰</button></div>' +
+      '<button type="button" class="panel-stack-options" data-stack-options="' + group.id + '" title="面板選項" aria-label="面板選項"><svg><use href="#i-more"/></svg></button></div>' +
       '<div class="panel-stack-body" data-panel-stack-body="' + group.id + '"></div></section>'
     ).join('');
     host.addEventListener('click', event => {
@@ -1899,7 +1952,7 @@
     dock.dataset.uiHome = 'panels';
     dock.dataset.uiRoute = 'PRIMARY_HOME';
     dock.setAttribute('aria-label', '面板 Dock');
-    dock.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="展開面板"><span class="edge-chevron" aria-hidden="true">‹</span></button></div>' + PANEL_GROUPS.map((group, index) =>
+    dock.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="展開面板"><span class="edge-chevron" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></button></div>' + PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-dock-separator" aria-hidden="true"></div>' : '') +
       '<div class="panel-dock-group ' + group.id + '" data-panel-group="' + group.id +
       '" aria-label="' + group.label + '">' +
