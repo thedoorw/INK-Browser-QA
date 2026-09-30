@@ -372,3 +372,163 @@ PARTS PRESENT
 + USER ACCEPTS
 = COMPLETION
 ```
+
+## 22. Strict inspection sequence
+
+Reference-driven review uses the following fixed order.
+
+### 22.1 Lock comparison conditions
+
+Before judging geometry, record the reference artifact, product artifact identity, viewport, browser zoom / OS scaling where relevant, and UI state.
+
+Normalize scale before comparing pixels.
+
+### 22.2 Blind visual delta sweep
+
+Inspect the rendered product against the reference before reading prior PASS claims.
+
+Rules:
+
+```text
+NO PASS LANGUAGE
+NO SOURCE EXPLANATION
+NO OLD CHECKLIST CONCLUSION
+NO "CLOSE ENOUGH"
+```
+
+Only enumerate visible differences.
+
+### 22.3 Same-class consistency sweep
+
+Compare every member of the same visual class:
+
+- application menus;
+- dropdowns/popups;
+- tool buttons;
+- icons;
+- tabs;
+- inputs/selects;
+- sliders;
+- scrollbars;
+- panel headers/footers;
+- dialog titlebars/close controls.
+
+A single outlier is a defect even if it is functionally correct.
+
+### 22.4 Numeric geometry / density sweep
+
+Measure major regions and controls:
+
+```text
+X / Y
+WIDTH / HEIGHT
+ROW COUNT
+ROW PITCH
+CONTROL HEIGHT
+PADDING / GAP
+ICON BOX / VISIBLE ENVELOPE
+FONT SIZE / LINE HEIGHT
+SPLITTER SIZE
+SCROLLBAR WIDTH
+```
+
+Outer dimensions alone are insufficient. Internal density and occupancy must also match the intended reference grammar.
+
+### 22.5 State coverage matrix
+
+Enumerate all UI states required by the reference/task and verify each rendered state separately.
+
+Examples:
+
+- expanded / collapsed;
+- single / double toolbar;
+- menu open;
+- panel menu open;
+- dialog open;
+- rulers on/off;
+- drag/reorder;
+- resize;
+- hover/focus/disabled where material.
+
+An unobserved runtime state is not visually verified.
+
+### 22.6 Source cause trace
+
+Only after visible deltas are recorded inspect:
+
+```text
+FINAL HTML / POST-RUNTIME DOM
+→ EFFECTIVE / COMPUTED CSS
+→ UI JS
+→ CAPABILITY AUTHORITY
+```
+
+Source explains why the defect exists; it does not replace the rendered comparison.
+
+### 22.7 Capability/home reconciliation
+
+For each reference control absent from the target UI:
+
+1. determine whether the target product already has the capability;
+2. if yes, inspect whether it is misplaced, hidden or duplicated;
+3. only if truly absent may it be classified as CAPABILITY_ABSENT.
+
+### 22.8 Interaction verification
+
+Operate the real product for affordances that imply behavior.
+
+Handlers/listeners in source are not interaction proof.
+
+### 22.9 Disposition
+
+Every remaining delta must be one of:
+
+```text
+FIX_NOW
+THEME_OR_COLOR_OVERRIDE
+CAPABILITY_ABSENT
+USER_OVERRIDE
+```
+
+No fifth category.
+
+### 22.10 USER checkpoint
+
+AI review does not replace product acceptance.
+
+## 23. Reviewer-bias guardrails
+
+Recognized failure modes:
+
+```text
+KNOWN_ISSUE_BIAS
+LOCAL_PASS_BIAS
+PRIOR_NARRATIVE_BIAS
+SAME_CLASS_BLINDNESS
+SOURCE_FIRST_BIAS
+PROXY_EVIDENCE_BIAS
+```
+
+Required countermeasures:
+
+- search for unknown deltas before verifying known issues;
+- compare same-class components as sets;
+- keep prior PASS statements out of the first visual sweep;
+- do not infer whole-product correctness from a few matching measurements;
+- do not let source availability bias visible-product judgment;
+- do not let proxy evidence close a different requirement.
+
+## 24. Standard reviewer output
+
+A standards/review role should separate:
+
+```text
+OBSERVED DELTA
+MEASURED DELTA
+SOURCE CAUSE
+CAPABILITY STATUS
+DISPOSITION
+USER DECISION NEEDED
+```
+
+Do not mix these stages into one vague PASS/FAIL narrative.
