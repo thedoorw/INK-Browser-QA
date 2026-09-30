@@ -83,7 +83,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
   q('#brandingPromoteDefault')?.click();await sleep(40);
   const promoted=JSON.parse(w.localStorage.getItem('ink.web.branding.product-default.v1')||'null');
   q('#brandingRestoreFactory')?.click();await sleep(40);
-  const restored={active:w.localStorage.getItem('ink.web.branding.active.v1'),productDefault:w.localStorage.getItem('ink.web.branding.product-default.v1'),name:q('#brandingAppName')?.value};
+  const restored={active:JSON.parse(w.localStorage.getItem('ink.web.branding.active.v1')||'null'),productDefault:w.localStorage.getItem('ink.web.branding.product-default.v1'),name:q('#brandingAppName')?.value};
   name.value='INK QA PERSIST';name.dispatchEvent(new w.Event('input',{bubbles:true}));
   title.value='INK QA Persist Window';title.dispatchEvent(new w.Event('input',{bubbles:true}));
   await sleep(50);
@@ -102,7 +102,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
   if(creative.reference.nativeVisibleFiles!==0||!creative.reference.picker)throw new Error('native reference file picker still visible');
   if(Object.values(creative).some(v=>v.status?.display!=='none'))throw new Error('engineering workspace status visible');
   if(activeBeforeReload?.name!=='INK QA PERSIST'||promoted?.name!=='INK QA PERSIST')throw new Error('branding persistence/promote failed');
-  if(restored.active!==null||restored.productDefault!==null)throw new Error('branding restore-factory failed');
+  if(restored.productDefault!==null||restored.active?.name!=='INK'||restored.name!=='INK')throw new Error('branding restore-factory failed '+JSON.stringify(restored));
   if(reloadApplied.stored?.name!=='INK QA PERSIST'||reloadApplied.title!=='INK QA Persist Window')throw new Error('branding reload persistence failed');
   document.querySelector('#pvsiMetrics').textContent=JSON.stringify(metrics);document.documentElement.dataset.qaReady='true';document.title='QA_READY';
 })().catch(error=>{document.querySelector('#pvsiMetrics').textContent=JSON.stringify({status:'ERROR',mode,error:String(error?.stack||error)});document.documentElement.dataset.qaReady='error';document.title='QA_ERROR'});

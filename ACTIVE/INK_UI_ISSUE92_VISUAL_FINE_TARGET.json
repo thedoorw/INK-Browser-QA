@@ -9,6 +9,6 @@
     "pvsi-pack5-live-pages"
   ],
   "central_runtime": false,
-  "run_generation": 10,
-  "note": "Exact deployed product identity includes styles/web-shell/index/creative-workspace/branding-settings. Captures all Preferences categories, creative panels, Libraries, Properties, Color, Adjustments, History, Channels and Pages plus persistence/reload audit."
+  "run_generation": 11,
+  "note": "Package 05 evidence rerun after correcting QA expectation for Restore Factory: active factory branding is intentionally re-persisted while product-default override is cleared. Exact deployed identity and all package5 screenshots remain required."
 }
