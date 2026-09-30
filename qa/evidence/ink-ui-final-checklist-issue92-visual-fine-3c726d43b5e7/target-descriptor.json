@@ -1,0 +1,14 @@
+{
+  "schema": "ink-ui-issue92-visual-fine-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "3c726d43b5e7713a27df180397246e6cab1961ef",
+  "scope": "INK-UI-PVSI-PACK-01 closure A03-A06 M04-M06 X01 deployed Pages evidence / no central Runtime",
+  "suites": [
+    "visual-fine-detail",
+    "pvsi-pack1-closure-live-pages"
+  ],
+  "central_runtime": false,
+  "run_generation": 6,
+  "note": "Package 1 closure only. Exact deployed index/styles/web-shell identity required; PS-1 menu text starts asserted."
+}
