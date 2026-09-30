@@ -1,0 +1,14 @@
+{
+  "schema": "ink-ui-issue92-visual-fine-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "54203bd6afe6de7e9cd7a81ae204f5bbe3732cf2",
+  "scope": "PvsI package 05 C01-C03 H01-H02 D01-D03 X02-X03 controls Preferences deployed visual evidence / no central Runtime",
+  "suites": [
+    "visual-fine-detail",
+    "pvsi-pack5-live-pages"
+  ],
+  "central_runtime": false,
+  "run_generation": 13,
+  "note": "Package 05 R2 exact deployed audit. Preferences uses fixed 826×624 frame, 31px titlebar, 125px rail, 20px category rows; creative CHAT is Light, native file picker is encapsulated. Harness waits for Preferences controller and gives audit 30s virtual time."
+}
