@@ -78,6 +78,14 @@ Visible UI verification must also follow:
 
 `governance/INK_UI_HTML_CSS_ASSEMBLY_VERIFICATION_RULE_v0.1.md`
 
+Reference-led UI design/review must follow:
+
+`governance/UI_REFERENCE_DRIVEN_DESIGN_AND_INSPECTION_STANDARD_v1.0.md`
+
+For the current INK Photoshop-aligned program, the consolidated authority is:
+
+`ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md`
+
 For any visible UI PASS, inspect the assembled current-main HTML/post-Runtime DOM together with effective CSS. Source registries, Runtime PASS, capability ledgers, and checklist counts cannot substitute for HTML/CSS assembly evidence.
 
 The Photoshop-aligned UI-A/B/C program is closed. Its completed delegation record is:
