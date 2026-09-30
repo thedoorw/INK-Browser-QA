@@ -493,7 +493,7 @@ Dynamic UI must be checked after runtime installation in final DOM plus effectiv
 
 Current detail pass:
 
-`ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md`
+`ACTIVE/INK_UI_PVSI_STRUCTURE_DENSITY_REALIGNMENT_DISPATCH_v1.0.md`
 
 The dispatch is the current bounded mutation task. This Master Guide is the durable design/inspection authority.
 
@@ -538,3 +538,217 @@ CURRENT ACTUAL PAGE + MASTER GUIDE + USER AUTHORITY WINS
 No AI self-declares final UI completion.
 
 Final completion requires the necessary assembly/visual/interaction/function/capability/workflow evidence and USER acceptance.
+
+## 30. Strict visual inspection protocol
+
+The UI inspection order is now mandatory and must not begin from source claims.
+
+### Phase 0 — lock comparison conditions
+
+Record before inspection:
+
+- reference artifact(s);
+- current product artifact / commit identity;
+- viewport size;
+- browser zoom / OS scaling where relevant;
+- UI state being compared: collapsed / expanded / menu-open / dialog-open / rulers-on / etc.
+
+Do not compare geometry across screenshots until scale/viewport differences are normalized.
+
+### Phase 1 — blind visual delta sweep
+
+Inspect the actual rendered product against the reference from top-left to bottom-right.
+
+Rules:
+
+```text
+NO PASS LANGUAGE
+NO "CLOSE ENOUGH"
+NO SOURCE EXPLANATION
+NO OLD CHECKLIST CLAIMS
+NO PRIOR REVIEW CONCLUSION
+```
+
+Only enumerate visible differences.
+
+Mandatory sweep order:
+
+```text
+APPLICATION MENU
+→ OPTIONS BAR
+→ LEFT TOOLS
+→ GLOBAL COLOR CONTROLS
+→ WORKSPACE / RULERS
+→ RIGHT GROUP A
+→ SPLITTER
+→ RIGHT GROUP B
+→ SPLITTER
+→ RIGHT GROUP C
+→ BOTTOM STATUS
+→ DIALOGS / PREFERENCES
+```
+
+### Phase 2 — same-class consistency sweep
+
+Collect all members of each visible component class and compare them with one another before comparing to Photoshop:
+
+- all application menus;
+- all menu popups;
+- all panel menus;
+- all tool buttons;
+- all icon families;
+- all tabs;
+- all inputs/selects;
+- all sliders;
+- all scrollbars;
+- all panel headers;
+- all panel footers;
+- all dialog headers / close controls.
+
+One black popup among white application menus is a defect even if that popup works.
+
+### Phase 3 — numeric geometry / density sweep
+
+Measure rather than infer when dimensions matter.
+
+For each major region record:
+
+```text
+X / Y
+WIDTH / HEIGHT
+ROW COUNT
+ROW PITCH
+CONTROL HEIGHT
+PADDING
+GAP
+ICON BOX
+VISIBLE ICON ENVELOPE
+FONT SIZE / LINE HEIGHT
+SPLITTER SIZE
+SCROLLBAR WIDTH
+```
+
+A matching outer width does not prove matching density. Tool count, vertical occupation, row rhythm and internal control distribution must also be compared.
+
+### Phase 4 — state coverage matrix
+
+Do not verify only the state shown in one screenshot.
+
+At minimum cover states relevant to the task:
+
+- Tools double / single;
+- right panels expanded / collapsed;
+- each application menu open;
+- panel options menu open;
+- Navigator;
+- Layers;
+- History;
+- Reference / Compose / CHAT where applicable;
+- Preferences;
+- rulers OFF / ON;
+- guide drag;
+- Layers drag reorder;
+- panel width resize;
+- stacked splitter resize.
+
+A source implementation of an unobserved state remains unverified.
+
+### Phase 5 — source cause trace
+
+Only after visible differences are enumerated, inspect:
+
+```text
+FINAL HTML / POST-RUNTIME DOM
+→ EFFECTIVE / COMPUTED CSS
+→ UI-FACING JS
+→ CAPABILITY AUTHORITY
+```
+
+Source analysis explains the defect. It does not substitute for visual discovery.
+
+### Phase 6 — capability / home reconciliation
+
+For every visible Photoshop tool/control absent from INK UI ask:
+
+1. does INK already have the capability?
+2. if yes, is it in the wrong home / hidden / duplicated?
+3. if no, is it a legitimate CAPABILITY_ABSENT exception?
+
+Do not classify an item as absent merely because it is missing from the current toolbar.
+
+### Phase 7 — interaction verification
+
+For controls whose reference meaning implies behavior, operate the real product:
+
+- click;
+- drag;
+- resize;
+- reorder;
+- switch tab;
+- collapse/expand;
+- open/close;
+- persist/reload where relevant.
+
+Event listeners or source handlers are not interaction evidence.
+
+### Phase 8 — disposition
+
+Every observed reference delta receives exactly one status:
+
+```text
+FIX_NOW
+THEME_OR_COLOR_OVERRIDE
+CAPABILITY_ABSENT
+USER_OVERRIDE
+```
+
+No fifth category.
+
+### Phase 9 — USER checkpoint
+
+Present the actual current product after the bounded pass.
+
+Do not declare the UI complete from AI review.
+
+## 31. Reviewer-bias guardrails
+
+The following failure modes are explicitly recognized:
+
+```text
+KNOWN_ISSUE_BIAS
+LOCAL_PASS_BIAS
+PRIOR_NARRATIVE_BIAS
+SAME_CLASS_BLINDNESS
+SOURCE_FIRST_BIAS
+PROXY_EVIDENCE_BIAS
+```
+
+Countermeasures:
+
+- discover unknown differences before verifying known ones;
+- compare same-class components as a set;
+- keep prior PASS statements out of the first visual sweep;
+- never infer whole-product conformity from a few matching dimensions;
+- use source only after the visible delta inventory;
+- preserve USER reference authority over derived interpretations.
+
+## 32. Current PvsI comparison authority
+
+The current bounded implementation pass uses:
+
+- `PvsI-1.png`
+- `PvsI-2.png`
+- `PvsI-3.png`
+
+These three images must be present in the execution CHAT window unless they are later stored as durable GitHub reference assets.
+
+They are immediate comparison authority for:
+
+- structure;
+- dimensions;
+- density;
+- grouping;
+- control grammar;
+- same-class consistency.
+
+The Photoshop originals remain upstream authority. The INK light palette remains the explicit USER theme override.
