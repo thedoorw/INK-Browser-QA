@@ -172,6 +172,8 @@ try{
     extra.chat={rect:rect(root),visible:visible(w,root),stage:app.creativeWorkspace?.stage||null,text:textContent.slice(0,1600),forbiddenMatches:forbidden.filter(term=>lower.includes(term)),visibleInputs:[...root?.querySelectorAll('input,select,textarea,button')||[]].filter(e=>visible(w,e)).map(e=>({tag:e.tagName.toLowerCase(),name:e.getAttribute('name'),id:e.id||null,label:e.getAttribute('aria-label')||safeText(e).slice(0,80)}))};
   }else if(mode==='guides'){
     seedCanvas(app);d.querySelector('#app').dataset.rulers='true';d.querySelector('[data-shell-action="toggle-rulers"]')?.setAttribute('aria-checked','true');app.addGuide?.({id:'visual-guide-x',orientation:'vertical',position:150});app.addGuide?.({id:'visual-guide-y',orientation:'horizontal',position:120});app.updateStatus?.();shell.showSnapFeedback?.({x:{type:'equal-distance',gap:20},y:{type:'equal-distance',gap:20}},{clientX:430,clientY:300});w.dispatchEvent(new w.Event('resize'));await sleep(180);
+  }else if(mode==='guides-px'){
+    seedCanvas(app);const unit=d.querySelector('#artboardUnit');if(unit){unit.value='px';unit.dispatchEvent(new w.Event('change',{bubbles:true}));}d.querySelector('#app').dataset.rulers='true';app.addGuide?.({id:'visual-guide-px-x',orientation:'vertical',position:180});app.addGuide?.({id:'visual-guide-px-y',orientation:'horizontal',position:150});w.dispatchEvent(new w.Event('resize'));await sleep(180);
   }else if(mode==='tooltip'){
     seedCanvas(app);const target=d.querySelector('[data-tool="eraser"]');target?.focus();await sleep(100);
   }else if(mode==='focus'){

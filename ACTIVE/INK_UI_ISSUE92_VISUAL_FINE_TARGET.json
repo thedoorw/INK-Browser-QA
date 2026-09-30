@@ -2,13 +2,13 @@
   "schema": "ink-ui-issue92-visual-fine-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "3c726d43b5e7713a27df180397246e6cab1961ef",
-  "scope": "INK-UI-PVSI-PACK-01 closure A03-A06 M04-M06 X01 deployed Pages evidence / no central Runtime",
+  "target_sha": "77e273d2228a97b5fde906ceb34fd7962b9bea1f",
+  "scope": "PvsI package 02 ruler guide snap visual evidence / no central Runtime",
   "suites": [
     "visual-fine-detail",
-    "pvsi-pack1-closure-live-pages"
+    "ruler-guide-snap"
   ],
   "central_runtime": false,
-  "run_generation": 6,
-  "note": "Package 1 closure only. Exact deployed index/styles/web-shell identity required; PS-1 menu text starts asserted."
+  "run_generation": 7,
+  "note": "Adds guides-px alongside default-mm guides screenshot."
 }

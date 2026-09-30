@@ -27,6 +27,7 @@ const STATES=[
   {mode:'keyboard-focus',width:1280,height:1024},
   {mode:'chat',width:1280,height:1024},
   {mode:'guides',width:1280,height:1024},
+  {mode:'guides-px',width:1280,height:1024},
   {mode:'tooltip',width:1280,height:1024},
   {mode:'focus',width:1280,height:1024}
 ];

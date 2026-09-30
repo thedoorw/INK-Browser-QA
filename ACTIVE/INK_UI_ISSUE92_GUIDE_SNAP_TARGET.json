@@ -1,8 +1,8 @@
 {
   "schema": "ink-ui-issue92-guide-snap-target",
   "version": 1,
-  "target_sha": "8ec9cdf4b450ba2e2be01534a23d0cec898c9ab9",
-  "scope": "AI05-AI10 AI12-AI15 AI17-AI18 AN03-AN05 exact-candidate browser evidence / no central Runtime",
+  "target_sha": "77e273d2228a97b5fde906ceb34fd7962b9bea1f",
+  "scope": "PvsI package 02 R01-R05 G01-G05 exact-candidate browser evidence / no central Runtime",
   "central_runtime": false,
-  "run_generation": 2
+  "run_generation": 3
 }

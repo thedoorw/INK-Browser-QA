@@ -125,6 +125,53 @@ try{
   const policyPass=normalized.tolerance===9&&normalized.hysteresis===3&&['guides','edges','centers','grid','equalDistance'].every(k=>normalized.categories[k]===true);
   checks.push({id:'AI15',pass:Boolean(policyPass),detail:{normalized}});
 
+  // PvsI Pack 02 — actual ruler/guide UI create, move, delete, lock, show/hide and unit authority.
+  app.page().guides=[];
+  d.querySelector('#app').dataset.rulers='true';
+  w.dispatchEvent(new w.Event('resize'));await sleep(80);
+  const stage=q('#stageWrap').getBoundingClientRect(),hr=q('[data-ruler-axis="horizontal"]').getBoundingClientRect(),vr=q('[data-ruler-axis="vertical"]').getBoundingClientRect();
+  const fire=(target,type,x,y)=>target.dispatchEvent(new w.PointerEvent(type,{bubbles:true,cancelable:true,pointerId:91,pointerType:'mouse',button:0,buttons:type==='pointerup'?0:1,clientX:x,clientY:y}));
+  fire(q('[data-ruler-axis="horizontal"]'),'pointerdown',stage.left+140,hr.top+8);
+  fire(w,'pointermove',stage.left+140,stage.top+120);fire(w,'pointerup',stage.left+140,stage.top+120);await sleep(50);
+  const horizontal=app.page().guides.find(g=>g.orientation==='horizontal');
+  fire(q('[data-ruler-axis="vertical"]'),'pointerdown',vr.left+8,stage.top+160);
+  fire(w,'pointermove',stage.left+170,stage.top+160);fire(w,'pointerup',stage.left+170,stage.top+160);await sleep(50);
+  const vertical=app.page().guides.find(g=>g.orientation==='vertical');
+  const createdBoth=Boolean(horizontal&&vertical);
+
+  let moved=false,deleted=false;
+  if(horizontal){
+    const before=horizontal.position,screen=app.renderer.worldToScreen({x:0,y:before});
+    fire(q('#stageWrap'),'pointerdown',stage.left+200,screen.y);
+    fire(w,'pointermove',stage.left+200,screen.y+28);fire(w,'pointerup',stage.left+200,screen.y+28);await sleep(50);
+    const after=app.page().guides.find(g=>g.id===horizontal.id)?.position;moved=Number.isFinite(after)&&Math.abs(after-before)>1;
+    const movedScreen=app.renderer.worldToScreen({x:0,y:after});
+    fire(q('#stageWrap'),'pointerdown',stage.left+200,movedScreen.y);
+    fire(w,'pointermove',stage.left+200,stage.top-24);fire(w,'pointerup',stage.left+200,stage.top-24);await sleep(50);
+    deleted=!app.page().guides.some(g=>g.id===horizontal.id);
+  }
+
+  const openView=async()=>{q('[data-application-menu-trigger="view"]')?.click();await sleep(30);};
+  await openView();const lockButton=q('[data-ui-b-command="guides:lock"]');lockButton?.click();await sleep(40);
+  const locked=Boolean(vertical&&app.page().guides.find(g=>g.id===vertical.id)?.locked);
+  await openView();const showButton=q('[data-ui-b-command="guides:toggle"]');showButton?.click();await sleep(40);
+  const hidden=Boolean(vertical&&app.page().guides.find(g=>g.id===vertical.id)?.visible===false);
+  await openView();showButton?.click();await sleep(40);
+  const shown=Boolean(vertical&&app.page().guides.find(g=>g.id===vertical.id)?.visible!==false);
+  await openView();const clearButton=q('[data-ui-b-command="guides:clear"]');clearButton?.click();await sleep(40);
+  const cleared=app.page().guides.length===0;
+  checks.push({id:'PVSI-G03',pass:Boolean(createdBoth&&moved&&deleted&&lockButton&&locked&&hidden&&shown&&clearButton&&cleared),detail:{createdBoth,moved,deleted,lockButton:Boolean(lockButton),locked,hidden,shown,clearButton:Boolean(clearButton),cleared}});
+
+  const hRuler=q('[data-ruler-axis="horizontal"]'),vRuler=q('[data-ruler-axis="vertical"]'),unitControl=q('#artboardUnit');
+  const defaultUnit={h:hRuler?.dataset.unit,v:vRuler?.dataset.unit,page:app.page().artboard?.unit};
+  if(unitControl){unitControl.value='px';unitControl.dispatchEvent(new w.Event('change',{bubbles:true}));await sleep(80);}
+  const pixelUnit={h:hRuler?.dataset.unit,v:vRuler?.dataset.unit,page:app.page().artboard?.unit};
+  if(unitControl){unitControl.value='mm';unitControl.dispatchEvent(new w.Event('change',{bubbles:true}));await sleep(80);}
+  const restoredUnit={h:hRuler?.dataset.unit,v:vRuler?.dataset.unit,page:app.page().artboard?.unit};
+  checks.push({id:'PVSI-R04',pass:Boolean(defaultUnit.h==='mm'&&defaultUnit.v==='mm'&&pixelUnit.h==='px'&&pixelUnit.v==='px'&&pixelUnit.page==='px'&&restoredUnit.h==='mm'&&restoredUnit.v==='mm'),detail:{defaultUnit,pixelUnit,restoredUnit}});
+  const previewStyle=w.getComputedStyle(q('#shellGuidePreview'));
+  checks.push({id:'PVSI-G01',pass:Boolean(previewStyle.backgroundColor==='rgb(0, 168, 255)'),detail:{previewColor:previewStyle.backgroundColor}});
+
   // AI17 — page guides/snap survive accepted storage save/load.
   app.page().guides=[];
   const persisted=app.addGuide({id:'persist-guide',orientation:'horizontal',position:123});
@@ -148,7 +195,7 @@ try{
   app.renderer.render();
 
   const failed=checks.filter(x=>!x.pass);
-  await post({schema:'INK-UI-ISSUE92-GUIDE-SNAP',version:1,status:failed.length?'FAIL':'PASS',checks,summary:{total:15,passed:15-failed.length,failed:failed.length}});
+  await post({schema:'INK-UI-ISSUE92-GUIDE-SNAP',version:2,status:failed.length?'FAIL':'PASS',checks,summary:{total:checks.length,passed:checks.length-failed.length,failed:failed.length}});
 }catch(error){
   await post({schema:'INK-UI-ISSUE92-GUIDE-SNAP',version:1,status:'ERROR',checks:[],summary:{total:15,passed:0,failed:15},error:String(error?.stack||error)});
 }
