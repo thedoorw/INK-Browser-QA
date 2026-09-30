@@ -10,7 +10,8 @@
       "index": "2647d252c2fac8b4ee5f23219f916d42771beb10b0c7546d5ca2a0e62b77b51b",
       "creative": "cca23eb655cb1a8c087924a5c4c04859a0b00f14f1ee1cdc8b7cff67948aedb9",
       "branding": "8e86e03502d72fb4fa39ce458bee39c412f68e2957f28dcf9c902573f386d76b",
-      "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0"
+      "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0",
+      "liveHarness": "c5f98601ba23841ca23cf7182f61b4d586d0e75d1ed082a06e85ad1cd21f5d77"
     },
     "observed": {
       "stylesStatus": 200,
@@ -25,9 +26,10 @@
       "index": "2647d252c2fac8b4ee5f23219f916d42771beb10b0c7546d5ca2a0e62b77b51b",
       "creative": "cca23eb655cb1a8c087924a5c4c04859a0b00f14f1ee1cdc8b7cff67948aedb9",
       "branding": "8e86e03502d72fb4fa39ce458bee39c412f68e2957f28dcf9c902573f386d76b",
-      "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0"
+      "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0",
+      "liveHarness": "c5f98601ba23841ca23cf7182f61b4d586d0e75d1ed082a06e85ad1cd21f5d77"
     },
-    "waitMs": 353
+    "waitMs": 349
   },
   "urls": {
     "prefs-general": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-general&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
@@ -55,11 +57,11 @@
   "screenshots": {
     "prefs-general": {
       "file": "live-prefs-general.png",
-      "bytes": 55986
+      "bytes": 51179
     },
     "prefs-interface": {
       "file": "live-prefs-interface.png",
-      "bytes": 57324
+      "bytes": 55986
     },
     "prefs-tools": {
       "file": "live-prefs-tools.png",
@@ -71,7 +73,7 @@
     },
     "prefs-guides": {
       "file": "live-prefs-guides.png",
-      "bytes": 55986
+      "bytes": 57324
     },
     "prefs-performance": {
       "file": "live-prefs-performance.png",
@@ -103,11 +105,11 @@
     },
     "creative-revision": {
       "file": "live-creative-revision.png",
-      "bytes": 56439
+      "bytes": 55079
     },
     "panel-properties": {
       "file": "live-panel-properties.png",
-      "bytes": 63979
+      "bytes": 62658
     },
     "panel-color": {
       "file": "live-panel-color.png",
@@ -127,7 +129,7 @@
     },
     "panel-pages": {
       "file": "live-panel-pages.png",
-      "bytes": 52466
+      "bytes": 53823
     },
     "audit": {
       "file": "live-audit.png",
