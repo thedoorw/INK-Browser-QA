@@ -1,4 +1,4 @@
-name: Web Reproduction CASE-001 R1
+name: Web Reproduction CASE-001 Smoke
 
 on:
   push:
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   census-capture:
-    name: Census, classify, capture The Minimalists
+    name: Smoke census, classify, capture The Minimalists
     runs-on: ubuntu-latest
     timeout-minutes: 25
 
@@ -40,13 +40,13 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run site census
-        run: npm run census -- --config config/case-001.json
+        run: npm run census -- --config config/case-001-smoke.json
 
       - name: Classify page families
-        run: npm run classify -- --config config/case-001.json
+        run: npm run classify -- --config config/case-001-smoke.json
 
       - name: Capture representative viewports
-        run: npm run capture -- --config config/case-001.json
+        run: npm run capture -- --config config/case-001-smoke.json
 
       - name: Upload reference evidence
         uses: actions/upload-artifact@v4
