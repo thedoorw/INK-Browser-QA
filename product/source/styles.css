@@ -4191,3 +4191,7 @@ html,body,#app{background:#e7e7e7}
  .app[data-toolbar-layout="dual"] .tool-group>[data-tool="pan"]{grid-area:10/2}
  .app[data-toolbar-layout="dual"] .tool-group>[data-tool="image"]{grid-area:11/1}
 }
+
+@media(min-width:761px){
+ .tool-layout-controls>.tool-layout-toggle,.panel-edge-strip>.panel-edge-toggle{flex:0 0 16px;width:16px;min-width:16px;max-width:16px;padding:0;display:grid;place-items:center}
+}
