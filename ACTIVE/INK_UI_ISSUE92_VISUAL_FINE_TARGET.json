@@ -2,13 +2,13 @@
   "schema": "ink-ui-issue92-visual-fine-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "c0bcc6519e4bd6d1789fa3b17d86de9b72d43f78",
-  "scope": "INK-UI-PVSI-PACK-01 direct deployed Pages + exact-target rendered evidence / no central Runtime",
+  "target_sha": "3c726d43b5e7713a27df180397246e6cab1961ef",
+  "scope": "INK-UI-PVSI-PACK-01 closure A03-A06 M04-M06 X01 deployed Pages evidence / no central Runtime",
   "suites": [
     "visual-fine-detail",
-    "pvsi-pack1-live-pages"
+    "pvsi-pack1-closure-live-pages"
   ],
   "central_runtime": false,
-  "run_generation": 5,
-  "note": "Package 1 evidence only. Product target is c0bcc651; live Pages capture waits for deployed CSS/web-shell byte identity and a newly deployed live harness."
+  "run_generation": 6,
+  "note": "Package 1 closure only. Exact deployed index/styles/web-shell identity required; PS-1 menu text starts asserted."
 }

@@ -95,23 +95,26 @@ const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 async function waitLiveProduct(root,timeoutMs=180000){
   const localCss=await readFile(path.join(root,'product/source/styles.css'));
   const localShell=await readFile(path.join(root,'product/source/web-shell.js'));
-  const expected={styles:digest(localCss),webShell:digest(localShell)};
+  const localIndex=await readFile(path.join(root,'product/source/index.html'));
+  const expected={styles:digest(localCss),webShell:digest(localShell),index:digest(localIndex)};
   const started=Date.now();let last={};
   while(Date.now()-started<timeoutMs){
     try{
       const bust='?pvsi='+encodeURIComponent(TARGET_SHA)+'&t='+Date.now();
-      const [cssRes,shellRes,harnessRes]=await Promise.all([
+      const [cssRes,shellRes,indexRes,harnessRes]=await Promise.all([
         fetch(LIVE_BASE+'product/source/styles.css'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
         fetch(LIVE_BASE+'product/source/web-shell.js'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
+        fetch(LIVE_BASE+'product/source/index.html'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
         fetch(LIVE_BASE+LIVE_HARNESS+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)})
       ]);
       const css=cssRes.ok?Buffer.from(await cssRes.arrayBuffer()):Buffer.alloc(0);
       const shell=shellRes.ok?Buffer.from(await shellRes.arrayBuffer()):Buffer.alloc(0);
+      const index=indexRes.ok?Buffer.from(await indexRes.arrayBuffer()):Buffer.alloc(0);
       last={
-        stylesStatus:cssRes.status,webShellStatus:shellRes.status,harnessStatus:harnessRes.status,
-        styles:css.length?digest(css):null,webShell:shell.length?digest(shell):null
+        stylesStatus:cssRes.status,webShellStatus:shellRes.status,indexStatus:indexRes.status,harnessStatus:harnessRes.status,
+        styles:css.length?digest(css):null,webShell:shell.length?digest(shell):null,index:index.length?digest(index):null
       };
-      if(cssRes.ok&&shellRes.ok&&harnessRes.ok&&last.styles===expected.styles&&last.webShell===expected.webShell){
+      if(cssRes.ok&&shellRes.ok&&indexRes.ok&&harnessRes.ok&&last.styles===expected.styles&&last.webShell===expected.webShell&&last.index===expected.index){
         return {baseUrl:LIVE_BASE,expected,observed:last,waitMs:Date.now()-started};
       }
     }catch(error){last={error:String(error?.message||error)};}
@@ -142,27 +145,29 @@ async function captureLivePages(root,identity){
     '--force-device-scale-factor=1','--window-size=1363,936','--virtual-time-budget=8000',
     '--run-all-compositor-stages-before-draw','--user-data-dir='+profile
   ];
-  const overviewUrl=LIVE_BASE+LIVE_HARNESS+'?mode=overview&target='+encodeURIComponent(TARGET_SHA);
-  const windowUrl=LIVE_BASE+LIVE_HARNESS+'?mode=menu-window&target='+encodeURIComponent(TARGET_SHA);
-  const overview=path.join(evidence,'live-overview.png');
-  const windowShot=path.join(evidence,'live-window-menu.png');
+  const modes=['overview','menu-window','tool-flyout','panel-options','workspace-menu','keyboard'];
+  const urls={},screenshots={};
   try{
-    await browserCommand(executable,[...common,'--screenshot='+overview,overviewUrl]);
-    await browserCommand(executable,[...common,'--screenshot='+windowShot,windowUrl]);
-    const dump=await browserCommand(executable,[...common,'--dump-dom',windowUrl]);
+    for(const mode of modes){
+      const url=LIVE_BASE+LIVE_HARNESS+'?mode='+encodeURIComponent(mode)+'&target='+encodeURIComponent(TARGET_SHA);
+      const file='live-'+mode+'.png',dest=path.join(evidence,file);
+      urls[mode]=url;
+      await browserCommand(executable,[...common,'--screenshot='+dest,url]);
+      const info=await stat(dest);
+      if(info.size<5000)throw new Error('live screenshot too small '+mode+' '+info.size);
+      screenshots[mode]={file,bytes:info.size};
+    }
+    const dump=await browserCommand(executable,[...common,'--dump-dom',urls.keyboard]);
     const match=dump.stdout.match(/<pre id="pvsiMetrics"[^>]*>([\s\S]*?)<\/pre>/i);
     if(!match)throw new Error('live metrics marker missing from dump');
     const unescape=s=>s.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
     const metrics=JSON.parse(unescape(match[1]));
-    const overviewInfo=await stat(overview),windowInfo=await stat(windowShot);
-    if(overviewInfo.size<5000||windowInfo.size<5000)throw new Error('live screenshot too small');
-    const live={schema:'INK-UI-PVSI-PACK1-LIVE-EVIDENCE',version:1,targetSha:TARGET_SHA,identity,
-      urls:{overview:overviewUrl,window:windowUrl},screenshots:{overview:{file:'live-overview.png',bytes:overviewInfo.size},window:{file:'live-window-menu.png',bytes:windowInfo.size}},metrics};
+    if(metrics.status!=='PASS')throw new Error('live harness '+(metrics.error||metrics.status));
+    const live={schema:'INK-UI-PVSI-PACK1-LIVE-EVIDENCE',version:2,targetSha:TARGET_SHA,identity,urls,screenshots,metrics};
     await writeFile(path.join(evidence,'live-metrics.json'),JSON.stringify(live,null,2));
     return live;
   }finally{await rm(profile,{recursive:true,force:true,maxRetries:5,retryDelay:150});}
 }
-
 async function waitReport(reports,mode,timeoutMs=5000){
   const start=Date.now();
   while(Date.now()-start<timeoutMs){
