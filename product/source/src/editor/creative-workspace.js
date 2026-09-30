@@ -262,23 +262,23 @@ export class CreativeWorkspaceController {
       <div class="creative-workspace-body">
         <section data-workspace-pane="reference">
           <strong>參考圖 → 直接擷取 → 可編輯路徑</strong>
-          <label class="creative-workspace-field"><span>參考圖</span><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp"></label>
+          <label class="creative-workspace-field creative-file-field"><span>參考圖</span><span class="creative-file-picker"><button type="button" data-workspace-action="choose-reference-file">選擇檔案…</button><output data-workspace-value="reference-file-name">未選擇檔案</output><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp" hidden></span></label>
           <label class="creative-workspace-field"><span>臨界值</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">直接擷取</button><button type="button" data-workspace-action="cancel-extract" disabled>取消</button></div>
           <label class="creative-workspace-field"><span>參考圖疊加</span><input type="range" data-workspace-input="overlay" min="0" max="1" step="0.1" value="0.5"></label>
           <output data-workspace-output="extraction">本次尚未擷取。</output>
           <details class="creative-structure-option">
             <summary>結構分析 <span>選用</span></summary>
-            <p>直接擷取 remains the default. Radial reconstruction reuses the accepted multi-Path prototype + Repeat authority.</p>
+            <p>以直接擷取為預設；結構分析沿用既有多路徑與 Repeat 能力。</p>
             <label class="creative-workspace-field"><span>Radial count</span><input type="number" data-workspace-input="structure-count" min="2" max="48" step="1" value="6"></label>
             <button type="button" class="creative-workspace-primary" data-workspace-action="structure-reconstruct">分析並重建</button>
             <output data-workspace-output="structure">Not executed.</output>
           </details>
           <details class="creative-structure-option workstation-capability-card">
             <summary>研究 → 創作 <span>唯讀</span></summary>
-            <p>Local evidence, derived visual principles, and creative constraints. No remote fetch and no automatic Creative Memory write.</p>
+            <p>顯示本機研究證據、視覺原則與創作限制；不自動連線或寫入創作記憶。</p>
             <button type="button" data-workspace-action="research-context-refresh">更新研究內容</button>
-            <output data-workspace-output="research-context">Research advisory not inspected.</output>
+            <output data-workspace-output="research-context">尚未查看研究內容。</output>
           </details>
         </section>
         <section data-workspace-pane="edit" hidden>
@@ -305,9 +305,9 @@ export class CreativeWorkspaceController {
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="apply-material">套用材質</button><button type="button" data-workspace-action="clear-material">移除材質</button></div>
           <output data-workspace-output="compose">構成操作保留物件結構。</output>
           <details class="creative-structure-option workstation-capability-card">
-            <summary>Parametric Structure <span>既有結構</span></summary>
-            <p>Selected Repeat status is shown here. Repeat/Transform mutation remains on the existing Core controls; CHAT accepts explicit deterministic structure descriptors.</p>
-            <output data-workspace-output="parametric-context">Select a Repeat to inspect deterministic structure state.</output>
+            <summary>參數結構 <span>既有結構</span></summary>
+            <p>顯示已選取 Repeat 的狀態；Repeat／Transform 仍由既有 Core 控制。</p>
+            <output data-workspace-output="parametric-context">選取 Repeat 以查看參數結構狀態。</output>
           </details>
         </section>
         <section data-workspace-pane="chat" hidden>
@@ -387,6 +387,10 @@ export class CreativeWorkspaceController {
       }
       const action = event.target.closest('[data-workspace-action]');
       if (action && action.dataset.workspaceAction !== 'close') {
+        if (action.dataset.workspaceAction === 'choose-reference-file') {
+          root.querySelector('[data-workspace-input="reference-file"]')?.click();
+          return;
+        }
         void this.handleAction(action.dataset.workspaceAction);
         return;
       }
@@ -396,6 +400,9 @@ export class CreativeWorkspaceController {
     root.addEventListener('change', event => {
       if (event.target.matches('[data-workspace-input="overlay"]')) {
         this.changeOverlay(Number(event.target.value));
+      } else if (event.target.matches('[data-workspace-input="reference-file"]')) {
+        const name = root.querySelector('[data-workspace-value="reference-file-name"]');
+        if (name) name.textContent = event.target.files?.[0]?.name || '未選擇檔案';
       }
     });
     this.mountSelectionCapabilityCard();
@@ -726,7 +733,7 @@ export class CreativeWorkspaceController {
     if (parametricOutput) {
       const repeat = (typeof this.app?.selectedObjects === 'function' ? this.app.selectedObjects() : []).find(item => item.object?.type === 'repeat')?.object;
       if (!repeat) {
-        parametricOutput.textContent = 'Select a Repeat to inspect deterministic structure state. Explicit descriptors are available to CHAT through resolve_parametric_structure.';
+        parametricOutput.textContent = '選取 Repeat 以查看參數結構狀態。 Explicit descriptors are available to CHAT through resolve_parametric_structure.';
       } else {
         const instanceCount = Array.isArray(repeat.instances) ? repeat.instances.length : Number(repeat.count || 0);
         parametricOutput.textContent = `Repeat · ${repeat.mode || 'radial'} · ${instanceCount} instance(s) · ${repeat.linked === false ? 'expanded/unlinked' : 'linked'} · source ${repeat.sourceObjectId || repeat.source?.id || 'unknown'}`;
