@@ -191,6 +191,25 @@ Gate:
 
 ### R3 — Capture / Measurement
 
+Before any geometry is accepted, the rendered page must pass a **Reference Validity Gate**.
+
+Required validity checks:
+- HTTP response is in the configured accepted range;
+- page title / identity marker matches the intended reference;
+- configured known structural/navigation markers are present;
+- the page is not a block page, CAPTCHA, interstitial, error document or unrelated redirect.
+
+A browser command completing successfully is not evidence that the reference was captured successfully.
+
+If reference validity fails:
+
+```text
+CAPTURE_EXECUTED
+≠ REFERENCE_VALID
+→ measurement evidence rejected
+→ do not advance to R4
+```
+
 For each representative family, capture at minimum:
 
 ```text
@@ -226,7 +245,7 @@ reference-screenshots/*   [artifact only]
 
 Gate:
 
-`R3_REFERENCE_MEASURED`
+`R3_REFERENCE_VALID_AND_MEASURED`
 
 ### R4 — Structural Blueprint
 
