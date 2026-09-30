@@ -25,6 +25,15 @@ DEV also reads:
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 = installed technical capability truth.
 
+`ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md`
+= consolidated current Photoshop-alignment design + inspection authority.
+
+`ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md`
+= current bounded Direct-MR UI execution task.
+
+`ACTIVE/AI_DEV_PRODUCTION_LINE_MR_NEW_WINDOW_HANDOFF_v1.0.md`
+= separate R&D-lane handoff for AI development-production-line research; it does not authorize INK product mutation.
+
 `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
 = closed delegation record for UI-B/UI-C implementation.
 
