@@ -9,6 +9,6 @@
     "pvsi-pack5-live-pages"
   ],
   "central_runtime": false,
-  "run_generation": 15,
-  "note": "Package 05 R3 exact audit retry. Live harness uses a module with top-level await so browser load/dump waits for async audit completion; audit has a single 60s virtual-time budget. Product target remains 7080067."
+  "run_generation": 16,
+  "note": "Package 05 R4: fix invalid module/top-level-return harness. Async audit now executes in classic IIFE, persists final metrics in same-origin localStorage, and runner forces completion with live-audit screenshot before synchronous audit-read dump."
 }

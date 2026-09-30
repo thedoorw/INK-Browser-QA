@@ -179,9 +179,15 @@ async function captureLivePages(root,identity){
       screenshots[mode]={file,bytes:info.size};
     }
     const auditUrl=LIVE_BASE+LIVE_HARNESS+'?mode=audit&target='+encodeURIComponent(TARGET_SHA);
-    urls.audit=auditUrl;
+    const auditReadUrl=LIVE_BASE+LIVE_HARNESS+'?mode=audit-read&target='+encodeURIComponent(TARGET_SHA);
+    urls.audit=auditUrl;urls.auditRead=auditReadUrl;
     const auditCommon=common.filter(arg=>!arg.startsWith('--virtual-time-budget='));
-    const dump=await browserCommand(executable,[...auditCommon,'--virtual-time-budget=60000','--dump-dom',auditUrl],150000);
+    const auditShot=path.join(evidence,'live-audit.png');
+    await browserCommand(executable,[...auditCommon,'--virtual-time-budget=60000','--screenshot='+auditShot,auditUrl],150000);
+    const auditInfo=await stat(auditShot);
+    if(auditInfo.size<5000)throw new Error('live audit screenshot too small '+auditInfo.size);
+    screenshots.audit={file:'live-audit.png',bytes:auditInfo.size};
+    const dump=await browserCommand(executable,[...auditCommon,'--virtual-time-budget=1000','--dump-dom',auditReadUrl],90000);
     const match=dump.stdout.match(/<pre id="pvsiMetrics"[^>]*>([\s\S]*?)<\/pre>/i);
     if(!match)throw new Error('live metrics marker missing from audit dump');
     const unescape=s=>s.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
