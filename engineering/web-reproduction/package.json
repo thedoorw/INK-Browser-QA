@@ -1,0 +1,18 @@
+{
+  "name": "ink-web-reproduction-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "census": "node src/census.mjs",
+    "classify": "node src/classify.mjs",
+    "capture": "node src/capture.mjs"
+  },
+  "dependencies": {
+    "crawlee": "3.18.1",
+    "playwright": "1.63.0"
+  }
+}
