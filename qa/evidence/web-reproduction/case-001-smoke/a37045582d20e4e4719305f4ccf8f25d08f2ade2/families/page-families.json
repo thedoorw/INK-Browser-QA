@@ -1,0 +1,746 @@
+{
+  "schema": "ink-web-reproduction-page-families",
+  "version": 1,
+  "caseId": "CASE-001-THE-MINIMALISTS-SMOKE",
+  "generatedAt": "2026-09-30T06:26:32.172Z",
+  "sourceCensus": "artifacts/case-001-smoke/census/site-census.json",
+  "familyCount": 10,
+  "routePrefixSummary": [
+    {
+      "prefix": "/",
+      "count": 1
+    },
+    {
+      "prefix": "/about/",
+      "count": 1
+    },
+    {
+      "prefix": "/archives/",
+      "count": 1
+    },
+    {
+      "prefix": "/contextual/",
+      "count": 1
+    },
+    {
+      "prefix": "/films/",
+      "count": 1
+    },
+    {
+      "prefix": "/metastasizes/",
+      "count": 1
+    },
+    {
+      "prefix": "/p557/",
+      "count": 1
+    },
+    {
+      "prefix": "/podcast/",
+      "count": 1
+    },
+    {
+      "prefix": "/resources/",
+      "count": 1
+    },
+    {
+      "prefix": "/tour/",
+      "count": 1
+    }
+  ],
+  "families": [
+    {
+      "familyId": "FAM-001",
+      "signature": "05816d334b4759b7",
+      "count": 1,
+      "representative": "/tour/",
+      "routePrefixes": [
+        {
+          "prefix": "/tour/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/tour/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "has-content-upgrade",
+          "header-full-width",
+          "header-image",
+          "page",
+          "page-id-718",
+          "page-template-default",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h3",
+          "h3",
+          "h3",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 3,
+          "h1": 1,
+          "h2": 0,
+          "h3": 4,
+          "p": 9,
+          "ul": 7,
+          "ol": 0,
+          "li": 36,
+          "img": 3,
+          "button": 3,
+          "input": 39
+        },
+        "formCount": 3,
+        "imageCount": 3
+      }
+    },
+    {
+      "familyId": "FAM-002",
+      "signature": "2aa04496546d79b0",
+      "count": 1,
+      "representative": "/",
+      "routePrefixes": [
+        {
+          "prefix": "/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "blog",
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "home",
+          "wp-child-theme-the-mins",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 1,
+          "h1": 1,
+          "h2": 16,
+          "h3": 0,
+          "p": 23,
+          "ul": 4,
+          "ol": 0,
+          "li": 18,
+          "img": 15,
+          "button": 1,
+          "input": 13
+        },
+        "formCount": 1,
+        "imageCount": 15
+      }
+    },
+    {
+      "familyId": "FAM-003",
+      "signature": "39ca9125831f930a",
+      "count": 1,
+      "representative": "/films/",
+      "routePrefixes": [
+        {
+          "prefix": "/films/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/films/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "page",
+          "page-id-18213",
+          "page-template-default",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h2",
+          "h2",
+          "h2",
+          "h3",
+          "h3",
+          "h3",
+          "h4",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 2,
+          "h1": 1,
+          "h2": 3,
+          "h3": 4,
+          "p": 16,
+          "ul": 5,
+          "ol": 0,
+          "li": 20,
+          "img": 12,
+          "button": 3,
+          "input": 26
+        },
+        "formCount": 2,
+        "imageCount": 12
+      }
+    },
+    {
+      "familyId": "FAM-004",
+      "signature": "4ab4347c756fa567",
+      "count": 1,
+      "representative": "/contextual/",
+      "routePrefixes": [
+        {
+          "prefix": "/contextual/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/contextual/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "post-template-default",
+          "postid-36748",
+          "single",
+          "single-format-standard",
+          "single-post",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 2,
+          "h1": 1,
+          "h2": 0,
+          "h3": 1,
+          "p": 11,
+          "ul": 5,
+          "ol": 0,
+          "li": 20,
+          "img": 2,
+          "button": 2,
+          "input": 26
+        },
+        "formCount": 2,
+        "imageCount": 2
+      }
+    },
+    {
+      "familyId": "FAM-005",
+      "signature": "64aa7363143a3e89",
+      "count": 1,
+      "representative": "/archives/",
+      "routePrefixes": [
+        {
+          "prefix": "/archives/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/archives/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "page",
+          "page-id-123",
+          "page-template-default",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h2",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 3,
+          "h1": 1,
+          "h2": 5,
+          "h3": 1,
+          "p": 4,
+          "ul": 8,
+          "ol": 0,
+          "li": 720,
+          "img": 2,
+          "button": 2,
+          "input": 28
+        },
+        "formCount": 3,
+        "imageCount": 2
+      }
+    },
+    {
+      "familyId": "FAM-006",
+      "signature": "922ce0835d04c6d0",
+      "count": 1,
+      "representative": "/podcast/",
+      "routePrefixes": [
+        {
+          "prefix": "/podcast/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/podcast/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "page",
+          "page-id-14236",
+          "page-template-default",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 2,
+          "h1": 1,
+          "h2": 0,
+          "h3": 2037,
+          "p": 1693,
+          "ul": 1816,
+          "ol": 0,
+          "li": 21134,
+          "img": 2,
+          "button": 2,
+          "input": 584
+        },
+        "formCount": 2,
+        "imageCount": 2
+      }
+    },
+    {
+      "familyId": "FAM-007",
+      "signature": "9a51b9dace6668e5",
+      "count": 1,
+      "representative": "/metastasizes/",
+      "routePrefixes": [
+        {
+          "prefix": "/metastasizes/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/metastasizes/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "post-template-default",
+          "postid-36735",
+          "single",
+          "single-format-standard",
+          "single-post",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 2,
+          "h1": 1,
+          "h2": 0,
+          "h3": 1,
+          "p": 11,
+          "ul": 5,
+          "ol": 0,
+          "li": 20,
+          "img": 2,
+          "button": 2,
+          "input": 26
+        },
+        "formCount": 2,
+        "imageCount": 2
+      }
+    },
+    {
+      "familyId": "FAM-008",
+      "signature": "a0ca4397f4606da5",
+      "count": 1,
+      "representative": "/about/",
+      "routePrefixes": [
+        {
+          "prefix": "/about/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/about/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "page",
+          "page-id-4209",
+          "page-template-default",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h3",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 2,
+          "h1": 1,
+          "h2": 0,
+          "h3": 2,
+          "p": 8,
+          "ul": 5,
+          "ol": 0,
+          "li": 20,
+          "img": 2,
+          "button": 2,
+          "input": 26
+        },
+        "formCount": 2,
+        "imageCount": 2
+      }
+    },
+    {
+      "familyId": "FAM-009",
+      "signature": "c772e46c9ef63a4f",
+      "count": 1,
+      "representative": "/p557/",
+      "routePrefixes": [
+        {
+          "prefix": "/p557/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/p557/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "header-full-width",
+          "header-image",
+          "post-template-default",
+          "postid-36742",
+          "single",
+          "single-format-standard",
+          "single-post",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 2,
+          "h1": 1,
+          "h2": 0,
+          "h3": 5,
+          "p": 5,
+          "ul": 8,
+          "ol": 0,
+          "li": 43,
+          "img": 2,
+          "button": 3,
+          "input": 26
+        },
+        "formCount": 2,
+        "imageCount": 2
+      }
+    },
+    {
+      "familyId": "FAM-010",
+      "signature": "dcc0585df4814b75",
+      "count": 1,
+      "representative": "/resources/",
+      "routePrefixes": [
+        {
+          "prefix": "/resources/",
+          "count": 1
+        }
+      ],
+      "examples": [
+        "/resources/"
+      ],
+      "structuralProfile": {
+        "bodyClassTokens": [
+          "custom-header",
+          "full-width-content",
+          "has-content-upgrade",
+          "header-full-width",
+          "header-image",
+          "page",
+          "page-id-25727",
+          "page-template-default",
+          "wp-child-theme-the-mins",
+          "wp-singular",
+          "wp-theme-genesis"
+        ],
+        "landmarkSequence": [
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form",
+          "form"
+        ],
+        "headingLevels": [
+          "h1",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3",
+          "h3"
+        ],
+        "tagCounts": {
+          "header": 0,
+          "nav": 0,
+          "main": 0,
+          "article": 0,
+          "aside": 0,
+          "footer": 0,
+          "section": 0,
+          "form": 14,
+          "h1": 1,
+          "h2": 0,
+          "h3": 13,
+          "p": 15,
+          "ul": 16,
+          "ol": 0,
+          "li": 42,
+          "img": 13,
+          "button": 14,
+          "input": 183
+        },
+        "formCount": 14,
+        "imageCount": 13
+      }
+    }
+  ]
+}

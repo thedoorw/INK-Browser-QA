@@ -1,0 +1,112 @@
+[
+  {
+    "familyId": "FAM-001",
+    "representative": "/tour/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/tour/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-002",
+    "representative": "/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-003",
+    "representative": "/films/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/films/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-004",
+    "representative": "/contextual/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/contextual/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-005",
+    "representative": "/archives/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/archives/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-006",
+    "representative": "/podcast/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/podcast/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-007",
+    "representative": "/metastasizes/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/metastasizes/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-008",
+    "representative": "/about/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/about/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-009",
+    "representative": "/p557/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/p557/",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "familyId": "FAM-010",
+    "representative": "/resources/",
+    "count": 1,
+    "routePrefixes": [
+      {
+        "prefix": "/resources/",
+        "count": 1
+      }
+    ]
+  }
+]

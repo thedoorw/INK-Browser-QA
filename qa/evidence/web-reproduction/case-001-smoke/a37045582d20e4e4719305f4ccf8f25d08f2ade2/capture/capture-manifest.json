@@ -1,0 +1,135 @@
+{
+  "schema": "ink-web-reproduction-capture-manifest",
+  "version": 1,
+  "caseId": "CASE-001-THE-MINIMALISTS-SMOKE",
+  "generatedAt": "2026-09-30T06:26:32.507Z",
+  "targetRoot": "https://www.theminimalists.com/",
+  "captures": [
+    {
+      "path": "/",
+      "viewport": "desktop",
+      "status": 403,
+      "screenshot": "home/desktop/reference-full.png",
+      "metrics": "home/desktop/metrics.json"
+    },
+    {
+      "path": "/",
+      "viewport": "compact",
+      "status": 403,
+      "screenshot": "home/compact/reference-full.png",
+      "metrics": "home/compact/metrics.json"
+    },
+    {
+      "path": "/",
+      "viewport": "mobile",
+      "status": 403,
+      "screenshot": "home/mobile/reference-full.png",
+      "metrics": "home/mobile/metrics.json"
+    },
+    {
+      "path": "/archives/",
+      "viewport": "desktop",
+      "status": 403,
+      "screenshot": "archives/desktop/reference-full.png",
+      "metrics": "archives/desktop/metrics.json"
+    },
+    {
+      "path": "/archives/",
+      "viewport": "compact",
+      "status": 403,
+      "screenshot": "archives/compact/reference-full.png",
+      "metrics": "archives/compact/metrics.json"
+    },
+    {
+      "path": "/archives/",
+      "viewport": "mobile",
+      "status": 403,
+      "screenshot": "archives/mobile/reference-full.png",
+      "metrics": "archives/mobile/metrics.json"
+    },
+    {
+      "path": "/start/",
+      "viewport": "desktop",
+      "status": 403,
+      "screenshot": "start/desktop/reference-full.png",
+      "metrics": "start/desktop/metrics.json"
+    },
+    {
+      "path": "/start/",
+      "viewport": "compact",
+      "status": 403,
+      "screenshot": "start/compact/reference-full.png",
+      "metrics": "start/compact/metrics.json"
+    },
+    {
+      "path": "/start/",
+      "viewport": "mobile",
+      "status": 403,
+      "screenshot": "start/mobile/reference-full.png",
+      "metrics": "start/mobile/metrics.json"
+    },
+    {
+      "path": "/podcast/",
+      "viewport": "desktop",
+      "status": 403,
+      "screenshot": "podcast/desktop/reference-full.png",
+      "metrics": "podcast/desktop/metrics.json"
+    },
+    {
+      "path": "/podcast/",
+      "viewport": "compact",
+      "status": 403,
+      "screenshot": "podcast/compact/reference-full.png",
+      "metrics": "podcast/compact/metrics.json"
+    },
+    {
+      "path": "/podcast/",
+      "viewport": "mobile",
+      "status": 403,
+      "screenshot": "podcast/mobile/reference-full.png",
+      "metrics": "podcast/mobile/metrics.json"
+    },
+    {
+      "path": "/books/",
+      "viewport": "desktop",
+      "status": 403,
+      "screenshot": "books/desktop/reference-full.png",
+      "metrics": "books/desktop/metrics.json"
+    },
+    {
+      "path": "/books/",
+      "viewport": "compact",
+      "status": 403,
+      "screenshot": "books/compact/reference-full.png",
+      "metrics": "books/compact/metrics.json"
+    },
+    {
+      "path": "/books/",
+      "viewport": "mobile",
+      "status": 403,
+      "screenshot": "books/mobile/reference-full.png",
+      "metrics": "books/mobile/metrics.json"
+    },
+    {
+      "path": "/resources/",
+      "viewport": "desktop",
+      "status": 403,
+      "screenshot": "resources/desktop/reference-full.png",
+      "metrics": "resources/desktop/metrics.json"
+    },
+    {
+      "path": "/resources/",
+      "viewport": "compact",
+      "status": 403,
+      "screenshot": "resources/compact/reference-full.png",
+      "metrics": "resources/compact/metrics.json"
+    },
+    {
+      "path": "/resources/",
+      "viewport": "mobile",
+      "status": 403,
+      "screenshot": "resources/mobile/reference-full.png",
+      "metrics": "resources/mobile/metrics.json"
+    }
+  ]
+}
