@@ -23,22 +23,25 @@ PvsI-3.png
 → preserve existing INK Core/capabilities
 ```
 
-## 2. Image attachment is mandatory
+## 2. Durable GitHub image authority
 
-The three PvsI images MUST be attached in the execution CHAT window.
+The comparison images are now stored in GitHub and are the canonical visual artifacts:
 
-Reason:
-- they contain the exact USER-selected visual comparisons;
-- text descriptions and old measurements are not substitutes for the visible comparison;
-- the executor must inspect the images directly before editing;
-- GitHub documents record the rules but do not replace visual evidence.
+- `reference/ui/photoshop/PvsI-1.png`
+- `reference/ui/photoshop/PvsI-2.png`
+- `reference/ui/photoshop/PvsI-3.png`
 
-If the execution window does not contain PvsI-1.png, PvsI-2.png and PvsI-3.png, stop before visual mutation and request those images.
+Original Photoshop references are also stored:
 
-Original Photoshop references remain upstream authority:
-- ps-1.png
-- ps-2.png
-- ps-3.png / latest USER Photoshop reference where available.
+- `reference/ui/photoshop/ps-1.png`
+- `reference/ui/photoshop/PS-2.png`
+- `reference/ui/photoshop/PS-3.png`
+
+The executor MUST inspect these exact images before editing.
+
+A new CHAT no longer depends on USER re-upload as the authority source. If the current tool cannot render repository binary images directly, retrieve/materialize the exact GitHub asset or use an attached mirror of the same file; do not substitute a text description, reconstructed image or unrelated screenshot.
+
+The GitHub path/blob identity remains authoritative.
 
 ## 3. Read order
 
