@@ -26,9 +26,9 @@ LAST_COMPLETED_TASK = INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001
 UI_A_PROMOTION_PR = 83
 UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
-ACTIVE_TASK = INK-UI-PS-REFERENCE-REASSEMBLY-001
+ACTIVE_TASK = INK-UI-PS-VISUAL-DETAIL-CONFORMANCE-001
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_DIRECT_MR_NEW_WINDOW_HANDOFF_v1.0.md
-ACTIVE_UI_ASSEMBLY_WORK_ORDER = ACTIVE/INK_UI_PS_REFERENCE_REASSEMBLY_WORK_ORDER_v1.0.md
+ACTIVE_UI_ASSEMBLY_WORK_ORDER = ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md
 ACTIVE_UI_BRANCH = main / bounded direct commits
 
 UI_B = UR_PASS / PROMOTED
@@ -157,7 +157,7 @@ PREVIOUS_GENERIC_SPARSE_LIGHT_UI = REJECTED
 UI_COMPLETE = USER_NOT_YET_DECLARED
 
 NEXT_OWNER = USER + UI_TASK_AUTHOR_CHAT
-NEXT_ACTION = DIRECT_MR_READ_PS_REFERENCE_REASSEMBLY_AND_EXECUTE
+NEXT_ACTION = DIRECT_MR_READ_PS_VISUAL_DETAIL_CONFORMANCE_AND_EXECUTE
 ```
 
 R31 USER rejection remains authoritative. The previous UI-A/B/C visual closure and UR visual PASS do not constrain the new reconstruction.
@@ -644,3 +644,11 @@ This pass explicitly restores:
 - removal/re-homing of redundant or low-sense visible controls.
 
 Prior checklist PASS labels do not override visible mismatch to the primary reference.
+
+
+## Visual-detail conformance dispatch — 2026-09-30
+
+Active dispatch:
+`ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md`
+
+USER-visible priorities: automatic tooltip/hint clutter off; matching left/right narrow-strip collapse arrows; typography/contrast normalization; no dark text/icons on dark headers; global foreground/background colors in left Tools footer; contextual Options Bar; centered color indicator; right-panel nested/status clutter removal; categorized single Preferences framework with Branding as one section; full current-page vs Photoshop visible delta sweep.
