@@ -1,0 +1,263 @@
+{
+  "schema": "INK-UI-ISSUE92-LAYERS-HISTORY",
+  "version": 1,
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "K01 layer hierarchy row count matches document layers",
+      "pass": true,
+      "detail": {
+        "rows": 4,
+        "layers": 4
+      }
+    },
+    {
+      "name": "K03 visibility action works",
+      "pass": true,
+      "detail": {
+        "before": true,
+        "after": false
+      }
+    },
+    {
+      "name": "K04 lock action works",
+      "pass": true,
+      "detail": {
+        "before": false,
+        "after": true
+      }
+    },
+    {
+      "name": "K05 opacity route works",
+      "pass": true,
+      "detail": {
+        "opacity": 0.55
+      }
+    },
+    {
+      "name": "AM10 insertion target visible before drop",
+      "pass": true,
+      "detail": {
+        "className": "layer-row drop-before",
+        "pseudoHeight": "2px",
+        "pseudoBackground": "rgb(59, 99, 251)"
+      }
+    },
+    {
+      "name": "AM11 drag feedback distinct from ordinary selection",
+      "pass": true,
+      "detail": {
+        "className": "layer-row active dragging",
+        "ariaGrabbed": "true",
+        "opacity": "0.5"
+      }
+    },
+    {
+      "name": "K09 layer drag reorder works",
+      "pass": true,
+      "detail": {
+        "beforeOrder": [
+          "b9ec4f3e-a46c-46e5-a1df-58964e4c2774",
+          "fabeab2b-7e05-49ed-91eb-e2d3d875bb47",
+          "9a2e4677-3836-474d-9db7-80690032e227",
+          "085f442a-345f-4ce4-9112-03ce7b0a0bf8"
+        ],
+        "afterOrder": [
+          "b9ec4f3e-a46c-46e5-a1df-58964e4c2774",
+          "fabeab2b-7e05-49ed-91eb-e2d3d875bb47",
+          "085f442a-345f-4ce4-9112-03ce7b0a0bf8",
+          "9a2e4677-3836-474d-9db7-80690032e227"
+        ]
+      }
+    },
+    {
+      "name": "AM12 reorder enters History authority",
+      "pass": true,
+      "detail": {
+        "lastHistory": "拖曳移動圖層"
+      }
+    },
+    {
+      "name": "AM12 reorder Undo Redo converge",
+      "pass": true,
+      "detail": {
+        "undoOrder": [
+          "b9ec4f3e-a46c-46e5-a1df-58964e4c2774",
+          "fabeab2b-7e05-49ed-91eb-e2d3d875bb47",
+          "9a2e4677-3836-474d-9db7-80690032e227",
+          "085f442a-345f-4ce4-9112-03ce7b0a0bf8"
+        ],
+        "redoOrder": [
+          "b9ec4f3e-a46c-46e5-a1df-58964e4c2774",
+          "fabeab2b-7e05-49ed-91eb-e2d3d875bb47",
+          "085f442a-345f-4ce4-9112-03ce7b0a0bf8",
+          "9a2e4677-3836-474d-9db7-80690032e227"
+        ]
+      }
+    },
+    {
+      "name": "K12 long layer list scroll works",
+      "pass": true,
+      "detail": {
+        "scrollHeight": 1010,
+        "clientHeight": 162,
+        "scrollTop": 848
+      }
+    },
+    {
+      "name": "L04 clicking earlier History state restores it",
+      "pass": true,
+      "detail": {
+        "baseLayers": 28,
+        "afterJump": 29,
+        "redoAfterJump": 2
+      }
+    },
+    {
+      "name": "L06 edit after earlier History state follows linear semantics",
+      "pass": true,
+      "detail": {
+        "redo": 0,
+        "timeline": {
+          "entries": [
+            {
+              "label": "新增圖層",
+              "forward": [
+                {
+                  "op": "set",
+                  "path": [
+                    "pages",
+                    0,
+                    "activeLayerId"
+                  ],
+                  "value": "eb4f9856-ebd4-43db-9693-86b8d6a015d7"
+                },
+                {
+                  "op": "array-insert",
+                  "path": [
+                    "pages",
+                    0,
+                    "layers"
+                  ],
+                  "index": 28,
+                  "value": {
+                    "id": "eb4f9856-ebd4-43db-9693-86b8d6a015d7",
+                    "name": "圖層 29",
+                    "visible": true,
+                    "locked": false,
+                    "opacity": 1,
+                    "objects": []
+                  }
+                }
+              ],
+              "inverse": [
+                {
+                  "op": "array-delete",
+                  "path": [
+                    "pages",
+                    0,
+                    "layers"
+                  ],
+                  "index": 28,
+                  "id": "eb4f9856-ebd4-43db-9693-86b8d6a015d7"
+                },
+                {
+                  "op": "set",
+                  "path": [
+                    "pages",
+                    0,
+                    "activeLayerId"
+                  ],
+                  "value": "04d0a4aa-3935-4ccf-8eba-641d15a5ed37"
+                }
+              ],
+              "captureMode": "scoped",
+              "capturedBytes": 3507,
+              "targetCount": 2,
+              "patchCount": 2,
+              "storedBytes": 486,
+              "objectIds": [
+                "eb4f9856-ebd4-43db-9693-86b8d6a015d7"
+              ]
+            },
+            {
+              "label": "新增圖層",
+              "forward": [
+                {
+                  "op": "set",
+                  "path": [
+                    "pages",
+                    0,
+                    "activeLayerId"
+                  ],
+                  "value": "09e043fe-454a-4980-bd28-cb047f26f014"
+                },
+                {
+                  "op": "array-insert",
+                  "path": [
+                    "pages",
+                    0,
+                    "layers"
+                  ],
+                  "index": 29,
+                  "value": {
+                    "id": "09e043fe-454a-4980-bd28-cb047f26f014",
+                    "name": "圖層 30",
+                    "visible": true,
+                    "locked": false,
+                    "opacity": 1,
+                    "objects": []
+                  }
+                }
+              ],
+              "inverse": [
+                {
+                  "op": "array-delete",
+                  "path": [
+                    "pages",
+                    0,
+                    "layers"
+                  ],
+                  "index": 29,
+                  "id": "09e043fe-454a-4980-bd28-cb047f26f014"
+                },
+                {
+                  "op": "set",
+                  "path": [
+                    "pages",
+                    0,
+                    "activeLayerId"
+                  ],
+                  "value": "eb4f9856-ebd4-43db-9693-86b8d6a015d7"
+                }
+              ],
+              "captureMode": "scoped",
+              "capturedBytes": 3627,
+              "targetCount": 2,
+              "patchCount": 2,
+              "storedBytes": 486,
+              "objectIds": [
+                "09e043fe-454a-4980-bd28-cb047f26f014"
+              ]
+            }
+          ],
+          "applied": 2,
+          "limit": 30
+        }
+      }
+    },
+    {
+      "name": "L09 History limit is panel-local and functional",
+      "pass": false,
+      "detail": {
+        "limit": 20,
+        "panel": false
+      }
+    }
+  ],
+  "summary": {
+    "total": 13,
+    "passed": 12,
+    "failed": 1
+  }
+}
