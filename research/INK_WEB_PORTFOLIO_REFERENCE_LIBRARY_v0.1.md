@@ -27,35 +27,7 @@ future fit for INK Creative Reproduction cases
 
 ## Initial reference set
 
-### WEB-REF-001 — Anthony Burrill
-
-Source:
-- https://anthonyburrill.com/
-- https://anthonyburrill.com/archive/
-- https://anthonyburrill.com/profile/
-
-Observed current IA:
-- Showcase
-- Shop
-- Archive
-- Profile
-- individual showcase pages with Title / Overview / credits
-- persistent contact / social / footer information
-
-Why useful:
-- clear portfolio-first information architecture;
-- strong typographic identity with simple navigation;
-- direct mapping from project index → project detail;
-- Archive and Profile structures are reusable for a future INK portfolio;
-- bounded enough for a first reproduction without requiring a complex application backend.
-
-Boundary:
-- Shop / checkout / payment behavior is not required for the first reproduction.
-
-Reproduction risk:
-- exact visual measurements and responsive behavior still require browser capture before implementation.
-
-### WEB-REF-002 — Order
+### WEB-REF-001 — Order
 
 Source:
 - https://order.design/
@@ -76,7 +48,7 @@ Reproduction risk:
 - very large content surface;
 - more suitable as a second-stage pattern source than the first bounded clone.
 
-### WEB-REF-003 — Studio Dumbar
+### WEB-REF-002 — Studio Dumbar
 
 Source:
 - https://studiodumbar.com/
@@ -98,7 +70,7 @@ Why useful:
 Reproduction risk:
 - motion-led presentation and media behavior increase first-project complexity.
 
-### WEB-REF-004 — PORTO ROCHA
+### WEB-REF-003 — PORTO ROCHA
 
 Source:
 - https://www.portorocha.com/
@@ -116,7 +88,7 @@ Why useful:
 Reproduction risk:
 - large content volume and motion/media treatment make it less bounded for the first clone.
 
-### WEB-REF-005 — Studio Feixen
+### WEB-REF-004 — Studio Feixen
 
 Source:
 - https://www.studiofeixen.ch/
@@ -140,7 +112,7 @@ Why useful:
 Reproduction risk:
 - intentionally experimental behavior and motion make it a poor first baseline.
 
-### WEB-REF-006 — Actual Source
+### WEB-REF-005 — Actual Source
 
 Source:
 - https://actualsource.work/
@@ -159,7 +131,7 @@ Reproduction risk:
 - current official site exposes limited machine-readable structure;
 - some detailed interaction evidence comes from older published documentation and needs fresh browser verification before cloning.
 
-### WEB-REF-007 — Wade and Leta
+### WEB-REF-006 — Wade and Leta
 
 Source:
 - https://wadeandleta.com/
@@ -185,7 +157,7 @@ The initial set confirms three useful reference families:
 
 ```text
 A. SIMPLE PORTFOLIO SHELL
-   Anthony Burrill / Wade and Leta
+   Wade and Leta
 
 B. DENSE INDEX / TAXONOMY
    Order / Actual Source
