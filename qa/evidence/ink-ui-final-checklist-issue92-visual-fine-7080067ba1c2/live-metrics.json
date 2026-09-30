@@ -27,7 +27,7 @@
       "branding": "8e86e03502d72fb4fa39ce458bee39c412f68e2957f28dcf9c902573f386d76b",
       "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0"
     },
-    "waitMs": 359
+    "waitMs": 353
   },
   "urls": {
     "prefs-general": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-general&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
@@ -49,24 +49,25 @@
     "panel-history": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-history&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
     "panel-channels": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-channels&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
     "panel-pages": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-pages&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
-    "audit": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=audit&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b"
+    "audit": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=audit&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "auditRead": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=audit-read&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b"
   },
   "screenshots": {
     "prefs-general": {
       "file": "live-prefs-general.png",
-      "bytes": 63790
+      "bytes": 55986
     },
     "prefs-interface": {
       "file": "live-prefs-interface.png",
-      "bytes": 63539
+      "bytes": 57324
     },
     "prefs-tools": {
       "file": "live-prefs-tools.png",
-      "bytes": 76001
+      "bytes": 55986
     },
     "prefs-canvas": {
       "file": "live-prefs-canvas.png",
-      "bytes": 57324
+      "bytes": 55986
     },
     "prefs-guides": {
       "file": "live-prefs-guides.png",
@@ -74,7 +75,7 @@
     },
     "prefs-performance": {
       "file": "live-prefs-performance.png",
-      "bytes": 55986
+      "bytes": 57324
     },
     "prefs-storage": {
       "file": "live-prefs-storage.png",
@@ -82,7 +83,7 @@
     },
     "prefs-branding": {
       "file": "live-prefs-branding.png",
-      "bytes": 57324
+      "bytes": 55986
     },
     "creative-reference": {
       "file": "live-creative-reference.png",
@@ -90,43 +91,47 @@
     },
     "panel-libraries": {
       "file": "live-panel-libraries.png",
-      "bytes": 55986
+      "bytes": 51155
     },
     "creative-compose": {
       "file": "live-creative-compose.png",
-      "bytes": 57324
+      "bytes": 55217
     },
     "creative-chat": {
       "file": "live-creative-chat.png",
-      "bytes": 55986
+      "bytes": 52088
     },
     "creative-revision": {
       "file": "live-creative-revision.png",
-      "bytes": 57324
+      "bytes": 56439
     },
     "panel-properties": {
       "file": "live-panel-properties.png",
-      "bytes": 57324
+      "bytes": 63979
     },
     "panel-color": {
       "file": "live-panel-color.png",
-      "bytes": 57324
+      "bytes": 58778
     },
     "panel-adjustments": {
       "file": "live-panel-adjustments.png",
-      "bytes": 55986
+      "bytes": 63635
     },
     "panel-history": {
       "file": "live-panel-history.png",
-      "bytes": 57324
+      "bytes": 54155
     },
     "panel-channels": {
       "file": "live-panel-channels.png",
-      "bytes": 57324
+      "bytes": 54251
     },
     "panel-pages": {
       "file": "live-panel-pages.png",
-      "bytes": 57324
+      "bytes": 52466
+    },
+    "audit": {
+      "file": "live-audit.png",
+      "bytes": 55986
     }
   },
   "status": "ERROR",
