@@ -24,7 +24,6 @@ Primary public evidence:
 - https://www.theminimalists.com/resources/
 - https://www.theminimalists.com/archives/
 
-Anthony Burrill remains in the reference library but is no longer the first reproduction target.
 
 ## Why this target
 
