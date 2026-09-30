@@ -1,0 +1,14 @@
+{
+  "schema": "ink-ui-issue92-visual-fine-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "55472ab114a06147b320caa7e33f11c236b2bcd8",
+  "scope": "PvsI package 03 T01-T08 tools global-color visual evidence / no central Runtime",
+  "suites": [
+    "visual-fine-detail",
+    "tools-dual-single-flyout"
+  ],
+  "central_runtime": false,
+  "run_generation": 8,
+  "note": "Fresh dual/single/full toolbar and flyout evidence; SVG icon inventory required."
+}
