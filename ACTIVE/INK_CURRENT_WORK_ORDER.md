@@ -29,6 +29,7 @@ UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 ACTIVE_TASK = INK-UI-PS-VISUAL-DETAIL-CONFORMANCE-001
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_DIRECT_MR_NEW_WINDOW_HANDOFF_v1.0.md
 ACTIVE_UI_ASSEMBLY_WORK_ORDER = ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md
+PS_ALIGNMENT_MASTER_GUIDE = ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md
 ACTIVE_UI_BRANCH = main / bounded direct commits
 
 UI_B = UR_PASS / PROMOTED
@@ -68,28 +69,17 @@ Focused/unit/static QA remains mandatory per package.
 
 ## Photoshop position/form authority
 
-Use current promoted capability placement for WHAT exists and Photoshop evidence for WHERE/HOW it appears.
+Use current capability authority for WHAT exists and Photoshop/USER evidence for WHERE/HOW it appears.
 
-Primary UI evidence:
-- `working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md`
-- `working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md`
-- `working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md`
-- `working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md`
-- `working/INK_UI_PS_PANEL_AND_STATUS_DETAIL_SPEC_v0.1.md`
-- `working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md`
+Canonical consolidated UI authority:
 
-Promoted placement:
-- `working/INK_UI_ATOMIC_CAPABILITY_DISPOSITION_v1.0.md`
-- `working/INK_UI_FULL_CAPABILITY_PLACEMENT_MATRIX_v1.0.md`
-- `working/INK_UI_UPDATED_CONTROL_LEDGER_v1.0.md`
-- `working/INK_UI_MENU_TOOLBAR_PANEL_ARCHITECTURE_v1.0.md`
-- `working/INK_UI_RECONCILIATION_GAP_REGISTER_v1.0.md`
+`ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md`
 
-Supersession:
-- current P1 placement overrides stale pre-P1 placement statements;
-- top-level Filter is required;
-- Color / Channels / Adjustments are normal panels;
-- masks/adjustments/filters/effects are not Specialist-only.
+Normal executors read the Master Guide plus the current ACTIVE dispatch. The older measurement, architecture, workpack and checklist files named inside the Master Guide are provenance/evidence and are opened only when exact historical measurement or proof is needed.
+
+Reusable future-program rule:
+
+`governance/UI_REFERENCE_DRIVEN_DESIGN_AND_INSPECTION_STANDARD_v1.0.md`
 
 ## Package A current scope
 
