@@ -1,0 +1,44 @@
+{
+  "schema": "ai-dev-evidence-manifest-model",
+  "version": "0.1",
+  "evidence_layers": [
+    "SOURCE",
+    "ARTIFACT",
+    "ASSEMBLY",
+    "VISUAL",
+    "INTERACTION",
+    "FUNCTION",
+    "RENDER",
+    "CORE",
+    "CAPABILITY",
+    "WORKFLOW",
+    "USER"
+  ],
+  "evidence_record_required_fields": [
+    "evidence_id",
+    "task_id",
+    "claim_id",
+    "layer",
+    "status",
+    "produced_by",
+    "locator",
+    "identity",
+    "proves",
+    "does_not_prove"
+  ],
+  "statuses": ["VERIFIED", "FAIL", "UNVERIFIED", "NOT_APPLICABLE_USER_APPROVED"],
+  "rules": [
+    "Every evidence record proves only explicitly named claims.",
+    "Evidence from one layer cannot close a claim in another layer.",
+    "NOT_APPLICABLE requires explicit USER approval when the requirement is visible or reference-led.",
+    "A reviewer may not convert SOURCE evidence into VISUAL or USER evidence by interpretation.",
+    "Identity must pin the exact commit/artifact/deployment/browser object that the evidence observed."
+  ],
+  "identity_chain": {
+    "order": ["commit", "artifact", "deployment", "browser_loaded"],
+    "commit": ["repo", "sha"],
+    "artifact": ["path_or_id", "sha256", "generated_from_commit"],
+    "deployment": ["url", "deployment_id_or_marker", "artifact_sha256_or_build_sha"],
+    "browser_loaded": ["url", "reported_build_sha_or_marker", "loaded_resource_digests_or_capture"]
+  }
+}
