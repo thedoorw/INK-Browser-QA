@@ -21,9 +21,12 @@ try {
     return;
   }
   const frame=document.querySelector('#liveFrame');
-  const waitFrame=()=>frame.contentDocument?.readyState==='complete'
+  const waitFrame=()=>frame.contentWindow?.INK_APP
     ? Promise.resolve()
-    : new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();}});
+    : new Promise((resolve,reject)=>{
+        const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);
+        frame.addEventListener('load',()=>{clearTimeout(t);resolve();},{once:true});
+      });
   const waitNextFrame=()=>new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe reload timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();}});
   await waitFrame();
   let w=frame.contentWindow,d=frame.contentDocument;

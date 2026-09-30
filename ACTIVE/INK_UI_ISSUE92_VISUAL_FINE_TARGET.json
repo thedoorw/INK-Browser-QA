@@ -9,6 +9,6 @@
     "pvsi-pack5-live-pages"
   ],
   "central_runtime": false,
-  "run_generation": 17,
-  "note": "Package 05 R5: exact identity gate now includes the live package5 harness itself. The workflow materializes that harness from the triggering commit and waits for Pages to deploy the identical bytes before any screenshots/audit are accepted."
+  "run_generation": 18,
+  "note": "Package 05 R6: fix live harness iframe readiness. Previous readyState check could accept initial about:blank and retain a stale contentDocument; harness now waits for the actual iframe load unless INK_APP already exists. Exact deployed harness hash gate remains mandatory."
 }
