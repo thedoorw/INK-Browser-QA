@@ -1,0 +1,14 @@
+{
+  "schema": "ink-ui-issue92-visual-fine-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "77e273d2228a97b5fde906ceb34fd7962b9bea1f",
+  "scope": "PvsI package 02 ruler guide snap visual evidence / no central Runtime",
+  "suites": [
+    "visual-fine-detail",
+    "ruler-guide-snap"
+  ],
+  "central_runtime": false,
+  "run_generation": 7,
+  "note": "Adds guides-px alongside default-mm guides screenshot."
+}
