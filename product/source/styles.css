@@ -4106,3 +4106,53 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   .history-panel-footer,.shell-panel-footer{font-size:10px}
 }
 html,body,#app{background:#e7e7e7}
+
+
+/* INK-UI-PVSI-PACK-05-R2 — fixed Preferences frame / Light creative surfaces */
+@media(min-width:761px){
+  /* Fixed-size PS-3 frame. max-* only constrains unusually small workstations;
+     using fixed width/height avoids CSS-grid shrink-to-fit content variance. */
+  .branding-settings-dialog{
+    width:826px!important;
+    max-width:calc(100% - 24px)!important;
+    height:624px!important;
+    max-height:calc(100% - 20px)!important
+  }
+  .preferences-categories button{
+    padding-inline:8px;
+    font-size:11px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:clip
+  }
+  #closeBrandingSettings svg{display:none}
+  #closeBrandingSettings::before{
+    content:"×";
+    display:block;
+    font:400 18px/22px Arial,sans-serif;
+    color:var(--ink-ui-text);
+    text-align:center
+  }
+
+  /* The CHAT surface is an INK-only capability but remains inside the
+     USER-locked Light workstation grammar. Override legacy dark descendants. */
+  .panel-stack-body #creativeWorkspace[data-shell-stage="chat"] .creative-chat-runtime,
+  .panel-stack-body #creativeWorkspace[data-shell-stage="chat"] .creative-chat-transcript,
+  .panel-stack-body #creativeWorkspace[data-shell-stage="chat"] .creative-workspace-prompt textarea{
+    background:var(--ink-ui-surface)!important;
+    color:var(--ink-ui-text)!important;
+    border-color:var(--ink-ui-border)!important;
+    border-radius:0!important
+  }
+  .panel-stack-body #creativeWorkspace[data-shell-stage="chat"] .creative-chat-runtime span,
+  .panel-stack-body #creativeWorkspace[data-shell-stage="chat"] .creative-chat-message>p,
+  .panel-stack-body #creativeWorkspace[data-shell-stage="chat"] .creative-chat-empty{
+    color:var(--ink-ui-text)!important
+  }
+  .panel-stack-body #creativeWorkspace[data-shell-stage="chat"] .creative-chat-runtime button{
+    background:var(--ink-ui-surface-subtle)!important;
+    color:var(--ink-ui-text)!important;
+    border-color:var(--ink-ui-border)!important;
+    border-radius:0!important
+  }
+}

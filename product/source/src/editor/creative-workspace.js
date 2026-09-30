@@ -363,7 +363,7 @@ export class CreativeWorkspaceController {
         </section>
         <section data-workspace-pane="revision" hidden>
           <strong>修訂擷取／還原</strong>
-          <label class="creative-workspace-field"><span>標籤</span><input type="text" data-workspace-input="revision-label" value="Workspace checkpoint"></label>
+          <label class="creative-workspace-field"><span>標籤</span><input type="text" data-workspace-input="revision-label" value="工作區檢查點"></label>
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="revision-capture">擷取</button><button type="button" data-workspace-action="revision-list">更新清單</button></div>
           <label class="creative-workspace-field"><span>修訂</span><select data-workspace-input="revision-id"><option value="">尚無修訂</option></select></label>
           <button type="button" class="creative-workspace-primary" data-workspace-action="revision-restore">還原選取修訂</button>
@@ -1056,7 +1056,7 @@ export class CreativeWorkspaceController {
       if (!this.conversationMessages.length) {
         const empty = document.createElement('p');
         empty.className = 'creative-chat-empty';
-        empty.textContent = 'No conversation. Inspect the current document or enter a prompt.';
+        empty.textContent = '尚無對話。可先查看目前文件或輸入提示詞。';
         transcript.append(empty);
       } else {
         for (const message of this.conversationMessages) {
@@ -1293,7 +1293,7 @@ export class CreativeWorkspaceController {
           : 'comparison unavailable';
         output.textContent = `${this.lastRevisionResult.created ? 'CAPTURED' : 'EQUIVALENT'} · ${this.lastRevisionResult.revisionId || current || 'none'} · ${delta}`;
       } else {
-        output.textContent = `Current revision: ${current || 'none'} · ${this.revisionItems.length} stored`;
+        output.textContent = `目前修訂：${current || '無'} · 已儲存 ${this.revisionItems.length} 筆`;
       }
     }
     const restore = this.root.querySelector('[data-workspace-action="revision-restore"]');

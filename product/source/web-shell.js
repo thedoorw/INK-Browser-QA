@@ -996,17 +996,17 @@
       </section>
       <section class="inspector-section tab-content shell-panel-section shell-library-panel" data-content="libraries" aria-label="資料庫">
         <div class="shell-panel-body">
-          <label class="shell-library-search-label" for="shellLibrarySearch"><span>Search</span><input id="shellLibrarySearch" type="search" autocomplete="off" placeholder="Search library"></label>
+          <label class="shell-library-search-label" for="shellLibrarySearch"><span>搜尋</span><input id="shellLibrarySearch" type="search" autocomplete="off" placeholder="搜尋資料庫"></label>
           <div id="shellLibraryFilters" class="shell-library-filters" role="group" aria-label="Library families">
             <button type="button" data-library-type="component" aria-pressed="true">元件</button>
             <button type="button" data-library-type="material" aria-pressed="true">材質</button>
             <button type="button" data-library-type="recipe" aria-pressed="true">配方</button>
             <button type="button" data-library-type="parametric-structure" aria-pressed="true">參數結構</button>
-            <button type="button" data-library-type="reference-derived-structure" aria-pressed="true">Reference</button>
+            <button type="button" data-library-type="reference-derived-structure" aria-pressed="true">參考</button>
           </div>
-          <p id="shellLibraryStatus" class="shell-panel-note shell-library-status">Library ready</p>
+          <p id="shellLibraryStatus" class="shell-panel-note shell-library-status">資料庫就緒</p>
           <div id="shellLibraryResults" class="shell-library-results" role="listbox" aria-label="Library results"></div>
-          <label class="shell-library-inspect-label" for="shellLibraryInspect"><span>Inspect · read-only</span><textarea id="shellLibraryInspect" class="shell-library-inspect" readonly aria-readonly="true" spellcheck="false"></textarea></label>
+          <label class="shell-library-inspect-label" for="shellLibraryInspect"><span>檢視 · 唯讀</span><textarea id="shellLibraryInspect" class="shell-library-inspect" readonly aria-readonly="true" spellcheck="false"></textarea></label>
         </div>
       </section>`);
     return true;
@@ -1157,7 +1157,7 @@
     inspect.dataset.libraryInspectType = item.type || '';
     inspect.dataset.libraryInspectId = item.ref?.id || '';
     state.librarySelectedRef = item.ref;
-    setLibraryStatus(response?.status === 'COMPLETED' ? 'Inspect · ' + (item.label || item.type) + ' · read-only' : 'Inspect failed', response?.status === 'COMPLETED' ? 'ready' : 'error');
+    setLibraryStatus(response?.status === 'COMPLETED' ? '檢視 · ' + (item.label || item.type) + ' · 唯讀' : '檢視失敗', response?.status === 'COMPLETED' ? 'ready' : 'error');
     return response?.status === 'COMPLETED';
   }
 
@@ -1243,7 +1243,7 @@
       root.append(row);
     }
     const matched = Number(response?.result?.totalMatched ?? results.length);
-    setLibraryStatus(response?.status === 'COMPLETED' ? matched + ' matched · ' + results.length + ' shown' : 'Library search failed', response?.status === 'COMPLETED' ? 'ready' : 'error');
+    setLibraryStatus(response?.status === 'COMPLETED' ? matched + ' 筆符合 · 顯示 ' + results.length + ' 筆' : '資料庫搜尋失敗', response?.status === 'COMPLETED' ? 'ready' : 'error');
     return response?.status === 'COMPLETED';
   }
 
