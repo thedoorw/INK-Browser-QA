@@ -3,30 +3,45 @@
 ```text
 ROLE = WR
 PROGRAM = INK-WEB-PORTFOLIO-001
-CURRENT_PHASE = C — First Website Reproduction / capture & measurement
+CURRENT_PHASE = C — First Website Reproduction / fast scaffold
 SSOT_READ = PASS
 WR_AUTHORITY = AUTONOMOUS
 INK_PRODUCT_CHANGE_REQUIRED = NO
-CURRENT_ACTION = C1 live-reference baseline committed; exact rendered measurements pending WEB DEV
-NEXT_OUTPUT = exact-viewport C1 measurements + screenshot evidence, then C2 component/token handoff
+PRIMARY_REFERENCE = The Minimalists
+METHOD = FAST_PATH_AI_ASSISTED_REPRODUCTION
+CURRENT_ACTION = reference switched; implementation-first path authorized
+NEXT_OUTPUT = working first scaffold on work branch, then same-viewport WR correction
 ```
 
-## Completed this session
+## Direction change
 
-- recovered WR authority and boundary from GitHub SSOT;
-- confirmed current phase and bounded WEB DEV Work Order;
-- verified `work/ink-web-portfolio-001` was 37 commits behind `main` and 0 commits ahead;
-- fast-forwarded the Web work branch to current `main` before new work;
-- re-verified the Anthony Burrill live public reference structure;
-- created `working/INK_WEB_PORTFOLIO_001_C1_REFERENCE_CAPTURE_BASELINE_v0.1.md`;
-- recorded only verified live-reference facts and left pixel geometry explicitly pending rather than inventing values.
+User explicitly selected The Minimalists as the first reproduction target.
+
+The program is no longer blocked on exhaustive capture/measurement before implementation.
+
+Current method:
+
+```text
+URL/screenshot-assisted scaffold
+→ neutralize copyrighted content/assets
+→ GitHub implementation
+→ visual/interaction comparison
+→ bounded correction
+→ responsive QA
+→ Pages
+```
+
+Primary accelerator candidate:
+- Replit Design / Agent for URL import/recreation plus Git/GitHub workflow.
+
+10Web Clone Agent is retained only as an optional disposable comparison/prototype path because its current clone workflow is page-level and WordPress-oriented.
 
 ## Current gate
 
 ```text
-C1_CAPTURE_AND_MEASURE = ACTIVE
-C1_REFERENCE_BASELINE = RECORDED
-EXACT_VIEWPORT_GEOMETRY = PENDING
+REFERENCE_SELECTION = THE_MINIMALISTS
+FAST_PATH = AUTHORIZED
+FIRST_SCAFFOLD = PENDING
 IMPLEMENTATION = NOT YET REVIEWED
 WR_PASS = NOT YET
 DEPLOYMENT = NOT YET AUTHORIZED
@@ -34,14 +49,19 @@ DEPLOYMENT = NOT YET AUTHORIZED
 
 ## Required next handoff
 
-WEB DEV must capture and measure the reference at:
+WEB DEV should produce the first working shell rather than another research report.
 
-```text
-1440 × 900
-1024 × 768
-390 × 844
-```
+Minimum surfaces:
+- /
+- /start/
+- /resources/
+- /archives/
+- /case/sample-case/
 
-and return screenshot/evidence paths plus measured geometry on `work/ink-web-portfolio-001`.
-
-WR will then review C1 and, if acceptable, advance to C2 structure/tokens.
+Then return:
+- branch HEAD SHA;
+- changed files;
+- run instructions;
+- screenshots at 1440×900, 1024×768 and 390×844;
+- short measured delta list;
+- asset/license statement.
