@@ -3760,3 +3760,57 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   .panel-dock-separator{flex:0 0 1px}
   .panel-dock-button{height:28px;min-height:28px}
 }
+
+
+/* ==========================================================================
+   INK-UI-PVSI-PIXEL-ALIGNMENT-001
+   Normalized reference state: Photoshop application crop 1280×994.
+   Geometry-only convergence; USER-locked light palette and capability
+   authorities remain unchanged.
+   ========================================================================== */
+@media(min-width:761px){
+  /* Photoshop toolbar local top strip = 11 px + 1 px divider. */
+  .tool-layout-controls{margin-bottom:0}
+
+  /* Photoshop repeated dual-column tool-row pitch = 26 px. */
+  .app.toolbar-layout-dual .tool-rail .tool-group{
+    row-gap:0;
+    column-gap:2px;
+  }
+
+  /* Photoshop foreground/background swatches = 18×18 with 10 px overlap. */
+  .tool-colors{width:28px;height:44px}
+  .tool-color{width:18px;height:18px}
+
+  /* 1280×994 expanded-stack reference:
+     y 61..72 edge strip, y 73 first group, y 993..994 bottom boundary.
+     After 12 px edge strip + 2×3 px splitters + 1 px bottom border,
+     group content height is 914 px = 269 + 261 + 384. */
+  .panel-stack-framework{
+    box-sizing:border-box;
+    border-bottom:1px solid var(--ink-ui-border);
+  }
+  .panel-stack-region[data-panel-stack-group="overview"]{flex-basis:29.431%}
+  .panel-stack-region[data-panel-stack-group="creative"]{flex-basis:28.556%}
+  .panel-stack-region[data-panel-stack-group="structure"]{flex-basis:42.013%}
+
+  /* Navigator reference = 28 px header + 208 px body + 33 px footer. */
+  .navigator-footer{
+    flex:0 0 33px;
+    height:33px;
+  }
+
+  /* Layers reference footer = 24 px content + 1 px boundary. */
+  .panel-stack-body>.layers-panel .layer-bottom-toolbar{
+    flex:0 0 25px;
+    height:25px;
+    min-height:25px;
+  }
+
+  /* Common bordered Options fields in the captured Photoshop state = 21 px. */
+  .contextual-options select,
+  .contextual-options input:not([type="range"]):not([type="checkbox"]):not([type="file"]):not([type="color"]){
+    height:21px;
+    min-height:21px;
+  }
+}
