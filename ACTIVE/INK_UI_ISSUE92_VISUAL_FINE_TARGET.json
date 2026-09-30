@@ -9,6 +9,6 @@
     "pvsi-pack5-live-pages"
   ],
   "central_runtime": false,
-  "run_generation": 11,
-  "note": "Package 05 evidence rerun after correcting QA expectation for Restore Factory: active factory branding is intentionally re-persisted while product-default override is cleared. Exact deployed identity and all package5 screenshots remain required."
+  "run_generation": 12,
+  "note": "Package 05 diagnostic rerun: always publish live-metrics/report/visual-metrics even when deployed audit fails, so a rendered failure is inspectable rather than lost."
 }

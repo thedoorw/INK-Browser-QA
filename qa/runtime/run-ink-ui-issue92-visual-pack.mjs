@@ -182,8 +182,11 @@ async function captureLivePages(root,identity){
     if(!match)throw new Error('live metrics marker missing from audit dump');
     const unescape=s=>s.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
     const metrics=JSON.parse(unescape(match[1]));
-    if(metrics.status!=='PASS')throw new Error('live package5 harness '+(metrics.error||metrics.status));
-    const live={schema:'INK-UI-PVSI-PACK5-LIVE-EVIDENCE',version:1,targetSha:TARGET_SHA,identity,urls,screenshots,metrics};
+    const live={schema:'INK-UI-PVSI-PACK5-LIVE-EVIDENCE',version:1,targetSha:TARGET_SHA,identity,urls,screenshots,status:metrics.status==='PASS'?'PASS':'ERROR',metrics};
+    await writeFile(path.join(evidence,'live-metrics.json'),JSON.stringify(live,null,2));
+    return live;
+  }catch(error){
+    const live={schema:'INK-UI-PVSI-PACK5-LIVE-EVIDENCE',version:1,targetSha:TARGET_SHA,identity,urls,screenshots,status:'ERROR',error:String(error?.stack||error)};
     await writeFile(path.join(evidence,'live-metrics.json'),JSON.stringify(live,null,2));
     return live;
   }finally{await rm(profile,{recursive:true,force:true,maxRetries:5,retryDelay:150});}
@@ -246,9 +249,10 @@ export async function run(root){
     for(const state of STATES){
       report.states.push(await capture(root,started.origin,state,reports));
     }
-    report.status='PASS';
-    report.summary={total:STATES.length,passed:STATES.length,failed:0,screenshotBytes:report.states.reduce((n,x)=>n+x.bytes,0)};
     await writeFile(path.join(evidenceDir,'visual-metrics.json'),JSON.stringify({schema:'INK-UI-ISSUE92-VISUAL-METRICS',version:1,targetSha:TARGET_SHA,states:report.states.map(x=>x.evidence)},null,2));
+    report.status=report.live?.status==='PASS'?'PASS':'FAIL';
+    report.summary={total:STATES.length,passed:STATES.length,failed:report.live?.status==='PASS'?0:1,screenshotBytes:report.states.reduce((n,x)=>n+x.bytes,0)};
+    if(report.status!=='PASS'){report.error=report.live?.error||report.live?.metrics?.error||'package5 live audit failed';process.exitCode=1;}
   }catch(error){
     report.status='FAIL';report.error=String(error?.stack||error);
     report.summary={total:STATES.length,passed:report.states.length,failed:STATES.length-report.states.length};
