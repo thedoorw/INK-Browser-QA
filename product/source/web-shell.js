@@ -20,17 +20,17 @@
     export: 'exportBtn'
   });
   const APPLICATION_MENU_REGISTRY = Object.freeze([
-    { id: 'file', label: '檔案', live: true },
-    { id: 'edit', label: '編輯', live: true },
-    { id: 'image', label: '影像', live: true },
-    { id: 'layer', label: '圖層', live: true },
-    { id: 'type', label: '文字', live: true },
-    { id: 'select', label: '選取', live: true },
-    { id: 'filter', label: '濾鏡', live: true },
-    { id: 'object', label: '物件', live: true },
-    { id: 'view', label: '檢視', live: true },
-    { id: 'window', label: '視窗', live: true },
-    { id: 'help', label: '說明', live: true }
+    { id: 'file', label: '檔案', mnemonic: 'f', live: true },
+    { id: 'edit', label: '編輯', mnemonic: 'e', live: true },
+    { id: 'image', label: '影像', mnemonic: 'i', live: true },
+    { id: 'layer', label: '圖層', mnemonic: 'l', live: true },
+    { id: 'type', label: '文字', mnemonic: 'y', live: true },
+    { id: 'select', label: '選取', mnemonic: 's', live: true },
+    { id: 'filter', label: '濾鏡', mnemonic: 't', live: true },
+    { id: 'object', label: '物件', mnemonic: 'o', live: true },
+    { id: 'view', label: '檢視', mnemonic: 'v', live: true },
+    { id: 'window', label: '視窗', mnemonic: 'w', live: true },
+    { id: 'help', label: '說明', mnemonic: 'h', live: true }
   ]);
   const DRAW_CONTEXT_TOOLS = new Set(['pen', 'pencil', 'marker', 'brush', 'airbrush']);
   const CONTEXT_CONTROL_IDS = Object.freeze(['quickControls', 'eraserOptions', 'shapeOptions', 'textOptions', 'selectionBar']);
@@ -230,10 +230,21 @@
         setApplicationMenu(def.id, state.openApplicationMenu !== def.id);
       });
       trigger.addEventListener('keydown', event => {
-        if (event.key !== 'ArrowDown') return;
-        event.preventDefault();
-        setApplicationMenu(def.id, true);
-        moveApplicationMenuFocus(menu, 'first');
+        if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          setApplicationMenu(def.id, true);
+          moveApplicationMenuFocus(menu, 'first');
+        } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          const live = APPLICATION_MENU_REGISTRY.filter(item => item.live);
+          const index = live.findIndex(item => item.id === def.id);
+          const next = live[(index + (event.key === 'ArrowRight' ? 1 : -1) + live.length) % live.length];
+          setApplicationMenu(next.id, true);
+          state.applicationMenus.get(next.id)?.trigger?.focus();
+        }
+      });
+      trigger.addEventListener('pointerenter', () => {
+        if (state.openApplicationMenu && state.openApplicationMenu !== def.id) setApplicationMenu(def.id, true);
       });
       menu.addEventListener('click', event => {
         const fileItem = event.target.closest('[data-file-command]');
@@ -264,6 +275,14 @@
         } else if (event.key === 'Home' || event.key === 'End') {
           event.preventDefault();
           moveApplicationMenuFocus(menu, event.key === 'Home' ? 'first' : 'last');
+        } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          const live = APPLICATION_MENU_REGISTRY.filter(item => item.live);
+          const currentId = state.openApplicationMenu || def.id;
+          const index = live.findIndex(item => item.id === currentId);
+          const next = live[(index + (event.key === 'ArrowRight' ? 1 : -1) + live.length) % live.length];
+          setApplicationMenu(next.id, true);
+          moveApplicationMenuFocus(state.applicationMenus.get(next.id).menu, 'first');
         } else if (event.key === 'Escape') {
           event.preventDefault();
           closeApplicationMenus({ focus: true });
@@ -279,7 +298,16 @@
       closeApplicationMenus();
     });
     document.addEventListener('keydown', event => {
-      if (event.key === 'Escape' && state.openApplicationMenu) closeApplicationMenus({ focus: true });
+      if (event.key === 'Escape' && state.openApplicationMenu) {
+        closeApplicationMenus({ focus: true });
+        return;
+      }
+      if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.key.length !== 1) return;
+      const match = APPLICATION_MENU_REGISTRY.find(item => item.live && item.mnemonic === event.key.toLowerCase());
+      if (!match) return;
+      event.preventDefault();
+      setApplicationMenu(match.id, true);
+      state.applicationMenus.get(match.id)?.trigger?.focus();
     });
     state.applicationMenuBound = true;
     return true;

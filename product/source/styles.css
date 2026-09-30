@@ -3850,3 +3850,64 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   }
   #app .panel-window-item.active .window-menu-check::before{opacity:1}
 }
+
+
+/* INK-UI-PVSI-PACK-01-CLOSURE — A03-A06 / M04-M06 / X01 */
+@media(min-width:761px){
+  /* A03 — PS-1 menu glyph starts: 36/85/134/180/229/279/329/378/421/473/526px.
+     With an 8px text inset, these fixed trigger starts reproduce the reference
+     rhythm while Object occupies the authorized non-3D capability slot. */
+  .menu-app-mark{box-sizing:border-box;width:28px;min-width:28px;padding:0 4px;border-right:0}
+  .menu-app-mark .brand-source-mark{width:16px;height:16px}
+  .application-menus>.application-menu{flex:0 0 auto}
+  .application-menus>.application-menu>button{box-sizing:border-box;height:24px;padding:0 8px;justify-content:flex-start;line-height:24px}
+  .application-menus>.application-menu[data-application-menu="file"]>button{width:49px}
+  .application-menus>.application-menu[data-application-menu="edit"]>button{width:49px}
+  .application-menus>.application-menu[data-application-menu="image"]>button{width:46px}
+  .application-menus>.application-menu[data-application-menu="layer"]>button{width:49px}
+  .application-menus>.application-menu[data-application-menu="type"]>button{width:50px}
+  .application-menus>.application-menu[data-application-menu="select"]>button{width:50px}
+  .application-menus>.application-menu[data-application-menu="filter"]>button{width:49px}
+  .application-menus>.application-menu[data-application-menu="object"]>button{width:43px}
+  .application-menus>.application-menu[data-application-menu="view"]>button{width:52px}
+  .application-menus>.application-menu[data-application-menu="window"]>button{width:53px}
+  .application-menus>.application-menu[data-application-menu="help"]>button{width:52px}
+
+  /* A04/A05 — every contextual tool keeps the 35px band and one 24px
+     control envelope; no control may create a second-height row. */
+  #contextualOptions{height:35px;min-height:35px;padding:0 4px}
+  #contextualOptions .contextual-tool-identity{height:35px}
+  #contextualOptions .quick-color-wrap{width:24px;height:24px;flex-basis:24px}
+  #contextualOptions .quick-color,#contextualOptions .quick-color-input{width:24px!important;height:24px!important}
+  #contextualOptions .contextual-divider{height:22px;margin-right:4px}
+
+  /* M04 — popup families use the same Light surface and 22px command rhythm. */
+  .workspace-menu,.brush-family-popover,.panel-options-menu{
+    padding:4px;border:1px solid var(--ink-ui-border-strong);border-radius:0;
+    background:var(--ink-ui-surface);color:var(--ink-ui-text);box-shadow:0 5px 14px rgba(0,0,0,.16)
+  }
+  .workspace-menu button,.brush-family-popover .subtool-button,.panel-options-menu button{
+    height:22px;min-height:22px;border-radius:0;color:var(--ink-ui-text);background:transparent;
+    font-size:var(--ui-type-md);line-height:var(--ui-label-baseline)
+  }
+  .brush-family-popover{width:196px}
+  .brush-family-popover .subtool-button{padding:0 6px}
+  .brush-family-popover .subtool-button.active{background:var(--ink-ui-control-active);color:var(--ink-ui-text);box-shadow:none}
+  .workspace-menu button:hover,.workspace-menu button:focus-visible,
+  .brush-family-popover .subtool-button:hover,.brush-family-popover .subtool-button:focus-visible,
+  .panel-options-menu button:hover,.panel-options-menu button:focus-visible{
+    background:var(--ink-ui-control-hover);color:var(--ink-ui-text);outline:none
+  }
+  .workspace-menu button.active{background:var(--ink-ui-control-active);color:var(--ink-ui-text);box-shadow:none}
+  .workspace-menu-separator,.brush-family-popover .subtool-separator{
+    height:1px;margin:4px 0;background:var(--ink-ui-popup-separator)
+  }
+
+  /* M05/X01 — common interactive states and icon envelopes stay on the
+     semantic token authority; text-glyph exceptions are inventoried by QA. */
+  .application-menus>button:focus-visible,
+  .application-menu>button:focus-visible,
+  .workspace-menu button:focus-visible,
+  .subtool-button:focus-visible,
+  .panel-options-menu button:focus-visible{outline:1px solid var(--ink-ui-focus);outline-offset:-1px}
+}
