@@ -27,12 +27,10 @@ archive / pagination
 finished-looking even with a small initial body of work
 ```
 
-## Reference change
+## Current reference
 
-- Previous primary reference: Anthony Burrill.
-- Current primary reference: The Minimalists — https://www.theminimalists.com/
-- Anthony Burrill remains a secondary Web Reference Library case.
-- The reference change affects only the Web portfolio lane.
+- The Minimalists — https://www.theminimalists.com/
+- The reference applies only to the Web portfolio lane.
 
 ## Current gate
 
