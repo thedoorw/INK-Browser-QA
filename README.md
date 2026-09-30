@@ -169,6 +169,14 @@ UI assembly evidence rule:
 
 `governance/INK_UI_HTML_CSS_ASSEMBLY_VERIFICATION_RULE_v0.1.md`
 
+Reusable reference-driven UI design / inspection standard:
+
+`governance/UI_REFERENCE_DRIVEN_DESIGN_AND_INSPECTION_STANDARD_v1.0.md`
+
+Current consolidated Photoshop-alignment authority:
+
+`ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md`
+
 ## New-window read order
 
 All roles:
@@ -262,6 +270,16 @@ reference software
 The USER should set direction and acceptance, not manually transport cross-role handoffs or rediscover missing completion gates.
 
 First prototype target: `AI_DEV_ORCHESTRATOR_v0.1`.
+
+Current R&D baseline incorporating the INK failure case:
+
+`research/AI_DEVELOPMENT_PRODUCTION_LINE_R_AND_D_HANDOFF_v1.0.md`
+
+New-window production-line MR handoff:
+
+`ACTIVE/AI_DEV_PRODUCTION_LINE_MR_NEW_WINDOW_HANDOFF_v1.0.md`
+
+The corrected direction is artifact-driven rather than claim-driven: source/Runtime/checklist PASS cannot substitute for assembled/rendered/interacted product evidence.
 
 ## Creative reproduction benchmark
 
@@ -407,48 +425,33 @@ Do not recreate retired task-specific workflows merely because their historical 
 
 ## UI authority
 
-The Photoshop-aligned final UI implementation program is closed and Runtime-verified.
-
-Final gate:
-- UI-A = MR PASS / UR PASS / promoted via PR #83;
-- UI-B = UR PASS / promoted via PR #84;
-- UI-C = UR PASS / promoted via PR #86;
-- final Runtime = PASS, run #36445204976;
-- final Runtime tested SHA = `24d3b3f607a17b3cb9331ec3635b34d804ee445b`;
-- final Runtime = verified;
-- UR full completion checklist audit = still required;
-- UI_COMPLETE = HOLD until that audit closes.
+The prior UI-A/B/C technical/runtime milestones are historical evidence. USER visual acceptance reopened the UI, and current work is in USER-directed reconstruction mode.
 
 Current authority:
 
 `ACTIVE/INK_CURRENT_WORK_ORDER.md`
 
-Master UI program:
+Consolidated Photoshop-alignment design + inspection guide:
 
-`working/INK_UI_PSH_ALIGNED_IMPLEMENTATION_MASTER_WORKPLAN_v1.0.md`
+`ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md`
 
-Current delegated UI execution authority:
+Current bounded UI dispatch:
 
-`ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
+`ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md`
+
+Direct execution handoff:
+
+`ACTIVE/INK_UI_DIRECT_MR_NEW_WINDOW_HANDOFF_v1.0.md`
+
+Reusable future-program UI standard:
+
+`governance/UI_REFERENCE_DRIVEN_DESIGN_AND_INSPECTION_STANDARD_v1.0.md`
 
 Current capability baseline remains:
 
 `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
 
-Final UI Runtime review:
-
-`working/INK_UI_FINAL_RUNTIME_MR_REVIEW_v1.0.md`
-
-UI engineering health:
-
-`governance/INK_UI_ENGINEERING_HEALTH_GUARDRAILS_v0.1.md`
-
-Current UI research/reference:
-- `research/INK_WEB_UI_DEVELOPMENT_PLAN_v0.1.md`
-- `research/INK_WORKSTATION_UI_CAPABILITY_MATRIX_v0.1.md`
-- `research/INK_UI_REVIEW_CHECKLIST_v0.1.md`
-
-Historical UI evidence does not override the current UI Work Order.
+Historical measurement/workpack/checklist files remain provenance. They do not independently override the Master Guide, current actual page, or USER authority.
 
 ## Research
 
