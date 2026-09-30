@@ -7,26 +7,19 @@ OWNER = WR
 PROGRAM = INK-WEB-PORTFOLIO-001
 PHASE = C — First Website Reproduction
 TASK = INK-WEB-PORTFOLIO-001-C1
-REFERENCE = https://anthonyburrill.com/
+REFERENCE = https://www.theminimalists.com/
+REFERENCE_CLASS = EDITORIAL / BOOK-LIKE PORTFOLIO SHELL
 INK_PRODUCT_CHANGE_REQUIRED = NO
 MR_REVIEW_REQUIRED = NO
 ```
 
 ## Goal
 
-Build the first bounded portfolio reproduction from observed public behavior of the Anthony Burrill portfolio shell.
+Reproduce the presentation system and reading behavior of The Minimalists as the first bounded Web reproduction.
 
-This is a Web-portfolio-only task. Do not modify INK product source, Core, Connector authority, workstation UI, Document / History / Revision implementation or FORMAT_VERSION.
+The objective is not to reproduce its copyrighted content or backend. The objective is to recover its non-full-width editorial shell, visual rhythm, sequential reading pattern and responsive behavior, then implement those principles as a portfolio-ready static site.
 
-## Branch
-
-Use:
-
-```text
-work/ink-web-portfolio-001
-```
-
-Until WR splits a dedicated implementation branch.
+This is Web-portfolio-only work. Do not modify INK product source, Core, Connector authority, workstation UI, Document / History / Revision implementation or FORMAT_VERSION.
 
 ## Required sequence
 
@@ -41,17 +34,25 @@ mobile = 390 × 844
 ```
 
 Capture/measure:
+- total content width;
+- reading-column width;
+- left/right whitespace;
 - header / navigation geometry;
-- page margins and max-width behavior;
-- project-grid columns and gaps;
-- typography scale / line-height / weights;
-- image aspect-ratio behavior;
-- project-detail text/media rhythm;
+- identity/intro block;
+- heading, body and metadata typography;
+- paragraph measure and line-height;
+- vertical spacing rhythm;
+- homepage entry spacing;
+- title / excerpt / MORE relationship;
+- image sizing and placement on detail pages;
+- previous / next behavior;
+- pagination/archive continuation;
+- secondary index layout;
 - footer;
 - breakpoint changes;
 - mobile navigation behavior;
 - overflow / scrolling;
-- hover/focus states that materially affect the UI.
+- hover/focus states that materially affect the experience.
 
 Do not invent values when they can be measured.
 
@@ -60,51 +61,66 @@ Do not invent values when they can be measured.
 Produce:
 - page map;
 - component map;
+- content model;
 - layout tokens;
+- reading-width tokens;
 - typography tokens;
-- spacing tokens;
+- spacing/rhythm tokens;
 - breakpoint table;
 - interaction notes.
 
 ### C3 — Independent implementation
 
-Implement an original code reproduction under a dedicated Web portfolio directory.
-
-If no existing Web portfolio root exists, use:
+Implement an original static reproduction under:
 
 ```text
 portfolio/
 ```
 
-Minimum routes/pages:
+Minimum presentation routes/pages:
 
 ```text
 /
+entry/sample-entry/
 archive/
-profile/
-case/sample-case/
+index/
+about/
 ```
 
-Use license-safe placeholder / owned media. Do not commit third-party reference-site images merely to increase visual similarity.
+Use license-safe placeholder or repository-owned media.
+
+The shell must support future content types without structural redesign:
+
+```text
+WORK
+PROCESS
+NOTE
+RESEARCH
+CASE STUDY
+```
 
 ### C4 — Visual and responsive QA
 
-Compare reference and reproduction at the same target viewports.
+Compare reference and reproduction at identical target viewports.
 
 Required checks:
-- shell alignment;
-- grid;
+- outer page proportion;
+- reading-column width;
 - typography hierarchy;
-- spacing;
-- image sizing/cropping;
+- paragraph measure;
+- vertical rhythm;
+- entry spacing;
+- image sizing;
 - navigation;
+- previous / next flow;
+- pagination/archive flow;
 - footer;
 - responsive transformation;
 - overflow;
 - hover/focus;
 - basic readable contrast.
 
-Record deltas as measured issues, not subjective comments.
+Record deltas as measured issues.
 
 ### C5 — WR handoff
 
@@ -116,13 +132,14 @@ Return:
 - screenshots/evidence paths;
 - known deltas;
 - third-party asset/license statement;
-- candidate Pages deployment path.
+- candidate GitHub Pages path.
 
 ## Explicit non-goals
 
-- no ecommerce reproduction;
+- no copyrighted content copying;
 - no WordPress/backend cloning;
-- no copied proprietary source code;
+- no newsletter backend;
+- no ecommerce;
 - no INK product mutation;
 - no deployment until WR review passes the bounded reproduction.
 
