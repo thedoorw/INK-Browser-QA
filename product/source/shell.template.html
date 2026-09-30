@@ -15,7 +15,7 @@
     body{min-height:100vh}
     #app{background:#e7e7e7;color:#262626}
   </style>
-  <link rel="stylesheet" href="styles.css?v=0.1-ps-reassembly2">
+  <link rel="stylesheet" href="styles.css?v=0.1-ps-detail1">
 </head>
 <body data-ink-first-paint="workstation">
 <svg class="svg-sprite" aria-hidden="true">
@@ -221,8 +221,14 @@
     </div>
     <div class="tool-layout-controls" aria-label="工具列版面">
       <button id="toolbarLayoutToggle" class="tool-layout-toggle" type="button" title="切換為雙欄工具列" aria-label="切換為雙欄工具列" aria-pressed="false">
-        <svg aria-hidden="true"><use href="#i-layout"/></svg>
+        <span class="edge-chevron" aria-hidden="true">‹</span>
       </button>
+    </div>
+    <div class="tool-colors" aria-label="前景與背景色">
+      <button id="resetToolColors" class="color-utility color-reset" aria-label="重設前景與背景色">▣</button>
+      <button id="swapToolColors" class="color-utility color-swap" aria-label="交換前景與背景色">⇄</button>
+      <input id="toolBackgroundColor" class="tool-color background-swatch" type="color" value="#ffffff" aria-label="背景色">
+      <input id="toolForegroundColor" class="tool-color foreground-swatch" type="color" value="#202020" aria-label="前景色">
     </div>
   </nav>
 
@@ -679,32 +685,36 @@
     <div class="dialog elevated-panel branding-settings-dialog">
       <div class="panel-header">
         <div><span class="eyebrow">INK</span><strong id="brandingSettingsTitle">偏好設定</strong></div>
-        <button id="closeBrandingSettings" class="mini-button panel-close-button" title="關閉 Branding 設定" aria-label="關閉 Branding 設定"><svg><use href="#i-close"/></svg></button>
+        <button id="closeBrandingSettings" class="mini-button panel-close-button" title="關閉偏好設定" aria-label="關閉偏好設定"><svg><use href="#i-close"/></svg></button>
       </div>
-      <div class="branding-settings-body">
-        <button id="brandingCanvasSettings" type="button" class="branding-canvas-settings">畫布與輸入設定…</button>
-        <p class="branding-settings-note">Title / Name、Logo 與 Favicon 會即時預覽並自動保留，重新載入後仍維持。</p>
-        <div class="branding-preview" aria-label="Branding 即時預覽">
+      <div class="preferences-layout">
+        <nav id="preferencesCategories" class="preferences-categories" aria-label="設定分類"></nav>
+        <div id="preferencesContent" class="preferences-content">
+      <section class="branding-settings-body preferences-category" data-preference-page="branding" aria-label="品牌">
+        <p class="branding-settings-note">名稱、標題、標誌與網站圖示會即時預覽並自動保存。</p>
+        <div class="branding-preview" aria-label="品牌即時預覽">
           <img id="brandingPreviewLogo" src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="">
           <div><strong id="brandingPreviewName">INK</strong><span id="brandingPreviewTitle">INK v0.1 · {{DELIVERY}}</span></div>
         </div>
-        <label class="branding-field"><span>Application Name</span><input id="brandingAppName" type="text" maxlength="40" autocomplete="off" spellcheck="false"></label>
-        <label class="branding-field"><span>Application Title</span><input id="brandingAppTitle" type="text" maxlength="100" autocomplete="off" spellcheck="false"></label>
+        <label class="branding-field"><span>應用程式名稱</span><input id="brandingAppName" type="text" maxlength="40" autocomplete="off" spellcheck="false"></label>
+        <label class="branding-field"><span>視窗標題</span><input id="brandingAppTitle" type="text" maxlength="100" autocomplete="off" spellcheck="false"></label>
         <div class="branding-asset-row">
-          <div class="branding-asset-copy"><strong>Logo</strong><span>PNG / JPG / WEBP / SVG · ≤ 768 KB</span></div>
+          <div class="branding-asset-copy"><strong>標誌</strong><span>PNG / JPG / WEBP / SVG · ≤ 768 KB</span></div>
           <button id="brandingLogoChoose" type="button">選擇檔案…</button>
           <input id="brandingLogoInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
         </div>
         <div class="branding-asset-row">
-          <div class="branding-asset-copy"><strong>Favicon</strong><span>PNG / JPG / WEBP / SVG · ≤ 256 KB</span></div>
+          <div class="branding-asset-copy"><strong>網站圖示</strong><span>PNG / JPG / WEBP / SVG · ≤ 256 KB</span></div>
           <button id="brandingFaviconChoose" type="button">選擇檔案…</button>
           <input id="brandingFaviconInput" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,image/x-icon" hidden>
         </div>
-        <p id="brandingSettingsStatus" class="branding-settings-status" role="status" aria-live="polite">使用目前 Product Default</p>
+        <p id="brandingSettingsStatus" class="branding-settings-status" role="status" aria-live="polite">使用目前產品預設</p>
         <div class="branding-settings-actions">
-          <button id="brandingReset" type="button">Reset</button>
-          <button id="brandingPromoteDefault" type="button" class="primary-button">Promote as Product Default</button>
-          <button id="brandingRestoreFactory" type="button">Restore Factory INK</button>
+          <button id="brandingReset" type="button">重設為產品預設</button>
+          <button id="brandingPromoteDefault" type="button" class="primary-button">設為產品預設</button>
+          <button id="brandingRestoreFactory" type="button">恢復原廠 INK</button>
+        </div>
+      </section>
         </div>
       </div>
     </div>
@@ -740,8 +750,8 @@
   <input id="calibrationProfileInput" type="file" accept=".json,.inkprofile" hidden>
   <input id="referenceEvidenceInput" type="file" accept="application/json,.json" hidden>
 </div>
-<script src="web-shell.js?v=0.1-ps-reassembly2"></script>
-<script src="ui/branding-settings.js?v=0.1-ps-reassembly2"></script>
+<script src="web-shell.js?v=0.1-ps-detail1"></script>
+<script src="ui/branding-settings.js?v=0.1-ps-detail1"></script>
 {{RUNTIME_SCRIPT}}
 
 </body>

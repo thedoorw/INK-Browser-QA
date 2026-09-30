@@ -133,22 +133,116 @@
         status: (isLogo ? 'Logo' : 'Favicon') + ' 已即時套用並保存'
       });
     } catch (error) {
-      setStatus(error?.message || 'Branding 圖檔無法使用', 'error');
+      setStatus(error?.message || '品牌圖檔無法使用', 'error');
     } finally {
       if (isLogo) els.logoInput.value = '';
       else els.faviconInput.value = '';
     }
   }
 
-  function openDialog() {
+  // Categorize the original, live controls. IDs, handlers and state owners survive
+  // reparenting; no duplicated settings values or replacement persistence layer.
+  const CATEGORIES = [
+    ['general', '一般'], ['interface', '介面'], ['tools', '工具'],
+    ['canvas', '畫布與輸入'], ['guides', '標尺／參考線／吸附'],
+    ['performance', '效能'], ['storage', '儲存'], ['branding', '品牌']
+  ];
+  let settingsMounted = false;
+  let returnFocus = null;
+
+  function showCategory(id = 'general') {
+    const selected = CATEGORIES.some(([key]) => key === id) ? id : 'general';
+    document.querySelectorAll('[data-preference-page]').forEach(page => { page.hidden = page.dataset.preferencePage !== selected; });
+    document.querySelectorAll('[data-preference-category]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.preferenceCategory === selected));
+    });
+    els.dialog.dataset.category = selected;
+    const layout = document.querySelector('#preferencesToolbarLayout');
+    if (layout) layout.value = document.querySelector('#app')?.dataset.toolbarLayout || 'dual';
+    const rulers = document.querySelector('#preferencesRulers');
+    if (rulers) rulers.checked = document.querySelector('#app')?.dataset.rulers === 'true';
+    const guides = document.querySelector('#preferencesGuides');
+    if (guides) { const list = globalThis.INK_APP?.page?.()?.guides || []; guides.checked = list.some(guide => guide.visible !== false); guides.disabled = list.length === 0; }
+    const renderCard = document.querySelector('#renderEngineCard');
+    if (renderCard && selected === 'performance') renderCard.hidden = false;
+  }
+
+  function mountSettings() {
+    if (settingsMounted || !globalThis.INK_APP) return;
+    const content = document.querySelector('#preferencesContent');
+    const nav = document.querySelector('#preferencesCategories');
+    const pages = new Map();
+    for (const [id, label] of CATEGORIES) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.preferenceCategory = id;
+      button.textContent = label;
+      button.setAttribute('aria-controls', 'preferences-' + id);
+      button.addEventListener('click', () => showCategory(id));
+      nav.append(button);
+      let page = document.querySelector('[data-preference-page="' + id + '"]');
+      if (!page) {
+        page = document.createElement('section');
+        page.className = 'preferences-category';
+        page.dataset.preferencePage = id;
+        page.setAttribute('aria-label', label);
+        content.append(page);
+      }
+      page.id = 'preferences-' + id;
+      const heading = document.createElement('h2');
+      heading.textContent = label;
+      page.prepend(heading);
+      pages.set(id, page);
+    }
+    const move = (id, category) => {
+      const control = document.getElementById(id);
+      if (!control) return;
+      pages.get(category).append(control.closest('.control-row,.toggle-row,.button-row') || control);
+    };
+    // Canvas content is moved once, including explanatory sections and outputs.
+    const canvas = document.querySelector('#canvasSettings');
+    for (const child of [...canvas.children]) {
+      if (!child.matches('.panel-header')) pages.get('canvas').append(child);
+    }
+    for (const id of ['snapToggle', 'smartGuidesToggle', 'gridSnapToggle', 'gridSize', 'artboardUnit']) move(id, 'guides');
+    for (const node of [...pages.get('canvas').querySelectorAll('.pen-calibration-title,.pen-calibration-actions,.pen-calibration-status')]) pages.get('tools').append(node);
+    for (const id of ['penPressureMin', 'penPressureMax', 'penPressureGamma', 'penPressureSmoothing', 'penTiltSensitivity', 'penUsePredicted', 'penPalmRejection']) move(id, 'tools');
+    // Put calibration actions after their fields.
+    pages.get('tools').append(document.querySelector('.pen-calibration-actions'), document.querySelector('#penCalibrationStatus'));
+    for (const id of ['storageHealthBtn', 'storageHealthStatus', 'releaseHealthBtn', 'releaseHealthStatus', 'downloadDiagnosticsBtn', 'checkUpdateBtn', 'updateStatus']) move(id, 'storage');
+    move('resetViewBtn', 'general');
+    move('historyLimit', 'general');
+    document.querySelector('.history-settings-card')?.remove();
+    const render = document.querySelector('#renderEngineCard');
+    if (render) { render.hidden = false; pages.get('performance').append(render); }
+    // Existing presentation authority remains toolbarLayoutToggle in web-shell.
+    pages.get('interface').insertAdjacentHTML('beforeend', '<label class="control-row"><span>工具列欄數</span><select id="preferencesToolbarLayout"><option value="dual">雙欄</option><option value="single">單欄</option></select></label>');
+    document.querySelector('#preferencesToolbarLayout').addEventListener('change', event => {
+      if (document.querySelector('#app').dataset.toolbarLayout !== event.target.value) document.querySelector('#toolbarLayoutToggle').click();
+    });
+    pages.get('guides').insertAdjacentHTML('beforeend', '<label class="toggle-row"><input id="preferencesRulers" type="checkbox"><span>顯示標尺</span></label><label class="toggle-row"><input id="preferencesGuides" type="checkbox"><span>顯示參考線</span></label>');
+    document.querySelector('#preferencesRulers').addEventListener('change', () => document.querySelector('[data-shell-action="toggle-rulers"]').click());
+    document.querySelector('#preferencesGuides').addEventListener('change', () => document.querySelector('[data-ui-b-command="guides:toggle"]').click());
+    // Remove technical English eyebrow duplicates in the normal settings chrome.
+    content.querySelectorAll('.subpanel-title > span:not([id])').forEach(node => node.remove());
+    canvas.hidden = true;
+    settingsMounted = true;
+    showCategory();
+  }
+
+  function openDialog(event) {
+    mountSettings();
+    returnFocus = document.activeElement;
+    showCategory(event?.detail?.category || 'general');
     els.dialog.hidden = false;
     syncDialogFields(activeBranding);
     setStatus('變更會即時預覽並自動保存');
-    requestAnimationFrame(() => els.nameInput.focus());
+    requestAnimationFrame(() => document.querySelector('[data-preference-category="' + els.dialog.dataset.category + '"]').focus());
   }
 
   function closeDialog() {
     els.dialog.hidden = true;
+    returnFocus?.focus?.();
   }
 
   function bind() {
@@ -182,15 +276,19 @@
     applyBranding(initial);
 
     globalThis.addEventListener('ink:branding-open', openDialog);
-    document.querySelector('#brandingCanvasSettings')?.addEventListener('click', () => {
-      closeDialog();
-      document.querySelector('#settingsToggle')?.click();
-    });
+    globalThis.addEventListener('ink:runtime-ready', mountSettings, { once: true });
+    mountSettings();
     els.close.addEventListener('click', closeDialog);
     els.dialog.addEventListener('click', event => {
       if (event.target === els.dialog) closeDialog();
     });
     document.addEventListener('keydown', event => {
+      if (event.key === 'Tab' && !els.dialog.hidden) {
+        const focusable = [...els.dialog.querySelectorAll('button,input,select,textarea,[tabindex]')].filter(node => !node.disabled && node.getClientRects().length && node.tabIndex >= 0);
+        const first = focusable[0], last = focusable.at(-1);
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
       if (event.key === 'Escape' && !els.dialog.hidden) {
         event.preventDefault();
         closeDialog();
@@ -206,21 +304,21 @@
     els.faviconInput.addEventListener('change', () => handleAsset('favicon', els.faviconInput.files?.[0]));
 
     els.reset.addEventListener('click', () => {
-      applyBranding(getProductDefault(), { persist: true, status: '已 Reset 至 Product Default' });
+      applyBranding(getProductDefault(), { persist: true, status: '已重設為產品預設' });
     });
 
     els.promote.addEventListener('click', () => {
       const promoted = normalize(activeBranding, factoryBranding);
       if (writeStored(PRODUCT_DEFAULT_KEY, promoted)) {
         writeStored(ACTIVE_KEY, promoted);
-        setStatus('目前 Branding 已 Promote 為 Product Default');
+        setStatus('目前品牌已設為產品預設');
       }
     });
 
     els.restoreFactory.addEventListener('click', () => {
       removeStored(PRODUCT_DEFAULT_KEY);
       removeStored(ACTIVE_KEY);
-      applyBranding(factoryBranding, { persist: true, status: '已恢復 Factory INK Branding' });
+      applyBranding(factoryBranding, { persist: true, status: '已恢復原廠 INK 品牌' });
     });
   }
 

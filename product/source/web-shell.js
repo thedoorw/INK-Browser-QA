@@ -57,12 +57,12 @@
     { id: 'color', label: '顏色', icon: 'i-brush', kind: 'inspector', tab: 'color', group: 'appearance' },
     { id: 'channels', label: '色版', icon: 'i-layers', kind: 'inspector', tab: 'channels', group: 'appearance' },
     { id: 'adjustments', label: '調整', icon: 'i-sliders', kind: 'inspector', tab: 'adjustments', group: 'appearance' },
-    { id: 'libraries', label: 'Libraries', icon: 'i-image', kind: 'inspector', tab: 'libraries', group: 'creative' },
-    { id: 'reference', label: 'Reference', icon: 'i-image', kind: 'creative', stage: 'reference', group: 'creative' },
-    { id: 'compose', label: 'Compose', icon: 'i-group', kind: 'creative', stage: 'compose', group: 'creative' },
+    { id: 'libraries', label: '資料庫', icon: 'i-image', kind: 'inspector', tab: 'libraries', group: 'creative' },
+    { id: 'reference', label: '參考', icon: 'i-image', kind: 'creative', stage: 'reference', group: 'creative' },
+    { id: 'compose', label: '構成', icon: 'i-group', kind: 'creative', stage: 'compose', group: 'creative' },
     { id: 'chat', label: 'CHAT', icon: 'i-spark', kind: 'creative', stage: 'chat', group: 'creative' },
-    { id: 'revision', label: 'Revision', icon: 'i-history', kind: 'creative', stage: 'revision', group: 'creative' },
-    { id: 'specialist', label: 'Specialist', icon: 'i-settings', kind: 'inspector', tab: 'studio', group: 'specialist' }
+    { id: 'revision', label: '修訂', icon: 'i-history', kind: 'creative', stage: 'revision', group: 'creative' },
+    { id: 'specialist', label: '專業工具', icon: 'i-settings', kind: 'inspector', tab: 'studio', group: 'specialist' }
   ]);
   const PANEL_GROUPS = Object.freeze([
     { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'adjustments', 'specialist'].map(id => PANEL_DEFS.find(def => def.id === id)) },
@@ -73,11 +73,11 @@
   const PRIMARY_PANEL_STATES = Object.freeze(['collapsed', ...PANEL_DEFS.map(def => def.id)]);
   const LIBRARY_TYPES = Object.freeze(['component', 'material', 'recipe', 'parametric-structure', 'reference-derived-structure']);
   const LIBRARY_TYPE_LABELS = Object.freeze({
-    component: 'Components',
-    material: 'Materials',
-    recipe: 'Recipes',
-    'parametric-structure': 'Parametric',
-    'reference-derived-structure': 'Reference-derived'
+    component: '元件',
+    material: '材質',
+    recipe: '配方',
+    'parametric-structure': '參數結構',
+    'reference-derived-structure': '參考衍生'
   });
 
   const state = {
@@ -292,7 +292,7 @@
       const dual = effective === 'dual';
       button.setAttribute('aria-pressed', String(dual));
       button.setAttribute('aria-label', dual ? '切換為單欄工具列' : '切換為雙欄工具列');
-      button.title = dual ? '切換為單欄工具列' : '切換為雙欄工具列';
+      button.querySelector('.edge-chevron').textContent = dual ? '‹' : '›';
     }
     if (persist) {
       try { localStorage.setItem(TOOLBAR_LAYOUT_KEY, normalized); } catch {}
@@ -334,18 +334,18 @@
       editing.className = 'contextual-edit-controls';
       editing.hidden = true;
       editing.innerHTML =
-        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="exitPathEditBtn">Done</button>' +
-        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathCornerBtn">Corner</button>' +
-        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathSmoothBtn">Smooth</button>' +
-        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathSymmetricBtn">Symmetric</button>' +
-        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="insertPathAnchorBtn">Insert</button>' +
-        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="deletePathAnchorsBtn">Delete</button>' +
-        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="exitStrokeEditBtn">Done</button>' +
-        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeCornerBtn">Corner</button>' +
-        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeSmoothBtn">Smooth</button>' +
-        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeSymmetricBtn">Symmetric</button>' +
-        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="simplifyStrokeBtn">Simplify</button>' +
-        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="deleteStrokeNodesBtn">Delete</button>';
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="exitPathEditBtn">完成</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathCornerBtn">尖角</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathSmoothBtn">平滑</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="pathSymmetricBtn">對稱</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="insertPathAnchorBtn">插入</button>' +
+        '<button type="button" data-edit-mode="path-edit" data-edit-proxy="deletePathAnchorsBtn">刪除</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="exitStrokeEditBtn">完成</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeCornerBtn">尖角</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeSmoothBtn">平滑</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="nodeSymmetricBtn">對稱</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="simplifyStrokeBtn">簡化</button>' +
+        '<button type="button" data-edit-mode="stroke-edit" data-edit-proxy="deleteStrokeNodesBtn">刪除</button>';
       editing.addEventListener('click', event => {
         const proxy = event.target.closest('[data-edit-proxy]');
         if (!proxy) return;
@@ -360,8 +360,8 @@
   }
 
   function contextualDescriptor(app) {
-    if (app?.pathEditing?.active) return { mode: 'path-edit', tool: 'path-edit', label: 'Path / Node', icon: 'i-pen' };
-    if (app?.strokeEdit) return { mode: 'stroke-edit', tool: 'stroke-edit', label: 'Stroke / Node', icon: 'i-brush' };
+    if (app?.pathEditing?.active) return { mode: 'path-edit', tool: 'path-edit', label: '路徑／節點', icon: 'i-pen' };
+    if (app?.strokeEdit) return { mode: 'stroke-edit', tool: 'stroke-edit', label: '筆畫／節點', icon: 'i-brush' };
     const selected = Array.isArray(app?.selection) ? app.selection.length : 0;
     if (selected > 0) return { mode: 'selection', tool: 'select', label: `選取 · ${selected} 個物件`, icon: 'i-select' };
     const tool = app?.tool || 'pen';
@@ -397,9 +397,9 @@
       });
     }
     if (advanced) {
-      const propertiesOpen = currentPanel() === 'properties';
+      const propertiesOpen = isDesktop() ? state.activePanel !== 'collapsed' && state.stackPanels.overview === 'properties' : currentPanel() === 'properties';
       const available = ['draw', 'eraser', 'shape', 'text', 'selection', 'path-edit', 'stroke-edit'].includes(descriptor.mode);
-      advanced.hidden = !available;
+      advanced.hidden = !available || (isDesktop() && propertiesOpen);
       advanced.textContent = descriptor.mode === 'selection' ? '物件' : '進階';
       advanced.classList.toggle('active', propertiesOpen);
       advanced.setAttribute('aria-pressed', String(propertiesOpen));
@@ -663,56 +663,26 @@
   }
 
   function ensureTooltipController() {
-    if (state.shellTooltip?.isConnected) return state.shellTooltip;
-    const root = state.root || document.querySelector('#app');
-    if (!root) return null;
-    const tooltip = document.createElement('div');
-    tooltip.id = 'shellTooltip';
-    tooltip.className = 'shell-tooltip';
-    tooltip.setAttribute('role', 'tooltip');
-    tooltip.hidden = true;
-    root.append(tooltip);
-    const show = target => {
-      if (!target || !isDesktop()) return;
-      const title = target.getAttribute('title') || target.dataset.shellTooltipTitle;
-      if (!title) return;
-      target.dataset.shellTooltipTitle = title;
-      target.removeAttribute('title');
-      state.tooltipTarget = target;
-      tooltip.textContent = title;
-      tooltip.hidden = false;
-      const rect = target.getBoundingClientRect();
-      const box = tooltip.getBoundingClientRect();
-      const left = Math.max(6, Math.min(globalThis.innerWidth - box.width - 6, rect.right + 8));
-      const top = Math.max(6, Math.min(globalThis.innerHeight - box.height - 6, rect.top + Math.max(0, (rect.height - box.height) / 2)));
-      tooltip.style.left = left + 'px';
-      tooltip.style.top = top + 'px';
+    if (state.tooltipObserver) return state.tooltipObserver;
+    const strip = node => {
+      if (!(node instanceof Element)) return;
+      const nodes = [...node.querySelectorAll('[title]')];
+      if (node.hasAttribute('title')) nodes.push(node);
+      for (const target of nodes) {
+        const title = target.getAttribute('title');
+        if (title && !target.hasAttribute('aria-label') && !target.textContent.trim()) target.setAttribute('aria-label', title);
+        target.removeAttribute('title');
+      }
     };
-    const hide = target => {
-      const current = target || state.tooltipTarget;
-      if (current?.dataset?.shellTooltipTitle && !current.hasAttribute('title')) current.setAttribute('title', current.dataset.shellTooltipTitle);
-      if (current?.dataset) delete current.dataset.shellTooltipTitle;
-      state.tooltipTarget = null;
-      tooltip.hidden = true;
-    };
-    document.addEventListener('pointerover', event => {
-      const target = event.target.closest?.('[title]');
-      if (target && target !== state.tooltipTarget) show(target);
+    strip(document.documentElement);
+    state.tooltipObserver = new MutationObserver(records => {
+      for (const record of records) {
+        if (record.type === 'attributes') strip(record.target);
+        else for (const node of record.addedNodes) strip(node);
+      }
     });
-    document.addEventListener('pointerout', event => {
-      if (!state.tooltipTarget) return;
-      if (event.relatedTarget && state.tooltipTarget.contains(event.relatedTarget)) return;
-      if (state.tooltipTarget.contains(event.target)) hide(state.tooltipTarget);
-    });
-    document.addEventListener('focusin', event => {
-      const target = event.target.closest?.('[title]');
-      if (target) show(target);
-    });
-    document.addEventListener('focusout', event => {
-      if (state.tooltipTarget?.contains(event.target)) hide(state.tooltipTarget);
-    });
-    state.shellTooltip = tooltip;
-    return tooltip;
+    state.tooltipObserver.observe(document.documentElement, { subtree: true, childList: true, attributes: true, attributeFilter: ['title'] });
+    return state.tooltipObserver;
   }
 
   function bindRulerGuideDrag() {
@@ -875,10 +845,10 @@
         <div class="shell-panel-body">
           <label class="shell-library-search-label" for="shellLibrarySearch"><span>Search</span><input id="shellLibrarySearch" type="search" autocomplete="off" placeholder="Search library"></label>
           <div id="shellLibraryFilters" class="shell-library-filters" role="group" aria-label="Library families">
-            <button type="button" data-library-type="component" aria-pressed="true">Components</button>
-            <button type="button" data-library-type="material" aria-pressed="true">Materials</button>
-            <button type="button" data-library-type="recipe" aria-pressed="true">Recipes</button>
-            <button type="button" data-library-type="parametric-structure" aria-pressed="true">Parametric</button>
+            <button type="button" data-library-type="component" aria-pressed="true">元件</button>
+            <button type="button" data-library-type="material" aria-pressed="true">材質</button>
+            <button type="button" data-library-type="recipe" aria-pressed="true">配方</button>
+            <button type="button" data-library-type="parametric-structure" aria-pressed="true">參數結構</button>
             <button type="button" data-library-type="reference-derived-structure" aria-pressed="true">Reference</button>
           </div>
           <p id="shellLibraryStatus" class="shell-panel-note shell-library-status">Library ready</p>
@@ -1638,8 +1608,9 @@
     host.id = 'shellPanelStackFramework';
     host.className = 'panel-stack-framework';
     host.dataset.panelRegistry = 'PANEL_GROUPS';
-    host.setAttribute('aria-label', 'Expanded panel groups');
-    host.innerHTML = PANEL_GROUPS.map((group, index) =>
+    host.setAttribute('aria-label', '展開的面板群組');
+    host.addEventListener('click', event => { if (event.target.closest('[data-panel-edge-toggle]')) closePrimaryPanels(); });
+    host.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="收合面板"><span class="edge-chevron" aria-hidden="true">›</span></button></div>' + PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
       '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
       '<div class="panel-stack-tabs" role="tablist" aria-label="' + group.label + '">' +
@@ -1651,6 +1622,7 @@
       const options = event.target.closest('[data-stack-options]');
       if (options) {
         const menu = createPanelOptionsMenu();
+        menu.querySelector('[data-panel-option="edit-content"]').hidden = options.dataset.stackOptions !== 'creative';
         const rect = options.getBoundingClientRect();
         const rootRect = root.getBoundingClientRect();
         menu.style.left = Math.max(4, Math.round(rect.right - rootRect.left - 162)) + 'px';
@@ -1735,6 +1707,7 @@
         const chosen = tab.dataset.panelStackTarget === selected;
         tab.classList.toggle('active', chosen);
         tab.setAttribute('aria-selected', String(chosen));
+        if (tab.dataset.panelStackTarget === 'reference') tab.textContent = chosen && runtime()?.creativeWorkspace?.stage === 'edit' ? '編輯' : '參考';
       });
       region.querySelectorAll('.inspector-section').forEach(section => {
         const visible = selected === 'properties'
@@ -1761,6 +1734,7 @@
     menu.setAttribute('role', 'menu');
     menu.hidden = true;
     menu.innerHTML =
+      '<button type="button" role="menuitem" data-panel-option="edit-content" hidden>編輯內容</button>' +
       '<button type="button" role="menuitem" data-panel-option="reset-width">重設面板寬度</button>' +
       '<span class="application-menu-separator" aria-hidden="true"></span>' +
       '<button type="button" role="menuitem" data-panel-option="close">關閉面板</button>';
@@ -1768,7 +1742,11 @@
     menu.addEventListener('click', event => {
       const item = event.target.closest('[data-panel-option]');
       if (!item) return;
-      if (item.dataset.panelOption === 'reset-width') {
+      if (item.dataset.panelOption === 'edit-content') {
+        selectPanel('reference');
+        runtime()?.creativeWorkspace?.setStage?.('edit');
+        syncSoon();
+      } else if (item.dataset.panelOption === 'reset-width') {
         setPrimaryPanelWidth(DEFAULT_PRIMARY_PANEL_WIDTH, { persist: true });
       } else if (item.dataset.panelOption === 'close') closePrimaryPanels();
       menu.hidden = true;
@@ -1821,7 +1799,7 @@
     dock.dataset.uiHome = 'panels';
     dock.dataset.uiRoute = 'PRIMARY_HOME';
     dock.setAttribute('aria-label', '面板 Dock');
-    dock.innerHTML = PANEL_GROUPS.map((group, index) =>
+    dock.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="展開面板"><span class="edge-chevron" aria-hidden="true">‹</span></button></div>' + PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-dock-separator" aria-hidden="true"></div>' : '') +
       '<div class="panel-dock-group ' + group.id + '" data-panel-group="' + group.id +
       '" aria-label="' + group.label + '">' +
@@ -1829,6 +1807,7 @@
       '</div>'
     ).join('');
     dock.addEventListener('click', event => {
+      if (event.target.closest('[data-panel-edge-toggle]')) { selectPanel(state.lastPanel || 'layers'); return; }
       const button = event.target.closest('[data-shell-panel]');
       if (!button) return;
       event.preventDefault();
@@ -1945,7 +1924,7 @@
     if (!def || !runtime()) return false;
     const group = PANEL_GROUPS.find(item => item.items.includes(def));
     if (group) state.stackPanels[group.id] = id;
-    if (isPanelOpen(id)) {
+    if (isPanelOpen(id) && !(def.kind === 'creative' && runtime()?.creativeWorkspace?.stage !== def.stage)) {
       rememberPanel(id);
       syncSoon();
       return true;
@@ -2086,6 +2065,15 @@
       } catch {
         app.inspectorNormalWidth = DEFAULT_PRIMARY_PANEL_WIDTH;
         state.root.style.setProperty('--inspector-w', DEFAULT_PRIMARY_PANEL_WIDTH + 'px');
+      }
+      const title = document.querySelector('#docTitle');
+      const properties = document.querySelector('[data-content="brush"]');
+      if (title && properties) {
+        const row = document.createElement('label');
+        row.className = 'control-row document-name-row';
+        row.innerHTML = '<span>作品名稱</span>';
+        row.append(title);
+        properties.prepend(row);
       }
       bindContextualOptions();
       bindInspectorCloseControl();

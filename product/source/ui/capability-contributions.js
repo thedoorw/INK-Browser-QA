@@ -5,7 +5,7 @@
 
 export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'file-external-open', menu:'file', section:'external', label:'開啟／匯入外部影像…', command:'external-open', authority:'P1-H format interoperability' },
-  { id:'file-import-reference', menu:'file', section:'import', label:'匯入 Reference…', command:'reference-import', authority:'Reference import' },
+  { id:'file-import-reference', menu:'file', section:'import', label:'匯入參考圖…', command:'reference-import', authority:'Reference import' },
   { id:'file-import-svg', menu:'file', section:'import', label:'匯入 SVG…', command:'svg-import', authority:'SVG import' },
   { id:'file-print', menu:'file', section:'output', label:'列印…', command:'print', authority:'Output/Artboard' },
 
@@ -19,9 +19,9 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'image-mode-rgb', menu:'image', section:'mode', label:'色彩模式：RGB', command:'color-mode:RGB', authority:'P1-G color management' },
   { id:'image-mode-cmyk', menu:'image', section:'mode', label:'色彩模式：CMYK', command:'color-mode:CMYK', authority:'P1-G color management' },
   { id:'image-mode-lab', menu:'image', section:'mode', label:'色彩模式：Lab', command:'color-mode:Lab', authority:'P1-G color management' },
-  { id:'image-mode-multi', menu:'image', section:'mode', label:'色彩模式：Multichannel', command:'color-mode:Multichannel', authority:'P1-G color management', guarded:true },
-  { id:'image-profile', menu:'image', section:'color', label:'Color Profile…', command:'color-profile', authority:'P1-G ICC' },
-  { id:'image-adjustments', menu:'image', section:'adjustment', label:'Adjustments…', command:'panel:adjustments', authority:'C24 adjustment stack' },
+  { id:'image-mode-multi', menu:'image', section:'mode', label:'色彩模式：多色版', command:'color-mode:Multichannel', authority:'P1-G color management', guarded:true },
+  { id:'image-profile', menu:'image', section:'color', label:'色彩描述檔…', command:'color-profile', authority:'P1-G ICC' },
+  { id:'image-adjustments', menu:'image', section:'adjustment', label:'調整…', command:'panel:adjustments', authority:'C24 adjustment stack' },
   { id:'image-crop', menu:'image', section:'raster', label:'裁切選取影像…', command:'image-crop', authority:'C22 raster image' },
   { id:'image-resize', menu:'image', section:'raster', label:'影像尺寸…', command:'image-resize', authority:'C22 raster image' },
 
@@ -30,9 +30,9 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'layer-delete', menu:'layer', section:'lifecycle', label:'刪除圖層', command:'layer-delete', authority:'Layers' },
   { id:'layer-group', menu:'layer', section:'hierarchy', label:'群組選取', command:'group', authority:'Document hierarchy' },
   { id:'layer-ungroup', menu:'layer', section:'hierarchy', label:'解散群組', command:'ungroup', authority:'Document hierarchy' },
-  { id:'layer-mask-add', menu:'layer', section:'mask', label:'建立 Mask', command:'mask-add', authority:'C23 mask' },
-  { id:'layer-mask-select', menu:'layer', section:'mask', label:'Select and Mask…', command:'select-and-mask', authority:'C23/P1-A refine selection' },
-  { id:'layer-effects', menu:'layer', section:'effect', label:'Layer Effects…', command:'layer-effects', authority:'C27 layer effects' },
+  { id:'layer-mask-add', menu:'layer', section:'mask', label:'建立遮色片', command:'mask-add', authority:'C23 mask' },
+  { id:'layer-mask-select', menu:'layer', section:'mask', label:'選取並遮住…', command:'select-and-mask', authority:'C23/P1-A refine selection' },
+  { id:'layer-effects', menu:'layer', section:'effect', label:'圖層效果…', command:'layer-effects', authority:'C27 layer effects' },
 
   { id:'type-horizontal', menu:'type', section:'type', label:'水平／段落文字', command:'text-mode:horizontal-tb', authority:'P1-C text object' },
   { id:'type-vertical-rl', menu:'type', section:'type', label:'垂直文字（右至左）', command:'text-mode:vertical-rl', authority:'P1-C text object' },
@@ -46,29 +46,29 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'select-quick', menu:'select', section:'raster', label:'快速選取', command:'tool:quickSelection', authority:'P1-A selection' },
   { id:'select-magic', menu:'select', section:'raster', label:'魔術棒', command:'tool:magicWand', authority:'P1-A selection' },
   { id:'select-object', menu:'select', section:'raster', label:'物件選取', command:'tool:objectSelection', authority:'P1-E selection' },
-  { id:'select-refine', menu:'select', section:'refine', label:'Select and Mask…', command:'select-and-mask', authority:'P1-A refine selection' },
+  { id:'select-refine', menu:'select', section:'refine', label:'選取並遮住…', command:'select-and-mask', authority:'P1-A refine selection' },
 
-  { id:'filter-gallery', menu:'filter', section:'gallery', label:'Filter Gallery…', command:'filter-gallery', authority:'C25/P1-F filter stack' },
-  { id:'filter-gaussian', menu:'filter', section:'blur', label:'Gaussian Blur…', command:'filter:gaussianBlur', authority:'C25 filter stack' },
-  { id:'filter-motion', menu:'filter', section:'blur', label:'Motion Blur…', command:'filter:motionBlur', authority:'P1-F filter stack' },
-  { id:'filter-median', menu:'filter', section:'noise', label:'Median…', command:'filter:median', authority:'P1-F filter stack' },
-  { id:'filter-sharpen', menu:'filter', section:'sharpen', label:'Sharpen', command:'filter:sharpen', authority:'C25 filter stack' },
-  { id:'filter-unsharp', menu:'filter', section:'sharpen', label:'Unsharp Mask…', command:'filter:unsharpMask', authority:'P1-F filter stack' },
-  { id:'filter-highpass', menu:'filter', section:'edge', label:'High Pass…', command:'filter:highPass', authority:'C25 filter stack' },
-  { id:'filter-edge', menu:'filter', section:'edge', label:'Edge Detection…', command:'filter:edgeDetection', authority:'C25 filter stack' },
-  { id:'filter-noise', menu:'filter', section:'noise', label:'Noise / Grain…', command:'filter:noiseGrain', authority:'C25 filter stack' },
-  { id:'filter-reduce-noise', menu:'filter', section:'noise', label:'Reduce Noise…', command:'filter:reduceNoise', authority:'P1-F filter stack' },
-  { id:'filter-texture', menu:'filter', section:'texture', label:'Texture Overlay…', command:'filter:textureOverlay', authority:'C25 filter stack' },
-  { id:'filter-emboss', menu:'filter', section:'stylize', label:'Emboss…', command:'filter:emboss', authority:'P1-F filter stack' },
-  { id:'filter-mosaic', menu:'filter', section:'pixelate', label:'Mosaic / Pixelate…', command:'filter:mosaic', authority:'P1-F filter stack' },
-  { id:'filter-minimum', menu:'filter', section:'other', label:'Minimum…', command:'filter:minimum', authority:'P1-F filter stack' },
-  { id:'filter-maximum', menu:'filter', section:'other', label:'Maximum…', command:'filter:maximum', authority:'P1-F filter stack' },
-  { id:'filter-liquify', menu:'filter', section:'workspace', label:'Liquify…', command:'liquify', authority:'P1-F liquify' },
+  { id:'filter-gallery', menu:'filter', section:'gallery', label:'濾鏡收藏館…', command:'filter-gallery', authority:'C25/P1-F filter stack' },
+  { id:'filter-gaussian', menu:'filter', section:'blur', label:'高斯模糊…', command:'filter:gaussianBlur', authority:'C25 filter stack' },
+  { id:'filter-motion', menu:'filter', section:'blur', label:'動態模糊…', command:'filter:motionBlur', authority:'P1-F filter stack' },
+  { id:'filter-median', menu:'filter', section:'noise', label:'中間值…', command:'filter:median', authority:'P1-F filter stack' },
+  { id:'filter-sharpen', menu:'filter', section:'sharpen', label:'銳利化', command:'filter:sharpen', authority:'C25 filter stack' },
+  { id:'filter-unsharp', menu:'filter', section:'sharpen', label:'遮色片銳利化…', command:'filter:unsharpMask', authority:'P1-F filter stack' },
+  { id:'filter-highpass', menu:'filter', section:'edge', label:'顏色快調…', command:'filter:highPass', authority:'C25 filter stack' },
+  { id:'filter-edge', menu:'filter', section:'edge', label:'邊緣偵測…', command:'filter:edgeDetection', authority:'C25 filter stack' },
+  { id:'filter-noise', menu:'filter', section:'noise', label:'雜訊／顆粒…', command:'filter:noiseGrain', authority:'C25 filter stack' },
+  { id:'filter-reduce-noise', menu:'filter', section:'noise', label:'減少雜訊…', command:'filter:reduceNoise', authority:'P1-F filter stack' },
+  { id:'filter-texture', menu:'filter', section:'texture', label:'紋理疊加…', command:'filter:textureOverlay', authority:'C25 filter stack' },
+  { id:'filter-emboss', menu:'filter', section:'stylize', label:'浮雕…', command:'filter:emboss', authority:'P1-F filter stack' },
+  { id:'filter-mosaic', menu:'filter', section:'pixelate', label:'馬賽克／像素化…', command:'filter:mosaic', authority:'P1-F filter stack' },
+  { id:'filter-minimum', menu:'filter', section:'other', label:'最小值…', command:'filter:minimum', authority:'P1-F filter stack' },
+  { id:'filter-maximum', menu:'filter', section:'other', label:'最大值…', command:'filter:maximum', authority:'P1-F filter stack' },
+  { id:'filter-liquify', menu:'filter', section:'workspace', label:'液化…', command:'liquify', authority:'P1-F liquify' },
 
-  { id:'object-skew', menu:'object', section:'transform', label:'Transform：Skew…', command:'transform:skew', authority:'P1-C advanced transform' },
+  { id:'object-skew', menu:'object', section:'transform', label:'變形：傾斜…', command:'transform:skew', authority:'P1-C advanced transform' },
   { id:'object-distort', menu:'object', section:'transform', label:'Transform：Distort…', command:'transform:distort', authority:'P1-C advanced transform' },
-  { id:'object-perspective', menu:'object', section:'transform', label:'Transform：Perspective…', command:'transform:perspective', authority:'P1-C advanced transform' },
-  { id:'object-warp', menu:'object', section:'transform', label:'Transform：Warp…', command:'transform:warp', authority:'P1-C deformation' },
+  { id:'object-perspective', menu:'object', section:'transform', label:'變形：透視…', command:'transform:perspective', authority:'P1-C advanced transform' },
+  { id:'object-warp', menu:'object', section:'transform', label:'變形：彎曲…', command:'transform:warp', authority:'P1-C deformation' },
   { id:'object-front', menu:'object', section:'arrange', label:'移至最上', command:'arrange:front', authority:'Document hierarchy' },
   { id:'object-back', menu:'object', section:'arrange', label:'移至最下', command:'arrange:back', authority:'Document hierarchy' },
   { id:'object-group', menu:'object', section:'hierarchy', label:'群組', command:'group', shortcut:'Ctrl+G', authority:'Document hierarchy' },
@@ -81,68 +81,68 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'object-align-bottom', menu:'object', section:'align', label:'對齊：靠下', command:'align:bottom', authority:'Existing alignSelection' },
   { id:'object-distribute-x', menu:'object', section:'align', label:'分布：水平等距', command:'align:distributeX', authority:'Existing alignSelection' },
   { id:'object-distribute-y', menu:'object', section:'align', label:'分布：垂直等距', command:'align:distributeY', authority:'Existing alignSelection' },
-  { id:'object-frame-selection', menu:'object', section:'structure', label:'建立 Frame', command:'frame-selection', authority:'Existing frameSelection' },
-  { id:'object-path-edit', menu:'object', section:'path', label:'Path／Node 編輯', command:'proxy:pathEditToggle', authority:'Existing Path edit endpoint' },
-  { id:'object-boolean-union', menu:'object', section:'path', label:'Path Boolean：Union', command:'proxy:booleanUnion', authority:'Existing boolean authority' },
-  { id:'object-boolean-difference', menu:'object', section:'path', label:'Path Boolean：Difference', command:'proxy:booleanDifference', authority:'Existing boolean authority' },
-  { id:'object-boolean-intersection', menu:'object', section:'path', label:'Path Boolean：Intersection', command:'proxy:booleanIntersection', authority:'Existing boolean authority' },
-  { id:'object-boolean-xor', menu:'object', section:'path', label:'Path Boolean：XOR', command:'proxy:booleanXor', authority:'Existing boolean authority' },
-  { id:'object-repeat-radial', menu:'object', section:'repeat', label:'Repeat：Radial', command:'proxy:repeatRadial', authority:'Existing Repeat authority' },
-  { id:'object-repeat-mirror', menu:'object', section:'repeat', label:'Repeat：Mirror', command:'proxy:repeatMirror', authority:'Existing Repeat authority' },
-  { id:'object-repeat-grid', menu:'object', section:'repeat', label:'Repeat：Grid', command:'proxy:repeatGrid', authority:'Existing Repeat authority' },
-  { id:'object-repeat-expand', menu:'object', section:'repeat', label:'Repeat：展開 Path', command:'proxy:repeatExpand', authority:'Existing Repeat authority' },
+  { id:'object-frame-selection', menu:'object', section:'structure', label:'建立框架', command:'frame-selection', authority:'Existing frameSelection' },
+  { id:'object-path-edit', menu:'object', section:'path', label:'路徑／節點編輯', command:'proxy:pathEditToggle', authority:'Existing Path edit endpoint' },
+  { id:'object-boolean-union', menu:'object', section:'path', label:'路徑布林：聯集', command:'proxy:booleanUnion', authority:'Existing boolean authority' },
+  { id:'object-boolean-difference', menu:'object', section:'path', label:'路徑布林：差集', command:'proxy:booleanDifference', authority:'Existing boolean authority' },
+  { id:'object-boolean-intersection', menu:'object', section:'path', label:'路徑布林：交集', command:'proxy:booleanIntersection', authority:'Existing boolean authority' },
+  { id:'object-boolean-xor', menu:'object', section:'path', label:'路徑布林：互斥', command:'proxy:booleanXor', authority:'Existing boolean authority' },
+  { id:'object-repeat-radial', menu:'object', section:'repeat', label:'重複：放射', command:'proxy:repeatRadial', authority:'Existing Repeat authority' },
+  { id:'object-repeat-mirror', menu:'object', section:'repeat', label:'重複：鏡射', command:'proxy:repeatMirror', authority:'Existing Repeat authority' },
+  { id:'object-repeat-grid', menu:'object', section:'repeat', label:'重複：格狀', command:'proxy:repeatGrid', authority:'Existing Repeat authority' },
+  { id:'object-repeat-expand', menu:'object', section:'repeat', label:'重複：展開路徑', command:'proxy:repeatExpand', authority:'Existing Repeat authority' },
 
-  { id:'view-grid', menu:'view', section:'guide', label:'Grid Snap', command:'snap:grid', authority:'page.snap' },
-  { id:'view-snap', menu:'view', section:'snap', label:'Snap', command:'snap:enabled', authority:'page.snap' },
-  { id:'view-snap-guides', menu:'view', section:'snap', label:'Snap To：Guides', command:'snap:guides', authority:'page.snap' },
-  { id:'view-snap-edges', menu:'view', section:'snap', label:'Snap To：Object Edges', command:'snap:edges', authority:'page.snap' },
-  { id:'view-snap-centers', menu:'view', section:'snap', label:'Snap To：Object Centers', command:'snap:centers', authority:'page.snap' },
-  { id:'view-snap-angle', menu:'view', section:'snap', label:'Snap To：Angles', command:'snap:angle', authority:'page.snap' },
-  { id:'view-snap-equal', menu:'view', section:'snap', label:'Snap To：Equal Distance', command:'snap:equalDistance', authority:'page.snap' },
-  { id:'view-guides-show', menu:'view', section:'guide', label:'顯示／隱藏 Guides', command:'guides:toggle', authority:'Document guides' },
-  { id:'view-workspace-creation', menu:'view', section:'workspace', label:'Workspace：Creation', command:'workspace:creation', authority:'Workspace' },
-  { id:'view-workspace-layout', menu:'view', section:'workspace', label:'Workspace：Layout', command:'workspace:layout', authority:'Workspace' },
+  { id:'view-grid', menu:'view', section:'guide', label:'格線吸附', command:'snap:grid', authority:'page.snap' },
+  { id:'view-snap', menu:'view', section:'snap', label:'吸附', command:'snap:enabled', authority:'page.snap' },
+  { id:'view-snap-guides', menu:'view', section:'snap', label:'吸附至參考線', command:'snap:guides', authority:'page.snap' },
+  { id:'view-snap-edges', menu:'view', section:'snap', label:'吸附至物件邊緣', command:'snap:edges', authority:'page.snap' },
+  { id:'view-snap-centers', menu:'view', section:'snap', label:'吸附至物件中心', command:'snap:centers', authority:'page.snap' },
+  { id:'view-snap-angle', menu:'view', section:'snap', label:'吸附至角度', command:'snap:angle', authority:'page.snap' },
+  { id:'view-snap-equal', menu:'view', section:'snap', label:'吸附至等距', command:'snap:equalDistance', authority:'page.snap' },
+  { id:'view-guides-show', menu:'view', section:'guide', label:'顯示／隱藏參考線', command:'guides:toggle', authority:'Document guides' },
+  { id:'view-workspace-creation', menu:'view', section:'workspace', label:'工作區：創作', command:'workspace:creation', authority:'Workspace' },
+  { id:'view-workspace-layout', menu:'view', section:'workspace', label:'工作區：版面', command:'workspace:layout', authority:'Workspace' },
 
-  { id:'help-shortcuts', menu:'help', section:'help', label:'Keyboard Shortcuts', command:'keyboard-shortcuts', authority:'UI help' },
-  { id:'help-updates', menu:'help', section:'help', label:'Updates', command:'updates', authority:'PWA update manager' },
-  { id:'help-diagnostics', menu:'help', section:'help', label:'Product Diagnostics', command:'panel:specialist', authority:'Product health' },
-  { id:'help-pen', menu:'help', section:'help', label:'Pen Calibration…', command:'pen-calibration', authority:'Device calibration' },
-  { id:'help-recovery', menu:'help', section:'recovery', label:'Recovery…', command:'recovery', authority:'Storage checkpoint recovery' }
+  { id:'help-shortcuts', menu:'help', section:'help', label:'鍵盤快捷鍵', command:'keyboard-shortcuts', authority:'UI help' },
+  { id:'help-updates', menu:'help', section:'help', label:'更新', command:'updates', authority:'PWA update manager' },
+  { id:'help-diagnostics', menu:'help', section:'help', label:'產品診斷', command:'panel:specialist', authority:'Product health' },
+  { id:'help-pen', menu:'help', section:'help', label:'觸控筆校準…', command:'pen-calibration', authority:'Device calibration' },
+  { id:'help-recovery', menu:'help', section:'recovery', label:'復原…', command:'recovery', authority:'Storage checkpoint recovery' }
 ]);
 
 export const UI_B_TOOL_GROUPS = Object.freeze([
-  { id:'draw', label:'Draw', icon:'✎', primary:'pen', tools:[
-    ['pen','Pen'],['pencil','Pencil'],['marker','Marker'],['brush','Brush'],['airbrush','Airbrush'],['blender','Blender'],['smudge','Smudge']
+  { id:'draw', label:'繪圖', icon:'✎', primary:'pen', tools:[
+    ['pen','鋼筆'],['pencil','鉛筆'],['marker','麥克筆'],['brush','毛筆'],['airbrush','噴筆'],['blender','混色'],['smudge','塗抹']
   ]},
-  { id:'lasso', label:'Lasso', icon:'⌁', primary:'lasso', tools:[
-    ['lasso','Lasso'],['polygonalLasso','Polygonal Lasso'],['magneticLasso','Magnetic Lasso']
+  { id:'lasso', label:'套索', icon:'⌁', primary:'lasso', tools:[
+    ['lasso','套索'],['polygonalLasso','多邊形套索'],['magneticLasso','磁性套索']
   ]},
-  { id:'smart-selection', label:'Select', icon:'◫', primary:'quickSelection', tools:[
-    ['quickSelection','Quick Selection'],['magicWand','Magic Wand'],['objectSelection','Object Selection']
+  { id:'smart-selection', label:'選取', icon:'◫', primary:'quickSelection', tools:[
+    ['quickSelection','快速選取'],['magicWand','魔術棒'],['objectSelection','物件選取']
   ]},
-  { id:'fill', label:'Fill', icon:'◩', primary:'gradient', tools:[
-    ['gradient','Gradient'],['paintBucket','Paint Bucket']
+  { id:'fill', label:'填色', icon:'◩', primary:'gradient', tools:[
+    ['gradient','漸層'],['paintBucket','油漆桶']
   ]},
-  { id:'sampling', label:'Sample', icon:'⌖', primary:'eyedropper', tools:[
-    ['eyedropper','Eyedropper'],['colorSampler','Color Sampler'],['measure','Measure']
+  { id:'sampling', label:'取樣', icon:'⌖', primary:'eyedropper', tools:[
+    ['eyedropper','滴管'],['colorSampler','顏色取樣'],['measure','測量']
   ]},
-  { id:'clone', label:'Clone', icon:'♧', primary:'cloneStamp', tools:[
-    ['cloneStamp','Clone Stamp'],['patternStamp','Pattern Stamp']
+  { id:'clone', label:'仿製', icon:'♧', primary:'cloneStamp', tools:[
+    ['cloneStamp','仿製印章'],['patternStamp','圖樣印章']
   ]},
-  { id:'healing', label:'Heal', icon:'✚', primary:'spotHealing', tools:[
-    ['healingBrush','Healing Brush'],['spotHealing','Spot Healing'],['patch','Patch']
+  { id:'healing', label:'修復', icon:'✚', primary:'spotHealing', tools:[
+    ['healingBrush','修復筆刷'],['spotHealing','污點修復'],['patch','修補']
   ]},
-  { id:'tone', label:'Tone', icon:'◐', primary:'dodge', tools:[
-    ['dodge','Dodge'],['burn','Burn'],['sponge','Sponge']
+  { id:'tone', label:'明暗', icon:'◐', primary:'dodge', tools:[
+    ['dodge','加亮'],['burn','加深'],['sponge','海綿']
   ]},
-  { id:'detail', label:'Detail', icon:'◌', primary:'localBlur', tools:[
-    ['localBlur','Blur'],['localSharpen','Sharpen'],['colorReplacement','Color Replacement']
+  { id:'detail', label:'細節', icon:'◌', primary:'localBlur', tools:[
+    ['localBlur','模糊'],['localSharpen','銳利化'],['colorReplacement','顏色取代']
   ]},
-  { id:'shape', label:'Shape', icon:'◇', primary:'shape:line', tools:[
-    ['shape:line','Line'],['shape:arrow','Arrow'],['shape:rect','Rectangle'],['shape:ellipse','Ellipse'],['shape:triangle','Triangle']
+  { id:'shape', label:'幾何', icon:'◇', primary:'shape:line', tools:[
+    ['shape:line','直線'],['shape:arrow','箭頭'],['shape:rect','矩形'],['shape:ellipse','橢圓'],['shape:triangle','三角形']
   ]},
-  { id:'text', label:'Type', icon:'T', primary:'text:horizontal-tb', tools:[
-    ['text:horizontal-tb','Horizontal / Paragraph'],['text:vertical-rl','Vertical Right-to-Left'],['text:vertical-lr','Vertical Left-to-Right']
+  { id:'text', label:'文字', icon:'T', primary:'text:horizontal-tb', tools:[
+    ['text:horizontal-tb','水平／段落'],['text:vertical-rl','直排右至左'],['text:vertical-lr','直排左至右']
   ]}
 ]);
 

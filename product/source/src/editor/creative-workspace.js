@@ -1,9 +1,9 @@
 const WORKSPACE_STAGES = Object.freeze([
-  ['reference', 'Reference'],
-  ['edit', 'Edit'],
-  ['compose', 'Compose'],
+  ['reference', '參考'],
+  ['edit', '編輯'],
+  ['compose', '構成'],
   ['chat', 'CHAT'],
-  ['revision', 'Revision']
+  ['revision', '修訂']
 ]);
 
 const clone = value => value == null ? value : JSON.parse(JSON.stringify(value));
@@ -189,7 +189,7 @@ export class CreativeWorkspaceController {
     this.stage = 'reference';
     this.activeProposalId = null;
     this.activePlanId = null;
-    this.status = { level: 'ready', code: 'WORKSPACE_READY', message: 'Creative workspace ready' };
+    this.status = { level: 'ready', code: 'WORKSPACE_READY', message: '創作工作區就緒' };
     this.open = false;
     this.root = null;
     this.toggle = null;
@@ -261,23 +261,23 @@ export class CreativeWorkspaceController {
       </div>
       <div class="creative-workspace-body">
         <section data-workspace-pane="reference">
-          <strong>Reference → Direct Extraction → editable Path</strong>
-          <label class="creative-workspace-field"><span>Reference image</span><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp"></label>
-          <label class="creative-workspace-field"><span>Threshold</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
-          <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">Direct Extraction</button><button type="button" data-workspace-action="cancel-extract" disabled>Cancel</button></div>
-          <label class="creative-workspace-field"><span>Reference overlay</span><input type="range" data-workspace-input="overlay" min="0" max="1" step="0.1" value="0.5"></label>
-          <output data-workspace-output="extraction">No extraction in this session.</output>
+          <strong>參考圖 → 直接擷取 → 可編輯路徑</strong>
+          <label class="creative-workspace-field"><span>參考圖</span><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp"></label>
+          <label class="creative-workspace-field"><span>臨界值</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
+          <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">直接擷取</button><button type="button" data-workspace-action="cancel-extract" disabled>取消</button></div>
+          <label class="creative-workspace-field"><span>參考圖疊加</span><input type="range" data-workspace-input="overlay" min="0" max="1" step="0.1" value="0.5"></label>
+          <output data-workspace-output="extraction">本次尚未擷取。</output>
           <details class="creative-structure-option">
-            <summary>Structure-Aware <span>OPTIONAL</span></summary>
-            <p>Direct Extraction remains the default. Radial reconstruction reuses the accepted multi-Path prototype + Repeat authority.</p>
+            <summary>結構分析 <span>選用</span></summary>
+            <p>直接擷取 remains the default. Radial reconstruction reuses the accepted multi-Path prototype + Repeat authority.</p>
             <label class="creative-workspace-field"><span>Radial count</span><input type="number" data-workspace-input="structure-count" min="2" max="48" step="1" value="6"></label>
-            <button type="button" class="creative-workspace-primary" data-workspace-action="structure-reconstruct">Analyze + reconstruct</button>
+            <button type="button" class="creative-workspace-primary" data-workspace-action="structure-reconstruct">分析並重建</button>
             <output data-workspace-output="structure">Not executed.</output>
           </details>
           <details class="creative-structure-option workstation-capability-card">
-            <summary>Research → Creation <span>READ ONLY</span></summary>
+            <summary>研究 → 創作 <span>唯讀</span></summary>
             <p>Local evidence, derived visual principles, and creative constraints. No remote fetch and no automatic Creative Memory write.</p>
-            <button type="button" data-workspace-action="research-context-refresh">Refresh research context</button>
+            <button type="button" data-workspace-action="research-context-refresh">更新研究內容</button>
             <output data-workspace-output="research-context">Research advisory not inspected.</output>
           </details>
         </section>
@@ -322,7 +322,7 @@ export class CreativeWorkspaceController {
           <button type="button" class="creative-workspace-primary" data-workspace-action="chat-conversation-transmit" hidden>Approve external transmission</button>
           <output data-workspace-output="chat-context">Context not inspected.</output>
           <details class="creative-structure-option workstation-capability-card" open>
-            <summary>Grounded Core context <span>READ ONLY</span></summary>
+            <summary>Grounded Core context <span>唯讀</span></summary>
             <div class="creative-workspace-actions"><button type="button" data-workspace-action="grounded-context-refresh">Grounded context</button><button type="button" data-workspace-action="creative-memory-refresh">Creative Memory</button><button type="button" data-workspace-action="research-context-refresh">Research</button></div>
             <output data-workspace-output="grounded-context">Grounded context not inspected.</output>
             <output data-workspace-output="creative-memory-context">Creative Memory advisory not inspected.</output>
@@ -373,7 +373,7 @@ export class CreativeWorkspaceController {
           <output data-workspace-output="revision-provenance">Provenance not inspected.</output>
         </section>
       </div>
-      <div class="creative-workspace-status" data-workspace-value="status" role="status">Creative workspace ready</div>
+      <div class="creative-workspace-status" data-workspace-value="status" role="status">創作工作區就緒</div>
     `;
     appRoot.append(root);
     this.root = root;
@@ -439,7 +439,7 @@ export class CreativeWorkspaceController {
         this.setStatus('CREATIVE_MEMORY_REFRESHED', 'Creative Memory advisory refreshed; no write performed', 'pass');
       } else if (action === 'research-context-refresh') {
         this.lastResearchCreationContext = await this.callGroundedTool('get_research_creation_context');
-        this.setStatus('RESEARCH_CONTEXT_REFRESHED', 'Local Research → Creation advisory refreshed; no network request performed', 'pass');
+        this.setStatus('RESEARCH_CONTEXT_REFRESHED', 'Local 研究 → 創作 advisory refreshed; no network request performed', 'pass');
       } else if (action === 'revision-compare') {
         const revisionId = text(this.root?.querySelector('[data-workspace-input="revision-id"]')?.value);
         if (!revisionId) throw Object.assign(new Error('Select a Revision'), { code: 'REVISION_REQUIRED' });
@@ -545,12 +545,12 @@ export class CreativeWorkspaceController {
     if (this.extractionAbort) return null;
     const api = this.app?.extraction;
     if (!api?.decode || !api?.structure) {
-      this.setStatus('STRUCTURE_AWARE_UNAVAILABLE', 'Structure-Aware controller unavailable', 'error');
+      this.setStatus('STRUCTURE_AWARE_UNAVAILABLE', '結構分析 controller unavailable', 'error');
       return null;
     }
     const referenceObjectId = this.referenceObjectId();
     if (!referenceObjectId) {
-      this.setStatus('STRUCTURE_AWARE_DIRECT_REFERENCE_REQUIRED', 'Run Direct Extraction first so Structure-Aware reuses the same visible reference', 'error');
+      this.setStatus('STRUCTURE_AWARE_DIRECT_REFERENCE_REQUIRED', 'Run 直接擷取 first so 結構分析 reuses the same visible reference', 'error');
       return null;
     }
     const file = this.root?.querySelector('[data-workspace-input="reference-file"]')?.files?.[0];
@@ -562,7 +562,7 @@ export class CreativeWorkspaceController {
     this.setStatus('STRUCTURE_AWARE_RUNNING', 'Analyzing radial evidence and retaining complete sector Path set', 'busy');
     try {
       if (!this.lastReference) {
-        if (!file) throw Object.assign(new Error('Choose the same reference image used for Direct Extraction'), { code: 'STRUCTURE_AWARE_REFERENCE_FILE_REQUIRED' });
+        if (!file) throw Object.assign(new Error('Choose the same reference image used for 直接擷取'), { code: 'STRUCTURE_AWARE_REFERENCE_FILE_REQUIRED' });
         this.lastReference = await api.decode(file);
       }
       const result = await api.structure(
@@ -585,7 +585,7 @@ export class CreativeWorkspaceController {
       return result;
     } catch (error) {
       const code = error?.code || 'STRUCTURE_AWARE_FAILED';
-      this.setStatus(code, error?.message || 'Structure-Aware reconstruction failed', code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
+      this.setStatus(code, error?.message || '結構分析 reconstruction failed', code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
       return null;
     } finally {
       this.extractionAbort = null;
@@ -627,13 +627,13 @@ export class CreativeWorkspaceController {
       const source = this.lastExtraction?.source;
       output.textContent = this.lastExtraction
         ? `DIRECT · ${diagnostics?.paths ?? this.lastExtraction.pathIds.length} paths · ${diagnostics?.nodes ?? 0} nodes · ${source?.name || 'reference'} · ${this.lastExtraction.batchId}`
-        : (this.referenceObjectId() ? `Reference: ${this.referenceObjectId()}` : 'No extraction in this session.');
+        : (this.referenceObjectId() ? `Reference: ${this.referenceObjectId()}` : '本次尚未擷取。');
     }
     const structure = this.root.querySelector('[data-workspace-output="structure"]');
     if (structure) {
       structure.textContent = this.lastStructure
         ? `OPTIONAL · count ${this.lastStructure.radialCount} · prototype ${this.lastStructure.prototypePathCount} paths / ${this.lastStructure.prototypeDiagnostics?.nodes ?? 0} nodes · mask IoU ${Number(this.lastStructure.maskIoU ?? 0).toFixed(3)} · ${this.lastStructure.repeatId}`
-        : 'Not executed. Direct Extraction remains active.';
+        : 'Not executed. 直接擷取 remains active.';
     }
     const structureButton = this.root.querySelector('[data-workspace-action="structure-reconstruct"]');
     if (structureButton) structureButton.disabled = Boolean(this.extractionAbort) || !this.referenceObjectId();
@@ -1130,7 +1130,7 @@ export class CreativeWorkspaceController {
     if (researchOutput) {
       const research = this.lastResearchCreationContext;
       if (!research) researchOutput.textContent = 'Research advisory provider ready · no remote fetch.';
-      else if (research.status === 'UNAVAILABLE') researchOutput.textContent = 'Research → Creation · UNAVAILABLE';
+      else if (research.status === 'UNAVAILABLE') researchOutput.textContent = '研究 → 創作 · UNAVAILABLE';
       else researchOutput.textContent = `Evidence ${research.selectedResearchEvidence?.length || 0} · Principles ${research.derivedPrinciples?.length || 0} · Constraints ${research.derivedCreativeConstraints?.length || 0} · unresolved ${research.unresolvedEvidence?.length || 0} · READ ONLY`;
     }
   }
@@ -1371,7 +1371,8 @@ export class CreativeWorkspaceController {
       '[data-workspace-value="chat"]',
       plan ? `${plan.status} · ${plan.steps.length} step(s)` : (proposal ? `${proposal.state} · ${proposal.operation}` : 'No proposal')
     );
-    setText(this.root, '[data-workspace-value="status"]', this.status?.code ? `${this.status.code} · ${this.status.message}` : 'Ready');
+    const statusNode = this.root.querySelector('[data-workspace-value="status"]');
+    if (statusNode) { statusNode.hidden = this.status?.level !== 'error'; statusNode.textContent = this.status?.level === 'error' ? this.status.message : ''; }
     this.root.dataset.stage = state.stage;
     this.root.dataset.historyPending = String(state.history.pending);
     this.root.dataset.formatVersion = String(state.document?.formatVersion ?? '');

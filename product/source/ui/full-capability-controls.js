@@ -188,13 +188,13 @@ export function installFullCapabilityControls(app){
     if(existingDraw){
       const pop=$('#brushFamilyPopover .brush-family-list');
       if(pop){
-        for(const [id,label] of [['blender','Blender'],['smudge','Smudge']]){
+        for(const [id,label] of [['blender','混色'],['smudge','塗抹']]){
           if(pop.querySelector('[data-ui-b-tool="'+id+'"]'))continue;
           const node=htmlNode('<button type="button" class="subtool-button" data-ui-b-tool="'+id+'"><span class="ui-b-glyph">•</span><span><strong>'+label+'</strong></span></button>');
           pop.appendChild(node);node.addEventListener('click',()=>{activateTool(id);app.toggleBrushFamilyPopover(false);});
         }
         if(!pop.querySelector('[data-ui-b-brush-package="import"]')){
-          const divider=htmlNode('<div class="application-menu-separator" role="separator"></div>'),importButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="import"><span class="ui-b-glyph">↓</span><span><strong>Import Brush Package…</strong></span></button>'),exportButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="export"><span class="ui-b-glyph">↑</span><span><strong>Export Brush Package…</strong></span></button>');
+          const divider=htmlNode('<div class="application-menu-separator" role="separator"></div>'),importButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="import"><span class="ui-b-glyph">↓</span><span><strong>匯入筆刷套件…</strong></span></button>'),exportButton=htmlNode('<button type="button" class="subtool-button" data-ui-b-brush-package="export"><span class="ui-b-glyph">↑</span><span><strong>匯出筆刷套件…</strong></span></button>');
           pop.append(divider,importButton,exportButton);
           importButton.addEventListener('click',()=>pickBrushPackage());
           exportButton.addEventListener('click',()=>{$('#brushPackageExport')?.click();app.toggleBrushFamilyPopover(false);});
@@ -236,7 +236,7 @@ export function installFullCapabilityControls(app){
       raster.clearTool();app.setTool('select');
       openPanel('specialist');
       const preset=$('#paintBrush');if(preset){preset.value=tool;preset.scrollIntoView({block:'center'});}
-      toast((tool==='blender'?'Blender':'Smudge')+' 使用既有 Brush Engine / Stroke Session authority；由 Properties 重播或套用');
+      toast((tool==='blender'?'混色':'塗抹')+' 使用既有 Brush Engine / Stroke Session authority；由 Properties 重播或套用');
     }else if(['pen','pencil','marker','brush','airbrush','lasso'].includes(tool)){
       raster.clearTool();app.setTool(tool);
     }else raster.clearTool();
@@ -257,14 +257,14 @@ export function installFullCapabilityControls(app){
     const o=raster.options();
     const selectionTools=new Set(['polygonalLasso','magneticLasso','quickSelection','magicWand','objectSelection']);
     let markup='<span class="ui-b-context-name">'+esc(tool)+'</span>';
-    if(selectionTools.has(tool))markup+='<select data-ui-b-option="selectionMode">'+selectOptions(['new','add','subtract','intersect'],o.selectionMode)+'</select><label>Tol <input type="number" min="0" max="255" value="'+o.tolerance+'" data-ui-b-option="tolerance"></label>';
+    if(selectionTools.has(tool))markup+='<select data-ui-b-option="selectionMode">'+selectOptions(['new','add','subtract','intersect'],o.selectionMode)+'</select><label>容差 <input type="number" min="0" max="255" value="'+o.tolerance+'" data-ui-b-option="tolerance"></label>';
     if(['magicWand','paintBucket'].includes(tool))markup+='<label><input type="checkbox" '+(o.contiguous?'checked':'')+' data-ui-b-option="contiguous"> Contiguous</label>';
-    if(['quickSelection','objectSelection','magneticLasso'].includes(tool))markup+='<label>Edge <input type="number" min="0" max="255" value="'+o.edgeThreshold+'" data-ui-b-option="edgeThreshold"></label>';
-    if(tool==='magneticLasso')markup+='<label>Search <input type="number" min="2" max="64" value="'+o.searchRadius+'" data-ui-b-option="searchRadius"></label>';
-    if(tool==='gradient')markup+='<select data-ui-b-option="gradientType">'+selectOptions(['linear','radial'],o.gradientType)+'</select><input type="color" value="'+o.gradientStart+'" data-ui-b-option="gradientStart"><input type="color" value="'+o.gradientEnd+'" data-ui-b-option="gradientEnd"><button type="button" data-ui-b-context-action="gradient-editor">Edit…</button>';
-    if(['cloneStamp','patternStamp','healingBrush','spotHealing','patch','dodge','burn','sponge','localBlur','localSharpen','colorReplacement'].includes(tool))markup+='<label>Size <input type="number" min="1" max="300" value="'+o.radius+'" data-ui-b-option="radius"></label><label>Strength <input type="number" min="0" max="1" step=".05" value="'+o.strength+'" data-ui-b-option="strength"></label>';
-    if(tool==='patternStamp')markup+='<button type="button" data-ui-b-context-action="pattern-image">Pattern…</button><span class="ui-b-context-hint">'+esc(raster.state.patternName||'No pattern')+'</span>';
-    if(['eyedropper','colorSampler'].includes(tool))markup+='<label>Radius <input type="number" min="0" max="32" value="'+o.sampleRadius+'" data-ui-b-option="sampleRadius"></label>';
+    if(['quickSelection','objectSelection','magneticLasso'].includes(tool))markup+='<label>邊緣 <input type="number" min="0" max="255" value="'+o.edgeThreshold+'" data-ui-b-option="edgeThreshold"></label>';
+    if(tool==='magneticLasso')markup+='<label>搜尋 <input type="number" min="2" max="64" value="'+o.searchRadius+'" data-ui-b-option="searchRadius"></label>';
+    if(tool==='gradient')markup+='<select data-ui-b-option="gradientType">'+selectOptions(['linear','radial'],o.gradientType)+'</select><input type="color" value="'+o.gradientStart+'" data-ui-b-option="gradientStart"><input type="color" value="'+o.gradientEnd+'" data-ui-b-option="gradientEnd"><button type="button" data-ui-b-context-action="gradient-editor">編輯…</button>';
+    if(['cloneStamp','patternStamp','healingBrush','spotHealing','patch','dodge','burn','sponge','localBlur','localSharpen','colorReplacement'].includes(tool))markup+='<label>大小 <input type="number" min="1" max="300" value="'+o.radius+'" data-ui-b-option="radius"></label><label>強度 <input type="number" min="0" max="1" step=".05" value="'+o.strength+'" data-ui-b-option="strength"></label>';
+    if(tool==='patternStamp')markup+='<button type="button" data-ui-b-context-action="pattern-image">圖樣…</button><span class="ui-b-context-hint">'+esc(raster.state.patternName||'無圖樣')+'</span>';
+    if(['eyedropper','colorSampler'].includes(tool))markup+='<label>半徑 <input type="number" min="0" max="32" value="'+o.sampleRadius+'" data-ui-b-option="sampleRadius"></label>';
     if(tool==='colorReplacement')markup+='<input type="color" value="'+o.replacementColor+'" data-ui-b-option="replacementColor">';
     if(tool==='sponge')markup+='<select data-ui-b-option="spongeMode">'+selectOptions(['saturate','desaturate'],o.spongeMode)+'</select>';
     if(['blender','smudge'].includes(tool))markup+='<span class="ui-b-context-hint">Brush Dynamics / Media → Properties</span>';
@@ -338,11 +338,11 @@ export function installFullCapabilityControls(app){
       $('#uiBAdjustmentGrid').addEventListener('click',event=>{const type=event.target.closest('[data-ui-b-adjustment]')?.dataset.uiBAdjustment;if(type)addAdjustment(type);});
     }
     const channels=$('[data-shell-panel-section="channels"] .shell-panel-body')||$('[data-content="channels"] .shell-panel-body');
-    if(channels)channels.innerHTML='<div id="uiBChannelsList" class="ui-b-stack-list"></div><div class="ui-b-panel-actions">'+button('Add Alpha','data-ui-b-channel="add-alpha"')+button('Add Spot','data-ui-b-channel="add-spot"')+button('Rename','data-ui-b-channel="rename"')+button('Up','data-ui-b-channel="up"')+button('Down','data-ui-b-channel="down"')+button('Remove','data-ui-b-channel="remove"')+'</div>';
+    if(channels)channels.innerHTML='<div id="uiBChannelsList" class="ui-b-stack-list"></div><div class="ui-b-panel-actions">'+button('新增 Alpha','data-ui-b-channel="add-alpha"')+button('新增特別色','data-ui-b-channel="add-spot"')+button('重新命名','data-ui-b-channel="rename"')+button('上移','data-ui-b-channel="up"')+button('下移','data-ui-b-channel="down"')+button('移除','data-ui-b-channel="remove"')+'</div>';
     channels?.addEventListener('click',event=>{const cmd=event.target.closest('[data-ui-b-channel]')?.dataset.uiBChannel;if(cmd)channelCommand(cmd);});
     const layers=$('[data-shell-panel-section="layers"] .shell-panel-body')||$('[data-content="layers"]');
     if(layers&&!$('#uiBLayerAppearance')){
-      const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance"><label>Blend <select id="uiBBlendMode">'+selectOptions(BLEND_MODES)+'</select></label><button type="button" data-ui-b-command="mask-add">Mask</button><button type="button" data-ui-b-command="layer-effects">fx</button><button type="button" data-ui-b-command="select-and-mask">Select and Mask</button></div>');
+      const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance"><label>混合 <select id="uiBBlendMode">'+selectOptions(BLEND_MODES)+'</select></label><button type="button" data-ui-b-command="mask-add">遮色片</button><button type="button" data-ui-b-command="layer-effects">fx</button><button type="button" data-ui-b-command="select-and-mask">選取並遮住</button></div>');
       layers.prepend(block);
       block.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);});
       $('#uiBBlendMode').addEventListener('change',event=>{const found=selectedObject();if(found)mutateObject('Blend Mode',found,object=>object.blendMode=event.target.value);});
@@ -351,7 +351,7 @@ export function installFullCapabilityControls(app){
     if(objectPanel&&!$('#uiBRasterProperties'))objectPanel.appendChild(htmlNode('<div id="uiBRasterProperties" class="property-card ui-b-raster-properties"><div class="subpanel-title"><strong>Raster / Image</strong><span>RASTER</span></div><div id="uiBRasterStateReadout" class="shell-panel-note">No raster selected</div><div id="uiBRasterSourceReadout" class="shell-panel-note"></div><div class="ui-b-panel-actions">'+button('Crop…','data-ui-b-command="image-crop"')+button('Resize…','data-ui-b-command="image-resize"')+button('Profile…','data-ui-b-command="color-profile"')+'</div><div class="ui-b-panel-actions">'+button('Histogram','data-ui-b-raster-insight="histogram"')+button('Snapshot','data-ui-b-raster-insight="snapshot"')+button('Compare','data-ui-b-raster-insight="compare"')+'</div><div id="uiBRasterAnalysis" class="shell-panel-note"></div><div id="uiBFilterStack" class="ui-b-stack-list"></div><div id="uiBEffectStack" class="ui-b-stack-list"></div></div>'));
     objectPanel?.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);const insight=event.target.closest('[data-ui-b-raster-insight]')?.dataset.uiBRasterInsight;if(insight)runRasterInsight(insight);});
     const geometryPanel=$('[data-content="geometry"]');
-    if(geometryPanel&&!$('#uiBVectorAppearance'))geometryPanel.appendChild(htmlNode('<div id="uiBVectorAppearance" class="property-card"><div class="subpanel-title"><strong>Vector Appearance</strong><span>VECTOR</span></div><div id="uiBVectorAppearanceReadout" class="shell-panel-note">Select a Path</div><div class="ui-b-panel-actions">'+button('Gradient…','data-ui-b-command="gradient-editor"')+button('Pattern…','data-ui-b-command="pattern-editor"')+'</div></div>'));
+    if(geometryPanel&&!$('#uiBVectorAppearance'))geometryPanel.appendChild(htmlNode('<div id="uiBVectorAppearance" class="property-card"><div class="subpanel-title"><strong>Vector Appearance</strong><span>VECTOR</span></div><div id="uiBVectorAppearanceReadout" class="shell-panel-note">Select a Path</div><div class="ui-b-panel-actions">'+button('Gradient…','data-ui-b-command="gradient-editor"')+button('圖樣…','data-ui-b-command="pattern-editor"')+'</div></div>'));
     geometryPanel?.addEventListener('click',event=>{const command=event.target.closest('[data-ui-b-command]')?.dataset.uiBCommand;if(command)dispatch(command);});
     refreshPanels();
   }
@@ -410,7 +410,7 @@ export function installFullCapabilityControls(app){
 
   async function refreshRecoveryDialog(){
     const list=$('#uiBRecoveryList');if(!list)return;
-    list.textContent='Loading…';
+    list.textContent='載入中…';
     const sources=[];
     const current=await app.store.loadRecord('autosave'),previous=await app.store.loadRecord('autosave:previous'),checkpoints=await app.store.loadRecord('autosave:checkpoints');
     if(current)sources.push({name:'current',record:current});
@@ -457,20 +457,20 @@ export function installFullCapabilityControls(app){
   function installDialogs(){
     const root=$('.app');if(!root)return;
     const specs=[
-      ['select-and-mask','Select and Mask','<label>Smooth <input id="uiBMaskSmooth" type="number" value="0" min="0" max="20"></label><label>Feather <input id="uiBMaskFeather" type="number" value="0" min="0" max="50"></label><label>Expand <input id="uiBMaskExpand" type="number" value="0" min="-50" max="50"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="select-and-mask">Apply Mask</button></div>'],
-      ['layer-effects','Layer Effects','<label>Effect <select id="uiBEffectType">'+selectOptions(Object.keys(EFFECT_DEFAULTS))+'</select></label><label>Color <input id="uiBEffectColor" type="color" value="#000000"></label><label>Opacity <input id="uiBEffectOpacity" type="number" min="0" max="1" step=".05" value=".6"></label><label>Size/Radius <input id="uiBEffectSize" type="number" min="0" max="200" value="8"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="layer-effects">Add Effect</button></div>'],
+      ['select-and-mask','選取並遮住','<label>Smooth <input id="uiBMaskSmooth" type="number" value="0" min="0" max="20"></label><label>Feather <input id="uiBMaskFeather" type="number" value="0" min="0" max="50"></label><label>Expand <input id="uiBMaskExpand" type="number" value="0" min="-50" max="50"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="select-and-mask">Apply Mask</button></div>'],
+      ['layer-effects','圖層效果','<label>Effect <select id="uiBEffectType">'+selectOptions(Object.keys(EFFECT_DEFAULTS))+'</select></label><label>Color <input id="uiBEffectColor" type="color" value="#000000"></label><label>Opacity <input id="uiBEffectOpacity" type="number" min="0" max="1" step=".05" value=".6"></label><label>Size/Radius <input id="uiBEffectSize" type="number" min="0" max="200" value="8"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="layer-effects">Add Effect</button></div>'],
       ['filter-params','Filter','<div id="uiBFilterName" class="ui-b-dialog-note"></div><label>Amount / Radius <input id="uiBFilterAmount" type="number" min="0" max="100" step=".1" value="2"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="filter-params">Add Filter</button></div>'],
-      ['filter-gallery','Filter Gallery','<div id="uiBFilterGalleryList" class="ui-b-gallery"></div>'],
-      ['liquify','Liquify','<label>Operation <select id="uiBLiquifyType">'+selectOptions(['forwardWarp','twirl','pucker','bloat','reconstruct'])+'</select></label><label>Radius <input id="uiBLiquifyRadius" type="number" min="1" max="1000" value="80"></label><label>Strength <input id="uiBLiquifyStrength" type="number" min="-1" max="1" step=".05" value=".4"></label><label>dx <input id="uiBLiquifyDx" type="number" value="12"></label><label>dy <input id="uiBLiquifyDy" type="number" value="0"></label><label><input id="uiBLiquifyFreezeSelection" type="checkbox"> Protect current raster selection</label><div class="button-row"><button class="primary-button" data-ui-b-apply="liquify">Add Liquify Filter</button></div>'],
-      ['gradient-editor','Gradient Editor','<label>Type <select id="uiBGradientType">'+selectOptions(['linear','radial'])+'</select></label><label>Start <input id="uiBGradientStart" type="color" value="#202020"></label><label>End <input id="uiBGradientEnd" type="color" value="#ffffff"></label><label>Opacity <input id="uiBGradientOpacity" type="number" min="0" max="1" step=".05" value="1"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="gradient-editor">Apply to selected Path</button></div>'],
+      ['filter-gallery','濾鏡收藏館','<div id="uiBFilterGalleryList" class="ui-b-gallery"></div>'],
+      ['liquify','液化','<label>Operation <select id="uiBLiquifyType">'+selectOptions(['forwardWarp','twirl','pucker','bloat','reconstruct'])+'</select></label><label>半徑 <input id="uiBLiquifyRadius" type="number" min="1" max="1000" value="80"></label><label>強度 <input id="uiBLiquifyStrength" type="number" min="-1" max="1" step=".05" value=".4"></label><label>dx <input id="uiBLiquifyDx" type="number" value="12"></label><label>dy <input id="uiBLiquifyDy" type="number" value="0"></label><label><input id="uiBLiquifyFreezeSelection" type="checkbox"> Protect current raster selection</label><div class="button-row"><button class="primary-button" data-ui-b-apply="liquify">Add Liquify Filter</button></div>'],
+      ['gradient-editor','漸層編輯器','<label>Type <select id="uiBGradientType">'+selectOptions(['linear','radial'])+'</select></label><label>Start <input id="uiBGradientStart" type="color" value="#202020"></label><label>End <input id="uiBGradientEnd" type="color" value="#ffffff"></label><label>Opacity <input id="uiBGradientOpacity" type="number" min="0" max="1" step=".05" value="1"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="gradient-editor">Apply to selected Path</button></div>'],
       ['pattern-editor','Pattern Fill','<label>Pattern ref <input id="uiBPatternRef" type="text" value="pattern-default"></label><label>Scale <input id="uiBPatternScale" type="number" step=".1" value="1"></label><label>Rotation <input id="uiBPatternRotation" type="number" value="0"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="pattern-editor">Apply to selected Path</button></div>'],
-      ['color-profile','Color Profile','<div id="uiBProfileReadout" class="ui-b-dialog-note">No profile</div><input id="uiBProfileInput" type="file" accept=".icc,.icm" hidden><div class="button-row"><button data-ui-b-profile-load>Load ICC…</button></div>'],
-      ['image-size','Image Size','<label>Width <input id="uiBImageWidth" type="number" min="1"></label><label>Height <input id="uiBImageHeight" type="number" min="1"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="image-size">Resize</button></div>'],
-      ['image-crop','Crop Image','<label>X <input id="uiBCropX" type="number" min="0" value="0"></label><label>Y <input id="uiBCropY" type="number" min="0" value="0"></label><label>Width <input id="uiBCropW" type="number" min="1"></label><label>Height <input id="uiBCropH" type="number" min="1"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="image-crop">Crop</button></div>'],
-      ['advanced-transform','Advanced Transform','<div id="uiBTransformMode" class="ui-b-dialog-note"></div><label>A <input id="uiBTransformA" type="number" step=".1" value="10"></label><label>B <input id="uiBTransformB" type="number" step=".1" value="0"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="advanced-transform">Apply</button></div>'],
-      ['keyboard-shortcuts','Keyboard Shortcuts','<div class="ui-b-shortcuts"><p><kbd>V</kbd> Select</p><p><kbd>F</kbd> Fit</p><p><kbd>R</kbd> Rulers</p><p><kbd>Ctrl+Z</kbd> Undo</p><p><kbd>Ctrl+Shift+Z</kbd> Redo</p><p><kbd>Delete</kbd> Delete selection</p><p><kbd>Space</kbd> temporary Pan</p><p><kbd>Shift</kbd> constrained/angle snap</p></div>'],
-      ['pen-calibration','Pen Calibration','<p class="ui-b-dialog-note">Calibration profile uses the existing device-validation authority.</p><div class="button-row"><button data-ui-b-pen-calibration-open>Open Specialist calibration controls</button></div>'],
-      ['recovery','Recovery','<p class="ui-b-dialog-note">Recovery uses the existing storage/checkpoint authority. No second autosave model is created.</p><div id="uiBRecoveryList" class="ui-b-stack-list">Loading…</div>']
+      ['color-profile','色彩描述檔','<div id="uiBProfileReadout" class="ui-b-dialog-note">No profile</div><input id="uiBProfileInput" type="file" accept=".icc,.icm" hidden><div class="button-row"><button data-ui-b-profile-load>Load ICC…</button></div>'],
+      ['image-size','影像尺寸','<label>Width <input id="uiBImageWidth" type="number" min="1"></label><label>Height <input id="uiBImageHeight" type="number" min="1"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="image-size">調整尺寸</button></div>'],
+      ['image-crop','Crop Image','<label>X <input id="uiBCropX" type="number" min="0" value="0"></label><label>Y <input id="uiBCropY" type="number" min="0" value="0"></label><label>Width <input id="uiBCropW" type="number" min="1"></label><label>Height <input id="uiBCropH" type="number" min="1"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="image-crop">裁切</button></div>'],
+      ['advanced-transform','進階變形','<div id="uiBTransformMode" class="ui-b-dialog-note"></div><label>A <input id="uiBTransformA" type="number" step=".1" value="10"></label><label>B <input id="uiBTransformB" type="number" step=".1" value="0"></label><div class="button-row"><button class="primary-button" data-ui-b-apply="advanced-transform">套用</button></div>'],
+      ['keyboard-shortcuts','鍵盤快捷鍵','<div class="ui-b-shortcuts"><p><kbd>V</kbd> Select</p><p><kbd>F</kbd> Fit</p><p><kbd>R</kbd> Rulers</p><p><kbd>Ctrl+Z</kbd> Undo</p><p><kbd>Ctrl+Shift+Z</kbd> Redo</p><p><kbd>Delete</kbd> Delete selection</p><p><kbd>Space</kbd> temporary Pan</p><p><kbd>Shift</kbd> constrained/angle snap</p></div>'],
+      ['pen-calibration','觸控筆校準','<p class="ui-b-dialog-note">Calibration profile uses the existing device-validation authority.</p><div class="button-row"><button data-ui-b-pen-calibration-open>Open Specialist calibration controls</button></div>'],
+      ['recovery','復原','<p class="ui-b-dialog-note">Recovery uses the existing storage/checkpoint authority. No second autosave model is created.</p><div id="uiBRecoveryList" class="ui-b-stack-list">載入中…</div>']
     ];
     for(const [id,title,body] of specs)if(!$('#uiB-'+id))root.appendChild(dialogShell(id,title,body,['filter-gallery','liquify'].includes(id)));
     root.addEventListener('click',event=>{
@@ -514,7 +514,7 @@ export function installFullCapabilityControls(app){
       if(id==='select-and-mask'){
         const selection=raster.refineSelection({smooth:number($('#uiBMaskSmooth').value),feather:number($('#uiBMaskFeather').value),expand:number($('#uiBMaskExpand').value)});
         const found=selectedRasterImage();if(!found)return;
-        mutateObject('Select and Mask',found,object=>object.rasterMask=createRasterMask(selection.width,selection.height,selection.alpha,{feather:number($('#uiBMaskFeather').value),expand:number($('#uiBMaskExpand').value)}));closeDialog(id);
+        mutateObject('選取並遮住',found,object=>object.rasterMask=createRasterMask(selection.width,selection.height,selection.alpha,{feather:number($('#uiBMaskFeather').value),expand:number($('#uiBMaskExpand').value)}));closeDialog(id);
       }else if(id==='layer-effects'){
         const type=$('#uiBEffectType').value,color=$('#uiBEffectColor').value,opacity=number($('#uiBEffectOpacity').value,.6),size=number($('#uiBEffectSize').value,8);
         const params={...(EFFECT_DEFAULTS[type]||{}),color,opacity};
@@ -533,7 +533,7 @@ export function installFullCapabilityControls(app){
         const found=selectedRasterImage();if(!found)return;
         const type=$('#uiBLiquifyType').value,radius=number($('#uiBLiquifyRadius').value,80),strength=number($('#uiBLiquifyStrength').value,.4),dx=number($('#uiBLiquifyDx').value,12),dy=number($('#uiBLiquifyDy').value,0);
         const object=found.object,rasterState=deserializeColorRaster(object.rasterState.colorRaster),x=rasterState.width/2,y=rasterState.height/2,freeze=$('#uiBLiquifyFreezeSelection')?.checked?raster.selection():null,filter=createLiquifyFilter([{type,x,y,radius,strength,dx,dy}],{freezeMask:freeze?.alpha||null,maxWork:Math.max(4096,rasterState.width*rasterState.height*2)});
-        mutateObject('Liquify',found,obj=>{obj.filterStack=obj.filterStack||[];obj.filterStack.push(filter);});closeDialog(id);
+        mutateObject('液化',found,obj=>{obj.filterStack=obj.filterStack||[];obj.filterStack.push(filter);});closeDialog(id);
       }else if(id==='gradient-editor'){
         const type=$('#uiBGradientType').value,start=$('#uiBGradientStart').value,end=$('#uiBGradientEnd').value,opacity=number($('#uiBGradientOpacity').value,1);
         if(state.dialogContext?.target==='raster'){
@@ -564,7 +564,7 @@ export function installFullCapabilityControls(app){
     if(preview.status!=='ok'||raster.bitDepth!==8||raster.colorMode!=='RGB'){toast('目前 UI crop 僅對 8-bit RGB raster 啟用');return;}
     const result=cropImageData(preview.imageData,{x:number($('#uiBCropX').value),y:number($('#uiBCropY').value),w:number($('#uiBCropW').value,raster.width),h:number($('#uiBCropH').value,raster.height)}),rgb=new Uint8Array(result.width*result.height*3),alpha=new Uint8Array(result.width*result.height);
     for(let i=0;i<result.width*result.height;i++){rgb[i*3]=result.data[i*4];rgb[i*3+1]=result.data[i*4+1];rgb[i*3+2]=result.data[i*4+2];alpha[i]=result.data[i*4+3];}
-    mutateObject('Image Crop',found,object=>{object.rasterState.colorRaster=serializeColorRaster(createColorRaster({width:result.width,height:result.height,bitDepth:8,colorMode:'RGB',data:rgb,alpha}));object.w=result.width;object.h=result.height;});closeDialog('image-crop');
+    mutateObject('裁切影像',found,object=>{object.rasterState.colorRaster=serializeColorRaster(createColorRaster({width:result.width,height:result.height,bitDepth:8,colorMode:'RGB',data:rgb,alpha}));object.w=result.width;object.h=result.height;});closeDialog('image-crop');
   }
 
   function setBitDepth(depth){
@@ -704,8 +704,8 @@ export function installFullCapabilityControls(app){
       if(command==='liquify')return openDialog('liquify');
       if(command==='guides:toggle'){const guides=app.page().guides||[];const visible=guides.some(guide=>guide.visible!==false);for(const guide of guides)app.setGuideVisible(guide.id,!visible);return;}
       if(command==='keyboard-shortcuts')return openDialog('keyboard-shortcuts');
-      if(command==='updates'){openPanel('specialist');$('#checkUpdateBtn')?.click();return;}
-      if(command==='pen-calibration')return openDialog('pen-calibration');
+      if(command==='updates'){globalThis.dispatchEvent(new CustomEvent('ink:branding-open',{detail:{category:'storage'}}));$('#checkUpdateBtn')?.click();return;}
+      if(command==='pen-calibration')return globalThis.dispatchEvent(new CustomEvent('ink:branding-open',{detail:{category:'tools'}}));
       if(command==='recovery')return openDialog('recovery');
       toast('Command route unavailable：'+command);
     }catch(error){console.error(error);toast(error.message||('Command failed: '+command),3200);}
