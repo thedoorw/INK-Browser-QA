@@ -323,38 +323,45 @@ This research direction does not itself authorize product mutation. Current impl
 
 ## Web portfolio / WR program
 
-A separate **WR — Web Review** lane owns the portfolio website program.
+A separate **WR — Web Review** lane owns the website reproduction, portfolio and Web Design Intelligence program.
 
-First program:
+Current active program:
 
 ```text
-INK-WEB-PORTFOLIO-001
-— Mature Portfolio Reference & First Reproduction
+INK-WEB-REPRODUCTION-PRODUCTION-LINE-001
+CASE-001 = The Minimalists
+REFERENCE = https://www.theminimalists.com/
 ```
 
-Sequence:
+Current sequence:
 
 ```text
-mature portfolio-site research
-→ select one strong reference
-→ reproduce the first portfolio website
-→ visual / responsive QA
+public reference URL
+→ site census
+→ page-family detection
+→ representative browser capture / measurement
+→ structural blueprint
+→ tokens / components / templates
+→ independent static reconstruction
+→ visual-diff correction
+→ responsive / interaction QA
 → GitHub Pages deployment
-→ record lessons
-→ establish reusable Web reproduction workflow
+→ reusable design intelligence
 ```
 
-WR should accumulate:
+The current goal is not a one-off site clone. CASE-001 is used to build and validate a reusable, increasingly automatic website-production line.
 
-```text
-Web Reference Library
-Web Pattern / Component Library
-Web Development Lessons
-```
+The reproduction target is the public presentation system — layout, architecture, navigation, components, responsive behavior and visible interactions — not copyrighted editorial content, proprietary media, private backend behavior or copied source code.
 
-The first site is intentionally reproduction-first rather than original-design-first. Once the shell is stable, it can present the Creative Reproduction Benchmark cases and results.
+Production-line specification:
 
-Program specification:
+`research/INK_WEB_REPRODUCTION_PRODUCTION_LINE_v0.1.md`
+
+Long-term design-intelligence direction:
+
+`research/INK_WEB_DESIGN_INTELLIGENCE_PRODUCTION_SYSTEM_v0.1.md`
+
+WR governance / durable portfolio authority:
 
 `research/INK_WEB_PORTFOLIO_WR_PLAN_v0.1.md`
 
@@ -362,10 +369,13 @@ Current WR status:
 
 `working/INK_WEB_PORTFOLIO_001_WR_STATUS_v0.1.md`
 
-Current Web reproduction Work Order:
+Current CASE-001 Work Order:
 
-`working/INK_WEB_PORTFOLIO_001_WEB_DEV_WORK_ORDER_v0.1.md`
+`working/INK_WEB_REPRODUCTION_CASE_001_THE_MINIMALISTS_WORK_ORDER_v0.1.md`
 
+Executable reproduction tools:
+
+`engineering/web-reproduction/`
 
 ## Repository map
 
