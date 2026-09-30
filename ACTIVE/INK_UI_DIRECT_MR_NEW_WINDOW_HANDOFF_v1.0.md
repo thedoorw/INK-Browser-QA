@@ -34,7 +34,7 @@ Read the consolidated design/inspection authority first:
 
 Then execute the current bounded task.
 
-Mandatory visual attachments in the execution CHAT: `PvsI-1.png`, `PvsI-2.png`, `PvsI-3.png`. If absent, stop and request them before visual mutation.
+Mandatory visual authority is stored in GitHub: `reference/ui/photoshop/PvsI-1.png`, `reference/ui/photoshop/PvsI-2.png`, `reference/ui/photoshop/PvsI-3.png`. Inspect those exact assets before visual mutation. Re-upload is optional only as a viewing mirror if the current tool cannot render repository binaries.
 
 Read and execute:
 
@@ -104,8 +104,9 @@ No AI review may override a USER visual rejection.
 
 The supplied Photoshop captures are the primary visual authority:
 
-- `ps-1.png`
-- `ps-2.png`
+- `reference/ui/photoshop/ps-1.png`
+- `reference/ui/photoshop/PS-2.png`
+- `reference/ui/photoshop/PS-3.png`
 
 Reference measurements:
 `working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md`
