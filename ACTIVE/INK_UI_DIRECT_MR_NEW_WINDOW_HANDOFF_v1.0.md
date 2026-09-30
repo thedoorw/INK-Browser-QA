@@ -28,6 +28,12 @@ Only after USER explicitly says the UI is finished/accepted does the project ret
 
 ## 1A. Current mandatory execution task
 
+Read the consolidated design/inspection authority first:
+
+`ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md`
+
+Then execute the current bounded task.
+
 Read and execute:
 
 `ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md`
