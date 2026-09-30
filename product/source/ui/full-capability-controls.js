@@ -186,7 +186,7 @@ export function installFullCapabilityControls(app){
       node.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,node),420);});
       ['pointerup','pointercancel','pointerleave'].forEach(type=>node.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
     }
-    const psCapabilityOrder=['[data-tool="select"]','[data-ui-b-tool-group="smart-selection"]','[data-tool="lasso"]','[data-ui-b-tool-group="sampling"]','[data-ui-b-tool-group="healing"]','#drawToolButton','[data-ui-b-tool-group="clone"]','[data-tool="eraser"]','[data-ui-b-tool-group="fill"]','[data-ui-b-tool-group="detail"]','[data-ui-b-tool-group="tone"]','[data-tool="shape"]','[data-tool="text"]','[data-tool="pan"]','[data-tool="image"]'];
+    const psCapabilityOrder=['[data-tool="select"]','[data-tool="lasso"]','[data-ui-b-tool-group="smart-selection"]','[data-ui-b-tool-group="sampling"]','[data-ui-b-tool-group="healing"]','#drawToolButton','[data-ui-b-tool-group="clone"]','[data-tool="eraser"]','[data-ui-b-tool-group="fill"]','[data-ui-b-tool-group="detail"]','[data-ui-b-tool-group="tone"]','[data-tool="text"]','[data-tool="shape"]','[data-tool="pan"]','[data-tool="image"]'];
     for(const selector of psCapabilityOrder){const node=$(selector);if(node&&node.parentElement===rail)rail.appendChild(node);}
     rail.querySelectorAll('.ui-b-glyph').forEach(node=>node.classList.remove('ui-b-glyph'));
     const mobileHost=$('#mobileToolSheet .mobile-tool-grid');
