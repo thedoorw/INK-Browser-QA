@@ -179,22 +179,67 @@ Why useful:
 Reproduction risk:
 - exact visual / motion system requires browser capture.
 
-## Phase A finding
+### WEB-REF-008 — The Minimalists
+
+Source:
+- https://www.theminimalists.com/
+- representative article: https://www.theminimalists.com/contextual/
+- paginated stream: https://www.theminimalists.com/page/2/
+- resources index: https://www.theminimalists.com/resources/
+
+Observed current model:
+- centered, non-full-width editorial reading experience;
+- persistent top navigation;
+- short site/author introduction;
+- sequential stream of titled entries with short descriptions and MORE links;
+- numbered/paginated continuation through a long archive;
+- article/detail pages centered on title, author, image and text;
+- previous/next continuation between entries;
+- secondary resource/index pages using the same editorial shell.
+
+Why useful for the user's portfolio direction:
+- remains visually complete even while content is still accumulating;
+- supports continuous publishing rather than requiring a large finished project grid on day one;
+- can present image + text + process + evidence naturally;
+- creates a book/journal-like page-by-page reading rhythm;
+- gives individual works enough narrative space without turning the site into a full-screen gallery;
+- maps well to future INK case studies, research notes and finished works.
+
+WR classification:
+```text
+EDITORIAL / BOOK-LIKE PORTFOLIO SHELL
+MICRO-SITE / JOURNAL
+SEQUENTIAL CASE-STUDY READING
+NON-FULL-BLEED CONTENT
+```
+
+Boundary:
+- reproduce layout/system behavior, not copyrighted editorial content;
+- newsletter/email infrastructure is optional and outside the first reproduction;
+- no WordPress or proprietary backend cloning is required.
+
+Reproduction risk:
+- exact geometry, typography and responsive breakpoint behavior still require browser capture and measurement.
+
+
 
 The initial set confirms three useful reference families:
 
 ```text
-A. SIMPLE PORTFOLIO SHELL
+A. EDITORIAL / BOOK-LIKE PORTFOLIO
+   The Minimalists
+
+B. SIMPLE PORTFOLIO SHELL
    Anthony Burrill / Wade and Leta
 
-B. DENSE INDEX / TAXONOMY
+C. DENSE INDEX / TAXONOMY
    Order / Actual Source
 
-C. MOTION / EXPERIMENTAL STUDIO
+D. MOTION / EXPERIMENTAL STUDIO
    Studio Dumbar / PORTO ROCHA / Studio Feixen
 ```
 
-For the first reproduction, the simple-portfolio-shell family is the correct starting point because it isolates navigation, grid, typography, project detail and responsive behavior before adding higher interaction complexity.
+For the first reproduction, the user selected the editorial / book-like model. The Minimalists is now the primary reference because its restrained non-full-width reading shell can grow continuously while still feeling complete, and it supports a sequential, page-by-page portfolio experience.
 
 ## Next
 
