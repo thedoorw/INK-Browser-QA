@@ -30,9 +30,9 @@ Only after USER explicitly says the UI is finished/accepted does the project ret
 
 Read and execute:
 
-`ACTIVE/INK_UI_PS_REFERENCE_REASSEMBLY_WORK_ORDER_v1.0.md`
+`ACTIVE/INK_UI_PS_VISUAL_DETAIL_CONFORMANCE_DISPATCH_v1.0.md`
 
-This task supersedes any assumption that the current visible single-rail / category-bar / duplicate-icon arrangement should be preserved merely because routes exist.
+This task is the current PS visual-detail conformance pass. It requires actual-page correction of typography, contrast, collapse grammar, global color placement, contextual Options Bar discipline, panel detail cleanup and categorized Preferences structure. Source-route existence is not acceptance.
 
 The historical Photoshop reference measurements, USER interaction captures and checklist requirements named in that work order are active implementation evidence.
 
