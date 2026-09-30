@@ -1,0 +1,76 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>INK PvsI Pack 1 Live Evidence</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
+#liveFrame{position:fixed;inset:0;width:100vw;height:100vh;border:0;background:#e7e7e7}
+#pvsiMetrics{display:none}
+</style>
+<iframe id="liveFrame" src="../../product/source/?pvsi-live=1"></iframe>
+<pre id="pvsiMetrics">{}</pre>
+<script>
+(async()=>{
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const mode=new URL(location.href).searchParams.get('mode')||'overview';
+  const frame=document.querySelector('#liveFrame');
+  const rect=e=>{if(!e)return null;const r=e.getBoundingClientRect(),s=frame.contentWindow.getComputedStyle(e);return {
+    x:r.x,y:r.y,width:r.width,height:r.height,right:r.right,bottom:r.bottom,
+    display:s.display,backgroundColor:s.backgroundColor,color:s.color,border:s.border,padding:s.padding,
+    fontSize:s.fontSize,lineHeight:s.lineHeight
+  }};
+  const row=e=>({text:String(e?.textContent||'').replace(/\s+/g,' ').trim(),...rect(e),disabled:Boolean(e?.disabled),pressed:e?.getAttribute('aria-pressed')});
+  await new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();}});
+  const w=frame.contentWindow,d=frame.contentDocument;
+  for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
+  if(!(w.INK_APP&&w.INK_WEB_SHELL))throw new Error('INK unavailable');
+  const app=d.querySelector('#app');
+  app.dataset.rulers='true';
+  w.dispatchEvent(new Event('resize'));
+  w.INK_WEB_SHELL.open('layers');
+  await sleep(250);
+
+  const menus={};
+  for(const trigger of [...d.querySelectorAll('[data-application-menu-trigger]')]){
+    const id=trigger.dataset.applicationMenuTrigger;
+    trigger.click();await sleep(60);
+    const popup=id==='window'?d.querySelector('#panelWindowMenu'):d.querySelector('#'+id+'Menu');
+    if(popup&&!popup.hidden){
+      const cs=w.getComputedStyle(popup),rows=[...popup.querySelectorAll('button,[role="menuitem"],.application-menu-separator')].map(row);
+      menus[id]={...rect(popup),backgroundColor:cs.backgroundColor,color:cs.color,padding:cs.padding,border:cs.border,rows};
+    }
+    w.INK_WEB_SHELL.closeMenus?.();await sleep(20);
+  }
+  if(mode==='menu-window'){
+    d.querySelector('[data-application-menu-trigger="window"]')?.click();
+    await sleep(180);
+  }
+
+  const windowPopup=d.querySelector('#panelWindowMenu');
+  const activeWindow=d.querySelector('#panelWindowMenu .panel-window-item.active');
+  const check=activeWindow?.querySelector('.window-menu-check');
+  const metrics={
+    status:'PASS',mode,target:new URL(location.href).searchParams.get('target')||null,
+    viewport:{width:w.innerWidth,height:w.innerHeight,dpr:w.devicePixelRatio},
+    shell:w.INK_WEB_SHELL.state(),
+    menuStrip:rect(d.querySelector('.menu-strip')),
+    options:rect(d.querySelector('#contextualOptions')),
+    brandMark:rect(d.querySelector('.menu-app-mark')),
+    brandImage:rect(d.querySelector('.brand-source-mark')),
+    brandName:rect(d.querySelector('.menu-app-mark strong')),
+    brandVersion:rect(d.querySelector('.menu-app-mark small')),
+    toolRail:rect(d.querySelector('.tool-rail')),
+    inspector:rect(d.querySelector('#inspector')),
+    stage:rect(d.querySelector('#stageWrap')),
+    windowPopup:windowPopup&&!windowPopup.hidden?rect(windowPopup):null,
+    activeWindowCheck:check?{opacity:w.getComputedStyle(check,'::before').opacity}:null,
+    menus
+  };
+  document.querySelector('#pvsiMetrics').textContent=JSON.stringify(metrics);
+  document.documentElement.dataset.qaReady='true';
+  document.title='QA_READY';
+})().catch(error=>{
+  document.querySelector('#pvsiMetrics').textContent=JSON.stringify({status:'ERROR',error:String(error?.stack||error)});
+  document.documentElement.dataset.qaReady='error';
+  document.title='QA_ERROR';
+});
+</script>

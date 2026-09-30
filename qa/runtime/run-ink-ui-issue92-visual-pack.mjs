@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
 import { existsSync } from 'node:fs';
 import { readFile,mkdir,mkdtemp,rm,stat,writeFile } from 'node:fs/promises';
@@ -86,6 +87,82 @@ async function startServer(root,reports){
   server.listen(0,'127.0.0.1');await once(server,'listening');
   return {server,origin:'http://127.0.0.1:'+server.address().port};
 }
+const LIVE_BASE='https://thedoorw.github.io/INK-Browser-QA/';
+const LIVE_HARNESS='qa/runtime/ink-ui-pvsi-pack1-live-harness.html';
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
+
+async function waitLiveProduct(root,timeoutMs=180000){
+  const localCss=await readFile(path.join(root,'product/source/styles.css'));
+  const localShell=await readFile(path.join(root,'product/source/web-shell.js'));
+  const expected={styles:digest(localCss),webShell:digest(localShell)};
+  const started=Date.now();let last={};
+  while(Date.now()-started<timeoutMs){
+    try{
+      const bust='?pvsi='+encodeURIComponent(TARGET_SHA)+'&t='+Date.now();
+      const [cssRes,shellRes,harnessRes]=await Promise.all([
+        fetch(LIVE_BASE+'product/source/styles.css'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
+        fetch(LIVE_BASE+'product/source/web-shell.js'+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)}),
+        fetch(LIVE_BASE+LIVE_HARNESS+bust,{cache:'no-store',signal:AbortSignal.timeout(10000)})
+      ]);
+      const css=cssRes.ok?Buffer.from(await cssRes.arrayBuffer()):Buffer.alloc(0);
+      const shell=shellRes.ok?Buffer.from(await shellRes.arrayBuffer()):Buffer.alloc(0);
+      last={
+        stylesStatus:cssRes.status,webShellStatus:shellRes.status,harnessStatus:harnessRes.status,
+        styles:css.length?digest(css):null,webShell:shell.length?digest(shell):null
+      };
+      if(cssRes.ok&&shellRes.ok&&harnessRes.ok&&last.styles===expected.styles&&last.webShell===expected.webShell){
+        return {baseUrl:LIVE_BASE,expected,observed:last,waitMs:Date.now()-started};
+      }
+    }catch(error){last={error:String(error?.message||error)};}
+    await sleep(3000);
+  }
+  throw new Error('live Pages identity timeout '+JSON.stringify({expected,last,timeoutMs}));
+}
+async function browserCommand(executable,args,timeoutMs=90000){
+  let child,stdout='',stderr='',timer;
+  try{
+    child=spawn(executable,args,{shell:false,windowsHide:true,stdio:['ignore','pipe','pipe']});
+    child.stdout.on('data',chunk=>{if(stdout.length<8*1024*1024)stdout+=chunk.toString();});
+    child.stderr.on('data',chunk=>{if(stderr.length<200000)stderr+=chunk.toString();});
+    const exit=await Promise.race([
+      once(child,'exit').then(([code,signal])=>({code,signal})),
+      new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('browser command timeout '+stderr)),timeoutMs);})
+    ]);
+    if(exit.code!==0)throw new Error('browser command exit '+exit.code+'/'+exit.signal+' '+stderr);
+    return {stdout,stderr};
+  }finally{clearTimeout(timer);await stop(child);}
+}
+async function captureLivePages(root,identity){
+  const evidence=path.join(root,'evidence');
+  const executable=browser();
+  const profile=await mkdtemp(path.join(root,'profile-live-pvsi-'));
+  const common=[
+    '--headless=new','--no-first-run','--no-default-browser-check','--disable-extensions','--disable-background-networking',
+    '--force-device-scale-factor=1','--window-size=1363,936','--virtual-time-budget=8000',
+    '--run-all-compositor-stages-before-draw','--user-data-dir='+profile
+  ];
+  const overviewUrl=LIVE_BASE+LIVE_HARNESS+'?mode=overview&target='+encodeURIComponent(TARGET_SHA);
+  const windowUrl=LIVE_BASE+LIVE_HARNESS+'?mode=menu-window&target='+encodeURIComponent(TARGET_SHA);
+  const overview=path.join(evidence,'live-overview.png');
+  const windowShot=path.join(evidence,'live-window-menu.png');
+  try{
+    await browserCommand(executable,[...common,'--screenshot='+overview,overviewUrl]);
+    await browserCommand(executable,[...common,'--screenshot='+windowShot,windowUrl]);
+    const dump=await browserCommand(executable,[...common,'--dump-dom',windowUrl]);
+    const match=dump.stdout.match(/<pre id="pvsiMetrics"[^>]*>([\s\S]*?)<\/pre>/i);
+    if(!match)throw new Error('live metrics marker missing from dump');
+    const unescape=s=>s.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+    const metrics=JSON.parse(unescape(match[1]));
+    const overviewInfo=await stat(overview),windowInfo=await stat(windowShot);
+    if(overviewInfo.size<5000||windowInfo.size<5000)throw new Error('live screenshot too small');
+    const live={schema:'INK-UI-PVSI-PACK1-LIVE-EVIDENCE',version:1,targetSha:TARGET_SHA,identity,
+      urls:{overview:overviewUrl,window:windowUrl},screenshots:{overview:{file:'live-overview.png',bytes:overviewInfo.size},window:{file:'live-window-menu.png',bytes:windowInfo.size}},metrics};
+    await writeFile(path.join(evidence,'live-metrics.json'),JSON.stringify(live,null,2));
+    return live;
+  }finally{await rm(profile,{recursive:true,force:true,maxRetries:5,retryDelay:150});}
+}
+
 async function waitReport(reports,mode,timeoutMs=5000){
   const start=Date.now();
   while(Date.now()-start<timeoutMs){
@@ -139,6 +216,8 @@ export async function run(root){
       const response=await fetch(started.origin+route,{signal:AbortSignal.timeout(5000)});
       assert.equal(response.status,200,'preflight '+route);await response.arrayBuffer();
     }
+    const liveIdentity=await waitLiveProduct(root);
+    report.live=await captureLivePages(root,liveIdentity);
     for(const state of STATES){
       report.states.push(await capture(root,started.origin,state,reports));
     }

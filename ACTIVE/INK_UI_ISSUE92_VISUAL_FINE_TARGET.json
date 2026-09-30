@@ -2,12 +2,13 @@
   "schema": "ink-ui-issue92-visual-fine-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "58ff31935bafedc9f1c67a0fac808cc4dd5129ec",
-  "scope": "AJ20 rebased exact-candidate semantic spacing token visual regression / no central Runtime",
+  "target_sha": "c0bcc6519e4bd6d1789fa3b17d86de9b72d43f78",
+  "scope": "INK-UI-PVSI-PACK-01 direct deployed Pages + exact-target rendered evidence / no central Runtime",
   "suites": [
-    "visual-fine-detail"
+    "visual-fine-detail",
+    "pvsi-pack1-live-pages"
   ],
   "central_runtime": false,
-  "run_generation": 4,
-  "note": "same 17 current-product states; rebased semantic token correction must preserve accepted geometry"
+  "run_generation": 5,
+  "note": "Package 1 evidence only. Product target is c0bcc651; live Pages capture waits for deployed CSS/web-shell byte identity and a newly deployed live harness."
 }
