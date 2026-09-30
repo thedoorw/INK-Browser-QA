@@ -4291,3 +4291,5 @@ html,body,#app{background:#e7e7e7}
  .layer-bottom-toolbar #addLayerBtn{order:3}
  .layer-bottom-toolbar #deleteLayerBtn{order:4}
 }
+
+@media(min-width:761px){.branding-settings-dialog{width:824px;max-width:calc(100vw - var(--tool-w) - var(--ruler-left-w) - var(--active-panel-w) - 24px)}}

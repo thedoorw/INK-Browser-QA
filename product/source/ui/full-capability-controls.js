@@ -262,10 +262,11 @@ export function installFullCapabilityControls(app){
       openPanel('specialist');
       const preset=$('#paintBrush');if(preset){preset.value=tool;preset.scrollIntoView({block:'center'});}
       toast((tool==='blender'?'混色':'塗抹')+' 使用既有 Brush Engine / Stroke Session authority；由 Properties 重播或套用');
-    }else if(['pen','pencil','marker','brush','airbrush','lasso'].includes(tool)){
+    }else if(['pen','pencil','marker','brush','airbrush','lasso','image'].includes(tool)){
       raster.clearTool();app.setTool(tool);
     }else raster.clearTool();
     $$('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
+    app.refreshToolUI?.();
     refreshContextOptions();
     if(!['blender','smudge'].includes(tool)&&!tool.startsWith('text:'))toast('工具：'+tool);
   }
