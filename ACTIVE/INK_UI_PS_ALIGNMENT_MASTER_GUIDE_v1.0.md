@@ -500,7 +500,7 @@ Dynamic UI must be checked after runtime installation in final DOM plus effectiv
 
 Current detail pass:
 
-`ACTIVE/INK_UI_PVSI_STRUCTURE_DENSITY_REALIGNMENT_DISPATCH_v1.0.md`
+`ACTIVE/INK_UI_PVSI_PIXEL_ALIGNMENT_DEV_DISPATCH_v1.0.md`
 
 The dispatch is the current bounded mutation task. This Master Guide is the durable design/inspection authority.
 
