@@ -1,0 +1,61 @@
+{
+  "schema": "ai-dev-evidence-manifest",
+  "version": "0.1",
+  "program_id": "AI-DEV-PRODUCTION-LINE-v0.1",
+  "task_id": "AI-DEV-TRIAL-STATE-HANDOFF-001",
+  "target_commit_sha": "5fb1e3fd891a378503adfe9527108556214f1ab4",
+  "records": [
+    {
+      "evidence_id": "E-TRIAL-SOURCE-001",
+      "task_id": "AI-DEV-TRIAL-STATE-HANDOFF-001",
+      "claim_id": "TRIAL_SOURCE_PINNED",
+      "layer": "SOURCE",
+      "status": "VERIFIED",
+      "produced_by": "AI_DEVELOPMENT_PRODUCTION_LINE_MR",
+      "locator": "https://github.com/thedoorw/INK-Browser-QA/commit/f10acf3384e27becb6a5eb54e009077e0d7da7a0",
+      "identity": {
+        "repo": "thedoorw/INK-Browser-QA",
+        "base_sha": "f10acf3384e27becb6a5eb54e009077e0d7da7a0",
+        "artifact_commit_sha": "5fb1e3fd891a378503adfe9527108556214f1ab4"
+      },
+      "proves": ["The prototype branch has an exact source baseline and exact artifact-producing commit."],
+      "does_not_prove": ["ARTIFACT byte identity", "deployment identity", "browser-loaded identity", "visual acceptance", "USER acceptance"]
+    },
+    {
+      "evidence_id": "E-TRIAL-ARTIFACT-001",
+      "task_id": "AI-DEV-TRIAL-STATE-HANDOFF-001",
+      "claim_id": "TRIAL_ARTIFACT_PINNED",
+      "layer": "ARTIFACT",
+      "status": "VERIFIED",
+      "produced_by": "AI_DEVELOPMENT_PRODUCTION_LINE_MR",
+      "locator": "research/ai-dev-production-line/prototype/trial-artifact.json",
+      "identity": {
+        "repo": "thedoorw/INK-Browser-QA",
+        "artifact_commit_sha": "5fb1e3fd891a378503adfe9527108556214f1ab4",
+        "path": "research/ai-dev-production-line/prototype/trial-artifact.json",
+        "sha256": "d4c41c8a8c682f3cc09f6367b035dae4304af548ee41eed11ae87f5d84d6305d"
+      },
+      "proves": ["The research-only trial artifact is byte-pinned by SHA-256 at the exact artifact commit."],
+      "does_not_prove": ["deployment identity", "browser-loaded identity", "INK product behavior", "visual acceptance", "USER acceptance"]
+    }
+  ],
+  "identity_chain": {
+    "commit": {
+      "status": "VERIFIED",
+      "sha": "5fb1e3fd891a378503adfe9527108556214f1ab4"
+    },
+    "artifact": {
+      "status": "VERIFIED",
+      "path": "research/ai-dev-production-line/prototype/trial-artifact.json",
+      "sha256": "d4c41c8a8c682f3cc09f6367b035dae4304af548ee41eed11ae87f5d84d6305d"
+    },
+    "deployment": {
+      "status": "UNVERIFIED",
+      "reason": "R&D prototype does not deploy or mutate INK."
+    },
+    "browser_loaded": {
+      "status": "UNVERIFIED",
+      "reason": "No deployed identity leg exists in this trial."
+    }
+  }
+}
