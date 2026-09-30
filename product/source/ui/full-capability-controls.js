@@ -186,6 +186,16 @@ export function installFullCapabilityControls(app){
       node.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,node),420);});
       ['pointerup','pointercancel','pointerleave'].forEach(type=>node.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
     }
+    const zoomTrigger=$('#psZoomControls');
+    if(zoomTrigger && !$('#psZoomMenu')){
+      const menu=htmlNode('<div id="psZoomMenu" class="application-command-menu ps-tool-zoom-menu" role="menu" aria-label="縮放控制" hidden><button type="button" role="menuitem" data-zoom-action="in">放大</button><button type="button" role="menuitem" data-zoom-action="out">縮小</button><button type="button" role="menuitem" data-zoom-action="fit">符合內容</button></div>');
+      document.body.append(menu);
+      const close=()=>{menu.hidden=true;zoomTrigger.setAttribute('aria-expanded','false');};
+      zoomTrigger.addEventListener('click',()=>{const r=zoomTrigger.getBoundingClientRect();menu.style.left=(r.right+3)+'px';menu.style.top=r.top+'px';menu.hidden=!menu.hidden;zoomTrigger.setAttribute('aria-expanded',String(!menu.hidden));});
+      menu.addEventListener('click',event=>{const action=event.target.closest('[data-zoom-action]')?.dataset.zoomAction;if(!action)return;if(action==='fit')app.fitContent();else app.zoomBy(action==='in'?1.2:1/1.2);close();});
+      document.addEventListener('pointerdown',event=>{if(!menu.contains(event.target)&&!zoomTrigger.contains(event.target))close();});
+      document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
+    }
     const psCapabilityOrder=['[data-tool="select"]','[data-tool="lasso"]','[data-ui-b-tool-group="smart-selection"]','[data-ui-b-tool-group="sampling"]','[data-ui-b-tool-group="healing"]','#drawToolButton','[data-ui-b-tool-group="clone"]','[data-tool="eraser"]','[data-ui-b-tool-group="fill"]','[data-ui-b-tool-group="detail"]','[data-ui-b-tool-group="tone"]','[data-tool="text"]','[data-tool="shape"]','[data-tool="pan"]','[data-tool="image"]'];
     for(const selector of psCapabilityOrder){const node=$(selector);if(node&&node.parentElement===rail)rail.appendChild(node);}
     rail.querySelectorAll('.ui-b-glyph').forEach(node=>node.classList.remove('ui-b-glyph'));
@@ -355,12 +365,16 @@ export function installFullCapabilityControls(app){
     if(layers&&!$('#uiBLayerAppearance')){
       const filterOptions=Object.keys(FILTER_DEFAULTS).map(type=>'<option value="'+esc(type)+'">'+esc(type)+'</option>').join('');
       const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance">'+
-        '<div class="ui-b-layer-filter"><span>種類</span><select id="uiBLayerFilterType">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" title="新增 Filter">＋</button></div>'+
+        '<details class="ui-b-layer-filter-menu"><summary>圖層濾鏡</summary><div class="ui-b-layer-filter"><span>濾鏡</span><select id="uiBLayerFilterType">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" title="新增圖層濾鏡">＋</button></div></details>'+
         '<div class="ui-b-layer-blend"><span>混合</span><select disabled title="目前文件模型沒有 layer blendMode authority"><option>正常</option></select><span class="ui-b-capability-note">Layer blend N/A</span></div>'+
         '<div class="ui-b-layer-lock"><span>鎖定</span><button type="button" data-layer-action="toggle-lock" aria-pressed="false"><svg><use href="#i-lock"/></svg></button></div>'+
       '</div>');
       layers.prepend(block);
       const opacity=layers.querySelector('.layer-opacity-card');if(opacity)block.after(opacity);
+      const filterMenu=block.querySelector('.ui-b-layer-filter-menu');
+      const layerFooter=layers.querySelector('.layer-bottom-toolbar');
+      if(filterMenu&&layerFooter){layerFooter.insertBefore(filterMenu,layerFooter.firstChild);filterMenu.addEventListener('click',event=>{if(event.target.closest('[data-layer-action="add-filter"]'))block.dispatchEvent(new CustomEvent('ink-layer-filter-add'));});}
+      block.addEventListener('ink-layer-filter-add',()=>{const layer=app.layer(),type=$('#uiBLayerFilterType')?.value;if(!layer||!type)return;app.history.pushScoped('新增圖層濾鏡：'+type,[app.layerPath(layer)],()=>{layer.filterStack=layer.filterStack||[];layer.filterStack.push(createFilter(type,FILTER_DEFAULTS[type]||{}));});filterMenu.open=false;app.refreshAll();app.renderer.render();refreshPanels();});
       block.addEventListener('click',event=>{
         const action=event.target.closest('[data-layer-action]')?.dataset.layerAction;
         if(action==='add-filter'){
@@ -760,12 +774,32 @@ export function installFullCapabilityControls(app){
     maskAdd?.addEventListener('click',()=>addMask());
   }
 
+  function renderLayerThumbnails(){
+    const page=app.page?.();if(!page||!app.renderer?.drawLayerObjects)return;
+    for(const row of document.querySelectorAll('.layer-row[data-layer-id]')){
+      const layer=page.layers.find(item=>item.id===row.dataset.layerId),thumb=row.querySelector('.layer-thumb');
+      if(!layer||!thumb)continue;
+      let canvas=thumb.querySelector('canvas');
+      if(!canvas){canvas=document.createElement('canvas');canvas.width=64;canvas.height=56;canvas.setAttribute('aria-hidden','true');thumb.replaceChildren(canvas);}
+      const context=canvas.getContext('2d');if(!context)continue;
+      context.setTransform(1,0,0,1,0,0);context.clearRect(0,0,64,56);
+      const bounds=app.renderer.contentBounds?.({...page,layers:[{...layer,visible:true}]});
+      if(!bounds||!Number.isFinite(bounds.w)||bounds.w<=0||bounds.h<=0)continue;
+      const scale=Math.min(60/bounds.w,52/bounds.h);
+      context.save();context.setTransform(scale,0,0,scale,32-(bounds.x+bounds.w/2)*scale,28-(bounds.y+bounds.h/2)*scale);
+      context.globalAlpha=layer.opacity??1;
+      try{app.renderer.drawLayerObjects(context,layer,page,{preferredScale:scale});}catch(error){console.warn('Layer thumbnail',error);}
+      context.restore();
+    }
+  }
   function installLifecycleRefresh(){
+    const originalLayers=app.refreshLayers.bind(app);
+    app.refreshLayers=function(){const result=originalLayers();renderLayerThumbnails();return result;};
     const original=app.refreshSelectionUI.bind(app);
     app.refreshSelectionUI=function(){const result=original();refreshPanels();return result;};
   }
 
-  installMenus();installTools();installPointerCapture();installPanels();installDialogs();installExportInterop();bridgeLegacySpecialist();installLifecycleRefresh();refreshContextOptions();refreshPanels();
+  installMenus();installTools();installPointerCapture();installPanels();installDialogs();installExportInterop();bridgeLegacySpecialist();installLifecycleRefresh();refreshContextOptions();refreshPanels();renderLayerThumbnails();
 
   const api={
     version:'1.0',app,state,raster,registry:UI_B_CONTRIBUTION_REPORT,

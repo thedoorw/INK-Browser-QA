@@ -155,6 +155,7 @@
     document.querySelectorAll('[data-preference-page]').forEach(page => { page.hidden = page.dataset.preferencePage !== selected; });
     document.querySelectorAll('[data-preference-category]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.preferenceCategory === selected));
+      button.setAttribute('aria-selected', String(button.dataset.preferenceCategory === selected));
     });
     els.dialog.dataset.category = selected;
     const layout = document.querySelector('#preferencesToolbarLayout');
@@ -171,6 +172,8 @@
     if (settingsMounted || !globalThis.INK_APP) return;
     const content = document.querySelector('#preferencesContent');
     const nav = document.querySelector('#preferencesCategories');
+    nav.setAttribute('role','tablist');
+    nav.setAttribute('aria-orientation','vertical');
     const pages = new Map();
     for (const [id, label] of CATEGORIES) {
       const button = document.createElement('button');
@@ -178,6 +181,7 @@
       button.dataset.preferenceCategory = id;
       button.textContent = label;
       button.setAttribute('aria-controls', 'preferences-' + id);
+      button.setAttribute('role', 'tab');
       button.addEventListener('click', () => showCategory(id));
       nav.append(button);
       let page = document.querySelector('[data-preference-page="' + id + '"]');
@@ -189,6 +193,7 @@
         content.append(page);
       }
       page.id = 'preferences-' + id;
+      page.setAttribute('role','tabpanel');
       const heading = document.createElement('h2');
       heading.textContent = label;
       page.prepend(heading);

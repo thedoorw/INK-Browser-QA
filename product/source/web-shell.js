@@ -966,10 +966,10 @@
           </div>
         </div>
         <div class="shell-panel-footer navigator-footer">
-          <output id="shellNavigatorZoom" class="navigator-zoom-field">100%</output>
-          <button type="button" id="shellNavigatorZoomOut" class="navigator-zoom-icon" aria-label="縮小"><svg><use href="#i-zoom-out"/></svg></button>
+          <input id="shellNavigatorZoom" class="navigator-zoom-field" type="text" inputmode="decimal" value="100%" aria-label="縮放百分比">
+          <button type="button" id="shellNavigatorZoomOut" class="navigator-zoom-icon" aria-label="縮小"><svg><use href="#i-mountain-small"/></svg></button>
           <input id="shellNavigatorZoomSlider" type="range" min="3" max="2400" step="1" value="100" aria-label="導覽器縮放">
-          <button type="button" id="shellNavigatorZoomIn" class="navigator-zoom-icon" aria-label="放大"><svg><use href="#i-zoom-in"/></svg></button>
+          <button type="button" id="shellNavigatorZoomIn" class="navigator-zoom-icon" aria-label="放大"><svg><use href="#i-mountain-large"/></svg></button>
         </div>
       </section>
       <section class="inspector-section tab-content shell-panel-section pages-shell-panel" data-content="pages" aria-label="頁面">
@@ -1617,6 +1617,21 @@
     bind('#shellNavigatorFit', () => { app.fitContent?.(); renderShellNavigator(); });
     bind('#shellNavigatorZoomOut', () => { app.zoomBy?.(1 / 1.2); renderShellNavigator(); });
     bind('#shellNavigatorZoomIn', () => { app.zoomBy?.(1.2); renderShellNavigator(); });
+    const zoomField = document.querySelector('#shellNavigatorZoom');
+    if (zoomField && zoomField.dataset.bound !== 'true') {
+      zoomField.dataset.bound = 'true';
+      const applyZoom = () => {
+        const number = Number.parseFloat(zoomField.value);
+        if (Number.isFinite(number) && number > 0) {
+          const requested = Math.min(24, Math.max(.03, number / 100));
+          const current = Math.max(.03, Number(app.page?.().camera?.scale) || 1);
+          app.zoomBy?.(requested / current);
+        }
+        renderShellNavigator();
+      };
+      zoomField.addEventListener('change', applyZoom);
+      zoomField.addEventListener('keydown', event => { if(event.key === 'Enter'){ event.preventDefault(); applyZoom(); zoomField.blur(); } });
+    }
     const zoomSlider = document.querySelector('#shellNavigatorZoomSlider');
     if (zoomSlider && zoomSlider.dataset.bound !== 'true') {
       zoomSlider.dataset.bound = 'true';
