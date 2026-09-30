@@ -20,6 +20,11 @@ const browser = await chromium.launch({ headless: true });
 const outRoot = path.resolve(config.artifactsDir ?? 'artifacts/case-001', 'capture');
 await fs.mkdir(outRoot, { recursive: true });
 
+const validation = config.referenceValidation ?? {};
+const expectedTitleContains = validation.expectedTitleContains ?? null;
+const expectedHomeLinks = validation.expectedHomeLinks ?? [];
+const require2xx = validation.require2xx !== false;
+
 const manifest = {
   schema: 'ink-web-reproduction-capture-manifest',
   version: 1,
@@ -48,6 +53,25 @@ for (const candidate of config.captureCandidates ?? []) {
       status = response?.status() ?? null;
       await page.evaluate(() => document.fonts?.ready ?? Promise.resolve());
       await page.waitForTimeout(800);
+
+      const title = await page.title();
+      const foundHomeLinks = target.pathname === '/'
+        ? await page.evaluate((paths) => {
+            const hrefs = new Set([...document.querySelectorAll('a[href]')].map((a) => {
+              try { return new URL(a.href, location.href).pathname; } catch { return null; }
+            }).filter(Boolean));
+            return paths.filter((p) => hrefs.has(p));
+          }, expectedHomeLinks)
+        : [];
+
+      const validityFailures = [];
+      if (require2xx && !(status >= 200 && status < 300)) validityFailures.push(`HTTP_STATUS_${status}`);
+      if (expectedTitleContains && !title.includes(expectedTitleContains)) validityFailures.push('TITLE_IDENTITY_MISMATCH');
+      if (target.pathname === '/' && expectedHomeLinks.length && foundHomeLinks.length < expectedHomeLinks.length) {
+        validityFailures.push(`HOME_LINK_IDENTITY_${foundHomeLinks.length}_OF_${expectedHomeLinks.length}`);
+      }
+
+      const referenceValid = validityFailures.length === 0;
 
       const metrics = await page.evaluate(() => {
         const first = (selector) => document.querySelector(selector);
@@ -176,11 +200,23 @@ for (const candidate of config.captureCandidates ?? []) {
 }
 
 await browser.close();
+
+manifest.referenceValidity = {
+  valid: manifest.captures.length > 0 && manifest.captures.every((x) => x.referenceValid === true && !x.error),
+  validCaptures: manifest.captures.filter((x) => x.referenceValid === true && !x.error).length,
+  invalidCaptures: manifest.captures.filter((x) => x.referenceValid !== true || x.error).length
+};
+
 await fs.writeFile(path.join(outRoot, 'capture-manifest.json'), JSON.stringify(manifest, null, 2));
 
 console.log(JSON.stringify({
   caseId: config.caseId,
   captures: manifest.captures.length,
   failures: manifest.captures.filter((x) => x.error).length,
+  referenceValidity: manifest.referenceValidity,
   output: outRoot
 }, null, 2));
+
+if (!manifest.referenceValidity.valid) {
+  process.exitCode = 2;
+}
