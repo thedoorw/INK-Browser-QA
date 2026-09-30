@@ -102,6 +102,23 @@ Do not treat exact signature hashes as final design semantics. WR may merge/spli
 
 ### WRPL-001-C — Capture / Measurement
 
+Reference Validity Gate is mandatory before measurements are accepted.
+
+For CASE-001, initial identity checks are:
+
+```text
+HTTP = 2xx
+TITLE CONTAINS = The Minimalists
+HOME LINKS INCLUDE =
+  /podcast/
+  /books/
+  /films/
+  /tour/
+  /resources/
+```
+
+A successful browser execution against a 403/block/interstitial page is `REFERENCE_VALIDITY_FAIL`, not a capture PASS.
+
 Required initial representative routes:
 
 ```text
