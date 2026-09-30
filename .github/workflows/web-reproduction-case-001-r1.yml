@@ -14,6 +14,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: web-reproduction-case-001
+  cancel-in-progress: true
+
 jobs:
   census-capture:
     name: Smoke census, classify, capture The Minimalists
