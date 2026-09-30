@@ -4156,3 +4156,9 @@ html,body,#app{background:#e7e7e7}
     border-radius:0!important
   }
 }
+
+
+/* INK-UI-PVSI-PACK-05-R3 — normal-panel telemetry cleanup */
+@media(min-width:761px){
+  .ui-b-layer-appearance .ui-b-capability-note{display:none!important}
+}

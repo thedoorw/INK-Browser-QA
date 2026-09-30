@@ -985,7 +985,7 @@
         <div class="shell-panel-body">
           <label class="shell-field"><span>目前顏色</span><input id="shellColorInput" type="color" value="#202020"></label>
           <label class="shell-field"><span>HEX</span><input id="shellColorHex" type="text" value="#202020" maxlength="7"></label>
-          <p class="shell-panel-note">使用既有工具顏色 authority；此面板不建立第二份顏色狀態。</p>
+          <p class="shell-panel-note">沿用目前工具顏色；此面板不另建立獨立顏色狀態。</p>
         </div>
       </section>
       <section class="inspector-section tab-content shell-panel-section" data-content="channels" data-shell-panel-section="channels" aria-label="色版">
@@ -1232,7 +1232,7 @@
       if (item.reuse?.classification === 'REUSE_AVAILABLE_EXISTING_AUTHORITY' && item.reuse?.operation) {
         const reuseButton = document.createElement('button');
         reuseButton.type = 'button';
-        reuseButton.textContent = 'Use / Propose';
+        reuseButton.textContent = '使用／提案';
         reuseButton.dataset.libraryReuseType = item.type || '';
         reuseButton.dataset.libraryReuseOperation = item.reuse.operation;
         reuseButton.addEventListener('click', () => proposeLibraryReuse(item));

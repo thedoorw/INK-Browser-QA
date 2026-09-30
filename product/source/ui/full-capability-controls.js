@@ -471,10 +471,10 @@ export function installFullCapabilityControls(app){
   function refreshChannels(){
     const list=$('#uiBChannelsList');if(!list)return;
     const found=selectedFound(app,object=>object.type==='image'&&object.rasterState?.colorRaster);
-    if(!found){list.innerHTML='<p class="shell-panel-note">Select a raster image to inspect channels.</p>';return;}
+    if(!found){list.innerHTML='<p class="shell-panel-note">選取點陣影像以檢視頻道。</p>';return;}
     const raster=deserializeColorRaster(found.object.rasterState.colorRaster),stateImage=found.object.rasterState;
     const rows=raster.channelNames.map((name,index)=>({kind:'process',index,name})).concat((stateImage.alphaChannels||[]).map((channel,index)=>({kind:'alpha',index,name:channel.name||'Alpha '+(index+1)})),(stateImage.spotChannels||[]).map((channel,index)=>({kind:'spot',index,name:channel.name||'Spot '+(index+1)})));
-    list.innerHTML=rows.map(row=>'<button class="ui-b-channel-row'+(state.selectedChannel&&state.selectedChannel.kind===row.kind&&state.selectedChannel.index===row.index?' active':'')+'" data-ui-b-channel-select="'+row.kind+':'+row.index+'"><span>'+esc(row.name)+'</span><small>'+row.kind+'</small></button>').join('');
+    list.innerHTML=rows.map(row=>'<button class="ui-b-channel-row'+(state.selectedChannel&&state.selectedChannel.kind===row.kind&&state.selectedChannel.index===row.index?' active':'')+'" data-ui-b-channel-select="'+row.kind+':'+row.index+'"><span>'+esc(row.name)+'</span><small>'+(row.kind==='process'?'色彩':row.kind==='alpha'?'Alpha':'特別色')+'</small></button>').join('');
     $$('[data-ui-b-channel-select]',list).forEach(button=>button.addEventListener('click',()=>{const [kind,index]=button.dataset.uiBChannelSelect.split(':');state.selectedChannel={kind,index:Number(index)};refreshChannels();}));
   }
   function channelCommand(command){
