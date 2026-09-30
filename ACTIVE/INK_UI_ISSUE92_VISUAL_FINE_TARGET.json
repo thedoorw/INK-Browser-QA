@@ -9,6 +9,6 @@
     "pvsi-pack5-live-pages"
   ],
   "central_runtime": false,
-  "run_generation": 14,
-  "note": "Package 05 R3 compact exact audit. Individual screenshots cover 19 states; audit validates 826×624/31/125/20 Preferences geometry, Escape close, Light CHAT, custom file picker, visible localization, branding promote/restore/reload, and exact deployed identity including full-capability-controls."
+  "run_generation": 15,
+  "note": "Package 05 R3 exact audit retry. Live harness uses a module with top-level await so browser load/dump waits for async audit completion; audit has a single 60s virtual-time budget. Product target remains 7080067."
 }

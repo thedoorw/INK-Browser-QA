@@ -8,12 +8,15 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
 </style>
 <iframe id="liveFrame" src="../../product/source/?pvsi-pack5=1"></iframe>
 <pre id="pvsiMetrics">{}</pre>
-<script>
-(async()=>{
+<script type="module">
+try {
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const mode=new URL(location.href).searchParams.get('mode')||'prefs-general';
   const frame=document.querySelector('#liveFrame');
-  const waitFrame=()=>new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();}});
+  const waitFrame=()=>frame.contentDocument?.readyState==='complete'
+    ? Promise.resolve()
+    : new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();}});
+  const waitNextFrame=()=>new Promise((resolve,reject)=>{const t=setTimeout(()=>reject(new Error('iframe reload timeout')),30000);frame.onload=()=>{clearTimeout(t);resolve();}});
   await waitFrame();
   let w=frame.contentWindow,d=frame.contentDocument;
   for(let i=0;i<240&&!(w.INK_APP&&w.INK_WEB_SHELL);i++)await sleep(100);
@@ -108,7 +111,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
   await sleep(40);
   const firstPaint={styleText:q('#inkFirstPaintStyle')?.textContent||'',body:rect(d.body),app:rect(q('#app'))};
 
-  const reloadWait=waitFrame();
+  const reloadWait=waitNextFrame();
   frame.src='../../product/source/?pvsi-pack5-reload=1';
   await reloadWait;
   w=frame.contentWindow;d=frame.contentDocument;
@@ -137,5 +140,9 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e7e7e7}
   if(restored.productDefault!==null||restored.active?.name!=='INK'||restored.name!=='INK')throw new Error('branding restore-factory failed '+JSON.stringify(restored));
   if(reloadApplied.stored?.name!=='INK QA PERSIST'||reloadApplied.title!=='INK QA Persist Window')throw new Error('branding reload persistence failed');
   document.querySelector('#pvsiMetrics').textContent=JSON.stringify(metrics);document.documentElement.dataset.qaReady='true';document.title='QA_READY';
-})().catch(error=>{document.querySelector('#pvsiMetrics').textContent=JSON.stringify({status:'ERROR',mode,error:String(error?.stack||error)});document.documentElement.dataset.qaReady='error';document.title='QA_ERROR'});
+} catch(error) {
+  document.querySelector('#pvsiMetrics').textContent=JSON.stringify({status:'ERROR',mode,error:String(error?.stack||error)});
+  document.documentElement.dataset.qaReady='error';
+  document.title='QA_ERROR';
+}
 </script>
