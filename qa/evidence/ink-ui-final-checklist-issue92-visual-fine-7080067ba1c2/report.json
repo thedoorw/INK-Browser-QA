@@ -13290,7 +13290,7 @@
       "width": 1280,
       "height": 1024,
       "screenshot": "history.png",
-      "bytes": 67555,
+      "bytes": 67311,
       "evidence": {
         "status": "PASS",
         "mode": "history",
@@ -17777,7 +17777,7 @@
       "width": 1280,
       "height": 1024,
       "screenshot": "panel-resize.png",
-      "bytes": 54478,
+      "bytes": 54107,
       "evidence": {
         "status": "PASS",
         "mode": "panel-resize",
@@ -18846,7 +18846,7 @@
       "width": 1280,
       "height": 1024,
       "screenshot": "layers-states.png",
-      "bytes": 61935,
+      "bytes": 60160,
       "evidence": {
         "status": "PASS",
         "mode": "layers-states",
@@ -25523,8 +25523,8 @@
           },
           {
             "tool": "shape",
-            "mode": "shape",
-            "toolState": "shape",
+            "mode": "eraser",
+            "toolState": "eraser",
             "rect": {
               "x": 4,
               "y": 25,
@@ -25537,14 +25537,8 @@
             "scrollWidth": 1251,
             "overflow": false,
             "visibleControls": [
-              "color",
-              "quickColor",
-              "BUTTON",
-              "BUTTON",
-              "BUTTON",
-              "BUTTON",
-              "BUTTON",
-              "shapeFill",
+              "size",
+              "quickSizeInput",
               "contextualAdvancedBtn"
             ]
           },
@@ -25596,7 +25590,7 @@
       "width": 1280,
       "height": 1024,
       "screenshot": "keyboard-focus.png",
-      "bytes": 54923,
+      "bytes": 54686,
       "evidence": {
         "status": "PASS",
         "mode": "keyboard-focus",
@@ -27872,7 +27866,7 @@
           },
           "visible": true,
           "stage": "chat",
-          "text": "INK WEB · CREATIVE LOOPCHAT × Document未命名作品 · c444257f-a1e1-440f-b637-5c454d8a5298 Page頁面 1 · c8e1b399-f986-408e-8d83-d29759a3e6d1 Contextchat · pen 修訂— Selectionpath · qa-visual-a Source— CHATNo proposal 參考編輯構成CHAT修訂 參考圖 → 直接擷取 → 可編輯路徑 參考圖選擇檔案…未選擇檔案 臨界值 直接擷取取消 參考圖疊加 本次尚未擷取。 結構分析 選用 以直接擷取為預設；結構分析沿用既有多路徑與 Repeat 能力。 Radial count 分析並重建 Not executed. 直接擷取 remains active. 研究 → 創作 唯讀 顯示本機研究證據、視覺原則與創作限制；不自動連線或寫入創作記憶。 更新研究內容 Research advisory provider ready · no remote fetch. 路徑編輯與表現筆畫 編輯路徑結束 簡化細化 筆畫顏色 基本寬度 套用表現筆畫移除表現筆畫 qa-visual-a · 4 nodes · OBJECT MODE · VECTOR 構成 → 重繪／材質 複製 群組 框架 移至最上 移至最下 填色 重繪選取路徑 材質 ID 套用材質移除材質 1 selected · path · History 0/0 參數結構 既有結構 顯示已選取 Repeat 的狀態；Repeat／Transform 仍由既有 Core 控制。 選取 Repeat 以查看參數結構狀態。 Explicit descriptors are available to CHAT through resolve_parametric_structure. 自然語言 CHAT STANDARD · manual-json 查看內容 尚無對話。可先查看目前文件或輸入提示詞。 提示詞 送出清除 同意傳送外部內容 尚未查看內容。 Grounded Core context 唯讀 查看 Core 內容Creative Memory研究 Grounded tools ready · inspect to read Document Bridge / Semantic Regions / Provenance. Creative Memory provider ready · advisory not inspected. 限定編輯 操作 重繪路徑 移動物件 簡化路徑 細化路徑 套用材質 移除材質 顏色 ΔX / ΔY 材質 ID 查看提出建議 同意 拒絕 執行 尚無建議。 多步驟創作計畫 目標 新增目前步驟清除步驟 提出計畫 同意計畫 拒絕計畫 執行計畫 DRAFT · 0 step(s) 修訂擷取／還原 標籤 擷取更新清單 修訂尚無修訂 還原選取修訂 與目前結構比較 目前修訂：無 · 已儲存 0 筆 尚未比較。 尚未查看來源。",
+          "text": "INK WEB · CREATIVE LOOPCHAT × Document未命名作品 · a5db220a-7728-40d0-88ca-c7ad42e085bc Page頁面 1 · f59fb61b-aefa-4aa7-8159-240140627315 Contextchat · pen 修訂— Selectionpath · qa-visual-a Source— CHATNo proposal 參考編輯構成CHAT修訂 參考圖 → 直接擷取 → 可編輯路徑 參考圖選擇檔案…未選擇檔案 臨界值 直接擷取取消 參考圖疊加 本次尚未擷取。 結構分析 選用 以直接擷取為預設；結構分析沿用既有多路徑與 Repeat 能力。 Radial count 分析並重建 Not executed. 直接擷取 remains active. 研究 → 創作 唯讀 顯示本機研究證據、視覺原則與創作限制；不自動連線或寫入創作記憶。 更新研究內容 Research advisory provider ready · no remote fetch. 路徑編輯與表現筆畫 編輯路徑結束 簡化細化 筆畫顏色 基本寬度 套用表現筆畫移除表現筆畫 qa-visual-a · 4 nodes · OBJECT MODE · VECTOR 構成 → 重繪／材質 複製 群組 框架 移至最上 移至最下 填色 重繪選取路徑 材質 ID 套用材質移除材質 1 selected · path · History 0/0 參數結構 既有結構 顯示已選取 Repeat 的狀態；Repeat／Transform 仍由既有 Core 控制。 選取 Repeat 以查看參數結構狀態。 Explicit descriptors are available to CHAT through resolve_parametric_structure. 自然語言 CHAT STANDARD · manual-json 查看內容 尚無對話。可先查看目前文件或輸入提示詞。 提示詞 送出清除 同意傳送外部內容 尚未查看內容。 Grounded Core context 唯讀 查看 Core 內容Creative Memory研究 Grounded tools ready · inspect to read Document Bridge / Semantic Regions / Provenance. Creative Memory provider ready · advisory not inspected. 限定編輯 操作 重繪路徑 移動物件 簡化路徑 細化路徑 套用材質 移除材質 顏色 ΔX / ΔY 材質 ID 查看提出建議 同意 拒絕 執行 尚無建議。 多步驟創作計畫 目標 新增目前步驟清除步驟 提出計畫 同意計畫 拒絕計畫 執行計畫 DRAFT · 0 step(s) 修訂擷取／還原 標籤 擷取更新清單 修訂尚無修訂 還原選取修訂 與目前結構比較 目前修訂：無 · 已儲存 0 筆 尚未比較。 尚未查看來源。",
           "forbiddenMatches": [
             "provider"
           ],
@@ -29605,7 +29599,7 @@
       "width": 1280,
       "height": 1024,
       "screenshot": "guides-px.png",
-      "bytes": 43578,
+      "bytes": 43370,
       "evidence": {
         "status": "PASS",
         "mode": "guides-px",
@@ -32721,7 +32715,7 @@
       "width": 1280,
       "height": 1024,
       "screenshot": "focus.png",
-      "bytes": 53901,
+      "bytes": 53714,
       "evidence": {
         "status": "PASS",
         "mode": "focus",
@@ -33802,7 +33796,7 @@
         "branding": "8e86e03502d72fb4fa39ce458bee39c412f68e2957f28dcf9c902573f386d76b",
         "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0"
       },
-      "waitMs": 354
+      "waitMs": 359
     },
     "urls": {
       "prefs-general": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-general&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
@@ -33841,67 +33835,67 @@
       },
       "prefs-canvas": {
         "file": "live-prefs-canvas.png",
-        "bytes": 90668
+        "bytes": 57324
       },
       "prefs-guides": {
         "file": "live-prefs-guides.png",
-        "bytes": 73004
+        "bytes": 55986
       },
       "prefs-performance": {
         "file": "live-prefs-performance.png",
-        "bytes": 71533
+        "bytes": 55986
       },
       "prefs-storage": {
         "file": "live-prefs-storage.png",
-        "bytes": 70014
+        "bytes": 55986
       },
       "prefs-branding": {
         "file": "live-prefs-branding.png",
-        "bytes": 79668
+        "bytes": 57324
       },
       "creative-reference": {
         "file": "live-creative-reference.png",
-        "bytes": 57324
+        "bytes": 55986
       },
       "panel-libraries": {
         "file": "live-panel-libraries.png",
-        "bytes": 51155
+        "bytes": 55986
       },
       "creative-compose": {
         "file": "live-creative-compose.png",
-        "bytes": 55217
+        "bytes": 57324
       },
       "creative-chat": {
         "file": "live-creative-chat.png",
-        "bytes": 52088
+        "bytes": 55986
       },
       "creative-revision": {
         "file": "live-creative-revision.png",
-        "bytes": 56439
+        "bytes": 57324
       },
       "panel-properties": {
         "file": "live-panel-properties.png",
-        "bytes": 62658
+        "bytes": 57324
       },
       "panel-color": {
         "file": "live-panel-color.png",
-        "bytes": 58778
+        "bytes": 57324
       },
       "panel-adjustments": {
         "file": "live-panel-adjustments.png",
-        "bytes": 63635
+        "bytes": 55986
       },
       "panel-history": {
         "file": "live-panel-history.png",
-        "bytes": 55492
+        "bytes": 57324
       },
       "panel-channels": {
         "file": "live-panel-channels.png",
-        "bytes": 55602
+        "bytes": 57324
       },
       "panel-pages": {
         "file": "live-panel-pages.png",
-        "bytes": 53823
+        "bytes": 57324
       }
     },
     "status": "ERROR",
@@ -33911,7 +33905,7 @@
     "total": 24,
     "passed": 24,
     "failed": 1,
-    "screenshotBytes": 1197796
+    "screenshotBytes": 1194774
   },
   "error": "package5 live audit failed"
 }
