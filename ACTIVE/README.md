@@ -34,6 +34,9 @@ DEV also reads:
 `ACTIVE/AI_DEV_PRODUCTION_LINE_MR_NEW_WINDOW_HANDOFF_v1.0.md`
 = separate R&D-lane handoff for AI development-production-line research; it does not authorize INK product mutation.
 
+`ACTIVE/INK_UI_STANDARDS_SUPERVISOR_MR_NEW_WINDOW_HANDOFF_v1.0.md`
+= continuous UI standards / supervision lane; maintains inspection rigor and reusable rules without acting as a progress-report role.
+
 `ACTIVE/INK_UI_UR_EXECUTION_DIRECTIVE_v1.0.md`
 = closed delegation record for UI-B/UI-C implementation.
 
