@@ -1,0 +1,134 @@
+{
+  "schema": "INK-UI-PVSI-PACK5-LIVE-EVIDENCE",
+  "version": 1,
+  "targetSha": "7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+  "identity": {
+    "baseUrl": "https://thedoorw.github.io/INK-Browser-QA/",
+    "expected": {
+      "styles": "0bd6fed5779fdf4daf5d187a5024931138f4ae157750f9ab4eb7b71ef319eefb",
+      "webShell": "1af1ed99bece7259e26230ed82a7c1d22f5f7441a1a739390c90cd11fdf5ac36",
+      "index": "2647d252c2fac8b4ee5f23219f916d42771beb10b0c7546d5ca2a0e62b77b51b",
+      "creative": "cca23eb655cb1a8c087924a5c4c04859a0b00f14f1ee1cdc8b7cff67948aedb9",
+      "branding": "8e86e03502d72fb4fa39ce458bee39c412f68e2957f28dcf9c902573f386d76b",
+      "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0"
+    },
+    "observed": {
+      "stylesStatus": 200,
+      "webShellStatus": 200,
+      "indexStatus": 200,
+      "creativeStatus": 200,
+      "brandingStatus": 200,
+      "fullControlsStatus": 200,
+      "harnessStatus": 200,
+      "styles": "0bd6fed5779fdf4daf5d187a5024931138f4ae157750f9ab4eb7b71ef319eefb",
+      "webShell": "1af1ed99bece7259e26230ed82a7c1d22f5f7441a1a739390c90cd11fdf5ac36",
+      "index": "2647d252c2fac8b4ee5f23219f916d42771beb10b0c7546d5ca2a0e62b77b51b",
+      "creative": "cca23eb655cb1a8c087924a5c4c04859a0b00f14f1ee1cdc8b7cff67948aedb9",
+      "branding": "8e86e03502d72fb4fa39ce458bee39c412f68e2957f28dcf9c902573f386d76b",
+      "fullControls": "7703982381d0bf4300b19f8a073cb57f6ea8d3c46bfdf8edd68da373185fdae0"
+    },
+    "waitMs": 354
+  },
+  "urls": {
+    "prefs-general": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-general&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "prefs-interface": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-interface&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "prefs-tools": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-tools&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "prefs-canvas": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-canvas&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "prefs-guides": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-guides&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "prefs-performance": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-performance&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "prefs-storage": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-storage&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "prefs-branding": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=prefs-branding&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "creative-reference": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=creative-reference&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "panel-libraries": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-libraries&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "creative-compose": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=creative-compose&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "creative-chat": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=creative-chat&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "creative-revision": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=creative-revision&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "panel-properties": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-properties&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "panel-color": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-color&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "panel-adjustments": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-adjustments&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "panel-history": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-history&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "panel-channels": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-channels&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "panel-pages": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=panel-pages&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b",
+    "audit": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-ui-pvsi-pack5-live-harness.html?mode=audit&target=7080067ba1c2c45c32d00f01d2ebd1517c0eff5b"
+  },
+  "screenshots": {
+    "prefs-general": {
+      "file": "live-prefs-general.png",
+      "bytes": 63790
+    },
+    "prefs-interface": {
+      "file": "live-prefs-interface.png",
+      "bytes": 63539
+    },
+    "prefs-tools": {
+      "file": "live-prefs-tools.png",
+      "bytes": 76001
+    },
+    "prefs-canvas": {
+      "file": "live-prefs-canvas.png",
+      "bytes": 90668
+    },
+    "prefs-guides": {
+      "file": "live-prefs-guides.png",
+      "bytes": 73004
+    },
+    "prefs-performance": {
+      "file": "live-prefs-performance.png",
+      "bytes": 71533
+    },
+    "prefs-storage": {
+      "file": "live-prefs-storage.png",
+      "bytes": 70014
+    },
+    "prefs-branding": {
+      "file": "live-prefs-branding.png",
+      "bytes": 79668
+    },
+    "creative-reference": {
+      "file": "live-creative-reference.png",
+      "bytes": 57324
+    },
+    "panel-libraries": {
+      "file": "live-panel-libraries.png",
+      "bytes": 51155
+    },
+    "creative-compose": {
+      "file": "live-creative-compose.png",
+      "bytes": 55217
+    },
+    "creative-chat": {
+      "file": "live-creative-chat.png",
+      "bytes": 52088
+    },
+    "creative-revision": {
+      "file": "live-creative-revision.png",
+      "bytes": 56439
+    },
+    "panel-properties": {
+      "file": "live-panel-properties.png",
+      "bytes": 62658
+    },
+    "panel-color": {
+      "file": "live-panel-color.png",
+      "bytes": 58778
+    },
+    "panel-adjustments": {
+      "file": "live-panel-adjustments.png",
+      "bytes": 63635
+    },
+    "panel-history": {
+      "file": "live-panel-history.png",
+      "bytes": 55492
+    },
+    "panel-channels": {
+      "file": "live-panel-channels.png",
+      "bytes": 55602
+    },
+    "panel-pages": {
+      "file": "live-panel-pages.png",
+      "bytes": 53823
+    }
+  },
+  "status": "ERROR",
+  "metrics": {}
+}
