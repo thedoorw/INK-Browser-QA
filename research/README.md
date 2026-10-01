@@ -28,13 +28,13 @@ Current work authority:
 ### CHAT qualification / creative reproduction / portfolio benchmark
 - `INK_CHAT_CAPABILITY_QUALIFICATION_PLAN_v0.1.md`
   - current Gate 1 before mature-work reproduction;
-  - 30 verified Figma / Adobe qualification/supporting cases; Canva is the next candidate pending connection and evidence selection;
+  - 40 Figma / Adobe / Canva qualification/supporting cases;
   - case × capability mapping before execution;
   - overlap / unique coverage / gap analysis;
   - isolated qualification → combined-task qualification → reproduction sequence.
 - `INK_CREATIVE_REPRODUCTION_BENCHMARK_v0.1.md`
   - 100+ mature-case candidate library remains a later target;
-  - Figma / Adobe current source ecosystems; Canva next-candidate ecosystem;
+  - Figma / Adobe / Canva source ecosystems;
   - CHAT-operated INK reproduction after qualification;
   - capability coverage / gap classification;
   - GitHub portfolio direction.
