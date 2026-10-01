@@ -422,7 +422,26 @@ A representative grouping is:
 12. export/output + multi-step closed loop
 ```
 
-The exact final grouping may be reduced further if one exercise covers several groups with measurable evidence.
+The exact final grouping is executed through only **three bounded INK exercises** unless evidence shows a real uncovered gap:
+
+| Exercise | Purpose | Primary groups covered | Minimum closed-loop evidence |
+| --- | --- | --- | --- |
+| INK-QA-A — Construct | Create a small finished poster/graphic from a text brief | 1–6, 9–12 | CHAT discovers capabilities → creates editable text/vector structure → arranges hierarchy/layout → Preview → identifies a concrete issue → corrects it → verifies History/Revision → exports |
+| INK-QA-B — Reference | Import a simple visual/SVG reference and reconstruct or transform it into editable INK structure | 1, 2, 4, 7, 10–12 | source identity preserved → editable structure produced → CHAT inspects against reference → corrects a mismatch → verifies lineage → exports |
+| INK-QA-C — Draw | Produce and revise a small freehand/brush-based element | 1, 4, 8, 10–12 | CHAT selects drawing route → creates editable stroke evidence → revises at least one stroke/property → Preview → verifies final state → exports |
+
+Rules:
+
+```text
+THREE_EXERCISES = DEFAULT_COMPLETE_GATE_1_SET
+DO_NOT_CREATE_ONE_TEST_PER_ATOMIC_CAPABILITY
+DOCUMENT_CONFIRMED_SUBCAPABILITY = DOES_NOT_REQUIRE_DUPLICATE_ISOLATED_TEST
+IF_A_GROUP_IS_NOT_EXERCISED = ADD_ONE_BOUNDED_TARGETED_TEST_ONLY
+PASS = VISIBLE_OR_STRUCTURAL_RESULT + CHAT_SELF_CORRECTION + FINAL_VERIFICATION
+TOOL_CALL_SUCCESS_ALONE = NOT_PASS
+```
+
+Gate 1 is therefore complete when the three exercises provide sufficient evidence for the practical groups, or when any uncovered group has one justified targeted supplemental test. The historical 56-row matrix remains planning provenance, not an execution checklist.
 
 No product mutation is authorized by this plan.
 
