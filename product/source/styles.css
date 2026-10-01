@@ -3707,7 +3707,7 @@ html,body,#app{background:#e7e7e7}
  .shell-navigator-fit-overlay{display:none}
  .contextual-tool-identity{color:#373737;min-width:27px;padding-right:6px;max-width:104px;padding:0;width:27px;display:grid;place-items:center}
  .contextual-tool-identity strong{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
- .contextual-tool-identity svg{width:19px;height:19px;stroke-width:1.8}
+ .contextual-tool-identity svg{width:19px;height:19px;stroke-width:1.5}
  .contextual-options .context-inline-control{display:flex;align-items:center;gap:5px;min-height:25px}
  .contextual-options .context-control-label{font-size:var(--ui-type-xl);line-height:22px}
  .contextual-options input[type="range"]{height:22px;margin:0}
@@ -3715,7 +3715,7 @@ html,body,#app{background:#e7e7e7}
  .tool-icon svg use[href="#i-brush"]{fill:currentColor;stroke-width:.7}
 }
 
-@media(min-width:761px){.tool-rail .tool-action{width:31px;height:26px;min-height:26px;padding:0;border:0;border-radius:0;background:transparent;color:var(--ink-ui-text-muted);display:grid;place-items:center}.tool-action svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8}.tool-action:hover{background:var(--ink-ui-control-hover)}}
+@media(min-width:761px){.tool-rail .tool-action{width:31px;height:26px;min-height:26px;padding:0;border:0;border-radius:0;background:transparent;color:var(--ink-ui-text-muted);display:grid;place-items:center}.tool-action svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5}.tool-action:hover{background:var(--ink-ui-control-hover)}}
 
 @media(min-width:761px){
  .panel-stack-body>.navigator-panel{padding:0}
