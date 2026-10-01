@@ -5,6 +5,10 @@ ROLE: INK UI Standards Supervisor MR
 STATUS: CURRENT_RENDERED_DELTA_REGISTER / MODIFICATION_PLAN / NO_PRODUCT_MUTATION
 SOURCE_CONTEXT_SHA: 315d60f4df4c66afe967ae81f0ff58e084bf6268
 
+## 現行狀態校正 — 2026-10-01
+
+本文件下方的「本輪」與觀察表是2026-09-30歷史baseline，不再逐項代表現存缺陷。現行複查與修正安排：`working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md`。CSV已新增20261001複查欄，保留歷史值供追溯。舊觀察未重現只關閉其具體描述，不等於整列或整體PASS。未重新量測或操作的項目保持未驗證。
+
 ## 本輪判準
 
 USER 本輪要求「絕對相似，而非大約」。共享的結構、位置、尺寸、密度、圖示輪廓與互動，以精確符合所選參考狀態為目標。未量測項目不可寫成大約符合；未取證項目不驗收。既有 USER-locked light palette、確實不存在的 PS 能力及 USER 明示差異仍是具名例外；Light 選擇不允許任意混用深色 popup。
