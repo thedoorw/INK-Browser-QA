@@ -108,3 +108,26 @@ Return:
 
 Do not self-declare final Photoshop fidelity or UI completion.
 STOP after this bounded normalization pass for USER review.
+
+
+## USER visual evidence pack — 2026-10-01
+
+USER visual evidence is encoded as the following attachment set. When these files are supplied in the DEV chat/window, inspect them before editing. They are direct USER problem-identification evidence and supplement the authoritative Photoshop Dataset / Micro-Module Grammar.
+
+| Code | Filename | Primary use |
+| --- | --- | --- |
+| UIE-00 | `INK-UIE-00_CURRENT_FULL.png` | Current INK full-screen baseline; macro context for shell, Tools, workspace and right panels |
+| UIE-01 | `INK-UIE-01_TOOLS_COLLAPSED_DETAIL.png` | USER-03 collapsed Tools overflow; USER-07 side-collapse separator/arrow/utility layout |
+| UIE-02 | `INK-UIE-02_TOP_CHROME_OPTIONS_DETAIL.png` | Photoshop↔INK top Menu / Options comparison; typography/control/spacing/icon; USER-06 window-control relation |
+| UIE-03 | `INK-UIE-03_RIGHT_PANEL_CURRENT_DETAIL.png` | Current right-panel detail; USER-01/02/04/05/07/08 |
+| UIE-04 | `INK-UIE-04_WINDOW_COLLAPSE_ICON_DETAIL.png` | Enlarged window-control, collapse-arrow and panel-menu/hamburger sharpness/placement; USER-06/07 |
+| UIE-05 | `INK-UIE-05_REFERENCE_PANEL_ZOOM.png` | Enlarged Reference panel; cards, bold, special color, slider frame, scrollbar, tabs; USER-02/04/05/08 |
+| UIE-06 | `INK-UIE-06_PS_EDIT_LAYERS_REFERENCE.png` | Photoshop Edit-menu grouping plus Layers/panel reference; USER-09/10 |
+
+Evidence handling rules:
+- do not treat these screenshots as a separate design authority that overrides `ACTIVE/INK_UI_PS_INSTANCE_DATASET_v1.0.md`;
+- use them to identify the exact current INK defects USER pointed out;
+- where a screenshot contains Photoshop and INK together, distinguish reference UI from the embedded/current INK image before measuring;
+- do not infer unseen functionality from a static screenshot;
+- if a current product state has changed since UIE-00/UIE-03/UIE-05, recheck the actual current rendered page and use the screenshots as defect provenance, not stale PASS/FAIL evidence.
+
