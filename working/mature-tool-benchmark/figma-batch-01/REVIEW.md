@@ -9,11 +9,12 @@ DEV_HANDOFF_HEAD: ae526b6d49b75128fb68fdb7d5ad8fc37cb1fdc6
 ## Reviewer verdict
 
 ```text
-REVIEW_VERDICT = ACCEPTED_AS_VALID_BLOCKED_BATCH
-MASTER_QUALIFICATION_PROMOTION = NONE
+REVIEW_VERDICT = ACCEPTED_AS_OPERATION_LEARNING_EVIDENCE
+MASTER_QUALIFICATION_PROMOTION = DOCUMENTED_OPERATION_STATUS_ONLY
 BATCH_02_AUTHORIZATION = NO
 MERGE_AUTHORIZATION = NO
-RERUN_REQUIRED = F01 / F08 / F09 / F10
+RERUN_REQUIRED = NONE_FOR_PROGRAM_GATE
+EXTERNAL_PAID_UPGRADE = FORBIDDEN
 F14 = CONFIRMED_CURRENT_SURFACE_TOOL_GAP
 ```
 
@@ -77,24 +78,31 @@ For a rerun, isolate cases with Sections or another topology that fits the authe
 ## Accepted conclusions
 
 ```text
-F01 = UNRESOLVED / RERUN
-F08 = UNRESOLVED / RERUN
-F09 = UNRESOLVED / RERUN
-F10 = UNRESOLVED / RERUN
-F14 = BLOCKED / CURRENT_FIGMA_CHAT_SURFACE_TOOL_GAP
+F01 = INITIAL_LIVE_CREATION_EVIDENCE / CLOSED_LOOP_NOT_PROVEN
+F08 = DOCUMENT_CONFIRMED / BOOLEAN_OPERATIONS_AVAILABLE
+F09 = DOCUMENT_CONFIRMED / AUTO_LAYOUT_AVAILABLE
+F10 = DOCUMENT_CONFIRMED / COMPONENT_OPERATIONS_AVAILABLE
+F14 = CHAT_SURFACE_GAP / CALLABLE_UNDO_AND_VERSION_HISTORY_SAVE_UNAVAILABLE
+EXTERNAL_PLAN_LIMIT = CONFIRMED / NON_BLOCKING
 ```
 
-No mature-tool autonomy PASS is established by Batch 01.
+No claim is made that F01 proved full autonomy; its required correction loop was interrupted.
 
-No CHAT_GAP is established by Batch 01.
+F08/F09/F10 do not require reruns merely to prove documented Figma API availability. Their value to INK is the operation model, not an external-product QA PASS.
 
-No master qualification result should be promoted from these five records.
+No CHAT_GAP was demonstrated by this batch.
+
+The only program-level promotions are the documented operation-status classifications above; they are not INK qualification results.
 
 ## Next gate
 
 ```text
-MTB-FIGMA-BATCH-01 REVIEW COMPLETE
-→ hold Batch 02
-→ prepare bounded Figma Batch 01 rerun fixture for F01/F08/F09/F10
+MTB-FIGMA-BATCH-01 = CLOSED FOR CURRENT PROGRAM PURPOSE
+→ no paid Figma upgrade
+→ no mandatory rerun
+→ no Batch 02
+→ extract Figma operation patterns into CHAT × INK qualification design
 → preserve F14 as confirmed surface-gap evidence unless the Figma tool surface changes
 ```
+
+If free Figma quota becomes available later, one small end-to-end exercise may be run only if it answers a concrete unresolved autonomy question. It is not a prerequisite for continuing INK.
