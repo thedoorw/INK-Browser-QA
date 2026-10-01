@@ -1,0 +1,5408 @@
+{
+  "before": {
+    "important": 104,
+    "coveredDeclarations": 1476,
+    "coveredHardcodedValues": 489,
+    "coveredRadiusShadow": 111,
+    "coveredColorLiterals": 101,
+    "coveredGeometryLiterals": 440,
+    "coveredBorderRadius": 67,
+    "coveredBoxShadow": 44,
+    "coveredDuplicateDefinitions": 96,
+    "breakpointFamilies": [
+      "(max-width:1120px)and(min-width:761px)",
+      "(max-width:760px)",
+      "(min-width:761px)",
+      "(min-width:761px)and(min-height:990px)and(max-height:998px)",
+      "(pointer:coarse)",
+      "(pointer:coarse)and(max-height:520px)",
+      "(prefers-reduced-motion:reduce)"
+    ],
+    "stateRoutingSourceFilesChanged": 0
+  },
+  "after": {
+    "important": 104,
+    "coveredDeclarations": 1308,
+    "coveredHardcodedValues": 367,
+    "coveredRadiusShadow": 85,
+    "coveredColorLiterals": 61,
+    "coveredGeometryLiterals": 339,
+    "coveredBorderRadius": 54,
+    "coveredBoxShadow": 31,
+    "coveredDuplicateDefinitions": 0,
+    "breakpointFamilies": [
+      "(max-width:1120px)and(min-width:761px)",
+      "(max-width:760px)",
+      "(min-width:761px)",
+      "(min-width:761px)and(min-height:990px)and(max-height:998px)",
+      "(pointer:coarse)",
+      "(pointer:coarse)and(max-height:520px)",
+      "(prefers-reduced-motion:reduce)"
+    ],
+    "stateRoutingSourceFilesChanged": 0
+  },
+  "removed": [
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "top",
+      "value": "calc(var(--topbar-h) + 10px)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "bottom",
+      "value": "calc(var(--status-h) + 10px)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "left",
+      "value": "10px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "width",
+      "value": "68px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "padding",
+      "value": "8px 5px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "border",
+      "value": "1px solid rgba(255,255,255,.82)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "border-radius",
+      "value": "18px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 111,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "box-shadow",
+      "value": "var(--shadow-sm)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 305,
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "selector": ".tool-rail",
+      "property": "width",
+      "value": "60px",
+      "important": false,
+      "reason": "obsolete narrow rail width superseded by desktop shared rail width"
+    },
+    {
+      "line": 307,
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "selector": ".tool-rail .tool-button",
+      "property": "height",
+      "value": "45px",
+      "important": false,
+      "reason": "obsolete narrow cell height superseded by desktop shared cell pitch"
+    },
+    {
+      "line": 308,
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "selector": ".tool-button.active::before",
+      "property": "left",
+      "value": "-5px",
+      "important": false,
+      "reason": "desktop active pseudo is disabled; obsolete narrow offset"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "top",
+      "value": "calc(var(--topbar-h) + 6px)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "bottom",
+      "value": "calc(var(--status-h) + 6px)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "left",
+      "value": "6px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "width",
+      "value": "54px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "padding",
+      "value": "4px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "border-color",
+      "value": "var(--line-strong)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "border-radius",
+      "value": "7px",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "box-shadow",
+      "value": "var(--shadow-sm)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 545,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "background",
+      "value": "rgba(242,242,239,.98)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 700,
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "selector": ".tool-rail",
+      "property": "width",
+      "value": "46px",
+      "important": false,
+      "reason": "obsolete narrow rail width superseded by desktop shared rail width"
+    },
+    {
+      "line": 701,
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "selector": ".tool-rail .tool-button",
+      "property": "height",
+      "value": "36px",
+      "important": false,
+      "reason": "obsolete narrow cell height superseded by desktop shared cell pitch"
+    },
+    {
+      "line": 1488,
+      "context": "",
+      "selector": ".tool-rail",
+      "property": "top",
+      "value": "calc(var(--topbar-h) + var(--contextual-h) + 8px)",
+      "important": false,
+      "reason": "desktop obsolete rail base; preserved exclusively for existing compact rail"
+    },
+    {
+      "line": 1942,
+      "context": "media:(min-width:761px)",
+      "selector": ".app.toolbar-layout-dual .tool-rail .tool-button",
+      "property": "width",
+      "value": "31px",
+      "important": false,
+      "reason": "dual state uses the same shared tool-cell width as single state"
+    },
+    {
+      "line": 2111,
+      "context": "media:(min-width:761px)",
+      "selector": ".creative-workspace-field",
+      "property": "grid-template-columns",
+      "value": "82px minmax(0,1fr)",
+      "important": false,
+      "reason": "shared Reference grid owns the identical final 72px label geometry"
+    },
+    {
+      "line": 2131,
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "selector": ".creative-workspace-field",
+      "property": "grid-template-columns",
+      "value": "72px minmax(0,1fr)",
+      "important": false,
+      "reason": "shared Reference grid owns the identical final 72px label geometry"
+    },
+    {
+      "line": 2627,
+      "context": "media:(min-width:761px)",
+      "selector": ".app.toolbar-layout-dual .tool-rail .tool-button",
+      "property": "width",
+      "value": "31px",
+      "important": false,
+      "reason": "dual state uses the same shared tool-cell width as single state"
+    },
+    {
+      "line": 3121,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-layout-toggle svg",
+      "property": "width",
+      "value": "9px",
+      "important": false,
+      "reason": "left-only glyph override retired; shared edge-chevron authority"
+    },
+    {
+      "line": 3121,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-layout-toggle svg",
+      "property": "height",
+      "value": "8px",
+      "important": false,
+      "reason": "left-only glyph override retired; shared edge-chevron authority"
+    },
+    {
+      "line": 3581,
+      "context": "media:(min-width:761px)",
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-field",
+      "property": "grid-template-columns",
+      "value": "72px minmax(0,1fr)",
+      "important": false,
+      "reason": "redundant scoped Reference grid; shared primitive has identical values"
+    },
+    {
+      "line": 3581,
+      "context": "media:(min-width:761px)",
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-field",
+      "property": "align-items",
+      "value": "center",
+      "important": false,
+      "reason": "redundant scoped Reference grid; shared primitive has identical values"
+    },
+    {
+      "line": 103,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "height",
+      "value": "36px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 103,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "padding",
+      "value": "0 11px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 103,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "border-radius",
+      "value": "9px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 103,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "font-size",
+      "value": "var(--ui-type-xl)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 103,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "font-weight",
+      "value": "600",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 104,
+      "context": "",
+      "selector": ".quiet-button:hover",
+      "property": "background",
+      "value": "#fff",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 104,
+      "context": "",
+      "selector": ".quiet-button:hover",
+      "property": "box-shadow",
+      "value": "var(--shadow-sm)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 105,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "min-height",
+      "value": "38px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 105,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "padding",
+      "value": "0 14px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 105,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "border-radius",
+      "value": "11px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 105,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "font-weight",
+      "value": "700",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 105,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "gap",
+      "value": "8px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 105,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "box-shadow",
+      "value": "0 5px 14px rgba(30,98,90,.18)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 106,
+      "context": "",
+      "selector": ".primary-button svg",
+      "property": "width",
+      "value": "17px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 106,
+      "context": "",
+      "selector": ".primary-button svg",
+      "property": "height",
+      "value": "17px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 107,
+      "context": "",
+      "selector": ".primary-button:hover",
+      "property": "box-shadow",
+      "value": "0 7px 18px rgba(30,98,90,.24)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 108,
+      "context": "",
+      "selector": ".primary-button:active",
+      "property": "transform",
+      "value": "translateY(1px)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 111,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "top",
+      "value": "calc(var(--topbar-h) + 10px)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 111,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "bottom",
+      "value": "calc(var(--status-h) + 10px)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 111,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "left",
+      "value": "10px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 111,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "width",
+      "value": "68px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 111,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "padding",
+      "value": "8px 5px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 111,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "border-radius",
+      "value": "18px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 111,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "box-shadow",
+      "value": "var(--shadow-sm)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 545,
+      "context": "media:(max-width:760px)",
+      "selector": ".tool-rail",
+      "property": "top",
+      "value": "calc(var(--topbar-h) + 6px)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 114,
+      "context": "",
+      "selector": ".tool-rail .tool-button",
+      "property": "height",
+      "value": "52px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 114,
+      "context": "",
+      "selector": ".tool-rail .tool-button",
+      "property": "border-radius",
+      "value": "13px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 114,
+      "context": "",
+      "selector": ".tool-rail .tool-button",
+      "property": "gap",
+      "value": "3px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 115,
+      "context": "",
+      "selector": ".tool-button .tool-label",
+      "property": "font-size",
+      "value": "var(--ui-type-xs)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 115,
+      "context": "",
+      "selector": ".tool-button .tool-label",
+      "property": "font-weight",
+      "value": "650",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 115,
+      "context": "",
+      "selector": ".tool-button .tool-label",
+      "property": "line-height",
+      "value": "1",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 116,
+      "context": "",
+      "selector": ".tool-button:hover",
+      "property": "background",
+      "value": "rgba(255,255,255,.85)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 117,
+      "context": "",
+      "selector": ".tool-button.active",
+      "property": "background",
+      "value": "var(--accent-soft)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 117,
+      "context": "",
+      "selector": ".tool-button.active",
+      "property": "box-shadow",
+      "value": "inset 0 0 0 1px rgba(30,98,90,.12)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 118,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "left",
+      "value": "-5px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 118,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "width",
+      "value": "3px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 118,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "height",
+      "value": "20px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 118,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "border-radius",
+      "value": "0 3px 3px 0",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 119,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "top",
+      "value": "7px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 119,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "right",
+      "value": "8px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 119,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "width",
+      "value": "4px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 119,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "height",
+      "value": "4px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 231,
+      "context": "",
+      "selector": ".segmented button",
+      "property": "min-height",
+      "value": "31px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 233,
+      "context": "",
+      "selector": ".shape-grid",
+      "property": "gap",
+      "value": "6px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 234,
+      "context": "",
+      "selector": ".shape-grid button",
+      "property": "padding",
+      "value": "7px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 239,
+      "context": "",
+      "selector": ".layer-row",
+      "property": "border-radius",
+      "value": "12px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 241,
+      "context": "",
+      "selector": ".layer-row.active",
+      "property": "box-shadow",
+      "value": "inset 3px 0 0 var(--accent)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 242,
+      "context": "",
+      "selector": ".layer-row .layer-name",
+      "property": "padding",
+      "value": "0 6px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 243,
+      "context": "",
+      "selector": ".layer-row .layer-name strong",
+      "property": "font-size",
+      "value": "var(--ui-type-lg)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 244,
+      "context": "",
+      "selector": ".layer-row .layer-meta",
+      "property": "font-size",
+      "value": "var(--ui-type-xs)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 244,
+      "context": "",
+      "selector": ".layer-row .layer-meta",
+      "property": "color",
+      "value": "var(--muted)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 244,
+      "context": "",
+      "selector": ".layer-row .layer-meta",
+      "property": "margin-top",
+      "value": "2px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 633,
+      "context": "",
+      "selector": ".layer-row .layer-meta",
+      "property": "font-size",
+      "value": "var(--ui-type-xs)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 245,
+      "context": "",
+      "selector": ".layer-row button",
+      "property": "height",
+      "value": "32px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 245,
+      "context": "",
+      "selector": ".layer-row button",
+      "property": "border-radius",
+      "value": "8px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 245,
+      "context": "",
+      "selector": ".layer-row button",
+      "property": "font-size",
+      "value": "var(--ui-type-lg)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 247,
+      "context": "",
+      "selector": ".layer-actions,.object-actions",
+      "property": "gap",
+      "value": "6px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 247,
+      "context": "",
+      "selector": ".layer-actions,.object-actions",
+      "property": "margin",
+      "value": "10px 0",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 248,
+      "context": "",
+      "selector": ".layer-actions button,.object-actions button",
+      "property": "padding",
+      "value": "8px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 272,
+      "context": "",
+      "selector": ".wide-button",
+      "property": "min-height",
+      "value": "38px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 272,
+      "context": "",
+      "selector": ".wide-button",
+      "property": "margin-top",
+      "value": "8px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 277,
+      "context": "",
+      "selector": ".dialog .primary-button",
+      "property": "margin-top",
+      "value": "10px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 306,
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "selector": ".tool-button .tool-label",
+      "property": "display",
+      "value": "none",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 323,
+      "context": "media:(max-width:760px)",
+      "selector": ".file-group .primary-button",
+      "property": "width",
+      "value": "38px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 323,
+      "context": "media:(max-width:760px)",
+      "selector": ".file-group .primary-button",
+      "property": "height",
+      "value": "38px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 323,
+      "context": "media:(max-width:760px)",
+      "selector": ".file-group .primary-button",
+      "property": "border-radius",
+      "value": "11px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 342,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-dock .tool-button,.dock-action",
+      "property": "border-radius",
+      "value": "13px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 342,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-dock .tool-button,.dock-action",
+      "property": "color",
+      "value": "#666159",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 718,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-dock .tool-button,.dock-action",
+      "property": "border-radius",
+      "value": "5px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 346,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-dock .tool-button.active",
+      "property": "background",
+      "value": "var(--accent-soft)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 346,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-dock .tool-button.active",
+      "property": "color",
+      "value": "var(--accent)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 360,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-tool-grid .tool-button",
+      "property": "height",
+      "value": "66px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 360,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-tool-grid .tool-button",
+      "property": "border-radius",
+      "value": "13px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 360,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-tool-grid .tool-button",
+      "property": "background",
+      "value": "rgba(255,255,255,.64)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 730,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-tool-grid .tool-button",
+      "property": "border-radius",
+      "value": "6px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 361,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-tool-grid .tool-button.active",
+      "property": "background",
+      "value": "var(--accent-soft)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 361,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-tool-grid .tool-button.active",
+      "property": "color",
+      "value": "var(--accent)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 361,
+      "context": "media:(max-width:760px)",
+      "selector": ".mobile-tool-grid .tool-button.active",
+      "property": "border-color",
+      "value": "rgba(30,98,90,.2)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 436,
+      "context": "",
+      "selector": ".stroke-edit-actions",
+      "property": "grid-template-columns",
+      "value": "repeat(2,1fr)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 436,
+      "context": "",
+      "selector": ".stroke-edit-actions",
+      "property": "gap",
+      "value": "6px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 436,
+      "context": "",
+      "selector": ".stroke-edit-actions",
+      "property": "margin-top",
+      "value": "7px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 437,
+      "context": "",
+      "selector": ".stroke-edit-actions button",
+      "property": "min-height",
+      "value": "34px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 476,
+      "context": "",
+      "selector": ".pen-calibration-actions .wide-button",
+      "property": "min-height",
+      "value": "34px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 773,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "height",
+      "value": "var(--menu-h)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 775,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "background",
+      "value": "linear-gradient(#3e3f41,#363739)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 776,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "color",
+      "value": "var(--chrome-text)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 776,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "border-bottom",
+      "value": "1px solid var(--chrome-line)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 777,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "box-shadow",
+      "value": "inset 0 1px rgba(255,255,255,.045)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1908,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "height",
+      "value": "var(--menu-h)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1908,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "border-bottom",
+      "value": "1px solid #202123",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2018,
+      "context": "media:(min-width:761px)",
+      "selector": ".menu-strip",
+      "property": "background",
+      "value": "#f7f7f7",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 784,
+      "context": "media:(min-width:761px)",
+      "selector": ".application-menus > button,.application-menu > button,.application-menu-label",
+      "property": "color",
+      "value": "#d5d6d8",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 805,
+      "context": "media:(min-width:761px)",
+      "selector": ".quiet-button",
+      "property": "height",
+      "value": "27px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 805,
+      "context": "media:(min-width:761px)",
+      "selector": ".quiet-button",
+      "property": "color",
+      "value": "#dadbdd",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 806,
+      "context": "media:(min-width:761px)",
+      "selector": ".quiet-button:hover",
+      "property": "background",
+      "value": "#5a5b5e",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 806,
+      "context": "media:(min-width:761px)",
+      "selector": ".quiet-button:hover",
+      "property": "color",
+      "value": "#fff",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 806,
+      "context": "media:(min-width:761px)",
+      "selector": ".quiet-button:hover",
+      "property": "box-shadow",
+      "value": "inset 0 0 0 1px #66676a",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 807,
+      "context": "media:(min-width:761px)",
+      "selector": ".primary-button",
+      "property": "height",
+      "value": "28px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 807,
+      "context": "media:(min-width:761px)",
+      "selector": ".primary-button",
+      "property": "min-height",
+      "value": "28px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 813,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail .tool-button",
+      "property": "height",
+      "value": "34px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 813,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail .tool-button",
+      "property": "border-radius",
+      "value": "2px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 813,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail .tool-button",
+      "property": "color",
+      "value": "#d1d2d4",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 814,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail .tool-label",
+      "property": "display",
+      "value": "none",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 815,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button:hover",
+      "property": "background",
+      "value": "#505154",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 815,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button:hover",
+      "property": "color",
+      "value": "#fff",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2080,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button:hover",
+      "property": "color",
+      "value": "#202020",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2080,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button:hover",
+      "property": "background",
+      "value": "#ececec",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 816,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "background",
+      "value": "#242527",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 816,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "color",
+      "value": "#63b9b1",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 816,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "box-shadow",
+      "value": "inset 2px 0 0 #47a39a,inset 0 0 0 1px #17181a",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2081,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "color",
+      "value": "#286f68",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2081,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "background",
+      "value": "#e1efed",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2081,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "box-shadow",
+      "value": "inset 0 0 0 1px #c5ddda",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2628,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "color",
+      "value": "var(--ink-ui-accent)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2628,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "background",
+      "value": "linear-gradient(var(--ink-ui-control-active),var(--ink-ui-control-active)) center/31px 24px no-repeat",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2628,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-button.active",
+      "property": "box-shadow",
+      "value": "none",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 860,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row",
+      "property": "background",
+      "value": "#3b3c3e",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 860,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row",
+      "property": "border-color",
+      "value": "#4d4e51",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2733,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row",
+      "property": "background",
+      "value": "var(--ink-ui-surface)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 860,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row:hover",
+      "property": "background",
+      "value": "#47484b",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 860,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row.active",
+      "property": "background",
+      "value": "#2b3332",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 860,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row.active",
+      "property": "border-color",
+      "value": "#4b8d87",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 860,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row.active",
+      "property": "box-shadow",
+      "value": "inset 2px 0 0 #51aaa1",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2735,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row.active",
+      "property": "background",
+      "value": "var(--ink-ui-control-active)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2735,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row.active",
+      "property": "box-shadow",
+      "value": "none",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 861,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row .layer-name strong",
+      "property": "font-size",
+      "value": "var(--ui-type-xs)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 861,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row .layer-meta",
+      "property": "font-size",
+      "value": "var(--ui-type-xs)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 861,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row .layer-meta",
+      "property": "color",
+      "value": "#97999c",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1118,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row .layer-meta",
+      "property": "font-size",
+      "value": "var(--ui-type-xs)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1997,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row .layer-meta",
+      "property": "color",
+      "value": "#aeb0b3",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1256,
+      "context": "",
+      "selector": ".creative-workspace-body section",
+      "property": "display",
+      "value": "grid",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1266,
+      "context": "",
+      "selector": ".creative-workspace-field",
+      "property": "display",
+      "value": "grid",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1266,
+      "context": "",
+      "selector": ".creative-workspace-field",
+      "property": "grid-template-columns",
+      "value": "92px minmax(0,1fr)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1266,
+      "context": "",
+      "selector": ".creative-workspace-field",
+      "property": "align-items",
+      "value": "center",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1269,
+      "context": "",
+      "selector": ".creative-workspace-actions",
+      "property": "grid-template-columns",
+      "value": "1fr 1fr",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1273,
+      "context": "",
+      "selector": ".creative-workspace-body output",
+      "property": "display",
+      "value": "block",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1273,
+      "context": "",
+      "selector": ".creative-workspace-body output",
+      "property": "overflow-wrap",
+      "value": "anywhere",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1277,
+      "context": "",
+      "selector": ".creative-workspace-action-grid",
+      "property": "grid-template-columns",
+      "value": "repeat(3,1fr)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1305,
+      "context": "",
+      "selector": ".creative-structure-option",
+      "property": "overflow",
+      "value": "hidden",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1306,
+      "context": "",
+      "selector": ".creative-structure-option>summary",
+      "property": "cursor",
+      "value": "pointer",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1306,
+      "context": "",
+      "selector": ".creative-structure-option>summary",
+      "property": "display",
+      "value": "flex",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1306,
+      "context": "",
+      "selector": ".creative-structure-option>summary",
+      "property": "align-items",
+      "value": "center",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1306,
+      "context": "",
+      "selector": ".creative-structure-option>summary",
+      "property": "justify-content",
+      "value": "space-between",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1307,
+      "context": "",
+      "selector": ".creative-structure-option>summary span",
+      "property": "letter-spacing",
+      "value": ".08em",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1308,
+      "context": "",
+      "selector": ".creative-structure-option[open]>summary",
+      "property": "margin-bottom",
+      "value": "6px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1636,
+      "context": "media:(min-width:761px)",
+      "selector": ".creative-workspace-body",
+      "property": "flex",
+      "value": "1",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1652,
+      "context": "media:(min-width:761px)",
+      "selector": ".context-inline-control",
+      "property": "padding-inline",
+      "value": "5px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1841,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail",
+      "property": "padding",
+      "value": "2px 1px",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1843,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail",
+      "property": "border-right",
+      "value": "1px solid #202123",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 1847,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail",
+      "property": "background",
+      "value": "#f7f7f7",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2624,
+      "context": "media:(min-width:761px)",
+      "selector": ".tool-rail",
+      "property": "background",
+      "value": "var(--ink-ui-surface)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2737,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "property": "background",
+      "value": "var(--ink-ui-accent)",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 2736,
+      "context": "media:(min-width:761px)",
+      "selector": ".layer-row.dragging",
+      "property": "opacity",
+      "value": ".48",
+      "important": false,
+      "reason": "superseded exact-selector declaration in identical context"
+    },
+    {
+      "line": 113,
+      "context": "",
+      "selector": ".tool-button",
+      "property": "position",
+      "value": "relative",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 113,
+      "context": "",
+      "selector": ".tool-button",
+      "property": "color",
+      "value": "#5f5c55",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 240,
+      "context": "",
+      "selector": ".layer-row:hover",
+      "property": "background",
+      "value": "#fff",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 246,
+      "context": "",
+      "selector": ".layer-row button:hover",
+      "property": "background",
+      "value": "rgba(255,255,255,.9)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 103,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "color",
+      "value": "#5d5a53",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 537,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "height",
+      "value": "28px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 537,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "padding",
+      "value": "0 8px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 537,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "border-radius",
+      "value": "3px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 537,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "font-size",
+      "value": "var(--ui-type-lg)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 537,
+      "context": "",
+      "selector": ".quiet-button",
+      "property": "font-weight",
+      "value": "600",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 104,
+      "context": "",
+      "selector": ".quiet-button:hover",
+      "property": "color",
+      "value": "var(--ink)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 538,
+      "context": "",
+      "selector": ".quiet-button:hover",
+      "property": "background",
+      "value": "rgba(255,255,255,.78)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 538,
+      "context": "",
+      "selector": ".quiet-button:hover",
+      "property": "box-shadow",
+      "value": "inset 0 0 0 1px var(--line)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 105,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "background",
+      "value": "var(--accent)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 539,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "min-height",
+      "value": "30px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 539,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "height",
+      "value": "30px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 539,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "padding",
+      "value": "0 10px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 539,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "border-radius",
+      "value": "4px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 539,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "font-size",
+      "value": "var(--ui-type-lg)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 539,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "font-weight",
+      "value": "650",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 539,
+      "context": "",
+      "selector": ".primary-button",
+      "property": "box-shadow",
+      "value": "0 1px 2px rgba(31,102,94,.22)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 107,
+      "context": "",
+      "selector": ".primary-button:hover",
+      "property": "background",
+      "value": "var(--accent-2)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 541,
+      "context": "",
+      "selector": ".primary-button:hover",
+      "property": "box-shadow",
+      "value": "0 1px 3px rgba(31,102,94,.26)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 542,
+      "context": "",
+      "selector": ".primary-button:active",
+      "property": "transform",
+      "value": "none",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 542,
+      "context": "",
+      "selector": ".primary-button:active",
+      "property": "background",
+      "value": "#19594f",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 546,
+      "context": "",
+      "selector": ".tool-group",
+      "property": "gap",
+      "value": "1px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 547,
+      "context": "",
+      "selector": ".tool-rail .tool-button",
+      "property": "height",
+      "value": "40px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 547,
+      "context": "",
+      "selector": ".tool-rail .tool-button",
+      "property": "border-radius",
+      "value": "4px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 547,
+      "context": "",
+      "selector": ".tool-rail .tool-button",
+      "property": "gap",
+      "value": "1px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 548,
+      "context": "",
+      "selector": ".tool-button .tool-icon",
+      "property": "width",
+      "value": "21px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 548,
+      "context": "",
+      "selector": ".tool-button .tool-icon",
+      "property": "height",
+      "value": "21px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 549,
+      "context": "",
+      "selector": ".tool-button .tool-icon svg",
+      "property": "width",
+      "value": "18px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 549,
+      "context": "",
+      "selector": ".tool-button .tool-icon svg",
+      "property": "height",
+      "value": "18px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 549,
+      "context": "",
+      "selector": ".tool-button .tool-icon svg",
+      "property": "stroke-width",
+      "value": "1.5",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 116,
+      "context": "",
+      "selector": ".tool-button:hover",
+      "property": "color",
+      "value": "var(--ink)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 551,
+      "context": "",
+      "selector": ".tool-button:hover",
+      "property": "background",
+      "value": "rgba(255,255,255,.78)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 117,
+      "context": "",
+      "selector": ".tool-button.active",
+      "property": "color",
+      "value": "var(--accent)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 552,
+      "context": "",
+      "selector": ".tool-button.active",
+      "property": "background",
+      "value": "rgba(31,102,94,.12)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 552,
+      "context": "",
+      "selector": ".tool-button.active",
+      "property": "box-shadow",
+      "value": "inset 0 0 0 1px rgba(31,102,94,.25)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 118,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "content",
+      "value": "\"\"",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 118,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "position",
+      "value": "absolute",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 118,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "background",
+      "value": "var(--accent)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 553,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "left",
+      "value": "-4px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 553,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "width",
+      "value": "2px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 553,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "height",
+      "value": "18px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 553,
+      "context": "",
+      "selector": ".tool-button.active::before",
+      "property": "border-radius",
+      "value": "0 1px 1px 0",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 119,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "background",
+      "value": "var(--accent-2)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 554,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "top",
+      "value": "5px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 554,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "right",
+      "value": "5px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 554,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "width",
+      "value": "3px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 554,
+      "context": "",
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "property": "height",
+      "value": "3px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 624,
+      "context": "",
+      "selector": ".segmented button",
+      "property": "min-height",
+      "value": "25px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 625,
+      "context": "",
+      "selector": ".shape-grid",
+      "property": "gap",
+      "value": "3px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 626,
+      "context": "",
+      "selector": ".shape-grid button",
+      "property": "padding",
+      "value": "5px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 241,
+      "context": "",
+      "selector": ".layer-row.active",
+      "property": "border-color",
+      "value": "rgba(30,98,90,.35)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 241,
+      "context": "",
+      "selector": ".layer-row.active",
+      "property": "background",
+      "value": "var(--accent-faint)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 630,
+      "context": "",
+      "selector": ".layer-row.active",
+      "property": "box-shadow",
+      "value": "inset 2px 0 0 var(--accent)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 632,
+      "context": "",
+      "selector": ".layer-row .layer-name strong",
+      "property": "font-size",
+      "value": "var(--ui-type-md)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 634,
+      "context": "",
+      "selector": ".layer-row button",
+      "property": "height",
+      "value": "27px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 634,
+      "context": "",
+      "selector": ".layer-row button",
+      "property": "border-radius",
+      "value": "3px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 635,
+      "context": "",
+      "selector": ".layer-actions,.object-actions",
+      "property": "gap",
+      "value": "4px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 635,
+      "context": "",
+      "selector": ".layer-actions,.object-actions",
+      "property": "margin",
+      "value": "6px 0",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 636,
+      "context": "",
+      "selector": ".layer-actions button,.object-actions button",
+      "property": "padding",
+      "value": "6px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 767,
+      "context": "",
+      "selector": ".menu-strip",
+      "property": "display",
+      "value": "none",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1005,
+      "context": "",
+      "selector": ".application-menu-separator",
+      "property": "background",
+      "value": "#242527",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 239,
+      "context": "",
+      "selector": ".layer-row",
+      "property": "background",
+      "value": "rgba(255,255,255,.64)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 629,
+      "context": "",
+      "selector": ".layer-row",
+      "property": "border-radius",
+      "value": "4px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1092,
+      "context": "",
+      "selector": ".layer-row.dragging",
+      "property": "opacity",
+      "value": ".48",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1093,
+      "context": "",
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "property": "background",
+      "value": "#63bbb2",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1093,
+      "context": "",
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "property": "box-shadow",
+      "value": "0 0 0 1px rgba(99,187,178,.22)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1099,
+      "context": "",
+      "selector": ".layer-row[aria-grabbed=\"true\"]",
+      "property": "outline",
+      "value": "1px solid #5db8af",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1099,
+      "context": "",
+      "selector": ".layer-row[aria-grabbed=\"true\"]",
+      "property": "outline-offset",
+      "value": "-1px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1410,
+      "context": "",
+      "selector": ".contextual-options",
+      "property": "height",
+      "value": "var(--contextual-h)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1410,
+      "context": "",
+      "selector": ".contextual-options",
+      "property": "align-items",
+      "value": "center",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1410,
+      "context": "",
+      "selector": ".contextual-options",
+      "property": "background",
+      "value": "var(--surface-solid)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1410,
+      "context": "",
+      "selector": ".contextual-options",
+      "property": "box-shadow",
+      "value": "0 1px 0 rgba(255,255,255,.5)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1415,
+      "context": "",
+      "selector": ".contextual-control-host::-webkit-scrollbar",
+      "property": "display",
+      "value": "none",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1440,
+      "context": "",
+      "selector": ".context-inline-control",
+      "property": "height",
+      "value": "28px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1453,
+      "context": "",
+      "selector": ".contextual-options .quick-slider",
+      "property": "height",
+      "value": "28px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 1454,
+      "context": "",
+      "selector": ".contextual-options .quick-slider input",
+      "property": "width",
+      "value": "92px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2299,
+      "context": "",
+      "selector": ".creative-file-picker",
+      "property": "display",
+      "value": "grid",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2299,
+      "context": "",
+      "selector": ".creative-file-picker",
+      "property": "grid-template-columns",
+      "value": "auto minmax(0,1fr)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2299,
+      "context": "",
+      "selector": ".creative-file-picker",
+      "property": "align-items",
+      "value": "center",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2299,
+      "context": "",
+      "selector": ".creative-file-picker",
+      "property": "min-width",
+      "value": "0",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2300,
+      "context": "",
+      "selector": ".creative-file-picker>button",
+      "property": "width",
+      "value": "auto",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2300,
+      "context": "",
+      "selector": ".creative-file-picker>button",
+      "property": "min-width",
+      "value": "68px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2301,
+      "context": "",
+      "selector": ".creative-file-picker>output",
+      "property": "min-width",
+      "value": "0",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2301,
+      "context": "",
+      "selector": ".creative-file-picker>output",
+      "property": "overflow",
+      "value": "hidden",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2301,
+      "context": "",
+      "selector": ".creative-file-picker>output",
+      "property": "text-overflow",
+      "value": "ellipsis",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2301,
+      "context": "",
+      "selector": ".creative-file-picker>output",
+      "property": "white-space",
+      "value": "nowrap",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2921,
+      "context": "",
+      "selector": ".ui-b-layer-appearance select",
+      "property": "min-width",
+      "value": "0",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2921,
+      "context": "",
+      "selector": ".ui-b-layer-appearance select",
+      "property": "height",
+      "value": "22px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2921,
+      "context": "",
+      "selector": ".ui-b-layer-appearance select",
+      "property": "border",
+      "value": "1px solid var(--ink-ui-border)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2921,
+      "context": "",
+      "selector": ".ui-b-layer-appearance select",
+      "property": "background",
+      "value": "var(--ink-ui-surface)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2922,
+      "context": "",
+      "selector": ".ui-b-layer-appearance button",
+      "property": "height",
+      "value": "22px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2922,
+      "context": "",
+      "selector": ".ui-b-layer-appearance button",
+      "property": "padding",
+      "value": "0 5px",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2922,
+      "context": "",
+      "selector": ".ui-b-layer-appearance button",
+      "property": "border",
+      "value": "1px solid var(--ink-ui-border)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 2922,
+      "context": "",
+      "selector": ".ui-b-layer-appearance button",
+      "property": "background",
+      "value": "var(--ink-ui-surface)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 3047,
+      "context": "",
+      "selector": ".application-menu-separator,.workspace-menu-separator",
+      "property": "margin",
+      "value": "var(--ui-menu-padding)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 3185,
+      "context": "",
+      "selector": ".layer-row .layer-meta",
+      "property": "color",
+      "value": "var(--ink-ui-text-muted)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 3185,
+      "context": "",
+      "selector": ".layer-row .layer-meta",
+      "property": "font-size",
+      "value": "var(--ui-type-sm)",
+      "important": false,
+      "reason": "legacy base moved to compact-only variant; desktop uses workstation authority"
+    },
+    {
+      "line": 767,
+      "context": "media:(max-width:760px)",
+      "selector": ".menu-strip",
+      "property": "display",
+      "value": "none",
+      "important": false,
+      "reason": "superseded exact-selector compact declaration"
+    },
+    {
+      "line": 1454,
+      "context": "media:(max-width:760px)",
+      "selector": ".contextual-options .quick-slider input",
+      "property": "width",
+      "value": "92px",
+      "important": false,
+      "reason": "superseded exact-selector compact declaration"
+    }
+  ],
+  "retained": [
+    {
+      "selector": ".tool-button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "position",
+        "color"
+      ]
+    },
+    {
+      "selector": ".layer-row:hover",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background"
+      ]
+    },
+    {
+      "selector": ".layer-row button:hover",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background"
+      ]
+    },
+    {
+      "selector": ".quiet-button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "color",
+        "height",
+        "padding",
+        "border-radius",
+        "font-size",
+        "font-weight"
+      ]
+    },
+    {
+      "selector": ".quiet-button:hover",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "color",
+        "background",
+        "box-shadow"
+      ]
+    },
+    {
+      "selector": ".primary-button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background",
+        "min-height",
+        "height",
+        "padding",
+        "border-radius",
+        "font-size",
+        "font-weight",
+        "box-shadow"
+      ]
+    },
+    {
+      "selector": ".primary-button:hover",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background",
+        "box-shadow"
+      ]
+    },
+    {
+      "selector": ".primary-button:active",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "transform",
+        "background"
+      ]
+    },
+    {
+      "selector": ".tool-group",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "gap"
+      ]
+    },
+    {
+      "selector": ".tool-rail .tool-button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "height",
+        "border-radius",
+        "gap"
+      ]
+    },
+    {
+      "selector": ".tool-button .tool-icon",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "width",
+        "height"
+      ]
+    },
+    {
+      "selector": ".tool-button .tool-icon svg",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "width",
+        "height",
+        "stroke-width"
+      ]
+    },
+    {
+      "selector": ".tool-button:hover",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "color",
+        "background"
+      ]
+    },
+    {
+      "selector": ".tool-button.active",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "color",
+        "background",
+        "box-shadow"
+      ]
+    },
+    {
+      "selector": ".tool-button.active::before",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "content",
+        "position",
+        "background",
+        "left",
+        "width",
+        "height",
+        "border-radius"
+      ]
+    },
+    {
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background",
+        "top",
+        "right",
+        "width",
+        "height"
+      ]
+    },
+    {
+      "selector": ".segmented button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "min-height"
+      ]
+    },
+    {
+      "selector": ".shape-grid",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "gap"
+      ]
+    },
+    {
+      "selector": ".shape-grid button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "padding"
+      ]
+    },
+    {
+      "selector": ".layer-row.active",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "border-color",
+        "background",
+        "box-shadow"
+      ]
+    },
+    {
+      "selector": ".layer-row .layer-name strong",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "font-size"
+      ]
+    },
+    {
+      "selector": ".layer-row button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "height",
+        "border-radius"
+      ]
+    },
+    {
+      "selector": ".layer-actions,.object-actions",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "gap",
+        "margin"
+      ]
+    },
+    {
+      "selector": ".layer-actions button,.object-actions button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "padding"
+      ]
+    },
+    {
+      "selector": ".menu-strip",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "display"
+      ]
+    },
+    {
+      "selector": ".application-menu-separator",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background"
+      ]
+    },
+    {
+      "selector": ".layer-row",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background",
+        "border-radius"
+      ]
+    },
+    {
+      "selector": ".layer-row.dragging",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "opacity"
+      ]
+    },
+    {
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "background",
+        "box-shadow"
+      ]
+    },
+    {
+      "selector": ".layer-row[aria-grabbed=\"true\"]",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "outline",
+        "outline-offset"
+      ]
+    },
+    {
+      "selector": ".contextual-options",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "height",
+        "align-items",
+        "background",
+        "box-shadow"
+      ]
+    },
+    {
+      "selector": ".contextual-control-host::-webkit-scrollbar",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "display"
+      ]
+    },
+    {
+      "selector": ".context-inline-control",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "height"
+      ]
+    },
+    {
+      "selector": ".contextual-options .quick-slider",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "height"
+      ]
+    },
+    {
+      "selector": ".contextual-options .quick-slider input",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "width"
+      ]
+    },
+    {
+      "selector": ".creative-file-picker",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "display",
+        "grid-template-columns",
+        "align-items",
+        "min-width"
+      ]
+    },
+    {
+      "selector": ".creative-file-picker>button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "width",
+        "min-width"
+      ]
+    },
+    {
+      "selector": ".creative-file-picker>output",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "min-width",
+        "overflow",
+        "text-overflow",
+        "white-space"
+      ]
+    },
+    {
+      "selector": ".ui-b-layer-appearance select",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "min-width",
+        "height",
+        "border",
+        "background"
+      ]
+    },
+    {
+      "selector": ".ui-b-layer-appearance button",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "height",
+        "padding",
+        "border",
+        "background"
+      ]
+    },
+    {
+      "selector": ".application-menu-separator,.workspace-menu-separator",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "margin"
+      ]
+    },
+    {
+      "selector": ".layer-row .layer-meta",
+      "reason": "compact-only presentation retained; desktop base shadowing retired",
+      "properties": [
+        "color",
+        "font-size"
+      ]
+    }
+  ],
+  "removedRules": [
+    {
+      "line": 103,
+      "selector": ".quiet-button",
+      "context": ""
+    },
+    {
+      "line": 104,
+      "selector": ".quiet-button:hover",
+      "context": ""
+    },
+    {
+      "line": 105,
+      "selector": ".primary-button",
+      "context": ""
+    },
+    {
+      "line": 106,
+      "selector": ".primary-button svg",
+      "context": ""
+    },
+    {
+      "line": 107,
+      "selector": ".primary-button:hover",
+      "context": ""
+    },
+    {
+      "line": 108,
+      "selector": ".primary-button:active",
+      "context": ""
+    },
+    {
+      "line": 111,
+      "selector": ".tool-rail",
+      "context": ""
+    },
+    {
+      "line": 114,
+      "selector": ".tool-rail .tool-button",
+      "context": ""
+    },
+    {
+      "line": 115,
+      "selector": ".tool-button .tool-label",
+      "context": ""
+    },
+    {
+      "line": 116,
+      "selector": ".tool-button:hover",
+      "context": ""
+    },
+    {
+      "line": 117,
+      "selector": ".tool-button.active",
+      "context": ""
+    },
+    {
+      "line": 118,
+      "selector": ".tool-button.active::before",
+      "context": ""
+    },
+    {
+      "line": 119,
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "context": ""
+    },
+    {
+      "line": 230,
+      "selector": ".segmented",
+      "context": ""
+    },
+    {
+      "line": 231,
+      "selector": ".segmented button",
+      "context": ""
+    },
+    {
+      "line": 233,
+      "selector": ".shape-grid",
+      "context": ""
+    },
+    {
+      "line": 234,
+      "selector": ".shape-grid button",
+      "context": ""
+    },
+    {
+      "line": 239,
+      "selector": ".layer-row",
+      "context": ""
+    },
+    {
+      "line": 240,
+      "selector": ".layer-row:hover",
+      "context": ""
+    },
+    {
+      "line": 241,
+      "selector": ".layer-row.active",
+      "context": ""
+    },
+    {
+      "line": 242,
+      "selector": ".layer-row .layer-name",
+      "context": ""
+    },
+    {
+      "line": 243,
+      "selector": ".layer-row .layer-name strong",
+      "context": ""
+    },
+    {
+      "line": 244,
+      "selector": ".layer-row .layer-meta",
+      "context": ""
+    },
+    {
+      "line": 245,
+      "selector": ".layer-row button",
+      "context": ""
+    },
+    {
+      "line": 246,
+      "selector": ".layer-row button:hover",
+      "context": ""
+    },
+    {
+      "line": 247,
+      "selector": ".layer-actions,.object-actions",
+      "context": ""
+    },
+    {
+      "line": 248,
+      "selector": ".layer-actions button,.object-actions button",
+      "context": ""
+    },
+    {
+      "line": 272,
+      "selector": ".wide-button",
+      "context": ""
+    },
+    {
+      "line": 277,
+      "selector": ".dialog .primary-button",
+      "context": ""
+    },
+    {
+      "line": 305,
+      "selector": ".tool-rail",
+      "context": ""
+    },
+    {
+      "line": 306,
+      "selector": ".tool-button .tool-label",
+      "context": ""
+    },
+    {
+      "line": 307,
+      "selector": ".tool-rail .tool-button",
+      "context": ""
+    },
+    {
+      "line": 308,
+      "selector": ".tool-button.active::before",
+      "context": ""
+    },
+    {
+      "line": 323,
+      "selector": ".file-group .primary-button",
+      "context": ""
+    },
+    {
+      "line": 342,
+      "selector": ".mobile-dock .tool-button,.dock-action",
+      "context": ""
+    },
+    {
+      "line": 346,
+      "selector": ".mobile-dock .tool-button.active",
+      "context": ""
+    },
+    {
+      "line": 347,
+      "selector": ".mobile-dock .tool-button.active::before",
+      "context": ""
+    },
+    {
+      "line": 360,
+      "selector": ".mobile-tool-grid .tool-button",
+      "context": ""
+    },
+    {
+      "line": 361,
+      "selector": ".mobile-tool-grid .tool-button.active",
+      "context": ""
+    },
+    {
+      "line": 436,
+      "selector": ".stroke-edit-actions",
+      "context": ""
+    },
+    {
+      "line": 437,
+      "selector": ".stroke-edit-actions button",
+      "context": ""
+    },
+    {
+      "line": 444,
+      "selector": ".stroke-edit-actions",
+      "context": ""
+    },
+    {
+      "line": 476,
+      "selector": ".pen-calibration-actions .wide-button",
+      "context": ""
+    },
+    {
+      "line": 537,
+      "selector": ".quiet-button",
+      "context": ""
+    },
+    {
+      "line": 538,
+      "selector": ".quiet-button:hover",
+      "context": ""
+    },
+    {
+      "line": 541,
+      "selector": ".primary-button:hover",
+      "context": ""
+    },
+    {
+      "line": 542,
+      "selector": ".primary-button:active",
+      "context": ""
+    },
+    {
+      "line": 545,
+      "selector": ".tool-rail",
+      "context": ""
+    },
+    {
+      "line": 549,
+      "selector": ".tool-button .tool-icon svg",
+      "context": ""
+    },
+    {
+      "line": 551,
+      "selector": ".tool-button:hover",
+      "context": ""
+    },
+    {
+      "line": 552,
+      "selector": ".tool-button.active",
+      "context": ""
+    },
+    {
+      "line": 553,
+      "selector": ".tool-button.active::before",
+      "context": ""
+    },
+    {
+      "line": 624,
+      "selector": ".segmented button",
+      "context": ""
+    },
+    {
+      "line": 626,
+      "selector": ".shape-grid button",
+      "context": ""
+    },
+    {
+      "line": 629,
+      "selector": ".layer-row",
+      "context": ""
+    },
+    {
+      "line": 630,
+      "selector": ".layer-row.active",
+      "context": ""
+    },
+    {
+      "line": 632,
+      "selector": ".layer-row .layer-name strong",
+      "context": ""
+    },
+    {
+      "line": 633,
+      "selector": ".layer-row .layer-meta",
+      "context": ""
+    },
+    {
+      "line": 636,
+      "selector": ".layer-actions button,.object-actions button",
+      "context": ""
+    },
+    {
+      "line": 700,
+      "selector": ".tool-rail",
+      "context": ""
+    },
+    {
+      "line": 701,
+      "selector": ".tool-rail .tool-button",
+      "context": ""
+    },
+    {
+      "line": 714,
+      "selector": ".file-group .primary-button",
+      "context": ""
+    },
+    {
+      "line": 718,
+      "selector": ".mobile-dock .tool-button,.dock-action",
+      "context": ""
+    },
+    {
+      "line": 730,
+      "selector": ".mobile-tool-grid .tool-button",
+      "context": ""
+    },
+    {
+      "line": 767,
+      "selector": ".menu-strip",
+      "context": ""
+    },
+    {
+      "line": 772,
+      "selector": ".menu-strip",
+      "context": ""
+    },
+    {
+      "line": 784,
+      "selector": ".application-menus > button,.application-menu > button,.application-menu-label",
+      "context": ""
+    },
+    {
+      "line": 805,
+      "selector": ".quiet-button",
+      "context": ""
+    },
+    {
+      "line": 806,
+      "selector": ".quiet-button:hover",
+      "context": ""
+    },
+    {
+      "line": 807,
+      "selector": ".primary-button",
+      "context": ""
+    },
+    {
+      "line": 813,
+      "selector": ".tool-rail .tool-button",
+      "context": ""
+    },
+    {
+      "line": 814,
+      "selector": ".tool-rail .tool-label",
+      "context": ""
+    },
+    {
+      "line": 815,
+      "selector": ".tool-button:hover",
+      "context": ""
+    },
+    {
+      "line": 816,
+      "selector": ".tool-button.active",
+      "context": ""
+    },
+    {
+      "line": 860,
+      "selector": ".layer-row",
+      "context": ""
+    },
+    {
+      "line": 860,
+      "selector": ".layer-row:hover",
+      "context": ""
+    },
+    {
+      "line": 860,
+      "selector": ".layer-row.active",
+      "context": ""
+    },
+    {
+      "line": 861,
+      "selector": ".layer-row .layer-name strong",
+      "context": ""
+    },
+    {
+      "line": 861,
+      "selector": ".layer-row .layer-meta",
+      "context": ""
+    },
+    {
+      "line": 1092,
+      "selector": ".layer-row.dragging",
+      "context": ""
+    },
+    {
+      "line": 1099,
+      "selector": ".layer-row[aria-grabbed=\"true\"]",
+      "context": ""
+    },
+    {
+      "line": 1118,
+      "selector": ".layer-row .layer-meta",
+      "context": ""
+    },
+    {
+      "line": 1255,
+      "selector": ".creative-workspace-body",
+      "context": ""
+    },
+    {
+      "line": 1256,
+      "selector": ".creative-workspace-body section",
+      "context": ""
+    },
+    {
+      "line": 1266,
+      "selector": ".creative-workspace-field",
+      "context": ""
+    },
+    {
+      "line": 1269,
+      "selector": ".creative-workspace-actions",
+      "context": ""
+    },
+    {
+      "line": 1273,
+      "selector": ".creative-workspace-body output",
+      "context": ""
+    },
+    {
+      "line": 1277,
+      "selector": ".creative-workspace-action-grid",
+      "context": ""
+    },
+    {
+      "line": 1305,
+      "selector": ".creative-structure-option",
+      "context": ""
+    },
+    {
+      "line": 1306,
+      "selector": ".creative-structure-option>summary",
+      "context": ""
+    },
+    {
+      "line": 1307,
+      "selector": ".creative-structure-option>summary span",
+      "context": ""
+    },
+    {
+      "line": 1308,
+      "selector": ".creative-structure-option[open]>summary",
+      "context": ""
+    },
+    {
+      "line": 1309,
+      "selector": ".creative-structure-option>p,.creative-structure-option>label,.creative-structure-option>button,.creative-structure-option>output",
+      "context": ""
+    },
+    {
+      "line": 1415,
+      "selector": ".contextual-control-host::-webkit-scrollbar",
+      "context": ""
+    },
+    {
+      "line": 1428,
+      "selector": ".contextual-options #selectionBar",
+      "context": ""
+    },
+    {
+      "line": 1636,
+      "selector": ".creative-workspace-body",
+      "context": ""
+    },
+    {
+      "line": 1652,
+      "selector": ".context-inline-control",
+      "context": ""
+    },
+    {
+      "line": 1834,
+      "selector": ".tool-rail",
+      "context": ""
+    },
+    {
+      "line": 1908,
+      "selector": ".menu-strip",
+      "context": ""
+    },
+    {
+      "line": 1910,
+      "selector": ".application-menus > button,.application-menu > button,.application-menu-label",
+      "context": ""
+    },
+    {
+      "line": 1916,
+      "selector": ".context-inline-control",
+      "context": ""
+    },
+    {
+      "line": 1927,
+      "selector": ".quiet-button",
+      "context": ""
+    },
+    {
+      "line": 1937,
+      "selector": ".tool-rail .tool-button",
+      "context": ""
+    },
+    {
+      "line": 1942,
+      "selector": ".app.toolbar-layout-dual .tool-rail .tool-button",
+      "context": ""
+    },
+    {
+      "line": 1997,
+      "selector": ".layer-row .layer-meta",
+      "context": ""
+    },
+    {
+      "line": 2017,
+      "selector": ".menu-strip",
+      "context": ""
+    },
+    {
+      "line": 2079,
+      "selector": ".tool-button",
+      "context": ""
+    },
+    {
+      "line": 2080,
+      "selector": ".tool-button:hover",
+      "context": ""
+    },
+    {
+      "line": 2081,
+      "selector": ".tool-button.active",
+      "context": ""
+    },
+    {
+      "line": 2111,
+      "selector": ".creative-workspace-field",
+      "context": ""
+    },
+    {
+      "line": 2131,
+      "selector": ".creative-workspace-field",
+      "context": ""
+    },
+    {
+      "line": 2624,
+      "selector": ".tool-rail",
+      "context": ""
+    },
+    {
+      "line": 2627,
+      "selector": ".app.toolbar-layout-dual .tool-rail .tool-button",
+      "context": ""
+    },
+    {
+      "line": 2628,
+      "selector": ".tool-button.active",
+      "context": ""
+    },
+    {
+      "line": 2733,
+      "selector": ".layer-row",
+      "context": ""
+    },
+    {
+      "line": 2735,
+      "selector": ".layer-row.active",
+      "context": ""
+    },
+    {
+      "line": 2736,
+      "selector": ".layer-row.dragging",
+      "context": ""
+    },
+    {
+      "line": 2737,
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "context": ""
+    },
+    {
+      "line": 2921,
+      "selector": ".ui-b-layer-appearance select",
+      "context": ""
+    },
+    {
+      "line": 3047,
+      "selector": ".application-menu-separator,.workspace-menu-separator",
+      "context": ""
+    },
+    {
+      "line": 3116,
+      "selector": ".tool-rail",
+      "context": ""
+    },
+    {
+      "line": 3121,
+      "selector": ".tool-layout-toggle svg",
+      "context": ""
+    },
+    {
+      "line": 3484,
+      "selector": ".layer-row",
+      "context": ""
+    },
+    {
+      "line": 3494,
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "context": ""
+    },
+    {
+      "line": 3581,
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-field",
+      "context": ""
+    }
+  ],
+  "retainedRules": [
+    {
+      "selector": ".app .window-visual-controls button:disabled",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".primary-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".primary-button svg",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".tool-rail::-webkit-scrollbar",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail .tool-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button .tool-label",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".segmented",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".shape-grid",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row .layer-name",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row .layer-meta",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-actions,.object-actions",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".object-actions .danger",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".wide-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".dialog .primary-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button .tool-label",
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".file-group .primary-button",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".file-group .primary-button span",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mobile-dock .tool-button,.dock-action",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mobile-dock .tool-button.active",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mobile-dock .tool-button.active::before",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mobile-tool-grid .tool-button",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mobile-tool-grid .tool-button.active",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mobile-tool-grid .tool-button.active::before",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".tool-rail .tool-button",
+      "context": "media:(pointer:coarse)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".stroke-edit-entry .wide-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".stroke-edit-actions",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".stroke-edit-actions button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".stroke-edit-actions button:disabled",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".stroke-edit-actions .danger",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".pen-calibration-actions .wide-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-group",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button .tool-icon",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".menu-strip",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus > button,.application-menu > button,.application-menu-label",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus > button:hover,.application-menus > button:focus-visible,.application-menu > button:hover,.application-menu > button:focus-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".quiet-button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".quiet-button:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".primary-button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".primary-button:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".primary-button:active",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-rail .tool-button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail .tool-label",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-button.active",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-button.active::before",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-button.featured::after,.tool-button.emphasis::after",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".segmented button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".shape-grid",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".shape-grid button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row.active",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row .layer-name strong",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row .layer-meta",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row button:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-actions,.object-actions",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-actions button,.object-actions button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus > button,.application-menu > button,.application-menu-label",
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".menu-strip",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mobile-dock .tool-button:hover,.dock-action:hover",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".mini-button,.icon-button,.quiet-button",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".layer-row,.page-card",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".layer-row.active,.page-card.active",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".application-menu",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menu-separator",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": "#canvasSettings .wide-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row:active,.layer-row.dragging",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row.drop-before::before",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row.drop-after::after",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row:hover .layer-drag-handle,.layer-row.active .layer-drag-handle",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".studio-button-grid",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".studio-button-grid button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-body",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-body section",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-body section[hidden]",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-field",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-field input",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-actions",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-actions button:disabled",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".creative-workspace-body output",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-action-grid",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-primary",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-field select",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-structure-option",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-structure-option>summary",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-structure-option>summary span",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-structure-option[open]>summary",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-structure-option>p,.creative-structure-option>label,.creative-structure-option>button,.creative-structure-option>output",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #quickControls,.contextual-options #eraserOptions,.contextual-options #shapeOptions,.contextual-options #textOptions",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #selectionBar",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options[data-context-mode=\"draw\"] #quickControls,\n.contextual-options[data-context-mode=\"eraser\"] #quickControls,\n.contextual-options[data-context-mode=\"shape\"] #quickControls,\n.contextual-options[data-context-mode=\"text\"] #quickControls",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".contextual-options[data-context-mode=\"eraser\"] #eraserOptions,\n.contextual-options[data-context-mode=\"shape\"] #shapeOptions,\n.contextual-options[data-context-mode=\"text\"] #textOptions",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".contextual-options[data-context-mode=\"selection\"] #selectionBar",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".contextual-options #quickControls",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".context-inline-control",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-color-wrap",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-color",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-color span",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-slider",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-slider input",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-slider output",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options[data-context-mode=\"eraser\"] #quickControls [data-context-control=\"color\"],\n.contextual-options[data-context-mode=\"eraser\"] #quickControls [data-context-control=\"opacity\"],\n.contextual-options[data-context-mode=\"shape\"] #quickControls [data-context-control=\"size\"],\n.contextual-options[data-context-mode=\"shape\"] #quickControls [data-context-control=\"opacity\"],\n.contextual-options[data-context-mode=\"text\"] #quickControls [data-context-control=\"size\"],\n.contextual-options[data-context-mode=\"text\"] #quickControls [data-context-control=\"opacity\"]",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".contextual-options #eraserOptions,\n.contextual-options #shapeOptions,\n.contextual-options #textOptions",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #eraserOptions .subpanel-title,\n.contextual-options #shapeOptions .subpanel-title",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #eraserOptions .segmented",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #eraserOptions .segmented button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #shapeOptions .shape-grid",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #shapeOptions .shape-grid button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #shapeOptions .toggle-row",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions .control-row",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions .control-row>span:first-child",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions select",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions .range-row",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions #fontSize",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions #fontSizeOutput",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #selectionBar .selection-title,\n.contextual-options #selectionBar .selection-divider,\n.contextual-options #selectionBar::after",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".contextual-options #selectionBar button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #selectionBar button svg",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-divider,.context-inline-control",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #eraserOptions .segmented",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #shapeOptions .toggle-row",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions .control-row>span:first-child",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions .range-row",
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #textOptions #fontSize",
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #selectionBar button span",
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #selectionBar button",
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-slider input",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".contextual-options #selectionBar button span",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".contextual-options #selectionBar button",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".creative-workspace-body",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".context-inline-control",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".tool-rail",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".topbar > .contextual-options",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-slider",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-slider input",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-group",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button .tool-icon",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button .tool-icon svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".inspector-section > *,.creative-workspace-body > *,.creative-workspace-body section,.creative-workspace-body section > *",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".inspector-section .property-card,.inspector-section .control-row,.inspector-section .toggle-row,.inspector-section .subpanel,.creative-workspace-field,.creative-workspace-actions,.creative-workspace-action-grid,.creative-workspace-inline,.creative-chat-runtime,.creative-chat-transcript,.creative-structure-option",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".inspector-section select,.inspector-section input,.inspector-section textarea,.inspector-section output,.creative-workspace-body select,.creative-workspace-body input,.creative-workspace-body textarea,.creative-workspace-body output,.creative-workspace-body pre",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".context-control-label,.contextual-options .quick-slider output",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus > button:hover,\n  .application-menus > button:focus-visible,\n  .application-menu > button:hover,\n  .application-menu > button:focus-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menu-separator",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".topbar .top-divider,\n  .topbar > .contextual-options",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".context-control-label,\n  .contextual-options .quick-slider output",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".context-inline-control:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-layout-toggle:hover,.tool-layout-toggle:focus-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".contextual-options .quick-slider input",
+      "context": "media:(max-width:1120px)and(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".geometry-panel .studio-button-grid",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".control-row input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.control-row select,.control-row textarea,.color-control input:not([type=\"color\"]),.number-unit input,.inspector-section select,.inspector-section textarea,.ui-b-context-controls input:not([type=\"checkbox\"]):not([type=\"color\"]),.ui-b-context-controls select,.branding-field input",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.contextual-options select",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".object-actions button,.layer-actions button,.stroke-edit-actions button,.studio-button-grid button,.ui-b-panel-actions button,.shape-grid button,.segmented button,.wide-button,.ui-b-context-controls button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".object-actions button:hover,.layer-actions button:hover,.stroke-edit-actions button:hover,.studio-button-grid button:hover,.ui-b-panel-actions button:hover,.shape-grid button:hover,.segmented button:hover,.wide-button:hover,.ui-b-context-controls button:hover",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".shape-grid button.active,.segmented button.active",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".control-row input:disabled,.control-row select:disabled,.object-actions button:disabled,.layer-actions button:disabled,.stroke-edit-actions button:disabled,.studio-button-grid button:disabled,.ui-b-panel-actions button:disabled,.shape-grid button:disabled,.segmented button:disabled,.wide-button:disabled,.ui-b-context-controls button:disabled",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".creative-workspace-field input:not([type=\"range\"]),.creative-workspace-field select",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-actions,.creative-workspace-action-grid",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-actions button,.creative-workspace-action-grid button,.creative-workspace-primary",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-workspace-actions button:hover,.creative-workspace-action-grid button:hover,.creative-workspace-primary:hover",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".creative-workspace-body strong,.creative-workspace-body section>strong",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-structure-option[open]",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-file-picker",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-file-picker>button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-file-picker>output",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".app *::-webkit-scrollbar",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".app *::-webkit-scrollbar-thumb",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".app *::-webkit-scrollbar-track",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".app *::-webkit-scrollbar-thumb:hover",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": "input[type=\"range\"]",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": "input[type=\"range\"]::-webkit-slider-runnable-track",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": "input[type=\"range\"]::-webkit-slider-thumb",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": "input[type=\"range\"]::-moz-range-track",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": "input[type=\"range\"]::-moz-range-thumb",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": "input[type=\"range\"]:disabled",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".app input[type=\"range\"]:disabled",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".window-visual-controls",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".window-visual-controls button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".window-visual-controls button:last-child",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".window-visual-controls svg",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-colors",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-color",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".foreground-swatch",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".background-swatch",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".color-utility",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".color-reset",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".color-swap",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-colors,.window-visual-controls",
+      "context": "media:(max-width:760px)",
+      "reason": "Existing compact presentation; not desktop styling authority"
+    },
+    {
+      "selector": ".tool-rail .tool-group",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".app[data-toolbar-layout=\"single\"] .tool-rail .tool-group",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-layout-controls,.panel-edge-strip",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-layout-controls",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-edge-strip",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-layout-toggle,.panel-edge-toggle",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".edge-chevron",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".edge-chevron svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-bottom-utilities",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-splitter",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-splitter::after",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-splitter:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-tab",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-tab.active",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-options",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-options svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row.drop-before::before,.layer-row.drop-after::after",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".ui-b-layer-appearance",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus > button,\n.application-menu > button,\n.application-menu-label,\n.application-command-menu button,\n.doc-title",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus > button,\n.application-menu > button,\n.application-menu-label,\n.application-command-menu button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".quiet-button,.primary-button,.workspace-switch button,.contextual-tool-identity strong,.context-control-label,.contextual-options .quick-slider output,.selection-bar button,.panel-window-item,.inspector-tab,.properties-subnav .inspector-tab,.preset-button,.statusbar button,.creative-workspace-toggle,.ai-settings-grid label,.ai-preview-toolbar button,.creative-chat-runtime button,.mobile-dock .tool-label,.dock-action .tool-label,.tool-button .tool-label,.creative-workspace-tabs button,#canvasSettings .control-row,#canvasSettings .control-row>span:first-child,#canvasSettings .toggle-row,.inspector-section .control-row,.inspector-section .toggle-row",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options #eraserOptions .segmented button,.contextual-options #shapeOptions .shape-grid button,.contextual-options #selectionBar button,.layer-actions button,.object-actions button,.stroke-edit-actions button,.inspector-section input,.inspector-section select,.inspector-section textarea",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".selection-title,.zoom-hud,.quick-glyph,.range-row output,.inspector-section .range-row output,.subpanel-title strong,.inspector-section .subpanel-title strong,.layer-row .layer-name strong,.history-step-copy strong,.creative-workspace-state strong,.creative-chat-runtime span,.creative-chat-message>strong,.creative-workspace-status,.quick-slider output,#exportProgress,.statusbar,.artboard-summary,.export-summary",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".inspector-section .subpanel-title strong,.layer-row .layer-name strong,.history-step-copy strong",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".brand .version,kbd,.eyebrow,.subpanel-title span,.inspector-section .subpanel-title span,.section-title span,.layer-row .layer-meta,.page-title span,.history-step-index,.history-step-copy small,.engine-status,.render-engine-meta,.render-engine-note,.version-badge,.panel-window-group-label,.object-tree-row .tree-object-name span,.creative-workspace-state span,.brush-family-head>span:last-child",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".topbar,\n  .topbar-leading,\n  .topbar-center,\n  .file-group,\n  .contextual-options,\n  .contextual-control-host",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-control-host::-webkit-scrollbar",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menu>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menu-separator,.workspace-menu-separator",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".app[data-document-active=\"false\"] .layers-panel .layer-opacity-card,\n  .app[data-document-active=\"false\"] .layers-panel .ui-b-layer-appearance,\n  .app[data-document-active=\"false\"] #layersList,\n  .app[data-document-active=\"false\"] .layer-bottom-toolbar",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".app.toolbar-layout-dual .tool-group",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".navigator-footer input[type=\"range\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".navigator-footer input[type=\"range\"]:focus-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-framework[hidden]",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-region-head",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-region-head:hover,.panel-stack-region.active .panel-stack-region-head",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-region.active .panel-stack-region-head",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-region-current",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-framework.stack-resizing .panel-stack-splitter",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row.dragging",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row[aria-grabbed=\"true\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row button,.layer-row button:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".ui-b-context-controls",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-context-controls label",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-context-controls input[type=\"number\"]",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-context-controls input[type=\"color\"]",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-context-controls select",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-context-controls button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-context-controls button:disabled,.ui-b-panel-actions button:disabled",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".ui-b-context-controls button:focus-visible,\n.ui-b-panel-grid button:focus-visible,\n.ui-b-panel-actions button:focus-visible,\n.ui-b-stack-row button:focus-visible,\n.ui-b-dialog button:focus-visible,\n.ui-b-gallery button:focus-visible",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".ui-b-layer-appearance label",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".topbar>.contextual-options .contextual-control-host",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".branding-settings-actions .primary-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail .tool-button.active",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-button:focus-visible,.panel-stack-tab:focus-visible,.panel-stack-options:focus-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-tab:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-options:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-body>.inspector-section.stack-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.inspector-section.stack-visible:not(.shell-panel-section)",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.inspector-section.stack-visible .layers-list",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.layers-panel .section-title",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.history-panel .section-title",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.history-panel .history-list",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>#creativeWorkspace,\n  .app:not(.inspector-open) .panel-stack-body>#creativeWorkspace",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-region[data-stack-panel=\"libraries\"] #creativeWorkspace",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-head",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-state",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-tabs button:not([data-workspace-stage=\"edit\"])",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-tabs",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".layer-row,.layer-row.active",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".layer-row .layer-name,.layer-row .layer-main,.layer-row .layer-drag-handle",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options,.contextual-control-host,.context-inline-control,.quick-slider",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-color::-webkit-color-swatch-wrapper",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-color::-webkit-color-swatch",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-color::-moz-color-swatch",
+      "context": "",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".preferences-category button:not(.primary-button)",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".preferences-category .primary-button",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-control-host button,.contextual-options select,.contextual-options input:not([type=\"range\"]):not([type=\"checkbox\"])",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-layout-toggle:hover,.panel-edge-toggle:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-dock>.panel-edge-strip",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-framework>.panel-edge-strip",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.inspector-section",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body .creative-workspace-tabs",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".app .layer-row .layer-name strong",
+      "context": "",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-layout-toggle[aria-pressed=\"true\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance>label",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance>button[data-ui-b-command=\"select-and-mask\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-framework",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-region[data-panel-stack-group=\"overview\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-region[data-panel-stack-group=\"creative\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-region[data-panel-stack-group=\"structure\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-body>.layers-panel .layer-bottom-toolbar",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options select,\n  .contextual-options input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"file\"]):not([type=\"color\"])",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus>.application-menu",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus>.application-menu>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"file\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"edit\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"image\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"layer\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"type\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"select\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"filter\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"object\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"view\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"window\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>.application-menu[data-application-menu=\"help\"]>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".application-menus>button:focus-visible,\n  .application-menu>button:focus-visible,\n  .workspace-menu button:focus-visible,\n  .subtool-button:focus-visible,\n  .panel-options-menu button:focus-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-button .tool-icon svg,.ui-b-tool-group .tool-icon svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".edge-chevron[data-direction=\"collapse\"] svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".color-utility svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-bottom-utilities button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-bottom-utilities button:hover,.tool-bottom-utilities button:focus-visible",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-bottom-utilities svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-button[disabled]",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-dock .panel-edge-toggle .edge-chevron svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-framework .panel-edge-toggle .edge-chevron svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-tabs",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance select",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance button svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".ui-b-layer-appearance button.active",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-framework",
+      "context": "media:(min-width:761px)and(min-height:990px)and(max-height:998px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".preferences-category button:not(.primary-button),.preferences-category .primary-button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-body",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),\n  .panel-stack-body #creativeWorkspace select,\n  .panel-stack-body #creativeWorkspace button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-body output",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace .creative-workspace-status",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace details",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace details>summary",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-file-picker",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-file-picker>button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".creative-file-picker>output",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body .shell-panel-body input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.panel-stack-body .shell-panel-body select,.panel-stack-body .shell-panel-body button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.inspector-section input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.panel-stack-body>.inspector-section select",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace[data-shell-stage=\"chat\"] .creative-chat-runtime,\n  .panel-stack-body #creativeWorkspace[data-shell-stage=\"chat\"] .creative-chat-transcript,\n  .panel-stack-body #creativeWorkspace[data-shell-stage=\"chat\"] .creative-workspace-prompt textarea",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace[data-shell-stage=\"chat\"] .creative-chat-runtime span,\n  .panel-stack-body #creativeWorkspace[data-shell-stage=\"chat\"] .creative-chat-message>p,\n  .panel-stack-body #creativeWorkspace[data-shell-stage=\"chat\"] .creative-chat-empty",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-body #creativeWorkspace[data-shell-stage=\"chat\"] .creative-chat-runtime button",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".ui-b-layer-appearance .ui-b-capability-note",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-framework>.panel-edge-strip,.panel-dock>.panel-edge-strip",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-region",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail .tool-group>[data-tool=\"image\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-rail .tool-icon svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail .tool-button.active,.tool-rail .tool-action.active",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".tool-colors .color-utility svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-control,.contextual-options .control-row",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .quick-color-input",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".preferences-category input[type=\"range\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".preferences-category .wide-button",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .context-inline-control",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options .context-control-label",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".contextual-options input[type=\"range\"]",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-rail .tool-action",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-action svg",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".tool-action:hover",
+      "context": "media:(min-width:761px)",
+      "reason": "Existing interaction/state/pseudo-element variant"
+    },
+    {
+      "selector": ".panel-stack-body>.navigator-panel",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    },
+    {
+      "selector": ".panel-stack-body>.layers-panel",
+      "context": "media:(min-width:761px)",
+      "reason": "Live shared primitive or distinct control role; surviving declaration order preserved"
+    }
+  ]
+}

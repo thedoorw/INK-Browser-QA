@@ -1,0 +1,746 @@
+{
+  "baselineProductCommit": "c90df990cddedc7d7d7692b88200985a8b50d5aa",
+  "authorityCheckpoint": "87f47dedcb97bd62708d58cd5ef4454626f1079c",
+  "environment": {
+    "viewport": "1280x1024",
+    "DPR": 1,
+    "browser": "153.0.8010.0",
+    "font": "Noto Sans TC 400 (QA-only font registration)",
+    "rendering": "Canvas fallback / CPU rasterization for screenshot stability",
+    "source": "candidate"
+  },
+  "productFilesChanged": [
+    "styles.css"
+  ],
+  "sourceFileCount": 273,
+  "jsFilesUnchanged": 224,
+  "beforeStyleSHA256": "1d234d83376e0e2c87b739ca93f58dad74bfecbe24eed55d977e8c9e0c8f21d2",
+  "afterStyleSHA256": "a4657f28b5005b11b1e6dcf2ad4e979efb2261049b879699989ac539a0d276db",
+  "sameClassDual": [
+    {
+      "class": null,
+      "parent": "edge-chevron",
+      "width": 7,
+      "height": 5
+    },
+    {
+      "class": "tool-color background-swatch",
+      "parent": "tool-colors",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "class": "tool-color foreground-swatch",
+      "parent": "tool-colors",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "class": null,
+      "parent": "edge-chevron",
+      "width": 7,
+      "height": 5
+    },
+    {
+      "class": null,
+      "parent": "edge-chevron",
+      "width": 7,
+      "height": 5
+    }
+  ],
+  "sameClassSingle": [
+    {
+      "class": null,
+      "parent": "edge-chevron",
+      "width": 7,
+      "height": 5
+    },
+    {
+      "class": "tool-color background-swatch",
+      "parent": "tool-colors",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "class": "tool-color foreground-swatch",
+      "parent": "tool-colors",
+      "width": 18,
+      "height": 18
+    },
+    {
+      "class": null,
+      "parent": "edge-chevron",
+      "width": 7,
+      "height": 5
+    },
+    {
+      "class": null,
+      "parent": "edge-chevron",
+      "width": 7,
+      "height": 5
+    }
+  ],
+  "checks": [
+    {
+      "name": "dual swatches share 18x18 primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "dual left/right chevrons share 7x5 primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "single swatches share 18x18 primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "single left/right chevrons share 7x5 primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "All visible stack tabs use 28px grammar",
+      "ok": true
+    },
+    {
+      "name": "single Tools swatches/utilities contained",
+      "ok": true,
+      "data": [
+        {
+          "class": "tool-colors",
+          "inside": true
+        },
+        {
+          "class": "color-utility color-reset",
+          "inside": true
+        },
+        {
+          "class": "color-utility color-swap",
+          "inside": true
+        },
+        {
+          "class": "tool-color background-swatch",
+          "inside": true
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "inside": true
+        },
+        {
+          "class": "tool-bottom-utilities",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "name": "Edit Preferences last",
+      "ok": true,
+      "data": [
+        {
+          "label": "復原Ctrl+Z",
+          "command": "undo"
+        },
+        {
+          "label": "重做Ctrl+Shift+Z",
+          "command": "redo"
+        },
+        {
+          "label": "建立副本Ctrl+D",
+          "id": "edit-duplicate",
+          "command": "duplicate"
+        },
+        {
+          "label": "刪除Delete",
+          "id": "edit-delete",
+          "command": "delete"
+        },
+        {
+          "label": "變形：傾斜…",
+          "id": "object-skew",
+          "command": "transform:skew"
+        },
+        {
+          "label": "變形：扭曲…",
+          "id": "object-distort",
+          "command": "transform:distort"
+        },
+        {
+          "label": "變形：透視…",
+          "id": "object-perspective",
+          "command": "transform:perspective"
+        },
+        {
+          "label": "變形：彎曲…",
+          "id": "object-warp",
+          "command": "transform:warp"
+        },
+        {
+          "label": "鍵盤快捷鍵…",
+          "id": "help-shortcuts",
+          "command": "keyboard-shortcuts"
+        },
+        {
+          "label": "偏好設定…",
+          "id": "edit-settings",
+          "command": "preferences"
+        }
+      ]
+    },
+    {
+      "name": "Edit transformations preserved",
+      "ok": true
+    },
+    {
+      "name": "Layers add + duplicate",
+      "ok": true
+    },
+    {
+      "name": "Layers lock changes authoritative state",
+      "ok": true
+    },
+    {
+      "name": "Layers reorder changes authoritative order",
+      "ok": true,
+      "data": {
+        "beforeOrder": [
+          "a7d97d3e-a8e1-4591-86cf-0248f6f70056",
+          "8436a5f0-aa1f-4bfa-b34c-33e57790a12a",
+          "784131a2-5a5e-47e8-b84d-1ef770cb8683"
+        ],
+        "afterOrder": [
+          "784131a2-5a5e-47e8-b84d-1ef770cb8683",
+          "a7d97d3e-a8e1-4591-86cf-0248f6f70056",
+          "8436a5f0-aa1f-4bfa-b34c-33e57790a12a"
+        ]
+      }
+    },
+    {
+      "name": "Layers delete",
+      "ok": true
+    },
+    {
+      "name": "Layers undo restores delete",
+      "ok": true
+    },
+    {
+      "name": "Preferences width invariant across categories",
+      "ok": true,
+      "data": [
+        {
+          "width": 740,
+          "height": 540,
+          "text": "介面與操作幾何角度吸附（15°）智慧參考線與物件吸附移動"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "觸控與筆單指使用目前工具（預設為導航）觸控筆校準起始壓力"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "文件與版面版面與列印文件依下列尺寸顯示；縮放與平移只改變"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "紙張與媒材紙張媒材吸水率58%粗糙度42%纖維強度36%"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "效能與儲存檢查儲存與離線狀態尚未檢查執行發布健康檢查尚未"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "品牌\n        名稱、標題、標誌與網站圖示會即時預"
+        }
+      ]
+    },
+    {
+      "name": "Panel splitter resizes",
+      "ok": true
+    },
+    {
+      "name": "Short Tools utilities inside viewport",
+      "ok": true
+    },
+    {
+      "name": "Compact page contains horizontal viewport",
+      "ok": true
+    },
+    {
+      "name": "No page/resource errors",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "Browser-loaded product response bytes match source",
+      "ok": true,
+      "data": {
+        "count": 203
+      }
+    }
+  ],
+  "states": {
+    "empty": {
+      "measuredRegionCounts": [
+        53,
+        53
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "active": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "tools-single": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "dock-collapsed": {
+      "measuredRegionCounts": [
+        26,
+        26
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "dock-expanded": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        1054,
+        734
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "reference": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "reference-details": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "reference-scroll": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "edit-menu": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "layers-normal": {
+      "measuredRegionCounts": [
+        54,
+        54
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "layers-locked": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "layers-hidden": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "layers-drag": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "layers-reordered": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "layers-undo": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "preferences": {
+      "measuredRegionCounts": [
+        57,
+        57
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "preferences-branding": {
+      "measuredRegionCounts": [
+        58,
+        58
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "focus": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "splitter-resized": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "desktop-narrow": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "short-single": {
+      "measuredRegionCounts": [
+        56,
+        56
+      ],
+      "pixelDeltaBounds": [
+        9,
+        64,
+        18,
+        72
+      ],
+      "changedSelectors": [
+        ".edge-chevron svg"
+      ]
+    },
+    "compact": {
+      "measuredRegionCounts": [
+        26,
+        26
+      ],
+      "pixelDeltaBounds": null,
+      "changedSelectors": []
+    }
+  },
+  "responses": {
+    "before": 203,
+    "after": 203,
+    "allBeforeMatch": true,
+    "allAfterMatch": true
+  },
+  "serviceWorkerController": "http://127.0.0.1:8765/product/source/service-worker.js",
+  "pageErrors": []
+}
