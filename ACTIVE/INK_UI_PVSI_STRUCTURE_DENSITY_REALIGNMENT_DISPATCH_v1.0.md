@@ -1,11 +1,15 @@
 # INK UI — PvsI Structure / Size / Density Realignment Dispatch v1.0
 
-STATUS: ACTIVE / USER_AUTHORIZED / DIRECT_MR_EXECUTION
+STATUS: SUPERSEDED / DO_NOT_EXECUTE / HISTORICAL
 DATE: 2026-09-30
 TASK: INK-UI-PVSI-STRUCTURE-DENSITY-REALIGNMENT-001
 OWNER: INK DIRECT UI MR
 
-## 1. Mission
+## Supersession — 2026-10-01
+
+USER deleted `PvsI-1 / PvsI-2 / PvsI-3` because the INK interface had changed. This dispatch is retained only as history and must not be used as current visual authority or mutation authorization. Use the original Photoshop references together with a fresh current-INK capture for future comparison.
+
+## 1. Historical mission
 
 Re-align the current INK desktop UI against Photoshop using the USER-supplied three PvsI comparison images as the immediate visual execution authority.
 
