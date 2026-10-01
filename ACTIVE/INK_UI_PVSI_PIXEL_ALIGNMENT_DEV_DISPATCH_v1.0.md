@@ -1,15 +1,19 @@
 # INK UI — PvsI Pixel Alignment DEV Dispatch v1.0
 
-STATUS: ACTIVE / USER_AUTHORIZED / DIRECT_UI_DEV_EXECUTION
+STATUS: SUPERSEDED / DO_NOT_EXECUTE / HISTORICAL
 DATE: 2026-09-30
 TASK: INK-UI-PVSI-PIXEL-ALIGNMENT-001
 OWNER: INK DIRECT UI MR / DEV EXECUTOR
+
+## Supersession — 2026-10-01
+
+USER deleted `PvsI-1 / PvsI-2 / PvsI-3` because the INK interface had changed. This dispatch no longer has valid comparison assets and must not authorize product mutation. Use `ACTIVE/INK_CURRENT_WORK_ORDER.md`, the Photoshop original references, and a fresh current-INK capture for any new comparison.
 
 ## Current clarification — 2026-10-01
 
 Master Guide exact-fidelity clarification supersedes former 1 CSS px acceptance wording. Current recheck/repair queue: `working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md`. Preserve existing authorized scope; queue UIR-01–05 as bounded corrections, UIR-02 after USER resolves action semantics. No Actions or new Runtime gate authorized.
 
-## 1. Mission
+## 1. Historical mission
 
 Use the three USER-selected PvsI comparison images as the direct visual measurement authority and revise current INK so that shared Photoshop/INK UI geometry, structure and density align at pixel level.
 
