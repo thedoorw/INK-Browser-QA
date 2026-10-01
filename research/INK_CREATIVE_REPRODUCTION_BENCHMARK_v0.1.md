@@ -5,9 +5,11 @@
 ```text
 TYPE = RESEARCH / BENCHMARK PROGRAM
 AUTHORITY = DIRECTIONAL / DOES NOT AUTHORIZE PRODUCT MUTATION
-PHASE_1 = MATURE-WORK_REPRODUCTION
-TARGET_CANDIDATE_LIBRARY = 100+
+PHASE_1 = CHAT_INK_QUALIFICATION_BEFORE_REPRODUCTION
+TARGET_CANDIDATE_LIBRARY = 100+ / DEFERRED
 PRIMARY_REFERENCE_ECOSYSTEMS = Figma / Adobe / Canva
+EXTERNAL_PAID_SPEND = FORBIDDEN
+MATURE_TOOL_TESTING = DOCUMENT_FIRST / MINIMAL_LIVE_LOOP_ONLY
 PORTFOLIO_TARGET = GitHub-hosted public case-study / result site
 ```
 
@@ -30,12 +32,12 @@ Detailed Gate-1 plan:
 
 ```text
 proven GPT / agent workflows in Figma / Adobe / Canva
-→ extract operations and workflow sequence
-→ map cases to INK capabilities
-→ identify overlap / unique coverage / gaps
-→ define CHAT × INK qualification tests
-→ execute Gate 1 isolated capability tests
-→ execute Gate 2 combined-task tests
+→ extract operation patterns
+→ accept documented mature-tool capabilities without redundant feature-by-feature retesting
+→ record external free-plan/paywall limits without blocking INK
+→ map operation patterns to INK capabilities
+→ compress qualification into a small set of multi-capability CHAT × INK exercises
+→ verify discovery / operation / Preview / self-correction / final state
 → analyze mature external work
 → CHAT writes INK-specific reproduction procedure
 → autonomous INK reproduction
@@ -45,6 +47,22 @@ proven GPT / agent workflows in Figma / Adobe / Canva
 ```
 
 The program must see the route before execution expands. Case collection is therefore subordinate to coverage planning, not an end in itself.
+
+## 2.1 Mature-tool boundary
+
+The benchmark does not perform exhaustive QA on external products.
+
+```text
+PAY_FOR_EXTERNAL_TOOL_TO_CONTINUE = NO
+DOCUMENT_CONFIRMED = sufficient for known operation availability
+LIVE_LOOP_CONFIRMED = reserved for a small representative autonomy proof
+CHAT_SURFACE_GAP = documented unavailable operation
+EXTERNAL_PLAN_LIMIT = free-plan/quota restriction; never an INK blocker
+```
+
+Figma Batch 01 established the practical reason for this boundary: external provider quotas can dominate the experiment and obscure the actual question of whether CHAT can create with INK.
+
+Therefore external-tool research ends when the operation model is understood well enough to inform INK. It does not continue merely to convert every external case into PASS.
 
 ## 3. Source pool
 
@@ -66,7 +84,7 @@ Useful sources include:
 
 The benchmark should prefer sources that expose enough visual or procedural evidence to support a reproducible test.
 
-The long-term mature-work candidate pool should contain **100 or more** qualified cases. Expansion toward that target is deferred while Gate 1 is being planned and qualified. The current evidence set is 40 Figma / Adobe / Canva qualification and supporting cases used to derive capability coverage and test direction. Canva adds existing-design retrieval, text/image extraction, image→editable-design conversion, URL import, design editing, Brand Kit constraints, feedback/revision and data-driven variants.
+The long-term mature-work candidate pool may still contain **100 or more** qualified cases, but that is a later creative-library goal rather than a prerequisite. Expansion is deferred until CHAT × INK can complete a small end-to-end creation loop. The current Figma / Adobe / Canva evidence set is used primarily to derive operation patterns and capability coverage, not to create an external-product regression suite.
 
 ## 4. Selection criteria
 
@@ -193,13 +211,13 @@ Reproduction cases may preserve tutorial steps as evidence, but reproduction beg
 
 ## 9. 100+ mature-work candidate library
 
-The long-term catalog target remains:
+The long-term catalog target remains optional:
 
 ```text
-QUALIFIED_CANDIDATES >= 100
+QUALIFIED_CANDIDATES >= 100 / LATER_LIBRARY_GOAL
 ```
 
-However this is **not the current gate**. The program first builds and executes the CHAT × INK qualification plan from the selected evidence set. Only after capability direction and gaps are visible should the mature-work library expand aggressively.
+It is **not a gate**. Do not delay creation or INK qualification in order to reach a candidate count. The library expands only after CHAT × INK has demonstrated a usable closed loop.
 
 The mature-work library should then be distributed across work categories and capability coverage so the full set becomes a practical creative benchmark for INK.
 
