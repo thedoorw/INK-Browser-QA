@@ -2,6 +2,7 @@
 
 STATUS: ACTIVE / CANONICAL UI DESIGN + INSPECTION GUIDE
 DATE: 2026-09-30
+LAST_UPDATED: 2026-10-01
 PROGRAM: INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
 
 ## 1. Purpose
@@ -29,9 +30,6 @@ Durable GitHub reference assets:
 - `reference/ui/photoshop/ps-1.png`
 - `reference/ui/photoshop/PS-2.png`
 - `reference/ui/photoshop/PS-3.png`
-- `reference/ui/photoshop/PvsI-1.png`
-- `reference/ui/photoshop/PvsI-2.png`
-- `reference/ui/photoshop/PvsI-3.png`
 
 USER current visual instructions and acceptance/rejection remain the highest current authority.
 
@@ -496,13 +494,14 @@ Runtime PASS is invalid substitute.
 
 Dynamic UI must be checked after runtime installation in final DOM plus effective CSS.
 
-## 26. Current active implementation dispatch
+## 26. Current active implementation / review authority
 
-Current detail pass:
+Current work is governed by:
 
-`ACTIVE/INK_UI_PVSI_PIXEL_ALIGNMENT_DEV_DISPATCH_v1.0.md`
+- `ACTIVE/INK_CURRENT_WORK_ORDER.md`;
+- `working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md` where the current bounded repair/recheck queue applies.
 
-The dispatch is the current bounded mutation task. This Master Guide is the durable design/inspection authority.
+The former `ACTIVE/INK_UI_PVSI_PIXEL_ALIGNMENT_DEV_DISPATCH_v1.0.md` is superseded and must not be executed. Its three PvsI comparison assets were deleted by USER on 2026-10-01 after the INK interface changed. This Master Guide remains the durable design/inspection authority.
 
 ## 27. Provenance map — older files
 
@@ -739,26 +738,19 @@ Countermeasures:
 - use source only after the visible delta inventory;
 - preserve USER reference authority over derived interpretations.
 
-## 32. Current PvsI comparison authority
+## 32. PvsI comparison retirement — 2026-10-01
 
-The current bounded implementation pass uses:
+The former `PvsI-1.png / PvsI-2.png / PvsI-3.png` composites were deleted by USER because the INK interface had changed.
 
-- `PvsI-1.png`
-- `PvsI-2.png`
-- `PvsI-3.png`
+Current rule:
 
-These images are now stored as durable GitHub reference assets. A USER re-upload is not required as the authority source; the executor must inspect the exact repository assets, retrieving/materializing them when necessary.
+- deleted PvsI composites are not current authority;
+- do not reconstruct them from old descriptions or derived measurements;
+- Photoshop originals `ps-1.png / PS-2.png / PS-3.png` remain the durable upstream visual references;
+- any future Photoshop ↔ INK comparison must use a fresh capture of the current INK state;
+- historical PvsI-derived observations may remain provenance only and cannot close current visual deltas.
 
-They are immediate comparison authority for:
-
-- structure;
-- dimensions;
-- density;
-- grouping;
-- control grammar;
-- same-class consistency.
-
-The Photoshop originals remain upstream authority. The INK light palette remains the explicit USER theme override.
+The INK light palette remains the explicit USER theme override.
 
 ## 33. USER exact-fidelity clarification — 2026-09-30
 
@@ -771,7 +763,7 @@ Machine-readable checklist mirror:
 
 Shared geometry targets delta=0 at the matched reference environment/state. The previous dispatch's <=1 CSS px residual is not permission to waive a visible discrepancy. Record measurement/raster uncertainty separately and keep unresolved fidelity open. Existing explicit Light-palette, authoritatively absent capability and USER overrides remain named exceptions.
 
-Photoshop document zoom does not scale application chrome. In PvsI composites, outer Photoshop chrome and the embedded INK document image occupy different coordinate systems. Never normalize all chrome from the document's 66.67% zoom. Cross-check multiple chrome anchors against the original reference and record any remaining scale uncertainty.
+Photoshop document zoom does not scale application chrome. Historical comparison composites exposed the risk of mixing document-image zoom with application-chrome scale; this remains a general measurement rule, not current PvsI evidence. Cross-check multiple chrome anchors against the original Photoshop reference and record any remaining scale uncertainty.
 
 Ruler thickness alone cannot establish ruler fidelity. Required ruler details include glyph envelope/baseline, vertical label orientation, tick hierarchy/spacing/length, unit conversion, origin and camera synchronization. Placed guides, drag preview and smart guides/snap feedback require separate state references and visual rules. Restore the named original interaction captures before claiming exact guide color/style measurements.
 
