@@ -65,3 +65,8 @@ UIR-02 動作語意需 USER 決定，先列設計待決，不自行製作假控�
 - Exact affected icons, browser-loaded build identity and clipping/scaling/stroke cause remain to be inspected; do not invent a cause from this report.
 - Recheck stable rendered toolbar against GitHub reference/ui/photoshop references, including single/double columns, normal/selected/disabled and flyout states. Require actual visual evidence before closing.
 - This update records the defect only; no product change in this operation.
+
+## USER control consistency — 2026-10-01 16:17 Asia/Taipei
+- UIR-07 NAVIGATOR_SLIDER_THUMB — OPEN / USER_REQUIRED_REPAIR.
+- Navigator zoom slider thumb must be circular, sharing the existing common range-control thumb size, border, fill and interaction-state styling. Inspect effective WebKit and Mozilla thumb rules; do not create a Navigator-only visual variant.
+- Verify normal/focus/disabled appearance and retained zoom interaction in stable rendered current build. This entry records the requested repair; no implementation or PASS claimed.
