@@ -1,6 +1,6 @@
 # INK DEV Progress
 
-STATUS: `BENCHMARK_REVIEW_REQUIRED`
+STATUS: `BENCHMARK_REVIEW_COMPLETE / RERUN_REQUIRED`
 
 TASK: `MTB-FIGMA-BATCH-01`
 
@@ -72,3 +72,20 @@ AUTHORIZED
 ```
 
 DEV handoff complete. STOP pending benchmark review.
+
+
+## Benchmark review
+
+REVIEW_RECORD:
+`working/mature-tool-benchmark/figma-batch-01/REVIEW.md`
+
+```text
+REVIEW_VERDICT = ACCEPTED_AS_VALID_BLOCKED_BATCH
+MASTER_QUALIFICATION_PROMOTION = NONE
+RERUN_REQUIRED = F01 / F08 / F09 / F10
+F14 = CONFIRMED_CURRENT_SURFACE_TOOL_GAP
+BATCH_02_AUTHORIZATION = NO
+MERGE_AUTHORIZATION = NO
+```
+
+Reviewer independently reproduced the Figma Starter MCP quota block. The five BLOCKED DEV results are not to be interpreted as five CHAT capability failures. F01/F08/F09/F10 remain unresolved pending a bounded rerun under a fixture compatible with the available plan. F14 is retained as a confirmed current CHAT↔Figma surface gap for callable undo/version-history save.
