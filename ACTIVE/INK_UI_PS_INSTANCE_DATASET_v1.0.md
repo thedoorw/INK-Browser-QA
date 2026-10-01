@@ -431,8 +431,8 @@ Reference-derived target:
 Reference characteristics:
 - window controls use crisp, optically centered glyphs;
 - collapse controls sit in a dedicated narrow strip;
-- collapse glyph is small and directional, not a text character;
-- panel-menu glyph is compact and consistent;
+- Photoshop captured collapse/expand glyph is a compact **double chevron** (`<<` / `>>` morphology), measured visible envelope ≈7×5 px; it must be rendered as controlled vector geometry rather than a text character;
+- Photoshop captured panel-menu glyph is **three horizontal lines**, measured visible envelope ≈10×7 px;
 - side-region collapse strip is separated from content by a clear boundary.
 
 Do not use arbitrary Unicode glyph weight as a replacement for a controlled icon.
