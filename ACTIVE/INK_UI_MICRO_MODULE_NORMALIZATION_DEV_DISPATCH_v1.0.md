@@ -131,3 +131,36 @@ Evidence handling rules:
 - do not infer unseen functionality from a static screenshot;
 - if a current product state has changed since UIE-00/UIE-03/UIE-05, recheck the actual current rendered page and use the screenshots as defect provenance, not stale PASS/FAIL evidence.
 
+
+
+## Mandatory pre-implementation capability exposure audit
+
+Before visual mutation, build a bounded `Capability → UI Surface Matrix` from:
+- `ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`;
+- current rendered Tools / Options Bar / menus / panels;
+- the Photoshop contextual Options Bar behavior described by the UI authorities.
+
+Do not assume the currently visible Options Bar is complete.
+
+Required sequence:
+
+```text
+CURRENT TOOL / COMMAND INVENTORY
+→ MATCH TO EXISTING INK CAPABILITY
+→ ENUMERATE EXISTING ADJUSTABLE PARAMETERS
+→ ASSIGN CORRECT PRIMARY UI HOME
+→ IDENTIFY MISSING / MISPLACED / DUPLICATE UI
+→ IMPLEMENT WITH SHARED MICRO-MODULE PRIMITIVES
+```
+
+Important:
+- Options Bar changes by active tool; do not make one global parameter strip containing everything.
+- Menu commands without persistent tool state may belong in menus/dialogs rather than Options Bar.
+- Persistent object/layer/document parameters belong in Properties/Layers/other owning panels where appropriate.
+- Existing capability with an applicable user parameter and no valid visible route is an assembly defect.
+- Headless/platform/diagnostic capability does not automatically require normal creative UI.
+- Never invent unsupported Photoshop parameters.
+
+DEV handoff must include the matrix or a concise machine-readable equivalent and identify all newly exposed controls by their existing capability/state authority.
+
+The visual normalization pass is not complete if it only restyles currently visible controls while leaving known existing user-facing tool parameters undisposed.
