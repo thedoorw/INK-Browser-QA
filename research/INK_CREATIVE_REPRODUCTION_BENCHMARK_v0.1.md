@@ -7,16 +7,15 @@ TYPE = RESEARCH / BENCHMARK PROGRAM
 AUTHORITY = DIRECTIONAL / DOES NOT AUTHORIZE PRODUCT MUTATION
 PHASE_1 = MATURE-WORK_REPRODUCTION
 TARGET_CANDIDATE_LIBRARY = 100+
-PRIMARY_REFERENCE_ECOSYSTEMS = Figma / Adobe
-NEXT_REFERENCE_CANDIDATE = Canva / PENDING CONNECTION + EVIDENCE SELECTION
+PRIMARY_REFERENCE_ECOSYSTEMS = Figma / Adobe / Canva
 PORTFOLIO_TARGET = GitHub-hosted public case-study / result site
 ```
 
 ## 1. Purpose
 
-INK has already incorporated multiple interaction and connector ideas derived from mature CHAT-operable systems such as Figma and Adobe.
+INK has already incorporated multiple interaction and connector ideas derived from mature CHAT-operable systems such as Figma, Adobe and Canva.
 
-The next validation stage is not to jump directly into mature-work reproduction. It first uses proven GPT / agent workflows from Figma and Adobe to establish a planned CHAT × INK capability qualification surface.
+The next validation stage is not to jump directly into mature-work reproduction. It first uses proven GPT / agent workflows from Figma, Adobe and Canva to establish a planned CHAT × INK capability qualification surface.
 
 The first question is:
 
@@ -30,7 +29,7 @@ Detailed Gate-1 plan:
 ## 2. Program sequence
 
 ```text
-proven GPT / agent workflows in Figma / Adobe
+proven GPT / agent workflows in Figma / Adobe / Canva
 → extract operations and workflow sequence
 → map cases to INK capabilities
 → identify overlap / unique coverage / gaps
@@ -53,9 +52,6 @@ Primary source ecosystems:
 
 - Figma
 - Adobe
-
-Next candidate after connection and validation:
-
 - Canva
 
 Useful sources include:
@@ -70,7 +66,7 @@ Useful sources include:
 
 The benchmark should prefer sources that expose enough visual or procedural evidence to support a reproducible test.
 
-The long-term mature-work candidate pool should contain **100 or more** qualified cases. Expansion toward that target is deferred while Gate 1 is being planned and qualified. The current verified evidence set is 30 Figma / Adobe cases used to derive capability coverage and test direction. Canva is a candidate replacement ecosystem and is not counted until connected, analyzed and assigned reproducible cases.
+The long-term mature-work candidate pool should contain **100 or more** qualified cases. Expansion toward that target is deferred while Gate 1 is being planned and qualified. The current evidence set is 40 Figma / Adobe / Canva qualification and supporting cases used to derive capability coverage and test direction. Canva adds existing-design retrieval, text/image extraction, image→editable-design conversion, URL import, design editing, Brand Kit constraints, feedback/revision and data-driven variants.
 
 ## 4. Selection criteria
 
