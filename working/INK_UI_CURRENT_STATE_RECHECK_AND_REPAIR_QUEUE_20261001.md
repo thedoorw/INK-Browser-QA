@@ -58,3 +58,10 @@ UIR-02 動作語意需 USER 決定，先列設計待決，不自行製作假控�
 ## 文件規則
 舊2026-09-30清單保留作歷史baseline，當前狀態以本表及同步CSV複查欄為準；子項未重現不等於整列或整體PASS。
 共享幾何target delta=0；1 CSS px不是免修容差，測量不確定性另記。歷史NEXT_ACTION、PASS、Runtime授權不作當前執行指令。
+
+## USER correction — 2026-10-01 16:12 Asia/Taipei
+- UIR-06 LEFT_TOOLBAR_BROKEN_ICONS — OPEN / USER_REPORTED_STILL_PRESENT.
+- USER reports:「左側工具列仍然破圖」。Previous SVG viewBox/wrapper/stroke normalization is an attempted source repair, not defect closure or current visual PASS.
+- Exact affected icons, browser-loaded build identity and clipping/scaling/stroke cause remain to be inspected; do not invent a cause from this report.
+- Recheck stable rendered toolbar against GitHub reference/ui/photoshop references, including single/double columns, normal/selected/disabled and flyout states. Require actual visual evidence before closing.
+- This update records the defect only; no product change in this operation.
