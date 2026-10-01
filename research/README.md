@@ -25,11 +25,17 @@ Current work authority:
 - `INK_CHAT_CONNECTOR_PLAN_INTEGRITY_AUDIT_v0.1.md`
 
 
-### Creative reproduction / portfolio benchmark
+### CHAT qualification / creative reproduction / portfolio benchmark
+- `INK_CHAT_CAPABILITY_QUALIFICATION_PLAN_v0.1.md`
+  - current Gate 1 before mature-work reproduction;
+  - 33 selected Figma / Penpot / Adobe qualification evidence cases;
+  - case × capability mapping before execution;
+  - overlap / unique coverage / gap analysis;
+  - isolated qualification → combined-task qualification → reproduction sequence.
 - `INK_CREATIVE_REPRODUCTION_BENCHMARK_v0.1.md`
-  - 100+ mature-case candidate library;
+  - 100+ mature-case candidate library remains a later target;
   - Figma / Penpot / Adobe source ecosystems;
-  - CHAT-operated INK reproduction;
+  - CHAT-operated INK reproduction after qualification;
   - capability coverage / gap classification;
   - GitHub portfolio direction.
 
