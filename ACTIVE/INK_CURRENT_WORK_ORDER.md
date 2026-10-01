@@ -7,6 +7,8 @@ Finite document/no-document workspace, populated Preferences categories, contras
 
 ## Current authority clarification — 2026-10-01
 
+USER deleted `reference/ui/photoshop/PvsI-1.png`, `PvsI-2.png`, and `PvsI-3.png` after the INK interface changed. Both PvsI-specific ACTIVE dispatches are superseded and may not authorize further comparison or mutation. Future Photoshop ↔ INK comparison requires the original Photoshop reference assets plus a fresh current-INK capture.
+
 Current live recheck and USER-authorized bounded repair queue:
 `working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md`.
 Supervisor maintains standards/documents; Direct UI MR executes the bounded repair queue alongside already authorized work. UIR-02 action semantics require USER decision before implementation. No product mutation was performed by this document update.
@@ -41,9 +43,9 @@ LAST_COMPLETED_TASK = INK-UI-C-PHOTOSHOP-FIDELITY-CLOSURE-001
 UI_A_PROMOTION_PR = 83
 UI_A_PROMOTION_MERGE = f839f542d6da1eaa68791a0c8f3a5834b6ba0868
 
-ACTIVE_TASK = INK-UI-PVSI-PIXEL-ALIGNMENT-001
+ACTIVE_TASK = USER_LED_UI_RECHECK_REPAIR / PS_REFERENCE_DATASET_REBUILD
 ACTIVE_UI_DIRECTIVE = ACTIVE/INK_UI_DIRECT_MR_NEW_WINDOW_HANDOFF_v1.0.md
-ACTIVE_UI_ASSEMBLY_WORK_ORDER = ACTIVE/INK_UI_PVSI_PIXEL_ALIGNMENT_DEV_DISPATCH_v1.0.md
+ACTIVE_UI_ASSEMBLY_WORK_ORDER = working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md
 PS_ALIGNMENT_MASTER_GUIDE = ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md
 ACTIVE_UI_BRANCH = main / bounded direct commits
 
@@ -162,7 +164,7 @@ PREVIOUS_GENERIC_SPARSE_LIGHT_UI = REJECTED
 UI_COMPLETE = USER_NOT_YET_DECLARED
 
 NEXT_OWNER = USER + UI_TASK_AUTHOR_CHAT
-NEXT_ACTION = DIRECT_MR_READ_PVSI_PIXEL_ALIGNMENT_AND_EXECUTE
+NEXT_ACTION = FOLLOW_CURRENT_USER_INSTRUCTION + CURRENT_RECHECK_REPAIR_QUEUE
 ```
 
 R31 USER rejection remains authoritative. The previous UI-A/B/C visual closure and UR visual PASS do not constrain the new reconstruction.
@@ -659,6 +661,6 @@ Active dispatch:
 USER-visible priorities: automatic tooltip/hint clutter off; matching left/right narrow-strip collapse arrows; typography/contrast normalization; no dark text/icons on dark headers; global foreground/background colors in left Tools footer; contextual Options Bar; centered color indicator; right-panel nested/status clutter removal; categorized single Preferences framework with Branding as one section; full current-page vs Photoshop visible delta sweep.
 
 
-## PvsI comparison authority — 2026-09-30
+## PvsI comparison retirement — 2026-10-01
 
-The current visual implementation pass uses the durable GitHub references `reference/ui/photoshop/PvsI-1.png`, `reference/ui/photoshop/PvsI-2.png`, `reference/ui/photoshop/PvsI-3.png` as immediate comparison authority for structure / dimensions / density. The executor must inspect those exact assets before visual mutation; a USER re-upload is optional only as an exact viewing mirror when repository-binary rendering is unavailable.
+The former `reference/ui/photoshop/PvsI-1.png`, `PvsI-2.png`, and `PvsI-3.png` assets were deleted by USER because the INK interface had changed. They are no longer current comparison authority. Do not recreate or reuse them as evidence. Current visual authority is the original Photoshop reference set plus fresh current-INK captures generated for the specific comparison state.
