@@ -117,6 +117,35 @@ Required correction:
 
 This is a same-class consistency defect: layout state changed the primitive size when only placement should change.
 
+### SUP-05 — LEFT/RIGHT COLLAPSE GLYPH SIZE OVERRIDE BREAKS SAME-CLASS ALIGNMENT
+
+The left and right collapse controls use the same `i-collapse` SVG source, but current CSS does not render them at the same geometry.
+
+Shared authority defines:
+```text
+.edge-chevron svg = 7 × 5 px
+```
+
+A later left-only override changes:
+```text
+.tool-layout-toggle svg = 9 × 8 px
+```
+
+The right panel-edge control remains at the shared 7 × 5 px geometry.
+
+Result:
+- the two same-class double-chevron controls acquire different optical envelopes;
+- despite both being centered in a nominal 12 px strip, their perceived vertical position/baseline differs;
+- this creates the USER-observed “one high, one low” mismatch.
+
+Required correction:
+- remove the left-only 9 × 8 px override;
+- left and right collapse/expand controls must use the same 7 × 5 px glyph primitive, same strip height, same button box and same optical-centering rule;
+- direction changes by transform/orientation only, not by size;
+- verify both expanded and collapsed states side-by-side at 1:1 screenshot scale.
+
+This is a same-class numeric defect and also evidence that a local override survived the shared-primitive migration.
+
 ## Capability → UI exposure disposition
 
 The new matrix is useful and the candidate exposes several real existing parameters through their existing authorities.
