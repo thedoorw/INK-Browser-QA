@@ -1,5 +1,25 @@
 # INK Current Work Order
 
+## Current UI normalization debt cleanup — 2026-10-02
+
+USER authorized a bounded cleanup pass before further visual/capability expansion.
+
+Current execution:
+- `ACTIVE/INK_UI_NORMALIZATION_TECH_DEBT_CLEANUP_DEV_DISPATCH_v1.0.md`
+
+Review authority:
+- `working/INK_UI_MICRO_MODULE_NORMALIZATION_SUPERVISOR_REVIEW_20261002.md`
+
+This pass removes covered duplicate/legacy presentation authority only.
+It must not expand capability scope or perform a new visual redesign.
+
+After cleanup:
+```text
+Supervisor + USER re-render review
+→ remaining SUP visual/state fixes
+→ later Capability → UI Exposure Batch B
+```
+
 ## Current UI micro-module normalization — 2026-10-01
 
 USER completed the current visual findings set and authorized one consolidated DEV normalization pass.
