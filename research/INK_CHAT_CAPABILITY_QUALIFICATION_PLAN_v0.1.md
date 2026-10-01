@@ -231,15 +231,49 @@ The Sheet is a working analysis surface.
 
 GitHub remains the SSOT for program direction, gate definitions and accepted conclusions.
 
-## 9. Current gate
+## 9. Current progress
 
 ```text
 33 qualification evidence cases = SELECTED
-case × capability planning = BUILDING
-coverage analysis = BUILDING
+CASE_COVERAGE_MATRIX = BUILT
+COVERAGE_SUMMARY = BUILT
+QUALIFICATION_TEST_ROWS = 33
+PRACTICAL_COVERAGE_GROUPS = 27
+
+COMMON_3 = 12
+COMMON_2 = 9
+SINGLE_ECOSYSTEM = 4
+INK_ONLY = 2
+
 INK execution = NOT STARTED
 100+ mature-work expansion = DEFERRED UNTIL QUALIFICATION DIRECTION IS VISIBLE
 portfolio reproduction = HOLD
+```
+
+Initial narrow / unique areas established before execution:
+
+- Boolean = Figma-led evidence;
+- Extraction / vectorization = Figma-led weak analogue;
+- Drawing / Stroke = only weak Adobe brush-region analogue, no strong external creation case yet;
+- Mask / Region = Adobe-led evidence;
+- Proposal / Explicit Approval = INK-specific;
+- Provenance / audit lineage = INK-specific.
+
+This is a planning result, not a runtime qualification result. A broad external overlap does not mean INK has passed that capability.
+
+## 10. Next action
+
+Do not add more mature-work cases merely to increase count.
+
+Next:
+
+```text
+review the 27-group coverage map
+→ prioritize P0 qualification rows
+→ execute isolated tests in dependency order
+→ record PASS / PARTIAL / BLOCKED / NOT_EXPOSED
+→ update coverage conclusion from planned evidence to observed INK behavior
+→ only then proceed to combined-task qualification
 ```
 
 No product mutation is authorized by this plan.
