@@ -7,7 +7,7 @@ TYPE = RESEARCH / QUALIFICATION PLAN
 AUTHORITY = DIRECTIONAL / DOES NOT AUTHORIZE PRODUCT MUTATION
 CURRENT_GATE = GATE_1_CHAT_INK_CAPABILITY_QUALIFICATION
 REFERENCE_ECOSYSTEMS = Figma / Adobe / Canva
-CASE_EVIDENCE_SET = 30 VERIFIED FIGMA / ADOBE CASES + CANVA EVIDENCE PENDING
+CASE_EVIDENCE_SET = 40 FIGMA / ADOBE / CANVA QUALIFICATION + SUPPORT CASES
 QUALIFICATION_TEST_ROWS = 56
 PRACTICAL_COVERAGE_GROUPS = 50
 BASELINE_FAMILY_AUDIT = 64 / 64 DISPOSITIONED
@@ -33,7 +33,7 @@ study proven GPT / agent workflows in Figma, Adobe and Canva
 → only then begin mature-work reproduction
 ```
 
-Canva is now installed and available as the third ChatGPT-operable comparison ecosystem. Canva cases are not counted until their workflows are selected and mapped.
+Canva is installed and is the third ChatGPT-operable comparison ecosystem. Ten official Canva workflow cases have been selected and mapped.
 
 ## 2. Gate sequence
 
@@ -93,13 +93,10 @@ Publish selected tutorial context, INK workflow, evidence and final result.
 
 ## 3. Qualification evidence set
 
-Current verified evidence:
+Current evidence ecosystems:
 
 - Figma;
-- Adobe.
-
-Third ecosystem now available for evidence selection:
-
+- Adobe;
 - Canva.
 
 Canva is intentionally chosen because it adds a different comparison surface:
@@ -284,19 +281,20 @@ GitHub remains the SSOT for program direction, gate definitions and accepted con
 ## 9. Current progress
 
 ```text
-VERIFIED_FIGMA_ADOBE_CASES = 30
+QUALIFICATION_EVIDENCE_CASES = 40
 CANVA_PLUGIN = INSTALLED
-CANVA_CASE_SELECTION = NEXT
-CASE_COVERAGE_MATRIX = BUILT / CANVA COLUMN PENDING POPULATION
-COVERAGE_SUMMARY = BUILT / CANVA COLUMN PENDING POPULATION
+CANVA_CASES = 10 MAPPED
+CASE_COVERAGE_MATRIX = BUILT
+COVERAGE_SUMMARY = BUILT
 QUALIFICATION_TEST_ROWS = 56
 PRACTICAL_COVERAGE_GROUPS = 50
 AUTHORITATIVE_BASELINE_FAMILIES = 64
 BASELINE_FAMILY_AUDIT = 64 / 64 DISPOSITIONED
 
-CURRENT TWO-ECOSYSTEM VIEW:
-COMMON_2 = 19
-SINGLE_ECOSYSTEM = 26
+THREE-ECOSYSTEM COVERAGE VIEW:
+COMMON_3 = 16
+COMMON_2 = 7
+SINGLE_ECOSYSTEM = 22
 INK_ONLY = 5
 
 INK execution = NOT STARTED
@@ -304,15 +302,14 @@ INK execution = NOT STARTED
 portfolio reproduction = HOLD
 ```
 
-The two-ecosystem counts above are temporary and must be recalculated after Canva case mapping.
-
-Current narrow or unique zones that Canva should be checked against first:
+Canva materially strengthens the middle layer between flat/reference input and editable design. Current strongest added areas:
 
 ```text
 Reference / existing-design intake
-Extraction-like structure understanding
-Layers / hierarchy
-Text / formatting
+Text / image content extraction
+Image → editable-design conversion
+PDF / PowerPoint URL import
+Text / formatting transformation
 Transform / resize
 Library / reuse
 Design feedback / visual QA
@@ -343,10 +340,10 @@ Do not begin INK Runtime qualification while the UI program is still changing.
 Next:
 
 ```text
-select Canva qualification cases
-→ map Canva workflows into the 50-group coverage matrix
-→ recalculate COMMON_3 / COMMON_2 / SINGLE / INK_ONLY
-→ prepare fixed fixtures and measurable PASS criteria
+prepare fixed fixtures and measurable PASS criteria
+→ define mature-tool autonomy test records for Figma / Adobe / Canva
+→ run those mature-tool tests while INK UI remains on hold
+→ use observed mature-tool behavior as the comparison baseline
 → HOLD until UI completion
 → execute P0 qualification in dependency order
 ```
