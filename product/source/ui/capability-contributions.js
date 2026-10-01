@@ -9,8 +9,13 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'file-import-svg', menu:'file', section:'import', label:'匯入 SVG…', command:'svg-import', authority:'SVG import' },
   { id:'file-print', menu:'file', section:'output', label:'列印…', command:'print', authority:'Output/Artboard' },
 
-  { id:'edit-duplicate', menu:'edit', section:'object', label:'複製', command:'duplicate', shortcut:'Ctrl+D', authority:'Document object authority' },
-  { id:'edit-delete', menu:'edit', section:'object', label:'刪除', command:'delete', shortcut:'Delete', authority:'Document object authority' },
+  { id:'edit-duplicate', menu:'edit', section:'copy', label:'建立副本', command:'duplicate', shortcut:'Ctrl+D', authority:'Document object authority' },
+  { id:'edit-delete', menu:'edit', section:'copy', label:'刪除', command:'delete', shortcut:'Delete', authority:'Document object authority' },
+  { id:'object-skew', menu:'edit', section:'transform', label:'變形：傾斜…', command:'transform:skew', authority:'P1-C advanced transform' },
+  { id:'object-distort', menu:'edit', section:'transform', label:'變形：扭曲…', command:'transform:distort', authority:'P1-C advanced transform' },
+  { id:'object-perspective', menu:'edit', section:'transform', label:'變形：透視…', command:'transform:perspective', authority:'P1-C advanced transform' },
+  { id:'object-warp', menu:'edit', section:'transform', label:'變形：彎曲…', command:'transform:warp', authority:'P1-C deformation' },
+  { id:'help-shortcuts', menu:'edit', section:'settings', label:'鍵盤快捷鍵…', command:'keyboard-shortcuts', authority:'UI help' },
   { id:'edit-settings', menu:'edit', section:'settings', label:'偏好設定…', command:'preferences', authority:'UI settings' },
 
   { id:'image-mode-8', menu:'image', section:'mode', label:'模式：8-bit', command:'bit-depth:8', authority:'P1-G color management' },
@@ -21,7 +26,7 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'image-mode-lab', menu:'image', section:'mode', label:'色彩模式：Lab', command:'color-mode:Lab', authority:'P1-G color management' },
   { id:'image-mode-multi', menu:'image', section:'mode', label:'色彩模式：多色版', command:'color-mode:Multichannel', authority:'P1-G color management', guarded:true },
   { id:'image-profile', menu:'image', section:'color', label:'色彩描述檔…', command:'color-profile', authority:'P1-G ICC' },
-  { id:'image-adjustments', menu:'edit', section:'adjustment', label:'調整…', command:'panel:adjustments', authority:'C24 adjustment stack' },
+  { id:'image-adjustments', menu:'image', section:'adjustment', label:'調整…', command:'panel:adjustments', authority:'C24 adjustment stack' },
   { id:'image-crop', menu:'image', section:'raster', label:'裁切選取影像…', command:'image-crop', authority:'C22 raster image' },
   { id:'image-resize', menu:'image', section:'raster', label:'影像尺寸…', command:'image-resize', authority:'C22 raster image' },
 
@@ -65,10 +70,6 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'filter-maximum', menu:'filter', section:'other', label:'最大值…', command:'filter:maximum', authority:'P1-F filter stack' },
   { id:'filter-liquify', menu:'filter', section:'workspace', label:'液化…', command:'liquify', authority:'P1-F liquify' },
 
-  { id:'object-skew', menu:'object', section:'transform', label:'變形：傾斜…', command:'transform:skew', authority:'P1-C advanced transform' },
-  { id:'object-distort', menu:'object', section:'transform', label:'變形：扭曲…', command:'transform:distort', authority:'P1-C advanced transform' },
-  { id:'object-perspective', menu:'object', section:'transform', label:'變形：透視…', command:'transform:perspective', authority:'P1-C advanced transform' },
-  { id:'object-warp', menu:'object', section:'transform', label:'變形：彎曲…', command:'transform:warp', authority:'P1-C deformation' },
   { id:'object-front', menu:'object', section:'arrange', label:'移至最上', command:'arrange:front', authority:'Document hierarchy' },
   { id:'object-back', menu:'object', section:'arrange', label:'移至最下', command:'arrange:back', authority:'Document hierarchy' },
   { id:'object-group', menu:'object', section:'hierarchy', label:'群組', command:'group', shortcut:'Ctrl+G', authority:'Document hierarchy' },
@@ -104,12 +105,35 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'view-guides-clear', menu:'view', section:'guide', label:'清除參考線', command:'guides:clear', authority:'Document guides' },
   { id:'view-workspace-layout', menu:'view', section:'workspace', label:'文件符合視窗', command:'workspace:fit-current', authority:'Workspace' },
 
-  { id:'help-shortcuts', menu:'help', section:'help', label:'鍵盤快捷鍵', command:'keyboard-shortcuts', authority:'UI help' },
   { id:'help-updates', menu:'help', section:'help', label:'更新', command:'updates', authority:'PWA update manager' },
   { id:'help-diagnostics', menu:'help', section:'help', label:'產品診斷', command:'panel:specialist', authority:'Product health' },
   { id:'help-pen', menu:'help', section:'help', label:'觸控筆校準…', command:'pen-calibration', authority:'Device calibration' },
   { id:'help-recovery', menu:'help', section:'recovery', label:'復原…', command:'recovery', authority:'Storage checkpoint recovery' }
 ]);
+
+// Contextual fields list only parameters consumed by the existing raster adapter.
+// Values remain owned by createRasterToolController.options/setOption.
+export const UI_B_RASTER_OPTION_FIELDS = Object.freeze({
+  polygonalLasso:['selectionMode'],
+  magneticLasso:['selectionMode','edgeThreshold','searchRadius'],
+  quickSelection:['selectionMode','tolerance','edgeThreshold'],
+  magicWand:['selectionMode','tolerance','contiguous'],
+  objectSelection:['selectionMode','tolerance','edgeThreshold'],
+  paintBucket:['tolerance','contiguous','opacity'],
+  cloneStamp:['radius','opacity','hardness'],
+  patternStamp:['radius','opacity','hardness'],
+  healingBrush:['radius','opacity','hardness'],
+  spotHealing:['radius','opacity','hardness'],
+  patch:['radius','opacity'],
+  dodge:['radius','strength','hardness'],
+  burn:['radius','strength','hardness'],
+  sponge:['radius','strength','hardness','spongeMode'],
+  localBlur:['radius','strength','hardness'],
+  localSharpen:['radius','strength','hardness'],
+  colorReplacement:['radius','strength','hardness','tolerance','replacementColor'],
+  eyedropper:['sampleRadius'],colorSampler:['sampleRadius'],
+  gradient:['gradientType','gradientStart','gradientEnd'],measure:[]
+});
 
 export const UI_B_TOOL_GROUPS = Object.freeze([
   { id:'draw', label:'繪圖', icon:'✎', primary:'pen', tools:[

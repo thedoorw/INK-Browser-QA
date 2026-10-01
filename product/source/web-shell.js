@@ -394,9 +394,11 @@
   function contextualDescriptor(app) {
     if (app?.pathEditing?.active) return { mode: 'path-edit', tool: 'path-edit', label: '路徑／節點', icon: 'i-pen' };
     if (app?.strokeEdit) return { mode: 'stroke-edit', tool: 'stroke-edit', label: '筆畫／節點', icon: 'i-brush' };
+    const capabilityTool = app?.uiBControls?.raster?.activeTool();
+    if (capabilityTool) return { mode: 'neutral', tool: capabilityTool, label: document.querySelector('#uiBCapabilityOptions')?.dataset.toolLabel || '工具', icon: 'i-sliders' };
     const selected = Array.isArray(app?.selection) ? app.selection.length : 0;
-    if (selected > 0) return { mode: 'selection', tool: 'select', label: `選取 · ${selected} 個物件`, icon: 'i-select' };
     const tool = app?.tool || 'pen';
+    if (selected > 0 && (tool === 'select' || tool === 'lasso')) return { mode: 'selection', tool: 'select', label: `選取 · ${selected} 個物件`, icon: 'i-select' };
     const meta = CONTEXT_TOOL_META[tool] || { label: '工具', icon: 'i-sliders' };
     if (DRAW_CONTEXT_TOOLS.has(tool)) return { mode: 'draw', tool, ...meta };
     if (tool === 'eraser' || tool === 'shape' || tool === 'text') return { mode: tool, tool, ...meta };
@@ -1792,12 +1794,12 @@
     host.dataset.panelRegistry = 'PANEL_GROUPS';
     host.setAttribute('aria-label', '展開的面板群組');
     host.addEventListener('click', event => { if (event.target.closest('[data-panel-edge-toggle]')) closePrimaryPanels(); });
-    host.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="收合面板"><span class="edge-chevron" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></button></div>' + PANEL_GROUPS.map((group, index) =>
+    host.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="收合面板"><span class="edge-chevron" aria-hidden="true"><svg viewBox="0 0 8 6"><use href="#i-collapse"/></svg></span></button></div>' + PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
       '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
       '<div class="panel-stack-tabs" role="tablist" aria-label="' + group.label + '">' +
       group.items.filter(def => !['specialist', 'adjustments'].includes(def.id)).map(def => '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="' + def.id + '" aria-selected="false">' + def.label + '</button>').join('') +
-      '<button type="button" class="panel-stack-options" data-stack-options="' + group.id + '" title="面板選項" aria-label="面板選項"><svg><use href="#i-more"/></svg></button></div>' +
+      '<button type="button" class="panel-stack-options" data-stack-options="' + group.id + '" title="面板選項" aria-label="面板選項"><svg viewBox="0 0 10 7"><use href="#i-panel-menu"/></svg></button></div>' +
       '<div class="panel-stack-body" data-panel-stack-body="' + group.id + '"></div></section>'
     ).join('');
     host.addEventListener('click', event => {
@@ -1981,7 +1983,7 @@
     dock.dataset.uiHome = 'panels';
     dock.dataset.uiRoute = 'PRIMARY_HOME';
     dock.setAttribute('aria-label', '面板 Dock');
-    dock.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="展開面板"><span class="edge-chevron" aria-hidden="true"><svg><use href="#i-chevron"/></svg></span></button></div>' + PANEL_GROUPS.map((group, index) =>
+    dock.innerHTML = '<div class="panel-edge-strip"><button type="button" class="panel-edge-toggle" data-panel-edge-toggle aria-label="展開面板"><span class="edge-chevron" aria-hidden="true"><svg viewBox="0 0 8 6"><use href="#i-collapse"/></svg></span></button></div>' + PANEL_GROUPS.map((group, index) =>
       (index ? '<div class="panel-dock-separator" aria-hidden="true"></div>' : '') +
       '<div class="panel-dock-group ' + group.id + '" data-panel-group="' + group.id +
       '" aria-label="' + group.label + '">' +
@@ -2111,6 +2113,8 @@
     const group = PANEL_GROUPS.find(item => item.items.includes(def));
     if (group) state.stackPanels[group.id] = id;
     if (currentPanel() === id && !(def.kind === 'creative' && runtime()?.creativeWorkspace?.stage !== def.stage)) {
+      // Properties must follow current selection even when its tab was already open.
+      if (id === 'properties') showInspector(def);
       rememberPanel(id);
       syncSoon();
       return true;
@@ -2405,4 +2409,3 @@
   if (document.querySelector('#app')) install();
   else document.addEventListener('DOMContentLoaded', install, { once: true });
 })();
-

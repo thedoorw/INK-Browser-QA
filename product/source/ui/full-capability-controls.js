@@ -15,7 +15,7 @@ import { applyNonDestructiveDeformation } from '../src/vector/deformation.js';
 import { normalizeGradientFill, normalizePatternFill } from '../src/vector/fill-appearance.js';
 import { updateTextObject } from '../src/editor/text-object.js';
 import { verifyStorageRecord } from '../src/document/storage.js';
-import { UI_B_MENU_CONTRIBUTIONS, UI_B_TOOL_GROUPS, UI_B_DIALOGS, UI_B_CONTRIBUTION_REPORT } from './capability-contributions.js';
+import { UI_B_MENU_CONTRIBUTIONS, UI_B_TOOL_GROUPS, UI_B_RASTER_OPTION_FIELDS, UI_B_DIALOGS, UI_B_CONTRIBUTION_REPORT } from './capability-contributions.js';
 import { createRasterToolController, UI_B_RASTER_TOOL_IDS } from './capability-raster-tools.js';
 
 const $=(selector,root=document)=>root.querySelector(selector);
@@ -298,23 +298,26 @@ export function installFullCapabilityControls(app){
   function refreshContextOptions(){
     const host=ensureContextHost(),tool=raster.activeTool()||(['blender','smudge'].includes(state.activeCapabilityTool)?state.activeCapabilityTool:null);
     if(!tool){host.hidden=true;return;}
+    // setOption notifies synchronously; preserve the field/focus while typing.
+    if(host.dataset.tool===tool&&document.activeElement?.matches('[data-ui-b-option]')&&host.contains(document.activeElement))return;
     host.hidden=false;
+    host.dataset.tool=tool;
+    host.dataset.toolLabel=uiLabel(tool);
     const o=raster.options();
-    const selectionTools=new Set(['polygonalLasso','magneticLasso','quickSelection','magicWand','objectSelection']);
-    let markup='<span class="ui-b-context-name">'+esc(uiLabel(tool))+'</span>';
-    if(selectionTools.has(tool))markup+='<select data-ui-b-option="selectionMode">'+selectOptions(['new','add','subtract','intersect'],o.selectionMode)+'</select><label>容差 <input type="number" min="0" max="255" value="'+o.tolerance+'" data-ui-b-option="tolerance"></label>';
-    if(['magicWand','paintBucket'].includes(tool))markup+='<label><input type="checkbox" '+(o.contiguous?'checked':'')+' data-ui-b-option="contiguous"> Contiguous</label>';
-    if(['quickSelection','objectSelection','magneticLasso'].includes(tool))markup+='<label>邊緣 <input type="number" min="0" max="255" value="'+o.edgeThreshold+'" data-ui-b-option="edgeThreshold"></label>';
-    if(tool==='magneticLasso')markup+='<label>搜尋 <input type="number" min="2" max="64" value="'+o.searchRadius+'" data-ui-b-option="searchRadius"></label>';
-    if(tool==='gradient')markup+='<select data-ui-b-option="gradientType">'+selectOptions(['linear','radial'],o.gradientType)+'</select><input type="color" value="'+o.gradientStart+'" data-ui-b-option="gradientStart"><input type="color" value="'+o.gradientEnd+'" data-ui-b-option="gradientEnd"><button type="button" data-ui-b-context-action="gradient-editor">編輯…</button>';
-    if(['cloneStamp','patternStamp','healingBrush','spotHealing','patch','dodge','burn','sponge','localBlur','localSharpen','colorReplacement'].includes(tool))markup+='<label>大小 <input type="number" min="1" max="300" value="'+o.radius+'" data-ui-b-option="radius"></label><label>強度 <input type="number" min="0" max="1" step=".05" value="'+o.strength+'" data-ui-b-option="strength"></label>';
+    const numeric={radius:['大小',1,300,1],strength:['強度',0,1,.05],opacity:['透明度',0,1,.05],hardness:['硬度',0,1,.05],tolerance:['容差',0,255,1],edgeThreshold:['邊緣',0,255,1],searchRadius:['搜尋',2,64,1],sampleRadius:['取樣半徑',0,32,1]};
+    const choices={selectionMode:['選取模式',['new','add','subtract','intersect']],gradientType:['漸層類型',['linear','radial']],spongeMode:['海綿模式',['saturate','desaturate']]};
+    let markup=(UI_B_RASTER_OPTION_FIELDS[tool]||[]).map(key=>{
+      if(numeric[key]){const [label,min,max,step]=numeric[key];return '<label>'+label+' <input type="number" min="'+min+'" max="'+max+'" step="'+step+'" value="'+o[key]+'" data-ui-b-option="'+key+'"></label>';}
+      if(choices[key])return '<label>'+choices[key][0]+' <select data-ui-b-option="'+key+'">'+selectOptions(choices[key][1],o[key])+'</select></label>';
+      if(key==='contiguous')return '<label><input type="checkbox" '+(o[key]?'checked':'')+' data-ui-b-option="'+key+'">連續</label>';
+      const label={gradientStart:'起始色',gradientEnd:'結束色',replacementColor:'替換色'}[key];
+      return '<label>'+label+' <input type="color" value="'+o[key]+'" data-ui-b-option="'+key+'"></label>';
+    }).join('');
+    if(tool==='gradient')markup+='<button type="button" data-ui-b-context-action="gradient-editor">編輯…</button>';
     if(tool==='patternStamp')markup+='<button type="button" data-ui-b-context-action="pattern-image">圖樣…</button><span class="ui-b-context-hint">'+esc(raster.state.patternName||'無圖樣')+'</span>';
-    if(['eyedropper','colorSampler'].includes(tool))markup+='<label>半徑 <input type="number" min="0" max="32" value="'+o.sampleRadius+'" data-ui-b-option="sampleRadius"></label>';
-    if(tool==='colorReplacement')markup+='<input type="color" value="'+o.replacementColor+'" data-ui-b-option="replacementColor">';
-    if(tool==='sponge')markup+='<select data-ui-b-option="spongeMode">'+selectOptions(['saturate','desaturate'],o.spongeMode)+'</select>';
     if(['blender','smudge'].includes(tool))markup+='<span class="ui-b-context-hint">Brush Dynamics / Media → Properties</span>';
     host.innerHTML=markup;
-    $$('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>raster.setOption(key,input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value);input.addEventListener('input',handler);input.addEventListener('change',handler);});
+    $$('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>{if(input.type==='number'&&!input.validity.valid)return;raster.setOption(key,input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value);};input.addEventListener('input',handler);input.addEventListener('change',handler);});
     $$('[data-ui-b-context-action]',host).forEach(control=>control.addEventListener('click',()=>{const action=control.dataset.uiBContextAction;if(action==='gradient-editor')openDialog('gradient-editor',{target:'raster'});else if(action==='pattern-image')pickPatternImage();}));
   }
 
@@ -389,7 +392,7 @@ export function installFullCapabilityControls(app){
     if(layers&&!$('#uiBLayerAppearance')){
       const filterOptions=Object.keys(FILTER_DEFAULTS).map(type=>'<option value="'+esc(type)+'">'+esc(uiLabel(type))+'</option>').join('');
       const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance">'+
-        '<details class="ui-b-layer-filter-menu"><summary>圖層濾鏡</summary><div class="ui-b-layer-filter"><span>濾鏡</span><select id="uiBLayerFilterType" aria-label="圖層濾鏡種類">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" aria-label="新增圖層濾鏡" title="新增圖層濾鏡">＋</button></div></details>'+
+        '<details class="ui-b-layer-filter-menu"><summary aria-label="圖層影像濾鏡"><svg viewBox="0 0 10 7" aria-hidden="true"><use href="#i-panel-menu"/></svg></summary><div class="ui-b-layer-filter"><span>濾鏡</span><select id="uiBLayerFilterType" aria-label="圖層濾鏡種類">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" aria-label="新增圖層濾鏡" title="新增圖層濾鏡">＋</button></div></details>'+
         '<div class="ui-b-layer-blend"><span>混合</span><select disabled title="目前文件模型沒有 layer blendMode authority"><option>正常</option></select><span class="ui-b-capability-note">Layer blend N/A</span></div>'+
         '<div class="ui-b-layer-lock"><span>鎖定</span><button type="button" data-layer-action="toggle-lock" aria-pressed="false"><svg><use href="#i-lock"/></svg></button></div>'+
       '</div>');
@@ -434,6 +437,7 @@ export function installFullCapabilityControls(app){
   }
 
   function refreshPanels(){
+    refreshTextProperties();
     const crop=$('#psCropTool');if(crop)crop.disabled=!selectedFound(app,object=>object.type==='image'&&object.rasterState?.colorRaster);
     const frame=$('#psFrameTool');if(frame)frame.disabled=!app.selection?.length;
     const path=$('#psPathEditTool');if(path)path.disabled=!selectedFound(app,object=>['path','stroke'].includes(object.type));
@@ -819,6 +823,40 @@ export function installFullCapabilityControls(app){
       context.restore();
     }
   }
+  function refreshTextProperties(){
+    const panel=$('[data-content="object"]');if(!panel)return;
+    let host=$('#uiBTextProperties');
+    if(!host){
+      host=htmlNode('<div id="uiBTextProperties" class="property-card"><label class="control-row"><span>行高</span><input type="number" min="0.1" max="10" step="0.05" data-ui-b-text-line-height></label></div>');
+      ($('#selectionControls')||panel).prepend(host);
+      $('[data-ui-b-text-line-height]',host).addEventListener('change',event=>{
+        const found=selectedFound(app,object=>object.type==='text');
+        if(found)mutateObject('Text Line Height',found,object=>updateTextObject(object,{lineHeight:clamp(number(event.target.value,1.25),.1,10)}));
+      });
+    }
+    const found=selectedFound(app,object=>object.type==='text');host.hidden=!found;
+    if(found)$('[data-ui-b-text-line-height]',host).value=found.object.lineHeight||1.25;
+  }
+
+  function refreshBrushExtraOptions(){
+    let host=$('#uiBBrushExtraOptions');
+    if(!host){host=htmlNode('<div id="uiBBrushExtraOptions" class="property-card slider-card"></div>');$('.brush-preview-card')?.after(host);}
+    const settings=app.toolSettings[app.tool];
+    const drawing=['pen','pencil','marker','brush','airbrush'].includes(app.tool);
+    const fields=drawing?[
+      ...(['pen','marker','brush','airbrush'].includes(settings?.kind)?[['taper','收尖']]:[]),
+      ...(['pencil','drybrush','brush','airbrush'].includes(settings?.kind)?[['grain','顆粒']]:[]),
+      ...(['brush','airbrush'].includes(settings?.kind)?[['softness','柔度']]:[]),
+      ...(app.tool==='airbrush'?[['flow','墨量'],['wetness','含水'],['bristle','筆毫']]:[])
+    ]:[];
+    host.hidden=!fields.length;
+    host.innerHTML=fields.map(([key,label])=>'<label class="control-row range-row"><span>'+label+'</span><input type="range" min="'+(key==='softness'?5:key==='flow'?10:0)+'" max="100" value="'+Math.round((settings[key]||0)*100)+'" data-ui-b-brush-option="'+key+'"><output>'+Math.round((settings[key]||0)*100)+'%</output></label>').join('');
+    $$('[data-ui-b-brush-option]',host).forEach(input=>input.addEventListener('input',()=>{
+      app.updateBrushSetting(input.dataset.uiBBrushOption,number(input.value)/100);
+      input.nextElementSibling.value=input.value+'%';
+    }));
+  }
+
   function installLifecycleRefresh(){
     const nativeSetTool=app.setTool.bind(app);
     app.setTool=function(tool){
@@ -826,7 +864,7 @@ export function installFullCapabilityControls(app){
       const result=nativeSetTool(tool);refreshContextOptions();return result;
     };
     const originalToolUI=app.refreshToolUI.bind(app);
-    app.refreshToolUI=function(){const result=originalToolUI();if(app.tool==='brush'){const draw=$('#drawToolButton');draw?.classList.remove('active');if(draw)draw.dataset.tool='pen';$('#drawToolUse')?.setAttribute('href','#i-pen');const label=$('#drawToolLabel');if(label)label.textContent='鋼筆';}const activeRaster=raster.activeTool();if(activeRaster){$$('.tool-rail .tool-button,.tool-rail .tool-action').forEach(node=>node.classList.remove('active'));const group=UI_B_TOOL_GROUPS.find(item=>item.tools.some(([id])=>id===activeRaster));const target=activeRaster==='objectSelection'?$('#psObjectSelect'):$('[data-ui-b-tool-group="'+group?.id+'"]');target?.classList.add('active');}else $('#psObjectSelect')?.classList.remove('active');return result;};
+    app.refreshToolUI=function(){const result=originalToolUI();refreshBrushExtraOptions();if(app.tool==='brush'){const draw=$('#drawToolButton');draw?.classList.remove('active');if(draw)draw.dataset.tool='pen';$('#drawToolUse')?.setAttribute('href','#i-pen');const label=$('#drawToolLabel');if(label)label.textContent='鋼筆';}const activeRaster=raster.activeTool();if(activeRaster){$$('.tool-rail .tool-button,.tool-rail .tool-action').forEach(node=>node.classList.remove('active'));const group=UI_B_TOOL_GROUPS.find(item=>item.tools.some(([id])=>id===activeRaster));const target=activeRaster==='objectSelection'?$('#psObjectSelect'):$('[data-ui-b-tool-group="'+group?.id+'"]');target?.classList.add('active');}else $('#psObjectSelect')?.classList.remove('active');return result;};
     const originalLayers=app.refreshLayers.bind(app);
     app.refreshLayers=function(){const result=originalLayers();renderLayerThumbnails();return result;};
     const original=app.refreshSelectionUI.bind(app);
@@ -844,4 +882,3 @@ export function installFullCapabilityControls(app){
   document.dispatchEvent(new CustomEvent('ink:ui-b-controls-ready',{detail:{menuCount:UI_B_CONTRIBUTION_REPORT.menuCount,toolGroupCount:UI_B_CONTRIBUTION_REPORT.toolGroupCount}}));
   return api;
 }
-
