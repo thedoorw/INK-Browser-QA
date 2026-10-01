@@ -1,5 +1,10 @@
 # INK Current Work Order
 
+## Current USER repair execution — 2026-10-01
+USER explicitly requested repairing discussed/found UI defects before researching Photoshop modular standards. Bounded product repairs published at 08180aa001463ea623a4ad45c9aab5d0dd0be509. [Current repair result](../working/INK_UI_REPAIR_RESULT_20261001.md) supersedes earlier NOT_EXECUTED/NONE statements for this batch; older checkpoints remain history, not present PASS evidence.
+Finite document/no-document workspace, populated Preferences categories, contrast/alignment, top-strip color, SVG structure and menu cleanup received scoped isolated-preview checks. UIR-01 erroneous effect-filter/search-filter equivalence withdrawn. Preferences deferred action semantics and full PS fidelity remain open. Official cached-session update activation was auto-review rejected; no bypass. Photoshop modular-system research follows this concrete USER review.
+
+
 ## Current authority clarification — 2026-10-01
 
 Current live recheck and USER-authorized bounded repair queue:

@@ -557,3 +557,8 @@ Same-class inspection requires an enumerated member list and a per-member state/
 A reviewer who has already read previous conclusions may perform a delta-first sweep, but must not claim fully blind independent review. Record input exposure and preserve unreviewed-reference/render-only discovery where practical.
 
 HTTP asset identity plus DOM resource URLs does not prove browser-executed bytes or all transitive modules. State partial identity chains accurately rather than closing them from a source SHA alone.
+
+## Semantic and runtime evidence clarification — 2026-10-01
+Before same-class comparison, establish what each control operates on and its actual command/state authority. Identical words such as filter do not establish equivalent functions; revoke erroneous mappings explicitly.
+Numeric review must measure the actual inner dialog, not its backdrop; inspect effective inherited grid/flex alignment and primary-button margins. Stable post-action screenshots are required when accessibility and rendering lag.
+A generated independent preview can verify new source while a cached production session remains old; label these evidence scopes separately. A loaded stylesheet URL does not attest every transitive browser module. Never bypass a rejected update activation; document the blocked official-session check and preserve scoped results.

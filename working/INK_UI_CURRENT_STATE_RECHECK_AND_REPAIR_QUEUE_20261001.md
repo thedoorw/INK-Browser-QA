@@ -1,4 +1,13 @@
 # INK UI 現況複查與修正工作單 — 2026-10-01
+
+## Current execution reconciliation — 2026-10-01
+USER subsequently authorized actual repair before Photoshop modular-system research. Source published at 08180aa001463ea623a4ad45c9aab5d0dd0be509; results and scoped evidence: [repair result](INK_UI_REPAIR_RESULT_20261001.md). Earlier NONE / NOT_EXECUTED fields below describe the previous planning snapshot only.
+
+UIR-01: previous same-class assumption withdrawn. Footer image-effect filterStack is not PS layer-search/type filter; do not relocate on that false equivalence. UIR-02: layout/contrast/category defects repaired and rendered; new OK/Cancel semantics remain undecided. UIR-03: duplicate removed and popup checked. UIR-04: translated name/source routing retained; full interaction not closed. UIR-05: prose removed; cross-tool color synchronization not revalidated this batch. Added repairs: finite two-state workspace, ruler/Navigator document bounds, continuous top-strip color, shared SVG sizing/stroke, branding action alignment. These have scoped preview evidence, not complete PS PASS.
+
+Official cached session activation was rejected by automatic approval review; independent generated preview verified without activating it. Remaining coverage is explicit in result report.
+
+## Historical planning snapshot
 STATUS: USER_AUTHORIZED_DOCUMENT_RECONCILIATION_AND_BOUNDED_REPAIR_PLANNING
 OWNER: INK UI Standards Supervisor MR
 PRODUCT_MUTATION: NONE
