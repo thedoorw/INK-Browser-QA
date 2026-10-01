@@ -15,32 +15,36 @@ PORTFOLIO_TARGET = GitHub-hosted public case-study / result site
 
 INK has already incorporated multiple interaction and connector ideas derived from mature CHAT-operable systems such as Figma, Penpot and Adobe.
 
-The next validation stage is not to invent more abstract capability claims. It is to use mature public works and tutorials as concrete creation targets and test whether CHAT can actually operate INK to reproduce complete works.
+The next validation stage is not to jump directly into mature-work reproduction. It first uses proven GPT / agent workflows from Figma, Penpot and Adobe to establish a planned CHAT × INK capability qualification surface.
 
-Phase 1 asks one primary question:
+The first question is:
 
-> Can CHAT operate INK well enough to reproduce a mature finished work to an acceptably close result?
+> Can CHAT reliably discover, target, invoke, verify and revise the practical creative capabilities already present in INK?
 
-This is first a validation of INK's practical creative completeness and CHAT operability.
+Only after this qualification direction is visible and sufficiently tested does the program move into mature-work reproduction.
 
-It is **not yet** primarily a test of whether CHAT can learn and generalize the original creator's methodology.
+Detailed Gate-1 plan:
+`research/INK_CHAT_CAPABILITY_QUALIFICATION_PLAN_v0.1.md`.
 
-## 2. Core closed loop
+## 2. Program sequence
 
 ```text
-mature public work / tutorial
-→ classify the finished work
-→ provide target/reference to CHAT
-→ CHAT inspects visible structure
-→ CHAT operates authoritative INK capabilities
+proven GPT / agent workflows in Figma / Penpot / Adobe
+→ extract operations and workflow sequence
+→ map cases to INK capabilities
+→ identify overlap / unique coverage / gaps
+→ define CHAT × INK qualification tests
+→ execute Gate 1 isolated capability tests
+→ execute Gate 2 combined-task tests
+→ analyze mature external work
+→ CHAT writes INK-specific reproduction procedure
+→ autonomous INK reproduction
 → Preview / compare / correct
-→ History / Revision / operation evidence
-→ finished reproduction
-→ capability-gap classification
-→ improve INK only when a real gap is established
-→ rerun
-→ publish case + result to portfolio
+→ History / Revision / provenance evidence
+→ publish selected case + result to portfolio
 ```
+
+The program must see the route before execution expands. Case collection is therefore subordinate to coverage planning, not an end in itself.
 
 ## 3. Source pool
 
@@ -62,7 +66,7 @@ Useful sources include:
 
 The benchmark should prefer sources that expose enough visual or procedural evidence to support a reproducible test.
 
-The long-term candidate pool should contain **100 or more** qualified cases. The source universe may be much larger; qualification matters more than raw count.
+The long-term mature-work candidate pool should contain **100 or more** qualified cases. Expansion toward that target is deferred while Gate 1 is being planned and qualified. The current initial evidence set is 33 selected Figma / Penpot / Adobe cases used to derive capability coverage and test direction.
 
 ## 4. Selection criteria
 
@@ -139,7 +143,7 @@ CAPABILITY EXISTS BUT CHAT CANNOT RELIABLY OPERATE IT
 CAPABILITY IS MISSING OR INSUFFICIENT IN INK
 ```
 
-## 7. Phase 1 acceptance model
+## 7. Reproduction acceptance model
 
 Each reproduction case should end in one of:
 
@@ -185,21 +189,19 @@ GAPS_FOUND
 FOLLOW-UP
 ```
 
-Phase 1 may preserve tutorial steps as evidence, but success is judged first by whether CHAT can reproduce the finished work with INK.
+Reproduction cases may preserve tutorial steps as evidence, but reproduction begins only after capability qualification. Success is judged by whether CHAT can complete the work with INK and visibly verify the result.
 
-## 9. 100+ candidate library
+## 9. 100+ mature-work candidate library
 
-The program should begin with a broad candidate library rather than treating the first 10–15 examples as the whole research space.
-
-The first major catalog target is:
+The long-term catalog target remains:
 
 ```text
 QUALIFIED_CANDIDATES >= 100
 ```
 
-The library should be intentionally distributed across work categories and capability coverage so that the full set becomes a practical creative benchmark for INK.
+However this is **not the current gate**. The program first builds and executes the CHAT × INK qualification plan from the selected evidence set. Only after capability direction and gaps are visible should the mature-work library expand aggressively.
 
-Cases can still be executed one by one or in bounded batches.
+The mature-work library should then be distributed across work categories and capability coverage so the full set becomes a practical creative benchmark for INK.
 
 ## 10. GitHub portfolio
 
@@ -241,9 +243,9 @@ site/
 
 The public-facing site is a presentation layer. GitHub repository data remains the evidence/source layer.
 
-## 11. Later phase
+## 11. Learning / generalization phase
 
-Only after Phase 1 has demonstrated that CHAT can reliably create with INK should the program move to the higher-level question:
+Only after capability qualification and reproduction have demonstrated that CHAT can reliably create with INK should the program move to the higher-level question:
 
 ```text
 tutorial / creator workflow
