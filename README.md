@@ -289,8 +289,8 @@ Primary reference ecosystems:
 
 ```text
 Figma
-Penpot
 Adobe
+Canva — next candidate; pending connection and evidence selection
 ```
 
 Current sequence:
@@ -311,7 +311,7 @@ proven GPT / agent examples and operating instructions
 → selected cases published to the portfolio
 ```
 
-The current initial evidence set is **33 selected Figma / Penpot / Adobe cases**. Their immediate purpose is not portfolio volume; it is to derive the first complete practical CHAT × INK qualification surface and expose connector/control gaps before execution expands.
+The current verified evidence set is **30 Figma / Adobe qualification and supporting cases**. Canva is the next candidate ChatGPT plugin and is not counted until it is connected, analyzed and assigned evidence cases. The immediate purpose is not portfolio volume; it is to derive the first complete practical CHAT × INK qualification surface and expose connector/control gaps before execution expands.
 
 The long-term target of **100+ qualified mature works** remains, but aggressive candidate expansion is deferred until qualification direction and coverage gaps are visible.
 
