@@ -70,3 +70,7 @@ UIR-02 動作語意需 USER 決定，先列設計待決，不自行製作假控�
 - UIR-07 NAVIGATOR_SLIDER_THUMB — OPEN / USER_REQUIRED_REPAIR.
 - Navigator zoom slider thumb must be circular, sharing the existing common range-control thumb size, border, fill and interaction-state styling. Inspect effective WebKit and Mozilla thumb rules; do not create a Navigator-only visual variant.
 - Verify normal/focus/disabled appearance and retained zoom interaction in stable rendered current build. This entry records the requested repair; no implementation or PASS claimed.
+
+## Modular baseline / bounded source repair — 2026-10-01
+See [PS modular classification](INK_UI_PS_MODULAR_CLASSIFICATION_20261001.md). All six repository references inspected; Adobe official guidance separated from native screenshot measurement. INK initial gray palette15 role tokens/13 unique grays; actual right-panel weights400/600/650/800 and 10/12/13px text show unresolved role mixing.
+Preferences category widths525/543 reproduce USER defect. CSS1c0253d29fe7950e1c8853181d7ab3f4e1ae131e switches to viewport-based width and removes Navigator-only thumb rules. Generator/whitespace checks pass. Preview reload still exposes previous triangular thumb CSS, so UIR-07 and width invariance remain RENDER_PENDING, not closed. UIR-06 remains OPEN. Broad typography/grayscale application and Edit-popup reference gap remain open.
