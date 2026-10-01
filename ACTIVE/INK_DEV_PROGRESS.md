@@ -1,6 +1,6 @@
 # INK DEV Progress
 
-STATUS: `AUTHORIZED / NOT_STARTED`
+STATUS: `BENCHMARK_REVIEW_REQUIRED`
 
 TASK: `MTB-FIGMA-BATCH-01`
 
@@ -35,6 +35,31 @@ working/mature-tool-benchmark/figma-batch-01/F14.md
 working/mature-tool-benchmark/figma-batch-01/BATCH_REPORT.md
 ```
 
+## DEV execution result
+
+FIGMA_FILE_URL:
+`https://www.figma.com/design/xwS3l54GYC863Qtnrwuw8y`
+
+```text
+F01 = BLOCKED / TOOL_GAP
+F08 = BLOCKED / TOOL_GAP
+F09 = BLOCKED / TOOL_GAP
+F10 = BLOCKED / TOOL_GAP
+F14 = BLOCKED / TOOL_GAP
+```
+
+Observed provider/tool constraints:
+
+1. Starter plan permits only 3 pages in the created Figma Design file; workpack requires 5 dedicated pages.
+2. Starter-plan Figma MCP tool-call quota was exhausted after F01 initial creation/Preview, preventing the mandatory correction/final-verification loop and the remaining case executions.
+3. Required Figma API guidance states `use_figma` does not expose undo or version-history saves; no separate active Figma tool exposed those F14 operations.
+
+USER_INTERVENTION_COUNT across batch: `0`
+
+No INK product/UI mutation performed.
+No merge performed.
+Batch 02 not started.
+
 ## Gate
 
 ```text
@@ -46,6 +71,4 @@ AUTHORIZED
 → BENCHMARK_REVIEW_REQUIRED
 ```
 
-DEV must self-verify each case through screenshot/structural inspection and correction before assigning PASS/PARTIAL/BLOCKED.
-
-DEV must STOP after Batch 01 handoff. Do not begin another benchmark batch and do not merge this branch.
+DEV handoff complete. STOP pending benchmark review.
