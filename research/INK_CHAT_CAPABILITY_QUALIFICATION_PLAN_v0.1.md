@@ -11,6 +11,7 @@ CASE_EVIDENCE_SET = 40 FIGMA / ADOBE / CANVA QUALIFICATION + SUPPORT CASES
 QUALIFICATION_TEST_ROWS = 56
 PRACTICAL_COVERAGE_GROUPS = 50
 BASELINE_FAMILY_AUDIT = 64 / 64 DISPOSITIONED
+MATURE_WORK_CASE_SELECTION = COVERAGE CLOSED / 50 OF 54 CASE-RELEVANT FAMILIES NATURALLY COVERED / 4 NON-BLOCKING DISPOSITIONS
 EXECUTION = MATURE_TOOL_METHOD_REVIEW_ACTIVE / INK_EXECUTION_HELD_BY_UI
 ```
 
@@ -350,6 +351,39 @@ Paper / Media
 Stylus / Calibration
 Layer Effects partial scope
 Recipe / Program Import / Creative Memory special semantics
+```
+
+### Mature-work case-selection disposition — 2026-10-01
+
+The mature-work candidate set now naturally covers **50 of 54 case-relevant capability families** through primary or supporting use.
+
+The four remaining families are explicitly non-blocking for mature-work case selection:
+
+```text
+C36 Stylus
+→ USER DEFERRED
+→ hardware/environment qualification later
+
+C37 Device calibration
+→ USER DEFERRED
+→ hardware/profile qualification later
+
+C56 Program Import
+→ SEPARATE R&D DISPATCHED
+→ External Actions / Recipes / Skills / Workflows / Scripts → INK Recipe
+→ tracked outside the visual mature-work case pool
+
+C60 Creative Memory / Research
+→ USER DEFERRED
+→ qualify later as a cross-case evidence/memory reuse capability
+```
+
+Therefore:
+
+```text
+MATURE_WORK_VISUAL_CASE_GAP = CLOSED FOR CURRENT SELECTION STAGE
+DO_NOT_ADD_ARTWORKS MERELY TO COVER C36 / C37 / C56 / C60
+NEXT_CASE_CHANGES = QUALITY / REDUNDANCY / PORTFOLIO VALUE, NOT RAW CAPABILITY-GAP CHASING
 ```
 
 This is a planning-coverage result, not a Runtime qualification result.
