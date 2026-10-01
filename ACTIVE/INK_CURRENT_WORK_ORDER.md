@@ -1,5 +1,15 @@
 # INK Current Work Order
 
+## Current authority clarification — 2026-10-01
+
+Current live recheck and USER-authorized bounded repair queue:
+`working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md`.
+Supervisor maintains standards/documents; Direct UI MR executes the bounded repair queue alongside already authorized work. UIR-02 action semantics require USER decision before implementation. No product mutation was performed by this document update.
+
+Only the current USER-led UI mode and current ACTIVE dispatch/repair queue are operative. Historical NEXT_OWNER / NEXT_ACTION / UI_COMPLETE / PASS / Runtime authorization blocks below are provenance only; they cannot authorize execution, Actions or acceptance. The 2026-09-30 observations are not current-product evidence without recheck.
+
+
+
 STATUS: `CURRENT / DIRECT_MR_UI_IMPLEMENTATION / USER_CONTROLLED / UI_RECONSTRUCTION_ACTIVE`
 
 DATE: 2026-09-28
