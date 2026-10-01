@@ -96,6 +96,27 @@ Required correction:
 
 The DEV debt report remains useful evidence, but `935 declarations removed` does not by itself prove that covered dual authority is gone.
 
+### SUP-04 — SINGLE-COLUMN COLOR SWATCHES WERE SHRUNK INSTEAD OF REFLOWED
+
+Current single-column Tools evidence shows the foreground/background color swatches reduced to fit the narrower rail.
+
+This does not match the Photoshop reference.
+
+Reference behavior:
+- single-column Tools rail remains ≈39–40 px wide;
+- foreground/background swatches retain the same ≈18×18 px primitive;
+- the two swatches overlap diagonally by ≈10 px X / ≈10 px Y;
+- combined visible footprint is therefore ≈28×28 px-class and fits inside the single-column rail;
+- reset/swap utilities reflow around that fixed swatch stack rather than forcing the swatches smaller.
+
+Required correction:
+- keep one shared swatch-size primitive for dual- and single-column Tools;
+- single-column state must change placement/reflow only;
+- do not introduce a smaller swatch token for collapsed/single Tools;
+- verify the complete color-control cluster remains inside the 39–40 px rail without clipping or overflow.
+
+This is a same-class consistency defect: layout state changed the primitive size when only placement should change.
+
 ## Capability → UI exposure disposition
 
 The new matrix is useful and the candidate exposes several real existing parameters through their existing authorities.
