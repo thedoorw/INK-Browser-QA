@@ -1,6 +1,6 @@
 # INK DEV Progress
 
-STATUS: `BENCHMARK_REVIEW_COMPLETE / RERUN_REQUIRED`
+STATUS: `BENCHMARK_REVIEW_COMPLETE / CLOSED_FOR_CURRENT_PROGRAM_PURPOSE`
 
 TASK: `MTB-FIGMA-BATCH-01`
 
@@ -80,12 +80,13 @@ REVIEW_RECORD:
 `working/mature-tool-benchmark/figma-batch-01/REVIEW.md`
 
 ```text
-REVIEW_VERDICT = ACCEPTED_AS_VALID_BLOCKED_BATCH
-MASTER_QUALIFICATION_PROMOTION = NONE
-RERUN_REQUIRED = F01 / F08 / F09 / F10
+REVIEW_VERDICT = ACCEPTED_AS_OPERATION_LEARNING_EVIDENCE
+MASTER_QUALIFICATION_PROMOTION = DOCUMENTED_OPERATION_STATUS_ONLY
+RERUN_REQUIRED = NONE_FOR_PROGRAM_GATE
+EXTERNAL_PAID_UPGRADE = FORBIDDEN
 F14 = CONFIRMED_CURRENT_SURFACE_TOOL_GAP
 BATCH_02_AUTHORIZATION = NO
 MERGE_AUTHORIZATION = NO
 ```
 
-Reviewer independently reproduced the Figma Starter MCP quota block. The five BLOCKED DEV results are not to be interpreted as five CHAT capability failures. F01/F08/F09/F10 remain unresolved pending a bounded rerun under a fixture compatible with the available plan. F14 is retained as a confirmed current CHAT↔Figma surface gap for callable undo/version-history save.
+Reviewer independently reproduced the Figma Starter MCP quota block. The five BLOCKED DEV results are not to be interpreted as five CHAT capability failures. Under the revised mature-tool policy, no paid upgrade or mandatory rerun is required. F01 remains limited live-creation evidence; F08/F09/F10 are retained as documented operation-surface evidence; F14 is a confirmed current CHAT↔Figma surface gap for callable undo/version-history save.
