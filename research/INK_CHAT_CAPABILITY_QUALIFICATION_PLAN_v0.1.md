@@ -11,7 +11,7 @@ CASE_EVIDENCE_SET = 40 FIGMA / ADOBE / CANVA QUALIFICATION + SUPPORT CASES
 QUALIFICATION_TEST_ROWS = 56
 PRACTICAL_COVERAGE_GROUPS = 50
 BASELINE_FAMILY_AUDIT = 64 / 64 DISPOSITIONED
-EXECUTION = NOT STARTED
+EXECUTION = MATURE_TOOL_METHOD_REVIEW_ACTIVE / INK_EXECUTION_HELD_BY_UI
 ```
 
 ## 1. Purpose
@@ -34,6 +34,27 @@ study proven GPT / agent workflows in Figma, Adobe and Canva
 ```
 
 Canva is installed and is the third ChatGPT-operable comparison ecosystem. Ten official Canva workflow cases have been selected and mapped.
+
+## 1.1 External-tool operating policy — 2026-10-01
+
+```text
+EXTERNAL_PAID_SPEND = FORBIDDEN
+CHATGPT_SUBSCRIPTION = ONLY_PAID_DEPENDENCY_ALLOWED
+MATURE_TOOL_PURPOSE = LEARN_OPERATION_PATTERNS / NOT FULL_PRODUCT_QA
+DOCUMENTED_CAPABILITY = MAY_BE_ACCEPTED_WITHOUT_REDUNDANT_LIVE_TEST
+DOCUMENTED_UNAVAILABLE_CAPABILITY = RECORD_AS CHAT_SURFACE_GAP
+FREE_PLAN_OR_QUOTA_BLOCK = RECORD_AS EXTERNAL_PLAN_LIMIT
+EXTERNAL_PLAN_LIMIT = MUST_NOT_BLOCK_INK_PROGRAM
+LIVE_TEST = RESERVED_FOR_UNKNOWN_BEHAVIOR_OR_END_TO_END_AUTONOMY
+```
+
+Figma, Adobe, Canva and any future external ecosystem are references and learning surfaces. The program will not purchase an external subscription merely to complete a benchmark.
+
+The mature-tool question is now deliberately narrow:
+
+> Does CHAT understand the relevant operation model well enough to transfer the method into INK, and is there at least limited evidence that CHAT can execute a closed loop where the free/current surface permits it?
+
+The program is **not** responsible for exhaustively proving every documented feature of Figma, Adobe, Canva or another external product.
 
 ## 2. Gate sequence
 
@@ -333,40 +354,75 @@ Recipe / Program Import / Creative Memory special semantics
 
 This is a planning-coverage result, not a Runtime qualification result.
 
-## 9.1 Mature-tool autonomy pretest dispatch
+## 9.1 Mature-tool autonomy pretest disposition
 
-While INK UI remains under active reconstruction, external mature-tool autonomy testing may proceed independently.
-
-Current dispatch:
+Figma Batch 01 was executed and reviewed. It demonstrated that exhaustive external-tool feature testing is the wrong gate for this program.
 
 ```text
 TASK = MTB-FIGMA-BATCH-01
 ECOSYSTEM = FIGMA
-CASES = F01 / F08 / F09 / F10 / F14
 BRANCH = work/mature-tool-benchmark-figma-batch-01
 ISSUE = #108
-STATUS = AUTHORIZED / DEV_NOT_STARTED
+STATUS = REVIEW_COMPLETE / NO_RERUN_REQUIRED_FOR_PROGRAM_GATE
+F01 = INITIAL_CREATION_EVIDENCE / CLOSED_LOOP_INTERRUPTED_BY_EXTERNAL_PLAN_LIMIT
+F08 = DOCUMENT_CONFIRMED_BOOLEAN_SURFACE
+F09 = DOCUMENT_CONFIRMED_AUTO_LAYOUT_SURFACE
+F10 = DOCUMENT_CONFIRMED_COMPONENT_SURFACE
+F14 = CHAT_SURFACE_GAP / CALLABLE_UNDO_AND_VERSION_HISTORY_SAVE_UNAVAILABLE
+BATCH_02 = NOT_REQUIRED
 ```
 
-Workpack:
-`working/INK_MATURE_TOOL_BENCHMARK_FIGMA_BATCH_01_DEV_WORKPACK_v0.1.md`
+The Starter-plan page limit and MCP quota are recorded as `EXTERNAL_PLAN_LIMIT`, not as CHAT capability failure. The program will not purchase a Figma plan to continue this benchmark.
 
-The DEV self-verifies and self-corrects each case, records USER intervention count and autonomy classification, then stops for benchmark review. Accepted results are promoted to the master qualification record only after review.
+Future Figma/Adobe/Canva work uses:
+
+```text
+official capability evidence
+→ operation-pattern extraction
+→ one bounded end-to-end sample only when it resolves a real unknown
+→ stop
+```
+
+No per-feature mature-tool regression suite is required.
 
 ## 10. Next action
 
 Do not begin INK Runtime qualification while the UI program is still changing.
 
+The mature-tool research phase is now reduced to operation-pattern confirmation. Do not expand external-tool testing merely to increase PASS counts.
+
 Next:
 
 ```text
-prepare fixed fixtures and measurable PASS criteria
-→ define mature-tool autonomy test records for Figma / Adobe / Canva
-→ run those mature-tool tests while INK UI remains on hold
-→ use observed mature-tool behavior as the comparison baseline
-→ HOLD until UI completion
-→ execute P0 qualification in dependency order
+finish concise Figma / Adobe / Canva operation-pattern map
+→ classify each external capability as DOCUMENT_CONFIRMED / LIVE_LOOP_CONFIRMED / CHAT_SURFACE_GAP / EXTERNAL_PLAN_LIMIT
+→ compress the 56 planned INK rows into approximately 10–12 practical capability groups
+→ define a small number of multi-capability INK exercises
+→ HOLD execution until current UI authority permits
+→ run CHAT × INK discovery → operation → Preview → self-correction → final verification
+→ if that closes, proceed to mature-work analysis and reproduction
 ```
+
+The preferred INK qualification unit is a **multi-capability exercise**, not one atomic feature per test.
+
+A representative grouping is:
+
+```text
+1. document / grounding / targeting
+2. shape + path creation/edit
+3. text + typography
+4. transform + layer/group/frame hierarchy
+5. boolean + repeat
+6. layout + align/snap/constraints
+7. SVG/reference intake + reconstruction
+8. drawing/brush/stroke
+9. library/reuse
+10. Preview/compare/self-correction
+11. History/Revision/provenance
+12. export/output + multi-step closed loop
+```
+
+The exact final grouping may be reduced further if one exercise covers several groups with measurable evidence.
 
 No product mutation is authorized by this plan.
 
