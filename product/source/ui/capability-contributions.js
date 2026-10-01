@@ -66,7 +66,7 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'filter-liquify', menu:'filter', section:'workspace', label:'液化…', command:'liquify', authority:'P1-F liquify' },
 
   { id:'object-skew', menu:'object', section:'transform', label:'變形：傾斜…', command:'transform:skew', authority:'P1-C advanced transform' },
-  { id:'object-distort', menu:'object', section:'transform', label:'Transform：Distort…', command:'transform:distort', authority:'P1-C advanced transform' },
+  { id:'object-distort', menu:'object', section:'transform', label:'變形：扭曲…', command:'transform:distort', authority:'P1-C advanced transform' },
   { id:'object-perspective', menu:'object', section:'transform', label:'變形：透視…', command:'transform:perspective', authority:'P1-C advanced transform' },
   { id:'object-warp', menu:'object', section:'transform', label:'變形：彎曲…', command:'transform:warp', authority:'P1-C deformation' },
   { id:'object-front', menu:'object', section:'arrange', label:'移至最上', command:'arrange:front', authority:'Document hierarchy' },
@@ -102,8 +102,7 @@ export const UI_B_MENU_CONTRIBUTIONS = Object.freeze([
   { id:'view-guides-show', menu:'view', section:'guide', label:'顯示／隱藏參考線', command:'guides:toggle', authority:'Document guides' },
   { id:'view-guides-lock', menu:'view', section:'guide', label:'鎖定／解鎖參考線', command:'guides:lock', authority:'Document guides' },
   { id:'view-guides-clear', menu:'view', section:'guide', label:'清除參考線', command:'guides:clear', authority:'Document guides' },
-  { id:'view-workspace-creation', menu:'view', section:'workspace', label:'工作區：創作', command:'workspace:creation', authority:'Workspace' },
-  { id:'view-workspace-layout', menu:'view', section:'workspace', label:'工作區：版面', command:'workspace:layout', authority:'Workspace' },
+  { id:'view-workspace-layout', menu:'view', section:'workspace', label:'文件符合視窗', command:'workspace:fit-current', authority:'Workspace' },
 
   { id:'help-shortcuts', menu:'help', section:'help', label:'鍵盤快捷鍵', command:'keyboard-shortcuts', authority:'UI help' },
   { id:'help-updates', menu:'help', section:'help', label:'更新', command:'updates', authority:'PWA update manager' },

@@ -143,15 +143,17 @@
   // Categorize the original, live controls. IDs, handlers and state owners survive
   // reparenting; no duplicated settings values or replacement persistence layer.
   const CATEGORIES = [
-    ['general', '一般'], ['interface', '介面'], ['tools', '工具'],
-    ['canvas', '畫布與輸入'], ['guides', '標尺／參考線／吸附'],
-    ['performance', '效能'], ['storage', '儲存'], ['branding', '品牌']
+    ['interface', '介面與操作'], ['tools', '觸控與筆'],
+    ['canvas', '文件與版面'], ['paper', '紙張與媒材'],
+    ['system', '效能與儲存'], ['branding', '品牌']
   ];
   let settingsMounted = false;
   let returnFocus = null;
 
-  function showCategory(id = 'general') {
-    const selected = CATEGORIES.some(([key]) => key === id) ? id : 'general';
+  function showCategory(id = 'interface') {
+    const aliases = { general: 'interface', guides: 'interface', performance: 'system', storage: 'system' };
+    id = aliases[id] || id;
+    const selected = CATEGORIES.some(([key]) => key === id) ? id : 'interface';
     document.querySelectorAll('[data-preference-page]').forEach(page => { page.hidden = page.dataset.preferencePage !== selected; });
     document.querySelectorAll('[data-preference-category]').forEach(button => {
       button.setAttribute('aria-pressed', String(button.dataset.preferenceCategory === selected));
@@ -165,7 +167,7 @@
     const guides = document.querySelector('#preferencesGuides');
     if (guides) { const list = globalThis.INK_APP?.page?.()?.guides || []; guides.checked = list.some(guide => guide.visible !== false); guides.disabled = list.length === 0; }
     const renderCard = document.querySelector('#renderEngineCard');
-    if (renderCard && selected === 'performance') renderCard.hidden = false;
+    if (renderCard && selected === 'system') renderCard.hidden = false;
   }
 
   function mountSettings() {
@@ -209,23 +211,31 @@
     for (const child of [...canvas.children]) {
       if (!child.matches('.panel-header')) pages.get('canvas').append(child);
     }
-    for (const id of ['snapToggle', 'smartGuidesToggle', 'gridSnapToggle', 'gridSize', 'artboardUnit']) move(id, 'guides');
+    // Preserve each live paper control and its event listeners.
+    const paperTitle = pages.get('canvas').querySelector('.paper-media-title');
+    if (paperTitle) {
+      let node = paperTitle;
+      while (node && !node.matches('.pen-calibration-title')) { const next = node.nextElementSibling; pages.get('paper').append(node); node = next; }
+    }
+    for (const id of ['paperType', 'paperColor']) move(id, 'paper');
+    move('fingerDrawToggle', 'tools');
+    for (const id of ['snapToggle', 'smartGuidesToggle', 'gridSnapToggle', 'gridSize', 'artboardUnit']) move(id, 'interface');
     for (const node of [...pages.get('canvas').querySelectorAll('.pen-calibration-title,.pen-calibration-actions,.pen-calibration-status')]) pages.get('tools').append(node);
     for (const id of ['penPressureMin', 'penPressureMax', 'penPressureGamma', 'penPressureSmoothing', 'penTiltSensitivity', 'penUsePredicted', 'penPalmRejection']) move(id, 'tools');
     // Put calibration actions after their fields.
     pages.get('tools').append(document.querySelector('.pen-calibration-actions'), document.querySelector('#penCalibrationStatus'));
-    for (const id of ['storageHealthBtn', 'storageHealthStatus', 'releaseHealthBtn', 'releaseHealthStatus', 'downloadDiagnosticsBtn', 'checkUpdateBtn', 'updateStatus']) move(id, 'storage');
-    move('resetViewBtn', 'general');
-    move('historyLimit', 'general');
+    for (const id of ['storageHealthBtn', 'storageHealthStatus', 'releaseHealthBtn', 'releaseHealthStatus', 'downloadDiagnosticsBtn', 'checkUpdateBtn', 'updateStatus']) move(id, 'system');
+    move('resetViewBtn', 'interface');
+    move('historyLimit', 'interface');
     document.querySelector('.history-settings-card')?.remove();
     const render = document.querySelector('#renderEngineCard');
-    if (render) { render.hidden = false; pages.get('performance').append(render); }
+    if (render) { render.hidden = false; pages.get('system').append(render); }
     // Existing presentation authority remains toolbarLayoutToggle in web-shell.
     pages.get('interface').insertAdjacentHTML('beforeend', '<label class="control-row"><span>工具列欄數</span><select id="preferencesToolbarLayout"><option value="dual">雙欄</option><option value="single">單欄</option></select></label>');
     document.querySelector('#preferencesToolbarLayout').addEventListener('change', event => {
       if (document.querySelector('#app').dataset.toolbarLayout !== event.target.value) document.querySelector('#toolbarLayoutToggle').click();
     });
-    pages.get('guides').insertAdjacentHTML('beforeend', '<label class="toggle-row"><input id="preferencesRulers" type="checkbox"><span>顯示標尺</span></label><label class="toggle-row"><input id="preferencesGuides" type="checkbox"><span>顯示參考線</span></label>');
+    pages.get('interface').insertAdjacentHTML('beforeend', '<label class="toggle-row"><input id="preferencesRulers" type="checkbox"><span>顯示標尺</span></label><label class="toggle-row"><input id="preferencesGuides" type="checkbox"><span>顯示參考線</span></label>');
     document.querySelector('#preferencesRulers').addEventListener('change', () => document.querySelector('[data-shell-action="toggle-rulers"]').click());
     document.querySelector('#preferencesGuides').addEventListener('change', () => document.querySelector('[data-ui-b-command="guides:toggle"]').click());
     // Remove technical English eyebrow duplicates in the normal settings chrome.
@@ -238,7 +248,7 @@
   function openDialog(event) {
     mountSettings();
     returnFocus = document.activeElement;
-    showCategory(event?.detail?.category || 'general');
+    showCategory(event?.detail?.category || 'interface');
     els.dialog.hidden = false;
     syncDialogFields(activeBranding);
     setStatus('變更會即時預覽並自動保存');

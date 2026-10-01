@@ -128,7 +128,7 @@ export function installFullCapabilityControls(app){
 
   const TOOL_GROUP_ICON_IDS=Object.freeze({draw:'i-pen',lasso:'i-lasso','smart-selection':'i-quick-selection',fill:'i-fill',sampling:'i-eyedropper',clone:'i-clone-stamp',healing:'i-healing',tone:'i-dodge',detail:'i-blur',shape:'i-shape',text:'i-text'});
   function toolGroupIcon(group){return TOOL_GROUP_ICON_IDS[group.id]||'i-select';}
-  function toolSvg(icon){return '<span class="tool-icon" aria-hidden="true"><svg><use href="#'+icon+'"/></svg></span>';}
+  function toolSvg(icon){return '<span class="tool-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#'+icon+'"/></svg></span>';}
   function createToolButton(group){
     return htmlNode('<button type="button" class="tool-button tool-stack ui-b-tool-group" data-ui-b-tool-group="'+esc(group.id)+'" aria-haspopup="menu" aria-expanded="false" title="'+esc(group.label)+'">'+toolSvg(toolGroupIcon(group))+'<span class="tool-label">'+esc(group.label)+'</span><span class="stack-corner" aria-hidden="true"></span></button>');
   }
@@ -215,7 +215,7 @@ export function installFullCapabilityControls(app){
     const groupHost=$('.tool-rail .tool-group');
     for(const [id,label,icon,action] of shortcuts){
       if($('#'+id))continue;
-      const node=htmlNode('<button id="'+id+'" class="tool-action" type="button" title="'+label+'" aria-label="'+label+'"><span class="tool-icon">'+toolSvg(icon)+'</span></button>');
+      const node=htmlNode('<button id="'+id+'" class="tool-action" type="button" title="'+label+'" aria-label="'+label+'">'+toolSvg(icon)+'</button>');
       groupHost.append(node);node.addEventListener('click',action);
     }
     const psCapabilityOrder=['[data-tool="select"]','#psObjectSelect','[data-tool="lasso"]','[data-ui-b-tool-group="smart-selection"]','#psCropTool','#psFrameTool','[data-ui-b-tool-group="sampling"]','[data-ui-b-tool-group="healing"]','#psBrushTool','[data-ui-b-tool-group="clone"]','[data-tool="eraser"]','[data-ui-b-tool-group="fill"]','[data-ui-b-tool-group="detail"]','[data-ui-b-tool-group="tone"]','#drawToolButton','#psPathEditTool','[data-tool="text"]','[data-tool="shape"]','[data-tool="pan"]','#psZoomControls'];

@@ -477,15 +477,35 @@
   }
 
 
-  function documentScrollBounds(app) {
+  function shellDocumentBounds(app) {
+    const artboard = app?.page?.()?.artboard;
+    if (!artboard) return null;
+    const w = Number(artboard.widthMm) * 96 / 25.4;
+    const h = Number(artboard.heightMm) * 96 / 25.4;
+    return w > 0 && h > 0 ? { x: -w / 2, y: -h / 2, w, h } : null;
+  }
+
+  function shellViewportBounds(app) {
     const renderer = app?.renderer;
-    const page = app?.page?.();
-    const view = renderer?.viewportWorldBounds?.();
-    const content = renderer?.contentBounds?.(page);
-    if (!view) return null;
-    let bounds = content && [content.x,content.y,content.w,content.h].every(Number.isFinite) && content.w>0 && content.h>0
-      ? {x:content.x,y:content.y,w:content.w,h:content.h}
-      : {x:view.x-view.w,y:view.y-view.h,w:view.w*3,h:view.h*3};
+    const rect = document.querySelector('#stageWrap')?.getBoundingClientRect();
+    if (!renderer?.screenToDisplayWorld || !rect) return null;
+    const points = [[rect.left,rect.top],[rect.right,rect.top],[rect.right,rect.bottom],[rect.left,rect.bottom]]
+      .map(([x,y]) => renderer.screenToDisplayWorld(x,y));
+    const xs = points.map(p=>p.x), ys = points.map(p=>p.y);
+    return {x:Math.min(...xs),y:Math.min(...ys),w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys)};
+  }
+
+  function shellDocumentPointToModel(app, point) {
+    const viewport = app.renderer.layoutViewport(app.page());
+    const c = Math.cos(-viewport.rotation), s = Math.sin(-viewport.rotation);
+    return { x:(point.x*c-point.y*s)/viewport.scale+viewport.x, y:(point.x*s+point.y*c)/viewport.scale+viewport.y };
+  }
+
+  function documentScrollBounds(app) {
+    if (!app?.documentOpen) return null;
+    const view = shellViewportBounds(app);
+    let bounds = shellDocumentBounds(app);
+    if (!view || !bounds) return null;
     const pad=Math.max(48,Math.max(bounds.w,bounds.h)*.12);
     bounds={x:bounds.x-pad,y:bounds.y-pad,w:bounds.w+pad*2,h:bounds.h+pad*2};
     return {view,bounds};
@@ -540,7 +560,7 @@
 
   function rulerUnitInfo(app) {
     const unit = app?.page?.()?.artboard?.unit === 'px' ? 'px' : 'mm';
-    return { unit, factor: unit === 'mm' ? 25.4 / 96 : 1, suffix: unit };
+    return { unit, factor: unit === 'mm' ? 25.4 / 96 : (app.page().artboard.ppi || 300) / 96, suffix: unit };
   }
 
   function drawVerticalRulerLabel(ctx, label, pixel) {
@@ -577,15 +597,18 @@
     ctx.fillRect(0, 0, cssWidth, cssHeight);
 
     const sampleStart = axis === 'horizontal'
-      ? renderer.screenToWorld(rect.left, stageRect.top)
-      : renderer.screenToWorld(stageRect.left, rect.top);
+      ? renderer.screenToDisplayWorld(rect.left, stageRect.top)
+      : renderer.screenToDisplayWorld(stageRect.left, rect.top);
     const sampleEnd = axis === 'horizontal'
-      ? renderer.screenToWorld(rect.right, stageRect.top)
-      : renderer.screenToWorld(stageRect.left, rect.bottom);
+      ? renderer.screenToDisplayWorld(rect.right, stageRect.top)
+      : renderer.screenToDisplayWorld(stageRect.left, rect.bottom);
     if (!sampleStart || !sampleEnd) return false;
     const unitInfo = rulerUnitInfo(app);
-    const startWorld = axis === 'horizontal' ? sampleStart.x : sampleStart.y;
-    const endWorld = axis === 'horizontal' ? sampleEnd.x : sampleEnd.y;
+    const documentBounds = shellDocumentBounds(app);
+    if (!documentBounds) return false;
+    const origin = axis === 'horizontal' ? documentBounds.x : documentBounds.y;
+    const startWorld = (axis === 'horizontal' ? sampleStart.x : sampleStart.y) - origin;
+    const endWorld = (axis === 'horizontal' ? sampleEnd.x : sampleEnd.y) - origin;
     const startValue = startWorld * unitInfo.factor;
     const endValue = endWorld * unitInfo.factor;
     const span = endValue - startValue;
@@ -610,6 +633,8 @@
     for (let index = 0; index < count; index += 1) {
       const value = first + index * minor;
       if (value < minValue - minor || value > maxValue + minor) continue;
+      const documentEnd = (axis === 'horizontal' ? documentBounds.w : documentBounds.h) * unitInfo.factor;
+      if (value < -1e-7 || value > documentEnd + 1e-7) continue;
       const pixel = (Math.round((value - startValue) / span * length * dpr) + .5) / dpr;
       const majorRatio = value / major;
       const isMajor = Math.abs(majorRatio - Math.round(majorRatio)) < 1e-5;
@@ -967,7 +992,6 @@
         <div class="shell-panel-body">
           <label class="shell-field"><span>目前顏色</span><input id="shellColorInput" type="color" value="#202020"></label>
           <label class="shell-field"><span>HEX</span><input id="shellColorHex" type="text" value="#202020" maxlength="7"></label>
-          <p class="shell-panel-note">沿用目前工具顏色；此面板不另建立獨立顏色狀態。</p>
         </div>
       </section>
       <section class="inspector-section tab-content shell-panel-section" data-content="channels" data-shell-panel-section="channels" aria-label="色版">
@@ -1032,12 +1056,8 @@
   }
 
   function navigatorDocumentBounds(app, canvas) {
-    const page = app?.page?.();
-    const renderer = app?.renderer;
-    const content = renderer?.contentBounds?.(page);
-    let bounds = content && [content.x, content.y, content.w, content.h].every(Number.isFinite) && content.w > 0 && content.h > 0
-      ? { x: content.x, y: content.y, w: content.w, h: content.h }
-      : { x: -400, y: -300, w: 800, h: 600 };
+    let bounds = shellDocumentBounds(app);
+    if (!bounds) return { x:-1,y:-1,w:2,h:2 };
     const extent = Math.max(1, bounds.w, bounds.h);
     const pad = Math.max(24, extent * .08);
     bounds = { x: bounds.x - pad, y: bounds.y - pad, w: bounds.w + pad * 2, h: bounds.h + pad * 2 };
@@ -1055,7 +1075,7 @@
     context.save();
     context.setTransform(scale, 0, 0, scale, -bounds.x * scale, -bounds.y * scale);
     try {
-      app.renderer?.renderPageWorld?.(context, app.page(), { bounds, preferredScale: scale });
+      app.renderer?.renderPageWorld?.(context, app.page(), { bounds:shellDocumentBounds(app), clipBounds:shellDocumentBounds(app), useLayoutViewport:true, preferredScale:scale });
     } catch {
       context.fillStyle = app.page()?.paper?.color || '#fff';
       context.fillRect(bounds.x, bounds.y, bounds.w, bounds.h);
@@ -1068,7 +1088,7 @@
     const renderer = app?.renderer;
     const camera = app?.page?.()?.camera;
     if (!renderer?.worldToScreen || !camera || !worldPoint) return false;
-    const screen = renderer.worldToScreen(worldPoint);
+    const screen = renderer.worldToScreen(shellDocumentPointToModel(app, worldPoint));
     if (!screen) return false;
     camera.x += renderer.width / 2 - screen.x;
     camera.y += renderer.height / 2 - screen.y;
@@ -1090,10 +1110,19 @@
     const zoom = document.querySelector('#shellNavigatorZoom');
     const slider = document.querySelector('#shellNavigatorZoomSlider');
     if (!app?.page?.() || !app.renderer?.viewportWorldBounds || !canvas || !proxy || !zoom || !slider) return;
+    proxy.hidden = !app.documentOpen;
+    zoom.disabled = slider.disabled = !app.documentOpen;
+    if (!app.documentOpen) {
+      const context = canvas.getContext('2d');
+      context.clearRect(0,0,canvas.width,canvas.height);
+      state.navigatorBounds = null;
+      zoom.value = '';
+      return;
+    }
     const bounds = navigatorDocumentBounds(app, canvas);
     state.navigatorBounds = bounds;
     drawNavigatorDocument(app, canvas, bounds);
-    const viewport = app.renderer.viewportWorldBounds();
+    const viewport = shellViewportBounds(app);
     const proxyW = viewport.w / bounds.w * 100;
     const proxyH = viewport.h / bounds.h * 100;
     const proxyX = (viewport.x - bounds.x) / bounds.w * 100;
@@ -1446,8 +1475,9 @@
   function syncSupplementalPanels() {
     const app = runtime();
     if (!state.root) return;
-    const hasDocument = Boolean(app?.doc);
+    const hasDocument = Boolean(app?.doc && app.documentOpen);
     state.root.dataset.documentActive = String(hasDocument);
+    document.querySelectorAll('[data-file-command="save"],[data-file-command="export"],#saveBtn,#exportBtn,[data-ui-b-command="tool:image"]').forEach(button => { button.disabled = !hasDocument; });
     const title = document.querySelector('#documentTabTitle');
     if (title && hasDocument) title.textContent = app.doc.title || document.querySelector('#docTitle')?.value || '未命名作品';
     const active = currentPanel();
@@ -1641,7 +1671,7 @@
     if (preview && preview.dataset.clickBound !== 'true') {
       preview.dataset.clickBound = 'true';
       preview.addEventListener('pointerdown', event => {
-        if (event.button !== 0 || event.target.closest?.('#shellNavigatorProxy')) return;
+        if (!app.documentOpen || event.button !== 0 || event.target.closest?.('#shellNavigatorProxy')) return;
         const bounds = state.navigatorBounds || navigatorDocumentBounds(app, document.querySelector('#shellNavigatorCanvas'));
         const target = navigatorWorldFromClient(preview, bounds, event.clientX, event.clientY);
         if (centerCameraOnWorld(app, target)) app.renderer?.render?.();
@@ -1653,7 +1683,8 @@
       proxy.dataset.bound = 'true';
       let start = null;
       proxy.addEventListener('pointerdown', event => {
-        const viewport = app.renderer?.viewportWorldBounds?.();
+        if (!app.documentOpen) return;
+        const viewport = shellViewportBounds(app);
         const bounds = state.navigatorBounds || navigatorDocumentBounds(app, document.querySelector('#shellNavigatorCanvas'));
         if (!viewport || !bounds) return;
         start = {

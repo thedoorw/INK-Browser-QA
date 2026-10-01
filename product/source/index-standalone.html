@@ -15,7 +15,7 @@
     body{min-height:100vh}
     #app{background:#e7e7e7;color:#262626}
   </style>
-  <link rel="stylesheet" href="styles.css?v=0.1-ui-20261001-debt1">
+  <link rel="stylesheet" href="styles.css?v=0.1-ui-20261001-repair2">
 </head>
 <body data-ink-first-paint="workstation">
 <svg class="svg-sprite" aria-hidden="true">
@@ -63,7 +63,7 @@
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-infinite" viewBox="0 0 24 24"><path d="M8.2 8.1c-2.3 0-4.2 1.7-4.2 3.9s1.9 3.9 4.2 3.9c2.8 0 4.7-2.7 7.6-6 1-1.2 2.1-1.8 3.1-1.8 1.8 0 3.1 1.7 3.1 3.9s-1.3 3.9-3.1 3.9c-1.1 0-2.2-.6-3.2-1.8L12 10c-1.3-1.3-2.5-1.9-3.8-1.9Z"/></symbol>
   <symbol id="i-layout" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 7h8M8 11h8M8 15h5"/></symbol>
-  <symbol id="i-quick-selection" viewBox="0 0 24 24"><path d="M4 4h5M15 4h5M4 20h5M15 20h5M4 4v5M4 15v5M20 4v5M20 15v5"/><path d="m10 8 7 7M14 7l3 3-7 7-3 1 1-3 6-8Z"/></symbol>
+  <symbol id="i-quick-selection" viewBox="0 0 24 24"><path d="M4 11V4h8M4 15v5h8M16 20h4v-5" stroke-dasharray="2 2"/><path d="m13 11 5-6 3 3-6 5-2-2Z"/><path d="M13 11c-3-1-5 1-5 4 3 0 5-1 5-4Z"/></symbol>
   <symbol id="i-fill" viewBox="0 0 24 24"><path d="m6 5 8 8-6 6-5-5 6-6"/><path d="M14 13h6l1 7H9"/><path d="M16 5h4M18 3v4"/></symbol>
   <symbol id="i-eyedropper" viewBox="0 0 24 24"><path d="m14 4 6 6-3 3-2-2-7.5 7.5L4 20l1.5-3.5L13 9l-2-2 3-3Z"/><path d="M6 17h4"/></symbol>
   <symbol id="i-clone-stamp" viewBox="0 0 24 24"><path d="M9 4h6l1 5 3 2v3H5v-3l3-2 1-5Z"/><path d="M6 14v5h12v-5M8 17h8"/></symbol>
@@ -84,7 +84,7 @@
   <symbol id="i-fx" viewBox="0 0 24 24"><path d="M5 18 11 6h6M7 11h9M14 18l5-8M14 10l5 8"/></symbol>
 <symbol id="i-object-select" viewBox="0 0 24 24"><path d="M4 3h16v17H4z" stroke-dasharray="2 2"/><path d="m10 8 8 4-4 2-2 4z"/></symbol><symbol id="i-crop" viewBox="0 0 24 24"><path d="M6 2v16h16M2 6h16v16M9 6h9v9"/></symbol><symbol id="i-frame" viewBox="0 0 24 24"><path d="M3 3h18v18H3zM3 3l18 18M21 3 3 21"/></symbol><symbol id="i-path" viewBox="0 0 24 24"><path d="m4 20 5-14 11 11-16 3zm5-14 8-3 4 4-1 10M4 20l8-8"/></symbol></svg>
 
-<div id="app" class="app web-shell-v0-1 toolbar-layout-dual" data-panel="brush" data-space="creation" data-shell-panel="layers" data-toolbar-layout="dual" data-document-active="true" data-rulers="false" data-first-paint="ready" style="--active-panel-w:252px">
+<div id="app" class="app web-shell-v0-1 toolbar-layout-dual" data-panel="brush" data-space="creation" data-shell-panel="layers" data-toolbar-layout="dual" data-document-active="false" data-rulers="false" data-first-paint="ready" style="--active-panel-w:252px">
   <div class="menu-strip" role="menubar" aria-label="應用程式選單">
     <div class="menu-app-mark" aria-label="INK v0.1 · Portable"><img class="brand-source-mark" data-brand-logo src="assets/INK_MARK_SOURCE_W-300.jpg?v=0.1" alt="" aria-hidden="true"><strong data-brand-app-name>INK</strong><small>0.1</small></div>
     <nav id="applicationMenus" class="application-menus" aria-label="主選單">
@@ -103,7 +103,6 @@
       <div class="application-menu" data-application-menu="edit">
         <button type="button" data-application-menu-trigger="edit" aria-haspopup="menu" aria-expanded="false">編輯(E)</button>
         <div id="editMenu" class="application-command-menu" role="menu" aria-label="編輯" hidden>
-<button type="button" role="menuitem" data-ui-b-contribution="image-adjustments" data-ui-b-command="panel:adjustments"><span>調整…</span></button>
           <button type="button" role="menuitem" data-shell-action="undo"><span>復原</span><kbd>Ctrl+Z</kbd></button>
           <button type="button" role="menuitem" data-shell-action="redo"><span>重做</span><kbd>Ctrl+Shift+Z</kbd></button>
           <span class="application-menu-separator" aria-hidden="true"></span>
@@ -113,7 +112,7 @@
       <div class="application-menu" data-application-menu="image">
         <button type="button" data-application-menu-trigger="image" aria-haspopup="menu" aria-expanded="false">影像(I)</button>
         <div id="imageMenu" class="application-command-menu" role="menu" aria-label="影像" hidden>
-<button type="button" role="menuitem" data-ui-b-command="workspace:creation"><span>繪畫與向量：創作空間</span><kbd>Ctrl+1</kbd></button><button type="button" role="menuitem" data-ui-b-command="workspace:layout"><span>繪畫與向量：版面空間</span><kbd>Ctrl+2</kbd></button><span class="application-menu-separator" role="separator"></span>
+<span class="application-menu-separator" role="separator"></span>
           <button type="button" role="menuitem" data-shell-action="canvas-settings"><span>畫布設定…</span></button>
           <button type="button" role="menuitem" data-ui-b-contribution="image-mode-8" data-ui-b-command="bit-depth:8"><span>模式：8-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-16" data-ui-b-command="bit-depth:16"><span>模式：16-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-32" data-ui-b-command="bit-depth:32"><span>模式：32-bit</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-rgb" data-ui-b-command="color-mode:RGB"><span>色彩模式：RGB</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-cmyk" data-ui-b-command="color-mode:CMYK"><span>色彩模式：CMYK</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-lab" data-ui-b-command="color-mode:Lab"><span>色彩模式：Lab</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-mode-multi" data-ui-b-command="color-mode:Multichannel"><span>色彩模式：多色版</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-profile" data-ui-b-command="color-profile"><span>色彩描述檔…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="image-crop" data-ui-b-command="image-crop"><span>裁切選取影像…</span></button><button type="button" role="menuitem" data-ui-b-contribution="image-resize" data-ui-b-command="image-resize"><span>影像尺寸…</span></button>
         </div>
@@ -150,7 +149,7 @@
         <button type="button" data-application-menu-trigger="object" aria-haspopup="menu" aria-expanded="false">物件</button>
         <div id="objectMenu" class="application-command-menu" role="menu" aria-label="物件" hidden>
           <button type="button" role="menuitem" data-shell-panel="properties"><span>物件屬性</span></button>
-          <button type="button" role="menuitem" data-ui-b-contribution="object-skew" data-ui-b-command="transform:skew"><span>變形：傾斜…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distort" data-ui-b-command="transform:distort"><span>Transform：Distort…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-perspective" data-ui-b-command="transform:perspective"><span>變形：透視…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-warp" data-ui-b-command="transform:warp"><span>變形：彎曲…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-front" data-ui-b-command="arrange:front"><span>移至最上</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-back" data-ui-b-command="arrange:back"><span>移至最下</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-group" data-ui-b-command="group"><span>群組</span><kbd>Ctrl+G</kbd></button><button type="button" role="menuitem" data-ui-b-contribution="object-ungroup" data-ui-b-command="ungroup"><span>解散群組</span><kbd>Ctrl+Shift+G</kbd></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-align-left" data-ui-b-command="align:left"><span>對齊：靠左</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-center-x" data-ui-b-command="align:centerX"><span>對齊：水平置中</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-right" data-ui-b-command="align:right"><span>對齊：靠右</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-top" data-ui-b-command="align:top"><span>對齊：靠上</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-center-y" data-ui-b-command="align:centerY"><span>對齊：垂直置中</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-bottom" data-ui-b-command="align:bottom"><span>對齊：靠下</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distribute-x" data-ui-b-command="align:distributeX"><span>分布：水平等距</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distribute-y" data-ui-b-command="align:distributeY"><span>分布：垂直等距</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-frame-selection" data-ui-b-command="frame-selection"><span>建立框架</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-path-edit" data-ui-b-command="proxy:pathEditToggle"><span>路徑／節點編輯</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-union" data-ui-b-command="proxy:booleanUnion"><span>路徑布林：聯集</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-difference" data-ui-b-command="proxy:booleanDifference"><span>路徑布林：差集</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-intersection" data-ui-b-command="proxy:booleanIntersection"><span>路徑布林：交集</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-xor" data-ui-b-command="proxy:booleanXor"><span>路徑布林：互斥</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-radial" data-ui-b-command="proxy:repeatRadial"><span>重複：放射</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-mirror" data-ui-b-command="proxy:repeatMirror"><span>重複：鏡射</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-grid" data-ui-b-command="proxy:repeatGrid"><span>重複：格狀</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-expand" data-ui-b-command="proxy:repeatExpand"><span>重複：展開路徑</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="object-skew" data-ui-b-command="transform:skew"><span>變形：傾斜…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distort" data-ui-b-command="transform:distort"><span>變形：扭曲…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-perspective" data-ui-b-command="transform:perspective"><span>變形：透視…</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-warp" data-ui-b-command="transform:warp"><span>變形：彎曲…</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-front" data-ui-b-command="arrange:front"><span>移至最上</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-back" data-ui-b-command="arrange:back"><span>移至最下</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-group" data-ui-b-command="group"><span>群組</span><kbd>Ctrl+G</kbd></button><button type="button" role="menuitem" data-ui-b-contribution="object-ungroup" data-ui-b-command="ungroup"><span>解散群組</span><kbd>Ctrl+Shift+G</kbd></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-align-left" data-ui-b-command="align:left"><span>對齊：靠左</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-center-x" data-ui-b-command="align:centerX"><span>對齊：水平置中</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-right" data-ui-b-command="align:right"><span>對齊：靠右</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-top" data-ui-b-command="align:top"><span>對齊：靠上</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-center-y" data-ui-b-command="align:centerY"><span>對齊：垂直置中</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-align-bottom" data-ui-b-command="align:bottom"><span>對齊：靠下</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distribute-x" data-ui-b-command="align:distributeX"><span>分布：水平等距</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-distribute-y" data-ui-b-command="align:distributeY"><span>分布：垂直等距</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-frame-selection" data-ui-b-command="frame-selection"><span>建立框架</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-path-edit" data-ui-b-command="proxy:pathEditToggle"><span>路徑／節點編輯</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-union" data-ui-b-command="proxy:booleanUnion"><span>路徑布林：聯集</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-difference" data-ui-b-command="proxy:booleanDifference"><span>路徑布林：差集</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-intersection" data-ui-b-command="proxy:booleanIntersection"><span>路徑布林：交集</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-boolean-xor" data-ui-b-command="proxy:booleanXor"><span>路徑布林：互斥</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-radial" data-ui-b-command="proxy:repeatRadial"><span>重複：放射</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-mirror" data-ui-b-command="proxy:repeatMirror"><span>重複：鏡射</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-grid" data-ui-b-command="proxy:repeatGrid"><span>重複：格狀</span></button><button type="button" role="menuitem" data-ui-b-contribution="object-repeat-expand" data-ui-b-command="proxy:repeatExpand"><span>重複：展開路徑</span></button>
         </div>
       </div>
       <div class="application-menu" data-application-menu="view">
@@ -163,7 +162,7 @@
           <button type="button" role="menuitemcheckbox" data-shell-action="toggle-rulers" aria-checked="false"><span>標尺</span></button>
           <span class="application-menu-separator" aria-hidden="true"></span>
           <button type="button" role="menuitem" data-shell-action="fullscreen"><span>全螢幕</span><kbd>Ctrl+Shift+F</kbd></button>
-          <button type="button" role="menuitem" data-ui-b-contribution="view-grid" data-ui-b-command="snap:grid"><span>格線吸附</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-snap" data-ui-b-command="snap:enabled"><span>吸附</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-guides" data-ui-b-command="snap:guides"><span>吸附至參考線</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-edges" data-ui-b-command="snap:edges"><span>吸附至物件邊緣</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-centers" data-ui-b-command="snap:centers"><span>吸附至物件中心</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-angle" data-ui-b-command="snap:angle"><span>吸附至角度</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-equal" data-ui-b-command="snap:equalDistance"><span>吸附至等距</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-guides-show" data-ui-b-command="guides:toggle"><span>顯示／隱藏參考線</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-guides-lock" data-ui-b-command="guides:lock"><span>鎖定／解鎖參考線</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-guides-clear" data-ui-b-command="guides:clear"><span>清除參考線</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-workspace-creation" data-ui-b-command="workspace:creation"><span>工作區：創作</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-workspace-layout" data-ui-b-command="workspace:layout"><span>工作區：版面</span></button>
+          <button type="button" role="menuitem" data-ui-b-contribution="view-grid" data-ui-b-command="snap:grid"><span>格線吸附</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-snap" data-ui-b-command="snap:enabled"><span>吸附</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-guides" data-ui-b-command="snap:guides"><span>吸附至參考線</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-edges" data-ui-b-command="snap:edges"><span>吸附至物件邊緣</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-centers" data-ui-b-command="snap:centers"><span>吸附至物件中心</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-angle" data-ui-b-command="snap:angle"><span>吸附至角度</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-snap-equal" data-ui-b-command="snap:equalDistance"><span>吸附至等距</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-guides-show" data-ui-b-command="guides:toggle"><span>顯示／隱藏參考線</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-guides-lock" data-ui-b-command="guides:lock"><span>鎖定／解鎖參考線</span></button><button type="button" role="menuitem" data-ui-b-contribution="view-guides-clear" data-ui-b-command="guides:clear"><span>清除參考線</span></button><span class="application-menu-separator" role="separator"></span><button type="button" role="menuitem" data-ui-b-contribution="view-workspace-layout" data-ui-b-command="workspace:fit-current"><span>文件符合視窗</span></button>
         </div>
       </div>
       <div class="application-menu application-window-menu" data-application-menu="window">
@@ -244,18 +243,18 @@
 
   <nav class="tool-rail glass-surface" aria-label="主要工具" data-ui-home="tool-selection" data-ui-route="PRIMARY_HOME">
     <div class="tool-group">
-      <button id="psBrushTool" class="tool-button" data-tool="brush" title="毛筆（I）" aria-label="毛筆"><span class="tool-icon"><svg><use href="#i-brush"/></svg></span><span class="tool-label">毛筆</span></button>
-      <button id="psZoomControls" class="tool-action ps-zoom-controls" type="button" title="縮放控制" aria-label="縮放控制" aria-haspopup="menu" aria-expanded="false"><span class="tool-icon"><svg><use href="#i-zoom-in"/></svg></span></button>
+      <button id="psBrushTool" class="tool-button" data-tool="brush" title="毛筆（I）" aria-label="毛筆"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-brush"/></svg></span><span class="tool-label">毛筆</span></button>
+      <button id="psZoomControls" class="tool-action ps-zoom-controls" type="button" title="縮放控制" aria-label="縮放控制" aria-haspopup="menu" aria-expanded="false"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-zoom-in"/></svg></span></button>
       <button id="drawToolButton" class="tool-button tool-stack" data-tool-stack="draw" data-tool="pen" title="繪圖工具；再按一次或長按可切換筆種（W）" aria-haspopup="true" aria-expanded="false">
-        <span class="tool-icon"><svg><use id="drawToolUse" href="#i-pen"/></svg></span><span id="drawToolLabel" class="tool-label">鋼筆</span><span class="stack-corner" aria-hidden="true"></span>
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><use id="drawToolUse" href="#i-pen"/></svg></span><span id="drawToolLabel" class="tool-label">鋼筆</span><span class="stack-corner" aria-hidden="true"></span>
       </button>
-      <button class="tool-button" data-tool="eraser" title="橡皮擦（E）"><span class="tool-icon"><svg><use href="#i-eraser"/></svg></span><span class="tool-label">橡皮擦</span></button>
-      <button class="tool-button emphasis" data-tool="select" title="選取與移動（V）"><span class="tool-icon"><svg><use href="#i-move"/></svg></span><span class="tool-label">選取</span></button>
-      <button class="tool-button" data-tool="lasso" title="套索（L）"><span class="tool-icon"><svg><use href="#i-lasso"/></svg></span><span class="tool-label">套索</span></button>
-      <button class="tool-button" data-tool="shape" title="幾何（S）"><span class="tool-icon"><svg><use href="#i-shape"/></svg></span><span class="tool-label">幾何</span></button>
-      <button class="tool-button" data-tool="text" title="文字（T）"><span class="tool-icon"><svg><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
-      <button class="tool-button" data-tool="image" title="圖片"><span class="tool-icon"><svg><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
-      <button class="tool-button" data-tool="pan" title="移動畫布（H／空白鍵）"><span class="tool-icon"><svg><use href="#i-pan"/></svg></span><span class="tool-label">移動</span></button>
+      <button class="tool-button" data-tool="eraser" title="橡皮擦（E）"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-eraser"/></svg></span><span class="tool-label">橡皮擦</span></button>
+      <button class="tool-button emphasis" data-tool="select" title="選取與移動（V）"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-move"/></svg></span><span class="tool-label">選取</span></button>
+      <button class="tool-button" data-tool="lasso" title="套索（L）"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-lasso"/></svg></span><span class="tool-label">套索</span></button>
+      <button class="tool-button" data-tool="shape" title="幾何（S）"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-shape"/></svg></span><span class="tool-label">幾何</span></button>
+      <button class="tool-button" data-tool="text" title="文字（T）"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
+      <button class="tool-button" data-tool="image" title="圖片"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
+      <button class="tool-button" data-tool="pan" title="移動畫布（H／空白鍵）"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-pan"/></svg></span><span class="tool-label">移動</span></button>
     </div>
     <div class="tool-layout-controls" aria-label="工具列版面">
       <button id="toolbarLayoutToggle" class="tool-layout-toggle" type="button" title="切換為雙欄工具列" aria-label="切換為雙欄工具列" aria-pressed="false">
@@ -648,32 +647,32 @@
   </aside>
 
   <nav class="mobile-dock glass-surface" aria-label="手機工具列">
-    <button class="tool-button active" data-tool="pen"><span class="tool-icon"><svg><use href="#i-pen"/></svg></span><span class="tool-label">鋼筆</span></button>
-    <button class="tool-button" data-tool="brush"><span class="tool-icon"><svg><use href="#i-brush"/></svg></span><span class="tool-label">毛筆</span></button>
-    <button class="tool-button" data-tool="eraser"><span class="tool-icon"><svg><use href="#i-eraser"/></svg></span><span class="tool-label">橡皮</span></button>
-    <button class="tool-button emphasis" data-tool="select"><span class="tool-icon"><svg><use href="#i-select"/></svg></span><span class="tool-label">選取</span></button>
-    <button id="mobileToolsToggle" class="dock-action"><span class="tool-icon"><svg><use href="#i-more"/></svg></span><span class="tool-label">更多</span></button>
+    <button class="tool-button active" data-tool="pen"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-pen"/></svg></span><span class="tool-label">鋼筆</span></button>
+    <button class="tool-button" data-tool="brush"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-brush"/></svg></span><span class="tool-label">毛筆</span></button>
+    <button class="tool-button" data-tool="eraser"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-eraser"/></svg></span><span class="tool-label">橡皮</span></button>
+    <button class="tool-button emphasis" data-tool="select"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-select"/></svg></span><span class="tool-label">選取</span></button>
+    <button id="mobileToolsToggle" class="dock-action"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-more"/></svg></span><span class="tool-label">更多</span></button>
   </nav>
 
   <section id="mobileToolSheet" class="mobile-tool-sheet elevated-panel" hidden>
     <div class="sheet-handle"></div>
     <div class="sheet-title"><div><span class="eyebrow">TOOLS</span><strong>全部工具</strong></div><button id="closeMobileTools" class="mini-button"><svg><use href="#i-close"/></svg></button></div>
     <div class="mobile-tool-grid">
-      <button class="tool-button" data-tool="pencil"><span class="tool-icon"><svg><use href="#i-pencil"/></svg></span><span class="tool-label">鉛筆</span></button>
-      <button class="tool-button" data-tool="marker"><span class="tool-icon"><svg><use href="#i-marker"/></svg></span><span class="tool-label">麥克筆</span></button>
-      <button class="tool-button" data-tool="airbrush"><span class="tool-icon"><svg><use href="#i-airbrush"/></svg></span><span class="tool-label">噴筆</span></button>
-      <button class="tool-button" data-tool="lasso"><span class="tool-icon"><svg><use href="#i-lasso"/></svg></span><span class="tool-label">套索</span></button>
-      <button class="tool-button" data-tool="shape"><span class="tool-icon"><svg><use href="#i-shape"/></svg></span><span class="tool-label">幾何</span></button>
-      <button class="tool-button" data-tool="text"><span class="tool-icon"><svg><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
-      <button class="tool-button" data-tool="image"><span class="tool-icon"><svg><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
-      <button class="tool-button" data-tool="pan"><span class="tool-icon"><svg><use href="#i-pan"/></svg></span><span class="tool-label">移動畫布</span></button>
+      <button class="tool-button" data-tool="pencil"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-pencil"/></svg></span><span class="tool-label">鉛筆</span></button>
+      <button class="tool-button" data-tool="marker"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-marker"/></svg></span><span class="tool-label">麥克筆</span></button>
+      <button class="tool-button" data-tool="airbrush"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-airbrush"/></svg></span><span class="tool-label">噴筆</span></button>
+      <button class="tool-button" data-tool="lasso"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-lasso"/></svg></span><span class="tool-label">套索</span></button>
+      <button class="tool-button" data-tool="shape"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-shape"/></svg></span><span class="tool-label">幾何</span></button>
+      <button class="tool-button" data-tool="text"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-text"/></svg></span><span class="tool-label">文字</span></button>
+      <button class="tool-button" data-tool="image"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-image"/></svg></span><span class="tool-label">圖片</span></button>
+      <button class="tool-button" data-tool="pan"><span class="tool-icon"><svg viewBox="0 0 24 24"><use href="#i-pan"/></svg></span><span class="tool-label">移動畫布</span></button>
     </div>
   </section>
 
   <section id="canvasSettings" class="floating-panel elevated-panel" hidden>
     <div class="panel-header"><div><span class="eyebrow">CANVAS</span><strong>畫布設定</strong></div><button id="closeSettings" class="mini-button panel-close-button" title="關閉畫布設定" aria-label="關閉畫布設定"><svg><use href="#i-close"/></svg></button></div>
     <div class="subpanel-title artboard-title"><strong>版面與列印</strong><span>LAYOUT / PRINT</span></div>
-    <p class="workspace-settings-note">創作空間保持無限畫布；版面空間使用下列 A4 設定。兩者共享同一批物件。</p>
+    <p class="workspace-settings-note">文件依下列尺寸顯示；縮放與平移只改變觀看位置，不改變文件尺寸。</p>
     <label class="control-row" data-artboard-fixed><span>尺寸</span><select id="artboardPreset"><option value="A4">A4 · 210 × 297 mm</option></select></label>
     <label class="control-row" data-artboard-fixed><span>方向</span><select id="artboardOrientation"><option value="portrait">直式</option><option value="landscape">橫式</option></select></label>
     <label class="control-row" data-artboard-fixed><span>解析度</span><select id="artboardPpi"><option value="150">150 PPI</option><option value="300" selected>300 PPI</option><option value="600">600 PPI</option></select></label>
@@ -692,7 +691,7 @@
     <label class="control-row"><span>視埠旋轉</span><div class="number-unit"><input id="layoutViewportRotation" type="number" min="-180" max="180" step="1" value="0"><span>°</span></div></label>
     <div class="viewport-actions"><button id="fitViewportContentBtn" class="wide-button">將全部內容符合 A4 視埠</button><button id="resetViewportBtn" class="wide-button">視埠 1:1 置中</button></div>
     <p id="artboardSummary" class="artboard-summary">A4 直式 · 210 × 297 mm · 300 PPI</p>
-    <button id="fitArtboardBtn" class="wide-button" data-artboard-fixed>切換至版面並符合畫板</button>
+    <button id="fitArtboardBtn" class="wide-button" data-artboard-fixed>文件符合視窗</button>
     <label class="control-row"><span>紙張</span><select id="paperType"><option value="blank">空白</option><option value="dots">點陣</option><option value="grid">方格</option><option value="ruled">橫線</option></select></label>
     <label class="control-row"><span>背景色</span><input id="paperColor" type="color" value="#fffef9"></label>
     <label class="control-row range-row"><span>格線間距</span><input id="gridSize" type="range" min="8" max="100" value="32"><output id="gridSizeOutput">32</output></label>
@@ -789,9 +788,9 @@
   <input id="calibrationProfileInput" type="file" accept=".json,.inkprofile" hidden>
   <input id="referenceEvidenceInput" type="file" accept="application/json,.json" hidden>
 </div>
-<script src="web-shell.js?v=0.1-ui-20261001-debt1"></script>
-<script src="ui/branding-settings.js?v=0.1-ui-20261001-debt1"></script>
-<script src="dist/ink.compat.js?v=0.1-ui-20261001-debt1"></script>
+<script src="web-shell.js?v=0.1-ui-20261001-repair2"></script>
+<script src="ui/branding-settings.js?v=0.1-ui-20261001-repair2"></script>
+<script src="dist/ink.compat.js?v=0.1-ui-20261001-repair2"></script>
 
 </body>
 </html>
