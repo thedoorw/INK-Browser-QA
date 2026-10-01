@@ -467,3 +467,96 @@ SHARED_PRIMITIVES_USED = YES
 ```
 
 Any exception requires explicit USER review.
+
+
+## 22. Capability → UI Surface Matrix
+
+The current INK capability baseline is larger than the currently visible UI. Existing capability must not remain invisible merely because the present UI omitted its control.
+
+Before implementation, reconcile visible UI against:
+
+`ACTIVE/INK_CURRENT_CAPABILITY_BASELINE.md`
+
+For every user-facing capability relevant to the creative workstation, assign exactly one primary UI home:
+
+```text
+OPTIONS_BAR
+PANEL_BODY
+PANEL_FOOTER
+APPLICATION_MENU
+CONTEXT_MENU
+DIALOG
+WINDOW_MENU
+DIAGNOSTIC_ONLY
+HEADLESS_ONLY
+```
+
+Do not place everything in Options Bar.
+
+Adobe/Photoshop grammar:
+- Options Bar is contextual to the currently selected tool;
+- shared tool parameters may recur across related tools;
+- tool-specific parameters appear only when that tool is active;
+- one-shot commands normally remain menus/dialogs;
+- persistent object/document state belongs in panels/properties;
+- application-wide visibility/workspace state belongs in Window/Preferences;
+- diagnostics do not occupy ordinary creative chrome.
+
+For each visible tool or command, DEV must record:
+
+| Field | Required |
+| --- | --- |
+| TOOL_OR_COMMAND | visible tool/command identity |
+| CURRENT_CAPABILITY | authoritative INK capability ID/family |
+| ACTIVE_CONTEXT | when this UI is applicable |
+| PARAMETERS | actual existing adjustable parameters |
+| PRIMARY_HOME | one of the homes above |
+| SECONDARY_ROUTE | optional shortcut/context route |
+| CURRENT_UI | present / missing / misplaced / duplicate |
+| REQUIRED_CONTROL_PRIMITIVE | input/select/slider/toggle/action/readout/etc. |
+| STATE_OWNER | authoritative state object/module |
+| IMPLEMENTATION_DISPOSITION | expose / move / consolidate / leave headless |
+| EVIDENCE | rendered + interaction proof required |
+
+Rules:
+- capability present + applicable parameter + no valid visible route = UI_ASSEMBLY_DEFECT;
+- capability present but headless/support-only = no normal UI required;
+- no parameter may be invented merely to imitate Photoshop;
+- no duplicate state owner may be created to expose an existing capability;
+- related tools should reuse the same shared parameter-control primitive where semantics match.
+
+High-priority capability families for this audit include:
+- C07 Selection;
+- C08 Smart guides / snapping;
+- C09 Align / distribute;
+- C10 Pen / vector Path;
+- C11 Shapes;
+- C13 Transform;
+- C14 Deformation;
+- C17 Repeat / parametric;
+- C19 Auto / Flex layout;
+- C20 Text;
+- C22 Raster / Image objects;
+- C23 Masks;
+- C24 Adjustments;
+- C25 Filters;
+- C26 Blend modes;
+- C27 Layer effects;
+- C29 Drawing tools;
+- C30 Brush engine;
+- C31 Natural media;
+- C32 Brush dynamics;
+- C33 Blender / Smudge;
+- C34 Stroke editing;
+- C37 Device calibration;
+- C38 Paper / media;
+- C39 Material system;
+- C40 Reference import;
+- C41 Extraction / vectorization;
+- C42 Structure reconstruction;
+- C43 History;
+- C46 Compare / Variant;
+- C52 High-resolution export;
+- C53 Output.
+
+This matrix is a UI exposure audit, not a new-capability work order.
