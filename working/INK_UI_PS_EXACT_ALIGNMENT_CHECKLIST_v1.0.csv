@@ -1,60 +1,60 @@
-﻿ID,區域,檢查項目,精確判準,本輪觀察,驗證狀態,證據,差異處置
-A01,頂端,Logo 旁文字,依 USER 保留 Logo；移除旁邊 INK／0.1 字樣,目前仍顯示 INK 0.1,差異已觀察,USER 截圖＋current-overview.jpg,FIX_NOW
-A02,頂端,Menu／Options／分隔線,PS 原圖鎖定 24+1+35+1；逐條邊界量測,實測 Menu 含邊界 25；Options 35；工作區起點 y=61,數值已記錄；未整體驗收,geometry.json,
-A03,頂端,選單標籤間距、基線,逐個標籤對應 PS；記 glyph envelope、基線、字距與點擊框,不能由 font-size:12px 推導字形一致,待驗證,PvsI／PS 原圖,
-A04,頂端,Options 工具上下文,選取／鋼筆／筆刷／橡皮擦／形狀／文字各自對照；高度固定,本輪只觀察鋼筆，不代表其他工具對齊,待驗證,PvsI／PS 原圖,
-A05,頂端,Options 控制幾何,逐個圖示框、數值框、分隔線與間距對照,目前 quickColor 24×24；外層 23×23，需檢查是否偏心,數值已記錄；待參考量測,geometry.json,
-A06,頂端,文件標題／狀態入口,遵守真實文件能力；不做無法切換的假分頁,PS 文件 tab 為已記錄能力例外；不以新增空白列湊高度,待驗證,PvsI／PS 原圖,
-M01,選單,全部應用程式 popup 顏色,同一 Light 語意色票；normal／hover／checked／disabled 同類一致,"10 個白底；視窗 rgb(56,57,59)，仍有深色／綠色選中列",差異已觀察,menu-metrics.json＋window-menu.jpg,FIX_NOW
-M02,選單,popup 行高、padding、邊界,相同選單項目類別共用逐項量測值；寬度按內容,一般項目 22px、padding 4px；視窗使用另一組框架／密度,差異已觀察,menu-metrics.json,FIX_NOW
-M03,選單,勾選／捷徑／子選單欄,按 PS 的 check、label、shortcut、arrow 四欄對齊,視窗以面板 icon／分類組方式呈現；需逐项對照能力與位置,待驗證,PvsI／PS 原圖,
-M04,選單,面板選單、工作區 popup、工具 flyout,各類有完整名冊；同類一致，跨類依 PS 對照,只開啟外觀群組選項；其餘未逐一驗證,部分已觀察,panel-options.jpg,
-M05,選單,hover／focus／disabled／checked,每種狀態獨立截圖；不可用 normal 代替,11 個應用程式選單已開啟；未驗證全部狀態,待驗證,PvsI／PS 原圖,
-M06,選單,鍵盤與關閉行为,Escape、外點、左右切換、上下移動、Enter、子選單，逐條黑箱,已用 Escape 關閉；其餘保留待驗證,待驗證,PvsI／PS 原圖,
-T01,工具列,單／雙欄外框,PS 原圖 72+1／39+1；共用能力與重排規則,雙欄 73px；兩種狀態已操作,數值／切換已記錄；未整體驗收,geometry.json＋tools-single.jpg,
-T02,工具列,collapse strip／箭頭,PS 11px strip+1px divider；箭頭 envelope、位置、hitbox 分開,不可只驗證 strip 高度,待驗證,PvsI／PS 原圖,
-T03,工具列,row／column pitch、累計佔高,逐列對照；末列誤差也量測；參考 row pitch 26px、column 33px,局部 SVG 中心 y=86／112，重複間距 26；工具名冊尚未對齊,数值已記錄；未整體驗收,geometry.json,
-T04,工具列,工具代表／排序／flyout,先按能力對應 PS 工具組，再固定位置與代表圖示,鋼筆、橡皮擦先出現；取樣／仿製／修復等以符號替代，整體節奏不同,差異已觀察,PvsI-1/2＋current-overview.jpg,FIX_NOW
-T05,工具列,圖示輪廓與光學重量,對應工具使用與 PS 相同視覺語法；逐個輪廓、線寬、重心量測,◫／◩／⌖／♧／✚／◐／◌ 等文字字形與其他 SVG 混用,差異已觀察,DOM snapshot＋current-overview.jpg,FIX_NOW
-T06,工具列,active／hover／disabled／focus,各類型同狀態對照；fill bounds 與 hitbox 分開,有 active 填色，不足以證明精確相似,待驗證,PvsI／PS 原圖,
-T07,工具列,前／背景色塊,PS2 鎖定 18×18，overlap 10×10；utility 位置另量,實測色塊 18×18，重疊 10×10；不表示整個色塊區已對齊,數值已記錄；未整體驗收,geometry.json,
-T08,工具列,swap／reset 與下方 utilities,依 PS 定位與圖示；支持功能歸位，無能力才例外,swap／reset 用文字字形；下方 Quick Mask／screen mode 未完成能力對位,差異已觀察,PvsI-1/2＋DOM snapshot,FIX_NOW
-R01,尺規,橫／直 ruler 與 corner,17px／17px／17×17；不含假文件 tab 補白,實測 17px；corner x73 y61；stage x90 y78,數值已記錄；未整體驗收,geometry.json＋rulers-on.jpg,
-R02,尺規,標字大小、方向、基線、留白,PS 原圖逐字形 envelope／baseline；不可只測 ruler 厚度,目前直尺整串文字旋轉90°，PS 原圖為直排讀法；標字細小且 source 固定9px，需分別量測字形／基線,差異已觀察,PS-2.png＋rulers-on.jpg＋web-shell.js renderDocumentRuler,FIX_NOW
-R03,尺規,長／中／短 tick 與線寬,逐種刻度量測長度、間隔、貼邊；1 raster px 與 CSS px 分開,source 使用 7／10／13 到 canvas 底部；尚無同尺度 raster delta,待驗證,PvsI／PS 原圖,
-R04,尺規,單位／原點／正負值,px／mm 狀態与标字結果一致；與指南讀值同一座標來源,Preferences 顯示 mm；ruler renderer 使用 world x/y，單位換算需黑箱確認,待驗證,PvsI／PS 原圖,
-R05,尺規,zoom／pan／rotate 同步,不同縮放與平移逐狀態檢查，單位与密度不能漂移,本輪只在畫布 zoom100% 檢查；USER 圖 zoom3% 不可直接比數字,待驗證,PvsI／PS 原圖,
-G01,參考線,落下的線樣式,以 PS placed 與 drag capture 分別鎖定色彩、實／虛線、厚度,目前落下的水平／垂直線是灰綠色虛線；USER 已拒絕其讀法,差異已觀察,USER 截圖＋guides-placed.jpg,FIX_NOW
-G02,參考線,drag preview／座標提示,依 PS horizontal／vertical drag 參考逐狀態量測；不能把 preview 當 placed,已拖出兩方向；截圖看到 X:-380.5 提示與 preview；中途 held-pointer 状态未完整取證,部分已觀察,rulers-guides.jpg,
-G03,參考線,create／move／delete／lock／show-hide,每項以實際 UI 操作與結果證明；線外觀不替代互動,本輪只操作 create；其餘未驗證,待驗證,PvsI／PS 原圖,
-G04,參考線,persistent guide／smart guide／snap 區分,三者外觀与生命週期依 PS 類別區分；不得共用一種虛線代替,尚未取證 smart snap／equal spacing 狀態,待驗證,PvsI／PS 原圖,
-G05,參考線,live readout 座標／單位,與 ruler、camera、guide 同一座標 authority；文字格式精確對照,不能用已存在 handler 作證明,待驗證,PvsI／PS 原圖,
-P01,右側面板,expanded／collapsed 邊界,252px 參考狀態／40px collapsed 含 divider；resize 不覆蓋畫布,expanded 外框 252；已收合與展開,數值／切換已記錄；未整體驗收,geometry.json＋dock-collapsed.jpg,
-P02,右側面板,A/B/C 比例与 splitter,只在 1280×994 匹配環境檢查 269／261／384；splitter3px；其他尺寸另外記錄,本輪 viewport1363×936；tabs y73／327.921875／575.375，不可宣稱等於指定 viewport,數值已記錄；待匹配環境,geometry.json,
-P03,右側面板,tabs／active 裝飾／字距,28px band、逐 tab baseline、padding、分界與 active state 對照,band28px；當前蓝色頂線／粗體仍需 raster 對照,待驗證,PvsI／PS 原圖,
-P04,右側面板,options 圖示／collapse 圖示,按 PS glyph envelope，不能使用不同字體的替代符號,options 是 ☰ 文字字形；collapse 是單角括號字形,差異已觀察,DOM snapshot＋PvsI-3,FIX_NOW
-P05,右側面板,body padding／footer／scrollbar,逐個 panel 測 top/right/bottom/left；同類捲軸一致,Navigator footer33px但內部控制排列不同；不能推導 panel 已對齊,待驗證,PvsI／PS 原圖,
-P06,右側面板,width／splitter resize 与保存,拖曳中、after、reload 狀態分别量測；保留原 authority,本輪未完成 resize／reload，保留待驗證,待驗證,PvsI／PS 原圖,
-N01,Navigator,zoom row 控制順序,按 PS：比例欄位→小縮放圖示→slider→大縮放圖示；既有其他命令另歸位,目前為符合／−／slider／100%／＋，其結構与 PS 不同,差異已觀察,PvsI-2/3＋current-overview.jpg,FIX_NOW
-N02,Navigator,slider thumb／icon／數值欄,按 PS 對應輪廓、尺寸與基線；同類 slider theme 一致,Navigator 藍色圓 knob；其他 sliders 綠色，PS 是另一種輪廓,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW
-N03,Navigator,preview／proxy／空狀態,以同內容、同zoom對照；thumbnail比例與 margins 分開量測,空白畫布下 preview219×149.3125；不能以無內容證明 populated proxy,待驗證,PvsI／PS 原圖,
-N04,Navigator,pan／proxy drag／高zoom,真實內容的相同視圖狀態，對照 main viewport 與 proxy,本輪未創作／匯入測試內容，保留待驗證,待驗證,PvsI／PS 原圖,
-L01,Layers,header controls 拓撲,filter/type→blend+opacity→lock/其餘支持屬性；逐項能力核對,opacity 在面板底部；上方是 blend+三個大按鈕，與 PS 不同,差異已觀察,PvsI-2/3＋current-overview.jpg,FIX_NOW
-L02,Layers,filter、lock、fill 主入口,先查現有能力；支持者移回 PS 對應位置，無能力有據例外,不可從 UI 沒顯示就判 CAPABILITY_ABSENT,待驗證,PvsI／PS 原圖,
-L03,Layers,layer row 的眼睛／縮圖／名稱／鎖,PS 對應列欄位与35px pitch 分開核驗,目前用 ◉／○ 表示 visibility／lock，缺 PS 型態的縮圖欄；物件數文字擠在第二行,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW
-L04,Layers,selected／hidden／locked／long name,每個狀態獨立取證，不用單列空文件覆蓋全部,本輪只有選中空白 layer1,待驗證,PvsI／PS 原圖,
-L05,Layers,footer actions 主位置,PS 中對應 action 按鈕在 footer；固定 icon envelope／pitch,目前 footer只有新增、複製、刪除；fx／mask 等在上方占大按鈕,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW
-L06,Layers,drag ghost／insertion／drop,分別驗證拖曳中與落下後；接回既有 History,本輪未做 reorder，不引用舊 PASS,待驗證,PvsI／PS 原圖,
-C01,創作面板,共用工作站控件密度,INK 專有功能採 PS 同類面板 form grammar；逐 row height／gap／label欄位,參考面板仍像 Web form；大型輸入、大按鈕與工程式標題占位,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW
-C02,創作面板,file picker 語言与封裝,顯示文字／按鈕形態由 INK 語意控件控制；不同 OS 不變形,Linux 顯示 Choose File／N...en，與繁中 shell 不一致,差異已觀察,current-overview.jpg,FIX_NOW
-C03,創作面板,Libraries／Compose／CHAT／Revision,逐 panel 擷取，labels、inputs、buttons、sliders 同類整套比對,本輪未切遍四 panel，不以 Reference 外觀代證,待驗證,PvsI／PS 原圖,
-H01,其他面板,Properties／Color／Adjustments,同類 header/body/footer；支持控件按 PS 主位置,本輪未逐 panel檢查,待驗證,PvsI／PS 原圖,
-H02,其他面板,History／Channels／Pages,逐 panel與空／有內容状态；History／Revision 語意分開,本輪未逐 panel檢查,待驗證,PvsI／PS 原圖,
-D01,Preferences,titlebar／dialog／navigation grammar,參考 PS-3；单行title、分類列節奏、內容區、動作區；light 例外限色票,現在深色兩行 INK+偏好設定、32px類型分類列、大型模糊 backdrop；結構與 PS 不同,差異已觀察,PS-3.png＋preferences.jpg,FIX_NOW
-D02,Preferences,各類內容／按鈕／關閉與焦點,逐類別 normal/focus/keyboard/close；不憑外框判斷,一般／尺規分類已開啟；其餘分類未逐項操作,待驗證,PvsI／PS 原圖,
-D03,Preferences,Branding preview／persist／reset,保持既有能力；不因移除主選單文字刪除設定能力,本輪未更改 Branding 或產品預設,待驗證,PvsI／PS 原圖,
-S01,底部,status segmentation／zoom／info,PS zoom/info 主位置与17px strip；按現有能力對位,現在 zoom 在右，PS 左；需對照主入口与既有狀態資訊,差異已觀察,PS-2.png＋current-overview.jpg,FIX_NOW
-S02,底部,document scrollbars,對應 state與16px reference；thumb為狀態派生，不固定長度,本輪未以有內容高zoom驗證,待驗證,PvsI／PS 原圖,
-X01,全域,字體／圖示／表面 token 名冊,完整列出實際元件；每類 baseline、line-height、stroke与狀態共用,目前存在 canvas9px label、SVG与字形混搭；需完整 cross-class audit,待驗證,PvsI／PS 原圖,
-X02,全域,first paint／reload／持久化狀態,首屏、穩定屏、reload分別取證；不同快取不得冒用 SHA,本輪看到部分操作後 AX 與 screenshot 有過渡差，證據須以穩定畫面為準,待驗證,PvsI／PS 原圖,
-X03,全域,能力與例外逐項帳本,只允许 FIX_NOW/THEME_OR_COLOR_OVERRIDE/CAPABILITY_ABSENT/USER_OVERRIDE,未知 scale、platform rendering、valid user state 屬證據條件，不是第五類例外,待驗證,PvsI／PS 原圖,
+﻿ID,區域,檢查項目,精確判準,本輪觀察,驗證狀態,證據,差異處置,20261001複查狀態,現行複查依據
+A01,頂端,Logo 旁文字,依 USER 保留 Logo；移除旁邊 INK／0.1 字樣,目前仍顯示 INK 0.1,差異已觀察,USER 截圖＋current-overview.jpg,FIX_NOW,"舊Logo旁文字未重現","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+A02,頂端,Menu／Options／分隔線,PS 原圖鎖定 24+1+35+1；逐條邊界量測,實測 Menu 含邊界 25；Options 35；工作區起點 y=61,數值已記錄；未整體驗收,geometry.json,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+A03,頂端,選單標籤間距、基線,逐個標籤對應 PS；記 glyph envelope、基線、字距與點擊框,不能由 font-size:12px 推導字形一致,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+A04,頂端,Options 工具上下文,選取／鋼筆／筆刷／橡皮擦／形狀／文字各自對照；高度固定,本輪只觀察鋼筆，不代表其他工具對齊,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+A05,頂端,Options 控制幾何,逐個圖示框、數值框、分隔線與間距對照,目前 quickColor 24×24；外層 23×23，需檢查是否偏心,數值已記錄；待參考量測,geometry.json,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+A06,頂端,文件標題／狀態入口,遵守真實文件能力；不做無法切換的假分頁,PS 文件 tab 為已記錄能力例外；不以新增空白列湊高度,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+M01,選單,全部應用程式 popup 顏色,同一 Light 語意色票；normal／hover／checked／disabled 同類一致,"10 個白底；視窗 rgb(56,57,59)，仍有深色／綠色選中列",差異已觀察,menu-metrics.json＋window-menu.jpg,FIX_NOW,"十一popup白底已實測；其他狀態未驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+M02,選單,popup 行高、padding、邊界,相同選單項目類別共用逐項量測值；寬度按內容,一般項目 22px、padding 4px；視窗使用另一組框架／密度,差異已觀察,menu-metrics.json,FIX_NOW,"Window框架已改；完整密度未驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+M03,選單,勾選／捷徑／子選單欄,按 PS 的 check、label、shortcut、arrow 四欄對齊,視窗以面板 icon／分類組方式呈現；需逐项對照能力與位置,待驗證,PvsI／PS 原圖,,"Window已勾選文字列；完整欄位未驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+M04,選單,面板選單、工作區 popup、工具 flyout,各類有完整名冊；同類一致，跨類依 PS 對照,只開啟外觀群組選項；其餘未逐一驗證,部分已觀察,panel-options.jpg,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+M05,選單,hover／focus／disabled／checked,每種狀態獨立截圖；不可用 normal 代替,11 個應用程式選單已開啟；未驗證全部狀態,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+M06,選單,鍵盤與關閉行为,Escape、外點、左右切換、上下移動、Enter、子選單，逐條黑箱,已用 Escape 關閉；其餘保留待驗證,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T01,工具列,單／雙欄外框,PS 原圖 72+1／39+1；共用能力與重排規則,雙欄 73px；兩種狀態已操作,數值／切換已記錄；未整體驗收,geometry.json＋tools-single.jpg,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T02,工具列,collapse strip／箭頭,PS 11px strip+1px divider；箭頭 envelope、位置、hitbox 分開,不可只驗證 strip 高度,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T03,工具列,row／column pitch、累計佔高,逐列對照；末列誤差也量測；參考 row pitch 26px、column 33px,局部 SVG 中心 y=86／112，重複間距 26；工具名冊尚未對齊,数值已記錄；未整體驗收,geometry.json,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T04,工具列,工具代表／排序／flyout,先按能力對應 PS 工具組，再固定位置與代表圖示,鋼筆、橡皮擦先出現；取樣／仿製／修復等以符號替代，整體節奏不同,差異已觀察,PvsI-1/2＋current-overview.jpg,FIX_NOW,"舊排序已變更；全組待複查","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T05,工具列,圖示輪廓與光學重量,對應工具使用與 PS 相同視覺語法；逐個輪廓、線寬、重心量測,◫／◩／⌖／♧／✚／◐／◌ 等文字字形與其他 SVG 混用,差異已觀察,DOM snapshot＋current-overview.jpg,FIX_NOW,"舊混合符號觀察已過時；逐圖示待複查","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T06,工具列,active／hover／disabled／focus,各類型同狀態對照；fill bounds 與 hitbox 分開,有 active 填色，不足以證明精確相似,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T07,工具列,前／背景色塊,PS2 鎖定 18×18，overlap 10×10；utility 位置另量,實測色塊 18×18，重疊 10×10；不表示整個色塊區已對齊,數值已記錄；未整體驗收,geometry.json,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+T08,工具列,swap／reset 與下方 utilities,依 PS 定位與圖示；支持功能歸位，無能力才例外,swap／reset 用文字字形；下方 Quick Mask／screen mode 未完成能力對位,差異已觀察,PvsI-1/2＋DOM snapshot,FIX_NOW,"swap/reset已改；完整utility待複查","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+R01,尺規,橫／直 ruler 與 corner,17px／17px／17×17；不含假文件 tab 補白,實測 17px；corner x73 y61；stage x90 y78,數值已記錄；未整體驗收,geometry.json＋rulers-on.jpg,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+R02,尺規,標字大小、方向、基線、留白,PS 原圖逐字形 envelope／baseline；不可只測 ruler 厚度,目前直尺整串文字旋轉90°，PS 原圖為直排讀法；標字細小且 source 固定9px，需分別量測字形／基線,差異已觀察,PS-2.png＋rulers-on.jpg＋web-shell.js renderDocumentRuler,FIX_NOW,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+R03,尺規,長／中／短 tick 與線寬,逐種刻度量測長度、間隔、貼邊；1 raster px 與 CSS px 分開,source 使用 7／10／13 到 canvas 底部；尚無同尺度 raster delta,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+R04,尺規,單位／原點／正負值,px／mm 狀態与标字結果一致；與指南讀值同一座標來源,Preferences 顯示 mm；ruler renderer 使用 world x/y，單位換算需黑箱確認,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+R05,尺規,zoom／pan／rotate 同步,不同縮放與平移逐狀態檢查，單位与密度不能漂移,本輪只在畫布 zoom100% 檢查；USER 圖 zoom3% 不可直接比數字,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+G01,參考線,落下的線樣式,以 PS placed 與 drag capture 分別鎖定色彩、實／虛線、厚度,目前落下的水平／垂直線是灰綠色虛線；USER 已拒絕其讀法,差異已觀察,USER 截圖＋guides-placed.jpg,FIX_NOW,"placed現細實線；精確PS樣式未驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+G02,參考線,drag preview／座標提示,依 PS horizontal／vertical drag 參考逐狀態量測；不能把 preview 當 placed,已拖出兩方向；截圖看到 X:-380.5 提示與 preview；中途 held-pointer 状态未完整取證,部分已觀察,rulers-guides.jpg,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+G03,參考線,create／move／delete／lock／show-hide,每項以實際 UI 操作與結果證明；線外觀不替代互動,本輪只操作 create；其餘未驗證,待驗證,PvsI／PS 原圖,,"水平create/move/drag-back delete已操作；其餘待驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+G04,參考線,persistent guide／smart guide／snap 區分,三者外觀与生命週期依 PS 類別區分；不得共用一種虛線代替,尚未取證 smart snap／equal spacing 狀態,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+G05,參考線,live readout 座標／單位,與 ruler、camera、guide 同一座標 authority；文字格式精確對照,不能用已存在 handler 作證明,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+P01,右側面板,expanded／collapsed 邊界,252px 參考狀態／40px collapsed 含 divider；resize 不覆蓋畫布,expanded 外框 252；已收合與展開,數值／切換已記錄；未整體驗收,geometry.json＋dock-collapsed.jpg,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+P02,右側面板,A/B/C 比例与 splitter,只在 1280×994 匹配環境檢查 269／261／384；splitter3px；其他尺寸另外記錄,本輪 viewport1363×936；tabs y73／327.921875／575.375，不可宣稱等於指定 viewport,數值已記錄；待匹配環境,geometry.json,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+P03,右側面板,tabs／active 裝飾／字距,28px band、逐 tab baseline、padding、分界與 active state 對照,band28px；當前蓝色頂線／粗體仍需 raster 對照,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+P04,右側面板,options 圖示／collapse 圖示,按 PS glyph envelope，不能使用不同字體的替代符號,options 是 ☰ 文字字形；collapse 是單角括號字形,差異已觀察,DOM snapshot＋PvsI-3,FIX_NOW,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+P05,右側面板,body padding／footer／scrollbar,逐個 panel 測 top/right/bottom/left；同類捲軸一致,Navigator footer33px但內部控制排列不同；不能推導 panel 已對齊,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+P06,右側面板,width／splitter resize 与保存,拖曳中、after、reload 狀態分别量測；保留原 authority,本輪未完成 resize／reload，保留待驗證,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+N01,Navigator,zoom row 控制順序,按 PS：比例欄位→小縮放圖示→slider→大縮放圖示；既有其他命令另歸位,目前為符合／−／slider／100%／＋，其結構与 PS 不同,差異已觀察,PvsI-2/3＋current-overview.jpg,FIX_NOW,"舊控制順序未重現","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+N02,Navigator,slider thumb／icon／數值欄,按 PS 對應輪廓、尺寸與基線；同類 slider theme 一致,Navigator 藍色圓 knob；其他 sliders 綠色，PS 是另一種輪廓,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW,"slider/icons已變更；輪廓未精測","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+N03,Navigator,preview／proxy／空狀態,以同內容、同zoom對照；thumbnail比例與 margins 分開量測,空白畫布下 preview219×149.3125；不能以無內容證明 populated proxy,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+N04,Navigator,pan／proxy drag／高zoom,真實內容的相同視圖狀態，對照 main viewport 與 proxy,本輪未創作／匯入測試內容，保留待驗證,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+L01,Layers,header controls 拓撲,filter/type→blend+opacity→lock/其餘支持屬性；逐項能力核對,opacity 在面板底部；上方是 blend+三個大按鈕，與 PS 不同,差異已觀察,PvsI-2/3＋current-overview.jpg,FIX_NOW,"opacity已上移；控制拓撲仍FIX_NOW UIR-01","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+L02,Layers,filter、lock、fill 主入口,先查現有能力；支持者移回 PS 對應位置，無能力有據例外,不可從 UI 沒顯示就判 CAPABILITY_ABSENT,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+L03,Layers,layer row 的眼睛／縮圖／名稱／鎖,PS 對應列欄位与35px pitch 分開核驗,目前用 ◉／○ 表示 visibility／lock，缺 PS 型態的縮圖欄；物件數文字擠在第二行,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW,"有眼睛縮圖；完整row狀態未驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+L04,Layers,selected／hidden／locked／long name,每個狀態獨立取證，不用單列空文件覆蓋全部,本輪只有選中空白 layer1,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+L05,Layers,footer actions 主位置,PS 中對應 action 按鈕在 footer；固定 icon envelope／pitch,目前 footer只有新增、複製、刪除；fx／mask 等在上方占大按鈕,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW,"fx/mask已footer；完整footer待驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+L06,Layers,drag ghost／insertion／drop,分別驗證拖曳中與落下後；接回既有 History,本輪未做 reorder，不引用舊 PASS,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+C01,創作面板,共用工作站控件密度,INK 專有功能採 PS 同類面板 form grammar；逐 row height／gap／label欄位,參考面板仍像 Web form；大型輸入、大按鈕與工程式標題占位,差異已觀察,PvsI-3＋current-overview.jpg,FIX_NOW,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+C02,創作面板,file picker 語言与封裝,顯示文字／按鈕形態由 INK 語意控件控制；不同 OS 不變形,Linux 顯示 Choose File／N...en，與繁中 shell 不一致,差異已觀察,current-overview.jpg,FIX_NOW,"繁中picker已觀察；跨OS未驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+C03,創作面板,Libraries／Compose／CHAT／Revision,逐 panel 擷取，labels、inputs、buttons、sliders 同類整套比對,本輪未切遍四 panel，不以 Reference 外觀代證,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+H01,其他面板,Properties／Color／Adjustments,同類 header/body/footer；支持控件按 PS 主位置,本輪未逐 panel檢查,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+H02,其他面板,History／Channels／Pages,逐 panel與空／有內容状态；History／Revision 語意分開,本輪未逐 panel檢查,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+D01,Preferences,titlebar／dialog／navigation grammar,參考 PS-3；单行title、分類列節奏、內容區、動作區；light 例外限色票,現在深色兩行 INK+偏好設定、32px類型分類列、大型模糊 backdrop；結構與 PS 不同,差異已觀察,PS-3.png＋preferences.jpg,FIX_NOW,"單行light titlebar；動作/布局仍FIX_NOW UIR-02","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+D02,Preferences,各類內容／按鈕／關閉與焦點,逐類別 normal/focus/keyboard/close；不憑外框判斷,一般／尺規分類已開啟；其餘分類未逐項操作,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+D03,Preferences,Branding preview／persist／reset,保持既有能力；不因移除主選單文字刪除設定能力,本輪未更改 Branding 或產品預設,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+S01,底部,status segmentation／zoom／info,PS zoom/info 主位置与17px strip；按現有能力對位,現在 zoom 在右，PS 左；需對照主入口与既有狀態資訊,差異已觀察,PS-2.png＋current-overview.jpg,FIX_NOW,"zoom已左移；status17px；其餘待驗證","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+S02,底部,document scrollbars,對應 state與16px reference；thumb為狀態派生，不固定長度,本輪未以有內容高zoom驗證,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+X01,全域,字體／圖示／表面 token 名冊,完整列出實際元件；每類 baseline、line-height、stroke与狀態共用,目前存在 canvas9px label、SVG与字形混搭；需完整 cross-class audit,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+X02,全域,first paint／reload／持久化狀態,首屏、穩定屏、reload分別取證；不同快取不得冒用 SHA,本輪看到部分操作後 AX 與 screenshot 有過渡差，證據須以穩定畫面為準,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
+X03,全域,能力與例外逐項帳本,只允许 FIX_NOW/THEME_OR_COLOR_OVERRIDE/CAPABILITY_ABSENT/USER_OVERRIDE,未知 scale、platform rendering、valid user state 屬證據條件，不是第五類例外,待驗證,PvsI／PS 原圖,,"本次未重新驗證；歷史觀察不可直接當現存缺陷","working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md"
