@@ -1,0 +1,193 @@
+{
+  "source": "cb210f7ed22d71bff37f63b1af53c09f1fa2fcad",
+  "active": [
+    "select"
+  ],
+  "assets": [
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/styles.css?v=0.1-ui-20261001-light4",
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/web-shell.js?v=0.1-ui-20261001-light4",
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/ui/branding-settings.js?v=0.1-ui-20261001-light4",
+    "https://thedoorw.github.io/INK-Browser-QA/product/source/src/ink.js?v=0.1-ui-20261001-light4"
+  ],
+  "rasterHidden": true,
+  "window": {
+    "background": "rgb(255, 255, 255)",
+    "borderColor": "rgb(102, 102, 102) rgb(229, 229, 229) rgb(229, 229, 229)",
+    "borderRadius": "0px 0px 3px 3px"
+  },
+  "routeChecks": [
+    {
+      "group": "smart-selection",
+      "chosen": "quickSelection",
+      "before": {
+        "active": [
+          "smart-selection"
+        ],
+        "hidden": false
+      },
+      "after": {
+        "active": [
+          "select"
+        ],
+        "hidden": true
+      }
+    },
+    {
+      "group": "sampling",
+      "chosen": "eyedropper",
+      "before": {
+        "active": [
+          "sampling"
+        ],
+        "hidden": false
+      },
+      "after": {
+        "active": [
+          "select"
+        ],
+        "hidden": true
+      }
+    },
+    {
+      "group": "healing",
+      "chosen": "healingBrush",
+      "before": {
+        "active": [
+          "healing"
+        ],
+        "hidden": false
+      },
+      "after": {
+        "active": [
+          "select"
+        ],
+        "hidden": true
+      }
+    },
+    {
+      "group": "clone",
+      "chosen": "cloneStamp",
+      "before": {
+        "active": [
+          "clone"
+        ],
+        "hidden": false
+      },
+      "after": {
+        "active": [
+          "select"
+        ],
+        "hidden": true
+      }
+    },
+    {
+      "group": "fill",
+      "chosen": "gradient",
+      "before": {
+        "active": [
+          "fill"
+        ],
+        "hidden": false
+      },
+      "after": {
+        "active": [
+          "select"
+        ],
+        "hidden": true
+      }
+    },
+    {
+      "group": "detail",
+      "chosen": "localBlur",
+      "before": {
+        "active": [
+          "detail"
+        ],
+        "hidden": false
+      },
+      "after": {
+        "active": [
+          "select"
+        ],
+        "hidden": true
+      }
+    },
+    {
+      "group": "tone",
+      "chosen": "dodge",
+      "before": {
+        "active": [
+          "tone"
+        ],
+        "hidden": false
+      },
+      "after": {
+        "active": [
+          "select"
+        ],
+        "hidden": true
+      }
+    }
+  ],
+  "nativeChecks": [
+    {
+      "active": [
+        "psBrushTool"
+      ],
+      "hidden": true
+    },
+    {
+      "active": [
+        "eraser"
+      ],
+      "hidden": true
+    },
+    {
+      "active": [
+        "pan"
+      ],
+      "hidden": true
+    },
+    {
+      "active": [
+        "select"
+      ],
+      "hidden": true,
+      "keyboard": "v"
+    }
+  ],
+  "familyChecks": [
+    {
+      "group": "draw",
+      "picked": "brush",
+      "active": [
+        "psBrushTool"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "lasso",
+      "picked": "lasso",
+      "active": [
+        "lasso"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "shape",
+      "picked": "shape:line",
+      "active": [
+        "shape"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "text",
+      "picked": "text:horizontal-tb",
+      "active": [
+        "text"
+      ],
+      "rasterHidden": true
+    }
+  ]
+}
