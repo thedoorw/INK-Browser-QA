@@ -1112,6 +1112,7 @@
     if (!app?.page?.() || !app.renderer?.viewportWorldBounds || !canvas || !proxy || !zoom || !slider) return;
     proxy.hidden = !app.documentOpen;
     zoom.disabled = slider.disabled = !app.documentOpen;
+    document.querySelector('#shellNavigatorZoomOut').disabled = document.querySelector('#shellNavigatorZoomIn').disabled = !app.documentOpen;
     if (!app.documentOpen) {
       const context = canvas.getContext('2d');
       context.clearRect(0,0,canvas.width,canvas.height);
@@ -1477,7 +1478,7 @@
     if (!state.root) return;
     const hasDocument = Boolean(app?.doc && app.documentOpen);
     state.root.dataset.documentActive = String(hasDocument);
-    document.querySelectorAll('[data-file-command="save"],[data-file-command="export"],#saveBtn,#exportBtn,[data-ui-b-command="tool:image"]').forEach(button => { button.disabled = !hasDocument; });
+    document.querySelectorAll('[data-file-command="save"],[data-file-command="export"],#saveBtn,#exportBtn,[data-ui-b-command="tool:image"],[data-ui-b-command="svg-import"],[data-ui-b-command="print"]').forEach(button => { button.disabled = !hasDocument; });
     const title = document.querySelector('#documentTabTitle');
     if (title && hasDocument) title.textContent = app.doc.title || document.querySelector('#docTitle')?.value || '未命名作品';
     const active = currentPanel();

@@ -754,7 +754,7 @@ export function installFullCapabilityControls(app){
       if(command.startsWith('snap:')){
         const kind=command.slice(5);if(kind==='enabled')app.setSnapEnabledState(!app.page().snap?.enabled);else app.setSnapCategoryState(kind,!app.page().snap?.categories?.[kind]);return;
       }
-      if(command.startsWith('workspace:'))return app.switchWorkspace(command.slice(10),{fit:false});
+      if(command.startsWith('workspace:'))return app.runWorkspaceCommand(command.slice(10));
       if(command==='external-open')return openExternalImage();
       if(command==='reference-import'){openPanel('reference');return;}
       if(command==='svg-import'){openPanel('specialist');$('#svgStudioInput')?.click();return;}

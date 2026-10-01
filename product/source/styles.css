@@ -2519,7 +2519,7 @@ kbd,
   #pagesToggle,#inspectorToggle.legacy-inspector-toggle{display:none!important}
 
   .menu-strip{height:var(--menu-h);background:var(--ink-ui-surface);border-bottom:1px solid var(--ink-ui-border)}
-  .topbar{top:var(--menu-h);height:var(--options-h);background:var(--ink-ui-surface-subtle);border-bottom:1px solid var(--ink-ui-border)}
+  .topbar{top:var(--menu-h);height:var(--options-h);background:var(--ink-ui-surface);border-bottom:1px solid var(--ink-ui-border)}
   .application-menus{height:100%}
   .application-menu>button{height:100%;padding:0 7px;border-radius:0}
   .application-command-menu{
@@ -3735,5 +3735,3 @@ html,body,#app{background:#e7e7e7}
  .layer-bottom-toolbar #addLayerBtn{order:3}
  .layer-bottom-toolbar #deleteLayerBtn{order:4}
 }
-
-@media(min-width:761px){.branding-settings-dialog{width:824px!important;max-width:calc(100vw - var(--tool-w) - var(--ruler-left-w) - var(--active-panel-w) - 24px)!important}}
