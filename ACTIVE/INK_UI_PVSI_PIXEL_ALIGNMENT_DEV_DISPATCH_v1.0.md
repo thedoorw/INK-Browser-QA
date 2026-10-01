@@ -5,6 +5,10 @@ DATE: 2026-09-30
 TASK: INK-UI-PVSI-PIXEL-ALIGNMENT-001
 OWNER: INK DIRECT UI MR / DEV EXECUTOR
 
+## Current clarification — 2026-10-01
+
+Master Guide exact-fidelity clarification supersedes former 1 CSS px acceptance wording. Current recheck/repair queue: `working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md`. Preserve existing authorized scope; queue UIR-01–05 as bounded corrections, UIR-02 after USER resolves action semantics. No Actions or new Runtime gate authorized.
+
 ## 1. Mission
 
 Use the three USER-selected PvsI comparison images as the direct visual measurement authority and revise current INK so that shared Photoshop/INK UI geometry, structure and density align at pixel level.
@@ -43,11 +47,11 @@ The target is therefore:
 
 ```text
 shared structure / position / dimensions / spacing / density / alignment
-= exact where possible
-= <= 1 CSS px residual for shared geometric edges and repeated control rhythm
+= target delta 0 in matched reference environment/state
+= no automatic 1 CSS px waiver; record measurement uncertainty separately
 ```
 
-Any larger residual requires explicit disposition.
+Every observed residual requires explicit disposition; measurement uncertainty is an evidence condition, not an exception.
 
 ## 3. Mandatory preparation
 
@@ -282,12 +286,12 @@ A single outlier remains a defect.
 Unless a USER/theme/capability exception applies:
 
 ```text
-major shared structural edges      target 0 px / max residual 1 CSS px
-repeated control dimensions        target 0 px / max residual 1 CSS px
-row pitch / padding / gap          target 0 px / max residual 1 CSS px
-icon box / optical centering       max residual 1 CSS px
+major shared structural edges      target 0 px / no automatic residual waiver
+repeated control dimensions        target 0 px / no automatic residual waiver
+row pitch / padding / gap          target 0 px / no automatic residual waiver
+icon box / optical centering       no automatic residual waiver
 splitter / divider thickness       exact where integer geometry permits
-panel group proportions            <= 1 CSS px at normalized reference viewport
+panel group proportions            target 0 px at matched reference viewport
 ```
 
 Typography rasterization itself is not judged by raw-pixel identity, but font size, weight role, line-height and baseline geometry must be measured.
