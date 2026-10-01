@@ -290,7 +290,7 @@ Primary reference ecosystems:
 ```text
 Figma
 Adobe
-Canva — next candidate; pending connection and evidence selection
+Canva
 ```
 
 Current sequence:
@@ -311,7 +311,7 @@ proven GPT / agent examples and operating instructions
 → selected cases published to the portfolio
 ```
 
-The current verified evidence set is **30 Figma / Adobe qualification and supporting cases**. Canva is the next candidate ChatGPT plugin and is not counted until it is connected, analyzed and assigned evidence cases. The immediate purpose is not portfolio volume; it is to derive the first complete practical CHAT × INK qualification surface and expose connector/control gaps before execution expands.
+The current evidence set is **40 Figma / Adobe / Canva qualification and supporting cases**. Canva was selected as the third comparison ecosystem because it adds existing-design retrieval, text/image extraction, image→editable-design conversion, URL import, Brand Kit constraints, comment-driven revision and bulk variants. The immediate purpose is not portfolio volume; it is to derive the first complete practical CHAT × INK qualification surface and expose connector/control gaps before execution expands.
 
 The long-term target of **100+ qualified mature works** remains, but aggressive candidate expansion is deferred until qualification direction and coverage gaps are visible.
 
