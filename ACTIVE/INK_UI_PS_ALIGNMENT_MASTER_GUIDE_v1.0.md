@@ -780,3 +780,7 @@ The current rendered sweep identifies the dark Window popup, mixed glyph/SVG too
 Theoretical flex-ratio residuals are not rendered residuals. SOURCE_COMPUTED and RENDERED_MEASURED must be distinct evidence labels. PLATFORM_RENDERING, REFERENCE_SCALE_LIMIT and VALID_USER_STATE describe evidence conditions; they do not create additional delta dispositions.
 
 This checklist is a supervision/modification plan. It does not alter the active executor task or independently authorize product mutation.
+
+## 34. Current-state reconciliation — 2026-10-01
+
+See `working/INK_UI_CURRENT_STATE_RECHECK_AND_REPAIR_QUEUE_20261001.md` for live recheck and bounded repair queue. Section33 rendered defects describe 2026-09-30, not an evergreen current defect list. Dark Window, old Navigator order, Layers opacity/footer/thumbnail defects and two-line Preferences titlebar were not reproduced in the 2026-10-01 observed page. Only observed subitems are reconciled; full states remain unverified. Exact-fidelity rule still targets delta=0. UIR-01–05 preserve all existing capability and require appropriate rendered/interaction evidence before closure.
