@@ -201,7 +201,7 @@ export function installFullCapabilityControls(app){
       document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
     }
     const shortcuts=[
-      ['psObjectSelect','物件選取','i-select',()=>activateTool('objectSelection')],
+      ['psObjectSelect','物件選取','i-object-select',()=>activateTool('objectSelection')],
       ['psCropTool','裁切影像…','i-crop',()=>openDialog('image-crop')],
       ['psFrameTool','框架選取物件','i-frame',()=>app.creativeWorkspace?.runComposeAction?.('frame')],
       ['psPathEditTool','編輯選取路徑','i-path',()=>app.enterPathEdit?.()]
@@ -427,6 +427,9 @@ export function installFullCapabilityControls(app){
   }
 
   function refreshPanels(){
+    const crop=$('#psCropTool');if(crop)crop.disabled=!selectedFound(app,object=>object.type==='image'&&object.rasterState?.colorRaster);
+    const frame=$('#psFrameTool');if(frame)frame.disabled=!app.selection?.length;
+    const path=$('#psPathEditTool');if(path)path.disabled=!selectedFound(app,object=>object.type==='path');
     const found=selectedFound(app),object=found?.object,stackTarget=object?.type==='image'?object:app.layer();
     const blend=$('#uiBBlendMode');if(blend)blend.value=object?.blendMode||'source-over';
     const layerLock=$('[data-layer-action="toggle-lock"]');if(layerLock){const locked=Boolean(app.layer()?.locked);layerLock.setAttribute('aria-pressed',String(locked));layerLock.classList.toggle('active',locked);}

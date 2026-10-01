@@ -3200,7 +3200,8 @@ button,input,select,textarea{font-family:var(--ui-font);color:inherit}
 .preferences-category #renderEngineCard{display:block!important;border:0;padding:0;background:transparent}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ink-ui-focus);outline-offset:1px}
 @media(min-width:761px){
-  .topbar{grid-template-columns:minmax(0,1fr) auto}
+  .topbar{grid-template-columns:30px minmax(0,1fr)}
+  .topbar>.file-group{display:none}
   .topbar-leading{display:none!important}
   .topbar-right #fullscreenToggle{display:none!important}
   .contextual-control-host button,.contextual-options select,.contextual-options input:not([type="range"]):not([type="checkbox"]){height:var(--ui-control-height);min-height:var(--ui-control-height)}
@@ -3725,4 +3726,3 @@ html,body,#app{background:#e7e7e7}
 }
 
 @media(min-width:761px){.branding-settings-dialog{width:824px!important;max-width:calc(100vw - var(--tool-w) - var(--ruler-left-w) - var(--active-panel-w) - 24px)!important}}
-

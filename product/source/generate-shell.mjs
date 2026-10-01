@@ -24,8 +24,8 @@ function assembleCapabilityMenus(html) {
   return html;
 }
 const targets = [
-  ['index.html', 'Web', 'manifest.webmanifest', '<span class="web-surface-badge">WEB</span>', '<script type="module" src="src/ink.js?v=0.1-ui-20261001-light1"></script>'],
-  ['index-standalone.html', 'Portable', 'manifest-portable.webmanifest', '', '<script src="dist/ink.compat.js?v=0.1-ui-20261001-light1"></script>']
+  ['index.html', 'Web', 'manifest.webmanifest', '<span class="web-surface-badge">WEB</span>', '<script type="module" src="src/ink.js?v=0.1-ui-20261001-light2"></script>'],
+  ['index-standalone.html', 'Portable', 'manifest-portable.webmanifest', '', '<script src="dist/ink.compat.js?v=0.1-ui-20261001-light2"></script>']
 ];
 
 for (const [file, delivery, manifest, badge, runtime] of targets) {
