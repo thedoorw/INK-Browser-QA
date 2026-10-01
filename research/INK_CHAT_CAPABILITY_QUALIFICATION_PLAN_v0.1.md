@@ -333,6 +333,26 @@ Recipe / Program Import / Creative Memory special semantics
 
 This is a planning-coverage result, not a Runtime qualification result.
 
+## 9.1 Mature-tool autonomy pretest dispatch
+
+While INK UI remains under active reconstruction, external mature-tool autonomy testing may proceed independently.
+
+Current dispatch:
+
+```text
+TASK = MTB-FIGMA-BATCH-01
+ECOSYSTEM = FIGMA
+CASES = F01 / F08 / F09 / F10 / F14
+BRANCH = work/mature-tool-benchmark-figma-batch-01
+ISSUE = #108
+STATUS = AUTHORIZED / DEV_NOT_STARTED
+```
+
+Workpack:
+`working/INK_MATURE_TOOL_BENCHMARK_FIGMA_BATCH_01_DEV_WORKPACK_v0.1.md`
+
+The DEV self-verifies and self-corrects each case, records USER intervention count and autonomy classification, then stops for benchmark review. Accepted results are promoted to the master qualification record only after review.
+
 ## 10. Next action
 
 Do not begin INK Runtime qualification while the UI program is still changing.
