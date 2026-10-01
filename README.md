@@ -281,11 +281,11 @@ New-window production-line MR handoff:
 
 The corrected direction is artifact-driven rather than claim-driven: source/Runtime/checklist PASS cannot substitute for assembled/rendered/interacted product evidence.
 
-## Creative reproduction benchmark
+## CHAT capability qualification → creative reproduction benchmark
 
-The next creative-validation direction is to test INK against mature finished works rather than rely only on isolated capability claims.
+The creative-validation direction now has a mandatory qualification gate before mature-work reproduction.
 
-Primary source ecosystems:
+Primary reference ecosystems:
 
 ```text
 Figma
@@ -293,28 +293,33 @@ Penpot
 Adobe
 ```
 
-Phase 1 goal:
+Current sequence:
 
 ```text
-mature finished work / tutorial
-→ CHAT inspects the target
-→ CHAT operates authoritative INK capabilities
+proven GPT / agent examples and operating instructions
+→ extract operation patterns
+→ map selected cases to INK capabilities
+→ identify overlap / unique coverage / missing coverage
+→ define CHAT × INK qualification tests
+→ Gate 1 isolated capability qualification
+→ Gate 2 combined-task qualification
+→ mature-work analysis
+→ CHAT writes an INK-specific reproduction procedure
+→ autonomous INK reproduction
 → Preview / compare / correct
-→ History / Revision / operation evidence
-→ finished reproduction
-→ classify real capability gaps
-→ bounded INK correction when authorized
-→ rerun
-→ publish the case/result to a GitHub portfolio
+→ History / Revision / provenance evidence
+→ selected cases published to the portfolio
 ```
 
-The first major catalog target is **100+ qualified mature cases** across concrete work categories such as poster, logo/brand mark, typography/layout, pattern/print, vector illustration, packaging, composite, social/marketing graphics, icon/symbol systems and related complete works.
+The current initial evidence set is **33 selected Figma / Penpot / Adobe cases**. Their immediate purpose is not portfolio volume; it is to derive the first complete practical CHAT × INK qualification surface and expose connector/control gaps before execution expands.
 
-The benchmark set as a whole, not every individual case, should progressively cover the practical INK capability surface.
+The long-term target of **100+ qualified mature works** remains, but aggressive candidate expansion is deferred until qualification direction and coverage gaps are visible.
 
-Phase 1 specifically tests whether CHAT can actually use INK to reproduce mature work. Learning and generalizing the original creator's methodology is a later phase.
+Qualification plan:
 
-Program specification:
+`research/INK_CHAT_CAPABILITY_QUALIFICATION_PLAN_v0.1.md`
+
+Reproduction benchmark:
 
 `research/INK_CREATIVE_REPRODUCTION_BENCHMARK_v0.1.md`
 
