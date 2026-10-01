@@ -13,11 +13,14 @@ Old measurement, workpack and audit files remain provenance/evidence. Normal imp
 
 Normal read order:
 
-1. this Master Guide;
-2. the current ACTIVE UI dispatch/work order;
-3. only the specific provenance/evidence file named by this guide when exact measurement or historical proof is needed.
+1. `ACTIVE/INK_UI_PS_INSTANCE_DATASET_v1.0.md` — single Photoshop measurement/reference dataset;
+2. `ACTIVE/INK_UI_MICRO_MODULE_GRAMMAR_v1.0.md` — INK shared micro-UI rules + application map;
+3. this Master Guide — Photoshop→INK structure/placement authority;
+4. the current ACTIVE UI dispatch/work order.
 
-Generic reusable rules are in:
+Git history is provenance. Do not reconstruct current Photoshop measurements from superseded split measurement files.
+
+Generic reusable inspection rules remain in:
 
 `governance/UI_REFERENCE_DRIVEN_DESIGN_AND_INSPECTION_STANDARD_v1.0.md`
 
@@ -503,29 +506,19 @@ Current work is governed by:
 
 The former `ACTIVE/INK_UI_PVSI_PIXEL_ALIGNMENT_DEV_DISPATCH_v1.0.md` is superseded and must not be executed. Its three PvsI comparison assets were deleted by USER on 2026-10-01 after the INK interface changed. This Master Guide remains the durable design/inspection authority.
 
-## 27. Provenance map — older files
+## 27. Consolidated Photoshop measurement authority
 
-These files remain useful evidence but are no longer the normal entry point:
+Photoshop numeric/reference data is now centralized in:
 
-### Measurement / reference
-- `working/INK_UI_FINAL_PS_REFERENCE_MEASUREMENT_v1.0.md` — macro geometry, double/single Tools, right dock/panel stack measurements.
-- `working/INK_UI_PS_ACTIVE_DOCUMENT_MEASUREMENT_v0.1.md` — active-document/rulers/Navigator/History measurements.
-- `working/INK_UI_PS_INTERACTION_DETAIL_MEASUREMENT_v0.1.md` — guide drag, Layers reorder, Navigator interaction evidence.
-- `working/INK_UI_PS_PANEL_AND_STATUS_DETAIL_SPEC_v0.1.md` — panel tabs/options/stacking/status grammar.
-- `working/INK_UI_PS_FINE_DETAIL_STANDARD_v1.0.md` — detailed visual roles and micro-geometry.
-- `working/INK_UI_PS_LIGHT_THEME_WEB_REFERENCE_v0.1.md` — light-theme evidence/roles.
-- `working/INK_UI_PS_REFERENCE_CAPTURE_AND_MEASUREMENT_PLAN_v0.1.md` — reference-capture inventory and closure history.
+`ACTIVE/INK_UI_PS_INSTANCE_DATASET_v1.0.md`
 
-### Architecture / placement
-- `working/INK_UI_MENU_TOOLBAR_PANEL_ARCHITECTURE_v1.0.md` — menu/tool/panel primary-home architecture.
-- `working/INK_UI_FULL_CAPABILITY_PLACEMENT_MATRIX_v1.0.md` — PUI/capability placement, not proof of implementation.
+The former split shell, active-document, interaction-detail, fine-detail and capture-plan files were migration sources only. Their provenance remains recoverable through Git history and they are not normal implementation inputs.
 
-### Historical workpacks
-- `working/INK_UI_A_PHOTOSHOP_SHELL_PANELS_DEV_WORKPACK_v1.0.md`
-- `working/INK_UI_C_PHOTOSHOP_FIDELITY_CLOSURE_DEV_WORKPACK_v1.0.md`
+INK micro-level application rules are centralized in:
 
-### Historical audit
-- `working/INK_UI_FINAL_AI_COMPLETION_CHECKLIST_v1.0.md` — historical requirement inventory; prior PASS labels do not override current actual-page mismatch.
+`ACTIVE/INK_UI_MICRO_MODULE_GRAMMAR_v1.0.md`
+
+Do not copy measurements back into multiple active documents.
 
 ## 28. Historical caution
 
