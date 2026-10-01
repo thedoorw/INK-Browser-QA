@@ -1,5 +1,36 @@
 # INK Current Work Order
 
+## Current UI micro-module normalization — 2026-10-01
+
+USER completed the current visual findings set and authorized one consolidated DEV normalization pass.
+
+Authoritative references:
+- `ACTIVE/INK_UI_PS_INSTANCE_DATASET_v1.0.md`
+- `ACTIVE/INK_UI_MICRO_MODULE_GRAMMAR_v1.0.md`
+- `ACTIVE/INK_UI_PS_ALIGNMENT_MASTER_GUIDE_v1.0.md`
+
+Current bounded execution:
+- `ACTIVE/INK_UI_MICRO_MODULE_NORMALIZATION_DEV_DISPATCH_v1.0.md`
+
+Execution is system-first, not patch-first:
+
+```text
+shared tokens/primitives
+→ migrate applicable UI classes
+→ remove superseded local rules
+→ verify rendered + interaction states
+→ USER review
+```
+
+Technical-debt guard:
+- no new `!important`;
+- no new duplicate state authority;
+- no new breakpoint family without escalation;
+- no one-off covered gray/control/slider/scrollbar implementation when the shared grammar applies;
+- obsolete local rules must be removed in the same pass.
+
+The current ten USER findings are incorporated into the Micro-Module Grammar and DEV dispatch. Product completion is not implied.
+
 ## Current USER repair execution — 2026-10-01
 USER explicitly requested repairing discussed/found UI defects before researching Photoshop modular standards. Bounded product repairs published at 08180aa001463ea623a4ad45c9aab5d0dd0be509. [Current repair result](../working/INK_UI_REPAIR_RESULT_20261001.md) supersedes earlier NOT_EXECUTED/NONE statements for this batch; older checkpoints remain history, not present PASS evidence.
 Finite document/no-document workspace, populated Preferences categories, contrast/alignment, top-strip color, SVG structure and menu cleanup received scoped isolated-preview checks. UIR-01 erroneous effect-filter/search-filter equivalence withdrawn. Preferences deferred action semantics and full PS fidelity remain open. Official cached-session update activation was auto-review rejected; no bypass. Photoshop modular-system research follows this concrete USER review.
