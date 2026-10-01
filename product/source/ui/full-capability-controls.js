@@ -201,7 +201,7 @@ export function installFullCapabilityControls(app){
       document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
     }
     const shortcuts=[
-      ['psObjectSelect','物件選取','i-object-select',()=>activateTool('objectSelection')],
+      ['psObjectSelect','影像物件選取','i-object-select',()=>activateTool('objectSelection')],
       ['psCropTool','裁切影像…','i-crop',()=>openDialog('image-crop')],
       ['psFrameTool','框架選取物件','i-frame',()=>app.creativeWorkspace?.runComposeAction?.('frame')],
       ['psPathEditTool','編輯選取節點','i-path',()=>{const found=selectedFound(app);if(found?.object.type==='stroke')app.enterStrokeEdit?.();else app.enterPathEdit?.();}]
@@ -268,7 +268,8 @@ export function installFullCapabilityControls(app){
     }else if(tool==='gradient'&&selectedFound(app,object=>object.type==='path')){
       raster.clearTool();app.setTool('select');openDialog('gradient-editor');
     }else if(UI_B_RASTER_TOOL_IDS.has(tool)){
-      raster.setTool(tool);
+      state.switchingRaster = true;
+      try { raster.setTool(tool); } finally { state.switchingRaster = false; }
     }else if(['blender','smudge'].includes(tool)){
       raster.clearTool();app.setTool('select');
       openPanel('specialist');
@@ -277,6 +278,7 @@ export function installFullCapabilityControls(app){
     }else if(['pen','pencil','marker','brush','airbrush','lasso','image'].includes(tool)){
       raster.clearTool();app.setTool(tool);
     }else raster.clearTool();
+    state.activeCapabilityTool=tool;
     $$('.ui-b-tool-group').forEach(button=>button.classList.toggle('active',UI_B_TOOL_GROUPS.find(group=>group.id===button.dataset.uiBToolGroup)?.tools.some(([id])=>id===tool)));
     app.refreshToolUI?.();
     refreshContextOptions();
@@ -813,6 +815,11 @@ export function installFullCapabilityControls(app){
     }
   }
   function installLifecycleRefresh(){
+    const nativeSetTool=app.setTool.bind(app);
+    app.setTool=function(tool){
+      if(!state.switchingRaster){if(raster.activeTool())raster.clearTool();state.activeCapabilityTool=null;}
+      const result=nativeSetTool(tool);refreshContextOptions();return result;
+    };
     const originalToolUI=app.refreshToolUI.bind(app);
     app.refreshToolUI=function(){const result=originalToolUI();if(app.tool==='brush'){const draw=$('#drawToolButton');draw?.classList.remove('active');if(draw)draw.dataset.tool='pen';$('#drawToolUse')?.setAttribute('href','#i-pen');const label=$('#drawToolLabel');if(label)label.textContent='鋼筆';}const activeRaster=raster.activeTool();if(activeRaster){$$('.tool-rail .tool-button,.tool-rail .tool-action').forEach(node=>node.classList.remove('active'));const group=UI_B_TOOL_GROUPS.find(item=>item.tools.some(([id])=>id===activeRaster));const target=activeRaster==='objectSelection'?$('#psObjectSelect'):$('[data-ui-b-tool-group="'+group?.id+'"]');target?.classList.add('active');}else $('#psObjectSelect')?.classList.remove('active');return result;};
     const originalLayers=app.refreshLayers.bind(app);

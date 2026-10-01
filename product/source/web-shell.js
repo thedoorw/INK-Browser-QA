@@ -823,7 +823,8 @@
       const point = app.renderer?.worldToScreen?.(
         guide.orientation === 'vertical' ? { x: guide.position, y: 0 } : { x: 0, y: guide.position }
       );
-      return guide.orientation === 'vertical' ? point?.x : point?.y;
+      const rect = stageNode.getBoundingClientRect();
+      return guide.orientation === 'vertical' ? point?.x + rect.left : point?.y + rect.top;
     };
     const hitGuide = event => {
       let best = null;
@@ -871,7 +872,8 @@
     const end = event => {
       if (!drag) return;
       const current = drag;
-      const commit = current.inside && Number.isFinite(current.value);
+      const cancelled = event?.type === 'pointercancel';
+      const commit = !cancelled && current.inside && Number.isFinite(current.value);
       drag = null;
       preview.hidden = true;
       readout.hidden = true;
@@ -880,7 +882,7 @@
       globalThis.removeEventListener('pointercancel', end, true);
       if (current.source === 'ruler') {
         if (commit) app.addGuide?.({ orientation: current.orientation, position: current.value });
-      } else if (current.source === 'placed') {
+      } else if (!cancelled && current.source === 'placed') {
         if (commit) app.moveGuide?.(current.id, current.value);
         else app.removeGuide?.(current.id);
       }

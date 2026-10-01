@@ -70,14 +70,14 @@ svg{display:block;width:20px;height:20px;fill:none;stroke:currentColor;stroke-wi
 
 .chrome-home{width:30px;height:28px;min-width:30px;padding:5px;display:grid;place-items:center;border:0;border-radius:0;background:transparent;color:var(--ink-ui-text-muted)}
 .chrome-home svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.window-visual-controls{margin-left:auto;align-self:flex-start;display:flex;height:19px;background:#535353;color:#a8a8a8;border-left:1px solid #636363;border-bottom:1px solid #636363}
-.window-visual-controls button{position:relative;width:28px;height:18px;padding:0;display:grid;place-items:center;border:0;border-right:1px solid #636363;border-radius:0}
+.window-visual-controls{margin-left:auto;align-self:flex-start;display:flex;height:19px;background:var(--ink-ui-surface);color:var(--ink-ui-text-muted);border:1px solid var(--ink-ui-border);border-top:0;border-radius:0 0 3px 3px;overflow:hidden}
+.window-visual-controls button{position:relative;width:28px;height:18px;padding:0;display:grid;place-items:center;border:0;border-right:1px solid var(--ink-ui-border);border-radius:0}
 .window-visual-controls button:nth-child(2){width:27px}
-.window-visual-controls button:last-child{width:47px}
+.window-visual-controls button:last-child{width:47px;border-right:0}
 .window-visual-controls svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5}
 .window-visual-controls button:first-child svg{stroke-width:3}
 .app .chrome-home:disabled{opacity:1;background:transparent;color:var(--ink-ui-text-muted)}
-.app .window-visual-controls button:disabled{opacity:1;background:#535353;color:#a8a8a8}
+.app .window-visual-controls button:disabled{opacity:1;background:transparent;color:var(--ink-ui-text-muted)}
 @media(max-width:760px){.chrome-home,.window-visual-controls{display:none}}
 .topbar{position:absolute;z-index:80;inset:0 0 auto 0;height:var(--topbar-h);display:grid;grid-template-columns:minmax(280px,1fr) auto minmax(280px,1fr);align-items:center;padding:0 14px;border-bottom:1px solid var(--line);box-shadow:0 1px 0 rgba(255,255,255,.75)}
 .topbar-leading,.file-group,.history-group{display:flex;align-items:center;gap:6px;min-width:0}
