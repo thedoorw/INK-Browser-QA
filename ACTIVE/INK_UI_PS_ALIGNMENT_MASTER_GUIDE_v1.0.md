@@ -134,9 +134,9 @@ Rules:
 
 ### 7.1 Tools collapse grammar
 
-Left Tools collapse/expand uses a narrow side/control strip with one small centered arrow/chevron.
+Left Tools collapse/expand uses a narrow side/control strip with the Photoshop-reference compact centered **double-chevron** collapse/expand glyph.
 
-This is a region-state control, not an ordinary tool button.
+This is a region-state control, not an ordinary tool button. Do not substitute a Unicode text glyph.
 
 ## 8. Global foreground/background color system
 
@@ -209,7 +209,7 @@ Canvas/workspace reflows; expanded panels do not simply cover the work area.
 
 ### 10.1 Right collapse grammar
 
-Expanded panel stack ↔ collapsed icon dock uses the same narrow-strip/centered-arrow language as the left Tools state control.
+Expanded panel stack ↔ collapsed icon dock uses the same narrow-strip/centered **double-chevron** language as the left Tools state control.
 
 Collapsed reference width:
 
