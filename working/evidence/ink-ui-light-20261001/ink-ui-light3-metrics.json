@@ -1,0 +1,291 @@
+{
+  "arrows": [
+    {
+      "color": "rgb(226, 226, 226)",
+      "height": 11
+    },
+    {
+      "color": "rgb(226, 226, 226)",
+      "height": 12
+    },
+    {
+      "color": "rgb(226, 226, 226)",
+      "height": 12
+    }
+  ],
+  "assets": [
+    "styles.css?v=0.1-ui-20261001-light3",
+    "web-shell.js?v=0.1-ui-20261001-light3",
+    "ui/branding-settings.js?v=0.1-ui-20261001-light3",
+    "src/ink.js?v=0.1-ui-20261001-light3"
+  ],
+  "menu": [
+    {
+      "checked": "true",
+      "panel": "navigator"
+    },
+    {
+      "checked": "true",
+      "panel": "properties"
+    },
+    {
+      "checked": "true",
+      "panel": "color"
+    },
+    {
+      "checked": "false",
+      "panel": "adjustments"
+    },
+    {
+      "checked": "false",
+      "panel": "specialist"
+    },
+    {
+      "checked": "true",
+      "panel": "libraries"
+    },
+    {
+      "checked": "true",
+      "panel": "reference"
+    },
+    {
+      "checked": "true",
+      "panel": "compose"
+    },
+    {
+      "checked": "true",
+      "panel": "chat"
+    },
+    {
+      "checked": "true",
+      "panel": "revision"
+    },
+    {
+      "checked": "true",
+      "panel": "layers"
+    },
+    {
+      "checked": "true",
+      "panel": "history"
+    },
+    {
+      "checked": "true",
+      "panel": "channels"
+    },
+    {
+      "checked": "true",
+      "panel": "pages"
+    }
+  ],
+  "menuBox": {
+    "padding": "4px",
+    "row": 22,
+    "width": 196
+  },
+  "panes": [
+    {
+      "firstTag": "LABEL",
+      "pane": "reference"
+    },
+    {
+      "firstTag": "DIV",
+      "pane": "compose"
+    },
+    {
+      "firstTag": "DIV",
+      "pane": "chat"
+    },
+    {
+      "firstTag": "LABEL",
+      "pane": "revision"
+    }
+  ],
+  "splitters": [
+    {
+      "border": "0px none rgb(38, 38, 38)",
+      "color": "rgb(229, 229, 229)",
+      "height": 1
+    },
+    {
+      "border": "0px none rgb(38, 38, 38)",
+      "color": "rgb(229, 229, 229)",
+      "height": 1
+    }
+  ],
+  "tabs": [
+    {
+      "border": "0px none rgb(34, 34, 34)",
+      "shadow": "none",
+      "text": "導覽器"
+    },
+    {
+      "border": "0px none rgb(34, 34, 34)",
+      "shadow": "none",
+      "text": "參考"
+    },
+    {
+      "border": "0px none rgb(34, 34, 34)",
+      "shadow": "none",
+      "text": "圖層"
+    }
+  ],
+  "tools": [
+    {
+      "height": 26,
+      "id": "select",
+      "width": 31,
+      "x": 4,
+      "y": 76
+    },
+    {
+      "height": 26,
+      "id": "psObjectSelect",
+      "width": 31,
+      "x": 37,
+      "y": 76
+    },
+    {
+      "height": 26,
+      "id": "lasso",
+      "width": 31,
+      "x": 4,
+      "y": 102
+    },
+    {
+      "height": 26,
+      "id": "smart-selection",
+      "width": 31,
+      "x": 37,
+      "y": 102
+    },
+    {
+      "height": 26,
+      "id": "psCropTool",
+      "width": 31,
+      "x": 4,
+      "y": 128
+    },
+    {
+      "height": 26,
+      "id": "psFrameTool",
+      "width": 31,
+      "x": 37,
+      "y": 128
+    },
+    {
+      "height": 26,
+      "id": "sampling",
+      "width": 31,
+      "x": 4,
+      "y": 154
+    },
+    {
+      "height": 26,
+      "id": "healing",
+      "width": 31,
+      "x": 37,
+      "y": 154
+    },
+    {
+      "height": 26,
+      "id": "psBrushTool",
+      "width": 31,
+      "x": 4,
+      "y": 180
+    },
+    {
+      "height": 26,
+      "id": "clone",
+      "width": 31,
+      "x": 37,
+      "y": 180
+    },
+    {
+      "height": 26,
+      "id": "eraser",
+      "width": 31,
+      "x": 4,
+      "y": 206
+    },
+    {
+      "height": 26,
+      "id": "fill",
+      "width": 31,
+      "x": 37,
+      "y": 206
+    },
+    {
+      "height": 26,
+      "id": "detail",
+      "width": 31,
+      "x": 4,
+      "y": 232
+    },
+    {
+      "height": 26,
+      "id": "tone",
+      "width": 31,
+      "x": 37,
+      "y": 232
+    },
+    {
+      "height": 26,
+      "id": "drawToolButton",
+      "width": 31,
+      "x": 4,
+      "y": 258
+    },
+    {
+      "height": 26,
+      "id": "psPathEditTool",
+      "width": 31,
+      "x": 37,
+      "y": 258
+    },
+    {
+      "height": 26,
+      "id": "text",
+      "width": 31,
+      "x": 4,
+      "y": 284
+    },
+    {
+      "height": 26,
+      "id": "shape",
+      "width": 31,
+      "x": 37,
+      "y": 284
+    },
+    {
+      "height": 26,
+      "id": "pan",
+      "width": 31,
+      "x": 4,
+      "y": 310
+    },
+    {
+      "height": 26,
+      "id": "psZoomControls",
+      "width": 31,
+      "x": 37,
+      "y": 310
+    }
+  ],
+  "url": "https://thedoorw.github.io/INK-Browser-QA/product/source/",
+  "viewport": {
+    "height": 936,
+    "width": 1363
+  },
+  "zoom": {
+    "nav": "100%",
+    "status": "100%"
+  },
+  "rangeGeometry": {
+    "sourceContract": {
+      "trackCssPx": 2,
+      "roundThumbCssPx": 9,
+      "navigatorThumbCssPx": 10
+    },
+    "renderEvidence": "ink-ui-light3-overview.jpg; visual verification only, pseudo-element getComputedStyle was not reliable in this browser bridge"
+  }
+}
