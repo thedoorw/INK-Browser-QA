@@ -1,0 +1,1139 @@
+{
+  "source": "418a360d138f0a6bad50ac65dee390e4585a4c53",
+  "before": {
+    "advanced": true,
+    "elements": [
+      {
+        "cls": "application-menus",
+        "id": "applicationMenus",
+        "rect": [
+          28,
+          0,
+          542,
+          24
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(42, 42, 42)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "window-visual-controls",
+        "id": "",
+        "rect": [
+          1259,
+          0,
+          104,
+          19
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "1px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "contextual-options glass-surface",
+        "id": "contextualOptions",
+        "rect": [
+          34,
+          25,
+          1325,
+          35
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "",
+        "rect": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "none",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button emphasis active",
+        "id": "",
+        "rect": [
+          4,
+          76,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(238, 238, 238)",
+          "rgb(59, 99, 251)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psObjectSelect",
+        "rect": [
+          37,
+          76,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "",
+        "rect": [
+          4,
+          102,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          102,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psCropTool",
+        "rect": [
+          4,
+          128,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(244, 244, 244)",
+          "rgb(117, 117, 117)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psFrameTool",
+        "rect": [
+          37,
+          128,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(244, 244, 244)",
+          "rgb(117, 117, 117)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          4,
+          154,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          154,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "psBrushTool",
+        "rect": [
+          4,
+          180,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          180,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "",
+        "rect": [
+          4,
+          206,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          206,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          4,
+          232,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          232,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "drawToolButton",
+        "rect": [
+          4,
+          258,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psPathEditTool",
+        "rect": [
+          37,
+          258,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(244, 244, 244)",
+          "rgb(117, 117, 117)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "",
+        "rect": [
+          4,
+          284,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "",
+        "rect": [
+          37,
+          284,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "",
+        "rect": [
+          4,
+          310,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action ps-zoom-controls",
+        "id": "psZoomControls",
+        "rect": [
+          37,
+          310,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-region",
+        "id": "",
+        "rect": [
+          1112,
+          73,
+          251,
+          253.109375
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-splitter",
+        "id": "",
+        "rect": [
+          1112,
+          326.109375,
+          251,
+          1
+        ],
+        "style": [
+          "rgb(229, 229, 229)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "block",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-region",
+        "id": "",
+        "rect": [
+          1112,
+          327.109375,
+          251,
+          245.578125
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-splitter",
+        "id": "",
+        "rect": [
+          1112,
+          572.6875,
+          251,
+          1
+        ],
+        "style": [
+          "rgb(229, 229, 229)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "block",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-region active",
+        "id": "",
+        "rect": [
+          1112,
+          573.6875,
+          251,
+          361.3125
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      }
+    ],
+    "glyphs": 0
+  },
+  "after": {
+    "advanced": false,
+    "assets": [
+      "https://thedoorw.github.io/INK-Browser-QA/product/source/styles.css?v=0.1-ui-20261001-debt1",
+      "https://thedoorw.github.io/INK-Browser-QA/product/source/web-shell.js?v=0.1-ui-20261001-debt1",
+      "https://thedoorw.github.io/INK-Browser-QA/product/source/ui/branding-settings.js?v=0.1-ui-20261001-debt1",
+      "https://thedoorw.github.io/INK-Browser-QA/product/source/src/ink.js?v=0.1-ui-20261001-debt1"
+    ],
+    "elements": [
+      {
+        "cls": "application-menus",
+        "id": "applicationMenus",
+        "rect": [
+          28,
+          0,
+          542,
+          24
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(42, 42, 42)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "window-visual-controls",
+        "id": "",
+        "rect": [
+          1259,
+          0,
+          104,
+          19
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "1px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "contextual-options glass-surface",
+        "id": "contextualOptions",
+        "rect": [
+          34,
+          25,
+          1325,
+          35
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "",
+        "rect": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "none",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button emphasis active",
+        "id": "",
+        "rect": [
+          4,
+          76,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(238, 238, 238)",
+          "rgb(59, 99, 251)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psObjectSelect",
+        "rect": [
+          37,
+          76,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "",
+        "rect": [
+          4,
+          102,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          102,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psCropTool",
+        "rect": [
+          4,
+          128,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(244, 244, 244)",
+          "rgb(117, 117, 117)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psFrameTool",
+        "rect": [
+          37,
+          128,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(244, 244, 244)",
+          "rgb(117, 117, 117)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          4,
+          154,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          154,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "psBrushTool",
+        "rect": [
+          4,
+          180,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          180,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "",
+        "rect": [
+          4,
+          206,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          206,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          4,
+          232,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack ui-b-tool-group",
+        "id": "",
+        "rect": [
+          37,
+          232,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "drawToolButton",
+        "rect": [
+          4,
+          258,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action",
+        "id": "psPathEditTool",
+        "rect": [
+          37,
+          258,
+          31,
+          26
+        ],
+        "style": [
+          "rgb(244, 244, 244)",
+          "rgb(117, 117, 117)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "",
+        "rect": [
+          4,
+          284,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button tool-stack",
+        "id": "",
+        "rect": [
+          37,
+          284,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-button",
+        "id": "",
+        "rect": [
+          4,
+          310,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "tool-action ps-zoom-controls",
+        "id": "psZoomControls",
+        "rect": [
+          37,
+          310,
+          31,
+          26
+        ],
+        "style": [
+          "rgba(0, 0, 0, 0)",
+          "rgb(102, 102, 102)",
+          "0px",
+          "0px",
+          "grid",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-region",
+        "id": "",
+        "rect": [
+          1112,
+          73,
+          251,
+          253.109375
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-splitter",
+        "id": "",
+        "rect": [
+          1112,
+          326.109375,
+          251,
+          1
+        ],
+        "style": [
+          "rgb(229, 229, 229)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "block",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-region",
+        "id": "",
+        "rect": [
+          1112,
+          327.109375,
+          251,
+          245.578125
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-splitter",
+        "id": "",
+        "rect": [
+          1112,
+          572.6875,
+          251,
+          1
+        ],
+        "style": [
+          "rgb(229, 229, 229)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "block",
+          "12px"
+        ]
+      },
+      {
+        "cls": "panel-stack-region active",
+        "id": "",
+        "rect": [
+          1112,
+          573.6875,
+          251,
+          361.3125
+        ],
+        "style": [
+          "rgb(255, 255, 255)",
+          "rgb(38, 38, 38)",
+          "0px",
+          "0px",
+          "flex",
+          "12px"
+        ]
+      }
+    ]
+  },
+  "geometryAndStyleUnchanged": true,
+  "toolRoutes": [
+    {
+      "group": "smart-selection",
+      "tool": "quickSelection",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "sampling",
+      "tool": "eyedropper",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "healing",
+      "tool": "healingBrush",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "clone",
+      "tool": "cloneStamp",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "fill",
+      "tool": "gradient",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "detail",
+      "tool": "localBlur",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "tone",
+      "tool": "dodge",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "shape",
+      "tool": "shape:line",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    },
+    {
+      "group": "text",
+      "tool": "text:horizontal-tb",
+      "active": [
+        "select"
+      ],
+      "rasterHidden": true
+    }
+  ]
+}
