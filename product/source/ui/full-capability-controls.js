@@ -102,7 +102,7 @@ function dialogShell(id,title,body,wide=false){
 export function installFullCapabilityControls(app){
   if(app.uiBControls)return app.uiBControls;
   const shell=window.INK_WEB_SHELL;
-  const state={lastToolByGroup:new Map(),activeCapabilityTool:null,dialogContext:null,selectedChannel:null,rasterSnapshot:null,recoveryCandidates:[]};
+  const state={lastToolByGroup:new Map(),activeCapabilityTool:null,switchingRaster:false,dialogContext:null,selectedChannel:null,rasterSnapshot:null,recoveryCandidates:[]};
   const raster=createRasterToolController(app,{onStateChange:()=>refreshContextOptions()});
 
   function toast(message,time=2400){app.toast(message,time);}
@@ -149,6 +149,16 @@ export function installFullCapabilityControls(app){
     document.querySelectorAll('[data-ui-b-tool-group][aria-expanded="true"]').forEach(node=>node.setAttribute('aria-expanded','false'));
     anchor.setAttribute('aria-expanded','true');
   }
+  function bindToolGroupHold(node,group){
+    let timer=null;
+    node.addEventListener('pointerdown',event=>{
+      if(event.button!==0)return;
+      timer=setTimeout(()=>openToolGroup(group,node),420);
+    });
+    for(const type of ['pointerup','pointercancel','pointerleave']){
+      node.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;});
+    }
+  }
   function installTools(){
     const rail=$('.tool-group');if(!rail)return;
     const existingDraw=$('#drawToolButton');
@@ -172,9 +182,7 @@ export function installFullCapabilityControls(app){
       if(!$('.stack-corner',existing))existing.appendChild(htmlNode('<span class="stack-corner" aria-hidden="true"></span>'));
       existing.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(group,existing);});
       existing.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();openToolGroup(group,existing);},true);
-      let timer=null;
-      existing.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,existing),420);});
-      ['pointerup','pointercancel','pointerleave'].forEach(type=>existing.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
+      bindToolGroupHold(existing,group);
     }
     const toolHost=existingLasso?.parentElement||rail,insertion=existingLasso?.nextElementSibling||null;
     for(const group of UI_B_TOOL_GROUPS.filter(group=>!['draw','lasso','shape','text'].includes(group.id))){
@@ -183,9 +191,7 @@ export function installFullCapabilityControls(app){
       node.addEventListener('click',()=>openToolGroup(group,node));
       node.addEventListener('keydown',event=>{if(event.key==='ArrowRight'||event.key==='ArrowDown'){event.preventDefault();openToolGroup(group,node);}});
       node.addEventListener('contextmenu',event=>{event.preventDefault();openToolGroup(group,node);});
-      let timer=null;
-      node.addEventListener('pointerdown',event=>{if(event.button!==0)return;timer=setTimeout(()=>openToolGroup(group,node),420);});
-      ['pointerup','pointercancel','pointerleave'].forEach(type=>node.addEventListener(type,()=>{if(timer)clearTimeout(timer);timer=null;}));
+      bindToolGroupHold(node,group);
     }
     const brushButton=$('#psBrushTool');
     brushButton?.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();activateTool('brush');},true);
@@ -259,7 +265,6 @@ export function installFullCapabilityControls(app){
 
   function activateTool(tool){
     app.openMobileToolSheet?.(false);
-    state.activeCapabilityTool=tool;
     for(const group of UI_B_TOOL_GROUPS){if(group.tools.some(([id])=>id===tool))state.lastToolByGroup.set(group.id,tool);}
     if(tool.startsWith('shape:')){
       raster.clearTool();app.shapeType=tool.slice(6);app.setTool('shape');app.refreshToolUI?.();

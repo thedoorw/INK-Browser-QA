@@ -412,7 +412,6 @@
     root.dataset.contextTool = descriptor.tool;
     const use = document.querySelector('#contextualToolUse');
     const name = document.querySelector('#contextualToolName');
-    const advanced = document.querySelector('#contextualAdvancedBtn');
     if (use) use.setAttribute('href', '#' + descriptor.icon);
     if (name) name.textContent = descriptor.label;
     const editing = document.querySelector('#shellEditingContextControls');
@@ -428,19 +427,7 @@
         }
       });
     }
-    if (advanced) {
-      const propertiesOpen = isDesktop() ? state.activePanel !== 'collapsed' && state.stackPanels.overview === 'properties' : currentPanel() === 'properties';
-      const available = ['draw', 'eraser', 'shape', 'text', 'selection', 'path-edit', 'stroke-edit'].includes(descriptor.mode);
-      advanced.hidden = !available || (isDesktop() && propertiesOpen);
-      advanced.textContent = descriptor.mode === 'selection' ? '物件' : '進階';
-      advanced.classList.toggle('active', propertiesOpen);
-      advanced.setAttribute('aria-pressed', String(propertiesOpen));
-      advanced.setAttribute('aria-expanded', String(propertiesOpen));
-      advanced.setAttribute('aria-controls', 'inspector');
-      const action = descriptor.mode === 'selection' ? '前往物件屬性' : '前往工具進階設定';
-      advanced.setAttribute('aria-label', action);
-      advanced.title = action;
-    }
+
   }
 
   function syncContextualSoon() {
@@ -451,18 +438,8 @@
     });
   }
 
-  function openContextualAdvanced() {
-    if (!runtime()) return false;
-    return selectPanel('properties');
-  }
-
   function bindContextualOptions() {
     if (!mountContextualControls()) return false;
-    const advanced = document.querySelector('#contextualAdvancedBtn');
-    if (advanced && advanced.dataset.contextBound !== 'true') {
-      advanced.dataset.contextBound = 'true';
-      advanced.addEventListener('click', openContextualAdvanced);
-    }
     if (!state.contextObserver) {
       state.contextObserver = new MutationObserver(syncContextualSoon);
       const toolName = document.querySelector('#activeToolName');

@@ -1411,8 +1411,8 @@ kbd{font-size:var(--ui-type-xs);padding:2px 4px;border-radius:3px}
 .contextual-tool-identity strong{overflow:hidden;text-overflow:ellipsis;font-size:var(--ui-type-md);font-weight:700}
 .contextual-divider{width:1px;height:20px;flex:0 0 auto;background:var(--line);margin-right:6px}
 .contextual-control-host::-webkit-scrollbar{display:none}
-.contextual-advanced-button{height:26px;min-width:46px;flex:0 0 auto;margin-left:6px;padding:0 8px;border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.72);color:var(--muted);font-size:var(--ui-type-xs);font-weight:650}
-.contextual-advanced-button:hover{background:#fff;color:var(--accent);border-color:var(--line-strong)}
+
+
 
 /* First-paint safety: legacy contextual controls start outside their shell in
    static HTML and are mounted into #contextualControlHost by web-shell.js.
@@ -1688,8 +1688,7 @@ kbd{font-size:var(--ui-type-xs);padding:2px 4px;border-radius:3px}
 /* Shared contextual row remains a single horizontal command surface. Overflow
    is intentionally scrollable; controls never wrap into the canvas. */
 .contextual-control-host{min-width:0;flex:1;height:100%;display:flex;align-items:center;gap:5px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-inline:contain;touch-action:pan-x}
-.contextual-tool-identity,
-.contextual-advanced-button{flex-shrink:0}
+.contextual-tool-identity{flex-shrink:0}
 
 /* Fullscreen keeps the existing browser/API authority. These rules only make
    the fullscreen root consume the browser-provided viewport consistently. */
@@ -1746,7 +1745,7 @@ kbd{font-size:var(--ui-type-xs);padding:2px 4px;border-radius:3px}
   .doc-title{width:min(31vw,140px)}
   .contextual-tool-identity{min-width:52px;padding-left:3px;max-width:72px;padding-inline:3px 5px}
   .contextual-divider{margin-right:2px}
-  .contextual-advanced-button{height:32px;margin-left:2px;padding-inline:6px}
+
 }
 
 @media(max-width:760px){
@@ -1921,7 +1920,7 @@ kbd{font-size:var(--ui-type-xs);padding:2px 4px;border-radius:3px}
   .context-inline-control{height:26px;padding-inline:4px}
   .contextual-options .quick-slider{height:26px;padding-inline:4px}
   .contextual-options .quick-slider input{width:72px}
-  .contextual-advanced-button.active,.contextual-advanced-button[aria-pressed="true"]{color:#86d2ca;background:#29413e;border-color:#315d59}
+
   .topbar-center{gap:2px;height:100%;padding:0 3px}
   .workspace-switch{height:26px;grid-template-columns:repeat(2,minmax(50px,1fr))}
   .workspace-switch button{height:22px;padding-inline:6px}
@@ -2069,10 +2068,9 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
   .contextual-options .quick-slider output{color:#626262}
   .context-inline-control{color:#444}
   .context-inline-control:hover{background:#fff}
-  .contextual-advanced-button{background:#f8f8f8;border-color:#cfcfcf;color:#565656;border-radius:2px;margin-left:3px;height:26px;min-width:48px;padding-inline:6px;font-size:var(--ui-type-md)}
-  .contextual-advanced-button:hover{background:#fff;color:#222;border-color:#606164}
-  .contextual-advanced-button.active,
-  .contextual-advanced-button[aria-pressed="true"]{color:#226a63;background:#e4f0ee;border-color:#a9cbc7}
+
+
+
 
   .workspace-switch{background:#e7e7e7;border-color:#d1d1d1}
   .workspace-switch button{color:#5a5a5a}
@@ -2236,13 +2234,11 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
 .application-menu-label,
 .application-command-menu button{font-weight:var(--ui-weight-regular)}
 .doc-title{font-weight:var(--ui-weight-control)}
-
 /* Normal interactive/control text. */
 .quiet-button,
 .primary-button,
 .workspace-switch button,
 .contextual-tool-identity strong,
-.contextual-advanced-button,
 .context-control-label,
 .contextual-options .quick-slider output,
 .contextual-options #eraserOptions .segmented button,
@@ -3619,11 +3615,11 @@ html,body,#app{background:#e7e7e7}
   .ui-b-layer-appearance .ui-b-capability-note{display:none!important}
 }
 /* USER 2026-09-30: compact chrome and single panel boundaries. */
-.menu-workspace,#contextualAdvancedBtn{display:none!important}
+.menu-workspace{display:none!important}
 @media(min-width:761px){
- .tool-layout-controls{margin-top:auto;padding:0;border-top:1px solid #202123;display:flex;justify-content:flex-start;flex:0 0 auto;border-top-color:#d5d5d5;order:-1;margin:0 0 3px;height:11px;min-height:11px;border:0;border-bottom:1px solid var(--ink-ui-border);margin-bottom:0;padding-left:3px;box-sizing:border-box}
+ .tool-layout-controls{padding:0;display:flex;justify-content:flex-start;flex:0 0 auto;order:-1;margin:0 0 3px;height:11px;min-height:11px;border:0;border-bottom:1px solid var(--ink-ui-border);margin-bottom:0;padding-left:3px;box-sizing:border-box}
  .panel-stack-framework>.panel-edge-strip,.panel-dock>.panel-edge-strip{justify-content:flex-end;padding-right:3px;box-sizing:border-box}
- .panel-stack-splitter{flex:0 0 1px;height:1px;background:var(--ink-ui-border);border-top:1px solid var(--ink-ui-border-strong);border-bottom:1px solid var(--ink-ui-border-soft);cursor:ns-resize;touch-action:none;z-index:2;min-height:1px;position:relative;border:0;overflow:visible}
+ .panel-stack-splitter{flex:0 0 1px;height:1px;background:var(--ink-ui-border);cursor:ns-resize;touch-action:none;z-index:2;min-height:1px;position:relative;border:0;overflow:visible}
  .panel-stack-splitter::after{content:"";position:absolute;left:0;right:0;top:-2px;height:5px;cursor:ns-resize}
  .panel-stack-region{flex:1 1 0;min-height:95px;background:var(--ink-ui-surface);overflow:hidden;display:flex;flex-direction:column;border-top:0;border-bottom:0;box-shadow:none}
 }
