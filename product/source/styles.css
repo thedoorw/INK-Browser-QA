@@ -3507,7 +3507,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   }
   .app:not(.panel-primary-open) .branding-settings-backdrop{right:var(--panel-dock-w)}
   .branding-settings-dialog{
-    box-sizing:border-box;width:min(826px,calc(100% - 24px));height:min(624px,calc(100% - 20px));
+    box-sizing:border-box;width:min(740px,calc(100vw - var(--tool-w) - var(--ruler-left-w) - var(--active-panel-w) - 24px));height:min(624px,calc(100% - 20px));
     max-width:none;max-height:none;display:flex;flex-direction:column;overflow:hidden;
     padding:0;border:1px solid var(--ink-ui-border-strong);border-radius:0;background:var(--ink-ui-surface);
     color:var(--ink-ui-text);box-shadow:0 8px 22px rgba(0,0,0,.28)
@@ -3590,7 +3590,7 @@ html,body,#app{background:#e7e7e7}
   /* Fixed-size PS-3 frame. max-* only constrains unusually small workstations;
      using fixed width/height avoids CSS-grid shrink-to-fit content variance. */
   .branding-settings-dialog{
-    width:min(740px,calc(100% - 24px));
+    width:min(740px,calc(100vw - var(--tool-w) - var(--ruler-left-w) - var(--active-panel-w) - 24px));
     max-width:100%;
     height:min(540px,calc(100% - 20px));
     max-height:100%
@@ -3662,8 +3662,6 @@ html,body,#app{background:#e7e7e7}
  .navigator-zoom-field{height:20px;display:grid;place-items:center;border:1px solid var(--ink-ui-border);background:var(--ink-ui-surface);font-size:var(--ui-type-lg);font-variant-numeric:tabular-nums;box-sizing:border-box;width:50px;min-width:0;padding:0 2px;text-align:left}
  .navigator-zoom-icon{width:22px;height:22px;padding:0;border:0;background:transparent;display:grid;place-items:center}
  .navigator-zoom-icon svg{width:17px;height:13px;stroke-width:1.4}
- #shellNavigatorZoomSlider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:10px;height:10px;margin-top:-4px;border:1px solid #6f6f6f;border-radius:0;background:#fff;transform:none;clip-path:polygon(50% 0,100% 65%,100% 100%,0 100%,0 65%)}
- #shellNavigatorZoomSlider::-moz-range-thumb{width:10px;height:10px;border:1px solid #6f6f6f;border-radius:0;background:#fff;transform:none}
  .ui-b-layer-appearance{display:flex;grid-template-columns:minmax(0,1fr) auto auto;gap:0;align-items:stretch;flex:0 0 auto;margin:0 -7px;border-bottom:1px solid var(--ink-ui-border);background:var(--ink-ui-surface-subtle);font-size:var(--ui-type-lg);flex-direction:column;border:0}
  .ui-b-layer-blend{grid-template-columns:34px minmax(0,1fr) auto;display:none}
  .ui-b-layer-lock{grid-template-columns:34px 24px 1fr;display:flex;min-height:24px;gap:7px;padding:1px 5px;order:2}
@@ -3689,7 +3687,7 @@ html,body,#app{background:#e7e7e7}
  .document-status-strip #rotateResetBtn,.document-status-strip #fitBtn,.document-status-strip #zoomOutBtn,.document-status-strip #zoomInBtn{display:none}
  .document-status-strip #zoomText{height:16px;line-height:16px;min-width:42px;border:0;border-right:1px solid var(--ink-ui-border);background:transparent;font-size:11px}
  .branding-settings-backdrop{top:var(--topbar-h);bottom:var(--document-status-h);left:calc(var(--tool-w) + var(--ruler-left-w));right:var(--active-panel-w);padding:0;background:rgba(0,0,0,.14)}
- .branding-settings-dialog{width:min(740px,calc(100% - 24px));height:min(540px,calc(100% - 20px))}
+ .branding-settings-dialog{width:min(740px,calc(100vw - var(--tool-w) - var(--ruler-left-w) - var(--active-panel-w) - 24px));height:min(540px,calc(100% - 20px))}
  .preferences-layout{grid-template-columns:144px minmax(0,1fr)}
  .preferences-categories{margin:10px 0 10px 10px;padding:0;border:1px solid var(--ink-ui-border);background:var(--ink-ui-surface-subtle)}
  .preferences-categories button{height:20px;min-height:20px;line-height:20px;padding:0 10px}
