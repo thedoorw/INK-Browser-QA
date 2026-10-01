@@ -200,8 +200,20 @@ export function installFullCapabilityControls(app){
       document.addEventListener('pointerdown',event=>{if(!menu.contains(event.target)&&!zoomTrigger.contains(event.target))close();});
       document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
     }
-    const psCapabilityOrder=['[data-tool="select"]','[data-tool="lasso"]','[data-ui-b-tool-group="smart-selection"]','[data-ui-b-tool-group="sampling"]','[data-ui-b-tool-group="healing"]','#drawToolButton','[data-ui-b-tool-group="clone"]','[data-tool="eraser"]','[data-ui-b-tool-group="fill"]','[data-ui-b-tool-group="detail"]','[data-ui-b-tool-group="tone"]','[data-tool="text"]','[data-tool="shape"]','[data-tool="pan"]','[data-tool="image"]'];
-    for(const selector of psCapabilityOrder){const node=$(selector);if(node&&node.parentElement===rail)rail.appendChild(node);}
+    const shortcuts=[
+      ['psObjectSelect','物件選取','i-select',()=>activateTool('objectSelection')],
+      ['psCropTool','裁切影像…','i-crop',()=>openDialog('image-crop')],
+      ['psFrameTool','框架選取物件','i-frame',()=>app.creativeWorkspace?.runComposeAction?.('frame')],
+      ['psPathEditTool','編輯選取路徑','i-path',()=>app.enterPathEdit?.()]
+    ];
+    const groupHost=$('.tool-rail .tool-group');
+    for(const [id,label,icon,action] of shortcuts){
+      if($('#'+id))continue;
+      const node=htmlNode('<button id="'+id+'" class="tool-action" type="button" title="'+label+'" aria-label="'+label+'"><span class="tool-icon">'+toolSvg(icon)+'</span></button>');
+      groupHost.append(node);node.addEventListener('click',action);
+    }
+    const psCapabilityOrder=['[data-tool="select"]','#psObjectSelect','[data-tool="lasso"]','[data-ui-b-tool-group="smart-selection"]','#psCropTool','#psFrameTool','[data-ui-b-tool-group="sampling"]','[data-ui-b-tool-group="healing"]','#psBrushTool','[data-ui-b-tool-group="clone"]','[data-tool="eraser"]','[data-ui-b-tool-group="fill"]','[data-ui-b-tool-group="detail"]','[data-ui-b-tool-group="tone"]','#drawToolButton','#psPathEditTool','[data-tool="text"]','[data-tool="shape"]','[data-tool="pan"]','#psZoomControls'];
+    for(const selector of psCapabilityOrder){const node=$(selector);if(node&&node.parentElement===groupHost)groupHost.appendChild(node);}
     rail.querySelectorAll('.ui-b-glyph').forEach(node=>node.classList.remove('ui-b-glyph'));
     const mobileHost=$('#mobileToolSheet .mobile-tool-grid');
     for(const group of UI_B_TOOL_GROUPS){
@@ -375,7 +387,7 @@ export function installFullCapabilityControls(app){
         '<div class="ui-b-layer-lock"><span>鎖定</span><button type="button" data-layer-action="toggle-lock" aria-pressed="false"><svg><use href="#i-lock"/></svg></button></div>'+
       '</div>');
       layers.prepend(block);
-      const opacity=layers.querySelector('.layer-opacity-card');if(opacity)block.after(opacity);
+      const opacity=layers.querySelector('.layer-opacity-card');if(opacity)block.before(opacity);
       const filterMenu=block.querySelector('.ui-b-layer-filter-menu');
       const layerFooter=layers.querySelector('.layer-bottom-toolbar');
       if(filterMenu&&layerFooter){layerFooter.insertBefore(filterMenu,layerFooter.firstChild);filterMenu.addEventListener('click',event=>{if(event.target.closest('[data-layer-action="add-filter"]'))block.dispatchEvent(new CustomEvent('ink-layer-filter-add'));});}
@@ -817,3 +829,4 @@ export function installFullCapabilityControls(app){
   document.dispatchEvent(new CustomEvent('ink:ui-b-controls-ready',{detail:{menuCount:UI_B_CONTRIBUTION_REPORT.menuCount,toolGroupCount:UI_B_CONTRIBUTION_REPORT.toolGroupCount}}));
   return api;
 }
+

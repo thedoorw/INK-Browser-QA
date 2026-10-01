@@ -138,7 +138,7 @@
 
   function buttonMarkup(def, menu = false) {
     if (menu) {
-      return '<button type="button" class="panel-window-item" data-shell-panel="' + def.id +
+      return '<button type="button" class="panel-window-item" role="menuitemcheckbox" aria-checked="false" data-shell-panel="' + def.id +
         '" title="' + def.label + '" aria-label="' + def.label + '" aria-pressed="false">' +
         '<span class="window-menu-check" aria-hidden="true"></span><span>' + def.label + '</span></button>';
     }
@@ -567,11 +567,13 @@
   }
 
   function drawVerticalRulerLabel(ctx, label, pixel) {
-    const chars = String(label).split('');
+    const text = String(label);
     ctx.save();
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
-    chars.forEach((char, index) => ctx.fillText(char, 1, pixel - 2 + index * 7));
+    ctx.translate(1, pixel - 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(text, 0, 0);
     ctx.restore();
   }
 
@@ -614,7 +616,8 @@
     ruler.dataset.unit = unitInfo.unit;
 
     const displayPerPixel = Math.abs(span) / length;
-    const major = niceRulerStep(displayPerPixel);
+    const labelWidth = Math.max(String(Math.round(startValue)).length, String(Math.round(endValue)).length) * 6;
+    const major = niceRulerStep(displayPerPixel, Math.max(60, labelWidth + 20));
     const subdivisions = major / displayPerPixel >= 70 ? 10 : 5;
     const minor = major / subdivisions;
     const minValue = Math.min(startValue, endValue);
@@ -624,24 +627,24 @@
 
     ctx.strokeStyle = '#8c8c8c';
     ctx.fillStyle = '#5f5f5f';
-    ctx.lineWidth = 1;
+    ctx.lineWidth = 1 / dpr;
     ctx.font = '9px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
     ctx.textBaseline = 'top';
     for (let index = 0; index < count; index += 1) {
       const value = first + index * minor;
       if (value < minValue - minor || value > maxValue + minor) continue;
-      const pixel = (value - startValue) / span * length;
+      const pixel = (Math.round((value - startValue) / span * length * dpr) + .5) / dpr;
       const majorRatio = value / major;
       const isMajor = Math.abs(majorRatio - Math.round(majorRatio)) < 1e-5;
       const halfRatio = value / (major / 2);
       const isHalf = !isMajor && Math.abs(halfRatio - Math.round(halfRatio)) < 1e-5;
       ctx.beginPath();
       if (axis === 'horizontal') {
-        ctx.moveTo(pixel + .5, isMajor ? 7 : isHalf ? 10 : 13);
-        ctx.lineTo(pixel + .5, cssHeight);
+        ctx.moveTo(pixel, isMajor ? 7 : isHalf ? 10 : 13);
+        ctx.lineTo(pixel, cssHeight);
       } else {
-        ctx.moveTo(isMajor ? 7 : isHalf ? 10 : 13, pixel + .5);
-        ctx.lineTo(cssWidth, pixel + .5);
+        ctx.moveTo(isMajor ? 7 : isHalf ? 10 : 13, pixel);
+        ctx.lineTo(cssWidth, pixel);
       }
       ctx.stroke();
       if (!isMajor) continue;
@@ -669,7 +672,7 @@
       state.viewSyncRaf = 0;
       renderDocumentRulers();
       syncDocumentScrollbars();
-      if (currentPanel() === 'navigator') renderShellNavigator();
+      renderShellNavigator();
     });
   }
 
@@ -2047,7 +2050,10 @@
   }
 
   function isPanelOpen(id) {
-    if (isDesktop() && state.activePanel !== 'collapsed') return Object.values(state.stackPanels).includes(id);
+    if (isDesktop()) {
+      if (state.activePanel === 'collapsed') return false;
+      return Boolean(document.querySelector('[data-panel-stack-target="' + id + '"]')) || Object.values(state.stackPanels).includes(id);
+    }
     return currentPanel() === id;
   }
 
@@ -2185,6 +2191,7 @@
     responsiveInspectorToggle?.setAttribute('aria-expanded', String(Boolean(state.root.classList.contains('inspector-open'))));
     document.querySelectorAll('[data-shell-panel]').forEach(button => {
       const pressed = isPanelOpen(button.dataset.shellPanel);
+      if (button.classList.contains('panel-window-item')) button.setAttribute('aria-checked', String(pressed));
       button.classList.toggle('active', pressed);
       button.setAttribute('aria-pressed', String(pressed));
     });
@@ -2226,6 +2233,7 @@
     if (!app || !state.root) return false;
     if (!state.runtimeBound) {
       state.runtimeBound = true;
+      app.setTool?.('select');
       try {
         if (!localStorage.getItem('ink-inspector-width')) {
           app.inspectorNormalWidth = DEFAULT_PRIMARY_PANEL_WIDTH;
@@ -2386,3 +2394,4 @@
   if (document.querySelector('#app')) install();
   else document.addEventListener('DOMContentLoaded', install, { once: true });
 })();
+

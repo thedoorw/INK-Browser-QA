@@ -261,7 +261,6 @@ export class CreativeWorkspaceController {
       </div>
       <div class="creative-workspace-body">
         <section data-workspace-pane="reference">
-          <strong>參考圖 → 直接擷取 → 可編輯路徑</strong>
           <label class="creative-workspace-field creative-file-field"><span>參考圖</span><span class="creative-file-picker"><button type="button" data-workspace-action="choose-reference-file">選擇檔案…</button><output data-workspace-value="reference-file-name">未選擇檔案</output><input type="file" data-workspace-input="reference-file" accept="image/png,image/jpeg,image/webp" hidden></span></label>
           <label class="creative-workspace-field"><span>臨界值</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">直接擷取</button><button type="button" data-workspace-action="cancel-extract" disabled>取消</button></div>
@@ -291,7 +290,6 @@ export class CreativeWorkspaceController {
           <output data-workspace-output="edit">請選取一個可編輯路徑。</output>
         </section>
         <section data-workspace-pane="compose" hidden>
-          <strong>構成 → 重繪／材質</strong>
           <div class="creative-workspace-action-grid">
             <button type="button" data-workspace-action="duplicate">複製</button>
             <button type="button" data-workspace-action="group">群組</button>
@@ -311,7 +309,6 @@ export class CreativeWorkspaceController {
           </details>
         </section>
         <section data-workspace-pane="chat" hidden>
-          <strong>自然語言 CHAT</strong>
           <div class="creative-chat-runtime">
             <span data-workspace-value="chat-runtime">LOCAL · manual-json</span>
             <button type="button" data-workspace-action="chat-conversation-inspect">查看內容</button>
@@ -362,7 +359,6 @@ export class CreativeWorkspaceController {
           <pre data-workspace-output="chat-plan">尚無計畫。請新增至少兩個依序執行的步驟。</pre>
         </section>
         <section data-workspace-pane="revision" hidden>
-          <strong>修訂擷取／還原</strong>
           <label class="creative-workspace-field"><span>標籤</span><input type="text" data-workspace-input="revision-label" value="工作區檢查點"></label>
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="revision-capture">擷取</button><button type="button" data-workspace-action="revision-list">更新清單</button></div>
           <label class="creative-workspace-field"><span>修訂</span><select data-workspace-input="revision-id"><option value="">尚無修訂</option></select></label>
@@ -1400,3 +1396,4 @@ export function installCreativeWorkspace(app) {
   controller.mount();
   return controller;
 }
+
