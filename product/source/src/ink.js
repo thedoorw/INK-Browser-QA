@@ -32,7 +32,7 @@ import { drawExpressivePathStroke, flattenSubpath, moveAnchor as movePathAnchor,
 import { resolvePathPaintAppearance } from './vector/paint-appearance.js';
 import { PNGWorkerEncoder } from './export/png-worker-encoder.js';
 import { BUILTIN_BRUSH_PRESETS as ENGINE_BRUSH_PRESETS } from './paint/brush-engine.js';
-import { decodeFormat as decodeImageFormatCore, documentImageStateToFormatPayload, encodeFormat as encodeImageFormatCore, formatPayloadToDocumentImageState, probeFormat as probeImageFormat } from './image/image-core.js';
+import { decodeFormat as decodeImageFormatCore, documentImageStateToFormatPayload, encodeFormat as encodeImageFormatCore, formatPayloadToDocumentImageState, probeFormat as probeImageFormat, webRasterImageDataToDocumentState } from './image/image-core.js';
 import { installFullCapabilityControls } from '../ui/full-capability-controls.js';
 
 const $=(s,r=document)=>r.querySelector(s);
@@ -622,6 +622,39 @@ class InkApp{
     if(!this.documentOpen){this.documentOpen=true;this.refreshWorkspaceUI();}
     const rasterState=formatPayloadToDocumentImageState(payload),object={id:uid(),type:'image',name,matrix:Array.isArray(matrix)?[...matrix]:M.identity(),opacity:1,w:payload.width,h:payload.height,rasterState};
     this.history.pushScoped('匯入格式影像',[this.layerObjectsPath(layer),['colorState']],()=>{layer.objects.push(object);this.doc.colorState=documentColorStateFromPayload(payload);this.selection=[{layerId:layer.id,objectId:object.id}];});
+    this.spatialDirty=true;this.refreshAll();return object;
+  }
+  async importWebRaster(input,{name=null,matrix=null,sourceChannel='WEB_RASTER_IMPORT'}={}){
+    if(typeof this.extraction?.decode!=='function')throw new Error('INK_WEB_RASTER_DECODE_AUTHORITY_UNAVAILABLE');
+    const decoded=input?.raster&&input?.source?input:await this.extraction.decode(input),layer=this.layer();
+    if(layer.locked)throw new Error('INK_ACTIVE_LAYER_LOCKED');
+    if(!this.documentOpen){this.documentOpen=true;this.refreshWorkspaceUI();}
+    const source=decoded?.source||{},mime=String(source.mimeType||'');
+    const format=mime==='image/png'?'PNG':mime==='image/jpeg'?'JPEG':mime==='image/webp'?'WEBP':'WEB_RASTER';
+    const rasterState=webRasterImageDataToDocumentState(decoded.raster,{
+      format,
+      metadata:{sourceName:source.name||null,mimeType:mime||null,sizeBytes:source.sizeBytes??null},
+      provenance:{sourceChannel:String(sourceChannel||'WEB_RASTER_IMPORT'),sourceSha256:source.sha256||null},
+      capabilities:{sourceMimeType:mime||null}
+    });
+    const object={
+      id:uid(),
+      type:'image',
+      name:name||source.name||'Imported image',
+      matrix:Array.isArray(matrix)?[...matrix]:M.identity(),
+      opacity:1,
+      w:decoded.raster.width,
+      h:decoded.raster.height,
+      rasterState,
+      metadata:{
+        source:{type:'editable-web-raster',id:source.sha256||null,name:source.name||null},
+        rasterImport:{
+          sourceChannel:String(sourceChannel||'WEB_RASTER_IMPORT'),
+          source:{name:source.name||null,mimeType:mime||null,sizeBytes:source.sizeBytes??null,sha256:source.sha256||null}
+        }
+      }
+    };
+    this.history.pushScoped('匯入可編輯影像',[this.layerObjectsPath(layer)],()=>{layer.objects.push(object);this.selection=[{layerId:layer.id,objectId:object.id}];});
     this.spatialDirty=true;this.refreshAll();return object;
   }
   exportImageFormat(format,refOrObject=null,options={}){
