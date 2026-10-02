@@ -2,7 +2,7 @@ name: INK Live CHAT Request
 
 on:
   push:
-    branches: [main]
+    branches: [main, work/chat-live-transport-002]
     paths:
       - ACTIVE/INK_LIVE_CHAT_REQUEST.json
 
@@ -55,7 +55,8 @@ jobs:
             }
             let sha;
             try {
-              const current = await github.rest.repos.getContent({ owner, repo, path, ref: 'main' });
+              const branch = context.ref.replace('refs/heads/', '');
+              const current = await github.rest.repos.getContent({ owner, repo, path, ref: branch });
               if (!Array.isArray(current.data)) sha = current.data.sha;
             } catch (error) {
               if (error.status !== 404) throw error;
@@ -67,7 +68,7 @@ jobs:
               path,
               message: 'qa(chat): record Live INK result ' + (result.requestId || 'unknown'),
               content,
-              branch: 'main',
+              branch,
               ...(sha ? { sha } : {})
             });
 
