@@ -1,5 +1,44 @@
 # INK Current Work Order
 
+## Recovery sequence after current-main UI rejection — 2026-10-02
+
+USER authorized Supervisor to arrange the recovery path.
+
+Required order:
+
+```text
+0. Finish accepted Core spatial-index promotion integration to latest main.
+1. Fresh current-main UI recovery branch.
+   - replay only already accepted post-SUP11 UI deltas;
+   - remove superseded authorities in the same pass;
+   - no broad redesign;
+   - STOP to Supervisor.
+2. Fresh C04 圖紙 / 手繪板 two-state repair branch from the accepted recovery candidate.
+   - repair the existing workspace authority;
+   - no second state owner;
+   - STOP to Core / Supervisor.
+3. Combined promotion onto latest main.
+   - accepted UI recovery + accepted C04 repair only;
+   - verify product-source identity and browser state;
+   - then USER deployed visual checkpoint.
+4. C06 12800% zoom remains a separate capability package.
+5. New Document / A4 architecture remains behind the existing USER decision gate.
+```
+
+Dispatches:
+- `ACTIVE/INK_UI_CURRENT_MAIN_RECOVERY_DEV_DISPATCH_v1.0.md`
+- `ACTIVE/INK_C04_WORKSPACE_TWO_STATE_REPAIR_DEV_DISPATCH_v1.0.md`
+
+Recovery policy:
+- do not merge/cherry-pick the divergent old UI branch wholesale;
+- do not publish a switch-placement-only main state and leave the known C04 control visibly nonfunctional;
+- do not solve missing/hidden UI by adding another CSS override layer;
+- obsolete authority must be removed when the shared accepted authority is restored;
+- no new `!important`, breakpoint family, duplicate state owner or per-component visual fork without escalation.
+
+The next USER-visible deployed checkpoint should occur after the combined recovery + C04 promotion, not after a placement-only intermediate state.
+
+
 ## USER current-main visual rejection checkpoint — 2026-10-02
 
 USER supplied a fresh 1280×1024 deployed-page screenshot and rejected the visible current-main UI as materially incomplete.
