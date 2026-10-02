@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   execute:
-    runs-on: [self-hosted, Windows, X64]
+    runs-on: ubuntu-latest
     timeout-minutes: 10
 
     steps:
