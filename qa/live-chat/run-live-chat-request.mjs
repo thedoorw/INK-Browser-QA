@@ -124,7 +124,25 @@ async function waitForInk(cdp, sessionId, expectedSourceSha) {
     }
     await new Promise(resolve => setTimeout(resolve, 100));
   }
-  throw new Error(`INK live readiness timeout: ${JSON.stringify(last)}`);
+  let diagnostics = null;
+  try {
+    const probe = await cdp.send('Runtime.evaluate', {
+      expression: `(() => ({
+        errors: Array.isArray(window.__INK_QA_ERRORS__) ? window.__INK_QA_ERRORS__.slice(-20) : [],
+        scripts: [...document.scripts].map(script => ({ type: script.type || null, src: script.src || null })),
+        resources: performance.getEntriesByType('resource').map(entry => ({
+          name: entry.name,
+          initiatorType: entry.initiatorType,
+          duration: Math.round(entry.duration),
+          transferSize: entry.transferSize || 0
+        })).filter(entry => /INK-Browser-QA|jsdelivr|src\\/ink|web-shell|studio-core|public-creative-api|chat-bounded-edit|capability-registry/.test(entry.name)).slice(-80)
+      }))()`,
+      returnByValue: true,
+      awaitPromise: false
+    }, sessionId, 5000);
+    diagnostics = probe.result?.value || null;
+  } catch {}
+  throw new Error(`INK live readiness timeout: ${JSON.stringify(last)} diagnostics=${JSON.stringify(diagnostics)}`);
 }
 
 function validateRequest(request) {
@@ -216,6 +234,26 @@ async function run() {
     const { sessionId } = await cdp.send('Target.attachToTarget', { targetId, flatten: true });
     await cdp.send('Page.enable', {}, sessionId);
     await cdp.send('Runtime.enable', {}, sessionId);
+    await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
+      source: `window.__INK_QA_ERRORS__ = [];
+        addEventListener('error', event => {
+          window.__INK_QA_ERRORS__.push({
+            type: 'error',
+            message: event.message || null,
+            source: event.filename || null,
+            line: event.lineno || null,
+            column: event.colno || null
+          });
+        });
+        addEventListener('unhandledrejection', event => {
+          const reason = event.reason;
+          window.__INK_QA_ERRORS__.push({
+            type: 'unhandledrejection',
+            message: reason?.message || String(reason || ''),
+            stack: reason?.stack || null
+          });
+        });`
+    }, sessionId);
 
     const nav = await cdp.send('Page.navigate', { url: LIVE_URL }, sessionId, 30000);
     assert.ok(!nav.errorText, nav.errorText || 'Navigation failed');
