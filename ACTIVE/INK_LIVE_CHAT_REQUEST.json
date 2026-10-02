@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B1-live-rerun-004",
+  "requestId": "clusterB-B2-adjustment-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "3a785b90d6f7922175cca3662fd2b72bf95430ce",
+  "expectedSourceSha": "11551eab8c1ec78e04031f178b7ab24b91b40d26",
   "steps": [
     {
       "id": "capabilities",
@@ -15,15 +15,70 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B1 Editable Raster",
+          "name": "B2 Editable Raster",
           "type": "image/png",
-          "intent": "Cluster B1 Live mutable raster import qualification"
+          "intent": "Cluster B2 native brightnessContrast qualification"
         }
       },
       "file": {
         "path": "qa/fixtures/rose-window/rose-window-primary.png",
         "name": "rose-window-primary.png",
         "type": "image/png"
+      }
+    },
+    {
+      "id": "previewBefore",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "adjustPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "clusterB-B2-live-brightness-contrast",
+          "operation": "image.adjustment.add.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "brightnessContrast",
+            "params": {
+              "brightness": 18,
+              "contrast": 22
+            },
+            "opacity": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "adjustApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "adjustPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "adjustExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "adjustPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "adjustApprove.result.result.approvalToken"
+        }
       }
     },
     {
@@ -57,6 +112,15 @@
       "tool": "get_ink_context",
       "input": {
         "maxObjects": 20
+      }
+    },
+    {
+      "id": "previewUndo",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     },
     {
