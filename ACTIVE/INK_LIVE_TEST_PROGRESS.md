@@ -236,11 +236,45 @@ C39 Material / C55 Recipe
 Cases:
 C001 C002 C007 C008 C013
 
-Observed:
-Material and Recipe Creative Library searches can return zero entries in a fresh Live document. Material apply operation exists, but immediately reusable CHAT-visible assets are not established.
+Source audit:
+`working/INK_LIVE_CLUSTER_D_MATERIAL_RECIPE_SOURCE_AUDIT_20261002.md`
 
-Next action:
-Determine whether the gap is catalog population, creation route, or exposure.
+Disposition:
+
+```text
+CREATIVE LIBRARY SEARCH = WORKING AS DESIGNED
+FRESH MATERIAL CATALOG = EMPTY BY DEFAULT
+MATERIAL TEMPLATE / INSTANCE ENGINE = PRODUCT EXISTS
+FLOWER_BATCH_01 VALIDATED TEMPLATES = PRODUCT EXISTS / NOT BOOTSTRAPPED
+PATH MATERIAL APPLY = CHAT-EXPOSED / CATALOG-DEPENDENT / LIMITED TO CURRENT PATH-APPEARANCE SEMANTICS
+FRESH RECIPE CATALOG = EMPTY BY DEFAULT
+GENERIC RECIPE ENGINE = PRODUCT EXISTS / NOT CHAT-GOVERNED
+FLORA PAINTING RECIPE RUNTIME = PRODUCT EXISTS / HISTORY-ATOMIC / NOT CHAT-EXPOSED
+RECIPE CREATIVE-LIBRARY REUSE = READ-ONLY BY DESIGN
+```
+
+Smallest coherent repairs:
+- D1 bounded Material template/instance creation over existing material library, chosen by actual case semantics rather than arbitrary catalog seeding;
+- D2 read-only inventory bridge for existing Recipe registries;
+- D3 one CHAT-governed execution entrypoint over one existing Recipe engine, with no third recipe engine.
+
+Do not use External Workflow Translation / Workflow IR R&D to disguise the current C55 Live gap.
+
+## Round 1 source-audit completion checkpoint — 2026-10-02
+
+All four Round 1 gap clusters now have source-audit classification:
+
+- Cluster A — Drawing / Natural Media
+- Cluster B — Raster / Effects / Deformation
+- Cluster C — Layout / Page / Artboard
+- Cluster D — Material / Recipe
+
+The audit phase no longer treats every missing Live route as a product capability gap. Existing native authorities and true integration/render gaps are separated in the four working audit records.
+
+Open candidate repair:
+- B0 web-raster bridge: PR #114 / Draft / static QA only / no runtime PASS.
+
+Next engineering should proceed by smallest coherent repair package + exact candidate QA, not another breadth scan.
 
 ## Current next stage
 
