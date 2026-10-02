@@ -248,7 +248,7 @@ const editSchemas = {
   'stroke.erase.v1': editTaskSchema(
     { type:'string', const:'stroke.erase.v1', description:'Erase a circular region from one existing native Stroke using the existing INK Stroke eraser geometry.' },
     obj({
-      center: pointSchema('World-space eraser center.'),
+      center: obj({ x: num('World-space eraser center X.'), y: num('World-space eraser center Y.') }, ['x','y'], 'World-space eraser center.'),
       radius: num('World-space eraser radius.', { minimum:Number.EPSILON, maximum:100000 })
     }, ['center','radius']),
     1, 1
