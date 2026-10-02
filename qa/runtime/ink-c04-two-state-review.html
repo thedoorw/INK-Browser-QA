@@ -1,0 +1,13 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>C04 exact candidate review</title>
+<style>body{margin:0;background:#fff}iframe{display:block;border:0}pre{white-space:pre-wrap;font:12px monospace}</style>
+<iframe id="product" title="INK exact C04 candidate"></iframe><pre id="qaState">Loading</pre>
+<script>
+const query=new URLSearchParams(location.search),frame=document.querySelector('#product');
+frame.width=query.get('w')==='960'?960:1280;frame.height=query.get('w')==='960'?800:1024;
+frame.src='../previews/c04-584e44ac/'+(query.has('restore')?'':'?fresh');
+const state=document.querySelector('#qaState');
+setInterval(()=>{try{const w=frame.contentWindow,a=w.INK_APP;if(!a?.renderer)return;const p=a.page(),buttons=[...w.document.querySelectorAll('#workspaceSwitch [data-space]')];
+const box=e=>{const r=e.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}};
+state.textContent=JSON.stringify({candidate:'584e44ac75af294508440d8d4196c81942fff739',build:w.INK_ARCHITECTURE?.buildId,viewport:{width:w.innerWidth,height:w.innerHeight,dpr:w.devicePixelRatio},documentOpen:a.documentOpen,dataset:w.document.querySelector('#app').dataset.space,spaceMode:a.spaceMode(),pageId:p.id,pageCount:a.doc.pages.length,workspace:p.workspace,camera:p.camera,cameraAliasesActive:p.camera===p.workspace.cameras[p.workspace.activeSpace],selection:a.selection,content:a.doc.pages.map(p=>({id:p.id,layers:p.layers,artboard:p.artboard})),history:a.history.stats(),buttons:buttons.map(b=>({text:b.textContent.trim(),space:b.dataset.space,pressed:b.getAttribute('aria-pressed'),disabled:b.disabled,box:box(b)})),switch:{count:w.document.querySelectorAll('#workspaceSwitch').length,parent:buttons[0]?.parentElement.parentElement.id,box:box(w.document.querySelector('#workspaceSwitch'))},renderer:{width:a.renderer.width,height:a.renderer.height,worldOrigin:a.renderer.worldToScreen({x:0,y:0}),screenOrigin:a.renderer.screenToWorld(a.renderer.width/2,a.renderer.height/2,p.camera,{left:0,top:0}),worldScreenScale:a.renderer.worldScreenScale()},documentDisplay:getComputedStyle(w.document.querySelector('#stageWrap')).display},null,2);
+}catch(e){state.textContent=String(e)}},250);
+</script></html>

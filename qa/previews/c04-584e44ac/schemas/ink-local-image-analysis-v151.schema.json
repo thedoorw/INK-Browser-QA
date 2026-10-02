@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schemas/ink-local-image-analysis-v151.schema.json",
+  "title": "INK Local Image Analysis 1.5.1",
+  "type": "object",
+  "required": ["format", "version", "status", "permission", "dimensions", "aspectRatio", "palette", "luminanceZones", "edgeDistribution", "majorRegions", "foregroundBackgroundCandidates", "geometryCandidates", "repetitionCandidates", "textureStatistics", "transparency", "vectorizableCandidates", "handDrawableCandidates", "imageProcessingCandidates", "observations", "hypotheses", "rejectedCandidates", "unresolvedAreas", "confidence"],
+  "properties": {
+    "format": { "const": "INK-LOCAL-IMAGE-ANALYSIS" },
+    "version": { "const": "1.5.1" },
+    "status": { "const": "PROPOSE" },
+    "permission": { "const": "PROPOSE" },
+    "dimensions": { "type": "object", "required": ["width", "height"] },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  }
+}

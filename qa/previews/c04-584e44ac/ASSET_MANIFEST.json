@@ -1,0 +1,1197 @@
+{
+  "format": "INK-ASSET-MANIFEST",
+  "version": "1.0",
+  "packageMode": "Portable Package",
+  "generatedAt": "2026-08-06T09:03:00+08:00",
+  "categories": [
+    "images",
+    "fonts",
+    "brushes",
+    "scripts",
+    "profiles",
+    "fixtures",
+    "reference files",
+    "external program assets",
+    "optional assets",
+    "test-only assets"
+  ],
+  "assets": [
+    {
+      "assetId": "ink_v165_fourfold_learning",
+      "type": "intelligence-candidate",
+      "path": "INTELLIGENCE_CANDIDATES/Dependency_Scope/INK_v1.6.5_Fourfold_Benefit_and_Learning_Delta.json",
+      "source": "HERO-DEP-001 fourfold benefit",
+      "license": "Project intelligence candidate",
+      "scope": "intelligence-candidate",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "4b20126c175dd39fe22264195bb178a9e9af162781988f0fd5c6532946d67350",
+      "size": 2225
+    },
+    {
+      "assetId": "illustrator_watercolor_video_recipe_v02",
+      "type": "video-derived-recipe",
+      "path": "INTELLIGENCE_CANDIDATES/Video_Derived_Recipes/Illustrator_Vector_Watercolor_Flower_Video_Derived_Recipe_v0.2.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "cc45ea406448df4aab29f6ded2b8c8b2bd5245d0e1a2567f2f6ddb6be85e26b1",
+      "size": 11626,
+      "source": "Uploaded Illustrator watercolor tutorial MP4; direct frame analysis",
+      "license": "Project internal derived candidate",
+      "fallback": null,
+      "usedBy": [
+        "scripts/run-v163-video-and-case5.mjs"
+      ],
+      "scope": "candidate",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "illustrator_watercolor_video_timeline_v163",
+      "type": "video-observation-timeline",
+      "path": "INTELLIGENCE_CANDIDATES/Video_Observed_Behaviors/Illustrator_Vector_Watercolor_Video_Timeline.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "7940ac0f46e6b2f1b21461ed830c84ae163d94ef205b5b27eaadb9fc59912cfb",
+      "size": 28108,
+      "source": "Uploaded Illustrator watercolor tutorial MP4; direct frame analysis",
+      "license": "User-provided research source; derived timeline only",
+      "fallback": null,
+      "usedBy": [
+        "INTELLIGENCE_CANDIDATES"
+      ],
+      "scope": "candidate",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "ink_v163_final_test_summary",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.3/INK_v1.6.3_FINAL_TEST_SUMMARY.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "6c43e8364c848beaef9da4005d4f1d88fb55ed645b79092f4d7d4342dfaf67ae",
+      "size": 4169,
+      "source": "INK v1.6.3 final integrated regression",
+      "license": "Project internal validation evidence",
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.3_Release_Decision.md"
+      ],
+      "scope": "validation",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "vw_video_01_summary_v163",
+      "type": "benchmark-summary",
+      "path": "Validation/v1.6.3/VW-VIDEO-01/VW-VIDEO-01-summary.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "4673eb97eedcdfba907664f671fdf81d090b98bff7ef904b1777e5b46518a5ea",
+      "size": 1209,
+      "source": "INK VW-VIDEO-01 procedural-equivalence benchmark",
+      "license": "Project internal validation evidence",
+      "fallback": null,
+      "usedBy": [
+        "tests/v163-id/id-normalization-and-video.test.mjs"
+      ],
+      "scope": "validation",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "case5_id_normalization_summary_v163",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.3/case-05-id-normalization/Case_5_ID_Normalization_Summary.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "32e780cd96ca0a524ad6366b8ee3a69ec2a7b2b236fdb0fb0aecc8068c8863c8",
+      "size": 12587,
+      "source": "Batch 02 Case 5 duplicate-ID regression",
+      "license": "Project internal validation evidence",
+      "fallback": null,
+      "usedBy": [
+        "tests/v163-id/id-normalization-and-video.test.mjs"
+      ],
+      "scope": "validation",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "ink_v164_final_test_summary",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.4/INK_v1.6.4_FINAL_TEST_SUMMARY.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "cfc70a7e783b2500488a8055e3af828ca64a5b14ea6c2f77d482232a19e29465",
+      "size": 1235,
+      "source": "INK v1.6.4 final integrated validation",
+      "license": "Project internal validation evidence",
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.4_Release_Decision.md"
+      ],
+      "scope": "validation",
+      "revision": "1.6.4-RC"
+    },
+    {
+      "assetId": "ink_v164_visual_assessment",
+      "type": "visual-assessment",
+      "path": "Validation/v1.6.4/visual-comparisons/visual-assessment.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "1d25079a691d29124ca28ed9c7516c585792f430717f8270ab09a204d199d867",
+      "size": 1232,
+      "source": "Human visual assessment with v1.6.3 and video reference",
+      "license": "Project internal validation evidence",
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.4_Release_Decision.md"
+      ],
+      "scope": "validation",
+      "revision": "1.6.4-RC"
+    },
+    {
+      "assetId": "ink_v164_wc_batch_summary",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.4/watercolor-benchmark/batch-summary.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "6f0c28287560d8ffd38ee99f351b45f3a3b96fc3406f8e48ca9d8361d51442ce",
+      "size": 232572,
+      "source": "Watercolor Benchmark Batch 03",
+      "license": "Project internal validation evidence",
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.4_Watercolor_Benchmark_Report.md"
+      ],
+      "scope": "validation",
+      "revision": "1.6.4-RC"
+    },
+    {
+      "assetId": "ink_v165_final_test_summary",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.5/INK_v1.6.5_FINAL_TEST_SUMMARY.json",
+      "source": "INK v1.6.5 integrated final regression",
+      "license": "Project validation evidence",
+      "scope": "validation",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "0310347c7369d01efea381ecf6a9d0c6c5a42a6a2e288954250a83f5f6f8751a",
+      "size": 6079
+    },
+    {
+      "assetId": "ink_v165_ds_summary",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.5/reports/DS-01-DS-09_Test_Summary.json",
+      "source": "v1.6.5 specialized regression",
+      "license": "Project validation evidence",
+      "scope": "validation",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "34ffa57bc59390a718d9ba4dea76edffee9de1ad76bc3ccf5e99b99a6ef2a212",
+      "size": 1638
+    },
+    {
+      "assetId": "ink_v165_reason_trace",
+      "type": "validation-evidence",
+      "path": "Validation/v1.6.5/reports/Dependency_Reason_Trace_Example.json",
+      "source": "HERO-WC-01 reason trace",
+      "license": "Project validation evidence",
+      "scope": "validation",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "5140afafcb20d4986a3155cd8505fff2b7a00a2e062ee0bfce548031811b384d",
+      "size": 42556
+    },
+    {
+      "assetId": "ink_v165_root_cause_summary",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.5/reports/HERO_DEP_001_Root_Cause_Summary.json",
+      "source": "HERO-DEP-001 root cause evidence",
+      "license": "Project validation evidence",
+      "scope": "validation",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "14a76b0c7edeeb08aedb8fffb87086dc513271c667da8b9125e0374472b06cab",
+      "size": 628
+    },
+    {
+      "assetId": "ink_v165_hero_dependency_summary",
+      "type": "validation-summary",
+      "path": "Validation/v1.6.5/reports/HERO_WC_01_Dependency_Regression_Summary.json",
+      "source": "HERO-WC-01 dependency regression",
+      "license": "Project validation evidence",
+      "scope": "validation",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "c4e82e36a6d6c8fe6213eb2aba337cc9080448e8c3915e44510c56440a117d34",
+      "size": 903
+    },
+    {
+      "assetId": "flower_vector_behaviors_v162",
+      "type": "behavior-library",
+      "path": "assets/behavior/flower-vector-structure-v1.6.2.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "973e91821ca5181f1f7ed7c005ce72551c904396d52cdc7c9045de1b16493e2b",
+      "size": 7076,
+      "source": "INK Flower Benchmark Batch 01",
+      "license": "Project internal derived validation asset",
+      "fallback": null,
+      "usedBy": [
+        "tests/v162/structure-capabilities.test.mjs",
+        "scripts/run-flower-batch-v162.mjs"
+      ],
+      "scope": "runtime",
+      "revision": "1.6.2-RC"
+    },
+    {
+      "assetId": "vector_watercolor_behaviors_v163",
+      "type": "behavior-candidate-catalog",
+      "path": "assets/behavior/vector-watercolor-candidates-v1.6.3.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "cf6e78b4d6683d6279dce7988166afe5b99dd08dec5035833c3228f0fd6781c4",
+      "size": 14189,
+      "source": "INK Batch 02 concentrated remediation and Vector Watercolor benchmark",
+      "license": "Project internal derived validation asset",
+      "fallback": null,
+      "usedBy": [
+        "tests/v163/vector-watercolor-capabilities.test.mjs"
+      ],
+      "scope": "runtime-and-validation",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "vector_watercolor_gaps_v163",
+      "type": "capability-gap-candidate-catalog",
+      "path": "assets/gaps/vector-watercolor-gap-candidates-v1.6.3.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "ffc32f190c6cf7d12a6805e95b51360d0115210ac761a15569ae8c9715a6560e",
+      "size": 2757,
+      "source": "INK Batch 02 concentrated remediation and Vector Watercolor benchmark",
+      "license": "Project internal derived validation asset",
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.3_Release_Decision.md"
+      ],
+      "scope": "runtime-and-validation",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "flower_material_templates_v162",
+      "type": "material-template-catalog",
+      "path": "assets/material/flower-batch-01-templates-v1.6.2.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "b789ee81fbf5093cfd39289341106dd0ed8399abb644260c46c967baa24cf8df",
+      "size": 101144,
+      "source": "INK Flower Benchmark Batch 01",
+      "license": "Project internal derived validation asset",
+      "fallback": null,
+      "usedBy": [
+        "src/material/flower-batch-01.js",
+        "tests/v162/structure-capabilities.test.mjs"
+      ],
+      "scope": "runtime",
+      "revision": "1.6.2-RC"
+    },
+    {
+      "assetId": "vector_watercolor_materials_v163",
+      "type": "material-structure-candidate-catalog",
+      "path": "assets/material/vector-watercolor-candidates-v1.6.3.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "dda987ac1049cda6b848b85edf4182bbff15e9c06406050d888a48a378c651c7",
+      "size": 2984,
+      "source": "INK Batch 02 concentrated remediation and Vector Watercolor benchmark",
+      "license": "Project internal derived validation asset",
+      "fallback": null,
+      "usedBy": [
+        "src/paint/vector-watercolor.js"
+      ],
+      "scope": "runtime-and-validation",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "illustrator_jsx_modules_v163",
+      "type": "program-module-candidate-index",
+      "path": "assets/program-modules/illustrator-jsx-module-candidates-v1.6.3.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "e395fd1c7f1ee6f51e0fbbfc34a0895adf80e3a4e90aee573fc96f126f7dab54",
+      "size": 6912,
+      "source": "INK Batch 02 concentrated remediation and Vector Watercolor benchmark",
+      "license": "Project internal derived validation asset",
+      "fallback": null,
+      "usedBy": [
+        "src/program-import/parsers.js",
+        "src/program-import/compiler.js"
+      ],
+      "scope": "runtime-and-validation",
+      "revision": "1.6.3-RC"
+    },
+    {
+      "assetId": "ink_v164_paper_overlay_profile",
+      "type": "watercolor-paper-overlay",
+      "path": "assets/watercolor-v2/INK_Procedural_Paper_Overlay_v1.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "3612f0b7a65f1c1986eb59edf4acc7c322fd45c0add99ad3ec89140ac0ae8e54",
+      "size": 645,
+      "source": "INK original procedural paper overlay profile",
+      "license": "INK-PROJECT-ORIGINAL",
+      "fallback": null,
+      "usedBy": [
+        "src/paint/vector-watercolor.js"
+      ],
+      "scope": "material",
+      "revision": "1.6.4-RC"
+    },
+    {
+      "assetId": "ink_v164_brush_artwork_profiles",
+      "type": "watercolor-brush-material",
+      "path": "assets/watercolor-v2/INK_Watercolor_Brush_Artwork_Profiles_v2.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "d083be10efec6bb13ee93383fc9343bb1341498958367c1d26c210432de958c8",
+      "size": 1080,
+      "source": "INK original deterministic vector brush profiles",
+      "license": "INK-PROJECT-ORIGINAL",
+      "fallback": null,
+      "usedBy": [
+        "src/paint/vector-watercolor.js"
+      ],
+      "scope": "material",
+      "revision": "1.6.4-RC"
+    },
+    {
+      "assetId": "ink_v164_material_source_manifest",
+      "type": "license-manifest",
+      "path": "assets/watercolor-v2/MATERIAL_SOURCE_AND_LICENSE_MANIFEST.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "3d15809c46d1d25980f4a1006054838deca0425fbd9239856e1f79b547312389",
+      "size": 5984,
+      "source": "Watercolor candidate source and license audit",
+      "license": "Mixed references; no external asset embedded",
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.4_Material_Source_and_License_Report.md"
+      ],
+      "scope": "provenance",
+      "revision": "1.6.4-RC"
+    },
+    {
+      "assetId": "ink_v165_root_cause",
+      "type": "technical-report",
+      "path": "docs/INK_v1.6.5_Dependency_Scope_Root_Cause.md",
+      "source": "HERO-DEP-001 remediation",
+      "license": "Project documentation",
+      "scope": "documentation",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "f7710974f720cd7fff0b81906979dfcb0cc1c9887dd50289bb9a3e388af93f3b",
+      "size": 1701
+    },
+    {
+      "assetId": "ink_v165_release_decision",
+      "type": "release-decision",
+      "path": "docs/INK_v1.6.5_Release_Decision.md",
+      "source": "INK v1.6.5 integrated validation",
+      "license": "Project documentation",
+      "scope": "documentation",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "8d974f1652ba80a5e9a94dca36105ceb853a3f27eb5ddf7971773e6f3e8a1729",
+      "size": 343
+    },
+    {
+      "assetId": "image-json-workflows-auto_adjust_v2_example.json",
+      "type": "fixture",
+      "path": "external-assets/library/image/json-workflows/auto_adjust_v2_example.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "87e5a7116505067a0d1420a61dc77add9e0cea0bf49c1f8f3dc0b4838889a8ae",
+      "size": 4037,
+      "source": "https://github.com/chflame163/ComfyUI_LayerStyle",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "64f976fec8492ea4930c0e30c32369573189b23d"
+    },
+    {
+      "assetId": "image-json-workflows-image_blend_example.json",
+      "type": "fixture",
+      "path": "external-assets/library/image/json-workflows/image_blend_example.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "93528ebbffdef625543daddb096331f5c10ccb86380d4c6241fb74992608fa8d",
+      "size": 6661,
+      "source": "https://github.com/chflame163/ComfyUI_LayerStyle",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "64f976fec8492ea4930c0e30c32369573189b23d"
+    },
+    {
+      "assetId": "image-json-workflows-mask_gradient_example.json",
+      "type": "fixture",
+      "path": "external-assets/library/image/json-workflows/mask_gradient_example.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "90aa4550663a06a3834041c0f9ca29186c648c2199824dd3b94fc323df3268b6",
+      "size": 7086,
+      "source": "https://github.com/chflame163/ComfyUI_LayerStyle",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "64f976fec8492ea4930c0e30c32369573189b23d"
+    },
+    {
+      "assetId": "image-json-workflows-rounded_rectangle_example.json",
+      "type": "fixture",
+      "path": "external-assets/library/image/json-workflows/rounded_rectangle_example.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "75d45f05b0d75f7f70398ae58949a42cb7461b017ab0f47006b07fba3d16e518",
+      "size": 9842,
+      "source": "https://github.com/chflame163/ComfyUI_LayerStyle",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "64f976fec8492ea4930c0e30c32369573189b23d"
+    },
+    {
+      "assetId": "image-json-workflows-stroke_example.json",
+      "type": "fixture",
+      "path": "external-assets/library/image/json-workflows/stroke_example.json",
+      "embedded": true,
+      "optional": false,
+      "hash": "f1a585e8b53af789bd24aa7edb7e11b39713cb8db2bea4d1b0a7985e0c20e57e",
+      "size": 3276,
+      "source": "https://github.com/chflame163/ComfyUI_LayerStyle",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "64f976fec8492ea4930c0e30c32369573189b23d"
+    },
+    {
+      "assetId": "image-photoshop-Colorisation_SplitProof.jsx",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Colorisation_SplitProof.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "479b4f91de24fffcc9680960ee079f260fec11f0fc8ff2fe5995b4d5f03b80b2",
+      "size": 4725,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Dimension-v01.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Dimension-v01.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "057374895b523bc1b9bf1f7a7b4fcd1bf4e66467fd783d8dc667a9a15b8939fe",
+      "size": 7469,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-ExtractColorFromBG.jsx",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/ExtractColorFromBG.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "b527451c37d5dee1efae4e49a19adee0b90ed925415b134e0b14241fe17fa20b",
+      "size": 48225,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-ExtractDrawingBgColor.jsx",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/ExtractDrawingBgColor.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "430e0cce5a08269f0e5e930e4930bc74ba4275599e4a92448fadaf13a4d383e7",
+      "size": 8355,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-ExtractLinesDynamicSimple.jsx",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/ExtractLinesDynamicSimple.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "dc003223dac9ebbbb6ce5c0adf8e81d27a98b1c776095edfa675d10b95753b89",
+      "size": 14302,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Firefly-Actions.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Firefly-Actions.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "9b8ae4c7f0ebf103f9f45f1c051dffdfb67fc9c083d291be9c29b740023d85f2",
+      "size": 48944,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Frequency-Separation.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Frequency-Separation.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "56ea2003be73018b81dfee524e0a5bc3c31b5b110045430793e2dd03406e66a3",
+      "size": 5022,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Generative-Upscale-Bypass-4096px-Limit.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Generative-Upscale-Bypass-4096px-Limit.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "7e1dd8db08e98b74020fd61bc20cfecb25100062a723c4367de4eaa903ea1e29",
+      "size": 324395,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Generative-Upscale-Bypass-4K-Limit-Topaz.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Generative-Upscale-Bypass-4K-Limit-Topaz.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "46f372beac54a565cf7dde30afe9c2a247c43a991635823c68b91e378c863b61",
+      "size": 362631,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Harmonize-Enhancement.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Harmonize-Enhancement.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "1fed6e67ce15623d02e543aeffb76c2c14165eecfb4e363611a6e0ec3982d592",
+      "size": 12548,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Photo-v01.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Photo-v01.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "76a2704d6cc2269293e1aa221724fd769b0e77b5c8731777d7f06991f8c85366",
+      "size": 4366,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Quick-Object-Extraction.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Quick-Object-Extraction.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "9b47dec313d23b342b668a85ac3d10fef953bc0c7c50d980de3025b6d861c12e",
+      "size": 3688,
+      "source": "https://github.com/sbaril/Photoshop-Scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "622493c9c617c9d2ff38500e8e512c0ad421eed9"
+    },
+    {
+      "assetId": "image-photoshop-Remove-Logo-From-Background.atn",
+      "type": "script",
+      "path": "external-assets/library/image/photoshop/Remove-Logo-From-Background.atn",
+      "embedded": true,
+      "optional": false,
+      "hash": "fc9e47b72031d423cb3bfb38e262b5908aeeaf6ac0f0619201d83f45bcfd7d6d",
+      "size": 2323,
+      "source": "https://github.com/neoqueto/remove-logo-from-background",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "3a482b576d6a0368db5ff8dd0098d7c67907bd7e"
+    },
+    {
+      "assetId": "license-comfyui-layerstyle-mit-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/comfyui-layerstyle-MIT.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "5db9f53ef698ae099810ef003ef0668f644ebf4ffc041d5a2fffdaafc81569b0",
+      "size": 1067,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "license-illustrator-scripts-mit-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/illustrator-scripts-MIT.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "26a8d6a18b1eeebdb99b8a9e9b6e87e56a76600337262f3bbecc589a06c002d0",
+      "size": 1074,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "license-inkscape-tiling-license-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/inkscape-tiling-license.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "size": 11357,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "BSD-3-Clause",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "license-p5-brush-mit-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/p5-brush-MIT.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "cabbece1a276329fa28ab40f1c99af3af2b7852a329551a9a485b2199616583a",
+      "size": 1084,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "license-photoshop-scripts-mit-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/photoshop-scripts-MIT.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "4681ea5169c4b3fdee796c07ad4e3caf3ba2f8e53bafdb563bdb9a23c0a10078",
+      "size": 1082,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "license-procedural-flower-mit-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/procedural-flower-MIT.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "72979b450c3b3aaa54fb434254841d1ea8462a4bbc427ad2ae9f312be718dad6",
+      "size": 1060,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "license-remove-logo-atn-mit-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/remove-logo-atn-MIT.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "ec0bc10743f78c3be2c3effb4f2aecbbe34f657eeed7c888ae9797ed1fd4eaf6",
+      "size": 1065,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "license-tessagon-license-txt",
+      "type": "license",
+      "path": "external-assets/library/licenses/tessagon-license.txt",
+      "embedded": true,
+      "optional": false,
+      "hash": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "size": 11357,
+      "source": "Bundled license evidence from INK v1.1.0 verified asset inventory",
+      "license": "BSD-3-Clause",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": null
+    },
+    {
+      "assetId": "paint-p5-brush-fill_circle_explorer.html",
+      "type": "fixture",
+      "path": "external-assets/library/paint/p5-brush/fill_circle_explorer.html",
+      "embedded": true,
+      "optional": false,
+      "hash": "b80ccaa0cfd8f4d3c4b4f9fa904b35e8669f5dbcc024a610f3b371e76fb9a943",
+      "size": 14979,
+      "source": "https://github.com/acamposuribe/p5.brush",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "13e01c4e6c3d614acbcc769a579e23980bb62254"
+    },
+    {
+      "assetId": "paint-p5-brush-pastel_hatching_test.js",
+      "type": "script",
+      "path": "external-assets/library/paint/p5-brush/pastel_hatching_test.js",
+      "embedded": true,
+      "optional": false,
+      "hash": "8f94ecb9bf98a9f3401ec75ac9a58f86e06487831561601bf17a857207ac5a9b",
+      "size": 3084,
+      "source": "https://github.com/acamposuribe/p5.brush",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "13e01c4e6c3d614acbcc769a579e23980bb62254"
+    },
+    {
+      "assetId": "paint-p5-brush-stroke_pressure.test.js",
+      "type": "script",
+      "path": "external-assets/library/paint/p5-brush/stroke_pressure.test.js",
+      "embedded": true,
+      "optional": false,
+      "hash": "315d0708611088884d28b657f909a9ff652a6bb3c1d08701a569ec31cd60af97",
+      "size": 3065,
+      "source": "https://github.com/acamposuribe/p5.brush",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "13e01c4e6c3d614acbcc769a579e23980bb62254"
+    },
+    {
+      "assetId": "paint-p5-brush-visual_suite.js",
+      "type": "script",
+      "path": "external-assets/library/paint/p5-brush/visual_suite.js",
+      "embedded": true,
+      "optional": false,
+      "hash": "a114855f859c657501dae9a4d4b65dec3b9ebb7bdeda2aa5b6425e83e56c4e68",
+      "size": 17787,
+      "source": "https://github.com/acamposuribe/p5.brush",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "13e01c4e6c3d614acbcc769a579e23980bb62254"
+    },
+    {
+      "assetId": "paint-p5-brush-wash_test.js",
+      "type": "script",
+      "path": "external-assets/library/paint/p5-brush/wash_test.js",
+      "embedded": true,
+      "optional": false,
+      "hash": "753b3e72f4f177325fa7329b8c1ab1639fb36c8a975e0bbf503420dae04fb62c",
+      "size": 1565,
+      "source": "https://github.com/acamposuribe/p5.brush",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "13e01c4e6c3d614acbcc769a579e23980bb62254"
+    },
+    {
+      "assetId": "vector-illustrator-circular.jsx",
+      "type": "script",
+      "path": "external-assets/library/vector/illustrator/circular.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "201daecf2b2d0c223f436ff93f0ef1583818870f5f0638f6662ba7672bccecee",
+      "size": 21641,
+      "source": "https://github.com/alexander-ladygin/illustrator-scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "fc7625410b62c833fce100f67cf18a97588279c5"
+    },
+    {
+      "assetId": "vector-illustrator-duplicator.jsx",
+      "type": "script",
+      "path": "external-assets/library/vector/illustrator/duplicator.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "0c44b21678ebf409c15afb40af218775af75d172b8474f6f72e309dd9e390409",
+      "size": 60629,
+      "source": "https://github.com/alexander-ladygin/illustrator-scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "fc7625410b62c833fce100f67cf18a97588279c5"
+    },
+    {
+      "assetId": "vector-illustrator-griddder.jsx",
+      "type": "script",
+      "path": "external-assets/library/vector/illustrator/griddder.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "a28943fd8d7442783b11d559bbeeba77da126e94e154ffef79435a4c14e7609a",
+      "size": 47091,
+      "source": "https://github.com/alexander-ladygin/illustrator-scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "fc7625410b62c833fce100f67cf18a97588279c5"
+    },
+    {
+      "assetId": "vector-illustrator-puzzleClipper.jsx",
+      "type": "script",
+      "path": "external-assets/library/vector/illustrator/puzzleClipper.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "7f8f05c50fcf8b7a58675a1b6a1c9a9df7bd4241a1dade551c90d9344d94a609",
+      "size": 1038,
+      "source": "https://github.com/alexander-ladygin/illustrator-scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "fc7625410b62c833fce100f67cf18a97588279c5"
+    },
+    {
+      "assetId": "vector-illustrator-round_any_corner.jsx",
+      "type": "script",
+      "path": "external-assets/library/vector/illustrator/round_any_corner.jsx",
+      "embedded": true,
+      "optional": false,
+      "hash": "dbbfa5ca937c0d799997572e5424d4ece097a22a212446f75364617479776bab",
+      "size": 24804,
+      "source": "https://github.com/alexander-ladygin/illustrator-scripts",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "fc7625410b62c833fce100f67cf18a97588279c5"
+    },
+    {
+      "assetId": "vector-inkscape-reference-floret-tessagon.svg",
+      "type": "reference",
+      "path": "external-assets/library/vector/inkscape/reference-floret-tessagon.svg",
+      "embedded": true,
+      "optional": false,
+      "hash": "08025ceea96047b516322434585da6afa1055e21c443619c9bc342eab0b83643",
+      "size": 24255,
+      "source": "https://github.com/cwant/tessagon",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "d262351279448fb81ddce8e932c60524e23cfecc"
+    },
+    {
+      "assetId": "vector-inkscape-tiling.inx",
+      "type": "fixture",
+      "path": "external-assets/library/vector/inkscape/tiling.inx",
+      "embedded": true,
+      "optional": false,
+      "hash": "989664701fd04f75ae41033e407b42a5f66cc321fb18d26704bfbdcc9357e060",
+      "size": 5744,
+      "source": "https://github.com/cwant/inkscape-tiling-extension",
+      "license": "LicenseRef-Repository",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "c4ea9c509b1234aa58d7593555f92db582174916"
+    },
+    {
+      "assetId": "vector-inkscape-tiling.py",
+      "type": "script",
+      "path": "external-assets/library/vector/inkscape/tiling.py",
+      "embedded": true,
+      "optional": false,
+      "hash": "d79b933233d43c55444082f78986c54c7a9f411af84108e3dd8b490af101de47",
+      "size": 6053,
+      "source": "https://github.com/cwant/inkscape-tiling-extension",
+      "license": "LicenseRef-Repository",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "c4ea9c509b1234aa58d7593555f92db582174916"
+    },
+    {
+      "assetId": "vector-procedural-flower-Flower.html",
+      "type": "fixture",
+      "path": "external-assets/library/vector/procedural-flower/Flower.html",
+      "embedded": true,
+      "optional": false,
+      "hash": "0f3ed8730363c38526ec58cca3b1d8a90964a35559ea0a2e973a14acb98ff50c",
+      "size": 13531,
+      "source": "https://github.com/Platane/Procedural-Flower",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "d857fbe846d5899cd5cf8ea6a47d37e6030f53c0"
+    },
+    {
+      "assetId": "vector-procedural-flower-Flw.js",
+      "type": "script",
+      "path": "external-assets/library/vector/procedural-flower/Flw.js",
+      "embedded": true,
+      "optional": false,
+      "hash": "1afeef977e5924e0743afd826901ebfa6976e2383b9e9c8469dd549df0db222a",
+      "size": 70587,
+      "source": "https://github.com/Platane/Procedural-Flower",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "d857fbe846d5899cd5cf8ea6a47d37e6030f53c0"
+    },
+    {
+      "assetId": "vector-procedural-flower-Rampant-Flower.html",
+      "type": "fixture",
+      "path": "external-assets/library/vector/procedural-flower/Rampant-Flower.html",
+      "embedded": true,
+      "optional": false,
+      "hash": "36eb2c73ebf1d8125ce11c9a44df506fc9eb4470b7d4657579353c1640904c72",
+      "size": 13454,
+      "source": "https://github.com/Platane/Procedural-Flower",
+      "license": "MIT",
+      "fallback": null,
+      "usedBy": [
+        "tests/unit/program-import-v110.test.mjs"
+      ],
+      "scope": "test-only",
+      "revision": "d857fbe846d5899cd5cf8ea6a47d37e6030f53c0"
+    },
+    {
+      "assetId": "ink_v165_change_domain",
+      "type": "runtime-module",
+      "path": "src/recompute/change-domain.js",
+      "source": "HERO-DEP-001 remediation",
+      "license": "Project source",
+      "scope": "runtime",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "0f37fb025e0f6309218927a41b7824a7c60e07ae50b344709b2ef92284c43d78",
+      "size": 1410
+    },
+    {
+      "assetId": "ink_v165_dependency_scope_tests",
+      "type": "test-suite",
+      "path": "tests/v165/dependency-scope.test.mjs",
+      "source": "HERO Dependency Scope Test Suite DS-01 through DS-09",
+      "license": "Project validation",
+      "scope": "test",
+      "embedded": true,
+      "optional": false,
+      "fallback": null,
+      "usedBy": [
+        "docs/INK_v1.6.5_Release_Decision.md"
+      ],
+      "revision": "1.6.5-RC",
+      "hash": "9a162881b30ea790359d2745aae9cc6a9db0426b7759b56b09bf399f3868c3e2",
+      "size": 14529
+    }
+  ],
+  "inkVersion": "1.6.5-RC"
+}

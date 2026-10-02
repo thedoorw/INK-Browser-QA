@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ink-conversational-session-v1.schema.json",
+  "title": "INK Conversational Session v1",
+  "type": "object",
+  "required": ["format", "version", "sessionId", "documentPath", "currentDocumentHash", "rounds", "createdAt", "updatedAt"],
+  "properties": {
+    "format": { "const": "INK-CONVERSATIONAL-SESSION" },
+    "version": { "const": "1.0" },
+    "sessionId": { "type": "string", "minLength": 3 },
+    "documentPath": { "type": "string" },
+    "currentDocumentHash": { "type": "string" },
+    "currentExecutionId": { "type": ["string", "null"] },
+    "currentCheckpointId": { "type": ["string", "null"] },
+    "rounds": { "type": "array", "items": { "type": "object", "required": ["round", "status", "beforeHash", "afterHash"] } },
+    "activeTargets": { "type": "array" }, "unresolvedItems": { "type": "array" }, "constraints": { "type": "object" },
+    "createdAt": { "type": "string" }, "updatedAt": { "type": "string" }
+  },
+  "additionalProperties": true
+}
