@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "paint-session-bounds-b2-blend-isolation-001",
+  "requestId": "paint-session-bounds-b2-blend-isolation-002",
   "candidateSha": "b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
   "case": "raster-stack-blend-b2"
 }
