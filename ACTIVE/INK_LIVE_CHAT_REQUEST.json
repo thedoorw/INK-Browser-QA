@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B2-adjustment-live-002",
+  "requestId": "clusterB-B2-filter-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "11551eab8c1ec78e04031f178b7ab24b91b40d26",
+  "expectedSourceSha": "e2ce5e409f42c992bcf411e5e23d8f02435b1a63",
   "steps": [
     {
       "id": "capabilities",
@@ -15,9 +15,9 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B2 Editable Raster",
+          "name": "B2 Filter Raster",
           "type": "image/png",
-          "intent": "Cluster B2 native brightnessContrast qualification"
+          "intent": "Cluster B2 native gaussianBlur qualification"
         }
       },
       "file": {
@@ -36,24 +36,23 @@
       }
     },
     {
-      "id": "adjustPropose",
+      "id": "filterPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B2-live-brightness-contrast",
-          "operation": "image.adjustment.add.v1",
+          "taskId": "clusterB-B2-live-gaussian-blur",
+          "operation": "image.filter.add.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "type": "brightnessContrast",
+            "type": "gaussianBlur",
             "params": {
-              "brightness": 18,
-              "contrast": 22
+              "radius": 2
             },
             "opacity": 1
           }
@@ -61,23 +60,23 @@
       }
     },
     {
-      "id": "adjustApprove",
+      "id": "filterApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "adjustPropose.result.result.proposalId"
+          "$ref": "filterPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "adjustExecute",
+      "id": "filterExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "adjustPropose.result.result.proposalId"
+          "$ref": "filterPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "adjustApprove.result.result.approvalToken"
+          "$ref": "filterApprove.result.result.approvalToken"
         }
       }
     },
