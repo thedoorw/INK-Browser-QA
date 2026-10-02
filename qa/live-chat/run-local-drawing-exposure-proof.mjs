@@ -157,10 +157,46 @@ async function main(){
       const blocked=await api.tools.invoke('use_ink',{action:'execute',planId:proposed.result.planId,approvalToken:'not-approved'});
       const approved=await api.tools.invoke('use_ink',{action:'approve',planId:proposed.result.planId});
       const executed=await api.tools.invoke('use_ink',{action:'execute',planId:proposed.result.planId,approvalToken:approved.result.approvalToken});
-      const context=await api.tools.invoke('get_ink_context',{maxObjects:16});
+      const previewCreated=await api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:960,background:true});
+
+      const pencilRef=executed.result.stepResults[0]?.targets?.[0]?.ref;
+      if(!pencilRef) throw new Error('PENCIL_REF_MISSING');
+
+      const editProposed=await api.tools.invoke('propose_ink_edit',{
+        taskId:'stroke-edit-proof',
+        operation:'stroke.edit.v1',
+        targets:[pencilRef],
+        arguments:{action:'move-node',index:1,x:185,y:105}
+      });
+      const editApproved=await api.tools.invoke('approve_ink_edit',{proposalId:editProposed.result.proposalId});
+      const editExecuted=await api.tools.invoke('execute_ink_edit',{
+        proposalId:editProposed.result.proposalId,
+        approvalToken:editApproved.result.approvalToken
+      });
+      const previewEdited=await api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:960,background:true});
+
+      const eraseProposed=await api.tools.invoke('propose_ink_edit',{
+        taskId:'stroke-erase-proof',
+        operation:'stroke.erase.v1',
+        targets:[pencilRef],
+        arguments:{center:{x:225,y:180},radius:18}
+      });
+      const eraseApproved=await api.tools.invoke('approve_ink_edit',{proposalId:eraseProposed.result.proposalId});
+      const eraseExecuted=await api.tools.invoke('execute_ink_edit',{
+        proposalId:eraseProposed.result.proposalId,
+        approvalToken:eraseApproved.result.approvalToken
+      });
+
+      const context=await api.tools.invoke('get_ink_context',{maxObjects:32});
       const history=await api.tools.invoke('get_ink_history',{});
       const preview=await api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:960,background:true});
-      return {capabilities:{status:capabilities.status,strokeDescriptor},proposed,blocked,approved,executed,context,history,preview};
+      return {
+        capabilities:{status:capabilities.status,strokeDescriptor},
+        proposed,blocked,approved,executed,
+        previewCreated,editProposed,editApproved,editExecuted,previewEdited,
+        eraseProposed,eraseApproved,eraseExecuted,
+        context,history,preview
+      };
     })()`);
 
     assert.equal(result.capabilities.status,'COMPLETED');
@@ -171,11 +207,35 @@ async function main(){
     assert.equal(result.executed.status,'COMPLETED');
     assert.equal(result.executed.result.stepResults.length,2);
     assert.ok(result.executed.result.stepResults.every(step=>step.ok===true&&step.changed===true));
+
+    assert.equal(result.editProposed.status,'PROPOSED');
+    assert.equal(result.editApproved.status,'APPROVED');
+    assert.equal(result.editExecuted.status,'EXECUTED');
+    assert.equal(result.eraseProposed.status,'PROPOSED');
+    assert.equal(result.eraseApproved.status,'APPROVED');
+    assert.equal(result.eraseExecuted.status,'EXECUTED');
+
     const strokes=(result.context.result.objects||[]).filter(item=>item.type==='stroke');
-    assert.equal(strokes.length,2);
-    assert.ok(result.history.result.entries.slice(-2).every(item=>item.label==='CHAT create Stroke'));
+    assert.ok(strokes.length>=2);
+    const lastLabels=result.history.result.entries.slice(-4).map(item=>item.label);
+    assert.deepEqual(lastLabels,[
+      'CHAT create Stroke','CHAT create Stroke','CHAT edit Stroke','CHAT erase Stroke'
+    ]);
+
+    assert.equal(result.previewCreated.status,'COMPLETED');
+    assert.equal(result.previewEdited.status,'COMPLETED');
     assert.equal(result.preview.status,'COMPLETED');
     assert.equal(result.preview.outputHandles.length,1);
+    assert.notEqual(
+      result.previewCreated.outputHandles[0].renderFingerprint,
+      result.previewEdited.outputHandles[0].renderFingerprint,
+      'Stroke edit must change rendered output'
+    );
+    assert.notEqual(
+      result.previewEdited.outputHandles[0].renderFingerprint,
+      result.preview.outputHandles[0].renderFingerprint,
+      'Stroke erase must change rendered output'
+    );
 
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
     await writeFile(screenshot,Buffer.from(shot.data,'base64'));
@@ -186,7 +246,11 @@ async function main(){
         approvalGateBlockedBeforeApproval:true,
         explicitApproval:true,
         nativeStrokeCount:strokes.length,
-        historyLabels:result.history.result.entries.slice(-2).map(item=>item.label),
+        strokeEditExecuted:true,
+        strokeEraseExecuted:true,
+        renderChangedAfterEdit:true,
+        renderChangedAfterErase:true,
+        historyLabels:lastLabels,
         revisionId:result.executed.revisionReceipt?.endingRevisionId||result.executed.revisionId||null,
         previewHandle:result.preview.outputHandles[0]
       },
