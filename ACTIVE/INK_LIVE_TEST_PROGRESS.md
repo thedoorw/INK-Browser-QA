@@ -463,3 +463,29 @@ Qualification proof:
 - first formal Live attempt timed out before Public API readiness on the same exact deployed SHA; warm rerun completed the full chain.
 - effect / Liquify remain unqualified and do not inherit this PASS.
 
+## B2 incremental qualification — effect / colorOverlay — 2026-10-02
+
+```text
+B2_EFFECT_PR = #124 / MERGED
+B2_EFFECT_EXACT_CANDIDATE = dcc5d45851f00b6f809852c5cabc5e53c3bdae09
+B2_EFFECT_SOURCE_INTEGRATION = 9d73a8018c0c37861aa3c76412951eb26bf78e62
+B2_EFFECT_CANDIDATE_QA = live-raster-effect-candidate-001 / PASS
+B2_EFFECT_LIVE = clusterB-B2-effect-live-003 / PASS
+B2_EFFECT_COVERAGE = colorOverlay QUALIFIED
+B2_ADJUSTMENT = brightnessContrast QUALIFIED
+B2_FILTER = gaussianBlur QUALIFIED
+B2_BLEND = multiply QUALIFIED
+B2_LIQUIFY = NEXT
+B2_OVERALL = PARTIAL / NOT COMPLETE
+```
+
+Qualification proof:
+- CHAT reuses existing `createLayerEffect()`, native image `effects`, `applyLayerEffects()`, scoped History and Renderer.
+- candidate `colorOverlay` changed canvas hash `7883b22 → b6f7f8de`; Undo/Redo restored exact hashes.
+- formal Live renderer fingerprint changed `fnv1a32:34d01658 → fnv1a32:7cd33282`.
+- History added `CHAT add image effect: colorOverlay`.
+- Undo restored `fnv1a32:34d01658`; Redo restored `fnv1a32:7cd33282`.
+- prior dropShadow combined QA on a fully opaque bounded raster was not renderer-observable because the native shadow is composited behind the source inside fixed raster bounds; no new effect engine or renderer repair was required.
+- first two formal Live attempts timed out before Public API readiness on the same exact deployed SHA; third warm run completed the full chain.
+- Liquify remains unqualified and does not inherit this PASS.
+
