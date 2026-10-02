@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -222,6 +222,15 @@ const editSchemas = {
     obj({
       mode: { type: 'string', enum: [...CHAT_IMAGE_BLEND_MODES], description: 'Existing supported image blend mode.' }
     }, ['mode'], 'Existing image blendMode argument.'),
+    1
+  ),
+  'image.effect.add.v1': editTaskSchema(
+    { type: 'string', const: 'image.effect.add.v1', description: 'Append one existing native layer effect to an editable raster image.' },
+    obj({
+      type: { type: 'string', enum: [...CHAT_IMAGE_EFFECT_TYPES], description: 'Existing supported layer effect type.' },
+      params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing effect parameters; maximum 8 KiB / depth 4 / 64 keys.' },
+      opacity: num('Effect opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, ['type'], 'Existing image-core createLayerEffect() arguments.'),
     1
   ),
   'path.edit.v1': editTaskSchema(
@@ -891,6 +900,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.adjustment.add.v1') operationConstraints.push('Initial qualified adjustment allowlist: brightnessContrast, levels, curves, hueSaturation.');
   if (operation === 'image.filter.add.v1') operationConstraints.push('Initial qualified filter allowlist: gaussianBlur, sharpen, noiseGrain, textureOverlay.');
   if (operation === 'image.blend.set.v1') operationConstraints.push('Uses the existing IMAGE_CAPABILITIES blend-mode allowlist and rejects no-op assignment.');
+  if (operation === 'image.effect.add.v1') operationConstraints.push('Initial effect allowlist: dropShadow, innerShadow, outerGlow, colorOverlay, stroke; qualification coverage is recorded per tested effect type.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
   if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
   if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
@@ -937,6 +947,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
         ? [{ taskId: 'image-filter-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'gaussianBlur', params: { radius: 2 }, opacity: 1 } }]
       : operation === 'image.blend.set.v1'
         ? [{ taskId: 'image-blend-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { mode: 'multiply' } }]
+      : operation === 'image.effect.add.v1'
+        ? [{ taskId: 'image-effect-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'colorOverlay', params: { color: '#00cc66' }, opacity: .55 } }]
       : operation === 'object.translate.v1'
       ? [{ taskId: 'translate-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'object-1' }], arguments: { dx: 10, dy: 5 } }]
       : operation === 'path.repaint.v1'
