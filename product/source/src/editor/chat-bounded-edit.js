@@ -1968,6 +1968,9 @@ function executeImageStackTask(app, task) {
     editFail('RASTER_IMAGE_REQUIRED', { objectId: found?.object?.id || null });
   }
   const object = found.object;
+  if (task.operation === 'image.adjustment.add.v1' && (object.adjustments?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+  if ((task.operation === 'image.filter.add.v1' || task.operation === 'image.liquify.add.v1') && (object.filterStack?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+  if (task.operation === 'image.effect.add.v1' && (object.effects?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
   let stackItem = null;
   const label = task.operation === 'image.adjustment.add.v1'
     ? `CHAT add image adjustment: ${task.arguments.type}`
@@ -1980,24 +1983,20 @@ function executeImageStackTask(app, task) {
           : 'CHAT add image Liquify';
   app.history.pushScoped(label, [app.objectPath(found)], () => {
     if (task.operation === 'image.adjustment.add.v1') {
-      if ((object.adjustments?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.adjustments = object.adjustments || [];
       stackItem = createAdjustment(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
       object.adjustments.push(stackItem);
     } else if (task.operation === 'image.filter.add.v1') {
-      if ((object.filterStack?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.filterStack = object.filterStack || [];
       stackItem = createFilter(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
       object.filterStack.push(stackItem);
     } else if (task.operation === 'image.effect.add.v1') {
-      if ((object.effects?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.effects = object.effects || [];
       stackItem = createLayerEffect(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
       object.effects.push(stackItem);
     } else if (task.operation === 'image.blend.set.v1') {
       object.blendMode = task.arguments.mode;
     } else if (task.operation === 'image.liquify.add.v1') {
-      if ((object.filterStack?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.filterStack = object.filterStack || [];
       stackItem = createLiquifyFilter(task.arguments.operations, {
         opacity: task.arguments.opacity,
