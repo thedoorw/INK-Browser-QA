@@ -3268,7 +3268,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   .topbar>.file-group{display:none}
   .topbar-leading{display:none!important}
   .topbar-right #fullscreenToggle{display:none!important}
-  .contextual-control-host button,.contextual-options select,.contextual-options input:not([type="range"]):not([type="checkbox"]){height:var(--ui-control-height);min-height:var(--ui-control-height)}
+  .contextual-control-host button,.contextual-options select{height:var(--ui-options-control-height);min-height:var(--ui-options-control-height)}
+  .app .contextual-options input:not([type="range"]):not([type="checkbox"]):not([type="file"]):not([type="color"]){height:var(--ui-options-control-height);min-height:var(--ui-options-control-height)}
   .contextual-control-host .quick-color-input{height:24px!important}
 
 
