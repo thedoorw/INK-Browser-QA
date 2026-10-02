@@ -1,9 +1,99 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "transport-proof-context-001",
+  "requestId": "transport-proof-closed-loop-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
-  "tool": "get_ink_context",
-  "input": {}
+  "steps": [
+    {
+      "id": "contextBefore",
+      "tool": "get_ink_context",
+      "input": {}
+    },
+    {
+      "id": "previewBefore",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 960,
+        "background": true
+      }
+    },
+    {
+      "id": "propose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "Live transport proof: create one editable circle",
+          "steps": [
+            {
+              "stepId": "create-circle",
+              "operation": "path.create.v1",
+              "targets": [],
+              "arguments": {
+                "shape": "circle",
+                "cx": 220,
+                "cy": 260,
+                "r": 80,
+                "fill": "#00b8d9",
+                "stroke": "#202020",
+                "strokeWidth": 3
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "approve",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "propose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "execute",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "propose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "approve.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "contextAfter",
+      "tool": "get_ink_context",
+      "input": {}
+    },
+    {
+      "id": "previewAfter",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 960,
+        "background": true
+      }
+    },
+    {
+      "id": "history",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "revisions",
+      "tool": "get_ink_revisions",
+      "input": {}
+    }
+  ]
 }
