@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "live-raster-effect-candidate-001",
-  "candidateSha": "dcc5d45851f00b6f809852c5cabc5e53c3bdae09",
-  "case": "raster-stack-effect-b2"
+  "requestId": "live-raster-liquify-candidate-001",
+  "candidateSha": "126073621dbf9cf44e12e55d77c1f145929f1147",
+  "case": "raster-stack-liquify-b2"
 }
