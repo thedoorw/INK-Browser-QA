@@ -101,6 +101,28 @@ Rules:
 - permanent duplicate File / Undo / Redo controls are not required when File/Edit/History/shortcuts are the authority;
 - icons, labels, inputs and sliders share stable vertical alignment.
 
+### 5.1 Window controls — reference-driven placement
+
+Top-right minimize / restore-maximize / close controls are Photoshop-specific visual-reference elements.
+
+Rules:
+- the **whole three-control cluster** is positioned from Photoshop reference measurement, not DEV aesthetic judgment;
+- measure/reference the cluster outer bounds and its relation to the Photoshop application right edge before changing INK placement;
+- move the cluster as one unit; do not independently nudge individual buttons;
+- button widths, internal spacing, visible glyph envelopes and optical centers are checked against the Photoshop raster;
+- glyph weight/sharpness follows the Photoshop visible raster envelopes maintained in the Dataset;
+- implementation may remain SVG/vector, but rendered geometry is judged at 1:1;
+- browser/OS constraints may justify an explicit exception, but must be documented rather than silently substituted.
+
+Review rule:
+```text
+REFERENCE MEASUREMENT
+→ SHARED CLUSTER GEOMETRY
+→ 1:1 RENDER COMPARISON
+```
+
+A DEV-selected `margin`, `translateX`, or per-icon offset without reference measurement is not acceptable evidence of alignment.
+
 ## 6. Document tab rule
 
 Photoshop has real multi-document tabs. Current INK baseline does not expose an equivalent complete multi-document authority.
