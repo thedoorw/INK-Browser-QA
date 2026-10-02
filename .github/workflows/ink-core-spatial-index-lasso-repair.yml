@@ -1,0 +1,45 @@
+name: INK Core Spatial Index Lasso Repair
+
+on:
+  push:
+    branches: [work/core-spatial-index-lasso-repair-001]
+    paths:
+      - product/source/src/ink.js
+      - qa/runtime/run-ink-core-spatial-index-lasso-repair.mjs
+      - .github/workflows/ink-core-spatial-index-lasso-repair.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-core-spatial-index-lasso-repair
+  cancel-in-progress: false
+
+jobs:
+  focused-browser-evidence:
+    name: Focused spatial-index lifecycle browser evidence
+    runs-on: windows-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Verify focused runner syntax
+        shell: pwsh
+        run: node --check qa/runtime/run-ink-core-spatial-index-lasso-repair.mjs
+
+      - name: Run focused browser evidence
+        shell: pwsh
+        run: node qa/runtime/run-ink-core-spatial-index-lasso-repair.mjs .
+
+      - name: Upload focused evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-core-spatial-index-lasso-${{ github.sha }}
+          path: qa/evidence/ink-core-spatial-index-lasso-repair-${{ github.sha }}/
+          if-no-files-found: error
+          retention-days: 30
