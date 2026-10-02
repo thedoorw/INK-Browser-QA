@@ -1,6 +1,37 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "status": "FAIL",
-  "error": "Runner result unavailable: ENOENT: no such file or directory, open '/home/runner/work/_temp/ink-source-candidate-result.json'"
+  "requestId": "live-raster-import-pr119-002",
+  "candidateSha": "e535234b1b3ad47d4fa0f4300ec3539275b0b4ca",
+  "case": "raster-import-named-tool",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:35433/?sourceCandidate=e535234b1b3ad47d4fa0f4300ec3539275b0b4ca",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "before": {
+      "count": 0,
+      "undo": 0,
+      "canvas": "8d257ff8"
+    },
+    "after": {
+      "count": 1,
+      "undo": 1,
+      "canvas": "b2d95166",
+      "id": "88fbd73a-a200-4949-9526-f086a663db79",
+      "width": 32,
+      "height": 24,
+      "sourceSha256": "02180abde1c6932923a0a99a9a346ce284ff63b7af38d8f082830d50268589b4"
+    },
+    "importStatus": "COMPLETED",
+    "previewStatus": "COMPLETED",
+    "undoStatus": "COMPLETED",
+    "redoStatus": "COMPLETED",
+    "restoredFormat": "ink-image-state"
+  },
+  "status": "PASS"
 }
