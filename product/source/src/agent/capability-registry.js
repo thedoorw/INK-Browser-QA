@@ -251,6 +251,30 @@ const editSchemas = {
     }, ['operations'], 'Existing image-core createLiquifyFilter() arguments. Freeze-mask pixel arrays are intentionally excluded.'),
     1
   ),
+  'path.warp.v1': editTaskSchema(
+    { type: 'string', const: 'path.warp.v1', description: 'Apply the existing reversible native bend-x deformation to one editable Path.' },
+    obj({
+      strength: num('Normalized warp strength.', { minimum: -1, maximum: 1 }),
+      maxDisplacement: num('Maximum normalized horizontal displacement ratio.', { minimum: 0, maximum: .5, default: .5 })
+    }, ['strength'], 'Existing createWarpDeformationPlan() arguments. Zero-effective warp is rejected as NO_OP.'),
+    1
+  ),
+  'path.distort.v1': editTaskSchema(
+    { type: 'string', const: 'path.distort.v1', description: 'Apply the existing native projective Distort transform to one editable Path.' },
+    obj({
+      xOffset: num('Local-space top-left / bottom-right X corner offset.', { minimum: -1000000, maximum: 1000000, default: 0 }),
+      yOffset: num('Local-space top-right / bottom-left Y corner offset.', { minimum: -1000000, maximum: 1000000, default: 0 })
+    }, [], 'Existing createDistortTransform() corner-offset route. Both offsets zero is rejected as NO_OP.'),
+    1
+  ),
+  'path.perspective.v1': editTaskSchema(
+    { type: 'string', const: 'path.perspective.v1', description: 'Apply the existing native projective Perspective transform to one editable Path.' },
+    obj({
+      xOffset: num('Local-space top-left / bottom-right X corner offset.', { minimum: -1000000, maximum: 1000000, default: 0 }),
+      yOffset: num('Local-space top-right / bottom-left Y corner offset.', { minimum: -1000000, maximum: 1000000, default: 0 })
+    }, [], 'Existing createPerspectiveTransform() corner-offset route. Both offsets zero is rejected as NO_OP.'),
+    1
+  ),
   'path.edit.v1': editTaskSchema(
     { type: 'string', const: 'path.edit.v1', description: 'Edit one Path through the existing PathEditController.' },
     obj({
@@ -920,6 +944,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.blend.set.v1') operationConstraints.push('Uses the existing IMAGE_CAPABILITIES blend-mode allowlist and rejects no-op assignment.');
   if (operation === 'image.effect.add.v1') operationConstraints.push('Initial effect allowlist: dropShadow, innerShadow, outerGlow, colorOverlay, stroke; qualification coverage is recorded per tested effect type.');
   if (operation === 'image.liquify.add.v1') operationConstraints.push('Maximum 32 operations; uses existing LIQUIFY_OPERATIONS/createLiquifyFilter/liquifyRaster. Arbitrary freeze-mask pixel arrays are excluded from CHAT exposure.');
+  if (operation === 'path.warp.v1') operationConstraints.push('Uses existing createWarpDeformationPlan() + applyNonDestructiveDeformation(); stable Path identity and editable anchor structure are preserved.');
+  if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') operationConstraints.push('Uses existing projective transform planning + mapProjectivePoint(); active reversible warp state is rejected rather than silently mixing deformation authorities.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
   if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
   if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
@@ -970,6 +996,12 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
         ? [{ taskId: 'image-effect-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'colorOverlay', params: { color: '#00cc66' }, opacity: .55 } }]
       : operation === 'image.liquify.add.v1'
         ? [{ taskId: 'image-liquify-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { operations: [{ type: 'twirl', x: 32, y: 24, radius: 18, strength: .65 }], opacity: 1, maxWork: 500000 } }]
+      : operation === 'path.warp.v1'
+        ? [{ taskId: 'path-warp-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { strength: .45, maxDisplacement: .35 } }]
+      : operation === 'path.distort.v1'
+        ? [{ taskId: 'path-distort-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { xOffset: 12, yOffset: 6 } }]
+      : operation === 'path.perspective.v1'
+        ? [{ taskId: 'path-perspective-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { xOffset: 8, yOffset: -5 } }]
       : operation === 'object.translate.v1'
       ? [{ taskId: 'translate-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'object-1' }], arguments: { dx: 10, dy: 5 } }]
       : operation === 'path.repaint.v1'
