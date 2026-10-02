@@ -1,0 +1,1448 @@
+{
+  "baseline": "80a1016f1ba39ae75f401929bd8892b3bd5f023c",
+  "source": "before",
+  "browser": "153.0.8010.0",
+  "tools": [
+    {
+      "context": "pen",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "2",
+          "label": "大小\n2",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "100",
+          "label": "透明度\n100",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "pen",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "pen"
+    },
+    {
+      "context": "pencil",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "2",
+          "label": "大小\n2.2",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "72",
+          "label": "透明度\n72",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "pencil",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "pencil"
+    },
+    {
+      "context": "marker",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "18",
+          "label": "大小\n18",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "30",
+          "label": "透明度\n30",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "marker",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "marker"
+    },
+    {
+      "context": "brush",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "12",
+          "label": "大小\n12",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "88",
+          "label": "透明度\n88",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "brush",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "brush"
+    },
+    {
+      "context": "airbrush",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "9",
+          "label": "透明度\n9",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "airbrush",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "airbrush"
+    },
+    {
+      "context": "select",
+      "mode": "neutral",
+      "controls": [],
+      "tool": "blender",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "select",
+      "mode": "neutral",
+      "controls": [],
+      "tool": "smudge",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "lasso",
+      "mode": "neutral",
+      "controls": [],
+      "tool": "lasso",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "lasso"
+    },
+    {
+      "context": "polygonalLasso",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        }
+      ],
+      "tool": "polygonalLasso",
+      "raster": "polygonalLasso",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "magneticLasso",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "edgeThreshold",
+          "value": "40",
+          "label": "邊緣",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "searchRadius",
+          "value": "8",
+          "label": "搜尋",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "magneticLasso",
+      "raster": "magneticLasso",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "quickSelection",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "edgeThreshold",
+          "value": "40",
+          "label": "邊緣",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "quickSelection",
+      "raster": "quickSelection",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "magicWand",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "contiguous",
+          "value": "on",
+          "label": "連續",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "magicWand",
+      "raster": "magicWand",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "objectSelection",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "edgeThreshold",
+          "value": "40",
+          "label": "邊緣",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "objectSelection",
+      "raster": "objectSelection",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "gradient",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "gradientType",
+          "value": "linear",
+          "label": "漸層類型\n線性\n放射",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "gradientStart",
+          "value": "#202020",
+          "label": "起始色",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "gradientEnd",
+          "value": "#ffffff",
+          "label": "結束色",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "value": "",
+          "label": "編輯…",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "gradient",
+      "raster": "gradient",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "paintBucket",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "contiguous",
+          "value": "on",
+          "label": "連續",
+          "disabled": false,
+          "type": "checkbox"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "paintBucket",
+      "raster": "paintBucket",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "eyedropper",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "sampleRadius",
+          "value": "0",
+          "label": "取樣半徑",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "eyedropper",
+      "raster": "eyedropper",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "colorSampler",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "sampleRadius",
+          "value": "0",
+          "label": "取樣半徑",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "colorSampler",
+      "raster": "colorSampler",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "measure",
+      "mode": "neutral",
+      "controls": [],
+      "tool": "measure",
+      "raster": "measure",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "cloneStamp",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "cloneStamp",
+      "raster": "cloneStamp",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "patternStamp",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "value": "",
+          "label": "圖樣…",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "patternStamp",
+      "raster": "patternStamp",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "healingBrush",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "healingBrush",
+      "raster": "healingBrush",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "spotHealing",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "spotHealing",
+      "raster": "spotHealing",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "patch",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "patch",
+      "raster": "patch",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "dodge",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "dodge",
+      "raster": "dodge",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "burn",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "burn",
+      "raster": "burn",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "sponge",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "spongeMode",
+          "value": "saturate",
+          "label": "海綿模式\n增加飽和度\n降低飽和度",
+          "disabled": false,
+          "type": "select-one"
+        }
+      ],
+      "tool": "sponge",
+      "raster": "sponge",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "localBlur",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "localBlur",
+      "raster": "localBlur",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "localSharpen",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "localSharpen",
+      "raster": "localSharpen",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "colorReplacement",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "replacementColor",
+          "value": "#3b63fb",
+          "label": "替換色",
+          "disabled": false,
+          "type": "color"
+        }
+      ],
+      "tool": "colorReplacement",
+      "raster": "colorReplacement",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:line",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:arrow",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:rect",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:ellipse",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:triangle",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "text",
+      "mode": "text",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "fontFamily",
+          "value": "system-ui",
+          "label": "字型\n系統字型\n明體\n黑體\n等寬",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "fontSize",
+          "value": "32",
+          "label": "字級\n32",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "text:horizontal-tb",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "text"
+    },
+    {
+      "context": "text",
+      "mode": "text",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "fontFamily",
+          "value": "system-ui",
+          "label": "字型\n系統字型\n明體\n黑體\n等寬",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "fontSize",
+          "value": "32",
+          "label": "字級\n32",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "text:vertical-rl",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "text"
+    },
+    {
+      "context": "text",
+      "mode": "text",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "fontFamily",
+          "value": "system-ui",
+          "label": "字型\n系統字型\n明體\n黑體\n等寬",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "fontSize",
+          "value": "32",
+          "label": "字級\n32",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "text:vertical-lr",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "text"
+    },
+    {
+      "context": "select",
+      "mode": "neutral",
+      "controls": [],
+      "tool": "select",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "eraser",
+      "mode": "eraser",
+      "controls": [
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "segment",
+          "value": "",
+          "label": "局部",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "object",
+          "value": "",
+          "label": "物件",
+          "disabled": false,
+          "type": "submit"
+        }
+      ],
+      "tool": "eraser",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "eraser"
+    },
+    {
+      "context": "pan",
+      "mode": "neutral",
+      "controls": [],
+      "tool": "pan",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "pan"
+    }
+  ],
+  "checks": [
+    {
+      "name": "No page/resource errors",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "All loaded source responses match candidate bytes",
+      "ok": true,
+      "data": {
+        "count": 202
+      }
+    }
+  ],
+  "snapshots": [
+    "pen",
+    "brush",
+    "smudge",
+    "lasso",
+    "magneticLasso",
+    "paintBucket",
+    "shape-rect",
+    "text-vertical-rl",
+    "pan"
+  ],
+  "lassoNoTarget": {
+    "cropDisabled": true,
+    "frameDisabled": true,
+    "selection": 0
+  },
+  "errors": [],
+  "loadedResponseCount": 0,
+  "loadedResponsesMatchSource": true
+}

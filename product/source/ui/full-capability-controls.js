@@ -15,7 +15,7 @@ import { applyNonDestructiveDeformation } from '../src/vector/deformation.js';
 import { normalizeGradientFill, normalizePatternFill } from '../src/vector/fill-appearance.js';
 import { updateTextObject } from '../src/editor/text-object.js';
 import { verifyStorageRecord } from '../src/document/storage.js';
-import { UI_B_MENU_CONTRIBUTIONS, UI_B_TOOL_GROUPS, UI_B_RASTER_OPTION_FIELDS, UI_B_DIALOGS, UI_B_CONTRIBUTION_REPORT } from './capability-contributions.js';
+import { UI_B_MENU_CONTRIBUTIONS, UI_B_TOOL_GROUPS, UI_B_RASTER_OPTION_FIELDS, UI_B_NATIVE_OPTION_ROUTES, UI_B_DIALOGS, UI_B_CONTRIBUTION_REPORT } from './capability-contributions.js';
 import { createRasterToolController, UI_B_RASTER_TOOL_IDS } from './capability-raster-tools.js';
 
 const $=(selector,root=document)=>root.querySelector(selector);
@@ -209,7 +209,7 @@ export function installFullCapabilityControls(app){
     const shortcuts=[
       ['psObjectSelect','影像物件選取','i-object-select',()=>activateTool('objectSelection')],
       ['psCropTool','裁切影像…','i-crop',()=>openDialog('image-crop')],
-      ['psFrameTool','框架選取物件','i-frame',()=>app.creativeWorkspace?.runComposeAction?.('frame')],
+      ['psFrameTool','框架選取物件','i-frame',()=>{if(!app.selection?.length){toast('請先選取要建立框架的物件');return;}app.creativeWorkspace?.runComposeAction?.('frame');}],
       ['psPathEditTool','編輯選取節點','i-path',()=>{const found=selectedFound(app);if(found?.object.type==='stroke')app.enterStrokeEdit?.();else app.enterPathEdit?.();}]
     ];
     const groupHost=$('.tool-rail .tool-group');
@@ -296,7 +296,7 @@ export function installFullCapabilityControls(app){
     $('.contextual-control-host')?.appendChild(host);return host;
   }
   function refreshContextOptions(){
-    const host=ensureContextHost(),tool=raster.activeTool()||(['blender','smudge'].includes(state.activeCapabilityTool)?state.activeCapabilityTool:null);
+    const host=ensureContextHost(),tool=raster.activeTool()||(['blender','smudge'].includes(state.activeCapabilityTool)?state.activeCapabilityTool:app.tool);
     if(!tool){host.hidden=true;return;}
     // setOption notifies synchronously; preserve the field/focus while typing.
     if(host.dataset.tool===tool&&document.activeElement?.matches('[data-ui-b-option]')&&host.contains(document.activeElement))return;
@@ -315,9 +315,30 @@ export function installFullCapabilityControls(app){
     }).join('');
     if(tool==='gradient')markup+='<button type="button" data-ui-b-context-action="gradient-editor">編輯…</button>';
     if(tool==='patternStamp')markup+='<button type="button" data-ui-b-context-action="pattern-image">圖樣…</button><span class="ui-b-context-hint">'+esc(raster.state.patternName||'無圖樣')+'</span>';
-    if(['blender','smudge'].includes(tool))markup+='<span class="ui-b-context-hint">Brush Dynamics / Media → Properties</span>';
+    const actions = UI_B_NATIVE_OPTION_ROUTES[tool] || [];
+    const labels = {'select-all':'全選','select-clear':'取消選取','zoom-out':'縮小','zoom-in':'放大','fit-content':'符合內容','reset-view':'重設視圖','paint-replay':'替換並重播','stroke-session':'筆畫 Session…'};
+    for(const action of actions){
+      if(action==='snap-angle')markup+='<label><input type="checkbox" data-ui-b-native-option="snap-angle" '+(app.snapAngles?'checked':'')+'>角度吸附</label>';
+      else if(action==='text-direction')markup+='<label>方向 <select data-ui-b-native-option="text-direction">'+[['horizontal-tb','水平'],['vertical-rl','直排右至左'],['vertical-lr','直排左至右']].map(([id,label])=>'<option value="'+id+'"'+((app.uiBTextMode||'horizontal-tb')===id?' selected':'')+'>'+label+'</option>').join('')+'</select></label>';
+      else markup+='<button type="button" data-ui-b-native-action="'+action+'">'+labels[action]+'</button>';
+    }
+    host.hidden=!markup;
+
     host.innerHTML=markup;
-    $$('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>{if(input.type==='number'&&!input.validity.valid)return;raster.setOption(key,input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value);};input.addEventListener('input',handler);input.addEventListener('change',handler);});
+    $$('[data-ui-b-native-option]',host).forEach(input=>input.addEventListener('change',()=>{
+      if(input.dataset.uiBNativeOption==='snap-angle'){const target=$('#snapToggle');target.checked=input.checked;target.dispatchEvent(new Event('change',{bubbles:true}));}
+      else app.uiBTextMode=input.value;
+    }));
+    $$('[data-ui-b-native-action]',host).forEach(control=>control.addEventListener('click',()=>{
+      const action=control.dataset.uiBNativeAction;
+      if(action==='select-all'||action==='select-clear')dispatch(action);
+      else if(action==='zoom-in'||action==='zoom-out')app.zoomBy(action==='zoom-in'?1.2:1/1.2);
+      else if(action==='fit-content')app.fitContent();
+      else if(action==='reset-view')app.resetView();
+      else if(action==='paint-replay')$('#paintReplay')?.click();
+      else if(action==='stroke-session')openPanel('specialist');
+    }));
+    $$('[data-ui-b-option]',host).forEach(input=>{const key=input.dataset.uiBOption;const handler=()=>{if(input.type==='number'&&!input.validity.valid)return;const value=input.type==='checkbox'?input.checked:input.type==='number'?number(input.value):input.value;if(raster.options()[key]!==value)raster.setOption(key,value);};input.addEventListener('input',handler);input.addEventListener('change',handler);});
     $$('[data-ui-b-context-action]',host).forEach(control=>control.addEventListener('click',()=>{const action=control.dataset.uiBContextAction;if(action==='gradient-editor')openDialog('gradient-editor',{target:'raster'});else if(action==='pattern-image')pickPatternImage();}));
   }
 
@@ -437,8 +458,8 @@ export function installFullCapabilityControls(app){
 
   function refreshPanels(){
     refreshTextProperties();
-    const crop=$('#psCropTool');if(crop)crop.disabled=!selectedFound(app,object=>object.type==='image'&&object.rasterState?.colorRaster);
-    const frame=$('#psFrameTool');if(frame)frame.disabled=!app.selection?.length;
+    const crop=$('#psCropTool');if(crop)crop.disabled=false;
+    const frame=$('#psFrameTool');if(frame)frame.disabled=false;
     const path=$('#psPathEditTool');if(path)path.disabled=!selectedFound(app,object=>['path','stroke'].includes(object.type));
     const found=selectedFound(app),object=found?.object,stackTarget=object?.type==='image'?object:app.layer();
     const blend=$('#uiBBlendMode');if(blend)blend.value=object?.blendMode||'source-over';
@@ -839,17 +860,16 @@ export function installFullCapabilityControls(app){
 
   function refreshBrushExtraOptions(){
     let host=$('#uiBBrushExtraOptions');
-    if(!host){host=htmlNode('<div id="uiBBrushExtraOptions" class="property-card slider-card"></div>');$('.brush-preview-card')?.after(host);}
+    if(!host){host=htmlNode('<div id="uiBBrushExtraOptions" class="contextual-tool-controls ui-b-context-controls"></div>');$('.contextual-control-host')?.append(host);}
     const settings=app.toolSettings[app.tool];
     const drawing=['pen','pencil','marker','brush','airbrush'].includes(app.tool);
     const fields=drawing?[
       ...(['pen','marker','brush','airbrush'].includes(settings?.kind)?[['taper','收尖']]:[]),
       ...(['pencil','drybrush','brush','airbrush'].includes(settings?.kind)?[['grain','顆粒']]:[]),
       ...(['brush','airbrush'].includes(settings?.kind)?[['softness','柔度']]:[]),
-      ...(app.tool==='airbrush'?[['flow','墨量'],['wetness','含水'],['bristle','筆毫']]:[])
     ]:[];
     host.hidden=!fields.length;
-    host.innerHTML=fields.map(([key,label])=>'<label class="control-row range-row"><span>'+label+'</span><input type="range" min="'+(key==='softness'?5:key==='flow'?10:0)+'" max="100" value="'+Math.round((settings[key]||0)*100)+'" data-ui-b-brush-option="'+key+'"><output>'+Math.round((settings[key]||0)*100)+'%</output></label>').join('');
+    host.innerHTML=fields.map(([key,label])=>'<label class="quick-slider context-inline-control"><span class="context-control-label">'+label+'</span><input type="range" min="'+(key==='softness'?5:key==='flow'?10:0)+'" max="100" value="'+Math.round((settings[key]||0)*100)+'" data-ui-b-brush-option="'+key+'"><output>'+Math.round((settings[key]||0)*100)+'%</output></label>').join('');
     $$('[data-ui-b-brush-option]',host).forEach(input=>input.addEventListener('input',()=>{
       app.updateBrushSetting(input.dataset.uiBBrushOption,number(input.value)/100);
       input.nextElementSibling.value=input.value+'%';
@@ -863,11 +883,11 @@ export function installFullCapabilityControls(app){
       const result=nativeSetTool(tool);refreshContextOptions();return result;
     };
     const originalToolUI=app.refreshToolUI.bind(app);
-    app.refreshToolUI=function(){const result=originalToolUI();refreshBrushExtraOptions();if(app.tool==='brush'){const draw=$('#drawToolButton');draw?.classList.remove('active');if(draw)draw.dataset.tool='pen';$('#drawToolUse')?.setAttribute('href','#i-pen');const label=$('#drawToolLabel');if(label)label.textContent='鋼筆';}const activeRaster=raster.activeTool();if(activeRaster){$$('.tool-rail .tool-button,.tool-rail .tool-action').forEach(node=>node.classList.remove('active'));const group=UI_B_TOOL_GROUPS.find(item=>item.tools.some(([id])=>id===activeRaster));const target=activeRaster==='objectSelection'?$('#psObjectSelect'):$('[data-ui-b-tool-group="'+group?.id+'"]');target?.classList.add('active');}else $('#psObjectSelect')?.classList.remove('active');return result;};
+    app.refreshToolUI=function(){const result=originalToolUI();const mediaPanel=$('#brushOptions');if(mediaPanel&&!mediaPanel.querySelector('input,select,button'))mediaPanel.hidden=true;$$('[data-shape]').forEach(control=>control.classList.toggle('active',control.dataset.shape===app.shapeType));if(app.tool==='brush'){const draw=$('#drawToolButton');draw?.classList.remove('active');if(draw)draw.dataset.tool='pen';$('#drawToolUse')?.setAttribute('href','#i-pen');const label=$('#drawToolLabel');if(label)label.textContent='鋼筆';}const activeRaster=raster.activeTool();if(activeRaster){$$('.tool-rail .tool-button,.tool-rail .tool-action').forEach(node=>node.classList.remove('active'));const group=UI_B_TOOL_GROUPS.find(item=>item.tools.some(([id])=>id===activeRaster));const target=activeRaster==='objectSelection'?$('#psObjectSelect'):$('[data-ui-b-tool-group="'+group?.id+'"]');target?.classList.add('active');}else $('#psObjectSelect')?.classList.remove('active');refreshContextOptions();refreshBrushExtraOptions();return result;};
     const originalLayers=app.refreshLayers.bind(app);
     app.refreshLayers=function(){const result=originalLayers();renderLayerThumbnails();return result;};
     const original=app.refreshSelectionUI.bind(app);
-    app.refreshSelectionUI=function(){const result=original();refreshPanels();return result;};
+    app.refreshSelectionUI=function(){const result=original();refreshPanels();refreshContextOptions();return result;};
   }
 
   installMenus();installTools();installPointerCapture();installPanels();installDialogs();installExportInterop();bridgeLegacySpecialist();installLifecycleRefresh();app.refreshToolUI();refreshContextOptions();refreshPanels();renderLayerThumbnails();

@@ -359,6 +359,16 @@
       const node = document.getElementById(id);
       if (node && node.parentElement !== host) host.append(node);
     }
+    // Move the original native controls, with their IDs and handlers intact.
+    const quick = document.querySelector('#quickControls');
+    for (const id of ['smoothingInput', 'pressureInput', 'brushFlowInput', 'brushWetnessInput', 'brushBristleInput']) {
+      const input = document.getElementById(id), row = input?.closest('label');
+      if (!quick || !row) continue;
+      row.className = 'quick-slider context-inline-control';
+      row.dataset.contextControl = ['smoothingInput','pressureInput'].includes(id) ? 'dynamics' : 'media';
+      row.querySelector('span')?.classList.add('context-control-label');
+      if (row.parentElement !== quick) quick.append(row);
+    }
     let editing = document.querySelector('#shellEditingContextControls');
     if (!editing) {
       editing = document.createElement('div');
@@ -394,12 +404,12 @@
   function contextualDescriptor(app) {
     if (app?.pathEditing?.active) return { mode: 'path-edit', tool: 'path-edit', label: '路徑／節點', icon: 'i-pen' };
     if (app?.strokeEdit) return { mode: 'stroke-edit', tool: 'stroke-edit', label: '筆畫／節點', icon: 'i-brush' };
-    const capabilityTool = app?.uiBControls?.raster?.activeTool();
+    const capabilityTool = app?.uiBControls?.raster?.activeTool() || (['blender','smudge'].includes(app?.uiBControls?.state?.activeCapabilityTool) ? app.uiBControls.state.activeCapabilityTool : null);
     if (capabilityTool) return { mode: 'neutral', tool: capabilityTool, label: document.querySelector('#uiBCapabilityOptions')?.dataset.toolLabel || '工具', icon: 'i-sliders' };
     const selected = Array.isArray(app?.selection) ? app.selection.length : 0;
     const tool = app?.tool || 'pen';
-    if (selected > 0 && (tool === 'select' || tool === 'lasso')) return { mode: 'selection', tool: 'select', label: `選取 · ${selected} 個物件`, icon: 'i-select' };
     const meta = CONTEXT_TOOL_META[tool] || { label: '工具', icon: 'i-sliders' };
+    if (selected > 0 && (tool === 'select' || tool === 'lasso')) return { mode: 'selection', tool, label: `${meta.label} · ${selected} 個物件`, icon: meta.icon };
     if (DRAW_CONTEXT_TOOLS.has(tool)) return { mode: 'draw', tool, ...meta };
     if (tool === 'eraser' || tool === 'shape' || tool === 'text') return { mode: tool, tool, ...meta };
     return { mode: 'neutral', tool, ...meta };
@@ -423,6 +433,11 @@
     const name = document.querySelector('#contextualToolName');
     if (use) use.setAttribute('href', '#' + descriptor.icon);
     if (name) name.textContent = descriptor.label;
+    const settings = app.toolSettings?.[app.tool];
+    root.querySelectorAll('[data-context-control="dynamics"]').forEach(row => { row.hidden = descriptor.mode !== 'draw'; });
+    root.querySelectorAll('[data-context-control="media"]').forEach(row => {
+      row.hidden = descriptor.mode !== 'draw' || !['brush','drybrush','airbrush'].includes(settings?.kind);
+    });
     const editing = document.querySelector('#shellEditingContextControls');
     if (editing) {
       const activeEdit = descriptor.mode === 'path-edit' || descriptor.mode === 'stroke-edit';

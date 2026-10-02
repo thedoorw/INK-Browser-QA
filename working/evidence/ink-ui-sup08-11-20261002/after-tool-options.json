@@ -1,0 +1,2865 @@
+{
+  "baseline": "80a1016f1ba39ae75f401929bd8892b3bd5f023c",
+  "source": "after",
+  "browser": "153.0.8010.0",
+  "tools": [
+    {
+      "context": "pen",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "2",
+          "label": "大小\n2",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "100",
+          "label": "透明度\n100",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "smoothingInput",
+          "value": "66",
+          "label": "平滑\n66%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "pressureInput",
+          "value": "15",
+          "label": "壓力\n15%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "taper",
+          "value": "4",
+          "label": "收尖\n4%",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "pen",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "pen"
+    },
+    {
+      "context": "pencil",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "2",
+          "label": "大小\n2.2",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "72",
+          "label": "透明度\n72",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "smoothingInput",
+          "value": "42",
+          "label": "平滑\n42%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "pressureInput",
+          "value": "70",
+          "label": "壓力\n70%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "grain",
+          "value": "42",
+          "label": "顆粒\n42%",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "pencil",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "pencil"
+    },
+    {
+      "context": "marker",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "18",
+          "label": "大小\n18",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "30",
+          "label": "透明度\n30",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "smoothingInput",
+          "value": "62",
+          "label": "平滑\n62%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "pressureInput",
+          "value": "8",
+          "label": "壓力\n8%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "taper",
+          "value": "0",
+          "label": "收尖\n0%",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "marker",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "marker"
+    },
+    {
+      "context": "brush",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "12",
+          "label": "大小\n12",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "88",
+          "label": "透明度\n88",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "smoothingInput",
+          "value": "46",
+          "label": "平滑\n46%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "pressureInput",
+          "value": "95",
+          "label": "壓力\n95%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "brushFlowInput",
+          "value": "82",
+          "label": "墨量\n82%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "brushWetnessInput",
+          "value": "36",
+          "label": "含水\n36%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "brushBristleInput",
+          "value": "18",
+          "label": "筆毫\n18%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "taper",
+          "value": "42",
+          "label": "收尖\n42%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "grain",
+          "value": "0",
+          "label": "顆粒\n0%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "softness",
+          "value": "5",
+          "label": "柔度\n0%",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "brush",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "brush"
+    },
+    {
+      "context": "airbrush",
+      "mode": "draw",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "9",
+          "label": "透明度\n9",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "smoothingInput",
+          "value": "70",
+          "label": "平滑\n70%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "pressureInput",
+          "value": "55",
+          "label": "壓力\n55%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "brushFlowInput",
+          "value": "78",
+          "label": "墨量\n78%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "brushWetnessInput",
+          "value": "34",
+          "label": "含水\n34%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "brushBristleInput",
+          "value": "30",
+          "label": "筆毫\n30%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "taper",
+          "value": "0",
+          "label": "收尖\n0%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "grain",
+          "value": "0",
+          "label": "顆粒\n0%",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "softness",
+          "value": "90",
+          "label": "柔度\n90%",
+          "disabled": false,
+          "type": "range"
+        }
+      ],
+      "tool": "airbrush",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "airbrush"
+    },
+    {
+      "context": "blender",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "paint-replay",
+          "value": "",
+          "label": "替換並重播",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "",
+          "key": "stroke-session",
+          "value": "",
+          "label": "筆畫 Session…",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "blender",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "smudge",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "paint-replay",
+          "value": "",
+          "label": "替換並重播",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "",
+          "key": "stroke-session",
+          "value": "",
+          "label": "筆畫 Session…",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "smudge",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "lasso",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "select-all",
+          "value": "",
+          "label": "全選",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "",
+          "key": "select-clear",
+          "value": "",
+          "label": "取消選取",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "lasso",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "lasso"
+    },
+    {
+      "context": "polygonalLasso",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        }
+      ],
+      "tool": "polygonalLasso",
+      "raster": "polygonalLasso",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "magneticLasso",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "edgeThreshold",
+          "value": "40",
+          "label": "邊緣",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "searchRadius",
+          "value": "8",
+          "label": "搜尋",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "magneticLasso",
+      "raster": "magneticLasso",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "quickSelection",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "edgeThreshold",
+          "value": "40",
+          "label": "邊緣",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "quickSelection",
+      "raster": "quickSelection",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "magicWand",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "contiguous",
+          "value": "on",
+          "label": "連續",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "magicWand",
+      "raster": "magicWand",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "objectSelection",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "selectionMode",
+          "value": "new",
+          "label": "選取模式\n新增\n增加\n減去\n交集",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "edgeThreshold",
+          "value": "40",
+          "label": "邊緣",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "objectSelection",
+      "raster": "objectSelection",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "gradient",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "gradientType",
+          "value": "linear",
+          "label": "漸層類型\n線性\n放射",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "",
+          "key": "gradientStart",
+          "value": "#202020",
+          "label": "起始色",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "gradientEnd",
+          "value": "#ffffff",
+          "label": "結束色",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "value": "",
+          "label": "編輯…",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "gradient",
+      "raster": "gradient",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "paintBucket",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "contiguous",
+          "value": "on",
+          "label": "連續",
+          "disabled": false,
+          "type": "checkbox"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "paintBucket",
+      "raster": "paintBucket",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "eyedropper",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "sampleRadius",
+          "value": "0",
+          "label": "取樣半徑",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "eyedropper",
+      "raster": "eyedropper",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "colorSampler",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "sampleRadius",
+          "value": "0",
+          "label": "取樣半徑",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "colorSampler",
+      "raster": "colorSampler",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "measure",
+      "mode": "neutral",
+      "controls": [],
+      "tool": "measure",
+      "raster": "measure",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "cloneStamp",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "cloneStamp",
+      "raster": "cloneStamp",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "patternStamp",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "value": "",
+          "label": "圖樣…",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "patternStamp",
+      "raster": "patternStamp",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "healingBrush",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "healingBrush",
+      "raster": "healingBrush",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "spotHealing",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "spotHealing",
+      "raster": "spotHealing",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "patch",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "opacity",
+          "value": "1",
+          "label": "透明度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "patch",
+      "raster": "patch",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "dodge",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "dodge",
+      "raster": "dodge",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "burn",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "burn",
+      "raster": "burn",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "sponge",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "spongeMode",
+          "value": "saturate",
+          "label": "海綿模式\n增加飽和度\n降低飽和度",
+          "disabled": false,
+          "type": "select-one"
+        }
+      ],
+      "tool": "sponge",
+      "raster": "sponge",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "localBlur",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "localBlur",
+      "raster": "localBlur",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "localSharpen",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        }
+      ],
+      "tool": "localSharpen",
+      "raster": "localSharpen",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "colorReplacement",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "radius",
+          "value": "18",
+          "label": "大小",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "strength",
+          "value": "0.55",
+          "label": "強度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "hardness",
+          "value": "0.85",
+          "label": "硬度",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "tolerance",
+          "value": "32",
+          "label": "容差",
+          "disabled": false,
+          "type": "number"
+        },
+        {
+          "id": "",
+          "key": "replacementColor",
+          "value": "#3b63fb",
+          "label": "替換色",
+          "disabled": false,
+          "type": "color"
+        }
+      ],
+      "tool": "colorReplacement",
+      "raster": "colorReplacement",
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "9",
+          "label": "透明度\n9",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        },
+        {
+          "id": "",
+          "key": "snap-angle",
+          "value": "on",
+          "label": "角度吸附",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:line",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "9",
+          "label": "透明度\n9",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        },
+        {
+          "id": "",
+          "key": "snap-angle",
+          "value": "on",
+          "label": "角度吸附",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:arrow",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "9",
+          "label": "透明度\n9",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        },
+        {
+          "id": "",
+          "key": "snap-angle",
+          "value": "on",
+          "label": "角度吸附",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:rect",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "9",
+          "label": "透明度\n9",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        },
+        {
+          "id": "",
+          "key": "snap-angle",
+          "value": "on",
+          "label": "角度吸附",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:ellipse",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "shape",
+      "mode": "shape",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "quickOpacityInput",
+          "value": "9",
+          "label": "透明度\n9",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "line",
+          "value": "",
+          "label": "線",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "arrow",
+          "value": "",
+          "label": "箭頭",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "rect",
+          "value": "",
+          "label": "矩形",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "ellipse",
+          "value": "",
+          "label": "橢圓",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "triangle",
+          "value": "",
+          "label": "三角",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "shapeFill",
+          "value": "on",
+          "label": "填色",
+          "disabled": false,
+          "type": "checkbox"
+        },
+        {
+          "id": "",
+          "key": "snap-angle",
+          "value": "on",
+          "label": "角度吸附",
+          "disabled": false,
+          "type": "checkbox"
+        }
+      ],
+      "tool": "shape:triangle",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "shape"
+    },
+    {
+      "context": "text",
+      "mode": "text",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "fontFamily",
+          "value": "system-ui",
+          "label": "字型\n系統字型\n明體\n黑體\n等寬",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "fontSize",
+          "value": "32",
+          "label": "字級\n32",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "text-direction",
+          "value": "horizontal-tb",
+          "label": "方向\n水平\n直排右至左\n直排左至右",
+          "disabled": false,
+          "type": "select-one"
+        }
+      ],
+      "tool": "text:horizontal-tb",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "text"
+    },
+    {
+      "context": "text",
+      "mode": "text",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "fontFamily",
+          "value": "system-ui",
+          "label": "字型\n系統字型\n明體\n黑體\n等寬",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "fontSize",
+          "value": "32",
+          "label": "字級\n32",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "text-direction",
+          "value": "vertical-rl",
+          "label": "方向\n水平\n直排右至左\n直排左至右",
+          "disabled": false,
+          "type": "select-one"
+        }
+      ],
+      "tool": "text:vertical-rl",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "text"
+    },
+    {
+      "context": "text",
+      "mode": "text",
+      "controls": [
+        {
+          "id": "quickColor",
+          "value": "",
+          "label": "",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "quickColorInput",
+          "value": "#202020",
+          "label": "",
+          "disabled": false,
+          "type": "color"
+        },
+        {
+          "id": "fontFamily",
+          "value": "system-ui",
+          "label": "字型\n系統字型\n明體\n黑體\n等寬",
+          "disabled": false,
+          "type": "select-one"
+        },
+        {
+          "id": "fontSize",
+          "value": "32",
+          "label": "字級\n32",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "text-direction",
+          "value": "vertical-lr",
+          "label": "方向\n水平\n直排右至左\n直排左至右",
+          "disabled": false,
+          "type": "select-one"
+        }
+      ],
+      "tool": "text:vertical-lr",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "text"
+    },
+    {
+      "context": "select",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "select-all",
+          "value": "",
+          "label": "全選",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "",
+          "key": "select-clear",
+          "value": "",
+          "label": "取消選取",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "select",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "select"
+    },
+    {
+      "context": "eraser",
+      "mode": "eraser",
+      "controls": [
+        {
+          "id": "quickSizeInput",
+          "value": "42",
+          "label": "大小\n42",
+          "disabled": false,
+          "type": "range"
+        },
+        {
+          "id": "",
+          "key": "segment",
+          "value": "",
+          "label": "局部",
+          "disabled": false,
+          "type": "submit"
+        },
+        {
+          "id": "",
+          "key": "object",
+          "value": "",
+          "label": "物件",
+          "disabled": false,
+          "type": "submit"
+        }
+      ],
+      "tool": "eraser",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "eraser"
+    },
+    {
+      "context": "pan",
+      "mode": "neutral",
+      "controls": [
+        {
+          "id": "",
+          "key": "zoom-out",
+          "value": "",
+          "label": "縮小",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "",
+          "key": "zoom-in",
+          "value": "",
+          "label": "放大",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "",
+          "key": "fit-content",
+          "value": "",
+          "label": "符合內容",
+          "disabled": false,
+          "type": "button"
+        },
+        {
+          "id": "",
+          "key": "reset-view",
+          "value": "",
+          "label": "重設視圖",
+          "disabled": false,
+          "type": "button"
+        }
+      ],
+      "tool": "pan",
+      "raster": null,
+      "ids": [],
+      "nativeTool": "pan"
+    }
+  ],
+  "checks": [
+    {
+      "name": "pen has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "pen original dynamics controls are visible",
+      "ok": true
+    },
+    {
+      "name": "pen declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "smoothingInput",
+          "pressureInput",
+          "taper"
+        ]
+      }
+    },
+    {
+      "name": "pencil has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "pencil original dynamics controls are visible",
+      "ok": true
+    },
+    {
+      "name": "pencil declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "smoothingInput",
+          "pressureInput",
+          "grain"
+        ]
+      }
+    },
+    {
+      "name": "marker has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "marker original dynamics controls are visible",
+      "ok": true
+    },
+    {
+      "name": "marker declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "smoothingInput",
+          "pressureInput",
+          "taper"
+        ]
+      }
+    },
+    {
+      "name": "brush has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "brush original dynamics controls are visible",
+      "ok": true
+    },
+    {
+      "name": "brush declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "smoothingInput",
+          "pressureInput",
+          "brushFlowInput",
+          "brushWetnessInput",
+          "brushBristleInput",
+          "taper",
+          "grain",
+          "softness"
+        ]
+      }
+    },
+    {
+      "name": "airbrush has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "airbrush original dynamics controls are visible",
+      "ok": true
+    },
+    {
+      "name": "airbrush declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "smoothingInput",
+          "pressureInput",
+          "brushFlowInput",
+          "brushWetnessInput",
+          "brushBristleInput",
+          "taper",
+          "grain",
+          "softness"
+        ]
+      }
+    },
+    {
+      "name": "blender has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "blender declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "paint-replay",
+          "stroke-session"
+        ]
+      }
+    },
+    {
+      "name": "smudge has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "smudge declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "paint-replay",
+          "stroke-session"
+        ]
+      }
+    },
+    {
+      "name": "lasso has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "Lasso has native selection commands and no invented scalar controls",
+      "ok": true
+    },
+    {
+      "name": "lasso declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "select-all",
+          "select-clear"
+        ]
+      }
+    },
+    {
+      "name": "polygonalLasso has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "polygonalLasso declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "selectionMode"
+        ],
+        "visible": [
+          "selectionMode"
+        ]
+      }
+    },
+    {
+      "name": "magneticLasso has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "magneticLasso declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "selectionMode",
+          "edgeThreshold",
+          "searchRadius"
+        ],
+        "visible": [
+          "selectionMode",
+          "edgeThreshold",
+          "searchRadius"
+        ]
+      }
+    },
+    {
+      "name": "quickSelection has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "quickSelection declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "selectionMode",
+          "tolerance",
+          "edgeThreshold"
+        ],
+        "visible": [
+          "selectionMode",
+          "tolerance",
+          "edgeThreshold"
+        ]
+      }
+    },
+    {
+      "name": "magicWand has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "magicWand declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "selectionMode",
+          "tolerance",
+          "contiguous"
+        ],
+        "visible": [
+          "selectionMode",
+          "tolerance",
+          "contiguous"
+        ]
+      }
+    },
+    {
+      "name": "objectSelection has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "objectSelection declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "selectionMode",
+          "tolerance",
+          "edgeThreshold"
+        ],
+        "visible": [
+          "selectionMode",
+          "tolerance",
+          "edgeThreshold"
+        ]
+      }
+    },
+    {
+      "name": "gradient has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "gradient declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "gradientType",
+          "gradientStart",
+          "gradientEnd",
+          "opacity"
+        ],
+        "visible": [
+          "gradientType",
+          "gradientStart",
+          "gradientEnd",
+          "opacity",
+          ""
+        ]
+      }
+    },
+    {
+      "name": "paintBucket has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "paintBucket declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "tolerance",
+          "contiguous",
+          "opacity"
+        ],
+        "visible": [
+          "tolerance",
+          "contiguous",
+          "opacity"
+        ]
+      }
+    },
+    {
+      "name": "eyedropper has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "eyedropper declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "sampleRadius"
+        ],
+        "visible": [
+          "sampleRadius"
+        ]
+      }
+    },
+    {
+      "name": "colorSampler has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "colorSampler declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "sampleRadius"
+        ],
+        "visible": [
+          "sampleRadius"
+        ]
+      }
+    },
+    {
+      "name": "measure has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "measure declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": []
+      }
+    },
+    {
+      "name": "cloneStamp has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "cloneStamp declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "opacity",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "opacity",
+          "hardness"
+        ]
+      }
+    },
+    {
+      "name": "patternStamp has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "patternStamp declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "opacity",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "opacity",
+          "hardness",
+          ""
+        ]
+      }
+    },
+    {
+      "name": "healingBrush has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "healingBrush declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "opacity",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "opacity",
+          "hardness"
+        ]
+      }
+    },
+    {
+      "name": "spotHealing has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "spotHealing declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "opacity",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "opacity",
+          "hardness"
+        ]
+      }
+    },
+    {
+      "name": "patch has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "patch declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "opacity"
+        ],
+        "visible": [
+          "radius",
+          "opacity"
+        ]
+      }
+    },
+    {
+      "name": "dodge has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "dodge declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "strength",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "strength",
+          "hardness"
+        ]
+      }
+    },
+    {
+      "name": "burn has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "burn declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "strength",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "strength",
+          "hardness"
+        ]
+      }
+    },
+    {
+      "name": "sponge has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "sponge declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "strength",
+          "hardness",
+          "spongeMode"
+        ],
+        "visible": [
+          "radius",
+          "strength",
+          "hardness",
+          "spongeMode"
+        ]
+      }
+    },
+    {
+      "name": "localBlur has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "localBlur declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "strength",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "strength",
+          "hardness"
+        ]
+      }
+    },
+    {
+      "name": "localSharpen has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "localSharpen declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "strength",
+          "hardness"
+        ],
+        "visible": [
+          "radius",
+          "strength",
+          "hardness"
+        ]
+      }
+    },
+    {
+      "name": "colorReplacement has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "colorReplacement declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [
+          "radius",
+          "strength",
+          "hardness",
+          "tolerance",
+          "replacementColor"
+        ],
+        "visible": [
+          "radius",
+          "strength",
+          "hardness",
+          "tolerance",
+          "replacementColor"
+        ]
+      }
+    },
+    {
+      "name": "shape:line has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "shape:line declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "line",
+          "arrow",
+          "rect",
+          "ellipse",
+          "triangle",
+          "shapeFill",
+          "snap-angle"
+        ]
+      }
+    },
+    {
+      "name": "shape:arrow has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "shape:arrow declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "line",
+          "arrow",
+          "rect",
+          "ellipse",
+          "triangle",
+          "shapeFill",
+          "snap-angle"
+        ]
+      }
+    },
+    {
+      "name": "shape:rect has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "Shape exposes consumed brush size/opacity and angle-snap authority",
+      "ok": true
+    },
+    {
+      "name": "shape:rect declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "line",
+          "arrow",
+          "rect",
+          "ellipse",
+          "triangle",
+          "shapeFill",
+          "snap-angle"
+        ]
+      }
+    },
+    {
+      "name": "shape:ellipse has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "shape:ellipse declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "line",
+          "arrow",
+          "rect",
+          "ellipse",
+          "triangle",
+          "shapeFill",
+          "snap-angle"
+        ]
+      }
+    },
+    {
+      "name": "shape:triangle has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "shape:triangle declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "quickSizeInput",
+          "quickOpacityInput",
+          "line",
+          "arrow",
+          "rect",
+          "ellipse",
+          "triangle",
+          "shapeFill",
+          "snap-angle"
+        ]
+      }
+    },
+    {
+      "name": "text:horizontal-tb has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "text:horizontal-tb exposes existing writing-mode state",
+      "ok": true
+    },
+    {
+      "name": "text:horizontal-tb declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "fontFamily",
+          "fontSize",
+          "text-direction"
+        ]
+      }
+    },
+    {
+      "name": "text:vertical-rl has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "text:vertical-rl exposes existing writing-mode state",
+      "ok": true
+    },
+    {
+      "name": "text:vertical-rl declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "fontFamily",
+          "fontSize",
+          "text-direction"
+        ]
+      }
+    },
+    {
+      "name": "text:vertical-lr has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "text:vertical-lr exposes existing writing-mode state",
+      "ok": true
+    },
+    {
+      "name": "text:vertical-lr declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickColor",
+          "quickColorInput",
+          "fontFamily",
+          "fontSize",
+          "text-direction"
+        ]
+      }
+    },
+    {
+      "name": "select has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "select declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "select-all",
+          "select-clear"
+        ]
+      }
+    },
+    {
+      "name": "eraser has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "eraser declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "quickSizeInput",
+          "segment",
+          "object"
+        ]
+      }
+    },
+    {
+      "name": "pan has unique native DOM identities",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "pan declared raster parameters are visible",
+      "ok": true,
+      "data": {
+        "expected": [],
+        "visible": [
+          "zoom-out",
+          "zoom-in",
+          "fit-content",
+          "reset-view"
+        ]
+      }
+    },
+    {
+      "name": "Lasso gesture leaves Crop and Frame discoverable",
+      "ok": true
+    },
+    {
+      "name": "Crop without raster gives prerequisite response",
+      "ok": true
+    },
+    {
+      "name": "Frame without selection gives prerequisite response",
+      "ok": true
+    },
+    {
+      "name": "Moved smoothing control writes original brush state",
+      "ok": true
+    },
+    {
+      "name": "Moved pressure control writes original brush state",
+      "ok": true
+    },
+    {
+      "name": "Native stroke consumes exposed dynamics",
+      "ok": true
+    },
+    {
+      "name": "Shape flyout and Options share the same active type",
+      "ok": true
+    },
+    {
+      "name": "Snap projection uses existing document category",
+      "ok": true
+    },
+    {
+      "name": "Shape consumes exposed size and opacity",
+      "ok": true
+    },
+    {
+      "name": "Native Lasso still selects the shape",
+      "ok": true,
+      "data": {
+        "x1": 310,
+        "y1": 330,
+        "x2": 450,
+        "y2": 460,
+        "b": {
+          "x": -290.8526328451012,
+          "y": -242.70695892743137,
+          "w": 131.90595593882142,
+          "h": 118.71536034493926
+        },
+        "tl": {
+          "x": 257,
+          "y": 289
+        },
+        "br": {
+          "x": 357,
+          "y": 379
+        }
+      }
+    },
+    {
+      "name": "Frame with Lasso target uses native frame authority",
+      "ok": true
+    },
+    {
+      "name": "Frame creation undo uses original History",
+      "ok": true
+    },
+    {
+      "name": "Text direction projects into native text creation",
+      "ok": true
+    },
+    {
+      "name": "Crop with a raster target opens existing crop dialog",
+      "ok": true
+    },
+    {
+      "name": "Crop commits native raster mutation",
+      "ok": true
+    },
+    {
+      "name": "Crop undo preserves native raster history",
+      "ok": true
+    },
+    {
+      "name": "Raster fields update original adapter state",
+      "ok": true,
+      "data": {
+        "selectionMode": "new",
+        "tolerance": 100,
+        "contiguous": true,
+        "edgeThreshold": 40,
+        "searchRadius": 8,
+        "radius": 18,
+        "strength": 0.55,
+        "opacity": 0.4,
+        "hardness": 0.85,
+        "sampleRadius": 0,
+        "gradientType": "linear",
+        "gradientStart": "#202020",
+        "gradientEnd": "#ffffff",
+        "replacementColor": "#3b63fb",
+        "spongeMode": "saturate"
+      }
+    },
+    {
+      "name": "Raster field focus survives synchronous state refresh",
+      "ok": true
+    },
+    {
+      "name": "Raster options survive tool switches without copied state",
+      "ok": true
+    },
+    {
+      "name": "Pan context zoom invokes camera authority",
+      "ok": true
+    },
+    {
+      "name": "Expanded Options remain horizontally contained at compact width",
+      "ok": true
+    },
+    {
+      "name": "No page/resource errors",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "All loaded source responses match candidate bytes",
+      "ok": true,
+      "data": {
+        "count": 202
+      }
+    }
+  ],
+  "snapshots": [
+    "pen",
+    "brush",
+    "smudge",
+    "lasso",
+    "magneticLasso",
+    "paintBucket",
+    "shape-rect",
+    "text-vertical-rl",
+    "pan",
+    "lasso-crop-feedback",
+    "lasso-frame-feedback",
+    "narrow-brush",
+    "compact-brush"
+  ],
+  "lassoNoTarget": {
+    "cropDisabled": false,
+    "frameDisabled": false,
+    "selection": 0
+  },
+  "errors": [],
+  "loadedResponseCount": 202,
+  "loadedResponsesMatchSource": true
+}

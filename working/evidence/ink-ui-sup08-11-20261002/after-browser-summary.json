@@ -1,0 +1,86 @@
+{
+  "environment": {
+    "browser": "153.0.8010.0",
+    "viewport": [
+      1280,
+      1024
+    ],
+    "DPR": 1,
+    "font": "Noto Sans TC 400 QA-only",
+    "rendering": "CPU Canvas fallback",
+    "source": "candidate"
+  },
+  "checks": [
+    {
+      "name": "Reference existing parameter inputs remain editable",
+      "ok": true
+    },
+    {
+      "name": "Reference actionable required-image feedback retained",
+      "ok": true
+    },
+    {
+      "name": "Existing file picker retains mixed CJK/Latin filename",
+      "ok": true
+    },
+    {
+      "name": "Layers native add/duplicate preserved",
+      "ok": true
+    },
+    {
+      "name": "Layers native lock preserved",
+      "ok": true
+    },
+    {
+      "name": "Layers delete/undo preserved",
+      "ok": true
+    },
+    {
+      "name": "Transparent splitter envelope still resizes",
+      "ok": true
+    },
+    {
+      "name": "Compact horizontal containment retained",
+      "ok": true
+    },
+    {
+      "name": "No page/resource errors",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "Loaded response bytes match source snapshot",
+      "ok": true,
+      "data": {
+        "count": 202
+      }
+    }
+  ],
+  "errors": [],
+  "states": [
+    "active",
+    "reference",
+    "reference-details",
+    "reference-file-name",
+    "layers",
+    "layers-locked",
+    "layers-hidden",
+    "panel-properties",
+    "panel-color",
+    "panel-adjustments",
+    "panel-history",
+    "panel-channels",
+    "panel-pages",
+    "panel-libraries",
+    "panel-compose",
+    "panel-chat",
+    "panel-revision",
+    "tools-single",
+    "dock-collapsed",
+    "dock-expanded",
+    "resized",
+    "narrow",
+    "compact"
+  ],
+  "loadedResponseCount": 202
+}

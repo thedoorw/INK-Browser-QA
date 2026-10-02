@@ -1,0 +1,2404 @@
+{
+  "baseline": "80a1016f1ba39ae75f401929bd8892b3bd5f023c",
+  "before": {
+    "bytes": 232453,
+    "sha256": "050674638e02d4f1180a3aedb2e96b841271df43593dd7e7b32d5d402a4e0278",
+    "declarations": 6596,
+    "important": 103,
+    "media": [
+      "(max-width:1120px)and(min-width:761px)",
+      "(max-width:760px)",
+      "(min-width:761px)",
+      "(min-width:761px)and(min-height:990px)and(max-height:998px)",
+      "(pointer:coarse)",
+      "(pointer:coarse)and(max-height:520px)",
+      "(prefers-reduced-motion:reduce)"
+    ],
+    "fontDeclarations": [
+      "media:(max-width:1120px)and(min-width:761px)|.application-menus > button,.application-menu > button,.application-menu-label|var(--ui-type-md)",
+      "media:(max-width:1120px)and(min-width:761px)|.creative-workspace-state span|var(--ui-type-xs)",
+      "media:(max-width:1120px)and(min-width:761px)|.creative-workspace-state strong|var(--ui-type-xs)",
+      "media:(max-width:760px)|#canvasSettings .panel-header strong|var(--ui-type-xl)",
+      "media:(max-width:760px)|#canvasSettings .subpanel-title strong,#canvasSettings .control-row>span:first-child,#canvasSettings .toggle-row|var(--ui-type-xl)",
+      "media:(max-width:760px)|#canvasSettings select,#canvasSettings input[type=\"number\"],#canvasSettings input[type=\"text\"],#canvasSettings output|var(--ui-type-xl)",
+      "media:(max-width:760px)|.artboard-summary,.export-summary|var(--ui-type-lg)",
+      "media:(max-width:760px)|.brand strong|var(--ui-type-xl)",
+      "media:(max-width:760px)|.contextual-tool-identity strong|var(--ui-type-xs)",
+      "media:(max-width:760px)|.control-row|var(--ui-type-lg)",
+      "media:(max-width:760px)|.doc-title|var(--ui-type-lg)",
+      "media:(max-width:760px)|.doc-title|var(--ui-type-xl)",
+      "media:(max-width:760px)|.history-step-copy small|var(--ui-type-sm)",
+      "media:(max-width:760px)|.history-step-copy strong|var(--ui-type-xl)",
+      "media:(max-width:760px)|.history-step-index|var(--ui-type-md)",
+      "media:(max-width:760px)|.layer-row .layer-meta|var(--ui-type-sm)",
+      "media:(max-width:760px)|.layer-row .layer-name strong|var(--ui-type-md)",
+      "media:(max-width:760px)|.mobile-dock .tool-label,\n  .dock-action .tool-label|var(--ui-type-md)",
+      "media:(max-width:760px)|.mobile-dock .tool-label,.dock-action .tool-label|var(--ui-type-xs)",
+      "media:(max-width:760px)|.mobile-dock .tool-label,.dock-action .tool-label|var(--ui-type-xs)",
+      "media:(max-width:760px)|.primary-button|var(--ui-type-lg)",
+      "media:(max-width:760px)|.quiet-button|var(--ui-type-lg)",
+      "media:(max-width:760px)|.toggle-row|var(--ui-type-lg)",
+      "media:(max-width:760px)|.workspace-switch button span|var(--ui-type-xs)",
+      "media:(max-width:760px)|.workspace-switch button|var(--ui-type-xs)",
+      "media:(min-width:761px)|#app .panel-window-item|var(--ui-type-lg)",
+      "media:(min-width:761px)|#zoomText|var(--ui-type-xs)",
+      "media:(min-width:761px)|.application-command-menu button|var(--ui-type-lg)",
+      "media:(min-width:761px)|.application-menus > button,.application-menu > button,.application-menu-label|var(--ui-type-lg)",
+      "media:(min-width:761px)|.artboard-summary,.export-summary|var(--ui-type-xs)",
+      "media:(min-width:761px)|.branding-settings-dialog>.panel-header strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.brush-family-head strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "media:(min-width:761px)|.context-control-label,.contextual-options .quick-slider output|var(--ui-type-md)",
+      "media:(min-width:761px)|.contextual-options .context-control-label|var(--ui-type-xl)",
+      "media:(min-width:761px)|.control-row|var(--ui-type-md)",
+      "media:(min-width:761px)|.creative-chat-message>p,.creative-chat-empty|var(--ui-type-md)",
+      "media:(min-width:761px)|.creative-chat-message>strong|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-chat-runtime span,.creative-chat-runtime button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-workspace-head strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.creative-workspace-state span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.creative-workspace-state strong|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-workspace-status|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-workspace-status|var(--ui-type-xs)",
+      "media:(min-width:761px)|.creative-workspace-tabs button|var(--ui-type-md)",
+      "media:(min-width:761px)|.doc-title|var(--ui-type-lg)",
+      "media:(min-width:761px)|.doc-title|var(--ui-type-lg)",
+      "media:(min-width:761px)|.document-status-strip #zoomText|var(--ui-type-sm)",
+      "media:(min-width:761px)|.document-status-strip .view-controls button|var(--ui-type-xs)",
+      "media:(min-width:761px)|.document-tab span|var(--ui-type-lg)",
+      "media:(min-width:761px)|.empty-hint strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.history-panel-footer,.shell-panel-footer|var(--ui-type-xs)",
+      "media:(min-width:761px)|.inspector-head .eyebrow|var(--ui-type-xs)",
+      "media:(min-width:761px)|.inspector-head strong,.creative-workspace-head strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.inspector-head strong,.panel-header strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.inspector-head strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-section .control-row|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-section .range-row output|var(--ui-type-sm)",
+      "media:(min-width:761px)|.inspector-section .subpanel-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.inspector-section .subpanel-title strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-section .toggle-row|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-tab|var(--ui-type-xs)",
+      "media:(min-width:761px)|.layer-name strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.layer-row .layer-meta|var(--ui-type-xs)",
+      "media:(min-width:761px)|.layer-row .layer-name strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.menu-app-mark small|var(--ui-type-xs)",
+      "media:(min-width:761px)|.menu-app-mark strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.menu-workspace|var(--ui-type-xs)",
+      "media:(min-width:761px)|.navigator-footer output|var(--ui-type-sm)",
+      "media:(min-width:761px)|.navigator-footer|var(--ui-type-sm)",
+      "media:(min-width:761px)|.navigator-zoom-field|var(--ui-type-lg)",
+      "media:(min-width:761px)|.no-selection span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.no-selection strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.panel-stack-body #creativeWorkspace details>summary|var(--ui-type-lg)",
+      "media:(min-width:761px)|.panel-stack-body #creativeWorkspace input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),\n  .panel-stack-body #creativeWorkspace select,\n  .panel-stack-body #creativeWorkspace button|var(--ui-type-lg)",
+      "media:(min-width:761px)|.panel-stack-body .shell-panel-body input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.panel-stack-body .shell-panel-body select,.panel-stack-body .shell-panel-body button|var(--ui-type-lg)",
+      "media:(min-width:761px)|.panel-stack-region-current|var(--ui-type-xs)",
+      "media:(min-width:761px)|.panel-stack-region-head|var(--ui-type-md)",
+      "media:(min-width:761px)|.panel-stack-tab|var(--ui-type-md)",
+      "media:(min-width:761px)|.panel-window-group-label|var(--ui-type-xs)",
+      "media:(min-width:761px)|.panel-window-group-label|var(--ui-type-xs)",
+      "media:(min-width:761px)|.panel-window-item|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-categories button|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-categories button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.preferences-category .branding-preview span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.preferences-category .branding-preview strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-category .branding-settings-note|var(--ui-type-sm)",
+      "media:(min-width:761px)|.preferences-category .branding-settings-status|var(--ui-type-xs)",
+      "media:(min-width:761px)|.preferences-category button:not(.primary-button),.preferences-category .primary-button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.preferences-category h2|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-category|var(--ui-type-md)",
+      "media:(min-width:761px)|.preset-button|var(--ui-type-xs)",
+      "media:(min-width:761px)|.primary-button|var(--ui-type-md)",
+      "media:(min-width:761px)|.properties-subnav .inspector-tab|var(--ui-type-md)",
+      "media:(min-width:761px)|.quiet-button|var(--ui-type-md)",
+      "media:(min-width:761px)|.range-row output|var(--ui-type-sm)",
+      "media:(min-width:761px)|.range-row output|var(--ui-type-xs)",
+      "media:(min-width:761px)|.section-title span|var(--ui-type-sm)",
+      "media:(min-width:761px)|.section-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.section-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.section-title strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.section-title strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.section-title strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.selection-bar button|var(--ui-type-xs)",
+      "media:(min-width:761px)|.selection-title|var(--ui-type-xs)",
+      "media:(min-width:761px)|.shell-field|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-page-copy small|var(--ui-type-xs)",
+      "media:(min-width:761px)|.shell-page-copy strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-panel-footer button|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-panel-note|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-tooltip|var(--ui-type-xs)",
+      "media:(min-width:761px)|.shortcut-badge|var(--ui-type-xs)",
+      "media:(min-width:761px)|.statusbar button,.version-badge|var(--ui-type-xs)",
+      "media:(min-width:761px)|.statusbar|var(--ui-type-sm)",
+      "media:(min-width:761px)|.statusbar|var(--ui-type-xs)",
+      "media:(min-width:761px)|.subpanel-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.subpanel-title strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.subpanel-title strong|var(--ui-type-xs)",
+      "media:(min-width:761px)|.toast|var(--ui-type-md)",
+      "media:(min-width:761px)|.toggle-row|var(--ui-type-xs)",
+      "media:(min-width:761px)|.ui-b-capability-note|var(--ui-type-xs)",
+      "media:(min-width:761px)|.ui-b-layer-appearance select|var(--ui-type-lg)",
+      "media:(min-width:761px)|.ui-b-layer-appearance>button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.ui-b-layer-appearance|var(--ui-type-md)",
+      "media:(min-width:761px)|.ui-b-layer-filter-menu>summary|0",
+      "media:(min-width:761px)|.workspace-menu button,.brush-family-popover .subtool-button,.panel-options-menu button|var(--ui-type-md)",
+      "media:(min-width:761px)|.zoom-hud|var(--ui-type-xs)",
+      "|#canvasSettings .artboard-summary|var(--ui-type-md)",
+      "|#canvasSettings .control-row>span:first-child|var(--ui-type-lg)",
+      "|#canvasSettings .control-row|var(--ui-type-lg)",
+      "|#canvasSettings .eyebrow|var(--ui-type-xs)",
+      "|#canvasSettings .number-unit span|var(--ui-type-md)",
+      "|#canvasSettings .panel-header strong|var(--ui-type-xl)",
+      "|#canvasSettings .subpanel-title span|var(--ui-type-xs)",
+      "|#canvasSettings .subpanel-title strong|var(--ui-type-lg)",
+      "|#canvasSettings .toggle-row|var(--ui-type-lg)",
+      "|#canvasSettings .workspace-settings-note,#canvasSettings .viewport-note|var(--ui-type-md)",
+      "|#canvasSettings select,#canvasSettings input[type=\"number\"],#canvasSettings input[type=\"text\"],#canvasSettings output|var(--ui-type-lg)",
+      "|#exportProgress|var(--ui-type-xs)",
+      "|.ai-analysis,.ai-plan-overview,.ai-difference-summary,.ai-transmission-preview|var(--ui-type-md)",
+      "|.ai-preview-banner|var(--ui-type-xs)",
+      "|.ai-preview-toolbar button|var(--ui-type-xs)",
+      "|.ai-prompt-label|var(--ui-type-lg)",
+      "|.ai-risk,\n.stroke-edit-status,\n.render-engine-meta,\n.gpu-validation-status,\n.pen-calibration-status,\n.export-progress|var(--ui-type-md)",
+      "|.ai-risk|var(--ui-type-xs)",
+      "|.ai-settings-grid label|var(--ui-type-xs)",
+      "|.ai-step label|var(--ui-type-lg)",
+      "|.ai-visual-preview figcaption|var(--ui-type-md)",
+      "|.app .control-row>span:first-child,.app .toggle-row>span,.preferences-category .subpanel-title strong|var(--ui-type-md)",
+      "|.app .layer-row .layer-name strong|var(--ui-type-md)",
+      "|.app input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"file\"]):not([type=\"color\"]),.app select|var(--ui-type-md)",
+      "|.application-command-menu button,.panel-options-menu button|var(--ui-type-md)",
+      "|.application-command-menu button|var(--ui-type-lg)",
+      "|.application-menus > button,\n.application-menu > button,\n.application-menu-label,\n.application-command-menu button,\n.doc-title|var(--ui-type-lg)",
+      "|.app|var(--ui-type-md)",
+      "|.artboard-summary,.export-summary|var(--ui-type-md)",
+      "|.brand .version,kbd,.eyebrow,.subpanel-title span,.inspector-section .subpanel-title span,.section-title span,.layer-row .layer-meta,.page-title span,.history-step-index,.history-step-copy small,.engine-status,.render-engine-meta,.render-engine-note,.version-badge,.panel-window-group-label,.object-tree-row .tree-object-name span,.creative-workspace-state span,.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "|.brand .version|var(--ui-type-xs)",
+      "|.brand .version|var(--ui-type-xs)",
+      "|.brand strong|var(--ui-type-display)",
+      "|.brand strong|var(--ui-type-display)",
+      "|.branding-asset-copy span|var(--ui-type-xs)",
+      "|.branding-asset-copy strong|var(--ui-type-md)",
+      "|.branding-asset-row button,.branding-settings-actions button|var(--ui-type-sm)",
+      "|.branding-field>span|var(--ui-type-md)",
+      "|.branding-preview span|var(--ui-type-sm)",
+      "|.branding-preview strong|var(--ui-type-display)",
+      "|.branding-settings-note|var(--ui-type-md)",
+      "|.branding-settings-status|var(--ui-type-sm)",
+      "|.brush-family-head strong|var(--ui-type-lg)",
+      "|.brush-family-head strong|var(--ui-type-xl)",
+      "|.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "|.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "|.context-control-label|var(--ui-type-xs)",
+      "|.contextual-options #textOptions #fontSizeOutput|var(--ui-type-xs)",
+      "|.contextual-options #textOptions .control-row>span:first-child|var(--ui-type-xs)",
+      "|.contextual-options .quick-slider output|var(--ui-type-xs)",
+      "|.contextual-tool-identity strong|var(--ui-type-md)",
+      "|.control-row input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.control-row select,.control-row textarea,.color-control input:not([type=\"color\"]),.number-unit input,.inspector-section select,.inspector-section textarea,.ui-b-context-controls input:not([type=\"checkbox\"]):not([type=\"color\"]),.ui-b-context-controls select,.branding-field input|var(--ui-type-md)",
+      "|.control-row output,.section-title span,.layer-meta|var(--ui-type-sm)",
+      "|.control-row,.toggle-row|var(--ui-type-md)",
+      "|.control-row|var(--ui-type-lg)",
+      "|.control-row|var(--ui-type-md)",
+      "|.creative-chat-message>p,.creative-chat-empty|var(--ui-type-xs)",
+      "|.creative-chat-runtime button|var(--ui-type-xs)",
+      "|.creative-file-picker>output|var(--ui-type-sm)",
+      "|.creative-structure-option>summary|var(--ui-type-md)",
+      "|.creative-workspace-actions button,.creative-workspace-action-grid button,.creative-workspace-primary|var(--ui-type-md)",
+      "|.creative-workspace-body strong,.creative-workspace-body section>strong|var(--ui-type-md)",
+      "|.creative-workspace-body|var(--ui-type-md)",
+      "|.creative-workspace-field input:not([type=\"range\"]),.creative-workspace-field select|var(--ui-type-md)",
+      "|.creative-workspace-field|var(--ui-type-md)",
+      "|.creative-workspace-head strong|var(--ui-type-xl)",
+      "|.creative-workspace-state span|var(--ui-type-xs)",
+      "|.creative-workspace-state strong|var(--ui-type-xs)",
+      "|.creative-workspace-tabs button|var(--ui-type-xs)",
+      "|.creative-workspace-toggle|var(--ui-type-xs)",
+      "|.doc-title|var(--ui-type-display)",
+      "|.doc-title|var(--ui-type-xl)",
+      "|.empty-hint strong|var(--ui-type-display)",
+      "|.empty-hint strong|var(--ui-type-display)",
+      "|.empty-hint>span|var(--ui-type-lg)",
+      "|.empty-hint>span|var(--ui-type-xl)",
+      "|.engine-status|var(--ui-type-xs)",
+      "|.engine-status|var(--ui-type-xs)",
+      "|.eyebrow|var(--ui-type-xs)",
+      "|.eyebrow|var(--ui-type-xs)",
+      "|.gpu-validation-status,.pen-calibration-status,.export-progress|var(--ui-type-md)",
+      "|.gpu-validation-status,.pen-calibration-status,.export-progress|var(--ui-type-xs)",
+      "|.hint-keys|var(--ui-type-md)",
+      "|.history-panel-footer|var(--ui-type-xs)",
+      "|.history-step-copy small|var(--ui-type-xs)",
+      "|.history-step-copy strong|var(--ui-type-md)",
+      "|.history-step-index|var(--ui-type-xs)",
+      "|.inspector-head strong,.panel-header strong,.creative-workspace-head strong,.empty-hint strong,.no-selection strong,.storage-health-status,#canvasSettings .panel-header strong|var(--ui-type-lg)",
+      "|.inspector-head strong,.panel-header strong|var(--ui-type-display)",
+      "|.inspector-head strong,.panel-header strong|var(--ui-type-lg)",
+      "|.inspector-tab|var(--ui-type-lg)",
+      "|.inspector-tab|var(--ui-type-md)",
+      "|.layer-row .layer-name,.layer-row .layer-main,.layer-row .layer-drag-handle|var(--ui-type-md)",
+      "|.layer-row button|var(--ui-type-md)",
+      "|.menu-app-mark small,\n.brand .version,\n.web-surface-badge|var(--ui-type-xs)",
+      "|.menu-app-mark strong,\n.brand strong|var(--ui-type-brand)",
+      "|.no-selection span,.artboard-summary,.export-summary,.storage-health-status,.gpu-validation-status,.pen-calibration-status,.export-progress,.render-engine-note,.studio-report,.ai-analysis,.ai-plan-overview,.ai-difference-summary,.ai-transmission-preview,.creative-chat-message>p,.creative-chat-empty,.workspace-settings-note,#canvasSettings .workspace-settings-note,#canvasSettings .viewport-note|var(--ui-type-md)",
+      "|.no-selection span|var(--ui-type-md)",
+      "|.no-selection span|var(--ui-type-xs)",
+      "|.no-selection strong|var(--ui-type-lg)",
+      "|.no-selection strong|var(--ui-type-xl)",
+      "|.number-unit span|var(--ui-type-xs)",
+      "|.object-actions button,.layer-actions button,.stroke-edit-actions button,.studio-button-grid button,.ui-b-panel-actions button,.shape-grid button,.segmented button,.wide-button,.ui-b-context-controls button|var(--ui-type-md)",
+      "|.object-tree-row .tree-object-marker,.object-tree-row .tree-object-tail|var(--ui-type-xl)",
+      "|.object-tree-row .tree-object-name span|var(--ui-type-xs)",
+      "|.object-tree-row .tree-object-name strong|var(--ui-type-xs)",
+      "|.object-tree-row .tree-state-button|var(--ui-type-xs)",
+      "|.page-title span|var(--ui-type-xs)",
+      "|.page-title span|var(--ui-type-xs)",
+      "|.page-title strong|var(--ui-type-lg)",
+      "|.page-title strong|var(--ui-type-md)",
+      "|.preferences-categories button|var(--ui-type-md)",
+      "|.preferences-category .primary-button|var(--ui-type-md)",
+      "|.preferences-category button:not(.primary-button)|var(--ui-type-md)",
+      "|.preferences-category h2|var(--ui-type-xl)",
+      "|.preferences-category p|var(--ui-type-sm)",
+      "|.preferences-category|var(--ui-type-md)",
+      "|.preset-button|var(--ui-type-md)",
+      "|.preset-button|var(--ui-type-xs)",
+      "|.program-asset-card summary|var(--ui-type-md)",
+      "|.quick-glyph.opacity|var(--ui-type-display)",
+      "|.quick-glyph|var(--ui-type-lg)",
+      "|.quick-glyph|var(--ui-type-md)",
+      "|.quick-slider output|var(--ui-type-xs)",
+      "|.quick-slider output|var(--ui-type-xs)",
+      "|.quiet-button,.primary-button,.workspace-switch button,.contextual-tool-identity strong,.context-control-label,.contextual-options .quick-slider output,.selection-bar button,.panel-window-item,.inspector-tab,.properties-subnav .inspector-tab,.preset-button,.statusbar button,.creative-workspace-toggle,.ai-settings-grid label,.ai-preview-toolbar button,.creative-chat-runtime button,.mobile-dock .tool-label,.dock-action .tool-label,.tool-button .tool-label,.creative-workspace-tabs button,#canvasSettings .control-row,#canvasSettings .control-row>span:first-child,#canvasSettings .toggle-row,.inspector-section .control-row,.inspector-section .toggle-row|var(--ui-type-md)",
+      "|.range-row output|var(--ui-type-md)",
+      "|.range-row output|var(--ui-type-xs)",
+      "|.render-engine-card select|var(--ui-type-xs)",
+      "|.render-engine-meta|var(--ui-type-md)",
+      "|.render-engine-meta|var(--ui-type-xs)",
+      "|.render-engine-note|var(--ui-type-md)",
+      "|.render-engine-note|var(--ui-type-xs)",
+      "|.section-title span|var(--ui-type-md)",
+      "|.section-title span|var(--ui-type-xs)",
+      "|.section-title strong|var(--ui-type-display)",
+      "|.section-title strong|var(--ui-type-lg)",
+      "|.section-title strong|var(--ui-type-lg)",
+      "|.selection-bar button|var(--ui-type-md)",
+      "|.selection-bar button|var(--ui-type-xs)",
+      "|.selection-bar[data-mode=\"contain\"]::after,.selection-bar[data-mode=\"intersect\"]::after|var(--ui-type-md)",
+      "|.selection-title,.zoom-hud,.quick-glyph,.range-row output,.inspector-section .range-row output,.subpanel-title strong,.inspector-section .subpanel-title strong,.layer-row .layer-name strong,.history-step-copy strong,.creative-workspace-state strong,.creative-chat-runtime span,.creative-chat-message>strong,.creative-workspace-status,.quick-slider output,#exportProgress,.statusbar,.artboard-summary,.export-summary|var(--ui-type-sm)",
+      "|.selection-title|var(--ui-type-lg)",
+      "|.selection-title|var(--ui-type-md)",
+      "|.shell-library-filters button|var(--ui-type-xs)",
+      "|.shell-library-result-actions button|var(--ui-type-xs)",
+      "|.shell-library-result-head small|var(--ui-type-xs)",
+      "|.shell-library-result-head strong|var(--ui-type-md)",
+      "|.shell-library-search-label,.shell-library-inspect-label|var(--ui-type-xs)",
+      "|.shell-property-actions button|var(--ui-type-xs)",
+      "|.shortcut-badge|var(--ui-type-xs)",
+      "|.statusbar button|var(--ui-type-xs)",
+      "|.statusbar button|var(--ui-type-xs)",
+      "|.statusbar|var(--ui-type-xs)",
+      "|.statusbar|var(--ui-type-xs)",
+      "|.storage-health-status|var(--ui-type-xl)",
+      "|.storage-health-status|var(--ui-type-xs)",
+      "|.stroke-edit-status|var(--ui-type-md)",
+      "|.stroke-edit-status|var(--ui-type-xs)",
+      "|.studio-report|var(--ui-type-lg)",
+      "|.subpanel-title span|var(--ui-type-xs)",
+      "|.subpanel-title span|var(--ui-type-xs)",
+      "|.subpanel-title strong|var(--ui-type-lg)",
+      "|.subpanel-title strong|var(--ui-type-md)",
+      "|.subtool-button small|var(--ui-type-xs)",
+      "|.subtool-button small|var(--ui-type-xs)",
+      "|.subtool-button strong|var(--ui-type-lg)",
+      "|.subtool-button strong|var(--ui-type-md)",
+      "|.text-editor-actions button|var(--ui-type-md)",
+      "|.text-editor-actions button|var(--ui-type-xs)",
+      "|.toast|var(--ui-type-lg)",
+      "|.toast|var(--ui-type-xl)",
+      "|.toggle-row|var(--ui-type-lg)",
+      "|.toggle-row|var(--ui-type-md)",
+      "|.tool-button .tool-label|var(--ui-type-xs)",
+      "|.transform-grid input|var(--ui-type-md)",
+      "|.transform-grid label span|var(--ui-type-md)",
+      "|.transform-grid label span|var(--ui-type-xs)",
+      "|.ui-b-context-controls label|var(--ui-type-md)",
+      "|.ui-b-context-hint|var(--ui-type-xs)",
+      "|.ui-b-context-name|var(--ui-type-md)",
+      "|.ui-b-dialog-body>label|var(--ui-type-md)",
+      "|.ui-b-dialog-note|var(--ui-type-md)",
+      "|.ui-b-gallery button span|var(--ui-type-xs)",
+      "|.ui-b-gallery button strong|var(--ui-type-md)",
+      "|.ui-b-glyph|var(--ui-icon-envelope)",
+      "|.ui-b-glyph|var(--ui-type-sm)",
+      "|.ui-b-layer-appearance button|var(--ui-type-md)",
+      "|.ui-b-layer-appearance label|var(--ui-type-md)",
+      "|.ui-b-panel-grid button|var(--ui-type-md)",
+      "|.ui-b-shortcuts p|var(--ui-type-md)",
+      "|.ui-b-stack-row small,\n.ui-b-channel-row small|var(--ui-type-xs)",
+      "|.ui-b-stack-row,\n.ui-b-channel-row|var(--ui-type-md)",
+      "|.version-badge|var(--ui-type-md)",
+      "|.version-badge|var(--ui-type-xs)",
+      "|.web-surface-badge|var(--ui-type-xs)",
+      "|.workspace-menu button|var(--ui-type-lg)",
+      "|.workspace-settings-note|var(--ui-type-xs)",
+      "|.workspace-switch button|var(--ui-type-xs)",
+      "|.zoom-hud|var(--ui-type-lg)",
+      "|:root|var(--ui-type-xl)",
+      "|kbd|var(--ui-type-xs)",
+      "|kbd|var(--ui-type-xs)"
+    ],
+    "coveredExactDuplicates": []
+  },
+  "after": {
+    "bytes": 233644,
+    "sha256": "d1caeab3cf27c73e4ee6d3af238c33f2f661bb06be3aedb14b481c372c26e979",
+    "declarations": 6619,
+    "important": 103,
+    "media": [
+      "(max-width:1120px)and(min-width:761px)",
+      "(max-width:760px)",
+      "(min-width:761px)",
+      "(min-width:761px)and(min-height:990px)and(max-height:998px)",
+      "(pointer:coarse)",
+      "(pointer:coarse)and(max-height:520px)",
+      "(prefers-reduced-motion:reduce)"
+    ],
+    "fontDeclarations": [
+      "media:(max-width:1120px)and(min-width:761px)|.application-menus > button,.application-menu > button,.application-menu-label|var(--ui-type-md)",
+      "media:(max-width:1120px)and(min-width:761px)|.creative-workspace-state span|var(--ui-type-xs)",
+      "media:(max-width:1120px)and(min-width:761px)|.creative-workspace-state strong|var(--ui-type-xs)",
+      "media:(max-width:760px)|#canvasSettings .panel-header strong|var(--ui-type-xl)",
+      "media:(max-width:760px)|#canvasSettings .subpanel-title strong,#canvasSettings .control-row>span:first-child,#canvasSettings .toggle-row|var(--ui-type-xl)",
+      "media:(max-width:760px)|#canvasSettings select,#canvasSettings input[type=\"number\"],#canvasSettings input[type=\"text\"],#canvasSettings output|var(--ui-type-xl)",
+      "media:(max-width:760px)|.artboard-summary,.export-summary|var(--ui-type-lg)",
+      "media:(max-width:760px)|.brand strong|var(--ui-type-xl)",
+      "media:(max-width:760px)|.contextual-tool-identity strong|var(--ui-type-xs)",
+      "media:(max-width:760px)|.control-row|var(--ui-type-lg)",
+      "media:(max-width:760px)|.doc-title|var(--ui-type-lg)",
+      "media:(max-width:760px)|.doc-title|var(--ui-type-xl)",
+      "media:(max-width:760px)|.history-step-copy small|var(--ui-type-sm)",
+      "media:(max-width:760px)|.history-step-copy strong|var(--ui-type-xl)",
+      "media:(max-width:760px)|.history-step-index|var(--ui-type-md)",
+      "media:(max-width:760px)|.layer-row .layer-meta|var(--ui-type-sm)",
+      "media:(max-width:760px)|.layer-row .layer-name strong|var(--ui-type-md)",
+      "media:(max-width:760px)|.mobile-dock .tool-label,\n  .dock-action .tool-label|var(--ui-type-md)",
+      "media:(max-width:760px)|.mobile-dock .tool-label,.dock-action .tool-label|var(--ui-type-xs)",
+      "media:(max-width:760px)|.mobile-dock .tool-label,.dock-action .tool-label|var(--ui-type-xs)",
+      "media:(max-width:760px)|.primary-button|var(--ui-type-lg)",
+      "media:(max-width:760px)|.quiet-button|var(--ui-type-lg)",
+      "media:(max-width:760px)|.toggle-row|var(--ui-type-lg)",
+      "media:(max-width:760px)|.workspace-switch button span|var(--ui-type-xs)",
+      "media:(max-width:760px)|.workspace-switch button|var(--ui-type-xs)",
+      "media:(min-width:761px)|#app .panel-window-item|var(--ui-type-lg)",
+      "media:(min-width:761px)|#zoomText|var(--ui-type-xs)",
+      "media:(min-width:761px)|.application-command-menu button|var(--ui-type-lg)",
+      "media:(min-width:761px)|.application-menus > button,.application-menu > button,.application-menu-label|var(--ui-type-lg)",
+      "media:(min-width:761px)|.artboard-summary,.export-summary|var(--ui-type-xs)",
+      "media:(min-width:761px)|.branding-settings-dialog>.panel-header strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.brush-family-head strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "media:(min-width:761px)|.context-control-label,.contextual-options .quick-slider output|var(--ui-type-md)",
+      "media:(min-width:761px)|.contextual-options .context-control-label|var(--ui-type-xl)",
+      "media:(min-width:761px)|.control-row|var(--ui-type-md)",
+      "media:(min-width:761px)|.creative-chat-message>p,.creative-chat-empty|var(--ui-type-md)",
+      "media:(min-width:761px)|.creative-chat-message>strong|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-chat-runtime span,.creative-chat-runtime button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-workspace-head strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.creative-workspace-state span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.creative-workspace-state strong|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-workspace-status|var(--ui-type-sm)",
+      "media:(min-width:761px)|.creative-workspace-status|var(--ui-type-xs)",
+      "media:(min-width:761px)|.creative-workspace-tabs button|var(--ui-type-md)",
+      "media:(min-width:761px)|.doc-title|var(--ui-type-lg)",
+      "media:(min-width:761px)|.doc-title|var(--ui-type-lg)",
+      "media:(min-width:761px)|.document-status-strip #zoomText|var(--ui-type-sm)",
+      "media:(min-width:761px)|.document-status-strip .view-controls button|var(--ui-type-xs)",
+      "media:(min-width:761px)|.document-tab span|var(--ui-type-lg)",
+      "media:(min-width:761px)|.empty-hint strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.history-panel-footer,.shell-panel-footer|var(--ui-type-xs)",
+      "media:(min-width:761px)|.inspector-head .eyebrow|var(--ui-type-xs)",
+      "media:(min-width:761px)|.inspector-head strong,.creative-workspace-head strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.inspector-head strong,.panel-header strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.inspector-head strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-section .control-row|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-section .range-row output|var(--ui-type-sm)",
+      "media:(min-width:761px)|.inspector-section .subpanel-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.inspector-section .subpanel-title strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-section .toggle-row|var(--ui-type-md)",
+      "media:(min-width:761px)|.inspector-tab|var(--ui-type-xs)",
+      "media:(min-width:761px)|.layer-name strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.layer-row .layer-meta|var(--ui-type-xs)",
+      "media:(min-width:761px)|.layer-row .layer-name strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.menu-app-mark small|var(--ui-type-xs)",
+      "media:(min-width:761px)|.menu-app-mark strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.menu-workspace|var(--ui-type-xs)",
+      "media:(min-width:761px)|.navigator-footer output|var(--ui-type-sm)",
+      "media:(min-width:761px)|.navigator-footer|var(--ui-type-sm)",
+      "media:(min-width:761px)|.navigator-zoom-field|var(--ui-type-lg)",
+      "media:(min-width:761px)|.no-selection span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.no-selection strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.panel-stack-body #creativeWorkspace details>summary|var(--ui-type-lg)",
+      "media:(min-width:761px)|.panel-stack-body #creativeWorkspace input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),\n  .panel-stack-body #creativeWorkspace select,\n  .panel-stack-body #creativeWorkspace button|var(--ui-type-lg)",
+      "media:(min-width:761px)|.panel-stack-body .shell-panel-body input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.panel-stack-body .shell-panel-body select,.panel-stack-body .shell-panel-body button|var(--ui-type-lg)",
+      "media:(min-width:761px)|.panel-stack-region-current|var(--ui-type-xs)",
+      "media:(min-width:761px)|.panel-stack-region-head|var(--ui-type-md)",
+      "media:(min-width:761px)|.panel-stack-tab|var(--ui-type-md)",
+      "media:(min-width:761px)|.panel-window-group-label|var(--ui-type-xs)",
+      "media:(min-width:761px)|.panel-window-group-label|var(--ui-type-xs)",
+      "media:(min-width:761px)|.panel-window-item|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-categories button|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-categories button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.preferences-category .branding-preview span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.preferences-category .branding-preview strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-category .branding-settings-note|var(--ui-type-sm)",
+      "media:(min-width:761px)|.preferences-category .branding-settings-status|var(--ui-type-xs)",
+      "media:(min-width:761px)|.preferences-category button:not(.primary-button),.preferences-category .primary-button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.preferences-category h2|var(--ui-type-md)",
+      "media:(min-width:761px)|.preferences-category|var(--ui-type-md)",
+      "media:(min-width:761px)|.preset-button|var(--ui-type-xs)",
+      "media:(min-width:761px)|.primary-button|var(--ui-type-md)",
+      "media:(min-width:761px)|.properties-subnav .inspector-tab|var(--ui-type-md)",
+      "media:(min-width:761px)|.quiet-button|var(--ui-type-md)",
+      "media:(min-width:761px)|.range-row output|var(--ui-type-sm)",
+      "media:(min-width:761px)|.range-row output|var(--ui-type-xs)",
+      "media:(min-width:761px)|.section-title span|var(--ui-type-sm)",
+      "media:(min-width:761px)|.section-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.section-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.section-title strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.section-title strong|var(--ui-type-lg)",
+      "media:(min-width:761px)|.section-title strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.selection-bar button|var(--ui-type-xs)",
+      "media:(min-width:761px)|.selection-title|var(--ui-type-xs)",
+      "media:(min-width:761px)|.shell-field|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-page-copy small|var(--ui-type-xs)",
+      "media:(min-width:761px)|.shell-page-copy strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-panel-footer button|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-panel-note|var(--ui-type-md)",
+      "media:(min-width:761px)|.shell-tooltip|var(--ui-type-xs)",
+      "media:(min-width:761px)|.shortcut-badge|var(--ui-type-xs)",
+      "media:(min-width:761px)|.statusbar button,.version-badge|var(--ui-type-xs)",
+      "media:(min-width:761px)|.statusbar|var(--ui-type-sm)",
+      "media:(min-width:761px)|.statusbar|var(--ui-type-xs)",
+      "media:(min-width:761px)|.subpanel-title span|var(--ui-type-xs)",
+      "media:(min-width:761px)|.subpanel-title strong|var(--ui-type-md)",
+      "media:(min-width:761px)|.subpanel-title strong|var(--ui-type-xs)",
+      "media:(min-width:761px)|.toast|var(--ui-type-md)",
+      "media:(min-width:761px)|.toggle-row|var(--ui-type-xs)",
+      "media:(min-width:761px)|.ui-b-capability-note|var(--ui-type-xs)",
+      "media:(min-width:761px)|.ui-b-layer-appearance select|var(--ui-type-lg)",
+      "media:(min-width:761px)|.ui-b-layer-appearance>button|var(--ui-type-sm)",
+      "media:(min-width:761px)|.ui-b-layer-appearance|var(--ui-type-md)",
+      "media:(min-width:761px)|.ui-b-layer-filter-menu>summary|0",
+      "media:(min-width:761px)|.workspace-menu button,.brush-family-popover .subtool-button,.panel-options-menu button|var(--ui-type-md)",
+      "media:(min-width:761px)|.zoom-hud|var(--ui-type-xs)",
+      "|#canvasSettings .artboard-summary|var(--ui-type-md)",
+      "|#canvasSettings .control-row>span:first-child|var(--ui-type-lg)",
+      "|#canvasSettings .control-row|var(--ui-type-lg)",
+      "|#canvasSettings .eyebrow|var(--ui-type-xs)",
+      "|#canvasSettings .number-unit span|var(--ui-type-md)",
+      "|#canvasSettings .panel-header strong|var(--ui-type-xl)",
+      "|#canvasSettings .subpanel-title span|var(--ui-type-xs)",
+      "|#canvasSettings .subpanel-title strong|var(--ui-type-lg)",
+      "|#canvasSettings .toggle-row|var(--ui-type-lg)",
+      "|#canvasSettings .workspace-settings-note,#canvasSettings .viewport-note|var(--ui-type-md)",
+      "|#canvasSettings select,#canvasSettings input[type=\"number\"],#canvasSettings input[type=\"text\"],#canvasSettings output|var(--ui-type-lg)",
+      "|#exportProgress|var(--ui-type-xs)",
+      "|.ai-analysis,.ai-plan-overview,.ai-difference-summary,.ai-transmission-preview|var(--ui-type-md)",
+      "|.ai-preview-banner|var(--ui-type-xs)",
+      "|.ai-preview-toolbar button|var(--ui-type-xs)",
+      "|.ai-prompt-label|var(--ui-type-lg)",
+      "|.ai-risk,\n.stroke-edit-status,\n.render-engine-meta,\n.gpu-validation-status,\n.pen-calibration-status,\n.export-progress|var(--ui-type-md)",
+      "|.ai-risk|var(--ui-type-xs)",
+      "|.ai-settings-grid label|var(--ui-type-xs)",
+      "|.ai-step label|var(--ui-type-lg)",
+      "|.ai-visual-preview figcaption|var(--ui-type-md)",
+      "|.app .control-row>span:first-child,.app .toggle-row>span,.preferences-category .subpanel-title strong|var(--ui-type-md)",
+      "|.app .layer-row .layer-name strong|var(--ui-type-md)",
+      "|.app input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"file\"]):not([type=\"color\"]),.app select|var(--ui-type-md)",
+      "|.application-command-menu button,.panel-options-menu button|var(--ui-type-md)",
+      "|.application-command-menu button|var(--ui-type-lg)",
+      "|.application-menus > button,\n.application-menu > button,\n.application-menu-label,\n.application-command-menu button,\n.doc-title|var(--ui-type-lg)",
+      "|.app|var(--ui-type-md)",
+      "|.artboard-summary,.export-summary|var(--ui-type-md)",
+      "|.brand .version,kbd,.eyebrow,.subpanel-title span,.inspector-section .subpanel-title span,.section-title span,.layer-row .layer-meta,.page-title span,.history-step-index,.history-step-copy small,.engine-status,.render-engine-meta,.render-engine-note,.version-badge,.panel-window-group-label,.object-tree-row .tree-object-name span,.creative-workspace-state span,.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "|.brand .version|var(--ui-type-xs)",
+      "|.brand .version|var(--ui-type-xs)",
+      "|.brand strong|var(--ui-type-display)",
+      "|.brand strong|var(--ui-type-display)",
+      "|.branding-asset-copy span|var(--ui-type-xs)",
+      "|.branding-asset-copy strong|var(--ui-type-md)",
+      "|.branding-asset-row button,.branding-settings-actions button|var(--ui-type-sm)",
+      "|.branding-field>span|var(--ui-type-md)",
+      "|.branding-preview span|var(--ui-type-sm)",
+      "|.branding-preview strong|var(--ui-type-display)",
+      "|.branding-settings-note|var(--ui-type-md)",
+      "|.branding-settings-status|var(--ui-type-sm)",
+      "|.brush-family-head strong|var(--ui-type-lg)",
+      "|.brush-family-head strong|var(--ui-type-xl)",
+      "|.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "|.brush-family-head>span:last-child|var(--ui-type-xs)",
+      "|.context-control-label|var(--ui-type-xs)",
+      "|.contextual-options #textOptions #fontSizeOutput|var(--ui-type-xs)",
+      "|.contextual-options #textOptions .control-row>span:first-child|var(--ui-type-xs)",
+      "|.contextual-options .quick-slider output|var(--ui-type-xs)",
+      "|.contextual-tool-identity strong|var(--ui-type-md)",
+      "|.control-row input:not([type=\"range\"]):not([type=\"checkbox\"]):not([type=\"color\"]),.control-row select,.control-row textarea,.color-control input:not([type=\"color\"]),.number-unit input,.inspector-section select,.inspector-section textarea,.ui-b-context-controls input:not([type=\"checkbox\"]):not([type=\"color\"]),.ui-b-context-controls select,.branding-field input|var(--ui-type-md)",
+      "|.control-row output,.section-title span,.layer-meta|var(--ui-type-sm)",
+      "|.control-row,.toggle-row|var(--ui-type-md)",
+      "|.control-row|var(--ui-type-lg)",
+      "|.control-row|var(--ui-type-md)",
+      "|.creative-chat-message>p,.creative-chat-empty|var(--ui-type-xs)",
+      "|.creative-chat-runtime button|var(--ui-type-xs)",
+      "|.creative-file-picker>output|var(--ui-type-sm)",
+      "|.creative-structure-option>summary|var(--ui-type-md)",
+      "|.creative-workspace-actions button,.creative-workspace-action-grid button,.creative-workspace-primary|var(--ui-type-md)",
+      "|.creative-workspace-body strong,.creative-workspace-body section>strong|var(--ui-type-md)",
+      "|.creative-workspace-body|var(--ui-type-md)",
+      "|.creative-workspace-field input:not([type=\"range\"]),.creative-workspace-field select|var(--ui-type-md)",
+      "|.creative-workspace-field|var(--ui-type-md)",
+      "|.creative-workspace-head strong|var(--ui-type-xl)",
+      "|.creative-workspace-state span|var(--ui-type-xs)",
+      "|.creative-workspace-state strong|var(--ui-type-xs)",
+      "|.creative-workspace-tabs button|var(--ui-type-xs)",
+      "|.creative-workspace-toggle|var(--ui-type-xs)",
+      "|.doc-title|var(--ui-type-display)",
+      "|.doc-title|var(--ui-type-xl)",
+      "|.empty-hint strong|var(--ui-type-display)",
+      "|.empty-hint strong|var(--ui-type-display)",
+      "|.empty-hint>span|var(--ui-type-lg)",
+      "|.empty-hint>span|var(--ui-type-xl)",
+      "|.engine-status|var(--ui-type-xs)",
+      "|.engine-status|var(--ui-type-xs)",
+      "|.eyebrow|var(--ui-type-xs)",
+      "|.eyebrow|var(--ui-type-xs)",
+      "|.gpu-validation-status,.pen-calibration-status,.export-progress|var(--ui-type-md)",
+      "|.gpu-validation-status,.pen-calibration-status,.export-progress|var(--ui-type-xs)",
+      "|.hint-keys|var(--ui-type-md)",
+      "|.history-panel-footer|var(--ui-type-xs)",
+      "|.history-step-copy small|var(--ui-type-xs)",
+      "|.history-step-copy strong|var(--ui-type-md)",
+      "|.history-step-index|var(--ui-type-xs)",
+      "|.inspector-head strong,.panel-header strong,.creative-workspace-head strong,.empty-hint strong,.no-selection strong,.storage-health-status,#canvasSettings .panel-header strong|var(--ui-type-lg)",
+      "|.inspector-head strong,.panel-header strong|var(--ui-type-display)",
+      "|.inspector-head strong,.panel-header strong|var(--ui-type-lg)",
+      "|.inspector-tab|var(--ui-type-lg)",
+      "|.inspector-tab|var(--ui-type-md)",
+      "|.layer-row .layer-name,.layer-row .layer-main,.layer-row .layer-drag-handle|var(--ui-type-md)",
+      "|.layer-row button|var(--ui-type-md)",
+      "|.menu-app-mark small,\n.brand .version,\n.web-surface-badge|var(--ui-type-xs)",
+      "|.menu-app-mark strong,\n.brand strong|var(--ui-type-brand)",
+      "|.no-selection span,.artboard-summary,.export-summary,.storage-health-status,.gpu-validation-status,.pen-calibration-status,.export-progress,.render-engine-note,.studio-report,.ai-analysis,.ai-plan-overview,.ai-difference-summary,.ai-transmission-preview,.creative-chat-message>p,.creative-chat-empty,.workspace-settings-note,#canvasSettings .workspace-settings-note,#canvasSettings .viewport-note|var(--ui-type-md)",
+      "|.no-selection span|var(--ui-type-md)",
+      "|.no-selection span|var(--ui-type-xs)",
+      "|.no-selection strong|var(--ui-type-lg)",
+      "|.no-selection strong|var(--ui-type-xl)",
+      "|.number-unit span|var(--ui-type-xs)",
+      "|.object-actions button,.layer-actions button,.stroke-edit-actions button,.studio-button-grid button,.ui-b-panel-actions button,.shape-grid button,.segmented button,.wide-button,.ui-b-context-controls button|var(--ui-type-md)",
+      "|.object-tree-row .tree-object-marker,.object-tree-row .tree-object-tail|var(--ui-type-xl)",
+      "|.object-tree-row .tree-object-name span|var(--ui-type-xs)",
+      "|.object-tree-row .tree-object-name strong|var(--ui-type-xs)",
+      "|.object-tree-row .tree-state-button|var(--ui-type-xs)",
+      "|.page-title span|var(--ui-type-xs)",
+      "|.page-title span|var(--ui-type-xs)",
+      "|.page-title strong|var(--ui-type-lg)",
+      "|.page-title strong|var(--ui-type-md)",
+      "|.preferences-categories button|var(--ui-type-md)",
+      "|.preferences-category .primary-button|var(--ui-type-md)",
+      "|.preferences-category button:not(.primary-button)|var(--ui-type-md)",
+      "|.preferences-category h2|var(--ui-type-xl)",
+      "|.preferences-category p|var(--ui-type-sm)",
+      "|.preferences-category|var(--ui-type-md)",
+      "|.preset-button|var(--ui-type-md)",
+      "|.preset-button|var(--ui-type-xs)",
+      "|.program-asset-card summary|var(--ui-type-md)",
+      "|.quick-glyph.opacity|var(--ui-type-display)",
+      "|.quick-glyph|var(--ui-type-lg)",
+      "|.quick-glyph|var(--ui-type-md)",
+      "|.quick-slider output|var(--ui-type-xs)",
+      "|.quick-slider output|var(--ui-type-xs)",
+      "|.quiet-button,.primary-button,.workspace-switch button,.contextual-tool-identity strong,.context-control-label,.contextual-options .quick-slider output,.selection-bar button,.panel-window-item,.inspector-tab,.properties-subnav .inspector-tab,.preset-button,.statusbar button,.creative-workspace-toggle,.ai-settings-grid label,.ai-preview-toolbar button,.creative-chat-runtime button,.mobile-dock .tool-label,.dock-action .tool-label,.tool-button .tool-label,.creative-workspace-tabs button,#canvasSettings .control-row,#canvasSettings .control-row>span:first-child,#canvasSettings .toggle-row,.inspector-section .control-row,.inspector-section .toggle-row|var(--ui-type-md)",
+      "|.range-row output|var(--ui-type-md)",
+      "|.range-row output|var(--ui-type-xs)",
+      "|.render-engine-card select|var(--ui-type-xs)",
+      "|.render-engine-meta|var(--ui-type-md)",
+      "|.render-engine-meta|var(--ui-type-xs)",
+      "|.render-engine-note|var(--ui-type-md)",
+      "|.render-engine-note|var(--ui-type-xs)",
+      "|.section-title span|var(--ui-type-md)",
+      "|.section-title span|var(--ui-type-xs)",
+      "|.section-title strong|var(--ui-type-display)",
+      "|.section-title strong|var(--ui-type-lg)",
+      "|.section-title strong|var(--ui-type-lg)",
+      "|.selection-bar button|var(--ui-type-md)",
+      "|.selection-bar button|var(--ui-type-xs)",
+      "|.selection-bar[data-mode=\"contain\"]::after,.selection-bar[data-mode=\"intersect\"]::after|var(--ui-type-md)",
+      "|.selection-title,.zoom-hud,.quick-glyph,.range-row output,.inspector-section .range-row output,.subpanel-title strong,.inspector-section .subpanel-title strong,.layer-row .layer-name strong,.history-step-copy strong,.creative-workspace-state strong,.creative-chat-runtime span,.creative-chat-message>strong,.creative-workspace-status,.quick-slider output,#exportProgress,.statusbar,.artboard-summary,.export-summary|var(--ui-type-sm)",
+      "|.selection-title|var(--ui-type-lg)",
+      "|.selection-title|var(--ui-type-md)",
+      "|.shell-library-filters button|var(--ui-type-xs)",
+      "|.shell-library-result-actions button|var(--ui-type-xs)",
+      "|.shell-library-result-head small|var(--ui-type-xs)",
+      "|.shell-library-result-head strong|var(--ui-type-md)",
+      "|.shell-library-search-label,.shell-library-inspect-label|var(--ui-type-xs)",
+      "|.shell-property-actions button|var(--ui-type-xs)",
+      "|.shortcut-badge|var(--ui-type-xs)",
+      "|.statusbar button|var(--ui-type-xs)",
+      "|.statusbar button|var(--ui-type-xs)",
+      "|.statusbar|var(--ui-type-xs)",
+      "|.statusbar|var(--ui-type-xs)",
+      "|.storage-health-status|var(--ui-type-xl)",
+      "|.storage-health-status|var(--ui-type-xs)",
+      "|.stroke-edit-status|var(--ui-type-md)",
+      "|.stroke-edit-status|var(--ui-type-xs)",
+      "|.studio-report|var(--ui-type-lg)",
+      "|.subpanel-title span|var(--ui-type-xs)",
+      "|.subpanel-title span|var(--ui-type-xs)",
+      "|.subpanel-title strong|var(--ui-type-lg)",
+      "|.subpanel-title strong|var(--ui-type-md)",
+      "|.subtool-button small|var(--ui-type-xs)",
+      "|.subtool-button small|var(--ui-type-xs)",
+      "|.subtool-button strong|var(--ui-type-lg)",
+      "|.subtool-button strong|var(--ui-type-md)",
+      "|.text-editor-actions button|var(--ui-type-md)",
+      "|.text-editor-actions button|var(--ui-type-xs)",
+      "|.toast|var(--ui-type-lg)",
+      "|.toast|var(--ui-type-xl)",
+      "|.toggle-row|var(--ui-type-lg)",
+      "|.toggle-row|var(--ui-type-md)",
+      "|.tool-button .tool-label|var(--ui-type-xs)",
+      "|.transform-grid input|var(--ui-type-md)",
+      "|.transform-grid label span|var(--ui-type-md)",
+      "|.transform-grid label span|var(--ui-type-xs)",
+      "|.ui-b-context-controls label|var(--ui-type-md)",
+      "|.ui-b-context-hint|var(--ui-type-xs)",
+      "|.ui-b-context-name|var(--ui-type-md)",
+      "|.ui-b-dialog-body>label|var(--ui-type-md)",
+      "|.ui-b-dialog-note|var(--ui-type-md)",
+      "|.ui-b-gallery button span|var(--ui-type-xs)",
+      "|.ui-b-gallery button strong|var(--ui-type-md)",
+      "|.ui-b-glyph|var(--ui-icon-envelope)",
+      "|.ui-b-glyph|var(--ui-type-sm)",
+      "|.ui-b-layer-appearance button|var(--ui-type-md)",
+      "|.ui-b-layer-appearance label|var(--ui-type-md)",
+      "|.ui-b-panel-grid button|var(--ui-type-md)",
+      "|.ui-b-shortcuts p|var(--ui-type-md)",
+      "|.ui-b-stack-row small,\n.ui-b-channel-row small|var(--ui-type-xs)",
+      "|.ui-b-stack-row,\n.ui-b-channel-row|var(--ui-type-md)",
+      "|.version-badge|var(--ui-type-md)",
+      "|.version-badge|var(--ui-type-xs)",
+      "|.web-surface-badge|var(--ui-type-xs)",
+      "|.workspace-menu button|var(--ui-type-lg)",
+      "|.workspace-settings-note|var(--ui-type-xs)",
+      "|.workspace-switch button|var(--ui-type-xs)",
+      "|.zoom-hud|var(--ui-type-lg)",
+      "|:root|var(--ui-type-xl)",
+      "|kbd|var(--ui-type-xs)",
+      "|kbd|var(--ui-type-xs)"
+    ],
+    "coveredExactDuplicates": []
+  },
+  "productFiles": 273,
+  "changed": [
+    {
+      "path": "generate-shell.mjs",
+      "changed": true,
+      "beforeSHA256": "d607744b4d9d3f78b0eaac61bf7c5495435949e654b558e443bb5efcc9bcfb7a",
+      "afterSHA256": "a300922d8ab69608838ac3924f6e9641c045d279af1dc73c11c3e7ccb4314b95"
+    },
+    {
+      "path": "index-standalone.html",
+      "changed": true,
+      "beforeSHA256": "24744d96e53284dade4425d6c92f4f8c44ebf4afb866e7080b351428ef806d0c",
+      "afterSHA256": "a7c51534a05165813117d1fb1cbcd40dbe5d4649cff9e1630e8ab5c5b3e5559c"
+    },
+    {
+      "path": "index.html",
+      "changed": true,
+      "beforeSHA256": "8a92fd435709d03a5d5714b1dcd8c42945dd9dc6709cf4ef88e6f8a5fc0b1ecf",
+      "afterSHA256": "1b4e55be2c0ccf52d5356cb0ce403421d84357b02c61f799d066b1cfdfd68be8"
+    },
+    {
+      "path": "service-worker.js",
+      "changed": true,
+      "beforeSHA256": "dcd4ffb7f487fac46097c88ff4905d45749c04ccf8640943044c12a356d3cc15",
+      "afterSHA256": "b4bbe2a3b5938ec4bd4be413ef4ea83a9fd6c087de01803d22146abaa8ee8d80"
+    },
+    {
+      "path": "shell.template.html",
+      "changed": true,
+      "beforeSHA256": "9583adb7a3798ae68bf420108e5e3fbe005c1eb06d5f4deef28a3fcf4fd3c8fb",
+      "afterSHA256": "c2deac372d2e6b70848a0fee0fd2fe9a04390b9cd45f04bfe7bcff7362694e4d"
+    },
+    {
+      "path": "src/config.js",
+      "changed": true,
+      "beforeSHA256": "38c7d63d27e876d9195a0ff70dd9407e11076576d20a4886c04e3553c16826af",
+      "afterSHA256": "453cd3b7dffc3f235bd272b525e09bc66789d33b01a0e871ac7f733fbada6897"
+    },
+    {
+      "path": "styles.css",
+      "changed": true,
+      "beforeSHA256": "050674638e02d4f1180a3aedb2e96b841271df43593dd7e7b32d5d402a4e0278",
+      "afterSHA256": "d1caeab3cf27c73e4ee6d3af238c33f2f661bb06be3aedb14b481c372c26e979"
+    },
+    {
+      "path": "ui/capability-contributions.js",
+      "changed": true,
+      "beforeSHA256": "d87a391666ab32d4352bc63a9bff45a56503f645e0f989026627e449ce411189",
+      "afterSHA256": "b94f957f24b35d9161c36fbe71d8180ec218db57facf8b584d25c5feac48b591"
+    },
+    {
+      "path": "ui/full-capability-controls.js",
+      "changed": true,
+      "beforeSHA256": "d5d2979aaee3642e6bd601eec2dc049460e8f0885701aaa2f51e0b867cbbd447",
+      "afterSHA256": "b31cc0bdc415069ae37fca373a4403aa4a34ae4866a8be48fe14cf90670395a9"
+    },
+    {
+      "path": "web-shell.js",
+      "changed": true,
+      "beforeSHA256": "280f221c8b489e9e08b1f66e4d2c1b01608a1c6e6bd036e6bde83d8f2f9d43d5",
+      "afterSHA256": "27ac033ab161220ce38702a72440daca8f200c3f4a4a86046a8a8c07e08e4ff9"
+    }
+  ],
+  "unchanged": 263,
+  "files": [
+    {
+      "path": "ASSET_MANIFEST.json",
+      "changed": false,
+      "beforeSHA256": "336e8d97575fbdbd2b9681b34b44a3bea92bee7a41959eb898bb2f842be18946",
+      "afterSHA256": "336e8d97575fbdbd2b9681b34b44a3bea92bee7a41959eb898bb2f842be18946"
+    },
+    {
+      "path": "assets/INK_MARK_SOURCE_W-300.jpg",
+      "changed": false,
+      "beforeSHA256": "08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8",
+      "afterSHA256": "08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8"
+    },
+    {
+      "path": "assets/behavior/flower-batch-01-behaviors.json",
+      "changed": false,
+      "beforeSHA256": "540be889b8d3ca6a440e214bf9279c788e2b61cd4d0d9ced2329f929625976cd",
+      "afterSHA256": "540be889b8d3ca6a440e214bf9279c788e2b61cd4d0d9ced2329f929625976cd"
+    },
+    {
+      "path": "assets/behavior/flower-vector-structure-v1.6.2.json",
+      "changed": false,
+      "beforeSHA256": "973e91821ca5181f1f7ed7c005ce72551c904396d52cdc7c9045de1b16493e2b",
+      "afterSHA256": "973e91821ca5181f1f7ed7c005ce72551c904396d52cdc7c9045de1b16493e2b"
+    },
+    {
+      "path": "assets/behavior/vector-watercolor-candidates-v1.6.3.json",
+      "changed": false,
+      "beforeSHA256": "cf6e78b4d6683d6279dce7988166afe5b99dd08dec5035833c3228f0fd6781c4",
+      "afterSHA256": "cf6e78b4d6683d6279dce7988166afe5b99dd08dec5035833c3228f0fd6781c4"
+    },
+    {
+      "path": "assets/favicon.svg",
+      "changed": false,
+      "beforeSHA256": "ba5c237f1c0f61d07bc06da99d44b83b3a85ab992feae425230e80f0a8289746",
+      "afterSHA256": "ba5c237f1c0f61d07bc06da99d44b83b3a85ab992feae425230e80f0a8289746"
+    },
+    {
+      "path": "assets/gaps/vector-watercolor-gap-candidates-v1.6.3.json",
+      "changed": false,
+      "beforeSHA256": "ffc32f190c6cf7d12a6805e95b51360d0115210ac761a15569ae8c9715a6560e",
+      "afterSHA256": "ffc32f190c6cf7d12a6805e95b51360d0115210ac761a15569ae8c9715a6560e"
+    },
+    {
+      "path": "assets/ink-mark.svg",
+      "changed": false,
+      "beforeSHA256": "af20f98fbdb17631bbc3915f8df25416f44437b290aed53c350850d2688cfd4e",
+      "afterSHA256": "af20f98fbdb17631bbc3915f8df25416f44437b290aed53c350850d2688cfd4e"
+    },
+    {
+      "path": "assets/material/flower-batch-01-templates-v1.6.2.json",
+      "changed": false,
+      "beforeSHA256": "b789ee81fbf5093cfd39289341106dd0ed8399abb644260c46c967baa24cf8df",
+      "afterSHA256": "b789ee81fbf5093cfd39289341106dd0ed8399abb644260c46c967baa24cf8df"
+    },
+    {
+      "path": "assets/material/vector-watercolor-candidates-v1.6.3.json",
+      "changed": false,
+      "beforeSHA256": "dda987ac1049cda6b848b85edf4182bbff15e9c06406050d888a48a378c651c7",
+      "afterSHA256": "dda987ac1049cda6b848b85edf4182bbff15e9c06406050d888a48a378c651c7"
+    },
+    {
+      "path": "assets/program-modules/illustrator-jsx-module-candidates-v1.6.3.json",
+      "changed": false,
+      "beforeSHA256": "e395fd1c7f1ee6f51e0fbbfc34a0895adf80e3a4e90aee573fc96f126f7dab54",
+      "afterSHA256": "e395fd1c7f1ee6f51e0fbbfc34a0895adf80e3a4e90aee573fc96f126f7dab54"
+    },
+    {
+      "path": "assets/watercolor-v2/INK_Procedural_Paper_Overlay_v1.json",
+      "changed": false,
+      "beforeSHA256": "3612f0b7a65f1c1986eb59edf4acc7c322fd45c0add99ad3ec89140ac0ae8e54",
+      "afterSHA256": "3612f0b7a65f1c1986eb59edf4acc7c322fd45c0add99ad3ec89140ac0ae8e54"
+    },
+    {
+      "path": "assets/watercolor-v2/INK_Watercolor_Brush_Artwork_Profiles_v2.json",
+      "changed": false,
+      "beforeSHA256": "d083be10efec6bb13ee93383fc9343bb1341498958367c1d26c210432de958c8",
+      "afterSHA256": "d083be10efec6bb13ee93383fc9343bb1341498958367c1d26c210432de958c8"
+    },
+    {
+      "path": "assets/watercolor-v2/MATERIAL_SOURCE_AND_LICENSE_MANIFEST.json",
+      "changed": false,
+      "beforeSHA256": "3d15809c46d1d25980f4a1006054838deca0425fbd9239856e1f79b547312389",
+      "afterSHA256": "3d15809c46d1d25980f4a1006054838deca0425fbd9239856e1f79b547312389"
+    },
+    {
+      "path": "device-validation.html",
+      "changed": false,
+      "beforeSHA256": "4187505c137821507e881b7e8a1bf6a4f03033a115213201a9a03fe0f6b2a046",
+      "afterSHA256": "4187505c137821507e881b7e8a1bf6a4f03033a115213201a9a03fe0f6b2a046"
+    },
+    {
+      "path": "dist/ink.compat.js",
+      "changed": false,
+      "beforeSHA256": "70b15275d1818e6b1c3db1329b38dd97d789a5ad4768557f1807f68b1a0c5797",
+      "afterSHA256": "70b15275d1818e6b1c3db1329b38dd97d789a5ad4768557f1807f68b1a0c5797"
+    },
+    {
+      "path": "generate-shell.mjs",
+      "changed": true,
+      "beforeSHA256": "d607744b4d9d3f78b0eaac61bf7c5495435949e654b558e443bb5efcc9bcfb7a",
+      "afterSHA256": "a300922d8ab69608838ac3924f6e9641c045d279af1dc73c11c3e7ccb4314b95"
+    },
+    {
+      "path": "index-standalone.html",
+      "changed": true,
+      "beforeSHA256": "24744d96e53284dade4425d6c92f4f8c44ebf4afb866e7080b351428ef806d0c",
+      "afterSHA256": "a7c51534a05165813117d1fb1cbcd40dbe5d4649cff9e1630e8ab5c5b3e5559c"
+    },
+    {
+      "path": "index.html",
+      "changed": true,
+      "beforeSHA256": "8a92fd435709d03a5d5714b1dcd8c42945dd9dc6709cf4ef88e6f8a5fc0b1ecf",
+      "afterSHA256": "1b4e55be2c0ccf52d5356cb0ce403421d84357b02c61f799d066b1cfdfd68be8"
+    },
+    {
+      "path": "manifest-portable.webmanifest",
+      "changed": false,
+      "beforeSHA256": "59a26df3091d78257f998c1786d5cb0be7fecb3e2de4084981c2d8b1e85e74ad",
+      "afterSHA256": "59a26df3091d78257f998c1786d5cb0be7fecb3e2de4084981c2d8b1e85e74ad"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "changed": false,
+      "beforeSHA256": "23abc717d9f28dd96110d10c690d82f037cf01df05abb2787d849a61d3d2edf6",
+      "afterSHA256": "23abc717d9f28dd96110d10c690d82f037cf01df05abb2787d849a61d3d2edf6"
+    },
+    {
+      "path": "qa/runtime-test-bridge.js",
+      "changed": false,
+      "beforeSHA256": "c40987a7227a304b5fd8a8441656c9941a3a6c93ddc7b9e5e5aa009774306fcd",
+      "afterSHA256": "c40987a7227a304b5fd8a8441656c9941a3a6c93ddc7b9e5e5aa009774306fcd"
+    },
+    {
+      "path": "schemas/ink-ai-approval-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "da82435a59a71a7825071602f15b0530ee8011f2231c59d74768537656bfef00",
+      "afterSHA256": "da82435a59a71a7825071602f15b0530ee8011f2231c59d74768537656bfef00"
+    },
+    {
+      "path": "schemas/ink-ai-audit-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "211631ab531cb3cc0c5969a7f383c2b0208b0be0e35749ccb99df8f761ce3655",
+      "afterSHA256": "211631ab531cb3cc0c5969a7f383c2b0208b0be0e35749ccb99df8f761ce3655"
+    },
+    {
+      "path": "schemas/ink-ai-capability-manifest-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "0b188de5413eb926860034ebbb6ec83d107969aaccce16f6cafa98f77b111828",
+      "afterSHA256": "0b188de5413eb926860034ebbb6ec83d107969aaccce16f6cafa98f77b111828"
+    },
+    {
+      "path": "schemas/ink-ai-command-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "d0c9e1fe2311fb48dd6e9d3ba31a53bbc9d4d90e1dcb882f0829b994888e513b",
+      "afterSHA256": "d0c9e1fe2311fb48dd6e9d3ba31a53bbc9d4d90e1dcb882f0829b994888e513b"
+    },
+    {
+      "path": "schemas/ink-ai-error-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "d07fd039865434c608157e913823f053869bc28c2c59107878a9d555c16b83b3",
+      "afterSHA256": "d07fd039865434c608157e913823f053869bc28c2c59107878a9d555c16b83b3"
+    },
+    {
+      "path": "schemas/ink-ai-execution-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "0ace596f55c8870cb4ddbcd160e5d2fd5f2db79190885852194f28e186c4adf9",
+      "afterSHA256": "0ace596f55c8870cb4ddbcd160e5d2fd5f2db79190885852194f28e186c4adf9"
+    },
+    {
+      "path": "schemas/ink-ai-preview-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "080d6ab305e0f42d193d66bb740962cb5f3efb008e06b7d11130cb1b6ee3dade",
+      "afterSHA256": "080d6ab305e0f42d193d66bb740962cb5f3efb008e06b7d11130cb1b6ee3dade"
+    },
+    {
+      "path": "schemas/ink-ai-result-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "20927d839b7521a5bf50bc860ec61bab2d79bbf7e5079049351a13131a120fb8",
+      "afterSHA256": "20927d839b7521a5bf50bc860ec61bab2d79bbf7e5079049351a13131a120fb8"
+    },
+    {
+      "path": "schemas/ink-asset-manifest-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "4a7c7b3fd3c8e6b84b2dee37d05d2bfc8375ef6e664a3127348b8e1dc5b35f0c",
+      "afterSHA256": "4a7c7b3fd3c8e6b84b2dee37d05d2bfc8375ef6e664a3127348b8e1dc5b35f0c"
+    },
+    {
+      "path": "schemas/ink-brush-package-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "a2fd171225f68d0e915ffa4fae0398455d3f803e1ffe493c0d62edf6b102ee4f",
+      "afterSHA256": "a2fd171225f68d0e915ffa4fae0398455d3f803e1ffe493c0d62edf6b102ee4f"
+    },
+    {
+      "path": "schemas/ink-chat-connection-v151.schema.json",
+      "changed": false,
+      "beforeSHA256": "de80d93b46fa3d48454c87da6c800ffd6d4e0be4d80070d7015789811693b60c",
+      "afterSHA256": "de80d93b46fa3d48454c87da6c800ffd6d4e0be4d80070d7015789811693b60c"
+    },
+    {
+      "path": "schemas/ink-chat-context-v151.schema.json",
+      "changed": false,
+      "beforeSHA256": "7170def7e938fdf4e168bebb527589367ef4bbe7d61ae93ecc005c5c373eee0e",
+      "afterSHA256": "7170def7e938fdf4e168bebb527589367ef4bbe7d61ae93ecc005c5c373eee0e"
+    },
+    {
+      "path": "schemas/ink-chat-tool-call-v151.schema.json",
+      "changed": false,
+      "beforeSHA256": "dd3e238385c04fd721d95b4a5588f38641f57f7a05d6c62aa88fb7456fbc1084",
+      "afterSHA256": "dd3e238385c04fd721d95b4a5588f38641f57f7a05d6c62aa88fb7456fbc1084"
+    },
+    {
+      "path": "schemas/ink-conversational-session-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "db8a617659f19d1dd6376e18b05a83f87448139e32a2cf9e0419389726492c58",
+      "afterSHA256": "db8a617659f19d1dd6376e18b05a83f87448139e32a2cf9e0419389726492c58"
+    },
+    {
+      "path": "schemas/ink-document-state-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "fe4c54e2fb4b2bdce8db5e0af8d4a284e139db24257d2780c4f2863cbbc9feeb",
+      "afterSHA256": "fe4c54e2fb4b2bdce8db5e0af8d4a284e139db24257d2780c4f2863cbbc9feeb"
+    },
+    {
+      "path": "schemas/ink-editable-plan-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "0230594261264fffbe6ba1ed6a54a7d384e75d46f703314c445718a34369b641",
+      "afterSHA256": "0230594261264fffbe6ba1ed6a54a7d384e75d46f703314c445718a34369b641"
+    },
+    {
+      "path": "schemas/ink-headless-result-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "d8302ad59c03b0c8c4d24b16b52b26688e3735f7bac3fc9558a05a6c68e46a7a",
+      "afterSHA256": "d8302ad59c03b0c8c4d24b16b52b26688e3735f7bac3fc9558a05a6c68e46a7a"
+    },
+    {
+      "path": "schemas/ink-local-image-analysis-v151.schema.json",
+      "changed": false,
+      "beforeSHA256": "92f64ac148dbe433a0faf6974b207237b7f9df84a167c0907ce071a71d9c38c9",
+      "afterSHA256": "92f64ac148dbe433a0faf6974b207237b7f9df84a167c0907ce071a71d9c38c9"
+    },
+    {
+      "path": "schemas/ink-recipe-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "a244c622fe366258e3edd7643d5abe14552d5c465569d57c9375bf2727b02375",
+      "afterSHA256": "a244c622fe366258e3edd7643d5abe14552d5c465569d57c9375bf2727b02375"
+    },
+    {
+      "path": "schemas/ink-stroke-session-v2.schema.json",
+      "changed": false,
+      "beforeSHA256": "fcada76613e0387bf8941139047a5ca05f7db7fcd42067d14cb611e7915fa73e",
+      "afterSHA256": "fcada76613e0387bf8941139047a5ca05f7db7fcd42067d14cb611e7915fa73e"
+    },
+    {
+      "path": "schemas/ink-stroke-v2.schema.json",
+      "changed": false,
+      "beforeSHA256": "d0c52a52ef576797bd0f03b51a2d5d33e7d50e8f50c40c17372cf26b4dc7a662",
+      "afterSHA256": "d0c52a52ef576797bd0f03b51a2d5d33e7d50e8f50c40c17372cf26b4dc7a662"
+    },
+    {
+      "path": "schemas/ink-structural-qa-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "fba352bd949d5b2eb106e573b8c431d551fffd05e74b985d12dedd9126a659a3",
+      "afterSHA256": "fba352bd949d5b2eb106e573b8c431d551fffd05e74b985d12dedd9126a659a3"
+    },
+    {
+      "path": "schemas/ink-visual-qa-v1.schema.json",
+      "changed": false,
+      "beforeSHA256": "53a11cd9cd79c1fe3728ccbc48d2dbfdd14089e6f7a3aabd764f7f3310827cb1",
+      "afterSHA256": "53a11cd9cd79c1fe3728ccbc48d2dbfdd14089e6f7a3aabd764f7f3310827cb1"
+    },
+    {
+      "path": "service-worker.js",
+      "changed": true,
+      "beforeSHA256": "dcd4ffb7f487fac46097c88ff4905d45749c04ccf8640943044c12a356d3cc15",
+      "afterSHA256": "b4bbe2a3b5938ec4bd4be413ef4ea83a9fd6c087de01803d22146abaa8ee8d80"
+    },
+    {
+      "path": "shell.template.html",
+      "changed": true,
+      "beforeSHA256": "9583adb7a3798ae68bf420108e5e3fbe005c1eb06d5f4deef28a3fcf4fd3c8fb",
+      "afterSHA256": "c2deac372d2e6b70848a0fee0fd2fe9a04390b9cd45f04bfe7bcff7362694e4d"
+    },
+    {
+      "path": "src/agent/capability-registry.js",
+      "changed": false,
+      "beforeSHA256": "a973107a1b2a243e6a9048923d3db23b3be8910f01ad964f7955b39b2b8ede57",
+      "afterSHA256": "a973107a1b2a243e6a9048923d3db23b3be8910f01ad964f7955b39b2b8ede57"
+    },
+    {
+      "path": "src/agent/creative-library-search.js",
+      "changed": false,
+      "beforeSHA256": "cfb998ec0050afca01b6d54644c6bf608cb3405bcd4546d54c56275ee286ece8",
+      "afterSHA256": "cfb998ec0050afca01b6d54644c6bf608cb3405bcd4546d54c56275ee286ece8"
+    },
+    {
+      "path": "src/agent/export-asset.js",
+      "changed": false,
+      "beforeSHA256": "49debe95df1a29594792e4385d1a1dd8a929fc8a6bc13f9f906f8949ee9e8407",
+      "afterSHA256": "49debe95df1a29594792e4385d1a1dd8a929fc8a6bc13f9f906f8949ee9e8407"
+    },
+    {
+      "path": "src/agent/index.js",
+      "changed": false,
+      "beforeSHA256": "e793e7794e8e317258a95ee2e9923f99fb71869b7433cf7cf731f853afd63391",
+      "afterSHA256": "e793e7794e8e317258a95ee2e9923f99fb71869b7433cf7cf731f853afd63391"
+    },
+    {
+      "path": "src/agent/output-handle-registry.js",
+      "changed": false,
+      "beforeSHA256": "0637e1a3d643b892917c468f5273679f14b6145ed16d0b894b0ae14cc45c07be",
+      "afterSHA256": "0637e1a3d643b892917c468f5273679f14b6145ed16d0b894b0ae14cc45c07be"
+    },
+    {
+      "path": "src/agent/public-creative-api.js",
+      "changed": false,
+      "beforeSHA256": "5ef73c61e867ab4930d8fd66a1de2317ca53c637752920af7937918fb1c10d5a",
+      "afterSHA256": "5ef73c61e867ab4930d8fd66a1de2317ca53c637752920af7937918fb1c10d5a"
+    },
+    {
+      "path": "src/agent/visual-feedback.js",
+      "changed": false,
+      "beforeSHA256": "5ea12b0d34abba3dfb186880df8e4b3c8a3cce5c511c689686526fe63ae2422f",
+      "afterSHA256": "5ea12b0d34abba3dfb186880df8e4b3c8a3cce5c511c689686526fe63ae2422f"
+    },
+    {
+      "path": "src/ai/ai-core.js",
+      "changed": false,
+      "beforeSHA256": "8ab44c898d0ad3f3ce8acfab90eab510058984f438427e09f757701b48e23103",
+      "afterSHA256": "8ab44c898d0ad3f3ce8acfab90eab510058984f438427e09f757701b48e23103"
+    },
+    {
+      "path": "src/ai/chat-reference-handoff.js",
+      "changed": false,
+      "beforeSHA256": "bada13eb9b958b7776a43a782b863f5be8534ee7ac4ea1c6795e4bf0ebc57d48",
+      "afterSHA256": "bada13eb9b958b7776a43a782b863f5be8534ee7ac4ea1c6795e4bf0ebc57d48"
+    },
+    {
+      "path": "src/ai/chat-runtime.js",
+      "changed": false,
+      "beforeSHA256": "5dee3994409522f6c87cc3cba3f08c238f8e6aaacf01469edb9606280c3e3477",
+      "afterSHA256": "5dee3994409522f6c87cc3cba3f08c238f8e6aaacf01469edb9606280c3e3477"
+    },
+    {
+      "path": "src/ai/conversation-flower-contract.js",
+      "changed": false,
+      "beforeSHA256": "599f08f006d64182353ec9a0a636382e31df41566a1203aa576d72b717ca8b4a",
+      "afterSHA256": "599f08f006d64182353ec9a0a636382e31df41566a1203aa576d72b717ca8b4a"
+    },
+    {
+      "path": "src/ai/creative-intelligence-context.js",
+      "changed": false,
+      "beforeSHA256": "6418e51fd8b02a42fb460159d1962acdbf6e179829cc4ceb161e81a3638d60e8",
+      "afterSHA256": "6418e51fd8b02a42fb460159d1962acdbf6e179829cc4ceb161e81a3638d60e8"
+    },
+    {
+      "path": "src/ai/document-bridge.js",
+      "changed": false,
+      "beforeSHA256": "84c56704717f5b768d4664b95d3b4d4fe71a347fd5b9f9e1bf45ade2d341f6f8",
+      "afterSHA256": "84c56704717f5b768d4664b95d3b4d4fe71a347fd5b9f9e1bf45ade2d341f6f8"
+    },
+    {
+      "path": "src/ai/grounded-creative-decision.js",
+      "changed": false,
+      "beforeSHA256": "133f45a4ff581cf07718f04e64c97bec6c0362b6624a9edc980db84282cb66f0",
+      "afterSHA256": "133f45a4ff581cf07718f04e64c97bec6c0362b6624a9edc980db84282cb66f0"
+    },
+    {
+      "path": "src/ai/install-ai.js",
+      "changed": false,
+      "beforeSHA256": "6d50cac4c91acabf0dacc7d4803d1272d3ca09909d9adeae29e5923cb5d4871b",
+      "afterSHA256": "6d50cac4c91acabf0dacc7d4803d1272d3ca09909d9adeae29e5923cb5d4871b"
+    },
+    {
+      "path": "src/ai/intent/flower-vocabulary-v1.json",
+      "changed": false,
+      "beforeSHA256": "fec0f51918477ec15e3150380454fb222534ea877381e377f8e16b7e8a3aa363",
+      "afterSHA256": "fec0f51918477ec15e3150380454fb222534ea877381e377f8e16b7e8a3aa363"
+    },
+    {
+      "path": "src/ai/intent/intent-parser.js",
+      "changed": false,
+      "beforeSHA256": "de13b077fd17c01431cd26fadd265fe5c180a5a7b46c0124054e981420fbc691",
+      "afterSHA256": "de13b077fd17c01431cd26fadd265fe5c180a5a7b46c0124054e981420fbc691"
+    },
+    {
+      "path": "src/ai/intent/intent-schema.js",
+      "changed": false,
+      "beforeSHA256": "3a9006142b7d3de881b9b4f832a8f45651b1717c6bdbe8c6d827e7b4dd9411b1",
+      "afterSHA256": "3a9006142b7d3de881b9b4f832a8f45651b1717c6bdbe8c6d827e7b4dd9411b1"
+    },
+    {
+      "path": "src/ai/intent/intent-to-plan.js",
+      "changed": false,
+      "beforeSHA256": "789041922f7131587037f71588fe78faac0b2431dc6c58ef4ceff1a484d7ecc0",
+      "afterSHA256": "789041922f7131587037f71588fe78faac0b2431dc6c58ef4ceff1a484d7ecc0"
+    },
+    {
+      "path": "src/ai/intent/intent-validator.js",
+      "changed": false,
+      "beforeSHA256": "eb95ece7ebe4f3174dead0b3522649b7b739d5eea9328218c51ef495a6fc1462",
+      "afterSHA256": "eb95ece7ebe4f3174dead0b3522649b7b739d5eea9328218c51ef495a6fc1462"
+    },
+    {
+      "path": "src/ai/plan-analyzers.js",
+      "changed": false,
+      "beforeSHA256": "cc02645d378e1c25a5098ced6cbc7ce861ca450000ef6935489bd52367686c67",
+      "afterSHA256": "cc02645d378e1c25a5098ced6cbc7ce861ca450000ef6935489bd52367686c67"
+    },
+    {
+      "path": "src/assets/asset-error.js",
+      "changed": false,
+      "beforeSHA256": "70a45169fb5199e0e70cbb7bded72d9c6f1b059e7852606b4b6785292cfb6649",
+      "afterSHA256": "70a45169fb5199e0e70cbb7bded72d9c6f1b059e7852606b4b6785292cfb6649"
+    },
+    {
+      "path": "src/assets/asset-manifest.js",
+      "changed": false,
+      "beforeSHA256": "e9e7e81b4fe639607340921984c5162d97d19a36cf3535ba858c6203b737fb5b",
+      "afterSHA256": "e9e7e81b4fe639607340921984c5162d97d19a36cf3535ba858c6203b737fb5b"
+    },
+    {
+      "path": "src/assets/asset-migration.js",
+      "changed": false,
+      "beforeSHA256": "e85d48bd928926087bf872895a6a4799238b8ae61e0bbf2602b7cc4e878d053d",
+      "afterSHA256": "e85d48bd928926087bf872895a6a4799238b8ae61e0bbf2602b7cc4e878d053d"
+    },
+    {
+      "path": "src/assets/index.js",
+      "changed": false,
+      "beforeSHA256": "c782fe186a6949ca3aa7b84a2857554eb621cb8adb59e8bc4dfd8a214e48cc3a",
+      "afterSHA256": "c782fe186a6949ca3aa7b84a2857554eb621cb8adb59e8bc4dfd8a214e48cc3a"
+    },
+    {
+      "path": "src/compare/visual-compare.js",
+      "changed": false,
+      "beforeSHA256": "1ea4686c8240cefe91fdef5a33ad6186eb60c63bcafd5c382a4eb6168249e9e6",
+      "afterSHA256": "1ea4686c8240cefe91fdef5a33ad6186eb60c63bcafd5c382a4eb6168249e9e6"
+    },
+    {
+      "path": "src/composition/composition-constraints.js",
+      "changed": false,
+      "beforeSHA256": "577d7c605d9a760e1d134b4c6e54c936a7d1a2d72de92b8eae09764db275001d",
+      "afterSHA256": "577d7c605d9a760e1d134b4c6e54c936a7d1a2d72de92b8eae09764db275001d"
+    },
+    {
+      "path": "src/config.js",
+      "changed": true,
+      "beforeSHA256": "38c7d63d27e876d9195a0ff70dd9407e11076576d20a4886c04e3553c16826af",
+      "afterSHA256": "453cd3b7dffc3f235bd272b525e09bc66789d33b01a0e871ac7f733fbada6897"
+    },
+    {
+      "path": "src/core/geometry.js",
+      "changed": false,
+      "beforeSHA256": "8aae8d5683b6869c9e411517638477cd869f9fa01a57a1e43dfe4c0a5cfa6386",
+      "afterSHA256": "8aae8d5683b6869c9e411517638477cd869f9fa01a57a1e43dfe4c0a5cfa6386"
+    },
+    {
+      "path": "src/core/index.js",
+      "changed": false,
+      "beforeSHA256": "33d798c4a87bffb77a46f408d21dbfc200a996ab2dc9d1e1e48c6c632602b62a",
+      "afterSHA256": "33d798c4a87bffb77a46f408d21dbfc200a996ab2dc9d1e1e48c6c632602b62a"
+    },
+    {
+      "path": "src/core/math.js",
+      "changed": false,
+      "beforeSHA256": "9960fb27438735ced4115e5bbc19f974bcf446c43c3e3ea3a2325a26b0c9fe65",
+      "afterSHA256": "9960fb27438735ced4115e5bbc19f974bcf446c43c3e3ea3a2325a26b0c9fe65"
+    },
+    {
+      "path": "src/core/stable-id.js",
+      "changed": false,
+      "beforeSHA256": "910f0c27223be67a7643e6fd44e1021fd1231e892b046db125cf2035c9998ed8",
+      "afterSHA256": "910f0c27223be67a7643e6fd44e1021fd1231e892b046db125cf2035c9998ed8"
+    },
+    {
+      "path": "src/core/utils.js",
+      "changed": false,
+      "beforeSHA256": "ab13ef417ba174b0ab86990fda75c987a462ba4f2f834441ba953e2dac5389f1",
+      "afterSHA256": "ab13ef417ba174b0ab86990fda75c987a462ba4f2f834441ba953e2dac5389f1"
+    },
+    {
+      "path": "src/document/artboard.js",
+      "changed": false,
+      "beforeSHA256": "f9253768171c7e1470147f71340309bf2372d184a8a0dab826bf2796b9929ac7",
+      "afterSHA256": "f9253768171c7e1470147f71340309bf2372d184a8a0dab826bf2796b9929ac7"
+    },
+    {
+      "path": "src/document/components.js",
+      "changed": false,
+      "beforeSHA256": "a1025682769cae12f19fc63be4113f23c895ec187555e975c654c94e70a2b1f0",
+      "afterSHA256": "a1025682769cae12f19fc63be4113f23c895ec187555e975c654c94e70a2b1f0"
+    },
+    {
+      "path": "src/document/file-envelope.js",
+      "changed": false,
+      "beforeSHA256": "da0c01dca93503976dec0a8c3ec837b762c68b78fb9d62c0452717d22fee5593",
+      "afterSHA256": "da0c01dca93503976dec0a8c3ec837b762c68b78fb9d62c0452717d22fee5593"
+    },
+    {
+      "path": "src/document/hierarchy.js",
+      "changed": false,
+      "beforeSHA256": "8d6b4936a30bab5e395341d60e3ff6801baf432a9f7e7847f6bcd782481324db",
+      "afterSHA256": "8d6b4936a30bab5e395341d60e3ff6801baf432a9f7e7847f6bcd782481324db"
+    },
+    {
+      "path": "src/document/index.js",
+      "changed": false,
+      "beforeSHA256": "a972d6779854bfbba9c71356d039003cb0fdf156ebf73996577bf8b58fd27959",
+      "afterSHA256": "a972d6779854bfbba9c71356d039003cb0fdf156ebf73996577bf8b58fd27959"
+    },
+    {
+      "path": "src/document/integrity.js",
+      "changed": false,
+      "beforeSHA256": "70a26fed8eb424ca69d6caa441d327af14f8d76e61ef1f3b3723d5921cf70cac",
+      "afterSHA256": "70a26fed8eb424ca69d6caa441d327af14f8d76e61ef1f3b3723d5921cf70cac"
+    },
+    {
+      "path": "src/document/layout.js",
+      "changed": false,
+      "beforeSHA256": "fbc2fcc530af71db7430f613219f19e9db6177fc333792be1c6eb2a53d14ac87",
+      "afterSHA256": "fbc2fcc530af71db7430f613219f19e9db6177fc333792be1c6eb2a53d14ac87"
+    },
+    {
+      "path": "src/document/migration.js",
+      "changed": false,
+      "beforeSHA256": "04a8d6eb51422700b318e4719975d56701aae6d733b0e3a163411f92e646f424",
+      "afterSHA256": "04a8d6eb51422700b318e4719975d56701aae6d733b0e3a163411f92e646f424"
+    },
+    {
+      "path": "src/document/model.js",
+      "changed": false,
+      "beforeSHA256": "7170550bdbb0d0848475f4f313a41a1afd515f2ef77943c404ec272be7ec5dcb",
+      "afterSHA256": "7170550bdbb0d0848475f4f313a41a1afd515f2ef77943c404ec272be7ec5dcb"
+    },
+    {
+      "path": "src/document/revision.js",
+      "changed": false,
+      "beforeSHA256": "d8877dcf6183955f6e6acb76caf72d5805e5304e78d71f4f9a39cc2385880001",
+      "afterSHA256": "d8877dcf6183955f6e6acb76caf72d5805e5304e78d71f4f9a39cc2385880001"
+    },
+    {
+      "path": "src/document/storage.js",
+      "changed": false,
+      "beforeSHA256": "e29b9efb0166d7b22aaad1361b91e6656a685069483fd2b5582d974de7a0d862",
+      "afterSHA256": "e29b9efb0166d7b22aaad1361b91e6656a685069483fd2b5582d974de7a0d862"
+    },
+    {
+      "path": "src/document/workspace.js",
+      "changed": false,
+      "beforeSHA256": "79e0c83d095b76cad4c7a87ffbd4cb79dcd95d31618bda8cee78810dc79a1576",
+      "afterSHA256": "79e0c83d095b76cad4c7a87ffbd4cb79dcd95d31618bda8cee78810dc79a1576"
+    },
+    {
+      "path": "src/editor/bounds.js",
+      "changed": false,
+      "beforeSHA256": "621c4156ab1f003b03518b17eb21ebf0c672196d7480e33f5c9cb93b421a55ca",
+      "afterSHA256": "621c4156ab1f003b03518b17eb21ebf0c672196d7480e33f5c9cb93b421a55ca"
+    },
+    {
+      "path": "src/editor/chat-bounded-edit.js",
+      "changed": false,
+      "beforeSHA256": "be8760d0825f7dc2e5feeecf1dd6258df1f4cf01abd2def839d653ceb4bd32eb",
+      "afterSHA256": "be8760d0825f7dc2e5feeecf1dd6258df1f4cf01abd2def839d653ceb4bd32eb"
+    },
+    {
+      "path": "src/editor/chat-creative-plan.js",
+      "changed": false,
+      "beforeSHA256": "aa800e5965346f4ac09787fb2a746846e95c42a3715b5eaa5c953373deab5b1e",
+      "afterSHA256": "aa800e5965346f4ac09787fb2a746846e95c42a3715b5eaa5c953373deab5b1e"
+    },
+    {
+      "path": "src/editor/composition.js",
+      "changed": false,
+      "beforeSHA256": "faba437aa7aff55125fd56f3be76cef76be6b410815ef8999bf7adf08f3e8e0d",
+      "afterSHA256": "faba437aa7aff55125fd56f3be76cef76be6b410815ef8999bf7adf08f3e8e0d"
+    },
+    {
+      "path": "src/editor/creative-workspace.js",
+      "changed": false,
+      "beforeSHA256": "451610d98fbecc6235a5998b6a3721c5770ba0a3de3b6695c5e10151cdb65127",
+      "afterSHA256": "451610d98fbecc6235a5998b6a3721c5770ba0a3de3b6695c5e10151cdb65127"
+    },
+    {
+      "path": "src/editor/expressive-stroke.js",
+      "changed": false,
+      "beforeSHA256": "5e117e2094bc99eb4f3282122515d95c4ce0f5035fd1624c282a50b21c9f2b93",
+      "afterSHA256": "5e117e2094bc99eb4f3282122515d95c4ce0f5035fd1624c282a50b21c9f2b93"
+    },
+    {
+      "path": "src/editor/index.js",
+      "changed": false,
+      "beforeSHA256": "3815d2ef9202c758339f19b8566bdd1326f1bf3f9f2864984565bd25cec182b5",
+      "afterSHA256": "3815d2ef9202c758339f19b8566bdd1326f1bf3f9f2864984565bd25cec182b5"
+    },
+    {
+      "path": "src/editor/path-edit.js",
+      "changed": false,
+      "beforeSHA256": "6394761d9f74377c81c9fe7e57691122a5a4673997ae8c34e042f3e00ca1b215",
+      "afterSHA256": "6394761d9f74377c81c9fe7e57691122a5a4673997ae8c34e042f3e00ca1b215"
+    },
+    {
+      "path": "src/editor/precision-layout.js",
+      "changed": false,
+      "beforeSHA256": "74696d6da798c2d9db129ef26b25501ca307874f9918be08ea07659750ebd855",
+      "afterSHA256": "74696d6da798c2d9db129ef26b25501ca307874f9918be08ea07659750ebd855"
+    },
+    {
+      "path": "src/editor/repaint-material.js",
+      "changed": false,
+      "beforeSHA256": "60c0f329c332dcff2b4e6e8fbfe98bea4d07be51d6b5822618f1482a6f5d5314",
+      "afterSHA256": "60c0f329c332dcff2b4e6e8fbfe98bea4d07be51d6b5822618f1482a6f5d5314"
+    },
+    {
+      "path": "src/editor/selection.js",
+      "changed": false,
+      "beforeSHA256": "2d7829acadda682fe8b3b7a461f14a047868256dd257196c2d5b65a78ee148b4",
+      "afterSHA256": "2d7829acadda682fe8b3b7a461f14a047868256dd257196c2d5b65a78ee148b4"
+    },
+    {
+      "path": "src/editor/text-layout.js",
+      "changed": false,
+      "beforeSHA256": "3e45d2810727aa28e237062aa72e8de1bfe3c32fa7958b43bc6795358164b507",
+      "afterSHA256": "3e45d2810727aa28e237062aa72e8de1bfe3c32fa7958b43bc6795358164b507"
+    },
+    {
+      "path": "src/editor/text-object.js",
+      "changed": false,
+      "beforeSHA256": "d22fa5c9532fbbae6813d59a5a88f32d99f805ab10157ce842c4368b17685925",
+      "afterSHA256": "d22fa5c9532fbbae6813d59a5a88f32d99f805ab10157ce842c4368b17685925"
+    },
+    {
+      "path": "src/editor/transform-advanced.js",
+      "changed": false,
+      "beforeSHA256": "27fba8ce08281d20c39ed2201ff3c1f36e013dcd00b23e4c99d925a226b182c9",
+      "afterSHA256": "27fba8ce08281d20c39ed2201ff3c1f36e013dcd00b23e4c99d925a226b182c9"
+    },
+    {
+      "path": "src/editor/transform.js",
+      "changed": false,
+      "beforeSHA256": "d3a801b62b469bbf79f367f6019e9460781574ae3675b5851c9a1011ca8df933",
+      "afterSHA256": "d3a801b62b469bbf79f367f6019e9460781574ae3675b5851c9a1011ca8df933"
+    },
+    {
+      "path": "src/export/index.js",
+      "changed": false,
+      "beforeSHA256": "cb782559b0620da9b464746fc6e54aeda74b16b1936f37aec612da84b550013b",
+      "afterSHA256": "cb782559b0620da9b464746fc6e54aeda74b16b1936f37aec612da84b550013b"
+    },
+    {
+      "path": "src/export/pdf.js",
+      "changed": false,
+      "beforeSHA256": "88969f56a18ef729af84bf12653f5b217d3eb342e074beb2011b81b1e57a0822",
+      "afterSHA256": "88969f56a18ef729af84bf12653f5b217d3eb342e074beb2011b81b1e57a0822"
+    },
+    {
+      "path": "src/export/png-worker-encoder.js",
+      "changed": false,
+      "beforeSHA256": "5c88bcab893b7aa66b488e2d3cfbf72721cdaaf0ec89a6da321d1279c8d8fddd",
+      "afterSHA256": "5c88bcab893b7aa66b488e2d3cfbf72721cdaaf0ec89a6da321d1279c8d8fddd"
+    },
+    {
+      "path": "src/extraction/adapters.js",
+      "changed": false,
+      "beforeSHA256": "ce6283b1dfa79152558ec8e42bbd13c49db2eb222a71e4bea867040ffbeb4283",
+      "afterSHA256": "ce6283b1dfa79152558ec8e42bbd13c49db2eb222a71e4bea867040ffbeb4283"
+    },
+    {
+      "path": "src/extraction/core.js",
+      "changed": false,
+      "beforeSHA256": "0b0822103bf1255ba3b298cd505efe53fdcca4ccfb96916ff8fa069c8ee8e480",
+      "afterSHA256": "0b0822103bf1255ba3b298cd505efe53fdcca4ccfb96916ff8fa069c8ee8e480"
+    },
+    {
+      "path": "src/extraction/install.js",
+      "changed": false,
+      "beforeSHA256": "61806858cd9653d4fc7375968b7681b55503c0685324f3eb4528d3a32cd67ce6",
+      "afterSHA256": "61806858cd9653d4fc7375968b7681b55503c0685324f3eb4528d3a32cd67ce6"
+    },
+    {
+      "path": "src/extraction/structure.js",
+      "changed": false,
+      "beforeSHA256": "3baa80c3b2e05250a2622b9b6afc9fa406c1e2bf26462f51a779c4f867b45be0",
+      "afterSHA256": "3baa80c3b2e05250a2622b9b6afc9fa406c1e2bf26462f51a779c4f867b45be0"
+    },
+    {
+      "path": "src/extraction/workspace.js",
+      "changed": false,
+      "beforeSHA256": "cdc60223f7b0ce7b2a0ed92df3a8b7d0da5263765b20414253ca49b5d8f78e80",
+      "afterSHA256": "cdc60223f7b0ce7b2a0ed92df3a8b7d0da5263765b20414253ca49b5d8f78e80"
+    },
+    {
+      "path": "src/flora/action/flora-action-errors.js",
+      "changed": false,
+      "beforeSHA256": "94b67bd3ad83958d284210b399e68c9c95b8adfe46a8edb153006b1b93be20c4",
+      "afterSHA256": "94b67bd3ad83958d284210b399e68c9c95b8adfe46a8edb153006b1b93be20c4"
+    },
+    {
+      "path": "src/flora/action/flora-action-schema.js",
+      "changed": false,
+      "beforeSHA256": "254a3a04162a8c34acfd977a7e2cd490f1c44e8e088386cc0686e85d34610600",
+      "afterSHA256": "254a3a04162a8c34acfd977a7e2cd490f1c44e8e088386cc0686e85d34610600"
+    },
+    {
+      "path": "src/flora/action/flora-action-validator.js",
+      "changed": false,
+      "beforeSHA256": "d10b2682ccc688d198375273273489d204caab09b9c0630cd87821c206db62eb",
+      "afterSHA256": "d10b2682ccc688d198375273273489d204caab09b9c0630cd87821c206db62eb"
+    },
+    {
+      "path": "src/flora/action/flora-command-dispatcher.js",
+      "changed": false,
+      "beforeSHA256": "7e332e15845b31f19ec8e4f14ad9e0fdaeb7b21417817e65b1c15e09aa246315",
+      "afterSHA256": "7e332e15845b31f19ec8e4f14ad9e0fdaeb7b21417817e65b1c15e09aa246315"
+    },
+    {
+      "path": "src/flora/crown/crown-painting-compiler.js",
+      "changed": false,
+      "beforeSHA256": "77e854b85657757788510a3e892a0a5f77aa48015a5a5535e169f39d0111e64c",
+      "afterSHA256": "77e854b85657757788510a3e892a0a5f77aa48015a5a5535e169f39d0111e64c"
+    },
+    {
+      "path": "src/flora/crown/crown-painting-plan-schema.js",
+      "changed": false,
+      "beforeSHA256": "ee6509f4790dd17b63cc92cd314ef6906b90f43b1fa6c7c295eed50681d5fdb1",
+      "afterSHA256": "ee6509f4790dd17b63cc92cd314ef6906b90f43b1fa6c7c295eed50681d5fdb1"
+    },
+    {
+      "path": "src/flora/crown/crown-painting-plan-validator.js",
+      "changed": false,
+      "beforeSHA256": "f01d0d9969079dd6eb1e69a3ea2334f08e137be7cd02f68cd4efade29f6b9773",
+      "afterSHA256": "f01d0d9969079dd6eb1e69a3ea2334f08e137be7cd02f68cd4efade29f6b9773"
+    },
+    {
+      "path": "src/flora/crown/crown-painting-runtime.js",
+      "changed": false,
+      "beforeSHA256": "23297d93a46ca9940231ba7a01e4649180290423f7502da7f1530e0fa195f97a",
+      "afterSHA256": "23297d93a46ca9940231ba7a01e4649180290423f7502da7f1530e0fa195f97a"
+    },
+    {
+      "path": "src/flora/crown/crown-visual-checks.js",
+      "changed": false,
+      "beforeSHA256": "8de6e4164ddbb1f4da57067b1954f490b4765ed851454fc7284a9e1c7ec9c5ca",
+      "afterSHA256": "8de6e4164ddbb1f4da57067b1954f490b4765ed851454fc7284a9e1c7ec9c5ca"
+    },
+    {
+      "path": "src/flora/crown/petal-recipe-generation.js",
+      "changed": false,
+      "beforeSHA256": "f745cd51a0e0d834bdb829d3d35fe3b10032df611f6d8cbb98b6939b8ed6b47c",
+      "afterSHA256": "f745cd51a0e0d834bdb829d3d35fe3b10032df611f6d8cbb98b6939b8ed6b47c"
+    },
+    {
+      "path": "src/flora/hero/a4-hero-plan-schema.js",
+      "changed": false,
+      "beforeSHA256": "f8b8290bf052577328c5829f0088887fa304828abb6ebaf5e5819cdec0a8fc8a",
+      "afterSHA256": "f8b8290bf052577328c5829f0088887fa304828abb6ebaf5e5819cdec0a8fc8a"
+    },
+    {
+      "path": "src/flora/hero/a4-hero-plan-validator.js",
+      "changed": false,
+      "beforeSHA256": "dc92e12da088ae6683cd0abc6996aca8c7595c8073db831926d287ac3f80c5a2",
+      "afterSHA256": "dc92e12da088ae6683cd0abc6996aca8c7595c8073db831926d287ac3f80c5a2"
+    },
+    {
+      "path": "src/flora/hero/a4-hero-visual-checks.js",
+      "changed": false,
+      "beforeSHA256": "eb1e15647efab28e5f853a642b9df92dad5c79c5fe40e4a1026e0a424de7a7f1",
+      "afterSHA256": "eb1e15647efab28e5f853a642b9df92dad5c79c5fe40e4a1026e0a424de7a7f1"
+    },
+    {
+      "path": "src/flora/hero/complete-hero-painting-compiler.js",
+      "changed": false,
+      "beforeSHA256": "8340453bf2f56f7ecdde8c9571e6dbd9d9a02ef803cdc8427ddadc6aa5a32fb0",
+      "afterSHA256": "8340453bf2f56f7ecdde8c9571e6dbd9d9a02ef803cdc8427ddadc6aa5a32fb0"
+    },
+    {
+      "path": "src/flora/hero/complete-hero-painting-runtime.js",
+      "changed": false,
+      "beforeSHA256": "8f8c3066f4025324df3ed15eb3daa78f8623118f3f4da6a40468e8312db1fb27",
+      "afterSHA256": "8f8c3066f4025324df3ed15eb3daa78f8623118f3f4da6a40468e8312db1fb27"
+    },
+    {
+      "path": "src/flora/hero/complete-hero-recipe-generation.js",
+      "changed": false,
+      "beforeSHA256": "39e7dfd635a7be486e29826fbe4fb80ecb8630505ad93d634fcb0df050f2d93d",
+      "afterSHA256": "39e7dfd635a7be486e29826fbe4fb80ecb8630505ad93d634fcb0df050f2d93d"
+    },
+    {
+      "path": "src/flora/hero/complete-hero-structure.js",
+      "changed": false,
+      "beforeSHA256": "b6effacbfb7105d08338571fcb3a63e5cc08f017b780e6e4dcb14e0936e1c189",
+      "afterSHA256": "b6effacbfb7105d08338571fcb3a63e5cc08f017b780e6e4dcb14e0936e1c189"
+    },
+    {
+      "path": "src/flora/index.js",
+      "changed": false,
+      "beforeSHA256": "2c8cc519df3ac1349a689b7ff4ed4293dec25fa287448dd85c9bf1f172fe149b",
+      "afterSHA256": "2c8cc519df3ac1349a689b7ff4ed4293dec25fa287448dd85c9bf1f172fe149b"
+    },
+    {
+      "path": "src/flora/mask/vector-mask.js",
+      "changed": false,
+      "beforeSHA256": "4ea95a17f3427eca0836547941e028240e49c51272314d6df4ed2bbba1010d01",
+      "afterSHA256": "4ea95a17f3427eca0836547941e028240e49c51272314d6df4ed2bbba1010d01"
+    },
+    {
+      "path": "src/flora/painting/abstract-petal-benchmark.js",
+      "changed": false,
+      "beforeSHA256": "0f18371e406d39700eaa73bb97eb02398861d337938fc6584733ee1903a46929",
+      "afterSHA256": "0f18371e406d39700eaa73bb97eb02398861d337938fc6584733ee1903a46929"
+    },
+    {
+      "path": "src/flora/painting/complete-crown-benchmark.js",
+      "changed": false,
+      "beforeSHA256": "bd212dab840b09a8a55b93c6b21b8637759c3a330230bbd13d5733e92c794221",
+      "afterSHA256": "bd212dab840b09a8a55b93c6b21b8637759c3a330230bbd13d5733e92c794221"
+    },
+    {
+      "path": "src/flora/painting/region-paint-operations.js",
+      "changed": false,
+      "beforeSHA256": "3ca676fb9b3c6be12086eb7c4c28dc77b332f63f388818a9fcc5afcc2f928e34",
+      "afterSHA256": "3ca676fb9b3c6be12086eb7c4c28dc77b332f63f388818a9fcc5afcc2f928e34"
+    },
+    {
+      "path": "src/flora/painting/region-stroke-compiler.js",
+      "changed": false,
+      "beforeSHA256": "f0b2a814f3bb9610e76ad9db94109eeb93d1d60a1aa18ad95008947ffaa02ba7",
+      "afterSHA256": "f0b2a814f3bb9610e76ad9db94109eeb93d1d60a1aa18ad95008947ffaa02ba7"
+    },
+    {
+      "path": "src/flora/painting/three-petal-benchmark.js",
+      "changed": false,
+      "beforeSHA256": "66f82e9643913d45e26f69d0c9d53f3769bc196682b562c74134ce9f062dd4fd",
+      "afterSHA256": "66f82e9643913d45e26f69d0c9d53f3769bc196682b562c74134ce9f062dd4fd"
+    },
+    {
+      "path": "src/flora/recipe/painting-recipe-compiler.js",
+      "changed": false,
+      "beforeSHA256": "f2d12201b18ea00b69044d7573a722ec41f7c732d708fb5fb74a22bdfeeec6c0",
+      "afterSHA256": "f2d12201b18ea00b69044d7573a722ec41f7c732d708fb5fb74a22bdfeeec6c0"
+    },
+    {
+      "path": "src/flora/recipe/painting-recipe-runtime.js",
+      "changed": false,
+      "beforeSHA256": "9954d72a0c24a2832f2f61ab37fb7e3f353abf4acf57fc5a71086a398ba9a084",
+      "afterSHA256": "9954d72a0c24a2832f2f61ab37fb7e3f353abf4acf57fc5a71086a398ba9a084"
+    },
+    {
+      "path": "src/flora/recipe/painting-recipe-schema.js",
+      "changed": false,
+      "beforeSHA256": "e61a115e1a77301d796984085a0fb5685b538ced9956f355dd3cabe3caf2f4bb",
+      "afterSHA256": "e61a115e1a77301d796984085a0fb5685b538ced9956f355dd3cabe3caf2f4bb"
+    },
+    {
+      "path": "src/flora/recipe/painting-recipe-validator.js",
+      "changed": false,
+      "beforeSHA256": "78f0914f43bb400713bbe8e66df321ec366d953a7075726dafdc809a690218c0",
+      "afterSHA256": "78f0914f43bb400713bbe8e66df321ec366d953a7075726dafdc809a690218c0"
+    },
+    {
+      "path": "src/flora/recipe/refined-painting-parameters.js",
+      "changed": false,
+      "beforeSHA256": "5fb047abbfc941ad26fab0d1247370722b1afc9c8ea0561ab083f2f07ea4b05f",
+      "afterSHA256": "5fb047abbfc941ad26fab0d1247370722b1afc9c8ea0561ab083f2f07ea4b05f"
+    },
+    {
+      "path": "src/flora/reference/reference-mapping.js",
+      "changed": false,
+      "beforeSHA256": "6078223b17a8507fd38dadc754eb28a79080c13712d7adbfcd103f4e4acf4403",
+      "afterSHA256": "6078223b17a8507fd38dadc754eb28a79080c13712d7adbfcd103f4e4acf4403"
+    },
+    {
+      "path": "src/flora/retention/painted-geometry-retention.js",
+      "changed": false,
+      "beforeSHA256": "1b0db90060a648f2fdaeca5fece07521ae7103f10c39f7bbb4d125907f8379a8",
+      "afterSHA256": "1b0db90060a648f2fdaeca5fece07521ae7103f10c39f7bbb4d125907f8379a8"
+    },
+    {
+      "path": "src/flora/runtime/flora-runtime-adapter.js",
+      "changed": false,
+      "beforeSHA256": "731bcf168e5c971025ef5d4f7004421e26067ea95674692f353fc1c6fb95110d",
+      "afterSHA256": "731bcf168e5c971025ef5d4f7004421e26067ea95674692f353fc1c6fb95110d"
+    },
+    {
+      "path": "src/flora/species/flr012-adonis.js",
+      "changed": false,
+      "beforeSHA256": "f740f6a2d929055673d4452c10a5dfb80fa432b70d4468e57f0826f5b4c76ead",
+      "afterSHA256": "f740f6a2d929055673d4452c10a5dfb80fa432b70d4468e57f0826f5b4c76ead"
+    },
+    {
+      "path": "src/flora/structure/geometry-measurement-gates.js",
+      "changed": false,
+      "beforeSHA256": "0814ec2466a7953811dcc5ca80fc619d859be53ba97990f333b77549331604bc",
+      "afterSHA256": "0814ec2466a7953811dcc5ca80fc619d859be53ba97990f333b77549331604bc"
+    },
+    {
+      "path": "src/flora/structure/hero-geometry.js",
+      "changed": false,
+      "beforeSHA256": "780b17c6f8757bb04d98bb7aa1dc507b3a454957dbf50dbd8a909c2bc8991ef5",
+      "afterSHA256": "780b17c6f8757bb04d98bb7aa1dc507b3a454957dbf50dbd8a909c2bc8991ef5"
+    },
+    {
+      "path": "src/flora/structure/hero-profile.js",
+      "changed": false,
+      "beforeSHA256": "e4c9a9a7110763ac75bed7971fc4a5850c55a9190fc53475c3d9bdbf243144b5",
+      "afterSHA256": "e4c9a9a7110763ac75bed7971fc4a5850c55a9190fc53475c3d9bdbf243144b5"
+    },
+    {
+      "path": "src/flora/structure/hero-runtime.js",
+      "changed": false,
+      "beforeSHA256": "2bbc10bbeedf1100b8eab95a06c3c297515537a329c9cd9b8c277712ea16d4fb",
+      "afterSHA256": "2bbc10bbeedf1100b8eab95a06c3c297515537a329c9cd9b8c277712ea16d4fb"
+    },
+    {
+      "path": "src/history/diff.js",
+      "changed": false,
+      "beforeSHA256": "afd7681d65b952410f26b7c1cf3b09743a875bb377581aaf3c41d8c896321d7f",
+      "afterSHA256": "afd7681d65b952410f26b7c1cf3b09743a875bb377581aaf3c41d8c896321d7f"
+    },
+    {
+      "path": "src/history/history.js",
+      "changed": false,
+      "beforeSHA256": "c54bf8d29a51259a3c97d1916932074218666712908b3cf4d7b0bd596daa2221",
+      "afterSHA256": "c54bf8d29a51259a3c97d1916932074218666712908b3cf4d7b0bd596daa2221"
+    },
+    {
+      "path": "src/history/index.js",
+      "changed": false,
+      "beforeSHA256": "ff9affd2a7bbd7c01f32476f3de96488a6ca6e76213bcb72569602a9de30a9d7",
+      "afterSHA256": "ff9affd2a7bbd7c01f32476f3de96488a6ca6e76213bcb72569602a9de30a9d7"
+    },
+    {
+      "path": "src/image/channel-core.js",
+      "changed": false,
+      "beforeSHA256": "dc0ca155b6a4d8d4deb909d6458657535a387ce820e59f9f793997fa12a3071d",
+      "afterSHA256": "dc0ca155b6a4d8d4deb909d6458657535a387ce820e59f9f793997fa12a3071d"
+    },
+    {
+      "path": "src/image/color-management-core.js",
+      "changed": false,
+      "beforeSHA256": "35edccf78280b99fba1da5a913b9b9e9f60225e91001e5b13afdf5f4fb363119",
+      "afterSHA256": "35edccf78280b99fba1da5a913b9b9e9f60225e91001e5b13afdf5f4fb363119"
+    },
+    {
+      "path": "src/image/format-interoperability.js",
+      "changed": false,
+      "beforeSHA256": "b6f46afc8acd528920914868d75119a21bef393b8acf1969a730280e1963e157",
+      "afterSHA256": "b6f46afc8acd528920914868d75119a21bef393b8acf1969a730280e1963e157"
+    },
+    {
+      "path": "src/image/formats/adapters/raw-adapter.js",
+      "changed": false,
+      "beforeSHA256": "3494c1c957a9d41de8101d14e934e8034febb12042d6766833ed1488e28dd619",
+      "afterSHA256": "3494c1c957a9d41de8101d14e934e8034febb12042d6766833ed1488e28dd619"
+    },
+    {
+      "path": "src/image/formats/binary.js",
+      "changed": false,
+      "beforeSHA256": "a1b5afe7c51c22e9635bf74748aae38394144d150a72fb9b152532fb45c7d2e7",
+      "afterSHA256": "a1b5afe7c51c22e9635bf74748aae38394144d150a72fb9b152532fb45c7d2e7"
+    },
+    {
+      "path": "src/image/formats/exr.js",
+      "changed": false,
+      "beforeSHA256": "26426918b4e6c35ec62e4231a1d3f39926a05d5e27b403e1bd60e09f1c13961d",
+      "afterSHA256": "26426918b4e6c35ec62e4231a1d3f39926a05d5e27b403e1bd60e09f1c13961d"
+    },
+    {
+      "path": "src/image/formats/normalized-payload.js",
+      "changed": false,
+      "beforeSHA256": "e4d11d5f5a68d67b7351cd77da72a96dad7fdd62a911731c97d56534c9e0ec10",
+      "afterSHA256": "e4d11d5f5a68d67b7351cd77da72a96dad7fdd62a911731c97d56534c9e0ec10"
+    },
+    {
+      "path": "src/image/formats/psd.js",
+      "changed": false,
+      "beforeSHA256": "91b77ec4d5f1ee11dec85ee48cda5301af8500b1567e4e58da36d1a884cdb874",
+      "afterSHA256": "91b77ec4d5f1ee11dec85ee48cda5301af8500b1567e4e58da36d1a884cdb874"
+    },
+    {
+      "path": "src/image/formats/tiff.js",
+      "changed": false,
+      "beforeSHA256": "742c042c226c9aaf8442aba9bc871623c97fcc204938fafba48026f4ecae06bb",
+      "afterSHA256": "742c042c226c9aaf8442aba9bc871623c97fcc204938fafba48026f4ecae06bb"
+    },
+    {
+      "path": "src/image/image-core.js",
+      "changed": false,
+      "beforeSHA256": "3e6ad27b6e7db91b4d9702de50fc431f598fbb27cf4ff1cff84be2914fb0436b",
+      "afterSHA256": "3e6ad27b6e7db91b4d9702de50fc431f598fbb27cf4ff1cff84be2914fb0436b"
+    },
+    {
+      "path": "src/image/raster-fill-tools.js",
+      "changed": false,
+      "beforeSHA256": "c89eba7b82447acd296afe5de81519e96b732ef43c938b49f28e7e9a7c337db3",
+      "afterSHA256": "c89eba7b82447acd296afe5de81519e96b732ef43c938b49f28e7e9a7c337db3"
+    },
+    {
+      "path": "src/image/raster-processing-advanced.js",
+      "changed": false,
+      "beforeSHA256": "1b4d00b3e56ba6a9094469a78281770b5f5a715a2026902179fe79d9a3ee76f8",
+      "afterSHA256": "1b4d00b3e56ba6a9094469a78281770b5f5a715a2026902179fe79d9a3ee76f8"
+    },
+    {
+      "path": "src/image/raster-retouch-tools.js",
+      "changed": false,
+      "beforeSHA256": "dc5b586483007cf78fe3be2ac677960ad87e4ab4b465cb1d1eabb4f8e7df7763",
+      "afterSHA256": "dc5b586483007cf78fe3be2ac677960ad87e4ab4b465cb1d1eabb4f8e7df7763"
+    },
+    {
+      "path": "src/image/raster-selection-tools.js",
+      "changed": false,
+      "beforeSHA256": "716a18a02e472ff840865b2fa836467a33d7b9d7da65d1732b8fe52350cc9302",
+      "afterSHA256": "716a18a02e472ff840865b2fa836467a33d7b9d7da65d1732b8fe52350cc9302"
+    },
+    {
+      "path": "src/ink.js",
+      "changed": false,
+      "beforeSHA256": "a349d4d83e40101abb9f7672a7fbf081c933343574a6190867fc9ca7325b6eda",
+      "afterSHA256": "a349d4d83e40101abb9f7672a7fbf081c933343574a6190867fc9ca7325b6eda"
+    },
+    {
+      "path": "src/input/device-validation.js",
+      "changed": false,
+      "beforeSHA256": "d172ed87d0ab8ed6b72ca463eec5eadae29131c504e43d77c63f6fc755fa5614",
+      "afterSHA256": "d172ed87d0ab8ed6b72ca463eec5eadae29131c504e43d77c63f6fc755fa5614"
+    },
+    {
+      "path": "src/input/input-arbiter.js",
+      "changed": false,
+      "beforeSHA256": "29caca3e67ddf7f02d93e48cde0582048df5d8f3a09ea53a7fa47fb7f1e570ee",
+      "afterSHA256": "29caca3e67ddf7f02d93e48cde0582048df5d8f3a09ea53a7fa47fb7f1e570ee"
+    },
+    {
+      "path": "src/input/pen-calibration.js",
+      "changed": false,
+      "beforeSHA256": "f7ff9cedd7f9701e5b25b840af44fb5b46aff713def74373320cb9f2b30036e8",
+      "afterSHA256": "f7ff9cedd7f9701e5b25b840af44fb5b46aff713def74373320cb9f2b30036e8"
+    },
+    {
+      "path": "src/input/stylus-test.js",
+      "changed": false,
+      "beforeSHA256": "b48bfe1d81ea241d30a19515050839d02866039a952d1190840ef285949dfc96",
+      "afterSHA256": "b48bfe1d81ea241d30a19515050839d02866039a952d1190840ef285949dfc96"
+    },
+    {
+      "path": "src/material/flower-batch-01.js",
+      "changed": false,
+      "beforeSHA256": "7dd03b9b0bb5bbd16e484ab30322653a15acc50e6eba32246dd4ca35e7cafc67",
+      "afterSHA256": "7dd03b9b0bb5bbd16e484ab30322653a15acc50e6eba32246dd4ca35e7cafc67"
+    },
+    {
+      "path": "src/material/index.js",
+      "changed": false,
+      "beforeSHA256": "52df9e63cac878a99afb4559ecedd519808006edbb23c1f12b54d7b20e01a9e2",
+      "afterSHA256": "52df9e63cac878a99afb4559ecedd519808006edbb23c1f12b54d7b20e01a9e2"
+    },
+    {
+      "path": "src/material/material-library.js",
+      "changed": false,
+      "beforeSHA256": "955e2ebd7c83290736219ab7af5fd5adfa21208a67843518dd0985b716c602f6",
+      "afterSHA256": "955e2ebd7c83290736219ab7af5fd5adfa21208a67843518dd0985b716c602f6"
+    },
+    {
+      "path": "src/memory/creative-memory.js",
+      "changed": false,
+      "beforeSHA256": "c29896b2de52e36fe10ee188f4a1d89fc7298a1b8aa15010f516fe5ac993f081",
+      "afterSHA256": "c29896b2de52e36fe10ee188f4a1d89fc7298a1b8aa15010f516fe5ac993f081"
+    },
+    {
+      "path": "src/paint/brush-engine.js",
+      "changed": false,
+      "beforeSHA256": "1b6a5267ac087207e42fb84072cc70f147ab077fcfa154ab82a578dbf2c38b0c",
+      "afterSHA256": "1b6a5267ac087207e42fb84072cc70f147ab077fcfa154ab82a578dbf2c38b0c"
+    },
+    {
+      "path": "src/paint/drawing-quality.js",
+      "changed": false,
+      "beforeSHA256": "55eb75e700484dc9e13b051c3fec74c6f1e572630df853970194b9eb3a0b72e0",
+      "afterSHA256": "55eb75e700484dc9e13b051c3fec74c6f1e572630df853970194b9eb3a0b72e0"
+    },
+    {
+      "path": "src/paint/drawing-workflow-import.js",
+      "changed": false,
+      "beforeSHA256": "24bdde769903b80165662d2be7edb2fd42c0f578e715824a937c05f794bd0289",
+      "afterSHA256": "24bdde769903b80165662d2be7edb2fd42c0f578e715824a937c05f794bd0289"
+    },
+    {
+      "path": "src/paint/index.js",
+      "changed": false,
+      "beforeSHA256": "d6e458864e9d4a1333ceaa732e687e443e99cba5339dee80a3c915ad08121fc2",
+      "afterSHA256": "d6e458864e9d4a1333ceaa732e687e443e99cba5339dee80a3c915ad08121fc2"
+    },
+    {
+      "path": "src/paint/natural-media-state.js",
+      "changed": false,
+      "beforeSHA256": "2cd3da61355df9e6fb84bdc81f95ba869ae1a24810e34bf654bcec252adfe876",
+      "afterSHA256": "2cd3da61355df9e6fb84bdc81f95ba869ae1a24810e34bf654bcec252adfe876"
+    },
+    {
+      "path": "src/paint/paint-core.js",
+      "changed": false,
+      "beforeSHA256": "206666ceb25162b6622ecb994f541c62d7c81bda936e64e601c51f231aa4a210",
+      "afterSHA256": "206666ceb25162b6622ecb994f541c62d7c81bda936e64e601c51f231aa4a210"
+    },
+    {
+      "path": "src/paint/stroke-model.js",
+      "changed": false,
+      "beforeSHA256": "5bf6530415cd3d0ab7f7f4e4f3bce0c9786236e974931e1ddd8ec3f29e7995e2",
+      "afterSHA256": "5bf6530415cd3d0ab7f7f4e4f3bce0c9786236e974931e1ddd8ec3f29e7995e2"
+    },
+    {
+      "path": "src/paint/stroke-quality-tools.js",
+      "changed": false,
+      "beforeSHA256": "7760f2f04ec165a0c641e94c9c4c185f62a0189d7a960da67ea8c120beec8e79",
+      "afterSHA256": "7760f2f04ec165a0c641e94c9c4c185f62a0189d7a960da67ea8c120beec8e79"
+    },
+    {
+      "path": "src/paint/stroke-session.js",
+      "changed": false,
+      "beforeSHA256": "ffbf749e16c00602eed1f72cf1a1bdfb9272f51e6a7f9a5cea5858ba92981747",
+      "afterSHA256": "ffbf749e16c00602eed1f72cf1a1bdfb9272f51e6a7f9a5cea5858ba92981747"
+    },
+    {
+      "path": "src/paint/vector-watercolor.js",
+      "changed": false,
+      "beforeSHA256": "a90ee119d1ac503b230f9e8193866602161c6dab5fbba7825aa056fd81b261a4",
+      "afterSHA256": "a90ee119d1ac503b230f9e8193866602161c6dab5fbba7825aa056fd81b261a4"
+    },
+    {
+      "path": "src/program-import/canonical-operation.js",
+      "changed": false,
+      "beforeSHA256": "eb31b583b5967822339171e95d1a1a2ae572b496919dd3a534f1cc7e4dce23c6",
+      "afterSHA256": "eb31b583b5967822339171e95d1a1a2ae572b496919dd3a534f1cc7e4dce23c6"
+    },
+    {
+      "path": "src/program-import/comparison-engine.js",
+      "changed": false,
+      "beforeSHA256": "be5a81c1ec4dfa6b079eaf50d4534970a890ffdb24a2cbdc623d0cdbebe0e7f4",
+      "afterSHA256": "be5a81c1ec4dfa6b079eaf50d4534970a890ffdb24a2cbdc623d0cdbebe0e7f4"
+    },
+    {
+      "path": "src/program-import/compiler.js",
+      "changed": false,
+      "beforeSHA256": "f03e2fa0572c56bbd6fce50a6b2a59a144dbadc909edadad5a27e148323c34df",
+      "afterSHA256": "f03e2fa0572c56bbd6fce50a6b2a59a144dbadc909edadad5a27e148323c34df"
+    },
+    {
+      "path": "src/program-import/coverage-engine.js",
+      "changed": false,
+      "beforeSHA256": "50057eaacf662e1b8cf11e56f4878797139f2619370e8a207f03cb17a7fafd4e",
+      "afterSHA256": "50057eaacf662e1b8cf11e56f4878797139f2619370e8a207f03cb17a7fafd4e"
+    },
+    {
+      "path": "src/program-import/expression-ir.js",
+      "changed": false,
+      "beforeSHA256": "a481523a5b8401a0b4bf42b84f5181b01ebf16151a9e1b33be12390e8afa7269",
+      "afterSHA256": "a481523a5b8401a0b4bf42b84f5181b01ebf16151a9e1b33be12390e8afa7269"
+    },
+    {
+      "path": "src/program-import/format-detector.js",
+      "changed": false,
+      "beforeSHA256": "390df2ae8aeb712a99d128b67d7ea93450a37f140dd8a26d428f8b67e2f1b7b2",
+      "afterSHA256": "390df2ae8aeb712a99d128b67d7ea93450a37f140dd8a26d428f8b67e2f1b7b2"
+    },
+    {
+      "path": "src/program-import/importer.js",
+      "changed": false,
+      "beforeSHA256": "7ba697d32c264898c46581e521fb06b528a28e7011f79204289fe7908e93c938",
+      "afterSHA256": "7ba697d32c264898c46581e521fb06b528a28e7011f79204289fe7908e93c938"
+    },
+    {
+      "path": "src/program-import/index.js",
+      "changed": false,
+      "beforeSHA256": "3f0c599bd8f45564932f169883a43a1423495501095147e88ae9d5828ebfda6a",
+      "afterSHA256": "3f0c599bd8f45564932f169883a43a1423495501095147e88ae9d5828ebfda6a"
+    },
+    {
+      "path": "src/program-import/parsers.js",
+      "changed": false,
+      "beforeSHA256": "9f1ffc7611fa8c6ae03b4c658c07f1f2e66be2f8438a68af24f6ea55ba51f22b",
+      "afterSHA256": "9f1ffc7611fa8c6ae03b4c658c07f1f2e66be2f8438a68af24f6ea55ba51f22b"
+    },
+    {
+      "path": "src/program-import/reference-package.js",
+      "changed": false,
+      "beforeSHA256": "658204a921f84eab421c9c4e151c9d389495ec51f942b5d6dfc41251093e69b3",
+      "afterSHA256": "658204a921f84eab421c9c4e151c9d389495ec51f942b5d6dfc41251093e69b3"
+    },
+    {
+      "path": "src/program-import/reference-pipeline.js",
+      "changed": false,
+      "beforeSHA256": "f5ea137b97f7aedac67c85dfa0857e7c8868b0c8684be5141cd4b325de57b76e",
+      "afterSHA256": "f5ea137b97f7aedac67c85dfa0857e7c8868b0c8684be5141cd4b325de57b76e"
+    },
+    {
+      "path": "src/program-import/reference-runner.js",
+      "changed": false,
+      "beforeSHA256": "d093d4767c333335fee9235ebc5fe48b37a19cf9033fc727a7b1660f8f8deda1",
+      "afterSHA256": "d093d4767c333335fee9235ebc5fe48b37a19cf9033fc727a7b1660f8f8deda1"
+    },
+    {
+      "path": "src/program-import/security.js",
+      "changed": false,
+      "beforeSHA256": "e232ce2e05b0046a28c7ca28aa93f2b1247172070cda10eb26bec758a3966215",
+      "afterSHA256": "e232ce2e05b0046a28c7ca28aa93f2b1247172070cda10eb26bec758a3966215"
+    },
+    {
+      "path": "src/provenance/provenance-graph.js",
+      "changed": false,
+      "beforeSHA256": "a44536e0d27b95893e5d13c7797b5783b32062b723f7187d07de01f5abe36930",
+      "afterSHA256": "a44536e0d27b95893e5d13c7797b5783b32062b723f7187d07de01f5abe36930"
+    },
+    {
+      "path": "src/pwa/index.js",
+      "changed": false,
+      "beforeSHA256": "40fc9fa14b5a9bdad28e7ffb857a7e72f7bfceb08e8287f182a1adfea7c57e3b",
+      "afterSHA256": "40fc9fa14b5a9bdad28e7ffb857a7e72f7bfceb08e8287f182a1adfea7c57e3b"
+    },
+    {
+      "path": "src/pwa/update-manager.js",
+      "changed": false,
+      "beforeSHA256": "643e9c2ed0a056a8d386f8ab4d7dc922887471250eb04d40c034121a625979a4",
+      "afterSHA256": "643e9c2ed0a056a8d386f8ab4d7dc922887471250eb04d40c034121a625979a4"
+    },
+    {
+      "path": "src/recipe/recipe-asset.js",
+      "changed": false,
+      "beforeSHA256": "a6803519274db77588c1a423834d24a89f103667a8ad713f553cf9f47dcf1c7c",
+      "afterSHA256": "a6803519274db77588c1a423834d24a89f103667a8ad713f553cf9f47dcf1c7c"
+    },
+    {
+      "path": "src/recipe/recipe-engine.js",
+      "changed": false,
+      "beforeSHA256": "c9c542086ad441650b1e813fd5612956de21c68f7cbe092ddbe4268de4b720b5",
+      "afterSHA256": "c9c542086ad441650b1e813fd5612956de21c68f7cbe092ddbe4268de4b720b5"
+    },
+    {
+      "path": "src/recipe/recipe-io.js",
+      "changed": false,
+      "beforeSHA256": "fa78fea053332fe3eed0169411c0faebe5e091859c4044d5b2d35eb6dc78d8b2",
+      "afterSHA256": "fa78fea053332fe3eed0169411c0faebe5e091859c4044d5b2d35eb6dc78d8b2"
+    },
+    {
+      "path": "src/recipe/recipe-migration.js",
+      "changed": false,
+      "beforeSHA256": "3fc28fbb0349df01b63dd9de368505256727eac32685181257b6df3d31149a39",
+      "afterSHA256": "3fc28fbb0349df01b63dd9de368505256727eac32685181257b6df3d31149a39"
+    },
+    {
+      "path": "src/recipe/recipe-validator.js",
+      "changed": false,
+      "beforeSHA256": "6f8b542a8acb7857770b748236792f9dfc0855fc7c1f2281b9c1019c77378188",
+      "afterSHA256": "6f8b542a8acb7857770b748236792f9dfc0855fc7c1f2281b9c1019c77378188"
+    },
+    {
+      "path": "src/recompute/affected-scope.js",
+      "changed": false,
+      "beforeSHA256": "6aed09683e9511410013a4cbef157b4dd824287a8a5b4bb49e381c784ec6e5d6",
+      "afterSHA256": "6aed09683e9511410013a4cbef157b4dd824287a8a5b4bb49e381c784ec6e5d6"
+    },
+    {
+      "path": "src/recompute/change-domain.js",
+      "changed": false,
+      "beforeSHA256": "0f37fb025e0f6309218927a41b7824a7c60e07ae50b344709b2ef92284c43d78",
+      "afterSHA256": "0f37fb025e0f6309218927a41b7824a7c60e07ae50b344709b2ef92284c43d78"
+    },
+    {
+      "path": "src/recompute/dependency-graph.js",
+      "changed": false,
+      "beforeSHA256": "6baacabc0b4f1058b1ce1f9208c5a7f097b5285fcf51090356125fd6e76b89a8",
+      "afterSHA256": "6baacabc0b4f1058b1ce1f9208c5a7f097b5285fcf51090356125fd6e76b89a8"
+    },
+    {
+      "path": "src/recompute/local-recompute.js",
+      "changed": false,
+      "beforeSHA256": "a9ec35827f81cad3cf058263224474122b49374df4cc6b9e99fb9004b54e06b1",
+      "afterSHA256": "a9ec35827f81cad3cf058263224474122b49374df4cc6b9e99fb9004b54e06b1"
+    },
+    {
+      "path": "src/recompute/recompute-report.js",
+      "changed": false,
+      "beforeSHA256": "8a0bf24687ff78b551201ef1a6015ca98c01183fbaaa03b65af78dec36a76174",
+      "afterSHA256": "8a0bf24687ff78b551201ef1a6015ca98c01183fbaaa03b65af78dec36a76174"
+    },
+    {
+      "path": "src/recompute/recompute-validator.js",
+      "changed": false,
+      "beforeSHA256": "d3dbd9035640cf4692034dcde72108168d90b4c0c389d18f89d4ab2e0ace482b",
+      "afterSHA256": "d3dbd9035640cf4692034dcde72108168d90b4c0c389d18f89d4ab2e0ace482b"
+    },
+    {
+      "path": "src/release/external-diagnostics.js",
+      "changed": false,
+      "beforeSHA256": "63e9aafb86d58d1ac22f40a1d81762cf62ff61179f99c2f68d611b6cd796a46a",
+      "afterSHA256": "63e9aafb86d58d1ac22f40a1d81762cf62ff61179f99c2f68d611b6cd796a46a"
+    },
+    {
+      "path": "src/release/index.js",
+      "changed": false,
+      "beforeSHA256": "b35b7875484a54fe6e11b11512d90c7e9f2c2acdc292478f6e931abf84106c6c",
+      "afterSHA256": "b35b7875484a54fe6e11b11512d90c7e9f2c2acdc292478f6e931abf84106c6c"
+    },
+    {
+      "path": "src/release/runtime-health.js",
+      "changed": false,
+      "beforeSHA256": "e0e4984072b7b72d15ffa737f820e0d7cec582ce465fdf575f44f726452e154b",
+      "afterSHA256": "e0e4984072b7b72d15ffa737f820e0d7cec582ce465fdf575f44f726452e154b"
+    },
+    {
+      "path": "src/render/canvas2d/multi-channel-ink-canvas2d.js",
+      "changed": false,
+      "beforeSHA256": "da423f411e67ab2d58f28ae0fbd4218a3452abbd85413d432b47663e7282c395",
+      "afterSHA256": "da423f411e67ab2d58f28ae0fbd4218a3452abbd85413d432b47663e7282c395"
+    },
+    {
+      "path": "src/render/canvas2d/natural-media-canvas2d.js",
+      "changed": false,
+      "beforeSHA256": "17837cf04180c38ec81709c99a67c39f67447d02235883b18aa10f0b38487a25",
+      "afterSHA256": "17837cf04180c38ec81709c99a67c39f67447d02235883b18aa10f0b38487a25"
+    },
+    {
+      "path": "src/render/gpu-resource-budget.js",
+      "changed": false,
+      "beforeSHA256": "6034f5d0aa3c9385836dba2cede0e27556877e64e4034ce137ec4f6fef4f8c60",
+      "afterSHA256": "6034f5d0aa3c9385836dba2cede0e27556877e64e4034ce137ec4f6fef4f8c60"
+    },
+    {
+      "path": "src/render/index.js",
+      "changed": false,
+      "beforeSHA256": "aa27ffc5d20a3ffafb7d9d3a591d0efac51a599a85a47734b869840b5c27a94b",
+      "afterSHA256": "aa27ffc5d20a3ffafb7d9d3a591d0efac51a599a85a47734b869840b5c27a94b"
+    },
+    {
+      "path": "src/render/interactive-benchmark.js",
+      "changed": false,
+      "beforeSHA256": "1a195eb7aeb601dd4938063c3c5ffcb75e6bbc23d705d731ffddf0e6e38e1926",
+      "afterSHA256": "1a195eb7aeb601dd4938063c3c5ffcb75e6bbc23d705d731ffddf0e6e38e1926"
+    },
+    {
+      "path": "src/render/live-canvas-tile-renderer.js",
+      "changed": false,
+      "beforeSHA256": "1bd497d9aa0f11b64648186829b689d45eb5ab0db1d71c4cdd0e71938a52dfff",
+      "afterSHA256": "1bd497d9aa0f11b64648186829b689d45eb5ab0db1d71c4cdd0e71938a52dfff"
+    },
+    {
+      "path": "src/render/multi-channel-ink.js",
+      "changed": false,
+      "beforeSHA256": "931ee9b549dea52842f9db3498a25d92e71562f6370b9322568b2913eea391b3",
+      "afterSHA256": "931ee9b549dea52842f9db3498a25d92e71562f6370b9322568b2913eea391b3"
+    },
+    {
+      "path": "src/render/natural-media-controller.js",
+      "changed": false,
+      "beforeSHA256": "7426a9c129f911c92f358a8c19bce072d61ccfc180a9b855e48ca59bb8466e94",
+      "afterSHA256": "7426a9c129f911c92f358a8c19bce072d61ccfc180a9b855e48ca59bb8466e94"
+    },
+    {
+      "path": "src/render/natural-media-run-utils.js",
+      "changed": false,
+      "beforeSHA256": "d0da69518b1bcfaec3e2096950ac418c5f76a39e83aefbfdb00cc1fcf8628ead",
+      "afterSHA256": "d0da69518b1bcfaec3e2096950ac418c5f76a39e83aefbfdb00cc1fcf8628ead"
+    },
+    {
+      "path": "src/render/natural-media-utils.js",
+      "changed": false,
+      "beforeSHA256": "e5338005862cc09ed7dd507c968486017372f59254d272368ee2be6e97415de1",
+      "afterSHA256": "e5338005862cc09ed7dd507c968486017372f59254d272368ee2be6e97415de1"
+    },
+    {
+      "path": "src/render/paper-profile.js",
+      "changed": false,
+      "beforeSHA256": "175d903bb9a3126b3d4d64d7a39a28583ed36c65601b11dcae347bad57f359ef",
+      "afterSHA256": "175d903bb9a3126b3d4d64d7a39a28583ed36c65601b11dcae347bad57f359ef"
+    },
+    {
+      "path": "src/render/pixel-compare.js",
+      "changed": false,
+      "beforeSHA256": "3932aa903d68888b9bf1d2f6e5e060219175859cca9b681550a33611c7ac0af1",
+      "afterSHA256": "3932aa903d68888b9bf1d2f6e5e060219175859cca9b681550a33611c7ac0af1"
+    },
+    {
+      "path": "src/render/tile-atlas.js",
+      "changed": false,
+      "beforeSHA256": "5a916e87e80643aadaaf84e563f3254bed33b56c436a888cfbafa24bc7366658",
+      "afterSHA256": "5a916e87e80643aadaaf84e563f3254bed33b56c436a888cfbafa24bc7366658"
+    },
+    {
+      "path": "src/render/tiled-export.js",
+      "changed": false,
+      "beforeSHA256": "5d3772a9fceb544818c821abc0a90788b3aa207c276076e901c4cd97630ab09a",
+      "afterSHA256": "5d3772a9fceb544818c821abc0a90788b3aa207c276076e901c4cd97630ab09a"
+    },
+    {
+      "path": "src/render/webgl/multi-channel-ink-webgl.js",
+      "changed": false,
+      "beforeSHA256": "9a05e7f1ff880fbeb4113e453775a9d84240eb3a8cb4bbbebf0337dc064f06a1",
+      "afterSHA256": "9a05e7f1ff880fbeb4113e453775a9d84240eb3a8cb4bbbebf0337dc064f06a1"
+    },
+    {
+      "path": "src/render/webgl/natural-media-webgl.js",
+      "changed": false,
+      "beforeSHA256": "abc12e9c29fdb8e5416d84d0cd4a4aa22cbd6135bb364cf54156c15facd775f8",
+      "afterSHA256": "abc12e9c29fdb8e5416d84d0cd4a4aa22cbd6135bb364cf54156c15facd775f8"
+    },
+    {
+      "path": "src/repeat/repeat-identity.js",
+      "changed": false,
+      "beforeSHA256": "cf1469cabdb7e68e98f0eaf4d2262522a1e10f1562239334f71f511e31cd1065",
+      "afterSHA256": "cf1469cabdb7e68e98f0eaf4d2262522a1e10f1562239334f71f511e31cd1065"
+    },
+    {
+      "path": "src/research/research-creation-bridge.js",
+      "changed": false,
+      "beforeSHA256": "a8d83e6220d2b8a4818d1d35cc2cb625bc5c9aae63bfaad95b70e94bea3f30d3",
+      "afterSHA256": "a8d83e6220d2b8a4818d1d35cc2cb625bc5c9aae63bfaad95b70e94bea3f30d3"
+    },
+    {
+      "path": "src/semantic/relationship-graph.js",
+      "changed": false,
+      "beforeSHA256": "97552fd95c0f6bb2e4dfc32d4809af812316b1b03b87606883b569d9510fc382",
+      "afterSHA256": "97552fd95c0f6bb2e4dfc32d4809af812316b1b03b87606883b569d9510fc382"
+    },
+    {
+      "path": "src/semantic/semantic-migration.js",
+      "changed": false,
+      "beforeSHA256": "08588849ba05cec09cbd5a59604dfe4952e8068a2257cc66e0ad87f9298558d2",
+      "afterSHA256": "08588849ba05cec09cbd5a59604dfe4952e8068a2257cc66e0ad87f9298558d2"
+    },
+    {
+      "path": "src/semantic/semantic-model.js",
+      "changed": false,
+      "beforeSHA256": "e867aede4cb40732fca72f40988c7f03483ce9567819beea82676a817a7c44d6",
+      "afterSHA256": "e867aede4cb40732fca72f40988c7f03483ce9567819beea82676a817a7c44d6"
+    },
+    {
+      "path": "src/semantic/semantic-region-grounding.js",
+      "changed": false,
+      "beforeSHA256": "e4d047e9531a5f13c2b377e3b857666b1f1046bb0fa56cd86b5b3b0dbda975d9",
+      "afterSHA256": "e4d047e9531a5f13c2b377e3b857666b1f1046bb0fa56cd86b5b3b0dbda975d9"
+    },
+    {
+      "path": "src/semantic/semantic-resolver.js",
+      "changed": false,
+      "beforeSHA256": "37df5002824c514c5b712bfe0c109c94762ab20b938e7d19faca682600560c2f",
+      "afterSHA256": "37df5002824c514c5b712bfe0c109c94762ab20b938e7d19faca682600560c2f"
+    },
+    {
+      "path": "src/semantic/semantic-validator.js",
+      "changed": false,
+      "beforeSHA256": "8657a0d5df3db905d2a798cd28bbee26e1b07f36379e5c19f83f11f31d8c914a",
+      "afterSHA256": "8657a0d5df3db905d2a798cd28bbee26e1b07f36379e5c19f83f11f31d8c914a"
+    },
+    {
+      "path": "src/spatial/index.js",
+      "changed": false,
+      "beforeSHA256": "b04f99515ba81272e10f3498cc093d7b8638f1a065ab7a49b2108a4ef0c96b59",
+      "afterSHA256": "b04f99515ba81272e10f3498cc093d7b8638f1a065ab7a49b2108a4ef0c96b59"
+    },
+    {
+      "path": "src/spatial/page-spatial-index.js",
+      "changed": false,
+      "beforeSHA256": "8581a86d58ff1742858626bacc419f113b28c80bc9e828eeee9709c0b8796f92",
+      "afterSHA256": "8581a86d58ff1742858626bacc419f113b28c80bc9e828eeee9709c0b8796f92"
+    },
+    {
+      "path": "src/spatial/quadtree.js",
+      "changed": false,
+      "beforeSHA256": "f28ebf4a76cf681f2d37a386203baa79d30f94c36b3c461dd4cd803cd0c107fd",
+      "afterSHA256": "f28ebf4a76cf681f2d37a386203baa79d30f94c36b3c461dd4cd803cd0c107fd"
+    },
+    {
+      "path": "src/stroke/edit.js",
+      "changed": false,
+      "beforeSHA256": "0fd8a45141fedf69c615cf5d0db0df36b60524ee5b525ba96e2f004f68b994e7",
+      "afterSHA256": "0fd8a45141fedf69c615cf5d0db0df36b60524ee5b525ba96e2f004f68b994e7"
+    },
+    {
+      "path": "src/stroke/index.js",
+      "changed": false,
+      "beforeSHA256": "4e0c529443f46019ba21e01386030316bed0b9c93c43d352d0ee4de488aec1b9",
+      "afterSHA256": "4e0c529443f46019ba21e01386030316bed0b9c93c43d352d0ee4de488aec1b9"
+    },
+    {
+      "path": "src/structure/parametric-structure.js",
+      "changed": false,
+      "beforeSHA256": "a16d0b8928b48b695db584153a55dd2e3fcc4303eb34d92a563f300fe751dd2e",
+      "afterSHA256": "a16d0b8928b48b695db584153a55dd2e3fcc4303eb34d92a563f300fe751dd2e"
+    },
+    {
+      "path": "src/studio-core.js",
+      "changed": false,
+      "beforeSHA256": "b8ac0aeb3301a94d4af9310ffaf0a65f15836353d56c36bfabeb564e3e3ebe50",
+      "afterSHA256": "b8ac0aeb3301a94d4af9310ffaf0a65f15836353d56c36bfabeb564e3e3ebe50"
+    },
+    {
+      "path": "src/vector/deformation.js",
+      "changed": false,
+      "beforeSHA256": "b905b1819961fa7f07f19ec9ffdbbfb36fa0a185a4e5338c18cd97d97883b8be",
+      "afterSHA256": "b905b1819961fa7f07f19ec9ffdbbfb36fa0a185a4e5338c18cd97d97883b8be"
+    },
+    {
+      "path": "src/vector/fill-appearance.js",
+      "changed": false,
+      "beforeSHA256": "2a409072adb05cb2989587649acdebf38bd9a4103fc3b6d629c6221f52f4a001",
+      "afterSHA256": "2a409072adb05cb2989587649acdebf38bd9a4103fc3b6d629c6221f52f4a001"
+    },
+    {
+      "path": "src/vector/geometry-kernel.js",
+      "changed": false,
+      "beforeSHA256": "e8082c855bfce2f09856611baf936d4ca950ed127d2bc44ddc6034f34378cf18",
+      "afterSHA256": "e8082c855bfce2f09856611baf936d4ca950ed127d2bc44ddc6034f34378cf18"
+    },
+    {
+      "path": "src/vector/paint-appearance.js",
+      "changed": false,
+      "beforeSHA256": "97d2a2f106a0f05bf42957b9cc06260f77b2d39bdf2319f0cf6d6caf7cc1898a",
+      "afterSHA256": "97d2a2f106a0f05bf42957b9cc06260f77b2d39bdf2319f0cf6d6caf7cc1898a"
+    },
+    {
+      "path": "src/vector/stroke-appearance.js",
+      "changed": false,
+      "beforeSHA256": "ef7b2668e0b76f995e707b09520b81df1f2b4698e54dccc7a7ce5d682bc2f66c",
+      "afterSHA256": "ef7b2668e0b76f995e707b09520b81df1f2b4698e54dccc7a7ce5d682bc2f66c"
+    },
+    {
+      "path": "src/vector/svg-id-normalizer.js",
+      "changed": false,
+      "beforeSHA256": "89dccfcfd2653dc42fa3059402733de4e73c5ca065a27a7b53fb096edb4e267c",
+      "afterSHA256": "89dccfcfd2653dc42fa3059402733de4e73c5ca065a27a7b53fb096edb4e267c"
+    },
+    {
+      "path": "src/vector/vector-core.js",
+      "changed": false,
+      "beforeSHA256": "02a7ce2c8cbc6fe0ebaae5b7451616cf4b78a086b762e04892c83a177590d8c7",
+      "afterSHA256": "02a7ce2c8cbc6fe0ebaae5b7451616cf4b78a086b762e04892c83a177590d8c7"
+    },
+    {
+      "path": "src/vendor/bezier-js-6.1.4/LICENSE.md",
+      "changed": false,
+      "beforeSHA256": "28cbcd9048957bc5139faeb4c24ef5f222c01a20630c477937de79b5fd6c0361",
+      "afterSHA256": "28cbcd9048957bc5139faeb4c24ef5f222c01a20630c477937de79b5fd6c0361"
+    },
+    {
+      "path": "src/vendor/bezier-js-6.1.4/bezier.js",
+      "changed": false,
+      "beforeSHA256": "df9f6c029fcb6be162f3c40c938be9e6188c3857fc7bbfb4236322e039f36987",
+      "afterSHA256": "df9f6c029fcb6be162f3c40c938be9e6188c3857fc7bbfb4236322e039f36987"
+    },
+    {
+      "path": "src/vendor/bezier-js-6.1.4/poly-bezier.js",
+      "changed": false,
+      "beforeSHA256": "6bf75f20af5efd504ad3c40e921f8b326f48773ab99dff24d487fca6fa07b614",
+      "afterSHA256": "6bf75f20af5efd504ad3c40e921f8b326f48773ab99dff24d487fca6fa07b614"
+    },
+    {
+      "path": "src/vendor/bezier-js-6.1.4/utils.js",
+      "changed": false,
+      "beforeSHA256": "2ad9a982e40937adec6f01fcc076934187fe9299fa8d9d36b7a3fb89605c135c",
+      "afterSHA256": "2ad9a982e40937adec6f01fcc076934187fe9299fa8d9d36b7a3fb89605c135c"
+    },
+    {
+      "path": "src/vendor/clipper2-ts-2.0.1/LICENSE.md",
+      "changed": false,
+      "beforeSHA256": "cfbd5b192dce2dbb591ceffa1adaa8e6e63d45667393c566593eb2f0efc5fb18",
+      "afterSHA256": "cfbd5b192dce2dbb591ceffa1adaa8e6e63d45667393c566593eb2f0efc5fb18"
+    },
+    {
+      "path": "src/vendor/clipper2-ts-2.0.1/clipper2.min.mjs",
+      "changed": false,
+      "beforeSHA256": "95eede29f97a76d102762ecfa2e62ac8fa434c45a72d368c59557a4b41b1731d",
+      "afterSHA256": "95eede29f97a76d102762ecfa2e62ac8fa434c45a72d368c59557a4b41b1731d"
+    },
+    {
+      "path": "src/vendor/imagetracer-1.2.6.js",
+      "changed": false,
+      "beforeSHA256": "5da0e3abdb76e07068662646c224c28ba0ed45b39da43d1d2a60294408125af8",
+      "afterSHA256": "5da0e3abdb76e07068662646c224c28ba0ed45b39da43d1d2a60294408125af8"
+    },
+    {
+      "path": "src/vendor/polygon-clipping.LICENSE.md",
+      "changed": false,
+      "beforeSHA256": "864ae9e4ed75e1571a3bcf5dc9070264213445b32e7e2af5bf60eba46fb656d0",
+      "afterSHA256": "864ae9e4ed75e1571a3bcf5dc9070264213445b32e7e2af5bf60eba46fb656d0"
+    },
+    {
+      "path": "src/vendor/polygon-clipping.umd.min.js",
+      "changed": false,
+      "beforeSHA256": "7f8619e84a86ce8dd400c9b50430e9c8cf8f26027b19eeb479f109f5c1a9d688",
+      "afterSHA256": "7f8619e84a86ce8dd400c9b50430e9c8cf8f26027b19eeb479f109f5c1a9d688"
+    },
+    {
+      "path": "styles.css",
+      "changed": true,
+      "beforeSHA256": "050674638e02d4f1180a3aedb2e96b841271df43593dd7e7b32d5d402a4e0278",
+      "afterSHA256": "d1caeab3cf27c73e4ee6d3af238c33f2f661bb06be3aedb14b481c372c26e979"
+    },
+    {
+      "path": "ui/branding-settings.js",
+      "changed": false,
+      "beforeSHA256": "3efb404b0f3dd0aa2128e3a17433d2cc1dd90faeb79bda4dde5282a4bd2d8058",
+      "afterSHA256": "3efb404b0f3dd0aa2128e3a17433d2cc1dd90faeb79bda4dde5282a4bd2d8058"
+    },
+    {
+      "path": "ui/capability-contributions.js",
+      "changed": true,
+      "beforeSHA256": "d87a391666ab32d4352bc63a9bff45a56503f645e0f989026627e449ce411189",
+      "afterSHA256": "b94f957f24b35d9161c36fbe71d8180ec218db57facf8b584d25c5feac48b591"
+    },
+    {
+      "path": "ui/capability-raster-tools.js",
+      "changed": false,
+      "beforeSHA256": "7ccdd71b358ba69b8e17cd55ab8e0037e61d847500eefd44300e8dab35d4c75f",
+      "afterSHA256": "7ccdd71b358ba69b8e17cd55ab8e0037e61d847500eefd44300e8dab35d4c75f"
+    },
+    {
+      "path": "ui/full-capability-controls.js",
+      "changed": true,
+      "beforeSHA256": "d5d2979aaee3642e6bd601eec2dc049460e8f0885701aaa2f51e0b867cbbd447",
+      "afterSHA256": "b31cc0bdc415069ae37fca373a4403aa4a34ae4866a8be48fe14cf90670395a9"
+    },
+    {
+      "path": "vendor/wrappy/package.json",
+      "changed": false,
+      "beforeSHA256": "54fa75d97876f390a0ca83595c2223285c4dee929954d67e329d4d678ba4ccb1",
+      "afterSHA256": "54fa75d97876f390a0ca83595c2223285c4dee929954d67e329d4d678ba4ccb1"
+    },
+    {
+      "path": "vendor/wrappy/wrappy.js",
+      "changed": false,
+      "beforeSHA256": "d982d2041f525d6cc51027235444413b75885625cf6a74ca2cc457be45ba3cb8",
+      "afterSHA256": "d982d2041f525d6cc51027235444413b75885625cf6a74ca2cc457be45ba3cb8"
+    },
+    {
+      "path": "web-shell.js",
+      "changed": true,
+      "beforeSHA256": "280f221c8b489e9e08b1f66e4d2c1b01608a1c6e6bd036e6bde83d8f2f9d43d5",
+      "afterSHA256": "27ac033ab161220ce38702a72440daca8f200c3f4a4a86046a8a8c07e08e4ff9"
+    }
+  ],
+  "scope": "UI normalization and existing-tool exposure only; Core/history/format/renderer unchanged; existing native/raster/text/session authorities reused; config/service-worker BUILD_ID metadata only"
+}

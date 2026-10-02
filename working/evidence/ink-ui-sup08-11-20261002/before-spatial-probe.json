@@ -1,0 +1,1030 @@
+{
+  "baseline": "80a1016f1ba39ae75f401929bd8892b3bd5f023c",
+  "source": "before",
+  "browser": "153.0.8010.0",
+  "tools": [],
+  "checks": [],
+  "snapshots": [
+    "native-spatial-probe"
+  ],
+  "beforeLasso": {
+    "dirty": false,
+    "objectCount": 1,
+    "indexCount": 0
+  },
+  "selectedBeforeRefresh": 0,
+  "selectedAfterRefresh": 1,
+  "errors": [],
+  "loaded": [
+    {
+      "url": "http://127.0.0.1:8766/product/source/styles.css?v=0.1-ui-20261002-normalization-completion",
+      "sha256": "050674638e02d4f1180a3aedb2e96b841271df43593dd7e7b32d5d402a4e0278",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/assets/INK_MARK_SOURCE_W-300.jpg?v=0.1",
+      "sha256": "08fdfd29832ffc06779eae8da9be6d14e9564ed292ba5548483def016338fed8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/",
+      "sha256": "8a92fd435709d03a5d5714b1dcd8c42945dd9dc6709cf4ef88e6f8a5fc0b1ecf",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/web-shell.js?v=0.1-ui-20261002-normalization-completion",
+      "sha256": "280f221c8b489e9e08b1f66e4d2c1b01608a1c6e6bd036e6bde83d8f2f9d43d5",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/ui/branding-settings.js?v=0.1-ui-20261002-normalization-completion",
+      "sha256": "3efb404b0f3dd0aa2128e3a17433d2cc1dd90faeb79bda4dde5282a4bd2d8058",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ink.js?v=0.1-ui-20261002-normalization-completion",
+      "sha256": "a349d4d83e40101abb9f7672a7fbf081c933343574a6190867fc9ca7325b6eda",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/config.js",
+      "sha256": "38c7d63d27e876d9195a0ff70dd9407e11076576d20a4886c04e3553c16826af",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/index.js",
+      "sha256": "2c8cc519df3ac1349a689b7ff4ed4293dec25fa287448dd85c9bf1f172fe149b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/core/index.js",
+      "sha256": "33d798c4a87bffb77a46f408d21dbfc200a996ab2dc9d1e1e48c6c632602b62a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/index.js",
+      "sha256": "a972d6779854bfbba9c71356d039003cb0fdf156ebf73996577bf8b58fd27959",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/history/index.js",
+      "sha256": "ff9affd2a7bbd7c01f32476f3de96488a6ca6e76213bcb72569602a9de30a9d7",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/components.js",
+      "sha256": "a1025682769cae12f19fc63be4113f23c895ec187555e975c654c94e70a2b1f0",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/mask/vector-mask.js",
+      "sha256": "4ea95a17f3427eca0836547941e028240e49c51272314d6df4ed2bbba1010d01",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/input/input-arbiter.js",
+      "sha256": "29caca3e67ddf7f02d93e48cde0582048df5d8f3a09ea53a7fa47fb7f1e570ee",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/stroke/index.js",
+      "sha256": "4e0c529443f46019ba21e01386030316bed0b9c93c43d352d0ee4de488aec1b9",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/input/pen-calibration.js",
+      "sha256": "f7ff9cedd7f9701e5b25b840af44fb5b46aff713def74373320cb9f2b30036e8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/spatial/index.js",
+      "sha256": "b04f99515ba81272e10f3498cc093d7b8638f1a065ab7a49b2108a4ef0c96b59",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/index.js",
+      "sha256": "3815d2ef9202c758339f19b8566bdd1326f1bf3f9f2864984565bd25cec182b5",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/index.js",
+      "sha256": "aa27ffc5d20a3ffafb7d9d3a591d0efac51a599a85a47734b869840b5c27a94b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/export/index.js",
+      "sha256": "cb782559b0620da9b464746fc6e54aeda74b16b1936f37aec612da84b550013b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/release/index.js",
+      "sha256": "b35b7875484a54fe6e11b11512d90c7e9f2c2acdc292478f6e931abf84106c6c",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/agent/index.js",
+      "sha256": "e793e7794e8e317258a95ee2e9923f99fb71869b7433cf7cf731f853afd63391",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/pwa/index.js",
+      "sha256": "40fc9fa14b5a9bdad28e7ffb857a7e72f7bfceb08e8287f182a1adfea7c57e3b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/text-object.js",
+      "sha256": "d22fa5c9532fbbae6813d59a5a88f32d99f805ab10157ce842c4368b17685925",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/studio-core.js",
+      "sha256": "b8ac0aeb3301a94d4af9310ffaf0a65f15836353d56c36bfabeb564e3e3ebe50",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/extraction/install.js",
+      "sha256": "61806858cd9653d4fc7375968b7681b55503c0685324f3eb4528d3a32cd67ce6",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/chat-reference-handoff.js",
+      "sha256": "bada13eb9b958b7776a43a782b863f5be8534ee7ac4ea1c6795e4bf0ebc57d48",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vector/paint-appearance.js",
+      "sha256": "97d2a2f106a0f05bf42957b9cc06260f77b2d39bdf2319f0cf6d6caf7cc1898a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vector/vector-core.js",
+      "sha256": "02a7ce2c8cbc6fe0ebaae5b7451616cf4b78a086b762e04892c83a177590d8c7",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/export/png-worker-encoder.js",
+      "sha256": "5c88bcab893b7aa66b488e2d3cfbf72721cdaaf0ec89a6da321d1279c8d8fddd",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/brush-engine.js",
+      "sha256": "1b6a5267ac087207e42fb84072cc70f147ab077fcfa154ab82a578dbf2c38b0c",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/image-core.js",
+      "sha256": "3e6ad27b6e7db91b4d9702de50fc431f598fbb27cf4ff1cff84be2914fb0436b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/action/flora-command-dispatcher.js",
+      "sha256": "7e332e15845b31f19ec8e4f14ad9e0fdaeb7b21417817e65b1c15e09aa246315",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/runtime/flora-runtime-adapter.js",
+      "sha256": "731bcf168e5c971025ef5d4f7004421e26067ea95674692f353fc1c6fb95110d",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/ui/full-capability-controls.js",
+      "sha256": "d5d2979aaee3642e6bd601eec2dc049460e8f0885701aaa2f51e0b867cbbd447",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/structure/hero-runtime.js",
+      "sha256": "2bbc10bbeedf1100b8eab95a06c3c297515537a329c9cd9b8c277712ea16d4fb",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/recipe/painting-recipe-runtime.js",
+      "sha256": "9954d72a0c24a2832f2f61ab37fb7e3f353abf4acf57fc5a71086a398ba9a084",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/hero/complete-hero-painting-runtime.js",
+      "sha256": "8f8c3066f4025324df3ed15eb3daa78f8623118f3f4da6a40468e8312db1fb27",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/crown/crown-painting-runtime.js",
+      "sha256": "23297d93a46ca9940231ba7a01e4649180290423f7502da7f1530e0fa195f97a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/core/math.js",
+      "sha256": "9960fb27438735ced4115e5bbc19f974bcf446c43c3e3ea3a2325a26b0c9fe65",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/species/flr012-adonis.js",
+      "sha256": "f740f6a2d929055673d4452c10a5dfb80fa432b70d4468e57f0826f5b4c76ead",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/reference/reference-mapping.js",
+      "sha256": "6078223b17a8507fd38dadc754eb28a79080c13712d7adbfcd103f4e4acf4403",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/retention/painted-geometry-retention.js",
+      "sha256": "1b0db90060a648f2fdaeca5fece07521ae7103f10c39f7bbb4d125907f8379a8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/core/geometry.js",
+      "sha256": "8aae8d5683b6869c9e411517638477cd869f9fa01a57a1e43dfe4c0a5cfa6386",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/core/utils.js",
+      "sha256": "ab13ef417ba174b0ab86990fda75c987a462ba4f2f834441ba953e2dac5389f1",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/core/stable-id.js",
+      "sha256": "910f0c27223be67a7643e6fd44e1021fd1231e892b046db125cf2035c9998ed8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/model.js",
+      "sha256": "7170550bdbb0d0848475f4f313a41a1afd515f2ef77943c404ec272be7ec5dcb",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/migration.js",
+      "sha256": "04a8d6eb51422700b318e4719975d56701aae6d733b0e3a163411f92e646f424",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/storage.js",
+      "sha256": "e29b9efb0166d7b22aaad1361b91e6656a685069483fd2b5582d974de7a0d862",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/integrity.js",
+      "sha256": "70a26fed8eb424ca69d6caa441d327af14f8d76e61ef1f3b3723d5921cf70cac",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/artboard.js",
+      "sha256": "f9253768171c7e1470147f71340309bf2372d184a8a0dab826bf2796b9929ac7",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/workspace.js",
+      "sha256": "79e0c83d095b76cad4c7a87ffbd4cb79dcd95d31618bda8cee78810dc79a1576",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/hierarchy.js",
+      "sha256": "8d6b4936a30bab5e395341d60e3ff6801baf432a9f7e7847f6bcd782481324db",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/layout.js",
+      "sha256": "fbc2fcc530af71db7430f613219f19e9db6177fc333792be1c6eb2a53d14ac87",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/file-envelope.js",
+      "sha256": "da0c01dca93503976dec0a8c3ec837b762c68b78fb9d62c0452717d22fee5593",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/history/diff.js",
+      "sha256": "afd7681d65b952410f26b7c1cf3b09743a875bb377581aaf3c41d8c896321d7f",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/document/revision.js",
+      "sha256": "d8877dcf6183955f6e6acb76caf72d5805e5304e78d71f4f9a39cc2385880001",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/history/history.js",
+      "sha256": "c54bf8d29a51259a3c97d1916932074218666712908b3cf4d7b0bd596daa2221",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/spatial/quadtree.js",
+      "sha256": "f28ebf4a76cf681f2d37a386203baa79d30f94c36b3c461dd4cd803cd0c107fd",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/stroke/edit.js",
+      "sha256": "0fd8a45141fedf69c615cf5d0db0df36b60524ee5b525ba96e2f004f68b994e7",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/spatial/page-spatial-index.js",
+      "sha256": "8581a86d58ff1742858626bacc419f113b28c80bc9e828eeee9709c0b8796f92",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/selection.js",
+      "sha256": "2d7829acadda682fe8b3b7a461f14a047868256dd257196c2d5b65a78ee148b4",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/bounds.js",
+      "sha256": "621c4156ab1f003b03518b17eb21ebf0c672196d7480e33f5c9cb93b421a55ca",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/transform.js",
+      "sha256": "d3a801b62b469bbf79f367f6019e9460781574ae3675b5851c9a1011ca8df933",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/path-edit.js",
+      "sha256": "6394761d9f74377c81c9fe7e57691122a5a4673997ae8c34e042f3e00ca1b215",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/expressive-stroke.js",
+      "sha256": "5e117e2094bc99eb4f3282122515d95c4ce0f5035fd1624c282a50b21c9f2b93",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/composition.js",
+      "sha256": "faba437aa7aff55125fd56f3be76cef76be6b410815ef8999bf7adf08f3e8e0d",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/repaint-material.js",
+      "sha256": "60c0f329c332dcff2b4e6e8fbfe98bea4d07be51d6b5822618f1482a6f5d5314",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/chat-creative-plan.js",
+      "sha256": "aa800e5965346f4ac09787fb2a746846e95c42a3715b5eaa5c953373deab5b1e",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/transform-advanced.js",
+      "sha256": "27fba8ce08281d20c39ed2201ff3c1f36e013dcd00b23e4c99d925a226b182c9",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/precision-layout.js",
+      "sha256": "74696d6da798c2d9db129ef26b25501ca307874f9918be08ea07659750ebd855",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/chat-bounded-edit.js",
+      "sha256": "be8760d0825f7dc2e5feeecf1dd6258df1f4cf01abd2def839d653ceb4bd32eb",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/creative-workspace.js",
+      "sha256": "451610d98fbecc6235a5998b6a3721c5770ba0a3de3b6695c5e10151cdb65127",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/editor/text-layout.js",
+      "sha256": "3e45d2810727aa28e237062aa72e8de1bfe3c32fa7958b43bc6795358164b507",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vector/fill-appearance.js",
+      "sha256": "2a409072adb05cb2989587649acdebf38bd9a4103fc3b6d629c6221f52f4a001",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/natural-media-run-utils.js",
+      "sha256": "d0da69518b1bcfaec3e2096950ac418c5f76a39e83aefbfdb00cc1fcf8628ead",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/natural-media-utils.js",
+      "sha256": "e5338005862cc09ed7dd507c968486017372f59254d272368ee2be6e97415de1",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/paper-profile.js",
+      "sha256": "175d903bb9a3126b3d4d64d7a39a28583ed36c65601b11dcae347bad57f359ef",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/multi-channel-ink.js",
+      "sha256": "931ee9b549dea52842f9db3498a25d92e71562f6370b9322568b2913eea391b3",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/natural-media-controller.js",
+      "sha256": "7426a9c129f911c92f358a8c19bce072d61ccfc180a9b855e48ca59bb8466e94",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/canvas2d/natural-media-canvas2d.js",
+      "sha256": "17837cf04180c38ec81709c99a67c39f67447d02235883b18aa10f0b38487a25",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/canvas2d/multi-channel-ink-canvas2d.js",
+      "sha256": "da423f411e67ab2d58f28ae0fbd4218a3452abbd85413d432b47663e7282c395",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/webgl/natural-media-webgl.js",
+      "sha256": "abc12e9c29fdb8e5416d84d0cd4a4aa22cbd6135bb364cf54156c15facd775f8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/webgl/multi-channel-ink-webgl.js",
+      "sha256": "9a05e7f1ff880fbeb4113e453775a9d84240eb3a8cb4bbbebf0337dc064f06a1",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/gpu-resource-budget.js",
+      "sha256": "6034f5d0aa3c9385836dba2cede0e27556877e64e4034ce137ec4f6fef4f8c60",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/pixel-compare.js",
+      "sha256": "3932aa903d68888b9bf1d2f6e5e060219175859cca9b681550a33611c7ac0af1",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/tiled-export.js",
+      "sha256": "5d3772a9fceb544818c821abc0a90788b3aa207c276076e901c4cd97630ab09a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/release/external-diagnostics.js",
+      "sha256": "63e9aafb86d58d1ac22f40a1d81762cf62ff61179f99c2f68d611b6cd796a46a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/export/pdf.js",
+      "sha256": "88969f56a18ef729af84bf12653f5b217d3eb342e074beb2011b81b1e57a0822",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/tile-atlas.js",
+      "sha256": "5a916e87e80643aadaaf84e563f3254bed33b56c436a888cfbafa24bc7366658",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/interactive-benchmark.js",
+      "sha256": "1a195eb7aeb601dd4938063c3c5ffcb75e6bbc23d705d731ffddf0e6e38e1926",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/render/live-canvas-tile-renderer.js",
+      "sha256": "1bd497d9aa0f11b64648186829b689d45eb5ab0db1d71c4cdd0e71938a52dfff",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/release/runtime-health.js",
+      "sha256": "e0e4984072b7b72d15ffa737f820e0d7cec582ce465fdf575f44f726452e154b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/pwa/update-manager.js",
+      "sha256": "643e9c2ed0a056a8d386f8ab4d7dc922887471250eb04d40c034121a625979a4",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/agent/public-creative-api.js",
+      "sha256": "5ef73c61e867ab4930d8fd66a1de2317ca53c637752920af7937918fb1c10d5a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/paint-core.js",
+      "sha256": "206666ceb25162b6622ecb994f541c62d7c81bda936e64e601c51f231aa4a210",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/agent/capability-registry.js",
+      "sha256": "a973107a1b2a243e6a9048923d3db23b3be8910f01ad964f7955b39b2b8ede57",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/input/stylus-test.js",
+      "sha256": "b48bfe1d81ea241d30a19515050839d02866039a952d1190840ef285949dfc96",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/recipe/recipe-engine.js",
+      "sha256": "c9c542086ad441650b1e813fd5612956de21c68f7cbe092ddbe4268de4b720b5",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/natural-media-state.js",
+      "sha256": "2cd3da61355df9e6fb84bdc81f95ba869ae1a24810e34bf654bcec252adfe876",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/index.js",
+      "sha256": "3f0c599bd8f45564932f169883a43a1423495501095147e88ae9d5828ebfda6a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/input/device-validation.js",
+      "sha256": "d172ed87d0ab8ed6b72ca463eec5eadae29131c504e43d77c63f6fc755fa5614",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/stroke-quality-tools.js",
+      "sha256": "7760f2f04ec165a0c641e94c9c4c185f62a0189d7a960da67ea8c120beec8e79",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/install-ai.js",
+      "sha256": "6d50cac4c91acabf0dacc7d4803d1272d3ca09909d9adeae29e5923cb5d4871b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vendor/imagetracer-1.2.6.js",
+      "sha256": "5da0e3abdb76e07068662646c224c28ba0ed45b39da43d1d2a60294408125af8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/extraction/adapters.js",
+      "sha256": "ce6283b1dfa79152558ec8e42bbd13c49db2eb222a71e4bea867040ffbeb4283",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/extraction/workspace.js",
+      "sha256": "cdc60223f7b0ce7b2a0ed92df3a8b7d0da5263765b20414253ca49b5d8f78e80",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/repeat/repeat-identity.js",
+      "sha256": "cf1469cabdb7e68e98f0eaf4d2262522a1e10f1562239334f71f511e31cd1065",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vendor/polygon-clipping.umd.min.js",
+      "sha256": "7f8619e84a86ce8dd400c9b50430e9c8cf8f26027b19eeb479f109f5c1a9d688",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vector/svg-id-normalizer.js",
+      "sha256": "89dccfcfd2653dc42fa3059402733de4e73c5ca065a27a7b53fb096edb4e267c",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/semantic/semantic-model.js",
+      "sha256": "e867aede4cb40732fca72f40988c7f03483ce9567819beea82676a817a7c44d6",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vector/stroke-appearance.js",
+      "sha256": "ef7b2668e0b76f995e707b09520b81df1f2b4698e54dccc7a7ce5d682bc2f66c",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/stroke-model.js",
+      "sha256": "5bf6530415cd3d0ab7f7f4e4f3bce0c9786236e974931e1ddd8ec3f29e7995e2",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/raster-processing-advanced.js",
+      "sha256": "1b4d00b3e56ba6a9094469a78281770b5f5a715a2026902179fe79d9a3ee76f8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/raster-selection-tools.js",
+      "sha256": "716a18a02e472ff840865b2fa836467a33d7b9d7da65d1732b8fe52350cc9302",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/raster-fill-tools.js",
+      "sha256": "c89eba7b82447acd296afe5de81519e96b732ef43c938b49f28e7e9a7c337db3",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/raster-retouch-tools.js",
+      "sha256": "dc5b586483007cf78fe3be2ac677960ad87e4ab4b465cb1d1eabb4f8e7df7763",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/color-management-core.js",
+      "sha256": "35edccf78280b99fba1da5a913b9b9e9f60225e91001e5b13afdf5f4fb363119",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/channel-core.js",
+      "sha256": "dc0ca155b6a4d8d4deb909d6458657535a387ce820e59f9f793997fa12a3071d",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/formats/normalized-payload.js",
+      "sha256": "e4d11d5f5a68d67b7351cd77da72a96dad7fdd62a911731c97d56534c9e0ec10",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/action/flora-action-errors.js",
+      "sha256": "94b67bd3ad83958d284210b399e68c9c95b8adfe46a8edb153006b1b93be20c4",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/format-interoperability.js",
+      "sha256": "b6f46afc8acd528920914868d75119a21bef393b8acf1969a730280e1963e157",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/action/flora-action-validator.js",
+      "sha256": "d10b2682ccc688d198375273273489d204caab09b9c0630cd87821c206db62eb",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/recipe/painting-recipe-compiler.js",
+      "sha256": "f2d12201b18ea00b69044d7573a722ec41f7c732d708fb5fb74a22bdfeeec6c0",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/painting/region-stroke-compiler.js",
+      "sha256": "f0b2a814f3bb9610e76ad9db94109eeb93d1d60a1aa18ad95008947ffaa02ba7",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/painting/abstract-petal-benchmark.js",
+      "sha256": "0f18371e406d39700eaa73bb97eb02398861d337938fc6584733ee1903a46929",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vector/deformation.js",
+      "sha256": "b905b1819961fa7f07f19ec9ffdbbfb36fa0a185a4e5338c18cd97d97883b8be",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/structure/hero-geometry.js",
+      "sha256": "780b17c6f8757bb04d98bb7aa1dc507b3a454957dbf50dbd8a909c2bc8991ef5",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/structure/hero-profile.js",
+      "sha256": "e4c9a9a7110763ac75bed7971fc4a5850c55a9190fc53475c3d9bdbf243144b5",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/ui/capability-contributions.js",
+      "sha256": "d87a391666ab32d4352bc63a9bff45a56503f645e0f989026627e449ce411189",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/ui/capability-raster-tools.js",
+      "sha256": "7ccdd71b358ba69b8e17cd55ab8e0037e61d847500eefd44300e8dab35d4c75f",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/painting/three-petal-benchmark.js",
+      "sha256": "66f82e9643913d45e26f69d0c9d53f3769bc196682b562c74134ce9f062dd4fd",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/painting/complete-crown-benchmark.js",
+      "sha256": "bd212dab840b09a8a55b93c6b21b8637759c3a330230bbd13d5733e92c794221",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/recipe/painting-recipe-validator.js",
+      "sha256": "78f0914f43bb400713bbe8e66df321ec366d953a7075726dafdc809a690218c0",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/crown/crown-painting-compiler.js",
+      "sha256": "77e854b85657757788510a3e892a0a5f77aa48015a5a5535e169f39d0111e64c",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/hero/complete-hero-painting-compiler.js",
+      "sha256": "8340453bf2f56f7ecdde8c9571e6dbd9d9a02ef803cdc8427ddadc6aa5a32fb0",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/hero/a4-hero-plan-validator.js",
+      "sha256": "dc92e12da088ae6683cd0abc6996aca8c7595c8073db831926d287ac3f80c5a2",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/hero/a4-hero-visual-checks.js",
+      "sha256": "eb1e15647efab28e5f853a642b9df92dad5c79c5fe40e4a1026e0a424de7a7f1",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/crown/crown-painting-plan-validator.js",
+      "sha256": "f01d0d9969079dd6eb1e69a3ea2334f08e137be7cd02f68cd4efade29f6b9773",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/crown/petal-recipe-generation.js",
+      "sha256": "f745cd51a0e0d834bdb829d3d35fe3b10032df611f6d8cbb98b6939b8ed6b47c",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/crown/crown-visual-checks.js",
+      "sha256": "8de6e4164ddbb1f4da57067b1954f490b4765ed851454fc7284a9e1c7ec9c5ca",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/semantic/semantic-migration.js",
+      "sha256": "08588849ba05cec09cbd5a59604dfe4952e8068a2257cc66e0ad87f9298558d2",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/structure/geometry-measurement-gates.js",
+      "sha256": "0814ec2466a7953811dcc5ca80fc619d859be53ba97990f333b77549331604bc",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/stroke-session.js",
+      "sha256": "ffbf749e16c00602eed1f72cf1a1bdfb9272f51e6a7f9a5cea5858ba92981747",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/assets/asset-migration.js",
+      "sha256": "e85d48bd928926087bf872895a6a4799238b8ae61e0bbf2602b7cc4e878d053d",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/document-bridge.js",
+      "sha256": "84c56704717f5b768d4664b95d3b4d4fe71a347fd5b9f9e1bf45ade2d341f6f8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/agent/output-handle-registry.js",
+      "sha256": "0637e1a3d643b892917c468f5273679f14b6145ed16d0b894b0ae14cc45c07be",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/agent/export-asset.js",
+      "sha256": "49debe95df1a29594792e4385d1a1dd8a929fc8a6bc13f9f906f8949ee9e8407",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/agent/visual-feedback.js",
+      "sha256": "5ea12b0d34abba3dfb186880df8e4b3c8a3cce5c511c689686526fe63ae2422f",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/agent/creative-library-search.js",
+      "sha256": "cfb998ec0050afca01b6d54644c6bf608cb3405bcd4546d54c56275ee286ece8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/drawing-workflow-import.js",
+      "sha256": "24bdde769903b80165662d2be7edb2fd42c0f578e715824a937c05f794bd0289",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/drawing-quality.js",
+      "sha256": "55eb75e700484dc9e13b051c3fec74c6f1e572630df853970194b9eb3a0b72e0",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/material/material-library.js",
+      "sha256": "955e2ebd7c83290736219ab7af5fd5adfa21208a67843518dd0985b716c602f6",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/recompute/dependency-graph.js",
+      "sha256": "6baacabc0b4f1058b1ce1f9208c5a7f097b5285fcf51090356125fd6e76b89a8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/expression-ir.js",
+      "sha256": "a481523a5b8401a0b4bf42b84f5181b01ebf16151a9e1b33be12390e8afa7269",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/composition/composition-constraints.js",
+      "sha256": "577d7c605d9a760e1d134b4c6e54c936a7d1a2d72de92b8eae09764db275001d",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/paint/vector-watercolor.js",
+      "sha256": "a90ee119d1ac503b230f9e8193866602161c6dab5fbba7825aa056fd81b261a4",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/canonical-operation.js",
+      "sha256": "eb31b583b5967822339171e95d1a1a2ae572b496919dd3a534f1cc7e4dce23c6",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/security.js",
+      "sha256": "e232ce2e05b0046a28c7ca28aa93f2b1247172070cda10eb26bec758a3966215",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/format-detector.js",
+      "sha256": "390df2ae8aeb712a99d128b67d7ea93450a37f140dd8a26d428f8b67e2f1b7b2",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/parsers.js",
+      "sha256": "9f1ffc7611fa8c6ae03b4c658c07f1f2e66be2f8438a68af24f6ea55ba51f22b",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/coverage-engine.js",
+      "sha256": "50057eaacf662e1b8cf11e56f4878797139f2619370e8a207f03cb17a7fafd4e",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/compiler.js",
+      "sha256": "f03e2fa0572c56bbd6fce50a6b2a59a144dbadc909edadad5a27e148323c34df",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/comparison-engine.js",
+      "sha256": "be5a81c1ec4dfa6b079eaf50d4534970a890ffdb24a2cbdc623d0cdbebe0e7f4",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/importer.js",
+      "sha256": "7ba697d32c264898c46581e521fb06b528a28e7011f79204289fe7908e93c938",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/reference-runner.js",
+      "sha256": "d093d4767c333335fee9235ebc5fe48b37a19cf9033fc727a7b1660f8f8deda1",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/reference-package.js",
+      "sha256": "658204a921f84eab421c9c4e151c9d389495ec51f942b5d6dfc41251093e69b3",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/program-import/reference-pipeline.js",
+      "sha256": "f5ea137b97f7aedac67c85dfa0857e7c8868b0c8684be5141cd4b325de57b76e",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/ai-core.js",
+      "sha256": "8ab44c898d0ad3f3ce8acfab90eab510058984f438427e09f757701b48e23103",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/plan-analyzers.js",
+      "sha256": "cc02645d378e1c25a5098ced6cbc7ce861ca450000ef6935489bd52367686c67",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/memory/creative-memory.js",
+      "sha256": "c29896b2de52e36fe10ee188f4a1d89fc7298a1b8aa15010f516fe5ac993f081",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/chat-runtime.js",
+      "sha256": "5dee3994409522f6c87cc3cba3f08c238f8e6aaacf01469edb9606280c3e3477",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/research/research-creation-bridge.js",
+      "sha256": "a8d83e6220d2b8a4818d1d35cc2cb625bc5c9aae63bfaad95b70e94bea3f30d3",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/formats/binary.js",
+      "sha256": "a1b5afe7c51c22e9635bf74748aae38394144d150a72fb9b152532fb45c7d2e7",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/extraction/core.js",
+      "sha256": "0b0822103bf1255ba3b298cd505efe53fdcca4ccfb96916ff8fa069c8ee8e480",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/extraction/structure.js",
+      "sha256": "3baa80c3b2e05250a2622b9b6afc9fa406c1e2bf26462f51a779c4f867b45be0",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/formats/psd.js",
+      "sha256": "91b77ec4d5f1ee11dec85ee48cda5301af8500b1567e4e58da36d1a884cdb874",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/formats/tiff.js",
+      "sha256": "742c042c226c9aaf8442aba9bc871623c97fcc204938fafba48026f4ecae06bb",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/formats/exr.js",
+      "sha256": "26426918b4e6c35ec62e4231a1d3f39926a05d5e27b403e1bd60e09f1c13961d",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/image/formats/adapters/raw-adapter.js",
+      "sha256": "3494c1c957a9d41de8101d14e934e8034febb12042d6766833ed1488e28dd619",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/action/flora-action-schema.js",
+      "sha256": "254a3a04162a8c34acfd977a7e2cd490f1c44e8e088386cc0686e85d34610600",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/painting/region-paint-operations.js",
+      "sha256": "3ca676fb9b3c6be12086eb7c4c28dc77b332f63f388818a9fcc5afcc2f928e34",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/recipe/painting-recipe-schema.js",
+      "sha256": "e61a115e1a77301d796984085a0fb5685b538ced9956f355dd3cabe3caf2f4bb",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/recipe/refined-painting-parameters.js",
+      "sha256": "5fb047abbfc941ad26fab0d1247370722b1afc9c8ea0561ab083f2f07ea4b05f",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/hero/a4-hero-plan-schema.js",
+      "sha256": "f8b8290bf052577328c5829f0088887fa304828abb6ebaf5e5819cdec0a8fc8a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/hero/complete-hero-structure.js",
+      "sha256": "b6effacbfb7105d08338571fcb3a63e5cc08f017b780e6e4dcb14e0936e1c189",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/hero/complete-hero-recipe-generation.js",
+      "sha256": "39e7dfd635a7be486e29826fbe4fb80ecb8630505ad93d634fcb0df050f2d93d",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/flora/crown/crown-painting-plan-schema.js",
+      "sha256": "ee6509f4790dd17b63cc92cd314ef6906b90f43b1fa6c7c295eed50681d5fdb1",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/semantic/relationship-graph.js",
+      "sha256": "97552fd95c0f6bb2e4dfc32d4809af812316b1b03b87606883b569d9510fc382",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/semantic/semantic-validator.js",
+      "sha256": "8657a0d5df3db905d2a798cd28bbee26e1b07f36379e5c19f83f11f31d8c914a",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/recompute/change-domain.js",
+      "sha256": "0f37fb025e0f6309218927a41b7824a7c60e07ae50b344709b2ef92284c43d78",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/creative-intelligence-context.js",
+      "sha256": "6418e51fd8b02a42fb460159d1962acdbf6e179829cc4ceb161e81a3638d60e8",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/ai/grounded-creative-decision.js",
+      "sha256": "133f45a4ff581cf07718f04e64c97bec6c0362b6624a9edc980db84282cb66f0",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/compare/visual-compare.js",
+      "sha256": "1ea4686c8240cefe91fdef5a33ad6186eb60c63bcafd5c382a4eb6168249e9e6",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/structure/parametric-structure.js",
+      "sha256": "a16d0b8928b48b695db584153a55dd2e3fcc4303eb34d92a563f300fe751dd2e",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/semantic/semantic-region-grounding.js",
+      "sha256": "e4d047e9531a5f13c2b377e3b857666b1f1046bb0fa56cd86b5b3b0dbda975d9",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/provenance/provenance-graph.js",
+      "sha256": "a44536e0d27b95893e5d13c7797b5783b32062b723f7187d07de01f5abe36930",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vector/geometry-kernel.js",
+      "sha256": "e8082c855bfce2f09856611baf936d4ca950ed127d2bc44ddc6034f34378cf18",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vendor/bezier-js-6.1.4/bezier.js",
+      "sha256": "df9f6c029fcb6be162f3c40c938be9e6188c3857fc7bbfb4236322e039f36987",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vendor/bezier-js-6.1.4/poly-bezier.js",
+      "sha256": "6bf75f20af5efd504ad3c40e921f8b326f48773ab99dff24d487fca6fa07b614",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vendor/bezier-js-6.1.4/utils.js",
+      "sha256": "2ad9a982e40937adec6f01fcc076934187fe9299fa8d9d36b7a3fb89605c135c",
+      "matches": true
+    },
+    {
+      "url": "http://127.0.0.1:8766/product/source/src/vendor/clipper2-ts-2.0.1/clipper2.min.mjs",
+      "sha256": "95eede29f97a76d102762ecfa2e62ac8fa434c45a72d368c59557a4b41b1731d",
+      "matches": true
+    }
+  ]
+}

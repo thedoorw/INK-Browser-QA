@@ -1,0 +1,1713 @@
+{
+  "method": "Rendered PNG raster, threshold max(R,G,B)<170 on light surfaces, bounded by final DOM Range or SVG/control crop. Source/reference threshold is separate. Coordinates are source-pixel edges; inclusive raster bounds. No DOM text box is mislabeled as visible ink.",
+  "baseline": "80a1016f1ba39ae75f401929bd8892b3bd5f023c",
+  "checks": [
+    {
+      "name": "Representative Reference / Layers rendered glyph centers within approximately 1px",
+      "ok": true,
+      "sampleCount": 41,
+      "maxDelta": 1.015625
+    },
+    {
+      "name": "Shared truncated-row text preserves full CJK glyph height: 未選擇檔案",
+      "ok": true,
+      "before": [
+        53,
+        10
+      ],
+      "after": [
+        53,
+        10
+      ]
+    },
+    {
+      "name": "Shared truncated-row text preserves full CJK glyph height: 圖層 1",
+      "ok": true,
+      "before": [
+        32,
+        11
+      ],
+      "after": [
+        32,
+        11
+      ]
+    },
+    {
+      "name": "active collapse family uses common SVG/button/strip boxes",
+      "ok": true,
+      "samples": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 68,
+            "height": 12,
+            "top": 61,
+            "right": 70,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              15,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              12.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ]
+    },
+    {
+      "name": "tools-single collapse family uses common SVG/button/strip boxes",
+      "ok": true,
+      "samples": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ]
+    },
+    {
+      "name": "dock-collapsed collapse family uses common SVG/button/strip boxes",
+      "ok": true,
+      "samples": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1241,
+            "y": 61,
+            "width": 39,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1241
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 12,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ]
+    },
+    {
+      "name": "dock-expanded collapse family uses common SVG/button/strip boxes",
+      "ok": true,
+      "samples": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ]
+    },
+    {
+      "name": "Window cluster outer bounds/right edge match measured Photoshop frame",
+      "ok": true,
+      "reference": {
+        "x": 1174,
+        "y": 0,
+        "right": 1277,
+        "bottom": 19,
+        "width": 103,
+        "height": 19,
+        "rightInset": 3,
+        "borderGray": [
+          99,
+          99,
+          99
+        ],
+        "edgeSamples": [
+          1174,
+          1202,
+          1229,
+          1276
+        ]
+      },
+      "before": {
+        "x": 1175,
+        "y": 0,
+        "width": 105,
+        "height": 19,
+        "top": 0,
+        "right": 1280,
+        "bottom": 19,
+        "left": 1175
+      },
+      "after": {
+        "x": 1174,
+        "y": 0,
+        "width": 103,
+        "height": 19,
+        "top": 0,
+        "right": 1277,
+        "bottom": 19,
+        "left": 1174
+      }
+    },
+    {
+      "name": "All three window glyphs have less dark raster ink",
+      "ok": true,
+      "threshold": 210,
+      "before": [
+        30,
+        76,
+        48
+      ],
+      "after": [
+        10,
+        45,
+        16
+      ]
+    }
+  ],
+  "window": {
+    "before": [
+      {
+        "label": "最小化視窗",
+        "button": {
+          "x": 1176,
+          "y": 0,
+          "width": 28,
+          "height": 18,
+          "top": 0,
+          "right": 1204,
+          "bottom": 18,
+          "left": 1176
+        },
+        "svgBox": {
+          "x": 1183.5,
+          "y": 3,
+          "width": 12,
+          "height": 12,
+          "top": 3,
+          "right": 1195.5,
+          "bottom": 15,
+          "left": 1183.5
+        },
+        "glyph": {
+          "inkPixels": 30,
+          "boundsInclusive": [
+            1185,
+            11,
+            1194,
+            13
+          ],
+          "size": [
+            10,
+            3
+          ],
+          "center": [
+            1190.0,
+            12.5
+          ]
+        },
+        "glyphToButtonDelta": [
+          0.0,
+          3.5
+        ]
+      },
+      {
+        "label": "還原視窗",
+        "button": {
+          "x": 1204,
+          "y": 0,
+          "width": 28,
+          "height": 18,
+          "top": 0,
+          "right": 1232,
+          "bottom": 18,
+          "left": 1204
+        },
+        "svgBox": {
+          "x": 1211.5,
+          "y": 3,
+          "width": 12,
+          "height": 12,
+          "top": 3,
+          "right": 1223.5,
+          "bottom": 15,
+          "left": 1211.5
+        },
+        "glyph": {
+          "inkPixels": 76,
+          "boundsInclusive": [
+            1212,
+            4,
+            1223,
+            13
+          ],
+          "size": [
+            12,
+            10
+          ],
+          "center": [
+            1218.0,
+            9.0
+          ]
+        },
+        "glyphToButtonDelta": [
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "label": "關閉視窗",
+        "button": {
+          "x": 1232,
+          "y": 0,
+          "width": 47,
+          "height": 18,
+          "top": 0,
+          "right": 1279,
+          "bottom": 18,
+          "left": 1232
+        },
+        "svgBox": {
+          "x": 1249.5,
+          "y": 3,
+          "width": 12,
+          "height": 12,
+          "top": 3,
+          "right": 1261.5,
+          "bottom": 15,
+          "left": 1249.5
+        },
+        "glyph": {
+          "inkPixels": 48,
+          "boundsInclusive": [
+            1251,
+            5,
+            1260,
+            12
+          ],
+          "size": [
+            10,
+            8
+          ],
+          "center": [
+            1256.0,
+            9.0
+          ]
+        },
+        "glyphToButtonDelta": [
+          0.5,
+          0.0
+        ]
+      }
+    ],
+    "after": [
+      {
+        "label": "最小化視窗",
+        "button": {
+          "x": 1175,
+          "y": 0,
+          "width": 27.5,
+          "height": 18,
+          "top": 0,
+          "right": 1202.5,
+          "bottom": 18,
+          "left": 1175
+        },
+        "svgBox": {
+          "x": 1182.25,
+          "y": 3,
+          "width": 12,
+          "height": 12,
+          "top": 3,
+          "right": 1194.25,
+          "bottom": 15,
+          "left": 1182.25
+        },
+        "glyph": {
+          "inkPixels": 10,
+          "boundsInclusive": [
+            1183,
+            12,
+            1192,
+            12
+          ],
+          "size": [
+            10,
+            1
+          ],
+          "center": [
+            1188.0,
+            12.5
+          ]
+        },
+        "glyphToButtonDelta": [
+          -0.75,
+          3.5
+        ]
+      },
+      {
+        "label": "還原視窗",
+        "button": {
+          "x": 1202.5,
+          "y": 0,
+          "width": 27.5,
+          "height": 18,
+          "top": 0,
+          "right": 1230,
+          "bottom": 18,
+          "left": 1202.5
+        },
+        "svgBox": {
+          "x": 1209.75,
+          "y": 3,
+          "width": 12,
+          "height": 12,
+          "top": 3,
+          "right": 1221.75,
+          "bottom": 15,
+          "left": 1209.75
+        },
+        "glyph": {
+          "inkPixels": 45,
+          "boundsInclusive": [
+            1211,
+            5,
+            1221,
+            14
+          ],
+          "size": [
+            11,
+            10
+          ],
+          "center": [
+            1216.5,
+            10.0
+          ]
+        },
+        "glyphToButtonDelta": [
+          0.25,
+          1.0
+        ]
+      },
+      {
+        "label": "關閉視窗",
+        "button": {
+          "x": 1230,
+          "y": 0,
+          "width": 46,
+          "height": 18,
+          "top": 0,
+          "right": 1276,
+          "bottom": 18,
+          "left": 1230
+        },
+        "svgBox": {
+          "x": 1247,
+          "y": 3,
+          "width": 12,
+          "height": 12,
+          "top": 3,
+          "right": 1259,
+          "bottom": 15,
+          "left": 1247
+        },
+        "glyph": {
+          "inkPixels": 16,
+          "boundsInclusive": [
+            1249,
+            5,
+            1256,
+            12
+          ],
+          "size": [
+            8,
+            8
+          ],
+          "center": [
+            1253.0,
+            9.0
+          ]
+        },
+        "glyphToButtonDelta": [
+          0.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "cluster": {
+    "photoshop": {
+      "x": 1174,
+      "y": 0,
+      "right": 1277,
+      "bottom": 19,
+      "width": 103,
+      "height": 19,
+      "rightInset": 3,
+      "borderGray": [
+        99,
+        99,
+        99
+      ],
+      "edgeSamples": [
+        1174,
+        1202,
+        1229,
+        1276
+      ]
+    },
+    "before": {
+      "rect": {
+        "x": 1175,
+        "y": 0,
+        "width": 105,
+        "height": 19,
+        "top": 0,
+        "right": 1280,
+        "bottom": 19,
+        "left": 1175
+      },
+      "style": {
+        "marginInlineEnd": "0px",
+        "strokeWidth": "2px"
+      }
+    },
+    "after": {
+      "rect": {
+        "x": 1174,
+        "y": 0,
+        "width": 103,
+        "height": 19,
+        "top": 0,
+        "right": 1277,
+        "bottom": 19,
+        "left": 1174
+      },
+      "style": {
+        "marginInlineEnd": "3px",
+        "strokeWidth": "1px"
+      }
+    }
+  },
+  "collapse": {
+    "before": {
+      "active": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 68,
+            "height": 12,
+            "top": 61,
+            "right": 70,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              15,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              12.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ],
+      "tools-single": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ],
+      "dock-collapsed": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1241,
+            "y": 61,
+            "width": 39,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1241
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 12,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ],
+      "dock-expanded": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ]
+    },
+    "after": {
+      "active": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 68,
+            "height": 12,
+            "top": 61,
+            "right": 70,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              15,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              12.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ],
+      "tools-single": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ],
+      "dock-collapsed": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1241,
+            "y": 61,
+            "width": 39,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1241
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 12,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ],
+      "dock-expanded": [
+        {
+          "owner": "tool-layout-toggle",
+          "svg": {
+            "x": 8.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 15.5,
+            "bottom": 69,
+            "left": 8.5
+          },
+          "button": {
+            "x": 4,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "left": 4
+          },
+          "strip": {
+            "x": 2,
+            "y": 61,
+            "width": 35,
+            "height": 12,
+            "top": 61,
+            "right": 37,
+            "bottom": 73,
+            "left": 2
+          },
+          "transform": "none",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              9,
+              64,
+              14,
+              68
+            ],
+            "size": [
+              6,
+              5
+            ],
+            "center": [
+              12.0,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        },
+        {
+          "owner": "panel-edge-toggle",
+          "svg": {
+            "x": 1265.5,
+            "y": 64,
+            "width": 7,
+            "height": 5,
+            "top": 64,
+            "right": 1272.5,
+            "bottom": 69,
+            "left": 1265.5
+          },
+          "button": {
+            "x": 1261,
+            "y": 61,
+            "width": 16,
+            "height": 11,
+            "top": 61,
+            "right": 1277,
+            "bottom": 72,
+            "left": 1261
+          },
+          "strip": {
+            "x": 1029,
+            "y": 61,
+            "width": 251,
+            "height": 12,
+            "top": 61,
+            "right": 1280,
+            "bottom": 73,
+            "left": 1029
+          },
+          "transform": "matrix(-1, 0, 0, -1, 0, 0)",
+          "glyph": {
+            "inkPixels": 11,
+            "boundsInclusive": [
+              1266,
+              64,
+              1272,
+              68
+            ],
+            "size": [
+              7,
+              5
+            ],
+            "center": [
+              1269.5,
+              66.5
+            ]
+          },
+          "glyphToButtonDelta": 0.0
+        }
+      ]
+    }
+  }
+}
