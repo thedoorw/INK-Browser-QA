@@ -1,108 +1,108 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-C009-001",
+  "requestId": "transport-proof-mutation-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
     {
-      "id": "import",
-      "tool": "import_ink_reference",
-      "input": {
-        "options": {
-          "name": "rose-window-primary.png",
-          "type": "image/png",
-          "intent": "C009 editable reconstruction probe"
-        }
-      },
-      "file": {
-        "path": "qa/fixtures/rose-window/rose-window-primary.png",
-        "name": "rose-window-primary.png",
-        "type": "image/png"
-      }
+      "id": "context_before",
+      "tool": "get_ink_context",
+      "input": {}
     },
     {
-      "id": "decompose",
-      "tool": "decompose_ink_reference",
-      "input": {
-        "referenceObjectId": {
-          "$ref": "import.result.referenceObjectId"
-        }
-      }
-    },
-    {
-      "id": "correctPropose",
+      "id": "propose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C009 probe: editable correction after reference reconstruction",
+          "intentSummary": "Live CHAT transport proof: create one rectangle and one text object",
           "steps": [
             {
-              "stepId": "repaint-a",
-              "operation": "path.repaint.v1",
-              "targets": [
-                {
-                  "$ref": "decompose.createdRefs.0"
-                }
-              ],
+              "stepId": "shape",
+              "operation": "path.create.v1",
+              "targets": [],
               "arguments": {
-                "fill": "#f0d7de",
-                "stroke": "#202020",
+                "shape": "rectangle",
+                "name": "CHAT Transport Proof Shape",
+                "x": 120,
+                "y": 120,
+                "width": 220,
+                "height": 140,
+                "fill": "#00b8d9",
+                "stroke": "#111111",
+                "strokeWidth": 3,
                 "opacity": 1
               },
               "dependsOn": []
             },
             {
-              "stepId": "repaint-b",
-              "operation": "path.repaint.v1",
-              "targets": [
-                {
-                  "$ref": "decompose.createdRefs.1"
-                }
-              ],
+              "stepId": "label",
+              "operation": "text.create.v1",
+              "targets": [],
               "arguments": {
-                "fill": "#d7e5f0",
-                "stroke": "#202020",
+                "text": "INK CHAT LIVE",
+                "x": 145,
+                "y": 185,
+                "color": "#111111",
+                "fontSize": 28,
+                "fontWeight": 700,
                 "opacity": 1
               },
-              "dependsOn": []
+              "dependsOn": [
+                "shape"
+              ]
             }
           ]
         }
       }
     },
     {
-      "id": "correctApprove",
+      "id": "blocked_execute",
+      "tool": "use_ink",
+      "allowFailure": true,
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "propose.result.planId"
+        },
+        "approvalToken": "not-approved"
+      }
+    },
+    {
+      "id": "approve",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "correctPropose.result.planId"
+          "$ref": "propose.result.planId"
         }
       }
     },
     {
-      "id": "correctExec",
+      "id": "execute",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "correctPropose.result.planId"
+          "$ref": "propose.result.planId"
         },
         "approvalToken": {
-          "$ref": "correctApprove.result.approvalToken"
+          "$ref": "approve.result.approvalToken"
         }
       }
     },
     {
-      "id": "context",
+      "id": "history",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "context_after",
       "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
-      }
+      "input": {}
     },
     {
       "id": "preview",
