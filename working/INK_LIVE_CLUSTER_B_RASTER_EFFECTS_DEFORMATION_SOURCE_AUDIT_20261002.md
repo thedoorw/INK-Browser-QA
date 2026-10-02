@@ -242,6 +242,49 @@ Expose existing Path warp/distort/perspective authorities on explicit stable Pat
 
 C019 requires product/render work before CHAT exposure can be truthful. It must not be implemented as a registry-only operation over the current descriptor.
 
+## B0 candidate checkpoint — 2026-10-02
+
+Fresh current-main replay after C04 combined product integration:
+
+- main product checkpoint observed: `aa01f1e311eb22cb572a61efea19b8bb21a96157`
+- branch: `work/ink-live-web-raster-bridge-002`
+- Draft PR: `#114`
+- candidate HEAD: `5bec56b5a4db08404a03ea43d71d158c849a4b56`
+- superseded historical PR: `#113` CLOSED
+
+Candidate product delta:
+- `product/source/src/image/format-interoperability.js`
+  - adds `webRasterImageDataToDocumentState()`;
+  - converts validated RGBA8 browser raster pixels into the existing `color-raster` / `ink-image-state` authority.
+- `product/source/src/ink.js`
+  - adds History-backed `InkApp.importWebRaster()`;
+  - reuses installed extraction decode;
+  - creates the existing native `type:'image' + rasterState` shape;
+  - preserves source / provenance metadata.
+
+Explicitly unchanged:
+- ReferenceImage remains locked and separate;
+- ordinary UI `importImage()` behavior is unchanged;
+- no Public Creative API / named-tool exposure yet;
+- no new renderer, History, Document or raster-state owner;
+- no FORMAT_VERSION change.
+
+Static QA:
+```text
+format-interoperability.js = SYNTAX PASS
+ink.js = SYNTAX PASS
+candidate diff = exactly 2 intended source files
+```
+
+Runtime/browser status:
+```text
+B0_RUNTIME = NOT_YET_CLAIMED
+HOSTED_LIVE_RUNNER = FORMAL LIVE URL ONLY
+BRANCH_CANDIDATE_BROWSER_PROOF = NOT AVAILABLE THROUGH CURRENT LIVE REQUEST RUNNER
+```
+
+Do not promote PR #114 from static QA alone.
+
 ## Current gate
 
 The active Current Work Order is the accepted C04 recovery + two-state combined-promotion sequence and explicitly keeps unrelated Live CHAT exposure work separate.
