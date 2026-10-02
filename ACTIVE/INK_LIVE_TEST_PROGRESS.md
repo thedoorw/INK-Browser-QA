@@ -438,3 +438,28 @@ Qualification proof:
 - first formal Live attempt timed out before Public API readiness on the same deployed SHA; no filter operation ran and no product failure was observed. Warm rerun completed the full chain.
 - blend / effect / Liquify remain unqualified and do not inherit this PASS.
 
+## B2 incremental qualification — blend / multiply — 2026-10-02
+
+```text
+B2_BLEND_PR = #123 / MERGED
+B2_BLEND_EXACT_CANDIDATE = db9ac524aee1f1bf7fc8fe613e75bfb93088a3ec
+B2_BLEND_SOURCE_INTEGRATION = 789e9efb77d1edaac15420483c9ce71dd43f414b
+B2_BLEND_CANDIDATE_QA = live-raster-blend-candidate-001 / PASS
+B2_BLEND_LIVE = clusterB-B2-blend-live-002 / PASS
+B2_BLEND_COVERAGE = multiply QUALIFIED
+B2_ADJUSTMENT = brightnessContrast QUALIFIED
+B2_FILTER = gaussianBlur QUALIFIED
+B2_EFFECT = NEXT / prior dropShadow combined QA was not renderer-observable
+B2_LIQUIFY = OPEN
+B2_OVERALL = PARTIAL / NOT COMPLETE
+```
+
+Qualification proof:
+- CHAT reuses existing image `blendMode`, existing IMAGE_CAPABILITIES blend-mode allowlist, scoped History and Renderer compositing.
+- candidate used two overlapping native editable rasters so blend semantics were renderer-observable; `multiply` changed canvas hash `7883b22 → a24287ef`.
+- formal Live imported the same editable raster twice; `image.blend.set.v1` changed renderer fingerprint `fnv1a32:34d01658 → fnv1a32:89aa5042`.
+- History added `CHAT set image blend: multiply`.
+- Undo restored `fnv1a32:34d01658`; Redo restored `fnv1a32:89aa5042`.
+- first formal Live attempt timed out before Public API readiness on the same exact deployed SHA; warm rerun completed the full chain.
+- effect / Liquify remain unqualified and do not inherit this PASS.
+
