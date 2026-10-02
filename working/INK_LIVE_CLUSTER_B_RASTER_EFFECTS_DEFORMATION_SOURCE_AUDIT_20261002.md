@@ -13,7 +13,8 @@ FAMILIES = C14 C22 C23 C24 C25 C26 C27 C28
 Cluster B is primarily an exposure gap, with one confirmed product/render gap in the current C019 text-deformation requirement.
 
 ```text
-MUTABLE RASTER INGEST = PRODUCT EXISTS / CHAT EXPOSURE GAP
+PSD / TIFF / EXR / RAW MUTABLE RASTER INGEST = PRODUCT EXISTS / CHAT EXPOSURE GAP
+PNG / JPEG / WEBP MUTABLE RASTER INGEST = PRODUCT CONVERSION-INTEGRATION GAP
 RASTER DIRECT EDIT CORE = PRODUCT EXISTS / CHAT EXPOSURE GAP
 RASTER MASK = PRODUCT EXISTS / CHAT EXPOSURE GAP
 ADJUSTMENT / FILTER = PRODUCT EXISTS / CHAT EXPOSURE GAP
@@ -28,7 +29,7 @@ REFERENCE IMAGE UNLOCK = NOT A REPAIR / REFERENCE LOCK IS INTENTIONAL
 
 ### Mutable raster ingest
 
-`InkApp.importImageFormat()` in `product/source/src/ink.js` is the existing editable-raster authority.
+`InkApp.importImageFormat()` in `product/source/src/ink.js` is an existing editable-raster authority for the format-interoperability path.
 
 It:
 - calls the existing image-format decoder;
@@ -39,9 +40,19 @@ It:
 - selects the new native image;
 - refreshes the existing renderer.
 
-The UI's external-image flow already calls this authority for supported image-format bytes.
+Important format boundary:
+- `format-interoperability.js` currently decodes PSD / PSB-read-path, TIFF, EXR and registered RAW adapters;
+- it does not decode PNG / JPEG / WEBP;
+- the ordinary `importImage()` path for browser images creates a display `src` image, not an editable `rasterState` image.
 
-Disposition: do not create a second raster document model. CHAT needs a bounded transport/exposure seam to this existing ingest authority.
+Therefore the existing mutable-raster ingest authority is real, but it does not cover the PNG used by Round 1.
+
+The existing Reference decoder already produces validated browser-local RGBA `ImageData`, and the color-management core already provides `createColorRaster()` / `serializeColorRaster()`. What is missing is the bounded product integration that converts that decoded web raster into the native `ink-image-state / rasterState` representation and commits it through existing History.
+
+Disposition:
+- PSD / TIFF / EXR / RAW mutable ingest = CHAT exposure gap;
+- PNG / JPEG / WEBP mutable ingest = small product conversion-integration gap;
+- do not create a second raster document model.
 
 ### Reference image is intentionally different
 
@@ -185,16 +196,23 @@ Do not close the material finding merely because filter/effect exposure becomes 
 
 ## Recommended smallest coherent exposure packages
 
-### B1 — native mutable raster ingest
+### B0 — web-raster → native rasterState bridge
 
-Expose the existing native raster ingest authority to CHAT with bounded binary/local-attachment handling and structured receipts.
-
-Requirements:
-- create native editable `image + rasterState`;
+Add the missing bounded product integration for PNG / JPEG / WEBP:
+- reuse the existing browser-local Reference decode result or equivalent validated ImageData;
+- convert RGBA8 into the existing color-management `color-raster` state;
+- create the existing native `image + rasterState` shape;
+- commit through existing History;
 - preserve source identity/provenance;
-- use existing History;
-- return stable native refs;
-- do not unlock or repurpose ReferenceImage.
+- do not unlock or repurpose ReferenceImage;
+- do not create a second renderer, image model or raster state owner.
+
+### B1 — mutable raster ingest CHAT exposure
+
+Expose the existing editable-raster ingest authority after B0:
+- common web raster through the B0 bridge;
+- PSD / TIFF / EXR / RAW through existing `importImageFormat()`;
+- structured receipts and stable native refs.
 
 ### B2 — non-destructive raster stack edit
 
