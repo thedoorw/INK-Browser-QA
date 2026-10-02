@@ -53,6 +53,67 @@ jobs:
                 error: 'Runner result unavailable: ' + error.message
               };
             }
+            const rawResult = JSON.stringify(result);
+            if (rawResult.length > 180000 && Array.isArray(result?.result?.steps)) {
+              const compactAgent = (agent) => {
+                const raw = agent?.result || {};
+                return {
+                  schema: agent?.schema || null,
+                  version: agent?.version || null,
+                  action: agent?.action || null,
+                  status: agent?.status || null,
+                  diagnostics: Array.isArray(agent?.diagnostics) ? agent.diagnostics.slice(0, 6) : [],
+                  targetRefCount: Array.isArray(agent?.targetRefs) ? agent.targetRefs.length : 0,
+                  createdRefCount: Array.isArray(agent?.createdRefs) ? agent.createdRefs.length : 0,
+                  changedRefCount: Array.isArray(agent?.changedRefs) ? agent.changedRefs.length : 0,
+                  createdRefsSample: Array.isArray(agent?.createdRefs) ? agent.createdRefs.slice(0, 8) : [],
+                  outputHandles: Array.isArray(agent?.outputHandles) ? agent.outputHandles.slice(0, 4) : [],
+                  historyReceipt: agent?.historyReceipt ? {
+                    commit: agent.historyReceipt.commit || null,
+                    stepCount: Array.isArray(agent.historyReceipt.steps) ? agent.historyReceipt.steps.length : null
+                  } : null,
+                  revisionReceipt: agent?.revisionReceipt ? {
+                    created: agent.revisionReceipt.created ?? null,
+                    endingRevisionId: agent.revisionReceipt.endingRevisionId ?? null,
+                    documentFingerprint: agent.revisionReceipt.documentFingerprint ?? null
+                  } : null,
+                  resultSummary: {
+                    status: raw?.status ?? null,
+                    action: raw?.action ?? null,
+                    planId: raw?.planId ?? null,
+                    referenceObjectId: raw?.referenceObjectId ?? null,
+                    sourceReferenceObjectId: raw?.sourceReferenceObjectId ?? null,
+                    colorObjectCount: Array.isArray(raw?.colorObjectIds) ? raw.colorObjectIds.length : null,
+                    lineObjectCount: Array.isArray(raw?.lineObjectIds) ? raw.lineObjectIds.length : null,
+                    totalMatched: raw?.totalMatched ?? null,
+                    resultCount: Array.isArray(raw?.results) ? raw.results.length : null,
+                    objectCount: Array.isArray(raw?.objects) ? raw.objects.length : null,
+                    contextFingerprint: raw?.contextFingerprint ?? null,
+                    handleId: raw?.handleId ?? null
+                  }
+                };
+              };
+              result = {
+                schema: result.schema,
+                version: result.version,
+                requestId: result.requestId,
+                tool: result.tool,
+                liveUrl: result.liveUrl,
+                expectedSourceSha: result.expectedSourceSha,
+                runtimeIdentity: result.runtimeIdentity,
+                status: result.status,
+                compacted: true,
+                fullResultBytes: rawResult.length,
+                fullResultArtifact: true,
+                result: {
+                  steps: result.result.steps.map(step => ({
+                    id: step.id,
+                    tool: step.tool,
+                    result: compactAgent(step.result)
+                  }))
+                }
+              };
+            }
             let sha;
             try {
               const current = await github.rest.repos.getContent({ owner, repo, path, ref: 'main' });
