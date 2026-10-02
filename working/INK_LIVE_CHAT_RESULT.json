@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-RESULT",
   "version": 1,
-  "requestId": "round1-C007-001",
+  "requestId": "round1-C003-binary-preflight-001",
   "tool": null,
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
@@ -15,989 +15,103 @@
   "result": {
     "steps": [
       {
-        "id": "createPropose",
-        "tool": "use_ink",
+        "id": "import",
+        "tool": "import_ink_reference",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
-          "action": "composition.propose",
-          "status": "PROPOSED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
+          "action": "reference.import",
+          "status": "FAILED",
+          "documentId": "533ca8bd-6fe9-4df6-830f-fcac3a2668e5",
+          "pageId": "63fc3bc8-c583-4048-89cf-2f95048d8b1f",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
           "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "approvalToken": null,
-            "approved": false,
-            "diagnostics": [],
-            "intentSummary": "C007 probe: base social design",
-            "planId": "plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:79415d3a",
-            "result": null,
-            "schema": "INK-CHAT-CREATIVE-PLAN",
-            "source": {
-              "documentFingerprint": "fnv1a32:0b9f7456",
-              "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-              "revisionId": null
-            },
-            "status": "PROPOSED",
-            "stepResults": [],
-            "steps": [
-              {
-                "arguments": {
-                  "fill": "#eeeeee",
-                  "height": 160,
-                  "name": "CHAT Path",
-                  "objectId": null,
-                  "opacity": 1,
-                  "shape": "rectangle",
-                  "stroke": "#222222",
-                  "strokeWidth": 2,
-                  "width": 220,
-                  "x": 160,
-                  "y": 160
-                },
-                "dependsOn": [],
-                "operation": "path.create.v1",
-                "stepId": "shape",
-                "targets": []
-              },
-              {
-                "arguments": {
-                  "color": "#202020",
-                  "fontFamily": "system-ui",
-                  "fontSize": 36,
-                  "fontWeight": 700,
-                  "lineHeight": 1.25,
-                  "opacity": 1,
-                  "text": "SOCIAL",
-                  "x": 210,
-                  "y": 225
-                },
-                "dependsOn": [],
-                "operation": "text.create.v1",
-                "stepId": "text",
-                "targets": []
-              }
-            ],
-            "validation": {
-              "schema": "INK-CHAT-CREATIVE-PLAN-VALIDATION",
-              "source": {
-                "documentFingerprint": "fnv1a32:0b9f7456",
-                "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-                "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-                "revisionId": null
-              },
-              "stepCount": 2,
-              "steps": [
-                {
-                  "dependsOn": [],
-                  "operation": "path.create.v1",
-                  "stepId": "shape",
-                  "stepIndex": 0,
-                  "targetCount": 0,
-                  "targets": [],
-                  "valid": true
-                },
-                {
-                  "dependsOn": [],
-                  "operation": "text.create.v1",
-                  "stepId": "text",
-                  "stepIndex": 1,
-                  "targetCount": 0,
-                  "targets": [],
-                  "valid": true
-                }
-              ],
-              "valid": true,
-              "version": 1
-            },
-            "version": 1
-          }
-        }
-      },
-      {
-        "id": "createApprove",
-        "tool": "use_ink",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "composition.approve",
-          "status": "APPROVED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": null,
-          "targetRefs": [],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "approvalToken": "INK-LOCAL-PLAN-APPROVAL:plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:79415d3a:1",
-            "approved": true,
-            "diagnostics": [],
-            "intentSummary": "C007 probe: base social design",
-            "planId": "plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:79415d3a",
-            "result": null,
-            "schema": "INK-CHAT-CREATIVE-PLAN",
-            "source": {
-              "documentFingerprint": "fnv1a32:0b9f7456",
-              "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-              "revisionId": null
-            },
-            "status": "APPROVED",
-            "stepResults": [],
-            "steps": [
-              {
-                "arguments": {
-                  "fill": "#eeeeee",
-                  "height": 160,
-                  "name": "CHAT Path",
-                  "objectId": null,
-                  "opacity": 1,
-                  "shape": "rectangle",
-                  "stroke": "#222222",
-                  "strokeWidth": 2,
-                  "width": 220,
-                  "x": 160,
-                  "y": 160
-                },
-                "dependsOn": [],
-                "operation": "path.create.v1",
-                "stepId": "shape",
-                "targets": []
-              },
-              {
-                "arguments": {
-                  "color": "#202020",
-                  "fontFamily": "system-ui",
-                  "fontSize": 36,
-                  "fontWeight": 700,
-                  "lineHeight": 1.25,
-                  "opacity": 1,
-                  "text": "SOCIAL",
-                  "x": 210,
-                  "y": 225
-                },
-                "dependsOn": [],
-                "operation": "text.create.v1",
-                "stepId": "text",
-                "targets": []
-              }
-            ],
-            "validation": {
-              "schema": "INK-CHAT-CREATIVE-PLAN-VALIDATION",
-              "source": {
-                "documentFingerprint": "fnv1a32:0b9f7456",
-                "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-                "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-                "revisionId": null
-              },
-              "stepCount": 2,
-              "steps": [
-                {
-                  "dependsOn": [],
-                  "operation": "path.create.v1",
-                  "stepId": "shape",
-                  "stepIndex": 0,
-                  "targetCount": 0,
-                  "targets": [],
-                  "valid": true
-                },
-                {
-                  "dependsOn": [],
-                  "operation": "text.create.v1",
-                  "stepId": "text",
-                  "stepIndex": 1,
-                  "targetCount": 0,
-                  "targets": [],
-                  "valid": true
-                }
-              ],
-              "valid": true,
-              "version": 1
-            },
-            "version": 1
-          }
-        }
-      },
-      {
-        "id": "createExec",
-        "tool": "use_ink",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "composition.execute",
-          "status": "COMPLETED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411",
-          "targetRefs": [],
-          "createdRefs": [],
-          "changedRefs": [],
           "historyReceipt": {
-            "steps": [
-              {
-                "history": {
-                  "afterUndoCount": 1,
-                  "beforeUndoCount": 0,
-                  "latestLabel": "CHAT create Path"
-                },
-                "stepId": "shape",
-                "stepIndex": 0
-              },
-              {
-                "history": {
-                  "afterUndoCount": 2,
-                  "beforeUndoCount": 1,
-                  "latestLabel": "CHAT create Text"
-                },
-                "stepId": "text",
-                "stepIndex": 1
-              }
-            ]
+            "after": {
+              "applied": 0,
+              "lastEntry": null,
+              "limit": 30,
+              "pending": false,
+              "redoCount": 0,
+              "retainedCount": 0,
+              "undoCount": 0
+            },
+            "before": {
+              "applied": 0,
+              "lastEntry": null,
+              "limit": 30,
+              "pending": false,
+              "redoCount": 0,
+              "retainedCount": 0,
+              "undoCount": 0
+            },
+            "commit": null
           },
           "revisionReceipt": {
-            "captureSkipped": null,
-            "comparison": {
-              "addedObjectIds": [
-                "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                "v_muqupd8q_cjj1ldn"
-              ],
-              "afterDocumentFingerprint": "fnv1a32:1cfca411",
-              "beforeDocumentFingerprint": null,
-              "changedObjectIds": [],
-              "equivalent": false,
-              "fingerprints": {
-                "appearance": {
-                  "after": "fnv1a32:0c305680",
-                  "before": null
-                },
-                "geometry": {
-                  "after": "fnv1a32:ddb98579",
-                  "before": null
-                },
-                "structure": {
-                  "after": "fnv1a32:b6d41721",
-                  "before": null
-                }
-              },
-              "objectCounts": {
-                "added": 2,
-                "after": 2,
-                "before": 0,
-                "changed": 0,
-                "removed": 0,
-                "touched": 2
-              },
-              "removedObjectIds": [],
-              "schema": "INK-REVISION-COMPARISON",
-              "touchedObjectIds": [
-                "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                "v_muqupd8q_cjj1ldn"
-              ],
-              "truncated": {
-                "added": false,
-                "changed": false,
-                "removed": false,
-                "touched": false
-              },
-              "version": 1
-            },
-            "created": true,
-            "documentFingerprint": "fnv1a32:1cfca411",
-            "endingRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411",
-            "equivalent": false,
-            "startingRevisionId": null
+            "after": null,
+            "before": null
           },
           "provenanceReceipt": null,
           "outputHandles": [],
-          "diagnostics": [],
+          "diagnostics": [
+            {
+              "code": "CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED",
+              "details": {},
+              "message": "CHAT handoff requires a File or Blob",
+              "phase": "reference.import"
+            }
+          ],
           "result": {
-            "ok": true,
-            "planId": "plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:79415d3a",
-            "remainingStepIds": [],
+            "actor": {
+              "channel": "CHAT_ATTACHMENT_HANDOFF",
+              "id": "chat",
+              "type": "chat"
+            },
+            "audit": {
+              "auditId": "audit_muqur3jy_1",
+              "format": "INK-AI-AUDIT"
+            },
+            "documentId": "533ca8bd-6fe9-4df6-830f-fcac3a2668e5",
+            "error": {
+              "code": "CHAT_REFERENCE_HANDOFF_BINARY_REQUIRED",
+              "message": "CHAT handoff requires a File or Blob"
+            },
+            "history": {
+              "after": {
+                "applied": 0,
+                "lastEntry": null,
+                "limit": 30,
+                "pending": false,
+                "redoCount": 0,
+                "retainedCount": 0,
+                "undoCount": 0
+              },
+              "before": {
+                "applied": 0,
+                "lastEntry": null,
+                "limit": 30,
+                "pending": false,
+                "redoCount": 0,
+                "retainedCount": 0,
+                "undoCount": 0
+              },
+              "commit": null
+            },
+            "intent": "C003 reference import probe",
+            "operation": "reference.import",
+            "provenance": null,
+            "referenceObjectId": null,
             "revision": {
-              "captureSkipped": null,
-              "comparison": {
-                "addedObjectIds": [
-                  "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                  "v_muqupd8q_cjj1ldn"
-                ],
-                "afterDocumentFingerprint": "fnv1a32:1cfca411",
-                "beforeDocumentFingerprint": null,
-                "changedObjectIds": [],
-                "equivalent": false,
-                "fingerprints": {
-                  "appearance": {
-                    "after": "fnv1a32:0c305680",
-                    "before": null
-                  },
-                  "geometry": {
-                    "after": "fnv1a32:ddb98579",
-                    "before": null
-                  },
-                  "structure": {
-                    "after": "fnv1a32:b6d41721",
-                    "before": null
-                  }
-                },
-                "objectCounts": {
-                  "added": 2,
-                  "after": 2,
-                  "before": 0,
-                  "changed": 0,
-                  "removed": 0,
-                  "touched": 2
-                },
-                "removedObjectIds": [],
-                "schema": "INK-REVISION-COMPARISON",
-                "touchedObjectIds": [
-                  "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                  "v_muqupd8q_cjj1ldn"
-                ],
-                "truncated": {
-                  "added": false,
-                  "changed": false,
-                  "removed": false,
-                  "touched": false
-                },
-                "version": 1
-              },
-              "created": true,
-              "documentFingerprint": "fnv1a32:1cfca411",
-              "endingRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411",
-              "equivalent": false,
-              "startingRevisionId": null
+              "after": null,
+              "before": null
             },
-            "schema": "INK-CHAT-CREATIVE-PLAN-RESULT",
-            "status": "COMPLETED",
-            "stepResults": [
-              {
-                "changed": true,
-                "history": {
-                  "afterUndoCount": 1,
-                  "beforeUndoCount": 0,
-                  "latestLabel": "CHAT create Path"
-                },
-                "ok": true,
-                "operation": "path.create.v1",
-                "proposalId": "proposal:plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:79415d3a:shape:f2162544",
-                "revision": {
-                  "currentRevisionId": null,
-                  "documentFingerprint": "fnv1a32:8a692836",
-                  "inspectedRevisionId": null
-                },
-                "state": "COMPLETED",
-                "stepId": "shape",
-                "stepIndex": 0,
-                "targets": [
-                  {
-                    "ref": {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "v_muqupd8q_cjj1ldn",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    },
-                    "stateFingerprint": "fnv1a32:3694bec1",
-                    "worldMatrix": [
-                      1,
-                      0,
-                      0,
-                      1,
-                      0,
-                      0
-                    ]
-                  }
-                ]
-              },
-              {
-                "changed": true,
-                "history": {
-                  "afterUndoCount": 2,
-                  "beforeUndoCount": 1,
-                  "latestLabel": "CHAT create Text"
-                },
-                "ok": true,
-                "operation": "text.create.v1",
-                "proposalId": "proposal:plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:79415d3a:text:83ea7f4b",
-                "revision": {
-                  "currentRevisionId": null,
-                  "documentFingerprint": "fnv1a32:1cfca411",
-                  "inspectedRevisionId": null
-                },
-                "state": "COMPLETED",
-                "stepId": "text",
-                "stepIndex": 1,
-                "targets": [
-                  {
-                    "ref": {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    },
-                    "stateFingerprint": "fnv1a32:d9dd7a7e",
-                    "worldMatrix": [
-                      1,
-                      0,
-                      0,
-                      1,
-                      210,
-                      225
-                    ]
-                  }
-                ]
-              }
-            ],
-            "stoppedStepId": null,
-            "version": 1
-          }
-        }
-      },
-      {
-        "id": "variantPropose",
-        "tool": "use_ink",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "composition.propose",
-          "status": "PROPOSED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411",
-          "targetRefs": [
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            },
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "v_muqupd8q_cjj1ldn",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "approvalToken": null,
-            "approved": false,
-            "diagnostics": [],
-            "intentSummary": "C007 probe: repeat and clone variants",
-            "planId": "plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:024207e9",
-            "result": null,
-            "schema": "INK-CHAT-CREATIVE-PLAN",
-            "source": {
-              "documentFingerprint": "fnv1a32:1cfca411",
-              "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-              "revisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-            },
-            "status": "PROPOSED",
-            "stepResults": [],
-            "steps": [
-              {
-                "arguments": {
-                  "columns": 3,
-                  "dx": 260,
-                  "dy": 200,
-                  "linked": true,
-                  "rows": 2
-                },
-                "dependsOn": [],
-                "operation": "repeat.grid.v1",
-                "stepId": "grid",
-                "targets": [
-                  {
-                    "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                    "objectId": "v_muqupd8q_cjj1ldn",
-                    "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                  }
-                ]
-              },
-              {
-                "arguments": {
-                  "dx": 260,
-                  "dy": 0
-                },
-                "dependsOn": [],
-                "operation": "object.clone.v1",
-                "stepId": "clone-text",
-                "targets": [
-                  {
-                    "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                    "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                    "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                  }
-                ]
-              }
-            ],
-            "validation": {
-              "schema": "INK-CHAT-CREATIVE-PLAN-VALIDATION",
-              "source": {
-                "documentFingerprint": "fnv1a32:1cfca411",
-                "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-                "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-                "revisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-              },
-              "stepCount": 2,
-              "steps": [
-                {
-                  "dependsOn": [],
-                  "operation": "repeat.grid.v1",
-                  "stepId": "grid",
-                  "stepIndex": 0,
-                  "targetCount": 1,
-                  "targets": [
-                    {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "v_muqupd8q_cjj1ldn",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    }
-                  ],
-                  "valid": true
-                },
-                {
-                  "dependsOn": [],
-                  "operation": "object.clone.v1",
-                  "stepId": "clone-text",
-                  "stepIndex": 1,
-                  "targetCount": 1,
-                  "targets": [
-                    {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    }
-                  ],
-                  "valid": true
-                }
-              ],
-              "valid": true,
-              "version": 1
-            },
-            "version": 1
-          }
-        }
-      },
-      {
-        "id": "variantApprove",
-        "tool": "use_ink",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "composition.approve",
-          "status": "APPROVED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411",
-          "targetRefs": [
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            },
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "v_muqupd8q_cjj1ldn",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "approvalToken": "INK-LOCAL-PLAN-APPROVAL:plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:024207e9:2",
-            "approved": true,
-            "diagnostics": [],
-            "intentSummary": "C007 probe: repeat and clone variants",
-            "planId": "plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:024207e9",
-            "result": null,
-            "schema": "INK-CHAT-CREATIVE-PLAN",
-            "source": {
-              "documentFingerprint": "fnv1a32:1cfca411",
-              "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-              "revisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-            },
-            "status": "APPROVED",
-            "stepResults": [],
-            "steps": [
-              {
-                "arguments": {
-                  "columns": 3,
-                  "dx": 260,
-                  "dy": 200,
-                  "linked": true,
-                  "rows": 2
-                },
-                "dependsOn": [],
-                "operation": "repeat.grid.v1",
-                "stepId": "grid",
-                "targets": [
-                  {
-                    "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                    "objectId": "v_muqupd8q_cjj1ldn",
-                    "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                  }
-                ]
-              },
-              {
-                "arguments": {
-                  "dx": 260,
-                  "dy": 0
-                },
-                "dependsOn": [],
-                "operation": "object.clone.v1",
-                "stepId": "clone-text",
-                "targets": [
-                  {
-                    "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                    "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                    "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                  }
-                ]
-              }
-            ],
-            "validation": {
-              "schema": "INK-CHAT-CREATIVE-PLAN-VALIDATION",
-              "source": {
-                "documentFingerprint": "fnv1a32:1cfca411",
-                "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-                "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-                "revisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-              },
-              "stepCount": 2,
-              "steps": [
-                {
-                  "dependsOn": [],
-                  "operation": "repeat.grid.v1",
-                  "stepId": "grid",
-                  "stepIndex": 0,
-                  "targetCount": 1,
-                  "targets": [
-                    {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "v_muqupd8q_cjj1ldn",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    }
-                  ],
-                  "valid": true
-                },
-                {
-                  "dependsOn": [],
-                  "operation": "object.clone.v1",
-                  "stepId": "clone-text",
-                  "stepIndex": 1,
-                  "targetCount": 1,
-                  "targets": [
-                    {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    }
-                  ],
-                  "valid": true
-                }
-              ],
-              "valid": true,
-              "version": 1
-            },
-            "version": 1
-          }
-        }
-      },
-      {
-        "id": "variantExec",
-        "tool": "use_ink",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "composition.execute",
-          "status": "COMPLETED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a",
-          "targetRefs": [
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            },
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "v_muqupd8q_cjj1ldn",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": {
-            "steps": [
-              {
-                "history": {
-                  "afterUndoCount": 3,
-                  "beforeUndoCount": 2,
-                  "latestLabel": "CHAT create grid Repeat"
-                },
-                "stepId": "grid",
-                "stepIndex": 0
-              },
-              {
-                "history": {
-                  "afterUndoCount": 4,
-                  "beforeUndoCount": 3,
-                  "latestLabel": "CHAT clone object"
-                },
-                "stepId": "clone-text",
-                "stepIndex": 1
-              }
-            ]
-          },
-          "revisionReceipt": {
-            "captureSkipped": null,
-            "comparison": {
-              "addedObjectIds": [
-                "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4",
-                "v_muqupdbl_13tg5nj"
-              ],
-              "afterDocumentFingerprint": "fnv1a32:d5aa817a",
-              "beforeDocumentFingerprint": "fnv1a32:1cfca411",
-              "changedObjectIds": [],
-              "equivalent": false,
-              "fingerprints": {
-                "appearance": {
-                  "after": "fnv1a32:31f94c11",
-                  "before": "fnv1a32:0c305680"
-                },
-                "geometry": {
-                  "after": "fnv1a32:4aca9376",
-                  "before": "fnv1a32:ddb98579"
-                },
-                "structure": {
-                  "after": "fnv1a32:2659e533",
-                  "before": "fnv1a32:b6d41721"
-                }
-              },
-              "objectCounts": {
-                "added": 2,
-                "after": 4,
-                "before": 2,
-                "changed": 0,
-                "removed": 0,
-                "touched": 2
-              },
-              "removedObjectIds": [],
-              "schema": "INK-REVISION-COMPARISON",
-              "touchedObjectIds": [
-                "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4",
-                "v_muqupdbl_13tg5nj"
-              ],
-              "truncated": {
-                "added": false,
-                "changed": false,
-                "removed": false,
-                "touched": false
-              },
-              "version": 1
-            },
-            "created": true,
-            "documentFingerprint": "fnv1a32:d5aa817a",
-            "endingRevisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a",
-            "equivalent": false,
-            "startingRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-          },
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "ok": true,
-            "planId": "plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:024207e9",
-            "remainingStepIds": [],
-            "revision": {
-              "captureSkipped": null,
-              "comparison": {
-                "addedObjectIds": [
-                  "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4",
-                  "v_muqupdbl_13tg5nj"
-                ],
-                "afterDocumentFingerprint": "fnv1a32:d5aa817a",
-                "beforeDocumentFingerprint": "fnv1a32:1cfca411",
-                "changedObjectIds": [],
-                "equivalent": false,
-                "fingerprints": {
-                  "appearance": {
-                    "after": "fnv1a32:31f94c11",
-                    "before": "fnv1a32:0c305680"
-                  },
-                  "geometry": {
-                    "after": "fnv1a32:4aca9376",
-                    "before": "fnv1a32:ddb98579"
-                  },
-                  "structure": {
-                    "after": "fnv1a32:2659e533",
-                    "before": "fnv1a32:b6d41721"
-                  }
-                },
-                "objectCounts": {
-                  "added": 2,
-                  "after": 4,
-                  "before": 2,
-                  "changed": 0,
-                  "removed": 0,
-                  "touched": 2
-                },
-                "removedObjectIds": [],
-                "schema": "INK-REVISION-COMPARISON",
-                "touchedObjectIds": [
-                  "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4",
-                  "v_muqupdbl_13tg5nj"
-                ],
-                "truncated": {
-                  "added": false,
-                  "changed": false,
-                  "removed": false,
-                  "touched": false
-                },
-                "version": 1
-              },
-              "created": true,
-              "documentFingerprint": "fnv1a32:d5aa817a",
-              "endingRevisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a",
-              "equivalent": false,
-              "startingRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-            },
-            "schema": "INK-CHAT-CREATIVE-PLAN-RESULT",
-            "status": "COMPLETED",
-            "stepResults": [
-              {
-                "changed": true,
-                "history": {
-                  "afterUndoCount": 3,
-                  "beforeUndoCount": 2,
-                  "latestLabel": "CHAT create grid Repeat"
-                },
-                "ok": true,
-                "operation": "repeat.grid.v1",
-                "proposalId": "proposal:plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:024207e9:grid:1066c1d6",
-                "revision": {
-                  "currentRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411",
-                  "documentFingerprint": "fnv1a32:b58d55f9",
-                  "inspectedRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-                },
-                "state": "COMPLETED",
-                "stepId": "grid",
-                "stepIndex": 0,
-                "targets": [
-                  {
-                    "ref": {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "v_muqupdbl_13tg5nj",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    },
-                    "stateFingerprint": "fnv1a32:2227ca79",
-                    "worldMatrix": [
-                      1,
-                      0,
-                      0,
-                      1,
-                      0,
-                      0
-                    ]
-                  }
-                ]
-              },
-              {
-                "changed": true,
-                "history": {
-                  "afterUndoCount": 4,
-                  "beforeUndoCount": 3,
-                  "latestLabel": "CHAT clone object"
-                },
-                "ok": true,
-                "operation": "object.clone.v1",
-                "proposalId": "proposal:plan:4c3edf4b-fd6a-461b-988c-57b438b4319a:024207e9:clone-text:e7b2eea2",
-                "revision": {
-                  "currentRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411",
-                  "documentFingerprint": "fnv1a32:d5aa817a",
-                  "inspectedRevisionId": "ink-rev:08f2d5ad:r1:99175b98:1cfca411"
-                },
-                "state": "COMPLETED",
-                "stepId": "clone-text",
-                "stepIndex": 1,
-                "targets": [
-                  {
-                    "ref": {
-                      "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                      "objectId": "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4",
-                      "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                    },
-                    "stateFingerprint": "fnv1a32:548cbc0a",
-                    "worldMatrix": [
-                      1,
-                      0,
-                      0,
-                      1,
-                      470,
-                      225
-                    ]
-                  }
-                ]
-              }
-            ],
-            "stoppedStepId": null,
-            "version": 1
-          }
-        }
-      },
-      {
-        "id": "recipeLibrary",
-        "tool": "search_ink_library",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "library.query",
-          "status": "COMPLETED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a",
-          "targetRefs": [],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "action": "search",
-            "limit": 20,
-            "query": "",
-            "results": [],
-            "schema": "INK_CREATIVE_LIBRARY_QUERY_RESULT",
-            "totalMatched": 0,
-            "types": [
-              "recipe"
-            ],
+            "schema": "INK-CHAT-REFERENCE-HANDOFF/1",
+            "source": null,
+            "sourceChannel": "CHAT_ATTACHMENT_HANDOFF",
+            "status": "FAILED",
+            "targetLayerId": "e15a41c5-8162-4c17-b09e-4a0e4d9cd102",
             "version": 1
           }
         }
@@ -1010,31 +124,10 @@
           "version": 1,
           "action": "context",
           "status": "COMPLETED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a",
-          "targetRefs": [
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            },
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            },
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "v_muqupd8q_cjj1ldn",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            },
-            {
-              "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-              "objectId": "v_muqupdbl_13tg5nj",
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-            }
-          ],
+          "documentId": "533ca8bd-6fe9-4df6-830f-fcac3a2668e5",
+          "pageId": "63fc3bc8-c583-4048-89cf-2f95048d8b1f",
+          "revisionId": null,
+          "targetRefs": [],
           "createdRefs": [],
           "changedRefs": [],
           "historyReceipt": null,
@@ -1045,11 +138,11 @@
           "result": {
             "active": {
               "layer": {
-                "id": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
+                "id": "e15a41c5-8162-4c17-b09e-4a0e4d9cd102",
                 "name": "圖層 1"
               },
               "page": {
-                "id": "58d38b44-eb48-4242-8232-35b2b74e18c8",
+                "id": "63fc3bc8-c583-4048-89cf-2f95048d8b1f",
                 "name": "頁面 1"
               }
             },
@@ -1060,23 +153,23 @@
                 "maxRelationships": 192
               },
               "objects": {
-                "returned": 4,
-                "totalAvailable": 4,
+                "returned": 0,
+                "totalAvailable": 0,
                 "truncated": false
               },
-              "outputBytes": 3619,
+              "outputBytes": 880,
               "relationships": {
                 "returned": 0,
                 "totalAvailable": 0,
                 "truncated": false
               }
             },
-            "contextFingerprint": "fnv1a32:721e818f",
+            "contextFingerprint": "fnv1a32:1dcc6551",
             "document": {
               "appVersion": "0.1",
               "format": "INK",
               "formatVersion": 4,
-              "id": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
+              "id": "533ca8bd-6fe9-4df6-830f-fcac3a2668e5",
               "pageCount": 1,
               "title": "未命名作品"
             },
@@ -1084,167 +177,7 @@
             "focus": {
               "objectIds": []
             },
-            "objects": [
-              {
-                "depth": 0,
-                "editability": {
-                  "editable": true,
-                  "objectProtected": false,
-                  "protectedProperties": []
-                },
-                "geometry": {
-                  "characterCount": 6,
-                  "kind": "text",
-                  "reference": {
-                    "kind": "text",
-                    "objectId": "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4"
-                  }
-                },
-                "name": null,
-                "parentId": null,
-                "ref": {
-                  "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                  "objectId": "5ea1ed2b-8d4e-419c-b4fc-e50c339274d4",
-                  "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                },
-                "renderOrder": 3,
-                "semantic": {
-                  "constraintIds": [],
-                  "dependencyIds": [],
-                  "editableParameterKeys": [],
-                  "protectedProperties": [],
-                  "role": null
-                },
-                "structure": {
-                  "ancestorIds": [],
-                  "effectiveLocked": false,
-                  "effectiveOpacity": 1,
-                  "effectiveVisible": true,
-                  "interactionExposed": true
-                },
-                "type": "text"
-              },
-              {
-                "depth": 0,
-                "editability": {
-                  "editable": true,
-                  "objectProtected": false,
-                  "protectedProperties": []
-                },
-                "geometry": {
-                  "characterCount": 6,
-                  "kind": "text",
-                  "reference": {
-                    "kind": "text",
-                    "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6"
-                  }
-                },
-                "name": null,
-                "parentId": null,
-                "ref": {
-                  "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                  "objectId": "63dd3f85-f5cc-4487-b62a-3783a291eff6",
-                  "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                },
-                "renderOrder": 2,
-                "semantic": {
-                  "constraintIds": [],
-                  "dependencyIds": [],
-                  "editableParameterKeys": [],
-                  "protectedProperties": [],
-                  "role": null
-                },
-                "structure": {
-                  "ancestorIds": [],
-                  "effectiveLocked": false,
-                  "effectiveOpacity": 1,
-                  "effectiveVisible": true,
-                  "interactionExposed": true
-                },
-                "type": "text"
-              },
-              {
-                "depth": 0,
-                "editability": {
-                  "editable": true,
-                  "objectProtected": false,
-                  "protectedProperties": []
-                },
-                "geometry": {
-                  "anchorCount": 4,
-                  "closedSubpathCount": 1,
-                  "fingerprint": "fnv1a32:389d93a1",
-                  "kind": "path",
-                  "reference": {
-                    "kind": "path",
-                    "objectId": "v_muqupd8q_cjj1ldn"
-                  },
-                  "subpathCount": 1
-                },
-                "name": "CHAT Path",
-                "parentId": null,
-                "ref": {
-                  "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                  "objectId": "v_muqupd8q_cjj1ldn",
-                  "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                },
-                "renderOrder": 0,
-                "semantic": {
-                  "constraintIds": [],
-                  "dependencyIds": [],
-                  "editableParameterKeys": [],
-                  "protectedProperties": [],
-                  "role": null
-                },
-                "structure": {
-                  "ancestorIds": [],
-                  "effectiveLocked": false,
-                  "effectiveOpacity": 1,
-                  "effectiveVisible": true,
-                  "interactionExposed": true
-                },
-                "type": "path"
-              },
-              {
-                "depth": 0,
-                "editability": {
-                  "editable": true,
-                  "objectProtected": false,
-                  "protectedProperties": []
-                },
-                "geometry": {
-                  "instanceCount": 6,
-                  "kind": "repeat",
-                  "reference": {
-                    "kind": "repeat",
-                    "objectId": "v_muqupdbl_13tg5nj"
-                  }
-                },
-                "name": "Repeat",
-                "parentId": null,
-                "ref": {
-                  "layerId": "a97e48d8-8aa7-44ae-ad7b-3d73fb4b0ee7",
-                  "objectId": "v_muqupdbl_13tg5nj",
-                  "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8"
-                },
-                "renderOrder": 1,
-                "semantic": {
-                  "constraintIds": [],
-                  "dependencyIds": [],
-                  "editableParameterKeys": [],
-                  "protectedProperties": [],
-                  "role": "instance"
-                },
-                "structure": {
-                  "ancestorIds": [],
-                  "effectiveLocked": false,
-                  "effectiveOpacity": 1,
-                  "effectiveVisible": true,
-                  "interactionExposed": true
-                },
-                "type": "repeat"
-              }
-            ],
+            "objects": [],
             "relationships": {
               "edges": [],
               "source": "object.semantic",
@@ -1252,7 +185,7 @@
               "truncated": false
             },
             "revision": {
-              "revisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a"
+              "revisionId": null
             },
             "schema": "INK-AI-DOCUMENT-BRIDGE",
             "selection": {
@@ -1260,78 +193,6 @@
               "unresolvedObjectIds": []
             },
             "version": 1
-          }
-        }
-      },
-      {
-        "id": "preview",
-        "tool": "get_ink_preview",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "preview.capture",
-          "status": "COMPLETED",
-          "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-          "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-          "revisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a",
-          "targetRefs": [],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [
-            {
-              "background": {
-                "color": "#fffef9",
-                "included": true
-              },
-              "bounds": {
-                "h": 408,
-                "w": 788,
-                "x": 136,
-                "y": 136
-              },
-              "byteLength": 14057,
-              "documentFingerprint": "fnv1a32:d5aa817a",
-              "documentId": "4c3edf4b-fd6a-461b-988c-57b438b4319a",
-              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
-              "format": "png",
-              "handleId": "ink-output-v1:bd195852",
-              "kind": "preview",
-              "mimeType": "image/png",
-              "objectRefs": [],
-              "pageId": "58d38b44-eb48-4242-8232-35b2b74e18c8",
-              "persistence": "NONE",
-              "pixelSize": {
-                "height": 409,
-                "width": 789
-              },
-              "renderFingerprint": "fnv1a32:288fb841",
-              "revisionId": "ink-rev:08f2d5ad:r2:d60ccd31:d5aa817a",
-              "schema": "INK_OUTPUT_HANDLE",
-              "scope": "content",
-              "transport": "INTERNAL_EPHEMERAL",
-              "version": 1
-            }
-          ],
-          "diagnostics": [],
-          "result": {
-            "bounds": {
-              "h": 408,
-              "w": 788,
-              "x": 136,
-              "y": 136
-            },
-            "byteLength": 14057,
-            "handleId": "ink-output-v1:bd195852",
-            "persistence": "NONE",
-            "pixelSize": {
-              "height": 409,
-              "width": 789
-            },
-            "scope": "content",
-            "transport": "INTERNAL_EPHEMERAL"
           }
         }
       }
