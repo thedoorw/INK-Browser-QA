@@ -1,5 +1,36 @@
 # INK Current Work Order
 
+## Core promotion Supervisor checkpoint — 2026-10-02
+
+Promotion review:
+- `working/INK_CORE_SPATIAL_INDEX_LASSO_PROMOTION_SUPERVISOR_REVIEW_20261002.md`
+
+Accepted:
+- promotion branch `work/core-spatial-index-lasso-promotion-001`;
+- exact browser-tested candidate `66cdb5b4ddc322a2b1027cab2627426f868027d3`;
+- final branch HEAD `f6d03f5be538f2ad2624cac7d3bd9e94402c95c0`;
+- focused browser evidence `33 / 33 PASS`;
+- `FORMAT_VERSION = 4`;
+- product mutation limited to `product/source/src/ink.js` Stroke / Shape exact-ID spatial-index notifications.
+
+Main moved after the promotion base only through two Current Work Order documentation commits:
+- `1afa015ad04aba7f836147d091eda6cef0c9225f`;
+- `90efb3654d1b006d2a62accad3416c851ec2bd1a`.
+
+No intervening product source mutation occurred.
+
+Supervisor disposition:
+```text
+CORE_PROMOTION_SUPERVISOR_REVIEW = ACCEPTED
+NEXT = INTEGRATE_ACCEPTED_PROMOTION_ONTO_LATEST_MAIN
+POST_INTEGRATION_GUARD = product/source tree byte-identical to exact tested candidate
+IF_PRODUCT_SOURCE_DIFFERS = STOP + RERUN_FOCUSED_BROWSER
+DO_NOT_COMBINE = UI / C04 / C06 / NEW_DOCUMENT / HISTORY
+```
+
+After the Core promotion reaches main, record the integrated SHA and then return to the separate current-main queue. C04 圖紙 / 手繪板, C06 12800% zoom, the accepted post-SUP11 UI candidate and New Document remain separate work and may not be folded into this Core integration.
+
+
 ## USER clarification — Navigator / canvas zoom ceiling — 2026-10-02
 
 USER reports Photoshop Navigator can reach **12800%**, while current INK stops at **2400%**.
