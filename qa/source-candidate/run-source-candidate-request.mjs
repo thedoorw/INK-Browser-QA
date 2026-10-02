@@ -123,7 +123,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['paint-session-create','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['paint-session-create','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -380,6 +380,71 @@ const RASTER_STACK_FILTER_B2_CASE = String.raw`(async()=>{
   return {passed:true,operation:'image.filter.add.v1',filterType:'gaussianBlur',objectId:ref.objectId,beforeFingerprint,afterFingerprint,beforeHash,afterHash,undoHash,redoHash,historyLabel,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,controllerResult:findField(executed,'controllerResult')||null};
 })()`;
 
+const RASTER_STACK_EFFECT_B2_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['import_ink_raster','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']) if(!toolNames.includes(name)) throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  const flatObjects=()=>app.page().layers.flatMap(layer=>layer.objects||[]);
+  const hashCanvas=()=>{const text=app.el.canvas.toDataURL('image/png');let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16);};
+  const findField=(value,key,depth=0)=>{if(value==null||depth>10||typeof value!=='object')return undefined;if(Object.prototype.hasOwnProperty.call(value,key))return value[key];for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}return undefined;};
+  const waitFrames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const edit=async(task)=>{
+    const proposed=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));
+    if(proposed?.status==='FAILED') throw new Error('PROPOSE_FAILED:'+JSON.stringify(proposed.diagnostics||[]));
+    const proposalId=findField(proposed,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING');
+    const approved=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));
+    if(approved?.status==='FAILED') throw new Error('APPROVE_FAILED:'+JSON.stringify(approved.diagnostics||[]));
+    const approvalToken=findField(approved,'approvalToken');if(!approvalToken)throw new Error('APPROVAL_TOKEN_MISSING');
+    const executed=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken}));
+    if(executed?.status==='FAILED') throw new Error('EXECUTE_FAILED:'+JSON.stringify(executed.diagnostics||[]));
+    if(findField(executed,'changed')!==true) throw new Error('EXECUTE_NOT_CHANGED');
+    await waitFrames();return executed;
+  };
+  const source=document.createElement('canvas');source.width=64;source.height=48;
+  const ctx=source.getContext('2d');ctx.fillStyle='#d64d6b';ctx.fillRect(0,0,32,48);ctx.fillStyle='#375b9b';ctx.fillRect(32,0,32,48);ctx.fillStyle='rgba(255,255,255,.7)';ctx.fillRect(10,8,44,12);ctx.fillStyle='rgba(20,20,20,.45)';ctx.fillRect(18,26,28,14);
+  const blob=await new Promise(resolve=>source.toBlob(resolve,'image/png'));if(!blob)throw new Error('PNG_BLOB_FAILED');
+  const file=new File([blob],'candidate-raster-effect-b2.png',{type:'image/png'});
+  const imported=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file},options:{name:'QA B2 Effect Raster',type:'image/png',intent:'B2 effect candidate QA'}}));
+  if(imported?.status==='FAILED')throw new Error('RASTER_IMPORT_FAILED:'+JSON.stringify(imported.diagnostics||[]));
+  const ref=imported?.createdRefs?.[0];if(!ref?.objectId)throw new Error('RASTER_CREATED_REF_MISSING');
+  await waitFrames();
+  let object=flatObjects().find(item=>item.id===ref.objectId);if(!object?.rasterState?.colorRaster)throw new Error('RASTER_STATE_MISSING');
+  app.selection=[];app.refreshSelectionUI?.();app.renderer?.render?.();await waitFrames();
+  app.history.clear();
+  const beforeState=app.chatBoundedEdit.inspect().objects.find(item=>item.ref?.objectId===ref.objectId);
+  const beforeFingerprint=beforeState?.stateFingerprint||null;
+  const beforeHash=hashCanvas();
+  const beforeUndo=app.history.undoStack.length;
+  const executed=await edit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-b2-effect-1',operation:'image.effect.add.v1',targets:[ref],arguments:{type:'colorOverlay',params:{color:'#00cc66'},opacity:.55}});
+  object=flatObjects().find(item=>item.id===ref.objectId);
+  const afterState=app.chatBoundedEdit.inspect().objects.find(item=>item.ref?.objectId===ref.objectId);
+  const afterFingerprint=afterState?.stateFingerprint||null;
+  const afterHash=hashCanvas();
+  const afterUndo=app.history.undoStack.length;
+  if(!beforeFingerprint||!afterFingerprint||beforeFingerprint===afterFingerprint)throw new Error('STATE_FINGERPRINT_UNCHANGED');
+  if(afterUndo!==beforeUndo+1)throw new Error('HISTORY_COUNT');
+  if(afterHash===beforeHash)throw new Error('RENDER_UNCHANGED');
+  if(object.effects?.length!==1||object.effects[0]?.type!=='colorOverlay')throw new Error('EFFECT_STACK_INVALID');
+  const historyLabel=app.history.undoStack.at(-1)?.label||null;
+  const preview=await Promise.resolve(api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:800,background:true}));
+  if(preview?.status==='FAILED')throw new Error('PREVIEW_FAILED');
+  const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undone?.status==='FAILED')throw new Error('UNDO_FAILED');
+  await waitFrames();
+  object=flatObjects().find(item=>item.id===ref.objectId);
+  const undoHash=hashCanvas();
+  if(!object||object.effects?.length)throw new Error('EFFECT_UNDO_FAILED');
+  if(undoHash!==beforeHash)throw new Error('UNDO_RENDER_NOT_RESTORED');
+  const redone=await Promise.resolve(api.tools.invoke('redo_ink',{}));if(redone?.status==='FAILED')throw new Error('REDO_FAILED');
+  await waitFrames();
+  object=flatObjects().find(item=>item.id===ref.objectId);
+  const redoHash=hashCanvas();
+  if(!object||object.effects?.length!==1||object.effects[0]?.type!=='colorOverlay')throw new Error('EFFECT_REDO_FAILED');
+  if(redoHash!==afterHash)throw new Error('REDO_RENDER_NOT_RESTORED');
+  return {passed:true,operation:'image.effect.add.v1',effectType:'colorOverlay',objectId:ref.objectId,beforeFingerprint,afterFingerprint,beforeHash,afterHash,undoHash,redoHash,historyLabel,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,controllerResult:findField(executed,'controllerResult')||null};
+})()`;
+
 const RASTER_STACK_BLEND_B2_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
@@ -537,7 +602,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='paint-session-create'?PAINT_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:RASTER_STACK_B2_CASE)))));
+    const caseExpression=request.case==='paint-session-create'?PAINT_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:RASTER_STACK_B2_CASE))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
