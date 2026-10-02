@@ -703,8 +703,8 @@ class InkApp{
     this.input.release(e.pointerId);this.penInput.release(e.pointerId);const it=this.interaction;
     if(it?.type==='gesture'){if(this.pointerMap.size<2){this.interaction=null;this.updateCursor();}return;}
     if(!it||it.pointerId!==e.pointerId)return;
-    if(it.type==='stroke'){it.object.points=it.object.points.filter(point=>!point.predicted);if(cancelled||it.object.points.length<1){this.history.cancel();this.draft=null;}else{it.object.points=stabilizePoints(it.object.points,it.object.smoothing);if(it.object.points.length===1)it.object.points.push({...it.object.points[0],x:it.object.points[0].x+.01});this.layer().objects.push(it.object);this.draft=null;this.history.commit();}}
-    else if(it.type==='shape'){if(cancelled||this.shapeTooSmall(it.object)){this.history.cancel();this.draft=null;}else{this.layer().objects.push(it.object);this.draft=null;this.history.commit();this.selection=[{layerId:this.layer().id,objectId:it.object.id}];this.revealObjectInspector();}}
+    if(it.type==='stroke'){it.object.points=it.object.points.filter(point=>!point.predicted);if(cancelled||it.object.points.length<1){this.history.cancel();this.draft=null;}else{it.object.points=stabilizePoints(it.object.points,it.object.smoothing);if(it.object.points.length===1)it.object.points.push({...it.object.points[0],x:it.object.points[0].x+.01});this.layer().objects.push(it.object);this.draft=null;this.history.commit();this.queueSpatialObject(it.object.id);}}
+    else if(it.type==='shape'){if(cancelled||this.shapeTooSmall(it.object)){this.history.cancel();this.draft=null;}else{this.layer().objects.push(it.object);this.draft=null;this.history.commit();this.queueSpatialObject(it.object.id);this.selection=[{layerId:this.layer().id,objectId:it.object.id}];this.revealObjectInspector();}}
     else if(it.type==='eraser'){it.changed?this.history.commit():this.history.cancel();}
     else if(it.type==='lasso'){if(!cancelled)this.finishLasso();this.draft=null;}
     else if(it.type==='marquee'){if(!cancelled)this.finishMarquee(it);this.draft=null;}
