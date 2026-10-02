@@ -137,7 +137,6 @@ export const UI_B_RASTER_OPTION_FIELDS = Object.freeze({
 
 // Context routes describe existing handlers; they do not own tool/selection state.
 export const UI_B_NATIVE_OPTION_ROUTES = Object.freeze({
-  select:['select-all','select-clear'], lasso:['select-all','select-clear'],
   pan:['zoom-out','zoom-in','fit-content','reset-view'],
   shape:['snap-angle'], text:['text-direction'],
   blender:['paint-replay','stroke-session'], smudge:['paint-replay','stroke-session']
