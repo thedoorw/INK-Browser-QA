@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "paint-session-bounds-b2-regression-001",
+  "requestId": "paint-session-bounds-b2-effect-isolation-001",
   "candidateSha": "b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
-  "case": "raster-stack-b2"
+  "case": "raster-stack-effect-b2"
 }
