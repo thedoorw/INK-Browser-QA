@@ -1,107 +1,213 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "transport-proof-closed-loop-002",
+  "requestId": "round1-C001-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
     {
-      "id": "contextBefore",
-      "tool": "get_ink_context",
-      "input": {}
-    },
-    {
-      "id": "previewBefore",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 960,
-        "background": true
-      }
-    },
-    {
-      "id": "propose",
+      "id": "createPropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "Live transport proof: create two editable vector shapes",
+          "intentSummary": "C001 probe: native shape and text creation",
           "steps": [
             {
-              "stepId": "create-circle",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "circle",
-                "cx": 220,
-                "cy": 260,
-                "r": 80,
-                "fill": "#00b8d9",
-                "stroke": "#202020",
-                "strokeWidth": 3
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "create-rect",
+              "stepId": "shape",
               "operation": "path.create.v1",
               "targets": [],
               "arguments": {
                 "shape": "rectangle",
-                "x": 360,
-                "y": 200,
-                "width": 180,
-                "height": 120,
-                "fill": "#ffcc00",
+                "x": 180,
+                "y": 180,
+                "width": 240,
+                "height": 160,
+                "fill": "#e8e8e8",
                 "stroke": "#202020",
-                "strokeWidth": 3
+                "strokeWidth": 2
               },
-              "dependsOn": [
-                "create-circle"
-              ]
+              "dependsOn": []
+            },
+            {
+              "stepId": "text",
+              "operation": "text.create.v1",
+              "targets": [],
+              "arguments": {
+                "text": "INK C001",
+                "x": 220,
+                "y": 240,
+                "color": "#202020",
+                "fontSize": 34,
+                "fontWeight": 700
+              },
+              "dependsOn": []
             }
           ]
         }
       }
     },
     {
-      "id": "approve",
+      "id": "createApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "propose.result.planId"
+          "$ref": "createPropose.result.planId"
         }
       }
     },
     {
-      "id": "execute",
+      "id": "executeCreate",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "propose.result.planId"
+          "$ref": "createPropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "approve.result.approvalToken"
+          "$ref": "createApprove.result.approvalToken"
         }
       }
     },
     {
-      "id": "contextAfter",
-      "tool": "get_ink_context",
-      "input": {}
+      "id": "movePropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "C001 probe: transform created objects",
+          "steps": [
+            {
+              "stepId": "move-shape",
+              "operation": "object.translate.v1",
+              "targets": [
+                {
+                  "$ref": "executeCreate.result.stepResults.0.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "dx": 40,
+                "dy": 20
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "move-text",
+              "operation": "object.translate.v1",
+              "targets": [
+                {
+                  "$ref": "executeCreate.result.stepResults.1.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "dx": 40,
+                "dy": 20
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
     },
     {
-      "id": "previewAfter",
-      "tool": "get_ink_preview",
+      "id": "moveApprove",
+      "tool": "use_ink",
       "input": {
-        "scope": "content",
-        "maxDimension": 960,
-        "background": true
+        "action": "approve",
+        "planId": {
+          "$ref": "movePropose.result.planId"
+        }
       }
+    },
+    {
+      "id": "executeMove",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "movePropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "moveApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "structurePropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "C001 probe: group and frame authorities",
+          "steps": [
+            {
+              "stepId": "group",
+              "operation": "group.create.v1",
+              "targets": [
+                {
+                  "$ref": "executeCreate.result.stepResults.0.targets.0.ref"
+                },
+                {
+                  "$ref": "executeCreate.result.stepResults.1.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "name": "C001 Group"
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "frame",
+              "operation": "frame.create.v1",
+              "targets": [],
+              "arguments": {
+                "name": "C001 Frame",
+                "x": 120,
+                "y": 120,
+                "width": 420,
+                "height": 300,
+                "opacity": 1
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "structureApprove",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "structurePropose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "executeStructure",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "structurePropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "structureApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "context",
+      "tool": "get_ink_context",
+      "input": {}
     },
     {
       "id": "history",
@@ -109,9 +215,13 @@
       "input": {}
     },
     {
-      "id": "revisions",
-      "tool": "get_ink_revisions",
-      "input": {}
+      "id": "preview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 960,
+        "background": true
+      }
     }
   ]
 }
