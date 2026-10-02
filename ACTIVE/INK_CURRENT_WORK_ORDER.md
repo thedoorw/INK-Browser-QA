@@ -1,5 +1,38 @@
 # INK Current Work Order
 
+## Post-SUP11 dispatch queue — 2026-10-02
+
+Authoritative reviewed product baseline:
+- `a9d122ccba14734caf6220a53044545494a8429b`
+
+USER authorized the next packages.
+
+Execution order / boundary:
+
+```text
+1. UI post-SUP11 refinement
+   → SUP-12 panel scrollbars
+   → Options Bar fixed-right existing workspace switch
+   → equal top-menu trigger spacing
+   → STOP to Supervisor / USER
+
+2. Core spatial-index / Lasso consistency
+   → separate Core-bounded mutation
+   → STOP to Core / Supervisor
+
+3. New Document architecture
+   → R&D / decision only
+   → NO product mutation until USER chooses the creation model
+```
+
+Dispatches:
+- `ACTIVE/INK_UI_POST_SUP11_REFINEMENT_DEV_DISPATCH_v1.0.md`
+- `ACTIVE/INK_CORE_SPATIAL_INDEX_LASSO_REPAIR_DEV_DISPATCH_v1.0.md`
+- `working/INK_NEW_DOCUMENT_ARCHITECTURE_DECISION_WORKPACK_v0.1.md`
+
+Do not merge the Core repair into the UI candidate.
+Do not implement the A4/New Document redesign from the R&D workpack before USER decision.
+
 ## Supervisor publication approval — SUP-08～SUP-11 candidate
 
 The local DEV implementation for SUP-08 through SUP-11 is authorized to be **published to GitHub SSOT as a review candidate**.
