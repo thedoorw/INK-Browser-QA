@@ -151,7 +151,75 @@ capability-registry.js = SYNTAX_OK
 
 No browser/runtime PASS is claimed.
 
+## A1 accepted / deployed closure — 2026-10-02
+
+The historical PR #112 / branch `work/ink-live-drawing-exposure-001` is superseded.
+
+Accepted line:
+
+```text
+FINAL_PR = #116
+EXACT_BROWSER_TESTED_CANDIDATE = c654a6fb22be2eaadfebc83b01171270c71cf1b1
+SOURCE_MAIN_INTEGRATION = 58adf13cd98a8594eb8e63faedc735ce0c5179f0
+PRODUCT_BLOBS_AT_MERGE = EXACT TO TESTED CANDIDATE
+LIVE_SOURCE_SHA = 58adf13cd98a8594eb8e63faedc735ce0c5179f0
+LIVE_REQUEST = clusterA-A1-live-rerun-004
+A1_RESULT = PASS
+```
+
+Candidate browser evidence:
+- Paint Session object created;
+- two strokes compiled/replayed;
+- canvas render changed;
+- Preview PASS;
+- History + Undo + Redo PASS.
+
+Formal Live evidence:
+- capability registry exposes `paint.session.create.v1`;
+- direct bounded-edit proposal/approval/execution PASS;
+- `pencil` + `watercolor` strokes, 6 samples;
+- scoped History entry created;
+- Undo removes the object;
+- Redo restores the same native `paint-session`;
+- Preview PASS.
+
+The earlier one-step `use_ink` request failure `CHAT_PLAN_STEPS_INVALID` is a QA-route misuse: Chat Creative Plan intentionally requires 2–32 steps. Single-operation A1 uses the direct bounded-edit named tools.
+
+A1 remains intentionally narrower than the whole Drawing cluster:
+- no claim for formal native `type:'stroke'` NaturalMedia/Airbrush exposure;
+- no Paper exposure;
+- no targeted Eraser exposure;
+- no Blender/Smudge closure.
+
+### Follow-up: Paint Session world/content bounds
+
+Studio renderer has a real `paint-session` draw route, but current renderer world-bounds specialization covers Path/Repeat and lets Paint Session fall through to generic bounds.
+
+Observed Live consequence:
+- strokes span substantially more than 49×49 in sample coordinates;
+- `get_ink_preview(scope='content')` returned fallback 49×49 bounds.
+
+Classification:
+```text
+PAINT_SESSION_RENDER = PASS
+PAINT_SESSION_HISTORY = PASS
+PAINT_SESSION_CONTENT_BOUNDS = PRODUCT INTEGRATION / USABILITY GAP
+A1 EXPOSURE CLOSURE = NOT BLOCKED
+```
+
 ## Current gate
+
+```text
+A1 PAINT SESSION = MERGED / DEPLOYED / LIVE PASS
+A2 NATIVE STROKE + NATURALMEDIA + AIRBRUSH = NEXT CLUSTER-A EXPOSURE PACKAGE
+A3 PAPER = OPEN
+A4 TARGETED ERASER = OPEN
+A5 BLENDER / SMUDGE = PRODUCT RENDER-INTEGRATION GAP
+```
+
+Current active whole-UI fidelity task remains separate. Live CHAT exposure may continue only without touching its reviewed UI-authority surfaces.
+
+
 
 Current Work Order now has the separate C04 combined-product sequence at Supervisor review.
 
