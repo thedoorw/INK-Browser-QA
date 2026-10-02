@@ -1,16 +1,244 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-library-materials-001",
+  "requestId": "round1-C008-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
-  "tool": "search_ink_library",
-  "input": {
-    "action": "search",
-    "query": "",
-    "types": [
-      "material"
-    ],
-    "limit": 50
-  }
+  "steps": [
+    {
+      "id": "createPropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "C008 probe: create vector primitives for geometric logo",
+          "steps": [
+            {
+              "stepId": "circle-a",
+              "operation": "path.create.v1",
+              "targets": [],
+              "arguments": {
+                "shape": "circle",
+                "cx": 260,
+                "cy": 260,
+                "r": 90,
+                "fill": "#e8e8e8",
+                "stroke": "#202020",
+                "strokeWidth": 2
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "circle-b",
+              "operation": "path.create.v1",
+              "targets": [],
+              "arguments": {
+                "shape": "circle",
+                "cx": 350,
+                "cy": 260,
+                "r": 90,
+                "fill": "#e8e8e8",
+                "stroke": "#202020",
+                "strokeWidth": 2
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "rect",
+              "operation": "path.create.v1",
+              "targets": [],
+              "arguments": {
+                "shape": "rectangle",
+                "x": 470,
+                "y": 210,
+                "width": 140,
+                "height": 100,
+                "fill": "#f2f2f2",
+                "stroke": "#202020",
+                "strokeWidth": 2
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "createApprove",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "createPropose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "createExec",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "createPropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "createApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "booleanPropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "C008 probe: boolean and transform",
+          "steps": [
+            {
+              "stepId": "union",
+              "operation": "boolean.apply.v1",
+              "targets": [
+                {
+                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
+                },
+                {
+                  "$ref": "createExec.result.stepResults.1.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "operation": "union",
+                "name": "C008 Union"
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "rotate",
+              "operation": "object.rotate.v1",
+              "targets": [
+                {
+                  "$ref": "createExec.result.stepResults.2.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "degrees": 30
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "booleanApprove",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "booleanPropose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "booleanExec",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "booleanPropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "booleanApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "repeatSvgPropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "C008 probe: radial repeat and SVG import",
+          "steps": [
+            {
+              "stepId": "repeat",
+              "operation": "repeat.radial.v1",
+              "targets": [
+                {
+                  "$ref": "booleanExec.result.stepResults.0.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "count": 6,
+                "center": {
+                  "x": 305,
+                  "y": 260
+                },
+                "sweep": 360,
+                "startAngle": 0,
+                "linked": true
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "svg",
+              "operation": "svg.import.v1",
+              "targets": [],
+              "arguments": {
+                "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M50 8 L92 50 L50 92 L8 50 Z\" fill=\"#d9d9d9\" stroke=\"#202020\" stroke-width=\"3\"/></svg>"
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "repeatSvgApprove",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "repeatSvgPropose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "repeatSvgExec",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "repeatSvgPropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "repeatSvgApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "context",
+      "tool": "get_ink_context",
+      "input": {}
+    },
+    {
+      "id": "history",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "preview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 960,
+        "background": true
+      }
+    }
+  ]
 }
