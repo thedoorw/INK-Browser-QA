@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "live-drawing-paint-session-pr115-003",
+  "requestId": "live-drawing-paint-session-pr115-004",
   "candidateSha": "039c0022b8ce8e743b3953045844b8c4d824f1a2",
   "case": "paint-session-create"
 }
