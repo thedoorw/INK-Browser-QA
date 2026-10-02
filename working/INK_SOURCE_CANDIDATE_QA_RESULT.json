@@ -1,43 +1,10 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "paint-session-bounds-b2-filter-isolation-001",
+  "requestId": "paint-session-bounds-b2-blend-isolation-001",
   "candidateSha": "b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
-  "case": "raster-stack-filter-b2",
-  "runtimeIdentity": {
-    "href": "http://127.0.0.1:35953/?sourceCandidate=b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
-    "readyState": "complete",
-    "apiReady": true,
-    "toolCount": 23,
-    "appVersion": "0.1"
-  },
-  "result": {
-    "passed": true,
-    "operation": "image.filter.add.v1",
-    "filterType": "gaussianBlur",
-    "objectId": "9a26738f-2ea0-45c2-8fac-b3d9cd476ae6",
-    "beforeFingerprint": "fnv1a32:1b85a4f7",
-    "afterFingerprint": "fnv1a32:85553ebc",
-    "beforeHash": "7883b22",
-    "afterHash": "a9f6be1d",
-    "undoHash": "7883b22",
-    "redoHash": "a9f6be1d",
-    "historyLabel": "CHAT add image filter: gaussianBlur",
-    "previewStatus": "COMPLETED",
-    "undoStatus": "COMPLETED",
-    "redoStatus": "COMPLETED",
-    "controllerResult": {
-      "filterCount": 1,
-      "resultRefs": [
-        {
-          "layerId": "56ab4ceb-82fd-4989-a826-4f70f9a9702f",
-          "objectId": "9a26738f-2ea0-45c2-8fac-b3d9cd476ae6",
-          "pageId": "ecae92a3-d9a5-4cb9-afa8-17e514761737"
-        }
-      ],
-      "stackItemId": "filter_1j0tr84",
-      "stackItemType": "gaussianBlur"
-    }
-  },
-  "status": "PASS"
+  "case": "raster-stack-blend-b2",
+  "status": "FAIL",
+  "error": "RASTER_STACK_BLEND_B2_CASE is not defined",
+  "stderr": "ix\")\n[2595:2627:1002/165228.747826:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2595:2595:1002/165230.777815:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2595:1002/165230.777876:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2627:1002/165230.777900:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2595:2627:1002/165230.777910:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2595:2595:1002/165230.789546:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2595:1002/165230.822582:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2627:1002/165230.833276:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2595:2595:1002/165231.201356:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2595:1002/165231.221681:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2627:1002/165231.222554:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2595:2595:1002/165231.229950:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2595:1002/165231.406475:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files\n[2595:2595:1002/165231.407721:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2627:1002/165231.407856:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2595:2595:1002/165231.553160:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2595:2627:1002/165231.553416:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2595:2595:1002/165231.650468:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2636:2636:1002/165232.733505:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.\n[2636:2636:1002/165232.948858:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.\nCorrupt JPEG data: premature end of data segment\n"
 }
