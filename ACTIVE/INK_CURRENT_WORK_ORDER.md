@@ -1,5 +1,24 @@
 # INK Current Work Order
 
+## USER directive — recovery DEV must finish before stopping — 2026-10-02
+
+For the active `INK UI Current-Main Recovery` task, DEV may not stop on partial evidence or interim HOLD.
+
+Authoritative dispatch:
+- `ACTIVE/INK_UI_CURRENT_MAIN_RECOVERY_DEV_DISPATCH_v1.0.md`
+
+Current product candidate:
+- `cdb90787b8a17729a67e6318ded6557fee5b730f`
+
+Current partial cloud evidence does **not** satisfy the completion gate.
+
+DEV must continue the same recovery task until the complete required browser/state/identity/technical-debt evidence set and final DEV return are finished. Local Chromium absence, screenshot timeout, preview publication, or partial cloud-browser evidence are not STOP conditions because an authorized cloud-browser route is available.
+
+Only an explicit cross-scope product conflict, Core/FORMAT_VERSION/History/C04/C06/New Document conflict, total authorized execution-route permission block, or evidence invalidating the accepted recovery design may stop early for Supervisor escalation.
+
+C04 remains blocked until the recovery package reaches a valid completed DEV handoff and Supervisor acceptance.
+
+
 ## Core integration completed — 2026-10-02
 
 Integrated main SHA: `892c1917280b87c9e44b7a8567517bf24d7e0122`.
