@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A1-regression-live-001",
+  "requestId": "paint-session-bounds-live-rerun-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
+  "expectedSourceSha": "be6baa7085b9520a67e0952968650d4648af4d0a",
   "steps": [
     {
       "id": "capabilities",
@@ -29,11 +29,11 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterA-A1-regression-paint-session",
+          "taskId": "paint-session-bounds-live-rerun-001",
           "operation": "paint.session.create.v1",
           "targets": [],
           "arguments": {
-            "name": "A1 Regression Paint Session",
+            "name": "Paint Session Bounds Live Rerun",
             "seed": 137,
             "opacity": 1,
             "strokes": [
