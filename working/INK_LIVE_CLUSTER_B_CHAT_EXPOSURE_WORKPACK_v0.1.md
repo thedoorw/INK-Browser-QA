@@ -409,3 +409,37 @@ Qualification proof:
 - first two formal Live attempts timed out before Public API readiness on the same exact deployed SHA; third warm run completed the full chain.
 - Liquify remains unqualified and does not inherit this PASS.
 
+## B2 incremental qualification — Liquify / twirl — 2026-10-02
+
+```text
+B2_LIQUIFY_PR = #125 / MERGED
+B2_LIQUIFY_EXACT_CANDIDATE = 126073621dbf9cf44e12e55d77c1f145929f1147
+B2_LIQUIFY_SOURCE_INTEGRATION = cc9b623258123da0e00e31a9e686357fba0d4ec0
+B2_LIQUIFY_CANDIDATE_QA = live-raster-liquify-candidate-002 / PASS
+B2_LIQUIFY_LIVE = clusterB-B2-liquify-live-003 / PASS
+B2_LIQUIFY_COVERAGE = twirl QUALIFIED
+B2_ADJUSTMENT = brightnessContrast QUALIFIED
+B2_FILTER = gaussianBlur QUALIFIED
+B2_BLEND = multiply QUALIFIED
+B2_EFFECT = colorOverlay QUALIFIED
+B2_OVERALL = PASS / FIVE PRIORITY OPERATION FAMILIES LIVE QUALIFIED
+```
+
+Qualification proof:
+- CHAT reuses existing `createLiquifyFilter()`, native image `filterStack`, existing Liquify raster renderer and scoped History.
+- exact candidate browser QA changed canvas hash `7883b22 → dc904cd1`; Undo/Redo restored those exact hashes.
+- formal Live renderer fingerprint changed `fnv1a32:34d01658 → fnv1a32:755eb849`.
+- History added `CHAT add image Liquify`; Preview completed; Undo restored `fnv1a32:34d01658`; Redo restored `fnv1a32:755eb849`.
+- first two formal Live attempts timed out before Public API readiness on the same exact deployed SHA; no Liquify operation ran and no product failure was observed. Third warm run completed the full chain.
+- no second raster model, Renderer, History or effect engine was introduced; ReferenceImage remains locked/separate.
+
+B2 closure is representative operation-family qualification, not an assertion that every enum variant in every family has been exhaustively tested:
+
+```text
+B2 NON_DESTRUCTIVE_IMAGE_STACK = PASS / MERGED / DEPLOYED / LIVE QUALIFIED
+QUALIFIED_REPRESENTATIVE_CASES = brightnessContrast + gaussianBlur + multiply + colorOverlay + twirl
+B3 = OPEN / LATER
+B4 = OPEN
+C019 = PRODUCT RENDER-INTEGRATION GAP
+```
+
