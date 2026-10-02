@@ -1,9 +1,9 @@
 {
   "schema": "ink-ui-issue92-control-health-target",
   "version": 1,
-  "target_sha": "f1caa739aad892b08bad0cca3747038d09bc02c1",
+  "target_sha": "f3f7aaeaa636073d216c23d825d23e344b064c62",
   "scope": "A03 AA10 AB08 AD11 AE08 AE10 AF09 exact-candidate source + live control health inventory / no central Runtime",
   "central_runtime": false,
-  "run_generation": 5,
-  "note": "2026-10-02 remaining whole-UI fidelity DEV exact-candidate recheck."
+  "run_generation": 6,
+  "note": "2026-10-02 remaining whole-UI fidelity final-candidate route/state inventory; legacy unrelated gates may remain open."
 }
