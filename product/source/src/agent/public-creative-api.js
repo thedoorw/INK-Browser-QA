@@ -3,6 +3,7 @@ import { installInkOutputRegistry } from './output-handle-registry.js';
 import { exportInkAsset } from './export-asset.js';
 import { captureInkPreview, inspectInkOutput, releaseInkOutput } from './visual-feedback.js';
 import { createCreativeLibrarySearch } from './creative-library-search.js';
+import { normalizeChatAttachment } from '../ai/chat-reference-handoff.js';
 import { getInkCapabilitySummaries, getInkNamedToolDefinitions, resolveInkCapabilityDescriptor } from './capability-registry.js';
 
 export const INK_PUBLIC_CREATIVE_API_SCHEMA = 'INK-PUBLIC-CREATIVE-API';
@@ -461,6 +462,82 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
+  const raster = Object.freeze({
+    async import(input, options = {}) {
+      const action = 'raster.import';
+      try {
+        if (typeof app?.importWebRaster !== 'function') {
+          throw Object.assign(new Error('INK mutable web-raster import authority unavailable'), { code: 'INK_AGENT_RASTER_IMPORT_AUTHORITY_UNAVAILABLE' });
+        }
+        const historyBefore = historyInspection(app);
+        const revisionBefore = currentRevisionId(app);
+        const file = await normalizeChatAttachment(input, options);
+        const object = await app.importWebRaster(file, {
+          name: options?.name || file?.name || null,
+          matrix: options?.matrix ?? null,
+          sourceChannel: 'CHAT_RASTER_ATTACHMENT_HANDOFF'
+        });
+        const pageId = activePage(app)?.id || null;
+        const selected = (Array.isArray(app?.selection) ? app.selection : [])
+          .find(item => String(item?.objectId ?? item?.id ?? '') === String(object?.id || ''));
+        const createdRefs = normalizeRefs(object?.id ? [{
+          pageId,
+          layerId: selected?.layerId || null,
+          objectId: object.id
+        }] : []);
+        const historyAfter = historyInspection(app);
+        const revisionAfter = currentRevisionId(app);
+        const source = object?.metadata?.rasterImport?.source || {};
+        const rasterState = object?.rasterState || {};
+        const compactHistory = value => ({
+          applied: value?.applied ?? null,
+          retainedCount: value?.retainedCount ?? null,
+          limit: value?.limit ?? null,
+          pending: Boolean(value?.pending),
+          canUndo: Boolean(value?.canUndo),
+          canRedo: Boolean(value?.canRedo)
+        });
+        const latestHistory = historyAfter?.applied > 0
+          ? historyAfter.entries?.[historyAfter.applied - 1] || null
+          : null;
+        return createInkAgentResult(app, action, {
+          status: 'COMPLETED',
+          createdRefs,
+          changedRefs: createdRefs,
+          historyReceipt: {
+            before: compactHistory(historyBefore),
+            after: compactHistory(historyAfter),
+            latest: latestHistory
+          },
+          revisionReceipt: { before: revisionBefore, after: revisionAfter },
+          provenanceReceipt: {
+            sourceChannel: object?.metadata?.rasterImport?.sourceChannel || 'CHAT_RASTER_ATTACHMENT_HANDOFF',
+            sourceSha256: source?.sha256 || null
+          },
+          result: {
+            objectId: object?.id || null,
+            source: {
+              name: source?.name || file?.name || null,
+              mimeType: source?.mimeType || file?.type || null,
+              sha256: source?.sha256 || null,
+              sizeBytes: source?.sizeBytes ?? file?.size ?? null,
+              width: Number(object?.w) || null,
+              height: Number(object?.h) || null
+            },
+            rasterState: {
+              type: rasterState?.type || null,
+              format: rasterState?.format || null,
+              width: Number(object?.w) || null,
+              height: Number(object?.h) || null
+            }
+          }
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    }
+  });
+
   const edit = Object.freeze({
     inspect() {
       const action = 'edit.inspect';
@@ -807,7 +884,7 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
-  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, edit, composition, history, revision, preview, asset, library, capability });
+  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, raster, edit, composition, history, revision, preview, asset, library, capability });
   const toolHandlers = Object.freeze({
     get_ink_capabilities: () => capabilities(),
     get_ink_context: input => context(input?.options ?? input ?? {}),
@@ -828,6 +905,7 @@ export function createInkPublicCreativeApi(app) {
     release_ink_output: input => asset.release(input?.handleId ?? input),
     describe_ink_capability: input => capability.describe(input?.idOrToolName ?? input?.capabilityId ?? input?.toolName ?? input),
     import_ink_reference: request => reference.import(request?.input ?? request, request?.options ?? {}),
+    import_ink_raster: request => raster.import(request?.input ?? request, request?.options ?? {}),
     export_ink_asset: input => asset.export(input ?? {}),
     search_ink_library: input => library.query(input ?? {}),
     use_ink: input => {
