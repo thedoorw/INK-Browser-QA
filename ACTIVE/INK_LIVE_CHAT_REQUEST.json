@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-C008-001",
+  "requestId": "round1-C002-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
@@ -13,51 +13,33 @@
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C008 probe: create vector primitives for geometric logo",
+          "intentSummary": "C002 probe: frame and text hierarchy",
           "steps": [
             {
-              "stepId": "circle-a",
-              "operation": "path.create.v1",
+              "stepId": "frame",
+              "operation": "frame.create.v1",
               "targets": [],
               "arguments": {
-                "shape": "circle",
-                "cx": 260,
-                "cy": 260,
-                "r": 90,
-                "fill": "#e8e8e8",
-                "stroke": "#202020",
-                "strokeWidth": 2
+                "name": "C002 Card",
+                "x": 140,
+                "y": 140,
+                "width": 520,
+                "height": 300,
+                "opacity": 1
               },
               "dependsOn": []
             },
             {
-              "stepId": "circle-b",
-              "operation": "path.create.v1",
+              "stepId": "text",
+              "operation": "text.create.v1",
               "targets": [],
               "arguments": {
-                "shape": "circle",
-                "cx": 350,
-                "cy": 260,
-                "r": 90,
-                "fill": "#e8e8e8",
-                "stroke": "#202020",
-                "strokeWidth": 2
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "rect",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "rectangle",
-                "x": 470,
+                "text": "2026 / INK",
+                "x": 190,
                 "y": 210,
-                "width": 140,
-                "height": 100,
-                "fill": "#f2f2f2",
-                "stroke": "#202020",
-                "strokeWidth": 2
+                "color": "#202020",
+                "fontSize": 42,
+                "fontWeight": 700
               },
               "dependsOn": []
             }
@@ -89,42 +71,56 @@
       }
     },
     {
-      "id": "booleanPropose",
+      "id": "layoutPropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C008 probe: boolean and transform",
+          "intentSummary": "C002 probe: hierarchy and auto layout",
           "steps": [
             {
-              "stepId": "union",
-              "operation": "boolean.apply.v1",
+              "stepId": "reparent",
+              "operation": "object.reparent.v1",
               "targets": [
-                {
-                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
-                },
                 {
                   "$ref": "createExec.result.stepResults.1.targets.0.ref"
                 }
               ],
               "arguments": {
-                "operation": "union",
-                "name": "C008 Union"
+                "parentObjectId": {
+                  "$ref": "createExec.result.stepResults.0.targets.0.ref.objectId"
+                },
+                "index": 0
               },
               "dependsOn": []
             },
             {
-              "stepId": "rotate",
-              "operation": "object.rotate.v1",
+              "stepId": "layout",
+              "operation": "layout.frame.set.v1",
               "targets": [
                 {
-                  "$ref": "createExec.result.stepResults.2.targets.0.ref"
+                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
                 }
               ],
               "arguments": {
-                "degrees": 30
+                "mode": "vertical",
+                "gap": 16,
+                "padding": {
+                  "top": 32,
+                  "right": 32,
+                  "bottom": 32,
+                  "left": 32
+                },
+                "align": {
+                  "main": "start",
+                  "cross": "start"
+                },
+                "sizing": {
+                  "horizontal": "fixed",
+                  "vertical": "fixed"
+                }
               },
               "dependsOn": []
             }
@@ -133,64 +129,62 @@
       }
     },
     {
-      "id": "booleanApprove",
+      "id": "layoutApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "booleanPropose.result.planId"
+          "$ref": "layoutPropose.result.planId"
         }
       }
     },
     {
-      "id": "booleanExec",
+      "id": "layoutExec",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "booleanPropose.result.planId"
+          "$ref": "layoutPropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "booleanApprove.result.approvalToken"
+          "$ref": "layoutApprove.result.approvalToken"
         }
       }
     },
     {
-      "id": "repeatSvgPropose",
+      "id": "componentPropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C008 probe: radial repeat and SVG import",
+          "intentSummary": "C002 probe: component registration and text edit",
           "steps": [
             {
-              "stepId": "repeat",
-              "operation": "repeat.radial.v1",
+              "stepId": "component",
+              "operation": "component.register.v1",
               "targets": [
                 {
-                  "$ref": "booleanExec.result.stepResults.0.targets.0.ref"
+                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
                 }
               ],
               "arguments": {
-                "count": 6,
-                "center": {
-                  "x": 305,
-                  "y": 260
-                },
-                "sweep": 360,
-                "startAngle": 0,
-                "linked": true
+                "name": "C002 Card Component"
               },
               "dependsOn": []
             },
             {
-              "stepId": "svg",
-              "operation": "svg.import.v1",
-              "targets": [],
+              "stepId": "text-edit",
+              "operation": "text.edit.v1",
+              "targets": [
+                {
+                  "$ref": "createExec.result.stepResults.1.targets.0.ref"
+                }
+              ],
               "arguments": {
-                "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><path d=\"M50 8 L92 50 L50 92 L8 50 Z\" fill=\"#d9d9d9\" stroke=\"#202020\" stroke-width=\"3\"/></svg>"
+                "text": "2026 / INK REVIEW",
+                "fontSize": 38
               },
               "dependsOn": []
             }
@@ -199,26 +193,38 @@
       }
     },
     {
-      "id": "repeatSvgApprove",
+      "id": "componentApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "repeatSvgPropose.result.planId"
+          "$ref": "componentPropose.result.planId"
         }
       }
     },
     {
-      "id": "repeatSvgExec",
+      "id": "componentExec",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "repeatSvgPropose.result.planId"
+          "$ref": "componentPropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "repeatSvgApprove.result.approvalToken"
+          "$ref": "componentApprove.result.approvalToken"
         }
+      }
+    },
+    {
+      "id": "library",
+      "tool": "search_ink_library",
+      "input": {
+        "action": "search",
+        "query": "C002",
+        "types": [
+          "component"
+        ],
+        "limit": 20
       }
     },
     {
