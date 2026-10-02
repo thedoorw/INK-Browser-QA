@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schema/ink-stroke-v2.json",
+  "title": "INK Unified Stroke v2",
+  "type": "object",
+  "required": ["format", "schemaVersion", "id", "brushId", "layerId", "pointerType", "color", "opacity", "seed", "transform", "samples", "boundingBox", "dependencies", "replayMetadata"],
+  "properties": {
+    "format": { "const": "INK-STROKE" },
+    "schemaVersion": { "const": 2 },
+    "id": { "type": "string", "minLength": 1 },
+    "brushId": { "type": "string", "minLength": 1 },
+    "layerId": { "type": "string", "minLength": 1 },
+    "pointerType": { "enum": ["pen", "mouse", "touch", "synthetic", "unknown"] },
+    "color": { "type": "string" },
+    "opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+    "seed": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "transform": { "type": "array", "minItems": 6, "maxItems": 6, "items": { "type": "number" } },
+    "samples": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/sample" } },
+    "boundingBox": { "$ref": "#/$defs/bounds" },
+    "dependencies": { "type": "array" },
+    "replayMetadata": { "type": "object" }
+  },
+  "$defs": {
+    "unit": { "type": "number", "minimum": 0, "maximum": 1 },
+    "sample": {
+      "type": "object",
+      "required": ["position", "timestamp", "pressure", "tiltX", "tiltY", "azimuth", "altitude", "velocity", "direction", "size", "opacity", "flow", "spacing", "scatter", "rotation", "textureCoordinates", "wetness", "paintLoad", "smudge", "blend", "glaze", "seed"],
+      "properties": {
+        "position": { "type": "object", "required": ["x", "y"], "properties": { "x": { "type": "number" }, "y": { "type": "number" } } },
+        "timestamp": { "type": "number" }, "pressure": { "$ref": "#/$defs/unit" },
+        "tiltX": { "type": "number", "minimum": -90, "maximum": 90 }, "tiltY": { "type": "number", "minimum": -90, "maximum": 90 },
+        "azimuth": { "type": "number" }, "altitude": { "type": "number", "minimum": 0, "maximum": 90 },
+        "velocity": { "type": "number", "minimum": 0 }, "direction": { "type": "number" }, "size": { "type": "number", "exclusiveMinimum": 0 },
+        "opacity": { "$ref": "#/$defs/unit" }, "flow": { "$ref": "#/$defs/unit" }, "spacing": { "type": "number", "exclusiveMinimum": 0 },
+        "scatter": { "$ref": "#/$defs/unit" }, "rotation": { "type": "number" },
+        "textureCoordinates": { "type": "object", "required": ["u", "v"], "properties": { "u": { "type": "number" }, "v": { "type": "number" } } },
+        "wetness": { "$ref": "#/$defs/unit" }, "paintLoad": { "$ref": "#/$defs/unit" }, "smudge": { "$ref": "#/$defs/unit" }, "blend": { "$ref": "#/$defs/unit" }, "glaze": { "$ref": "#/$defs/unit" }, "seed": { "type": "integer" }
+      }
+    },
+    "bounds": { "type": "object", "required": ["x", "y", "width", "height"], "properties": { "x": { "type": "number" }, "y": { "type": "number" }, "width": { "type": "number", "minimum": 0 }, "height": { "type": "number", "minimum": 0 } } }
+  }
+}

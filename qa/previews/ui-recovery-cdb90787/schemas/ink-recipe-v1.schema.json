@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ink.local/schemas/ink-recipe-v1.schema.json",
+  "title": "INK Recipe Asset 1.0",
+  "type": "object",
+  "required": ["format", "version", "recipeId", "schemaVersion", "title", "dependencies", "capabilities", "rollbackPolicy", "testStatus"],
+  "properties": {
+    "format": { "const": "INK-RECIPE" },
+    "version": { "const": "1.0" },
+    "recipeId": { "type": "string", "pattern": "^recipe[-_:]" },
+    "schemaVersion": { "const": "1.0" },
+    "dependencies": { "type": "array" },
+    "capabilities": { "type": "object" },
+    "rollbackPolicy": { "type": "object" },
+    "testStatus": { "type": "object" }
+  },
+  "additionalProperties": true
+}

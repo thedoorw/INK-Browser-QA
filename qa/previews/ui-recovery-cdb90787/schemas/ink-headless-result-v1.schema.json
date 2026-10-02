@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ink-headless-result-v1.schema.json",
+  "type": "object",
+  "required": ["status"],
+  "properties": {
+    "status": { "enum": ["READY", "APPROVED", "REJECTED", "COMPLETED", "ROLLED_BACK", "UNSUPPORTED", "USER_CHOICE_REQUIRED", "FULL_REGENERATION_REQUIRED", "FAILED"] },
+    "planId": { "type": ["string", "null"] }, "recipeId": { "type": ["string", "null"] }, "executionId": { "type": ["string", "null"] },
+    "difference": { "type": ["object", "null"] }, "structuralQA": { "type": ["object", "null"] }, "visualQA": { "type": ["object", "null"] }
+  },
+  "additionalProperties": true
+}

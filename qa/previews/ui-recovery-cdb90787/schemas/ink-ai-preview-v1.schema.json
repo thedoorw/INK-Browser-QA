@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"ink-ai-preview-v1","type":"object","required":["format","version","previewId","recipeId","planId","baseDocumentHash","branchDocumentHash","isolated","steps","difference","views","performanceEstimate"],"properties":{"format":{"const":"INK-AI-PREVIEW"},"isolated":{"const":true},"temporaryHistory":{"const":true}}}
