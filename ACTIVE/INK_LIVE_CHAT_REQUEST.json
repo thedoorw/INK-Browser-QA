@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "transport-proof-closed-loop-001",
+  "requestId": "transport-proof-closed-loop-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
@@ -27,7 +27,7 @@
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "Live transport proof: create one editable circle",
+          "intentSummary": "Live transport proof: create two editable vector shapes",
           "steps": [
             {
               "stepId": "create-circle",
@@ -43,6 +43,24 @@
                 "strokeWidth": 3
               },
               "dependsOn": []
+            },
+            {
+              "stepId": "create-rect",
+              "operation": "path.create.v1",
+              "targets": [],
+              "arguments": {
+                "shape": "rectangle",
+                "x": 360,
+                "y": 200,
+                "width": 180,
+                "height": 120,
+                "fill": "#ffcc00",
+                "stroke": "#202020",
+                "strokeWidth": 3
+              },
+              "dependsOn": [
+                "create-circle"
+              ]
             }
           ]
         }
