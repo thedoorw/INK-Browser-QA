@@ -239,6 +239,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.simplify.v1',
   'path.refine.v1',
   'path.create.v1',
+  'stroke.create.v1',
   'paint.session.create.v1',
   'image.adjustment.add.v1',
   'image.filter.add.v1',
@@ -511,6 +512,58 @@ export const CHAT_PAINT_SESSION_BRUSH_IDS = Object.freeze(
     .map(preset => preset.id)
 );
 const CHAT_PAINT_SESSION_BRUSH_ID_SET = new Set(CHAT_PAINT_SESSION_BRUSH_IDS);
+
+export const CHAT_STROKE_KINDS = Object.freeze(['pen', 'pencil', 'marker', 'brush', 'drybrush', 'airbrush']);
+const CHAT_STROKE_KIND_SET = new Set(CHAT_STROKE_KINDS);
+const CHAT_NATURAL_MEDIA_STROKE_KIND_SET = new Set(['brush', 'drybrush', 'airbrush']);
+
+function normalizeStrokeCreateSample(raw, field, index) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENT_INVALID', { field });
+  return {
+    x: boundedNumber(raw.x, `${field}.x`),
+    y: boundedNumber(raw.y, `${field}.y`),
+    pressure: boundedNumber(raw.pressure ?? raw.p ?? .5, `${field}.pressure`, { min: 0, max: 1 }),
+    timestamp: boundedNumber(raw.timestamp ?? raw.time ?? raw.t ?? index * 16, `${field}.timestamp`, { min: 0, max: 1e9 }),
+    tiltX: boundedNumber(raw.tiltX ?? 0, `${field}.tiltX`, { min: -90, max: 90 }),
+    tiltY: boundedNumber(raw.tiltY ?? 0, `${field}.tiltY`, { min: -90, max: 90 }),
+    azimuth: boundedNumber(raw.azimuth ?? 0, `${field}.azimuth`, { min: -1000, max: 1000 }),
+    altitude: boundedNumber(raw.altitude ?? 90, `${field}.altitude`, { min: 0, max: 90 }),
+    twist: boundedNumber(raw.twist ?? 0, `${field}.twist`, { min: -360000, max: 360000 })
+  };
+}
+
+function normalizeStrokeCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const kind = boundedText(raw.kind, 'arguments.kind', { max: 80 });
+  if (!CHAT_STROKE_KIND_SET.has(kind)) editFail('ARGUMENT_INVALID', { field: 'arguments.kind', allowed: CHAT_STROKE_KINDS });
+  if (!Array.isArray(raw.samples) || raw.samples.length < 2 || raw.samples.length > 4096) {
+    editFail('ARGUMENT_INVALID', { field: 'arguments.samples' });
+  }
+  const samples = raw.samples.map((sample, sampleIndex) =>
+    normalizeStrokeCreateSample(sample, `arguments.samples[${sampleIndex}]`, sampleIndex));
+  for (let sampleIndex = 1; sampleIndex < samples.length; sampleIndex += 1) {
+    if (samples[sampleIndex].timestamp < samples[sampleIndex - 1].timestamp) {
+      editFail('ARGUMENT_INVALID', { field: `arguments.samples[${sampleIndex}].timestamp` });
+    }
+  }
+  return {
+    objectId: raw.objectId == null ? null : boundedText(raw.objectId, 'arguments.objectId', { max: 160 }),
+    name: raw.name == null ? 'CHAT Stroke' : boundedText(raw.name, 'arguments.name', { max: 160 }),
+    kind,
+    color: raw.color == null ? '#202020' : boundedPaintToken(raw.color, 'arguments.color'),
+    size: boundedNumber(raw.size ?? 12, 'arguments.size', { min: .25, max: 512 }),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
+    smoothing: boundedNumber(raw.smoothing ?? .5, 'arguments.smoothing', { min: 0, max: .95 }),
+    pressure: boundedNumber(raw.pressure ?? .8, 'arguments.pressure', { min: 0, max: 1 }),
+    taper: boundedNumber(raw.taper ?? 0, 'arguments.taper', { min: 0, max: 1 }),
+    grain: boundedNumber(raw.grain ?? 0, 'arguments.grain', { min: 0, max: 1 }),
+    softness: boundedNumber(raw.softness ?? .7, 'arguments.softness', { min: 0, max: 1 }),
+    flow: boundedNumber(raw.flow ?? 1, 'arguments.flow', { min: 0, max: 1 }),
+    wetness: boundedNumber(raw.wetness ?? 0, 'arguments.wetness', { min: 0, max: 1 }),
+    bristle: boundedNumber(raw.bristle ?? 0, 'arguments.bristle', { min: 0, max: 1 }),
+    samples
+  };
+}
 
 function normalizePaintSessionSample(raw, field, index) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENT_INVALID', { field });
@@ -934,6 +987,7 @@ function normalizeOperationArguments(operation, raw) {
     };
   }
   if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
+  if (operation === 'stroke.create.v1') return normalizeStrokeCreateArguments(raw);
   if (operation === 'paint.session.create.v1') return normalizePaintSessionCreateArguments(raw);
   if (operation === 'image.adjustment.add.v1') return normalizeImageAdjustmentArguments(raw);
   if (operation === 'image.filter.add.v1') return normalizeImageFilterArguments(raw);
@@ -971,7 +1025,7 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
-  if (operation === 'path.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
+  if (operation === 'path.create.v1' || operation === 'stroke.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'image.adjustment.add.v1'
     || operation === 'image.filter.add.v1'
     || operation === 'image.blend.set.v1'
@@ -1402,6 +1456,80 @@ function executePathCreateTask(app, task) {
   return { createdRefs: [ref], resultRefs: [ref], objectId: path.id, shape: task.arguments.shape };
 }
 
+
+function executeStrokeCreateTask(app, task) {
+  const layer = activeLayer(app);
+  if (!layer) editFail('LAYER_UNAVAILABLE');
+  if (layer.locked) editFail('TARGET_LOCKED', { layerId: layer.id });
+  const args = task.arguments;
+  const strokeId = args.objectId || `chat-stroke-${chatStateFingerprint({
+    taskId: task.taskId,
+    name: args.name,
+    kind: args.kind,
+    color: args.color,
+    size: args.size,
+    opacity: args.opacity,
+    smoothing: args.smoothing,
+    pressure: args.pressure,
+    taper: args.taper,
+    grain: args.grain,
+    softness: args.softness,
+    flow: args.flow,
+    wetness: args.wetness,
+    bristle: args.bristle,
+    samples: args.samples
+  }).replace(':', '-')}`;
+  if (findPageObject(app.page(), strokeId)) editFail('OBJECT_ID_COLLISION', { objectId: strokeId });
+
+  const origin = args.samples[0];
+  const firstTimestamp = origin.timestamp;
+  const points = args.samples.map(sample => ({
+    x: sample.x - origin.x,
+    y: sample.y - origin.y,
+    p: sample.pressure,
+    tiltX: sample.tiltX,
+    tiltY: sample.tiltY,
+    altitude: sample.altitude,
+    azimuth: sample.azimuth,
+    twist: sample.twist,
+    predicted: false,
+    t: sample.timestamp - firstTimestamp
+  }));
+  const object = {
+    id: strokeId,
+    type: 'stroke',
+    name: args.name,
+    matrix: Matrix.translate(origin.x, origin.y),
+    opacity: args.opacity,
+    color: args.color,
+    size: args.size,
+    kind: args.kind,
+    smoothing: args.smoothing,
+    pressure: args.pressure,
+    taper: args.taper,
+    grain: args.grain,
+    softness: args.softness,
+    flow: args.flow,
+    wetness: args.wetness,
+    bristle: args.bristle,
+    ...(CHAT_NATURAL_MEDIA_STROKE_KIND_SET.has(args.kind) ? { mediaModel: 'natural-v2' } : {}),
+    points
+  };
+
+  app.history.pushScoped('CHAT create Stroke', structuralHistoryPaths(app, []), () => {
+    layer.objects.push(object);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: layer.id, objectId: object.id };
+  return {
+    createdRefs: [ref],
+    resultRefs: [ref],
+    objectId: object.id,
+    kind: object.kind,
+    pointCount: object.points.length,
+    mediaModel: object.mediaModel || null
+  };
+}
 
 function executePaintSessionCreateTask(app, task) {
   const layer = activeLayer(app);
@@ -2094,6 +2222,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'object.translate.v1') return executeTranslateTask(app, task);
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
+  if (task.operation === 'stroke.create.v1') return executeStrokeCreateTask(app, task);
   if (task.operation === 'paint.session.create.v1') return executePaintSessionCreateTask(app, task);
   if (task.operation === 'image.adjustment.add.v1') return executeImageAdjustmentTask(app, task);
   if (task.operation === 'image.filter.add.v1') return executeImageFilterTask(app, task);
