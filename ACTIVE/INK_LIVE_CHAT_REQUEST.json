@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B2-effect-live-003",
+  "requestId": "clusterB-B2-liquify-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "9d73a8018c0c37861aa3c76412951eb26bf78e62",
+  "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
   "steps": [
     {
       "id": "capabilities",
@@ -15,9 +15,9 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B2 Effect Raster",
+          "name": "B2 Liquify Raster",
           "type": "image/png",
-          "intent": "Cluster B2 colorOverlay effect qualification"
+          "intent": "Cluster B2 Liquify twirl qualification"
         }
       },
       "file": {
@@ -36,47 +36,53 @@
       }
     },
     {
-      "id": "effectPropose",
+      "id": "liquifyPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B2-live-effect-color-overlay",
-          "operation": "image.effect.add.v1",
+          "taskId": "clusterB-B2-live-liquify-twirl",
+          "operation": "image.liquify.add.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "type": "colorOverlay",
-            "params": {
-              "color": "#00cc66"
-            },
-            "opacity": 0.55
+            "operations": [
+              {
+                "type": "twirl",
+                "x": 543,
+                "y": 724,
+                "radius": 260,
+                "strength": 0.7
+              }
+            ],
+            "opacity": 1,
+            "maxWork": 5000000
           }
         }
       }
     },
     {
-      "id": "effectApprove",
+      "id": "liquifyApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "effectPropose.result.result.proposalId"
+          "$ref": "liquifyPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "effectExecute",
+      "id": "liquifyExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "effectPropose.result.result.proposalId"
+          "$ref": "liquifyPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "effectApprove.result.result.approvalToken"
+          "$ref": "liquifyApprove.result.result.approvalToken"
         }
       }
     },
