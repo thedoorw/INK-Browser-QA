@@ -3,7 +3,7 @@ import {probeTiff,parseTiff,encodeBaselineTiff} from './formats/tiff.js';
 import {probeExr,parseExr,encodeBasicExr} from './formats/exr.js';
 import {createRawAdapterRegistry} from './formats/adapters/raw-adapter.js';
 import {createNormalizedPayload} from './formats/normalized-payload.js';
-import {deserializeColorRaster,serializeColorRaster} from './color-management-core.js';
+import {createColorRaster,deserializeColorRaster,serializeColorRaster} from './color-management-core.js';
 export const rawAdapters=createRawAdapterRegistry();
 export function probeFormat(input){for(const fn of [probePsd,probeTiff,probeExr]){const p=fn(input);if(p.matched)return p;}const r=rawAdapters.probe(input);return r.matched?r:{matched:false,format:null,status:r.status};}
 export async function decodeFormat(input,{format=null,...options}={}){const p=format?{format}:probeFormat(input);if(p.format==='PSD'||p.format==='PSB')return parsePsd(input,options);if(p.format==='TIFF')return parseTiff(input,options);if(p.format==='EXR')return parseExr(input,options);if(p.format==='RAW')return rawAdapters.decode(input);throw new Error('INK_FORMAT_UNRECOGNIZED');}
@@ -73,6 +73,52 @@ export function formatPayloadToDocumentImageState(payload) {
     provenance: jsonSafe(payload.provenance || {}),
     capabilities: jsonSafe(payload.capabilities || {})
   };
+}
+
+export function webRasterImageDataToDocumentState(imageData, {
+  format = 'WEB_RASTER',
+  metadata = {},
+  provenance = {},
+  capabilities = {}
+} = {}) {
+  const width = Math.floor(Number(imageData?.width));
+  const height = Math.floor(Number(imageData?.height));
+  const rgba = imageData?.data;
+  if (!(width > 0 && height > 0) || !rgba || rgba.length !== width * height * 4) {
+    throw new Error('INK_WEB_RASTER_IMAGE_DATA_INVALID');
+  }
+  const pixels = width * height;
+  const rgb = new Uint8Array(pixels * 3);
+  const alpha = new Uint8Array(pixels);
+  for (let pixel = 0; pixel < pixels; pixel += 1) {
+    const sourceOffset = pixel * 4;
+    const targetOffset = pixel * 3;
+    rgb[targetOffset] = rgba[sourceOffset];
+    rgb[targetOffset + 1] = rgba[sourceOffset + 1];
+    rgb[targetOffset + 2] = rgba[sourceOffset + 2];
+    alpha[pixel] = rgba[sourceOffset + 3];
+  }
+  const raster = createColorRaster({
+    width,
+    height,
+    bitDepth: 8,
+    colorMode: 'RGB',
+    data: rgb,
+    alpha
+  });
+  const payload = createNormalizedPayload({
+    format: String(format || 'WEB_RASTER'),
+    width,
+    height,
+    bitDepth: 8,
+    colorMode: 'RGB',
+    compositeRaster: raster,
+    alpha,
+    metadata: jsonSafe(metadata || {}),
+    provenance: jsonSafe(provenance || {}),
+    capabilities: { editableRaster: true, webRasterBridge: true, ...jsonSafe(capabilities || {}) }
+  });
+  return formatPayloadToDocumentImageState(payload);
 }
 
 export function documentImageStateToFormatPayload(state, { format = null, version = null } = {}) {
