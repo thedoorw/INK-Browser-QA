@@ -1,6 +1,1689 @@
 {
   "schema": "INK-CHAT-DRAWING-EXPOSURE-PROOF",
   "version": 1,
-  "status": "FAIL",
-  "error": "Error: STROKE_EDIT_APPROVE_FAILED:{\"schema\":\"INK_AGENT_RESULT\",\"version\":1,\"action\":\"edit.approve\",\"status\":\"FAILED\",\"documentId\":\"6ff2634e-b09d-4ef2-8bf7-6fe77a86be3b\",\"pageId\":\"f779a41d-9d93-4e26-b3d1-95e411756947\",\"revisionId\":\"ink-rev:66051d72:r1:3cd625ab:e55d4872\",\"targetRefs\":[],\"createdRefs\":[],\"changedRefs\":[],\"historyReceipt\":null,\"revisionReceipt\":null,\"provenanceReceipt\":null,\"outputHandles\":[],\"diagnostics\":[{\"code\":\"CHAT_EDIT_PROPOSAL_NOT_FOUND\",\"details\":{},\"phase\":\"approve\"}],\"result\":{\"code\":\"CHAT_EDIT_PROPOSAL_NOT_FOUND\",\"ok\":false,\"phase\":\"approve\"}}\n    at main (file:///home/runner/work/INK-Browser-QA/INK-Browser-QA/qa/live-chat/run-local-drawing-exposure-proof.mjs:212:55)\n    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at async file:///home/runner/work/INK-Browser-QA/INK-Browser-QA/qa/live-chat/run-local-drawing-exposure-proof.mjs:272:1"
+  "status": "PASS",
+  "ready": {
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 22
+  },
+  "checks": {
+    "capabilityExposed": true,
+    "proposalNeutral": true,
+    "approvalGateBlockedBeforeApproval": true,
+    "explicitApproval": true,
+    "nativeStrokeCount": 3,
+    "strokeEditExecuted": true,
+    "strokeEraseExecuted": true,
+    "renderChangedAfterEdit": true,
+    "renderChangedAfterErase": true,
+    "historyLabels": [
+      "CHAT create Stroke",
+      "CHAT create Stroke",
+      "CHAT edit Stroke",
+      "CHAT erase Stroke"
+    ],
+    "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+    "previewHandle": {
+      "background": {
+        "color": "#fffef9",
+        "included": true
+      },
+      "bounds": {
+        "h": 244.1,
+        "w": 351.2,
+        "x": 74.4,
+        "y": 76.5
+      },
+      "byteLength": 20869,
+      "documentFingerprint": "fnv1a32:23fd0a0f",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+      "format": "png",
+      "handleId": "ink-output-v1:f7507d8c",
+      "kind": "preview",
+      "mimeType": "image/png",
+      "objectRefs": [],
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "persistence": "NONE",
+      "pixelSize": {
+        "height": 245,
+        "width": 352
+      },
+      "renderFingerprint": "fnv1a32:1442ea99",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "schema": "INK_OUTPUT_HANDLE",
+      "scope": "content",
+      "transport": "INTERNAL_EPHEMERAL",
+      "version": 1
+    }
+  },
+  "result": {
+    "capabilities": {
+      "status": "COMPLETED",
+      "strokeDescriptor": {
+        "availability": true,
+        "availabilityReason": null,
+        "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+        "descriptorVersion": 1,
+        "id": "stroke.create.v1",
+        "namedTool": "propose_ink_edit",
+        "publicMethod": "edit.propose",
+        "role": "PROPOSAL",
+        "routingClass": "PROPOSAL_REQUIRED",
+        "title": "stroke.create.v1"
+      }
+    },
+    "proposed": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "composition.propose",
+      "status": "PROPOSED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": null,
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "approvalToken": null,
+        "approved": false,
+        "diagnostics": [],
+        "intentSummary": "CHAT drawing exposure proof: pencil stroke plus wet natural-media brush stroke",
+        "planId": "plan:08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df:7cd04d5b",
+        "result": null,
+        "schema": "INK-CHAT-CREATIVE-PLAN",
+        "source": {
+          "documentFingerprint": "fnv1a32:66e14585",
+          "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+          "revisionId": null
+        },
+        "status": "PROPOSED",
+        "stepResults": [],
+        "steps": [
+          {
+            "arguments": {
+              "bristle": 0,
+              "color": "#263238",
+              "flow": 1,
+              "grain": 0.62,
+              "kind": "pencil",
+              "mediaModel": null,
+              "name": "CHAT Pencil Proof",
+              "objectId": null,
+              "opacity": 0.76,
+              "points": [
+                {
+                  "p": 0.25,
+                  "t": 0,
+                  "x": 120,
+                  "y": 160
+                },
+                {
+                  "p": 0.55,
+                  "t": 16,
+                  "x": 170,
+                  "y": 125
+                },
+                {
+                  "p": 0.9,
+                  "t": 32,
+                  "x": 225,
+                  "y": 180
+                },
+                {
+                  "p": 0.65,
+                  "t": 48,
+                  "x": 285,
+                  "y": 135
+                },
+                {
+                  "p": 0.3,
+                  "t": 64,
+                  "x": 340,
+                  "y": 170
+                }
+              ],
+              "pressure": 0.72,
+              "size": 5,
+              "smoothing": 0.42,
+              "softness": 0,
+              "taper": 0,
+              "wetness": 0
+            },
+            "dependsOn": [],
+            "operation": "stroke.create.v1",
+            "stepId": "pencil",
+            "targets": []
+          },
+          {
+            "arguments": {
+              "bristle": 0.22,
+              "color": "#b7355d",
+              "flow": 0.74,
+              "grain": 0.16,
+              "kind": "brush",
+              "mediaModel": "natural-v2",
+              "name": "CHAT Wet Brush Proof",
+              "objectId": null,
+              "opacity": 0.8,
+              "points": [
+                {
+                  "p": 0.22,
+                  "t": 0,
+                  "x": 120,
+                  "y": 260
+                },
+                {
+                  "p": 0.7,
+                  "t": 18,
+                  "x": 180,
+                  "y": 215
+                },
+                {
+                  "p": 1,
+                  "t": 36,
+                  "x": 245,
+                  "y": 275
+                },
+                {
+                  "p": 0.72,
+                  "t": 54,
+                  "x": 315,
+                  "y": 220
+                },
+                {
+                  "p": 0.3,
+                  "t": 72,
+                  "x": 380,
+                  "y": 265
+                }
+              ],
+              "pressure": 0.95,
+              "size": 24,
+              "smoothing": 0.5,
+              "softness": 0,
+              "taper": 0.35,
+              "wetness": 0.82
+            },
+            "dependsOn": [
+              "pencil"
+            ],
+            "operation": "stroke.create.v1",
+            "stepId": "wet-brush",
+            "targets": []
+          }
+        ],
+        "validation": {
+          "schema": "INK-CHAT-CREATIVE-PLAN-VALIDATION",
+          "source": {
+            "documentFingerprint": "fnv1a32:66e14585",
+            "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+            "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+            "revisionId": null
+          },
+          "stepCount": 2,
+          "steps": [
+            {
+              "dependsOn": [],
+              "operation": "stroke.create.v1",
+              "stepId": "pencil",
+              "stepIndex": 0,
+              "targetCount": 0,
+              "targets": [],
+              "valid": true
+            },
+            {
+              "dependsOn": [
+                "pencil"
+              ],
+              "operation": "stroke.create.v1",
+              "stepId": "wet-brush",
+              "stepIndex": 1,
+              "targetCount": 0,
+              "targets": [],
+              "valid": true
+            }
+          ],
+          "valid": true,
+          "version": 1
+        },
+        "version": 1
+      }
+    },
+    "blocked": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "composition.execute",
+      "status": "FAILED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": null,
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [
+        {
+          "code": "CHAT_PLAN_APPROVAL_REQUIRED",
+          "details": {
+            "actual": "PROPOSED"
+          },
+          "message": "INK_CHAT_PLAN_APPROVAL_REQUIRED",
+          "phase": "composition.execute"
+        }
+      ],
+      "result": null
+    },
+    "approved": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "composition.approve",
+      "status": "APPROVED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": null,
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "approvalToken": "INK-LOCAL-PLAN-APPROVAL:plan:08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df:7cd04d5b:1",
+        "approved": true,
+        "diagnostics": [],
+        "intentSummary": "CHAT drawing exposure proof: pencil stroke plus wet natural-media brush stroke",
+        "planId": "plan:08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df:7cd04d5b",
+        "result": null,
+        "schema": "INK-CHAT-CREATIVE-PLAN",
+        "source": {
+          "documentFingerprint": "fnv1a32:66e14585",
+          "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+          "revisionId": null
+        },
+        "status": "APPROVED",
+        "stepResults": [],
+        "steps": [
+          {
+            "arguments": {
+              "bristle": 0,
+              "color": "#263238",
+              "flow": 1,
+              "grain": 0.62,
+              "kind": "pencil",
+              "mediaModel": null,
+              "name": "CHAT Pencil Proof",
+              "objectId": null,
+              "opacity": 0.76,
+              "points": [
+                {
+                  "p": 0.25,
+                  "t": 0,
+                  "x": 120,
+                  "y": 160
+                },
+                {
+                  "p": 0.55,
+                  "t": 16,
+                  "x": 170,
+                  "y": 125
+                },
+                {
+                  "p": 0.9,
+                  "t": 32,
+                  "x": 225,
+                  "y": 180
+                },
+                {
+                  "p": 0.65,
+                  "t": 48,
+                  "x": 285,
+                  "y": 135
+                },
+                {
+                  "p": 0.3,
+                  "t": 64,
+                  "x": 340,
+                  "y": 170
+                }
+              ],
+              "pressure": 0.72,
+              "size": 5,
+              "smoothing": 0.42,
+              "softness": 0,
+              "taper": 0,
+              "wetness": 0
+            },
+            "dependsOn": [],
+            "operation": "stroke.create.v1",
+            "stepId": "pencil",
+            "targets": []
+          },
+          {
+            "arguments": {
+              "bristle": 0.22,
+              "color": "#b7355d",
+              "flow": 0.74,
+              "grain": 0.16,
+              "kind": "brush",
+              "mediaModel": "natural-v2",
+              "name": "CHAT Wet Brush Proof",
+              "objectId": null,
+              "opacity": 0.8,
+              "points": [
+                {
+                  "p": 0.22,
+                  "t": 0,
+                  "x": 120,
+                  "y": 260
+                },
+                {
+                  "p": 0.7,
+                  "t": 18,
+                  "x": 180,
+                  "y": 215
+                },
+                {
+                  "p": 1,
+                  "t": 36,
+                  "x": 245,
+                  "y": 275
+                },
+                {
+                  "p": 0.72,
+                  "t": 54,
+                  "x": 315,
+                  "y": 220
+                },
+                {
+                  "p": 0.3,
+                  "t": 72,
+                  "x": 380,
+                  "y": 265
+                }
+              ],
+              "pressure": 0.95,
+              "size": 24,
+              "smoothing": 0.5,
+              "softness": 0,
+              "taper": 0.35,
+              "wetness": 0.82
+            },
+            "dependsOn": [
+              "pencil"
+            ],
+            "operation": "stroke.create.v1",
+            "stepId": "wet-brush",
+            "targets": []
+          }
+        ],
+        "validation": {
+          "schema": "INK-CHAT-CREATIVE-PLAN-VALIDATION",
+          "source": {
+            "documentFingerprint": "fnv1a32:66e14585",
+            "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+            "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+            "revisionId": null
+          },
+          "stepCount": 2,
+          "steps": [
+            {
+              "dependsOn": [],
+              "operation": "stroke.create.v1",
+              "stepId": "pencil",
+              "stepIndex": 0,
+              "targetCount": 0,
+              "targets": [],
+              "valid": true
+            },
+            {
+              "dependsOn": [
+                "pencil"
+              ],
+              "operation": "stroke.create.v1",
+              "stepId": "wet-brush",
+              "stepIndex": 1,
+              "targetCount": 0,
+              "targets": [],
+              "valid": true
+            }
+          ],
+          "valid": true,
+          "version": 1
+        },
+        "version": 1
+      }
+    },
+    "executed": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "composition.execute",
+      "status": "COMPLETED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": {
+        "steps": [
+          {
+            "history": {
+              "afterUndoCount": 1,
+              "beforeUndoCount": 0,
+              "latestLabel": "CHAT create Stroke"
+            },
+            "stepId": "pencil",
+            "stepIndex": 0
+          },
+          {
+            "history": {
+              "afterUndoCount": 2,
+              "beforeUndoCount": 1,
+              "latestLabel": "CHAT create Stroke"
+            },
+            "stepId": "wet-brush",
+            "stepIndex": 1
+          }
+        ]
+      },
+      "revisionReceipt": {
+        "captureSkipped": null,
+        "comparison": {
+          "addedObjectIds": [
+            "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+            "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e"
+          ],
+          "afterDocumentFingerprint": "fnv1a32:e986fe70",
+          "beforeDocumentFingerprint": null,
+          "changedObjectIds": [],
+          "equivalent": false,
+          "fingerprints": {
+            "appearance": {
+              "after": "fnv1a32:0aacd91a",
+              "before": null
+            },
+            "geometry": {
+              "after": "fnv1a32:e433df6e",
+              "before": null
+            },
+            "structure": {
+              "after": "fnv1a32:6be2f9af",
+              "before": null
+            }
+          },
+          "objectCounts": {
+            "added": 2,
+            "after": 2,
+            "before": 0,
+            "changed": 0,
+            "removed": 0,
+            "touched": 2
+          },
+          "removedObjectIds": [],
+          "schema": "INK-REVISION-COMPARISON",
+          "touchedObjectIds": [
+            "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+            "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e"
+          ],
+          "truncated": {
+            "added": false,
+            "changed": false,
+            "removed": false,
+            "touched": false
+          },
+          "version": 1
+        },
+        "created": true,
+        "documentFingerprint": "fnv1a32:e986fe70",
+        "endingRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+        "equivalent": false,
+        "startingRevisionId": null
+      },
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "ok": true,
+        "planId": "plan:08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df:7cd04d5b",
+        "remainingStepIds": [],
+        "revision": {
+          "captureSkipped": null,
+          "comparison": {
+            "addedObjectIds": [
+              "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+              "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e"
+            ],
+            "afterDocumentFingerprint": "fnv1a32:e986fe70",
+            "beforeDocumentFingerprint": null,
+            "changedObjectIds": [],
+            "equivalent": false,
+            "fingerprints": {
+              "appearance": {
+                "after": "fnv1a32:0aacd91a",
+                "before": null
+              },
+              "geometry": {
+                "after": "fnv1a32:e433df6e",
+                "before": null
+              },
+              "structure": {
+                "after": "fnv1a32:6be2f9af",
+                "before": null
+              }
+            },
+            "objectCounts": {
+              "added": 2,
+              "after": 2,
+              "before": 0,
+              "changed": 0,
+              "removed": 0,
+              "touched": 2
+            },
+            "removedObjectIds": [],
+            "schema": "INK-REVISION-COMPARISON",
+            "touchedObjectIds": [
+              "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+              "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e"
+            ],
+            "truncated": {
+              "added": false,
+              "changed": false,
+              "removed": false,
+              "touched": false
+            },
+            "version": 1
+          },
+          "created": true,
+          "documentFingerprint": "fnv1a32:e986fe70",
+          "endingRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "equivalent": false,
+          "startingRevisionId": null
+        },
+        "schema": "INK-CHAT-CREATIVE-PLAN-RESULT",
+        "status": "COMPLETED",
+        "stepResults": [
+          {
+            "changed": true,
+            "history": {
+              "afterUndoCount": 1,
+              "beforeUndoCount": 0,
+              "latestLabel": "CHAT create Stroke"
+            },
+            "ok": true,
+            "operation": "stroke.create.v1",
+            "proposalId": "proposal:plan:08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df:7cd04d5b:pencil:4e308d50",
+            "revision": {
+              "currentRevisionId": null,
+              "documentFingerprint": "fnv1a32:63030ea7",
+              "inspectedRevisionId": null
+            },
+            "state": "COMPLETED",
+            "stepId": "pencil",
+            "stepIndex": 0,
+            "targets": [
+              {
+                "ref": {
+                  "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                  "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+                  "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+                },
+                "stateFingerprint": "fnv1a32:9193a576",
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ]
+              }
+            ]
+          },
+          {
+            "changed": true,
+            "history": {
+              "afterUndoCount": 2,
+              "beforeUndoCount": 1,
+              "latestLabel": "CHAT create Stroke"
+            },
+            "ok": true,
+            "operation": "stroke.create.v1",
+            "proposalId": "proposal:plan:08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df:7cd04d5b:wet-brush:86c92051",
+            "revision": {
+              "currentRevisionId": null,
+              "documentFingerprint": "fnv1a32:e986fe70",
+              "inspectedRevisionId": null
+            },
+            "state": "COMPLETED",
+            "stepId": "wet-brush",
+            "stepIndex": 1,
+            "targets": [
+              {
+                "ref": {
+                  "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                  "objectId": "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e",
+                  "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+                },
+                "stateFingerprint": "fnv1a32:17a6c396",
+                "worldMatrix": [
+                  1,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ]
+              }
+            ]
+          }
+        ],
+        "stoppedStepId": null,
+        "version": 1
+      }
+    },
+    "previewCreated": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "preview.capture",
+      "status": "COMPLETED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [
+        {
+          "background": {
+            "color": "#fffef9",
+            "included": true
+          },
+          "bounds": {
+            "h": 224.1,
+            "w": 351.2,
+            "x": 74.4,
+            "y": 96.5
+          },
+          "byteLength": 20674,
+          "documentFingerprint": "fnv1a32:e986fe70",
+          "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+          "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+          "format": "png",
+          "handleId": "ink-output-v1:d00d665f",
+          "kind": "preview",
+          "mimeType": "image/png",
+          "objectRefs": [],
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+          "persistence": "NONE",
+          "pixelSize": {
+            "height": 225,
+            "width": 352
+          },
+          "renderFingerprint": "fnv1a32:9204c01e",
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "schema": "INK_OUTPUT_HANDLE",
+          "scope": "content",
+          "transport": "INTERNAL_EPHEMERAL",
+          "version": 1
+        }
+      ],
+      "diagnostics": [],
+      "result": {
+        "bounds": {
+          "h": 224.1,
+          "w": 351.2,
+          "x": 74.4,
+          "y": 96.5
+        },
+        "byteLength": 20674,
+        "handleId": "ink-output-v1:d00d665f",
+        "persistence": "NONE",
+        "pixelSize": {
+          "height": 225,
+          "width": 352
+        },
+        "scope": "content",
+        "transport": "INTERNAL_EPHEMERAL"
+      }
+    },
+    "editProposed": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "edit.propose",
+      "status": "PROPOSED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "action": "propose",
+        "ok": true,
+        "result": {
+          "approvalToken": null,
+          "approved": false,
+          "expected": {
+            "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+            "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+            "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+            "targetFingerprints": {
+              "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1/3ce0bbbe-5a06-4356-8709-682cb2a3b132": "fnv1a32:9193a576"
+            }
+          },
+          "proposalId": "proposal:stroke-edit-proof:cff8af64",
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "schema": "INK-CHAT-EDIT-PROPOSAL",
+          "state": "PROPOSED",
+          "stateFingerprint": "fnv1a32:b65ab694",
+          "task": {
+            "arguments": {
+              "action": "move-node",
+              "index": 1,
+              "x": 185,
+              "y": 105
+            },
+            "expected": null,
+            "operation": "stroke.edit.v1",
+            "schema": "INK-CHAT-EDIT-TASK",
+            "targets": [
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              }
+            ],
+            "taskId": "stroke-edit-proof",
+            "version": 1
+          },
+          "version": 1
+        }
+      }
+    },
+    "editApproved": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "edit.approve",
+      "status": "APPROVED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "action": "approve",
+        "ok": true,
+        "result": {
+          "approvalToken": "INK-LOCAL-APPROVAL:proposal:stroke-edit-proof:cff8af64:3",
+          "approved": true,
+          "expected": {
+            "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+            "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+            "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+            "targetFingerprints": {
+              "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1/3ce0bbbe-5a06-4356-8709-682cb2a3b132": "fnv1a32:9193a576"
+            }
+          },
+          "proposalId": "proposal:stroke-edit-proof:cff8af64",
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "schema": "INK-CHAT-EDIT-PROPOSAL",
+          "state": "APPROVED",
+          "stateFingerprint": "fnv1a32:b65ab694",
+          "task": {
+            "arguments": {
+              "action": "move-node",
+              "index": 1,
+              "x": 185,
+              "y": 105
+            },
+            "expected": null,
+            "operation": "stroke.edit.v1",
+            "schema": "INK-CHAT-EDIT-TASK",
+            "targets": [
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              }
+            ],
+            "taskId": "stroke-edit-proof",
+            "version": 1
+          },
+          "version": 1
+        }
+      }
+    },
+    "editExecuted": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "edit.execute",
+      "status": "EXECUTED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "createdRefs": [],
+      "changedRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "historyReceipt": {
+        "afterUndoCount": 3,
+        "beforeUndoCount": 2,
+        "latestLabel": "CHAT edit Stroke"
+      },
+      "revisionReceipt": {
+        "currentRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+        "documentFingerprint": "fnv1a32:f03b732c",
+        "inspectedRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70"
+      },
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "action": "execute",
+        "ok": true,
+        "result": {
+          "changed": true,
+          "controllerResult": {
+            "action": "move-node",
+            "pointCount": 5,
+            "resultRefs": [
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              }
+            ]
+          },
+          "history": {
+            "afterUndoCount": 3,
+            "beforeUndoCount": 2,
+            "latestLabel": "CHAT edit Stroke"
+          },
+          "ok": true,
+          "operation": "stroke.edit.v1",
+          "proposalId": "proposal:stroke-edit-proof:cff8af64",
+          "revision": {
+            "currentRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+            "documentFingerprint": "fnv1a32:f03b732c",
+            "inspectedRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70"
+          },
+          "schema": "INK-CHAT-EDIT-RESULT",
+          "state": "EXECUTED",
+          "targets": [
+            {
+              "ref": {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              },
+              "stateFingerprint": "fnv1a32:9193a576",
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ]
+            }
+          ],
+          "taskId": "stroke-edit-proof",
+          "version": 1
+        }
+      }
+    },
+    "previewEdited": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "preview.capture",
+      "status": "COMPLETED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [
+        {
+          "background": {
+            "color": "#fffef9",
+            "included": true
+          },
+          "bounds": {
+            "h": 244.1,
+            "w": 351.2,
+            "x": 74.4,
+            "y": 76.5
+          },
+          "byteLength": 21363,
+          "documentFingerprint": "fnv1a32:f03b732c",
+          "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+          "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+          "format": "png",
+          "handleId": "ink-output-v1:51ab6330",
+          "kind": "preview",
+          "mimeType": "image/png",
+          "objectRefs": [],
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+          "persistence": "NONE",
+          "pixelSize": {
+            "height": 245,
+            "width": 352
+          },
+          "renderFingerprint": "fnv1a32:2013f3f0",
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "schema": "INK_OUTPUT_HANDLE",
+          "scope": "content",
+          "transport": "INTERNAL_EPHEMERAL",
+          "version": 1
+        }
+      ],
+      "diagnostics": [],
+      "result": {
+        "bounds": {
+          "h": 244.1,
+          "w": 351.2,
+          "x": 74.4,
+          "y": 76.5
+        },
+        "byteLength": 21363,
+        "handleId": "ink-output-v1:51ab6330",
+        "persistence": "NONE",
+        "pixelSize": {
+          "height": 245,
+          "width": 352
+        },
+        "scope": "content",
+        "transport": "INTERNAL_EPHEMERAL"
+      }
+    },
+    "eraseProposed": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "edit.propose",
+      "status": "PROPOSED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "action": "propose",
+        "ok": true,
+        "result": {
+          "approvalToken": null,
+          "approved": false,
+          "expected": {
+            "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+            "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+            "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+            "targetFingerprints": {
+              "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1/3ce0bbbe-5a06-4356-8709-682cb2a3b132": "fnv1a32:9193a576"
+            }
+          },
+          "proposalId": "proposal:stroke-erase-proof:5190c735",
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "schema": "INK-CHAT-EDIT-PROPOSAL",
+          "state": "PROPOSED",
+          "stateFingerprint": "fnv1a32:9af39970",
+          "task": {
+            "arguments": {
+              "center": {
+                "x": 225,
+                "y": 180
+              },
+              "radius": 18
+            },
+            "expected": null,
+            "operation": "stroke.erase.v1",
+            "schema": "INK-CHAT-EDIT-TASK",
+            "targets": [
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              }
+            ],
+            "taskId": "stroke-erase-proof",
+            "version": 1
+          },
+          "version": 1
+        }
+      }
+    },
+    "eraseApproved": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "edit.approve",
+      "status": "APPROVED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "action": "approve",
+        "ok": true,
+        "result": {
+          "approvalToken": "INK-LOCAL-APPROVAL:proposal:stroke-erase-proof:5190c735:4",
+          "approved": true,
+          "expected": {
+            "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+            "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+            "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+            "targetFingerprints": {
+              "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1/3ce0bbbe-5a06-4356-8709-682cb2a3b132": "fnv1a32:9193a576"
+            }
+          },
+          "proposalId": "proposal:stroke-erase-proof:5190c735",
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "schema": "INK-CHAT-EDIT-PROPOSAL",
+          "state": "APPROVED",
+          "stateFingerprint": "fnv1a32:9af39970",
+          "task": {
+            "arguments": {
+              "center": {
+                "x": 225,
+                "y": 180
+              },
+              "radius": 18
+            },
+            "expected": null,
+            "operation": "stroke.erase.v1",
+            "schema": "INK-CHAT-EDIT-TASK",
+            "targets": [
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              }
+            ],
+            "taskId": "stroke-erase-proof",
+            "version": 1
+          },
+          "version": 1
+        }
+      }
+    },
+    "eraseExecuted": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "edit.execute",
+      "status": "EXECUTED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        },
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "createdRefs": [],
+      "changedRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        },
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "historyReceipt": {
+        "afterUndoCount": 4,
+        "beforeUndoCount": 3,
+        "latestLabel": "CHAT erase Stroke"
+      },
+      "revisionReceipt": {
+        "currentRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+        "documentFingerprint": "fnv1a32:23fd0a0f",
+        "inspectedRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70"
+      },
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "action": "execute",
+        "ok": true,
+        "result": {
+          "changed": true,
+          "controllerResult": {
+            "center": {
+              "x": 225,
+              "y": 180
+            },
+            "createdRefs": [
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              },
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              }
+            ],
+            "erasedObjectId": "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+            "fragmentCount": 2,
+            "radius": 18,
+            "resultRefs": [
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              },
+              {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              }
+            ]
+          },
+          "history": {
+            "afterUndoCount": 4,
+            "beforeUndoCount": 3,
+            "latestLabel": "CHAT erase Stroke"
+          },
+          "ok": true,
+          "operation": "stroke.erase.v1",
+          "proposalId": "proposal:stroke-erase-proof:5190c735",
+          "revision": {
+            "currentRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+            "documentFingerprint": "fnv1a32:23fd0a0f",
+            "inspectedRevisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70"
+          },
+          "schema": "INK-CHAT-EDIT-RESULT",
+          "state": "EXECUTED",
+          "targets": [
+            {
+              "ref": {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              },
+              "stateFingerprint": "fnv1a32:c13c5ebf",
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "ref": {
+                "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+                "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+                "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+              },
+              "stateFingerprint": "fnv1a32:b1bd6095",
+              "worldMatrix": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0
+              ]
+            }
+          ],
+          "taskId": "stroke-erase-proof",
+          "version": 1
+        }
+      }
+    },
+    "context": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "context",
+      "status": "COMPLETED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        },
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        },
+        {
+          "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+          "objectId": "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e",
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+        }
+      ],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "active": {
+          "layer": {
+            "id": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+            "name": "圖層 1"
+          },
+          "page": {
+            "id": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+            "name": "頁面 1"
+          }
+        },
+        "bounds": {
+          "limits": {
+            "maxBytes": 98304,
+            "maxObjects": 96,
+            "maxRelationships": 192
+          },
+          "objects": {
+            "returned": 3,
+            "totalAvailable": 3,
+            "truncated": false
+          },
+          "outputBytes": 2990,
+          "relationships": {
+            "returned": 0,
+            "totalAvailable": 0,
+            "truncated": false
+          }
+        },
+        "contextFingerprint": "fnv1a32:96d9dcd8",
+        "document": {
+          "appVersion": "0.1",
+          "format": "INK",
+          "formatVersion": 4,
+          "id": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+          "pageCount": 1,
+          "title": "未命名作品"
+        },
+        "fingerprintAlgorithm": "fnv1a32-canonical-json",
+        "focus": {
+          "objectIds": []
+        },
+        "objects": [
+          {
+            "depth": 0,
+            "editability": {
+              "editable": true,
+              "objectProtected": false,
+              "protectedProperties": []
+            },
+            "geometry": {
+              "kind": "stroke",
+              "pointCount": 3,
+              "reference": {
+                "kind": "stroke",
+                "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b"
+              }
+            },
+            "name": "CHAT Pencil Proof",
+            "parentId": null,
+            "ref": {
+              "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+              "objectId": "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+              "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+            },
+            "renderOrder": 1,
+            "semantic": {
+              "constraintIds": [],
+              "dependencyIds": [],
+              "editableParameterKeys": [],
+              "protectedProperties": [],
+              "role": null
+            },
+            "structure": {
+              "ancestorIds": [],
+              "effectiveLocked": false,
+              "effectiveOpacity": 0.76,
+              "effectiveVisible": true,
+              "interactionExposed": true
+            },
+            "type": "stroke"
+          },
+          {
+            "depth": 0,
+            "editability": {
+              "editable": true,
+              "objectProtected": false,
+              "protectedProperties": []
+            },
+            "geometry": {
+              "kind": "stroke",
+              "pointCount": 3,
+              "reference": {
+                "kind": "stroke",
+                "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4"
+              }
+            },
+            "name": "CHAT Pencil Proof",
+            "parentId": null,
+            "ref": {
+              "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+              "objectId": "df25bcba-0416-4f28-890f-9ba4f80492f4",
+              "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+            },
+            "renderOrder": 0,
+            "semantic": {
+              "constraintIds": [],
+              "dependencyIds": [],
+              "editableParameterKeys": [],
+              "protectedProperties": [],
+              "role": null
+            },
+            "structure": {
+              "ancestorIds": [],
+              "effectiveLocked": false,
+              "effectiveOpacity": 0.76,
+              "effectiveVisible": true,
+              "interactionExposed": true
+            },
+            "type": "stroke"
+          },
+          {
+            "depth": 0,
+            "editability": {
+              "editable": true,
+              "objectProtected": false,
+              "protectedProperties": []
+            },
+            "geometry": {
+              "kind": "stroke",
+              "pointCount": 5,
+              "reference": {
+                "kind": "stroke",
+                "objectId": "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e"
+              }
+            },
+            "name": "CHAT Wet Brush Proof",
+            "parentId": null,
+            "ref": {
+              "layerId": "6368ab86-39b0-4cfa-ac25-ec7caf8b60c1",
+              "objectId": "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e",
+              "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf"
+            },
+            "renderOrder": 2,
+            "semantic": {
+              "constraintIds": [],
+              "dependencyIds": [],
+              "editableParameterKeys": [],
+              "protectedProperties": [],
+              "role": null
+            },
+            "structure": {
+              "ancestorIds": [],
+              "effectiveLocked": false,
+              "effectiveOpacity": 0.8,
+              "effectiveVisible": true,
+              "interactionExposed": true
+            },
+            "type": "stroke"
+          }
+        ],
+        "relationships": {
+          "edges": [],
+          "source": "object.semantic",
+          "totalAvailable": 0,
+          "truncated": false
+        },
+        "revision": {
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70"
+        },
+        "schema": "INK-AI-DOCUMENT-BRIDGE",
+        "selection": {
+          "objectIds": [],
+          "unresolvedObjectIds": []
+        },
+        "version": 1
+      }
+    },
+    "history": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "history.inspect",
+      "status": "COMPLETED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [],
+      "diagnostics": [],
+      "result": {
+        "applied": 4,
+        "canRedo": false,
+        "canUndo": true,
+        "entries": [
+          {
+            "captureMode": "scoped",
+            "label": "CHAT create Stroke",
+            "objectIds": [
+              "3ce0bbbe-5a06-4356-8709-682cb2a3b132"
+            ],
+            "patchCount": 1,
+            "storedBytes": 648,
+            "targetCount": 1
+          },
+          {
+            "captureMode": "scoped",
+            "label": "CHAT create Stroke",
+            "objectIds": [
+              "fe6b9227-b470-48f7-b9f5-dce91b1eeb2e"
+            ],
+            "patchCount": 1,
+            "storedBytes": 684,
+            "targetCount": 1
+          },
+          {
+            "captureMode": "scoped",
+            "label": "CHAT edit Stroke",
+            "objectIds": [],
+            "patchCount": 2,
+            "storedBytes": 330,
+            "targetCount": 1
+          },
+          {
+            "captureMode": "scoped",
+            "label": "CHAT erase Stroke",
+            "objectIds": [
+              "0975bc86-b00e-4fdc-ba76-114d2821be7b",
+              "3ce0bbbe-5a06-4356-8709-682cb2a3b132",
+              "df25bcba-0416-4f28-890f-9ba4f80492f4"
+            ],
+            "patchCount": 3,
+            "storedBytes": 2174,
+            "targetCount": 1
+          }
+        ],
+        "limit": 30,
+        "pending": false,
+        "retainedCount": 4,
+        "stats": {
+          "capturedBytes": 2591,
+          "fullEntries": 0,
+          "limit": 30,
+          "metrics": {
+            "fullBegins": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0,
+            "scopedBegins": 4,
+            "scopedCapturedBytes": 2591
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches",
+          "patchCount": 7,
+          "redo": 0,
+          "scopedEntries": 4,
+          "scopedRatio": 1,
+          "storedBytes": 3836,
+          "undo": 4
+        }
+      }
+    },
+    "preview": {
+      "schema": "INK_AGENT_RESULT",
+      "version": 1,
+      "action": "preview.capture",
+      "status": "COMPLETED",
+      "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+      "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+      "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+      "targetRefs": [],
+      "createdRefs": [],
+      "changedRefs": [],
+      "historyReceipt": null,
+      "revisionReceipt": null,
+      "provenanceReceipt": null,
+      "outputHandles": [
+        {
+          "background": {
+            "color": "#fffef9",
+            "included": true
+          },
+          "bounds": {
+            "h": 244.1,
+            "w": 351.2,
+            "x": 74.4,
+            "y": 76.5
+          },
+          "byteLength": 20869,
+          "documentFingerprint": "fnv1a32:23fd0a0f",
+          "documentId": "08f4d2f0-b8b9-40e4-8c9b-2f4cfe9881df",
+          "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+          "format": "png",
+          "handleId": "ink-output-v1:f7507d8c",
+          "kind": "preview",
+          "mimeType": "image/png",
+          "objectRefs": [],
+          "pageId": "c7f80122-cb58-4368-9b30-7e42d6d89ccf",
+          "persistence": "NONE",
+          "pixelSize": {
+            "height": 245,
+            "width": 352
+          },
+          "renderFingerprint": "fnv1a32:1442ea99",
+          "revisionId": "ink-rev:24765281:r1:d2880ffe:e986fe70",
+          "schema": "INK_OUTPUT_HANDLE",
+          "scope": "content",
+          "transport": "INTERNAL_EPHEMERAL",
+          "version": 1
+        }
+      ],
+      "diagnostics": [],
+      "result": {
+        "bounds": {
+          "h": 244.1,
+          "w": 351.2,
+          "x": 74.4,
+          "y": 76.5
+        },
+        "byteLength": 20869,
+        "handleId": "ink-output-v1:f7507d8c",
+        "persistence": "NONE",
+        "pixelSize": {
+          "height": 245,
+          "width": 352
+        },
+        "scope": "content",
+        "transport": "INTERNAL_EPHEMERAL"
+      }
+    }
+  }
 }
