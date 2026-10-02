@@ -2,10 +2,11 @@
   "schema": "ink-ui-checklist-evidence-target",
   "version": 1,
   "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
-  "target_sha": "306ff4e5364eeebe66fd811f5d93693bc96a3575",
-  "scope": "Issue #92 evidence-only / UI browser suite only",
+  "target_sha": "f3f7aaeaa636073d216c23d825d23e344b064c62",
+  "scope": "remaining whole-UI fidelity DEV exact-candidate broad UI regression",
   "suites": [
     "ui"
   ],
-  "central_runtime": false
+  "central_runtime": false,
+  "run_generation": 1
 }
