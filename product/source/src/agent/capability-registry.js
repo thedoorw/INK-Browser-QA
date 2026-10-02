@@ -1,4 +1,12 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS } from '../editor/chat-bounded-edit.js';
+import {
+  CHAT_EDIT_OPERATIONS,
+  CHAT_PAINT_SESSION_BRUSH_IDS,
+  CHAT_IMAGE_ADJUSTMENT_TYPES,
+  CHAT_IMAGE_FILTER_TYPES,
+  CHAT_IMAGE_EFFECT_TYPES,
+  CHAT_IMAGE_BLEND_MODES,
+  CHAT_IMAGE_LIQUIFY_OPERATION_TYPES
+} from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -10,7 +18,7 @@ export const INK_CAPABILITY_INPUT_SCHEMA_KEYWORDS = Object.freeze([
 ]);
 
 export const INK_CAPABILITY_TARGET_TYPES = Object.freeze([
-  'Document', 'Page', 'Layer', 'Object', 'Path',
+  'Document', 'Page', 'Layer', 'Object', 'Path', 'Image',
   'ReferenceImage', 'INK_OUTPUT_HANDLE', 'Revision', 'None'
 ]);
 
@@ -198,6 +206,58 @@ const editSchemas = {
       }, ['brushId', 'samples'], 'One existing Brush Engine stroke.'), 'Bounded Paint Session strokes.', { minItems: 1, maxItems: 64 })
     }, ['strokes'], 'Total samples are bounded to 16,384. Uses existing StrokeSessionRecorder → replayStrokeSession → History/Renderer authority.'),
     0, 0
+  ),
+  'image.adjustment.add.v1': editTaskSchema(
+    { type: 'string', const: 'image.adjustment.add.v1', description: 'Append one existing non-destructive adjustment to an editable raster image.' },
+    obj({
+      type: { type: 'string', enum: [...CHAT_IMAGE_ADJUSTMENT_TYPES], description: 'Qualified existing adjustment type.' },
+      params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing adjustment parameters; maximum 8 KiB / depth 4 / 64 keys.' },
+      opacity: num('Adjustment opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, ['type'], 'Existing image-core createAdjustment() arguments.'),
+    1
+  ),
+  'image.filter.add.v1': editTaskSchema(
+    { type: 'string', const: 'image.filter.add.v1', description: 'Append one existing non-destructive filter to an editable raster image.' },
+    obj({
+      type: { type: 'string', enum: [...CHAT_IMAGE_FILTER_TYPES], description: 'Qualified existing filter type.' },
+      params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing filter parameters; maximum 8 KiB / depth 4 / 64 keys.' },
+      opacity: num('Filter opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, ['type'], 'Existing image-core createFilter() arguments.'),
+    1
+  ),
+  'image.blend.set.v1': editTaskSchema(
+    { type: 'string', const: 'image.blend.set.v1', description: 'Set the existing image blendMode through bounded History mutation.' },
+    obj({
+      mode: { type: 'string', enum: [...CHAT_IMAGE_BLEND_MODES], description: 'Existing supported image blend mode.' }
+    }, ['mode'], 'Image blend mode arguments.'),
+    1
+  ),
+  'image.effect.add.v1': editTaskSchema(
+    { type: 'string', const: 'image.effect.add.v1', description: 'Append one existing layer effect to an editable raster image.' },
+    obj({
+      type: { type: 'string', enum: [...CHAT_IMAGE_EFFECT_TYPES], description: 'Existing supported layer effect type.' },
+      params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing effect parameters; maximum 8 KiB / depth 4 / 64 keys.' },
+      opacity: num('Effect opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, ['type'], 'Existing image-core createLayerEffect() arguments.'),
+    1
+  ),
+  'image.liquify.add.v1': editTaskSchema(
+    { type: 'string', const: 'image.liquify.add.v1', description: 'Append one existing Liquify filter with bounded operations to an editable raster image.' },
+    obj({
+      operations: arr(obj({
+        type: { type: 'string', enum: [...CHAT_IMAGE_LIQUIFY_OPERATION_TYPES], description: 'Existing Liquify operation type.' },
+        x: num('Operation center X.'),
+        y: num('Operation center Y.'),
+        radius: num('Operation radius.', { minimum: 1, maximum: 1000000 }),
+        strength: num('Operation strength.', { minimum: -1, maximum: 1 }),
+        dx: num('Forward-warp X delta.'),
+        dy: num('Forward-warp Y delta.'),
+        angle: num('Optional twirl angle.', { minimum: -36000, maximum: 36000 })
+      }, ['type','x','y'], 'One bounded existing Liquify operation.'), 'Liquify operations.', { minItems: 1, maxItems: 32 }),
+      opacity: num('Liquify filter opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      maxWork: { type: 'integer', minimum: 1, maximum: 50000000, description: 'Optional existing Liquify work ceiling.' }
+    }, ['operations'], 'Existing image-core createLiquifyFilter() arguments. Freeze-mask pixel arrays are intentionally excluded.'),
+    1
   ),
   'path.edit.v1': editTaskSchema(
     { type: 'string', const: 'path.edit.v1', description: 'Edit one Path through the existing PathEditController.' },
@@ -846,19 +906,26 @@ primary.push(descriptor({
 
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
+  const imageOnly = operation.startsWith('image.');
   const zeroTargetCreate = ['path.create.v1', 'paint.session.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
   const operationConstraints = zeroTargetCreate
     ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
     : operation === 'text.edit.v1'
       ? ['Target must resolve to one editable visible unlocked Text object.']
-      : pathOnly || operation === 'boolean.apply.v1'
-        ? ['Targets must resolve to editable visible unlocked Path objects.']
-        : ['Targets must resolve to editable visible unlocked objects.'];
+      : imageOnly
+        ? ['Target must resolve to exactly one editable visible unlocked native Image with rasterState.colorRaster. ReferenceImage and src-only images are rejected.']
+        : pathOnly || operation === 'boolean.apply.v1'
+          ? ['Targets must resolve to editable visible unlocked Path objects.']
+          : ['Targets must resolve to editable visible unlocked objects.'];
   if (operation === 'boolean.apply.v1') operationConstraints.push('All 2+ Path targets must share the same layer and structural parent.');
   if (operation === 'group.create.v1') operationConstraints.push('All targets must share the same layer and structural parent.');
   if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
   if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
   if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
+  if (imageOnly) operationConstraints.push('Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
+  if (operation === 'image.adjustment.add.v1') operationConstraints.push('Initial qualified adjustment allowlist: brightnessContrast, levels, curves, hueSaturation.');
+  if (operation === 'image.filter.add.v1') operationConstraints.push('Initial qualified filter allowlist: gaussianBlur, sharpen, noiseGrain, textureOverlay. Liquify uses its dedicated operation.');
+  if (operation === 'image.liquify.add.v1') operationConstraints.push('Maximum 32 operations; no arbitrary freeze-mask pixel arrays in v0.1.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
   if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
   if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
@@ -891,12 +958,24 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
       ? (operation === 'component.definition.duplicate.v1' ? ['Document'] : ['Page'])
       : operation === 'text.edit.v1'
         ? ['Object']
-        : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
+        : imageOnly
+          ? ['Image']
+          : (pathOnly || operation === 'boolean.apply.v1' ? ['Path'] : ['Object']),
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
     examples: operation === 'paint.session.create.v1'
       ? [{ taskId: 'paint-session-1', operation, targets: [], arguments: { name: 'CHAT Paint Session', seed: 17, strokes: [{ brushId: 'pencil', color: '#202020', samples: [{ x: 20, y: 20, pressure: .3, timestamp: 0 }, { x: 120, y: 80, pressure: .8, timestamp: 24 }] }] } }]
+      : operation === 'image.adjustment.add.v1'
+        ? [{ taskId: 'image-adjust-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'brightnessContrast', params: { brightness: 12, contrast: 8 }, opacity: 1 } }]
+      : operation === 'image.filter.add.v1'
+        ? [{ taskId: 'image-filter-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'gaussianBlur', params: { radius: 2 }, opacity: 1 } }]
+      : operation === 'image.blend.set.v1'
+        ? [{ taskId: 'image-blend-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { mode: 'multiply' } }]
+      : operation === 'image.effect.add.v1'
+        ? [{ taskId: 'image-effect-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'dropShadow', params: { color: '#000000', opacity: .5, offsetX: 4, offsetY: 4, blur: 6 } } }]
+      : operation === 'image.liquify.add.v1'
+        ? [{ taskId: 'image-liquify-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { operations: [{ type: 'twirl', x: 32, y: 24, radius: 18, strength: .4 }] } }]
       : operation === 'object.translate.v1'
       ? [{ taskId: 'translate-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'object-1' }], arguments: { dx: 10, dy: 5 } }]
       : operation === 'path.repaint.v1'
