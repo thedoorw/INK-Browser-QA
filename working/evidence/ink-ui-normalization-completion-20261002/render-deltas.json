@@ -1,0 +1,112 @@
+[
+  {
+    "state": "active",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "tools-single",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "dock-collapsed",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      484
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "dock-expanded",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "reference",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "reference-details",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "edit-menu",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "layers-normal",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "preferences",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      1280,
+      1023
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "short-single",
+    "pixelDifferenceBounds": [
+      2,
+      4,
+      960,
+      499
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  },
+  {
+    "state": "compact",
+    "pixelDifferenceBounds": [
+      16,
+      663,
+      45,
+      707
+    ],
+    "interpretation": "difference location only, not acceptance/fidelity score; behavior probes can alter later-state document history/selection"
+  }
+]

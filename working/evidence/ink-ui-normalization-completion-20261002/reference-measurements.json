@@ -1,0 +1,107 @@
+{
+  "sourceRaster": [
+    {
+      "file": "01-ps-1.png",
+      "sha256": "9bb8f329df55f6e6617e32e60a138c6cd21451509465073d4821802482815f76",
+      "state": "dual",
+      "swatchSize": [
+        25,
+        25
+      ],
+      "originOffset": [
+        16,
+        16
+      ],
+      "overlap": [
+        9,
+        9
+      ]
+    },
+    {
+      "file": "02-PS-2.png",
+      "sha256": "b08f33d05ae8339a6538e46ef045b7bc8f60540543865d32c1589ce115758310",
+      "state": "dual",
+      "swatchSize": [
+        25,
+        25
+      ],
+      "originOffset": [
+        16,
+        16
+      ],
+      "overlap": [
+        9,
+        9
+      ]
+    },
+    {
+      "file": "03-PS-3.png",
+      "sha256": "62c598d4328b740db59938761cef3307da526337073239edcafe9b8856b648ca",
+      "state": "dual",
+      "swatchSize": [
+        25,
+        25
+      ],
+      "originOffset": [
+        16,
+        16
+      ],
+      "overlap": [
+        9,
+        9
+      ]
+    }
+  ],
+  "single": {
+    "status": "REFERENCE_MISSING",
+    "candidateSize": [
+      18,
+      18
+    ],
+    "candidateOriginOffset": [
+      10,
+      10
+    ],
+    "candidateOverlap": [
+      8,
+      8
+    ],
+    "basis": "retained INK baseline, not original single PS measurement"
+  },
+  "dualPS1": {
+    "foregroundInclusive": [
+      17,
+      383,
+      41,
+      407
+    ],
+    "backgroundInclusive": [
+      33,
+      399,
+      57,
+      423
+    ]
+  },
+  "windowPS1": {
+    "threshold": "min(R,G,B)>=145; source raster, not scaled preview",
+    "minimizeInclusive": [
+      1183,
+      11,
+      1192,
+      13
+    ],
+    "restoreInclusive": [
+      1210,
+      5,
+      1221,
+      14
+    ],
+    "closeInclusive": [
+      1248,
+      5,
+      1257,
+      12
+    ]
+  },
+  "limitation": "Source image raster coordinates cannot establish OS/browser/DPR settings of the original Photoshop session; INK browser measurements use stated environment."
+}

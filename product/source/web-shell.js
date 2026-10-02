@@ -65,7 +65,7 @@
     { id: 'specialist', label: '專業工具', icon: 'i-settings', kind: 'inspector', tab: 'studio', group: 'specialist' }
   ]);
   const PANEL_GROUPS = Object.freeze([
-    { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'adjustments', 'specialist'].map(id => PANEL_DEFS.find(def => def.id === id)) },
+    { id: 'overview', label: '外觀', items: ['navigator', 'properties', 'color', 'adjustments'].map(id => PANEL_DEFS.find(def => def.id === id)) },
     { id: 'creative', label: '創作', items: ['libraries', 'reference', 'compose', 'chat', 'revision'].map(id => PANEL_DEFS.find(def => def.id === id)) },
     { id: 'structure', label: '文件', items: ['layers', 'history', 'channels', 'pages'].map(id => PANEL_DEFS.find(def => def.id === id)) }
   ]);
@@ -410,6 +410,13 @@
     const root = state.contextualRoot || document.querySelector('#contextualOptions');
     if (!app || !root) return;
     const descriptor = contextualDescriptor(app);
+    const changedTool = root.dataset.contextTool && root.dataset.contextTool !== descriptor.tool;
+    if (changedTool && !['blender', 'smudge'].includes(descriptor.tool) && state.stackPanels.overview === 'specialist') {
+      state.stackPanels.overview = 'properties';
+      if (state.activePanel === 'specialist') state.activePanel = 'properties';
+      showInspector(PANEL_DEFS.find(def => def.id === 'properties'));
+      syncSoon();
+    }
     root.dataset.contextMode = descriptor.mode;
     root.dataset.contextTool = descriptor.tool;
     const use = document.querySelector('#contextualToolUse');
@@ -1798,7 +1805,8 @@
       (index ? '<div class="panel-stack-splitter" data-panel-stack-splitter="' + group.id + '" role="separator" aria-orientation="horizontal"></div>' : '') +
       '<section class="panel-stack-region" data-panel-stack-group="' + group.id + '">' +
       '<div class="panel-stack-tabs" role="tablist" aria-label="' + group.label + '">' +
-      group.items.filter(def => !['specialist', 'adjustments'].includes(def.id)).map(def => '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="' + def.id + '" aria-selected="false">' + def.label + '</button>').join('') +
+      group.items.map(def => '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="' + def.id + '" aria-selected="false">' + def.label + '</button>').join('') +
+      (group.id === 'overview' ? '<button type="button" role="tab" class="panel-stack-tab" data-panel-stack-target="specialist" aria-selected="false" hidden>診斷</button>' : '') +
       '<button type="button" class="panel-stack-options" data-stack-options="' + group.id + '" title="面板選項" aria-label="面板選項"><svg viewBox="0 0 10 7"><use href="#i-panel-menu"/></svg></button></div>' +
       '<div class="panel-stack-body" data-panel-stack-body="' + group.id + '"></div></section>'
     ).join('');
@@ -1886,9 +1894,10 @@
       const group = PANEL_GROUPS.find(item => item.id === region.dataset.panelStackGroup);
       const selected = state.stackPanels[group.id];
       region.dataset.stackPanel = selected;
-      region.classList.toggle('active', group.items.some(def => def.id === active));
+      region.classList.toggle('active', group.items.some(def => def.id === active) || (group.id === 'overview' && active === 'specialist'));
       region.querySelectorAll('[data-panel-stack-target]').forEach(tab => {
         const chosen = tab.dataset.panelStackTarget === selected;
+        if (tab.dataset.panelStackTarget === 'specialist') tab.hidden = !chosen;
         tab.classList.toggle('active', chosen);
         tab.setAttribute('aria-selected', String(chosen));
         if (tab.dataset.panelStackTarget === 'reference') tab.textContent = chosen && runtime()?.creativeWorkspace?.stage === 'edit' ? '編輯' : '參考';
@@ -1900,6 +1909,7 @@
             ? ['ai', 'studio'].includes(section.dataset.content) && section.dataset.content === state.root.dataset.panel
             : section.dataset.content === selected;
         section.classList.toggle('stack-visible', visible);
+        section.setAttribute('aria-hidden', String(!visible));
       });
       if (group.id === 'creative') {
         const creative = region.querySelector('#creativeWorkspace');
@@ -2019,7 +2029,8 @@
     menu.setAttribute('role', 'menu');
     menu.setAttribute('aria-label', '視窗');
     menu.hidden = true;
-    menu.innerHTML = PANEL_GROUPS.map(group =>
+    const windowGroups = [...PANEL_GROUPS, { id: 'diagnostics', label: '診斷', items: PANEL_DEFS.filter(def => def.id === 'specialist') }];
+    menu.innerHTML = windowGroups.map(group =>
       '<div class="panel-window-group" data-panel-group="' + group.id + '">' +
       '<div class="panel-window-group-label">' + group.label + '</div>' +
       group.items.map(def => buttonMarkup(def, true)).join('') +
@@ -2065,7 +2076,7 @@
   function isPanelOpen(id) {
     if (isDesktop()) {
       if (state.activePanel === 'collapsed') return false;
-      return Boolean(document.querySelector('[data-panel-stack-target="' + id + '"]')) || Object.values(state.stackPanels).includes(id);
+      return Object.values(state.stackPanels).includes(id);
     }
     return currentPanel() === id;
   }
@@ -2112,6 +2123,7 @@
     if (!def || !runtime()) return false;
     const group = PANEL_GROUPS.find(item => item.items.includes(def));
     if (group) state.stackPanels[group.id] = id;
+    else if (id === 'specialist') state.stackPanels.overview = id;
     if (currentPanel() === id && !(def.kind === 'creative' && runtime()?.creativeWorkspace?.stage !== def.stage)) {
       // Properties must follow current selection even when its tab was already open.
       if (id === 'properties') showInspector(def);

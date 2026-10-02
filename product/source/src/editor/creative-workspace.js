@@ -265,19 +265,17 @@ export class CreativeWorkspaceController {
           <label class="creative-workspace-field"><span>臨界值</span><input type="number" data-workspace-input="threshold" value="128" min="0" max="255"></label>
           <div class="creative-workspace-actions"><button type="button" data-workspace-action="extract">直接擷取</button><button type="button" data-workspace-action="cancel-extract" disabled>取消</button></div>
           <label class="creative-workspace-field"><span>參考圖疊加</span><input type="range" data-workspace-input="overlay" min="0" max="1" step="0.1" value="0.5"></label>
-          <output data-workspace-output="extraction">本次尚未擷取。</output>
+          <output data-workspace-output="extraction" hidden></output>
           <details class="creative-structure-option">
             <summary>結構分析 <span>選用</span></summary>
-            <p>以直接擷取為預設；結構分析沿用既有多路徑與 Repeat 能力。</p>
-            <label class="creative-workspace-field"><span>Radial count</span><input type="number" data-workspace-input="structure-count" min="2" max="48" step="1" value="6"></label>
+            <label class="creative-workspace-field"><span>放射數量</span><input type="number" data-workspace-input="structure-count" min="2" max="48" step="1" value="6"></label>
             <button type="button" class="creative-workspace-primary" data-workspace-action="structure-reconstruct">分析並重建</button>
-            <output data-workspace-output="structure">Not executed.</output>
+            <output data-workspace-output="structure" hidden></output>
           </details>
           <details class="creative-structure-option workstation-capability-card">
             <summary>研究 → 創作 <span>唯讀</span></summary>
-            <p>顯示本機研究證據、視覺原則與創作限制；不自動連線或寫入創作記憶。</p>
             <button type="button" data-workspace-action="research-context-refresh">更新研究內容</button>
-            <output data-workspace-output="research-context">尚未查看研究內容。</output>
+            <output data-workspace-output="research-context" hidden></output>
           </details>
         </section>
         <section data-workspace-pane="edit" hidden>
@@ -495,19 +493,19 @@ export class CreativeWorkspaceController {
     if (this.extractionAbort) return null;
     const api = this.app?.extraction;
     if (!api?.decode || !api?.extract) {
-      this.setStatus('EXTRACTION_UNAVAILABLE', 'Extraction controller unavailable', 'error');
+      this.setStatus('EXTRACTION_UNAVAILABLE', '目前無法擷取參考圖', 'error');
       return null;
     }
     const file = this.root?.querySelector('[data-workspace-input="reference-file"]')?.files?.[0];
     const threshold = Number(this.root?.querySelector('[data-workspace-input="threshold"]')?.value ?? 128);
     if (!file) {
-      this.setStatus('EXTRACTION_REFERENCE_REQUIRED', 'Choose a reference image', 'error');
+      this.setStatus('EXTRACTION_REFERENCE_REQUIRED', '請先選擇參考圖', 'error');
       return null;
     }
     const controller = new AbortController();
     this.extractionAbort = controller;
     this.refresh();
-    this.setStatus('EXTRACTION_RUNNING', 'Extracting reference to editable Path', 'busy');
+    this.setStatus('EXTRACTION_RUNNING', '正在擷取參考圖', 'busy');
     try {
       const reference = await api.decode(file);
       this.lastReference = reference;
@@ -532,11 +530,11 @@ export class CreativeWorkspaceController {
       this.app.fitContent?.();
       const paths = result.diagnostics?.paths ?? result.paths?.length ?? 0;
       const nodes = result.diagnostics?.nodes ?? 0;
-      this.setStatus('EXTRACTION_COMPLETE', `${paths} paths · ${nodes} nodes · editable Path selected`, 'pass');
+      this.setStatus('EXTRACTION_COMPLETE', `已擷取 ${paths} 條路徑、${nodes} 個節點`, 'pass');
       return result;
     } catch (error) {
       const code = error?.code || 'EXTRACTION_FAILED';
-      this.setStatus(code, code === 'EXTRACTION_CANCELLED' ? 'Extraction cancelled' : (error?.message || 'Extraction failed'), code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
+      this.setStatus(code, code === 'EXTRACTION_CANCELLED' ? '已取消擷取' : '擷取失敗，請確認參考圖後重試', code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
       return null;
     } finally {
       this.extractionAbort = null;
@@ -548,12 +546,12 @@ export class CreativeWorkspaceController {
     if (this.extractionAbort) return null;
     const api = this.app?.extraction;
     if (!api?.decode || !api?.structure) {
-      this.setStatus('STRUCTURE_AWARE_UNAVAILABLE', '結構分析 controller unavailable', 'error');
+      this.setStatus('STRUCTURE_AWARE_UNAVAILABLE', '目前無法分析結構', 'error');
       return null;
     }
     const referenceObjectId = this.referenceObjectId();
     if (!referenceObjectId) {
-      this.setStatus('STRUCTURE_AWARE_DIRECT_REFERENCE_REQUIRED', 'Run 直接擷取 first so 結構分析 reuses the same visible reference', 'error');
+      this.setStatus('STRUCTURE_AWARE_DIRECT_REFERENCE_REQUIRED', '請先直接擷取參考圖', 'error');
       return null;
     }
     const file = this.root?.querySelector('[data-workspace-input="reference-file"]')?.files?.[0];
@@ -562,10 +560,10 @@ export class CreativeWorkspaceController {
     const controller = new AbortController();
     this.extractionAbort = controller;
     this.refresh();
-    this.setStatus('STRUCTURE_AWARE_RUNNING', 'Analyzing radial evidence and retaining complete sector Path set', 'busy');
+    this.setStatus('STRUCTURE_AWARE_RUNNING', '正在分析放射結構', 'busy');
     try {
       if (!this.lastReference) {
-        if (!file) throw Object.assign(new Error('Choose the same reference image used for 直接擷取'), { code: 'STRUCTURE_AWARE_REFERENCE_FILE_REQUIRED' });
+        if (!file) throw Object.assign(new Error('請選擇直接擷取時使用的參考圖'), { code: 'STRUCTURE_AWARE_REFERENCE_FILE_REQUIRED' });
         this.lastReference = await api.decode(file);
       }
       const result = await api.structure(
@@ -583,12 +581,12 @@ export class CreativeWorkspaceController {
         source: clone(this.lastReference.source || null)
       };
       this.app.fitContent?.();
-      this.setStatus('STRUCTURE_AWARE_COMPLETE', `count ${result.radialCount} · ${this.lastStructure.prototypePathCount} prototype Paths · linked Repeat`, 'pass');
+      this.setStatus('STRUCTURE_AWARE_COMPLETE', `已建立 ${result.radialCount} 個放射單元`, 'pass');
       this.refresh();
       return result;
     } catch (error) {
       const code = error?.code || 'STRUCTURE_AWARE_FAILED';
-      this.setStatus(code, error?.message || '結構分析 reconstruction failed', code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
+      this.setStatus(code, code === 'EXTRACTION_CANCELLED' ? '已取消分析' : code === 'STRUCTURE_AWARE_REFERENCE_FILE_REQUIRED' ? '請選擇直接擷取時使用的參考圖' : '結構分析失敗，請確認參考圖後重試', code === 'EXTRACTION_CANCELLED' ? 'info' : 'error');
       return null;
     } finally {
       this.extractionAbort = null;
@@ -605,15 +603,15 @@ export class CreativeWorkspaceController {
   changeOverlay(opacity) {
     const referenceObjectId = this.referenceObjectId();
     if (!referenceObjectId || !Number.isFinite(opacity)) {
-      this.setStatus('EXTRACTION_OVERLAY_UNAVAILABLE', 'Select an extracted Path or run extraction first', 'error');
+      this.setStatus('EXTRACTION_OVERLAY_UNAVAILABLE', '請先直接擷取，或選取已擷取的路徑', 'error');
       return false;
     }
     try {
       this.app.extraction.overlay(referenceObjectId, opacity);
-      this.setStatus('EXTRACTION_OVERLAY_UPDATED', `Reference opacity ${Math.round(opacity * 100)}%`, 'pass');
+      this.setStatus('EXTRACTION_OVERLAY_UPDATED', `參考圖透明度 ${Math.round(opacity * 100)}%`, 'pass');
       return true;
     } catch (error) {
-      this.setStatus(error?.code || 'EXTRACTION_OVERLAY_FAILED', error?.message || 'Overlay update failed', 'error');
+      this.setStatus(error?.code || 'EXTRACTION_OVERLAY_FAILED', '無法更新參考圖透明度，請重試', 'error');
       return false;
     }
   }
@@ -629,14 +627,16 @@ export class CreativeWorkspaceController {
       const diagnostics = this.lastExtraction?.diagnostics;
       const source = this.lastExtraction?.source;
       output.textContent = this.lastExtraction
-        ? `DIRECT · ${diagnostics?.paths ?? this.lastExtraction.pathIds.length} paths · ${diagnostics?.nodes ?? 0} nodes · ${source?.name || 'reference'} · ${this.lastExtraction.batchId}`
-        : (this.referenceObjectId() ? `Reference: ${this.referenceObjectId()}` : '本次尚未擷取。');
+        ? `已擷取 ${diagnostics?.paths ?? this.lastExtraction.pathIds.length} 條路徑`
+        : (this.referenceObjectId() ? '已載入參考圖' : '');
+      output.hidden = !output.textContent;
     }
     const structure = this.root.querySelector('[data-workspace-output="structure"]');
     if (structure) {
       structure.textContent = this.lastStructure
-        ? `OPTIONAL · count ${this.lastStructure.radialCount} · prototype ${this.lastStructure.prototypePathCount} paths / ${this.lastStructure.prototypeDiagnostics?.nodes ?? 0} nodes · mask IoU ${Number(this.lastStructure.maskIoU ?? 0).toFixed(3)} · ${this.lastStructure.repeatId}`
-        : 'Not executed. 直接擷取 remains active.';
+        ? `已建立 ${this.lastStructure.radialCount} 個放射單元`
+        : '';
+      structure.hidden = !structure.textContent;
     }
     const structureButton = this.root.querySelector('[data-workspace-action="structure-reconstruct"]');
     if (structureButton) structureButton.disabled = Boolean(this.extractionAbort) || !this.referenceObjectId();
@@ -1132,9 +1132,10 @@ export class CreativeWorkspaceController {
     const researchOutput = this.root?.querySelector('[data-workspace-output="research-context"]');
     if (researchOutput) {
       const research = this.lastResearchCreationContext;
-      if (!research) researchOutput.textContent = 'Research advisory provider ready · no remote fetch.';
-      else if (research.status === 'UNAVAILABLE') researchOutput.textContent = '研究 → 創作 · UNAVAILABLE';
-      else researchOutput.textContent = `Evidence ${research.selectedResearchEvidence?.length || 0} · Principles ${research.derivedPrinciples?.length || 0} · Constraints ${research.derivedCreativeConstraints?.length || 0} · unresolved ${research.unresolvedEvidence?.length || 0} · READ ONLY`;
+      researchOutput.hidden = !research;
+      if (!research) researchOutput.textContent = '';
+      else if (research.status === 'UNAVAILABLE') researchOutput.textContent = '目前沒有研究內容';
+      else researchOutput.textContent = `參考資料 ${research.selectedResearchEvidence?.length || 0} 項 · 視覺原則 ${research.derivedPrinciples?.length || 0} 項 · 創作限制 ${research.derivedCreativeConstraints?.length || 0} 項`;
     }
   }
 

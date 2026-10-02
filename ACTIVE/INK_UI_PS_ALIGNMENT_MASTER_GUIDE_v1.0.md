@@ -2,7 +2,7 @@
 
 STATUS: ACTIVE / CANONICAL UI DESIGN + INSPECTION GUIDE
 DATE: 2026-09-30
-LAST_UPDATED: 2026-10-01
+LAST_UPDATED: 2026-10-02
 PROGRAM: INK-UI-PHOTOSHOP-ALIGNED-IMPLEMENTATION-001
 
 ## 1. Purpose
@@ -152,6 +152,8 @@ reset to default colors
 ```
 
 Use the existing INK color state authority. Do not create a second color owner.
+
+Single and dual Tools share this semantic composition but use separate layout-state size and origin-offset tokens. Canonical measured geometry and missing-reference limitations are maintained in Dataset §8. A shared primitive does not imply equal swatch dimensions in different layout states.
 
 Options Bar may expose a color control only when the active tool needs contextual color adjustment.
 
@@ -785,3 +787,4 @@ Functional categories govern all instances; typography, grayscale and separators
 ## 37. Measured modular baseline — 2026-10-01
 See [functional classification and measured inventory](../working/INK_UI_PS_MODULAR_CLASSIFICATION_20261001.md). Six observed functional text roles are not six sizes or official Adobe classes. Official UI font sizing/Spectrum plugin guidance and native screenshot measurements are separate authorities. Initial INK semantic palette has15 gray tokens/13 unique values; full rendered count is not established. Native PS panel junction has separate structural/raster treatment; USER light-theme junction role must remain distinct from ordinary internal separators.
 Preferences width525/543 across categories was actually reproduced; previous one-category width evidence does not close invariance. UIR-06 toolbar remains open. CSS fix1c0253d viewport-anchors width and reuses common round range thumb; current render evidence is tracked in the baseline report, not inferred from source.
+

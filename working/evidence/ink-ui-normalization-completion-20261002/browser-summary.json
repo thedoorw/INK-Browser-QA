@@ -1,0 +1,560 @@
+{
+  "environment": {
+    "viewport": "1280x1024",
+    "DPR": 1,
+    "browser": "153.0.8010.0",
+    "font": "Noto Sans TC 400 (QA-only font registration)",
+    "rendering": "Canvas fallback / CPU rasterization for screenshot stability",
+    "source": "candidate"
+  },
+  "baseline": "f7e387c2977b3c69c160356bd368b4f387c602c2",
+  "beforeStates": 22,
+  "afterStates": 26,
+  "checks": [
+    {
+      "name": "SUP-06 Object menu visible mnemonic follows menu class",
+      "ok": true
+    },
+    {
+      "name": "dual layout swatch primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 25,
+          "height": 25
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 25,
+          "height": 25
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "dual left/right chevrons share 7x5 primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 25,
+          "height": 25
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 25,
+          "height": 25
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "single layout swatch primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "single left/right chevrons share 7x5 primitive",
+      "ok": true,
+      "data": [
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": "tool-color background-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "parent": "tool-colors",
+          "width": 18,
+          "height": 18
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        },
+        {
+          "class": null,
+          "parent": "edge-chevron",
+          "width": 7,
+          "height": 5
+        }
+      ]
+    },
+    {
+      "name": "All visible stack tabs use 28px grammar",
+      "ok": true
+    },
+    {
+      "name": "single Tools swatches/utilities contained",
+      "ok": true,
+      "data": [
+        {
+          "class": "tool-colors",
+          "inside": true
+        },
+        {
+          "class": "color-utility color-reset",
+          "inside": true
+        },
+        {
+          "class": "color-utility color-swap",
+          "inside": true
+        },
+        {
+          "class": "tool-color background-swatch",
+          "inside": true
+        },
+        {
+          "class": "tool-color foreground-swatch",
+          "inside": true
+        },
+        {
+          "class": "tool-bottom-utilities",
+          "inside": true
+        }
+      ]
+    },
+    {
+      "name": "SUP-01 Adjustments tab matches body",
+      "ok": true
+    },
+    {
+      "name": "SUP-01 Help diagnostic has visible selected identity",
+      "ok": true
+    },
+    {
+      "name": "SUP-01 ordinary native tool clears diagnostic",
+      "ok": true
+    },
+    {
+      "name": "SUP-01 Window diagnostic route preserved",
+      "ok": true
+    },
+    {
+      "name": "SUP-01 ordinary raster tool clears diagnostic",
+      "ok": true
+    },
+    {
+      "name": "Left/right collapse strips and tab surface match",
+      "ok": true,
+      "data": [
+        "rgb(255, 255, 255)",
+        "rgb(255, 255, 255)",
+        "rgb(255, 255, 255)",
+        "rgb(255, 255, 255)",
+        "rgb(255, 255, 255)",
+        "rgb(255, 255, 255)"
+      ]
+    },
+    {
+      "name": "Collapse control states do not introduce surface jumps",
+      "ok": true,
+      "data": [
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)",
+        "rgba(0, 0, 0, 0)"
+      ]
+    },
+    {
+      "name": "Junction visible 1px with transparent 5px hit envelope",
+      "ok": true,
+      "data": {
+        "height": 1,
+        "hit": "5px",
+        "top": "-2px",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "name": "dual swatch offset and visible overlap",
+      "ok": true,
+      "data": [
+        {
+          "id": "toolBackgroundColor",
+          "x": 31.5,
+          "y": 379,
+          "w": 25
+        },
+        {
+          "id": "toolForegroundColor",
+          "x": 15.5,
+          "y": 363,
+          "w": 25
+        }
+      ]
+    },
+    {
+      "name": "single swatch offset and visible overlap",
+      "ok": true,
+      "data": [
+        {
+          "id": "toolBackgroundColor",
+          "x": 15.5,
+          "y": 615,
+          "w": 18
+        },
+        {
+          "id": "toolForegroundColor",
+          "x": 5.5,
+          "y": 605,
+          "w": 18
+        }
+      ]
+    },
+    {
+      "name": "Swatch reset uses existing color authority",
+      "ok": true
+    },
+    {
+      "name": "Swatch swap uses existing color authority",
+      "ok": true
+    },
+    {
+      "name": "Window controls anchored right with 12px glyphs and honest disabled state",
+      "ok": true,
+      "data": {
+        "right": 1280,
+        "buttons": [
+          {
+            "disabled": true,
+            "label": "最小化視窗",
+            "svg": {
+              "x": 1183.5,
+              "y": 3,
+              "width": 12,
+              "height": 12,
+              "top": 3,
+              "right": 1195.5,
+              "bottom": 15,
+              "left": 1183.5
+            }
+          },
+          {
+            "disabled": true,
+            "label": "還原視窗",
+            "svg": {
+              "x": 1211.5,
+              "y": 3,
+              "width": 12,
+              "height": 12,
+              "top": 3,
+              "right": 1223.5,
+              "bottom": 15,
+              "left": 1211.5
+            }
+          },
+          {
+            "disabled": true,
+            "label": "關閉視窗",
+            "svg": {
+              "x": 1249.5,
+              "y": 3,
+              "width": 12,
+              "height": 12,
+              "top": 3,
+              "right": 1261.5,
+              "bottom": 15,
+              "left": 1249.5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SUP-02 Reference has localized controls without explanatory paragraphs",
+      "ok": true,
+      "data": {
+        "text": "參考圖\n選擇檔案…\n未選擇檔案\n臨界值\n直接擷取\n取消\n參考圖疊加\n結構分析\n選用\n放射數量\n分析並重建\n研究 → 創作\n唯讀",
+        "paragraphs": 0
+      }
+    },
+    {
+      "name": "SUP-02 Reference required-image error is actionable Chinese",
+      "ok": true,
+      "data": "請先選擇參考圖"
+    },
+    {
+      "name": "Edit Preferences last",
+      "ok": true,
+      "data": [
+        {
+          "label": "復原Ctrl+Z",
+          "command": "undo"
+        },
+        {
+          "label": "重做Ctrl+Shift+Z",
+          "command": "redo"
+        },
+        {
+          "label": "建立副本Ctrl+D",
+          "id": "edit-duplicate",
+          "command": "duplicate"
+        },
+        {
+          "label": "刪除Delete",
+          "id": "edit-delete",
+          "command": "delete"
+        },
+        {
+          "label": "變形：傾斜…",
+          "id": "object-skew",
+          "command": "transform:skew"
+        },
+        {
+          "label": "變形：扭曲…",
+          "id": "object-distort",
+          "command": "transform:distort"
+        },
+        {
+          "label": "變形：透視…",
+          "id": "object-perspective",
+          "command": "transform:perspective"
+        },
+        {
+          "label": "變形：彎曲…",
+          "id": "object-warp",
+          "command": "transform:warp"
+        },
+        {
+          "label": "鍵盤快捷鍵…",
+          "id": "help-shortcuts",
+          "command": "keyboard-shortcuts"
+        },
+        {
+          "label": "偏好設定…",
+          "id": "edit-settings",
+          "command": "preferences"
+        }
+      ]
+    },
+    {
+      "name": "Edit transformations preserved",
+      "ok": true
+    },
+    {
+      "name": "Layers no unsupported blend placeholder",
+      "ok": true
+    },
+    {
+      "name": "Layers opacity lock list footer follow structural order",
+      "ok": true,
+      "data": [
+        {
+          "selector": ".layer-opacity-card",
+          "top": 657.71875,
+          "height": 30,
+          "order": "0"
+        },
+        {
+          "selector": ".ui-b-layer-appearance",
+          "top": 687.71875,
+          "height": 24,
+          "order": "1"
+        },
+        {
+          "selector": ".layers-list",
+          "top": 711.71875,
+          "height": 286.28125,
+          "order": "2"
+        },
+        {
+          "selector": ".layer-bottom-toolbar",
+          "top": 998,
+          "height": 25,
+          "order": "3"
+        }
+      ]
+    },
+    {
+      "name": "Existing layer filter route updates native layer",
+      "ok": true
+    },
+    {
+      "name": "Layer filter undo restores native layer",
+      "ok": true
+    },
+    {
+      "name": "Layers add + duplicate",
+      "ok": true
+    },
+    {
+      "name": "Layers lock changes authoritative state",
+      "ok": true
+    },
+    {
+      "name": "Layers reorder changes authoritative order",
+      "ok": true,
+      "data": {
+        "beforeOrder": [
+          "1d5b7ffb-ccdd-49c9-884b-fe256cf64c76",
+          "8f03ac71-dd5f-4769-a797-0a4fe626fd3f",
+          "10737f5a-1224-438d-ad17-951cf291711d"
+        ],
+        "afterOrder": [
+          "10737f5a-1224-438d-ad17-951cf291711d",
+          "1d5b7ffb-ccdd-49c9-884b-fe256cf64c76",
+          "8f03ac71-dd5f-4769-a797-0a4fe626fd3f"
+        ]
+      }
+    },
+    {
+      "name": "Layers delete",
+      "ok": true
+    },
+    {
+      "name": "Layers undo restores delete",
+      "ok": true
+    },
+    {
+      "name": "Preferences width invariant across categories",
+      "ok": true,
+      "data": [
+        {
+          "width": 740,
+          "height": 540,
+          "text": "介面與操作幾何角度吸附（15°）智慧參考線與物件吸附移動"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "觸控與筆單指使用目前工具（預設為導航）觸控筆校準起始壓力"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "文件與版面版面與列印文件依下列尺寸顯示；縮放與平移只改變"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "紙張與媒材紙張媒材吸水率58%粗糙度42%纖維強度36%"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "效能與儲存檢查儲存與離線狀態尚未檢查執行發布健康檢查尚未"
+        },
+        {
+          "width": 740,
+          "height": 540,
+          "text": "品牌\n        名稱、標題、標誌與網站圖示會即時預"
+        }
+      ]
+    },
+    {
+      "name": "Panel splitter resizes",
+      "ok": true
+    },
+    {
+      "name": "Short Tools utilities inside viewport",
+      "ok": true
+    },
+    {
+      "name": "Compact page contains horizontal viewport",
+      "ok": true
+    },
+    {
+      "name": "No page/resource errors",
+      "ok": true,
+      "data": []
+    },
+    {
+      "name": "Browser-loaded product response bytes match source",
+      "ok": true,
+      "data": {
+        "count": 203
+      }
+    }
+  ],
+  "failure": null,
+  "serviceWorkerController": "http://127.0.0.1:8765/product/source/service-worker.js",
+  "loadedResponses": {
+    "before": 203,
+    "after": 203,
+    "allBytesMatch": true
+  },
+  "sourceHealth": {
+    "productFiles": 273,
+    "unchanged": 263
+  },
+  "singleReferenceStatus": "REFERENCE_MISSING"
+}

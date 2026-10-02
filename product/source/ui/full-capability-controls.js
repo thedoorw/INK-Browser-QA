@@ -393,7 +393,6 @@ export function installFullCapabilityControls(app){
       const filterOptions=Object.keys(FILTER_DEFAULTS).map(type=>'<option value="'+esc(type)+'">'+esc(uiLabel(type))+'</option>').join('');
       const block=htmlNode('<div id="uiBLayerAppearance" class="ui-b-layer-appearance">'+
         '<details class="ui-b-layer-filter-menu"><summary aria-label="圖層影像濾鏡"><svg viewBox="0 0 10 7" aria-hidden="true"><use href="#i-panel-menu"/></svg></summary><div class="ui-b-layer-filter"><span>濾鏡</span><select id="uiBLayerFilterType" aria-label="圖層濾鏡種類">'+filterOptions+'</select><button type="button" data-layer-action="add-filter" aria-label="新增圖層濾鏡" title="新增圖層濾鏡">＋</button></div></details>'+
-        '<div class="ui-b-layer-blend"><span>混合</span><select disabled title="目前文件模型沒有 layer blendMode authority"><option>正常</option></select><span class="ui-b-capability-note">Layer blend N/A</span></div>'+
         '<div class="ui-b-layer-lock"><span>鎖定</span><button type="button" data-layer-action="toggle-lock" aria-pressed="false"><svg><use href="#i-lock"/></svg></button></div>'+
       '</div>');
       layers.prepend(block);

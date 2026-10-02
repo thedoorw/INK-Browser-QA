@@ -209,9 +209,21 @@ Measured/observed:
 - flyout marker = 3×3 px visible
 - collapse glyph = 7×5 px visible
 - foreground/background swatches are **layout-state dependent** in Photoshop; single-column and double-column Tools do not use the same visible swatch size.
-- the previously recorded 18×18 px value applies only to the measured state from which it was taken and must not be generalized across both toolbar layouts.
+- the previous 18×18 px entry has no recoverable single-layout source crop in the available canonical assets; it must not be presented as a verified single-column measurement.
 - single-column and double-column swatch size/overlap must be recorded as separate measurements.
 - shared authority is the color-cluster grammar (foreground/background diagonal overlap + reset/swap utilities), not one universal swatch dimension.
+
+2026-10-02 source-raster remeasurement (all three canonical Photoshop captures show dual Tools):
+
+| State | Foreground / background visible outer size | Diagonal origin offset | Shared overlap | Evidence |
+| --- | --- | --- | --- | --- |
+| Dual | 25×25 px each | 16×16 px | 9×9 px | ps-1 foreground x17–41/y383–407; background x33–57/y399–423, inclusive pixel bounds; PS-2/PS-3 confirm same geometry |
+| Single | REFERENCE_MISSING | REFERENCE_MISSING | REFERENCE_MISSING | No original single-column capture recovered; existing INK 18×18 / offset10 / overlap8 retained provisionally |
+
+Origin offset and overlap are different measurements: shared overlap = swatch size − diagonal origin offset on each axis. Do not label the 16px dual origin offset as a 16px shared overlap. Implement layout variants through shared state tokens. The provisional single values are implementation evidence only; SUP-04 cannot be fully closed until a valid single-layout reference is measured.
+
+Window-control source-raster visible envelopes in ps-1 (threshold≥145 on the dark reference): minimize x1183–1192/y11–13 = 10×3 px; restore x1210–1221/y5–14 = 12×10 px; close x1248–1257/y5–12 = 10×8 px. These are visible raster bounds, not button hitbox or SVG viewport measurements.
+
 - Quick Mask visible envelope ≈17×13 px
 - Screen Mode visible envelope ≈17×13 px
 - flyout outer reference ≈172×100 px for 5 rows
@@ -503,3 +515,4 @@ This file consolidates the applicable measurement content formerly split across:
 - reference-capture plan.
 
 Git history remains the provenance source. Legacy split files are superseded after migration audit.
+
