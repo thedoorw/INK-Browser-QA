@@ -1,0 +1,2564 @@
+{
+  "schema": "INK-UI-ISSUE92-CONTROL-HEALTH-BROWSER",
+  "version": 1,
+  "status": "FAIL",
+  "checks": [
+    {
+      "id": "AD11",
+      "pass": false,
+      "detail": {
+        "toolCount": 24,
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 73,
+          "bottom": 1024,
+          "width": 73,
+          "height": 963
+        },
+        "toolRects": [
+          {
+            "id": null,
+            "group": null,
+            "tool": "select",
+            "left": 4,
+            "top": 77,
+            "right": 35,
+            "bottom": 103,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "psObjectSelect",
+            "group": null,
+            "tool": null,
+            "left": 37,
+            "top": 77,
+            "right": 68,
+            "bottom": 103,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "lasso",
+            "tool": "lasso",
+            "left": 4,
+            "top": 105,
+            "right": 35,
+            "bottom": 131,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "smart-selection",
+            "tool": null,
+            "left": 37,
+            "top": 105,
+            "right": 68,
+            "bottom": 131,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "psCropTool",
+            "group": null,
+            "tool": null,
+            "left": 4,
+            "top": 133,
+            "right": 35,
+            "bottom": 159,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "psFrameTool",
+            "group": null,
+            "tool": null,
+            "left": 37,
+            "top": 133,
+            "right": 68,
+            "bottom": 159,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "sampling",
+            "tool": null,
+            "left": 4,
+            "top": 161,
+            "right": 35,
+            "bottom": 187,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "healing",
+            "tool": null,
+            "left": 37,
+            "top": 161,
+            "right": 68,
+            "bottom": 187,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "psBrushTool",
+            "group": null,
+            "tool": "brush",
+            "left": 4,
+            "top": 189,
+            "right": 35,
+            "bottom": 215,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "clone",
+            "tool": null,
+            "left": 37,
+            "top": 189,
+            "right": 68,
+            "bottom": 215,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": null,
+            "tool": "eraser",
+            "left": 4,
+            "top": 217,
+            "right": 35,
+            "bottom": 243,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "fill",
+            "tool": null,
+            "left": 37,
+            "top": 217,
+            "right": 68,
+            "bottom": 243,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "detail",
+            "tool": null,
+            "left": 4,
+            "top": 245,
+            "right": 35,
+            "bottom": 271,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "tone",
+            "tool": null,
+            "left": 37,
+            "top": 245,
+            "right": 68,
+            "bottom": 271,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "drawToolButton",
+            "group": "draw",
+            "tool": "pen",
+            "left": 4,
+            "top": 273,
+            "right": 35,
+            "bottom": 299,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "psPathEditTool",
+            "group": null,
+            "tool": null,
+            "left": 37,
+            "top": 273,
+            "right": 68,
+            "bottom": 299,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "text",
+            "tool": "text",
+            "left": 4,
+            "top": 301,
+            "right": 35,
+            "bottom": 327,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": "shape",
+            "tool": "shape",
+            "left": 37,
+            "top": 301,
+            "right": 68,
+            "bottom": 327,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": null,
+            "group": null,
+            "tool": "pan",
+            "left": 4,
+            "top": 329,
+            "right": 35,
+            "bottom": 355,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "psZoomControls",
+            "group": null,
+            "tool": null,
+            "left": 37,
+            "top": 329,
+            "right": 68,
+            "bottom": 355,
+            "width": 31,
+            "height": 26
+          },
+          {
+            "id": "toolbarLayoutToggle",
+            "group": null,
+            "tool": null,
+            "left": 4,
+            "top": 61,
+            "right": 20,
+            "bottom": 72,
+            "width": 16,
+            "height": 11
+          },
+          {
+            "id": "resetToolColors",
+            "group": null,
+            "tool": null,
+            "left": 15.5,
+            "top": 395,
+            "right": 27.5,
+            "bottom": 407,
+            "width": 12,
+            "height": 12
+          },
+          {
+            "id": "swapToolColors",
+            "group": null,
+            "tool": null,
+            "left": 44.5,
+            "top": 363,
+            "right": 56.5,
+            "bottom": 375,
+            "width": 12,
+            "height": 12
+          },
+          {
+            "id": "toolScreenMode",
+            "group": null,
+            "tool": null,
+            "left": 24,
+            "top": 412,
+            "right": 48,
+            "bottom": 434,
+            "width": 24,
+            "height": 22
+          }
+        ]
+      }
+    },
+    {
+      "id": "AF09",
+      "pass": false,
+      "detail": {
+        "viewport": [
+          1280,
+          1024
+        ],
+        "menu": {
+          "left": 0,
+          "top": 0,
+          "right": 1280,
+          "bottom": 25,
+          "width": 1280,
+          "height": 25
+        },
+        "topbar": {
+          "left": 0,
+          "top": 25,
+          "right": 1280,
+          "bottom": 61,
+          "width": 1280,
+          "height": 36
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 73,
+          "bottom": 1024,
+          "width": 73,
+          "height": 963
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 1024,
+          "width": 40,
+          "height": 963
+        },
+        "band": null,
+        "tab": null,
+        "stage": {
+          "left": 73,
+          "top": 61,
+          "right": 1028,
+          "bottom": 1024,
+          "width": 955,
+          "height": 963
+        },
+        "status": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 0,
+          "height": 0
+        }
+      }
+    },
+    {
+      "id": "AB08",
+      "pass": true,
+      "detail": {
+        "menus": [
+          {
+            "id": "file",
+            "opened": true
+          },
+          {
+            "id": "edit",
+            "opened": true
+          },
+          {
+            "id": "image",
+            "opened": true
+          },
+          {
+            "id": "layer",
+            "opened": true
+          },
+          {
+            "id": "type",
+            "opened": true
+          },
+          {
+            "id": "select",
+            "opened": true
+          },
+          {
+            "id": "filter",
+            "opened": true
+          },
+          {
+            "id": "object",
+            "opened": true
+          },
+          {
+            "id": "view",
+            "opened": true
+          },
+          {
+            "id": "window",
+            "opened": true
+          },
+          {
+            "id": "help",
+            "opened": true
+          }
+        ],
+        "contributions": {
+          "total": 96,
+          "failed": []
+        },
+        "panels": [
+          {
+            "id": "properties",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "properties",
+              "activePanel": "properties",
+              "lastPanel": "properties",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "editor",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "layers",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "layers",
+              "activePanel": "layers",
+              "lastPanel": "layers",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "editor",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "history",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "history",
+              "activePanel": "history",
+              "lastPanel": "history",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "editor",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "navigator",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "navigator",
+              "activePanel": "navigator",
+              "lastPanel": "navigator",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "editor",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "pages",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "pages",
+              "activePanel": "pages",
+              "lastPanel": "pages",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "editor",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "color",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "color",
+              "activePanel": "color",
+              "lastPanel": "color",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "appearance",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "channels",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "channels",
+              "activePanel": "channels",
+              "lastPanel": "channels",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "appearance",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "adjustments",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "adjustments",
+              "activePanel": "adjustments",
+              "lastPanel": "adjustments",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "appearance",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "libraries",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "libraries",
+              "activePanel": "libraries",
+              "lastPanel": "libraries",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "creative",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "reference",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "reference",
+              "activePanel": "reference",
+              "lastPanel": "reference",
+              "collapsed": false,
+              "inspectorOpen": false,
+              "creativeOpen": true,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "creative",
+              "creativeStage": "reference",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "compose",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "compose",
+              "activePanel": "compose",
+              "lastPanel": "compose",
+              "collapsed": false,
+              "inspectorOpen": false,
+              "creativeOpen": true,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "creative",
+              "creativeStage": "compose",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "chat",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "chat",
+              "activePanel": "chat",
+              "lastPanel": "chat",
+              "collapsed": false,
+              "inspectorOpen": false,
+              "creativeOpen": true,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "creative",
+              "creativeStage": "chat",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "revision",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "revision",
+              "activePanel": "revision",
+              "lastPanel": "revision",
+              "collapsed": false,
+              "inspectorOpen": false,
+              "creativeOpen": true,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "creative",
+              "creativeStage": "revision",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          },
+          {
+            "id": "specialist",
+            "opened": true,
+            "active": true,
+            "state": {
+              "version": "0.1",
+              "authority": "single",
+              "layoutMode": "DESKTOP_WIDE",
+              "primaryState": "specialist",
+              "activePanel": "specialist",
+              "lastPanel": "specialist",
+              "collapsed": false,
+              "inspectorOpen": true,
+              "creativeOpen": false,
+              "panelWidth": 252,
+              "stageWidth": 955,
+              "dockWidth": 40,
+              "panelGroup": "specialist",
+              "creativeStage": "revision",
+              "contextMode": "neutral",
+              "contextTool": "objectSelection",
+              "toolbarLayout": "dual",
+              "toolbarLayoutPreference": "dual",
+              "menuController": "application-menu-registry",
+              "openApplicationMenu": null,
+              "liveApplicationMenus": [
+                "file",
+                "edit",
+                "image",
+                "layer",
+                "type",
+                "select",
+                "filter",
+                "object",
+                "view",
+                "window",
+                "help"
+              ]
+            },
+            "error": null
+          }
+        ],
+        "tools": [
+          {
+            "id": "draw",
+            "primary": "pen",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "lasso",
+            "primary": "lasso",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "smart-selection",
+            "primary": "quickSelection",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "fill",
+            "primary": "gradient",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "sampling",
+            "primary": "eyedropper",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "clone",
+            "primary": "cloneStamp",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "healing",
+            "primary": "spotHealing",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "tone",
+            "primary": "dodge",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "detail",
+            "primary": "localBlur",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "shape",
+            "primary": "shape:line",
+            "found": true,
+            "clicked": true,
+            "error": null
+          },
+          {
+            "id": "text",
+            "primary": "text:horizontal-tb",
+            "found": true,
+            "clicked": true,
+            "error": null
+          }
+        ],
+        "browserErrors": []
+      }
+    },
+    {
+      "id": "AE08",
+      "pass": true,
+      "detail": {
+        "routeFallbacks": [],
+        "browserErrors": [],
+        "menuCount": 11,
+        "contributionCount": 96,
+        "panelCount": 14,
+        "toolGroupCount": 11
+      }
+    },
+    {
+      "id": "AE10-browser",
+      "pass": true,
+      "detail": {
+        "routeFallbacks": [],
+        "browserErrors": [],
+        "toastCount": 23
+      }
+    },
+    {
+      "id": "AA10",
+      "pass": false,
+      "detail": {
+        "viewport": [
+          760,
+          900
+        ],
+        "targetCount": 71,
+        "minWidth": 24,
+        "minHeight": 22,
+        "undersized": [
+          {
+            "tag": "button",
+            "id": "penCalibrationCheckBtn",
+            "type": null,
+            "role": null,
+            "effectiveTag": "button",
+            "width": 288,
+            "height": 22
+          },
+          {
+            "tag": "button",
+            "id": "penCalibrationResetBtn",
+            "type": null,
+            "role": null,
+            "effectiveTag": "button",
+            "width": 288,
+            "height": 22
+          }
+        ],
+        "compactFits": true,
+        "scrollWidth": 760
+      }
+    },
+    {
+      "id": "visible-identity",
+      "pass": false,
+      "detail": {
+        "anonymous": [
+          {
+            "tag": "button",
+            "text": "",
+            "className": ""
+          },
+          {
+            "tag": "button",
+            "text": "",
+            "className": ""
+          },
+          {
+            "tag": "button",
+            "text": "",
+            "className": ""
+          }
+        ],
+        "unexpectedAnonymous": [
+          {
+            "tag": "button",
+            "text": "",
+            "className": ""
+          },
+          {
+            "tag": "button",
+            "text": "",
+            "className": ""
+          },
+          {
+            "tag": "button",
+            "text": "",
+            "className": ""
+          }
+        ]
+      }
+    }
+  ],
+  "inventory": {
+    "menuSweep": [
+      {
+        "id": "file",
+        "opened": true
+      },
+      {
+        "id": "edit",
+        "opened": true
+      },
+      {
+        "id": "image",
+        "opened": true
+      },
+      {
+        "id": "layer",
+        "opened": true
+      },
+      {
+        "id": "type",
+        "opened": true
+      },
+      {
+        "id": "select",
+        "opened": true
+      },
+      {
+        "id": "filter",
+        "opened": true
+      },
+      {
+        "id": "object",
+        "opened": true
+      },
+      {
+        "id": "view",
+        "opened": true
+      },
+      {
+        "id": "window",
+        "opened": true
+      },
+      {
+        "id": "help",
+        "opened": true
+      }
+    ],
+    "contributionSweep": [
+      {
+        "id": "file-external-open",
+        "command": "external-open",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "file-import-reference",
+        "command": "reference-import",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "file-import-svg",
+        "command": "svg-import",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "file-print",
+        "command": "print",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "edit-duplicate",
+        "command": "duplicate",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "edit-delete",
+        "command": "delete",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-skew",
+        "command": "transform:skew",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-distort",
+        "command": "transform:distort",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-perspective",
+        "command": "transform:perspective",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-warp",
+        "command": "transform:warp",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "help-shortcuts",
+        "command": "keyboard-shortcuts",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "edit-settings",
+        "command": "preferences",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-mode-8",
+        "command": "bit-depth:8",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-mode-16",
+        "command": "bit-depth:16",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-mode-32",
+        "command": "bit-depth:32",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-mode-rgb",
+        "command": "color-mode:RGB",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-mode-cmyk",
+        "command": "color-mode:CMYK",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-mode-lab",
+        "command": "color-mode:Lab",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-mode-multi",
+        "command": "color-mode:Multichannel",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-profile",
+        "command": "color-profile",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-adjustments",
+        "command": "panel:adjustments",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-crop",
+        "command": "image-crop",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "image-resize",
+        "command": "image-resize",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-new",
+        "command": "layer-new",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-duplicate",
+        "command": "layer-duplicate",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-delete",
+        "command": "layer-delete",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-group",
+        "command": "group",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-ungroup",
+        "command": "ungroup",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-mask-add",
+        "command": "mask-add",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-mask-select",
+        "command": "select-and-mask",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "layer-effects",
+        "command": "layer-effects",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "type-horizontal",
+        "command": "text-mode:horizontal-tb",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "type-vertical-rl",
+        "command": "text-mode:vertical-rl",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "type-vertical-lr",
+        "command": "text-mode:vertical-lr",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "type-path",
+        "command": "text-on-path",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-all",
+        "command": "select-all",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-clear",
+        "command": "select-clear",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-polygon",
+        "command": "tool:polygonalLasso",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-magnetic",
+        "command": "tool:magneticLasso",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-quick",
+        "command": "tool:quickSelection",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-magic",
+        "command": "tool:magicWand",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-object",
+        "command": "tool:objectSelection",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "select-refine",
+        "command": "select-and-mask",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-gallery",
+        "command": "filter-gallery",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-gaussian",
+        "command": "filter:gaussianBlur",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-motion",
+        "command": "filter:motionBlur",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-median",
+        "command": "filter:median",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-sharpen",
+        "command": "filter:sharpen",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-unsharp",
+        "command": "filter:unsharpMask",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-highpass",
+        "command": "filter:highPass",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-edge",
+        "command": "filter:edgeDetection",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-noise",
+        "command": "filter:noiseGrain",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-reduce-noise",
+        "command": "filter:reduceNoise",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-texture",
+        "command": "filter:textureOverlay",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-emboss",
+        "command": "filter:emboss",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-mosaic",
+        "command": "filter:mosaic",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-minimum",
+        "command": "filter:minimum",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-maximum",
+        "command": "filter:maximum",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "filter-liquify",
+        "command": "liquify",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-front",
+        "command": "arrange:front",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-back",
+        "command": "arrange:back",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-group",
+        "command": "group",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-ungroup",
+        "command": "ungroup",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-align-left",
+        "command": "align:left",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-align-center-x",
+        "command": "align:centerX",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-align-right",
+        "command": "align:right",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-align-top",
+        "command": "align:top",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-align-center-y",
+        "command": "align:centerY",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-align-bottom",
+        "command": "align:bottom",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-distribute-x",
+        "command": "align:distributeX",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-distribute-y",
+        "command": "align:distributeY",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-frame-selection",
+        "command": "frame-selection",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-path-edit",
+        "command": "proxy:pathEditToggle",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-boolean-union",
+        "command": "proxy:booleanUnion",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-boolean-difference",
+        "command": "proxy:booleanDifference",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-boolean-intersection",
+        "command": "proxy:booleanIntersection",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-boolean-xor",
+        "command": "proxy:booleanXor",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-repeat-radial",
+        "command": "proxy:repeatRadial",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-repeat-mirror",
+        "command": "proxy:repeatMirror",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-repeat-grid",
+        "command": "proxy:repeatGrid",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "object-repeat-expand",
+        "command": "proxy:repeatExpand",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-grid",
+        "command": "snap:grid",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-snap",
+        "command": "snap:enabled",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-snap-guides",
+        "command": "snap:guides",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-snap-edges",
+        "command": "snap:edges",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-snap-centers",
+        "command": "snap:centers",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-snap-angle",
+        "command": "snap:angle",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-snap-equal",
+        "command": "snap:equalDistance",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-guides-show",
+        "command": "guides:toggle",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-guides-lock",
+        "command": "guides:lock",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-guides-clear",
+        "command": "guides:clear",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "view-workspace-layout",
+        "command": "workspace:fit-current",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "help-updates",
+        "command": "updates",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "help-diagnostics",
+        "command": "panel:specialist",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "help-pen",
+        "command": "pen-calibration",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "help-recovery",
+        "command": "recovery",
+        "found": true,
+        "clicked": true,
+        "error": null
+      }
+    ],
+    "panelSweep": [
+      {
+        "id": "properties",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "properties",
+          "activePanel": "properties",
+          "lastPanel": "properties",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "layers",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": "layers",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "history",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "history",
+          "activePanel": "history",
+          "lastPanel": "history",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "navigator",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "navigator",
+          "activePanel": "navigator",
+          "lastPanel": "navigator",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "pages",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "pages",
+          "activePanel": "pages",
+          "lastPanel": "pages",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "color",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "color",
+          "activePanel": "color",
+          "lastPanel": "color",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "appearance",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "channels",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "channels",
+          "activePanel": "channels",
+          "lastPanel": "channels",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "appearance",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "adjustments",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "adjustments",
+          "activePanel": "adjustments",
+          "lastPanel": "adjustments",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "appearance",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "libraries",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "libraries",
+          "activePanel": "libraries",
+          "lastPanel": "libraries",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "creative",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "reference",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "reference",
+          "activePanel": "reference",
+          "lastPanel": "reference",
+          "collapsed": false,
+          "inspectorOpen": false,
+          "creativeOpen": true,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "creative",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "compose",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "compose",
+          "activePanel": "compose",
+          "lastPanel": "compose",
+          "collapsed": false,
+          "inspectorOpen": false,
+          "creativeOpen": true,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "creative",
+          "creativeStage": "compose",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "chat",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "chat",
+          "activePanel": "chat",
+          "lastPanel": "chat",
+          "collapsed": false,
+          "inspectorOpen": false,
+          "creativeOpen": true,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "creative",
+          "creativeStage": "chat",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "revision",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "revision",
+          "activePanel": "revision",
+          "lastPanel": "revision",
+          "collapsed": false,
+          "inspectorOpen": false,
+          "creativeOpen": true,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "creative",
+          "creativeStage": "revision",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      },
+      {
+        "id": "specialist",
+        "opened": true,
+        "active": true,
+        "state": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "specialist",
+          "activePanel": "specialist",
+          "lastPanel": "specialist",
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "specialist",
+          "creativeStage": "revision",
+          "contextMode": "neutral",
+          "contextTool": "objectSelection",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "error": null
+      }
+    ],
+    "toolSweep": [
+      {
+        "id": "draw",
+        "primary": "pen",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "lasso",
+        "primary": "lasso",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "smart-selection",
+        "primary": "quickSelection",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "fill",
+        "primary": "gradient",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "sampling",
+        "primary": "eyedropper",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "clone",
+        "primary": "cloneStamp",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "healing",
+        "primary": "spotHealing",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "tone",
+        "primary": "dodge",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "detail",
+        "primary": "localBlur",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "shape",
+        "primary": "shape:line",
+        "found": true,
+        "clicked": true,
+        "error": null
+      },
+      {
+        "id": "text",
+        "primary": "text:horizontal-tb",
+        "found": true,
+        "clicked": true,
+        "error": null
+      }
+    ],
+    "toastMessages": [
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "此操作需要具有 Raster State 的影像",
+      "至少選取兩個物件",
+      "未選取群組",
+      "此操作需要具有 Raster State 的影像",
+      "Text mode：horizontal-tb",
+      "Text mode：vertical-rl",
+      "Text mode：vertical-lr",
+      "請同時選取 Text 與 Path",
+      "工具：polygonalLasso",
+      "工具：magneticLasso",
+      "工具：quickSelection",
+      "工具：magicWand",
+      "工具：objectSelection",
+      "至少選取兩個物件",
+      "未選取群組"
+    ],
+    "browserErrors": []
+  },
+  "summary": {
+    "total": 7,
+    "passed": 3,
+    "failed": 4
+  }
+}
