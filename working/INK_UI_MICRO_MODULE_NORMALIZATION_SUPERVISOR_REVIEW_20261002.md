@@ -487,3 +487,27 @@ FULL_TOOL_TO_OPTIONS_RECONCILIATION = REQUIRED
 ```
 
 This should be implemented as a separate bounded Tool → Options Bar exposure batch using existing INK capability/state authorities, not as ad-hoc controls added to the current visual-refinement CSS pass.
+
+
+### SUP-12 — PANEL SCROLLBARS STILL RENDER ROUNDED
+
+USER visual review confirms that scrollbars inside the right panel stack still render with rounded/pill thumbs, despite the intended shared scrollbar grammar.
+
+Current stylesheet already contains a global WebKit rule with `border-radius:0`, so this is not accepted as solved by source declaration alone. The rendered result is authoritative.
+
+Required investigation:
+- identify which actual panel scroll containers are using native/overlay scrollbar rendering or bypassing the shared `.app *::-webkit-scrollbar*` authority;
+- include Reference, Layers, History, Libraries and any generic `.shell-panel-body` / `.inspector-section` scroll surface;
+- ensure panel scrollbars render square/rectilinear thumbs and tracks at 1:1;
+- do not create per-panel scrollbar skins;
+- keep one shared scrollbar primitive.
+
+Acceptance:
+```text
+ALL_RIGHT_PANEL_SCROLLBARS = RECTILINEAR
+THUMB_RADIUS = 0
+TRACK_RADIUS = 0
+NO_PANEL_SPECIFIC_SCROLLBAR_OVERRIDE = TRUE
+```
+
+Rendered screenshot evidence is required; CSS declaration alone is insufficient.
