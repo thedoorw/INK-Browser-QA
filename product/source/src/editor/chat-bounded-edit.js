@@ -1,4 +1,4 @@
-import { Matrix } from '../core/index.js';
+import { Matrix, uid } from '../core/index.js';
 import { createFrame, findPageObject, reparentPageObject, walkPageObjects } from '../document/hierarchy.js';
 import { setFrameLayout, setChildLayoutItem } from '../document/layout.js';
 import { registerComponentDefinition, createComponentInstance, setComponentOverride, detachComponentInstance, duplicateComponentDefinition, repairComponentReference } from '../document/components.js';
@@ -219,6 +219,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.simplify.v1',
   'path.refine.v1',
   'path.create.v1',
+  'stroke.create.v1',
   'path.edit.v1',
   'object.rotate.v1',
   'object.clone.v1',
@@ -335,6 +336,46 @@ function normalizeAnchor(value, field) {
     in: value.in == null ? { x: 0, y: 0 } : normalizePoint(value.in, `${field}.in`),
     out: value.out == null ? { x: 0, y: 0 } : normalizePoint(value.out, `${field}.out`),
     mode
+  };
+}
+
+function normalizeStrokePoint(value, index) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) editFail('ARGUMENT_INVALID', { field: `arguments.points[${index}]` });
+  const point = {
+    x: boundedNumber(value.x, `arguments.points[${index}].x`),
+    y: boundedNumber(value.y, `arguments.points[${index}].y`),
+    p: boundedNumber(value.p ?? value.pressure ?? .5, `arguments.points[${index}].p`, { min: 0, max: 1 }),
+    t: boundedNumber(value.t ?? value.time ?? index * 8, `arguments.points[${index}].t`, { min: 0, max: 1e12 })
+  };
+  for (const key of ['tiltX', 'tiltY']) {
+    if (value[key] != null) point[key] = boundedNumber(value[key], `arguments.points[${index}].${key}`, { min: -90, max: 90 });
+  }
+  if (value.altitude != null) point.altitude = boundedNumber(value.altitude, `arguments.points[${index}].altitude`, { min: 0, max: 90 });
+  if (value.azimuth != null) point.azimuth = boundedNumber(value.azimuth, `arguments.points[${index}].azimuth`, { min: -1e6, max: 1e6 });
+  if (value.twist != null) point.twist = boundedNumber(value.twist, `arguments.points[${index}].twist`, { min: -360000, max: 360000 });
+  return point;
+}
+
+function normalizeStrokeCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  if (!Array.isArray(raw.points) || raw.points.length < 2 || raw.points.length > 4096) editFail('ARGUMENTS_INVALID', { field: 'arguments.points' });
+  return {
+    objectId: raw.objectId == null ? null : boundedText(raw.objectId, 'arguments.objectId', { max: 160 }),
+    name: raw.name == null ? 'CHAT Stroke' : boundedText(raw.name, 'arguments.name', { max: 160 }),
+    kind: boundedEnum(raw.kind || 'pen', 'arguments.kind', ['pen', 'pencil', 'marker', 'brush', 'drybrush', 'airbrush']),
+    color: raw.color == null ? '#202020' : boundedPaintToken(raw.color, 'arguments.color'),
+    size: boundedNumber(raw.size ?? 4, 'arguments.size', { min: Number.EPSILON, max: 100000 }),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
+    smoothing: boundedNumber(raw.smoothing ?? .5, 'arguments.smoothing', { min: 0, max: .95 }),
+    pressure: boundedNumber(raw.pressure ?? .8, 'arguments.pressure', { min: 0, max: 1 }),
+    taper: boundedNumber(raw.taper ?? 0, 'arguments.taper', { min: 0, max: 1 }),
+    grain: boundedNumber(raw.grain ?? 0, 'arguments.grain', { min: 0, max: 1 }),
+    softness: boundedNumber(raw.softness ?? 0, 'arguments.softness', { min: 0, max: 1 }),
+    flow: boundedNumber(raw.flow ?? 1, 'arguments.flow', { min: 0, max: 1 }),
+    wetness: boundedNumber(raw.wetness ?? 0, 'arguments.wetness', { min: 0, max: 1 }),
+    bristle: boundedNumber(raw.bristle ?? 0, 'arguments.bristle', { min: 0, max: 1 }),
+    mediaModel: raw.mediaModel == null ? null : boundedEnum(raw.mediaModel, 'arguments.mediaModel', ['natural-v2']),
+    points: raw.points.map(normalizeStrokePoint)
   };
 }
 
@@ -747,6 +788,7 @@ function normalizeOperationArguments(operation, raw) {
     };
   }
   if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
+  if (operation === 'stroke.create.v1') return normalizeStrokeCreateArguments(raw);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
@@ -778,7 +820,7 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
-  if (operation === 'path.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
+  if (operation === 'path.create.v1' || operation === 'stroke.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
@@ -1191,6 +1233,47 @@ function executePathCreateTask(app, task) {
   finishStructuralMutation(app);
   const ref = { pageId: app.page().id, layerId: layer.id, objectId: path.id };
   return { createdRefs: [ref], resultRefs: [ref], objectId: path.id, shape: task.arguments.shape };
+}
+
+function executeStrokeCreateTask(app, task) {
+  const layer = activeLayer(app);
+  if (!layer) editFail('LAYER_UNAVAILABLE');
+  const args = task.arguments;
+  const stroke = {
+    id: args.objectId || uid(),
+    type: 'stroke',
+    name: args.name,
+    matrix: Matrix.identity(),
+    opacity: args.opacity,
+    color: args.color,
+    size: args.size,
+    kind: args.kind,
+    smoothing: args.smoothing,
+    pressure: args.pressure,
+    taper: args.taper,
+    grain: args.grain,
+    softness: args.softness,
+    flow: args.flow,
+    wetness: args.wetness,
+    bristle: args.bristle,
+    ...(args.mediaModel ? { mediaModel: args.mediaModel } : {}),
+    points: clone(args.points)
+  };
+  if (findPageObject(app.page(), stroke.id)) editFail('OBJECT_ID_COLLISION', { objectId: stroke.id });
+  app.history.pushScoped('CHAT create Stroke', structuralHistoryPaths(app, []), () => {
+    layer.objects.push(stroke);
+  });
+  app.queueSpatialObject?.({ layerId: layer.id, objectId: stroke.id });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: layer.id, objectId: stroke.id };
+  return {
+    createdRefs: [ref],
+    resultRefs: [ref],
+    objectId: stroke.id,
+    kind: stroke.kind,
+    pointCount: stroke.points.length,
+    mediaModel: stroke.mediaModel || null
+  };
 }
 
 function executeRotateTask(app, task) {
@@ -1700,6 +1783,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'object.translate.v1') return executeTranslateTask(app, task);
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
+  if (task.operation === 'stroke.create.v1') return executeStrokeCreateTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
   if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
