@@ -2,6 +2,6 @@
   "schema": "INK-CHAT-DRAWING-EXPOSURE-TRIGGER",
   "version": 1,
   "issue": 111,
-  "intent": "Re-run after eraser schema fix and add module import validation.",
-  "sequence": 4
+  "intent": "Verify native Stroke creation, edit and erase through CHAT public tools.",
+  "sequence": 5
 }
