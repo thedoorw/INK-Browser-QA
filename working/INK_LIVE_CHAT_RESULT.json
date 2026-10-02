@@ -1,92 +1,10 @@
 {
   "schema": "INK-LIVE-CHAT-RESULT",
   "version": 1,
-  "requestId": "qa-hosted-trigger-smoke-002",
-  "tool": "get_ink_context",
+  "requestId": "clusterA-A1-live-rerun-001",
+  "tool": null,
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": null,
-  "runtimeIdentity": {
-    "href": "https://thedoorw.github.io/INK/",
-    "readyState": "complete",
-    "apiReady": true,
-    "sourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
-    "toolCount": 22
-  },
-  "result": {
-    "schema": "INK_AGENT_RESULT",
-    "version": 1,
-    "action": "context",
-    "status": "COMPLETED",
-    "documentId": "74235a7c-2622-4a82-a81f-ff5895a6595f",
-    "pageId": "f601414d-789f-47ff-8bca-94a283f8b22a",
-    "revisionId": null,
-    "targetRefs": [],
-    "createdRefs": [],
-    "changedRefs": [],
-    "historyReceipt": null,
-    "revisionReceipt": null,
-    "provenanceReceipt": null,
-    "outputHandles": [],
-    "diagnostics": [],
-    "result": {
-      "active": {
-        "layer": {
-          "id": "06b47879-4e92-4eea-833d-cd6a76ef682e",
-          "name": "圖層 1"
-        },
-        "page": {
-          "id": "f601414d-789f-47ff-8bca-94a283f8b22a",
-          "name": "頁面 1"
-        }
-      },
-      "bounds": {
-        "limits": {
-          "maxBytes": 98304,
-          "maxObjects": 96,
-          "maxRelationships": 192
-        },
-        "objects": {
-          "returned": 0,
-          "totalAvailable": 0,
-          "truncated": false
-        },
-        "outputBytes": 880,
-        "relationships": {
-          "returned": 0,
-          "totalAvailable": 0,
-          "truncated": false
-        }
-      },
-      "contextFingerprint": "fnv1a32:0f7af568",
-      "document": {
-        "appVersion": "0.1",
-        "format": "INK",
-        "formatVersion": 4,
-        "id": "74235a7c-2622-4a82-a81f-ff5895a6595f",
-        "pageCount": 1,
-        "title": "未命名作品"
-      },
-      "fingerprintAlgorithm": "fnv1a32-canonical-json",
-      "focus": {
-        "objectIds": []
-      },
-      "objects": [],
-      "relationships": {
-        "edges": [],
-        "source": "object.semantic",
-        "totalAvailable": 0,
-        "truncated": false
-      },
-      "revision": {
-        "revisionId": null
-      },
-      "schema": "INK-AI-DOCUMENT-BRIDGE",
-      "selection": {
-        "objectIds": [],
-        "unresolvedObjectIds": []
-      },
-      "version": 1
-    }
-  },
-  "status": "COMPLETED"
+  "status": "FAILED",
+  "error": "INK live readiness timeout: {\"href\":\"https://thedoorw.github.io/INK/\",\"readyState\":\"interactive\",\"apiReady\":false,\"sourceSha\":\"58adf13cd98a8594eb8e63faedc735ce0c5179f0\",\"toolCount\":0}",
+  "stderr": "] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2189:2189:1002/133019.050310:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2189:1002/133019.050369:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2216:1002/133019.050395:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2189:2216:1002/133019.050405:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2189:2189:1002/133019.060195:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2189:1002/133019.114162:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2216:1002/133019.158935:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2189:2189:1002/133019.637096:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2189:1002/133019.662172:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2216:1002/133019.662270:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2189:2189:1002/133019.672614:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2189:1002/133019.853454:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files\n[2189:2189:1002/133019.858285:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2216:1002/133019.858506:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2189:2189:1002/133019.972181:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2216:1002/133019.972266:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2189:2189:1002/133020.070724:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2189:2219:1002/133025.312161:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n[2189:2219:1002/133025.315344:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n[2189:2219:1002/133025.315595:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\nCreated TensorFlow Lite XNNPACK delegate for CPU.\n[2189:2219:1002/133045.581554:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n"
 }
