@@ -1,5 +1,41 @@
 # INK Current Work Order
 
+## USER clarification — Navigator / canvas zoom ceiling — 2026-10-02
+
+USER reports Photoshop Navigator can reach **12800%**, while current INK stops at **2400%**.
+
+Current-main source audit confirms the INK limit is not only a Navigator-slider UI limit:
+
+- `InkApp.zoomBy()` clamps camera scale to `.03 .. 24`;
+- pinch / gesture zoom clamps to `.03 .. 24`;
+- wheel zoom clamps to `.03 .. 24`;
+- Navigator slider is declared `min="3" max="2400"`;
+- Navigator numeric field routes through the same `zoomBy()` authority, so values above 2400% are also capped by Core view state.
+
+Therefore this is a **C06 Canvas Navigation capability gap**, not a cosmetic Navigator control defect.
+
+Required target:
+```text
+INK_MANUAL_ZOOM_MAX = 12800%
+CURRENT_MANUAL_ZOOM_MAX = 2400%
+TARGET_CAMERA_SCALE_MAX = 128
+CURRENT_CAMERA_SCALE_MAX = 24
+```
+
+Implementation must use one zoom-limit authority shared by wheel / gesture / +/- / Navigator slider / Navigator numeric input. Do not patch only the slider.
+
+Before promotion, validate at high zoom:
+- pan stability and center-preserving zoom;
+- Canvas2D / WebGL rendering;
+- selection / hit tolerance;
+- brush and eraser cursor geometry;
+- rulers / guides / overlays;
+- Navigator proxy rectangle;
+- tile/cache behavior and memory/performance;
+- no NaN / overflow / precision drift.
+
+Do not assume changing `24` to `128` alone is sufficient.
+
 ## USER clarification — 圖紙 / 手繪板切換仍未完成 — 2026-10-02
 
 USER current screenshot confirms the current main UI still does not expose a usable **圖紙 ↔ 手繪板** switch.
