@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "live-raster-web-bridge-pr118-001",
-  "candidateSha": "076400c52bcd3f6a62e7de0a87dc26bfc010f8e4",
-  "case": "web-raster-bridge"
+  "requestId": "live-raster-import-pr119-001",
+  "candidateSha": "e535234b1b3ad47d4fa0f4300ec3539275b0b4ca",
+  "case": "raster-import-named-tool"
 }
