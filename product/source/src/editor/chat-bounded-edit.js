@@ -11,6 +11,7 @@ import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
+import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, createAdjustment, createFilter, createLiquifyFilter, createLayerEffect } from '../image/image-core.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -102,6 +103,19 @@ function pathAppearanceSummary(path) {
 
 function appearanceSummary(object) {
   if (object?.type === 'path') return pathAppearanceSummary(object);
+  if (object?.type === 'image') {
+    return {
+      opacity: finite(object?.opacity) ?? 1,
+      blendMode: object?.blendMode || 'source-over',
+      rasterStateType: object?.rasterState?.type || null,
+      stackFingerprint: chatStateFingerprint({
+        adjustments: object?.adjustments || [],
+        filterStack: object?.filterStack || [],
+        effects: object?.effects || [],
+        blendMode: object?.blendMode || 'source-over'
+      })
+    };
+  }
   const result = { opacity: finite(object?.opacity) ?? 1 };
   for (const key of ['color', 'fill', 'fillColor', 'stroke', 'strokeWidth', 'size', 'kind']) {
     if (object?.[key] !== undefined && typeof object[key] !== 'object') result[key] = object[key];
@@ -212,6 +226,12 @@ export const CHAT_EDIT_TASK_VERSION = 1;
 export const CHAT_EDIT_PROPOSAL_SCHEMA = 'INK-CHAT-EDIT-PROPOSAL';
 export const CHAT_EDIT_PROPOSAL_VERSION = 1;
 
+export const CHAT_IMAGE_ADJUSTMENT_TYPES = Object.freeze(['brightnessContrast', 'levels', 'curves', 'hueSaturation']);
+export const CHAT_IMAGE_FILTER_TYPES = Object.freeze(['gaussianBlur', 'sharpen', 'noiseGrain', 'textureOverlay']);
+export const CHAT_IMAGE_EFFECT_TYPES = Object.freeze(['dropShadow', 'innerShadow', 'outerGlow', 'colorOverlay', 'stroke']);
+export const CHAT_IMAGE_BLEND_MODES = Object.freeze([...IMAGE_CAPABILITIES.blendModes]);
+export const CHAT_IMAGE_LIQUIFY_OPERATION_TYPES = Object.freeze([...LIQUIFY_OPERATIONS]);
+
 export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.repaint.v1',
   'path.material.apply.v1',
@@ -221,6 +241,11 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.refine.v1',
   'path.create.v1',
   'paint.session.create.v1',
+  'image.adjustment.add.v1',
+  'image.filter.add.v1',
+  'image.blend.set.v1',
+  'image.effect.add.v1',
+  'image.liquify.add.v1',
   'path.edit.v1',
   'object.rotate.v1',
   'object.clone.v1',
@@ -317,6 +342,102 @@ function boundedEnum(value, field, allowed) {
   const text = boundedText(value, field, { max: 80 });
   if (!allowed.includes(text)) editFail('ARGUMENT_INVALID', { field });
   return text;
+}
+
+function normalizeBoundedJson(value, field, {
+  maxBytes = 8192,
+  maxDepth = 4,
+  maxKeys = 64,
+  maxArray = 128,
+  maxString = 512
+} = {}) {
+  const state = { keys: 0 };
+  const visit = (item, path, depth) => {
+    if (depth > maxDepth) editFail('ARGUMENTS_BOUNDS', { field: path });
+    if (item == null || typeof item === 'boolean') return item;
+    if (typeof item === 'number') {
+      if (!Number.isFinite(item)) editFail('ARGUMENT_INVALID', { field: path });
+      return item;
+    }
+    if (typeof item === 'string') {
+      if (item.length > maxString) editFail('ARGUMENTS_BOUNDS', { field: path });
+      return item;
+    }
+    if (Array.isArray(item)) {
+      if (item.length > maxArray) editFail('ARGUMENTS_BOUNDS', { field: path });
+      return item.map((entry, index) => visit(entry, `${path}[${index}]`, depth + 1));
+    }
+    if (!item || typeof item !== 'object' || Object.getPrototypeOf(item) !== Object.prototype) {
+      editFail('ARGUMENT_INVALID', { field: path });
+    }
+    const keys = Object.keys(item);
+    state.keys += keys.length;
+    if (state.keys > maxKeys) editFail('ARGUMENTS_BOUNDS', { field: path });
+    return Object.fromEntries(keys.sort().map(key => [
+      boundedText(key, `${path}.key`, { max: 128 }),
+      visit(item[key], `${path}.${key}`, depth + 1)
+    ]));
+  };
+  const normalized = visit(value ?? {}, field, 0);
+  if (JSON.stringify(normalized).length > maxBytes) editFail('ARGUMENTS_BOUNDS', { field });
+  return normalized;
+}
+
+function normalizeImageAdjustmentArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    type: boundedEnum(raw.type, 'arguments.type', CHAT_IMAGE_ADJUSTMENT_TYPES),
+    params: normalizeBoundedJson(raw.params ?? {}, 'arguments.params'),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
+}
+
+function normalizeImageFilterArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    type: boundedEnum(raw.type, 'arguments.type', CHAT_IMAGE_FILTER_TYPES),
+    params: normalizeBoundedJson(raw.params ?? {}, 'arguments.params'),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
+}
+
+function normalizeImageBlendArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return { mode: boundedEnum(raw.mode, 'arguments.mode', CHAT_IMAGE_BLEND_MODES) };
+}
+
+function normalizeImageEffectArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    type: boundedEnum(raw.type, 'arguments.type', CHAT_IMAGE_EFFECT_TYPES),
+    params: normalizeBoundedJson(raw.params ?? {}, 'arguments.params'),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
+}
+
+function normalizeImageLiquifyArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  if (!Array.isArray(raw.operations) || raw.operations.length < 1 || raw.operations.length > 32) {
+    editFail('ARGUMENTS_INVALID', { field: 'arguments.operations' });
+  }
+  const operations = raw.operations.map((op, index) => {
+    if (!op || typeof op !== 'object' || Array.isArray(op)) editFail('ARGUMENT_INVALID', { field: `arguments.operations[${index}]` });
+    return {
+      type: boundedEnum(op.type, `arguments.operations[${index}].type`, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES),
+      x: boundedNumber(op.x, `arguments.operations[${index}].x`),
+      y: boundedNumber(op.y, `arguments.operations[${index}].y`),
+      radius: boundedNumber(op.radius ?? 32, `arguments.operations[${index}].radius`, { min: 1, max: 1000000 }),
+      strength: boundedNumber(op.strength ?? .5, `arguments.operations[${index}].strength`, { min: -1, max: 1 }),
+      dx: boundedNumber(op.dx ?? 0, `arguments.operations[${index}].dx`),
+      dy: boundedNumber(op.dy ?? 0, `arguments.operations[${index}].dy`),
+      angle: boundedNumber(op.angle ?? 0, `arguments.operations[${index}].angle`, { min: -36000, max: 36000 })
+    };
+  });
+  return {
+    operations,
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
+    maxWork: raw.maxWork == null ? null : boundedNumber(raw.maxWork, 'arguments.maxWork', { min: 1, max: 50000000, integer: true })
+  };
 }
 
 function normalizePoint(value, field, { optional = false } = {}) {
@@ -816,7 +937,17 @@ function normalizeOperationArguments(operation, raw) {
   }
   if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
   if (operation === 'paint.session.create.v1') return normalizePaintSessionCreateArguments(raw);
-  if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
+  if (operation === 'image.adjustment.add.v1') return normalizeImageAdjustmentArguments(raw);
+  if (operation === 'image.filter.add.v1') return normalizeImageFilterArguments(raw);
+  if (operation === 'image.blend.set.v1') return normalizeImageBlendArguments(raw);
+  if (operation === 'image.effect.add.v1') return normalizeImageEffectArguments(raw);
+  if (operation === 'image.liquify.add.v1') return normalizeImageLiquifyArguments(raw);
+  if (operation === 'image.adjustment.add.v1'
+    || operation === 'image.filter.add.v1'
+    || operation === 'image.blend.set.v1'
+    || operation === 'image.effect.add.v1'
+    || operation === 'image.liquify.add.v1'
+    || operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
   if (operation === 'repeat.radial.v1') return normalizeRepeatRadialArguments(raw);
@@ -992,6 +1123,14 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     }
     if (task.operation === 'text.edit.v1' && found.object?.type !== 'text') {
       editFail('TEXT_REQUIRED', { objectId: found.object?.id || null });
+    }
+    if (task.operation.startsWith('image.')) {
+      if (found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster) {
+        editFail('RASTER_IMAGE_REQUIRED', { objectId: found.object?.id || null });
+      }
+      if (task.operation === 'image.blend.set.v1' && (found.object?.blendMode || 'source-over') === task.arguments.mode) {
+        editFail('NO_OP', { objectId: found.object?.id || null });
+      }
     }
     if (found.effectiveLocked) editFail('TARGET_LOCKED', { objectId: found.object.id });
     if (found.effectiveVisible === false) editFail('TARGET_HIDDEN', { objectId: found.object.id });
@@ -1822,6 +1961,66 @@ function executeComponentReferenceRepairTask(app, task) {
   };
 }
 
+function executeImageStackTask(app, task) {
+  const ref = task.targets[0];
+  const found = findPageObject(app.page(), ref);
+  if (!found || found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster) {
+    editFail('RASTER_IMAGE_REQUIRED', { objectId: found?.object?.id || null });
+  }
+  const object = found.object;
+  let stackItem = null;
+  let label = 'CHAT edit image stack';
+  app.history.pushScoped(label, [app.objectPath(found)], () => {
+    if (task.operation === 'image.adjustment.add.v1') {
+      if ((object.adjustments?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+      object.adjustments = object.adjustments || [];
+      stackItem = createAdjustment(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
+      object.adjustments.push(stackItem);
+      label = `CHAT add image adjustment: ${task.arguments.type}`;
+    } else if (task.operation === 'image.filter.add.v1') {
+      if ((object.filterStack?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+      object.filterStack = object.filterStack || [];
+      stackItem = createFilter(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
+      object.filterStack.push(stackItem);
+      label = `CHAT add image filter: ${task.arguments.type}`;
+    } else if (task.operation === 'image.effect.add.v1') {
+      if ((object.effects?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+      object.effects = object.effects || [];
+      stackItem = createLayerEffect(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
+      object.effects.push(stackItem);
+      label = `CHAT add image effect: ${task.arguments.type}`;
+    } else if (task.operation === 'image.blend.set.v1') {
+      object.blendMode = task.arguments.mode;
+      label = `CHAT set image blend: ${task.arguments.mode}`;
+    } else if (task.operation === 'image.liquify.add.v1') {
+      if ((object.filterStack?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+      object.filterStack = object.filterStack || [];
+      stackItem = createLiquifyFilter(task.arguments.operations, {
+        opacity: task.arguments.opacity,
+        maxWork: task.arguments.maxWork
+      });
+      object.filterStack.push(stackItem);
+      label = 'CHAT add image Liquify';
+    } else {
+      editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
+    }
+  });
+  const latest = app.history?.undoStack?.at?.(-1);
+  if (latest && latest.label === 'CHAT edit image stack') latest.label = label;
+  app.spatialDirty = true;
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: object.id }],
+    stackItemId: stackItem?.id || null,
+    stackItemType: stackItem?.type || null,
+    blendMode: object.blendMode || 'source-over',
+    adjustmentCount: object.adjustments?.length || 0,
+    filterCount: object.filterStack?.length || 0,
+    effectCount: object.effects?.length || 0
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
@@ -1832,6 +2031,11 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
   if (task.operation === 'paint.session.create.v1') return executePaintSessionCreateTask(app, task);
+  if (task.operation === 'image.adjustment.add.v1'
+    || task.operation === 'image.filter.add.v1'
+    || task.operation === 'image.blend.set.v1'
+    || task.operation === 'image.effect.add.v1'
+    || task.operation === 'image.liquify.add.v1') return executeImageStackTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
   if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
