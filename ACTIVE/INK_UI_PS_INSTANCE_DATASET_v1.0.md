@@ -362,9 +362,12 @@ LEVEL 2 — major region boundary
 clearer contrast than internal divider
 
 LEVEL 3 — panel-group splitter
-≈3 px visual structure
-center/seam visibly stronger
-interactive when resize is supported
+Photoshop capture occupies ≈3 px structural raster/envelope.
+For INK light-theme application, do not copy that envelope as a 3 px solid visible band:
+- visible junction line = 1 px;
+- junction contrast may be slightly stronger than an ordinary divider;
+- draggable interaction envelope may extend to ≈5 px transparently around the line.
+Visual thickness and pointer hit area are separate measurements.
 ```
 
 Do not use borders around every row/control to create hierarchy.
