@@ -55,6 +55,17 @@ function cdpPipe(child) {
   let nextId = 1;
   let buffer = Buffer.alloc(0);
   const pending = new Map();
+  const events = [];
+  const pushEvent = message => {
+    if (!message?.method) return;
+    if (!['Network.responseReceived','Network.loadingFailed','Runtime.exceptionThrown'].includes(message.method)) return;
+    events.push({
+      method: message.method,
+      sessionId: message.sessionId || null,
+      params: message.params || {}
+    });
+    if (events.length > 800) events.splice(0, events.length - 800);
+  };
 
   const failAll = error => {
     for (const entry of pending.values()) {
@@ -75,6 +86,7 @@ function cdpPipe(child) {
       let message;
       try { message = JSON.parse(raw); }
       catch (error) { failAll(error); continue; }
+      pushEvent(message);
       if (!message.id) continue;
       const entry = pending.get(message.id);
       if (!entry) continue;
@@ -99,7 +111,10 @@ function cdpPipe(child) {
     input.write(JSON.stringify(message) + '\0');
   });
 
-  return { send };
+  return {
+    send,
+    events() { return events.slice(); }
+  };
 }
 
 async function waitForInk(cdp, sessionId, expectedSourceSha) {
@@ -142,7 +157,47 @@ async function waitForInk(cdp, sessionId, expectedSourceSha) {
     }, sessionId, 5000);
     diagnostics = probe.result?.value || null;
   } catch {}
-  throw new Error(`INK live readiness timeout: ${JSON.stringify(last)} diagnostics=${JSON.stringify(diagnostics)}`);
+  const protocolEvents = typeof cdp?.events === 'function' ? cdp.events() : [];
+  const networkDiagnostics = protocolEvents.map(event => {
+    if (event.method === 'Network.responseReceived') {
+      const response = event.params?.response || {};
+      return {
+        kind: 'response',
+        url: response.url || null,
+        status: response.status ?? null,
+        mimeType: response.mimeType || null,
+        protocol: response.protocol || null,
+        fromDiskCache: Boolean(response.fromDiskCache),
+        fromServiceWorker: Boolean(response.fromServiceWorker)
+      };
+    }
+    if (event.method === 'Network.loadingFailed') {
+      return {
+        kind: 'loadingFailed',
+        url: event.params?.requestId || null,
+        errorText: event.params?.errorText || null,
+        blockedReason: event.params?.blockedReason || null,
+        corsErrorStatus: event.params?.corsErrorStatus || null
+      };
+    }
+    if (event.method === 'Runtime.exceptionThrown') {
+      const details = event.params?.exceptionDetails || {};
+      return {
+        kind: 'exception',
+        text: details.text || null,
+        url: details.url || null,
+        lineNumber: details.lineNumber ?? null,
+        columnNumber: details.columnNumber ?? null,
+        exception: details.exception?.description || details.exception?.value || null
+      };
+    }
+    return null;
+  }).filter(Boolean).filter(item =>
+    item.kind !== 'response'
+    || Number(item.status) >= 400
+    || /cdn\.jsdelivr\.net\/gh\/thedoorw\/INK-Browser-QA/.test(String(item.url || ''))
+  ).slice(-160);
+  throw new Error(`INK live readiness timeout: ${JSON.stringify(last)} diagnostics=${JSON.stringify(diagnostics)} protocol=${JSON.stringify(networkDiagnostics)}`);
 }
 
 function validateRequest(request) {
@@ -234,6 +289,7 @@ async function run() {
     const { sessionId } = await cdp.send('Target.attachToTarget', { targetId, flatten: true });
     await cdp.send('Page.enable', {}, sessionId);
     await cdp.send('Runtime.enable', {}, sessionId);
+    await cdp.send('Network.enable', {}, sessionId);
     await cdp.send('Page.addScriptToEvaluateOnNewDocument', {
       source: `window.__INK_QA_ERRORS__ = [];
         addEventListener('error', event => {
