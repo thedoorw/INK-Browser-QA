@@ -438,6 +438,13 @@ Required correction:
 
 Exact left inset / final stroke must be derived from the rendered comparison, not guessed by independent per-icon offsets.
 
+Next-review enforcement for SUP-09:
+- require Photoshop cluster outer-bound/right-edge measurement;
+- require INK cluster outer-bound/right-edge measurement from the same 1:1 viewport class;
+- compare the cluster as one unit before judging individual glyphs;
+- reject a result that only reports `margin-left/right`, `translateX`, or “moved left” without Photoshop reference evidence;
+- then inspect minimize / restore / close visible envelopes and stroke weight separately.
+
 ### SUP-10 — LASSO SELECTION DISABLES THE TWO FOLLOWING TOOL ACTIONS
 
 USER reports that after selecting Lasso, the two buttons directly below it become non-clickable.
