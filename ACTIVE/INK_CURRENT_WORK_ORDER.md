@@ -1,5 +1,33 @@
 # INK Current Work Order
 
+## USER current-main visual rejection checkpoint — 2026-10-02
+
+USER supplied a fresh 1280×1024 deployed-page screenshot and rejected the visible current-main UI as materially incomplete.
+
+Supervisor review:
+- `working/INK_UI_CURRENT_MAIN_VISUAL_REJECTION_20261002.md`
+
+Current findings include:
+- C04 圖紙 / 手繪板 switch not visible on desktop;
+- Options Bar remains semantically under-assembled and duplicates `全選 / 取消選取` one-shot commands;
+- accepted post-SUP11 UI refinement candidate is not installed on current main;
+- current main still contains eleven per-menu fixed-width rules and the old global `scrollbar-color`;
+- no-document Navigator state and remaining Reference/icon-class details require fresh state/same-class evidence.
+
+Disposition:
+```text
+CURRENT_MAIN_UI = USER_REJECTED
+OLD_UI_PASS = NOT_CURRENT_EVIDENCE
+POST_SUP11_ACCEPTED = NOT_YET_INSTALLED_ON_MAIN
+UI_COMPLETE = HOLD
+PRODUCT_MUTATION_BY_SUPERVISOR = NONE
+```
+
+This does not invalidate or expand the currently bounded Core spatial-index promotion integration.
+
+After that Core integration is completed, UI continuation must start from a fresh current-main UI branch and reconcile the already accepted post-SUP11 deltas before another USER visual checkpoint. Do not blindly merge the divergent old UI candidate.
+
+
 ## Core promotion Supervisor checkpoint — 2026-10-02
 
 Promotion review:
