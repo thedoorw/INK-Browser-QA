@@ -1,8 +1,8 @@
 # INK UI Micro-Module Normalization — Supervisor Review 2026-10-02
 
-STATUS: REVISION_REQUIRED / NO PRODUCT MUTATION BY SUPERVISOR
+STATUS: NORMALIZATION_CANDIDATE_ACCEPTED_WITH_OPEN_VISUAL_REFERENCE / NO PRODUCT MUTATION BY SUPERVISOR
 ROLE: INK UI Standards Supervisor MR
-CANDIDATE: c90df990cddedc7d7d7692b88200985a8b50d5aa
+CANDIDATE: a17cf7d46c151744668cf42f55b15212fe758415
 BASE: 361ebc21ae6917b23031180bfd1b7b8fa278cfde
 DISPATCH: ACTIVE/INK_UI_MICRO_MODULE_NORMALIZATION_DEV_DISPATCH_v1.0.md
 
@@ -253,3 +253,115 @@ Required correction:
 ```
 
 This is a top-menu same-class consistency defect. Keep the existing object menu command routing unchanged; only normalize the visible menu label/mnemonic.
+
+
+## Completion follow-up — candidate a17cf7d
+
+Candidate:
+`a17cf7d46c151744668cf42f55b15212fe758415`
+
+Baseline for this follow-up:
+`f7e387c2977b3c69c160356bd368b4f387c602c2`
+
+Independent checks performed:
+- inspected final product source and commit diff;
+- inspected fresh rendered evidence for active, single Tools, expanded/collapsed dock, Reference normal/details, Layers, Adjustments, Diagnostic and Edit menu states;
+- inspected browser summary and source-health evidence;
+- rechecked current CSS for reintroduced covered duplicate authority.
+
+### Technical-debt gate
+
+No cleanup regression found in the latest candidate:
+- covered exact duplicate definitions remain zero in the delivered source-health audit;
+- `!important` decreases from 104 to 103 relative to the cleanup candidate;
+- breakpoint families are unchanged;
+- no new font declaration family is introduced by the latest pass;
+- shared left/right collapse glyph primitive remains 7×5 px;
+- panel tabs remain on the shared 28 px grammar;
+- the latest source does not reintroduce the removed left-only 9×8 collapse override;
+- browser-loaded response bytes match the reviewed source.
+
+Therefore:
+```text
+TECH_DEBT_CLEANUP = STILL ACCEPTED
+SUP-03 = RESOLVED
+SUP-05 = RESOLVED
+```
+
+### SUP-01 follow-up — RESOLVED
+
+Fresh evidence shows:
+- Adjustments has a visible top-group tab and the selected body matches it;
+- Specialist/Diagnostic receives an explicit visible `診斷` tab only when that route is active;
+- ordinary native/raster tool selection clears the diagnostic state;
+- Help and Window diagnostic routes remain reachable.
+
+The prior hidden Specialist/body identity leak is not reproduced.
+
+### SUP-02 follow-up — RESOLVED
+
+Reference detail state is now compact and localized:
+- `Radial count` → `放射數量`;
+- explanatory execution/debug prose is removed from the ordinary creative panel;
+- the required-image error is concise Chinese;
+- no explanatory paragraph block remains in the reference pane.
+
+### SUP-06 follow-up — RESOLVED
+
+The top menu now renders:
+```text
+物件(O)
+```
+with existing routing unchanged.
+
+### SUP-04 follow-up — OPEN / REFERENCE_MISSING
+
+The latest pass corrected the canonical **dual-column** Photoshop measurement from source raster:
+- dual foreground/background swatches = 25×25 px each;
+- diagonal origin offset = 16×16 px;
+- resulting visible overlap = 9×9 px.
+
+Current INK dual Tools now follows that measured state.
+
+However:
+- no original Photoshop **single-column** source capture has been recovered;
+- current INK single-column 18×18 / 10 px offset is explicitly provisional implementation evidence, not a verified Photoshop measurement;
+- therefore the USER-observed single-column swatch concern cannot be closed by the current dataset.
+
+Required disposition:
+```text
+DUAL_SWATCH = MEASURED / IMPLEMENTED
+SINGLE_SWATCH = REFERENCE_MISSING / USER CHECKPOINT
+```
+
+Do not claim that the current single-column shrink is Photoshop-faithful until a valid single-column reference is measured.
+
+### Window controls
+
+The latest pass now anchors the visual controls at the right edge and uses explicit vector geometry. Source-raster reference envelopes were also recorded for minimize / restore / close.
+
+This is an improvement, but final optical fidelity remains a USER visual checkpoint; browser geometry alone does not prove the glyphs visually match Photoshop.
+
+### Capability exposure
+
+The latest normalization candidate does not close the separate full Capability → UI Exposure problem.
+
+The current top Options Bar can still be sparse for contexts whose parameters have not yet been surfaced. This remains the later Batch B task and is not a reason to reopen the accepted technical-debt cleanup.
+
+### Current disposition
+
+```text
+NORMALIZATION_SYSTEM = ACCEPTED AS CURRENT BASE
+TECH_DEBT_CLEANUP = ACCEPTED
+SUP-01 = RESOLVED
+SUP-02 = RESOLVED
+SUP-03 = RESOLVED
+SUP-05 = RESOLVED
+SUP-06 = RESOLVED
+SUP-04 = OPEN / SINGLE-COLUMN PHOTOSHOP REFERENCE MISSING
+WINDOW_CONTROL_OPTICAL_FIDELITY = USER CHECKPOINT
+FULL_CAPABILITY_UI_EXPOSURE = NOT CLOSED
+FINAL_UI_COMPLETE = NOT CLAIMED
+```
+
+Do not start Capability → UI Exposure Batch B until USER completes the current visual checkpoint on the normalized base.
