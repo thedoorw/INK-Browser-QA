@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A1-live-rerun-003",
+  "requestId": "clusterA-A1-live-rerun-004",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "58adf13cd98a8594eb8e63faedc735ce0c5179f0",
   "steps": [
@@ -12,101 +12,92 @@
     },
     {
       "id": "paintPropose",
-      "tool": "use_ink",
+      "tool": "propose_ink_edit",
       "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "intentSummary": "Cluster A A1 Live rerun: create bounded Paint Session",
-          "steps": [
-            {
-              "stepId": "paint-session",
-              "operation": "paint.session.create.v1",
-              "targets": [],
-              "arguments": {
-                "name": "A1 Live Paint Session",
-                "seed": 37,
-                "opacity": 1,
-                "strokes": [
+          "taskId": "clusterA-A1-live-paint-session",
+          "operation": "paint.session.create.v1",
+          "targets": [],
+          "arguments": {
+            "name": "A1 Live Paint Session",
+            "seed": 37,
+            "opacity": 1,
+            "strokes": [
+              {
+                "brushId": "pencil",
+                "color": "#25384a",
+                "seed": 101,
+                "samples": [
                   {
-                    "brushId": "pencil",
-                    "color": "#25384a",
-                    "seed": 101,
-                    "samples": [
-                      {
-                        "x": -110,
-                        "y": -55,
-                        "pressure": 0.25,
-                        "timestamp": 0
-                      },
-                      {
-                        "x": -20,
-                        "y": -95,
-                        "pressure": 0.65,
-                        "timestamp": 20
-                      },
-                      {
-                        "x": 80,
-                        "y": -30,
-                        "pressure": 0.9,
-                        "timestamp": 40
-                      }
-                    ]
+                    "x": -110,
+                    "y": -55,
+                    "pressure": 0.25,
+                    "timestamp": 0
                   },
                   {
-                    "brushId": "watercolor",
-                    "color": "#b86d83",
-                    "seed": 102,
-                    "samples": [
-                      {
-                        "x": -90,
-                        "y": 20,
-                        "pressure": 0.35,
-                        "timestamp": 0
-                      },
-                      {
-                        "x": 0,
-                        "y": 70,
-                        "pressure": 0.7,
-                        "timestamp": 22
-                      },
-                      {
-                        "x": 100,
-                        "y": 25,
-                        "pressure": 0.5,
-                        "timestamp": 44
-                      }
-                    ]
+                    "x": -20,
+                    "y": -95,
+                    "pressure": 0.65,
+                    "timestamp": 20
+                  },
+                  {
+                    "x": 80,
+                    "y": -30,
+                    "pressure": 0.9,
+                    "timestamp": 40
                   }
                 ]
               },
-              "dependsOn": []
-            }
-          ]
+              {
+                "brushId": "watercolor",
+                "color": "#b86d83",
+                "seed": 102,
+                "samples": [
+                  {
+                    "x": -90,
+                    "y": 20,
+                    "pressure": 0.35,
+                    "timestamp": 0
+                  },
+                  {
+                    "x": 0,
+                    "y": 70,
+                    "pressure": 0.7,
+                    "timestamp": 22
+                  },
+                  {
+                    "x": 100,
+                    "y": 25,
+                    "pressure": 0.5,
+                    "timestamp": 44
+                  }
+                ]
+              }
+            ]
+          }
         }
       }
     },
     {
       "id": "paintApprove",
-      "tool": "use_ink",
+      "tool": "approve_ink_edit",
       "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "paintPropose.result.planId"
+        "proposalId": {
+          "$ref": "paintPropose.result.result.proposalId"
         }
       }
     },
     {
       "id": "paintExecute",
-      "tool": "use_ink",
+      "tool": "execute_ink_edit",
       "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "paintPropose.result.planId"
+        "proposalId": {
+          "$ref": "paintPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "paintApprove.result.approvalToken"
+          "$ref": "paintApprove.result.result.approvalToken"
         }
       }
     },
