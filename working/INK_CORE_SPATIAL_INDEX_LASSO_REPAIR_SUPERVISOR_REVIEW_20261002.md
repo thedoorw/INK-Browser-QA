@@ -1,6 +1,6 @@
 # INK Core Spatial Index / Lasso Consistency — Supervisor Review 2026-10-02
 
-STATUS: SUPERVISOR_ACCEPTED / PROMOTION_PENDING
+STATUS: FINAL_CORE_ACCEPTANCE / PASS
 
 Repository: `thedoorw/INK-Browser-QA`
 
@@ -13,173 +13,161 @@ Baseline:
 Candidate branch:
 `work/core-spatial-index-lasso-repair-001`
 
-Final branch HEAD:
+Final candidate HEAD:
 `7913b332247c0892928501761975bf59d96e3885`
 
 Exact browser-tested SHA:
 `864e72d5aa6b37ca5625c9ea3634fa506ea6b644`
 
-Focused browser run:
-`36972999791`
+Focused browser result:
+`33 / 33 PASS`
 
-## 1. Final source review
+## 1. Product-source review
 
-The product mutation remains narrowly bounded to:
+The final candidate remains narrowly bounded to `product/source/src/ink.js`.
 
-`product/source/src/ink.js`
+Only two product lines differ from baseline:
 
-The exact Core change is two mutation-lifecycle notifications:
+- finalized Stroke creation now calls `queueSpatialObject(it.object.id)`;
+- finalized Shape creation now calls `queueSpatialObject(it.object.id)`.
 
-- finalized Stroke creation queues `it.object.id` with `queueSpatialObject(it.object.id)`;
-- finalized Shape creation queues `it.object.id` with `queueSpatialObject(it.object.id)`.
+This is the accepted mutation-lifecycle location for the reproduced stale-index defect.
 
-No other product source is changed relative to the task baseline.
+The repair:
+- does not add `refreshAll()` as a blanket workaround;
+- does not create a second spatial index;
+- does not create a second selection authority;
+- does not alter UI;
+- does not touch New Document / A4;
+- does not touch Creation / Layout workspace;
+- preserves `FORMAT_VERSION = 4`;
+- preserves the existing `PageSpatialIndex` / `spatialPending` incremental authority.
 
-The repair is placed after the object has been committed into the document and uses the pre-existing `spatialPending` / `PageSpatialIndex.syncObjects()` path.
+## 2. Exact tested-SHA identity
 
-It does not:
-- add a new `refreshAll()` workaround;
-- create a second spatial index;
-- create a second selection authority;
-- alter UI;
-- alter New Document / A4;
-- alter Creation / Layout workspace;
-- alter FORMAT_VERSION.
+The focused runner executed against:
 
-## 2. Spatial authority review
+`864e72d5aa6b37ca5625c9ea3634fa506ea6b644`
 
-Existing authority remains singular:
+and produced:
 
-```text
-document/page object graph
-→ queueSpatialObject / queueSpatialSelection
-→ spatialPending
-→ ensureSpatialIndex
-→ PageSpatialIndex.syncObjects
-→ fallback full rebuild only when existing authority requires it
-```
+`33 / 33 PASS`
 
-The new create path therefore joins the same mutation lifecycle already used by object edits.
+The final branch HEAD is:
 
-Independent source inspection confirms:
-- `queueSpatialObject()` only records the exact object ID;
-- `ensureSpatialIndex()` consumes pending IDs incrementally when the current page/index is valid;
-- unsafe incremental synchronization falls back through the existing rebuild path;
-- native Lasso queries `ensureSpatialIndex()`, not a second selection/index implementation.
+`7913b332247c0892928501761975bf59d96e3885`
 
-## 3. Browser evidence
+Comparison from the tested SHA to final HEAD shows no product-source or runner mutation.
 
-Committed evidence:
+Only the following changed after the exact browser run:
+- committed JSON evidence added;
+- committed PNG evidence added;
+- DEV return added;
+- task-specific GitHub Actions workflow removed.
 
-- `qa/evidence/ink-core-spatial-index-lasso-repair-864e72d5aa6b/spatial-index-browser.json`
-- `qa/evidence/ink-core-spatial-index-lasso-repair-864e72d5aa6b/shape-lasso-pass.png`
-- `working/INK_CORE_SPATIAL_INDEX_LASSO_REPAIR_DEV_RETURN_20261002.md`
+Therefore the final candidate contains the same tested product and focused-runner bytes.
 
-Evidence identity:
+## 3. Committed browser evidence
 
-```text
-targetSha = 864e72d5aa6b37ca5625c9ea3634fa506ea6b644
-FORMAT_VERSION = 4
-status = PASS
-checks = 33 / 33 PASS
-failures = 0
-central Runtime = NOT EXECUTED
-```
+The branch now contains:
 
-The focused runner uses the actual browser product.
+- `qa/evidence/ink-core-spatial-index-lasso-repair-864e72d5aa6b/spatial-index-browser.json`;
+- `qa/evidence/ink-core-spatial-index-lasso-repair-864e72d5aa6b/shape-lasso-pass.png`;
+- `working/INK_CORE_SPATIAL_INDEX_LASSO_REPAIR_DEV_RETURN_20261002.md`.
 
-For the reproduced defect it:
-1. selects the native Shape tool;
-2. creates the Shape by pointer drag;
-3. confirms the exact new object ID is pending while not yet present in the index;
-4. selects the native Lasso tool;
-5. performs a polygon pointer gesture around the new Shape;
-6. verifies native Lasso selects that exact Shape ID;
-7. verifies the pending ID is incrementally consumed by the existing index.
+The JSON records:
+- status `PASS`;
+- `33 / 33` focused checks passing;
+- zero failures;
+- `FORMAT_VERSION = 4`;
+- exact tested SHA identity;
+- exact index entry IDs, counts, dirty state and pending IDs across lifecycle mutations.
 
-The runner does not call `refreshAll()` to make the fresh Shape selectable.
+## 4. Required lifecycle acceptance
 
-## 4. Required lifecycle coverage
+Focused browser evidence closes the dispatch requirements:
 
-All required focused checks are present and PASS:
-
-| Area | Evidence disposition |
+| Mutation / state | Supervisor result |
 | --- | --- |
-| Shape create | exact ID queued; native Lasso selects it without blanket rebuild |
-| Stroke create | exact ID queued and incrementally indexed |
-| Move | selected ID queued; new bounds indexed; stale old hit removed |
-| Resize | selected ID queued; bounds updated |
-| Rotate | selected ID queued; bounds updated |
-| Duplicate | existing structural dirty/rebuild path contains original + copy IDs |
-| Delete | deleted ID removed |
-| Undo delete | exact ID restored |
-| Redo delete | exact ID removed again |
-| Undo/redo creation | same created ID removed/restored correctly |
-| Group / ungroup | group/child IDs reconcile correctly |
-| Frame | frame + nested child IDs reconcile correctly |
-| Reparent | child ID and world bounds preserved across root/frame moves |
-| Page switch | index switches page authority with no cross-page ID leakage |
+| fresh Shape create → native Lasso | PASS |
+| Stroke create | PASS |
+| move | PASS |
+| resize | PASS |
+| rotate | PASS |
+| duplicate | PASS |
+| delete | PASS |
+| undo / redo creation | PASS |
+| undo / redo deletion | PASS |
+| group / ungroup | PASS |
+| frame / reparent | PASS |
+| page switch / cross-page leakage | PASS |
+| exact index entry IDs / counts | PASS |
+| FORMAT_VERSION = 4 | PASS |
 
-Final evidence counters include both incremental updates and the pre-existing structural full rebuild paths. This is expected; the dispatch prohibited adding a blanket rebuild workaround, not removing legitimate structural rebuilds already owned by the Core lifecycle.
+Critical reproduced defect is closed:
 
-## 5. Evidence-handoff hygiene
+```text
+fresh Shape creation
+→ document contains Shape
+→ exact Shape ID enters spatialPending
+→ native Lasso query consumes pending ID incrementally
+→ same Shape ID enters spatial index
+→ Shape is selected
+→ no manual refreshAll()
+```
 
-The earlier blocking evidence gap is closed.
+The fresh Shape path changes:
+- index count: `0 → 1`;
+- incremental updates: `0 → 1`;
+- full rebuild count remains unchanged for that incremental synchronization.
 
-The task-specific GitHub Actions workflow:
+## 5. Structural lifecycle review
+
+The evidence confirms the surrounding existing lifecycle remains coherent:
+
+- move / resize / rotate use exact-ID incremental synchronization;
+- duplicate / delete use the pre-existing structural dirty/rebuild path;
+- undo / redo restore/remove exact IDs through document replacement and rebuild;
+- group / ungroup and frame / reparent preserve expected hierarchy/index IDs;
+- page switching rebuilds against the active page and does not leak previous-page entries.
+
+No additional Core repair is required by this package.
+
+## 6. GitHub Actions cleanup
+
+The task-specific workflow:
+
 `.github/workflows/ink-core-spatial-index-lasso-repair.yml`
 
 is absent from the final candidate tree.
 
-Final branch delta versus the task baseline contains only:
-- `product/source/src/ink.js`;
-- focused runner;
+Review no longer depends on a transient workflow artifact; the required JSON and PNG are committed to GitHub source history.
+
+## 7. Final candidate diff
+
+Baseline → final candidate contains only:
+
+- `product/source/src/ink.js` — accepted two-line Core repair;
+- `qa/runtime/run-ink-core-spatial-index-lasso-repair.mjs` — focused browser runner;
 - committed JSON evidence;
 - committed PNG evidence;
 - DEV return.
 
-No UI/New Document/workspace product file is part of the final delta.
-
-## 6. Branch promotion note
-
-The work branch is now diverged from current `main` because main continued receiving Supervisor/work-order documentation while the Core task was isolated.
-
-Therefore:
-
-```text
-DO NOT use branch divergence as a reason to reopen the Core fix.
-DO NOT fold unrelated current-main work into this repair review.
-PROMOTION should preserve the exact accepted final tree delta on current main.
-```
-
-A clean promotion/replay of the accepted final delta is preferable to importing transient task-workflow history.
-
-No promotion or product mutation is performed by this Supervisor review.
+No unrelated Core, UI, New Document/A4, or workspace mutation is present.
 
 ## Supervisor disposition
 
 ```text
-CORE_REPAIR_SOURCE = ACCEPTED
+CORE_REPAIR_SOURCE = PASS
 MUTATION_LIFECYCLE_LOCATION = ACCEPTED
-SPATIAL_INDEX_AUTHORITY = PRESERVED
-SECOND_SELECTION_AUTHORITY = NONE
-NEW_REFRESHALL_WORKAROUND = NONE
-
-FOCUSED_BROWSER_EVIDENCE = PASS / 33_OF_33
-EXACT_ID_VALIDATION = PASS
-CREATE_MOVE_RESIZE_ROTATE = PASS
-DUPLICATE_DELETE_UNDO_REDO = PASS
-GROUP_FRAME_REPARENT = PASS
-PAGE_SWITCH_ISOLATION = PASS
-
-FORMAT_VERSION = 4 / UNCHANGED
-UI_MUTATION = NONE
-NEW_DOCUMENT_A4_MUTATION = NONE
-WORKSPACE_MUTATION = NONE
-TASK_WORKFLOW_RETAINED = NO
-
-CANDIDATE_HEAD = 7913b332247c0892928501761975bf59d96e3885
-TESTED_SHA = 864e72d5aa6b37ca5625c9ea3634fa506ea6b644
-CORE_SUPERVISOR_REVIEW = ACCEPTED
-PROMOTION = PENDING / SEPARATE ACTION
+FOCUSED_QA_DESIGN = PASS
+ACTUAL_BROWSER_EVIDENCE = 33 / 33 PASS
+INDEX_ENTRY_ID_VALIDATION = PASS
+TESTED_SHA_IDENTITY_CHAIN = PASS
+TASK_WORKFLOW_REMOVED = YES
+FORMAT_VERSION = 4
+FINAL_CORE_ACCEPTANCE = GRANTED
+CANDIDATE = ACCEPTED / NOT_MERGED
+NEXT_ACTION = USER / PROMOTION_DECISION
+STOP = TRUE
 ```
