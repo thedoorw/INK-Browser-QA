@@ -413,3 +413,28 @@ Qualification proof:
 - first formal Live attempt timed out before Public API readiness on the same exact deployed SHA with no window/module exception or HTTP failure; warm rerun completed the full operation chain.
 - superseded over-broad PR #120 was closed unmerged. Filter / blend / effect / Liquify require separate qualification and are not covered by this PASS.
 
+## B2 incremental qualification — filter / gaussianBlur — 2026-10-02
+
+```text
+B2_FILTER_PR = #122 / MERGED
+B2_FILTER_EXACT_CANDIDATE = c7a0b08e43d3410811efdd5532571002a1acb478
+B2_FILTER_SOURCE_INTEGRATION = e2ce5e409f42c992bcf411e5e23d8f02435b1a63
+B2_FILTER_CANDIDATE_QA = live-raster-filter-candidate-001 / PASS
+B2_FILTER_LIVE = clusterB-B2-filter-live-002 / PASS
+B2_FILTER_COVERAGE = gaussianBlur QUALIFIED
+B2_ADJUSTMENT = brightnessContrast QUALIFIED
+B2_BLEND = NEXT
+B2_EFFECT = OPEN / prior over-broad candidate had unqualified render delta
+B2_LIQUIFY = OPEN
+B2_OVERALL = PARTIAL / NOT COMPLETE
+```
+
+Qualification proof:
+- CHAT reuses existing `createFilter('gaussianBlur')`, native image `filterStack`, scoped History and existing Renderer.
+- exact candidate browser QA changed canvas hash `7883b22 → a9f6be1d`; Undo/Redo restored those exact hashes.
+- formal Live renderer fingerprint changed `fnv1a32:34d01658 → fnv1a32:c6017f2e`.
+- History added `CHAT add image filter: gaussianBlur`.
+- Undo restored `fnv1a32:34d01658`; Redo restored `fnv1a32:c6017f2e`.
+- first formal Live attempt timed out before Public API readiness on the same deployed SHA; no filter operation ran and no product failure was observed. Warm rerun completed the full chain.
+- blend / effect / Liquify remain unqualified and do not inherit this PASS.
+
