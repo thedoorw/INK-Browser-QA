@@ -942,12 +942,7 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'image.blend.set.v1') return normalizeImageBlendArguments(raw);
   if (operation === 'image.effect.add.v1') return normalizeImageEffectArguments(raw);
   if (operation === 'image.liquify.add.v1') return normalizeImageLiquifyArguments(raw);
-  if (operation === 'image.adjustment.add.v1'
-    || operation === 'image.filter.add.v1'
-    || operation === 'image.blend.set.v1'
-    || operation === 'image.effect.add.v1'
-    || operation === 'image.liquify.add.v1'
-    || operation === 'path.edit.v1') return normalizePathEditArguments(raw);
+  if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
   if (operation === 'repeat.radial.v1') return normalizeRepeatRadialArguments(raw);
@@ -979,7 +974,12 @@ function normalizeOperationArguments(operation, raw) {
 
 function operationTargetRules(operation) {
   if (operation === 'path.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
-  if (operation === 'path.edit.v1'
+  if (operation === 'image.adjustment.add.v1'
+    || operation === 'image.filter.add.v1'
+    || operation === 'image.blend.set.v1'
+    || operation === 'image.effect.add.v1'
+    || operation === 'image.liquify.add.v1'
+    || operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
     || operation === 'object.clone.v1'
@@ -1969,29 +1969,33 @@ function executeImageStackTask(app, task) {
   }
   const object = found.object;
   let stackItem = null;
-  let label = 'CHAT edit image stack';
+  const label = task.operation === 'image.adjustment.add.v1'
+    ? `CHAT add image adjustment: ${task.arguments.type}`
+    : task.operation === 'image.filter.add.v1'
+      ? `CHAT add image filter: ${task.arguments.type}`
+      : task.operation === 'image.effect.add.v1'
+        ? `CHAT add image effect: ${task.arguments.type}`
+        : task.operation === 'image.blend.set.v1'
+          ? `CHAT set image blend: ${task.arguments.mode}`
+          : 'CHAT add image Liquify';
   app.history.pushScoped(label, [app.objectPath(found)], () => {
     if (task.operation === 'image.adjustment.add.v1') {
       if ((object.adjustments?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.adjustments = object.adjustments || [];
       stackItem = createAdjustment(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
       object.adjustments.push(stackItem);
-      label = `CHAT add image adjustment: ${task.arguments.type}`;
     } else if (task.operation === 'image.filter.add.v1') {
       if ((object.filterStack?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.filterStack = object.filterStack || [];
       stackItem = createFilter(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
       object.filterStack.push(stackItem);
-      label = `CHAT add image filter: ${task.arguments.type}`;
     } else if (task.operation === 'image.effect.add.v1') {
       if ((object.effects?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.effects = object.effects || [];
       stackItem = createLayerEffect(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
       object.effects.push(stackItem);
-      label = `CHAT add image effect: ${task.arguments.type}`;
     } else if (task.operation === 'image.blend.set.v1') {
       object.blendMode = task.arguments.mode;
-      label = `CHAT set image blend: ${task.arguments.mode}`;
     } else if (task.operation === 'image.liquify.add.v1') {
       if ((object.filterStack?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
       object.filterStack = object.filterStack || [];
@@ -2000,13 +2004,10 @@ function executeImageStackTask(app, task) {
         maxWork: task.arguments.maxWork
       });
       object.filterStack.push(stackItem);
-      label = 'CHAT add image Liquify';
     } else {
       editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
     }
   });
-  const latest = app.history?.undoStack?.at?.(-1);
-  if (latest && latest.label === 'CHAT edit image stack') latest.label = label;
   app.spatialDirty = true;
   app.refreshAll?.();
   app.renderer?.render?.();
