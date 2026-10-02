@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-batch-A-C004-C005-C006-C012-C017-001",
+  "requestId": "round1-batch-A-C004-C005-C006-C012-C017-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
@@ -364,26 +364,12 @@
               "operation": "path.create.v1",
               "targets": [],
               "arguments": {
-                "shape": "polygon",
-                "name": "C017 Wing",
-                "points": [
-                  {
-                    "x": 120,
-                    "y": 680
-                  },
-                  {
-                    "x": 210,
-                    "y": 620
-                  },
-                  {
-                    "x": 300,
-                    "y": 690
-                  },
-                  {
-                    "x": 220,
-                    "y": 760
-                  }
-                ],
+                "shape": "rectangle",
+                "name": "C017 Editable Wing Block",
+                "x": 120,
+                "y": 650,
+                "width": 170,
+                "height": 110,
                 "fill": "#ffd5e5",
                 "stroke": "#222222",
                 "strokeWidth": 2
@@ -439,8 +425,8 @@
                 "action": "move-anchor",
                 "subpathIndex": 0,
                 "anchorIndex": 1,
-                "x": 230,
-                "y": 600
+                "x": 320,
+                "y": 635
               },
               "dependsOn": []
             },
