@@ -1,0 +1,610 @@
+{
+  "schema": "INK-WEB-UI-001-BROWSER-QA-TRANSPORT",
+  "version": 1,
+  "status": "FAIL",
+  "formatVersion": 0,
+  "summary": {
+    "total": 25,
+    "passed": 0,
+    "failed": 25
+  },
+  "fatal": "BROWSER_HARNESS_FATAL",
+  "checks": [
+    {
+      "name": "G3 delivered first-paint contract is present before Runtime-state assertions",
+      "pass": false,
+      "detail": {
+        "body": "workstation",
+        "app": {
+          "firstPaint": "ready",
+          "space": "creation",
+          "shellPanel": "layers",
+          "toolbarLayout": "dual"
+        },
+        "style": "html,body{margin:0;background:#e7e7e7;color:#262626}\n    body{min-height:100vh}\n    #app{background:#e7e7e7;color:#262626}"
+      }
+    },
+    {
+      "name": "Photoshop shell viewport is 1280 CSS px",
+      "pass": true,
+      "detail": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "dpr": 1
+        },
+        "menu": {
+          "left": 0,
+          "top": 0,
+          "right": 1280,
+          "bottom": 25,
+          "width": 1280,
+          "height": 25
+        },
+        "options": {
+          "left": 0,
+          "top": 25,
+          "right": 1280,
+          "bottom": 61,
+          "width": 1280,
+          "height": 36
+        },
+        "contextual": {
+          "left": 34,
+          "top": 25,
+          "right": 1276,
+          "bottom": 60,
+          "width": 1242,
+          "height": 35
+        },
+        "stage": {
+          "left": 73,
+          "top": 61,
+          "right": 1028,
+          "bottom": 800,
+          "width": 955,
+          "height": 739
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 73,
+          "bottom": 800,
+          "width": 73,
+          "height": 739
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "docTitle": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 0,
+          "height": 0
+        }
+      }
+    },
+    {
+      "name": "menu outer row is 25 px (24 + 1)",
+      "pass": true,
+      "detail": {
+        "left": 0,
+        "top": 0,
+        "right": 1280,
+        "bottom": 25,
+        "width": 1280,
+        "height": 25
+      }
+    },
+    {
+      "name": "shared options outer row is 36 px at y=25",
+      "pass": true,
+      "detail": {
+        "left": 0,
+        "top": 25,
+        "right": 1280,
+        "bottom": 61,
+        "width": 1280,
+        "height": 36
+      }
+    },
+    {
+      "name": "contextual controls occupy the same second row",
+      "pass": true,
+      "detail": {
+        "options": {
+          "left": 0,
+          "top": 25,
+          "right": 1280,
+          "bottom": 61,
+          "width": 1280,
+          "height": 36
+        },
+        "contextual": {
+          "left": 34,
+          "top": 25,
+          "right": 1276,
+          "bottom": 60,
+          "width": 1242,
+          "height": 35
+        }
+      }
+    },
+    {
+      "name": "Photoshop shell origin is y=61 and active-document workspace begins at y=90",
+      "pass": false,
+      "detail": {
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "dpr": 1
+        },
+        "menu": {
+          "left": 0,
+          "top": 0,
+          "right": 1280,
+          "bottom": 25,
+          "width": 1280,
+          "height": 25
+        },
+        "options": {
+          "left": 0,
+          "top": 25,
+          "right": 1280,
+          "bottom": 61,
+          "width": 1280,
+          "height": 36
+        },
+        "contextual": {
+          "left": 34,
+          "top": 25,
+          "right": 1276,
+          "bottom": 60,
+          "width": 1242,
+          "height": 35
+        },
+        "stage": {
+          "left": 73,
+          "top": 61,
+          "right": 1028,
+          "bottom": 800,
+          "width": 955,
+          "height": 739
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 73,
+          "bottom": 800,
+          "width": 73,
+          "height": 739
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "docTitle": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 0,
+          "height": 0
+        }
+      }
+    },
+    {
+      "name": "left rail is edge-attached 40 px",
+      "pass": false,
+      "detail": {
+        "left": 0,
+        "top": 61,
+        "right": 73,
+        "bottom": 800,
+        "width": 73,
+        "height": 739
+      }
+    },
+    {
+      "name": "workspace begins immediately after left rail",
+      "pass": true,
+      "detail": {
+        "stage": {
+          "left": 73,
+          "top": 61,
+          "right": 1028,
+          "bottom": 800,
+          "width": 955,
+          "height": 739
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 73,
+          "bottom": 800,
+          "width": 73,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "right dock is edge-attached 40 px",
+      "pass": true,
+      "detail": {
+        "left": 1240,
+        "top": 61,
+        "right": 1280,
+        "bottom": 800,
+        "width": 40,
+        "height": 739
+      }
+    },
+    {
+      "name": "workspace ends immediately before compact dock",
+      "pass": false,
+      "detail": {
+        "stage": {
+          "left": 73,
+          "top": 61,
+          "right": 1028,
+          "bottom": 800,
+          "width": 955,
+          "height": 739
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "active document tab uses the 29 px band / 28 px tab authority",
+      "pass": false,
+      "detail": {
+        "band": null,
+        "tab": null,
+        "title": null
+      }
+    },
+    {
+      "name": "title identity is INK v0.1 · Web",
+      "pass": true,
+      "detail": "INK v0.1 · Web"
+    },
+    {
+      "name": "FORMAT_VERSION remains 4",
+      "pass": true,
+      "detail": 4
+    },
+    {
+      "name": "active runtime display version is 0.1",
+      "pass": true,
+      "detail": "0.1"
+    },
+    {
+      "name": "historical product identity absent from active shell",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "initial Web view is canvas-first",
+      "pass": false,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "layers",
+        "activePanel": "layers",
+        "lastPanel": null,
+        "collapsed": false,
+        "inspectorOpen": true,
+        "creativeOpen": false,
+        "panelWidth": 252,
+        "stageWidth": 955,
+        "dockWidth": 40,
+        "panelGroup": "editor",
+        "creativeStage": "reference",
+        "contextMode": "neutral",
+        "contextTool": "select",
+        "toolbarLayout": "dual",
+        "toolbarLayoutPreference": "dual",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "left tool rail remains visible",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "right panel dock starts compact",
+      "pass": false,
+      "detail": {
+        "version": "0.1",
+        "authority": "single",
+        "layoutMode": "DESKTOP_WIDE",
+        "primaryState": "layers",
+        "activePanel": "layers",
+        "lastPanel": null,
+        "collapsed": false,
+        "inspectorOpen": true,
+        "creativeOpen": false,
+        "panelWidth": 252,
+        "stageWidth": 955,
+        "dockWidth": 40,
+        "panelGroup": "editor",
+        "creativeStage": "reference",
+        "contextMode": "neutral",
+        "contextTool": "select",
+        "toolbarLayout": "dual",
+        "toolbarLayoutPreference": "dual",
+        "menuController": "application-menu-registry",
+        "openApplicationMenu": null,
+        "liveApplicationMenus": [
+          "file",
+          "edit",
+          "image",
+          "layer",
+          "type",
+          "select",
+          "filter",
+          "object",
+          "view",
+          "window",
+          "help"
+        ]
+      }
+    },
+    {
+      "name": "initial stage reserves 40 px rail and 40 px dock",
+      "pass": false,
+      "detail": {
+        "frameWidth": 1280,
+        "stageWidth": 955,
+        "dockWidth": 40
+      }
+    },
+    {
+      "name": "UI-006 Phase D preserves frozen tool order",
+      "pass": false,
+      "detail": [
+        "image",
+        "select",
+        "lasso",
+        "brush",
+        "eraser",
+        "draw",
+        "text",
+        "shape",
+        "pan"
+      ]
+    },
+    {
+      "name": "UI-006 Phase D defaults to single-column desktop toolbar",
+      "pass": false,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": null,
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "select",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 73,
+          "bottom": 800,
+          "width": 73,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "Photoshop-aligned dual-column layout uses the 73 px rail and preserves canvas adjacency",
+      "pass": false,
+      "detail": {
+        "shell": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": null,
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 988,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "select",
+          "toolbarLayout": "single",
+          "toolbarLayoutPreference": "single",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        },
+        "rail": {
+          "left": 0,
+          "top": 61,
+          "right": 40,
+          "bottom": 800,
+          "width": 40,
+          "height": 739
+        },
+        "stage": {
+          "left": 40,
+          "top": 61,
+          "right": 1028,
+          "bottom": 800,
+          "width": 988,
+          "height": 739
+        }
+      }
+    },
+    {
+      "name": "UI-006 Phase D dual-column mode exposes no extra tools",
+      "pass": true,
+      "detail": [
+        "image",
+        "select",
+        "lasso",
+        "brush",
+        "eraser",
+        "draw",
+        "text",
+        "shape",
+        "pan"
+      ]
+    },
+    {
+      "name": "UI-006 Phase D single-dual switch restores stage geometry",
+      "pass": false,
+      "detail": {
+        "initialStageWidth": 955,
+        "restored": {
+          "version": "0.1",
+          "authority": "single",
+          "layoutMode": "DESKTOP_WIDE",
+          "primaryState": "layers",
+          "activePanel": "layers",
+          "lastPanel": null,
+          "collapsed": false,
+          "inspectorOpen": true,
+          "creativeOpen": false,
+          "panelWidth": 252,
+          "stageWidth": 955,
+          "dockWidth": 40,
+          "panelGroup": "editor",
+          "creativeStage": "reference",
+          "contextMode": "neutral",
+          "contextTool": "select",
+          "toolbarLayout": "dual",
+          "toolbarLayoutPreference": "dual",
+          "menuController": "application-menu-registry",
+          "openApplicationMenu": null,
+          "liveApplicationMenus": [
+            "file",
+            "edit",
+            "image",
+            "layer",
+            "type",
+            "select",
+            "filter",
+            "object",
+            "view",
+            "window",
+            "help"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UI-DEBT-001 1280x1024 collapsed shell remains fully contained",
+      "pass": false,
+      "detail": {
+        "viewport": [
+          1280,
+          1024
+        ],
+        "stage": {
+          "left": 73,
+          "top": 61,
+          "right": 1028,
+          "bottom": 1024,
+          "width": 955,
+          "height": 963
+        },
+        "dock": {
+          "left": 1240,
+          "top": 61,
+          "right": 1280,
+          "bottom": 1024,
+          "width": 40,
+          "height": 963
+        },
+        "status": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 0,
+          "height": 0
+        }
+      }
+    }
+  ],
+  "fatalDetail": "TypeError: parameter 1 is not of type 'Element'.\n    at run (http://127.0.0.1:54171/__qa_harness.html:241:32)"
+}

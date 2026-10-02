@@ -1,0 +1,10 @@
+{
+  "schema": "INK-UI-FINAL-CHECKLIST-ISSUE92-UI-SUITE",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "targetSha": "f3f7aaeaa636073d216c23d825d23e344b064c62",
+  "workflowSha": "17a0311ece1811388369bec08d4fcbc28ad1c02e",
+  "centralRuntimeExecuted": false,
+  "status": "FAIL",
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'FAIL' !== 'PASS'\n\n    at validateEvidence (file:///D:/a/_temp/ink-ui-issue92-TvgIKe/qa/runtime/run-ink-runtime-batch.mjs:97:12)\n    at run (file:///D:/a/_temp/ink-ui-issue92-TvgIKe/qa/runtime/run-ink-ui-checklist-evidence-batch.mjs:59:5)\n    at async file:///D:/a/_temp/ink-ui-issue92-TvgIKe/qa/runtime/run-ink-ui-checklist-evidence-batch.mjs:75:85"
+}
