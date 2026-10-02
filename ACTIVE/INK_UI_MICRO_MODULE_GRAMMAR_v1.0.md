@@ -562,3 +562,23 @@ High-priority capability families for this audit include:
 - C53 Output.
 
 This matrix is a UI exposure audit, not a new-capability work order.
+
+
+### Tools color-cluster state grammar
+
+Photoshop single-column and double-column Tools use different foreground/background swatch scales.
+
+Required model:
+```text
+SWATCH_SIZE_SINGLE
+SWATCH_SIZE_DUAL
+SWATCH_OVERLAP_SINGLE
+SWATCH_OVERLAP_DUAL
+```
+
+Rules:
+- do not force one swatch-size token across both toolbar layouts;
+- both states share the same semantic composition: foreground/background diagonal overlap + reset/swap utilities;
+- single vs dual sizing is an intentional layout-state difference, not a same-class defect;
+- exact numeric values must come from Photoshop reference measurement, not from fitting INK into the available rail width;
+- reset/swap utility placement must be reflowed per layout state rather than scaled arbitrarily.
