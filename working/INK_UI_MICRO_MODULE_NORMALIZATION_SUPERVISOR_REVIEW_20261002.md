@@ -518,3 +518,124 @@ NO_PANEL_SPECIFIC_SCROLLBAR_OVERRIDE = TRUE
 ```
 
 Rendered screenshot evidence is required; CSS declaration alone is insufficient.
+
+
+## SUP-08～SUP-11 publication review — candidate a9d122c
+
+Candidate:
+`a9d122ccba14734caf6220a53044545494a8429b`
+
+Publication base:
+`d8170428710ae06daa00795a932e2a867609200b`
+
+Independent Supervisor review:
+- inspected exact one-commit diff from publication base;
+- inspected DEV return, Tool → Options matrix, source-health, browser, raster and spatial-probe evidence;
+- inspected fresh 1:1 active / Reference / Layers / window-control / representative Options Bar renders;
+- did not treat the DEV PASS assertions as sufficient by themselves.
+
+### Scope / technical-debt guard
+
+The product mutation is bounded to 10 product files:
+- generated shell / HTML delivery artifacts and build identity;
+- `styles.css`;
+- `ui/capability-contributions.js`;
+- `ui/full-capability-controls.js`;
+- `web-shell.js`.
+
+No Core / renderer / History / FORMAT_VERSION mutation is present.
+
+Guard remains intact:
+```text
+!important = 103 → 103
+breakpoint families = unchanged
+covered exact-context visual duplicates = 0 → 0
+loaded product bytes = candidate source
+page/resource errors = none
+```
+
+### SUP-08 — ACCEPTED
+
+Right-panel fixed-row treatment is now shared rather than label-specific:
+- common row line-height / optical text-edge grammar;
+- Reference and Layers visible rows use shared centering;
+- no per-label translate/top/bottom nudge is introduced.
+
+Fresh raster evidence samples 41 Reference/Layers text envelopes with maximum absolute row-center delta ≈1.02 px in the declared QA environment.
+
+Current screenshots visually support the intended correction. USER remains final visual authority.
+
+### SUP-09 — IMPLEMENTATION ACCEPTED / USER VISUAL CHECKPOINT
+
+The window-control cluster is corrected as one shared unit:
+- 3 px end inset;
+- shared 27.5 px non-close control width;
+- 46 px close width;
+- 103×19 px outer cluster aligned to the measured Photoshop reference;
+- common 12×12 SVG envelope and 1-unit stroke;
+- no per-button translation patch / Unicode substitution.
+
+The after/reference crops show a materially closer cluster position and lighter glyph weight.
+
+This closes the source/geometry defect. Final optical preference remains a USER checkpoint.
+
+### SUP-10 — ACCEPTED
+
+Crop / Frame no longer become unexplained dead controls after Lasso:
+- both remain discoverable;
+- no-target Crop reports the existing raster prerequisite;
+- no-target Frame reports a concise selection prerequisite;
+- valid Crop and Frame routes still use existing product authorities and History;
+- no duplicate selection state was added.
+
+### SUP-11 — ACCEPTED FOR CURRENT INSTALLED TOOL SET
+
+A concrete Tool → Options matrix now exists for the installed tools/subtools.
+
+Independent source inspection confirms the implementation:
+- reuses existing native controls/handlers where possible;
+- reuses raster adapter option state;
+- exposes existing Shape/Text/Pan/selection/replay actions without inventing scalar parameters;
+- preserves persistent object/document parameters in their existing panels instead of duplicating them into Options;
+- does not claim that all 496 atomics belong in Options Bar.
+
+Focused evidence reports 40 tool/subtool variants and all listed option/interaction assertions passing, including state consumption, focus persistence, tool-switch persistence and compact horizontal containment.
+
+This closes the **current installed Tool → Options reconciliation** represented by this matrix. It does not pre-authorize future capabilities or later USER-requested global Options-Bar controls.
+
+### Separate open defect — Core spatial index
+
+The candidate correctly reproduces, rather than hides, an existing Core defect:
+- newly drawn Shape can exist while spatial index remains stale;
+- native Lasso may miss it until `refreshAll`.
+
+This is outside the UI candidate and remains OPEN for a separate Core-bounded decision.
+
+### SUP-12 — OPEN
+
+Right-panel scrollbar rectilinear rendering was explicitly outside this candidate and remains unresolved.
+
+### Later USER decisions not included in a9d122c
+
+The following requirements were discussed after the local SUP-08～11 implementation and are **not** considered part of this candidate acceptance:
+- New Document architecture: A4 must not be assumed to be the permanent document model; blank/no-document startup and arbitrary document dimensions/presets/background initialization remain to be specified before implementation.
+- Restore the existing document/workspace-space switch in the fixed **right zone of the Options Bar**, reusing existing workspace authority rather than creating a second state model.
+- Top application-menu labels, including `物件(O)`, must use one equal-spacing/padding grammar rather than a one-off correction.
+
+### Disposition
+
+```text
+CANDIDATE_a9d122c = ACCEPTED_AS_REVIEWED_BOUNDED_UI_BASE
+SUP-08 = ACCEPTED
+SUP-09 = SOURCE_GEOMETRY_ACCEPTED / USER_VISUAL_CHECKPOINT
+SUP-10 = ACCEPTED
+SUP-11 = ACCEPTED_FOR_CURRENT_INSTALLED_TOOL_SET
+
+CORE_SPATIAL_INDEX = OPEN / OUTSIDE_UI_SCOPE
+SUP-12_PANEL_SCROLLBAR = OPEN
+A4_NEW_DOCUMENT_MODEL = OPEN_DESIGN_DECISION
+OPTIONS_BAR_RIGHT_WORKSPACE_SWITCH = OPEN_USER_REQUIREMENT
+TOP_MENU_EQUAL_SPACING = OPEN_USER_REQUIREMENT
+
+FINAL_UI_COMPLETE = NOT CLAIMED
+```
