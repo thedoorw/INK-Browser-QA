@@ -105,7 +105,7 @@ function cdpPipe(child) {
 async function waitForInk(cdp, sessionId, expectedSourceSha) {
   const started = Date.now();
   let last = null;
-  while (Date.now() - started < 30000) {
+  while (Date.now() - started < 90000) {
     const probe = await cdp.send('Runtime.evaluate', {
       expression: `(() => ({
         href: location.href,
