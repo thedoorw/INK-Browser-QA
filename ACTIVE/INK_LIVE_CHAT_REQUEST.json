@@ -1,6 +1,168 @@
 {
+  "schema": "INK-LIVE-CHAT-REQUEST",
+  "version": 1,
+  "requestId": "clusterA-A1-live-rerun-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "requestId": "qa-hosted-trigger-smoke-002",
-  "tool": "get_ink_context",
-  "input": {}
+  "expectedSourceSha": "58adf13cd98a8594eb8e63faedc735ce0c5179f0",
+  "steps": [
+    {
+      "id": "capabilities",
+      "tool": "get_ink_capabilities",
+      "input": {}
+    },
+    {
+      "id": "paintPropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "Cluster A A1 Live rerun: create bounded Paint Session",
+          "steps": [
+            {
+              "stepId": "paint-session",
+              "operation": "paint.session.create.v1",
+              "targets": [],
+              "arguments": {
+                "name": "A1 Live Paint Session",
+                "seed": 37,
+                "opacity": 1,
+                "strokes": [
+                  {
+                    "brushId": "pencil",
+                    "color": "#25384a",
+                    "seed": 101,
+                    "samples": [
+                      {
+                        "x": -110,
+                        "y": -55,
+                        "pressure": 0.25,
+                        "timestamp": 0
+                      },
+                      {
+                        "x": -20,
+                        "y": -95,
+                        "pressure": 0.65,
+                        "timestamp": 20
+                      },
+                      {
+                        "x": 80,
+                        "y": -30,
+                        "pressure": 0.9,
+                        "timestamp": 40
+                      }
+                    ]
+                  },
+                  {
+                    "brushId": "watercolor",
+                    "color": "#b86d83",
+                    "seed": 102,
+                    "samples": [
+                      {
+                        "x": -90,
+                        "y": 20,
+                        "pressure": 0.35,
+                        "timestamp": 0
+                      },
+                      {
+                        "x": 0,
+                        "y": 70,
+                        "pressure": 0.7,
+                        "timestamp": 22
+                      },
+                      {
+                        "x": 100,
+                        "y": 25,
+                        "pressure": 0.5,
+                        "timestamp": 44
+                      }
+                    ]
+                  }
+                ]
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "paintApprove",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "paintPropose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "paintExecute",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "paintPropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "paintApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "contextAfter",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "historyAfter",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "previewAfter",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "undo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "contextUndo",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "redo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "contextRedo",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "previewRedo",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    }
+  ]
 }
