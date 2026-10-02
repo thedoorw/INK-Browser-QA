@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A1-live-rerun-004",
+  "requestId": "clusterB-B1-live-rerun-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "58adf13cd98a8594eb8e63faedc735ce0c5179f0",
+  "expectedSourceSha": "3a785b90d6f7922175cca3662fd2b72bf95430ce",
   "steps": [
     {
       "id": "capabilities",
@@ -11,94 +11,19 @@
       "input": {}
     },
     {
-      "id": "paintPropose",
-      "tool": "propose_ink_edit",
+      "id": "importRaster",
+      "tool": "import_ink_raster",
       "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "clusterA-A1-live-paint-session",
-          "operation": "paint.session.create.v1",
-          "targets": [],
-          "arguments": {
-            "name": "A1 Live Paint Session",
-            "seed": 37,
-            "opacity": 1,
-            "strokes": [
-              {
-                "brushId": "pencil",
-                "color": "#25384a",
-                "seed": 101,
-                "samples": [
-                  {
-                    "x": -110,
-                    "y": -55,
-                    "pressure": 0.25,
-                    "timestamp": 0
-                  },
-                  {
-                    "x": -20,
-                    "y": -95,
-                    "pressure": 0.65,
-                    "timestamp": 20
-                  },
-                  {
-                    "x": 80,
-                    "y": -30,
-                    "pressure": 0.9,
-                    "timestamp": 40
-                  }
-                ]
-              },
-              {
-                "brushId": "watercolor",
-                "color": "#b86d83",
-                "seed": 102,
-                "samples": [
-                  {
-                    "x": -90,
-                    "y": 20,
-                    "pressure": 0.35,
-                    "timestamp": 0
-                  },
-                  {
-                    "x": 0,
-                    "y": 70,
-                    "pressure": 0.7,
-                    "timestamp": 22
-                  },
-                  {
-                    "x": 100,
-                    "y": 25,
-                    "pressure": 0.5,
-                    "timestamp": 44
-                  }
-                ]
-              }
-            ]
-          }
+        "options": {
+          "name": "B1 Editable Raster",
+          "type": "image/png",
+          "intent": "Cluster B1 Live mutable raster import qualification"
         }
-      }
-    },
-    {
-      "id": "paintApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "paintPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "paintExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "paintPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "paintApprove.result.result.approvalToken"
-        }
+      },
+      "file": {
+        "path": "qa/fixtures/rose-window/rose-window-primary.png",
+        "name": "rose-window-primary.png",
+        "type": "image/png"
       }
     },
     {
