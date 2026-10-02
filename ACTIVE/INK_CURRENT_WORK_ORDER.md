@@ -1,5 +1,32 @@
 # INK Current Work Order
 
+## Current normalized-base visual refinement — 2026-10-02
+
+USER authorized a bounded visual-refinement pass on the accepted normalized base.
+
+Baseline:
+- `a17cf7d46c151744668cf42f55b15212fe758415`
+
+Current execution:
+- `ACTIVE/INK_UI_NORMALIZED_BASE_VISUAL_REFINEMENT_DEV_DISPATCH_v1.0.md`
+
+Review authority:
+- `working/INK_UI_MICRO_MODULE_NORMALIZATION_SUPERVISOR_REVIEW_20261002.md`
+- `ACTIVE/INK_UI_MICRO_MODULE_GRAMMAR_v1.0.md`
+
+Current scope:
+- right-panel fixed-row optical vertical centering;
+- Reference row rhythm;
+- Layers existing-row optical alignment;
+- window-control optical fidelity;
+- left/right collapse-control optical-centering recheck.
+
+Explicitly deferred:
+- full Capability → UI Exposure / Options Bar Batch B;
+- speculative single-column Photoshop swatch fidelity without reference.
+
+Technical-debt guard remains active: no new `!important`, no new breakpoint family, no duplicate covered visual authority, no one-off baseline-offset patches.
+
 ## Current UI normalization debt cleanup — 2026-10-02
 
 USER authorized a bounded cleanup pass before further visual/capability expansion.
