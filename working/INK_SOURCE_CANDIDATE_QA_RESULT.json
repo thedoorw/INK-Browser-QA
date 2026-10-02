@@ -1,10 +1,43 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "paint-session-bounds-b2-regression-001",
+  "requestId": "paint-session-bounds-b2-effect-isolation-001",
   "candidateSha": "b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
-  "case": "raster-stack-b2",
-  "status": "FAIL",
-  "error": "Error: RENDER_UNCHANGED:image.effect.add.v1\n    at runStackEdit (<anonymous>:45:37)\n    at async <anonymous>:53:3",
-  "stderr": "ix\")\n[2390:2418:1002/164616.118002:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2390:2390:1002/164616.317423:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2390:1002/164616.317473:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2418:1002/164616.317706:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2390:2418:1002/164616.317717:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2390:2390:1002/164616.318099:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2390:1002/164616.320291:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2418:1002/164616.320810:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2390:2390:1002/164616.354492:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2390:1002/164616.354887:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2418:1002/164616.354961:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2390:2390:1002/164616.359903:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2390:1002/164616.413834:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2418:1002/164616.413907:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2390:2390:1002/164616.414084:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files\n[2390:2390:1002/164616.436740:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2390:2418:1002/164616.436808:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2390:2390:1002/164616.468927:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2429:2429:1002/164616.897143:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.\n[2429:2429:1002/164616.995684:ERROR:gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc:1210] []Automatic fallback to software WebGL has been deprecated. Please use the --enable-unsafe-swiftshader flag to opt in to lower security guarantees for trusted content.\nCorrupt JPEG data: premature end of data segment\n"
+  "case": "raster-stack-effect-b2",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:42707/?sourceCandidate=b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "operation": "image.effect.add.v1",
+    "effectType": "colorOverlay",
+    "objectId": "5eccf4e0-6b62-482a-9be7-de4cd22d85e1",
+    "beforeFingerprint": "fnv1a32:e946150c",
+    "afterFingerprint": "fnv1a32:5882fa6e",
+    "beforeHash": "7883b22",
+    "afterHash": "b6f7f8de",
+    "undoHash": "7883b22",
+    "redoHash": "b6f7f8de",
+    "historyLabel": "CHAT add image effect: colorOverlay",
+    "previewStatus": "COMPLETED",
+    "undoStatus": "COMPLETED",
+    "redoStatus": "COMPLETED",
+    "controllerResult": {
+      "effectCount": 1,
+      "resultRefs": [
+        {
+          "layerId": "407c94f5-9585-4651-ba4f-f6b8845830dd",
+          "objectId": "5eccf4e0-6b62-482a-9be7-de4cd22d85e1",
+          "pageId": "0858a526-bc45-4954-8b6d-24452cca228f"
+        }
+      ],
+      "stackItemId": "effect_10x4jfd",
+      "stackItemType": "colorOverlay"
+    }
+  },
+  "status": "PASS"
 }
