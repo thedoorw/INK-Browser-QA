@@ -387,3 +387,29 @@ At the start of a new window, read live GitHub state again. Do not assume this p
 - `thedoorw/INK/CASE_SWEEP.md`
 
 If those conflict, current GitHub evidence wins.
+
+## B2 incremental qualification — adjustment / brightnessContrast — 2026-10-02
+
+```text
+B2_ADJUSTMENT_PR = #121 / MERGED
+B2_ADJUSTMENT_EXACT_CANDIDATE = 4df08a4498723cfec19b825b1df9eb3ecb0ae7ea
+B2_ADJUSTMENT_SOURCE_INTEGRATION = 11551eab8c1ec78e04031f178b7ab24b91b40d26
+B2_ADJUSTMENT_CANDIDATE_QA = live-raster-adjustment-candidate-001 / PASS
+B2_ADJUSTMENT_LIVE = clusterB-B2-adjustment-live-002 / PASS
+B2_ADJUSTMENT_COVERAGE = brightnessContrast QUALIFIED
+B2_FILTER = NEXT
+B2_BLEND = OPEN
+B2_EFFECT = OPEN / prior over-broad candidate had unqualified render delta
+B2_LIQUIFY = OPEN
+B2_OVERALL = PARTIAL / NOT COMPLETE
+```
+
+Qualification proof:
+- CHAT uses existing `propose_ink_edit → approve_ink_edit → execute_ink_edit` authority; no second raster model, renderer, History or effect engine was added.
+- target is the existing editable native `image + rasterState.colorRaster`; ReferenceImage remains locked/separate.
+- native `createAdjustment('brightnessContrast')` stack mutation produced a renderer fingerprint change `fnv1a32:34d01658 → fnv1a32:17debb38`.
+- scoped History added `CHAT add image adjustment: brightnessContrast`.
+- Preview completed; Undo restored renderer fingerprint `fnv1a32:34d01658`; Redo restored `fnv1a32:17debb38`.
+- first formal Live attempt timed out before Public API readiness on the same exact deployed SHA with no window/module exception or HTTP failure; warm rerun completed the full operation chain.
+- superseded over-broad PR #120 was closed unmerged. Filter / blend / effect / Liquify require separate qualification and are not covered by this PASS.
+
