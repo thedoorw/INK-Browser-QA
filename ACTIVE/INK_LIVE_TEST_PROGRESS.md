@@ -221,6 +221,54 @@ Cluster B implementation design:
 
 The workpack fixes the minimum sequence as B0 web-raster bridge → B1 mutable raster named-tool import → B2 non-destructive image-stack edits → B4 native Path deformation, with local/destructive raster tools and masks deferred to B3. C019 Text warp remains excluded as a product render-integration gap.
 
+### B0 + B1 accepted / deployed closure — 2026-10-02
+
+```text
+B0_FRESH_PR = #118 / MERGED
+B0_EXACT_CANDIDATE = 076400c52bcd3f6a62e7de0a87dc26bfc010f8e4
+B0_SOURCE_INTEGRATION = 3110a40227351cdc99a1639d09e55838d54cc8ed
+B0_CANDIDATE_BROWSER_QA = live-raster-web-bridge-pr118-001 / PASS
+
+B1_PR = #119 / MERGED
+B1_EXACT_CANDIDATE = e535234b1b3ad47d4fa0f4300ec3539275b0b4ca
+B1_SOURCE_INTEGRATION = 3a785b90d6f7922175cca3662fd2b72bf95430ce
+B1_CANDIDATE_BROWSER_QA = live-raster-import-pr119-002 / PASS
+LIVE_DEPLOYED_SOURCE = 3a785b90d6f7922175cca3662fd2b72bf95430ce
+B1_LIVE_RERUN = clusterB-B1-live-rerun-004 / COMPLETED
+```
+
+B0 exact browser proof:
+- RGBA8 PNG decoded into existing `color-raster / ink-image-state`;
+- native editable `image + rasterState` rendered through the existing renderer;
+- Preview completed;
+- scoped History, Undo and Redo completed.
+
+B1 exact candidate and formal Live proof:
+- `raster.import / import_ink_raster` is discoverable; Live named-tool count increased to 23;
+- browser-local PNG attachment reused `normalizeChatAttachment()`;
+- formal Live imported `rose-window-primary.png` as a 1086×1448 native editable image;
+- stable created ref and source SHA-256 receipt returned;
+- History entry `匯入可編輯影像` created;
+- content Preview completed at 607×800 output from 1134×1496 content bounds;
+- Undo reduced context to zero objects;
+- Redo restored the same editable native image;
+- ReferenceImage semantics remain locked/separate;
+- public result does not return raw binary/data URL.
+
+The first three formal Live attempts stalled before Public API installation while the exact-SHA jsDelivr module graph was still loading. Extended readiness + protocol diagnostics confirmed this was deployment transport/readiness variability rather than a B1 operation failure; the same exact deployed source subsequently completed the full B1 Live sequence.
+
+Current Cluster B sequence:
+
+```text
+B0 WEB RASTER BRIDGE = PASS / MERGED
+B1 PNG-JPEG-WEBP MUTABLE RASTER NAMED TOOL = PASS / MERGED / LIVE QUALIFIED
+PSD-TIFF-EXR-RAW CHAT INGEST = STILL OPEN
+B2 NON-DESTRUCTIVE IMAGE STACK = NEXT
+B3 LOCAL/DESTRUCTIVE RASTER + MASKS = LATER
+B4 PATH DEFORMATION = OPEN
+C019 TEXT WARP = PRODUCT RENDER-INTEGRATION GAP
+```
+
 ### C — Layout Assist / Page / Artboard
 
 Families:
@@ -297,10 +345,12 @@ All four Round 1 gap clusters now have source-audit classification:
 
 The audit phase no longer treats every missing Live route as a product capability gap. Existing native authorities and true integration/render gaps are separated in the four working audit records.
 
-Open candidate repair:
-- B0 web-raster bridge: PR #114 / Draft / static QA only / no runtime PASS.
+Accepted repair progression:
+- Cluster A A1 Paint Session: merged / deployed / Live PASS.
+- Cluster B B0 web-raster bridge: merged / exact browser PASS.
+- Cluster B B1 mutable PNG/JPEG/WebP raster import: merged / deployed / Live PASS.
 
-Next engineering should proceed by smallest coherent repair package + exact candidate QA, not another breadth scan.
+Next engineering should proceed with B2 non-destructive image-stack exposure by smallest coherent operation + exact candidate QA, not another breadth scan.
 
 ## Current next stage
 
