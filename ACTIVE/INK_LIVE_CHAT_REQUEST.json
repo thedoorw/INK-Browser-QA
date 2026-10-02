@@ -1,170 +1,27 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-C007-001",
+  "requestId": "round1-C003-binary-preflight-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
     {
-      "id": "createPropose",
-      "tool": "use_ink",
+      "id": "import",
+      "tool": "import_ink_reference",
+      "allowFailure": true,
       "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C007 probe: base social design",
-          "steps": [
-            {
-              "stepId": "shape",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "rectangle",
-                "x": 160,
-                "y": 160,
-                "width": 220,
-                "height": 160,
-                "fill": "#eeeeee",
-                "stroke": "#222222",
-                "strokeWidth": 2
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "text",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "SOCIAL",
-                "x": 210,
-                "y": 225,
-                "color": "#202020",
-                "fontSize": 36,
-                "fontWeight": 700
-              },
-              "dependsOn": []
-            }
-          ]
+        "input": {},
+        "options": {
+          "name": "reference.png",
+          "type": "image/png",
+          "intent": "C003 reference import probe"
         }
-      }
-    },
-    {
-      "id": "createApprove",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "createPropose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "createExec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "createPropose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "createApprove.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "variantPropose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C007 probe: repeat and clone variants",
-          "steps": [
-            {
-              "stepId": "grid",
-              "operation": "repeat.grid.v1",
-              "targets": [
-                {
-                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "columns": 3,
-                "rows": 2,
-                "dx": 260,
-                "dy": 200,
-                "linked": true
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "clone-text",
-              "operation": "object.clone.v1",
-              "targets": [
-                {
-                  "$ref": "createExec.result.stepResults.1.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "dx": 260,
-                "dy": 0
-              },
-              "dependsOn": []
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "variantApprove",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "variantPropose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "variantExec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "variantPropose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "variantApprove.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "recipeLibrary",
-      "tool": "search_ink_library",
-      "input": {
-        "action": "search",
-        "query": "",
-        "types": [
-          "recipe"
-        ],
-        "limit": 20
       }
     },
     {
       "id": "context",
       "tool": "get_ink_context",
       "input": {}
-    },
-    {
-      "id": "preview",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 960,
-        "background": true
-      }
     }
   ]
 }
