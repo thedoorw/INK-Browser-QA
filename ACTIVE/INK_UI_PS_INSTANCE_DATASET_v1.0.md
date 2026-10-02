@@ -224,6 +224,12 @@ Origin offset and overlap are different measurements: shared overlap = swatch si
 
 Window-control source-raster visible envelopes in ps-1 (threshold≥145 on the dark reference): minimize x1183–1192/y11–13 = 10×3 px; restore x1210–1221/y5–14 = 12×10 px; close x1248–1257/y5–12 = 10×8 px. These are visible raster bounds, not button hitbox or SVG viewport measurements.
 
+Window-control cluster placement rule:
+- cluster placement is an `ALIGNMENT_RELATION`, not a free visual choice;
+- next implementation/review must record the Photoshop cluster outer bounds and right-edge relation from the canonical raster before accepting a horizontal move;
+- INK placement is compared as one cluster; per-button offsets do not substitute for cluster alignment;
+- until that measurement is recorded, a DEV-chosen horizontal inset must remain provisional and cannot close fidelity.
+
 - Quick Mask visible envelope ≈17×13 px
 - Screen Mode visible envelope ≈17×13 px
 - flyout outer reference ≈172×100 px for 5 rows
