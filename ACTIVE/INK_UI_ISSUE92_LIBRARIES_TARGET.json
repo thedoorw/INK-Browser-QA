@@ -1,9 +1,9 @@
 {
   "schema": "ink-ui-issue92-libraries-target",
   "version": 1,
-  "target_sha": "e73d2fa2cfc71487e04d4ad813dc357dfc7ee7c3",
+  "target_sha": "f3f7aaeaa636073d216c23d825d23e344b064c62",
   "scope": "O03-O12 Libraries exact-candidate interaction / no central Runtime",
   "central_runtime": false,
-  "run_generation": 4,
-  "note": "O11 candidate adds current pageId/layerId to existing component.instance.create.v1 proposal arguments."
+  "run_generation": 5,
+  "note": "2026-10-02 remaining whole-UI fidelity exact-candidate Libraries recheck."
 }
