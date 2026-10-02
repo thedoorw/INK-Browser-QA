@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -171,6 +171,37 @@ const editSchemas = {
       x: num('Rectangle X.'), y: num('Rectangle Y.'), width: num('Rectangle width.', { minimum: Number.EPSILON }), height: num('Rectangle height.', { minimum: Number.EPSILON }),
       points: arr(obj({ x: num('Point X.'), y: num('Point Y.') }, ['x', 'y'], 'Point.'), 'Polygon/polyline points.', { maxItems: 4096 })
     }, ['shape'], 'Shape-specific geometry is validated by the bounded edit authority.'),
+    0, 0
+  ),
+  'stroke.create.v1': editTaskSchema(
+    { type: 'string', const: 'stroke.create.v1', description: 'Create one native interactive-compatible Stroke on the active layer through existing History, spatial-index, Renderer, and NaturalMediaController authorities.' },
+    obj({
+      objectId: str('Optional caller-supplied stable stroke object id; collisions are rejected.'),
+      name: str('Stroke name.'),
+      kind: { type: 'string', enum: [...CHAT_STROKE_KINDS], description: 'Existing native stroke kind. Blender, Smudge, and Eraser are intentionally excluded from A2.' },
+      color: str('Stroke color token.'),
+      size: num('Native stroke size.', { minimum: .25, maximum: 512, default: 12 }),
+      opacity: num('Stroke opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      smoothing: num('Stored native smoothing parameter.', { minimum: 0, maximum: .95, default: .5 }),
+      pressure: num('Pressure influence.', { minimum: 0, maximum: 1, default: .8 }),
+      taper: num('Stroke taper.', { minimum: 0, maximum: 1, default: 0 }),
+      grain: num('Stroke grain.', { minimum: 0, maximum: 1, default: 0 }),
+      softness: num('Airbrush softness.', { minimum: 0, maximum: 1, default: .7 }),
+      flow: num('Natural-media flow.', { minimum: 0, maximum: 1, default: 1 }),
+      wetness: num('Natural-media wetness.', { minimum: 0, maximum: 1, default: 0 }),
+      bristle: num('Natural-media bristle amount.', { minimum: 0, maximum: 1, default: 0 }),
+      samples: arr(obj({
+        x: num('World-space sample X.'),
+        y: num('World-space sample Y.'),
+        pressure: num('Sample pressure.', { minimum: 0, maximum: 1, default: .5 }),
+        timestamp: num('Monotonic sample timestamp in milliseconds.', { minimum: 0, maximum: 1000000000 }),
+        tiltX: num('Tilt X degrees.', { minimum: -90, maximum: 90, default: 0 }),
+        tiltY: num('Tilt Y degrees.', { minimum: -90, maximum: 90, default: 0 }),
+        azimuth: num('Azimuth.', { minimum: -1000, maximum: 1000, default: 0 }),
+        altitude: num('Altitude degrees.', { minimum: 0, maximum: 90, default: 90 }),
+        twist: num('Pointer twist.', { minimum: -360000, maximum: 360000, default: 0 })
+      }, ['x', 'y'], 'One bounded native stroke sample.'), 'World-space samples; at least two are required.', { minItems: 2, maxItems: 4096 })
+    }, ['kind', 'samples'], 'Creates the same native type=stroke document object used by interactive drawing. Natural kinds brush/drybrush/airbrush are routed to the existing natural-v2 renderer.'),
     0, 0
   ),
   'paint.session.create.v1': editTaskSchema(
