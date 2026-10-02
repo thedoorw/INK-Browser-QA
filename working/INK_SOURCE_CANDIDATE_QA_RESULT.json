@@ -1,43 +1,6 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "live-raster-effect-candidate-001",
-  "candidateSha": "dcc5d45851f00b6f809852c5cabc5e53c3bdae09",
-  "case": "raster-stack-effect-b2",
-  "runtimeIdentity": {
-    "href": "http://127.0.0.1:40075/?sourceCandidate=dcc5d45851f00b6f809852c5cabc5e53c3bdae09",
-    "readyState": "complete",
-    "apiReady": true,
-    "toolCount": 23,
-    "appVersion": "0.1"
-  },
-  "result": {
-    "passed": true,
-    "operation": "image.effect.add.v1",
-    "effectType": "colorOverlay",
-    "objectId": "c9d0422c-a7f8-48fa-9176-ce867a8ed954",
-    "beforeFingerprint": "fnv1a32:2352d45c",
-    "afterFingerprint": "fnv1a32:b955b852",
-    "beforeHash": "7883b22",
-    "afterHash": "b6f7f8de",
-    "undoHash": "7883b22",
-    "redoHash": "b6f7f8de",
-    "historyLabel": "CHAT add image effect: colorOverlay",
-    "previewStatus": "COMPLETED",
-    "undoStatus": "COMPLETED",
-    "redoStatus": "COMPLETED",
-    "controllerResult": {
-      "effectCount": 1,
-      "resultRefs": [
-        {
-          "layerId": "3fff1136-d6f4-48cb-9d8d-eaf848885b19",
-          "objectId": "c9d0422c-a7f8-48fa-9176-ce867a8ed954",
-          "pageId": "451139d8-0122-4cf5-853c-db0114a42f59"
-        }
-      ],
-      "stackItemId": "effect_9v1n8f",
-      "stackItemType": "colorOverlay"
-    }
-  },
-  "status": "PASS"
+  "status": "FAIL",
+  "error": "Runner result unavailable: ENOENT: no such file or directory, open '/home/runner/work/_temp/ink-source-candidate-result.json'"
 }
