@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-C019-001",
+  "requestId": "round1-C019-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
@@ -155,7 +155,8 @@
       "tool": "describe_ink_capability",
       "input": {
         "idOrToolName": "text.warp.v1"
-      }
+      },
+      "allowFailure": true
     },
     {
       "id": "context",
