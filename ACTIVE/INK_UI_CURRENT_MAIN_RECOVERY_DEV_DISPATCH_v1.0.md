@@ -5,6 +5,58 @@ DATE: 2026-10-02
 REPOSITORY: thedoorw/INK-Browser-QA
 SSOT: GitHub
 
+## USER completion directive — 2026-10-02
+
+USER requires this recovery DEV pass to **finish the assigned recovery package before stopping**.
+
+Partial evidence, interim review, a source-only candidate, a preview publication, local-browser unavailability, screenshot timeout, or a temporary QA inconvenience is **not a STOP condition**.
+
+The existing candidate `cdb90787b8a17729a67e6318ded6557fee5b730f` is the product candidate to finish unless fresh evidence proves a product defect that requires a bounded correction. Do not restart or redesign the recovery.
+
+DEV must continue until every required recovery gate below is resolved:
+
+```text
+1280x1024_NO_DOCUMENT = COMPLETE
+1280x1024_DOCUMENT_OPEN = COMPLETE
+960x800_DOCUMENT_OPEN = COMPLETE
+BRUSH_OPTIONS = COMPLETE
+TEXT_OPTIONS = COMPLETE
+LASSO_OPTIONS = COMPLETE
+MENU_GEOMETRY = COMPLETE
+REFERENCE_SCROLLBAR = COMPLETE
+LAYERS_SCROLLBAR = COMPLETE
+HISTORY_SCROLLBAR = COMPLETE
+LIBRARIES_SCROLLBAR = COMPLETE
+PROPERTIES_SCROLLBAR_OR_EXPLICIT_VALID_DISPOSITION = COMPLETE
+BROWSER_LOADED_HTML_CSS_IDENTITY = COMPLETE
+PAGE_ERROR_CHECK = COMPLETE
+TECH_DEBT_RETURN = COMPLETE
+FINAL_DEV_RETURN = COMPLETE
+```
+
+For Properties:
+- first reproduce the real current panel/content state and determine the actual scroll owner;
+- if a real overflow scrollbar is part of that state, capture and measure it;
+- if the current authoritative Properties topology has no scrollbar owner for the tested state, record the exact DOM/computed-style/source reason and mark the requirement with an explicit evidence-backed disposition rather than fabricating overflow merely to obtain a screenshot;
+- cropped/hidden content discovered during this check is a separate visible defect and must be recorded, not silently fixed outside this recovery scope.
+
+Browser/evidence execution rule:
+- cloud browser evidence is valid and already proven available;
+- local Chrome absence is not a blocker;
+- if one capture method times out, use another browser/capture route while preserving exact candidate identity and required viewport geometry;
+- do not stop at `FRESH_PARTIAL_BROWSER_EVIDENCE`.
+
+Allowed early STOP conditions are limited to:
+
+```text
+A. candidate product bytes must change outside the authorized recovery scope;
+B. a Core / FORMAT_VERSION / History / C04 / C06 / New Document conflict is encountered;
+C. required repository/browser permissions are unavailable across all authorized execution routes;
+D. evidence proves the accepted recovery semantic delta itself is invalid and requires Supervisor redesign.
+```
+
+If none of A–D occurs, DEV must continue and complete the package.
+
 ## Purpose
 
 Recover already accepted UI work that is absent from current main, without broad redesign and without accumulating another patch layer.
@@ -153,4 +205,19 @@ SUPERSEDED_RULES_REMOVED = YES
 
 Do not merge to main.
 
+**Do not STOP on partial completion.** A DEV handoff is valid only after every required evidence/completion gate in this dispatch is complete, or one of the explicit early-STOP conditions A–D in the USER completion directive is met and documented with exact evidence.
+
+Normal successful stop condition:
+
+```text
+RECOVERY_IMPLEMENTATION = COMPLETE
+REQUIRED_BROWSER_EVIDENCE = COMPLETE
+REQUIRED_STATE_COVERAGE = COMPLETE
+BROWSER_IDENTITY = COMPLETE
+TECH_DEBT_RETURN = COMPLETE
+FINAL_DEV_RETURN = COMPLETE
+→ STOP TO SUPERVISOR
+```
+
+Then:
 `RECOVERY CANDIDATE → Supervisor review → C04 repair stage`
