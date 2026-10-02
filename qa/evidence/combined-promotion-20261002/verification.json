@@ -1,0 +1,275 @@
+{
+  "base": "1fb3f3d5046bb7b7e94b06b07a495e2cea5014ef",
+  "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+  "integratedMain": "aa01f1e311eb22cb572a61efea19b8bb21a96157",
+  "productTree": "5ccaac62ed85176d69e07a1b72b1cac20c507f87",
+  "scope": "Fresh captured observations and Git identity; not whole-UI acceptance",
+  "checks": [
+    {
+      "name": "complete product tree: 78d4e9e5",
+      "result": "PASS"
+    },
+    {
+      "name": "complete product tree: aa01f1e3",
+      "result": "PASS"
+    },
+    {
+      "name": "no intervening product mutation",
+      "result": "PASS"
+    },
+    {
+      "name": "seven accepted product files only",
+      "result": "PASS"
+    },
+    {
+      "name": "promotion candidate has no unrelated changes",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: no-document",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: new-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: creation-0",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: layout-0",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: creation-1",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: layout-1",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: creation-2",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: layout-2",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: selected-layout-before",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: selected-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: selected-layout-after",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: 960-no-document",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: 960-new-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: 960-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "pre authoritative state and geometry: 960-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "pre fetched asset: index.html",
+      "result": "PASS"
+    },
+    {
+      "name": "pre fetched asset: styles.css",
+      "result": "PASS"
+    },
+    {
+      "name": "pre fetched asset: src/ink.js",
+      "result": "PASS"
+    },
+    {
+      "name": "pre fetched asset: src/config.js",
+      "result": "PASS"
+    },
+    {
+      "name": "pre fetched asset: web-shell.js",
+      "result": "PASS"
+    },
+    {
+      "name": "pre fetched asset: src/document/workspace.js",
+      "result": "PASS"
+    },
+    {
+      "name": "pre fetched asset: src/document/migration.js",
+      "result": "PASS"
+    },
+    {
+      "name": "pre instantiated method: switchWorkspace",
+      "result": "PASS"
+    },
+    {
+      "name": "pre instantiated method: refreshWorkspaceUI",
+      "result": "PASS"
+    },
+    {
+      "name": "pre instantiated method: newDocument",
+      "result": "PASS"
+    },
+    {
+      "name": "pre no product-origin warning/error",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-no-document",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-new-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-layout-return",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-page2-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-page1-restored",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-page2-restored",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-layout-reloaded",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-960-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-960-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main authoritative state and geometry: main-960-layout-return",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main fetched asset: index.html",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main fetched asset: styles.css",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main fetched asset: src/ink.js",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main fetched asset: src/config.js",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main fetched asset: web-shell.js",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main fetched asset: src/document/workspace.js",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main fetched asset: src/document/migration.js",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main instantiated method: switchWorkspace",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main instantiated method: refreshWorkspaceUI",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main instantiated method: newDocument",
+      "result": "PASS"
+    },
+    {
+      "name": "official-main no product-origin warning/error",
+      "result": "PASS"
+    },
+    {
+      "name": "native New remains A4 Layout",
+      "result": "PASS"
+    },
+    {
+      "name": "three native repeated round trips",
+      "result": "PASS"
+    },
+    {
+      "name": "nonempty selection/content/History preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "official per-page workspace",
+      "result": "PASS"
+    },
+    {
+      "name": "official autosave/reload restores page/content/camera/workspace",
+      "result": "PASS"
+    },
+    {
+      "name": "official 960 round trip",
+      "result": "PASS"
+    },
+    {
+      "name": "960 host does not overlap workspace switch",
+      "result": "PASS"
+    },
+    {
+      "name": "shared content-driven menu grammar",
+      "result": "PASS"
+    },
+    {
+      "name": "rectangular overflowing right-panel scrollbars",
+      "result": "PASS"
+    },
+    {
+      "name": "no new important or breakpoint family",
+      "result": "PASS"
+    },
+    {
+      "name": "obsolete authorities absent",
+      "result": "PASS"
+    },
+    {
+      "name": "FORMAT_VERSION remains 4",
+      "result": "PASS"
+    },
+    {
+      "name": "Core spatial-index source retained exactly",
+      "result": "PASS"
+    }
+  ],
+  "total": 66,
+  "passed": 66
+}

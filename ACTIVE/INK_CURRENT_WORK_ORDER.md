@@ -1,5 +1,39 @@
 # INK Current Work Order
 
+## Combined recovery + C04 promotion integrated — 2026-10-02
+
+This checkpoint supersedes the earlier active/pending promotion status below.
+
+- LATEST_MAIN_BASE: `1fb3f3d5046bb7b7e94b06b07a495e2cea5014ef`
+- PROMOTION_BRANCH: `work/ui-recovery-c04-combined-promotion-001`
+- PROMOTION_CANDIDATE: `78d4e9e5b749d74a8a93503d87f7c85f75e1bd98`
+- BRANCH_FINAL_EVIDENCE_HEAD: `5113500b1409b3a8bcd8b79634506b7bece36ab3`
+- INTEGRATED_MAIN_SHA: `aa01f1e311eb22cb572a61efea19b8bb21a96157`
+- PRODUCT_SOURCE_TREE: `5ccaac62ed85176d69e07a1b72b1cac20c507f87`
+- TREE_IDENTITY: EXACT
+- BROWSER_CHECKS: fresh 66/66 captured-evidence and identity checks; official product/source 1280/960, both states, per-page preservation and autosave/reload.
+- EXISTING_SCOPED_TESTS: spatial + artboard/output/workspace 11/11.
+- FORMAT_VERSION: 4
+- UNRELATED_PRODUCT_MUTATION: NONE
+- NEW_IMPORTANT / BREAKPOINT / DUPLICATE_STATE_OWNER / GRAY_FORK / FAKE_AFFORDANCE: 0
+- USER_VISUAL_CHECKPOINT: READY
+
+Return: `working/INK_UI_RECOVERY_C04_COMBINED_PROMOTION_FINAL_DEV_RETURN_20261002.md`
+Evidence: `qa/evidence/combined-promotion-20261002/evidence-manifest.json`
+
+```text
+COMBINED_RECOVERY_C04_PROMOTION = INTEGRATED
+OFFICIAL_MAIN_PRODUCT_PROMOTION = EXECUTED / EXACT
+DEPLOYED_IDENTITY = VERIFIED / FRESH
+USER_VISUAL_PASS = NOT_CLAIMED
+FINAL_UI_COMPLETE = NO
+NEXT = SUPERVISOR / USER DEPLOYED VISUAL CHECKPOINT
+```
+
+Verified source-repository deployed page: https://thedoorw.github.io/INK-Browser-QA/product/source/
+
+Stop at this checkpoint. C06 12800%, Properties clipping, New Document/A4 architecture, remaining whole-UI fidelity and Live CHAT exposure remain separate. No promotion to the separate `thedoorw/INK` Live-test repository is claimed.
+
 ## C04 Supervisor acceptance / combined promotion active — 2026-10-02
 
 Supervisor review:

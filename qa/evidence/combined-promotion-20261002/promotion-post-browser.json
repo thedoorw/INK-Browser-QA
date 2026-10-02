@@ -1,0 +1,2376 @@
+{
+  "records": [
+    {
+      "name": "main-no-document",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": false,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "d9ccf026-de29-4ec9-bb4a-25a64f0fdf09",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.65,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": false
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "d9ccf026-de29-4ec9-bb4a-25a64f0fdf09",
+            "layers": [
+              {
+                "id": "9c52c540-30b2-4672-b5cc-8df9cf04ad99",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": true,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": true,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 963,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 481.5
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-new-layout",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-creation",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-layout-return",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-page2-creation",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+        "pageCount": 2,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.65,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": false
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          },
+          {
+            "id": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+            "layers": [
+              {
+                "id": "2eafebe4-aa11-47d6-aa57-3b2d73d4d0b5",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 1,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 2,
+          "storedBytes": 1495,
+          "capturedBytes": 1321,
+          "scopedEntries": 1,
+          "fullEntries": 0,
+          "scopedRatio": 1,
+          "metrics": {
+            "scopedBegins": 1,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 1321,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-page1-restored",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+        "pageCount": 2,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          },
+          {
+            "id": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+            "layers": [
+              {
+                "id": "2eafebe4-aa11-47d6-aa57-3b2d73d4d0b5",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 1,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 2,
+          "storedBytes": 1495,
+          "capturedBytes": 1321,
+          "scopedEntries": 1,
+          "fullEntries": 0,
+          "scopedRatio": 1,
+          "metrics": {
+            "scopedBegins": 1,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 1321,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-page2-restored",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+        "pageCount": 2,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7429713804713804,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7429713804713804,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          },
+          {
+            "id": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+            "layers": [
+              {
+                "id": "2eafebe4-aa11-47d6-aa57-3b2d73d4d0b5",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 1,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 2,
+          "storedBytes": 1495,
+          "capturedBytes": 1321,
+          "scopedEntries": 1,
+          "fullEntries": 0,
+          "scopedRatio": 1,
+          "metrics": {
+            "scopedBegins": 1,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 1321,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7429713804713804
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-layout-reloaded",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+        "pageCount": 2,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7429713804713804,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7429713804713804,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          },
+          {
+            "id": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+            "layers": [
+              {
+                "id": "2eafebe4-aa11-47d6-aa57-3b2d73d4d0b5",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7429713804713804
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-960-layout",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 960,
+          "height": 800,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+        "pageCount": 2,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7429713804713804,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7429713804713804,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          },
+          {
+            "id": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+            "layers": [
+              {
+                "id": "2eafebe4-aa11-47d6-aa57-3b2d73d4d0b5",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 816.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 882.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 814.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 635,
+          "height": 722,
+          "worldOrigin": {
+            "x": 317.5,
+            "y": 361
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7429713804713804
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-960-creation",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 960,
+          "height": 800,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+        "pageCount": 2,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7429713804713804,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          },
+          {
+            "id": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+            "layers": [
+              {
+                "id": "2eafebe4-aa11-47d6-aa57-3b2d73d4d0b5",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 816.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 882.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 814.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 635,
+          "height": 722,
+          "worldOrigin": {
+            "x": 317.5,
+            "y": 361
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "main-960-layout-return",
+      "state": {
+        "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 960,
+          "height": 800,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+        "pageCount": 2,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7429713804713804,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7429713804713804,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "dccac91d-5ffc-4ac2-adb9-bd5f0155adcf",
+            "layers": [
+              {
+                "id": "bea2af98-98a0-42d8-9aad-52e95582a020",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          },
+          {
+            "id": "c4b592f3-04bd-42e0-bb9a-c4808a184373",
+            "layers": [
+              {
+                "id": "2eafebe4-aa11-47d6-aa57-3b2d73d4d0b5",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 816.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 882.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 814.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 635,
+          "height": 722,
+          "worldOrigin": {
+            "x": 317.5,
+            "y": 361
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7429713804713804
+        },
+        "documentDisplay": "block"
+      }
+    }
+  ],
+  "identity": {
+    "scope": "fetched deployed assets plus executed C04 method source; not full transitive-module attestation",
+    "assets": [
+      {
+        "name": "index.html",
+        "status": 200,
+        "sha256": "94ad4e74c5804c640afc8cc55ceea5c82b72201a6525a3141068224317f3c51c"
+      },
+      {
+        "name": "styles.css",
+        "status": 200,
+        "sha256": "33e3ccaaf333ab7682261fbd58ed0a8cada90dc9cdd232bb5c378dd9272a24e8"
+      },
+      {
+        "name": "src/ink.js",
+        "status": 200,
+        "sha256": "ad926160cdd50dd636a3b610fc6c2c467796b70aab704d43227c710ac71c1ef5"
+      },
+      {
+        "name": "src/config.js",
+        "status": 200,
+        "sha256": "a2b0fb75b39bf0bc0447a3af7d870d2f73c25ea26b5e466922b65f3d176dbea8"
+      },
+      {
+        "name": "web-shell.js",
+        "status": 200,
+        "sha256": "27ac033ab161220ce38702a72440daca8f200c3f4a4a86046a8a8c07e08e4ff9"
+      },
+      {
+        "name": "src/document/workspace.js",
+        "status": 200,
+        "sha256": "79e0c83d095b76cad4c7a87ffbd4cb79dcd95d31618bda8cee78810dc79a1576"
+      },
+      {
+        "name": "src/document/migration.js",
+        "status": 200,
+        "sha256": "04a8d6eb51422700b318e4719975d56701aae6d733b0e3a163411f92e646f424"
+      }
+    ],
+    "executedMethods": {
+      "switchWorkspace": {
+        "source": "switchWorkspace(next,{fit=true,announce=true}={}){if(!this.documentOpen)return {changed:false,firstVisit:false,activeSpace:this.spaceMode()};const page=this.page(),result=activateWorkspace(page,next);this.el.app.dataset.space=result.activeSpace;this.renderer.invalidateTiles();if(fit&&result.firstVisit){if(result.activeSpace==='layout'){this.fitLayoutViewportToContent({commit:false,render:false});this.fitArtboard({switchSpace:false});}else this.fitContent();}else this.renderer.render();this.refreshWorkspaceUI();this.refreshArtboardUI();this.markDirty();if(announce&&result.changed)this.toast(result.activeSpace==='layout'?'已切換圖紙':'已切換手繪板');return result;}",
+        "sha256": "ba909f6274bb7c7e6a8f83312b67a569d2798222540d0d21c15e37582f1643cb"
+      },
+      "refreshWorkspaceUI": {
+        "source": "refreshWorkspaceUI(){const workspace=ensureWorkspace(this.page()),space=workspace.activeSpace;this.el.app.dataset.space=space;$$('[data-space]').forEach(button=>{const active=this.documentOpen&&button.dataset.space===space;button.disabled=!this.documentOpen;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});$$('[data-workspace-command=\"creation\"],[data-workspace-command=\"layout\"]').forEach(button=>{const active=this.documentOpen&&button.dataset.workspaceCommand===space;button.disabled=!this.documentOpen;button.classList.toggle('active',active);button.setAttribute('aria-checked',String(active));});this.refreshLayoutViewportUI();}",
+        "sha256": "cded2e483f81aae024349b5545fe3febeb6e4612a6740d04705672ca916cb8c9"
+      },
+      "newDocument": {
+        "source": "newDocument(){if(this.dirty&&!confirm('建立新作品？目前內容已自動儲存，但未另存的修改會離開目前畫面。'))return;const document=defaultDocument();for(const page of document.pages){page.artboard.showSafeArea=false;page.artboard.showCenter=false;activateWorkspace(page,'layout');}this.replaceDocument(document);this.history.clear();this.store.remove('autosave');this.fitArtboard({switchSpace:false});this.toast('已建立新作品');}",
+        "sha256": "3cbb66960c854a6c472a8b61f7eb7779b2a9265234439cd3f5422c6047c8d029"
+      }
+    }
+  },
+  "geometry": {
+    "buttons": [
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 22,
+        "line": "14.4px",
+        "padding": "0px 6px",
+        "width": 66.375,
+        "x": 1136.25,
+        "y": 31.5
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 22,
+        "line": "14.4px",
+        "padding": "0px 6px",
+        "width": 66.375,
+        "x": 1202.625,
+        "y": 31.5
+      }
+    ],
+    "menus": [
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 53.4375,
+        "x": 28,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 53.875,
+        "x": 81.4375,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 51.28125,
+        "x": 135.3125,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 53.5,
+        "x": 186.59375,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 54,
+        "x": 240.09375,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 53.796875,
+        "x": 294.09375,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 53.875,
+        "x": 347.890625,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 56.578125,
+        "x": 401.765625,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 54.40625,
+        "x": 458.34375,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 58.375,
+        "x": 512.75,
+        "y": 0
+      },
+      {
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "padding": "1px 8px",
+        "width": 56.09375,
+        "x": 571.125,
+        "y": 0
+      }
+    ],
+    "overflow": [],
+    "switch": {
+      "flexShrink": "0",
+      "font": "12px",
+      "height": 26,
+      "line": "15.6px",
+      "padding": "1px",
+      "width": 136.75,
+      "x": 1134.25,
+      "y": 29.5
+    }
+  },
+  "narrowGeometry": {
+    "host": {
+      "height": 35,
+      "width": 725.25,
+      "x": 83,
+      "y": 25
+    },
+    "menus": [
+      {
+        "box": {
+          "height": 24,
+          "width": 53.4375,
+          "x": 28,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 53.875,
+          "x": 81.4375,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 51.28125,
+          "x": 135.3125,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 53.5,
+          "x": 186.59375,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 54,
+          "x": 240.09375,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 53.796875,
+          "x": 294.09375,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 53.875,
+          "x": 347.890625,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 56.578125,
+          "x": 401.765625,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 54.40625,
+          "x": 458.34375,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 58.375,
+          "x": 512.75,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      },
+      {
+        "box": {
+          "height": 24,
+          "width": 56.09375,
+          "x": 571.125,
+          "y": 0
+        },
+        "font": "12px",
+        "padding": "0px 8px"
+      }
+    ],
+    "options": {
+      "height": 35,
+      "width": 922,
+      "x": 34,
+      "y": 25
+    },
+    "overflow": [
+      {
+        "scrollbarColor": "auto",
+        "tag": "DIV",
+        "thumbRadius": "0px",
+        "trackRadius": "0px"
+      },
+      {
+        "scrollbarColor": "auto",
+        "tag": "DIV",
+        "thumbRadius": "0px",
+        "trackRadius": "0px"
+      }
+    ],
+    "switch": {
+      "height": 26,
+      "width": 136.75,
+      "x": 814.25,
+      "y": 29.5
+    }
+  },
+  "logs": [
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:39:02.902Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:39:36.671Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:00.496Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:05.752Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:05.856Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:05.872Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:11.466Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:17.804Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:17.838Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:27.340Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:27.340Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:32.656Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:32.657Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:42.287Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:42.287Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:43.619Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:43.622Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:40:43.627Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:41:01.567Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:41:01.571Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:41:11.480Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    }
+  ],
+  "logs960": [
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:41:34.086Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:41:49.453Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:42:04.766Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:42:04.768Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    }
+  ],
+  "url": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-combined-promotion-78d4e9e5.html?restore",
+  "narrowUrl": "https://thedoorw.github.io/INK-Browser-QA/qa/runtime/ink-combined-promotion-78d4e9e5.html?w=960&restore",
+  "scope": "Fresh official product/source deployment; observer does not operate product"
+}

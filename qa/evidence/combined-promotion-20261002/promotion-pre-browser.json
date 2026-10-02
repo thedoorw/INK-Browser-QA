@@ -1,0 +1,4343 @@
+{
+  "records": [
+    {
+      "name": "no-document",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": false,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "c837390b-32d5-487b-81dc-1943f2151555",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.65,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": false
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "c837390b-32d5-487b-81dc-1943f2151555",
+            "layers": [
+              {
+                "id": "a625c661-2a38-4180-9004-089e46849839",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": true,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": true,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 963,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 481.5
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "new-layout",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "creation-0",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "layout-0",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "creation-1",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "layout-1",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "creation-2",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "layout-2",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "selected-layout-before",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [
+          {
+            "layerId": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+            "objectId": "95cc516f-8db3-445d-b1e8-9e83dde49ffc"
+          }
+        ],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": [
+                  {
+                    "id": "95cc516f-8db3-445d-b1e8-9e83dde49ffc",
+                    "type": "shape",
+                    "name": "幾何",
+                    "matrix": [
+                      1,
+                      0,
+                      0,
+                      1,
+                      -185.32786809404408,
+                      -335.0411280846063
+                    ],
+                    "opacity": 1,
+                    "shape": "rect",
+                    "color": "#202020",
+                    "fillColor": "#202020",
+                    "size": 1.1,
+                    "fill": false,
+                    "x2": 263.81191187764284,
+                    "y2": 211.0495295021142,
+                    "w": 263.81191187764284,
+                    "h": 211.0495295021142
+                  }
+                ]
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 1,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 1,
+          "storedBytes": 516,
+          "capturedBytes": 68,
+          "scopedEntries": 1,
+          "fullEntries": 0,
+          "scopedRatio": 1,
+          "metrics": {
+            "scopedBegins": 1,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 68,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "selected-creation",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [
+          {
+            "layerId": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+            "objectId": "95cc516f-8db3-445d-b1e8-9e83dde49ffc"
+          }
+        ],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": [
+                  {
+                    "id": "95cc516f-8db3-445d-b1e8-9e83dde49ffc",
+                    "type": "shape",
+                    "name": "幾何",
+                    "matrix": [
+                      1,
+                      0,
+                      0,
+                      1,
+                      -185.32786809404408,
+                      -335.0411280846063
+                    ],
+                    "opacity": 1,
+                    "shape": "rect",
+                    "color": "#202020",
+                    "fillColor": "#202020",
+                    "size": 1.1,
+                    "fill": false,
+                    "x2": 263.81191187764284,
+                    "y2": 211.0495295021142,
+                    "w": 263.81191187764284,
+                    "h": 211.0495295021142
+                  }
+                ]
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 1,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 1,
+          "storedBytes": 516,
+          "capturedBytes": 68,
+          "scopedEntries": 1,
+          "fullEntries": 0,
+          "scopedRatio": 1,
+          "metrics": {
+            "scopedBegins": 1,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 68,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "selected-layout-after",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 1280,
+          "height": 1024,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.7581158810325477,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.7581158810325477,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [
+          {
+            "layerId": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+            "objectId": "95cc516f-8db3-445d-b1e8-9e83dde49ffc"
+          }
+        ],
+        "content": [
+          {
+            "id": "7751945c-639f-43ee-ab8a-6d48f29d6f8d",
+            "layers": [
+              {
+                "id": "10845c88-096b-4d54-b2ab-fb76a807b1fe",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": [
+                  {
+                    "id": "95cc516f-8db3-445d-b1e8-9e83dde49ffc",
+                    "type": "shape",
+                    "name": "幾何",
+                    "matrix": [
+                      1,
+                      0,
+                      0,
+                      1,
+                      -185.32786809404408,
+                      -335.0411280846063
+                    ],
+                    "opacity": 1,
+                    "shape": "rect",
+                    "color": "#202020",
+                    "fillColor": "#202020",
+                    "size": 1.1,
+                    "fill": false,
+                    "x2": 263.81191187764284,
+                    "y2": 211.0495295021142,
+                    "w": 263.81191187764284,
+                    "h": 211.0495295021142
+                  }
+                ]
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 1,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 1,
+          "storedBytes": 516,
+          "capturedBytes": 68,
+          "scopedEntries": 1,
+          "fullEntries": 0,
+          "scopedRatio": 1,
+          "metrics": {
+            "scopedBegins": 1,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 68,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 1136.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 1202.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 1134.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 955,
+          "height": 946,
+          "worldOrigin": {
+            "x": 477.5,
+            "y": 473
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.7581158810325477
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "960-no-document",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 960,
+          "height": 800,
+          "dpr": 1
+        },
+        "documentOpen": false,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "654b2ee6-6b21-4c47-924c-9d5dd27837bc",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.65,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": false
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "654b2ee6-6b21-4c47-924c-9d5dd27837bc",
+            "layers": [
+              {
+                "id": "3e5b9bc1-b5d2-4b21-b7e0-2b2709607cfb",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": true,
+              "showCenter": true,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": true,
+            "box": {
+              "x": 816.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": true,
+            "box": {
+              "x": 882.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 814.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 635,
+          "height": 739,
+          "worldOrigin": {
+            "x": 317.5,
+            "y": 369.5
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "960-new-layout",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 960,
+          "height": 800,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "f52e639f-0712-4b3b-a7aa-0995c167d37e",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.5585648148148148,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.5585648148148148,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "f52e639f-0712-4b3b-a7aa-0995c167d37e",
+            "layers": [
+              {
+                "id": "5f9d7776-7079-4d14-b915-0710c547cb71",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 816.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 882.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 814.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 635,
+          "height": 722,
+          "worldOrigin": {
+            "x": 317.5,
+            "y": 361
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.5585648148148148
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "960-creation",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 960,
+          "height": 800,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "creation",
+        "spaceMode": "creation",
+        "pageId": "f52e639f-0712-4b3b-a7aa-0995c167d37e",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "creation",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.5585648148148148,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 1,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "f52e639f-0712-4b3b-a7aa-0995c167d37e",
+            "layers": [
+              {
+                "id": "5f9d7776-7079-4d14-b915-0710c547cb71",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 816.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 882.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 814.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 635,
+          "height": 722,
+          "worldOrigin": {
+            "x": 317.5,
+            "y": 361
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 1
+        },
+        "documentDisplay": "block"
+      }
+    },
+    {
+      "name": "960-layout",
+      "state": {
+        "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+        "build": "20261002-c04-two-state-repair",
+        "viewport": {
+          "width": 960,
+          "height": 800,
+          "dpr": 1
+        },
+        "documentOpen": true,
+        "dataset": "layout",
+        "spaceMode": "layout",
+        "pageId": "f52e639f-0712-4b3b-a7aa-0995c167d37e",
+        "pageCount": 1,
+        "workspace": {
+          "activeSpace": "layout",
+          "showLayoutFrameInCreation": false,
+          "layoutViewport": {
+            "x": 0,
+            "y": 0,
+            "scale": 1,
+            "rotation": 0
+          },
+          "cameras": {
+            "creation": {
+              "x": 0,
+              "y": 0,
+              "scale": 1,
+              "rotation": 0
+            },
+            "layout": {
+              "x": 0,
+              "y": 0,
+              "scale": 0.5585648148148148,
+              "rotation": 0
+            }
+          },
+          "visited": {
+            "creation": true,
+            "layout": true
+          }
+        },
+        "camera": {
+          "x": 0,
+          "y": 0,
+          "scale": 0.5585648148148148,
+          "rotation": 0
+        },
+        "cameraAliasesActive": true,
+        "selection": [],
+        "content": [
+          {
+            "id": "f52e639f-0712-4b3b-a7aa-0995c167d37e",
+            "layers": [
+              {
+                "id": "5f9d7776-7079-4d14-b915-0710c547cb71",
+                "name": "圖層 1",
+                "visible": true,
+                "locked": false,
+                "opacity": 1,
+                "objects": []
+              }
+            ],
+            "artboard": {
+              "mode": "fixed",
+              "preset": "A4",
+              "orientation": "portrait",
+              "widthMm": 210,
+              "heightMm": 297,
+              "ppi": 300,
+              "bleedMm": 0,
+              "safeMarginMm": 10,
+              "unit": "mm",
+              "showBleed": true,
+              "showSafeArea": false,
+              "showCenter": false,
+              "clipContent": true
+            }
+          }
+        ],
+        "history": {
+          "undo": 0,
+          "redo": 0,
+          "limit": 30,
+          "patchCount": 0,
+          "storedBytes": 0,
+          "capturedBytes": 0,
+          "scopedEntries": 0,
+          "fullEntries": 0,
+          "scopedRatio": 0,
+          "metrics": {
+            "scopedBegins": 0,
+            "fullBegins": 0,
+            "scopedCapturedBytes": 0,
+            "fullCapturedBytes": 0,
+            "inPlaceApplies": 0
+          },
+          "mode": "hybrid-target-scoped-id-aware-patches"
+        },
+        "buttons": [
+          {
+            "text": "手繪板",
+            "space": "creation",
+            "pressed": "false",
+            "disabled": false,
+            "box": {
+              "x": 816.25,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          },
+          {
+            "text": "圖紙",
+            "space": "layout",
+            "pressed": "true",
+            "disabled": false,
+            "box": {
+              "x": 882.625,
+              "y": 31.5,
+              "width": 66.375,
+              "height": 22
+            }
+          }
+        ],
+        "switch": {
+          "count": 1,
+          "parent": "contextualOptions",
+          "box": {
+            "x": 814.25,
+            "y": 29.5,
+            "width": 136.75,
+            "height": 26
+          }
+        },
+        "renderer": {
+          "width": 635,
+          "height": 722,
+          "worldOrigin": {
+            "x": 317.5,
+            "y": 361
+          },
+          "screenOrigin": {
+            "x": 0,
+            "y": 0
+          },
+          "worldScreenScale": 0.5585648148148148
+        },
+        "documentDisplay": "block"
+      }
+    }
+  ],
+  "identity": {
+    "scope": "fetched deployed assets plus executed C04 method source; not full transitive-module attestation",
+    "assets": [
+      {
+        "name": "index.html",
+        "status": 200,
+        "sha256": "94ad4e74c5804c640afc8cc55ceea5c82b72201a6525a3141068224317f3c51c"
+      },
+      {
+        "name": "styles.css",
+        "status": 200,
+        "sha256": "33e3ccaaf333ab7682261fbd58ed0a8cada90dc9cdd232bb5c378dd9272a24e8"
+      },
+      {
+        "name": "src/ink.js",
+        "status": 200,
+        "sha256": "ad926160cdd50dd636a3b610fc6c2c467796b70aab704d43227c710ac71c1ef5"
+      },
+      {
+        "name": "src/config.js",
+        "status": 200,
+        "sha256": "a2b0fb75b39bf0bc0447a3af7d870d2f73c25ea26b5e466922b65f3d176dbea8"
+      },
+      {
+        "name": "web-shell.js",
+        "status": 200,
+        "sha256": "27ac033ab161220ce38702a72440daca8f200c3f4a4a86046a8a8c07e08e4ff9"
+      },
+      {
+        "name": "src/document/workspace.js",
+        "status": 200,
+        "sha256": "79e0c83d095b76cad4c7a87ffbd4cb79dcd95d31618bda8cee78810dc79a1576"
+      },
+      {
+        "name": "src/document/migration.js",
+        "status": 200,
+        "sha256": "04a8d6eb51422700b318e4719975d56701aae6d733b0e3a163411f92e646f424"
+      }
+    ],
+    "executedMethods": {
+      "switchWorkspace": {
+        "source": "switchWorkspace(next,{fit=true,announce=true}={}){if(!this.documentOpen)return {changed:false,firstVisit:false,activeSpace:this.spaceMode()};const page=this.page(),result=activateWorkspace(page,next);this.el.app.dataset.space=result.activeSpace;this.renderer.invalidateTiles();if(fit&&result.firstVisit){if(result.activeSpace==='layout'){this.fitLayoutViewportToContent({commit:false,render:false});this.fitArtboard({switchSpace:false});}else this.fitContent();}else this.renderer.render();this.refreshWorkspaceUI();this.refreshArtboardUI();this.markDirty();if(announce&&result.changed)this.toast(result.activeSpace==='layout'?'已切換圖紙':'已切換手繪板');return result;}",
+        "sha256": "ba909f6274bb7c7e6a8f83312b67a569d2798222540d0d21c15e37582f1643cb"
+      },
+      "refreshWorkspaceUI": {
+        "source": "refreshWorkspaceUI(){const workspace=ensureWorkspace(this.page()),space=workspace.activeSpace;this.el.app.dataset.space=space;$$('[data-space]').forEach(button=>{const active=this.documentOpen&&button.dataset.space===space;button.disabled=!this.documentOpen;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});$$('[data-workspace-command=\"creation\"],[data-workspace-command=\"layout\"]').forEach(button=>{const active=this.documentOpen&&button.dataset.workspaceCommand===space;button.disabled=!this.documentOpen;button.classList.toggle('active',active);button.setAttribute('aria-checked',String(active));});this.refreshLayoutViewportUI();}",
+        "sha256": "cded2e483f81aae024349b5545fe3febeb6e4612a6740d04705672ca916cb8c9"
+      },
+      "newDocument": {
+        "source": "newDocument(){if(this.dirty&&!confirm('建立新作品？目前內容已自動儲存，但未另存的修改會離開目前畫面。'))return;const document=defaultDocument();for(const page of document.pages){page.artboard.showSafeArea=false;page.artboard.showCenter=false;activateWorkspace(page,'layout');}this.replaceDocument(document);this.history.clear();this.store.remove('autosave');this.fitArtboard({switchSpace:false});this.toast('已建立新作品');}",
+        "sha256": "3cbb66960c854a6c472a8b61f7eb7779b2a9265234439cd3f5422c6047c8d029"
+      }
+    }
+  },
+  "geometry": {
+    "buttons": [
+      {
+        "clientWidth": 66,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 22,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 66,
+        "width": 66.375,
+        "x": 1136.25,
+        "y": 31.5
+      },
+      {
+        "clientWidth": 66,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 22,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 66,
+        "width": 66.375,
+        "x": 1202.625,
+        "y": 31.5
+      }
+    ],
+    "menus": [
+      {
+        "clientWidth": 53,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 53,
+        "width": 53.4375,
+        "x": 28,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 54,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 54,
+        "width": 53.875,
+        "x": 81.4375,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 51,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 51,
+        "width": 51.28125,
+        "x": 135.3125,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 54,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 54,
+        "width": 53.5,
+        "x": 186.59375,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 54,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 54,
+        "width": 54,
+        "x": 240.09375,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 54,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 54,
+        "width": 53.796875,
+        "x": 294.09375,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 54,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 54,
+        "width": 53.875,
+        "x": 347.890625,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 57,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 57,
+        "width": 56.578125,
+        "x": 401.765625,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 54,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 54,
+        "width": 54.40625,
+        "x": 458.34375,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 58,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 58,
+        "width": 58.375,
+        "x": 512.75,
+        "y": 0
+      },
+      {
+        "clientWidth": 56,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 24,
+        "line": "14.4px",
+        "overflow": "visible",
+        "padding": "1px 8px",
+        "scrollWidth": 56,
+        "width": 56.09375,
+        "x": 571.125,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      {
+        "clientWidth": 0,
+        "flexShrink": "1",
+        "font": "12px",
+        "height": 0,
+        "line": "15.6px",
+        "overflow": "visible",
+        "padding": "0px 6px",
+        "scrollWidth": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      }
+    ],
+    "options": {
+      "clientWidth": 1240,
+      "flexShrink": "1",
+      "font": "12px",
+      "height": 35,
+      "line": "15.6px",
+      "overflow": "hidden",
+      "padding": "0px 4px",
+      "scrollWidth": 1240,
+      "width": 1242,
+      "x": 34,
+      "y": 25
+    },
+    "overflow": [
+      {
+        "height": 251,
+        "id": "",
+        "scrollHeight": 515,
+        "scrollbarColor": "auto",
+        "tag": "SECTION",
+        "thumb": "0px"
+      }
+    ],
+    "switch": {
+      "clientWidth": 135,
+      "flexShrink": "0",
+      "font": "12px",
+      "height": 26,
+      "line": "15.6px",
+      "overflow": "visible",
+      "padding": "1px",
+      "scrollWidth": 135,
+      "width": 136.75,
+      "x": 1134.25,
+      "y": 29.5
+    }
+  },
+  "logs": [
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:33:17.194Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:33:25.105Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:33:31.909Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:33:32.000Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:33:32.006Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:34:46.691Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:01.622Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:01.650Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:01.947Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:01.947Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:02.961Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:02.978Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:03.978Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:03.978Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:04.992Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:05.009Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:12.258Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:12.259Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:17.069Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:17.095Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:17.099Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:29.502Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:30.515Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:30.529Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:31.506Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:31.506Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    }
+  ],
+  "logs960": [
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:35:52.828Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:36:02.796Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:36:19.342Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:36:19.342Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:36:19.415Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:36:20.387Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:36:20.768Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-10-02T12:36:20.768Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    }
+  ],
+  "limitations": [
+    "Pre-integration preview uses accepted immutable composition; full product tree equality checked in Git.",
+    "Initial Playwright locator attempts did not switch actual state and are excluded; only native AX interactions count."
+  ]
+}

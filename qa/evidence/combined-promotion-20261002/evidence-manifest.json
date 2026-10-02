@@ -1,0 +1,54 @@
+{
+  "task": "UI recovery + C04 combined promotion",
+  "base": "1fb3f3d5046bb7b7e94b06b07a495e2cea5014ef",
+  "candidate": "78d4e9e5b749d74a8a93503d87f7c85f75e1bd98",
+  "integratedMain": "aa01f1e311eb22cb572a61efea19b8bb21a96157",
+  "productSourceTree": "5ccaac62ed85176d69e07a1b72b1cac20c507f87",
+  "files": [
+    {
+      "path": "qa/evidence/combined-promotion-20261002/promotion-1280-layout.jpg",
+      "bytes": 54552,
+      "sha256": "9d0868617aa0a26b92ba29bf9bbc59fc3931b43b59becd472242c70059ba064f"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/promotion-960-creation-final.jpg",
+      "bytes": 60191,
+      "sha256": "2e93700536e754f4367e892c8f3ededf2f430fb1f3df61b27659e836e6958a27"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/promotion-deployed-checkpoint.jpg",
+      "bytes": 54971,
+      "sha256": "d4e29769b554df0e03be926ef7e9760c71c17273026ba717a5ef4440084b9c26"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/promotion-main-960-creation.jpg",
+      "bytes": 60183,
+      "sha256": "0534e36d63cc98e5f0f54a4df701f03e1dade2737f8187c3375566f93b4fd336"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/promotion-main-layout.jpg",
+      "bytes": 64130,
+      "sha256": "17c5ae5c45667622672fdea7878c5ba22d8e04d8fcbedfb8d6f20425a4f90329"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/promotion-post-browser.json",
+      "bytes": 64497,
+      "sha256": "9008395bf94901c00a462bceb32d29b94c57cc3cb29d9fca0b0912a455d11c9f"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/promotion-pre-browser.json",
+      "bytes": 110274,
+      "sha256": "8be903cedfb1ab33e3866780da2fcfff9577f8a770dd2ee6832c362b9eee7936"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/unit.tap",
+      "bytes": 980,
+      "sha256": "ad4590e65d3b89b3e80fa54f3a6817d8358b77a3f7950e44e008c14d87cd6e5c"
+    },
+    {
+      "path": "qa/evidence/combined-promotion-20261002/verification.json",
+      "bytes": 6949,
+      "sha256": "5f38cd0f63b6a55abc96ad4ce84e5573b165d7276d99fd90c3daaaaba6801ad7"
+    }
+  ]
+}
