@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "paint-session-bounds-live-rerun-001",
+  "requestId": "paint-session-bounds-live-rerun-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "be6baa7085b9520a67e0952968650d4648af4d0a",
   "steps": [
@@ -29,11 +29,11 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "paint-session-bounds-live-rerun-001",
+          "taskId": "paint-session-bounds-live-rerun-002",
           "operation": "paint.session.create.v1",
           "targets": [],
           "arguments": {
-            "name": "Paint Session Bounds Live Rerun",
+            "name": "Paint Session Bounds Live Warm Rerun",
             "seed": 137,
             "opacity": 1,
             "strokes": [
