@@ -36,6 +36,8 @@ https://thedoorw.github.io/INK/
 - INK/TEST_FINDINGS.md
 
 任務：
+INK 是設計給 CHAT 操作。Live 網頁是 Runtime / Preview surface，不是要求 CHAT 用滑鼠模仿人類操作。主要測試路徑必須走 INK Public Creative API / named tools（runtime: `window.INK_APP.inkPublicApi`）。
+
 持續執行 INK Live 測試、記錄問題、重現與分類。先做 breadth-first case sweep：每個成熟作品案例只快速測它最有辨識度的功能，不先完成整件作品；掃完一輪後集中修缺陷，再做第二輪組合測試，最後才做完整作品。需要產品修正時，只在 INK-Browser-QA 依目前治理規則做 bounded 修正與驗證；通過後選定 exact source SHA 發布到 thedoorw/INK，更新 BUILD_INFO.json，再對 Live URL 重測。
 
 規則：
