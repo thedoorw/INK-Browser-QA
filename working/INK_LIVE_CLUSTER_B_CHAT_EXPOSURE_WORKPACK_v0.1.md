@@ -5,6 +5,21 @@ DATE = 2026-10-02
 SOURCE_REPO = thedoorw/INK-Browser-QA
 PARENT_AUDIT = working/INK_LIVE_CLUSTER_B_RASTER_EFFECTS_DEFORMATION_SOURCE_AUDIT_20261002.md
 
+## Execution status — 2026-10-02
+
+```text
+B0 = COMPLETE / PR #118 / browser PASS / merged
+B1 = COMPLETE / PR #119 / browser PASS / merged / Live PASS
+B2 = NEXT
+B3 = LATER
+B4 = OPEN
+```
+
+Authoritative B1 formal Live evidence:
+`clusterB-B1-live-rerun-004` on deployed source `3a785b90d6f7922175cca3662fd2b72bf95430ce`.
+
+The current B1 named-tool qualification covers browser-local PNG/JPEG/WebP. Do not silently broaden that PASS to PSD/TIFF/EXR/RAW.
+
 ## Objective
 
 Close the highest-value Raster / Filter / Effect / Deformation Live gaps by exposing existing native authorities to CHAT without creating duplicate Document, History, Renderer, raster-state or transform authorities.
