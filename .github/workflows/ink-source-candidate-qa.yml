@@ -1,0 +1,101 @@
+name: INK Source Candidate QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ACTIVE/INK_SOURCE_CANDIDATE_QA_REQUEST.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ink-source-candidate-qa
+  cancel-in-progress: false
+
+jobs:
+  execute:
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 12
+
+    steps:
+      - name: Checkout QA authority
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Read candidate request
+        id: request
+        shell: pwsh
+        run: |
+          $request = Get-Content "ACTIVE/INK_SOURCE_CANDIDATE_QA_REQUEST.json" -Raw | ConvertFrom-Json
+          if ($request.schema -ne "INK-SOURCE-CANDIDATE-QA-REQUEST") { throw "Invalid request schema" }
+          if ($request.version -ne 1) { throw "Invalid request version" }
+          if ($request.candidateSha -notmatch "^[a-f0-9]{40}$") { throw "Invalid candidate SHA" }
+          "candidate_sha=$($request.candidateSha)" >> $env:GITHUB_OUTPUT
+
+      - name: Checkout exact candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.request.outputs.candidate_sha }}
+          path: candidate
+          persist-credentials: false
+
+      - name: Execute exact candidate browser QA
+        run: >-
+          node qa/source-candidate/run-source-candidate-request.mjs
+          "ACTIVE/INK_SOURCE_CANDIDATE_QA_REQUEST.json"
+          "candidate/product/source"
+          "${{ runner.temp }}\ink-source-candidate-result.json"
+          "${{ runner.temp }}\ink-source-candidate-result.png"
+
+      - name: Publish candidate QA result to GitHub SSOT
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          RESULT_PATH: ${{ runner.temp }}\ink-source-candidate-result.json
+        with:
+          script: |
+            const fs = require('node:fs');
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const path = 'working/INK_SOURCE_CANDIDATE_QA_RESULT.json';
+            let result;
+            try {
+              result = JSON.parse(fs.readFileSync(process.env.RESULT_PATH, 'utf8'));
+            } catch (error) {
+              result = {
+                schema: 'INK-SOURCE-CANDIDATE-QA-RESULT',
+                version: 1,
+                status: 'FAIL',
+                error: 'Runner result unavailable: ' + error.message
+              };
+            }
+            let sha;
+            try {
+              const current = await github.rest.repos.getContent({ owner, repo, path, ref: 'main' });
+              if (!Array.isArray(current.data)) sha = current.data.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            const content = Buffer.from(JSON.stringify(result, null, 2) + '\n').toString('base64');
+            await github.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path,
+              message: 'qa(candidate): record ' + (result.requestId || 'unknown') + ' ' + (result.status || 'UNKNOWN'),
+              content,
+              branch: 'main',
+              ...(sha ? { sha } : {})
+            });
+
+      - name: Preserve candidate visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-source-candidate-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}\ink-source-candidate-result.json
+            ${{ runner.temp }}\ink-source-candidate-result.png
+          if-no-files-found: warn
+          retention-days: 30
