@@ -365,3 +365,36 @@ FINAL_UI_COMPLETE = NOT CLAIMED
 ```
 
 Do not start Capability → UI Exposure Batch B until USER completes the current visual checkpoint on the normalized base.
+
+
+### SUP-07 — RIGHT-PANEL ROW TEXT OPTICAL VERTICAL CENTERING
+
+USER visual checkpoint on the normalized 1280×1024 render identifies inconsistent optical vertical placement of text inside fixed-height right-panel rows.
+
+Affected row classes to inspect as one same-class problem:
+- Reference parameter rows;
+- `結構分析 / 選用`;
+- `研究 → 創作 / 唯讀`;
+- Layers `透明度` row;
+- Layers `鎖定` row;
+- panel tabs and other fixed-height compact rows where the visible glyph envelope appears high/low.
+
+The requirement is not merely that the CSS box contains `align-items:center`.
+
+Required correction criterion:
+```text
+ROW VISUAL CENTER
+≈ TEXT VISIBLE-GLYPH CENTER
+≈ ICON / CONTROL CENTER
+≈ RIGHT-SIDE STATE TEXT CENTER
+```
+
+Implementation rule:
+- fixed row height stays authoritative;
+- center children with shared flex/grid alignment;
+- use the shared line-height token;
+- remove local vertical padding/baseline nudges that shift one row independently;
+- where `line-height == row height` creates CJK optical drift, switch the row to flex/grid centering rather than adding a local top/bottom patch;
+- verify same-class row centers at 1:1 render, approximately within ±1 px.
+
+This is a micro-module grammar issue, not a request for isolated per-label offsets.
