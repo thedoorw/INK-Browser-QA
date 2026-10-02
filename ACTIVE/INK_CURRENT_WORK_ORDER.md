@@ -1,30 +1,28 @@
 # INK Current Work Order
 
-## Current execution — Core spatial-index / Lasso consistency — 2026-10-02
+## Current Core review checkpoint — 2026-10-02
 
-USER authorized continuation after Supervisor review of the post-SUP11 UI candidate.
+Core spatial-index / Lasso consistency DEV has stopped and Supervisor review is complete.
 
-Active execution:
-- `ACTIVE/INK_CORE_SPATIAL_INDEX_LASSO_REPAIR_DEV_DISPATCH_v1.0.md`
+Accepted candidate:
+- branch `work/core-spatial-index-lasso-repair-001`
+- final HEAD `7913b332247c0892928501761975bf59d96e3885`
+- exact tested SHA `864e72d5aa6b37ca5625c9ea3634fa506ea6b644`
+- focused browser evidence `33 / 33 PASS`
+- review: `working/INK_CORE_SPATIAL_INDEX_LASSO_REPAIR_SUPERVISOR_REVIEW_20261002.md`
 
-Core repair baseline remains:
-- `a9d122ccba14734caf6220a53044545494a8429b`
-
-Boundary:
-- keep this repair separate from the post-SUP11 UI candidate;
-- no UI mutation;
-- no New Document / A4 architecture implementation;
-- no workspace-state workaround.
-
-The newly exposed C04 Creation / Layout two-state defect remains on HOLD pending a separate authority decision; do not fold it into the spatial-index repair.
-
-Required stop:
+Disposition:
 ```text
-focused Core mutation
-→ mutation-lifecycle / spatial-index evidence
-→ create/move/duplicate/delete/undo/redo/page-switch checks
-→ STOP to Core / Supervisor
+CORE_SUPERVISOR_REVIEW = ACCEPTED
+PROMOTION = PENDING / SEPARATE ACTION
+UI_MUTATION = NONE
+NEW_DOCUMENT_A4_MUTATION = NONE
+WORKSPACE_MUTATION = NONE
+FORMAT_VERSION = 4
 ```
+
+The C04 Creation / Layout two-state defect remains separate and on HOLD. Do not fold it into Core promotion.
+
 
 ## Post-SUP11 dispatch queue — 2026-10-02
 
