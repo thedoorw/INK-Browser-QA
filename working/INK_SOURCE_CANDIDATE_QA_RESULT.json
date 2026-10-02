@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "paint-session-bounds-candidate-001",
+  "requestId": "paint-session-bounds-candidate-002",
   "candidateSha": "b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
   "case": "paint-session-create",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:33597/?sourceCandidate=b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
+    "href": "http://127.0.0.1:39127/?sourceCandidate=b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -24,9 +24,15 @@
       "canvas": "c81fe871",
       "id": "chat-paint-fnv1a32-c7900103",
       "strokes": 2,
-      "replayHash": "6655c1e4"
+      "replayHash": "4fe9a4fb"
     },
     "previewStatus": "COMPLETED",
+    "previewBounds": {
+      "h": 231.12032,
+      "w": 274.0064,
+      "x": -135.13,
+      "y": -120.46648
+    },
     "undoStatus": "COMPLETED",
     "redoStatus": "COMPLETED",
     "restoredStrokeCount": 2
