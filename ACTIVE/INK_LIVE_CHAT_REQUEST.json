@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "testB-capability-inventory-001",
+  "requestId": "testB-capability-inventory-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
   "steps": [
