@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "testB-capability-inventory-002",
+  "requestId": "clusterA-A2-native-stroke-discovery-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
   "steps": [
@@ -9,6 +9,13 @@
       "id": "capabilities",
       "tool": "get_ink_capabilities",
       "input": {}
+    },
+    {
+      "id": "describeStroke",
+      "tool": "describe_ink_capability",
+      "input": {
+        "idOrToolName": "stroke.create.v1"
+      }
     }
   ]
 }
