@@ -1,5 +1,56 @@
 # INK Current Work Order
 
+## C04 Supervisor acceptance / combined promotion active — 2026-10-02
+
+Supervisor review:
+- `working/INK_C04_TWO_STATE_REPAIR_SUPERVISOR_REVIEW_20261002.md`
+
+Accepted C04:
+- branch `work/c04-paper-freehand-two-state-repair-001`;
+- immutable product candidate `584e44ac75af294508440d8d4196c81942fff739`;
+- branch evidence HEAD `d0b56db04630b4a9c41b50a7c54f25f3bd744bef`;
+- accepted complete product/source tree `5ccaac62ed85176d69e07a1b72b1cac20c507f87`;
+- fresh scoped evidence `49 / 49`;
+- existing artboard/output/workspace suite `8 / 8`;
+- FORMAT_VERSION = `4`;
+- no new workspace state owner, CSS workaround, breakpoint family, !important, gray fork or fake affordance.
+
+Disposition:
+```text
+C04_IMPLEMENTATION = ACCEPTED
+C04_EVIDENCE = ACCEPTED
+C04_CORE_SUPERVISOR_REVIEW = ACCEPTED
+COMBINED_RECOVERY_C04_PROMOTION = RELEASED
+OFFICIAL_MAIN_PRODUCT_PROMOTION = NOT_YET_EXECUTED
+USER_VISUAL_PASS = NOT_CLAIMED
+FINAL_UI_COMPLETE = NO
+```
+
+Active execution:
+- `ACTIVE/INK_UI_RECOVERY_C04_COMBINED_PROMOTION_DEV_DISPATCH_v1.0.md`
+
+Required method:
+```text
+latest main
+→ confirm no intervening product/source mutation
+→ fresh combined-promotion branch
+→ promote accepted recovery + C04 composition only
+→ product/source tree MUST equal 5ccaac62ed85176d69e07a1b72b1cac20c507f87
+→ focused browser verification
+→ integrate exact accepted composition to latest main
+→ post-integration identity verification
+→ USER deployed visual checkpoint
+```
+
+Do not merge the historical recovery or C04 branches wholesale.
+
+Keep separate:
+- C06 12800% zoom;
+- Properties clipping;
+- New Document / A4 architecture;
+- unrelated Live CHAT exposure work;
+- remaining whole-UI Photoshop fidelity work.
+
 ## C04 completed candidate checkpoint — 2026-10-02
 
 Branch: `work/c04-paper-freehand-two-state-repair-001`.
