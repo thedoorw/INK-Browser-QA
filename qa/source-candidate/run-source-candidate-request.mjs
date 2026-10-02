@@ -164,8 +164,10 @@ const PAINT_CASE = String.raw`(async()=>{
   if(after.count!==before.count+1) throw new Error('PAINT_SESSION_OBJECT_COUNT');
   if(after.undo!==before.undo+1) throw new Error('PAINT_SESSION_HISTORY_COUNT');
   if(after.canvas===before.canvas) throw new Error('PAINT_SESSION_RENDER_UNCHANGED');
-  const preview=await Promise.resolve(api.tools.invoke('get_ink_preview',{}));
+  const preview=await Promise.resolve(api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:800,background:true}));
   if(preview?.status==='FAILED') throw new Error('PREVIEW_FAILED');
+  const previewBounds=preview?.result?.bounds||preview?.outputHandles?.[0]?.bounds||null;
+  if(!(previewBounds?.w>200&&previewBounds?.h>160)) throw new Error('PAINT_SESSION_CONTENT_BOUNDS:'+JSON.stringify(previewBounds));
   const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));
   if(undone?.status==='FAILED') throw new Error('UNDO_FAILED');
   if(flatObjects().some(item=>item.id===object.id)) throw new Error('UNDO_OBJECT_RETAINED');
@@ -173,7 +175,7 @@ const PAINT_CASE = String.raw`(async()=>{
   if(redone?.status==='FAILED') throw new Error('REDO_FAILED');
   const restored=flatObjects().find(item=>item.id===object.id);
   if(!restored||restored.type!=='paint-session') throw new Error('REDO_OBJECT_MISSING');
-  return {passed:true,before,after,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredStrokeCount:restored.session?.strokes?.length||0};
+  return {passed:true,before,after,previewStatus:preview.status,previewBounds,undoStatus:undone.status,redoStatus:redone.status,restoredStrokeCount:restored.session?.strokes?.length||0};
 })()`;
 
 const RASTER_CASE = String.raw`(async()=>{
