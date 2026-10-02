@@ -85,50 +85,63 @@ C29 C30 C31 C32 C33 C34 C35 C38
 Cases:
 C016 C017 C018
 
-Observed:
-Live CHAT registry exposes no brush / natural-media / paper / Blender / Smudge authority. C017 proves vector Path editing only; that is not accepted as a substitute.
-
-Next action:
-Source-audit existing native drawing authorities. If they exist, expose them through the bounded CHAT surface without creating duplicate drawing state.
-
-### A source-audit checkpoint — 2026-10-02
-
 Source audit:
 `working/INK_LIVE_CLUSTER_A_DRAWING_NATURAL_MEDIA_SOURCE_AUDIT_20261002.md`
 
 Disposition:
 
 ```text
-GENERAL DRAWING / BRUSH SESSION = PRODUCT EXISTS / CHAT EXPOSURE GAP
+GENERAL DRAWING / BRUSH SESSION = PRODUCT EXISTS / A1 CHAT EXPOSURE PASS
 NATIVE STROKE + AIRBRUSH = PRODUCT EXISTS / CHAT EXPOSURE GAP
 PAPER PROFILE / MUTATION = PRODUCT EXISTS / CHAT EXPOSURE GAP
 ERASER GEOMETRY = PRODUCT EXISTS / CHAT EXPOSURE GAP / SEPARATE BOUNDED DESIGN
 BLENDER / SMUDGE = PRODUCT RENDER-INTEGRATION GAP
 ```
 
-Draft bounded candidate:
-- branch `work/ink-live-drawing-exposure-001`
-- PR #112
-- candidate HEAD `96d873d45ba86a4760a82648a9ee31972714b936`
-- candidate operation `paint.session.create.v1`
-- static syntax: PASS for the two changed modules
-- runtime/browser qualification: NOT YET CLAIMED
-- merge / Live promotion: HOLD under current required review and C04 integration sequence
+#### A1 Paint Session closure — 2026-10-02
 
-The candidate does not expose Blender / Smudge / Eraser and does not create duplicate Document / History / Renderer / drawing authority.
+```text
+PR = #116 / MERGED
+EXACT_CANDIDATE = c654a6fb22be2eaadfebc83b01171270c71cf1b1
+SOURCE_INTEGRATION = 58adf13cd98a8594eb8e63faedc735ce0c5179f0
+CANDIDATE_BROWSER_QA = live-drawing-paint-session-pr116-001 / PASS
+LIVE_DEPLOYED_SOURCE = 58adf13cd98a8594eb8e63faedc735ce0c5179f0
+LIVE_RERUN = clusterA-A1-live-rerun-004 / COMPLETED
+```
+
+Exact candidate browser QA proved:
+- native `paint-session` creation;
+- 2 deterministic strokes;
+- renderer output changed;
+- Preview completed;
+- one scoped History entry;
+- Undo removed the object;
+- Redo restored it.
+
+Formal Live rerun proved:
+- `paint.session.create.v1` is discoverable;
+- direct `propose_ink_edit → approve_ink_edit → execute_ink_edit` works;
+- pencil + watercolor Paint Session created with 6 samples;
+- History label `CHAT create Paint Session`;
+- Preview completed;
+- Undo context returned zero objects;
+- Redo restored the same native `paint-session`.
+
+A single-step bounded edit must use the direct bounded-edit named tools. `use_ink` Creative Plan remains a 2–32 step composition authority; the earlier `CHAT_PLAN_STEPS_INVALID` probe was a test-route misuse, not an A1 product defect.
+
+A1 is closed. Remaining sequence:
+```text
+A2 native Stroke / formal NaturalMedia / Airbrush exposure
+→ A3 Paper
+→ A4 targeted Eraser
+→ A5 Blender / Smudge product integration
+```
+
+Follow-up geometry issue:
+`paint-session` currently renders correctly but lacks a dedicated content/world-bounds authority; content Preview used fallback 49×49 bounds despite wider stroke sample coordinates. Track separately from A1 exposure closure.
 
 Cluster A implementation design:
 `working/INK_LIVE_CLUSTER_A_CHAT_EXPOSURE_WORKPACK_v0.1.md`
-
-Repair sequence is now fixed as:
-`A1 Paint Session → A2 native Stroke/NaturalMedia → A3 Paper → A4 targeted Eraser → A5 Blender/Smudge product integration`.
-
-Current A1 candidate:
-- PR #115 / Draft;
-- exact candidate `039c0022b8ce8e743b3953045844b8c4d824f1a2`;
-- source-contract review found no blocking StrokeSession/replay mismatch;
-- exact browser QA request `live-drawing-paint-session-pr115-001` is pending self-hosted runner execution;
-- no browser PASS, merge or Live promotion claimed yet.
 
 ### B — Raster / Mask / Filter / Blend / Effect / Deformation
 
