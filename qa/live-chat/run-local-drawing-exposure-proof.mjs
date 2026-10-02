@@ -168,10 +168,10 @@ async function main(){
         targets:[pencilRef],
         arguments:{action:'move-node',index:1,x:185,y:105}
       });
-      const editApproved=await api.tools.invoke('approve_ink_edit',{proposalId:editProposed.result.proposalId});
+      const editApproved=await api.tools.invoke('approve_ink_edit',{proposalId:editProposed.result.result.proposalId});
       const editExecuted=await api.tools.invoke('execute_ink_edit',{
-        proposalId:editProposed.result.proposalId,
-        approvalToken:editApproved.result.approvalToken
+        proposalId:editProposed.result.result.proposalId,
+        approvalToken:editApproved.result.result.approvalToken
       });
       const previewEdited=await api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:960,background:true});
 
@@ -181,10 +181,10 @@ async function main(){
         targets:[pencilRef],
         arguments:{center:{x:225,y:180},radius:18}
       });
-      const eraseApproved=await api.tools.invoke('approve_ink_edit',{proposalId:eraseProposed.result.proposalId});
+      const eraseApproved=await api.tools.invoke('approve_ink_edit',{proposalId:eraseProposed.result.result.proposalId});
       const eraseExecuted=await api.tools.invoke('execute_ink_edit',{
-        proposalId:eraseProposed.result.proposalId,
-        approvalToken:eraseApproved.result.approvalToken
+        proposalId:eraseProposed.result.result.proposalId,
+        approvalToken:eraseApproved.result.result.approvalToken
       });
 
       const context=await api.tools.invoke('get_ink_context',{maxObjects:32});
