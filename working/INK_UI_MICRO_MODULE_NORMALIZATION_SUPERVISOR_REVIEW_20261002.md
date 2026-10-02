@@ -398,3 +398,92 @@ Implementation rule:
 - verify same-class row centers at 1:1 render, approximately within ±1 px.
 
 This is a micro-module grammar issue, not a request for isolated per-label offsets.
+
+
+### SUP-08 — VISUAL REFINEMENT DISPATCH HAS NO PRODUCT EXECUTION EVIDENCE
+
+Current repository inspection after USER review shows:
+- latest product mutation remains `a17cf7d46c151744668cf42f55b15212fe758415`;
+- `ACTIVE/INK_UI_NORMALIZED_BASE_VISUAL_REFINEMENT_DEV_DISPATCH_v1.0.md` was published afterward;
+- no later product commit, visual-refinement evidence directory, completion marker or row-center measurement evidence is present in the SSOT.
+
+Therefore the current USER screenshot must not be treated as proof that the latest visual-refinement dispatch was executed.
+
+Disposition:
+```text
+VISUAL_REFINEMENT_DISPATCH = NOT EVIDENCED AS EXECUTED
+LAST VERIFIED PRODUCT BASE = a17cf7d...
+```
+
+### SUP-09 — WINDOW CONTROL CLUSTER POSITION / GLYPH WEIGHT
+
+USER visual review of the current rendered base identifies two remaining top-right deltas:
+- the window-control cluster should sit slightly further left than the current render;
+- minimize / restore / close glyphs are optically too heavy.
+
+Current source uses:
+```text
+--ui-window-icon-size: 12px
+--ui-window-icon-stroke: 2
+```
+
+The Photoshop source-raster glyph envelopes are materially lighter than the current rendered appearance.
+
+Required correction:
+- move the three-control cluster as one shared unit; do not apply per-button positional patches;
+- reduce visual stroke/weight through the shared window-icon primitive;
+- preserve crisp vector geometry and common optical centering;
+- verify minimize / restore / close independently against the reference raster at 1:1;
+- do not use Unicode glyphs.
+
+Exact left inset / final stroke must be derived from the rendered comparison, not guessed by independent per-icon offsets.
+
+### SUP-10 — LASSO SELECTION DISABLES THE TWO FOLLOWING TOOL ACTIONS
+
+USER reports that after selecting Lasso, the two buttons directly below it become non-clickable.
+
+Source inspection confirms this is explicit state logic, not only a visual hitbox issue:
+
+```js
+crop.disabled = !selectedFound(app, object => object.type === 'image' && object.rasterState?.colorRaster)
+frame.disabled = !app.selection?.length
+```
+
+The two controls are therefore disabled when Lasso changes/clears the prerequisite selection state.
+
+Required UX correction:
+- selecting one tool must not accidentally make neighboring tool/actions appear broken;
+- determine whether Crop / Frame are true tools or prerequisite-bound commands;
+- if they are commands requiring a target, keep their route discoverable and communicate the missing prerequisite on activation rather than silently becoming unusable as a side effect of selecting Lasso, unless the product authority explicitly requires disabled state;
+- do not duplicate selection state or invent new capability semantics.
+
+This needs an interaction test:
+```text
+select ordinary tool
+→ select Lasso
+→ click Crop
+→ click Frame
+→ verify each route either activates legitimately or gives a concise prerequisite response
+→ neither control becomes an unexplained dead button
+```
+
+### SUP-11 — OPTIONS BAR IS STRUCTURALLY INCOMPLETE
+
+USER again identifies the Options Bar as visibly incomplete.
+
+Source inspection confirms the current contextual exposure is only partial:
+- `refreshContextOptions()` renders only the fields listed by `UI_B_RASTER_OPTION_FIELDS`;
+- the base `lasso` tool has no field entry;
+- polygonal/magnetic lasso expose only the currently enumerated raster-adapter parameters;
+- many native/editor tools are not reconciled through the same Tool → Options Bar exposure matrix.
+
+Therefore the current blank/sparse Options Bar is not a spacing bug. It is a capability-exposure gap.
+
+Disposition:
+```text
+OPTIONS_BAR_VISUAL_GRAMMAR = EXISTS
+OPTIONS_BAR_CAPABILITY_EXPOSURE = INCOMPLETE
+FULL_TOOL_TO_OPTIONS_RECONCILIATION = REQUIRED
+```
+
+This should be implemented as a separate bounded Tool → Options Bar exposure batch using existing INK capability/state authorities, not as ad-hoc controls added to the current visual-refinement CSS pass.
