@@ -243,3 +243,46 @@ No thedoorw/INK product-source file has been modified.
 5. Keep Blender / Smudge as a separate product-integration package; do not fold it into exposure work.
 
 Only accepted exact source SHA may be promoted to Live.
+
+
+## TEST A formal qualification checkpoint — 2026-10-03
+
+Evidence:
+`working/INK_TEST_A_DRAWING_NATURAL_MEDIA_QUALIFICATION_20261003.md`
+
+Exact Live identities:
+
+```text
+DEPLOYED_SOURCE_SHA = cc9b623258123da0e00e31a9e686357fba0d4ec0
+LIVE_REPO_HEAD_AT_TEST = 145a00587bcc6dbc9717b05179f2c5e131a5b587
+```
+
+Formal Live results:
+
+```text
+A2_NATIVE_STROKE = BLOCKED_AT_PUBLIC_EXPOSURE / EXPOSURE_GAP
+NATURALMEDIA = BLOCKED_AT_SHARED_STROKE_EXPOSURE / EXPOSURE_GAP
+AIRBRUSH = BLOCKED_AT_SHARED_STROKE_EXPOSURE / EXPOSURE_GAP
+A3_PAPER = BLOCKED_AT_PUBLIC_EXPOSURE / EXPOSURE_GAP
+A1_REGRESSION = PASS
+```
+
+Reproducers:
+- `clusterA-A2-native-stroke-discovery-live-001` → `describe_ink_capability("stroke.create.v1")` returned `INK_CAPABILITY_NOT_FOUND`;
+- `clusterA-A3-paper-discovery-live-001` → `describe_ink_capability("page.paper.set.v1")` returned `INK_CAPABILITY_NOT_FOUND`;
+- `clusterA-A1-regression-live-001` completed proposal → approval → execution → native `paint-session` → History → Preview → Undo → Redo on the current deployed source.
+
+A1 regression specifics:
+- one native `paint-session`, stable id `chat-paint-fnv1a32-a5525b8e`;
+- one scoped History entry `CHAT create Paint Session`;
+- Preview fingerprint `fnv1a32:a6535881`;
+- Undo reduced document object count to 0;
+- Redo restored the same object id and the same Preview fingerprint;
+- JSON-safe structured result;
+- no pointer/mouse simulation.
+
+This checkpoint does not authorize implementation. The source audit disposition remains:
+- A2 / NaturalMedia / Airbrush: existing product authority, missing CHAT exposure;
+- A3 Paper: existing product authority, missing CHAT exposure;
+- A1: remains closed and regression-clean;
+- Paint Session 49×49 content-bounds fallback remains a separate known integration/usability gap.
