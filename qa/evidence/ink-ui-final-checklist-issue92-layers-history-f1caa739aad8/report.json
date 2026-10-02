@@ -1,0 +1,12 @@
+{
+  "schema": "INK-UI-ISSUE92-LAYERS-HISTORY-REPORT",
+  "targetSha": "f1caa739aad892b08bad0cca3747038d09bc02c1",
+  "centralRuntimeExecuted": false,
+  "status": "FAIL",
+  "profile": "D:\\a\\_temp\\ink-lh-cS1JwB\\profile-lh-WV7rzh",
+  "summary": {
+    "total": 13,
+    "passed": 11,
+    "failed": 2
+  }
+}
