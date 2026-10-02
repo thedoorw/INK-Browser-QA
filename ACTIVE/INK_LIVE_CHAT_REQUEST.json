@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A3-paper-discovery-live-001",
+  "requestId": "clusterA-A1-regression-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
   "steps": [
@@ -11,10 +11,160 @@
       "input": {}
     },
     {
-      "id": "describePaper",
-      "tool": "describe_ink_capability",
+      "id": "contextBefore",
+      "tool": "get_ink_context",
       "input": {
-        "idOrToolName": "page.paper.set.v1"
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "historyBefore",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "paintPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "clusterA-A1-regression-paint-session",
+          "operation": "paint.session.create.v1",
+          "targets": [],
+          "arguments": {
+            "name": "A1 Regression Paint Session",
+            "seed": 137,
+            "opacity": 1,
+            "strokes": [
+              {
+                "brushId": "pencil",
+                "color": "#25384a",
+                "seed": 201,
+                "samples": [
+                  {
+                    "x": -110,
+                    "y": -55,
+                    "pressure": 0.25,
+                    "timestamp": 0
+                  },
+                  {
+                    "x": -20,
+                    "y": -95,
+                    "pressure": 0.65,
+                    "timestamp": 20
+                  },
+                  {
+                    "x": 80,
+                    "y": -30,
+                    "pressure": 0.9,
+                    "timestamp": 40
+                  }
+                ]
+              },
+              {
+                "brushId": "watercolor",
+                "color": "#b86d83",
+                "seed": 202,
+                "samples": [
+                  {
+                    "x": -90,
+                    "y": 20,
+                    "pressure": 0.35,
+                    "timestamp": 0
+                  },
+                  {
+                    "x": 0,
+                    "y": 70,
+                    "pressure": 0.7,
+                    "timestamp": 22
+                  },
+                  {
+                    "x": 100,
+                    "y": 25,
+                    "pressure": 0.5,
+                    "timestamp": 44
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "paintApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "paintPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "paintExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "paintPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "paintApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "contextAfter",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "historyAfter",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "previewAfter",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "undo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "contextUndo",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "redo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "contextRedo",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "previewRedo",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     }
   ]
