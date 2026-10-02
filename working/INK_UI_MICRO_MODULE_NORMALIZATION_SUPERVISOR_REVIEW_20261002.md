@@ -80,6 +80,8 @@ Required correction:
 
 ### SUP-03 — COVERED LEGACY CSS STILL COEXISTS WITH NEW AUTHORITY
 
+**RESOLVED by cleanup candidate `f7e387c2977b3c69c160356bd368b4f387c602c2`.**
+
 The candidate removed a large amount of CSS debt, but covered component families still retain earlier Web-App-era base rules underneath later Photoshop/shared rules.
 
 Examples still present in the same current stylesheet include earlier declarations such as:
@@ -96,28 +98,19 @@ Required correction:
 
 The DEV debt report remains useful evidence, but `935 declarations removed` does not by itself prove that covered dual authority is gone.
 
-### SUP-04 — SINGLE-COLUMN COLOR SWATCHES WERE SHRUNK INSTEAD OF REFLOWED
+### SUP-04 — SINGLE-COLUMN COLOR SWATCH SIZE
 
-Current single-column Tools evidence shows the foreground/background color swatches reduced to fit the narrower rail.
+**WITHDRAWN after numeric verification.**
 
-This does not match the Photoshop reference.
+The earlier visual review inferred that the single-column swatches had been reduced. Fresh before/after DOM/computed evidence from the bounded cleanup shows that both foreground and background swatches were already 18×18 px in both dual- and single-column Tools, using the same `--ui-swatch-size:18px` primitive. The combined diagonal stack also remained inside the single-column rail.
 
-Reference behavior:
-- single-column Tools rail remains ≈39–40 px wide;
-- foreground/background swatches retain the same ≈18×18 px primitive;
-- the two swatches overlap diagonally by ≈10 px X / ≈10 px Y;
-- combined visible footprint is therefore ≈28×28 px-class and fits inside the single-column rail;
-- reset/swap utilities reflow around that fixed swatch stack rather than forcing the swatches smaller.
+Therefore the previous “single-column swatch shrink” diagnosis was incorrect and must not be used as a DEV correction target.
 
-Required correction:
-- keep one shared swatch-size primitive for dual- and single-column Tools;
-- single-column state must change placement/reflow only;
-- do not introduce a smaller swatch token for collapsed/single Tools;
-- verify the complete color-control cluster remains inside the 39–40 px rail without clipping or overflow.
-
-This is a same-class consistency defect: layout state changed the primitive size when only placement should change.
+Any remaining visual mismatch in the color cluster must be reviewed as placement/optical composition against Photoshop, not as a primitive-size defect.
 
 ### SUP-05 — LEFT/RIGHT COLLAPSE GLYPH SIZE OVERRIDE BREAKS SAME-CLASS ALIGNMENT
+
+**RESOLVED by cleanup candidate `f7e387c2977b3c69c160356bd368b4f387c602c2`.**
 
 The left and right collapse controls use the same `i-collapse` SVG source, but current CSS does not render them at the same geometry.
 
@@ -199,3 +192,36 @@ Next bounded DEV revision should address only:
 - SUP-03 removal of superseded covered CSS declarations.
 
 After that, return fresh rendered evidence for USER review.
+
+
+## Cleanup follow-up — 2026-10-02
+
+Candidate:
+`f7e387c2977b3c69c160356bd368b4f387c602c2`
+
+Independent Supervisor checks:
+- product mutation is CSS-only;
+- JS/HTML/state/command authority unchanged;
+- no new `!important` (104 before / 104 after);
+- no new breakpoint family;
+- covered exact-selector duplicates within identical context reduced to zero by the delivered audit;
+- legacy covered desktop declarations were removed or isolated as explicit compact/state variants rather than replaced by higher-specificity patches;
+- left-only `9×8` collapse SVG override is absent from final source;
+- shared collapse primitive is `7×5` for both left/right controls;
+- shared swatch primitive is `18×18` for both dual/single Tools;
+- visible panel tabs remain 28 px;
+- sampled rendered states preserve current normalized geometry except for the intended left-chevron correction;
+- focused behavior checks for Layers/Edit/Preferences/splitter continue to pass in the DEV evidence.
+
+Disposition:
+```text
+TECH_DEBT_CLEANUP = ACCEPTED
+SUP-03 = RESOLVED
+SUP-04 = WITHDRAWN (earlier Supervisor visual inference was incorrect)
+SUP-05 = RESOLVED
+SUP-01 = OPEN
+SUP-02 = OPEN
+OVERALL_UI = NOT PASS / USER VISUAL REVIEW STILL REQUIRED
+```
+
+The cleanup acceptance does not approve Photoshop fidelity and does not authorize Capability → UI Exposure Batch B.
