@@ -211,7 +211,7 @@ const RASTER_CASE = String.raw`(async()=>{
 })()`;
 
 
-const RASTER_NAMED_TOOL_CASE = String.raw\`(async()=>{
+const RASTER_NAMED_TOOL_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
   const toolNames=api.tools.registry().map(item=>item.name);
@@ -248,7 +248,7 @@ const RASTER_NAMED_TOOL_CASE = String.raw\`(async()=>{
   const restored=flatObjects().find(item=>item.id===object.id);
   if(redone?.status==='FAILED'||!restored?.rasterState?.colorRaster) throw new Error('RASTER_REDO_FAILED');
   return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
-})()\`;
+})()`;
 
 async function run(){
   const requestPath=path.resolve(process.argv[2]);
