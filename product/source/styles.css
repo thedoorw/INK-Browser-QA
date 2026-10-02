@@ -1706,6 +1706,7 @@ kbd{font-size:var(--ui-type-xs);padding:2px 4px;border-radius:3px}
 /* Shared contextual row remains a single horizontal command surface. Overflow
    is intentionally scrollable; controls never wrap into the canvas. */
 .contextual-control-host{min-width:0;flex:1;height:100%;display:flex;align-items:center;gap:5px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-inline:contain;touch-action:pan-x}
+.contextual-options > .workspace-switch{flex:0 0 auto;margin-inline-start:auto}
 .contextual-tool-identity{flex-shrink:0}
 
 /* Fullscreen keeps the existing browser/API authority. These rules only make
@@ -2019,7 +2020,7 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
     border-radius:2px;
   }
   .menu-app-mark small{color:#858585}
-  .application-menus > button,.application-menu > button,.application-menu-label{height:100%;padding:0 8px;font-size:var(--ui-type-lg);font-weight:400;border-radius:0;white-space:nowrap;display:flex;align-items:center;padding-inline:7px;color:#333}
+.application-menus > button,.application-menu > button,.application-menu-label{height:100%;padding-inline:8px;font-size:var(--ui-type-lg);font-weight:400;border-radius:0;white-space:nowrap;display:flex;align-items:center;color:#333}
   .application-menus > button:hover,
   .application-menus > button:focus-visible,
   .application-menu > button:hover,
@@ -2314,8 +2315,9 @@ html,body,.app{background:var(--chrome-0);color:var(--chrome-text)}
   .creative-file-picker>output{min-width:0;text-overflow:ellipsis;white-space:nowrap;
   }
 }
-/* Native scrollbar grammar; document scrollbars retain their scrollbar semantics. */
-.app *{scrollbar-color:var(--ink-ui-scrollbar-thumb) var(--ui-scrollbar-track)}
+/* Native Chromium scrollbars use the shared WebKit primitive. A non-auto
+   scrollbar-color takes precedence over these pseudo-elements and restores
+   the browser's rounded thumb. Document range scrollbars remain separate. */
 .app *::-webkit-scrollbar{width:var(--ui-scrollbar-width);height:var(--ui-scrollbar-width)}
 .app *::-webkit-scrollbar-thumb{border:2px solid var(--ui-scrollbar-track);border-radius:0;background:var(--ink-ui-scrollbar-thumb)}
 .app *::-webkit-scrollbar-track{border-radius:0;background:var(--ui-scrollbar-track)}
@@ -2595,7 +2597,7 @@ input[type="range"]:disabled{opacity:1;--ui-slider-track:var(--ink-ui-border);--
     box-shadow:none;height:var(--menu-h);background:var(--ink-ui-surface);border-bottom:1px solid var(--ink-ui-border)}
   .topbar{top:var(--menu-h);height:var(--options-h);background:var(--ink-ui-surface);border-bottom:1px solid var(--ink-ui-border)}
   .application-menus{height:100%}
-  .application-menu>button{height:100%;padding:0 7px;border-radius:0}
+  .application-menu>button{border-radius:0}
   .application-command-menu{
     width:196px;padding:2px;background:var(--ink-ui-surface);border:1px solid var(--ink-ui-border-strong);
     box-shadow:0 5px 14px rgba(0,0,0,.16);color:var(--ink-ui-text)
@@ -3396,24 +3398,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 
 /* INK-UI-PVSI-PACK-01-CLOSURE — A03-A06 / M04-M06 / X01 */
 @media(min-width:761px){
-  /* A03 — PS-1 menu glyph starts: 36/85/134/180/229/279/329/378/421/473/526px.
-     With an 8px text inset, these fixed trigger starts reproduce the reference
-     rhythm while Object occupies the authorized non-3D capability slot. */
+  /* A03 — all menu triggers share the same inset; their widths follow text. */
   .menu-app-mark{box-sizing:border-box;width:28px;min-width:28px;padding:0 4px;border-right:0}
   .menu-app-mark .brand-source-mark{width:16px;height:16px}
   .application-menus>.application-menu{flex:0 0 auto}
-  .application-menus>.application-menu>button{box-sizing:border-box;height:24px;padding:0 8px;justify-content:flex-start;line-height:24px}
-  .application-menus>.application-menu[data-application-menu="file"]>button{width:49px}
-  .application-menus>.application-menu[data-application-menu="edit"]>button{width:49px}
-  .application-menus>.application-menu[data-application-menu="image"]>button{width:46px}
-  .application-menus>.application-menu[data-application-menu="layer"]>button{width:49px}
-  .application-menus>.application-menu[data-application-menu="type"]>button{width:50px}
-  .application-menus>.application-menu[data-application-menu="select"]>button{width:50px}
-  .application-menus>.application-menu[data-application-menu="filter"]>button{width:49px}
-  .application-menus>.application-menu[data-application-menu="object"]>button{width:43px}
-  .application-menus>.application-menu[data-application-menu="view"]>button{width:52px}
-  .application-menus>.application-menu[data-application-menu="window"]>button{width:53px}
-  .application-menus>.application-menu[data-application-menu="help"]>button{width:52px}
+  .application-menus>.application-menu>button{box-sizing:border-box;height:24px;justify-content:flex-start}
 
   /* A04/A05 — every contextual tool keeps the 35px band and one 24px
      control envelope; no control may create a second-height row. */

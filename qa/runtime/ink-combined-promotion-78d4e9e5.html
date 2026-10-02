@@ -1,0 +1,16 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>Combined promotion current-main review</title>
+<style>body{margin:0;background:#fff}iframe{display:block;border:0}pre{white-space:pre-wrap;font:12px monospace}</style>
+<iframe id="product" title="INK official current-main composition"></iframe><pre id="qaState">Loading</pre>
+<script>
+const query=new URLSearchParams(location.search),frame=document.querySelector('#product');
+frame.width=query.get('w')==='960'?960:1280;frame.height=query.get('w')==='960'?800:1024;
+frame.src='../../product/source/'+(query.has('restore')?'':'?fresh');
+const state=document.querySelector('#qaState');
+setInterval(()=>{try{const w=frame.contentWindow,a=w.INK_APP;if(!a?.renderer)return;const p=a.page(),buttons=[...w.document.querySelectorAll('#workspaceSwitch [data-space]')];
+const box=e=>{const r=e.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}};
+state.textContent=JSON.stringify({candidate:'78d4e9e5b749d74a8a93503d87f7c85f75e1bd98',build:w.INK_ARCHITECTURE?.buildId,viewport:{width:w.innerWidth,height:w.innerHeight,dpr:w.devicePixelRatio},documentOpen:a.documentOpen,dataset:w.document.querySelector('#app').dataset.space,spaceMode:a.spaceMode(),pageId:p.id,pageCount:a.doc.pages.length,workspace:p.workspace,camera:p.camera,cameraAliasesActive:p.camera===p.workspace.cameras[p.workspace.activeSpace],selection:a.selection,content:a.doc.pages.map(p=>({id:p.id,layers:p.layers,artboard:p.artboard})),history:a.history.stats(),buttons:buttons.map(b=>({text:b.textContent.trim(),space:b.dataset.space,pressed:b.getAttribute('aria-pressed'),disabled:b.disabled,box:box(b)})),switch:{count:w.document.querySelectorAll('#workspaceSwitch').length,parent:buttons[0]?.parentElement.parentElement.id,box:box(w.document.querySelector('#workspaceSwitch'))},renderer:{width:a.renderer.width,height:a.renderer.height,worldOrigin:a.renderer.worldToScreen({x:0,y:0}),screenOrigin:a.renderer.screenToWorld(a.renderer.width/2,a.renderer.height/2,p.camera,{left:0,top:0}),worldScreenScale:a.renderer.worldScreenScale()},documentDisplay:getComputedStyle(w.document.querySelector('#stageWrap')).display},null,2);
+}catch(e){state.textContent=String(e)}},250);
+</script></html>
+<pre id="qaIdentity">Identity pending</pre><script>
+(async()=>{const frame=document.querySelector('#product');while(!frame.contentWindow.INK_APP)await new Promise(r=>setTimeout(r,100));const app=frame.contentWindow.INK_APP,digest=async text=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(text)))].map(b=>b.toString(16).padStart(2,'0')).join('');const result={scope:'fetched deployed assets plus executed C04 method source; not full transitive-module attestation',assets:[],executedMethods:{}};for(const name of ['index.html','styles.css','src/ink.js','src/config.js','web-shell.js','src/document/workspace.js','src/document/migration.js']){const response=await fetch(new URL(name,frame.src),{cache:'no-store'}),text=await response.text();result.assets.push({name,status:response.status,sha256:await digest(text)});}for(const name of ['switchWorkspace','refreshWorkspaceUI','newDocument'])result.executedMethods[name]={source:app[name].toString(),sha256:await digest(app[name].toString())};document.querySelector('#qaIdentity').textContent=JSON.stringify(result,null,2);})();
+</script>
