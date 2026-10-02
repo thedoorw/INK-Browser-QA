@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "paint-session-bounds-candidate-001",
+  "requestId": "paint-session-bounds-candidate-002",
   "candidateSha": "b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
   "case": "paint-session-create"
 }
