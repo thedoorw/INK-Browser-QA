@@ -146,6 +146,14 @@ function validateRequest(request) {
       ids.add(step.id);
       assert.match(String(step?.tool || ''), /^[a-z0-9_]{1,80}$/);
       assert.ok(step?.input == null || (typeof step.input === 'object' && !Array.isArray(step.input)), 'step input must be an object');
+      if (step.file != null) {
+        assert.equal(step.tool, 'import_ink_reference', 'file payload is only allowed for import_ink_reference');
+        assert.ok(step.file && typeof step.file === 'object' && !Array.isArray(step.file), 'step file must be an object');
+        assert.match(String(step.file.path || ''), /^qa\/fixtures\/[A-Za-z0-9._\/-]+$/);
+        assert.ok(!String(step.file.path).includes('..'), 'fixture path traversal rejected');
+        assert.match(String(step.file.name || ''), /^[A-Za-z0-9._-]{1,120}$/);
+        assert.ok(['image/png','image/jpeg','image/webp'].includes(String(step.file.type || '')), 'unsupported fixture MIME type');
+      }
     }
   }
   if (request?.expectedSourceSha) assert.match(String(request.expectedSourceSha), /^[a-f0-9]{40}$/);
@@ -213,8 +221,22 @@ async function run() {
     assert.ok(!nav.errorText, nav.errorText || 'Navigation failed');
     const identity = await waitForInk(cdp, sessionId, request.expectedSourceSha || null);
 
-    const invoke = async (tool, input = {}) => {
-      const payload = Buffer.from(JSON.stringify({ tool, input }), 'utf8').toString('base64');
+    const invoke = async (tool, input = {}, fileSpec = null) => {
+      let file = null;
+      if (fileSpec) {
+        const root = path.resolve(process.cwd());
+        const fixtureRoot = path.resolve(root, 'qa/fixtures') + path.sep;
+        const filePath = path.resolve(root, fileSpec.path);
+        assert.ok(filePath.startsWith(fixtureRoot), 'Fixture path outside qa/fixtures');
+        const bytes = await readFile(filePath);
+        assert.ok(bytes.length > 0 && bytes.length <= 8 * 1024 * 1024, 'Fixture byte size out of bounds');
+        file = {
+          name: fileSpec.name,
+          type: fileSpec.type,
+          base64: bytes.toString('base64')
+        };
+      }
+      const payload = Buffer.from(JSON.stringify({ tool, input, file }), 'utf8').toString('base64');
       const execution = await cdp.send('Runtime.evaluate', {
         expression: `(async () => {
           const request = JSON.parse(atob(${JSON.stringify(payload)}));
@@ -222,7 +244,15 @@ async function run() {
           if (!api?.tools?.invoke || !api?.tools?.registry) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
           const names = api.tools.registry().map(item => item.name);
           if (!names.includes(request.tool)) throw new Error('INK_NAMED_TOOL_NOT_FOUND:' + request.tool);
-          return await Promise.resolve(api.tools.invoke(request.tool, request.input));
+          let toolInput = request.input || {};
+          if (request.file) {
+            const raw = atob(request.file.base64);
+            const bytes = new Uint8Array(raw.length);
+            for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+            const file = new File([bytes], request.file.name, { type: request.file.type });
+            toolInput = { ...toolInput, input: { file } };
+          }
+          return await Promise.resolve(api.tools.invoke(request.tool, toolInput));
         })()`,
         returnByValue: true,
         awaitPromise: true
@@ -239,7 +269,7 @@ async function run() {
       const steps = [];
       for (const step of request.steps) {
         const input = resolveRefs(step.input || {}, results);
-        const result = await invoke(step.tool, input);
+        const result = await invoke(step.tool, input, step.file || null);
         results.set(step.id, result);
         steps.push({ id: step.id, tool: step.tool, result });
         if (result?.status === 'FAILED' && step.allowFailure !== true) {
