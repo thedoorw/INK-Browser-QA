@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B2-liquify-live-003",
+  "requestId": "clusterB-B4-discovery-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
   "steps": [
@@ -11,142 +11,24 @@
       "input": {}
     },
     {
-      "id": "importRaster",
-      "tool": "import_ink_raster",
+      "id": "describeWarp",
+      "tool": "describe_ink_capability",
       "input": {
-        "options": {
-          "name": "B2 Liquify Raster",
-          "type": "image/png",
-          "intent": "Cluster B2 Liquify twirl qualification"
-        }
-      },
-      "file": {
-        "path": "qa/fixtures/rose-window/rose-window-primary.png",
-        "name": "rose-window-primary.png",
-        "type": "image/png"
+        "idOrToolName": "path.warp.v1"
       }
     },
     {
-      "id": "previewBefore",
-      "tool": "get_ink_preview",
+      "id": "describeDistort",
+      "tool": "describe_ink_capability",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "idOrToolName": "path.distort.v1"
       }
     },
     {
-      "id": "liquifyPropose",
-      "tool": "propose_ink_edit",
+      "id": "describePerspective",
+      "tool": "describe_ink_capability",
       "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "clusterB-B2-live-liquify-twirl",
-          "operation": "image.liquify.add.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
-          "arguments": {
-            "operations": [
-              {
-                "type": "twirl",
-                "x": 543,
-                "y": 724,
-                "radius": 260,
-                "strength": 0.7
-              }
-            ],
-            "opacity": 1,
-            "maxWork": 5000000
-          }
-        }
-      }
-    },
-    {
-      "id": "liquifyApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "liquifyPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "liquifyExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "liquifyPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "liquifyApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "contextAfter",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
-      }
-    },
-    {
-      "id": "historyAfter",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "previewAfter",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "undo",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "contextUndo",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
-      }
-    },
-    {
-      "id": "previewUndo",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "redo",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "contextRedo",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
-      }
-    },
-    {
-      "id": "previewRedo",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "idOrToolName": "path.perspective.v1"
       }
     }
   ]
