@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-C019-002",
+  "requestId": "round1-C007-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
@@ -13,49 +13,35 @@
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C019 probe: editable text and vector path",
+          "intentSummary": "C007 probe: base social design",
           "steps": [
+            {
+              "stepId": "shape",
+              "operation": "path.create.v1",
+              "targets": [],
+              "arguments": {
+                "shape": "rectangle",
+                "x": 160,
+                "y": 160,
+                "width": 220,
+                "height": 160,
+                "fill": "#eeeeee",
+                "stroke": "#222222",
+                "strokeWidth": 2
+              },
+              "dependsOn": []
+            },
             {
               "stepId": "text",
               "operation": "text.create.v1",
               "targets": [],
               "arguments": {
-                "text": "CURVED TYPE",
-                "x": 220,
-                "y": 260,
+                "text": "SOCIAL",
+                "x": 210,
+                "y": 225,
                 "color": "#202020",
-                "fontSize": 48,
+                "fontSize": 36,
                 "fontWeight": 700
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "path",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "polyline",
-                "points": [
-                  {
-                    "x": 180,
-                    "y": 360
-                  },
-                  {
-                    "x": 280,
-                    "y": 300
-                  },
-                  {
-                    "x": 380,
-                    "y": 300
-                  },
-                  {
-                    "x": 480,
-                    "y": 360
-                  }
-                ],
-                "stroke": "#202020",
-                "strokeWidth": 3,
-                "fill": "none"
               },
               "dependsOn": []
             }
@@ -87,39 +73,43 @@
       }
     },
     {
-      "id": "editPropose",
+      "id": "variantPropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C019 probe: edit text and transform path",
+          "intentSummary": "C007 probe: repeat and clone variants",
           "steps": [
             {
-              "stepId": "text-edit",
-              "operation": "text.edit.v1",
+              "stepId": "grid",
+              "operation": "repeat.grid.v1",
               "targets": [
                 {
                   "$ref": "createExec.result.stepResults.0.targets.0.ref"
                 }
               ],
               "arguments": {
-                "text": "CURVED TYPE / INK",
-                "fontSize": 42
+                "columns": 3,
+                "rows": 2,
+                "dx": 260,
+                "dy": 200,
+                "linked": true
               },
               "dependsOn": []
             },
             {
-              "stepId": "path-rotate",
-              "operation": "object.rotate.v1",
+              "stepId": "clone-text",
+              "operation": "object.clone.v1",
               "targets": [
                 {
                   "$ref": "createExec.result.stepResults.1.targets.0.ref"
                 }
               ],
               "arguments": {
-                "degrees": 8
+                "dx": 260,
+                "dy": 0
               },
               "dependsOn": []
             }
@@ -128,35 +118,39 @@
       }
     },
     {
-      "id": "editApprove",
+      "id": "variantApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "editPropose.result.planId"
+          "$ref": "variantPropose.result.planId"
         }
       }
     },
     {
-      "id": "editExec",
+      "id": "variantExec",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "editPropose.result.planId"
+          "$ref": "variantPropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "editApprove.result.approvalToken"
+          "$ref": "variantApprove.result.approvalToken"
         }
       }
     },
     {
-      "id": "describeDeform",
-      "tool": "describe_ink_capability",
+      "id": "recipeLibrary",
+      "tool": "search_ink_library",
       "input": {
-        "idOrToolName": "text.warp.v1"
-      },
-      "allowFailure": true
+        "action": "search",
+        "query": "",
+        "types": [
+          "recipe"
+        ],
+        "limit": 20
+      }
     },
     {
       "id": "context",
