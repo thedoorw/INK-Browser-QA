@@ -1,5 +1,40 @@
 # INK Current Work Order
 
+## Current integration — accepted Core spatial-index repair promotion — 2026-10-02
+
+USER authorized follow-up integration of the accepted Core repair.
+
+Active promotion dispatch:
+- `ACTIVE/INK_CORE_SPATIAL_INDEX_LASSO_PROMOTION_DEV_DISPATCH_v1.0.md`
+
+Required method:
+```text
+current main
+→ fresh promotion branch
+→ replay exact accepted Core delta only
+→ carry accepted QA/evidence provenance
+→ rerun focused browser checks on current-main composition
+→ STOP to Core / Supervisor
+```
+
+Do **not** merge the divergent old repair branch wholesale.
+
+Accepted repair identity:
+- old repair branch HEAD: `7913b332247c0892928501761975bf59d96e3885`
+- exact prior tested SHA: `864e72d5aa6b37ca5625c9ea3634fa506ea6b644`
+- prior focused evidence: `33 / 33 PASS`
+
+Promotion remains bounded:
+- only the accepted Stroke/Shape create spatial-index notifications may change product source;
+- no UI;
+- no New Document / A4;
+- no Creation / Layout workspace;
+- no History redesign;
+- no FORMAT_VERSION change.
+
+Required stop:
+`PROMOTION CANDIDATE → focused browser evidence → Core / Supervisor review`
+
 ## Current Core review checkpoint — 2026-10-02
 
 Core spatial-index / Lasso consistency DEV has stopped and Supervisor review is complete.
