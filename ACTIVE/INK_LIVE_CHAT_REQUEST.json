@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-C002-001",
+  "requestId": "round1-C019-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
@@ -13,33 +13,49 @@
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C002 probe: frame and text hierarchy",
+          "intentSummary": "C019 probe: editable text and vector path",
           "steps": [
-            {
-              "stepId": "frame",
-              "operation": "frame.create.v1",
-              "targets": [],
-              "arguments": {
-                "name": "C002 Card",
-                "x": 140,
-                "y": 140,
-                "width": 520,
-                "height": 300,
-                "opacity": 1
-              },
-              "dependsOn": []
-            },
             {
               "stepId": "text",
               "operation": "text.create.v1",
               "targets": [],
               "arguments": {
-                "text": "2026 / INK",
-                "x": 190,
-                "y": 210,
+                "text": "CURVED TYPE",
+                "x": 220,
+                "y": 260,
                 "color": "#202020",
-                "fontSize": 42,
+                "fontSize": 48,
                 "fontWeight": 700
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "path",
+              "operation": "path.create.v1",
+              "targets": [],
+              "arguments": {
+                "shape": "polyline",
+                "points": [
+                  {
+                    "x": 180,
+                    "y": 360
+                  },
+                  {
+                    "x": 280,
+                    "y": 300
+                  },
+                  {
+                    "x": 380,
+                    "y": 300
+                  },
+                  {
+                    "x": 480,
+                    "y": 360
+                  }
+                ],
+                "stroke": "#202020",
+                "strokeWidth": 3,
+                "fill": "none"
               },
               "dependsOn": []
             }
@@ -71,120 +87,39 @@
       }
     },
     {
-      "id": "layoutPropose",
+      "id": "editPropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C002 probe: hierarchy and auto layout",
+          "intentSummary": "C019 probe: edit text and transform path",
           "steps": [
-            {
-              "stepId": "reparent",
-              "operation": "object.reparent.v1",
-              "targets": [
-                {
-                  "$ref": "createExec.result.stepResults.1.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "parentObjectId": {
-                  "$ref": "createExec.result.stepResults.0.targets.0.ref.objectId"
-                },
-                "index": 0
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "layout",
-              "operation": "layout.frame.set.v1",
-              "targets": [
-                {
-                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "mode": "vertical",
-                "gap": 16,
-                "padding": {
-                  "top": 32,
-                  "right": 32,
-                  "bottom": 32,
-                  "left": 32
-                },
-                "align": {
-                  "main": "start",
-                  "cross": "start"
-                },
-                "sizing": {
-                  "horizontal": "fixed",
-                  "vertical": "fixed"
-                }
-              },
-              "dependsOn": []
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "layoutApprove",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "layoutPropose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "layoutExec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "layoutPropose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "layoutApprove.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "componentPropose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C002 probe: component registration and text edit",
-          "steps": [
-            {
-              "stepId": "component",
-              "operation": "component.register.v1",
-              "targets": [
-                {
-                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "name": "C002 Card Component"
-              },
-              "dependsOn": []
-            },
             {
               "stepId": "text-edit",
               "operation": "text.edit.v1",
               "targets": [
                 {
+                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "text": "CURVED TYPE / INK",
+                "fontSize": 42
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "path-rotate",
+              "operation": "object.rotate.v1",
+              "targets": [
+                {
                   "$ref": "createExec.result.stepResults.1.targets.0.ref"
                 }
               ],
               "arguments": {
-                "text": "2026 / INK REVIEW",
-                "fontSize": 38
+                "degrees": 8
               },
               "dependsOn": []
             }
@@ -193,48 +128,38 @@
       }
     },
     {
-      "id": "componentApprove",
+      "id": "editApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "componentPropose.result.planId"
+          "$ref": "editPropose.result.planId"
         }
       }
     },
     {
-      "id": "componentExec",
+      "id": "editExec",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "componentPropose.result.planId"
+          "$ref": "editPropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "componentApprove.result.approvalToken"
+          "$ref": "editApprove.result.approvalToken"
         }
       }
     },
     {
-      "id": "library",
-      "tool": "search_ink_library",
+      "id": "describeDeform",
+      "tool": "describe_ink_capability",
       "input": {
-        "action": "search",
-        "query": "C002",
-        "types": [
-          "component"
-        ],
-        "limit": 20
+        "idOrToolName": "text.warp.v1"
       }
     },
     {
       "id": "context",
       "tool": "get_ink_context",
-      "input": {}
-    },
-    {
-      "id": "history",
-      "tool": "get_ink_history",
       "input": {}
     },
     {
