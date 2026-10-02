@@ -1,0 +1,23 @@
+{
+  "files": {
+    "index.html": {
+      "sourceSha256": "96539c2d64ddf7989a1a92c9de14293f2bf6261f4340a70654e56be42ff2ec62",
+      "browser": {
+        "status": 200,
+        "sha256": "96539c2d64ddf7989a1a92c9de14293f2bf6261f4340a70654e56be42ff2ec62",
+        "url": "http://127.0.0.1:4173/index.html?identity=1790915408079"
+      },
+      "matches": true
+    },
+    "styles.css": {
+      "sourceSha256": "33e3ccaaf333ab7682261fbd58ed0a8cada90dc9cdd232bb5c378dd9272a24e8",
+      "browser": {
+        "status": 200,
+        "sha256": "33e3ccaaf333ab7682261fbd58ed0a8cada90dc9cdd232bb5c378dd9272a24e8",
+        "url": "http://127.0.0.1:4173/styles.css?v=0.1-ui-20261002-post-sup11"
+      },
+      "matches": true
+    }
+  },
+  "installedSwitchParent": "contextualOptions"
+}

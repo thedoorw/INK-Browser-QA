@@ -1,0 +1,463 @@
+{
+  "chromium": "153.0.8010.0",
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 1024,
+      "cases": [
+        {
+          "tool": "brush",
+          "panel": "layers",
+          "contextTool": "brush",
+          "switchCount": 1,
+          "parent": "contextualOptions",
+          "switch": {
+            "x": 1158.5,
+            "y": 29.5,
+            "width": 112.5,
+            "height": 26,
+            "top": 29.5,
+            "right": 1271,
+            "bottom": 55.5,
+            "left": 1158.5
+          },
+          "options": {
+            "x": 34,
+            "y": 25,
+            "width": 1242,
+            "height": 35,
+            "top": 25,
+            "right": 1276,
+            "bottom": 60,
+            "left": 34
+          },
+          "controlHost": {
+            "x": 83,
+            "y": 25,
+            "width": 1069.5,
+            "height": 35,
+            "top": 25,
+            "right": 1152.5,
+            "bottom": 60,
+            "left": 83
+          },
+          "hostClientWidth": 1070,
+          "hostScrollWidth": 1535,
+          "visible": true,
+          "rightInset": 5,
+          "overlap": false
+        },
+        {
+          "tool": "text",
+          "panel": "layers",
+          "contextTool": "text",
+          "switchCount": 1,
+          "parent": "contextualOptions",
+          "switch": {
+            "x": 1158.5,
+            "y": 29.5,
+            "width": 112.5,
+            "height": 26,
+            "top": 29.5,
+            "right": 1271,
+            "bottom": 55.5,
+            "left": 1158.5
+          },
+          "options": {
+            "x": 34,
+            "y": 25,
+            "width": 1242,
+            "height": 35,
+            "top": 25,
+            "right": 1276,
+            "bottom": 60,
+            "left": 34
+          },
+          "controlHost": {
+            "x": 83,
+            "y": 25,
+            "width": 1069.5,
+            "height": 35,
+            "top": 25,
+            "right": 1152.5,
+            "bottom": 60,
+            "left": 83
+          },
+          "hostClientWidth": 1070,
+          "hostScrollWidth": 1070,
+          "visible": true,
+          "rightInset": 5,
+          "overlap": false
+        },
+        {
+          "tool": "lasso",
+          "panel": "layers",
+          "contextTool": "lasso",
+          "switchCount": 1,
+          "parent": "contextualOptions",
+          "switch": {
+            "x": 1158.5,
+            "y": 29.5,
+            "width": 112.5,
+            "height": 26,
+            "top": 29.5,
+            "right": 1271,
+            "bottom": 55.5,
+            "left": 1158.5
+          },
+          "options": {
+            "x": 34,
+            "y": 25,
+            "width": 1242,
+            "height": 35,
+            "top": 25,
+            "right": 1276,
+            "bottom": 60,
+            "left": 34
+          },
+          "controlHost": {
+            "x": 83,
+            "y": 25,
+            "width": 1069.5,
+            "height": 35,
+            "top": 25,
+            "right": 1152.5,
+            "bottom": 60,
+            "left": 83
+          },
+          "hostClientWidth": 1070,
+          "hostScrollWidth": 1070,
+          "visible": true,
+          "rightInset": 5,
+          "overlap": false
+        }
+      ]
+    },
+    {
+      "width": 960,
+      "height": 800,
+      "cases": [
+        {
+          "tool": "brush",
+          "panel": "layers",
+          "contextTool": "brush",
+          "switchCount": 1,
+          "parent": "contextualOptions",
+          "switch": {
+            "x": 838.5,
+            "y": 29.5,
+            "width": 112.5,
+            "height": 26,
+            "top": 29.5,
+            "right": 951,
+            "bottom": 55.5,
+            "left": 838.5
+          },
+          "options": {
+            "x": 34,
+            "y": 25,
+            "width": 922,
+            "height": 35,
+            "top": 25,
+            "right": 956,
+            "bottom": 60,
+            "left": 34
+          },
+          "controlHost": {
+            "x": 83,
+            "y": 25,
+            "width": 749.5,
+            "height": 35,
+            "top": 25,
+            "right": 832.5,
+            "bottom": 60,
+            "left": 83
+          },
+          "hostClientWidth": 750,
+          "hostScrollWidth": 1395,
+          "visible": true,
+          "rightInset": 5,
+          "overlap": false
+        },
+        {
+          "tool": "text",
+          "panel": "layers",
+          "contextTool": "text",
+          "switchCount": 1,
+          "parent": "contextualOptions",
+          "switch": {
+            "x": 838.5,
+            "y": 29.5,
+            "width": 112.5,
+            "height": 26,
+            "top": 29.5,
+            "right": 951,
+            "bottom": 55.5,
+            "left": 838.5
+          },
+          "options": {
+            "x": 34,
+            "y": 25,
+            "width": 922,
+            "height": 35,
+            "top": 25,
+            "right": 956,
+            "bottom": 60,
+            "left": 34
+          },
+          "controlHost": {
+            "x": 83,
+            "y": 25,
+            "width": 749.5,
+            "height": 35,
+            "top": 25,
+            "right": 832.5,
+            "bottom": 60,
+            "left": 83
+          },
+          "hostClientWidth": 750,
+          "hostScrollWidth": 750,
+          "visible": true,
+          "rightInset": 5,
+          "overlap": false
+        },
+        {
+          "tool": "lasso",
+          "panel": "layers",
+          "contextTool": "lasso",
+          "switchCount": 1,
+          "parent": "contextualOptions",
+          "switch": {
+            "x": 838.5,
+            "y": 29.5,
+            "width": 112.5,
+            "height": 26,
+            "top": 29.5,
+            "right": 951,
+            "bottom": 55.5,
+            "left": 838.5
+          },
+          "options": {
+            "x": 34,
+            "y": 25,
+            "width": 922,
+            "height": 35,
+            "top": 25,
+            "right": 956,
+            "bottom": 60,
+            "left": 34
+          },
+          "controlHost": {
+            "x": 83,
+            "y": 25,
+            "width": 749.5,
+            "height": 35,
+            "top": 25,
+            "right": 832.5,
+            "bottom": 60,
+            "left": 83
+          },
+          "hostClientWidth": 750,
+          "hostScrollWidth": 750,
+          "visible": true,
+          "rightInset": 5,
+          "overlap": false
+        }
+      ]
+    }
+  ],
+  "stateAuthority": {
+    "initial": {
+      "dom": "layout",
+      "core": "layout",
+      "pageWorkspace": "layout",
+      "pressed": [
+        {
+          "space": "creation",
+          "pressed": "false"
+        },
+        {
+          "space": "layout",
+          "pressed": "true"
+        }
+      ]
+    },
+    "afterLayoutClick": {
+      "dom": "layout",
+      "core": "layout",
+      "pageWorkspace": "layout",
+      "pressed": [
+        {
+          "space": "creation",
+          "pressed": "false"
+        },
+        {
+          "space": "layout",
+          "pressed": "true"
+        }
+      ]
+    },
+    "afterCreationClick": {
+      "dom": "layout",
+      "core": "layout",
+      "pageWorkspace": "layout",
+      "pressed": [
+        {
+          "space": "creation",
+          "pressed": "false"
+        },
+        {
+          "space": "layout",
+          "pressed": "true"
+        }
+      ]
+    }
+  },
+  "menu": [
+    {
+      "text": "檔案(F)",
+      "menu": "file",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 56.265625,
+      "left": 28,
+      "right": 84.265625,
+      "textLeft": 36,
+      "textRight": 76.265625
+    },
+    {
+      "text": "編輯(E)",
+      "menu": "edit",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 56.953125,
+      "left": 84.265625,
+      "right": 141.21875,
+      "textLeft": 92.265625,
+      "textRight": 133.21875
+    },
+    {
+      "text": "影像(I)",
+      "menu": "image",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 52.90625,
+      "left": 141.21875,
+      "right": 194.125,
+      "textLeft": 149.21875,
+      "textRight": 186.125
+    },
+    {
+      "text": "圖層(L)",
+      "menu": "layer",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 56.0625,
+      "left": 194.125,
+      "right": 250.1875,
+      "textLeft": 202.125,
+      "textRight": 242.1875
+    },
+    {
+      "text": "文字(Y)",
+      "menu": "type",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 56.703125,
+      "left": 250.1875,
+      "right": 306.890625,
+      "textLeft": 258.1875,
+      "textRight": 298.890625
+    },
+    {
+      "text": "選取(S)",
+      "menu": "select",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 56.984375,
+      "left": 306.890625,
+      "right": 363.875,
+      "textLeft": 314.890625,
+      "textRight": 355.875
+    },
+    {
+      "text": "濾鏡(T)",
+      "menu": "filter",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 56.703125,
+      "left": 363.875,
+      "right": 420.578125,
+      "textLeft": 371.875,
+      "textRight": 412.578125
+    },
+    {
+      "text": "物件(O)",
+      "menu": "object",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 58.8125,
+      "left": 420.578125,
+      "right": 479.390625,
+      "textLeft": 428.578125,
+      "textRight": 471.390625
+    },
+    {
+      "text": "檢視(V)",
+      "menu": "view",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 57.578125,
+      "left": 479.390625,
+      "right": 536.96875,
+      "textLeft": 487.390625,
+      "textRight": 528.96875
+    },
+    {
+      "text": "視窗(W)",
+      "menu": "window",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 61.234375,
+      "left": 536.96875,
+      "right": 598.203125,
+      "textLeft": 544.96875,
+      "textRight": 590.203125
+    },
+    {
+      "text": "說明(H)",
+      "menu": "help",
+      "paddingLeft": "8px",
+      "paddingRight": "8px",
+      "height": 24,
+      "lineHeight": "14.4px",
+      "width": 58.390625,
+      "left": 598.203125,
+      "right": 656.59375,
+      "textLeft": 606.203125,
+      "textRight": 648.59375
+    }
+  ],
+  "errors": [],
+  "objectMenuOpens": "true"
+}

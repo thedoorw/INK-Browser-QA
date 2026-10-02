@@ -1,0 +1,147 @@
+{
+  "stage": "after",
+  "chromium": "153.0.8010.0",
+  "viewport": "1280x1024",
+  "cases": [
+    {
+      "name": "reference",
+      "owner": {
+        "selector": "[data-qa-scroll-owner=\"reference\"]",
+        "tag": "DIV",
+        "className": "creative-workspace-body",
+        "scrollHeight": 888,
+        "clientHeight": 243,
+        "overflowY": "auto",
+        "scrollbarColor": "auto",
+        "scrollbarWidth": "auto",
+        "thumbRadius": "0px",
+        "trackRadius": "0px",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "trackBackground": "rgb(244, 244, 244)",
+        "rect": {
+          "x": 1029,
+          "y": 381.015625,
+          "width": 251,
+          "height": 242.703125,
+          "top": 381.015625,
+          "right": 1280,
+          "bottom": 623.71875,
+          "left": 1029
+        },
+        "candidateCount": 1
+      }
+    },
+    {
+      "name": "layers",
+      "owner": {
+        "selector": "[data-qa-scroll-owner=\"layers\"]",
+        "tag": "SECTION",
+        "className": "inspector-section tab-content layers-panel stack-visible active",
+        "scrollHeight": 787,
+        "clientHeight": 370,
+        "overflowY": "auto",
+        "scrollbarColor": "auto",
+        "scrollbarWidth": "auto",
+        "thumbRadius": "0px",
+        "trackRadius": "0px",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "trackBackground": "rgb(244, 244, 244)",
+        "rect": {
+          "x": 1029,
+          "y": 652.71875,
+          "width": 251,
+          "height": 370.28125,
+          "top": 652.71875,
+          "right": 1280,
+          "bottom": 1023,
+          "left": 1029
+        },
+        "candidateCount": 2
+      }
+    },
+    {
+      "name": "history",
+      "owner": {
+        "selector": "[data-qa-scroll-owner=\"history\"]",
+        "tag": "SECTION",
+        "className": "inspector-section tab-content history-panel active stack-visible",
+        "scrollHeight": 746,
+        "clientHeight": 370,
+        "overflowY": "auto",
+        "scrollbarColor": "auto",
+        "scrollbarWidth": "auto",
+        "thumbRadius": "0px",
+        "trackRadius": "0px",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "trackBackground": "rgb(244, 244, 244)",
+        "rect": {
+          "x": 1029,
+          "y": 652.71875,
+          "width": 251,
+          "height": 370.28125,
+          "top": 652.71875,
+          "right": 1280,
+          "bottom": 1023,
+          "left": 1029
+        },
+        "candidateCount": 2
+      }
+    },
+    {
+      "name": "libraries",
+      "owner": {
+        "selector": "[data-qa-scroll-owner=\"libraries\"]",
+        "tag": "DIV",
+        "className": "shell-panel-body",
+        "scrollHeight": 1076,
+        "clientHeight": 231,
+        "overflowY": "auto",
+        "scrollbarColor": "auto",
+        "scrollbarWidth": "auto",
+        "thumbRadius": "0px",
+        "trackRadius": "0px",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "trackBackground": "rgb(244, 244, 244)",
+        "rect": {
+          "x": 1035,
+          "y": 387.015625,
+          "width": 239,
+          "height": 230.703125,
+          "top": 387.015625,
+          "right": 1274,
+          "bottom": 617.71875,
+          "left": 1035
+        },
+        "candidateCount": 3
+      }
+    },
+    {
+      "name": "properties",
+      "owner": {
+        "selector": "[data-qa-scroll-owner=\"properties\"]",
+        "tag": "SECTION",
+        "className": "inspector-section tab-content active stack-visible",
+        "scrollHeight": 795,
+        "clientHeight": 251,
+        "overflowY": "auto",
+        "scrollbarColor": "auto",
+        "scrollbarWidth": "auto",
+        "thumbRadius": "0px",
+        "trackRadius": "0px",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "trackBackground": "rgb(244, 244, 244)",
+        "rect": {
+          "x": 1029,
+          "y": 101,
+          "width": 251,
+          "height": 251.015625,
+          "top": 101,
+          "right": 1280,
+          "bottom": 352.015625,
+          "left": 1029
+        },
+        "candidateCount": 1
+      }
+    }
+  ]
+}
