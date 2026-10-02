@@ -1,6 +1,44 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "status": "FAIL",
-  "error": "Runner result unavailable: ENOENT: no such file or directory, open '/home/runner/work/_temp/ink-source-candidate-result.json'"
+  "requestId": "live-raster-liquify-candidate-002",
+  "candidateSha": "126073621dbf9cf44e12e55d77c1f145929f1147",
+  "case": "raster-stack-liquify-b2",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:45493/?sourceCandidate=126073621dbf9cf44e12e55d77c1f145929f1147",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "operation": "image.liquify.add.v1",
+    "liquifyType": "liquify",
+    "objectId": "eca8bffd-122a-4516-8f52-3bb000a57b23",
+    "beforeFingerprint": "fnv1a32:e839a8f0",
+    "afterFingerprint": "fnv1a32:04386ba4",
+    "beforeHash": "7883b22",
+    "afterHash": "dc904cd1",
+    "undoHash": "7883b22",
+    "redoHash": "dc904cd1",
+    "historyLabel": "CHAT add image Liquify",
+    "previewStatus": "COMPLETED",
+    "undoStatus": "COMPLETED",
+    "redoStatus": "COMPLETED",
+    "controllerResult": {
+      "filterCount": 1,
+      "operationCount": 1,
+      "resultRefs": [
+        {
+          "layerId": "2e1e8dc1-b036-46a2-86a5-1ed30906609b",
+          "objectId": "eca8bffd-122a-4516-8f52-3bb000a57b23",
+          "pageId": "60781ed0-e58d-4171-9a7d-7a36624d36bc"
+        }
+      ],
+      "stackItemId": "filter_1ltoia8",
+      "stackItemType": "liquify"
+    }
+  },
+  "status": "PASS"
 }
