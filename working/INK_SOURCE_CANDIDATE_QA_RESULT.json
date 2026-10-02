@@ -1,6 +1,190 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "status": "FAIL",
-  "error": "Runner result unavailable: ENOENT: no such file or directory, open '/home/runner/work/_temp/ink-source-candidate-result.json'"
+  "requestId": "clusterA-A2-stroke-create-candidate-002",
+  "candidateSha": "99413c4c2c2dd44a0b8bc2716b0ed51964fb5a69",
+  "case": "stroke-create-a2",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:43325/?sourceCandidate=99413c4c2c2dd44a0b8bc2716b0ed51964fb5a69",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "operation": "stroke.create.v1",
+    "created": [
+      {
+        "id": "chat-stroke-fnv1a32-305b66ac",
+        "kind": "pencil",
+        "mediaModel": null,
+        "pointCount": 3
+      },
+      {
+        "id": "chat-stroke-fnv1a32-4aee2959",
+        "kind": "brush",
+        "mediaModel": "natural-v2",
+        "pointCount": 3
+      },
+      {
+        "id": "chat-stroke-fnv1a32-201f5261",
+        "kind": "airbrush",
+        "mediaModel": "natural-v2",
+        "pointCount": 3
+      },
+      {
+        "id": "chat-stroke-fnv1a32-391cb2bc",
+        "kind": "drybrush",
+        "mediaModel": "natural-v2",
+        "pointCount": 3
+      }
+    ],
+    "before": {
+      "count": 0,
+      "undo": 0,
+      "canvas": "8d257ff8"
+    },
+    "after": {
+      "count": 4,
+      "undo": 4,
+      "canvas": "35c0b307"
+    },
+    "historyLabels": [
+      "CHAT create Stroke",
+      "CHAT create Stroke",
+      "CHAT create Stroke",
+      "CHAT create Stroke"
+    ],
+    "previewStatus": "COMPLETED",
+    "previewBounds": {
+      "h": 350.6,
+      "w": 451,
+      "x": -233.6,
+      "y": -182
+    },
+    "undoStatus": "COMPLETED",
+    "redoStatus": "COMPLETED",
+    "redoCanvas": "35c0b307",
+    "naturalMedia": {
+      "preference": "auto",
+      "floraReferenceBackend": "canvas2d",
+      "activeBackend": "webgl2",
+      "gpuAvailable": true,
+      "gpuState": "ready",
+      "forcedReason": null,
+      "fallbacks": 0,
+      "batchFallbacks": 0,
+      "webgl": {
+        "backend": "webgl2",
+        "drawCalls": 3,
+        "cacheHits": 53,
+        "cacheMisses": 3,
+        "evictions": 0,
+        "contextLosses": 0,
+        "restores": 0,
+        "vertices": 1722,
+        "state": "ready",
+        "available": true,
+        "cacheEntries": 3,
+        "lastError": null,
+        "capabilities": {
+          "maxTextureSize": 8192,
+          "maxRenderbufferSize": 8192,
+          "maxViewportDims": [
+            8192,
+            8192
+          ],
+          "maxTextureUnits": 32,
+          "vendor": "Google Inc. (Google)",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        },
+        "resources": {
+          "allocations": 3,
+          "releases": 0,
+          "evictions": 0,
+          "rejected": 0,
+          "peakBytes": 736892,
+          "budgetBytes": 100663296,
+          "usedBytes": 736892,
+          "availableBytes": 99926404,
+          "utilization": 0.0073203643163045245,
+          "resources": 3,
+          "byType": {
+            "raster-cache": 736892
+          }
+        },
+        "selfTest": null
+      },
+      "multiChannelWebgl": {
+        "backend": "webgl2-multichannel",
+        "runs": 0,
+        "strokes": 0,
+        "drawCalls": 0,
+        "simulationPasses": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "evictions": 0,
+        "contextLosses": 0,
+        "restores": 0,
+        "state": "ready",
+        "available": true,
+        "cacheEntries": 0,
+        "lastError": null,
+        "targets": null,
+        "capabilities": {
+          "maxTextureSize": 8192,
+          "maxRenderbufferSize": 8192,
+          "maxDrawBuffers": 8,
+          "maxColorAttachments": 8,
+          "maxViewportDims": [
+            8192,
+            8192
+          ],
+          "vendor": "Google Inc. (Google)",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+        },
+        "resources": {
+          "allocations": 0,
+          "releases": 0,
+          "evictions": 0,
+          "rejected": 0,
+          "peakBytes": 0,
+          "budgetBytes": 167772160,
+          "usedBytes": 0,
+          "availableBytes": 167772160,
+          "utilization": 0,
+          "resources": 0,
+          "byType": {}
+        },
+        "selfTest": null
+      },
+      "multiChannelCanvas2d": {
+        "backend": "canvas2d-multichannel",
+        "runs": 0,
+        "strokes": 0,
+        "stamps": 0,
+        "pixels": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "evictions": 0,
+        "skipped": 0,
+        "cacheEntries": 0
+      },
+      "canvas2d": {
+        "backend": "canvas2d",
+        "surfaceRevision": "WP8B-1",
+        "drawCalls": 0,
+        "frequencyVisibility": {
+          "low": true,
+          "mid": true,
+          "high": true
+        }
+      }
+    }
+  },
+  "status": "PASS"
 }
