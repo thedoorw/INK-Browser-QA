@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A2-native-stroke-live-001",
+  "requestId": "clusterA-A2-native-stroke-live-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "d0248e9661cc242081507e4bf73fc8b73aeb6256",
   "steps": [
@@ -29,7 +29,7 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a2-pencil-001",
+          "taskId": "live-a2-pencil-002",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
@@ -100,7 +100,7 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a2-brush-001",
+          "taskId": "live-a2-brush-002",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
@@ -174,7 +174,7 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a2-airbrush-001",
+          "taskId": "live-a2-airbrush-002",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
@@ -240,7 +240,7 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a2-drybrush-001",
+          "taskId": "live-a2-drybrush-002",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
