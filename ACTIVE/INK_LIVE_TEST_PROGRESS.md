@@ -190,6 +190,11 @@ Candidate scope:
 
 The current hosted Live request runner is hard-bound to the formal Live URL and cannot qualify this branch candidate before promotion. Static QA alone is not a promotion gate.
 
+Cluster B implementation design:
+`working/INK_LIVE_CLUSTER_B_CHAT_EXPOSURE_WORKPACK_v0.1.md`
+
+The workpack fixes the minimum sequence as B0 web-raster bridge → B1 mutable raster named-tool import → B2 non-destructive image-stack edits → B4 native Path deformation, with local/destructive raster tools and masks deferred to B3. C019 Text warp remains excluded as a product render-integration gap.
+
 ### C — Layout Assist / Page / Artboard
 
 Families:
