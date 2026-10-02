@@ -141,7 +141,8 @@ Source audit:
 Disposition:
 
 ```text
-MUTABLE RASTER INGEST = PRODUCT EXISTS / CHAT EXPOSURE GAP
+PSD / TIFF / EXR / RAW MUTABLE RASTER INGEST = PRODUCT EXISTS / CHAT EXPOSURE GAP
+PNG / JPEG / WEBP MUTABLE RASTER INGEST = PRODUCT CONVERSION-INTEGRATION GAP
 RASTER DIRECT EDIT CORE = PRODUCT EXISTS / CHAT EXPOSURE GAP
 MASK / ADJUSTMENT / FILTER / BLEND / EFFECT = PRODUCT EXISTS / CHAT EXPOSURE GAP
 RASTER LIQUIFY = PRODUCT EXISTS / CHAT EXPOSURE GAP
@@ -151,7 +152,8 @@ REFERENCE IMAGE LOCK = INTENTIONAL / DO NOT UNLOCK AS REPAIR
 ```
 
 Important boundaries:
-- native mutable raster ingest already exists through `InkApp.importImageFormat()`;
+- native mutable raster ingest already exists through `InkApp.importImageFormat()` for PSD / TIFF / EXR / RAW;
+- Round 1 PNG / JPEG / WEBP still need a small product bridge from validated browser raster data into the existing `rasterState` representation;
 - Reference import is a separate locked provenance/extraction object and must remain separate;
 - Studio installs the actual raster stack renderer before CHAT Public API, so adjustment/filter/mask/effect/blend/Liquify are product-real rather than UI-only descriptors;
 - C019 cannot be closed with a registry-only `text.warp` operation because current `drawText()` does not consume the existing `pathText` descriptor;
