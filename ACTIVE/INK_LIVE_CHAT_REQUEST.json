@@ -1,10 +1,15 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-batch-C010-C011-C014-C015-001",
+  "requestId": "round1-batch-C010-C011-C014-C015-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
+    {
+      "id": "capabilities",
+      "tool": "get_ink_capabilities",
+      "input": {}
+    },
     {
       "id": "import",
       "tool": "import_ink_reference",
@@ -12,7 +17,7 @@
         "options": {
           "name": "rose-window-primary.png",
           "type": "image/png",
-          "intent": "Raster/reference placement probes C010 C011 C014 C015"
+          "intent": "Raster/reference probe C010 C011 C014 C015"
         }
       },
       "file": {
@@ -22,23 +27,15 @@
       }
     },
     {
-      "id": "previewBefore",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
       "id": "clonePropose",
       "tool": "use_ink",
+      "allowFailure": true,
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C014/C015 reusable raster-source placement probe",
+          "intentSummary": "Probe ReferenceImage reuse/transform exposure",
           "steps": [
             {
               "stepId": "clone",
@@ -49,8 +46,8 @@
                 }
               ],
               "arguments": {
-                "dx": 260,
-                "dy": 40
+                "dx": 220,
+                "dy": 0
               },
               "dependsOn": []
             },
@@ -63,101 +60,12 @@
                 }
               ],
               "arguments": {
-                "dx": 40,
-                "dy": 20
+                "dx": 20,
+                "dy": 10
               },
               "dependsOn": []
             }
           ]
-        }
-      }
-    },
-    {
-      "id": "cloneApprove",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "clonePropose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "cloneExec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "clonePropose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "cloneApprove.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "scalePropose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C015 transformed placement probe",
-          "steps": [
-            {
-              "stepId": "scale",
-              "operation": "object.scale.v1",
-              "targets": [
-                {
-                  "$ref": "cloneExec.result.stepResults.0.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "sx": 0.65,
-                "sy": 0.65
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "rotate",
-              "operation": "object.rotate.v1",
-              "targets": [
-                {
-                  "$ref": "cloneExec.result.stepResults.0.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "degrees": -7
-              },
-              "dependsOn": [
-                "scale"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "scaleApprove",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "scalePropose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "scaleExec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "scalePropose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "scaleApprove.result.approvalToken"
         }
       }
     },
@@ -169,12 +77,7 @@
       }
     },
     {
-      "id": "history",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "previewAfter",
+      "id": "preview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
