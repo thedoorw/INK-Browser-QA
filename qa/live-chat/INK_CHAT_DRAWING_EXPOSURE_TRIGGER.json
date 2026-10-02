@@ -1,0 +1,6 @@
+{
+  "schema": "INK-CHAT-DRAWING-EXPOSURE-TRIGGER",
+  "version": 1,
+  "issue": 111,
+  "intent": "Verify bounded native Stroke exposure without merging into active UI recovery."
+}
