@@ -250,7 +250,7 @@ const RASTER_NAMED_TOOL_CASE = String.raw`(async()=>{
   return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
 })()`;
 
-const RASTER_STACK_ADJUSTMENT_B2_CASE = String.raw\`(async()=>{
+const RASTER_STACK_ADJUSTMENT_B2_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
   const toolNames=api.tools.registry().map(item=>item.name);
@@ -312,7 +312,7 @@ const RASTER_STACK_ADJUSTMENT_B2_CASE = String.raw\`(async()=>{
   if(!object||object.adjustments?.length!==1||object.adjustments[0]?.type!=='brightnessContrast')throw new Error('ADJUSTMENT_REDO_FAILED');
   if(redoHash!==afterHash)throw new Error('REDO_RENDER_NOT_RESTORED');
   return {passed:true,operation:'image.adjustment.add.v1',adjustmentType:'brightnessContrast',objectId:ref.objectId,beforeFingerprint,afterFingerprint,beforeHash,afterHash,undoHash,redoHash,historyLabel,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,controllerResult:findField(executed,'controllerResult')||null};
-})()\`;
+})()`;
 
 const RASTER_STACK_B2_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
