@@ -173,6 +173,38 @@ const editSchemas = {
     }, ['shape'], 'Shape-specific geometry is validated by the bounded edit authority.'),
     0, 0
   ),
+  'stroke.create.v1': editTaskSchema(
+    { type: 'string', const: 'stroke.create.v1', description: 'Create one native freehand Stroke on the active layer using the existing INK Stroke/Renderer model.' },
+    obj({
+      objectId: str('Optional caller-supplied stable object id; collisions are rejected.'),
+      name: str('Stroke name.'),
+      kind: { type: 'string', enum: ['pen', 'pencil', 'marker', 'brush', 'drybrush', 'airbrush'], description: 'Existing INK native stroke kind.' },
+      color: str('Stroke color token.'),
+      size: num('Base stroke size.', { minimum: Number.EPSILON, maximum: 100000 }),
+      opacity: num('Stroke opacity.', { minimum: 0, maximum: 1 }),
+      smoothing: num('Existing smoothing strength.', { minimum: 0, maximum: .95 }),
+      pressure: num('Existing pressure-size influence.', { minimum: 0, maximum: 1 }),
+      taper: num('Existing taper amount.', { minimum: 0, maximum: 1 }),
+      grain: num('Existing grain amount.', { minimum: 0, maximum: 1 }),
+      softness: num('Existing airbrush softness.', { minimum: 0, maximum: 1 }),
+      flow: num('Existing brush flow.', { minimum: 0, maximum: 1 }),
+      wetness: num('Existing natural-media wetness.', { minimum: 0, maximum: 1 }),
+      bristle: num('Existing brush bristle amount.', { minimum: 0, maximum: 1 }),
+      mediaModel: { type: 'string', enum: ['natural-v2'], description: 'Existing natural-media model when explicitly requested.' },
+      points: arr(obj({
+        x: num('World X position.'),
+        y: num('World Y position.'),
+        p: num('Pressure sample.', { minimum: 0, maximum: 1 }),
+        t: num('Monotonic sample timestamp.', { minimum: 0 }),
+        tiltX: num('Tilt X.', { minimum: -90, maximum: 90 }),
+        tiltY: num('Tilt Y.', { minimum: -90, maximum: 90 }),
+        altitude: num('Altitude angle.', { minimum: 0, maximum: 90 }),
+        azimuth: num('Azimuth angle.'),
+        twist: num('Twist angle.')
+      }, ['x', 'y'], 'One bounded native Stroke point.'), 'Ordered native Stroke points.', { minItems: 2, maxItems: 4096 })
+    }, ['kind', 'points'], 'Bounded native Stroke creation. Rendering remains owned by the existing INK Renderer / NaturalMediaController.'),
+    0, 0
+  ),
   'path.edit.v1': editTaskSchema(
     { type: 'string', const: 'path.edit.v1', description: 'Edit one Path through the existing PathEditController.' },
     obj({
@@ -784,7 +816,7 @@ primary.push(descriptor({
 
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
-  const zeroTargetCreate = ['path.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
+  const zeroTargetCreate = ['path.create.v1', 'stroke.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
   const operationConstraints = zeroTargetCreate
     ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
     : operation === 'text.edit.v1'
@@ -807,6 +839,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'component.instance.detach.v1') operationConstraints.push('Target must be one resolvable Component Instance; native detach remaps geometry ids and replaces the instance.');
   if (operation === 'component.definition.duplicate.v1') operationConstraints.push('Zero-target definition duplication uses the existing native definition/source duplication transaction.');
   if (operation === 'component.reference.repair.v1') operationConstraints.push('Explicit repair only; target must be one Component Instance and automatic repair remains prohibited.');
+  if (operation === 'stroke.create.v1') operationConstraints.push('Creates the same native Stroke object family used by interactive INK drawing; no second brush engine, renderer, History authority or document state is introduced.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
@@ -840,7 +873,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
           ? [{ taskId: 'material-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { templateId: 'material-template' } }]
           : operation === 'path.material.remove.v1'
             ? [{ taskId: 'material-remove-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: {} }]
-            : [{ taskId: operation + '-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: {} }],
+            : operation === 'stroke.create.v1'
+              ? [{ taskId: 'stroke-create-1', operation, targets: [], arguments: { kind: 'pencil', color: '#202020', size: 4, points: [{ x: 10, y: 20, p: .3, t: 0 }, { x: 80, y: 45, p: .8, t: 16 }] } }]
+              : [{ taskId: operation + '-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: {} }],
     toolPrimary: false
   });
 });
