@@ -10,6 +10,7 @@ import { createTextObject, updateTextObject } from './text-object.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
+import { deleteStrokeNodes, eraseStrokeWithCircle, insertStrokeNode, setStrokeNodeMode, moveStrokeHandle, setStrokeSegmentStyle, clearStrokeSegmentStyle } from '../stroke/index.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -220,6 +221,8 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.refine.v1',
   'path.create.v1',
   'stroke.create.v1',
+  'stroke.edit.v1',
+  'stroke.erase.v1',
   'path.edit.v1',
   'object.rotate.v1',
   'object.clone.v1',
@@ -376,6 +379,75 @@ function normalizeStrokeCreateArguments(raw = {}) {
     bristle: boundedNumber(raw.bristle ?? 0, 'arguments.bristle', { min: 0, max: 1 }),
     mediaModel: raw.mediaModel == null ? null : boundedEnum(raw.mediaModel, 'arguments.mediaModel', ['natural-v2']),
     points: raw.points.map(normalizeStrokePoint)
+  };
+}
+
+function normalizeStrokeStylePatch(raw = {}, prefix = 'arguments') {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENT_INVALID', { field: prefix });
+  const patch = {};
+  if (hasOwn(raw, 'color')) patch.color = boundedPaintToken(raw.color, `${prefix}.color`);
+  if (hasOwn(raw, 'size')) patch.size = boundedNumber(raw.size, `${prefix}.size`, { min: Number.EPSILON, max: 100000 });
+  if (hasOwn(raw, 'opacity')) patch.opacity = boundedNumber(raw.opacity, `${prefix}.opacity`, { min: 0, max: 1 });
+  if (hasOwn(raw, 'kind')) patch.kind = boundedEnum(raw.kind, `${prefix}.kind`, ['pen', 'pencil', 'marker', 'brush', 'drybrush', 'airbrush']);
+  for (const key of ['smoothing', 'pressure', 'taper', 'grain', 'softness', 'flow', 'wetness', 'bristle']) {
+    if (hasOwn(raw, key)) patch[key] = boundedNumber(raw[key], `${prefix}.${key}`, { min: 0, max: key === 'smoothing' ? .95 : 1 });
+  }
+  if (hasOwn(raw, 'mediaModel')) patch.mediaModel = raw.mediaModel == null ? null : boundedEnum(raw.mediaModel, `${prefix}.mediaModel`, ['natural-v2']);
+  if (!Object.keys(patch).length) editFail('ARGUMENTS_EMPTY');
+  return patch;
+}
+
+function normalizeStrokeEditArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const action = boundedEnum(raw.action, 'arguments.action', [
+    'move-node', 'set-node-mode', 'move-handle', 'insert-node', 'delete-nodes',
+    'set-segment-style', 'clear-segment-style', 'set-style'
+  ]);
+  const index = (value, field, max = 4096) => boundedNumber(value, field, { min: 0, max, integer: true });
+  if (action === 'move-node') return {
+    action,
+    index: index(raw.index, 'arguments.index'),
+    x: boundedNumber(raw.x, 'arguments.x'),
+    y: boundedNumber(raw.y, 'arguments.y')
+  };
+  if (action === 'set-node-mode') return {
+    action,
+    index: index(raw.index, 'arguments.index'),
+    mode: boundedEnum(raw.mode, 'arguments.mode', ['corner', 'smooth', 'symmetric'])
+  };
+  if (action === 'move-handle') return {
+    action,
+    index: index(raw.index, 'arguments.index'),
+    side: boundedEnum(raw.side, 'arguments.side', ['in', 'out']),
+    x: boundedNumber(raw.x, 'arguments.x'),
+    y: boundedNumber(raw.y, 'arguments.y')
+  };
+  if (action === 'insert-node') return {
+    action,
+    segmentIndex: index(raw.segmentIndex, 'arguments.segmentIndex'),
+    t: boundedNumber(raw.t ?? .5, 'arguments.t', { min: .02, max: .98 })
+  };
+  if (action === 'delete-nodes') {
+    if (!Array.isArray(raw.indices) || !raw.indices.length || raw.indices.length > 512) editFail('ARGUMENTS_INVALID');
+    return { action, indices: [...new Set(raw.indices.map((value, idx) => index(value, `arguments.indices[${idx}]`)))] };
+  }
+  if (action === 'set-segment-style') return {
+    action,
+    segmentIndex: index(raw.segmentIndex, 'arguments.segmentIndex'),
+    style: normalizeStrokeStylePatch(raw.style || {}, 'arguments.style')
+  };
+  if (action === 'clear-segment-style') return {
+    action,
+    segmentIndex: index(raw.segmentIndex, 'arguments.segmentIndex')
+  };
+  return { action, patch: normalizeStrokeStylePatch(raw.patch || raw, 'arguments.patch') };
+}
+
+function normalizeStrokeEraseArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    center: normalizePoint(raw.center, 'arguments.center'),
+    radius: boundedNumber(raw.radius, 'arguments.radius', { min: Number.EPSILON, max: 100000 })
   };
 }
 
@@ -789,6 +861,8 @@ function normalizeOperationArguments(operation, raw) {
   }
   if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
   if (operation === 'stroke.create.v1') return normalizeStrokeCreateArguments(raw);
+  if (operation === 'stroke.edit.v1') return normalizeStrokeEditArguments(raw);
+  if (operation === 'stroke.erase.v1') return normalizeStrokeEraseArguments(raw);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
@@ -1273,6 +1347,91 @@ function executeStrokeCreateTask(app, task) {
     kind: stroke.kind,
     pointCount: stroke.points.length,
     mediaModel: stroke.mediaModel || null
+  };
+}
+
+function executeStrokeEditTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'stroke') editFail('STROKE_REQUIRED');
+  const stroke = found.object;
+  const args = task.arguments;
+  app.history.pushScoped('CHAT edit Stroke', structuralHistoryPaths(app, [found]), () => {
+    if (args.action === 'move-node') {
+      const point = stroke.points?.[args.index];
+      if (!point) editFail('STROKE_NODE_REQUIRED', { index: args.index });
+      point.x = args.x; point.y = args.y;
+      return;
+    }
+    if (args.action === 'set-node-mode') {
+      if (!setStrokeNodeMode(stroke, args.index, args.mode)) editFail('STROKE_NODE_REQUIRED', { index: args.index });
+      return;
+    }
+    if (args.action === 'move-handle') {
+      if (!moveStrokeHandle(stroke, args.index, args.side, { x: args.x, y: args.y })) editFail('STROKE_HANDLE_REQUIRED', { index: args.index });
+      return;
+    }
+    if (args.action === 'insert-node') {
+      const insertedIndex = insertStrokeNode(stroke, args.segmentIndex, args.t);
+      if (insertedIndex < 0) editFail('STROKE_SEGMENT_REQUIRED', { segmentIndex: args.segmentIndex });
+      return;
+    }
+    if (args.action === 'delete-nodes') {
+      const replacement = deleteStrokeNodes(stroke, args.indices);
+      if (!replacement) editFail('STROKE_MINIMUM_POINTS');
+      Object.assign(stroke, replacement);
+      return;
+    }
+    if (args.action === 'set-segment-style') {
+      if (args.segmentIndex >= Math.max(0, (stroke.points?.length || 0) - 1)) editFail('STROKE_SEGMENT_REQUIRED', { segmentIndex: args.segmentIndex });
+      setStrokeSegmentStyle(stroke, args.segmentIndex, args.style);
+      return;
+    }
+    if (args.action === 'clear-segment-style') {
+      if (args.segmentIndex >= Math.max(0, (stroke.points?.length || 0) - 1)) editFail('STROKE_SEGMENT_REQUIRED', { segmentIndex: args.segmentIndex });
+      clearStrokeSegmentStyle(stroke, args.segmentIndex);
+      return;
+    }
+    if (args.action === 'set-style') {
+      Object.assign(stroke, args.patch);
+      if (args.patch.mediaModel === null) delete stroke.mediaModel;
+      return;
+    }
+    editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
+  });
+  app.queueSpatialObject?.({ layerId: found.layer.id, objectId: stroke.id });
+  finishStructuralMutation(app);
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: stroke.id }],
+    action: args.action,
+    pointCount: stroke.points?.length || 0
+  };
+}
+
+function executeStrokeEraseTask(app, task) {
+  const found = findPageObject(app.page(), task.targets[0]);
+  if (!found || found.object?.type !== 'stroke') editFail('STROKE_REQUIRED');
+  const sourceIndex = found.parentArray.indexOf(found.object);
+  if (sourceIndex < 0) editFail('TARGET_MISSING');
+  const erased = eraseStrokeWithCircle(found.object, task.arguments.center, task.arguments.radius, () => uid());
+  if (!erased.changed) editFail('NO_OP');
+  const fragments = erased.fragments;
+  const parentId = found.parentObject?.id || null;
+  for (const fragment of fragments) {
+    if (parentId) fragment.parentId = parentId;
+    else delete fragment.parentId;
+  }
+  app.history.pushScoped('CHAT erase Stroke', structuralHistoryPaths(app, [found]), () => {
+    found.parentArray.splice(sourceIndex, 1, ...fragments);
+  });
+  finishStructuralMutation(app);
+  const refs = fragments.map(fragment => ({ pageId: app.page().id, layerId: found.layer.id, objectId: fragment.id }));
+  return {
+    createdRefs: refs,
+    resultRefs: refs,
+    erasedObjectId: found.object.id,
+    fragmentCount: fragments.length,
+    center: clone(task.arguments.center),
+    radius: task.arguments.radius
   };
 }
 
@@ -1784,6 +1943,8 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
   if (task.operation === 'stroke.create.v1') return executeStrokeCreateTask(app, task);
+  if (task.operation === 'stroke.edit.v1') return executeStrokeEditTask(app, task);
+  if (task.operation === 'stroke.erase.v1') return executeStrokeEraseTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
   if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
