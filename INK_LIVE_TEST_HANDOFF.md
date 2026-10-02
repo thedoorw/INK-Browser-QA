@@ -32,10 +32,11 @@ https://thedoorw.github.io/INK/
 - INK-Browser-QA/ACTIVE/INK_CURRENT_WORK_ORDER.md
 - INK/BUILD_INFO.json
 - INK/TEST_PLAN.md
+- INK/CASE_SWEEP.md
 - INK/TEST_FINDINGS.md
 
 任務：
-持續執行 INK Live 測試、記錄問題、重現與分類；需要產品修正時，只在 INK-Browser-QA 依目前治理規則做 bounded 修正與驗證；通過後選定 exact source SHA 發布到 thedoorw/INK，更新 BUILD_INFO.json，再對 Live URL 重測。
+持續執行 INK Live 測試、記錄問題、重現與分類。先做 breadth-first case sweep：每個成熟作品案例只快速測它最有辨識度的功能，不先完成整件作品；掃完一輪後集中修缺陷，再做第二輪組合測試，最後才做完整作品。需要產品修正時，只在 INK-Browser-QA 依目前治理規則做 bounded 修正與驗證；通過後選定 exact source SHA 發布到 thedoorw/INK，更新 BUILD_INFO.json，再對 Live URL 重測。
 
 規則：
 - 不直接在 thedoorw/INK 修主程式。
