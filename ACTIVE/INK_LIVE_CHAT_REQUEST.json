@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-C003-001",
+  "requestId": "round1-C009-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
@@ -12,7 +12,7 @@
         "options": {
           "name": "rose-window-primary.png",
           "type": "image/png",
-          "intent": "C003 reference import probe"
+          "intent": "C009 editable reconstruction probe"
         }
       },
       "file": {
@@ -31,40 +31,42 @@
       }
     },
     {
-      "id": "layoutPropose",
+      "id": "correctPropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C003 probe: create editable portfolio structure after reference analysis",
+          "intentSummary": "C009 probe: editable correction after reference reconstruction",
           "steps": [
             {
-              "stepId": "frame",
-              "operation": "frame.create.v1",
-              "targets": [],
+              "stepId": "repaint-a",
+              "operation": "path.repaint.v1",
+              "targets": [
+                {
+                  "$ref": "decompose.createdRefs.0"
+                }
+              ],
               "arguments": {
-                "name": "C003 Portfolio Frame",
-                "x": 120,
-                "y": 120,
-                "width": 600,
-                "height": 420,
+                "fill": "#f0d7de",
+                "stroke": "#202020",
                 "opacity": 1
               },
               "dependsOn": []
             },
             {
-              "stepId": "text",
-              "operation": "text.create.v1",
-              "targets": [],
+              "stepId": "repaint-b",
+              "operation": "path.repaint.v1",
+              "targets": [
+                {
+                  "$ref": "decompose.createdRefs.1"
+                }
+              ],
               "arguments": {
-                "text": "REFERENCE STUDY",
-                "x": 170,
-                "y": 170,
-                "color": "#202020",
-                "fontSize": 32,
-                "fontWeight": 700
+                "fill": "#d7e5f0",
+                "stroke": "#202020",
+                "opacity": 1
               },
               "dependsOn": []
             }
@@ -73,37 +75,34 @@
       }
     },
     {
-      "id": "layoutApprove",
+      "id": "correctApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "layoutPropose.result.planId"
+          "$ref": "correctPropose.result.planId"
         }
       }
     },
     {
-      "id": "layoutExec",
+      "id": "correctExec",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "layoutPropose.result.planId"
+          "$ref": "correctPropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "layoutApprove.result.approvalToken"
+          "$ref": "correctApprove.result.approvalToken"
         }
       }
     },
     {
       "id": "context",
       "tool": "get_ink_context",
-      "input": {}
-    },
-    {
-      "id": "history",
-      "tool": "get_ink_history",
-      "input": {}
+      "input": {
+        "maxObjects": 20
+      }
     },
     {
       "id": "preview",
