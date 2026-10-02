@@ -30,6 +30,7 @@ https://thedoorw.github.io/INK/
 - INK-Browser-QA/README.md
 - INK-Browser-QA/INK_LIVE_TEST_HANDOFF.md
 - INK-Browser-QA/ACTIVE/INK_CURRENT_WORK_ORDER.md
+- INK-Browser-QA/ACTIVE/INK_LIVE_TEST_PROGRESS.md
 - INK/BUILD_INFO.json
 - INK/TEST_PLAN.md
 - INK/CASE_SWEEP.md
