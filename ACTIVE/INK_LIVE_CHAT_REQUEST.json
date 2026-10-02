@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B4-discovery-live-001",
+  "requestId": "testB-capability-inventory-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
   "steps": [
@@ -9,27 +9,6 @@
       "id": "capabilities",
       "tool": "get_ink_capabilities",
       "input": {}
-    },
-    {
-      "id": "describeWarp",
-      "tool": "describe_ink_capability",
-      "input": {
-        "idOrToolName": "path.warp.v1"
-      }
-    },
-    {
-      "id": "describeDistort",
-      "tool": "describe_ink_capability",
-      "input": {
-        "idOrToolName": "path.distort.v1"
-      }
-    },
-    {
-      "id": "describePerspective",
-      "tool": "describe_ink_capability",
-      "input": {
-        "idOrToolName": "path.perspective.v1"
-      }
     }
   ]
 }
