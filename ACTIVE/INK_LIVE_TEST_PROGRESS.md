@@ -203,11 +203,30 @@ C02 C05 C08 C09
 Cases:
 C001 C002 C003 C008
 
-Observed:
-Core Frame/Layout/Transform paths work, but page mutation, artboard/print, smart-guide/snapping and align/distribute coverage remains incomplete.
+Source audit:
+`working/INK_LIVE_CLUSTER_C_LAYOUT_PAGE_ARTBOARD_SOURCE_AUDIT_20261002.md`
 
-Next action:
-Source-audit existing authorities and expose only accepted native routes.
+Disposition:
+
+```text
+PAGE CREATE / DELETE / DUPLICATE / RENAME / SWITCH = PRODUCT EXISTS / CHAT EXPOSURE GAP
+ALIGN / DISTRIBUTE X-Y = PRODUCT EXISTS / CHAT EXPOSURE GAP
+SMART SNAP / EQUAL DISTANCE / ANGLE SNAP = PRODUCT EXISTS / CHAT EXPOSURE GAP
+RULER GUIDES = PRODUCT EXISTS / CHAT EXPOSURE GAP
+ARTBOARD STATE / MUTATION = PRODUCT EXISTS / CHAT EXPOSURE GAP
+ARTBOARD OUTPUT = PRODUCT EXISTS / PARTIALLY ALREADY CHAT-EXPOSED
+NEW DOCUMENT ARCHITECTURE = SEPARATE USER-GATED SCOPE
+```
+
+No new layout/page/snapping/artboard engine is required.
+
+Smallest coherent exposure packages:
+- C1 page operations;
+- C2 explicit-ref align/distribute using existing `alignSelection()`;
+- C3 snap/guide page operations through existing precision-layout authority;
+- C4 artboard state mutation through existing `changeArtboard()`.
+
+Do not fold New Document/A4 redesign, C04 workspace, C06 zoom, History redesign, Raster or Drawing work into Cluster C.
 
 ### D — Reusable Creative Assets
 
