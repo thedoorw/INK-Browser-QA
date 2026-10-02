@@ -1,373 +1,29 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-batch-A-C004-C005-C006-C012-C017-002",
+  "requestId": "round1-C017-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
     {
-      "id": "c004_propose",
+      "id": "createPropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C004 quick poster overlap probe",
+          "intentSummary": "C017 editable path probe",
           "steps": [
             {
-              "stepId": "bg",
+              "stepId": "shape",
               "operation": "path.create.v1",
               "targets": [],
               "arguments": {
                 "shape": "rectangle",
-                "name": "C004 Poster Block",
-                "x": 80,
-                "y": 80,
-                "width": 280,
-                "height": 180,
-                "fill": "#f4efe6",
-                "stroke": "#202020",
-                "strokeWidth": 2
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "title",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "CONCEPT 04",
-                "x": 110,
-                "y": 140,
-                "color": "#202020",
-                "fontSize": 32,
-                "fontWeight": 700
-              },
-              "dependsOn": [
-                "bg"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "c004_approve",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c004_propose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c004_exec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c004_propose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c004_approve.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c005_propose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C005 invitation mixed text and layout probe",
-          "steps": [
-            {
-              "stepId": "card",
-              "operation": "frame.create.v1",
-              "targets": [],
-              "arguments": {
-                "name": "C005 Invitation",
-                "x": 430,
-                "y": 80,
-                "width": 320,
-                "height": 220,
-                "opacity": 1
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "headline",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "DANCE NIGHT",
-                "x": 470,
-                "y": 130,
-                "color": "#111111",
-                "fontSize": 30,
-                "fontWeight": 700
-              },
-              "dependsOn": [
-                "card"
-              ]
-            },
-            {
-              "stepId": "detail",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "FRIDAY · 8 PM",
-                "x": 470,
-                "y": 190,
-                "color": "#555555",
-                "fontSize": 18,
-                "fontWeight": 400
-              },
-              "dependsOn": [
-                "headline"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "c005_approve",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c005_propose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c005_exec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c005_propose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c005_approve.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c006_propose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C006 flyer layout plus output probe",
-          "steps": [
-            {
-              "stepId": "panel",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "rectangle",
-                "name": "C006 Flyer Panel",
-                "x": 80,
-                "y": 360,
-                "width": 300,
-                "height": 220,
-                "fill": "#ffffff",
-                "stroke": "#222222",
-                "strokeWidth": 2
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "headline",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "BOUTIQUE OPENING",
-                "x": 110,
-                "y": 410,
-                "color": "#222222",
-                "fontSize": 26,
-                "fontWeight": 700
-              },
-              "dependsOn": [
-                "panel"
-              ]
-            },
-            {
-              "stepId": "sub",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "SATURDAY / 10–18",
-                "x": 110,
-                "y": 470,
-                "color": "#666666",
-                "fontSize": 17,
-                "fontWeight": 400
-              },
-              "dependsOn": [
-                "headline"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "c006_approve",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c006_propose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c006_exec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c006_propose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c006_approve.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c006_svg",
-      "tool": "export_ink_asset",
-      "input": {
-        "format": "svg",
-        "scope": "artboard",
-        "background": true
-      }
-    },
-    {
-      "id": "c006_pdf",
-      "tool": "export_ink_asset",
-      "input": {
-        "format": "pdf",
-        "scope": "artboard",
-        "ppi": 300,
-        "background": true
-      }
-    },
-    {
-      "id": "c012_propose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C012 quote card overlap probe",
-          "steps": [
-            {
-              "stepId": "quoteBox",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "rectangle",
-                "name": "C012 Quote Card",
-                "x": 430,
-                "y": 360,
-                "width": 320,
-                "height": 220,
-                "fill": "#fafafa",
-                "stroke": "#dddddd",
-                "strokeWidth": 1
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "quote",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "MOVE WITH INTENT",
-                "x": 470,
-                "y": 435,
-                "color": "#111111",
-                "fontSize": 27,
-                "fontWeight": 700
-              },
-              "dependsOn": [
-                "quoteBox"
-              ]
-            },
-            {
-              "stepId": "credit",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "— SQUIRRELITES",
-                "x": 470,
-                "y": 500,
-                "color": "#777777",
-                "fontSize": 15,
-                "fontWeight": 400
-              },
-              "dependsOn": [
-                "quote"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "c012_approve",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c012_propose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c012_exec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c012_propose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c012_approve.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c017_create_propose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C017 editable path and duplicate probe",
-          "steps": [
-            {
-              "stepId": "wing",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "rectangle",
-                "name": "C017 Editable Wing Block",
+                "name": "C017 Path",
                 "x": 120,
-                "y": 650,
+                "y": 120,
                 "width": 170,
                 "height": 110,
                 "fill": "#ffd5e5",
@@ -375,75 +31,20 @@
                 "strokeWidth": 2
               },
               "dependsOn": []
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "c017_create_approve",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c017_create_propose.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c017_create_exec",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c017_create_propose.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c017_create_approve.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c017_edit_propose",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C017 move one path anchor and clone",
-          "steps": [
-            {
-              "stepId": "editWing",
-              "operation": "path.edit.v1",
-              "targets": [
-                {
-                  "$ref": "c017_create_exec.result.stepResults.0.targets.0.ref"
-                }
-              ],
-              "arguments": {
-                "action": "move-anchor",
-                "subpathIndex": 0,
-                "anchorIndex": 1,
-                "x": 320,
-                "y": 635
-              },
-              "dependsOn": []
             },
             {
-              "stepId": "cloneWing",
-              "operation": "object.clone.v1",
-              "targets": [
-                {
-                  "$ref": "c017_create_exec.result.stepResults.0.targets.0.ref"
-                }
-              ],
+              "stepId": "label",
+              "operation": "text.create.v1",
+              "targets": [],
               "arguments": {
-                "dx": 220,
-                "dy": 0
+                "text": "C017",
+                "x": 145,
+                "y": 165,
+                "color": "#222222",
+                "fontSize": 18
               },
               "dependsOn": [
-                "editWing"
+                "shape"
               ]
             }
           ]
@@ -451,25 +52,95 @@
       }
     },
     {
-      "id": "c017_edit_approve",
+      "id": "createApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "c017_edit_propose.result.planId"
+          "$ref": "createPropose.result.planId"
         }
       }
     },
     {
-      "id": "c017_edit_exec",
+      "id": "createExec",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "c017_edit_propose.result.planId"
+          "$ref": "createPropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "c017_edit_approve.result.approvalToken"
+          "$ref": "createApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "editPropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "C017 path anchor edit and clone",
+          "steps": [
+            {
+              "stepId": "edit",
+              "operation": "path.edit.v1",
+              "targets": [
+                {
+                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "action": "move-anchor",
+                "subpathIndex": 0,
+                "anchorIndex": 1,
+                "x": 320,
+                "y": 105
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "clone",
+              "operation": "object.clone.v1",
+              "targets": [
+                {
+                  "$ref": "createExec.result.stepResults.0.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "dx": 220,
+                "dy": 0
+              },
+              "dependsOn": [
+                "edit"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "editApprove",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "editPropose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "editExec",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "editPropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "editApprove.result.approvalToken"
         }
       }
     },
@@ -488,7 +159,7 @@
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 1200,
+        "maxDimension": 960,
         "background": true
       }
     }
