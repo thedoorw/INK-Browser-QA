@@ -1,0 +1,49 @@
+{
+  "buttons": [
+    {
+      "alignItems": "center",
+      "box": {
+        "height": 22,
+        "right": 1202.625,
+        "width": 66.375,
+        "x": 1136.25,
+        "y": 31.5
+      },
+      "display": "flex",
+      "fontSize": "12px",
+      "lineHeight": "14.4px",
+      "padding": "0px 6px",
+      "text": "手繪板"
+    },
+    {
+      "alignItems": "center",
+      "box": {
+        "height": 22,
+        "right": 1269,
+        "width": 66.375,
+        "x": 1202.625,
+        "y": 31.5
+      },
+      "display": "flex",
+      "fontSize": "12px",
+      "lineHeight": "14.4px",
+      "padding": "0px 6px",
+      "text": "圖紙"
+    }
+  ],
+  "gap": 6,
+  "host": {
+    "height": 35,
+    "right": 1128.25,
+    "width": 1045.25,
+    "x": 83,
+    "y": 25
+  },
+  "switch": {
+    "height": 26,
+    "right": 1271,
+    "width": 136.75,
+    "x": 1134.25,
+    "y": 29.5
+  }
+}

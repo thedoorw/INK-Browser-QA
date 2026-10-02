@@ -1,0 +1,59 @@
+{
+  "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+  "productSourceTree": "5ccaac62ed85176d69e07a1b72b1cac20c507f87",
+  "cssIdentical": true,
+  "importantBefore": 103,
+  "importantAfter": 103,
+  "newBreakpointFamily": 0,
+  "newDuplicateWorkspaceStateOwner": 0,
+  "newGrayLiteral": 0,
+  "newFakeAffordance": 0,
+  "formatVersion": 4,
+  "schemaHistoryRendererSpatialIndexFilesChanged": false,
+  "supersededCoercionsRemoved": 2,
+  "newDocumentInitialLayoutPreserved": true,
+  "runtimeMethods": {
+    "switchWorkspace": {
+      "source": "switchWorkspace(next,{fit=true,announce=true}={}){if(!this.documentOpen)return {changed:false,firstVisit:false,activeSpace:this.spaceMode()};const page=this.page(),result=activateWorkspace(page,next);this.el.app.dataset.space=result.activeSpace;this.renderer.invalidateTiles();if(fit&&result.firstVisit){if(result.activeSpace==='layout'){this.fitLayoutViewportToContent({commit:false,render:false});this.fitArtboard({switchSpace:false});}else this.fitContent();}else this.renderer.render();this.refreshWorkspaceUI();this.refreshArtboardUI();this.markDirty();if(announce&&result.changed)this.toast(result.activeSpace==='layout'?'已切換圖紙':'已切換手繪板');return result;}",
+      "sha256": "ba909f6274bb7c7e6a8f83312b67a569d2798222540d0d21c15e37582f1643cb"
+    },
+    "refreshWorkspaceUI": {
+      "source": "refreshWorkspaceUI(){const workspace=ensureWorkspace(this.page()),space=workspace.activeSpace;this.el.app.dataset.space=space;$$('[data-space]').forEach(button=>{const active=this.documentOpen&&button.dataset.space===space;button.disabled=!this.documentOpen;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));});$$('[data-workspace-command=\"creation\"],[data-workspace-command=\"layout\"]').forEach(button=>{const active=this.documentOpen&&button.dataset.workspaceCommand===space;button.disabled=!this.documentOpen;button.classList.toggle('active',active);button.setAttribute('aria-checked',String(active));});this.refreshLayoutViewportUI();}",
+      "sha256": "cded2e483f81aae024349b5545fe3febeb6e4612a6740d04705672ca916cb8c9"
+    },
+    "newDocument": {
+      "source": "newDocument(){if(this.dirty&&!confirm('建立新作品？目前內容已自動儲存，但未另存的修改會離開目前畫面。'))return;const document=defaultDocument();for(const page of document.pages){page.artboard.showSafeArea=false;page.artboard.showCenter=false;activateWorkspace(page,'layout');}this.replaceDocument(document);this.history.clear();this.store.remove('autosave');this.fitArtboard({switchSpace:false});this.toast('已建立新作品');}",
+      "sha256": "3cbb66960c854a6c472a8b61f7eb7779b2a9265234439cd3f5422c6047c8d029"
+    }
+  },
+  "assets": [
+    {
+      "name": "index.html",
+      "sha256": "94ad4e74c5804c640afc8cc55ceea5c82b72201a6525a3141068224317f3c51c"
+    },
+    {
+      "name": "styles.css",
+      "sha256": "33e3ccaaf333ab7682261fbd58ed0a8cada90dc9cdd232bb5c378dd9272a24e8"
+    },
+    {
+      "name": "src/ink.js",
+      "sha256": "ad926160cdd50dd636a3b610fc6c2c467796b70aab704d43227c710ac71c1ef5"
+    },
+    {
+      "name": "src/config.js",
+      "sha256": "a2b0fb75b39bf0bc0447a3af7d870d2f73c25ea26b5e466922b65f3d176dbea8"
+    },
+    {
+      "name": "web-shell.js",
+      "sha256": "27ac033ab161220ce38702a72440daca8f200c3f4a4a86046a8a8c07e08e4ff9"
+    },
+    {
+      "name": "src/document/workspace.js",
+      "sha256": "79e0c83d095b76cad4c7a87ffbd4cb79dcd95d31618bda8cee78810dc79a1576"
+    },
+    {
+      "name": "src/document/migration.js",
+      "sha256": "04a8d6eb51422700b318e4719975d56701aae6d733b0e3a163411f92e646f424"
+    }
+  ]
+}

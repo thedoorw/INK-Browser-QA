@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: A4 portrait at 300 PPI resolves to print-ready dimensions
+ok 1 - A4 portrait at 300 PPI resolves to print-ready dimensions
+  ---
+  duration_ms: 1.413873
+  type: 'test'
+  ...
+# Subtest: A4 landscape swaps physical and pixel dimensions
+ok 2 - A4 landscape swaps physical and pixel dimensions
+  ---
+  duration_ms: 0.157097
+  type: 'test'
+  ...
+# Subtest: bleed, safety and crop-mark export geometry remain physically bounded
+ok 3 - bleed, safety and crop-mark export geometry remain physically bounded
+  ---
+  duration_ms: 0.418131
+  type: 'test'
+  ...
+# Subtest: new documents start in full creation space while retaining an A4 layout definition
+ok 4 - new documents start in full creation space while retaining an A4 layout definition
+  ---
+  duration_ms: 4.198074
+  type: 'test'
+  ...
+# Subtest: PDF output encodes one exact A4 page in points
+ok 5 - PDF output encodes one exact A4 page in points
+  ---
+  duration_ms: 0.753967
+  type: 'test'
+  ...
+# Subtest: live Canvas tile renderer completes dirty tiles and serves a clean atlas
+ok 6 - live Canvas tile renderer completes dirty tiles and serves a clean atlas
+  ---
+  duration_ms: 2.070404
+  type: 'test'
+  ...
+# Subtest: creation and layout spaces share objects while retaining independent cameras
+ok 7 - creation and layout spaces share objects while retaining independent cameras
+  ---
+  duration_ms: 1.639794
+  type: 'test'
+  ...
+# Subtest: layout viewport is finite, bounded and independent from original objects
+ok 8 - layout viewport is finite, bounded and independent from original objects
+  ---
+  duration_ms: 0.707497
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 164.385244

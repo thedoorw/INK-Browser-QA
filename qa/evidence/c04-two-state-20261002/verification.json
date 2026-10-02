@@ -1,0 +1,204 @@
+{
+  "candidate": "584e44ac75af294508440d8d4196c81942fff739",
+  "checks": [
+    {
+      "name": "state authority and switch geometry: 1280-no-document",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-new-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-roundtrip-layout-0",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-roundtrip-creation-0",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-roundtrip-layout-1",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-roundtrip-creation-1",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-roundtrip-layout-2",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-roundtrip-creation-2",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-selected-shape",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-creation-zoomed",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-selected-shape-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-selected-shape-creation-restored",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-creation-keyboard-zoom",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-layout-camera-preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-creation-camera-preserved",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-page2-new-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-page2-first-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-page1-restored-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-page2-restored-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-before-autosave-reload-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-autosave-restored-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-before-autosave-reload-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-autosave-restored-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 1280-final-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 960-no-document",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 960-layout",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 960-creation",
+      "result": "PASS"
+    },
+    {
+      "name": "state authority and switch geometry: 960-layout-restored",
+      "result": "PASS"
+    },
+    {
+      "name": "native new remains A4 Layout",
+      "result": "PASS"
+    },
+    {
+      "name": "three repeated native round trips",
+      "result": "PASS"
+    },
+    {
+      "name": "selected content and History preserved during switch",
+      "result": "PASS"
+    },
+    {
+      "name": "native keyboard zoom retains independent cameras",
+      "result": "PASS"
+    },
+    {
+      "name": "per-page workspace restored",
+      "result": "PASS"
+    },
+    {
+      "name": "native autosave and reload: layout",
+      "result": "PASS"
+    },
+    {
+      "name": "native autosave and reload: creation",
+      "result": "PASS"
+    },
+    {
+      "name": "960 native round trip",
+      "result": "PASS"
+    },
+    {
+      "name": "deployed asset identity: index.html",
+      "result": "PASS"
+    },
+    {
+      "name": "deployed asset identity: styles.css",
+      "result": "PASS"
+    },
+    {
+      "name": "deployed asset identity: src/ink.js",
+      "result": "PASS"
+    },
+    {
+      "name": "deployed asset identity: src/config.js",
+      "result": "PASS"
+    },
+    {
+      "name": "deployed asset identity: web-shell.js",
+      "result": "PASS"
+    },
+    {
+      "name": "deployed asset identity: src/document/workspace.js",
+      "result": "PASS"
+    },
+    {
+      "name": "deployed asset identity: src/document/migration.js",
+      "result": "PASS"
+    },
+    {
+      "name": "executed C04 method identity: switchWorkspace",
+      "result": "PASS"
+    },
+    {
+      "name": "executed C04 method identity: refreshWorkspaceUI",
+      "result": "PASS"
+    },
+    {
+      "name": "executed C04 method identity: newDocument",
+      "result": "PASS"
+    },
+    {
+      "name": "technical debt guard",
+      "result": "PASS"
+    },
+    {
+      "name": "no product-origin warn/error in exercised windows",
+      "result": "PASS"
+    }
+  ],
+  "total": 49,
+  "passed": 49,
+  "scope": "Captured cloud-browser/native interactions; assertions do not operate product"
+}

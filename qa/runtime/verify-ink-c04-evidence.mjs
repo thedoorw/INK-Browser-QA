@@ -1,0 +1,32 @@
+import assert from 'node:assert/strict';
+import {defaultDocument,sanitizeDocument} from '../../product/source/src/document/index.js';
+import {readFileSync,writeFileSync} from 'node:fs';
+const root=new URL('../evidence/c04-two-state-20261002/',import.meta.url);
+const states=JSON.parse(readFileSync(new URL('c04-state-geometry.json',root)));
+const checks=[];const check=(name,fn)=>{fn();checks.push({name,result:'PASS'})};
+const get=label=>{const item=states.find(x=>x.label===label);assert.ok(item,label);return item.state};
+for(const {label,state:s} of states)check('state authority and switch geometry: '+label,()=>{
+ assert.equal(s.candidate,'584e44ac75af294508440d8d4196c81942fff739');
+ assert.equal(s.build,'20261002-c04-two-state-repair');
+ assert.equal(s.dataset,s.spaceMode);assert.equal(s.spaceMode,s.workspace.activeSpace);
+ assert.equal(s.cameraAliasesActive,true);assert.deepEqual(s.camera,s.workspace.cameras[s.spaceMode]);
+ assert.equal(s.switch.count,1);assert.equal(s.switch.parent,'contextualOptions');
+ assert.equal(s.switch.box.x+s.switch.box.width,s.viewport.width-9);
+ assert.equal(s.buttons[0].box.height,s.buttons[1].box.height);assert.equal(s.buttons[0].box.width,s.buttons[1].box.width);
+ for(const b of s.buttons){assert.equal(b.disabled,!s.documentOpen);assert.equal(b.pressed,String(s.documentOpen&&b.space===s.spaceMode));}
+});
+check('native new remains A4 Layout',()=>{const s=get('1280-new-layout');assert.equal(s.spaceMode,'layout');assert.equal(s.content[0].artboard.preset,'A4')});
+check('three repeated native round trips',()=>{for(let i=0;i<3;i++){assert.equal(get('1280-roundtrip-layout-'+i).spaceMode,'layout');assert.equal(get('1280-roundtrip-creation-'+i).spaceMode,'creation');assert.deepEqual(get('1280-roundtrip-layout-'+i).content,get('1280-roundtrip-creation-'+i).content)}});
+check('selected content and History preserved during switch',()=>{const a=get('1280-selected-shape'),b=get('1280-selected-shape-layout'),c=get('1280-selected-shape-creation-restored');assert.equal(a.selection.length,1);for(const s of [b,c]){assert.deepEqual(s.content,a.content);assert.deepEqual(s.selection,a.selection);assert.equal(s.history.undo,a.history.undo);assert.equal(s.history.redo,a.history.redo)}});
+check('native keyboard zoom retains independent cameras',()=>{const a=get('1280-creation-keyboard-zoom'),b=get('1280-layout-camera-preserved'),c=get('1280-creation-camera-preserved');assert.equal(a.camera.scale,1.44);assert.deepEqual(a.camera,c.camera);assert.equal(b.camera.scale,get('1280-new-layout').camera.scale);assert.notDeepEqual(a.camera,b.camera)});
+check('per-page workspace restored',()=>{assert.equal(get('1280-page1-restored-creation').spaceMode,'creation');assert.equal(get('1280-page1-restored-creation').camera.scale,1.44);assert.equal(get('1280-page2-restored-layout').spaceMode,'layout');assert.equal(get('1280-page2-restored-layout').pageId,get('1280-page2-first-layout').pageId)});
+for(const space of ['layout','creation'])check('native autosave and reload: '+space,()=>{const a=get('1280-before-autosave-reload-'+space),b=get('1280-autosave-restored-'+space);assert.equal(b.documentOpen,true);assert.equal(b.spaceMode,space);assert.equal(b.pageId,a.pageId);const normalized=sanitizeDocument({...defaultDocument(),activePageId:a.pageId,pages:a.content}).pages.map(p=>({id:p.id,layers:p.layers,artboard:p.artboard}));assert.deepEqual(b.content,normalized);assert.deepEqual(b.workspace,a.workspace)});
+check('960 native round trip',()=>{assert.equal(get('960-layout').spaceMode,'layout');assert.equal(get('960-creation').spaceMode,'creation');assert.equal(get('960-layout-restored').spaceMode,'layout');assert.deepEqual(get('960-layout').content,get('960-creation').content)});
+const source=JSON.parse(readFileSync(new URL('source-identity-tech-debt.json',root)));
+const browser=JSON.parse(readFileSync(new URL('c04-browser-identity.json',root)));
+for(const asset of browser.assets)check('deployed asset identity: '+asset.name,()=>{assert.equal(asset.status,200);assert.equal(asset.sha256,source.assets.find(a=>a.name===asset.name).sha256)});
+for(const [name,value] of Object.entries(browser.executedMethods))check('executed C04 method identity: '+name,()=>assert.deepEqual(value,source.runtimeMethods[name]));
+check('technical debt guard',()=>{assert.equal(source.cssIdentical,true);assert.equal(source.importantBefore,source.importantAfter);assert.equal(source.newBreakpointFamily,0);assert.equal(source.newDuplicateWorkspaceStateOwner,0);assert.equal(source.formatVersion,4)});
+check('no product-origin warn/error in exercised windows',()=>{const logs=JSON.parse(readFileSync(new URL('c04-browser-errors.json',root)));for(const values of Object.values(logs))for(const value of values)assert.ok(String(value.url||'').startsWith('chrome-extension://')||value.message.includes('chrome-extension://'))});
+const result={candidate:'584e44ac75af294508440d8d4196c81942fff739',checks,total:checks.length,passed:checks.length,scope:'Captured cloud-browser/native interactions; assertions do not operate product'};
+writeFileSync(new URL('verification.json',root),JSON.stringify(result,null,2));console.log(JSON.stringify({total:result.total,passed:result.passed}));

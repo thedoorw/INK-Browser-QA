@@ -1,5 +1,71 @@
 # INK Current Work Order
 
+## C04 branch checkpoint — 2026-10-02
+
+C04 repair is complete on this branch and STOPPED to Core / Supervisor review.
+Exact candidate: `584e44ac75af294508440d8d4196c81942fff739`.
+Return: `working/INK_C04_TWO_STATE_REPAIR_FINAL_DEV_RETURN_20261002.md`.
+Evidence: `qa/evidence/c04-two-state-20261002/` (49/49 scoped evidence checks).
+No main product promotion or Core/Supervisor acceptance is claimed. Main Current Work Order remains global authority.
+
+## UI recovery Supervisor checkpoint — 2026-10-02
+
+Supervisor review:
+- `working/INK_UI_CURRENT_MAIN_RECOVERY_SUPERVISOR_REVIEW_20261002.md`
+
+Accepted recovery:
+- branch `work/ink-ui-current-main-recovery-001`;
+- immutable product candidate `cdb90787b8a17729a67e6318ded6557fee5b730f`;
+- branch final HEAD `8f1666804058caf9b968d51137967c61fd9cc222`;
+- product/source tree `86bdf0eacebb6f930062d9d2c1bb9b048b9fc7ca`;
+- required browser/state/identity evidence complete;
+- technical-debt guard accepted.
+
+Disposition:
+```text
+UI_RECOVERY_SUPERVISOR_REVIEW = ACCEPTED
+C04_ENTRY = RELEASED
+USER_VISUAL_PASS = NOT CLAIMED
+FINAL_UI_COMPLETE = NO
+```
+
+Separate open finding:
+```text
+PROPERTIES_LAYOUT_CLIPPING = OPEN / SEPARATE UI DEFECT
+DO_NOT_PATCH_INSIDE_C04
+```
+
+Current main has advanced since the recovery base through non-product work only; no `product/source` changes after `0ad0c663597f4373b5815364c5a9d7cae40365b4` were found. Final combined promotion must still target latest main.
+
+Next execution:
+- `ACTIVE/INK_C04_WORKSPACE_TWO_STATE_REPAIR_DEV_DISPATCH_v1.0.md`
+- create the C04 branch from the accepted recovery composition;
+- repair only the existing workspace authority;
+- STOP to Core / Supervisor review;
+- do not merge the recovery candidate alone to main.
+
+C06 12800% zoom, Properties clipping and New Document remain separate.
+
+
+## USER directive — recovery DEV must finish before stopping — 2026-10-02
+
+For the active `INK UI Current-Main Recovery` task, DEV may not stop on partial evidence or interim HOLD.
+
+Authoritative dispatch:
+- `ACTIVE/INK_UI_CURRENT_MAIN_RECOVERY_DEV_DISPATCH_v1.0.md`
+
+Current product candidate:
+- `cdb90787b8a17729a67e6318ded6557fee5b730f`
+
+Current partial cloud evidence does **not** satisfy the completion gate.
+
+DEV must continue the same recovery task until the complete required browser/state/identity/technical-debt evidence set and final DEV return are finished. Local Chromium absence, screenshot timeout, preview publication, or partial cloud-browser evidence are not STOP conditions because an authorized cloud-browser route is available.
+
+Only an explicit cross-scope product conflict, Core/FORMAT_VERSION/History/C04/C06/New Document conflict, total authorized execution-route permission block, or evidence invalidating the accepted recovery design may stop early for Supervisor escalation.
+
+C04 remains blocked until the recovery package reaches a valid completed DEV handoff and Supervisor acceptance.
+
+
 ## Core integration completed — 2026-10-02
 
 Integrated main SHA: `892c1917280b87c9e44b7a8567517bf24d7e0122`.
