@@ -1,0 +1,83 @@
+name: INK Live CHAT Request
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ACTIVE/INK_LIVE_CHAT_REQUEST.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ink-live-chat-request
+  cancel-in-progress: false
+
+jobs:
+  execute:
+    runs-on: [self-hosted, Windows, X64]
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout request runner
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Execute CHAT request against Live INK
+        run: >-
+          node qa/live-chat/run-live-chat-request.mjs
+          "ACTIVE/INK_LIVE_CHAT_REQUEST.json"
+          "${{ runner.temp }}\ink-live-chat-result.json"
+          "${{ runner.temp }}\ink-live-chat-result.png"
+
+      - name: Publish structured result to GitHub SSOT
+        if: always()
+        uses: actions/github-script@v7
+        env:
+          RESULT_PATH: ${{ runner.temp }}\ink-live-chat-result.json
+        with:
+          script: |
+            const fs = require('node:fs');
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const path = 'working/INK_LIVE_CHAT_RESULT.json';
+            let result;
+            try {
+              result = JSON.parse(fs.readFileSync(process.env.RESULT_PATH, 'utf8'));
+            } catch (error) {
+              result = {
+                schema: 'INK-LIVE-CHAT-RESULT',
+                version: 1,
+                status: 'FAILED',
+                error: 'Runner result unavailable: ' + error.message
+              };
+            }
+            let sha;
+            try {
+              const current = await github.rest.repos.getContent({ owner, repo, path, ref: 'main' });
+              if (!Array.isArray(current.data)) sha = current.data.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            const content = Buffer.from(JSON.stringify(result, null, 2) + '\n').toString('base64');
+            await github.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path,
+              message: 'qa(chat): record Live INK result ' + (result.requestId || 'unknown'),
+              content,
+              branch: 'main',
+              ...(sha ? { sha } : {})
+            });
+
+      - name: Preserve visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-live-chat-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}\ink-live-chat-result.json
+            ${{ runner.temp }}\ink-live-chat-result.png
+          if-no-files-found: warn
+          retention-days: 30
