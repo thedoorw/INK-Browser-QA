@@ -1,0 +1,14 @@
+{
+  "schema": "ink-ui-issue92-workstation-interaction-target",
+  "version": 1,
+  "task": "INK-UI-FINAL-CHECKLIST-CLOSURE-001",
+  "target_sha": "f3f7aaeaa636073d216c23d825d23e344b064c62",
+  "scope": "Issue #92 D10/E03/E04/E05/E10/G06/J01/J02/J05/K02/N02/N03 focused browser evidence / no central Runtime",
+  "suites": [
+    "workstation-interactions"
+  ],
+  "central_runtime": false,
+  "run_generation": 4,
+  "diagnostic_note": "N02 page panel mount/binding/visibility split; N03 forced non-trivial two-page selection",
+  "note": "2026-10-02 remaining whole-UI fidelity DEV rerun after Options context gating."
+}

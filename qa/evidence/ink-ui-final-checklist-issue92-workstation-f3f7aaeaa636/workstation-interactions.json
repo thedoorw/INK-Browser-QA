@@ -1,0 +1,243 @@
+{
+  "schema": "INK-UI-ISSUE92-WORKSTATION-INTERACTIONS",
+  "version": 1,
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "D10",
+      "pass": true,
+      "detail": {
+        "firstFocused": true,
+        "secondFocused": true,
+        "closed": true,
+        "focusReturned": true
+      }
+    },
+    {
+      "id": "E03",
+      "pass": true,
+      "detail": {
+        "toolColor": "#123456",
+        "main": "#123456"
+      }
+    },
+    {
+      "id": "E04",
+      "pass": true,
+      "detail": {
+        "toolSize": 17.5,
+        "mainSize": "17.5"
+      }
+    },
+    {
+      "id": "E05",
+      "pass": true,
+      "detail": {
+        "drawState": {
+          "mode": "draw",
+          "quick": true,
+          "color": true,
+          "size": true,
+          "opacity": true,
+          "value": 0.63
+        },
+        "eraserState": {
+          "mode": "eraser",
+          "quick": true,
+          "color": false,
+          "size": true,
+          "opacity": false,
+          "specific": true
+        },
+        "shapeState": {
+          "mode": "shape",
+          "color": true,
+          "size": false,
+          "opacity": false,
+          "specific": true
+        },
+        "textState": {
+          "mode": "text",
+          "color": true,
+          "size": false,
+          "opacity": false,
+          "specific": true
+        }
+      }
+    },
+    {
+      "id": "G06",
+      "pass": true,
+      "detail": {
+        "before": {
+          "x": 5000,
+          "y": -3500,
+          "scale": 0.2
+        },
+        "after": {
+          "x": 6000,
+          "y": -4200,
+          "scale": 0.24
+        },
+        "summary": "A4 直式 · 210 × 297 mm · 300 PPI · 2480 × 3508 px · 視埠 100% · 創作空間（無框）"
+      }
+    },
+    {
+      "id": "J01",
+      "pass": true,
+      "detail": {
+        "panel": "properties",
+        "count": "1"
+      }
+    },
+    {
+      "id": "J02",
+      "pass": true,
+      "detail": {
+        "xBefore": 120,
+        "xAfter": 145,
+        "historyBefore": 0,
+        "historyAfter": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          1,
+          145,
+          100
+        ]
+      }
+    },
+    {
+      "id": "J05",
+      "pass": true,
+      "detail": {
+        "beforeEdit": {
+          "card": true,
+          "actions": false
+        },
+        "duringEdit": {
+          "card": true,
+          "actions": true,
+          "status": "4 個節點；點擊節點或區段"
+        },
+        "afterClear": {
+          "card": false,
+          "actions": false
+        }
+      }
+    },
+    {
+      "id": "E10",
+      "pass": true,
+      "detail": {
+        "beforeEdit": {
+          "card": true,
+          "actions": false
+        },
+        "duringEdit": {
+          "card": true,
+          "actions": true,
+          "status": "4 個節點；點擊節點或區段"
+        },
+        "afterClear": {
+          "card": false,
+          "actions": false
+        }
+      }
+    },
+    {
+      "id": "K02",
+      "pass": true,
+      "detail": {
+        "frameId": "9918f0e5-1cdd-4ef3-ac55-6a3009ccca16",
+        "frameSynced": true,
+        "childSynced": true,
+        "selection": [
+          {
+            "layerId": "f2ca6992-d23f-4b18-91f1-d4d712df8e25",
+            "objectId": "qa-path-001"
+          }
+        ]
+      }
+    },
+    {
+      "id": "N02",
+      "pass": true,
+      "detail": {
+        "beforeDiag": {
+          "openResult": true,
+          "shell": {
+            "version": "0.1",
+            "authority": "single",
+            "layoutMode": "DESKTOP_WIDE",
+            "primaryState": "pages",
+            "activePanel": "pages",
+            "lastPanel": "pages",
+            "collapsed": false,
+            "inspectorOpen": true,
+            "creativeOpen": false,
+            "panelWidth": 252,
+            "stageWidth": 955,
+            "dockWidth": 40,
+            "panelGroup": "editor",
+            "creativeStage": "reference",
+            "contextMode": "selection",
+            "contextTool": "select",
+            "toolbarLayout": "dual",
+            "toolbarLayoutPreference": "dual",
+            "menuController": "application-menu-registry",
+            "openApplicationMenu": null,
+            "liveApplicationMenus": [
+              "file",
+              "edit",
+              "image",
+              "layer",
+              "type",
+              "select",
+              "filter",
+              "object",
+              "view",
+              "window",
+              "help"
+            ]
+          },
+          "inspectorOpen": true,
+          "sectionActive": true,
+          "sectionVisible": true,
+          "listVisible": true,
+          "addVisible": true,
+          "addBound": "true",
+          "beforePages": 1,
+          "initialCount": 1
+        },
+        "afterButtonPages": 2,
+        "afterRows": 2,
+        "rowVisible": [
+          true,
+          true
+        ],
+        "shellAddWorked": true
+      }
+    },
+    {
+      "id": "N03",
+      "pass": true,
+      "detail": {
+        "diagnosticSeeded": false,
+        "rows": 2,
+        "firstId": "e983822e-07dc-4584-8651-e835fbd1baa0",
+        "lastId": "4df84e29-699c-424c-886e-31007dcace80",
+        "distinct": true,
+        "firstSelected": true,
+        "lastSelected": true,
+        "active": "4df84e29-699c-424c-886e-31007dcace80"
+      }
+    }
+  ],
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0
+  }
+}

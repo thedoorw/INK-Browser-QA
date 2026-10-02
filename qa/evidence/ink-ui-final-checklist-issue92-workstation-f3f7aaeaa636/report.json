@@ -1,0 +1,11 @@
+{
+  "schema": "INK-UI-ISSUE92-WORKSTATION-INTERACTIONS-REPORT",
+  "targetSha": "f3f7aaeaa636073d216c23d825d23e344b064c62",
+  "centralRuntimeExecuted": false,
+  "status": "PASS",
+  "summary": {
+    "total": 12,
+    "passed": 12,
+    "failed": 0
+  }
+}
