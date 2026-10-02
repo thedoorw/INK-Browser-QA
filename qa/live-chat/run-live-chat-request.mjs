@@ -9,14 +9,24 @@ const LIVE_URL = 'https://thedoorw.github.io/INK/';
 
 function findBrowser() {
   const candidates = [process.env.INK_CHROMIUM_PATH, process.env.CHROME_PATH];
-  for (const base of [process.env.ProgramFiles, process.env['ProgramFiles(x86)'], process.env.LOCALAPPDATA].filter(Boolean)) {
+  if (process.platform === 'win32') {
+    for (const base of [process.env.ProgramFiles, process.env['ProgramFiles(x86)'], process.env.LOCALAPPDATA].filter(Boolean)) {
+      candidates.push(
+        path.join(base, 'Google/Chrome/Application/chrome.exe'),
+        path.join(base, 'Microsoft/Edge/Application/msedge.exe')
+      );
+    }
+  } else {
     candidates.push(
-      path.join(base, 'Google/Chrome/Application/chrome.exe'),
-      path.join(base, 'Microsoft/Edge/Application/msedge.exe')
+      '/usr/bin/google-chrome',
+      '/usr/bin/google-chrome-stable',
+      '/usr/bin/chromium',
+      '/usr/bin/chromium-browser',
+      '/opt/google/chrome/chrome'
     );
   }
   const found = candidates.find(file => file && existsSync(file));
-  if (!found) throw new Error('Installed Chrome/Edge required; set INK_CHROMIUM_PATH');
+  if (!found) throw new Error('Installed Chrome/Chromium required; set INK_CHROMIUM_PATH');
   return found;
 }
 
