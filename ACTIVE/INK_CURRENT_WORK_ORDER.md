@@ -1,5 +1,29 @@
 # INK Current Work Order
 
+## C04 completed candidate checkpoint — 2026-10-02
+
+Branch: `work/c04-paper-freehand-two-state-repair-001`.
+Immutable product candidate: `584e44ac75af294508440d8d4196c81942fff739`.
+Branch final evidence HEAD: `d0b56db04630b4a9c41b50a7c54f25f3bd744bef`.
+Product/source tree: `5ccaac62ed85176d69e07a1b72b1cac20c507f87`.
+
+Branch-local return:
+- `working/INK_C04_TWO_STATE_REPAIR_FINAL_DEV_RETURN_20261002.md`
+- `qa/evidence/c04-two-state-20261002/evidence-manifest.json`
+
+Fresh scoped checks: 49/49. Both workspace states, repeated round trips, selection/content/History preservation, independent cameras, per-page state, autosave/reload and 960 viewport are observed. Seven deployed asset hashes and three instantiated C04 method identities match the exact candidate. Existing artboard/output/workspace suite: 8/8. CSS unchanged; new important/breakpoint/state owner/gray/fake-affordance = 0; FORMAT_VERSION = 4.
+
+```text
+C04_IMPLEMENTATION_AND_EVIDENCE = COMPLETE
+C04_CORE_SUPERVISOR_REVIEW = PENDING
+OFFICIAL_MAIN_PRODUCT_PROMOTION = NOT_EXECUTED
+USER_VISUAL_PASS = NOT_CLAIMED
+FINAL_UI_COMPLETE = NO
+NEXT = CORE / SUPERVISOR REVIEW OF EXACT C04 CANDIDATE
+```
+
+The completed return is source-exposed implementation evidence, not an independent acceptance decision. Review the exact candidate before combined recovery+C04 promotion onto latest main. Do not merge recovery alone. C06 12800%, Properties clipping and New Document remain separate.
+
 ## UI recovery Supervisor checkpoint — 2026-10-02
 
 Supervisor review:
