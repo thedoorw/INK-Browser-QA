@@ -207,32 +207,42 @@ const editSchemas = {
   ),
   'stroke.edit.v1': editTaskSchema(
     { type: 'string', const: 'stroke.edit.v1', description: 'Edit one existing native INK Stroke through the existing Stroke object model.' },
-    {
-      oneOf: [
-        obj({ action: { type: 'string', const: 'move-node' }, index: integer('Stroke node index.', { minimum: 0, maximum: 4096 }), x: num('World X position.'), y: num('World Y position.') }, ['action','index','x','y']),
-        obj({ action: { type: 'string', const: 'set-node-mode' }, index: integer('Stroke node index.', { minimum: 0, maximum: 4096 }), mode: { type:'string', enum:['corner','smooth','symmetric'] } }, ['action','index','mode']),
-        obj({ action: { type: 'string', const: 'move-handle' }, index: integer('Stroke node index.', { minimum: 0, maximum: 4096 }), side: { type:'string', enum:['in','out'] }, x: num('Handle world X.'), y: num('Handle world Y.') }, ['action','index','side','x','y']),
-        obj({ action: { type: 'string', const: 'insert-node' }, segmentIndex: integer('Stroke segment index.', { minimum:0, maximum:4096 }), t: num('Insertion position on segment.', { minimum:.02, maximum:.98 }) }, ['action','segmentIndex']),
-        obj({ action: { type: 'string', const: 'delete-nodes' }, indices: arr(integer('Stroke node index.', { minimum:0, maximum:4096 }), 'Stroke node indices.', { minItems:1, maxItems:512 }) }, ['action','indices']),
-        obj({ action: { type: 'string', const: 'set-segment-style' }, segmentIndex: integer('Stroke segment index.', { minimum:0, maximum:4096 }), style: obj({
-          color: str('Segment color token.'), size: num('Segment size.', { minimum:Number.EPSILON, maximum:100000 }),
-          opacity: num('Segment opacity.', { minimum:0, maximum:1 }), pressure: num('Segment pressure influence.', { minimum:0, maximum:1 }),
-          flow: num('Segment flow.', { minimum:0, maximum:1 }), wetness: num('Segment wetness.', { minimum:0, maximum:1 }),
-          grain: num('Segment grain.', { minimum:0, maximum:1 }), bristle: num('Segment bristle.', { minimum:0, maximum:1 })
-        }, [], 'Bounded segment style patch.') }, ['action','segmentIndex','style']),
-        obj({ action: { type: 'string', const: 'clear-segment-style' }, segmentIndex: integer('Stroke segment index.', { minimum:0, maximum:4096 }) }, ['action','segmentIndex']),
-        obj({ action: { type: 'string', const: 'set-style' }, patch: obj({
-          color: str('Stroke color token.'), size: num('Stroke size.', { minimum:Number.EPSILON, maximum:100000 }),
-          opacity: num('Stroke opacity.', { minimum:0, maximum:1 }),
-          kind: { type:'string', enum:['pen','pencil','marker','brush','drybrush','airbrush'] },
-          smoothing: num('Smoothing.', { minimum:0, maximum:.95 }), pressure: num('Pressure influence.', { minimum:0, maximum:1 }),
-          taper: num('Taper.', { minimum:0, maximum:1 }), grain: num('Grain.', { minimum:0, maximum:1 }),
-          softness: num('Softness.', { minimum:0, maximum:1 }), flow: num('Flow.', { minimum:0, maximum:1 }),
-          wetness: num('Wetness.', { minimum:0, maximum:1 }), bristle: num('Bristle.', { minimum:0, maximum:1 }),
-          mediaModel: { anyOf:[{type:'string',const:'natural-v2'},{type:'null'}] }
-        }, [], 'Bounded native Stroke appearance patch.') }, ['action','patch'])
-      ]
-    },
+    obj({
+      action: { type: 'string', enum: ['move-node','set-node-mode','move-handle','insert-node','delete-nodes','set-segment-style','clear-segment-style','set-style'], description: 'Bounded native Stroke edit action.' },
+      index: { type: 'integer', minimum: 0, maximum: 4096, description: 'Stroke node index.' },
+      segmentIndex: { type: 'integer', minimum: 0, maximum: 4096, description: 'Stroke segment index.' },
+      indices: arr({ type: 'integer', minimum: 0, maximum: 4096, description: 'Stroke node index.' }, 'Stroke node indices.', { minItems: 1, maxItems: 512 }),
+      side: { type: 'string', enum: ['in','out'], description: 'Stroke handle side.' },
+      mode: { type: 'string', enum: ['corner','smooth','symmetric'], description: 'Stroke node mode.' },
+      x: num('World-space X position.'),
+      y: num('World-space Y position.'),
+      t: num('Segment insertion parameter.', { minimum: .02, maximum: .98 }),
+      style: obj({
+        color: str('Segment color token.'),
+        size: num('Segment size.', { minimum: Number.EPSILON, maximum: 100000 }),
+        opacity: num('Segment opacity.', { minimum: 0, maximum: 1 }),
+        pressure: num('Segment pressure influence.', { minimum: 0, maximum: 1 }),
+        flow: num('Segment flow.', { minimum: 0, maximum: 1 }),
+        wetness: num('Segment wetness.', { minimum: 0, maximum: 1 }),
+        grain: num('Segment grain.', { minimum: 0, maximum: 1 }),
+        bristle: num('Segment bristle.', { minimum: 0, maximum: 1 })
+      }, [], 'Bounded segment style patch.'),
+      patch: obj({
+        color: str('Stroke color token.'),
+        size: num('Stroke size.', { minimum: Number.EPSILON, maximum: 100000 }),
+        opacity: num('Stroke opacity.', { minimum: 0, maximum: 1 }),
+        kind: { type: 'string', enum: ['pen','pencil','marker','brush','drybrush','airbrush'], description: 'Existing native Stroke kind.' },
+        smoothing: num('Smoothing.', { minimum: 0, maximum: .95 }),
+        pressure: num('Pressure influence.', { minimum: 0, maximum: 1 }),
+        taper: num('Taper.', { minimum: 0, maximum: 1 }),
+        grain: num('Grain.', { minimum: 0, maximum: 1 }),
+        softness: num('Softness.', { minimum: 0, maximum: 1 }),
+        flow: num('Flow.', { minimum: 0, maximum: 1 }),
+        wetness: num('Wetness.', { minimum: 0, maximum: 1 }),
+        bristle: num('Bristle.', { minimum: 0, maximum: 1 }),
+        mediaModel: { type: 'string', enum: ['natural-v2'], description: 'Existing natural-media model.' }
+      }, [], 'Bounded native Stroke appearance patch.')
+    }, ['action'], 'Action-specific fields are validated by the existing bounded Stroke authority.'),
     1, 1
   ),
   'stroke.erase.v1': editTaskSchema(
