@@ -166,7 +166,8 @@ Reference geometry:
 ```text
 expanded width ≈ 252 px / elastic
 panel header/tab band ≈ 28 px
-stack splitter ≈ 3 px
+captured Photoshop splitter envelope ≈ 3 px
+INK light-theme visible junction = 1 px; resize hit envelope may remain ≈5 px transparent
 
 1280×994 reference state:
 group A ≈ 269 px
@@ -778,7 +779,7 @@ INK image-effect filterStack is not Photoshop layer-kind/search filter. Previous
 ## 36. USER functional modular classification — 2026-10-01
 First classify Photoshop Chinese text by functional role, then measure size, weight and line height within each role. Determine the number of actual categories from reference evidence; do not predeclare or treat inferred screenshot metrics as official Adobe standards.
 Next inventory INK grayscale values by functional role (text, surface, border and interaction state), recording effective rendered values and source ownership. Distinguish intentional role/state differences from accidental duplicate styles; class counts remain unmeasured until inventory.
-USER requires the junction separators between upper/middle/lower panel groups to be slightly darker than ordinary within-group separators. Define panel-group junction and internal separator as separate shared semantic tokens; select numeric grayscale values through reference/current-build comparison. Preserve consistent thickness unless evidence requires another distinction. Do not style each junction by subjective local judgment.
+USER requires the junction separators between upper/middle/lower panel groups to be slightly darker than ordinary within-group separators, but the current 3 px visible seam is too heavy. Define panel-group junction and internal separator as separate shared semantic tokens. The light-theme panel-group junction uses a 1 px visible line; resize affordance may use an approximately 5 px transparent hit envelope centered on that line. Do not expose the hit envelope as visible thickness. Select grayscale through reference/current-build comparison and do not style each junction by subjective local judgment.
 Functional categories govern all instances; typography, grayscale and separators must share rules rather than vary independently by content. This records design intent only; numeric choices, inventory and implementation remain open.
 
 ## 37. Measured modular baseline — 2026-10-01
