@@ -1,5 +1,28 @@
 # INK Current Work Order
 
+## USER clarification — 圖紙 / 手繪板切換仍未完成 — 2026-10-02
+
+USER current screenshot confirms the current main UI still does not expose a usable **圖紙 ↔ 手繪板** switch.
+
+Interpretation:
+- `圖紙` = Layout / page-oriented document view;
+- `手繪板` = Creation / freehand drawing workspace;
+- this is the same product boundary as C04 Creation / Layout, but USER terminology is now authoritative for the visible interaction requirement.
+
+There are two separate open requirements:
+1. **UI exposure** — the switch is not present/usable in the current main screenshot;
+2. **state authority** — prior post-SUP11 evidence showed the existing Creation/Layout authority remained stuck in `layout`, so merely restoring a button is insufficient.
+
+Therefore:
+```text
+C04_UI_SWITCH_VISIBLE = OPEN
+C04_TWO_STATE_BEHAVIOR = OPEN
+DO_NOT_SOLVE_WITH_UI_ONLY
+DO_NOT_CREATE_SECOND_WORKSPACE_STATE_AUTHORITY
+```
+
+Any later implementation must restore one visible switch and make both states actually function through the existing C04 authority.
+
 ## Current integration — accepted Core spatial-index repair promotion — 2026-10-02
 
 USER authorized follow-up integration of the accepted Core repair.
