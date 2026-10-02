@@ -255,6 +255,28 @@ All sliders:
 
 Current Reference panel slider must be migrated to this grammar.
 
+### Fixed-height row optical centering
+
+Any UI element expressed as a fixed-height row must optically center its visible content vertically.
+
+Applies to:
+- panel tabs;
+- parameter rows;
+- Reference summary/action rows;
+- Layers opacity/lock rows;
+- footer/tool rows;
+- right-aligned row state text such as 選用 / 唯讀;
+- compact menu/control rows where a fixed row height is used.
+
+Rules:
+- use one row-height authority and center child content inside that box;
+- text, icons, inputs and right-side state labels must share the same vertical center;
+- do not compensate with unrelated per-row top/bottom padding;
+- do not rely on `line-height == row height` alone when CJK font metrics leave the visible glyph envelope optically high or low;
+- prefer flex/grid `align-items:center` plus the shared text line-height;
+- review the **visible glyph envelope**, not only computed CSS boxes;
+- same-class row centers should match within approximately ±1 px at the 1280×1024 reference render.
+
 ## 12. Panel-content grammar
 
 Normal tool panel:
