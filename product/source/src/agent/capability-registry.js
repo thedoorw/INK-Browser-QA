@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_IMAGE_ADJUSTMENT_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -206,6 +206,15 @@ const editSchemas = {
       params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing adjustment parameters; maximum 8 KiB / depth 4 / 64 keys.' },
       opacity: num('Adjustment opacity.', { minimum: 0, maximum: 1, default: 1 })
     }, ['type'], 'Existing image-core createAdjustment() arguments.'),
+    1
+  ),
+  'image.filter.add.v1': editTaskSchema(
+    { type: 'string', const: 'image.filter.add.v1', description: 'Append one existing non-destructive filter to an editable raster image.' },
+    obj({
+      type: { type: 'string', enum: [...CHAT_IMAGE_FILTER_TYPES], description: 'Qualified existing filter type.' },
+      params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing filter parameters; maximum 8 KiB / depth 4 / 64 keys.' },
+      opacity: num('Filter opacity.', { minimum: 0, maximum: 1, default: 1 })
+    }, ['type'], 'Existing image-core createFilter() arguments.'),
     1
   ),
   'path.edit.v1': editTaskSchema(
@@ -871,8 +880,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
   if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
   if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
-  if (imageOnly) operationConstraints.push('Image adjustment params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
+  if (imageOnly) operationConstraints.push('Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
   if (operation === 'image.adjustment.add.v1') operationConstraints.push('Initial qualified adjustment allowlist: brightnessContrast, levels, curves, hueSaturation.');
+  if (operation === 'image.filter.add.v1') operationConstraints.push('Initial qualified filter allowlist: gaussianBlur, sharpen, noiseGrain, textureOverlay.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
   if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
   if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
@@ -915,6 +925,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
       ? [{ taskId: 'paint-session-1', operation, targets: [], arguments: { name: 'CHAT Paint Session', seed: 17, strokes: [{ brushId: 'pencil', color: '#202020', samples: [{ x: 20, y: 20, pressure: .3, timestamp: 0 }, { x: 120, y: 80, pressure: .8, timestamp: 24 }] }] } }]
       : operation === 'image.adjustment.add.v1'
         ? [{ taskId: 'image-adjust-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'brightnessContrast', params: { brightness: 12, contrast: 8 }, opacity: 1 } }]
+      : operation === 'image.filter.add.v1'
+        ? [{ taskId: 'image-filter-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'gaussianBlur', params: { radius: 2 }, opacity: 1 } }]
       : operation === 'object.translate.v1'
       ? [{ taskId: 'translate-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'object-1' }], arguments: { dx: 10, dy: 5 } }]
       : operation === 'path.repaint.v1'
