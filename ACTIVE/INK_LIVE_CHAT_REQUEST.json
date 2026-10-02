@@ -1,291 +1,137 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "round1-batch-C004-C005-C006-C012-001",
+  "requestId": "round1-batch-C010-C011-C014-C015-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "66cdb5b4ddc322a2b1027cab2627426f868027d3",
   "steps": [
     {
-      "id": "c004p",
-      "tool": "use_ink",
+      "id": "import",
+      "tool": "import_ink_reference",
       "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C004 poster overlap probe",
-          "steps": [
-            {
-              "stepId": "bg",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "rectangle",
-                "name": "C004 Block",
-                "x": 80,
-                "y": 80,
-                "width": 260,
-                "height": 170,
-                "fill": "#f4efe6",
-                "stroke": "#202020",
-                "strokeWidth": 2
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "title",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "CONCEPT 04",
-                "x": 110,
-                "y": 140,
-                "color": "#202020",
-                "fontSize": 30,
-                "fontWeight": 700
-              },
-              "dependsOn": [
-                "bg"
-              ]
-            }
-          ]
+        "options": {
+          "name": "rose-window-primary.png",
+          "type": "image/png",
+          "intent": "Raster/reference placement probes C010 C011 C014 C015"
         }
+      },
+      "file": {
+        "path": "qa/fixtures/rose-window/rose-window-primary.png",
+        "name": "rose-window-primary.png",
+        "type": "image/png"
       }
     },
     {
-      "id": "c004a",
-      "tool": "use_ink",
+      "id": "previewBefore",
+      "tool": "get_ink_preview",
       "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c004p.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c004e",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c004p.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c004a.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c005p",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C005 invitation probe",
-          "steps": [
-            {
-              "stepId": "card",
-              "operation": "frame.create.v1",
-              "targets": [],
-              "arguments": {
-                "name": "C005 Invitation",
-                "x": 400,
-                "y": 80,
-                "width": 300,
-                "height": 200
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "headline",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "DANCE NIGHT",
-                "x": 440,
-                "y": 130,
-                "color": "#111111",
-                "fontSize": 28,
-                "fontWeight": 700
-              },
-              "dependsOn": [
-                "card"
-              ]
-            },
-            {
-              "stepId": "detail",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "FRIDAY · 8 PM",
-                "x": 440,
-                "y": 185,
-                "color": "#555555",
-                "fontSize": 17
-              },
-              "dependsOn": [
-                "headline"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "c005a",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c005p.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c005e",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c005p.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c005a.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c006p",
-      "tool": "use_ink",
-      "input": {
-        "action": "propose",
-        "plan": {
-          "schema": "INK-CHAT-CREATIVE-PLAN",
-          "version": 1,
-          "intentSummary": "C006 flyer output probe",
-          "steps": [
-            {
-              "stepId": "panel",
-              "operation": "path.create.v1",
-              "targets": [],
-              "arguments": {
-                "shape": "rectangle",
-                "name": "C006 Flyer",
-                "x": 80,
-                "y": 320,
-                "width": 300,
-                "height": 210,
-                "fill": "#ffffff",
-                "stroke": "#222222",
-                "strokeWidth": 2
-              },
-              "dependsOn": []
-            },
-            {
-              "stepId": "headline",
-              "operation": "text.create.v1",
-              "targets": [],
-              "arguments": {
-                "text": "BOUTIQUE OPENING",
-                "x": 110,
-                "y": 370,
-                "color": "#222222",
-                "fontSize": 24,
-                "fontWeight": 700
-              },
-              "dependsOn": [
-                "panel"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "id": "c006a",
-      "tool": "use_ink",
-      "input": {
-        "action": "approve",
-        "planId": {
-          "$ref": "c006p.result.planId"
-        }
-      }
-    },
-    {
-      "id": "c006e",
-      "tool": "use_ink",
-      "input": {
-        "action": "execute",
-        "planId": {
-          "$ref": "c006p.result.planId"
-        },
-        "approvalToken": {
-          "$ref": "c006a.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "c006svg",
-      "tool": "export_ink_asset",
-      "input": {
-        "format": "svg",
-        "scope": "artboard",
+        "scope": "content",
+        "maxDimension": 800,
         "background": true
       }
     },
     {
-      "id": "c006pdf",
-      "tool": "export_ink_asset",
-      "input": {
-        "format": "pdf",
-        "scope": "artboard",
-        "ppi": 300,
-        "background": true
-      }
-    },
-    {
-      "id": "c012p",
+      "id": "clonePropose",
       "tool": "use_ink",
       "input": {
         "action": "propose",
         "plan": {
           "schema": "INK-CHAT-CREATIVE-PLAN",
           "version": 1,
-          "intentSummary": "C012 quote card overlap probe",
+          "intentSummary": "C014/C015 reusable raster-source placement probe",
           "steps": [
             {
-              "stepId": "box",
-              "operation": "path.create.v1",
-              "targets": [],
+              "stepId": "clone",
+              "operation": "object.clone.v1",
+              "targets": [
+                {
+                  "$ref": "import.createdRefs.0"
+                }
+              ],
               "arguments": {
-                "shape": "rectangle",
-                "name": "C012 Quote Card",
-                "x": 420,
-                "y": 320,
-                "width": 300,
-                "height": 210,
-                "fill": "#fafafa",
-                "stroke": "#dddddd",
-                "strokeWidth": 1
+                "dx": 260,
+                "dy": 40
               },
               "dependsOn": []
             },
             {
-              "stepId": "quote",
-              "operation": "text.create.v1",
-              "targets": [],
+              "stepId": "move",
+              "operation": "object.translate.v1",
+              "targets": [
+                {
+                  "$ref": "import.createdRefs.0"
+                }
+              ],
               "arguments": {
-                "text": "MOVE WITH INTENT",
-                "x": 460,
-                "y": 390,
-                "color": "#111111",
-                "fontSize": 25,
-                "fontWeight": 700
+                "dx": 40,
+                "dy": 20
+              },
+              "dependsOn": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "cloneApprove",
+      "tool": "use_ink",
+      "input": {
+        "action": "approve",
+        "planId": {
+          "$ref": "clonePropose.result.planId"
+        }
+      }
+    },
+    {
+      "id": "cloneExec",
+      "tool": "use_ink",
+      "input": {
+        "action": "execute",
+        "planId": {
+          "$ref": "clonePropose.result.planId"
+        },
+        "approvalToken": {
+          "$ref": "cloneApprove.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "scalePropose",
+      "tool": "use_ink",
+      "input": {
+        "action": "propose",
+        "plan": {
+          "schema": "INK-CHAT-CREATIVE-PLAN",
+          "version": 1,
+          "intentSummary": "C015 transformed placement probe",
+          "steps": [
+            {
+              "stepId": "scale",
+              "operation": "object.scale.v1",
+              "targets": [
+                {
+                  "$ref": "cloneExec.result.stepResults.0.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "sx": 0.65,
+                "sy": 0.65
+              },
+              "dependsOn": []
+            },
+            {
+              "stepId": "rotate",
+              "operation": "object.rotate.v1",
+              "targets": [
+                {
+                  "$ref": "cloneExec.result.stepResults.0.targets.0.ref"
+                }
+              ],
+              "arguments": {
+                "degrees": -7
               },
               "dependsOn": [
-                "box"
+                "scale"
               ]
             }
           ]
@@ -293,32 +139,34 @@
       }
     },
     {
-      "id": "c012a",
+      "id": "scaleApprove",
       "tool": "use_ink",
       "input": {
         "action": "approve",
         "planId": {
-          "$ref": "c012p.result.planId"
+          "$ref": "scalePropose.result.planId"
         }
       }
     },
     {
-      "id": "c012e",
+      "id": "scaleExec",
       "tool": "use_ink",
       "input": {
         "action": "execute",
         "planId": {
-          "$ref": "c012p.result.planId"
+          "$ref": "scalePropose.result.planId"
         },
         "approvalToken": {
-          "$ref": "c012a.result.approvalToken"
+          "$ref": "scaleApprove.result.approvalToken"
         }
       }
     },
     {
       "id": "context",
       "tool": "get_ink_context",
-      "input": {}
+      "input": {
+        "maxObjects": 20
+      }
     },
     {
       "id": "history",
@@ -326,11 +174,21 @@
       "input": {}
     },
     {
-      "id": "preview",
+      "id": "previewAfter",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 1200,
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "exportPng",
+      "tool": "export_ink_asset",
+      "input": {
+        "format": "png",
+        "scope": "content",
+        "scale": 1,
         "background": true
       }
     }
