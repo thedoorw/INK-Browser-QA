@@ -1,0 +1,19 @@
+✔ A4 portrait at 300 PPI resolves to print-ready dimensions (1.549588ms)
+✔ A4 landscape swaps physical and pixel dimensions (0.19871ms)
+✔ bleed, safety and crop-mark export geometry remain physically bounded (0.589769ms)
+✔ new documents start in full creation space while retaining an A4 layout definition (4.848946ms)
+✔ PDF output encodes one exact A4 page in points (0.837594ms)
+✔ live Canvas tile renderer completes dirty tiles and serves a clean atlas (1.344659ms)
+✔ creation and layout spaces share objects while retaining independent cameras (1.125779ms)
+✔ layout viewport is finite, bounded and independent from original objects (0.541117ms)
+✔ quadtree returns only intersecting items (1.812836ms)
+✔ page spatial index retains layer and z-order metadata (0.796582ms)
+✔ page spatial index updates one object incrementally (0.698875ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 142.892699
