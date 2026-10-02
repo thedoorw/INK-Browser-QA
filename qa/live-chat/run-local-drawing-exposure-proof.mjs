@@ -208,11 +208,11 @@ async function main(){
     assert.equal(result.executed.result.stepResults.length,2);
     assert.ok(result.executed.result.stepResults.every(step=>step.ok===true&&step.changed===true));
 
-    assert.equal(result.editProposed.status,'PROPOSED');
-    assert.equal(result.editApproved.status,'APPROVED');
+    if(result.editProposed.status!=='PROPOSED') throw new Error('STROKE_EDIT_PROPOSE_FAILED:'+JSON.stringify(result.editProposed));
+    if(result.editApproved.status!=='APPROVED') throw new Error('STROKE_EDIT_APPROVE_FAILED:'+JSON.stringify(result.editApproved));
     assert.equal(result.editExecuted.status,'EXECUTED');
-    assert.equal(result.eraseProposed.status,'PROPOSED');
-    assert.equal(result.eraseApproved.status,'APPROVED');
+    if(result.eraseProposed.status!=='PROPOSED') throw new Error('STROKE_ERASE_PROPOSE_FAILED:'+JSON.stringify(result.eraseProposed));
+    if(result.eraseApproved.status!=='APPROVED') throw new Error('STROKE_ERASE_APPROVE_FAILED:'+JSON.stringify(result.eraseApproved));
     assert.equal(result.eraseExecuted.status,'EXECUTED');
 
     const strokes=(result.context.result.objects||[]).filter(item=>item.type==='stroke');
