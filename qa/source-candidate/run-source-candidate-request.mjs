@@ -123,7 +123,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['paint-session-create','web-raster-bridge'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['paint-session-create','web-raster-bridge','raster-import-named-tool'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -210,6 +210,46 @@ const RASTER_CASE = String.raw`(async()=>{
   return {passed:true,before,after,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
 })()`;
 
+
+const RASTER_NAMED_TOOL_CASE = String.raw\`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['import_ink_raster','get_ink_preview','undo_ink','redo_ink']) if(!toolNames.includes(name)) throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+  const flatObjects=()=>app.page().layers.flatMap(layer=>layer.objects||[]);
+  const hashCanvas=()=>{const text=app.el.canvas.toDataURL('image/png');let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16);};
+  const before={count:flatObjects().length,undo:app.history.undoStack.length,canvas:hashCanvas()};
+  const source=document.createElement('canvas');source.width=32;source.height=24;
+  const ctx=source.getContext('2d');ctx.fillStyle='#d64d6b';ctx.fillRect(0,0,16,24);ctx.fillStyle='#375b9b';ctx.fillRect(16,0,16,24);ctx.fillStyle='rgba(255,255,255,.5)';ctx.fillRect(8,6,16,12);
+  const blob=await new Promise(resolve=>source.toBlob(resolve,'image/png')); if(!blob) throw new Error('PNG_BLOB_FAILED');
+  const file=new File([blob],'candidate-raster-named-tool.png',{type:'image/png'});
+  const imported=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file},options:{name:'QA Named Raster',type:'image/png',intent:'B1 candidate QA'}}));
+  if(imported?.status==='FAILED') throw new Error('RASTER_IMPORT_FAILED:'+JSON.stringify(imported.diagnostics||[]));
+  const ref=imported?.createdRefs?.[0]; if(!ref?.objectId) throw new Error('RASTER_CREATED_REF_MISSING');
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const object=flatObjects().find(item=>item.id===ref.objectId);
+  if(!object?.rasterState?.colorRaster) throw new Error('RASTER_STATE_MISSING');
+  const raster=object.rasterState.colorRaster;
+  if(raster.width!==32||raster.height!==24||raster.channelCount!==3||raster.bitDepth!==8) throw new Error('RASTER_STATE_DIMENSION_OR_FORMAT');
+  if(object.metadata?.source?.type!=='editable-web-raster') throw new Error('RASTER_PROVENANCE_TYPE');
+  const serialized=JSON.stringify(imported);
+  if(serialized.includes('data:image/')||serialized.includes('base64,')) throw new Error('RASTER_RESULT_BINARY_LEAK');
+  const after={count:flatObjects().length,undo:app.history.undoStack.length,canvas:hashCanvas(),id:object.id,width:raster.width,height:raster.height,sourceSha256:object.metadata?.rasterImport?.source?.sha256||null};
+  if(after.count!==before.count+1) throw new Error('RASTER_OBJECT_COUNT');
+  if(after.undo!==before.undo+1) throw new Error('RASTER_HISTORY_COUNT');
+  if(after.canvas===before.canvas) throw new Error('RASTER_RENDER_UNCHANGED');
+  const preview=await Promise.resolve(api.tools.invoke('get_ink_preview',{}));
+  if(preview?.status==='FAILED') throw new Error('PREVIEW_FAILED');
+  const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));
+  if(undone?.status==='FAILED'||flatObjects().some(item=>item.id===object.id)) throw new Error('RASTER_UNDO_FAILED');
+  const redone=await Promise.resolve(api.tools.invoke('redo_ink',{}));
+  const restored=flatObjects().find(item=>item.id===object.id);
+  if(redone?.status==='FAILED'||!restored?.rasterState?.colorRaster) throw new Error('RASTER_REDO_FAILED');
+  return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
+})()\`;
+
 async function run(){
   const requestPath=path.resolve(process.argv[2]);
   const candidateRoot=path.resolve(process.argv[3]);
@@ -230,7 +270,8 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseResult=await evaluate(cdp,sessionId,request.case==='paint-session-create'?PAINT_CASE:RASTER_CASE,90000);
+    const caseExpression=request.case==='paint-session-create'?PAINT_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:RASTER_NAMED_TOOL_CASE);
+    const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
     await writeFile(screenshotPath,Buffer.from(shot.data,'base64'));
