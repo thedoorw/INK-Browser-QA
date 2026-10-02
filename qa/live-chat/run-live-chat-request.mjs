@@ -130,10 +130,49 @@ async function waitForInk(cdp, sessionId, expectedSourceSha) {
 function validateRequest(request) {
   assert.equal(request?.liveUrl, LIVE_URL, 'Unsupported live URL');
   assert.match(String(request?.requestId || ''), /^[A-Za-z0-9_.:-]{1,120}$/);
-  assert.match(String(request?.tool || ''), /^[a-z0-9_]{1,80}$/);
-  assert.ok(request?.input == null || (typeof request.input === 'object' && !Array.isArray(request.input)), 'input must be an object');
+  const hasSingle = typeof request?.tool === 'string';
+  const hasSteps = Array.isArray(request?.steps) && request.steps.length > 0;
+  assert.ok(hasSingle !== hasSteps, 'Request must contain exactly one of tool or steps');
+  if (hasSingle) {
+    assert.match(String(request.tool), /^[a-z0-9_]{1,80}$/);
+    assert.ok(request?.input == null || (typeof request.input === 'object' && !Array.isArray(request.input)), 'input must be an object');
+  }
+  if (hasSteps) {
+    assert.ok(request.steps.length <= 32, 'Too many steps');
+    const ids = new Set();
+    for (const step of request.steps) {
+      assert.match(String(step?.id || ''), /^[A-Za-z0-9_.:-]{1,80}$/);
+      assert.ok(!ids.has(step.id), 'Duplicate step id');
+      ids.add(step.id);
+      assert.match(String(step?.tool || ''), /^[a-z0-9_]{1,80}$/);
+      assert.ok(step?.input == null || (typeof step.input === 'object' && !Array.isArray(step.input)), 'step input must be an object');
+    }
+  }
   if (request?.expectedSourceSha) assert.match(String(request.expectedSourceSha), /^[a-f0-9]{40}$/);
   return request;
+}
+
+function valueAtPath(root, pathText) {
+  const parts = String(pathText || '').split('.').filter(Boolean);
+  let value = root;
+  for (const part of parts) {
+    if (value == null || !Object.prototype.hasOwnProperty.call(Object(value), part)) {
+      throw new Error('INK_SEQUENCE_REF_NOT_FOUND:' + pathText);
+    }
+    value = value[part];
+  }
+  return value;
+}
+
+function resolveRefs(value, results) {
+  if (Array.isArray(value)) return value.map(item => resolveRefs(item, results));
+  if (!value || typeof value !== 'object') return value;
+  if (Object.keys(value).length === 1 && typeof value.$ref === 'string') {
+    const [stepId, ...rest] = value.$ref.split('.');
+    if (!results.has(stepId)) throw new Error('INK_SEQUENCE_STEP_NOT_FOUND:' + stepId);
+    return valueAtPath(results.get(stepId), rest.join('.'));
+  }
+  return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, resolveRefs(item, results)]));
 }
 
 async function run() {
@@ -174,22 +213,42 @@ async function run() {
     assert.ok(!nav.errorText, nav.errorText || 'Navigation failed');
     const identity = await waitForInk(cdp, sessionId, request.expectedSourceSha || null);
 
-    const payload = Buffer.from(JSON.stringify({ tool: request.tool, input: request.input || {} }), 'utf8').toString('base64');
-    const execution = await cdp.send('Runtime.evaluate', {
-      expression: `(async () => {
-        const request = JSON.parse(atob(${JSON.stringify(payload)}));
-        const api = window.INK_APP?.inkPublicApi;
-        if (!api?.tools?.invoke || !api?.tools?.registry) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
-        const names = api.tools.registry().map(item => item.name);
-        if (!names.includes(request.tool)) throw new Error('INK_NAMED_TOOL_NOT_FOUND:' + request.tool);
-        return await Promise.resolve(api.tools.invoke(request.tool, request.input));
-      })()`,
-      returnByValue: true,
-      awaitPromise: true
-    }, sessionId, 60000);
+    const invoke = async (tool, input = {}) => {
+      const payload = Buffer.from(JSON.stringify({ tool, input }), 'utf8').toString('base64');
+      const execution = await cdp.send('Runtime.evaluate', {
+        expression: `(async () => {
+          const request = JSON.parse(atob(${JSON.stringify(payload)}));
+          const api = window.INK_APP?.inkPublicApi;
+          if (!api?.tools?.invoke || !api?.tools?.registry) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+          const names = api.tools.registry().map(item => item.name);
+          if (!names.includes(request.tool)) throw new Error('INK_NAMED_TOOL_NOT_FOUND:' + request.tool);
+          return await Promise.resolve(api.tools.invoke(request.tool, request.input));
+        })()`,
+        returnByValue: true,
+        awaitPromise: true
+      }, sessionId, 60000);
+      if (execution.exceptionDetails) {
+        throw new Error(execution.exceptionDetails.text || 'INK tool execution failed');
+      }
+      return execution.result?.value ?? null;
+    };
 
-    if (execution.exceptionDetails) {
-      throw new Error(execution.exceptionDetails.text || 'INK tool execution failed');
+    let executionResult;
+    if (Array.isArray(request.steps)) {
+      const results = new Map();
+      const steps = [];
+      for (const step of request.steps) {
+        const input = resolveRefs(step.input || {}, results);
+        const result = await invoke(step.tool, input);
+        results.set(step.id, result);
+        steps.push({ id: step.id, tool: step.tool, result });
+        if (result?.status === 'FAILED' && step.allowFailure !== true) {
+          throw new Error('INK_SEQUENCE_STEP_FAILED:' + step.id + ':' + (result.diagnostics?.[0]?.code || 'UNKNOWN'));
+        }
+      }
+      executionResult = { steps };
+    } else {
+      executionResult = await invoke(request.tool, request.input || {});
     }
 
     const shot = await cdp.send('Page.captureScreenshot', {
@@ -204,11 +263,11 @@ async function run() {
       schema: 'INK-LIVE-CHAT-RESULT',
       version: 1,
       requestId: request.requestId,
-      tool: request.tool,
+      tool: request.tool || null,
       liveUrl: LIVE_URL,
       expectedSourceSha: request.expectedSourceSha || null,
       runtimeIdentity: identity,
-      result: execution.result?.value ?? null,
+      result: executionResult,
       status: 'COMPLETED'
     };
     await writeFile(outputPath, JSON.stringify(result, null, 2));
