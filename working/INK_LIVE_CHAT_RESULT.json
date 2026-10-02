@@ -1,10 +1,2545 @@
 {
   "schema": "INK-LIVE-CHAT-RESULT",
   "version": 1,
-  "requestId": "clusterB-B2-liquify-live-002",
+  "requestId": "clusterB-B2-liquify-live-003",
   "tool": null,
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "status": "FAILED",
-  "error": "INK live readiness timeout: {\"href\":\"https://thedoorw.github.io/INK/\",\"readyState\":\"complete\",\"apiReady\":false,\"sourceSha\":\"cc9b623258123da0e00e31a9e686357fba0d4ec0\",\"toolCount\":0} diagnostics={\"errors\":[],\"scripts\":[{\"type\":null,\"src\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/web-shell.js?v=0.1-ui-20261002-sup08-11\"},{\"type\":null,\"src\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/ui/branding-settings.js?v=0.1-ui-20261002-sup08-11\"},{\"type\":\"module\",\"src\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ink.js?v=0.1-ui-20261002-sup08-11\"}],\"resources\":[{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/a4-hero-visual-checks.js\",\"initiatorType\":\"script\",\"duration\":95,\"transferSize\":4708},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/recipe/painting-recipe-validator.js\",\"initiatorType\":\"script\",\"duration\":89,\"transferSize\":2788},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/crown-painting-plan-validator.js\",\"initiatorType\":\"script\",\"duration\":2409,\"transferSize\":2256},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/petal-recipe-generation.js\",\"initiatorType\":\"script\",\"duration\":84,\"transferSize\":4810},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/crown-visual-checks.js\",\"initiatorType\":\"script\",\"duration\":93,\"transferSize\":2006},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/structure/geometry-measurement-gates.js\",\"initiatorType\":\"script\",\"duration\":87,\"transferSize\":5846},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/paint-core.js\",\"initiatorType\":\"script\",\"duration\":68,\"transferSize\":2414},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/stroke-session.js\",\"initiatorType\":\"script\",\"duration\":69,\"transferSize\":4206},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/semantic-migration.js\",\"initiatorType\":\"script\",\"duration\":70,\"transferSize\":762},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/assets/asset-migration.js\",\"initiatorType\":\"script\",\"duration\":70,\"transferSize\":581},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/binary.js\",\"initiatorType\":\"script\",\"duration\":35,\"transferSize\":1791},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/painting/region-paint-operations.js\",\"initiatorType\":\"script\",\"duration\":29,\"transferSize\":1179},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/a4-hero-plan-schema.js\",\"initiatorType\":\"script\",\"duration\":16,\"transferSize\":1033},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/recipe/painting-recipe-schema.js\",\"initiatorType\":\"script\",\"duration\":13,\"transferSize\":1272},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/complete-hero-structure.js\",\"initiatorType\":\"script\",\"duration\":15,\"transferSize\":6195},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/complete-hero-recipe-generation.js\",\"initiatorType\":\"script\",\"duration\":16,\"transferSize\":5761},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/document-bridge.js\",\"initiatorType\":\"script\",\"duration\":16,\"transferSize\":6440},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/output-handle-registry.js\",\"initiatorType\":\"script\",\"duration\":24,\"transferSize\":2131},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/export-asset.js\",\"initiatorType\":\"script\",\"duration\":19,\"transferSize\":2751},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/visual-feedback.js\",\"initiatorType\":\"script\",\"duration\":24,\"transferSize\":5240},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/creative-library-search.js\",\"initiatorType\":\"script\",\"duration\":26,\"transferSize\":4959},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/recipe/refined-painting-parameters.js\",\"initiatorType\":\"script\",\"duration\":18,\"transferSize\":4747},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/action/flora-action-schema.js\",\"initiatorType\":\"script\",\"duration\":44157,\"transferSize\":300},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/drawing-workflow-import.js\",\"initiatorType\":\"script\",\"duration\":21,\"transferSize\":5266},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/drawing-quality.js\",\"initiatorType\":\"script\",\"duration\":22,\"transferSize\":2065},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/stroke-quality-tools.js\",\"initiatorType\":\"script\",\"duration\":21,\"transferSize\":2497},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/natural-media-state.js\",\"initiatorType\":\"script\",\"duration\":796,\"transferSize\":1576},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/relationship-graph.js\",\"initiatorType\":\"script\",\"duration\":15,\"transferSize\":1092},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/semantic-validator.js\",\"initiatorType\":\"script\",\"duration\":18,\"transferSize\":907},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/action/flora-action-errors.js\",\"initiatorType\":\"script\",\"duration\":818,\"transferSize\":481},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/action/flora-action-validator.js\",\"initiatorType\":\"script\",\"duration\":2310,\"transferSize\":3565},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/imagetracer-1.2.6.js\",\"initiatorType\":\"script\",\"duration\":1065,\"transferSize\":12486},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/adapters.js\",\"initiatorType\":\"script\",\"duration\":1262,\"transferSize\":3461},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/workspace.js\",\"initiatorType\":\"script\",\"duration\":2185,\"transferSize\":5720},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/psd.js\",\"initiatorType\":\"script\",\"duration\":2505,\"transferSize\":4186},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/exr.js\",\"initiatorType\":\"script\",\"duration\":513,\"transferSize\":3827},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/tiff.js\",\"initiatorType\":\"script\",\"duration\":36462,\"transferSize\":4314},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/adapters/raw-adapter.js\",\"initiatorType\":\"script\",\"duration\":1456,\"transferSize\":1342},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/core.js\",\"initiatorType\":\"script\",\"duration\":988,\"transferSize\":3012},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/crown-painting-plan-schema.js\",\"initiatorType\":\"script\",\"duration\":907,\"transferSize\":977},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/structure.js\",\"initiatorType\":\"script\",\"duration\":462,\"transferSize\":2430},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/recipe/recipe-engine.js\",\"initiatorType\":\"script\",\"duration\":6181,\"transferSize\":12729},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/input/device-validation.js\",\"initiatorType\":\"script\",\"duration\":521,\"transferSize\":1923},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/input/stylus-test.js\",\"initiatorType\":\"script\",\"duration\":3228,\"transferSize\":2931},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/index.js\",\"initiatorType\":\"script\",\"duration\":649,\"transferSize\":421},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/install-ai.js\",\"initiatorType\":\"script\",\"duration\":2367,\"transferSize\":8201},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/canonical-operation.js\",\"initiatorType\":\"script\",\"duration\":935,\"transferSize\":2269},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/format-detector.js\",\"initiatorType\":\"script\",\"duration\":921,\"transferSize\":1933},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/parsers.js\",\"initiatorType\":\"script\",\"duration\":1001,\"transferSize\":7714},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/security.js\",\"initiatorType\":\"script\",\"duration\":2003,\"transferSize\":2194},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/coverage-engine.js\",\"initiatorType\":\"script\",\"duration\":1046,\"transferSize\":3134},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/compiler.js\",\"initiatorType\":\"script\",\"duration\":1265,\"transferSize\":4104},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/comparison-engine.js\",\"initiatorType\":\"script\",\"duration\":2419,\"transferSize\":4401},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/importer.js\",\"initiatorType\":\"script\",\"duration\":1467,\"transferSize\":3483},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/reference-runner.js\",\"initiatorType\":\"script\",\"duration\":61385,\"transferSize\":0},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/reference-package.js\",\"initiatorType\":\"script\",\"duration\":3132,\"transferSize\":1385},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/reference-pipeline.js\",\"initiatorType\":\"script\",\"duration\":3435,\"transferSize\":1099},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/ai-core.js\",\"initiatorType\":\"script\",\"duration\":1002,\"transferSize\":19621},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/chat-runtime.js\",\"initiatorType\":\"script\",\"duration\":1734,\"transferSize\":18161},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/plan-analyzers.js\",\"initiatorType\":\"script\",\"duration\":778,\"transferSize\":6714},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/research/research-creation-bridge.js\",\"initiatorType\":\"script\",\"duration\":1576,\"transferSize\":8699},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/memory/creative-memory.js\",\"initiatorType\":\"script\",\"duration\":1707,\"transferSize\":7218},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/creative-intelligence-context.js\",\"initiatorType\":\"script\",\"duration\":2870,\"transferSize\":6677},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/grounded-creative-decision.js\",\"initiatorType\":\"script\",\"duration\":3648,\"transferSize\":3560},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/compare/visual-compare.js\",\"initiatorType\":\"script\",\"duration\":3250,\"transferSize\":5141},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/structure/parametric-structure.js\",\"initiatorType\":\"script\",\"duration\":2340,\"transferSize\":6710},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/material/material-library.js\",\"initiatorType\":\"script\",\"duration\":1127,\"transferSize\":4673},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/recompute/dependency-graph.js\",\"initiatorType\":\"script\",\"duration\":2448,\"transferSize\":5697},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/expression-ir.js\",\"initiatorType\":\"script\",\"duration\":36363,\"transferSize\":300},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/composition/composition-constraints.js\",\"initiatorType\":\"script\",\"duration\":1107,\"transferSize\":1969},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/vector-watercolor.js\",\"initiatorType\":\"script\",\"duration\":1793,\"transferSize\":7336},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/semantic-region-grounding.js\",\"initiatorType\":\"script\",\"duration\":3642,\"transferSize\":7040},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/provenance/provenance-graph.js\",\"initiatorType\":\"script\",\"duration\":34739,\"transferSize\":300},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/recompute/change-domain.js\",\"initiatorType\":\"script\",\"duration\":33892,\"transferSize\":300},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vector/geometry-kernel.js\",\"initiatorType\":\"script\",\"duration\":1201,\"transferSize\":4952},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/bezier-js-6.1.4/bezier.js\",\"initiatorType\":\"script\",\"duration\":1191,\"transferSize\":8254},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/clipper2-ts-2.0.1/clipper2.min.mjs\",\"initiatorType\":\"script\",\"duration\":28430,\"transferSize\":300},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/bezier-js-6.1.4/utils.js\",\"initiatorType\":\"script\",\"duration\":2758,\"transferSize\":7513},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/bezier-js-6.1.4/poly-bezier.js\",\"initiatorType\":\"script\",\"duration\":27314,\"transferSize\":300},{\"name\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/assets/favicon.svg?v=0.1\",\"initiatorType\":\"other\",\"duration\":16,\"transferSize\":437}]} protocol=[{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/precision-layout.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/composition.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/repaint-material.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/transform-advanced.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vector/fill-appearance.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/bounds.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/chat-bounded-edit.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/workspace.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/migration.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/file-envelope.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/integrity.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/model.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/storage.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/layout.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/pixel-compare.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/webgl/natural-media-webgl.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/canvas2d/multi-channel-ink-canvas2d.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/gpu-resource-budget.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/natural-media-run-utils.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/natural-media-controller.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/paper-profile.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/hierarchy.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/document/revision.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/canvas2d/natural-media-canvas2d.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/interactive-benchmark.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/tiled-export.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/tile-atlas.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/multi-channel-ink.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/natural-media-utils.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/release/runtime-health.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/release/external-diagnostics.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/export/pdf.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/pwa/update-manager.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/history/diff.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/spatial/quadtree.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/spatial/page-spatial-index.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/history/history.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/stroke-model.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/normalized-payload.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/color-management-core.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/raster-fill-tools.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/structure/hero-profile.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/painting/abstract-petal-benchmark.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/structure/hero-geometry.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/recipe/painting-recipe-compiler.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/semantic-model.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vector/svg-id-normalizer.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/repeat/repeat-identity.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vector/stroke-appearance.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vector/deformation.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/crown-painting-compiler.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/raster-processing-advanced.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/raster-selection-tools.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/ui/capability-contributions.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/a4-hero-plan-validator.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/painting/complete-crown-benchmark.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/petal-recipe-generation.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/live-canvas-tile-renderer.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/painting/three-petal-benchmark.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/complete-hero-painting-compiler.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/capability-registry.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/public-creative-api.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/polygon-clipping.umd.min.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/recipe/painting-recipe-validator.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/render/webgl/multi-channel-ink-webgl.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/a4-hero-visual-checks.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/ui/capability-raster-tools.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/painting/region-stroke-compiler.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/crown-visual-checks.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/structure/geometry-measurement-gates.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/paint-core.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/stroke-session.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/semantic-migration.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/binary.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/painting/region-paint-operations.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/assets/asset-migration.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/recipe/painting-recipe-schema.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/a4-hero-plan-schema.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/complete-hero-structure.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/hero/complete-hero-recipe-generation.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/document-bridge.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/recipe/refined-painting-parameters.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/export-asset.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/relationship-graph.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/output-handle-registry.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/drawing-workflow-import.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/visual-feedback.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/stroke-quality-tools.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/semantic-validator.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/agent/creative-library-search.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/drawing-quality.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/selection.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/action/flora-command-dispatcher.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/install.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/natural-media-state.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/format-interoperability.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/channel-core.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/stroke/edit.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/action/flora-action-errors.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/exr.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/imagetracer-1.2.6.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/adapters.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/crown-painting-plan-validator.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/raster-retouch-tools.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/adapters/raw-adapter.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/workspace.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/editor/text-object.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/core.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/action/flora-action-validator.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/crown/crown-painting-plan-schema.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/extraction/structure.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/psd.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/studio-core.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/input/device-validation.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/index.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/format-detector.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/canonical-operation.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/parsers.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/coverage-engine.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/compiler.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/importer.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/install-ai.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/security.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/comparison-engine.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/plan-analyzers.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/input/stylus-test.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/ai-core.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/reference-package.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/research/research-creation-bridge.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/memory/creative-memory.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/reference-pipeline.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/chat-runtime.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/recipe/recipe-engine.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/structure/parametric-structure.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/creative-intelligence-context.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/composition/composition-constraints.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/material/material-library.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/compare/visual-compare.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/ai/grounded-creative-decision.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/paint/vector-watercolor.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/recompute/dependency-graph.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/semantic/semantic-region-grounding.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vector/geometry-kernel.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/bezier-js-6.1.4/bezier.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/bezier-js-6.1.4/utils.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/image/formats/tiff.js\",\"status\":200,\"mimeType\":\"application/javascript\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/clipper2-ts-2.0.1/clipper2.min.mjs\",\"status\":404,\"mimeType\":\"text/plain\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"loadingFailed\",\"url\":\"2584.210\",\"errorText\":\"net::ERR_ABORTED\",\"blockedReason\":null,\"corsErrorStatus\":null},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/vendor/bezier-js-6.1.4/poly-bezier.js\",\"status\":404,\"mimeType\":\"text/plain\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"loadingFailed\",\"url\":\"2584.212\",\"errorText\":\"net::ERR_ABORTED\",\"blockedReason\":null,\"corsErrorStatus\":null},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/flora/action/flora-action-schema.js\",\"status\":404,\"mimeType\":\"text/plain\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"loadingFailed\",\"url\":\"2584.156\",\"errorText\":\"net::ERR_ABORTED\",\"blockedReason\":null,\"corsErrorStatus\":null},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/assets/favicon.svg?v=0.1\",\"status\":200,\"mimeType\":\"image/svg+xml\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/provenance/provenance-graph.js\",\"status\":404,\"mimeType\":\"text/plain\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"loadingFailed\",\"url\":\"2584.206\",\"errorText\":\"net::ERR_ABORTED\",\"blockedReason\":null,\"corsErrorStatus\":null},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/recompute/change-domain.js\",\"status\":404,\"mimeType\":\"text/plain\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"loadingFailed\",\"url\":\"2584.207\",\"errorText\":\"net::ERR_ABORTED\",\"blockedReason\":null,\"corsErrorStatus\":null},{\"kind\":\"response\",\"url\":\"https://cdn.jsdelivr.net/gh/thedoorw/INK-Browser-QA@cc9b623258123da0e00e31a9e686357fba0d4ec0/product/source/src/program-import/expression-ir.js\",\"status\":404,\"mimeType\":\"text/plain\",\"protocol\":\"h3\",\"fromDiskCache\":false,\"fromServiceWorker\":false},{\"kind\":\"loadingFailed\",\"url\":\"2584.202\",\"errorText\":\"net::ERR_ABORTED\",\"blockedReason\":null,\"corsErrorStatus\":null},{\"kind\":\"loadingFailed\",\"url\":\"2584.188\",\"errorText\":\"net::ERR_FAILED\",\"blockedReason\":null,\"corsErrorStatus\":{\"corsError\":\"MissingAllowOriginHeader\",\"failedParameter\":\"\"}}]",
-  "stderr": "s are \"tcp\" and on UNIX \"unix\")\n[2473:2473:1002/154655.866898:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2473:1002/154655.866963:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2502:1002/154655.866987:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2473:2502:1002/154655.867000:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2473:2473:1002/154655.879231:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2473:1002/154655.916821:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2502:1002/154655.926926:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2473:2473:1002/154656.621542:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2473:1002/154656.631890:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2502:1002/154656.632255:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2473:2473:1002/154656.665495:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2473:1002/154656.998587:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: org.freedesktop.DBus.Error.ServiceUnknown: The name org.freedesktop.UPower was not provided by any .service files\n[2473:2473:1002/154656.999710:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2502:1002/154656.999858:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2473:2473:1002/154657.221441:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2502:1002/154657.221526:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2473:2473:1002/154657.325217:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.NameHasOwner: object_path= /org/freedesktop/DBus: unknown error type: \n[2473:2505:1002/154702.584350:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n[2473:2505:1002/154702.682544:ERROR:google_apis/gcm/engine/mcs_client.cc:702]   Error code: 401  Error message: Authentication Failed: wrong_secret\n[2473:2505:1002/154702.682557:ERROR:google_apis/gcm/engine/mcs_client.cc:704] Failed to log in to GCM, resetting connection.\nCreated TensorFlow Lite XNNPACK delegate for CPU.\n[2473:2505:1002/154727.374068:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT\n[2473:2505:1002/154823.267953:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: QUOTA_EXCEEDED\n"
+  "expectedSourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
+  "runtimeIdentity": {
+    "href": "https://thedoorw.github.io/INK/",
+    "readyState": "complete",
+    "apiReady": true,
+    "sourceSha": "cc9b623258123da0e00e31a9e686357fba0d4ec0",
+    "toolCount": 23
+  },
+  "result": {
+    "steps": [
+      {
+        "id": "capabilities",
+        "tool": "get_ink_capabilities",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "capabilities",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "api": {
+              "schema": "INK-PUBLIC-CREATIVE-API",
+              "version": 1
+            },
+            "capabilities": [
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "capabilities.list",
+                "namedTool": "get_ink_capabilities",
+                "publicMethod": "capabilities",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "List INK capabilities"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "document.context",
+                "namedTool": "get_ink_context",
+                "publicMethod": "context",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "Read document context"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "document.selection",
+                "namedTool": "get_ink_selection",
+                "publicMethod": "selection",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "Read selection"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "document.inspect",
+                "namedTool": "inspect_ink_objects",
+                "publicMethod": "inspect",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "Inspect objects"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "reference.decompose",
+                "namedTool": "decompose_ink_reference",
+                "publicMethod": "reference.decompose",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Decompose Reference into Color + Line"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "edit.propose",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "Propose bounded edit"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "edit.approve",
+                "namedTool": "approve_ink_edit",
+                "publicMethod": "edit.approve",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "Approve bounded edit"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "edit.execute",
+                "namedTool": "execute_ink_edit",
+                "publicMethod": "edit.execute",
+                "role": "WRITE",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "Execute approved bounded edit"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "history.inspect",
+                "namedTool": "get_ink_history",
+                "publicMethod": "history.inspect",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "Inspect History"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "history.undo",
+                "namedTool": "undo_ink",
+                "publicMethod": "history.undo",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Undo"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "history.redo",
+                "namedTool": "redo_ink",
+                "publicMethod": "history.redo",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Redo"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "revision.list",
+                "namedTool": "get_ink_revisions",
+                "publicMethod": "revision.list",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "List Revisions"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "revision.capture",
+                "namedTool": "capture_ink_revision",
+                "publicMethod": "revision.capture",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Capture Revision"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "revision.restore",
+                "namedTool": "restore_ink_revision",
+                "publicMethod": "revision.restore",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Restore Revision"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "preview.capture",
+                "namedTool": "get_ink_preview",
+                "publicMethod": "preview.capture",
+                "role": "READ",
+                "routingClass": "NAMED_TOOL",
+                "title": "Capture Preview"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "asset.inspect",
+                "namedTool": "inspect_ink_output",
+                "publicMethod": "asset.inspect",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "Inspect output handle"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "asset.release",
+                "namedTool": "release_ink_output",
+                "publicMethod": "asset.release",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Release output handle payload"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "capability.describe",
+                "namedTool": "describe_ink_capability",
+                "publicMethod": "capability.describe",
+                "role": "READ",
+                "routingClass": "READ_ONLY",
+                "title": "Describe INK capability"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "composition.programmable",
+                "namedTool": "use_ink",
+                "publicMethod": "composition.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "Programmable native composition"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "reference.import",
+                "namedTool": "import_ink_reference",
+                "publicMethod": "reference.import",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Import Reference"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "raster.import",
+                "namedTool": "import_ink_raster",
+                "publicMethod": "raster.import",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL",
+                "title": "Import Editable Raster"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "asset.export",
+                "namedTool": "export_ink_asset",
+                "publicMethod": "asset.export",
+                "role": "READ",
+                "routingClass": "NAMED_TOOL",
+                "title": "Export INK asset"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "library.search",
+                "namedTool": "search_ink_library",
+                "publicMethod": "library.query",
+                "role": "READ",
+                "routingClass": "NAMED_TOOL",
+                "title": "Search INK Creative Library"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "path.repaint.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "path.repaint.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "path.material.apply.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "path.material.apply.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "path.material.remove.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "path.material.remove.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "object.translate.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "object.translate.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "path.simplify.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "path.simplify.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "path.refine.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "path.refine.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "path.create.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "path.create.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "paint.session.create.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "paint.session.create.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "image.adjustment.add.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "image.adjustment.add.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "image.filter.add.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "image.filter.add.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "image.blend.set.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "image.blend.set.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "image.effect.add.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "image.effect.add.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "image.liquify.add.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "image.liquify.add.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "path.edit.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "path.edit.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "object.rotate.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "object.rotate.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "object.clone.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "object.clone.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "repeat.radial.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "repeat.radial.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "boolean.apply.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "boolean.apply.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "group.create.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "group.create.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "object.reparent.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "object.reparent.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "frame.create.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "frame.create.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "text.create.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "text.create.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "text.edit.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "text.edit.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "svg.import.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "svg.import.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "object.resize.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "object.resize.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "object.scale.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "object.scale.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "object.order.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "object.order.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "repeat.mirror.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "repeat.mirror.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "repeat.grid.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "repeat.grid.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "layout.frame.set.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "layout.frame.set.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "layout.frame.remove.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "layout.frame.remove.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "layout.item.set.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "layout.item.set.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "layout.item.remove.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "layout.item.remove.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "component.register.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "component.register.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "component.instance.create.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "component.instance.create.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "component.override.set.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "component.override.set.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "component.override.reset.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "component.override.reset.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "component.instance.detach.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "component.instance.detach.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "component.definition.duplicate.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "component.definition.duplicate.v1"
+              },
+              {
+                "availability": true,
+                "availabilityReason": null,
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "component.reference.repair.v1",
+                "namedTool": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED",
+                "title": "component.reference.repair.v1"
+              },
+              {
+                "availability": false,
+                "availabilityReason": "EXTERNAL_TRANSPORT_NOT_IMPLEMENTED",
+                "descriptorSchema": "INK_CAPABILITY_DESCRIPTOR",
+                "descriptorVersion": 1,
+                "id": "external.transport",
+                "namedTool": null,
+                "publicMethod": null,
+                "role": "UNAVAILABLE",
+                "routingClass": "UNAVAILABLE",
+                "title": "External connector transport"
+              }
+            ],
+            "namedTools": [
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "Ink Public Creative API capability registry",
+                "availability": true,
+                "capabilityId": "capabilities.list",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "get_ink_capabilities",
+                "publicMethod": "capabilities",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NONE",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "buildAIDocumentBridge",
+                "availability": true,
+                "capabilityId": "document.context",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "get_ink_context",
+                "publicMethod": "context",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_CURRENT",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "buildAIDocumentBridge + app.selection",
+                "availability": true,
+                "capabilityId": "document.selection",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "get_ink_selection",
+                "publicMethod": "selection",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_CURRENT",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "buildAIDocumentBridge",
+                "availability": true,
+                "capabilityId": "document.inspect",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "inspect_ink_objects",
+                "publicMethod": "inspect",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_CURRENT",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.chatReferenceHandoff.decomposeReference",
+                "availability": true,
+                "capabilityId": "reference.decompose",
+                "descriptorVersion": 1,
+                "historyExpectation": "AUTHORITATIVE_COMMIT",
+                "name": "decompose_ink_reference",
+                "publicMethod": "reference.decompose",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NO_AUTO_CAPTURE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.chatBoundedEditAdapter.propose",
+                "availability": true,
+                "capabilityId": "edit.propose",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "propose_ink_edit",
+                "publicMethod": "edit.propose",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NONE",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED"
+              },
+              {
+                "approvalRequired": true,
+                "authoritativeRoute": "app.chatBoundedEditAdapter.approve",
+                "availability": true,
+                "capabilityId": "edit.approve",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "approve_ink_edit",
+                "publicMethod": "edit.approve",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NONE",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED"
+              },
+              {
+                "approvalRequired": true,
+                "authoritativeRoute": "app.chatBoundedEditAdapter.execute",
+                "availability": true,
+                "capabilityId": "edit.execute",
+                "descriptorVersion": 1,
+                "historyExpectation": "AUTHORITATIVE_COMMIT",
+                "name": "execute_ink_edit",
+                "publicMethod": "edit.execute",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NO_AUTO_CAPTURE",
+                "role": "WRITE",
+                "routingClass": "PROPOSAL_REQUIRED"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.history",
+                "availability": true,
+                "capabilityId": "history.inspect",
+                "descriptorVersion": 1,
+                "historyExpectation": "READ_EXISTING",
+                "name": "get_ink_history",
+                "publicMethod": "history.inspect",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NONE",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.history.undo",
+                "availability": true,
+                "capabilityId": "history.undo",
+                "descriptorVersion": 1,
+                "historyExpectation": "MOVE_EXISTING_STACK",
+                "name": "undo_ink",
+                "publicMethod": "history.undo",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NO_AUTO_CAPTURE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.history.redo",
+                "availability": true,
+                "capabilityId": "history.redo",
+                "descriptorVersion": 1,
+                "historyExpectation": "MOVE_EXISTING_STACK",
+                "name": "redo_ink",
+                "publicMethod": "history.redo",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NO_AUTO_CAPTURE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.revisions.list",
+                "availability": true,
+                "capabilityId": "revision.list",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "get_ink_revisions",
+                "publicMethod": "revision.list",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_EXISTING",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.revisions.capture",
+                "availability": true,
+                "capabilityId": "revision.capture",
+                "descriptorVersion": 1,
+                "historyExpectation": "REQUIRE_IDLE",
+                "name": "capture_ink_revision",
+                "publicMethod": "revision.capture",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "EXPLICIT_CAPTURE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.revisions.restore",
+                "availability": true,
+                "capabilityId": "revision.restore",
+                "descriptorVersion": 1,
+                "historyExpectation": "RESET_TO_REVISION",
+                "name": "restore_ink_revision",
+                "publicMethod": "revision.restore",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "EXPLICIT_RESTORE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.renderExportCanvas + existing Renderer",
+                "availability": true,
+                "capabilityId": "preview.capture",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "get_ink_preview",
+                "publicMethod": "preview.capture",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_CURRENT",
+                "role": "READ",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "Connector ephemeral INK_OUTPUT_HANDLE registry + documentFingerprint",
+                "availability": true,
+                "capabilityId": "asset.inspect",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "inspect_ink_output",
+                "publicMethod": "asset.inspect",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_CURRENT",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "Connector ephemeral INK_OUTPUT_HANDLE registry",
+                "availability": true,
+                "capabilityId": "asset.release",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "release_ink_output",
+                "publicMethod": "asset.release",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NONE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "Ink canonical capability registry",
+                "availability": true,
+                "capabilityId": "capability.describe",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "describe_ink_capability",
+                "publicMethod": "capability.describe",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NONE",
+                "role": "READ",
+                "routingClass": "READ_ONLY"
+              },
+              {
+                "approvalRequired": true,
+                "authoritativeRoute": "app.inkPublicApi.composition.* → app.chatCreativePlan → existing bounded-edit authority → History → Revision",
+                "availability": true,
+                "capabilityId": "composition.programmable",
+                "descriptorVersion": 1,
+                "historyExpectation": "EXISTING_CHAT_CREATIVE_PLAN",
+                "name": "use_ink",
+                "publicMethod": "composition.propose",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "EXISTING_PARTIAL_OR_FINAL_CAPTURE",
+                "role": "PROPOSAL",
+                "routingClass": "PROPOSAL_REQUIRED"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.chatReferenceHandoff.importReference",
+                "availability": true,
+                "capabilityId": "reference.import",
+                "descriptorVersion": 1,
+                "historyExpectation": "AUTHORITATIVE_COMMIT",
+                "name": "import_ink_reference",
+                "publicMethod": "reference.import",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NO_AUTO_CAPTURE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "normalizeChatAttachment → app.importWebRaster → existing History / image+rasterState / Renderer",
+                "availability": true,
+                "capabilityId": "raster.import",
+                "descriptorVersion": 1,
+                "historyExpectation": "AUTHORITATIVE_COMMIT",
+                "name": "import_ink_raster",
+                "publicMethod": "raster.import",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "NO_AUTO_CAPTURE",
+                "role": "WRITE",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.exportPNG / app.exportSVG / app.exportPDF → existing INK output registry",
+                "availability": true,
+                "capabilityId": "asset.export",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "export_ink_asset",
+                "publicMethod": "asset.export",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_CURRENT",
+                "role": "READ",
+                "routingClass": "NAMED_TOOL"
+              },
+              {
+                "approvalRequired": false,
+                "authoritativeRoute": "app.inkPublicApi.library.query → current Document Component / Material / Recipe / Repeat / Reference-derived authorities",
+                "availability": true,
+                "capabilityId": "library.search",
+                "descriptorVersion": 1,
+                "historyExpectation": "NONE",
+                "name": "search_ink_library",
+                "publicMethod": "library.query",
+                "resultEnvelope": "INK_AGENT_RESULT",
+                "revisionExpectation": "READ_CURRENT",
+                "role": "READ",
+                "routingClass": "NAMED_TOOL"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "importRaster",
+        "tool": "import_ink_raster",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "raster.import",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "changedRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "historyReceipt": {
+            "after": {
+              "applied": 1,
+              "canRedo": false,
+              "canUndo": true,
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 1
+            },
+            "before": {
+              "applied": 0,
+              "canRedo": false,
+              "canUndo": false,
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 0
+            },
+            "latest": {
+              "captureMode": "scoped",
+              "label": "匯入可編輯影像",
+              "objectIds": [
+                "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+              ],
+              "patchCount": 1,
+              "storedBytes": 24005810,
+              "targetCount": 1
+            }
+          },
+          "revisionReceipt": {
+            "after": null,
+            "before": null
+          },
+          "provenanceReceipt": {
+            "sourceChannel": "CHAT_RASTER_ATTACHMENT_HANDOFF",
+            "sourceSha256": "e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807"
+          },
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+            "rasterState": {
+              "format": null,
+              "height": 1448,
+              "type": "ink-image-state",
+              "width": 1086
+            },
+            "source": {
+              "height": 1448,
+              "mimeType": "image/png",
+              "name": "rose-window-primary.png",
+              "sha256": "e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807",
+              "sizeBytes": 2969222,
+              "width": 1086
+            }
+          }
+        }
+      },
+      {
+        "id": "previewBefore",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1496,
+                "w": 1134,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1138475,
+              "documentFingerprint": "fnv1a32:938e8ab1",
+              "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:4798bfdb",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 800,
+                "width": 607
+              },
+              "renderFingerprint": "fnv1a32:34d01658",
+              "revisionId": null,
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "diagnostics": [],
+          "result": {
+            "bounds": {
+              "h": 1496,
+              "w": 1134,
+              "x": -24,
+              "y": -24
+            },
+            "byteLength": 1138475,
+            "handleId": "ink-output-v1:4798bfdb",
+            "persistence": "NONE",
+            "pixelSize": {
+              "height": 800,
+              "width": 607
+            },
+            "scope": "content",
+            "transport": "INTERNAL_EPHEMERAL"
+          }
+        }
+      },
+      {
+        "id": "liquifyPropose",
+        "tool": "propose_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.propose",
+          "status": "PROPOSED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "propose",
+            "ok": true,
+            "result": {
+              "approvalToken": null,
+              "approved": false,
+              "expected": {
+                "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+                "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+                "revisionId": null,
+                "targetFingerprints": {
+                  "d9949de7-ed8f-4126-b700-2f47d84d2755/baae8e78-9bb3-45e3-991f-aa0e4d6892bc": "fnv1a32:fa5ea800"
+                }
+              },
+              "proposalId": "proposal:clusterB-B2-live-liquify-twirl:c5faac44",
+              "revisionId": null,
+              "schema": "INK-CHAT-EDIT-PROPOSAL",
+              "state": "PROPOSED",
+              "stateFingerprint": "fnv1a32:21aa4be7",
+              "task": {
+                "arguments": {
+                  "maxWork": 5000000,
+                  "opacity": 1,
+                  "operations": [
+                    {
+                      "radius": 260,
+                      "strength": 0.7,
+                      "type": "twirl",
+                      "x": 543,
+                      "y": 724
+                    }
+                  ]
+                },
+                "expected": null,
+                "operation": "image.liquify.add.v1",
+                "schema": "INK-CHAT-EDIT-TASK",
+                "targets": [
+                  {
+                    "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                    "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+                    "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+                  }
+                ],
+                "taskId": "clusterB-B2-live-liquify-twirl",
+                "version": 1
+              },
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "liquifyApprove",
+        "tool": "approve_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.approve",
+          "status": "APPROVED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "approve",
+            "ok": true,
+            "result": {
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:clusterB-B2-live-liquify-twirl:c5faac44:1",
+              "approved": true,
+              "expected": {
+                "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+                "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+                "revisionId": null,
+                "targetFingerprints": {
+                  "d9949de7-ed8f-4126-b700-2f47d84d2755/baae8e78-9bb3-45e3-991f-aa0e4d6892bc": "fnv1a32:fa5ea800"
+                }
+              },
+              "proposalId": "proposal:clusterB-B2-live-liquify-twirl:c5faac44",
+              "revisionId": null,
+              "schema": "INK-CHAT-EDIT-PROPOSAL",
+              "state": "APPROVED",
+              "stateFingerprint": "fnv1a32:21aa4be7",
+              "task": {
+                "arguments": {
+                  "maxWork": 5000000,
+                  "opacity": 1,
+                  "operations": [
+                    {
+                      "radius": 260,
+                      "strength": 0.7,
+                      "type": "twirl",
+                      "x": 543,
+                      "y": 724
+                    }
+                  ]
+                },
+                "expected": null,
+                "operation": "image.liquify.add.v1",
+                "schema": "INK-CHAT-EDIT-TASK",
+                "targets": [
+                  {
+                    "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                    "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+                    "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+                  }
+                ],
+                "taskId": "clusterB-B2-live-liquify-twirl",
+                "version": 1
+              },
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "liquifyExecute",
+        "tool": "execute_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.execute",
+          "status": "EXECUTED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "historyReceipt": {
+            "afterUndoCount": 2,
+            "beforeUndoCount": 1,
+            "latestLabel": "CHAT add image Liquify"
+          },
+          "revisionReceipt": {
+            "currentRevisionId": null,
+            "documentFingerprint": "fnv1a32:2986cc7e",
+            "inspectedRevisionId": null
+          },
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "execute",
+            "ok": true,
+            "result": {
+              "changed": true,
+              "controllerResult": {
+                "filterCount": 1,
+                "operationCount": 1,
+                "resultRefs": [
+                  {
+                    "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                    "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+                    "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+                  }
+                ],
+                "stackItemId": "filter_3azeiv",
+                "stackItemType": "liquify"
+              },
+              "history": {
+                "afterUndoCount": 2,
+                "beforeUndoCount": 1,
+                "latestLabel": "CHAT add image Liquify"
+              },
+              "ok": true,
+              "operation": "image.liquify.add.v1",
+              "proposalId": "proposal:clusterB-B2-live-liquify-twirl:c5faac44",
+              "revision": {
+                "currentRevisionId": null,
+                "documentFingerprint": "fnv1a32:2986cc7e",
+                "inspectedRevisionId": null
+              },
+              "schema": "INK-CHAT-EDIT-RESULT",
+              "state": "EXECUTED",
+              "targets": [
+                {
+                  "ref": {
+                    "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                    "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+                    "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+                  },
+                  "stateFingerprint": "fnv1a32:22876e08",
+                  "worldMatrix": [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0
+                  ]
+                }
+              ],
+              "taskId": "clusterB-B2-live-liquify-twirl",
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "contextAfter",
+        "tool": "get_ink_context",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "context",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "active": {
+              "layer": {
+                "id": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                "name": "圖層 1"
+              },
+              "page": {
+                "id": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+                "name": "頁面 1"
+              }
+            },
+            "bounds": {
+              "limits": {
+                "maxBytes": 98304,
+                "maxObjects": 96,
+                "maxRelationships": 192
+              },
+              "objects": {
+                "returned": 1,
+                "totalAvailable": 1,
+                "truncated": false
+              },
+              "outputBytes": 1615,
+              "relationships": {
+                "returned": 0,
+                "totalAvailable": 0,
+                "truncated": false
+              }
+            },
+            "contextFingerprint": "fnv1a32:822a5ee7",
+            "document": {
+              "appVersion": "0.1",
+              "format": "INK",
+              "formatVersion": 4,
+              "id": "f09ae479-3571-4890-bc79-2935b033cd6f",
+              "pageCount": 1,
+              "title": "未命名作品"
+            },
+            "fingerprintAlgorithm": "fnv1a32-canonical-json",
+            "focus": {
+              "objectIds": []
+            },
+            "objects": [
+              {
+                "depth": 0,
+                "editability": {
+                  "editable": true,
+                  "objectProtected": false,
+                  "protectedProperties": []
+                },
+                "geometry": {
+                  "height": 1448,
+                  "kind": "image",
+                  "reference": {
+                    "kind": "image",
+                    "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  },
+                  "width": 1086
+                },
+                "name": "B2 Liquify Raster",
+                "parentId": null,
+                "ref": {
+                  "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                  "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+                  "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+                },
+                "renderOrder": 0,
+                "semantic": {
+                  "constraintIds": [],
+                  "dependencyIds": [],
+                  "editableParameterKeys": [],
+                  "protectedProperties": [],
+                  "role": null
+                },
+                "structure": {
+                  "ancestorIds": [],
+                  "effectiveLocked": false,
+                  "effectiveOpacity": 1,
+                  "effectiveVisible": true,
+                  "interactionExposed": true
+                },
+                "type": "image"
+              }
+            ],
+            "relationships": {
+              "edges": [],
+              "source": "object.semantic",
+              "totalAvailable": 0,
+              "truncated": false
+            },
+            "revision": {
+              "revisionId": null
+            },
+            "schema": "INK-AI-DOCUMENT-BRIDGE",
+            "selection": {
+              "objectIds": [
+                "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+              ],
+              "unresolvedObjectIds": []
+            },
+            "version": 1
+          }
+        }
+      },
+      {
+        "id": "historyAfter",
+        "tool": "get_ink_history",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.inspect",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "applied": 2,
+            "canRedo": false,
+            "canUndo": true,
+            "entries": [
+              {
+                "captureMode": "scoped",
+                "label": "匯入可編輯影像",
+                "objectIds": [
+                  "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                ],
+                "patchCount": 1,
+                "storedBytes": 24005810,
+                "targetCount": 1
+              },
+              {
+                "captureMode": "scoped",
+                "label": "CHAT add image Liquify",
+                "objectIds": [],
+                "patchCount": 1,
+                "storedBytes": 355,
+                "targetCount": 1
+              }
+            ],
+            "limit": 30,
+            "pending": false,
+            "retainedCount": 2,
+            "stats": {
+              "capturedBytes": 24005747,
+              "fullEntries": 0,
+              "limit": 30,
+              "metrics": {
+                "fullBegins": 0,
+                "fullCapturedBytes": 0,
+                "inPlaceApplies": 0,
+                "scopedBegins": 2,
+                "scopedCapturedBytes": 24005747
+              },
+              "mode": "hybrid-target-scoped-id-aware-patches",
+              "patchCount": 2,
+              "redo": 0,
+              "scopedEntries": 2,
+              "scopedRatio": 1,
+              "storedBytes": 24006165,
+              "undo": 2
+            }
+          }
+        }
+      },
+      {
+        "id": "previewAfter",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1496,
+                "w": 1134,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1135458,
+              "documentFingerprint": "fnv1a32:2986cc7e",
+              "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:27c7bdb9",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 800,
+                "width": 607
+              },
+              "renderFingerprint": "fnv1a32:755eb849",
+              "revisionId": null,
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "diagnostics": [],
+          "result": {
+            "bounds": {
+              "h": 1496,
+              "w": 1134,
+              "x": -24,
+              "y": -24
+            },
+            "byteLength": 1135458,
+            "handleId": "ink-output-v1:27c7bdb9",
+            "persistence": "NONE",
+            "pixelSize": {
+              "height": 800,
+              "width": 607
+            },
+            "scope": "content",
+            "transport": "INTERNAL_EPHEMERAL"
+          }
+        }
+      },
+      {
+        "id": "undo",
+        "tool": "undo_ink",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.undo",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": {
+            "after": {
+              "applied": 1,
+              "canRedo": true,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005810,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT add image Liquify",
+                  "objectIds": [],
+                  "patchCount": 1,
+                  "storedBytes": 355,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005747,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 1,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005747
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 2,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24006165,
+                "undo": 1
+              }
+            },
+            "applied": true,
+            "before": {
+              "applied": 2,
+              "canRedo": false,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005810,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT add image Liquify",
+                  "objectIds": [],
+                  "patchCount": 1,
+                  "storedBytes": 355,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005747,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 0,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005747
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 2,
+                "redo": 0,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24006165,
+                "undo": 2
+              }
+            }
+          },
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "applied": true,
+            "history": {
+              "applied": 1,
+              "canRedo": true,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005810,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT add image Liquify",
+                  "objectIds": [],
+                  "patchCount": 1,
+                  "storedBytes": 355,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005747,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 1,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005747
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 2,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24006165,
+                "undo": 1
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "contextUndo",
+        "tool": "get_ink_context",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "context",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "active": {
+              "layer": {
+                "id": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                "name": "圖層 1"
+              },
+              "page": {
+                "id": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+                "name": "頁面 1"
+              }
+            },
+            "bounds": {
+              "limits": {
+                "maxBytes": 98304,
+                "maxObjects": 96,
+                "maxRelationships": 192
+              },
+              "objects": {
+                "returned": 1,
+                "totalAvailable": 1,
+                "truncated": false
+              },
+              "outputBytes": 1577,
+              "relationships": {
+                "returned": 0,
+                "totalAvailable": 0,
+                "truncated": false
+              }
+            },
+            "contextFingerprint": "fnv1a32:bbe89163",
+            "document": {
+              "appVersion": "0.1",
+              "format": "INK",
+              "formatVersion": 4,
+              "id": "f09ae479-3571-4890-bc79-2935b033cd6f",
+              "pageCount": 1,
+              "title": "未命名作品"
+            },
+            "fingerprintAlgorithm": "fnv1a32-canonical-json",
+            "focus": {
+              "objectIds": []
+            },
+            "objects": [
+              {
+                "depth": 0,
+                "editability": {
+                  "editable": true,
+                  "objectProtected": false,
+                  "protectedProperties": []
+                },
+                "geometry": {
+                  "height": 1448,
+                  "kind": "image",
+                  "reference": {
+                    "kind": "image",
+                    "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  },
+                  "width": 1086
+                },
+                "name": "B2 Liquify Raster",
+                "parentId": null,
+                "ref": {
+                  "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                  "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+                  "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+                },
+                "renderOrder": 0,
+                "semantic": {
+                  "constraintIds": [],
+                  "dependencyIds": [],
+                  "editableParameterKeys": [],
+                  "protectedProperties": [],
+                  "role": null
+                },
+                "structure": {
+                  "ancestorIds": [],
+                  "effectiveLocked": false,
+                  "effectiveOpacity": 1,
+                  "effectiveVisible": true,
+                  "interactionExposed": true
+                },
+                "type": "image"
+              }
+            ],
+            "relationships": {
+              "edges": [],
+              "source": "object.semantic",
+              "totalAvailable": 0,
+              "truncated": false
+            },
+            "revision": {
+              "revisionId": null
+            },
+            "schema": "INK-AI-DOCUMENT-BRIDGE",
+            "selection": {
+              "objectIds": [],
+              "unresolvedObjectIds": []
+            },
+            "version": 1
+          }
+        }
+      },
+      {
+        "id": "previewUndo",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1496,
+                "w": 1134,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1138475,
+              "documentFingerprint": "fnv1a32:920016bf",
+              "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:3b9796b0",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 800,
+                "width": 607
+              },
+              "renderFingerprint": "fnv1a32:34d01658",
+              "revisionId": null,
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "diagnostics": [],
+          "result": {
+            "bounds": {
+              "h": 1496,
+              "w": 1134,
+              "x": -24,
+              "y": -24
+            },
+            "byteLength": 1138475,
+            "handleId": "ink-output-v1:3b9796b0",
+            "persistence": "NONE",
+            "pixelSize": {
+              "height": 800,
+              "width": 607
+            },
+            "scope": "content",
+            "transport": "INTERNAL_EPHEMERAL"
+          }
+        }
+      },
+      {
+        "id": "redo",
+        "tool": "redo_ink",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.redo",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": {
+            "after": {
+              "applied": 2,
+              "canRedo": false,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005810,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT add image Liquify",
+                  "objectIds": [],
+                  "patchCount": 1,
+                  "storedBytes": 355,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005747,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 2,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005747
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 2,
+                "redo": 0,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24006165,
+                "undo": 2
+              }
+            },
+            "applied": true,
+            "before": {
+              "applied": 1,
+              "canRedo": true,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005810,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT add image Liquify",
+                  "objectIds": [],
+                  "patchCount": 1,
+                  "storedBytes": 355,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005747,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 1,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005747
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 2,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24006165,
+                "undo": 1
+              }
+            }
+          },
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "applied": true,
+            "history": {
+              "applied": 2,
+              "canRedo": false,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005810,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT add image Liquify",
+                  "objectIds": [],
+                  "patchCount": 1,
+                  "storedBytes": 355,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005747,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 2,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005747
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 2,
+                "redo": 0,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24006165,
+                "undo": 2
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "contextRedo",
+        "tool": "get_ink_context",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "context",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+              "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "active": {
+              "layer": {
+                "id": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                "name": "圖層 1"
+              },
+              "page": {
+                "id": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+                "name": "頁面 1"
+              }
+            },
+            "bounds": {
+              "limits": {
+                "maxBytes": 98304,
+                "maxObjects": 96,
+                "maxRelationships": 192
+              },
+              "objects": {
+                "returned": 1,
+                "totalAvailable": 1,
+                "truncated": false
+              },
+              "outputBytes": 1577,
+              "relationships": {
+                "returned": 0,
+                "totalAvailable": 0,
+                "truncated": false
+              }
+            },
+            "contextFingerprint": "fnv1a32:bbe89163",
+            "document": {
+              "appVersion": "0.1",
+              "format": "INK",
+              "formatVersion": 4,
+              "id": "f09ae479-3571-4890-bc79-2935b033cd6f",
+              "pageCount": 1,
+              "title": "未命名作品"
+            },
+            "fingerprintAlgorithm": "fnv1a32-canonical-json",
+            "focus": {
+              "objectIds": []
+            },
+            "objects": [
+              {
+                "depth": 0,
+                "editability": {
+                  "editable": true,
+                  "objectProtected": false,
+                  "protectedProperties": []
+                },
+                "geometry": {
+                  "height": 1448,
+                  "kind": "image",
+                  "reference": {
+                    "kind": "image",
+                    "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc"
+                  },
+                  "width": 1086
+                },
+                "name": "B2 Liquify Raster",
+                "parentId": null,
+                "ref": {
+                  "layerId": "d9949de7-ed8f-4126-b700-2f47d84d2755",
+                  "objectId": "baae8e78-9bb3-45e3-991f-aa0e4d6892bc",
+                  "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5"
+                },
+                "renderOrder": 0,
+                "semantic": {
+                  "constraintIds": [],
+                  "dependencyIds": [],
+                  "editableParameterKeys": [],
+                  "protectedProperties": [],
+                  "role": null
+                },
+                "structure": {
+                  "ancestorIds": [],
+                  "effectiveLocked": false,
+                  "effectiveOpacity": 1,
+                  "effectiveVisible": true,
+                  "interactionExposed": true
+                },
+                "type": "image"
+              }
+            ],
+            "relationships": {
+              "edges": [],
+              "source": "object.semantic",
+              "totalAvailable": 0,
+              "truncated": false
+            },
+            "revision": {
+              "revisionId": null
+            },
+            "schema": "INK-AI-DOCUMENT-BRIDGE",
+            "selection": {
+              "objectIds": [],
+              "unresolvedObjectIds": []
+            },
+            "version": 1
+          }
+        }
+      },
+      {
+        "id": "previewRedo",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+          "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1496,
+                "w": 1134,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1135458,
+              "documentFingerprint": "fnv1a32:2986cc7e",
+              "documentId": "f09ae479-3571-4890-bc79-2935b033cd6f",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:27c7bdb9",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "e9f54013-f3fa-41b4-8d07-d55f24a6d7f5",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 800,
+                "width": 607
+              },
+              "renderFingerprint": "fnv1a32:755eb849",
+              "revisionId": null,
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "diagnostics": [],
+          "result": {
+            "bounds": {
+              "h": 1496,
+              "w": 1134,
+              "x": -24,
+              "y": -24
+            },
+            "byteLength": 1135458,
+            "handleId": "ink-output-v1:27c7bdb9",
+            "persistence": "NONE",
+            "pixelSize": {
+              "height": 800,
+              "width": 607
+            },
+            "scope": "content",
+            "transport": "INTERNAL_EPHEMERAL"
+          }
+        }
+      }
+    ]
+  },
+  "status": "COMPLETED"
 }
