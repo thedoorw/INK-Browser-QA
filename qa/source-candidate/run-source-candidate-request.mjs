@@ -281,6 +281,7 @@ const RASTER_STACK_ADJUSTMENT_B2_CASE = String.raw`(async()=>{
   const ref=imported?.createdRefs?.[0];if(!ref?.objectId)throw new Error('RASTER_CREATED_REF_MISSING');
   await waitFrames();
   let object=flatObjects().find(item=>item.id===ref.objectId);if(!object?.rasterState?.colorRaster)throw new Error('RASTER_STATE_MISSING');
+  app.selection=[];app.refreshSelectionUI?.();app.renderer?.render?.();await waitFrames();
   app.history.clear();
   const beforeState=app.chatBoundedEdit.inspect().objects.find(item=>item.ref?.objectId===ref.objectId);
   const beforeFingerprint=beforeState?.stateFingerprint||null;
