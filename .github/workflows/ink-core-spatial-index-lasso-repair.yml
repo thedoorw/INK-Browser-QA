@@ -40,6 +40,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ink-core-spatial-index-lasso-${{ github.sha }}
-          path: qa/evidence/ink-core-spatial-index-lasso-repair-${{ github.sha }}/
+          path: qa/evidence/ink-core-spatial-index-lasso-repair-*/
           if-no-files-found: error
           retention-days: 30
