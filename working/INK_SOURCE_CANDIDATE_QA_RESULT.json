@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "paint-session-bounds-b2-blend-isolation-002",
+  "requestId": "paint-session-bounds-b2-liquify-isolation-001",
   "candidateSha": "b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
-  "case": "raster-stack-blend-b2",
+  "case": "raster-stack-liquify-b2",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:46853/?sourceCandidate=b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
+    "href": "http://127.0.0.1:41699/?sourceCandidate=b7c73f7ea32a25013dddd9721e1a35e7e052fc26",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,29 +13,31 @@
   },
   "result": {
     "passed": true,
-    "operation": "image.blend.set.v1",
-    "blendMode": "multiply",
-    "objectId": "16cf304a-7a90-4fab-a0d4-753b68d2ea9c",
-    "baseObjectId": "bbaee9bf-fd81-46be-ae69-3a09ab81ecda",
-    "beforeFingerprint": "fnv1a32:e2545770",
-    "afterFingerprint": "fnv1a32:4c56f219",
+    "operation": "image.liquify.add.v1",
+    "liquifyType": "liquify",
+    "objectId": "be4e4f0c-a92c-4bab-804e-03532e040873",
+    "beforeFingerprint": "fnv1a32:1d546997",
+    "afterFingerprint": "fnv1a32:67460d39",
     "beforeHash": "7883b22",
-    "afterHash": "a24287ef",
+    "afterHash": "dc904cd1",
     "undoHash": "7883b22",
-    "redoHash": "a24287ef",
-    "historyLabel": "CHAT set image blend: multiply",
+    "redoHash": "dc904cd1",
+    "historyLabel": "CHAT add image Liquify",
     "previewStatus": "COMPLETED",
     "undoStatus": "COMPLETED",
     "redoStatus": "COMPLETED",
     "controllerResult": {
-      "blendMode": "multiply",
+      "filterCount": 1,
+      "operationCount": 1,
       "resultRefs": [
         {
-          "layerId": "c05f5020-d499-472d-ba99-9a043fe6b517",
-          "objectId": "16cf304a-7a90-4fab-a0d4-753b68d2ea9c",
-          "pageId": "58a7c7e7-d986-47ed-8671-fbed3d4426e9"
+          "layerId": "98e3ab68-12c6-4fde-bc28-ed10f6f6cb69",
+          "objectId": "be4e4f0c-a92c-4bab-804e-03532e040873",
+          "pageId": "378da3f0-5158-4b5c-bdfe-373f1f2b2dec"
         }
-      ]
+      ],
+      "stackItemId": "filter_yudj3c",
+      "stackItemType": "liquify"
     }
   },
   "status": "PASS"
