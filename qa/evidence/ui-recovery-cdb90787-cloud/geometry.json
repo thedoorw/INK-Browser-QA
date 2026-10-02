@@ -1,0 +1,386 @@
+[
+  {
+    "state": "brush",
+    "geometry": {
+      "buttons": [
+        {
+          "checked": null,
+          "pressed": "false",
+          "text": "創作"
+        },
+        {
+          "checked": null,
+          "pressed": "true",
+          "text": "版面"
+        }
+      ],
+      "host": {
+        "h": 35,
+        "right": 1235.5,
+        "w": 1152.5,
+        "x": 83,
+        "y": 25
+      },
+      "space": "layout",
+      "switch": {
+        "h": 26,
+        "right": 1354,
+        "w": 112.5,
+        "x": 1241.5,
+        "y": 29.5
+      },
+      "viewport": [
+        1363,
+        936
+      ]
+    }
+  },
+  {
+    "state": "text",
+    "geometry": {
+      "buttons": [
+        {
+          "checked": null,
+          "pressed": "false",
+          "text": "創作"
+        },
+        {
+          "checked": null,
+          "pressed": "true",
+          "text": "版面"
+        }
+      ],
+      "host": {
+        "h": 35,
+        "right": 1235.5,
+        "w": 1152.5,
+        "x": 83,
+        "y": 25
+      },
+      "space": "layout",
+      "switch": {
+        "h": 26,
+        "right": 1354,
+        "w": 112.5,
+        "x": 1241.5,
+        "y": 29.5
+      },
+      "viewport": [
+        1363,
+        936
+      ]
+    }
+  },
+  {
+    "state": "lasso",
+    "geometry": {
+      "buttons": [
+        {
+          "checked": null,
+          "pressed": "false",
+          "text": "創作"
+        },
+        {
+          "checked": null,
+          "pressed": "true",
+          "text": "版面"
+        }
+      ],
+      "host": {
+        "h": 35,
+        "right": 1235.5,
+        "w": 1152.5,
+        "x": 83,
+        "y": 25
+      },
+      "space": "layout",
+      "switch": {
+        "h": 26,
+        "right": 1354,
+        "w": 112.5,
+        "x": 1241.5,
+        "y": 29.5
+      },
+      "viewport": [
+        1363,
+        936
+      ]
+    }
+  },
+  {
+    "state": "after-creation-click",
+    "geometry": {
+      "buttons": [
+        {
+          "checked": null,
+          "pressed": "false",
+          "text": "創作"
+        },
+        {
+          "checked": null,
+          "pressed": "true",
+          "text": "版面"
+        }
+      ],
+      "host": {
+        "h": 35,
+        "right": 1235.5,
+        "w": 1152.5,
+        "x": 83,
+        "y": 25
+      },
+      "space": "layout",
+      "switch": {
+        "h": 26,
+        "right": 1354,
+        "w": 112.5,
+        "x": 1241.5,
+        "y": 29.5
+      },
+      "viewport": [
+        1363,
+        936
+      ]
+    }
+  },
+  {
+    "state": "brush-framed-1280",
+    "geometry": {
+      "children": [
+        {
+          "h": 35,
+          "id": "",
+          "right": 66,
+          "w": 27,
+          "x": 39,
+          "y": 25
+        },
+        {
+          "h": 22,
+          "id": "",
+          "right": 73,
+          "w": 1,
+          "x": 72,
+          "y": 31.5
+        },
+        {
+          "h": 35,
+          "id": "contextualControlHost",
+          "right": 1152.5,
+          "w": 1069.5,
+          "x": 83,
+          "y": 25
+        },
+        {
+          "h": 26,
+          "id": "workspaceSwitch",
+          "right": 1271,
+          "w": 112.5,
+          "x": 1158.5,
+          "y": 29.5
+        }
+      ],
+      "w": 1242
+    }
+  },
+  {
+    "state": "brush-framed-960",
+    "geometry": {
+      "children": [
+        {
+          "h": 35,
+          "id": "",
+          "right": 66,
+          "w": 27,
+          "x": 39,
+          "y": 25
+        },
+        {
+          "h": 22,
+          "id": "",
+          "right": 73,
+          "w": 1,
+          "x": 72,
+          "y": 31.5
+        },
+        {
+          "h": 35,
+          "id": "contextualControlHost",
+          "right": 832.5,
+          "w": 749.5,
+          "x": 83,
+          "y": 25
+        },
+        {
+          "h": 26,
+          "id": "workspaceSwitch",
+          "right": 951,
+          "w": 112.5,
+          "x": 838.5,
+          "y": 29.5
+        }
+      ],
+      "w": 922
+    }
+  },
+  {
+    "state": "text-framed-960",
+    "geometry": {
+      "children": [
+        {
+          "h": 35,
+          "id": "",
+          "right": 66,
+          "w": 27,
+          "x": 39,
+          "y": 25
+        },
+        {
+          "h": 22,
+          "id": "",
+          "right": 73,
+          "w": 1,
+          "x": 72,
+          "y": 31.5
+        },
+        {
+          "h": 35,
+          "id": "contextualControlHost",
+          "right": 832.5,
+          "w": 749.5,
+          "x": 83,
+          "y": 25
+        },
+        {
+          "h": 26,
+          "id": "workspaceSwitch",
+          "right": 951,
+          "w": 112.5,
+          "x": 838.5,
+          "y": 29.5
+        }
+      ],
+      "w": 922
+    }
+  },
+  {
+    "state": "lasso-framed-960",
+    "geometry": {
+      "children": [
+        {
+          "h": 35,
+          "id": "",
+          "right": 66,
+          "w": 27,
+          "x": 39,
+          "y": 25
+        },
+        {
+          "h": 22,
+          "id": "",
+          "right": 73,
+          "w": 1,
+          "x": 72,
+          "y": 31.5
+        },
+        {
+          "h": 35,
+          "id": "contextualControlHost",
+          "right": 832.5,
+          "w": 749.5,
+          "x": 83,
+          "y": 25
+        },
+        {
+          "h": 26,
+          "id": "workspaceSwitch",
+          "right": 951,
+          "w": 112.5,
+          "x": 838.5,
+          "y": 29.5
+        }
+      ],
+      "w": 922
+    }
+  },
+  {
+    "state": "text-framed-1280",
+    "geometry": {
+      "children": [
+        {
+          "h": 35,
+          "id": "",
+          "right": 66,
+          "w": 27,
+          "x": 39,
+          "y": 25
+        },
+        {
+          "h": 22,
+          "id": "",
+          "right": 73,
+          "w": 1,
+          "x": 72,
+          "y": 31.5
+        },
+        {
+          "h": 35,
+          "id": "contextualControlHost",
+          "right": 1152.5,
+          "w": 1069.5,
+          "x": 83,
+          "y": 25
+        },
+        {
+          "h": 26,
+          "id": "workspaceSwitch",
+          "right": 1271,
+          "w": 112.5,
+          "x": 1158.5,
+          "y": 29.5
+        }
+      ],
+      "w": 1242
+    }
+  },
+  {
+    "state": "lasso-framed-1280",
+    "geometry": {
+      "children": [
+        {
+          "h": 35,
+          "id": "",
+          "right": 66,
+          "w": 27,
+          "x": 39,
+          "y": 25
+        },
+        {
+          "h": 22,
+          "id": "",
+          "right": 73,
+          "w": 1,
+          "x": 72,
+          "y": 31.5
+        },
+        {
+          "h": 35,
+          "id": "contextualControlHost",
+          "right": 1152.5,
+          "w": 1069.5,
+          "x": 83,
+          "y": 25
+        },
+        {
+          "h": 26,
+          "id": "workspaceSwitch",
+          "right": 1271,
+          "w": 112.5,
+          "x": 1158.5,
+          "y": 29.5
+        }
+      ],
+      "w": 1242
+    }
+  }
+]
