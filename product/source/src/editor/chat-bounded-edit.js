@@ -10,6 +10,7 @@ import { createTextObject, updateTextObject } from './text-object.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
+import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -219,6 +220,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.simplify.v1',
   'path.refine.v1',
   'path.create.v1',
+  'paint.session.create.v1',
   'path.edit.v1',
   'object.rotate.v1',
   'object.clone.v1',
@@ -383,6 +385,72 @@ function normalizePathCreateArguments(raw = {}) {
   return result;
 }
 
+
+export const CHAT_PAINT_SESSION_BRUSH_IDS = Object.freeze(
+  BUILTIN_BRUSH_PRESETS
+    .filter(preset => !['blender', 'smudge', 'eraser'].includes(preset.engine))
+    .map(preset => preset.id)
+);
+const CHAT_PAINT_SESSION_BRUSH_ID_SET = new Set(CHAT_PAINT_SESSION_BRUSH_IDS);
+
+function normalizePaintSessionSample(raw, field, index) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENT_INVALID', { field });
+  return {
+    x: boundedNumber(raw.x, `${field}.x`),
+    y: boundedNumber(raw.y, `${field}.y`),
+    pressure: boundedNumber(raw.pressure ?? raw.p ?? .5, `${field}.pressure`, { min: 0, max: 1 }),
+    timestamp: boundedNumber(raw.timestamp ?? raw.time ?? raw.t ?? index * 16, `${field}.timestamp`, { min: 0, max: 1e9 }),
+    tiltX: boundedNumber(raw.tiltX ?? 0, `${field}.tiltX`, { min: -90, max: 90 }),
+    tiltY: boundedNumber(raw.tiltY ?? 0, `${field}.tiltY`, { min: -90, max: 90 }),
+    azimuth: boundedNumber(raw.azimuth ?? 0, `${field}.azimuth`, { min: -1000, max: 1000 }),
+    altitude: boundedNumber(raw.altitude ?? 90, `${field}.altitude`, { min: 0, max: 90 })
+  };
+}
+
+function normalizePaintSessionCreateArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  if (!Array.isArray(raw.strokes) || raw.strokes.length < 1 || raw.strokes.length > 64) editFail('ARGUMENTS_INVALID');
+  let sampleCount = 0;
+  const strokes = raw.strokes.map((stroke, strokeIndex) => {
+    if (!stroke || typeof stroke !== 'object' || Array.isArray(stroke)) {
+      editFail('ARGUMENT_INVALID', { field: `arguments.strokes[${strokeIndex}]` });
+    }
+    const brushId = boundedText(stroke.brushId, `arguments.strokes[${strokeIndex}].brushId`, { max: 80 });
+    if (!CHAT_PAINT_SESSION_BRUSH_ID_SET.has(brushId)) {
+      editFail('ARGUMENT_INVALID', {
+        field: `arguments.strokes[${strokeIndex}].brushId`,
+        allowed: CHAT_PAINT_SESSION_BRUSH_IDS
+      });
+    }
+    if (!Array.isArray(stroke.samples) || stroke.samples.length < 2 || stroke.samples.length > 4096) {
+      editFail('ARGUMENT_INVALID', { field: `arguments.strokes[${strokeIndex}].samples` });
+    }
+    sampleCount += stroke.samples.length;
+    if (sampleCount > 16384) editFail('ARGUMENTS_BOUNDS', { field: 'arguments.strokes.samples' });
+    const samples = stroke.samples.map((sample, sampleIndex) =>
+      normalizePaintSessionSample(sample, `arguments.strokes[${strokeIndex}].samples[${sampleIndex}]`, sampleIndex));
+    for (let sampleIndex = 1; sampleIndex < samples.length; sampleIndex += 1) {
+      if (samples[sampleIndex].timestamp < samples[sampleIndex - 1].timestamp) {
+        editFail('ARGUMENT_INVALID', { field: `arguments.strokes[${strokeIndex}].samples[${sampleIndex}].timestamp` });
+      }
+    }
+    return {
+      id: stroke.id == null ? null : boundedText(stroke.id, `arguments.strokes[${strokeIndex}].id`, { max: 160 }),
+      brushId,
+      color: stroke.color == null ? '#202020' : boundedPaintToken(stroke.color, `arguments.strokes[${strokeIndex}].color`),
+      seed: boundedNumber(stroke.seed ?? strokeIndex + 1, `arguments.strokes[${strokeIndex}].seed`, { min: 0, max: 4294967295, integer: true }),
+      samples
+    };
+  });
+  return {
+    objectId: raw.objectId == null ? null : boundedText(raw.objectId, 'arguments.objectId', { max: 160 }),
+    name: raw.name == null ? 'CHAT Paint Session' : boundedText(raw.name, 'arguments.name', { max: 160 }),
+    seed: boundedNumber(raw.seed ?? 1, 'arguments.seed', { min: 0, max: 4294967295, integer: true }),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
+    strokes,
+    sampleCount
+  };
+}
 function normalizePathEditArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   const action = boundedEnum(raw.action, 'arguments.action', [
@@ -747,6 +815,7 @@ function normalizeOperationArguments(operation, raw) {
     };
   }
   if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
+  if (operation === 'paint.session.create.v1') return normalizePaintSessionCreateArguments(raw);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
@@ -778,7 +847,7 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
-  if (operation === 'path.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
+  if (operation === 'path.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
@@ -1193,6 +1262,68 @@ function executePathCreateTask(app, task) {
   return { createdRefs: [ref], resultRefs: [ref], objectId: path.id, shape: task.arguments.shape };
 }
 
+
+function executePaintSessionCreateTask(app, task) {
+  const layer = activeLayer(app);
+  if (!layer) editFail('LAYER_UNAVAILABLE');
+  if (layer.locked) editFail('TARGET_LOCKED', { layerId: layer.id });
+  const args = task.arguments;
+  const registry = new BrushPresetRegistry();
+  const sessionId = args.objectId || `chat-paint-${chatStateFingerprint({
+    taskId: task.taskId,
+    seed: args.seed,
+    name: args.name,
+    strokes: args.strokes.map(stroke => ({ brushId: stroke.brushId, color: stroke.color, seed: stroke.seed, samples: stroke.samples }))
+  }).replace(':', '-')}`;
+  if (findPageObject(app.page(), sessionId)) editFail('OBJECT_ID_COLLISION', { objectId: sessionId });
+
+  const recorder = new StrokeSessionRecorder({
+    id: sessionId,
+    name: args.name,
+    seed: args.seed,
+    registry,
+    layerState: [{ id: layer.id, visible: layer.visible !== false, locked: Boolean(layer.locked), opacity: layer.opacity ?? 1 }],
+    metadata: { source: 'CHAT_BOUNDED_EDIT', operation: task.operation, taskId: task.taskId }
+  });
+  for (const [strokeIndex, spec] of args.strokes.entries()) {
+    recorder.beginStroke({
+      ...(spec.id ? { id: spec.id } : {}),
+      brushId: spec.brushId,
+      color: spec.color,
+      seed: spec.seed,
+      layerId: layer.id,
+      metadata: { source: 'CHAT_BOUNDED_EDIT', strokeIndex }
+    });
+    for (const sample of spec.samples) recorder.addSample(sample);
+    recorder.endStroke();
+  }
+  const session = recorder.finish({ source: 'CHAT_BOUNDED_EDIT', taskId: task.taskId });
+  const replay = replayStrokeSession(session, { registry, fixedSeed: true });
+  if (replay?.report?.status !== 'COMPLETED') editFail('PAINT_REPLAY_FAILED', { status: replay?.report?.status || null });
+  const object = {
+    id: sessionId,
+    type: 'paint-session',
+    name: args.name,
+    matrix: Matrix.identity(),
+    opacity: args.opacity,
+    session,
+    replay
+  };
+  app.history.pushScoped('CHAT create Paint Session', structuralHistoryPaths(app, []), () => {
+    layer.objects.push(object);
+  });
+  finishStructuralMutation(app);
+  const ref = { pageId: app.page().id, layerId: layer.id, objectId: object.id };
+  return {
+    createdRefs: [ref],
+    resultRefs: [ref],
+    objectId: object.id,
+    strokeCount: session.strokes.length,
+    sampleCount: args.sampleCount,
+    brushIds: [...new Set(session.strokes.map(stroke => stroke.brushId))],
+    replayHash: replay.replayHash || replay.report?.replayHash || null
+  };
+}
 function executeRotateTask(app, task) {
   const foundItems = task.targets.map(ref => findPageObject(app.page(), ref));
   if (foundItems.some(found => !found)) editFail('TARGET_MISSING');
@@ -1700,6 +1831,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'object.translate.v1') return executeTranslateTask(app, task);
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
+  if (task.operation === 'paint.session.create.v1') return executePaintSessionCreateTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
   if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
