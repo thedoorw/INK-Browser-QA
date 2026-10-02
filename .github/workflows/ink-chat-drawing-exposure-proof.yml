@@ -26,6 +26,7 @@ jobs:
           node --check product/source/src/editor/chat-bounded-edit.js
           node --check product/source/src/agent/capability-registry.js
           node --check qa/live-chat/run-local-drawing-exposure-proof.mjs
+          node --input-type=module -e "await import('./product/source/src/agent/capability-registry.js'); console.log('module-import-check PASS')"
 
       - name: Run local browser proof
         run: |
