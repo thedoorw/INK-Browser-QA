@@ -205,6 +205,44 @@ const editSchemas = {
     }, ['kind', 'points'], 'Bounded native Stroke creation. Rendering remains owned by the existing INK Renderer / NaturalMediaController.'),
     0, 0
   ),
+  'stroke.edit.v1': editTaskSchema(
+    { type: 'string', const: 'stroke.edit.v1', description: 'Edit one existing native INK Stroke through the existing Stroke object model.' },
+    {
+      oneOf: [
+        obj({ action: { type: 'string', const: 'move-node' }, index: integer('Stroke node index.', { minimum: 0, maximum: 4096 }), x: num('World X position.'), y: num('World Y position.') }, ['action','index','x','y']),
+        obj({ action: { type: 'string', const: 'set-node-mode' }, index: integer('Stroke node index.', { minimum: 0, maximum: 4096 }), mode: { type:'string', enum:['corner','smooth','symmetric'] } }, ['action','index','mode']),
+        obj({ action: { type: 'string', const: 'move-handle' }, index: integer('Stroke node index.', { minimum: 0, maximum: 4096 }), side: { type:'string', enum:['in','out'] }, x: num('Handle world X.'), y: num('Handle world Y.') }, ['action','index','side','x','y']),
+        obj({ action: { type: 'string', const: 'insert-node' }, segmentIndex: integer('Stroke segment index.', { minimum:0, maximum:4096 }), t: num('Insertion position on segment.', { minimum:.02, maximum:.98 }) }, ['action','segmentIndex']),
+        obj({ action: { type: 'string', const: 'delete-nodes' }, indices: arr(integer('Stroke node index.', { minimum:0, maximum:4096 }), 'Stroke node indices.', { minItems:1, maxItems:512 }) }, ['action','indices']),
+        obj({ action: { type: 'string', const: 'set-segment-style' }, segmentIndex: integer('Stroke segment index.', { minimum:0, maximum:4096 }), style: obj({
+          color: str('Segment color token.'), size: num('Segment size.', { minimum:Number.EPSILON, maximum:100000 }),
+          opacity: num('Segment opacity.', { minimum:0, maximum:1 }), pressure: num('Segment pressure influence.', { minimum:0, maximum:1 }),
+          flow: num('Segment flow.', { minimum:0, maximum:1 }), wetness: num('Segment wetness.', { minimum:0, maximum:1 }),
+          grain: num('Segment grain.', { minimum:0, maximum:1 }), bristle: num('Segment bristle.', { minimum:0, maximum:1 })
+        }, [], 'Bounded segment style patch.') }, ['action','segmentIndex','style']),
+        obj({ action: { type: 'string', const: 'clear-segment-style' }, segmentIndex: integer('Stroke segment index.', { minimum:0, maximum:4096 }) }, ['action','segmentIndex']),
+        obj({ action: { type: 'string', const: 'set-style' }, patch: obj({
+          color: str('Stroke color token.'), size: num('Stroke size.', { minimum:Number.EPSILON, maximum:100000 }),
+          opacity: num('Stroke opacity.', { minimum:0, maximum:1 }),
+          kind: { type:'string', enum:['pen','pencil','marker','brush','drybrush','airbrush'] },
+          smoothing: num('Smoothing.', { minimum:0, maximum:.95 }), pressure: num('Pressure influence.', { minimum:0, maximum:1 }),
+          taper: num('Taper.', { minimum:0, maximum:1 }), grain: num('Grain.', { minimum:0, maximum:1 }),
+          softness: num('Softness.', { minimum:0, maximum:1 }), flow: num('Flow.', { minimum:0, maximum:1 }),
+          wetness: num('Wetness.', { minimum:0, maximum:1 }), bristle: num('Bristle.', { minimum:0, maximum:1 }),
+          mediaModel: { anyOf:[{type:'string',const:'natural-v2'},{type:'null'}] }
+        }, [], 'Bounded native Stroke appearance patch.') }, ['action','patch'])
+      ]
+    },
+    1, 1
+  ),
+  'stroke.erase.v1': editTaskSchema(
+    { type:'string', const:'stroke.erase.v1', description:'Erase a circular region from one existing native Stroke using the existing INK Stroke eraser geometry.' },
+    obj({
+      center: pointSchema('World-space eraser center.'),
+      radius: num('World-space eraser radius.', { minimum:Number.EPSILON, maximum:100000 })
+    }, ['center','radius']),
+    1, 1
+  ),
   'path.edit.v1': editTaskSchema(
     { type: 'string', const: 'path.edit.v1', description: 'Edit one Path through the existing PathEditController.' },
     obj({
@@ -840,6 +878,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'component.definition.duplicate.v1') operationConstraints.push('Zero-target definition duplication uses the existing native definition/source duplication transaction.');
   if (operation === 'component.reference.repair.v1') operationConstraints.push('Explicit repair only; target must be one Component Instance and automatic repair remains prohibited.');
   if (operation === 'stroke.create.v1') operationConstraints.push('Creates the same native Stroke object family used by interactive INK drawing; no second brush engine, renderer, History authority or document state is introduced.');
+  if (operation === 'stroke.edit.v1') operationConstraints.push('Edits the same native Stroke object family through existing Stroke geometry/style semantics and existing History; no parallel stroke authority.');
+  if (operation === 'stroke.erase.v1') operationConstraints.push('Uses the existing Stroke eraser geometry and replaces only the targeted native Stroke with its bounded fragments.');
   if (operation === 'path.repaint.v1') {
     operationConstraints.push('arguments must contain at least one of fill, stroke, opacity, or expressiveStrokeColor; empty arguments are rejected with ARGUMENTS_EMPTY.');
   }
@@ -875,7 +915,11 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
             ? [{ taskId: 'material-remove-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: {} }]
             : operation === 'stroke.create.v1'
               ? [{ taskId: 'stroke-create-1', operation, targets: [], arguments: { kind: 'pencil', color: '#202020', size: 4, points: [{ x: 10, y: 20, p: .3, t: 0 }, { x: 80, y: 45, p: .8, t: 16 }] } }]
-              : [{ taskId: operation + '-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: {} }],
+              : operation === 'stroke.edit.v1'
+                ? [{ taskId: 'stroke-edit-1', operation, targets: [{ pageId:'page-1',layerId:'layer-1',objectId:'stroke-1' }], arguments: { action:'move-node', index:1, x:90, y:50 } }]
+                : operation === 'stroke.erase.v1'
+                  ? [{ taskId: 'stroke-erase-1', operation, targets: [{ pageId:'page-1',layerId:'layer-1',objectId:'stroke-1' }], arguments: { center:{x:50,y:40}, radius:12 } }]
+                  : [{ taskId: operation + '-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: {} }],
     toolPrimary: false
   });
 });
