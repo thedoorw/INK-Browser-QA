@@ -434,6 +434,14 @@
     if (use) use.setAttribute('href', '#' + descriptor.icon);
     if (name) name.textContent = descriptor.label;
     const settings = app.toolSettings?.[app.tool];
+    const baseContextVisibility = {
+      color: descriptor.mode === 'draw' || descriptor.mode === 'shape' || descriptor.mode === 'text',
+      size: descriptor.mode === 'draw' || descriptor.mode === 'eraser',
+      opacity: descriptor.mode === 'draw'
+    };
+    for (const [control, shown] of Object.entries(baseContextVisibility)) {
+      root.querySelectorAll('[data-context-control="' + control + '"]').forEach(row => { row.hidden = !shown; });
+    }
     root.querySelectorAll('[data-context-control="dynamics"]').forEach(row => { row.hidden = descriptor.mode !== 'draw'; });
     root.querySelectorAll('[data-context-control="media"]').forEach(row => {
       row.hidden = descriptor.mode !== 'draw' || !['brush','drybrush','airbrush'].includes(settings?.kind);
