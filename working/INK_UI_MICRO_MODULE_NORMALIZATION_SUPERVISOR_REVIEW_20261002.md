@@ -98,15 +98,22 @@ Required correction:
 
 The DEV debt report remains useful evidence, but `935 declarations removed` does not by itself prove that covered dual authority is gone.
 
-### SUP-04 — SINGLE-COLUMN COLOR SWATCH SIZE
+### SUP-04 — TOOLS COLOR SWATCH STATE SCALE
 
-**WITHDRAWN after numeric verification.**
+**REOPENED after USER correction.**
 
-The earlier visual review inferred that the single-column swatches had been reduced. Fresh before/after DOM/computed evidence from the bounded cleanup shows that both foreground and background swatches were already 18×18 px in both dual- and single-column Tools, using the same `--ui-swatch-size:18px` primitive. The combined diagonal stack also remained inside the single-column rail.
+The prior withdrawal was incorrect. Photoshop single-column and double-column Tools intentionally use different foreground/background swatch scales.
 
-Therefore the previous “single-column swatch shrink” diagnosis was incorrect and must not be used as a DEV correction target.
+Current INK uses one shared `--ui-swatch-size:18px` primitive for both layouts. That is not faithful to the Photoshop reference behavior.
 
-Any remaining visual mismatch in the color cluster must be reviewed as placement/optical composition against Photoshop, not as a primitive-size defect.
+Required correction:
+- define separate single-column and double-column swatch-size tokens;
+- measure each state from Photoshop reference evidence before implementation;
+- preserve the same semantic foreground/background diagonal composition while allowing state-specific size and overlap;
+- reset/swap utilities must reflow with each state;
+- do not solve fit by arbitrary per-instance scaling or local overrides.
+
+This is a state-specific reference rule, not a same-class consistency rule.
 
 ### SUP-05 — LEFT/RIGHT COLLAPSE GLYPH SIZE OVERRIDE BREAKS SAME-CLASS ALIGNMENT
 
@@ -208,7 +215,7 @@ Independent Supervisor checks:
 - legacy covered desktop declarations were removed or isolated as explicit compact/state variants rather than replaced by higher-specificity patches;
 - left-only `9×8` collapse SVG override is absent from final source;
 - shared collapse primitive is `7×5` for both left/right controls;
-- shared swatch primitive is `18×18` for both dual/single Tools;
+- current INK still uses one `18×18` swatch primitive for both dual/single Tools; this is now identified as a remaining reference mismatch under SUP-04;
 - visible panel tabs remain 28 px;
 - sampled rendered states preserve current normalized geometry except for the intended left-chevron correction;
 - focused behavior checks for Layers/Edit/Preferences/splitter continue to pass in the DEV evidence.
@@ -217,7 +224,7 @@ Disposition:
 ```text
 TECH_DEBT_CLEANUP = ACCEPTED
 SUP-03 = RESOLVED
-SUP-04 = WITHDRAWN (earlier Supervisor visual inference was incorrect)
+SUP-04 = OPEN (single/dual Photoshop swatch scales are intentionally different)
 SUP-05 = RESOLVED
 SUP-01 = OPEN
 SUP-02 = OPEN
