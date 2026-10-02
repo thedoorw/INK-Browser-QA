@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "live-raster-filter-candidate-001",
-  "candidateSha": "c7a0b08e43d3410811efdd5532571002a1acb478",
-  "case": "raster-stack-filter-b2",
+  "requestId": "live-raster-blend-candidate-001",
+  "candidateSha": "db9ac524aee1f1bf7fc8fe613e75bfb93088a3ec",
+  "case": "raster-stack-blend-b2",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:45193/?sourceCandidate=c7a0b08e43d3410811efdd5532571002a1acb478",
+    "href": "http://127.0.0.1:36457/?sourceCandidate=db9ac524aee1f1bf7fc8fe613e75bfb93088a3ec",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,30 +13,29 @@
   },
   "result": {
     "passed": true,
-    "operation": "image.filter.add.v1",
-    "filterType": "gaussianBlur",
-    "objectId": "4de2199a-899b-4503-8ba4-a6d52f8a300a",
-    "beforeFingerprint": "fnv1a32:23fdf456",
-    "afterFingerprint": "fnv1a32:58d03700",
+    "operation": "image.blend.set.v1",
+    "blendMode": "multiply",
+    "objectId": "332a373d-1f98-4f38-9e1a-ee53b9efedbe",
+    "baseObjectId": "676d8bf1-ecf2-4729-b8bc-4acbc8f1bf1d",
+    "beforeFingerprint": "fnv1a32:121d3e9b",
+    "afterFingerprint": "fnv1a32:6739da62",
     "beforeHash": "7883b22",
-    "afterHash": "a9f6be1d",
+    "afterHash": "a24287ef",
     "undoHash": "7883b22",
-    "redoHash": "a9f6be1d",
-    "historyLabel": "CHAT add image filter: gaussianBlur",
+    "redoHash": "a24287ef",
+    "historyLabel": "CHAT set image blend: multiply",
     "previewStatus": "COMPLETED",
     "undoStatus": "COMPLETED",
     "redoStatus": "COMPLETED",
     "controllerResult": {
-      "filterCount": 1,
+      "blendMode": "multiply",
       "resultRefs": [
         {
-          "layerId": "13aa1a6a-3579-44b5-a178-ab7124745cec",
-          "objectId": "4de2199a-899b-4503-8ba4-a6d52f8a300a",
-          "pageId": "daa019f4-d185-4eeb-b56c-44feaa4366c8"
+          "layerId": "52591002-4d32-44b0-9536-fdb684a56920",
+          "objectId": "332a373d-1f98-4f38-9e1a-ee53b9efedbe",
+          "pageId": "f53f781c-9500-4eae-9ec1-263a391d72c2"
         }
-      ],
-      "stackItemId": "filter_ss69ro",
-      "stackItemType": "gaussianBlur"
+      ]
     }
   },
   "status": "PASS"
