@@ -91,6 +91,32 @@ Live CHAT registry exposes no brush / natural-media / paper / Blender / Smudge a
 Next action:
 Source-audit existing native drawing authorities. If they exist, expose them through the bounded CHAT surface without creating duplicate drawing state.
 
+### A source-audit checkpoint — 2026-10-02
+
+Source audit:
+`working/INK_LIVE_CLUSTER_A_DRAWING_NATURAL_MEDIA_SOURCE_AUDIT_20261002.md`
+
+Disposition:
+
+```text
+GENERAL DRAWING / BRUSH SESSION = PRODUCT EXISTS / CHAT EXPOSURE GAP
+NATIVE STROKE + AIRBRUSH = PRODUCT EXISTS / CHAT EXPOSURE GAP
+PAPER PROFILE / MUTATION = PRODUCT EXISTS / CHAT EXPOSURE GAP
+ERASER GEOMETRY = PRODUCT EXISTS / CHAT EXPOSURE GAP / SEPARATE BOUNDED DESIGN
+BLENDER / SMUDGE = PRODUCT RENDER-INTEGRATION GAP
+```
+
+Draft bounded candidate:
+- branch `work/ink-live-drawing-exposure-001`
+- PR #112
+- candidate HEAD `96d873d45ba86a4760a82648a9ee31972714b936`
+- candidate operation `paint.session.create.v1`
+- static syntax: PASS for the two changed modules
+- runtime/browser qualification: NOT YET CLAIMED
+- merge / Live promotion: HOLD under current required review and C04 integration sequence
+
+The candidate does not expose Blender / Smudge / Eraser and does not create duplicate Document / History / Renderer / drawing authority.
+
 ### B — Raster / Mask / Filter / Blend / Effect / Deformation
 
 Families:
