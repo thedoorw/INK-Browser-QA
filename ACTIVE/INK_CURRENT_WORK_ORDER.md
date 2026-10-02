@@ -1,5 +1,14 @@
 # INK Current Work Order
 
+## Core integration completed — 2026-10-02
+
+Integrated main SHA: `892c1917280b87c9e44b7a8567517bf24d7e0122`.
+
+Complete `product/source` Git tree: `5d234ef03f56dfc6148192a771016b7f90fe8407`, byte-identical to exact browser-tested candidate `66cdb5b4ddc322a2b1027cab2627426f868027d3`.
+Accepted focused 33/33 evidence is retained for these unchanged product bytes; no new browser run claimed. FORMAT_VERSION = 4. No UI/C04/C06/New Document mutation in Core integration.
+
+UI recovery entry gate is now released. Execute `ACTIVE/INK_UI_CURRENT_MAIN_RECOVERY_DEV_DISPATCH_v1.0.md` on a fresh branch from latest main, then STOP to Supervisor. C04 remains blocked until recovery candidate acceptance. No intermediate placement-only deployment checkpoint.
+
 ## Recovery sequence after current-main UI rejection — 2026-10-02
 
 USER authorized Supervisor to arrange the recovery path.
