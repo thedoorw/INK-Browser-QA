@@ -719,6 +719,42 @@ primary.push(descriptor({
 }));
 
 
+// Cluster B1 direct mutable web-raster import. Binary ingest is a named-tool boundary, not bounded-edit JSON.
+primary.push(descriptor({
+  id: 'raster.import',
+  title: 'Import Editable Raster',
+  description: 'Import a browser-local PNG, JPEG or WebP attachment into the existing native editable image + rasterState authority.',
+  availability: true,
+  routingClass: 'NAMED_TOOL',
+  namedTool: 'import_ink_raster',
+  publicMethod: 'raster.import',
+  role: 'WRITE',
+  authoritativeRoute: 'normalizeChatAttachment → app.importWebRaster → existing History / image+rasterState / Renderer',
+  inputSchema: obj({
+    input: { description: 'Browser-local File or Blob, or the existing normalizeChatAttachment {file} / {blob, name, type} handoff. Binary bytes are never encoded in JSON.' },
+    options: obj({
+      name: str('Optional object name; defaults to the local file name.'),
+      type: str('MIME type for a bare Blob.'),
+      mimeType: str('Existing MIME type alias for a bare Blob.'),
+      lastModified: num('Optional file modification time.'),
+      intent: str('Optional audit intent.'),
+      matrix: arr(num('Affine matrix coefficient.'), 'Optional placement matrix.', { minItems: 6, maxItems: 6 })
+    }, [], 'Mutable raster import options.')
+  }, ['input'], 'Named Tool canonical request: {input, options?}.'),
+  targetTypes: ['Image'],
+  constraints: [
+    'Current B1 qualification covers browser-local PNG / JPEG / WebP only through the existing web-raster decoder and B0 bridge.',
+    'Creates the existing native editable image + rasterState shape; ReferenceImage remains separate and locked.',
+    'Raw File/Blob, pixel arrays, data URLs and remote URLs are never returned in the public JSON result.',
+    'Uses existing History and Renderer; no automatic Revision capture and no duplicate raster state owner.',
+    'PSD/TIFF/EXR/RAW already have a native importImageFormat authority but are not claimed by this B1 web-raster named-tool qualification.'
+  ],
+  ...policy(false, 'DIRECT_NAMED_TOOL', 'AUTHORITATIVE_COMMIT', 'NO_AUTO_CAPTURE', true, false, 'Call get_ink_preview after import for visual verification.'),
+  resultContract: resultContract({ statuses: ['COMPLETED', 'FAILED'], createsRefs: true, changesRefs: true }),
+  examples: [{ input: '<browser-local File>', options: { name: 'editable.png', type: 'image/png' } }],
+  toolPrimary: true
+}));
+
 // C2-A direct high-level export tool. Export is readback/output generation, not a bounded Document mutation.
 primary.push(descriptor({
   id: 'asset.export', title: 'Export INK asset', description: 'Generate PNG, SVG or PDF through the existing INK export authorities and retain the result in the existing ephemeral output registry.',
