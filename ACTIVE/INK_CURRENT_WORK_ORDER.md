@@ -1,5 +1,45 @@
 # INK Current Work Order
 
+## Remaining whole-UI Photoshop fidelity — Supervisor release 2026-10-02
+
+This section supersedes the prior `NEXT = SUPERVISOR / USER DEPLOYED VISUAL CHECKPOINT` only for the bounded remaining whole-UI fidelity scope.
+
+- SUPERVISOR_BASE: `58adf13cd98a8594eb8e63faedc735ce0c5179f0`
+- COMBINED_INTEGRATED_MAIN: `aa01f1e311eb22cb572a61efea19b8bb21a96157`
+- PRODUCT_SOURCE_TREE_AT_RECHECK: `18f04e089bac94826b55604e0810d93517504f82`
+- INTERVENING_PRODUCT_SOURCE_MUTATION: `YES — bounded CHAT/agent paths only`
+- UI_AUTHORITY_BLOBS_CHANGED: `NO`
+- COMBINED_UI_BASELINE_TREE: `5ccaac62ed85176d69e07a1b72b1cac20c507f87`
+- OLD_WHOLE_UI_PASS_REUSED: `NO`
+- SUPERVISOR_PRODUCT_MUTATION: `NONE`
+- REVIEW: `working/INK_UI_REMAINING_WHOLE_UI_FIDELITY_SUPERVISOR_REVIEW_20261002.md`
+- DEV_DISPATCH: `ACTIVE/INK_UI_REMAINING_WHOLE_UI_FIDELITY_DEV_DISPATCH_v1.0.md`
+
+Active bounded objective:
+1. top-right window cluster: normalized 1:1 rendered verification before any move;
+2. Options Bar: remove duplicate Select/Lasso one-shot contextual routing and close Options-specific 21 px control geometry;
+3. right panels: measure same-class row/spacing/separator/typography; fix only proven outliers;
+4. icon / tab / collapse / scrollbar: complete fresh same-class + state coverage and repair only proven outliers.
+
+Keep separate and untouched:
+- C04 `圖紙 / 手繪板` accepted behavior;
+- C06 12800% zoom;
+- Properties clipping;
+- New Document / A4 architecture;
+- Live CHAT exposure and separate Live repository work.
+
+DEV must start from **latest main at execution time**. If an intervening mutation changes the UI-authority blobs or can alter the reviewed shell/panel/options surfaces, STOP for Supervisor recheck. Non-UI concurrent product mutations must be recorded but do not automatically block this task.
+
+```text
+REMAINING_WHOLE_UI_FIDELITY = ACTIVE_BOUNDED_TASK
+WINDOW_CONTROL_GEOMETRY_CHANGE = NOT_PREAUTHORIZED
+OPTIONS_CONTEXT_ROUTING = FIX_NOW
+RIGHT_PANEL_BROAD_REDESIGN = NOT_AUTHORIZED
+C04_REOPEN = NO
+FINAL_UI_COMPLETE = NO
+NEXT = DEV → fresh evidence → SUPERVISOR REVIEW
+```
+
 ## Combined recovery + C04 promotion integrated — 2026-10-02
 
 This checkpoint supersedes the earlier active/pending promotion status below.
