@@ -18,16 +18,19 @@ Confirmed:
 - covered duplicate exact-selector definitions in identical context are reported as 96 → 0 and spot-checks of the final source confirm the targeted families were consolidated rather than patched later;
 - obsolete left-only `.tool-layout-toggle svg { width:9px; height:8px }` is gone;
 - both left/right collapse SVGs resolve to the shared 7×5 px primitive;
-- Tools foreground/background swatches resolve to one shared 18×18 px primitive in both dual and single layouts;
+- Tools foreground/background swatches currently resolve to one 18×18 px primitive in both layouts; this is source-consistent but no longer considered the correct Photoshop visual target;
 - panel tabs retain the shared 28 px grammar;
 - current rendered states are materially preserved; the intended visible delta is the corrected left collapse glyph;
 - sampled Layers, Edit, Preferences, Reference overflow and splitter behavior evidence show no cleanup regression.
 
-## Correction to prior Supervisor finding
+## Swatch correction after USER review
 
-The prior `SUP-04` finding that single-column swatches had been shrunk was a visual inference and was incorrect.
+The cleanup correctly consolidated the current source, but its assumption that single- and double-column Tools should share one 18×18 px swatch primitive was incorrect.
 
-Fresh numeric evidence shows the baseline candidate already used 18×18 px swatches in both Tools layouts. Any remaining Photoshop mismatch in that cluster must be reviewed as optical placement/composition, not primitive size.
+Photoshop intentionally uses different swatch scales by toolbar layout state. Therefore:
+- the cleanup remains accepted as a technical-debt consolidation pass;
+- the 18×18 shared swatch result is not accepted as final Photoshop fidelity;
+- SUP-04 is reopened for the next visual completion repair using separate single/dual measured tokens.
 
 ## Remaining open issues
 
