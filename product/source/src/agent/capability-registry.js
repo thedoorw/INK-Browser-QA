@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -231,6 +231,24 @@ const editSchemas = {
       params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing effect parameters; maximum 8 KiB / depth 4 / 64 keys.' },
       opacity: num('Effect opacity.', { minimum: 0, maximum: 1, default: 1 })
     }, ['type'], 'Existing image-core createLayerEffect() arguments.'),
+    1
+  ),
+  'image.liquify.add.v1': editTaskSchema(
+    { type: 'string', const: 'image.liquify.add.v1', description: 'Append one existing native Liquify filter to an editable raster image.' },
+    obj({
+      operations: arr(obj({
+        type: { type: 'string', enum: [...CHAT_IMAGE_LIQUIFY_OPERATION_TYPES], description: 'Existing Liquify operation type.' },
+        x: num('Raster-space center X.'),
+        y: num('Raster-space center Y.'),
+        radius: num('Operation radius.', { minimum: 1, maximum: 1000000, default: 32 }),
+        strength: num('Operation strength.', { minimum: -1, maximum: 1, default: .5 }),
+        dx: num('Forward-warp X displacement.'),
+        dy: num('Forward-warp Y displacement.'),
+        angle: num('Optional angle in degrees.', { minimum: -360000, maximum: 360000 })
+      }, ['type','x','y'], 'One bounded existing Liquify operation.'), 'Liquify operations.', { minItems: 1, maxItems: 32 }),
+      opacity: num('Liquify filter opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      maxWork: { type: 'integer', minimum: 1, maximum: 50000000, description: 'Optional existing Liquify work ceiling.' }
+    }, ['operations'], 'Existing image-core createLiquifyFilter() arguments. Freeze-mask pixel arrays are intentionally excluded.'),
     1
   ),
   'path.edit.v1': editTaskSchema(
@@ -901,6 +919,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.filter.add.v1') operationConstraints.push('Initial qualified filter allowlist: gaussianBlur, sharpen, noiseGrain, textureOverlay.');
   if (operation === 'image.blend.set.v1') operationConstraints.push('Uses the existing IMAGE_CAPABILITIES blend-mode allowlist and rejects no-op assignment.');
   if (operation === 'image.effect.add.v1') operationConstraints.push('Initial effect allowlist: dropShadow, innerShadow, outerGlow, colorOverlay, stroke; qualification coverage is recorded per tested effect type.');
+  if (operation === 'image.liquify.add.v1') operationConstraints.push('Maximum 32 operations; uses existing LIQUIFY_OPERATIONS/createLiquifyFilter/liquifyRaster. Arbitrary freeze-mask pixel arrays are excluded from CHAT exposure.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
   if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
   if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
@@ -949,6 +968,8 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
         ? [{ taskId: 'image-blend-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { mode: 'multiply' } }]
       : operation === 'image.effect.add.v1'
         ? [{ taskId: 'image-effect-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'colorOverlay', params: { color: '#00cc66' }, opacity: .55 } }]
+      : operation === 'image.liquify.add.v1'
+        ? [{ taskId: 'image-liquify-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { operations: [{ type: 'twirl', x: 32, y: 24, radius: 18, strength: .65 }], opacity: 1, maxWork: 500000 } }]
       : operation === 'object.translate.v1'
       ? [{ taskId: 'translate-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'object-1' }], arguments: { dx: 10, dy: 5 } }]
       : operation === 'path.repaint.v1'
