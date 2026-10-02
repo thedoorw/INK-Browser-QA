@@ -165,7 +165,7 @@ function validateRequest(request) {
       assert.match(String(step?.tool || ''), /^[a-z0-9_]{1,80}$/);
       assert.ok(step?.input == null || (typeof step.input === 'object' && !Array.isArray(step.input)), 'step input must be an object');
       if (step.file != null) {
-        assert.equal(step.tool, 'import_ink_reference', 'file payload is only allowed for import_ink_reference');
+        assert.ok(['import_ink_reference','import_ink_raster'].includes(step.tool), 'file payload is only allowed for import_ink_reference or import_ink_raster');
         assert.ok(step.file && typeof step.file === 'object' && !Array.isArray(step.file), 'step file must be an object');
         assert.match(String(step.file.path || ''), /^qa\/fixtures\/[A-Za-z0-9._\/-]+$/);
         assert.ok(!String(step.file.path).includes('..'), 'fixture path traversal rejected');
