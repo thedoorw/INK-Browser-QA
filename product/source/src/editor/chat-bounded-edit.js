@@ -11,6 +11,7 @@ import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
+import { createAdjustment } from '../image/image-core.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -102,6 +103,18 @@ function pathAppearanceSummary(path) {
 
 function appearanceSummary(object) {
   if (object?.type === 'path') return pathAppearanceSummary(object);
+  if (object?.type === 'image') {
+    return {
+      opacity: finite(object?.opacity) ?? 1,
+      rasterStateType: object?.rasterState?.type || null,
+      stackFingerprint: chatStateFingerprint({
+        adjustments: object?.adjustments || [],
+        filterStack: object?.filterStack || [],
+        effects: object?.effects || [],
+        blendMode: object?.blendMode || 'source-over'
+      })
+    };
+  }
   const result = { opacity: finite(object?.opacity) ?? 1 };
   for (const key of ['color', 'fill', 'fillColor', 'stroke', 'strokeWidth', 'size', 'kind']) {
     if (object?.[key] !== undefined && typeof object[key] !== 'object') result[key] = object[key];
@@ -212,6 +225,8 @@ export const CHAT_EDIT_TASK_VERSION = 1;
 export const CHAT_EDIT_PROPOSAL_SCHEMA = 'INK-CHAT-EDIT-PROPOSAL';
 export const CHAT_EDIT_PROPOSAL_VERSION = 1;
 
+export const CHAT_IMAGE_ADJUSTMENT_TYPES = Object.freeze(['brightnessContrast', 'levels', 'curves', 'hueSaturation']);
+
 export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.repaint.v1',
   'path.material.apply.v1',
@@ -221,6 +236,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.refine.v1',
   'path.create.v1',
   'paint.session.create.v1',
+  'image.adjustment.add.v1',
   'path.edit.v1',
   'object.rotate.v1',
   'object.clone.v1',
@@ -317,6 +333,54 @@ function boundedEnum(value, field, allowed) {
   const text = boundedText(value, field, { max: 80 });
   if (!allowed.includes(text)) editFail('ARGUMENT_INVALID', { field });
   return text;
+}
+
+function normalizeBoundedJson(value, field, {
+  maxBytes = 8192,
+  maxDepth = 4,
+  maxKeys = 64,
+  maxArray = 128,
+  maxString = 512
+} = {}) {
+  const state = { keys: 0 };
+  const visit = (item, path, depth) => {
+    if (depth > maxDepth) editFail('ARGUMENTS_BOUNDS', { field: path });
+    if (item == null || typeof item === 'boolean') return item;
+    if (typeof item === 'number') {
+      if (!Number.isFinite(item)) editFail('ARGUMENT_INVALID', { field: path });
+      return item;
+    }
+    if (typeof item === 'string') {
+      if (item.length > maxString) editFail('ARGUMENTS_BOUNDS', { field: path });
+      return item;
+    }
+    if (Array.isArray(item)) {
+      if (item.length > maxArray) editFail('ARGUMENTS_BOUNDS', { field: path });
+      return item.map((entry, index) => visit(entry, `${path}[${index}]`, depth + 1));
+    }
+    if (!item || typeof item !== 'object' || Object.getPrototypeOf(item) !== Object.prototype) {
+      editFail('ARGUMENT_INVALID', { field: path });
+    }
+    const keys = Object.keys(item);
+    state.keys += keys.length;
+    if (state.keys > maxKeys) editFail('ARGUMENTS_BOUNDS', { field: path });
+    return Object.fromEntries(keys.sort().map(key => [
+      boundedText(key, `${path}.key`, { max: 128 }),
+      visit(item[key], `${path}.${key}`, depth + 1)
+    ]));
+  };
+  const normalized = visit(value ?? {}, field, 0);
+  if (JSON.stringify(normalized).length > maxBytes) editFail('ARGUMENTS_BOUNDS', { field });
+  return normalized;
+}
+
+function normalizeImageAdjustmentArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    type: boundedEnum(raw.type, 'arguments.type', CHAT_IMAGE_ADJUSTMENT_TYPES),
+    params: normalizeBoundedJson(raw.params ?? {}, 'arguments.params'),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
 }
 
 function normalizePoint(value, field, { optional = false } = {}) {
@@ -816,6 +880,7 @@ function normalizeOperationArguments(operation, raw) {
   }
   if (operation === 'path.create.v1') return normalizePathCreateArguments(raw);
   if (operation === 'paint.session.create.v1') return normalizePaintSessionCreateArguments(raw);
+  if (operation === 'image.adjustment.add.v1') return normalizeImageAdjustmentArguments(raw);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
@@ -848,7 +913,8 @@ function normalizeOperationArguments(operation, raw) {
 
 function operationTargetRules(operation) {
   if (operation === 'path.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
-  if (operation === 'path.edit.v1'
+  if (operation === 'image.adjustment.add.v1'
+    || operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
     || operation === 'object.clone.v1'
@@ -992,6 +1058,10 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     }
     if (task.operation === 'text.edit.v1' && found.object?.type !== 'text') {
       editFail('TEXT_REQUIRED', { objectId: found.object?.id || null });
+    }
+    if (task.operation === 'image.adjustment.add.v1'
+      && (found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster)) {
+      editFail('RASTER_IMAGE_REQUIRED', { objectId: found.object?.id || null });
     }
     if (found.effectiveLocked) editFail('TARGET_LOCKED', { objectId: found.object.id });
     if (found.effectiveVisible === false) editFail('TARGET_HIDDEN', { objectId: found.object.id });
@@ -1822,6 +1892,31 @@ function executeComponentReferenceRepairTask(app, task) {
   };
 }
 
+function executeImageAdjustmentTask(app, task) {
+  const ref = task.targets[0];
+  const found = findPageObject(app.page(), ref);
+  if (!found || found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster) {
+    editFail('RASTER_IMAGE_REQUIRED', { objectId: found?.object?.id || null });
+  }
+  const object = found.object;
+  if ((object.adjustments?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+  let stackItem = null;
+  app.history.pushScoped(`CHAT add image adjustment: ${task.arguments.type}`, [app.objectPath(found)], () => {
+    object.adjustments = object.adjustments || [];
+    stackItem = createAdjustment(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
+    object.adjustments.push(stackItem);
+  });
+  app.spatialDirty = true;
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: object.id }],
+    stackItemId: stackItem?.id || null,
+    stackItemType: stackItem?.type || null,
+    adjustmentCount: object.adjustments?.length || 0
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
@@ -1832,6 +1927,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
   if (task.operation === 'paint.session.create.v1') return executePaintSessionCreateTask(app, task);
+  if (task.operation === 'image.adjustment.add.v1') return executeImageAdjustmentTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
   if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
