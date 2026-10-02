@@ -120,9 +120,11 @@ Use exactly three structural levels:
 - shell / major panel boundary
 
 ### Panel-group splitter
-- ≈3 px visual seam
-- distinct from ordinary divider
+- visible seam = 1 px
+- slightly stronger contrast than an ordinary divider
+- draggable hit area ≈5 px, centered transparently on the visible seam
 - draggable only where resize behavior exists
+- never render the interaction hit area as a thick gray band
 
 Rules:
 - do not frame every row;
