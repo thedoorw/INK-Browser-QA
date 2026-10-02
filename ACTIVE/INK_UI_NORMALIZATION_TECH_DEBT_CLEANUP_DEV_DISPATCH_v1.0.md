@@ -76,8 +76,8 @@ For each covered class:
 Required examples:
 - left and right collapse glyphs must use the same 7×5 px double-chevron primitive;
 - no left-only 9×8 px collapse override;
-- single/dual Tools must use the same 18×18 px color swatch primitive;
-- single-column state changes placement/reflow only, not swatch primitive size;
+- [SUPERSEDED AFTER USER REVIEW] the cleanup originally required one 18×18 px swatch primitive across single/dual Tools.
+- Correct current authority: Photoshop single/dual toolbar states use different swatch scales; future visual repair must use separate measured state tokens.
 - panel tabs share one 28 px grammar;
 - shared slider geometry must not have per-panel thumb/track sizes;
 - shared scrollbar geometry must not have panel-specific rounded variants.
@@ -152,7 +152,7 @@ NEW_BREAKPOINT_FAMILY = 0
 NEW_STATE_AUTHORITY = 0
 NEW_DUPLICATE_COVERED_VISUAL_AUTHORITY = 0
 LEFT_RIGHT_COLLAPSE_GEOMETRY = SAME_PRIMITIVE
-SINGLE_DUAL_SWATCH_SIZE = SAME_PRIMITIVE
+SINGLE_DUAL_SWATCH_SIZE = SUPERSEDED_BY_STATE_SPECIFIC_REFERENCE
 ```
 
 Do not optimize metrics by deleting required state/responsive variants.
