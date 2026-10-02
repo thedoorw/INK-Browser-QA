@@ -1,5 +1,31 @@
 # INK Current Work Order
 
+## Supervisor publication approval — SUP-08～SUP-11 candidate
+
+The local DEV implementation for SUP-08 through SUP-11 is authorized to be **published to GitHub SSOT as a review candidate**.
+
+This approval means:
+- DEV may push the bounded candidate and its evidence so Supervisor / USER can inspect the exact bytes;
+- the corresponding deployed page may update as part of normal repository publication;
+- this is **not** a visual PASS, UI completion claim, or final acceptance.
+
+This approval does **not** authorize:
+- the existing Core space-index issue;
+- SUP-12 panel-scrollbar repair;
+- any unrelated Core / History / FORMAT_VERSION mutation;
+- any further Capability → UI expansion beyond the exact already-completed local SUP-08～SUP-11 candidate.
+
+Required handoff after push:
+```text
+CANDIDATE_SHA
+CHANGED_FILES
+SUP-08～SUP-11 EVIDENCE
+TECH_DEBT_GUARD RESULT
+STOP → SUPERVISOR / USER REVIEW
+```
+
+If the pushed diff contains work outside this boundary, it must be separated or rejected during review.
+
 ## Current normalized-base visual refinement — 2026-10-02
 
 USER authorized a bounded visual-refinement pass on the accepted normalized base.
