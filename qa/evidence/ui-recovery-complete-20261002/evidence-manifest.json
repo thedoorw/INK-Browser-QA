@@ -1,0 +1,94 @@
+{
+  "1280-brush-bottom.jpg": {
+    "bytes": 47904,
+    "sha256": "bfae7a588145ccf5e33806fb41e6454fbbe9412e0c85c515b1e77f1cce78af56"
+  },
+  "1280-brush-top.jpg": {
+    "bytes": 57083,
+    "sha256": "e537fdba963e7ab14b1524dd9ca02140e24488dd3b814846c0004da18a7cba48"
+  },
+  "1280-dom.txt": {
+    "bytes": 5558,
+    "sha256": "a55d30aeef00d128cbd37ad0e49c65995dfda62b99663c5471eb0fb23292cd6c"
+  },
+  "1280-lasso.jpg": {
+    "bytes": 54950,
+    "sha256": "0186188fd541526d93312034c1ec32a1ae3fc3822a8e80664d1f6e087797b0cc"
+  },
+  "1280-no-document-bottom.jpg": {
+    "bytes": 31034,
+    "sha256": "0b74d53136d8aee5ebcbae2e52f1f03df57191939e3a10286851d30b0ecb1c6e"
+  },
+  "1280-no-document-top.jpg": {
+    "bytes": 42769,
+    "sha256": "5137e10b2db595990596831f8ba3c44d13cddcf072e87a1aba92a23a75bc4474"
+  },
+  "1280-properties.jpg": {
+    "bytes": 62858,
+    "sha256": "c6b1ab68bd23c305a37298cd5b8612951383563270d7637e912793752deae364"
+  },
+  "1280-reference-scrollbar.jpg": {
+    "bytes": 53909,
+    "sha256": "53b6479229768097da9083dcde1eaa3d847a0d9a3ff9dc08911834a7546a5116"
+  },
+  "1280-text.jpg": {
+    "bytes": 61134,
+    "sha256": "d24670de31d8affe9a83cce90669429a3b0b0941e49ccfe1ed60f134e6e7312a"
+  },
+  "960-brush.jpg": {
+    "bytes": 61397,
+    "sha256": "cf22ef9a5f9025baa1bbebc81f39f7304e54ba518710b94f1639c8601708da9b"
+  },
+  "960-dom.txt": {
+    "bytes": 6353,
+    "sha256": "825a372aa9c0c7b843c5e626df47722399261e39c9cfbb556093c6edbfcde5d8"
+  },
+  "960-lasso.jpg": {
+    "bytes": 58505,
+    "sha256": "8bec9f41f7bf80019b723a461243151216f70bf4bee0dc488967cbb3a69d2e2b"
+  },
+  "960-layers-scrollbar.jpg": {
+    "bytes": 58184,
+    "sha256": "275953ed8526b342a137529b806f66d484104f282edef8fe153650233f9c031f"
+  },
+  "960-libraries-scrollbar.jpg": {
+    "bytes": 55683,
+    "sha256": "b8ebd8953b0d0d5e71f8840514606bd1dea808997aaf58a56aa6ffa700b883d4"
+  },
+  "960-text.jpg": {
+    "bytes": 59629,
+    "sha256": "86c3f61645f5cd95c52d8cc44c88508561c13a204879b5979d42922c29cdd13a"
+  },
+  "browser-errors.json": {
+    "bytes": 23913,
+    "sha256": "655c5b655525f5f7fcd3c2860b9581ada9178bae1888d9db6c7918bdeeea2ffd"
+  },
+  "browser-source-byte-identity.json": {
+    "bytes": 1088,
+    "sha256": "6ff471f816f3db418de54371cff0af7ef0158ee02354c02a08b3f58926b86d39"
+  },
+  "cssom-source-alignment.json": {
+    "bytes": 595,
+    "sha256": "b5026c520d05cf70d925e337025ff18bfefb2218677516ae01a769854d119988"
+  },
+  "history-sample-disposition.json": {
+    "bytes": 913,
+    "sha256": "8e91ff7516ebf677288b1a67507e6784d09ab61b2a7faf1403be2475149cafdc"
+  },
+  "loaded-authority-rules.json": {
+    "bytes": 75171,
+    "sha256": "92c5a647d45953a8e89a8919a9a087d9bdebac2904467b89a9bc8cf9c6c2d835"
+  },
+  "loaded-dom-cssom.json": {
+    "bytes": 256798,
+    "sha256": "d03efda2d448463e5b53c1ae0fc1516843b432c6cd133477b03c284631f4b549"
+  },
+  "source-identity-tech-debt.json": {
+    "bytes": 1949,
+    "sha256": "745bbff203a494af49662e36608aa626f04806f6c07d084c0fba6c781d9b6106"
+  },
+  "state-geometry.json": {
+    "bytes": 43178,
+    "sha256": "e3b5423174202943045e3da8542ed7760ed01467bb29596dddb915ca76ffa954"
+  }
+}

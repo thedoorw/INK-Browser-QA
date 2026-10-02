@@ -1,0 +1,197 @@
+- iframe [active]:
+  - menubar "應用程式選單":
+    - generic "INK · INK v0.1 · Web":
+    - navigation "主選單":
+      - button "檔案(F)"
+      - button "編輯(E)"
+      - button "影像(I)"
+      - button "圖層(L)"
+      - button "文字(Y)"
+      - button "選取(S)"
+      - button "濾鏡(T)"
+      - button "物件(O)"
+      - button "檢視(V)"
+      - button "視窗(W)"
+      - button "說明(H)"
+    - generic "視窗控制":
+      - button "最小化視窗" [disabled]:
+      - button "還原視窗" [disabled]:
+      - button "關閉視窗" [disabled]:
+  - banner:
+    - button "首頁（功能待定）" [disabled]:
+    - region "目前工具選項":
+      - strong: 套索
+      - button "全選"
+      - button "取消選取"
+      - group "工作空間":
+        - button "創作空間 Ctrl+1":
+          - generic: 創作
+        - button "版面空間 Ctrl+2" [pressed]:
+          - generic: 版面
+  - navigation "主要工具":
+    - button "選取與移動（V）":
+    - button "影像物件選取":
+    - button "套索（L）":
+    - button "選取":
+    - button "裁切影像…":
+    - button "框架選取物件":
+    - button "取樣":
+    - button "修復":
+    - button "毛筆":
+    - button "仿製":
+    - button "橡皮擦（E）":
+    - button "填色":
+    - button "細節":
+    - button "明暗":
+    - button "繪圖工具；再按一次或長按可切換筆種（W）":
+    - button "編輯選取節點" [disabled]:
+    - button "文字（T）":
+    - button "幾何（S）":
+    - button "移動畫布（H／空白鍵）":
+    - button "縮放控制":
+    - generic "工具列版面":
+      - button "切換為單欄工具列" [pressed]:
+    - generic "前景與背景色":
+      - button "重設前景與背景色":
+      - button "交換前景與背景色":
+      - textbox "背景色"
+      - textbox "前景色"
+    - generic "工具列顯示":
+      - button "切換螢幕模式":
+  - main:
+    - generic "INK 畫布"
+    - status
+  - contentinfo "作用中文件狀態":
+    - generic: 文件
+    - generic: 68%
+  - generic "作用中文件框架":
+    - generic "水平捲動":
+      - slider "水平捲動"
+    - generic "垂直捲動":
+      - slider "垂直捲動"
+  - generic "展開的面板群組":
+    - button "收合面板":
+    - tablist "外觀":
+      - tab "導覽器" [selected]
+      - tab "屬性"
+      - tab "顏色"
+      - tab "調整"
+      - button "面板選項":
+    - region "導覽器":
+      - application "導覽器縮圖；拖曳框可平移視圖"
+      - textbox "縮放百分比"
+      - button "縮小":
+      - slider "導覽器縮放"
+      - button "放大":
+    - separator
+    - tablist "創作":
+      - tab "資料庫" [active] [selected]
+      - tab "參考"
+      - tab "構成"
+      - tab "CHAT"
+      - tab "修訂"
+      - button "面板選項":
+    - region "資料庫":
+      - generic: 搜尋
+      - searchbox "搜尋"
+      - group "Library families":
+        - button "元件" [pressed]
+        - button "材質" [pressed]
+        - button "配方" [pressed]
+        - button "參數結構" [pressed]
+        - button "參考" [pressed]
+      - paragraph: 0 筆符合 · 顯示 0 筆
+      - listbox "Library results"
+      - generic: 檢視 · 唯讀
+      - textbox "檢視 · 唯讀"
+    - separator
+    - tablist "文件":
+      - tab "圖層" [selected]
+      - tab "歷史"
+      - tab "色版"
+      - tab "頁面"
+      - button "面板選項":
+    - generic: 透明度
+    - slider "透明度"
+    - status: 100%
+    - generic: 鎖定
+    - button:
+    - listbox "圖層清單":
+      - option "隱藏圖層 圖層 14 鎖定圖層" [selected]:
+        - button "隱藏圖層":
+        - button "圖層 14":
+          - strong: 圖層 14
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 13 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 13":
+          - strong: 圖層 13
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 12 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 12":
+          - strong: 圖層 12
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 11 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 11":
+          - strong: 圖層 11
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 10 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 10":
+          - strong: 圖層 10
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 9 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 9":
+          - strong: 圖層 9
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 8 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 8":
+          - strong: 圖層 8
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 7 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 7":
+          - strong: 圖層 7
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 6 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 6":
+          - strong: 圖層 6
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 5 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 5":
+          - strong: 圖層 5
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 4 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 4":
+          - strong: 圖層 4
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 3 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 3":
+          - strong: 圖層 3
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 2 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 2":
+          - strong: 圖層 2
+        - button "鎖定圖層"
+      - option "隱藏圖層 圖層 1 鎖定圖層":
+        - button "隱藏圖層":
+        - button "圖層 1":
+          - strong: 圖層 1
+        - button "鎖定圖層"
+    - toolbar "圖層操作":
+      - generic "圖層影像濾鏡":
+      - button "新增圖層":
+      - button "複製圖層":
+      - button "新增遮色片":
+      - button "圖層效果":
+      - button "刪除圖層":
+  - separator "調整面板寬度"

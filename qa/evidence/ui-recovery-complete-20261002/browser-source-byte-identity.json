@@ -1,0 +1,37 @@
+[
+  {
+    "browser_download": "index (2).html",
+    "source": "index.html",
+    "bytes": 105355,
+    "sha256": "97d174def0ef9c7b0323cea69304df7847c22a1162e81fd118c1202a72872a4a",
+    "exact_candidate_match": true
+  },
+  {
+    "browser_download": "styles.css",
+    "source": "styles.css",
+    "bytes": 232579,
+    "sha256": "33e3ccaaf333ab7682261fbd58ed0a8cada90dc9cdd232bb5c378dd9272a24e8",
+    "exact_candidate_match": true
+  },
+  {
+    "browser_download": "web-shell.js",
+    "source": "web-shell.js",
+    "bytes": 118888,
+    "sha256": "27ac033ab161220ce38702a72440daca8f200c3f4a4a86046a8a8c07e08e4ff9",
+    "exact_candidate_match": true
+  },
+  {
+    "browser_download": "branding-settings.js",
+    "source": "ui/branding-settings.js",
+    "bytes": 15980,
+    "sha256": "3efb404b0f3dd0aa2128e3a17433d2cc1dd90faeb79bda4dde5282a4bd2d8058",
+    "exact_candidate_match": true
+  },
+  {
+    "browser_download": "ink.js",
+    "source": "src/ink.js",
+    "bytes": 201417,
+    "sha256": "3ed3f42cd96030d7fe886323ded85fbc0b5492c821b435b115594c633aef9cd7",
+    "exact_candidate_match": true
+  }
+]

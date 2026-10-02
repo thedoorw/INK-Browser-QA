@@ -1,0 +1,27 @@
+{
+  "source": "../ui-recovery-cdb90787-cloud/history-scroll-1363.jpg",
+  "candidate": "cdb90787b8a17729a67e6318ded6557fee5b730f",
+  "capture_date": "2026-10-02",
+  "viewport": [
+    1363,
+    936
+  ],
+  "visible_history_operations": 12,
+  "painted_thumb_pixel_bounds": {
+    "x": [
+      1341,
+      1349
+    ],
+    "y": [
+      611,
+      875
+    ],
+    "width": 8,
+    "height": 264
+  },
+  "measurement": "RGB < 210 gray rectangle verified at top/bottom edge and center; JPEG threshold approx \u00b11px",
+  "shared_css": "width12px border2px border-radius0",
+  "reuse_reason": "Fresh same-candidate cloud capture, not historical branch PASS. Additional state mutation was auto-review rejected; existing sample satisfies scrollbar evidence without retry.",
+  "sha256": "e4da56e1a8d0b2c4bf314a2ce9783ee1cd6270d122b68bebfacb51f0982da954",
+  "published_evidence_commit": "c70dd8392082121a6f35538b90e0e08cb2d652aa"
+}

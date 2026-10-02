@@ -1,0 +1,1976 @@
+[
+  {
+    "label": "1280-no-document",
+    "context": {
+      "bottom": 60,
+      "height": 35,
+      "left": 34,
+      "right": 1276,
+      "top": 25,
+      "width": 1242,
+      "x": 34,
+      "y": 25
+    },
+    "dpr": 1,
+    "height": 1024,
+    "host": {
+      "bottom": 60,
+      "height": 35,
+      "left": 83,
+      "right": 1152.5,
+      "top": 25,
+      "width": 1069.5,
+      "x": 83,
+      "y": 25
+    },
+    "navigator": [
+      {
+        "disabled": true,
+        "id": "shellNavigatorZoom"
+      },
+      {
+        "disabled": true,
+        "id": "shellNavigatorZoomOut"
+      },
+      {
+        "disabled": true,
+        "id": "shellNavigatorZoomSlider"
+      },
+      {
+        "disabled": true,
+        "id": "shellNavigatorZoomIn"
+      }
+    ],
+    "parent": "contextualOptions",
+    "space": "creation",
+    "stage": [
+      {
+        "display": "block",
+        "h": 963,
+        "id": "stage",
+        "w": 955
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "brushLivePreview",
+        "w": 230
+      },
+      {
+        "display": "block",
+        "h": 120,
+        "id": "stylusTestCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 180,
+        "id": "interactiveBenchmarkCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "shellNavigatorCanvas",
+        "w": 220
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      }
+    ],
+    "switch": {
+      "bottom": 55.5,
+      "height": 26,
+      "left": 1158.5,
+      "right": 1271,
+      "top": 29.5,
+      "width": 112.5,
+      "x": 1158.5,
+      "y": 29.5
+    },
+    "switchCount": 1,
+    "text": "選取\n全選\n取消選取\n創作\n版面",
+    "width": 1280
+  },
+  {
+    "label": "1280-stable-brush",
+    "context": {
+      "bottom": 60,
+      "height": 35,
+      "left": 34,
+      "right": 1276,
+      "top": 25,
+      "width": 1242,
+      "x": 34,
+      "y": 25
+    },
+    "dpr": 1,
+    "height": 1024,
+    "host": {
+      "bottom": 60,
+      "height": 35,
+      "left": 83,
+      "right": 1152.5,
+      "top": 25,
+      "width": 1069.5,
+      "x": 83,
+      "y": 25
+    },
+    "navigator": [
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoom"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomOut"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomSlider"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomIn"
+      }
+    ],
+    "parent": "contextualOptions",
+    "space": "layout",
+    "stage": [
+      {
+        "display": "block",
+        "h": 946,
+        "id": "stage",
+        "w": 955
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "brushLivePreview",
+        "w": 230
+      },
+      {
+        "display": "block",
+        "h": 120,
+        "id": "stylusTestCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 180,
+        "id": "interactiveBenchmarkCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "shellNavigatorCanvas",
+        "w": 220
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      }
+    ],
+    "switch": {
+      "bottom": 55.5,
+      "height": 26,
+      "left": 1158.5,
+      "right": 1271,
+      "top": 29.5,
+      "width": 112.5,
+      "x": 1158.5,
+      "y": 29.5
+    },
+    "switchCount": 1,
+    "text": "毛筆\n顏色\n大小\n12\n透明度\n88\n平滑\n46%\n壓力\n95%\n墨量\n82%\n含水\n36%\n筆毫\n18%\n收尖\n42%\n顆粒\n0%\n柔度\n0%\n創作\n版面",
+    "width": 1280
+  },
+  {
+    "label": "1280-text",
+    "context": {
+      "bottom": 60,
+      "height": 35,
+      "left": 34,
+      "right": 1276,
+      "top": 25,
+      "width": 1242,
+      "x": 34,
+      "y": 25
+    },
+    "dpr": 1,
+    "height": 1024,
+    "host": {
+      "bottom": 60,
+      "height": 35,
+      "left": 83,
+      "right": 1152.5,
+      "top": 25,
+      "width": 1069.5,
+      "x": 83,
+      "y": 25
+    },
+    "navigator": [
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoom"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomOut"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomSlider"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomIn"
+      }
+    ],
+    "parent": "contextualOptions",
+    "space": "layout",
+    "stage": [
+      {
+        "display": "block",
+        "h": 946,
+        "id": "stage",
+        "w": 955
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "brushLivePreview",
+        "w": 230
+      },
+      {
+        "display": "block",
+        "h": 120,
+        "id": "stylusTestCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 180,
+        "id": "interactiveBenchmarkCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "shellNavigatorCanvas",
+        "w": 220
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      }
+    ],
+    "switch": {
+      "bottom": 55.5,
+      "height": 26,
+      "left": 1158.5,
+      "right": 1271,
+      "top": 29.5,
+      "width": 112.5,
+      "x": 1158.5,
+      "y": 29.5
+    },
+    "switchCount": 1,
+    "text": "文字\n顏色\n字型\n系統字型\n明體\n黑體\n等寬\n字級\n32\n方向\n水平\n直排右至左\n直排左至右\n創作\n版面",
+    "width": 1280
+  },
+  {
+    "label": "1280-lasso",
+    "context": {
+      "bottom": 60,
+      "height": 35,
+      "left": 34,
+      "right": 1276,
+      "top": 25,
+      "width": 1242,
+      "x": 34,
+      "y": 25
+    },
+    "dpr": 1,
+    "height": 1024,
+    "host": {
+      "bottom": 60,
+      "height": 35,
+      "left": 83,
+      "right": 1152.5,
+      "top": 25,
+      "width": 1069.5,
+      "x": 83,
+      "y": 25
+    },
+    "navigator": [
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoom"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomOut"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomSlider"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomIn"
+      }
+    ],
+    "parent": "contextualOptions",
+    "space": "layout",
+    "stage": [
+      {
+        "display": "block",
+        "h": 946,
+        "id": "stage",
+        "w": 955
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "brushLivePreview",
+        "w": 230
+      },
+      {
+        "display": "block",
+        "h": 120,
+        "id": "stylusTestCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 180,
+        "id": "interactiveBenchmarkCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "shellNavigatorCanvas",
+        "w": 220
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      }
+    ],
+    "switch": {
+      "bottom": 55.5,
+      "height": 26,
+      "left": 1158.5,
+      "right": 1271,
+      "top": 29.5,
+      "width": 112.5,
+      "x": 1158.5,
+      "y": 29.5
+    },
+    "switchCount": 1,
+    "text": "套索\n全選\n取消選取\n創作\n版面",
+    "width": 1280
+  },
+  {
+    "label": "960-brush",
+    "context": {
+      "bottom": 60,
+      "height": 35,
+      "left": 34,
+      "right": 956,
+      "top": 25,
+      "width": 922,
+      "x": 34,
+      "y": 25
+    },
+    "dpr": 1,
+    "height": 800,
+    "host": {
+      "bottom": 60,
+      "height": 35,
+      "left": 83,
+      "right": 832.5,
+      "top": 25,
+      "width": 749.5,
+      "x": 83,
+      "y": 25
+    },
+    "navigator": [
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoom"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomOut"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomSlider"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomIn"
+      }
+    ],
+    "parent": "contextualOptions",
+    "space": "layout",
+    "stage": [
+      {
+        "display": "block",
+        "h": 722,
+        "id": "stage",
+        "w": 635
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "brushLivePreview",
+        "w": 230
+      },
+      {
+        "display": "block",
+        "h": 120,
+        "id": "stylusTestCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 180,
+        "id": "interactiveBenchmarkCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "shellNavigatorCanvas",
+        "w": 220
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      }
+    ],
+    "switch": {
+      "bottom": 55.5,
+      "height": 26,
+      "left": 838.5,
+      "right": 951,
+      "top": 29.5,
+      "width": 112.5,
+      "x": 838.5,
+      "y": 29.5
+    },
+    "switchCount": 1,
+    "text": "毛筆\n顏色\n大小\n12\n透明度\n88\n平滑\n46%\n壓力\n95%\n墨量\n82%\n含水\n36%\n筆毫\n18%\n收尖\n42%\n顆粒\n0%\n柔度\n0%\n創作\n版面",
+    "width": 960
+  },
+  {
+    "label": "1280-properties",
+    "scrollOwners": [
+      {
+        "barWidth": "12px",
+        "class": "property-card brush-preview-card",
+        "clientH": 58,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 223.296875,
+          "height": 58.296875,
+          "left": 1035,
+          "right": 1274,
+          "top": 165,
+          "width": 239,
+          "x": 1035,
+          "y": 165
+        },
+        "scrollH": 68,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card color-card",
+        "clientH": 46,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 279.578125,
+          "height": 46.28125,
+          "left": 1035,
+          "right": 1274,
+          "top": 233.296875,
+          "width": 239,
+          "x": 1035,
+          "y": 233.296875
+        },
+        "scrollH": 54,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card slider-card",
+        "clientH": 51,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 341.015625,
+          "height": 51.4375,
+          "left": 1035,
+          "right": 1274,
+          "top": 289.578125,
+          "width": 239,
+          "x": 1035,
+          "y": 289.578125
+        },
+        "scrollH": 60,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "creative-workspace-body",
+        "clientH": 243,
+        "clientW": 251,
+        "id": "",
+        "overflowY": "auto",
+        "parent": "creativeWorkspace",
+        "rect": {
+          "bottom": 623.71875,
+          "height": 242.703125,
+          "left": 1029,
+          "right": 1280,
+          "top": 381.015625,
+          "width": 251,
+          "x": 1029,
+          "y": 381.015625
+        },
+        "scrollH": 243,
+        "scrollW": 251,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card layer-opacity-card",
+        "clientH": 30,
+        "clientW": 237,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 687.71875,
+          "height": 30,
+          "left": 1030,
+          "right": 1267,
+          "top": 657.71875,
+          "width": 237,
+          "x": 1030,
+          "y": 657.71875
+        },
+        "scrollH": 30,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "layers-list",
+        "clientH": 286,
+        "clientW": 237,
+        "id": "layersList",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 998,
+          "height": 286.28125,
+          "left": 1036,
+          "right": 1273,
+          "top": 711.71875,
+          "width": 237,
+          "x": 1036,
+          "y": 711.71875
+        },
+        "scrollH": 286,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      }
+    ]
+  },
+  {
+    "label": "960-text",
+    "context": {
+      "bottom": 60,
+      "height": 35,
+      "left": 34,
+      "right": 956,
+      "top": 25,
+      "width": 922,
+      "x": 34,
+      "y": 25
+    },
+    "dpr": 1,
+    "height": 800,
+    "host": {
+      "bottom": 60,
+      "height": 35,
+      "left": 83,
+      "right": 832.5,
+      "top": 25,
+      "width": 749.5,
+      "x": 83,
+      "y": 25
+    },
+    "navigator": [
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoom"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomOut"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomSlider"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomIn"
+      }
+    ],
+    "parent": "contextualOptions",
+    "space": "layout",
+    "stage": [
+      {
+        "display": "block",
+        "h": 722,
+        "id": "stage",
+        "w": 635
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "brushLivePreview",
+        "w": 230
+      },
+      {
+        "display": "block",
+        "h": 120,
+        "id": "stylusTestCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 180,
+        "id": "interactiveBenchmarkCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "shellNavigatorCanvas",
+        "w": 220
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      }
+    ],
+    "switch": {
+      "bottom": 55.5,
+      "height": 26,
+      "left": 838.5,
+      "right": 951,
+      "top": 29.5,
+      "width": 112.5,
+      "x": 838.5,
+      "y": 29.5
+    },
+    "switchCount": 1,
+    "text": "文字\n顏色\n字型\n系統字型\n明體\n黑體\n等寬\n字級\n32\n方向\n水平\n直排右至左\n直排左至右\n創作\n版面",
+    "width": 960
+  },
+  {
+    "label": "properties-ancestor-chain",
+    "props": [
+      {
+        "class": "brush-live-preview",
+        "clientH": 40,
+        "display": "block",
+        "id": "brushLivePreview",
+        "overflowY": "clip",
+        "scrollH": 40,
+        "tag": "CANVAS"
+      },
+      {
+        "class": "property-card brush-preview-card",
+        "clientH": 58,
+        "display": "block",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 68,
+        "tag": "DIV"
+      },
+      {
+        "class": "inspector-section tab-content active stack-visible",
+        "clientH": 251,
+        "display": "flex",
+        "id": "",
+        "overflowY": "auto",
+        "scrollH": 251,
+        "tag": "SECTION"
+      },
+      {
+        "class": "panel-stack-body",
+        "clientH": 251,
+        "display": "flex",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 251,
+        "tag": "DIV"
+      },
+      {
+        "class": "panel-stack-region active",
+        "clientH": 279,
+        "display": "flex",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 279,
+        "tag": "SECTION"
+      },
+      {
+        "class": "panel-stack-framework",
+        "clientH": 962,
+        "display": "flex",
+        "id": "shellPanelStackFramework",
+        "overflowY": "hidden",
+        "scrollH": 962,
+        "tag": "DIV"
+      },
+      {
+        "class": "app web-shell-v0-1 toolbar-layout-dual active inspector-open panel-primary-open",
+        "clientH": 1024,
+        "display": "block",
+        "id": "app",
+        "overflowY": "hidden",
+        "scrollH": 1024,
+        "tag": "DIV"
+      },
+      {
+        "class": "",
+        "clientH": 1024,
+        "display": "block",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 1024,
+        "tag": "BODY"
+      },
+      {
+        "class": "",
+        "clientH": 1024,
+        "display": "block",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 1024,
+        "tag": "HTML"
+      }
+    ]
+  },
+  {
+    "label": "960-lasso",
+    "context": {
+      "bottom": 60,
+      "height": 35,
+      "left": 34,
+      "right": 956,
+      "top": 25,
+      "width": 922,
+      "x": 34,
+      "y": 25
+    },
+    "dpr": 1,
+    "height": 800,
+    "host": {
+      "bottom": 60,
+      "height": 35,
+      "left": 83,
+      "right": 832.5,
+      "top": 25,
+      "width": 749.5,
+      "x": 83,
+      "y": 25
+    },
+    "navigator": [
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoom"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomOut"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomSlider"
+      },
+      {
+        "disabled": false,
+        "id": "shellNavigatorZoomIn"
+      }
+    ],
+    "parent": "contextualOptions",
+    "space": "layout",
+    "stage": [
+      {
+        "display": "block",
+        "h": 722,
+        "id": "stage",
+        "w": 635
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "",
+        "w": 300
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "brushLivePreview",
+        "w": 230
+      },
+      {
+        "display": "block",
+        "h": 120,
+        "id": "stylusTestCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 180,
+        "id": "interactiveBenchmarkCanvas",
+        "w": 320
+      },
+      {
+        "display": "block",
+        "h": 150,
+        "id": "shellNavigatorCanvas",
+        "w": 220
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      },
+      {
+        "display": "block",
+        "h": 56,
+        "id": "",
+        "w": 64
+      }
+    ],
+    "switch": {
+      "bottom": 55.5,
+      "height": 26,
+      "left": 838.5,
+      "right": 951,
+      "top": 29.5,
+      "width": 112.5,
+      "x": 838.5,
+      "y": 29.5
+    },
+    "switchCount": 1,
+    "text": "套索\n全選\n取消選取\n創作\n版面",
+    "width": 960
+  },
+  {
+    "label": "1280-reference-layers",
+    "scrollOwners": [
+      {
+        "barWidth": "12px",
+        "class": "property-card brush-preview-card",
+        "clientH": 58,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 223.296875,
+          "height": 58.296875,
+          "left": 1035,
+          "right": 1274,
+          "top": 165,
+          "width": 239,
+          "x": 1035,
+          "y": 165
+        },
+        "scrollH": 68,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card color-card",
+        "clientH": 46,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 279.578125,
+          "height": 46.28125,
+          "left": 1035,
+          "right": 1274,
+          "top": 233.296875,
+          "width": 239,
+          "x": 1035,
+          "y": 233.296875
+        },
+        "scrollH": 54,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card slider-card",
+        "clientH": 51,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 341.015625,
+          "height": 51.4375,
+          "left": 1035,
+          "right": 1274,
+          "top": 289.578125,
+          "width": 239,
+          "x": 1035,
+          "y": 289.578125
+        },
+        "scrollH": 60,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "creative-workspace-body",
+        "clientH": 243,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "auto",
+        "parent": "creativeWorkspace",
+        "rect": {
+          "bottom": 623.71875,
+          "height": 242.703125,
+          "left": 1029,
+          "right": 1280,
+          "top": 381.015625,
+          "width": 251,
+          "x": 1029,
+          "y": 381.015625
+        },
+        "scrollH": 282,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card layer-opacity-card",
+        "clientH": 30,
+        "clientW": 237,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 687.71875,
+          "height": 30,
+          "left": 1030,
+          "right": 1267,
+          "top": 657.71875,
+          "width": 237,
+          "x": 1030,
+          "y": 657.71875
+        },
+        "scrollH": 30,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "layers-list",
+        "clientH": 286,
+        "clientW": 237,
+        "id": "layersList",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 998,
+          "height": 286.28125,
+          "left": 1036,
+          "right": 1273,
+          "top": 711.71875,
+          "width": 237,
+          "x": 1036,
+          "y": 711.71875
+        },
+        "scrollH": 286,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      }
+    ]
+  },
+  {
+    "label": "960-layers",
+    "scrollOwners": [
+      {
+        "barWidth": "12px",
+        "class": "shell-panel-body",
+        "clientH": 159,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content shell-panel-section navigator-panel stack-visible",
+        "rect": {
+          "bottom": 260.078125,
+          "height": 159.078125,
+          "left": 709,
+          "right": 960,
+          "top": 101,
+          "width": 251,
+          "x": 709,
+          "y": 101
+        },
+        "scrollH": 173,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "creative-workspace-body",
+        "clientH": 179,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "auto",
+        "parent": "creativeWorkspace",
+        "rect": {
+          "bottom": 493.828125,
+          "height": 178.75,
+          "left": 709,
+          "right": 960,
+          "top": 315.078125,
+          "width": 251,
+          "x": 709,
+          "y": 315.078125
+        },
+        "scrollH": 188,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card layer-opacity-card",
+        "clientH": 30,
+        "clientW": 237,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content layers-panel stack-visible active",
+        "rect": {
+          "bottom": 557.828125,
+          "height": 30,
+          "left": 710,
+          "right": 947,
+          "top": 527.828125,
+          "width": 237,
+          "x": 710,
+          "y": 527.828125
+        },
+        "scrollH": 30,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "layers-list",
+        "clientH": 192,
+        "clientW": 225,
+        "id": "layersList",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content layers-panel stack-visible active",
+        "rect": {
+          "bottom": 774,
+          "height": 192.171875,
+          "left": 716,
+          "right": 953,
+          "top": 581.828125,
+          "width": 237,
+          "x": 716,
+          "y": 581.828125
+        },
+        "scrollH": 470,
+        "scrollW": 225,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      }
+    ]
+  },
+  {
+    "label": "960-libraries",
+    "scrollOwners": [
+      {
+        "barWidth": "12px",
+        "class": "shell-panel-body",
+        "clientH": 159,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content shell-panel-section navigator-panel stack-visible",
+        "rect": {
+          "bottom": 260.078125,
+          "height": 159.078125,
+          "left": 709,
+          "right": 960,
+          "top": 101,
+          "width": 251,
+          "x": 709,
+          "y": 101
+        },
+        "scrollH": 173,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "shell-panel-body",
+        "clientH": 167,
+        "clientW": 227,
+        "id": "",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content shell-panel-section shell-library-panel active stack-visible",
+        "rect": {
+          "bottom": 487.828125,
+          "height": 166.75,
+          "left": 715,
+          "right": 954,
+          "top": 321.078125,
+          "width": 239,
+          "x": 715,
+          "y": 321.078125
+        },
+        "scrollH": 360,
+        "scrollW": 227,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card layer-opacity-card",
+        "clientH": 30,
+        "clientW": 237,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 557.828125,
+          "height": 30,
+          "left": 710,
+          "right": 947,
+          "top": 527.828125,
+          "width": 237,
+          "x": 710,
+          "y": 527.828125
+        },
+        "scrollH": 30,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "layers-list",
+        "clientH": 192,
+        "clientW": 225,
+        "id": "layersList",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 774,
+          "height": 192.171875,
+          "left": 716,
+          "right": 953,
+          "top": 581.828125,
+          "width": 237,
+          "x": 716,
+          "y": 581.828125
+        },
+        "scrollH": 506,
+        "scrollW": 225,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      }
+    ]
+  },
+  {
+    "label": "1280-menu-geometry",
+    "menus": [
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 28,
+          "right": 81.4375,
+          "top": 0,
+          "width": 53.4375,
+          "x": 28,
+          "y": 0
+        },
+        "text": "檔案(F)",
+        "width": "53.4375px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 81.4375,
+          "right": 135.3125,
+          "top": 0,
+          "width": 53.875,
+          "x": 81.4375,
+          "y": 0
+        },
+        "text": "編輯(E)",
+        "width": "53.875px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 135.3125,
+          "right": 186.59375,
+          "top": 0,
+          "width": 51.28125,
+          "x": 135.3125,
+          "y": 0
+        },
+        "text": "影像(I)",
+        "width": "51.2812px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 186.59375,
+          "right": 240.09375,
+          "top": 0,
+          "width": 53.5,
+          "x": 186.59375,
+          "y": 0
+        },
+        "text": "圖層(L)",
+        "width": "53.5px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 240.09375,
+          "right": 294.09375,
+          "top": 0,
+          "width": 54,
+          "x": 240.09375,
+          "y": 0
+        },
+        "text": "文字(Y)",
+        "width": "54px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 294.09375,
+          "right": 347.890625,
+          "top": 0,
+          "width": 53.796875,
+          "x": 294.09375,
+          "y": 0
+        },
+        "text": "選取(S)",
+        "width": "53.7969px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 347.890625,
+          "right": 401.765625,
+          "top": 0,
+          "width": 53.875,
+          "x": 347.890625,
+          "y": 0
+        },
+        "text": "濾鏡(T)",
+        "width": "53.875px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 401.765625,
+          "right": 458.34375,
+          "top": 0,
+          "width": 56.578125,
+          "x": 401.765625,
+          "y": 0
+        },
+        "text": "物件(O)",
+        "width": "56.5781px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 458.34375,
+          "right": 512.75,
+          "top": 0,
+          "width": 54.40625,
+          "x": 458.34375,
+          "y": 0
+        },
+        "text": "檢視(V)",
+        "width": "54.4062px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 512.75,
+          "right": 571.125,
+          "top": 0,
+          "width": 58.375,
+          "x": 512.75,
+          "y": 0
+        },
+        "text": "視窗(W)",
+        "width": "58.375px"
+      },
+      {
+        "paddingLeft": "8px",
+        "paddingRight": "8px",
+        "rect": {
+          "bottom": 24,
+          "height": 24,
+          "left": 571.125,
+          "right": 627.21875,
+          "top": 0,
+          "width": 56.09375,
+          "x": 571.125,
+          "y": 0
+        },
+        "text": "說明(H)",
+        "width": "56.0938px"
+      }
+    ]
+  },
+  {
+    "label": "1280-stable-brush-properties",
+    "scrollOwners": [
+      {
+        "barWidth": "12px",
+        "class": "property-card brush-preview-card",
+        "clientH": 24,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 280.296875,
+          "height": 24.296875,
+          "left": 1035,
+          "right": 1274,
+          "top": 256,
+          "width": 239,
+          "x": 1035,
+          "y": 256
+        },
+        "scrollH": 68,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card color-card",
+        "clientH": 19,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 309.578125,
+          "height": 19.28125,
+          "left": 1035,
+          "right": 1274,
+          "top": 290.296875,
+          "width": 239,
+          "x": 1035,
+          "y": 290.296875
+        },
+        "scrollH": 54,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card slider-card",
+        "clientH": 21,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content active stack-visible",
+        "rect": {
+          "bottom": 341.015625,
+          "height": 21.4375,
+          "left": 1035,
+          "right": 1274,
+          "top": 319.578125,
+          "width": 239,
+          "x": 1035,
+          "y": 319.578125
+        },
+        "scrollH": 60,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "creative-workspace-body",
+        "clientH": 243,
+        "clientW": 239,
+        "id": "",
+        "overflowY": "auto",
+        "parent": "creativeWorkspace",
+        "rect": {
+          "bottom": 623.71875,
+          "height": 242.703125,
+          "left": 1029,
+          "right": 1280,
+          "top": 381.015625,
+          "width": 251,
+          "x": 1029,
+          "y": 381.015625
+        },
+        "scrollH": 282,
+        "scrollW": 239,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "property-card layer-opacity-card",
+        "clientH": 30,
+        "clientW": 237,
+        "id": "",
+        "overflowY": "hidden",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 687.71875,
+          "height": 30,
+          "left": 1030,
+          "right": 1267,
+          "top": 657.71875,
+          "width": 237,
+          "x": 1030,
+          "y": 657.71875
+        },
+        "scrollH": 30,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      },
+      {
+        "barWidth": "12px",
+        "class": "layers-list",
+        "clientH": 286,
+        "clientW": 237,
+        "id": "layersList",
+        "overflowY": "auto",
+        "parent": "inspector-section tab-content layers-panel stack-visible",
+        "rect": {
+          "bottom": 998,
+          "height": 286.28125,
+          "left": 1036,
+          "right": 1273,
+          "top": 711.71875,
+          "width": 237,
+          "x": 1036,
+          "y": 711.71875
+        },
+        "scrollH": 286,
+        "scrollW": 237,
+        "scrollbarColor": "auto",
+        "thumbBackground": "rgb(184, 184, 184)",
+        "thumbRadius": "0px"
+      }
+    ]
+  },
+  {
+    "label": "stable-brush-properties-ancestor-chain",
+    "props": [
+      {
+        "class": "brush-live-preview",
+        "clientH": 40,
+        "display": "block",
+        "id": "brushLivePreview",
+        "overflowY": "clip",
+        "scrollH": 40,
+        "tag": "CANVAS"
+      },
+      {
+        "class": "property-card brush-preview-card",
+        "clientH": 24,
+        "display": "block",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 68,
+        "tag": "DIV"
+      },
+      {
+        "class": "inspector-section tab-content active stack-visible",
+        "clientH": 251,
+        "display": "flex",
+        "id": "",
+        "overflowY": "auto",
+        "scrollH": 251,
+        "tag": "SECTION"
+      },
+      {
+        "class": "panel-stack-body",
+        "clientH": 251,
+        "display": "flex",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 251,
+        "tag": "DIV"
+      },
+      {
+        "class": "panel-stack-region active",
+        "clientH": 279,
+        "display": "flex",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 279,
+        "tag": "SECTION"
+      },
+      {
+        "class": "panel-stack-framework",
+        "clientH": 962,
+        "display": "flex",
+        "id": "shellPanelStackFramework",
+        "overflowY": "hidden",
+        "scrollH": 962,
+        "tag": "DIV"
+      },
+      {
+        "class": "app web-shell-v0-1 toolbar-layout-dual active inspector-open panel-primary-open",
+        "clientH": 1024,
+        "display": "block",
+        "id": "app",
+        "overflowY": "hidden",
+        "scrollH": 1024,
+        "tag": "DIV"
+      },
+      {
+        "class": "",
+        "clientH": 1024,
+        "display": "block",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 1024,
+        "tag": "BODY"
+      },
+      {
+        "class": "",
+        "clientH": 1024,
+        "display": "block",
+        "id": "",
+        "overflowY": "hidden",
+        "scrollH": 1024,
+        "tag": "HTML"
+      }
+    ]
+  }
+]

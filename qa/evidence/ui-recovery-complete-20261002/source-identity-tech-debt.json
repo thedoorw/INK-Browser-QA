@@ -1,0 +1,61 @@
+{
+  "candidate": "cdb90787b8a17729a67e6318ded6557fee5b730f",
+  "tree": "86bdf0eacebb6f930062d9d2c1bb9b048b9fc7ca",
+  "changed_product_files": [
+    "product/source/index-standalone.html",
+    "product/source/index.html",
+    "product/source/service-worker.js",
+    "product/source/shell.template.html",
+    "product/source/src/config.js",
+    "product/source/styles.css"
+  ],
+  "new_important_count": 0,
+  "important_counts": [
+    103,
+    103
+  ],
+  "new_breakpoint_family": 0,
+  "core_unchanged": true,
+  "files": {
+    "product/source/index-standalone.html": {
+      "bytes": 105346,
+      "sha256": "8e44f257c709ca6b7925fd284b7e67ef7a0624c1c1147a3597449f0bedc7cf0b"
+    },
+    "product/source/index.html": {
+      "bytes": 105355,
+      "sha256": "97d174def0ef9c7b0323cea69304df7847c22a1162e81fd118c1202a72872a4a"
+    },
+    "product/source/service-worker.js": {
+      "bytes": 11339,
+      "sha256": "c40c5f58ed88227dfcb5f0da8abc0764c54f78af8c3645937cb88867d3b758bf"
+    },
+    "product/source/shell.template.html": {
+      "bytes": 88468,
+      "sha256": "0d95c577c22b95b7b4d66e7d49403f41bbfc041b4cd8e029a544b0108af60ac7"
+    },
+    "product/source/src/config.js": {
+      "bytes": 176,
+      "sha256": "4eef8024ac6baa8d414ad1aaef3323b2a23987af4a3ca4efd31e434575131b3f"
+    },
+    "product/source/styles.css": {
+      "bytes": 232579,
+      "sha256": "33e3ccaaf333ab7682261fbd58ed0a8cada90dc9cdd232bb5c378dd9272a24e8"
+    }
+  },
+  "new_duplicate_ui_state_authority": 0,
+  "per_menu_width_authority_count": 0,
+  "global_scrollbar_color_count": 0,
+  "workspace_switch_node_count": {
+    "shell.template.html": 1,
+    "index.html": 1,
+    "index-standalone.html": 1
+  },
+  "superseded_rules_removed": true,
+  "removals": [
+    "global .app * scrollbar-color",
+    "eleven application-menu fixed widths",
+    "superseded 7px desktop trigger padding",
+    "workspaceSwitch original hidden topbar parent"
+  ],
+  "normalized_delivery_parity": true
+}

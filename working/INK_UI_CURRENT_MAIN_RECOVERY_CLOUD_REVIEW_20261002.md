@@ -1,3 +1,5 @@
+> Completion update — 2026-10-02: the partial-evidence disposition below is historical. All required gates and the final DEV handoff are now recorded in [INK_UI_CURRENT_MAIN_RECOVERY_FINAL_DEV_RETURN_20261002.md](INK_UI_CURRENT_MAIN_RECOVERY_FINAL_DEV_RETURN_20261002.md). Product candidate remains cdb90787; Supervisor acceptance is pending. C04 is not started.
+
 # UI recovery cloud-browser review — 2026-10-02
 
 STATUS: FRESH_PARTIAL_BROWSER_EVIDENCE / RECOVERY_ACCEPTANCE_HOLD

@@ -1,0 +1,34 @@
+{
+  "source_rules": 1037,
+  "loaded_rules": 1034,
+  "selectors_matching": 1034,
+  "differences": [
+    {
+      "kind": "delete",
+      "source": [
+        [
+          "qualified-rule",
+          "",
+          "input[type=range]::-moz-range-track"
+        ],
+        [
+          "qualified-rule",
+          "",
+          "input[type=range]::-moz-range-thumb"
+        ]
+      ],
+      "loaded": []
+    },
+    {
+      "kind": "delete",
+      "source": [
+        [
+          "qualified-rule",
+          "",
+          ".tool-color::-moz-color-swatch"
+        ]
+      ],
+      "loaded": []
+    }
+  ]
+}
