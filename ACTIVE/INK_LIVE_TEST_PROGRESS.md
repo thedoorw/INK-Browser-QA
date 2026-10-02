@@ -117,6 +117,19 @@ Draft bounded candidate:
 
 The candidate does not expose Blender / Smudge / Eraser and does not create duplicate Document / History / Renderer / drawing authority.
 
+Cluster A implementation design:
+`working/INK_LIVE_CLUSTER_A_CHAT_EXPOSURE_WORKPACK_v0.1.md`
+
+Repair sequence is now fixed as:
+`A1 Paint Session → A2 native Stroke/NaturalMedia → A3 Paper → A4 targeted Eraser → A5 Blender/Smudge product integration`.
+
+Current A1 candidate:
+- PR #115 / Draft;
+- exact candidate `039c0022b8ce8e743b3953045844b8c4d824f1a2`;
+- source-contract review found no blocking StrokeSession/replay mismatch;
+- exact browser QA request `live-drawing-paint-session-pr115-001` is pending self-hosted runner execution;
+- no browser PASS, merge or Live promotion claimed yet.
+
 ### B — Raster / Mask / Filter / Blend / Effect / Deformation
 
 Families:
