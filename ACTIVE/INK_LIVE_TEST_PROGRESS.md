@@ -133,6 +133,35 @@ Source-audit existing raster/effect authorities and separate:
 1. existing capability not exposed to CHAT;
 2. genuinely missing product capability.
 
+### B source-audit checkpoint — 2026-10-02
+
+Source audit:
+`working/INK_LIVE_CLUSTER_B_RASTER_EFFECTS_DEFORMATION_SOURCE_AUDIT_20261002.md`
+
+Disposition:
+
+```text
+MUTABLE RASTER INGEST = PRODUCT EXISTS / CHAT EXPOSURE GAP
+RASTER DIRECT EDIT CORE = PRODUCT EXISTS / CHAT EXPOSURE GAP
+MASK / ADJUSTMENT / FILTER / BLEND / EFFECT = PRODUCT EXISTS / CHAT EXPOSURE GAP
+RASTER LIQUIFY = PRODUCT EXISTS / CHAT EXPOSURE GAP
+VECTOR PATH WARP / DISTORT / PERSPECTIVE = PRODUCT EXISTS / CHAT EXPOSURE GAP
+TEXT WARP / CURVED-TEXT RENDER = PRODUCT RENDER-INTEGRATION GAP
+REFERENCE IMAGE LOCK = INTENTIONAL / DO NOT UNLOCK AS REPAIR
+```
+
+Important boundaries:
+- native mutable raster ingest already exists through `InkApp.importImageFormat()`;
+- Reference import is a separate locked provenance/extraction object and must remain separate;
+- Studio installs the actual raster stack renderer before CHAT Public API, so adjustment/filter/mask/effect/blend/Liquify are product-real rather than UI-only descriptors;
+- C019 cannot be closed with a registry-only `text.warp` operation because current `drawText()` does not consume the existing `pathText` descriptor;
+- C013 material-catalog absence remains a separate reusable-asset/material issue.
+
+Current gate:
+- source audit / exposure design may continue;
+- Cluster B product-source merge and Live promotion remain HOLD while the active C04 recovery + two-state combined-promotion composition is in progress;
+- unrelated Live CHAT exposure work must remain separate.
+
 ### C — Layout Assist / Page / Artboard
 
 Families:
