@@ -208,8 +208,10 @@ Measured/observed:
 - practical observed range ≈16–22 px wide × 11–18 px high
 - flyout marker = 3×3 px visible
 - collapse glyph = 7×5 px visible
-- foreground/background swatches = 18×18 px each
-- swatch overlap = 10 px X / 10 px Y
+- foreground/background swatches are **layout-state dependent** in Photoshop; single-column and double-column Tools do not use the same visible swatch size.
+- the previously recorded 18×18 px value applies only to the measured state from which it was taken and must not be generalized across both toolbar layouts.
+- single-column and double-column swatch size/overlap must be recorded as separate measurements.
+- shared authority is the color-cluster grammar (foreground/background diagonal overlap + reset/swap utilities), not one universal swatch dimension.
 - Quick Mask visible envelope ≈17×13 px
 - Screen Mode visible envelope ≈17×13 px
 - flyout outer reference ≈172×100 px for 5 rows
