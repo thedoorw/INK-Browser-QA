@@ -1,35 +1,10 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "live-drawing-paint-session-pr116-001",
-  "candidateSha": "c654a6fb22be2eaadfebc83b01171270c71cf1b1",
-  "case": "paint-session-create",
-  "runtimeIdentity": {
-    "href": "http://127.0.0.1:44659/?sourceCandidate=c654a6fb22be2eaadfebc83b01171270c71cf1b1",
-    "readyState": "complete",
-    "apiReady": true,
-    "toolCount": 22,
-    "appVersion": "0.1"
-  },
-  "result": {
-    "passed": true,
-    "before": {
-      "count": 0,
-      "undo": 0,
-      "canvas": "8d257ff8"
-    },
-    "after": {
-      "count": 1,
-      "undo": 1,
-      "canvas": "c81fe871",
-      "id": "chat-paint-fnv1a32-c7900103",
-      "strokes": 2,
-      "replayHash": "5023f606"
-    },
-    "previewStatus": "COMPLETED",
-    "undoStatus": "COMPLETED",
-    "redoStatus": "COMPLETED",
-    "restoredStrokeCount": 2
-  },
-  "status": "PASS"
+  "requestId": "live-raster-web-bridge-pr114-001",
+  "candidateSha": "5bec56b5a4db08404a03ea43d71d158c849a4b56",
+  "case": "web-raster-bridge",
+  "status": "FAIL",
+  "error": "CDP timeout: Browser.getVersion",
+  "stderr": "[2616:2650:1002/134538.580110:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2616:2650:1002/134538.626483:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2616:2650:1002/134540.493859:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2616:2650:1002/134541.889801:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n"
 }
