@@ -137,8 +137,20 @@ A2 native Stroke / formal NaturalMedia / Airbrush exposure
 → A5 Blender / Smudge product integration
 ```
 
-Follow-up geometry issue:
-`paint-session` currently renders correctly but lacks a dedicated content/world-bounds authority; content Preview used fallback 49×49 bounds despite wider stroke sample coordinates. Track separately from A1 exposure closure.
+Follow-up geometry issue — CLOSED 2026-10-03:
+
+```text
+PR = #126 / MERGED
+EXACT_CANDIDATE = b7c73f7ea32a25013dddd9721e1a35e7e052fc26
+SOURCE_INTEGRATION = be6baa7085b9520a67e0952968650d4648af4d0a
+LIVE_DEPLOYED_SOURCE = be6baa7085b9520a67e0952968650d4648af4d0a
+LIVE_RERUN = paint-session-bounds-live-rerun-003 / COMPLETED
+RESULT = PASS / REPAIRED
+```
+
+The repair routes native Paint Session replay geometry through existing `strokeBoundingBox` and Renderer world-bounds authority. Formal Live evidence returned content bounds `x=-135.13 y=-120.46648 w=274.0064 h=231.12032`; Undo returned zero objects; Redo restored the same native Paint Session and identical render fingerprint `fnv1a32:1b8d3443`.
+
+The first two Live retries stopped before Public API readiness while the newly pinned exact-SHA jsDelivr module graph was propagating. They executed no product operation and are classified as transport/readiness variability, not product regression.
 
 Cluster A implementation design:
 `working/INK_LIVE_CLUSTER_A_CHAT_EXPOSURE_WORKPACK_v0.1.md`
