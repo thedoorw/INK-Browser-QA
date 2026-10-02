@@ -123,7 +123,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['paint-session-create','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['paint-session-create','stroke-create-a2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -176,6 +176,101 @@ const PAINT_CASE = String.raw`(async()=>{
   const restored=flatObjects().find(item=>item.id===object.id);
   if(!restored||restored.type!=='paint-session') throw new Error('REDO_OBJECT_MISSING');
   return {passed:true,before,after,previewStatus:preview.status,previewBounds,undoStatus:undone.status,redoStatus:redone.status,restoredStrokeCount:restored.session?.strokes?.length||0};
+})()`;
+
+const STROKE_A2_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']) if(!toolNames.includes(name)) throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+  const flatObjects=()=>app.page().layers.flatMap(layer=>layer.objects||[]);
+  const hashCanvas=()=>{const text=app.el.canvas.toDataURL('image/png');let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16);};
+  const findField=(value,key,depth=0)=>{
+    if(value==null||depth>8||typeof value!=='object') return undefined;
+    if(Object.prototype.hasOwnProperty.call(value,key)) return value[key];
+    for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}
+    return undefined;
+  };
+  const waitFrames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const edit=async(task)=>{
+    const proposed=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));
+    if(proposed?.status==='FAILED') throw new Error('PROPOSE_FAILED:'+JSON.stringify(proposed.diagnostics||[]));
+    const proposalId=findField(proposed,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING');
+    const approved=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));
+    if(approved?.status==='FAILED') throw new Error('APPROVE_FAILED:'+JSON.stringify(approved.diagnostics||[]));
+    const approvalToken=findField(approved,'approvalToken');if(!approvalToken)throw new Error('APPROVAL_TOKEN_MISSING');
+    const executed=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken}));
+    if(executed?.status==='FAILED') throw new Error('EXECUTE_FAILED:'+JSON.stringify(executed.diagnostics||[]));
+    if(findField(executed,'changed')!==true) throw new Error('EXECUTE_NOT_CHANGED');
+    await waitFrames();
+    return {executed,objectId:findField(executed,'objectId')};
+  };
+  const before={count:flatObjects().length,undo:app.history.undoStack.length,canvas:hashCanvas()};
+  const specs=[
+    {taskId:'qa-a2-pencil',name:'QA A2 Pencil',kind:'pencil',color:'#243746',size:6,opacity:.82,smoothing:.42,pressure:.78,grain:.68,samples:[
+      {x:-170,y:-105,pressure:.22,timestamp:0,tiltX:2,tiltY:8},{x:-95,y:-135,pressure:.7,timestamp:24,tiltX:6,tiltY:10},{x:-20,y:-80,pressure:.9,timestamp:48,tiltX:4,tiltY:5}
+    ]},
+    {taskId:'qa-a2-brush',name:'QA A2 Brush',kind:'brush',color:'#8f3f58',size:20,opacity:.9,smoothing:.46,pressure:.95,taper:.36,flow:.78,wetness:.62,bristle:.28,samples:[
+      {x:20,y:-105,pressure:.3,timestamp:0,tiltX:-4,tiltY:7},{x:90,y:-140,pressure:.88,timestamp:24,tiltX:-8,tiltY:12},{x:170,y:-72,pressure:.52,timestamp:48,tiltX:-3,tiltY:4}
+    ]},
+    {taskId:'qa-a2-airbrush',name:'QA A2 Airbrush',kind:'airbrush',color:'#42689a',size:44,opacity:.28,smoothing:.7,pressure:.6,softness:.86,flow:.55,samples:[
+      {x:-170,y:35,pressure:.28,timestamp:0},{x:-95,y:78,pressure:.7,timestamp:25},{x:-20,y:105,pressure:.42,timestamp:50}
+    ]},
+    {taskId:'qa-a2-drybrush',name:'QA A2 DryBrush',kind:'drybrush',color:'#6a573e',size:26,opacity:.65,smoothing:.36,pressure:.9,taper:.3,grain:.82,flow:.58,wetness:.08,bristle:.78,samples:[
+      {x:20,y:35,pressure:.32,timestamp:0},{x:95,y:92,pressure:.86,timestamp:25},{x:170,y:55,pressure:.48,timestamp:50}
+    ]}
+  ];
+  const created=[];
+  for(const spec of specs){
+    const {objectId}=await edit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:spec.taskId,operation:'stroke.create.v1',targets:[],arguments:spec});
+    if(!objectId) throw new Error('STROKE_OBJECT_ID_MISSING:'+spec.kind);
+    const object=flatObjects().find(item=>item.id===objectId);
+    if(!object||object.type!=='stroke'||object.kind!==spec.kind) throw new Error('STROKE_OBJECT_INVALID:'+spec.kind);
+    if(object.points?.length!==spec.samples.length) throw new Error('STROKE_POINT_COUNT:'+spec.kind);
+    const natural=['brush','drybrush','airbrush'].includes(spec.kind);
+    if(natural&&object.mediaModel!=='natural-v2') throw new Error('NATURAL_MEDIA_MODEL_MISSING:'+spec.kind);
+    if(natural&&!app.renderer?.naturalMedia?.supports?.(object)) throw new Error('NATURAL_MEDIA_CONTROLLER_REJECTED:'+spec.kind);
+    if(!natural&&app.renderer?.naturalMedia?.supports?.(object)) throw new Error('PENCIL_NATURAL_MEDIA_MISROUTE');
+    created.push({id:object.id,kind:object.kind,mediaModel:object.mediaModel||null,pointCount:object.points.length});
+  }
+  const after={count:flatObjects().length,undo:app.history.undoStack.length,canvas:hashCanvas()};
+  if(after.count!==before.count+4) throw new Error('STROKE_OBJECT_COUNT');
+  if(after.undo!==before.undo+4) throw new Error('STROKE_HISTORY_COUNT');
+  if(after.canvas===before.canvas) throw new Error('STROKE_RENDER_UNCHANGED');
+  const historyLabels=app.history.undoStack.slice(-4).map(entry=>entry.label);
+  if(historyLabels.some(label=>label!=='CHAT create Stroke')) throw new Error('STROKE_HISTORY_LABEL');
+  const inspected=app.chatBoundedEdit.inspect().objects.filter(item=>created.some(entry=>entry.id===item.ref?.objectId));
+  if(inspected.length!==4||inspected.some(item=>item.type!=='stroke')) throw new Error('STROKE_CONTEXT_SUMMARY');
+  const preview=await Promise.resolve(api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:800,background:true}));
+  if(preview?.status==='FAILED') throw new Error('PREVIEW_FAILED');
+  const previewBounds=preview?.result?.bounds||preview?.outputHandles?.[0]?.bounds||null;
+  if(!(previewBounds?.w>300&&previewBounds?.h>180)) throw new Error('STROKE_CONTENT_BOUNDS:'+JSON.stringify(previewBounds));
+  const lastId=created.at(-1).id;
+  const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));
+  if(undone?.status==='FAILED'||flatObjects().some(item=>item.id===lastId)) throw new Error('STROKE_UNDO_FAILED');
+  const redone=await Promise.resolve(api.tools.invoke('redo_ink',{}));
+  if(redone?.status==='FAILED') throw new Error('STROKE_REDO_FAILED');
+  await waitFrames();
+  const restored=flatObjects().find(item=>item.id===lastId);
+  if(!restored||restored.type!=='stroke'||restored.kind!=='drybrush') throw new Error('STROKE_REDO_OBJECT_MISSING');
+  const redoCanvas=hashCanvas();
+  if(redoCanvas!==after.canvas) throw new Error('STROKE_REDO_RENDER_NOT_RESTORED');
+  return {
+    passed:true,
+    operation:'stroke.create.v1',
+    created,
+    before,
+    after,
+    historyLabels,
+    previewStatus:preview.status,
+    previewBounds,
+    undoStatus:undone.status,
+    redoStatus:redone.status,
+    redoCanvas,
+    naturalMedia:app.renderer?.naturalMedia?.diagnostics?.()||null
+  };
 })()`;
 
 const RASTER_CASE = String.raw`(async()=>{
@@ -669,7 +764,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='paint-session-create'?PAINT_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))));
+    const caseExpression=request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
