@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B2-blend-live-001",
+  "requestId": "clusterB-B2-blend-live-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "789e9efb77d1edaac15420483c9ce71dd43f414b",
   "steps": [
