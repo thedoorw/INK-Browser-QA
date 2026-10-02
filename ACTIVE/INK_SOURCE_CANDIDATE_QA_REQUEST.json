@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "live-raster-blend-candidate-001",
-  "candidateSha": "db9ac524aee1f1bf7fc8fe613e75bfb93088a3ec",
-  "case": "raster-stack-blend-b2"
+  "requestId": "live-raster-effect-candidate-001",
+  "candidateSha": "dcc5d45851f00b6f809852c5cabc5e53c3bdae09",
+  "case": "raster-stack-effect-b2"
 }
