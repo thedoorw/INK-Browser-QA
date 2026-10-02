@@ -164,6 +164,32 @@ Current gate:
 - Cluster B product-source merge and Live promotion remain HOLD while the active C04 recovery + two-state combined-promotion composition is in progress;
 - unrelated Live CHAT exposure work must remain separate.
 
+### B0 candidate checkpoint — web raster bridge
+
+Fresh replay after main integrated the accepted recovery + C04 product composition:
+
+```text
+MAIN_PRODUCT_CHECKPOINT = aa01f1e311eb22cb572a61efea19b8bb21a96157
+BRANCH = work/ink-live-web-raster-bridge-002
+PR = #114 / DRAFT
+CANDIDATE_HEAD = 5bec56b5a4db08404a03ea43d71d158c849a4b56
+SUPERSEDED_PR = #113 / CLOSED
+STATIC_SYNTAX = PASS / 2 CHANGED SOURCE FILES ONLY
+RUNTIME_BROWSER = NOT YET CLAIMED
+LIVE_PROMOTION = NOT EXECUTED
+```
+
+Candidate scope:
+- RGBA8 web raster → existing `color-raster / ink-image-state`;
+- History-backed `InkApp.importWebRaster()`;
+- existing Reference lock/provenance semantics unchanged;
+- no CHAT named-tool exposure yet;
+- no UI behavior change;
+- no Document / History / Renderer / raster-state fork;
+- FORMAT_VERSION unchanged.
+
+The current hosted Live request runner is hard-bound to the formal Live URL and cannot qualify this branch candidate before promotion. Static QA alone is not a promotion gate.
+
 ### C — Layout Assist / Page / Artboard
 
 Families:
