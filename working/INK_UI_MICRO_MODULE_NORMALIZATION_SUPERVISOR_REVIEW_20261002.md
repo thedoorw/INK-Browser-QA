@@ -232,3 +232,24 @@ OVERALL_UI = NOT PASS / USER VISUAL REVIEW STILL REQUIRED
 ```
 
 The cleanup acceptance does not approve Photoshop fidelity and does not authorize Capability → UI Exposure Batch B.
+
+
+### SUP-06 — OBJECT MENU MNEMONIC MISSING
+
+Current top application menu labels consistently expose keyboard mnemonic letters in parentheses, e.g. 檔案(F), 編輯(E), 影像(I), 圖層(L), 文字(Y), 選取(S), 濾鏡(T), 檢視(V), 視窗(W), 說明(H).
+
+The Object menu is currently rendered as:
+
+```text
+物件
+```
+
+Source confirms the trigger text lacks a mnemonic.
+
+Required correction:
+
+```text
+物件(O)
+```
+
+This is a top-menu same-class consistency defect. Keep the existing object menu command routing unchanged; only normalize the visible menu label/mnemonic.
