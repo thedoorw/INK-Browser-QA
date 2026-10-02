@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B2-filter-live-002",
+  "requestId": "clusterB-B2-blend-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "e2ce5e409f42c992bcf411e5e23d8f02435b1a63",
+  "expectedSourceSha": "789e9efb77d1edaac15420483c9ce71dd43f414b",
   "steps": [
     {
       "id": "capabilities",
@@ -11,13 +11,29 @@
       "input": {}
     },
     {
-      "id": "importRaster",
+      "id": "importBase",
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B2 Filter Raster",
+          "name": "B2 Blend Base",
           "type": "image/png",
-          "intent": "Cluster B2 native gaussianBlur qualification"
+          "intent": "Cluster B2 blend native qualification base"
+        }
+      },
+      "file": {
+        "path": "qa/fixtures/rose-window/rose-window-primary.png",
+        "name": "rose-window-primary.png",
+        "type": "image/png"
+      }
+    },
+    {
+      "id": "importTop",
+      "tool": "import_ink_raster",
+      "input": {
+        "options": {
+          "name": "B2 Blend Target",
+          "type": "image/png",
+          "intent": "Cluster B2 blend native qualification target"
         }
       },
       "file": {
@@ -36,47 +52,43 @@
       }
     },
     {
-      "id": "filterPropose",
+      "id": "blendPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B2-live-gaussian-blur",
-          "operation": "image.filter.add.v1",
+          "taskId": "clusterB-B2-live-blend-multiply",
+          "operation": "image.blend.set.v1",
           "targets": [
             {
-              "$ref": "importRaster.createdRefs.0"
+              "$ref": "importTop.createdRefs.0"
             }
           ],
           "arguments": {
-            "type": "gaussianBlur",
-            "params": {
-              "radius": 2
-            },
-            "opacity": 1
+            "mode": "multiply"
           }
         }
       }
     },
     {
-      "id": "filterApprove",
+      "id": "blendApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "filterPropose.result.result.proposalId"
+          "$ref": "blendPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "filterExecute",
+      "id": "blendExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "filterPropose.result.result.proposalId"
+          "$ref": "blendPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "filterApprove.result.result.approvalToken"
+          "$ref": "blendApprove.result.result.approvalToken"
         }
       }
     },
