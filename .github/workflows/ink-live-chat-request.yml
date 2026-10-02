@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: ink-live-chat-request
+  group: ink-live-chat-request-hosted
   cancel-in-progress: false
 
 jobs:
