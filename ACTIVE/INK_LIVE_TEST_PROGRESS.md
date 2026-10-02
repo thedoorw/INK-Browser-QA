@@ -523,3 +523,37 @@ B4 = OPEN
 C019 = PRODUCT RENDER-INTEGRATION GAP
 ```
 
+
+
+## TEST A — Drawing / Natural Media qualification checkpoint — 2026-10-03
+
+Formal test record:
+`working/INK_TEST_A_DRAWING_NATURAL_MEDIA_QUALIFICATION_20261003.md`
+
+```text
+DEPLOYED_SOURCE_SHA = cc9b623258123da0e00e31a9e686357fba0d4ec0
+LIVE_REPO_HEAD_AT_TEST = 145a00587bcc6dbc9717b05179f2c5e131a5b587
+
+A2_NATIVE_STROKE = EXPOSURE_GAP
+NATURALMEDIA = EXPOSURE_GAP AT stroke.create.v1 ENTRYPOINT
+AIRBRUSH = EXPOSURE_GAP AT stroke.create.v1 ENTRYPOINT
+A3_PAPER = EXPOSURE_GAP
+A1_REGRESSION = PASS
+```
+
+Formal Live evidence:
+- `clusterA-A2-native-stroke-discovery-live-001` → `stroke.create.v1` not discoverable / `INK_CAPABILITY_NOT_FOUND`;
+- `clusterA-A3-paper-discovery-live-001` → `page.paper.set.v1` not discoverable / `INK_CAPABILITY_NOT_FOUND`;
+- `clusterA-A1-regression-live-001` → current Live source created one native `paint-session`, one scoped History entry, completed Preview, Undo removed the object, Redo restored the same object and exact Preview fingerprint `fnv1a32:a6535881`.
+
+No Core/UI/FORMAT_VERSION change was made. No pointer/mouse simulation was used.
+
+Current Cluster A test disposition:
+
+```text
+A1 = PASS / REGRESSION CLEAN
+A2 = BLOCKED AT CHAT EXPOSURE
+A3 = BLOCKED AT CHAT EXPOSURE
+A4 = NOT IN THIS TEST PACKAGE
+A5 = NOT IN THIS TEST PACKAGE / existing product integration classification unchanged
+```
