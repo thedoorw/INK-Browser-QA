@@ -203,6 +203,10 @@ Cross-window recovery:
 
 `governance/INK_DEVELOPMENT_CHAT_HANDOFF.md`
 
+INK Live Test / Deployment cross-window handoff:
+
+`INK_LIVE_TEST_HANDOFF.md`
+
 ## Product model
 
 INK remains one product with two delivery forms:
