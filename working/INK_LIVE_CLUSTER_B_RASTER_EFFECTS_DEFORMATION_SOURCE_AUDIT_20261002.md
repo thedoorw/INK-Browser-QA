@@ -285,18 +285,59 @@ BRANCH_CANDIDATE_BROWSER_PROOF = NOT AVAILABLE THROUGH CURRENT LIVE REQUEST RUNN
 
 Do not promote PR #114 from static QA alone.
 
-## Current gate
+## B0 + B1 accepted / deployed closure — 2026-10-02
 
-The active Current Work Order is the accepted C04 recovery + two-state combined-promotion sequence and explicitly keeps unrelated Live CHAT exposure work separate.
-
-Therefore:
+Historical PR #114 is superseded by the accepted fresh replay.
 
 ```text
-CLUSTER_B_PRODUCT_SOURCE_MERGE = HOLD
-LIVE_PROMOTION = HOLD
-SOURCE_AUDIT / DESIGN = ALLOWED
-UNRELATED C04 COMPOSITION = DO NOT MODIFY
+B0_FINAL_PR = #118
+B0_EXACT_TESTED_CANDIDATE = 076400c52bcd3f6a62e7de0a87dc26bfc010f8e4
+B0_MAIN_INTEGRATION = 3110a40227351cdc99a1639d09e55838d54cc8ed
+B0_RESULT = PASS
+
+B1_FINAL_PR = #119
+B1_EXACT_TESTED_CANDIDATE = e535234b1b3ad47d4fa0f4300ec3539275b0b4ca
+B1_MAIN_INTEGRATION = 3a785b90d6f7922175cca3662fd2b72bf95430ce
+LIVE_SOURCE_SHA = 3a785b90d6f7922175cca3662fd2b72bf95430ce
+LIVE_REQUEST = clusterB-B1-live-rerun-004
+B1_RESULT = PASS
 ```
 
-No thedoorw/INK product-source file was modified by this audit.
-No Live rerun is claimed because no Cluster B repair has been promoted.
+B0 proves the missing PNG/JPEG/WebP conversion seam without changing ReferenceImage semantics.
+
+B1 exposes that seam through the direct named tool `import_ink_raster`, reusing:
+`normalizeChatAttachment → InkApp.importWebRaster → existing History → native image+rasterState → existing Renderer`.
+
+Formal Live evidence:
+- PNG source 1086×1448 / 2,969,222 bytes;
+- stable native image ref returned;
+- source SHA-256 `e0c8039f6a30b21ac87483cfacfaa1c7fa2b05d2be79596d1a3d3f765469b807`;
+- editable `ink-image-state`;
+- Preview PASS;
+- scoped History PASS;
+- Undo PASS;
+- Redo PASS.
+
+Scope boundary:
+- PNG/JPEG/WebP attachment path is qualified.
+- PSD/TIFF/EXR/RAW native ingest remains product-existing but is not yet CHAT-qualified through this named tool.
+- adjustment/filter/blend/effect/Liquify remain B2 exposure gaps.
+- local/destructive raster tools and masks remain B3.
+- Path deformation remains B4.
+- Text warp remains a product render-integration gap.
+
+The formal Live runner now permits a 90-second exact-SHA module readiness window and records module-network diagnostics. Earlier readiness timeouts on the same exact source were deployment/CDN variability, not product-operation failures.
+
+## Current gate
+
+```text
+B0 WEB_RASTER_BRIDGE = MERGED / PASS
+B1 WEB_RASTER_NAMED_TOOL = MERGED / DEPLOYED / LIVE PASS
+B2 NON_DESTRUCTIVE_RASTER_STACK = NEXT
+B3 LOCAL_RASTER_MASKS = OPEN / LATER
+B4 PATH_DEFORMATION = OPEN
+C019 TEXT_DEFORMATION = PRODUCT RENDER-INTEGRATION GAP
+```
+
+Concurrent whole-UI fidelity work remains separate. B0/B1 changed no reviewed UI-authority blobs; future Cluster B work must maintain that boundary.
+
