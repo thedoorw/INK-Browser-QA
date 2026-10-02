@@ -11,7 +11,7 @@ import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
-import { IMAGE_CAPABILITIES, createAdjustment, createFilter } from '../image/image-core.js';
+import { IMAGE_CAPABILITIES, createAdjustment, createFilter, createLayerEffect } from '../image/image-core.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -228,6 +228,7 @@ export const CHAT_EDIT_PROPOSAL_VERSION = 1;
 export const CHAT_IMAGE_ADJUSTMENT_TYPES = Object.freeze(['brightnessContrast', 'levels', 'curves', 'hueSaturation']);
 export const CHAT_IMAGE_FILTER_TYPES = Object.freeze(['gaussianBlur', 'sharpen', 'noiseGrain', 'textureOverlay']);
 export const CHAT_IMAGE_BLEND_MODES = Object.freeze([...IMAGE_CAPABILITIES.blendModes]);
+export const CHAT_IMAGE_EFFECT_TYPES = Object.freeze(['dropShadow', 'innerShadow', 'outerGlow', 'colorOverlay', 'stroke']);
 
 export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.repaint.v1',
@@ -241,6 +242,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'image.adjustment.add.v1',
   'image.filter.add.v1',
   'image.blend.set.v1',
+  'image.effect.add.v1',
   'path.edit.v1',
   'object.rotate.v1',
   'object.clone.v1',
@@ -399,6 +401,15 @@ function normalizeImageFilterArguments(raw = {}) {
 function normalizeImageBlendArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   return { mode: boundedEnum(raw.mode, 'arguments.mode', CHAT_IMAGE_BLEND_MODES) };
+}
+
+function normalizeImageEffectArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    type: boundedEnum(raw.type, 'arguments.type', CHAT_IMAGE_EFFECT_TYPES),
+    params: normalizeBoundedJson(raw.params ?? {}, 'arguments.params'),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
 }
 
 function normalizePoint(value, field, { optional = false } = {}) {
@@ -901,6 +912,7 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'image.adjustment.add.v1') return normalizeImageAdjustmentArguments(raw);
   if (operation === 'image.filter.add.v1') return normalizeImageFilterArguments(raw);
   if (operation === 'image.blend.set.v1') return normalizeImageBlendArguments(raw);
+  if (operation === 'image.effect.add.v1') return normalizeImageEffectArguments(raw);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
@@ -936,6 +948,7 @@ function operationTargetRules(operation) {
   if (operation === 'image.adjustment.add.v1'
     || operation === 'image.filter.add.v1'
     || operation === 'image.blend.set.v1'
+    || operation === 'image.effect.add.v1'
     || operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
@@ -1083,7 +1096,8 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     }
     if ((task.operation === 'image.adjustment.add.v1'
       || task.operation === 'image.filter.add.v1'
-      || task.operation === 'image.blend.set.v1')
+      || task.operation === 'image.blend.set.v1'
+      || task.operation === 'image.effect.add.v1')
       && (found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster)) {
       editFail('RASTER_IMAGE_REQUIRED', { objectId: found.object?.id || null });
     }
@@ -1988,6 +2002,31 @@ function executeImageBlendTask(app, task) {
   };
 }
 
+function executeImageEffectTask(app, task) {
+  const ref = task.targets[0];
+  const found = findPageObject(app.page(), ref);
+  if (!found || found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster) {
+    editFail('RASTER_IMAGE_REQUIRED', { objectId: found?.object?.id || null });
+  }
+  const object = found.object;
+  if ((object.effects?.length || 0) >= 64) editFail('STACK_LIMIT', { operation: task.operation });
+  let stackItem = null;
+  app.history.pushScoped(`CHAT add image effect: ${task.arguments.type}`, [app.objectPath(found)], () => {
+    object.effects = object.effects || [];
+    stackItem = createLayerEffect(task.arguments.type, task.arguments.params, { opacity: task.arguments.opacity });
+    object.effects.push(stackItem);
+  });
+  app.spatialDirty = true;
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: object.id }],
+    stackItemId: stackItem?.id || null,
+    stackItemType: stackItem?.type || null,
+    effectCount: object.effects?.length || 0
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
@@ -2001,6 +2040,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'image.adjustment.add.v1') return executeImageAdjustmentTask(app, task);
   if (task.operation === 'image.filter.add.v1') return executeImageFilterTask(app, task);
   if (task.operation === 'image.blend.set.v1') return executeImageBlendTask(app, task);
+  if (task.operation === 'image.effect.add.v1') return executeImageEffectTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
   if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
