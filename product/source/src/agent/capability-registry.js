@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -171,6 +171,32 @@ const editSchemas = {
       x: num('Rectangle X.'), y: num('Rectangle Y.'), width: num('Rectangle width.', { minimum: Number.EPSILON }), height: num('Rectangle height.', { minimum: Number.EPSILON }),
       points: arr(obj({ x: num('Point X.'), y: num('Point Y.') }, ['x', 'y'], 'Point.'), 'Polygon/polyline points.', { maxItems: 4096 })
     }, ['shape'], 'Shape-specific geometry is validated by the bounded edit authority.'),
+    0, 0
+  ),
+  'paint.session.create.v1': editTaskSchema(
+    { type: 'string', const: 'paint.session.create.v1', description: 'Create one native deterministic Paint / Stroke Session on the active layer through the existing Brush Engine and Stroke Session authority.' },
+    obj({
+      objectId: str('Optional caller-supplied stable paint-session object id; collisions are rejected.'),
+      name: str('Paint Session name.'),
+      seed: { type: 'integer', minimum: 0, maximum: 4294967295, default: 1, description: 'Deterministic session seed.' },
+      opacity: num('Paint Session object opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      strokes: arr(obj({
+        id: str('Optional stable stroke id inside the session.'),
+        brushId: { type: 'string', enum: [...CHAT_PAINT_SESSION_BRUSH_IDS], description: 'Accepted existing built-in Brush Engine preset. Blender, Smudge, and Eraser remain excluded until their render integration is separately qualified.' },
+        color: str('Stroke color token.'),
+        seed: { type: 'integer', minimum: 0, maximum: 4294967295, description: 'Optional deterministic stroke seed.' },
+        samples: arr(obj({
+          x: num('World-space sample X.'),
+          y: num('World-space sample Y.'),
+          pressure: num('Pressure.', { minimum: 0, maximum: 1, default: .5 }),
+          timestamp: num('Monotonic sample timestamp in milliseconds.', { minimum: 0, maximum: 1000000000 }),
+          tiltX: num('Tilt X degrees.', { minimum: -90, maximum: 90, default: 0 }),
+          tiltY: num('Tilt Y degrees.', { minimum: -90, maximum: 90, default: 0 }),
+          azimuth: num('Azimuth.', { minimum: -1000, maximum: 1000, default: 0 }),
+          altitude: num('Altitude degrees.', { minimum: 0, maximum: 90, default: 90 })
+        }, ['x', 'y'], 'One deterministic stroke sample.'), 'Stroke samples; at least two are required.', { minItems: 2, maxItems: 4096 })
+      }, ['brushId', 'samples'], 'One existing Brush Engine stroke.'), 'Bounded Paint Session strokes.', { minItems: 1, maxItems: 64 })
+    }, ['strokes'], 'Total samples are bounded to 16,384. Uses existing StrokeSessionRecorder → replayStrokeSession → History/Renderer authority.'),
     0, 0
   ),
   'path.edit.v1': editTaskSchema(
@@ -784,7 +810,7 @@ primary.push(descriptor({
 
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
-  const zeroTargetCreate = ['path.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
+  const zeroTargetCreate = ['path.create.v1', 'paint.session.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
   const operationConstraints = zeroTargetCreate
     ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
     : operation === 'text.edit.v1'
@@ -796,6 +822,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'group.create.v1') operationConstraints.push('All targets must share the same layer and structural parent.');
   if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
   if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
+  if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
   if (operation === 'object.order.v1') operationConstraints.push('Targets must share one layer and structural parent; only front/back are exposed in C2-A.');
   if (operation === 'repeat.mirror.v1' || operation === 'repeat.grid.v1') operationConstraints.push('One source object only; creates a native Repeat adjacent to the source through existing History.');
@@ -832,7 +859,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
-    examples: operation === 'object.translate.v1'
+    examples: operation === 'paint.session.create.v1'
+      ? [{ taskId: 'paint-session-1', operation, targets: [], arguments: { name: 'CHAT Paint Session', seed: 17, strokes: [{ brushId: 'pencil', color: '#202020', samples: [{ x: 20, y: 20, pressure: .3, timestamp: 0 }, { x: 120, y: 80, pressure: .8, timestamp: 24 }] }] } }]
+      : operation === 'object.translate.v1'
       ? [{ taskId: 'translate-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'object-1' }], arguments: { dx: 10, dy: 5 } }]
       : operation === 'path.repaint.v1'
         ? [{ taskId: 'repaint-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { fill: '#ffffff' } }]
