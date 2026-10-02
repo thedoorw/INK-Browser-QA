@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - ACTIVE/INK_LIVE_CHAT_REQUEST.json
+      - ACTIVE/INK_SOURCE_CANDIDATE_QA_REQUEST.json
 
 permissions:
   contents: write
@@ -22,9 +23,24 @@ jobs:
       - name: Checkout request runner
         uses: actions/checkout@v4
         with:
+          fetch-depth: 2
           persist-credentials: false
 
+      - name: Detect request kind
+        id: detect
+        run: |
+          changed="$(git diff-tree --no-commit-id --name-only -r HEAD)"
+          if printf '%s\n' "$changed" | grep -qx 'ACTIVE/INK_SOURCE_CANDIDATE_QA_REQUEST.json'; then
+            echo "mode=candidate" >> "$GITHUB_OUTPUT"
+          elif printf '%s\n' "$changed" | grep -qx 'ACTIVE/INK_LIVE_CHAT_REQUEST.json'; then
+            echo "mode=live" >> "$GITHUB_OUTPUT"
+          else
+            echo "No supported request file changed" >&2
+            exit 2
+          fi
+
       - name: Execute CHAT request against Live INK
+        if: steps.detect.outputs.mode == 'live'
         run: >-
           node qa/live-chat/run-live-chat-request.mjs
           "ACTIVE/INK_LIVE_CHAT_REQUEST.json"
@@ -32,7 +48,7 @@ jobs:
           "${{ runner.temp }}/ink-live-chat-result.png"
 
       - name: Publish structured result to GitHub SSOT
-        if: always()
+        if: always() && steps.detect.outputs.mode == 'live'
         uses: actions/github-script@v7
         env:
           RESULT_PATH: ${{ runner.temp }}/ink-live-chat-result.json
@@ -133,7 +149,7 @@ jobs:
             });
 
       - name: Preserve visual evidence
-        if: always()
+        if: always() && steps.detect.outputs.mode == 'live'
         uses: actions/upload-artifact@v4
         with:
           name: ink-live-chat-${{ github.run_id }}
@@ -143,3 +159,78 @@ jobs:
           if-no-files-found: warn
           retention-days: 30
 
+
+
+      - name: Read source candidate request
+        if: steps.detect.outputs.mode == 'candidate'
+        id: candidate_request
+        run: |
+          node -e "const fs=require('fs');const r=JSON.parse(fs.readFileSync('ACTIVE/INK_SOURCE_CANDIDATE_QA_REQUEST.json','utf8'));if(r.schema!=='INK-SOURCE-CANDIDATE-QA-REQUEST'||r.version!==1||!/^[a-f0-9]{40}$/.test(String(r.candidateSha||'')))process.exit(2);fs.appendFileSync(process.env.GITHUB_OUTPUT,'candidate_sha='+r.candidateSha+'\\n')"
+
+      - name: Checkout exact source candidate
+        if: steps.detect.outputs.mode == 'candidate'
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.candidate_request.outputs.candidate_sha }}
+          path: candidate
+          persist-credentials: false
+
+      - name: Execute exact source candidate browser QA
+        if: steps.detect.outputs.mode == 'candidate'
+        run: >-
+          node qa/source-candidate/run-source-candidate-request.mjs
+          "ACTIVE/INK_SOURCE_CANDIDATE_QA_REQUEST.json"
+          "candidate/product/source"
+          "${{ runner.temp }}/ink-source-candidate-result.json"
+          "${{ runner.temp }}/ink-source-candidate-result.png"
+
+      - name: Publish source candidate QA result
+        if: always() && steps.detect.outputs.mode == 'candidate'
+        uses: actions/github-script@v7
+        env:
+          RESULT_PATH: ${{ runner.temp }}/ink-source-candidate-result.json
+        with:
+          script: |
+            const fs = require('node:fs');
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const path = 'working/INK_SOURCE_CANDIDATE_QA_RESULT.json';
+            let result;
+            try {
+              result = JSON.parse(fs.readFileSync(process.env.RESULT_PATH, 'utf8'));
+            } catch (error) {
+              result = {
+                schema: 'INK-SOURCE-CANDIDATE-QA-RESULT',
+                version: 1,
+                status: 'FAIL',
+                error: 'Runner result unavailable: ' + error.message
+              };
+            }
+            let sha;
+            try {
+              const current = await github.rest.repos.getContent({ owner, repo, path, ref: 'main' });
+              if (!Array.isArray(current.data)) sha = current.data.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            const content = Buffer.from(JSON.stringify(result, null, 2) + '\n').toString('base64');
+            await github.rest.repos.createOrUpdateFileContents({
+              owner,
+              repo,
+              path,
+              message: 'qa(candidate): record ' + (result.requestId || 'unknown') + ' ' + (result.status || 'UNKNOWN'),
+              content,
+              branch: 'main',
+              ...(sha ? { sha } : {})
+            });
+
+      - name: Preserve source candidate evidence
+        if: always() && steps.detect.outputs.mode == 'candidate'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-source-candidate-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/ink-source-candidate-result.json
+            ${{ runner.temp }}/ink-source-candidate-result.png
+          if-no-files-found: warn
+          retention-days: 30
