@@ -2,7 +2,7 @@ import { Canvas2DNaturalMediaRenderer } from './canvas2d/natural-media-canvas2d.
 import { Canvas2DMultiChannelInkRenderer } from './canvas2d/multi-channel-ink-canvas2d.js';
 import { WebGLNaturalMediaRenderer } from './webgl/natural-media-webgl.js';
 import { WebGLMultiChannelInkRenderer } from './webgl/multi-channel-ink-webgl.js';
-import { isNaturalMediaStroke } from './natural-media-utils.js';
+import { isNaturalMediaMixerStroke, isNaturalMediaStroke } from './natural-media-utils.js';
 import { supportsNaturalMediaRun } from './natural-media-run-utils.js';
 
 export const NATURAL_MEDIA_RENDER_MODES = Object.freeze(['auto', 'gpu', 'canvas2d']);
@@ -16,11 +16,11 @@ export class NaturalMediaController {
     this.multiChannelCanvas2d = new Canvas2DMultiChannelInkRenderer(multiChannelOptions.canvas2d || {});
     this.webgl = new WebGLNaturalMediaRenderer({ ...webglOptions, onStatusChange: () => this.emitStatus() });
     this.multiChannelWebgl = new WebGLMultiChannelInkRenderer({ ...(multiChannelOptions.webgl || {}), onStatusChange: () => this.emitStatus() });
-    this.forcedReason = null;this.lastBackend = 'canvas2d';this.fallbacks = 0;this.batchFallbacks = 0;
+    this.forcedReason = null;this.lastBackend = 'canvas2d';this.fallbacks = 0;this.batchFallbacks = 0;this.mixingRuns = 0;
     if (this.preference !== 'canvas2d') { this.webgl.initialize();this.multiChannelWebgl.initialize(); }
   }
   supports(stroke) { return isNaturalMediaStroke(stroke); }
-  supportsRun(entries, options = {}) { return supportsNaturalMediaRun(entries, options); }
+  supportsRun(entries, options = {}) { return supportsNaturalMediaRun(entries, { ...options, includeMixers: true }); }
   setFrequencyVisibility(value = {}) {
     const result = this.canvas2d.setFrequencyVisibility(value);
     this.emitStatus();
@@ -52,7 +52,9 @@ export class NaturalMediaController {
   renderStrokeRun(ctx, entries, paper = {}, options = {}) {
     const minimumStrokes = Math.max(1, Math.trunc(options.minimumStrokes ?? 2));
     if (!this.supportsRun(entries, { minimum: minimumStrokes })) return false;
-    const mayUseGPU = this.preference !== 'canvas2d' && !this.forcedReason;
+    const hasMixers = entries.some(entry => isNaturalMediaMixerStroke(entry?.stroke || entry));
+    if (hasMixers) this.mixingRuns++;
+    const mayUseGPU = !hasMixers && this.preference !== 'canvas2d' && !this.forcedReason;
     if (mayUseGPU) {
       try {
         const raster = this.multiChannelWebgl.render(entries, paper, options);
@@ -96,6 +98,7 @@ export class NaturalMediaController {
       forcedReason: this.forcedReason,
       fallbacks: this.fallbacks,
       batchFallbacks: this.batchFallbacks,
+      mixingRuns: this.mixingRuns,
       webgl: gpu,
       multiChannelWebgl: multiGpu,
       multiChannelCanvas2d: this.multiChannelCanvas2d.diagnostics(),
