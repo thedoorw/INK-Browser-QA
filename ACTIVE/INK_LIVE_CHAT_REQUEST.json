@@ -1,35 +1,48 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-source-retouch-live-001b",
+  "requestId": "clusterB-advanced-raster-ingest-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "0794cd5aa0567314ec6c240acdef57de7ef314d6",
+  "expectedSourceSha": "8d5a8ee9fdd0b4e2c63d910e75f29d48514ccf3f",
   "steps": [
     {
-      "id": "describe",
+      "id": "describeImport",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "image.raster.sourceRetouch.v1"
+        "idOrToolName": "raster.import"
       }
     },
     {
-      "id": "importRaster",
+      "id": "historyBefore",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "psd",
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B3 Source Retouch Raster B",
-          "type": "image/png",
-          "intent": "B3 source-dependent retouch formal Live B"
+          "name": "Live Advanced PSD",
+          "type": "image/vnd.adobe.photoshop",
+          "matrix": [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "intent": "advanced mutable raster formal Live"
         }
       },
       "file": {
-        "path": "qa/fixtures/rose-window/rose-window-primary.png",
-        "name": "rose-window-primary.png",
-        "type": "image/png"
+        "generatedFormat": "PSD",
+        "name": "live-advanced.psd",
+        "type": "image/vnd.adobe.photoshop"
       }
     },
     {
-      "id": "previewBaseline",
+      "id": "previewPSD",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -38,62 +51,31 @@
       }
     },
     {
-      "id": "patchPropose",
-      "tool": "propose_ink_edit",
+      "id": "tiff",
+      "tool": "import_ink_raster",
       "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-b3-source-patch",
-          "operation": "image.raster.sourceRetouch.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
+        "options": {
+          "name": "Live Advanced TIFF",
+          "type": "image/tiff",
+          "matrix": [
+            1,
+            0,
+            0,
+            1,
+            24,
+            0
           ],
-          "arguments": {
-            "type": "patch",
-            "sourceRegion": {
-              "x": 180,
-              "y": 260,
-              "width": 32,
-              "height": 32
-            },
-            "targetRegion": {
-              "x": 720,
-              "y": 880,
-              "width": 32,
-              "height": 32
-            },
-            "opacity": 1,
-            "feather": 4
-          }
+          "intent": "advanced mutable raster formal Live"
         }
+      },
+      "file": {
+        "generatedFormat": "TIFF",
+        "name": "live-advanced.tiff",
+        "type": "image/tiff"
       }
     },
     {
-      "id": "patchApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "patchPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "patchExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "patchPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "patchApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "patchPreview",
+      "id": "previewTIFF",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -102,12 +84,50 @@
       }
     },
     {
-      "id": "patchUndo",
+      "id": "exr",
+      "tool": "import_ink_raster",
+      "input": {
+        "options": {
+          "name": "Live Advanced EXR",
+          "type": "image/x-exr",
+          "matrix": [
+            1,
+            0,
+            0,
+            1,
+            48,
+            0
+          ],
+          "intent": "advanced mutable raster formal Live"
+        }
+      },
+      "file": {
+        "generatedFormat": "EXR",
+        "name": "live-advanced.exr",
+        "type": "image/x-exr"
+      }
+    },
+    {
+      "id": "previewEXR",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "historyAfterImports",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "undoEXR",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "patchUndoPreview",
+      "id": "previewUndoEXR",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -116,12 +136,12 @@
       }
     },
     {
-      "id": "patchRedo",
+      "id": "redoEXR",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "patchRedoPreview",
+      "id": "previewRedoEXR",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -130,101 +150,110 @@
       }
     },
     {
-      "id": "noopPropose",
+      "id": "bucketPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-b3-source-noop",
-          "operation": "image.raster.sourceRetouch.v1",
+          "taskId": "live-advanced-psd-bucket",
+          "operation": "image.raster.paintBucket.v1",
           "targets": [
             {
-              "$ref": "importRaster.createdRefs.0"
+              "$ref": "psd.createdRefs.0"
             }
           ],
           "arguments": {
-            "type": "cloneStamp",
-            "sourceX": 400,
-            "sourceY": 500,
-            "targetX": 400,
-            "targetY": 500,
-            "radius": 20,
-            "opacity": 1,
-            "hardness": 1
+            "x": 0,
+            "y": 0,
+            "color": "#20b86a",
+            "tolerance": 0,
+            "contiguous": true,
+            "opacity": 1
           }
         }
       }
     },
     {
-      "id": "noopApprove",
+      "id": "bucketApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "noopPropose.result.result.proposalId"
+          "$ref": "bucketPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "noopExecute",
+      "id": "bucketExecute",
       "tool": "execute_ink_edit",
-      "allowFailure": true,
       "input": {
         "proposalId": {
-          "$ref": "noopPropose.result.result.proposalId"
+          "$ref": "bucketPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "noopApprove.result.result.approvalToken"
+          "$ref": "bucketApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "rangePropose",
-      "tool": "propose_ink_edit",
+      "id": "previewPsdEdit",
+      "tool": "get_ink_preview",
       "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-b3-source-range",
-          "operation": "image.raster.sourceRetouch.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
-          "arguments": {
-            "type": "healingBrush",
-            "sourceX": 2000,
-            "sourceY": 12,
-            "targetX": 580,
-            "targetY": 715,
-            "radius": 20,
-            "opacity": 1,
-            "hardness": 1
-          }
-        }
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     },
     {
-      "id": "rangeApprove",
-      "tool": "approve_ink_edit",
+      "id": "undoPsdEdit",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewUndoPsdEdit",
+      "tool": "get_ink_preview",
       "input": {
-        "proposalId": {
-          "$ref": "rangePropose.result.result.proposalId"
-        }
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     },
     {
-      "id": "rangeExecute",
-      "tool": "execute_ink_edit",
+      "id": "redoPsdEdit",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewRedoPsdEdit",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "rawUnavailable",
+      "tool": "import_ink_raster",
       "allowFailure": true,
       "input": {
-        "proposalId": {
-          "$ref": "rangePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "rangeApprove.result.result.approvalToken"
+        "options": {
+          "name": "Live RAW unavailable",
+          "type": "image/x-adobe-dng",
+          "intent": "verify default RAW decoder boundary"
         }
+      },
+      "file": {
+        "generatedFormat": "RAW_UNAVAILABLE",
+        "name": "live-camera.dng",
+        "type": "image/x-adobe-dng"
+      }
+    },
+    {
+      "id": "contextFinal",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
       }
     },
     {
