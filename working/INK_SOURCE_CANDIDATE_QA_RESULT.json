@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "local-paper-webgl-a1-regression-001",
-  "candidateSha": "e75ff85e28a7fa6370d25c1a9f38c6488e189023",
-  "case": "paint-session-create",
+  "requestId": "local-paper-webgl-merged-roughness-001",
+  "candidateSha": "698ce0ef781eeb5899ab5b84183d9a0d0eb8e6f5",
+  "case": "page-paper-webgl-roughness",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:44485/?sourceCandidate=e75ff85e28a7fa6370d25c1a9f38c6488e189023",
+    "href": "http://127.0.0.1:33797/?sourceCandidate=698ce0ef781eeb5899ab5b84183d9a0d0eb8e6f5",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,29 +13,187 @@
   },
   "result": {
     "passed": true,
-    "before": {
-      "count": 0,
-      "undo": 0,
-      "canvas": "8d257ff8"
+    "operation": "page.paper.set.v1",
+    "roughnessOnly": true,
+    "paperBefore": {
+      "type": "blank",
+      "color": "#fffef9",
+      "gridSize": 32,
+      "absorbency": 0.58,
+      "roughness": 0.42,
+      "fiberStrength": 0.36,
+      "fiberAngle": 0,
+      "sizing": 0.28,
+      "granulation": 0.32,
+      "seed": 1337,
+      "textureVisible": true
     },
-    "after": {
-      "count": 1,
-      "undo": 1,
-      "canvas": "c81fe871",
-      "id": "chat-paint-fnv1a32-c7900103",
-      "strokes": 2,
-      "replayHash": "82de9fb3"
+    "paperAfter": {
+      "type": "blank",
+      "color": "#fffef9",
+      "gridSize": 32,
+      "absorbency": 0.58,
+      "roughness": 0.95,
+      "fiberStrength": 0.36,
+      "fiberAngle": 0,
+      "sizing": 0.28,
+      "granulation": 0.32,
+      "seed": 1337,
+      "textureVisible": true
     },
-    "previewStatus": "COMPLETED",
-    "previewBounds": {
-      "h": 231.12032,
-      "w": 274.0064,
-      "x": -135.13,
-      "y": -120.46648
+    "absorbencyPreserved": true,
+    "baseline": "fnv1a32:bbeabfad",
+    "changed": "fnv1a32:44068a67",
+    "undoPreview": "fnv1a32:bbeabfad",
+    "redoPreview": "fnv1a32:44068a67",
+    "historyBefore": 1,
+    "historyAfter": 2,
+    "activeBackend": "webgl2-multichannel",
+    "objectId": "chat-stroke-fnv1a32-0caae146",
+    "strokeIdentityStable": true,
+    "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
+    "directParity": {
+      "canvas2d": {
+        "low": "d89edc99",
+        "high": "34a46cf6",
+        "changed": true
+      },
+      "webgl": {
+        "low": "493bb14e",
+        "high": "8dc9621f",
+        "changed": true
+      },
+      "resistance": {
+        "low": 0.21010617070841858,
+        "high": 0.3632172434599529,
+        "direction": "HIGHER_ROUGHNESS_HIGHER_RESISTANCE"
+      },
+      "absorbency": {
+        "low": 0.45751917071251297,
+        "high": 0.45751917071251297,
+        "preserved": true
+      }
     },
-    "undoStatus": "COMPLETED",
-    "redoStatus": "COMPLETED",
-    "restoredStrokeCount": 2
+    "naturalMedia": {
+      "preference": "auto",
+      "floraReferenceBackend": "canvas2d",
+      "activeBackend": "webgl2-multichannel",
+      "gpuAvailable": true,
+      "gpuState": "ready",
+      "forcedReason": null,
+      "fallbacks": 0,
+      "batchFallbacks": 0,
+      "webgl": {
+        "backend": "webgl2",
+        "drawCalls": 1,
+        "cacheHits": 0,
+        "cacheMisses": 1,
+        "evictions": 0,
+        "contextLosses": 0,
+        "restores": 0,
+        "vertices": 342,
+        "state": "ready",
+        "available": true,
+        "cacheEntries": 0,
+        "lastError": null,
+        "capabilities": {
+          "maxTextureSize": 8192,
+          "maxRenderbufferSize": 8192,
+          "maxViewportDims": [
+            8192,
+            8192
+          ],
+          "maxTextureUnits": 32,
+          "vendor": "Google Inc. (Google)",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        },
+        "resources": {
+          "allocations": 1,
+          "releases": 1,
+          "evictions": 0,
+          "rejected": 0,
+          "peakBytes": 961124,
+          "budgetBytes": 100663296,
+          "usedBytes": 0,
+          "availableBytes": 100663296,
+          "utilization": 0,
+          "resources": 0,
+          "byType": {}
+        },
+        "selfTest": null
+      },
+      "multiChannelWebgl": {
+        "backend": "webgl2-multichannel",
+        "runs": 6,
+        "strokes": 6,
+        "drawCalls": 6,
+        "simulationPasses": 24,
+        "cacheHits": 4,
+        "cacheMisses": 6,
+        "evictions": 0,
+        "contextLosses": 0,
+        "restores": 0,
+        "state": "ready",
+        "available": true,
+        "cacheEntries": 2,
+        "lastError": null,
+        "targets": "364x177",
+        "capabilities": {
+          "maxTextureSize": 8192,
+          "maxRenderbufferSize": 8192,
+          "maxDrawBuffers": 8,
+          "maxColorAttachments": 8,
+          "maxViewportDims": [
+            8192,
+            8192
+          ],
+          "vendor": "Google Inc. (Google)",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+        },
+        "resources": {
+          "allocations": 16,
+          "releases": 12,
+          "evictions": 0,
+          "rejected": 0,
+          "peakBytes": 3101232,
+          "budgetBytes": 167772160,
+          "usedBytes": 1659504,
+          "availableBytes": 166112656,
+          "utilization": 0.009891414642333984,
+          "resources": 4,
+          "byType": {
+            "raster-cache": 628656,
+            "mrt-target": 1030848
+          }
+        },
+        "selfTest": null
+      },
+      "multiChannelCanvas2d": {
+        "backend": "canvas2d-multichannel",
+        "runs": 0,
+        "strokes": 0,
+        "stamps": 0,
+        "pixels": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "evictions": 0,
+        "skipped": 0,
+        "cacheEntries": 0
+      },
+      "canvas2d": {
+        "backend": "canvas2d",
+        "surfaceRevision": "WP8B-1",
+        "drawCalls": 0,
+        "frequencyVisibility": {
+          "low": true,
+          "mid": true,
+          "high": true
+        }
+      }
+    }
   },
   "status": "PASS"
 }
