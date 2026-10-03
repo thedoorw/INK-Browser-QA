@@ -656,17 +656,18 @@ const ALIGN_DISTRIBUTE_C2_CASE = String.raw`(async()=>{
   for(const name of ['describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','undo_ink','redo_ink'])if(!toolNames.includes(name))throw new Error('MISSING_TOOL:'+name);
   if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
   app.history.clear();
+  const findField=(value,key,depth=0)=>{if(value==null||depth>12||typeof value!=='object')return undefined;if(Object.prototype.hasOwnProperty.call(value,key))return value[key];for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}return undefined;};
   const edit=async task=>{
     const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));if(p?.status==='FAILED')throw new Error('PROPOSE:'+JSON.stringify(p.diagnostics||[]));
-    const proposalId=p.result?.proposalId;if(!proposalId)throw new Error('PROPOSAL_ID_MISSING');
+    const proposalId=findField(p,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING');
     const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));if(a?.status==='FAILED')throw new Error('APPROVE:'+JSON.stringify(a.diagnostics||[]));
-    const token=a.result?.approvalToken;if(!token)throw new Error('TOKEN_MISSING');
+    const token=findField(a,'approvalToken');if(!token)throw new Error('TOKEN_MISSING');
     const e=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken:token}));if(e?.status==='FAILED')throw new Error('EXECUTE:'+JSON.stringify(e.diagnostics||[]));
     return e;
   };
   const create=async(id,x,y,w,h)=>{
     const e=await edit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-c2-create-'+id,operation:'path.create.v1',targets:[],arguments:{objectId:id,name:id,shape:'rectangle',x,y,width:w,height:h,fill:'#d4878b',stroke:'#49383b',strokeWidth:2,opacity:1}});
-    return e.result.controllerResult.resultRefs[0];
+    return findField(e,'resultRefs')[0];
   };
   const refs=[
     await create('qa-c2-a',10,20,40,30),
@@ -693,7 +694,7 @@ const ALIGN_DISTRIBUTE_C2_CASE = String.raw`(async()=>{
   const left=bounds();
   if(!left.every(b=>close(b.x,left[0].x)))throw new Error('LEFT_ALIGN_FAILED:'+JSON.stringify(left));
   if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_LEFT');
-  if(leftResult.result.controllerResult.mode!=='left'||leftResult.result.controllerResult.changedTargetCount<1)throw new Error('LEFT_RECEIPT_INVALID');
+  if(findField(leftResult,'mode')!=='left'||findField(leftResult,'changedTargetCount')<1)throw new Error('LEFT_RECEIPT_INVALID');
   if(app.history.undoStack.at(-1)?.label!=='對齊物件')throw new Error('LEFT_HISTORY_LABEL_INVALID');
   await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('LEFT_UNDO_MISMATCH');
   await Promise.resolve(api.tools.invoke('redo_ink',{}));if(!sameBounds(bounds(),left))throw new Error('LEFT_REDO_MISMATCH');
@@ -703,7 +704,7 @@ const ALIGN_DISTRIBUTE_C2_CASE = String.raw`(async()=>{
   const center=bounds(),centers=center.map(b=>b.x+b.w/2);
   if(!centers.every(v=>close(v,centers[0])))throw new Error('CENTERX_ALIGN_FAILED:'+JSON.stringify(center));
   if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_CENTER');
-  if(centerResult.result.controllerResult.mode!=='centerX')throw new Error('CENTER_RECEIPT_INVALID');
+  if(findField(centerResult,'mode')!=='centerX')throw new Error('CENTER_RECEIPT_INVALID');
   await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('CENTER_UNDO_MISMATCH');
 
   const distributeResult=await align('distributeX');
@@ -712,16 +713,18 @@ const ALIGN_DISTRIBUTE_C2_CASE = String.raw`(async()=>{
   const gap2=distributed[2].x-(distributed[1].x+distributed[1].w);
   if(!close(gap1,gap2,.01))throw new Error('DISTRIBUTEX_GAP_MISMATCH:'+gap1+':'+gap2);
   if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_DISTRIBUTE');
-  if(distributeResult.result.controllerResult.mode!=='distributeX')throw new Error('DISTRIBUTE_RECEIPT_INVALID');
+  if(findField(distributeResult,'mode')!=='distributeX')throw new Error('DISTRIBUTE_RECEIPT_INVALID');
   const distributedExact=bounds();
   await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('DISTRIBUTE_UNDO_MISMATCH');
   await Promise.resolve(api.tools.invoke('redo_ink',{}));if(!sameBounds(bounds(),distributedExact))throw new Error('DISTRIBUTE_REDO_MISMATCH');
 
   const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:{schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-c2-distribute-two',operation:'object.align.v1',targets:refs.slice(0,2),arguments:{mode:'distributeX'}}}));
   if(p?.status==='FAILED')throw new Error('TWO_TARGET_PROPOSE_UNEXPECTED_FAIL');
-  const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:p.result.proposalId}));
+  const twoProposalId=findField(p,'proposalId');if(!twoProposalId)throw new Error('TWO_TARGET_PROPOSAL_ID_MISSING');
+  const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:twoProposalId}));
   if(a?.status==='FAILED')throw new Error('TWO_TARGET_APPROVE_UNEXPECTED_FAIL');
-  const rejected=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:p.result.proposalId,approvalToken:a.result.approvalToken}));
+  const twoToken=findField(a,'approvalToken');if(!twoToken)throw new Error('TWO_TARGET_TOKEN_MISSING');
+  const rejected=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:twoProposalId,approvalToken:twoToken}));
   const rejectCode=rejected?.diagnostics?.[0]?.code||null;
   if(rejected?.status!=='FAILED'||rejectCode!=='CHAT_EDIT_TARGET_COUNT_INVALID')throw new Error('DISTRIBUTE_TWO_NOT_REJECTED:'+JSON.stringify(rejected));
 
