@@ -233,7 +233,15 @@ test('invalid, cross-container, no-op, and stale Path refs are rejected before m
   assert.equal(response.ok, false);
   assert.equal(response.code, 'CHAT_EDIT_NO_OP');
 
-  const staleApp = makeApp(), staleAdapter = createChatBoundedEditAdapter(staleApp.chatBoundedEdit);
+  const singularApp = makeApp(), singularAdapter = createChatBoundedEditAdapter(singularApp.chatBoundedEdit);
+  findPageObject(singularApp.page(), 'text-1').object.matrix = [0, 0, 0, 0, 0, 0];
+  response = singularAdapter.propose(task('singular-text', 'text.path.set.v1', [ref(singularApp, 'text-1')], {
+    pathRef: ref(singularApp, 'curve-1')
+  }));
+  assert.equal(response.ok, false);
+  assert.equal(response.code, 'CHAT_EDIT_TARGET_SINGULAR');
+
+    const staleApp = makeApp(), staleAdapter = createChatBoundedEditAdapter(staleApp.chatBoundedEdit);
   const proposal = staleAdapter.propose(task('stale-path', 'text.path.set.v1', [ref(staleApp, 'text-1')], {
     pathRef: ref(staleApp, 'curve-1'),
     startOffset: 4
