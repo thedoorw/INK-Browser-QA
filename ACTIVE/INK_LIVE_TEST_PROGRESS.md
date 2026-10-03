@@ -907,3 +907,58 @@ B3_LOCAL_RETOUCH_FAMILIES = OPEN / SEPARATE
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## B3.2 Raster Mask — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+B3_RASTER_MASK = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+RASTER_STALE_FINGERPRINT_SEAM = REPAIRED / QUALIFIED
+B3_OVERALL = PARTIAL
+```
+
+Authority:
+- `image.mask.raster.set.v1` uses bounded raster-local rectangle geometry only;
+- raw alpha arrays are not accepted from CHAT;
+- existing `rasterizePathMask() / rasterMask / modifyRasterMask() / renderImageStack()` remain sole mask/render authority;
+- current contract exposes invert/feather/expand but intentionally not `enabled=false`, because current renderer does not consume the disabled state;
+- image-operation target fingerprints now include native raster pixels + rasterMask content only for image mutations; general CHAT context does not scan pixel arrays;
+- B3.1 Paint Bucket is included in explicit native-raster target validation;
+- no pointer emulation, second raster/mask/Renderer/History authority, UI change, or FORMAT_VERSION change.
+
+Source/candidate:
+- PR #139 merged.
+- exact candidate `e018a08c5c8e352908eee5e066f2e33eee883946`.
+- merged/deployed source `2d1c67f398c19cbbec1e935095b5dc991c886213`.
+- candidate request `clusterB-B3-raster-mask-candidate-002-regressions`.
+- candidate result commit `cccdf7dd67e549b9aa128cadcbf9e4220864b22c`.
+- candidate run `37096583395`; artifact `11263983500`; digest `sha256:668c97dd98f767ae2603a9395c3cb64ccf74d10f7e1121bf03ef592ff5c0c45d`.
+- pixels unchanged by Mask `376ec6fb → 376ec6fb`; Preview `4d9848b1 → 88ecac90`; exact Undo/Redo.
+- pixel-intervening stale Mask proposal: rejected.
+- mask-intervening stale Paint Bucket proposal: rejected.
+- same Mask: NO_OP rejected.
+- B3.1 / B2 brightnessContrast / A5 exact-SHA regressions PASS.
+
+Formal Live:
+- request `clusterB-B3-raster-mask-live-001`.
+- request commit `ef47817e08841f052962beb5259ac7aa747c5277`.
+- result commit `1a93302dd47ccea63fb90e4e0a96f18409c5128f`.
+- run `37096759128`; artifact `11264348327`; digest `sha256:349b022f3cc5b351d655869b565b4652db42c5806a063ac220a1cb4704e2bc36`.
+- exact source verified; `apiReady=true`; 23 named tools.
+- intervening Paint Bucket changed target fingerprint; stale Mask approval rejected `CHAT_EDIT_TARGET_STALE`.
+- undo of intervening pixel edit restored baseline Preview `fnv1a32:34d01658`.
+- native 1086×1448 raster Mask bounds x=100 y=100 w=500 h=700; mask fingerprint `fnv1a32:5ecf69a0`.
+- Mask Preview `fnv1a32:34d01658 → fnv1a32:6b03e9c5`; Undo `34d01658`; Redo `6b03e9c5`.
+- same-mask repeat rejected `CHAT_EDIT_NO_OP`.
+- History contains native editable-raster import + scoped `CHAT set raster mask`.
+
+```text
+B3_PAINT_BUCKET = CLOSED / FORMAL LIVE QUALIFIED
+B3_RASTER_MASK = CLOSED / FORMAL LIVE QUALIFIED
+RASTER_PIXEL_AND_MASK_STALE_PROTECTION = PASS
+NEXT_B3 = STRUCTURED_LOCAL_RETOUCH
+B3_OVERALL = PARTIAL
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
