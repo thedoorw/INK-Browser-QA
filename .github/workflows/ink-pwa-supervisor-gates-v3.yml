@@ -3,7 +3,7 @@ name: INK PWA Supervisor Gate CI v3
 on:
   push:
     branches:
-      - work/pwa-cache-freshness-supervisor-gates-003
+      - work/pwa-cache-freshness-integration-regression-001
     paths:
       - product/source/**
       - pwa-pages-build-identity.txt
@@ -65,7 +65,7 @@ jobs:
           grep -F "premerge-profile.tgz" .github/workflows/ink-pwa-pages-postintegration.yml
 
       - name: Materialize latest-main product baseline
-        run: git worktree add "$RUNNER_TEMP/ink-pwa-baseline" a6842e95a00ef440d47cc393394b9272d75f6082
+        run: git worktree add "$RUNNER_TEMP/ink-pwa-baseline" 01aaabac7d2a7a3d006029a616e7eed40fd334f4
 
       - name: Real Chromium lifecycle A
         run: |
