@@ -126,7 +126,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -647,6 +647,127 @@ const RASTER_NAMED_TOOL_CASE = String.raw`(async()=>{
   const restored=flatObjects().find(item=>item.id===object.id);
   if(redone?.status==='FAILED'||!restored?.rasterState?.colorRaster) throw new Error('RASTER_REDO_FAILED');
   return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
+})()`;
+
+const PAGE_OPS_C1_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke)throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const requiredTools=['describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','undo_ink','redo_ink','get_ink_history'];
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of requiredTools)if(!toolNames.includes(name))throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+
+  const findField=(value,key,depth=0)=>{if(value==null||depth>12||typeof value!=='object')return undefined;if(Object.prototype.hasOwnProperty.call(value,key))return value[key];for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}return undefined;};
+  const historyCount=()=>app.history.undoStack.length;
+  const edit=async task=>{
+    const proposed=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));
+    if(proposed?.status==='FAILED')throw new Error('PROPOSE_FAILED:'+task.operation+':'+JSON.stringify(proposed.diagnostics||[]));
+    const proposalId=findField(proposed,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING:'+task.operation);
+    const approved=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));
+    if(approved?.status==='FAILED')throw new Error('APPROVE_FAILED:'+task.operation+':'+JSON.stringify(approved.diagnostics||[]));
+    const approvalToken=findField(approved,'approvalToken');if(!approvalToken)throw new Error('APPROVAL_TOKEN_MISSING:'+task.operation);
+    const executed=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken}));
+    if(executed?.status==='FAILED')throw new Error('EXECUTE_FAILED:'+task.operation+':'+JSON.stringify(executed.diagnostics||[]));
+    if(findField(executed,'changed')!==true)throw new Error('NOT_CHANGED:'+task.operation);
+    return executed;
+  };
+  const proposeFailure=async(task,code)=>{
+    const result=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));
+    const text=(findField(result,'code')||JSON.stringify(result?.diagnostics||[]));
+    if(result?.status!=='FAILED'||!String(text).includes(code))throw new Error('EXPECTED_PROPOSE_FAILURE:'+code+':'+String(text));
+    return String(text);
+  };
+  const task=(taskId,operation,args={})=>({schema:'INK-CHAT-EDIT-TASK',version:1,taskId,operation,targets:[],arguments:args});
+
+  const operations=['page.create.v1','page.duplicate.v1','page.delete.v1','page.rename.v1','page.activate.v1'];
+  for(const operation of operations){
+    const described=await Promise.resolve(api.tools.invoke('describe_ink_capability',{idOrToolName:operation}));
+    if(described?.status==='FAILED')throw new Error('DESCRIBE_FAILED:'+operation);
+    const text=JSON.stringify(described);
+    if(!text.includes(operation))throw new Error('DESCRIPTOR_OPERATION_MISSING:'+operation);
+    const targetMax=findField(described,'maxItems');
+    if(targetMax!==0)throw new Error('PAGE_TARGET_SCHEMA_NOT_ZERO:'+operation+':'+targetMax);
+  }
+
+  if(app.doc.pages.length!==1)throw new Error('FRESH_PAGE_COUNT:'+app.doc.pages.length);
+  const page1=app.doc.pages[0],page1Id=page1.id;
+  const createHistoryBefore=historyCount();
+  const created=await edit(task('qa-c1-create','page.create.v1',{}));
+  const page2Id=findField(created,'pageId');
+  if(!page2Id||page2Id===page1Id||app.doc.activePageId!==page2Id||app.doc.pages.length!==2)throw new Error('PAGE_CREATE_STATE');
+  if(historyCount()!==createHistoryBefore+1||app.history.undoStack.at(-1)?.label!=='新增頁面')throw new Error('PAGE_CREATE_HISTORY');
+
+  const pathCreated=await edit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-c1-source-path',operation:'path.create.v1',targets:[],arguments:{objectId:'qa-c1-page2-path',name:'C1 Page 2 Path',shape:'rectangle',x:0,y:0,width:80,height:60,fill:'#d4878b',stroke:'#49383b',strokeWidth:2,opacity:1}});
+  if(findField(pathCreated,'objectId')!=='qa-c1-page2-path')throw new Error('PAGE2_PATH_CREATE_FAILED');
+
+  const renamed=await edit(task('qa-c1-rename','page.rename.v1',{pageId:page2Id,name:'QA Page 2'}));
+  if(app.doc.pages.find(page=>page.id===page2Id)?.name!=='QA Page 2')throw new Error('PAGE_RENAME_STATE');
+  if(app.history.undoStack.at(-1)?.label!=='重新命名頁面')throw new Error('PAGE_RENAME_HISTORY');
+  const renameNoOpCode=await proposeFailure(task('qa-c1-rename-noop','page.rename.v1',{pageId:page2Id,name:'QA Page 2'}),'CHAT_EDIT_NO_OP');
+
+  const page2=app.doc.pages.find(page=>page.id===page2Id);
+  const sourceLayerIds=new Set(page2.layers.map(layer=>layer.id));
+  const sourceObjectIds=new Set(page2.layers.flatMap(layer=>layer.objects||[]).map(object=>object.id));
+  const duplicated=await edit(task('qa-c1-duplicate','page.duplicate.v1',{pageId:page2Id}));
+  const page3Id=findField(duplicated,'pageId');
+  const page3=app.doc.pages.find(page=>page.id===page3Id);
+  if(!page3||page3Id===page2Id||app.doc.activePageId!==page3Id||app.doc.pages.length!==3)throw new Error('PAGE_DUPLICATE_STATE');
+  if(app.history.undoStack.at(-1)?.label!=='複製頁面')throw new Error('PAGE_DUPLICATE_HISTORY');
+  if(page3.layers.some(layer=>sourceLayerIds.has(layer.id)))throw new Error('PAGE_DUPLICATE_LAYER_ID_REUSED');
+  const duplicateObjectIds=page3.layers.flatMap(layer=>layer.objects||[]).map(object=>object.id);
+  if(!duplicateObjectIds.length||duplicateObjectIds.some(id=>sourceObjectIds.has(id)))throw new Error('PAGE_DUPLICATE_OBJECT_ID_REUSED');
+
+  const activateHistoryBefore=historyCount();
+  const activated=await edit(task('qa-c1-activate','page.activate.v1',{pageId:page1Id}));
+  if(app.doc.activePageId!==page1Id)throw new Error('PAGE_ACTIVATE_STATE');
+  if(historyCount()!==activateHistoryBefore)throw new Error('PAGE_ACTIVATE_HISTORY_MUTATED');
+  if(findField(activated,'historyEntryCreated')!==false)throw new Error('PAGE_ACTIVATE_RECEIPT');
+  const activateNoOpCode=await proposeFailure(task('qa-c1-activate-noop','page.activate.v1',{pageId:page1Id}),'CHAT_EDIT_NO_OP');
+
+  const deleteHistoryBefore=historyCount();
+  await edit(task('qa-c1-delete-copy','page.delete.v1',{pageId:page3Id}));
+  if(app.doc.pages.some(page=>page.id===page3Id)||app.doc.pages.length!==2)throw new Error('PAGE_DELETE_STATE');
+  if(historyCount()!==deleteHistoryBefore+1||app.history.undoStack.at(-1)?.label!=='刪除頁面')throw new Error('PAGE_DELETE_HISTORY');
+  const activeAfterDelete=app.doc.activePageId;
+
+  const undoDelete=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undoDelete?.status==='FAILED')throw new Error('PAGE_DELETE_UNDO_FAILED');
+  if(!app.doc.pages.some(page=>page.id===page3Id)||app.doc.pages.length!==3||app.doc.activePageId!==page1Id)throw new Error('PAGE_DELETE_UNDO_STATE');
+  const redoDelete=await Promise.resolve(api.tools.invoke('redo_ink',{}));if(redoDelete?.status==='FAILED')throw new Error('PAGE_DELETE_REDO_FAILED');
+  if(app.doc.pages.some(page=>page.id===page3Id)||app.doc.pages.length!==2||app.doc.activePageId!==activeAfterDelete)throw new Error('PAGE_DELETE_REDO_STATE');
+
+  if(app.doc.activePageId!==page2Id)await edit(task('qa-c1-activate-page2','page.activate.v1',{pageId:page2Id}));
+  const staleProposal=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:task('qa-c1-stale-rename','page.rename.v1',{pageId:page2Id,name:'Should Not Apply'})}));
+  if(staleProposal?.status==='FAILED')throw new Error('STALE_PROPOSE_FAILED');
+  const staleProposalId=findField(staleProposal,'proposalId');if(!staleProposalId)throw new Error('STALE_PROPOSAL_ID_MISSING');
+  const page4Created=await edit(task('qa-c1-create-for-stale','page.create.v1',{}));
+  const page4Id=findField(page4Created,'pageId');if(!page4Id||app.doc.activePageId!==page4Id)throw new Error('STALE_MUTATION_CREATE_FAILED');
+  const staleApproved=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:staleProposalId}));
+  const staleCode=findField(staleApproved,'code')||JSON.stringify(staleApproved?.diagnostics||[]);
+  if(staleApproved?.status!=='FAILED'||!String(staleCode).includes('CHAT_EDIT_STALE_PAGE'))throw new Error('STALE_PAGE_NOT_REJECTED:'+String(staleCode));
+
+  await edit(task('qa-c1-delete-page4','page.delete.v1',{pageId:page4Id}));
+  if(app.doc.pages.length!==2)throw new Error('PAGE4_DELETE_FAILED');
+  await edit(task('qa-c1-delete-page2','page.delete.v1',{pageId:page2Id}));
+  if(app.doc.pages.length!==1||app.doc.pages[0].id!==page1Id)throw new Error('CLEANUP_TO_ONE_PAGE_FAILED');
+  const minPageCode=await proposeFailure(task('qa-c1-delete-last','page.delete.v1',{pageId:page1Id}),'CHAT_EDIT_MINIMUM_PAGE_REQUIRED');
+
+  const history=await Promise.resolve(api.tools.invoke('get_ink_history',{}));
+  if(history?.status==='FAILED')throw new Error('HISTORY_INSPECT_FAILED');
+  return {
+    passed:true,
+    operations,
+    initialPageId:page1Id,
+    createdPageId:page2Id,
+    duplicatedPageId:page3Id,
+    duplicateIdentity:{sourceLayerIds:[...sourceLayerIds],sourceObjectIds:[...sourceObjectIds],duplicateLayerIds:page3.layers.map(layer=>layer.id),duplicateObjectIds},
+    noOpCodes:{rename:renameNoOpCode,activate:activateNoOpCode},
+    staleCode:String(staleCode),
+    minimumPageCode:minPageCode,
+    finalPageCount:app.doc.pages.length,
+    finalActivePageId:app.doc.activePageId,
+    historyLabels:app.history.undoStack.map(entry=>entry.label)
+  };
 })()`;
 
 const RASTER_ADVANCED_INGEST_CASE = String.raw`(async()=>{
@@ -1601,7 +1722,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))))))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='page-ops-c1'?PAGE_OPS_C1_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     if(request.naturalMediaCacheReview===true) caseResult.naturalMediaCacheReview=await evaluate(cdp,sessionId,NATURAL_MEDIA_CACHE_REVIEW_CASE,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
@@ -1618,10 +1739,10 @@ async function run(){
 await run();
 // Fresh installed-browser process/profile for each required cross-capability regression.
 const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
-if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
+if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
   const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
   primary.regressions=[];
-  for(const caseName of (batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-advanced-ingest'?['raster-import-named-tool','raster-direct-paint-bucket-b3','raster-source-retouch-b3','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
+  for(const caseName of (batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-advanced-ingest'?['raster-import-named-tool','raster-direct-paint-bucket-b3','raster-source-retouch-b3','raster-stack-adjustment-b2']:batchRequest.case==='page-ops-c1'?['stroke-create-a2','page-paper-a3','raster-import-named-tool','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
     const prefix=path.resolve(process.argv[4])+'.'+caseName;
     await writeFile(prefix+'.request.json',JSON.stringify({...batchRequest,requestId:batchRequest.requestId+'-'+caseName,case:caseName,regressions:false,naturalMediaCacheReview:false}));
     const regression=spawn(process.execPath,[path.resolve(process.argv[1]),prefix+'.request.json',path.resolve(process.argv[3]),prefix+'.json',prefix+'.png'],{shell:false,stdio:'inherit'});
