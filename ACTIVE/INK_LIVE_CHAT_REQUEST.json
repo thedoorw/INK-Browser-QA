@@ -1,61 +1,79 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "local-paper-webgl-roughness-live-001",
+  "requestId": "clusterA-A4-targeted-eraser-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "698ce0ef781eeb5899ab5b84183d9a0d0eb8e6f5",
+  "expectedSourceSha": "3ab58f771f927f50d4548c40ca153834df08600d",
   "steps": [
     {
-      "id": "describePaper",
+      "id": "describeEraser",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "page.paper.set.v1"
+        "idOrToolName": "stroke.erase.circle.v1"
       }
     },
     {
-      "id": "brushPropose",
+      "id": "contextBefore",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 30
+      }
+    },
+    {
+      "id": "historyBefore",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "strokePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-webgl-roughness-brush",
+          "taskId": "live-a4-source-stroke-001",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
-            "kind": "brush",
-            "color": "#355d73",
-            "size": 78,
-            "opacity": 0.92,
-            "flow": 0.86,
-            "wetness": 0.9,
-            "grain": 0.34,
-            "bristle": 0.3,
-            "seed": 9182,
+            "objectId": "live-a4-source-stroke",
+            "name": "Live A4 Source Stroke",
+            "kind": "pencil",
+            "color": "#2c4456",
+            "size": 14,
+            "opacity": 0.9,
+            "smoothing": 0.2,
+            "pressure": 0.8,
+            "grain": 0.35,
             "samples": [
               {
-                "x": -145,
-                "y": -35,
-                "pressure": 0.3,
+                "x": -180,
+                "y": 0,
+                "pressure": 0.7,
                 "timestamp": 0
               },
               {
-                "x": -55,
-                "y": 55,
-                "pressure": 0.82,
-                "timestamp": 22
+                "x": -90,
+                "y": 0,
+                "pressure": 0.78,
+                "timestamp": 20
               },
               {
-                "x": 45,
-                "y": -5,
-                "pressure": 0.96,
-                "timestamp": 44
+                "x": 0,
+                "y": 0,
+                "pressure": 0.85,
+                "timestamp": 40
               },
               {
-                "x": 145,
-                "y": 42,
-                "pressure": 0.55,
-                "timestamp": 66
+                "x": 90,
+                "y": 0,
+                "pressure": 0.78,
+                "timestamp": 60
+              },
+              {
+                "x": 180,
+                "y": 0,
+                "pressure": 0.7,
+                "timestamp": 80
               }
             ]
           }
@@ -63,28 +81,28 @@
       }
     },
     {
-      "id": "brushApprove",
+      "id": "strokeApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "brushPropose.result.result.proposalId"
+          "$ref": "strokePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "brushExecute",
+      "id": "strokeExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "brushPropose.result.result.proposalId"
+          "$ref": "strokePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "brushApprove.result.result.approvalToken"
+          "$ref": "strokeApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewBefore",
+      "id": "previewBeforeErase",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -93,64 +111,70 @@
       }
     },
     {
-      "id": "roughnessPropose",
+      "id": "erasePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-webgl-roughness-paper",
-          "operation": "page.paper.set.v1",
-          "targets": [],
+          "taskId": "live-a4-erase-main-001",
+          "operation": "stroke.erase.circle.v1",
+          "targets": [
+            {
+              "pageId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.pageId"
+              },
+              "layerId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.layerId"
+              },
+              "objectId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.objectId"
+              }
+            }
+          ],
           "arguments": {
-            "key": "roughness",
-            "value": 0.95
+            "x": 0,
+            "y": 0,
+            "radius": 32
           }
         }
       }
     },
     {
-      "id": "roughnessApprove",
+      "id": "eraseApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "roughnessPropose.result.result.proposalId"
+          "$ref": "erasePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "roughnessExecute",
+      "id": "eraseExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "roughnessPropose.result.result.proposalId"
+          "$ref": "erasePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "roughnessApprove.result.result.approvalToken"
+          "$ref": "eraseApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewAfter",
-      "tool": "get_ink_preview",
+      "id": "contextAfterErase",
+      "tool": "get_ink_context",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": false
+        "maxObjects": 30
       }
     },
     {
-      "id": "historyAfter",
+      "id": "historyAfterErase",
       "tool": "get_ink_history",
       "input": {}
     },
     {
-      "id": "undoPaper",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "previewUndo",
+      "id": "previewAfterErase",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -159,23 +183,212 @@
       }
     },
     {
-      "id": "redoPaper",
-      "tool": "redo_ink",
+      "id": "undoErase",
+      "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewRedo",
+      "id": "contextUndoErase",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 30
+      }
+    },
+    {
+      "id": "previewUndoErase",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
         "maxDimension": 800,
         "background": false
+      }
+    },
+    {
+      "id": "redoErase",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "contextRedoErase",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 30
+      }
+    },
+    {
+      "id": "previewRedoErase",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
+    },
+    {
+      "id": "restoreSource",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "stalePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a4-stale-erase-001",
+          "operation": "stroke.erase.circle.v1",
+          "targets": [
+            {
+              "pageId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.pageId"
+              },
+              "layerId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.layerId"
+              },
+              "objectId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.objectId"
+              }
+            }
+          ],
+          "arguments": {
+            "x": 0,
+            "y": 0,
+            "radius": 24
+          }
+        }
+      }
+    },
+    {
+      "id": "translatePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a4-stale-mutation-001",
+          "operation": "object.translate.v1",
+          "targets": [
+            {
+              "pageId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.pageId"
+              },
+              "layerId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.layerId"
+              },
+              "objectId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.objectId"
+              }
+            }
+          ],
+          "arguments": {
+            "dx": 7,
+            "dy": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "translateApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "translatePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "translateExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "translatePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "translateApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "staleApprove",
+      "tool": "approve_ink_edit",
+      "allowFailure": true,
+      "input": {
+        "proposalId": {
+          "$ref": "stalePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "undoTranslate",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "noOpPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-a4-noop-001",
+          "operation": "stroke.erase.circle.v1",
+          "targets": [
+            {
+              "pageId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.pageId"
+              },
+              "layerId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.layerId"
+              },
+              "objectId": {
+                "$ref": "strokeExecute.result.result.controllerResult.resultRefs.0.objectId"
+              }
+            }
+          ],
+          "arguments": {
+            "x": 900,
+            "y": 900,
+            "radius": 10
+          }
+        }
+      }
+    },
+    {
+      "id": "noOpApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "noOpPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "noOpExecute",
+      "tool": "execute_ink_edit",
+      "allowFailure": true,
+      "input": {
+        "proposalId": {
+          "$ref": "noOpPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "noOpApprove.result.result.approvalToken"
+        }
       }
     },
     {
       "id": "historyFinal",
       "tool": "get_ink_history",
       "input": {}
+    },
+    {
+      "id": "previewFinal",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
     }
   ]
 }
