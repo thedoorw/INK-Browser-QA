@@ -1,0 +1,74 @@
+{
+  "schema": "INK_PWA_CACHE_FRESHNESS_INTEGRATION_REGRESSION_FAILURE",
+  "version": 1,
+  "status": "FAIL_STOP_SUPERVISOR",
+  "latestMainBase": "01aaabac7d2a7a3d006029a616e7eed40fd334f4",
+  "acceptedV3Candidate": "0ccfd4a729f16ff755921f5881fa0090e2745581",
+  "integrationBranch": "work/pwa-cache-freshness-integration-live-gate-001",
+  "integrationCandidate": "9b26ebc54842489c44ce433d62d17c82c77d924f",
+  "integrationTree": "7d47f0378b3dbeb4e7ed3f57dbc9380f8109156a",
+  "exactAcceptedCompositionProof": {
+    "githubTree": "71b74938dc04304485d9a37f83a487352d7f10e5",
+    "productTree": "f38506141209841c770d9acd3caea08eae528e32",
+    "qaTree": "dcdf0ce4c2f5ff10fec87e3e6a3318fb246a71ee",
+    "pagesIdentityBlob": "52dd7057396607451e898729dab76737302ba378",
+    "matchesAcceptedV3": true
+  },
+  "regressionProbe": {
+    "branch": "work/pwa-cache-freshness-integration-regression-001",
+    "commit": "eaf2132881084d7ad8134c178427c9f6051018de",
+    "qaOnlyChanges": [
+      "workflow push branch selector changed to the regression child branch",
+      "baseline worktree SHA changed from a6842e95a00ef440d47cc393394b9272d75f6082 to latest main 01aaabac7d2a7a3d006029a616e7eed40fd334f4"
+    ],
+    "productTreeUnchanged": true,
+    "runId": 37123474390,
+    "jobId": 111204016494,
+    "conclusion": "failure",
+    "artifactId": 11274172923,
+    "artifactDigest": "sha256:fa25c4a24d81eae398c348311a484a13f2649af6f9ead145d1957f9709d37f3f"
+  },
+  "passedSteps": [
+    "Verify local deterministic fallback identity",
+    "Source and syntax guards",
+    "Build with the same Jekyll Pages path",
+    "Verify publication-bound Jekyll revision",
+    "Verify post-integration gate wiring",
+    "Materialize latest-main product baseline"
+  ],
+  "failedStep": "Real Chromium lifecycle A",
+  "error": "timeout waiting for candidate worker identity: false",
+  "failureDiagnostics": {
+    "previousWorkerControlled": true,
+    "controller": {
+      "scriptURL": "service-worker.js",
+      "state": "activated"
+    },
+    "active": {
+      "scriptURL": "service-worker.js",
+      "state": "activated"
+    },
+    "waiting": {
+      "scriptURL": "service-worker.js",
+      "state": "installed"
+    },
+    "inkCaches": [],
+    "candidateServiceWorkerRequested": true,
+    "candidateBuildId": "src-9a29bbb8ab5444f8122e5e9d"
+  },
+  "priorAcceptedQualification": {
+    "runId": 37119509698,
+    "artifactId": 11272193852,
+    "conclusion": "success",
+    "localA": "PASS",
+    "localB": "PASS",
+    "sameProductTree": true
+  },
+  "disposition": {
+    "integrateMain": false,
+    "pagesPostIntegrationGateRun": false,
+    "pwaClosed": false,
+    "next": "SUPERVISOR"
+  },
+  "note": "The harness JSON baselineSource field remains hard-coded to a6842e95..., but the Actions log confirms the fresh regression materialized latest main 01aaabac... as its baseline."
+}
