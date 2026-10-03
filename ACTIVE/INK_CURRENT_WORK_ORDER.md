@@ -1,5 +1,9 @@
 # INK Current Work Order
 
+## CHAT / Core / Live authority appointment — 2026-10-03
+
+USER appointed the current Codex authority for CHAT capability / Core / Live supervision. See [scoped authority](INK_CHAT_CORE_LIVE_AUTHORITY_v1.0.md). Existing execution owners continue; UI authority and the work orders below remain independent. Acceptance requires exact candidate review, integration, deployment identity and Formal Live closure.
+
 ## Remaining whole-UI Photoshop fidelity — Supervisor release 2026-10-02
 
 This section supersedes the prior `NEXT = SUPERVISOR / USER DEPLOYED VISUAL CHECKPOINT` only for the bounded remaining whole-UI fidelity scope.
