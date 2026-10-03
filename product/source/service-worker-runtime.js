@@ -1,8 +1,11 @@
 importScripts('./build-identity.js');
 
 const PRODUCT_VERSION = '0.1';
-const BUILD_ID = self.INK_BUILD_ID;
-if (!BUILD_ID) throw new Error('INK generated build identity unavailable');
+const WORKER_URL = new URL(self.location.href);
+const QUERY_BUILD_ID = WORKER_URL.searchParams.get('build');
+const BUILD_ID = QUERY_BUILD_ID || self.INK_BUILD_ID;
+const PUBLISHED_REVISION = BUILD_ID?.startsWith('pages-') ? BUILD_ID.slice(6) : null;
+if (!BUILD_ID) throw new Error('INK build identity unavailable');
 const CACHE_PREFIX = 'ink-build-';
 const SHELL_CACHE = `${CACHE_PREFIX}${BUILD_ID}-shell`;
 const RUNTIME_CACHE = `${CACHE_PREFIX}${BUILD_ID}-runtime`;
@@ -255,7 +258,8 @@ self.addEventListener('message', event => {
       shellCache: SHELL_CACHE,
       runtimeCache: RUNTIME_CACHE,
       navigationStrategy: 'network-first',
-      assetStrategy: 'network-first'
+      assetStrategy: 'network-first',
+      publishedRevision: PUBLISHED_REVISION
     });
   }
   if (message.type === 'INK_CLEAR_RUNTIME_CACHE') event.waitUntil(caches.delete(RUNTIME_CACHE));
