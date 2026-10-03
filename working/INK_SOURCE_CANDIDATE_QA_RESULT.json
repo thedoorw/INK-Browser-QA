@@ -1,6 +1,480 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "status": "FAIL",
-  "error": "Runner result unavailable: ENOENT: no such file or directory, open '/home/runner/work/_temp/ink-source-candidate-result.json'"
+  "requestId": "clusterC-C3-snap-guides-candidate-002-regressions",
+  "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+  "case": "snap-guides-c3",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:42309/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "operations": [
+      "page.snap.set.v1",
+      "guide.add.v1",
+      "guide.move.v1",
+      "guide.remove.v1",
+      "guide.lock.set.v1",
+      "guide.visibility.set.v1"
+    ],
+    "baselineGrid": false,
+    "gridValue": true,
+    "staleCode": "CHAT_EDIT_STALE_PRECISION_LAYOUT",
+    "snapNoOp": "CHAT_EDIT_NO_OP",
+    "lockedMove": "CHAT_EDIT_GUIDE_LOCKED",
+    "hiddenNoOp": "CHAT_EDIT_NO_OP",
+    "snapEvidence": {
+      "delta": {
+        "x": 4,
+        "y": 0
+      },
+      "snapped": {
+        "x": true,
+        "y": false
+      },
+      "evidence": {
+        "x": {
+          "type": "guide",
+          "axis": "x",
+          "sourceRole": "start",
+          "targetRole": "guide",
+          "targetId": "qa-c3-guide-v",
+          "candidateKey": "guide:x:start:qa-c3-guide-v:guide",
+          "correction": 4,
+          "targetValue": 180,
+          "line": {
+            "axis": "x",
+            "value": 180
+          }
+        },
+        "y": null
+      },
+      "bypassed": false
+    },
+    "finalGuides": [],
+    "initialGuides": [],
+    "historyLabels": [
+      "新增參考線",
+      "移動參考線",
+      "鎖定參考線",
+      "鎖定參考線",
+      "顯示參考線",
+      "顯示參考線",
+      "刪除參考線"
+    ]
+  },
+  "status": "PASS",
+  "regressions": [
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-align-distribute-c2",
+      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "case": "align-distribute-c2",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:36265/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "object.align.v1",
+        "modes": [
+          "left",
+          "centerX",
+          "distributeX"
+        ],
+        "baseline": [
+          {
+            "x": 10,
+            "y": 19.999999999999996,
+            "w": 40,
+            "h": 30.000000000000004
+          },
+          {
+            "x": 90,
+            "y": 69.99999999999999,
+            "w": 50,
+            "h": 30.000000000000043
+          },
+          {
+            "x": 260,
+            "y": 125,
+            "w": 60,
+            "h": 30
+          }
+        ],
+        "left": [
+          {
+            "x": 10,
+            "y": 19.999999999999996,
+            "w": 40,
+            "h": 30.000000000000004
+          },
+          {
+            "x": 10,
+            "y": 69.99999999999999,
+            "w": 50,
+            "h": 30.000000000000043
+          },
+          {
+            "x": 10,
+            "y": 125,
+            "w": 60,
+            "h": 30
+          }
+        ],
+        "center": [
+          {
+            "x": 145,
+            "y": 19.999999999999996,
+            "w": 40,
+            "h": 30.000000000000004
+          },
+          {
+            "x": 140,
+            "y": 69.99999999999999,
+            "w": 50,
+            "h": 30.000000000000043
+          },
+          {
+            "x": 135,
+            "y": 125,
+            "w": 60,
+            "h": 30
+          }
+        ],
+        "distributed": [
+          {
+            "x": 10,
+            "y": 19.999999999999996,
+            "w": 40,
+            "h": 30.000000000000004
+          },
+          {
+            "x": 130,
+            "y": 69.99999999999999,
+            "w": 50,
+            "h": 30.000000000000043
+          },
+          {
+            "x": 260,
+            "y": 125,
+            "w": 60,
+            "h": 30
+          }
+        ],
+        "gaps": [
+          80,
+          80
+        ],
+        "selectionRestored": true,
+        "distributionGuard": "CHAT_EDIT_TARGET_COUNT_INVALID",
+        "historyLabel": "對齊物件"
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-page-ops-c1",
+      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "case": "page-ops-c1",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:42535/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operations": [
+          "page.create.v1",
+          "page.duplicate.v1",
+          "page.delete.v1",
+          "page.rename.v1",
+          "page.activate.v1"
+        ],
+        "initialPageId": "e001a179-9f6f-42ef-a0dd-9b985ebb02a2",
+        "createdPageId": "020a8b99-ae80-461d-b6eb-c945f83b4e43",
+        "duplicatedPageId": "8a246806-4776-42fc-b6e2-bc9220a6dafe",
+        "duplicateIdentity": {
+          "sourceLayerIds": [
+            "e862f7df-7857-4e50-ba4e-d1465b41023b"
+          ],
+          "sourceObjectIds": [
+            "qa-c1-page2-path"
+          ],
+          "duplicateLayerIds": [
+            "517717f8-0489-4c3f-9954-d1f8335691f3"
+          ],
+          "duplicateObjectIds": [
+            "0ccbba95-4271-4216-b17e-8edea2dac7b7"
+          ]
+        },
+        "noOpCodes": {
+          "rename": "CHAT_EDIT_NO_OP",
+          "activate": "CHAT_EDIT_NO_OP"
+        },
+        "staleCode": "CHAT_EDIT_STALE_PAGE",
+        "minimumPageCode": "CHAT_EDIT_MINIMUM_PAGE_REQUIRED",
+        "finalPageCount": 1,
+        "finalActivePageId": "e001a179-9f6f-42ef-a0dd-9b985ebb02a2",
+        "historyLabels": [
+          "新增頁面",
+          "CHAT create Path",
+          "重新命名頁面",
+          "複製頁面",
+          "刪除頁面",
+          "新增頁面",
+          "刪除頁面",
+          "刪除頁面"
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-page-paper-a3",
+      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "case": "page-paper-a3",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:41473/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "page.paper.set.v1",
+        "paperCoupledRunStrokeCount": 2,
+        "paperBefore": {
+          "type": "blank",
+          "color": "#fffef9",
+          "gridSize": 32,
+          "absorbency": 0.58,
+          "roughness": 0.42,
+          "fiberStrength": 0.36,
+          "fiberAngle": 0,
+          "sizing": 0.28,
+          "granulation": 0.32,
+          "seed": 1337,
+          "textureVisible": true
+        },
+        "paperAfter": {
+          "type": "blank",
+          "color": "#fffef9",
+          "gridSize": 32,
+          "absorbency": 0.05,
+          "roughness": 0.95,
+          "fiberStrength": 0.36,
+          "fiberAngle": 0,
+          "sizing": 0.28,
+          "granulation": 0.32,
+          "seed": 1337,
+          "textureVisible": true
+        },
+        "baseline": "fnv1a32:05b5d299",
+        "roughPreview": "fnv1a32:8a0d1881",
+        "changedPreview": "fnv1a32:400ea8b1",
+        "undoRedoRenderExact": true,
+        "scopedPaperEntries": [
+          {
+            "label": "調整畫布",
+            "captureMode": "scoped"
+          },
+          {
+            "label": "調整畫布",
+            "captureMode": "scoped"
+          }
+        ],
+        "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
+        "invalidCasesRejected": 5,
+        "noOpRejected": true,
+        "staleRejected": true,
+        "pendingPreviewRejected": true,
+        "naturalMedia": {
+          "preference": "auto",
+          "floraReferenceBackend": "canvas2d",
+          "activeBackend": "webgl2-multichannel",
+          "gpuAvailable": true,
+          "gpuState": "ready",
+          "forcedReason": null,
+          "fallbacks": 0,
+          "batchFallbacks": 0,
+          "mixingRuns": 0,
+          "webgl": {
+            "backend": "webgl2",
+            "drawCalls": 4,
+            "cacheHits": 9,
+            "cacheMisses": 4,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "vertices": 1272,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 2,
+            "lastError": null,
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "maxTextureUnits": 32,
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 4,
+              "releases": 2,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 1637668,
+              "budgetBytes": 100663296,
+              "usedBytes": 1637668,
+              "availableBytes": 99025628,
+              "utilization": 0.01626876990000407,
+              "resources": 2,
+              "byType": {
+                "raster-cache": 1637668
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelWebgl": {
+            "backend": "webgl2-multichannel",
+            "runs": 17,
+            "strokes": 32,
+            "drawCalls": 32,
+            "simulationPasses": 68,
+            "cacheHits": 18,
+            "cacheMisses": 17,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 6,
+            "lastError": null,
+            "targets": "312x212",
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxDrawBuffers": 8,
+              "maxColorAttachments": 8,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 44,
+              "releases": 36,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 4468380,
+              "budgetBytes": 167772160,
+              "usedBytes": 2991900,
+              "availableBytes": 164780260,
+              "utilization": 0.01783311367034912,
+              "resources": 8,
+              "byType": {
+                "raster-cache": 1933596,
+                "mrt-target": 1058304
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 0,
+            "strokes": 0,
+            "mixingStrokes": 0,
+            "stamps": 0,
+            "mixerStamps": 0,
+            "transportedPigment": 0,
+            "pixels": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0,
+            "preparations": 0,
+            "preparationSkips": 0,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 0
+          },
+          "canvas2d": {
+            "backend": "canvas2d",
+            "surfaceRevision": "WP8B-1",
+            "drawCalls": 0,
+            "frequencyVisibility": {
+              "low": true,
+              "mid": true,
+              "high": true
+            }
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C3-snap-guides-candidate-002-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "de4ad731c7bad36626080c32113dbc692113306e",
+      "case": "raster-stack-adjustment-b2",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:35927/?sourceCandidate=de4ad731c7bad36626080c32113dbc692113306e",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "image.adjustment.add.v1",
+        "adjustmentType": "brightnessContrast",
+        "objectId": "fb2780f5-92cc-4bca-94eb-9005e2a6650c",
+        "beforeFingerprint": "fnv1a32:ccca8b2d",
+        "afterFingerprint": "fnv1a32:8758ef68",
+        "beforeHash": "7883b22",
+        "afterHash": "9cd23fe",
+        "undoHash": "7883b22",
+        "redoHash": "9cd23fe",
+        "historyLabel": "CHAT add image adjustment: brightnessContrast",
+        "previewStatus": "COMPLETED",
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "controllerResult": {
+          "adjustmentCount": 1,
+          "resultRefs": [
+            {
+              "layerId": "c167abb1-083f-4f61-8ee1-af7ad44e15bf",
+              "objectId": "fb2780f5-92cc-4bca-94eb-9005e2a6650c",
+              "pageId": "4cd9750a-046d-4f09-9285-4f5e3e132b0c"
+            }
+          ],
+          "stackItemId": "adj_1x6gov0",
+          "stackItemType": "brightnessContrast"
+        }
+      },
+      "status": "PASS"
+    }
+  ]
 }
