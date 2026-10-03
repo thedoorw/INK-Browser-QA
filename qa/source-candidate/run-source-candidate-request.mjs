@@ -168,10 +168,12 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
   app.history.clear();
   const tools=api.tools.registry().map(item=>item.name);
-  for(const name of ['search_ink_library','get_ink_recipe_inventory','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']){
+  for(const name of ['get_ink_capabilities','search_ink_library','get_ink_recipe_inventory','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']){
     if(!tools.includes(name))throw new Error('MISSING_TOOL:'+name);
   }
-  const descriptorIds=(await invoke('discover_ink_capabilities',{}))?.result?.capabilities?.map?.(item=>item.id)||[];
+  const discovered=await invoke('get_ink_capabilities',{});
+  if(discovered?.status==='FAILED')throw new Error('CAPABILITY_DISCOVERY_FAILED:'+JSON.stringify(discovered.diagnostics||[]));
+  const descriptorIds=discovered?.result?.capabilities?.map?.(item=>item.id)||[];
   for(const id of ['material.template.create.v1','material.instance.create.v1','recipe.inventory','recipe.studio.execute.v1']){
     if(!descriptorIds.includes(id))throw new Error('MISSING_CAPABILITY:'+id);
   }
