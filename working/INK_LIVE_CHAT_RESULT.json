@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-RESULT",
   "version": 1,
-  "requestId": "clusterB-B3-local-retouch-live-002a-rerun2",
+  "requestId": "clusterB-B3-local-retouch-live-002b",
   "tool": null,
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "ca4bf6913efe1564eb572988a306120b3c008539",
@@ -22,8 +22,8 @@
           "version": 1,
           "action": "capability.describe",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -296,22 +296,22 @@
           "version": 1,
           "action": "raster.import",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "changedRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "historyReceipt": {
@@ -335,7 +335,7 @@
               "captureMode": "scoped",
               "label": "匯入可編輯影像",
               "objectIds": [
-                "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                "d75441d2-1dfe-4082-8160-8b9b31b25acc"
               ],
               "patchCount": 1,
               "storedBytes": 24005818,
@@ -353,7 +353,7 @@
           "outputHandles": [],
           "diagnostics": [],
           "result": {
-            "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
+            "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
             "rasterState": {
               "format": null,
               "height": 1448,
@@ -379,8 +379,8 @@
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -401,15 +401,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:48a0b192",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
+              "documentFingerprint": "fnv1a32:fbd7a41a",
+              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:78d21c61",
+              "handleId": "ink-output-v1:a59a4e9c",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -432,7 +432,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:78d21c61",
+            "handleId": "ink-output-v1:a59a4e9c",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -444,21 +444,21 @@
         }
       },
       {
-        "id": "stalePropose",
+        "id": "spongePropose",
         "tool": "propose_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.propose",
           "status": "PROPOSED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "createdRefs": [],
@@ -475,24 +475,25 @@
               "approvalToken": null,
               "approved": false,
               "expected": {
-                "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-                "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7/31d89897-68c9-4a37-9dd5-9b7721a0b5e1": "fnv1a32:d8013ee5"
+                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
                 }
               },
-              "proposalId": "proposal:live-b3-local-stale:38113b1f",
+              "proposalId": "proposal:live-b3-local-sponge:396be0d7",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:26dbf42a",
+              "stateFingerprint": "fnv1a32:2f70dee1",
               "task": {
                 "arguments": {
                   "hardness": 0.85,
+                  "mode": "saturate",
                   "radius": 48,
                   "strength": 0.8,
-                  "type": "burn",
+                  "type": "sponge",
                   "x": 543,
                   "y": 724
                 },
@@ -501,12 +502,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   }
                 ],
-                "taskId": "live-b3-local-stale",
+                "taskId": "live-b3-local-sponge",
                 "version": 1
               },
               "version": 1
@@ -515,92 +516,21 @@
         }
       },
       {
-        "id": "bucketPropose",
-        "tool": "propose_ink_edit",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "edit.propose",
-          "status": "PROPOSED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-          "revisionId": null,
-          "targetRefs": [
-            {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "action": "propose",
-            "ok": true,
-            "result": {
-              "approvalToken": null,
-              "approved": false,
-              "expected": {
-                "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-                "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-                "revisionId": null,
-                "targetFingerprints": {
-                  "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7/31d89897-68c9-4a37-9dd5-9b7721a0b5e1": "fnv1a32:d8013ee5"
-                }
-              },
-              "proposalId": "proposal:live-b3-local-intervening:40d504de",
-              "revisionId": null,
-              "schema": "INK-CHAT-EDIT-PROPOSAL",
-              "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:26dbf42a",
-              "task": {
-                "arguments": {
-                  "color": "#20b86a",
-                  "contiguous": true,
-                  "opacity": 1,
-                  "tolerance": 0,
-                  "x": 5,
-                  "y": 5
-                },
-                "expected": null,
-                "operation": "image.raster.paintBucket.v1",
-                "schema": "INK-CHAT-EDIT-TASK",
-                "targets": [
-                  {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-                  }
-                ],
-                "taskId": "live-b3-local-intervening",
-                "version": 1
-              },
-              "version": 1
-            }
-          }
-        }
-      },
-      {
-        "id": "bucketApprove",
+        "id": "spongeApprove",
         "tool": "approve_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.approve",
           "status": "APPROVED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "createdRefs": [],
@@ -614,41 +544,42 @@
             "action": "approve",
             "ok": true,
             "result": {
-              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-intervening:40d504de:1",
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-sponge:396be0d7:1",
               "approved": true,
               "expected": {
-                "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-                "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7/31d89897-68c9-4a37-9dd5-9b7721a0b5e1": "fnv1a32:d8013ee5"
+                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
                 }
               },
-              "proposalId": "proposal:live-b3-local-intervening:40d504de",
+              "proposalId": "proposal:live-b3-local-sponge:396be0d7",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "APPROVED",
-              "stateFingerprint": "fnv1a32:26dbf42a",
+              "stateFingerprint": "fnv1a32:2f70dee1",
               "task": {
                 "arguments": {
-                  "color": "#20b86a",
-                  "contiguous": true,
-                  "opacity": 1,
-                  "tolerance": 0,
-                  "x": 5,
-                  "y": 5
+                  "hardness": 0.85,
+                  "mode": "saturate",
+                  "radius": 48,
+                  "strength": 0.8,
+                  "type": "sponge",
+                  "x": 543,
+                  "y": 724
                 },
                 "expected": null,
-                "operation": "image.raster.paintBucket.v1",
+                "operation": "image.raster.localRetouch.v1",
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   }
                 ],
-                "taskId": "live-b3-local-intervening",
+                "taskId": "live-b3-local-sponge",
                 "version": 1
               },
               "version": 1
@@ -657,39 +588,39 @@
         }
       },
       {
-        "id": "bucketExecute",
+        "id": "spongeExecute",
         "tool": "execute_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.execute",
           "status": "EXECUTED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "createdRefs": [],
           "changedRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "historyReceipt": {
             "afterUndoCount": 2,
             "beforeUndoCount": 1,
-            "latestLabel": "CHAT raster Paint Bucket"
+            "latestLabel": "CHAT raster local retouch: sponge"
           },
           "revisionReceipt": {
             "currentRevisionId": null,
-            "documentFingerprint": "fnv1a32:309213fc",
+            "documentFingerprint": "fnv1a32:f55ef7ef",
             "inspectedRevisionId": null
           },
           "provenanceReceipt": null,
@@ -703,41 +634,32 @@
               "controllerResult": {
                 "changed": true,
                 "rasterEdit": {
-                  "changedChannels": 39,
-                  "changedPixels": 13,
-                  "color": "#20b86a",
-                  "contiguous": true,
-                  "opacity": 1,
-                  "selectionBounds": {
-                    "h": 5,
-                    "w": 5,
-                    "x": 2,
-                    "y": 2
-                  },
-                  "tolerance": 0,
-                  "type": "paintBucket",
-                  "x": 5,
-                  "y": 5
+                  "changedChannels": 20005,
+                  "changedPixels": 6989,
+                  "radius": 48,
+                  "type": "sponge",
+                  "x": 543,
+                  "y": 724
                 },
                 "resultRefs": [
                   {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   }
                 ]
               },
               "history": {
                 "afterUndoCount": 2,
                 "beforeUndoCount": 1,
-                "latestLabel": "CHAT raster Paint Bucket"
+                "latestLabel": "CHAT raster local retouch: sponge"
               },
               "ok": true,
-              "operation": "image.raster.paintBucket.v1",
-              "proposalId": "proposal:live-b3-local-intervening:40d504de",
+              "operation": "image.raster.localRetouch.v1",
+              "proposalId": "proposal:live-b3-local-sponge:396be0d7",
               "revision": {
                 "currentRevisionId": null,
-                "documentFingerprint": "fnv1a32:309213fc",
+                "documentFingerprint": "fnv1a32:f55ef7ef",
                 "inspectedRevisionId": null
               },
               "schema": "INK-CHAT-EDIT-RESULT",
@@ -745,11 +667,11 @@
               "targets": [
                 {
                   "ref": {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   },
-                  "stateFingerprint": "fnv1a32:8a3e31c2",
+                  "stateFingerprint": "fnv1a32:b56e9b89",
                   "worldMatrix": [
                     1,
                     0,
@@ -760,22 +682,22 @@
                   ]
                 }
               ],
-              "taskId": "live-b3-local-intervening",
+              "taskId": "live-b3-local-sponge",
               "version": 1
             }
           }
         }
       },
       {
-        "id": "staleApprove",
-        "tool": "approve_ink_edit",
+        "id": "spongePreview",
+        "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
-          "action": "edit.approve",
-          "status": "FAILED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -783,38 +705,71 @@
           "historyReceipt": null,
           "revisionReceipt": null,
           "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [
+          "outputHandles": [
             {
-              "code": "CHAT_EDIT_TARGET_STALE",
-              "details": {
-                "actual": "fnv1a32:8a3e31c2",
-                "expected": "fnv1a32:d8013ee5",
-                "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+              "background": {
+                "color": "#fffef9",
+                "included": true
               },
-              "phase": "approve"
+              "bounds": {
+                "h": 1496,
+                "w": 1134,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1138750,
+              "documentFingerprint": "fnv1a32:f55ef7ef",
+              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:c1293e80",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 800,
+                "width": 607
+              },
+              "renderFingerprint": "fnv1a32:f496a2ca",
+              "revisionId": null,
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
             }
           ],
+          "diagnostics": [],
           "result": {
-            "actual": "fnv1a32:8a3e31c2",
-            "code": "CHAT_EDIT_TARGET_STALE",
-            "expected": "fnv1a32:d8013ee5",
-            "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-            "ok": false,
-            "phase": "approve"
+            "bounds": {
+              "h": 1496,
+              "w": 1134,
+              "x": -24,
+              "y": -24
+            },
+            "byteLength": 1138750,
+            "handleId": "ink-output-v1:c1293e80",
+            "persistence": "NONE",
+            "pixelSize": {
+              "height": 800,
+              "width": 607
+            },
+            "scope": "content",
+            "transport": "INTERNAL_EPHEMERAL"
           }
         }
       },
       {
-        "id": "undoBucket",
+        "id": "spongeUndo",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -829,7 +784,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -837,10 +792,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -859,11 +814,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 20008,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014583,
+                "storedBytes": 28392212,
                 "undo": 1
               }
             },
@@ -877,7 +832,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -885,10 +840,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -907,11 +862,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 20008,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014583,
+                "storedBytes": 28392212,
                 "undo": 2
               }
             }
@@ -931,7 +886,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -939,10 +894,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -961,11 +916,11 @@
                   "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 20008,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014583,
+                "storedBytes": 28392212,
                 "undo": 1
               }
             }
@@ -973,15 +928,15 @@
         }
       },
       {
-        "id": "previewRestored",
+        "id": "spongeUndoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1002,15 +957,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:aaaf4db5",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
+              "documentFingerprint": "fnv1a32:17160bc9",
+              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:4df540c0",
+              "handleId": "ink-output-v1:94633a75",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -1033,7 +988,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:4df540c0",
+            "handleId": "ink-output-v1:94633a75",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1045,345 +1000,30 @@
         }
       },
       {
-        "id": "dodgePropose",
-        "tool": "propose_ink_edit",
+        "id": "spongeRedo",
+        "tool": "redo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
-          "action": "edit.propose",
-          "status": "PROPOSED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-          "revisionId": null,
-          "targetRefs": [
-            {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "action": "propose",
-            "ok": true,
-            "result": {
-              "approvalToken": null,
-              "approved": false,
-              "expected": {
-                "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-                "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-                "revisionId": null,
-                "targetFingerprints": {
-                  "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7/31d89897-68c9-4a37-9dd5-9b7721a0b5e1": "fnv1a32:d8013ee5"
-                }
-              },
-              "proposalId": "proposal:live-b3-local-dodge:79544d15",
-              "revisionId": null,
-              "schema": "INK-CHAT-EDIT-PROPOSAL",
-              "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:67c6cae8",
-              "task": {
-                "arguments": {
-                  "hardness": 0.85,
-                  "radius": 48,
-                  "strength": 0.8,
-                  "type": "dodge",
-                  "x": 543,
-                  "y": 724
-                },
-                "expected": null,
-                "operation": "image.raster.localRetouch.v1",
-                "schema": "INK-CHAT-EDIT-TASK",
-                "targets": [
-                  {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-                  }
-                ],
-                "taskId": "live-b3-local-dodge",
-                "version": 1
-              },
-              "version": 1
-            }
-          }
-        }
-      },
-      {
-        "id": "dodgeApprove",
-        "tool": "approve_ink_edit",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "edit.approve",
-          "status": "APPROVED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-          "revisionId": null,
-          "targetRefs": [
-            {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "action": "approve",
-            "ok": true,
-            "result": {
-              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-dodge:79544d15:2",
-              "approved": true,
-              "expected": {
-                "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-                "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-                "revisionId": null,
-                "targetFingerprints": {
-                  "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7/31d89897-68c9-4a37-9dd5-9b7721a0b5e1": "fnv1a32:d8013ee5"
-                }
-              },
-              "proposalId": "proposal:live-b3-local-dodge:79544d15",
-              "revisionId": null,
-              "schema": "INK-CHAT-EDIT-PROPOSAL",
-              "state": "APPROVED",
-              "stateFingerprint": "fnv1a32:67c6cae8",
-              "task": {
-                "arguments": {
-                  "hardness": 0.85,
-                  "radius": 48,
-                  "strength": 0.8,
-                  "type": "dodge",
-                  "x": 543,
-                  "y": 724
-                },
-                "expected": null,
-                "operation": "image.raster.localRetouch.v1",
-                "schema": "INK-CHAT-EDIT-TASK",
-                "targets": [
-                  {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-                  }
-                ],
-                "taskId": "live-b3-local-dodge",
-                "version": 1
-              },
-              "version": 1
-            }
-          }
-        }
-      },
-      {
-        "id": "dodgeExecute",
-        "tool": "execute_ink_edit",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "edit.execute",
-          "status": "EXECUTED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-          "revisionId": null,
-          "targetRefs": [
-            {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [
-            {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-            }
-          ],
-          "historyReceipt": {
-            "afterUndoCount": 2,
-            "beforeUndoCount": 1,
-            "latestLabel": "CHAT raster local retouch: dodge"
-          },
-          "revisionReceipt": {
-            "currentRevisionId": null,
-            "documentFingerprint": "fnv1a32:269e57c0",
-            "inspectedRevisionId": null
-          },
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "action": "execute",
-            "ok": true,
-            "result": {
-              "changed": true,
-              "controllerResult": {
-                "changed": true,
-                "rasterEdit": {
-                  "changedChannels": 21311,
-                  "changedPixels": 7191,
-                  "radius": 48,
-                  "type": "dodge",
-                  "x": 543,
-                  "y": 724
-                },
-                "resultRefs": [
-                  {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-                  }
-                ]
-              },
-              "history": {
-                "afterUndoCount": 2,
-                "beforeUndoCount": 1,
-                "latestLabel": "CHAT raster local retouch: dodge"
-              },
-              "ok": true,
-              "operation": "image.raster.localRetouch.v1",
-              "proposalId": "proposal:live-b3-local-dodge:79544d15",
-              "revision": {
-                "currentRevisionId": null,
-                "documentFingerprint": "fnv1a32:269e57c0",
-                "inspectedRevisionId": null
-              },
-              "schema": "INK-CHAT-EDIT-RESULT",
-              "state": "EXECUTED",
-              "targets": [
-                {
-                  "ref": {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
-                  },
-                  "stateFingerprint": "fnv1a32:0fc26864",
-                  "worldMatrix": [
-                    1,
-                    0,
-                    0,
-                    1,
-                    0,
-                    0
-                  ]
-                }
-              ],
-              "taskId": "live-b3-local-dodge",
-              "version": 1
-            }
-          }
-        }
-      },
-      {
-        "id": "dodgePreview",
-        "tool": "get_ink_preview",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "preview.capture",
+          "action": "history.redo",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-          "revisionId": null,
-          "targetRefs": [],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [
-            {
-              "background": {
-                "color": "#fffef9",
-                "included": true
-              },
-              "bounds": {
-                "h": 1496,
-                "w": 1134,
-                "x": -24,
-                "y": -24
-              },
-              "byteLength": 1137612,
-              "documentFingerprint": "fnv1a32:269e57c0",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
-              "format": "png",
-              "handleId": "ink-output-v1:64e84305",
-              "kind": "preview",
-              "mimeType": "image/png",
-              "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-              "persistence": "NONE",
-              "pixelSize": {
-                "height": 800,
-                "width": 607
-              },
-              "renderFingerprint": "fnv1a32:bc3c479d",
-              "revisionId": null,
-              "schema": "INK_OUTPUT_HANDLE",
-              "scope": "content",
-              "transport": "INTERNAL_EPHEMERAL",
-              "version": 1
-            }
-          ],
-          "diagnostics": [],
-          "result": {
-            "bounds": {
-              "h": 1496,
-              "w": 1134,
-              "x": -24,
-              "y": -24
-            },
-            "byteLength": 1137612,
-            "handleId": "ink-output-v1:64e84305",
-            "persistence": "NONE",
-            "pixelSize": {
-              "height": 800,
-              "width": 607
-            },
-            "scope": "content",
-            "transport": "INTERNAL_EPHEMERAL"
-          }
-        }
-      },
-      {
-        "id": "dodgeUndo",
-        "tool": "undo_ink",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "history.undo",
-          "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
           "changedRefs": [],
           "historyReceipt": {
             "after": {
-              "applied": 1,
-              "canRedo": true,
+              "applied": 2,
+              "canRedo": false,
               "canUndo": true,
               "entries": [
                 {
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1391,10 +1031,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -1409,29 +1049,29 @@
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
                   "inPlaceApplies": 2,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
-                "redo": 1,
+                "patchCount": 20008,
+                "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28685747,
-                "undo": 1
+                "storedBytes": 28392212,
+                "undo": 2
               }
             },
             "applied": true,
             "before": {
-              "applied": 2,
-              "canRedo": false,
+              "applied": 1,
+              "canRedo": true,
               "canUndo": true,
               "entries": [
                 {
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1439,10 +1079,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -1457,254 +1097,15 @@
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
                   "inPlaceApplies": 1,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
-                "redo": 0,
-                "scopedEntries": 2,
-                "scopedRatio": 1,
-                "storedBytes": 28685747,
-                "undo": 2
-              }
-            }
-          },
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "applied": true,
-            "history": {
-              "applied": 1,
-              "canRedo": true,
-              "canUndo": true,
-              "entries": [
-                {
-                  "captureMode": "scoped",
-                  "label": "匯入可編輯影像",
-                  "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
-                  ],
-                  "patchCount": 1,
-                  "storedBytes": 24005818,
-                  "targetCount": 1
-                },
-                {
-                  "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
-                  "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
-                  "targetCount": 1
-                }
-              ],
-              "limit": 30,
-              "pending": false,
-              "retainedCount": 2,
-              "stats": {
-                "capturedBytes": 24005755,
-                "fullEntries": 0,
-                "limit": 30,
-                "metrics": {
-                  "fullBegins": 0,
-                  "fullCapturedBytes": 0,
-                  "inPlaceApplies": 2,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
-                },
-                "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
+                "patchCount": 20008,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28685747,
-                "undo": 1
-              }
-            }
-          }
-        }
-      },
-      {
-        "id": "dodgeUndoPreview",
-        "tool": "get_ink_preview",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "preview.capture",
-          "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-          "revisionId": null,
-          "targetRefs": [],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [
-            {
-              "background": {
-                "color": "#fffef9",
-                "included": true
-              },
-              "bounds": {
-                "h": 1496,
-                "w": 1134,
-                "x": -24,
-                "y": -24
-              },
-              "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:f20ff305",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
-              "format": "png",
-              "handleId": "ink-output-v1:0abf3d5e",
-              "kind": "preview",
-              "mimeType": "image/png",
-              "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-              "persistence": "NONE",
-              "pixelSize": {
-                "height": 800,
-                "width": 607
-              },
-              "renderFingerprint": "fnv1a32:34d01658",
-              "revisionId": null,
-              "schema": "INK_OUTPUT_HANDLE",
-              "scope": "content",
-              "transport": "INTERNAL_EPHEMERAL",
-              "version": 1
-            }
-          ],
-          "diagnostics": [],
-          "result": {
-            "bounds": {
-              "h": 1496,
-              "w": 1134,
-              "x": -24,
-              "y": -24
-            },
-            "byteLength": 1138475,
-            "handleId": "ink-output-v1:0abf3d5e",
-            "persistence": "NONE",
-            "pixelSize": {
-              "height": 800,
-              "width": 607
-            },
-            "scope": "content",
-            "transport": "INTERNAL_EPHEMERAL"
-          }
-        }
-      },
-      {
-        "id": "dodgeRedo",
-        "tool": "redo_ink",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "history.redo",
-          "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
-          "revisionId": null,
-          "targetRefs": [],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": {
-            "after": {
-              "applied": 2,
-              "canRedo": false,
-              "canUndo": true,
-              "entries": [
-                {
-                  "captureMode": "scoped",
-                  "label": "匯入可編輯影像",
-                  "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
-                  ],
-                  "patchCount": 1,
-                  "storedBytes": 24005818,
-                  "targetCount": 1
-                },
-                {
-                  "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
-                  "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
-                  "targetCount": 1
-                }
-              ],
-              "limit": 30,
-              "pending": false,
-              "retainedCount": 2,
-              "stats": {
-                "capturedBytes": 24005755,
-                "fullEntries": 0,
-                "limit": 30,
-                "metrics": {
-                  "fullBegins": 0,
-                  "fullCapturedBytes": 0,
-                  "inPlaceApplies": 3,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
-                },
-                "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
-                "redo": 0,
-                "scopedEntries": 2,
-                "scopedRatio": 1,
-                "storedBytes": 28685747,
-                "undo": 2
-              }
-            },
-            "applied": true,
-            "before": {
-              "applied": 1,
-              "canRedo": true,
-              "canUndo": true,
-              "entries": [
-                {
-                  "captureMode": "scoped",
-                  "label": "匯入可編輯影像",
-                  "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
-                  ],
-                  "patchCount": 1,
-                  "storedBytes": 24005818,
-                  "targetCount": 1
-                },
-                {
-                  "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
-                  "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
-                  "targetCount": 1
-                }
-              ],
-              "limit": 30,
-              "pending": false,
-              "retainedCount": 2,
-              "stats": {
-                "capturedBytes": 24005755,
-                "fullEntries": 0,
-                "limit": 30,
-                "metrics": {
-                  "fullBegins": 0,
-                  "fullCapturedBytes": 0,
-                  "inPlaceApplies": 2,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
-                },
-                "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
-                "redo": 1,
-                "scopedEntries": 2,
-                "scopedRatio": 1,
-                "storedBytes": 28685747,
+                "storedBytes": 28392212,
                 "undo": 1
               }
             }
@@ -1724,7 +1125,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1732,10 +1133,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -1749,16 +1150,16 @@
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 3,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
+                  "inPlaceApplies": 2,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
+                "patchCount": 20008,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28685747,
+                "storedBytes": 28392212,
                 "undo": 2
               }
             }
@@ -1766,15 +1167,15 @@
         }
       },
       {
-        "id": "dodgeRedoPreview",
+        "id": "spongeRedoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1794,22 +1195,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1137612,
-              "documentFingerprint": "fnv1a32:269e57c0",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
+              "byteLength": 1138750,
+              "documentFingerprint": "fnv1a32:f55ef7ef",
+              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:64e84305",
+              "handleId": "ink-output-v1:c1293e80",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:bc3c479d",
+              "renderFingerprint": "fnv1a32:f496a2ca",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -1825,8 +1226,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1137612,
-            "handleId": "ink-output-v1:64e84305",
+            "byteLength": 1138750,
+            "handleId": "ink-output-v1:c1293e80",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1838,15 +1239,15 @@
         }
       },
       {
-        "id": "dodgeRestore",
+        "id": "spongeRestore",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1861,7 +1262,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1869,58 +1270,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
-                  "targetCount": 1
-                }
-              ],
-              "limit": 30,
-              "pending": false,
-              "retainedCount": 2,
-              "stats": {
-                "capturedBytes": 24005755,
-                "fullEntries": 0,
-                "limit": 30,
-                "metrics": {
-                  "fullBegins": 0,
-                  "fullCapturedBytes": 0,
-                  "inPlaceApplies": 4,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
-                },
-                "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
-                "redo": 1,
-                "scopedEntries": 2,
-                "scopedRatio": 1,
-                "storedBytes": 28685747,
-                "undo": 1
-              }
-            },
-            "applied": true,
-            "before": {
-              "applied": 2,
-              "canRedo": false,
-              "canUndo": true,
-              "entries": [
-                {
-                  "captureMode": "scoped",
-                  "label": "匯入可編輯影像",
-                  "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
-                  ],
-                  "patchCount": 1,
-                  "storedBytes": 24005818,
-                  "targetCount": 1
-                },
-                {
-                  "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
-                  "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -1935,15 +1288,63 @@
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
                   "inPlaceApplies": 3,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
+                "patchCount": 20008,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 28392212,
+                "undo": 1
+              }
+            },
+            "applied": true,
+            "before": {
+              "applied": 2,
+              "canRedo": false,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005818,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT raster local retouch: sponge",
+                  "objectIds": [],
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005755,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 2,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005755
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 20008,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28685747,
+                "storedBytes": 28392212,
                 "undo": 2
               }
             }
@@ -1963,7 +1364,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -1971,10 +1372,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: dodge",
+                  "label": "CHAT raster local retouch: sponge",
                   "objectIds": [],
-                  "patchCount": 21313,
-                  "storedBytes": 4679929,
+                  "patchCount": 20007,
+                  "storedBytes": 4386394,
                   "targetCount": 1
                 }
               ],
@@ -1988,16 +1389,16 @@
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 4,
-                  "scopedBegins": 3,
-                  "scopedCapturedBytes": 48011442
+                  "inPlaceApplies": 3,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005755
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21314,
+                "patchCount": 20008,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28685747,
+                "storedBytes": 28392212,
                 "undo": 1
               }
             }
@@ -2005,21 +1406,21 @@
         }
       },
       {
-        "id": "burnPropose",
+        "id": "localBlurPropose",
         "tool": "propose_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.propose",
           "status": "PROPOSED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "createdRefs": [],
@@ -2036,24 +1437,25 @@
               "approvalToken": null,
               "approved": false,
               "expected": {
-                "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-                "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7/31d89897-68c9-4a37-9dd5-9b7721a0b5e1": "fnv1a32:d8013ee5"
+                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
                 }
               },
-              "proposalId": "proposal:live-b3-local-burn:57b8eb1f",
+              "proposalId": "proposal:live-b3-local-blur:0ba563b5",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:ce29c2d6",
+              "stateFingerprint": "fnv1a32:c312065b",
               "task": {
                 "arguments": {
                   "hardness": 0.85,
+                  "kernelRadius": 3,
                   "radius": 48,
-                  "strength": 0.8,
-                  "type": "burn",
+                  "strength": 1,
+                  "type": "localBlur",
                   "x": 543,
                   "y": 724
                 },
@@ -2062,12 +1464,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   }
                 ],
-                "taskId": "live-b3-local-burn",
+                "taskId": "live-b3-local-blur",
                 "version": 1
               },
               "version": 1
@@ -2076,21 +1478,21 @@
         }
       },
       {
-        "id": "burnApprove",
+        "id": "localBlurApprove",
         "tool": "approve_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.approve",
           "status": "APPROVED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "createdRefs": [],
@@ -2104,27 +1506,28 @@
             "action": "approve",
             "ok": true,
             "result": {
-              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-burn:57b8eb1f:3",
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:live-b3-local-blur:0ba563b5:2",
               "approved": true,
               "expected": {
-                "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-                "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+                "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+                "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7/31d89897-68c9-4a37-9dd5-9b7721a0b5e1": "fnv1a32:d8013ee5"
+                  "bd81b27b-6958-4be5-a116-013113f4cee3/d75441d2-1dfe-4082-8160-8b9b31b25acc": "fnv1a32:82edc32e"
                 }
               },
-              "proposalId": "proposal:live-b3-local-burn:57b8eb1f",
+              "proposalId": "proposal:live-b3-local-blur:0ba563b5",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "APPROVED",
-              "stateFingerprint": "fnv1a32:ce29c2d6",
+              "stateFingerprint": "fnv1a32:c312065b",
               "task": {
                 "arguments": {
                   "hardness": 0.85,
+                  "kernelRadius": 3,
                   "radius": 48,
-                  "strength": 0.8,
-                  "type": "burn",
+                  "strength": 1,
+                  "type": "localBlur",
                   "x": 543,
                   "y": 724
                 },
@@ -2133,12 +1536,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   }
                 ],
-                "taskId": "live-b3-local-burn",
+                "taskId": "live-b3-local-blur",
                 "version": 1
               },
               "version": 1
@@ -2147,39 +1550,39 @@
         }
       },
       {
-        "id": "burnExecute",
+        "id": "localBlurExecute",
         "tool": "execute_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.execute",
           "status": "EXECUTED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "createdRefs": [],
           "changedRefs": [
             {
-              "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-              "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+              "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+              "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
             }
           ],
           "historyReceipt": {
             "afterUndoCount": 2,
             "beforeUndoCount": 1,
-            "latestLabel": "CHAT raster local retouch: burn"
+            "latestLabel": "CHAT raster local retouch: localBlur"
           },
           "revisionReceipt": {
             "currentRevisionId": null,
-            "documentFingerprint": "fnv1a32:b49e7952",
+            "documentFingerprint": "fnv1a32:2047b20f",
             "inspectedRevisionId": null
           },
           "provenanceReceipt": null,
@@ -2193,32 +1596,32 @@
               "controllerResult": {
                 "changed": true,
                 "rasterEdit": {
-                  "changedChannels": 21620,
-                  "changedPixels": 7209,
+                  "changedChannels": 20733,
+                  "changedPixels": 7127,
                   "radius": 48,
-                  "type": "burn",
+                  "type": "localBlur",
                   "x": 543,
                   "y": 724
                 },
                 "resultRefs": [
                   {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   }
                 ]
               },
               "history": {
                 "afterUndoCount": 2,
                 "beforeUndoCount": 1,
-                "latestLabel": "CHAT raster local retouch: burn"
+                "latestLabel": "CHAT raster local retouch: localBlur"
               },
               "ok": true,
               "operation": "image.raster.localRetouch.v1",
-              "proposalId": "proposal:live-b3-local-burn:57b8eb1f",
+              "proposalId": "proposal:live-b3-local-blur:0ba563b5",
               "revision": {
                 "currentRevisionId": null,
-                "documentFingerprint": "fnv1a32:b49e7952",
+                "documentFingerprint": "fnv1a32:2047b20f",
                 "inspectedRevisionId": null
               },
               "schema": "INK-CHAT-EDIT-RESULT",
@@ -2226,11 +1629,11 @@
               "targets": [
                 {
                   "ref": {
-                    "layerId": "4c5fa523-c67a-4452-8e01-a03f2a6eb7d7",
-                    "objectId": "31d89897-68c9-4a37-9dd5-9b7721a0b5e1",
-                    "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2"
+                    "layerId": "bd81b27b-6958-4be5-a116-013113f4cee3",
+                    "objectId": "d75441d2-1dfe-4082-8160-8b9b31b25acc",
+                    "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162"
                   },
-                  "stateFingerprint": "fnv1a32:eedf98a9",
+                  "stateFingerprint": "fnv1a32:45f2ce05",
                   "worldMatrix": [
                     1,
                     0,
@@ -2241,22 +1644,22 @@
                   ]
                 }
               ],
-              "taskId": "live-b3-local-burn",
+              "taskId": "live-b3-local-blur",
               "version": 1
             }
           }
         }
       },
       {
-        "id": "burnPreview",
+        "id": "localBlurPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2276,22 +1679,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1137569,
-              "documentFingerprint": "fnv1a32:b49e7952",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
+              "byteLength": 1137900,
+              "documentFingerprint": "fnv1a32:2047b20f",
+              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:ac1d377f",
+              "handleId": "ink-output-v1:b3b2be52",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:e1e479ef",
+              "renderFingerprint": "fnv1a32:0aa47f36",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -2307,8 +1710,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1137569,
-            "handleId": "ink-output-v1:ac1d377f",
+            "byteLength": 1137900,
+            "handleId": "ink-output-v1:b3b2be52",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -2320,15 +1723,15 @@
         }
       },
       {
-        "id": "burnUndo",
+        "id": "localBlurUndo",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2343,7 +1746,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2351,58 +1754,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
+                  "label": "CHAT raster local retouch: localBlur",
                   "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
-                  "targetCount": 1
-                }
-              ],
-              "limit": 30,
-              "pending": false,
-              "retainedCount": 2,
-              "stats": {
-                "capturedBytes": 24005755,
-                "fullEntries": 0,
-                "limit": 30,
-                "metrics": {
-                  "fullBegins": 0,
-                  "fullCapturedBytes": 0,
-                  "inPlaceApplies": 5,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
-                },
-                "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
-                "redo": 1,
-                "scopedEntries": 2,
-                "scopedRatio": 1,
-                "storedBytes": 28734133,
-                "undo": 1
-              }
-            },
-            "applied": true,
-            "before": {
-              "applied": 2,
-              "canRedo": false,
-              "canUndo": true,
-              "entries": [
-                {
-                  "captureMode": "scoped",
-                  "label": "匯入可編輯影像",
-                  "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
-                  ],
-                  "patchCount": 1,
-                  "storedBytes": 24005818,
-                  "targetCount": 1
-                },
-                {
-                  "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
-                  "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
                   "targetCount": 1
                 }
               ],
@@ -2417,15 +1772,63 @@
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
                   "inPlaceApplies": 4,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
+                "patchCount": 20736,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 28552323,
+                "undo": 1
+              }
+            },
+            "applied": true,
+            "before": {
+              "applied": 2,
+              "canRedo": false,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005818,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT raster local retouch: localBlur",
+                  "objectIds": [],
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005755,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 3,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 20736,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28734133,
+                "storedBytes": 28552323,
                 "undo": 2
               }
             }
@@ -2445,7 +1848,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2453,10 +1856,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
+                  "label": "CHAT raster local retouch: localBlur",
                   "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
                   "targetCount": 1
                 }
               ],
@@ -2470,16 +1873,16 @@
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 5,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
+                  "inPlaceApplies": 4,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
+                "patchCount": 20736,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28734133,
+                "storedBytes": 28552323,
                 "undo": 1
               }
             }
@@ -2487,15 +1890,15 @@
         }
       },
       {
-        "id": "burnUndoPreview",
+        "id": "localBlurUndoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2516,15 +1919,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:ea2340d3",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
+              "documentFingerprint": "fnv1a32:8c39863c",
+              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:48cfdb24",
+              "handleId": "ink-output-v1:f432ab85",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -2547,7 +1950,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:48cfdb24",
+            "handleId": "ink-output-v1:f432ab85",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -2559,15 +1962,15 @@
         }
       },
       {
-        "id": "burnRedo",
+        "id": "localBlurRedo",
         "tool": "redo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.redo",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2582,7 +1985,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2590,58 +1993,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
+                  "label": "CHAT raster local retouch: localBlur",
                   "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
-                  "targetCount": 1
-                }
-              ],
-              "limit": 30,
-              "pending": false,
-              "retainedCount": 2,
-              "stats": {
-                "capturedBytes": 24005755,
-                "fullEntries": 0,
-                "limit": 30,
-                "metrics": {
-                  "fullBegins": 0,
-                  "fullCapturedBytes": 0,
-                  "inPlaceApplies": 6,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
-                },
-                "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
-                "redo": 0,
-                "scopedEntries": 2,
-                "scopedRatio": 1,
-                "storedBytes": 28734133,
-                "undo": 2
-              }
-            },
-            "applied": true,
-            "before": {
-              "applied": 1,
-              "canRedo": true,
-              "canUndo": true,
-              "entries": [
-                {
-                  "captureMode": "scoped",
-                  "label": "匯入可編輯影像",
-                  "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
-                  ],
-                  "patchCount": 1,
-                  "storedBytes": 24005818,
-                  "targetCount": 1
-                },
-                {
-                  "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
-                  "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
                   "targetCount": 1
                 }
               ],
@@ -2656,15 +2011,63 @@
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
                   "inPlaceApplies": 5,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
+                "patchCount": 20736,
+                "redo": 0,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 28552323,
+                "undo": 2
+              }
+            },
+            "applied": true,
+            "before": {
+              "applied": 1,
+              "canRedo": true,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005818,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT raster local retouch: localBlur",
+                  "objectIds": [],
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005755,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 4,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 20736,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28734133,
+                "storedBytes": 28552323,
                 "undo": 1
               }
             }
@@ -2684,7 +2087,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2692,10 +2095,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
+                  "label": "CHAT raster local retouch: localBlur",
                   "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
                   "targetCount": 1
                 }
               ],
@@ -2709,16 +2112,16 @@
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 6,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
+                  "inPlaceApplies": 5,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
+                "patchCount": 20736,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28734133,
+                "storedBytes": 28552323,
                 "undo": 2
               }
             }
@@ -2726,15 +2129,15 @@
         }
       },
       {
-        "id": "burnRedoPreview",
+        "id": "localBlurRedoPreview",
         "tool": "get_ink_preview",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2754,22 +2157,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1137569,
-              "documentFingerprint": "fnv1a32:b49e7952",
-              "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
+              "byteLength": 1137900,
+              "documentFingerprint": "fnv1a32:2047b20f",
+              "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:ac1d377f",
+              "handleId": "ink-output-v1:b3b2be52",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+              "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:e1e479ef",
+              "renderFingerprint": "fnv1a32:0aa47f36",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -2785,8 +2188,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1137569,
-            "handleId": "ink-output-v1:ac1d377f",
+            "byteLength": 1137900,
+            "handleId": "ink-output-v1:b3b2be52",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -2798,15 +2201,15 @@
         }
       },
       {
-        "id": "burnRestore",
+        "id": "localBlurRestore",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2821,7 +2224,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2829,58 +2232,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
+                  "label": "CHAT raster local retouch: localBlur",
                   "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
-                  "targetCount": 1
-                }
-              ],
-              "limit": 30,
-              "pending": false,
-              "retainedCount": 2,
-              "stats": {
-                "capturedBytes": 24005755,
-                "fullEntries": 0,
-                "limit": 30,
-                "metrics": {
-                  "fullBegins": 0,
-                  "fullCapturedBytes": 0,
-                  "inPlaceApplies": 7,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
-                },
-                "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
-                "redo": 1,
-                "scopedEntries": 2,
-                "scopedRatio": 1,
-                "storedBytes": 28734133,
-                "undo": 1
-              }
-            },
-            "applied": true,
-            "before": {
-              "applied": 2,
-              "canRedo": false,
-              "canUndo": true,
-              "entries": [
-                {
-                  "captureMode": "scoped",
-                  "label": "匯入可編輯影像",
-                  "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
-                  ],
-                  "patchCount": 1,
-                  "storedBytes": 24005818,
-                  "targetCount": 1
-                },
-                {
-                  "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
-                  "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
                   "targetCount": 1
                 }
               ],
@@ -2895,15 +2250,63 @@
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
                   "inPlaceApplies": 6,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
+                "patchCount": 20736,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 28552323,
+                "undo": 1
+              }
+            },
+            "applied": true,
+            "before": {
+              "applied": 2,
+              "canRedo": false,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005818,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT raster local retouch: localBlur",
+                  "objectIds": [],
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005755,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 5,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 20736,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28734133,
+                "storedBytes": 28552323,
                 "undo": 2
               }
             }
@@ -2923,7 +2326,7 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                    "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                   ],
                   "patchCount": 1,
                   "storedBytes": 24005818,
@@ -2931,10 +2334,10 @@
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster local retouch: burn",
+                  "label": "CHAT raster local retouch: localBlur",
                   "objectIds": [],
-                  "patchCount": 21622,
-                  "storedBytes": 4728315,
+                  "patchCount": 20735,
+                  "storedBytes": 4546505,
                   "targetCount": 1
                 }
               ],
@@ -2948,16 +2351,16 @@
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 7,
-                  "scopedBegins": 4,
-                  "scopedCapturedBytes": 72017129
+                  "inPlaceApplies": 6,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011442
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 21623,
+                "patchCount": 20736,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 28734133,
+                "storedBytes": 28552323,
                 "undo": 1
               }
             }
@@ -2972,8 +2375,8 @@
           "version": 1,
           "action": "history.inspect",
           "status": "COMPLETED",
-          "documentId": "71a9d333-ede7-48a2-8f0c-27e19b299261",
-          "pageId": "579f19dd-8ded-4e9f-9a30-1851e7f458c2",
+          "documentId": "fd75b628-1468-41d6-bbba-8df2c12b003a",
+          "pageId": "efbaa0e3-f67c-4365-afa7-2daadca21162",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -2992,7 +2395,7 @@
                 "captureMode": "scoped",
                 "label": "匯入可編輯影像",
                 "objectIds": [
-                  "31d89897-68c9-4a37-9dd5-9b7721a0b5e1"
+                  "d75441d2-1dfe-4082-8160-8b9b31b25acc"
                 ],
                 "patchCount": 1,
                 "storedBytes": 24005818,
@@ -3000,10 +2403,10 @@
               },
               {
                 "captureMode": "scoped",
-                "label": "CHAT raster local retouch: burn",
+                "label": "CHAT raster local retouch: localBlur",
                 "objectIds": [],
-                "patchCount": 21622,
-                "storedBytes": 4728315,
+                "patchCount": 20735,
+                "storedBytes": 4546505,
                 "targetCount": 1
               }
             ],
@@ -3017,16 +2420,16 @@
               "metrics": {
                 "fullBegins": 0,
                 "fullCapturedBytes": 0,
-                "inPlaceApplies": 7,
-                "scopedBegins": 4,
-                "scopedCapturedBytes": 72017129
+                "inPlaceApplies": 6,
+                "scopedBegins": 3,
+                "scopedCapturedBytes": 48011442
               },
               "mode": "hybrid-target-scoped-id-aware-patches",
-              "patchCount": 21623,
+              "patchCount": 20736,
               "redo": 1,
               "scopedEntries": 2,
               "scopedRatio": 1,
-              "storedBytes": 28734133,
+              "storedBytes": 28552323,
               "undo": 1
             }
           }
