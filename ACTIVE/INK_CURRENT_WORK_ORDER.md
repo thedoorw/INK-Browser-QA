@@ -1,5 +1,27 @@
 # INK Current Work Order
 
+## PWA / Cache Freshness — Integration + Live Gate ACTIVE 2026-10-03
+
+Dispatch:
+- `ACTIVE/INK_PWA_CACHE_FRESHNESS_INTEGRATION_LIVE_GATE_DISPATCH_v1.0.md`
+
+Accepted source:
+- branch `work/pwa-cache-freshness-supervisor-gates-003`
+- exact candidate `0ccfd4a729f16ff755921f5881fa0090e2745581`
+
+Required sequence:
+```text
+latest main
+→ bounded PWA v3 integration
+→ focused regression
+→ main integration
+→ exact GitHub Pages publication
+→ actual normal open/F5 + close/reopen + offline gate
+→ Supervisor closure
+```
+
+No PWA redesign unless the actual deployed live gate fails with reproducible evidence.
+
 ## PWA / Cache Freshness — Supervisor v2 accepted for bounded integration — 2026-10-03
 
 Reviewed branch:
