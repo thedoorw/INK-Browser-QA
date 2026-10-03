@@ -36,6 +36,15 @@ test('runtime worker is online-first with build-scoped offline fallback', async 
   assert.doesNotMatch(source, /if \(cached\) return cached;/);
 });
 
+test('application runtime exposes the same generated build identity', async () => {
+  const config = await read('product/source/src/config.js');
+  const template = await read('product/source/shell.template.html');
+  const web = await read('product/source/index.html');
+  assert.match(config, /BUILD_ID = globalThis\.INK_BUILD_ID \|\| 'ink-build-unidentified'/);
+  assert.match(template, /<script src="build-identity\.js"><\/script>/);
+  assert.match(web, /<script src="build-identity\.js"><\/script>/);
+});
+
 test('update manager targets runtime worker and auto-activates updates', async () => {
   const source = await read('product/source/src/pwa/update-manager.js');
   const appSource = await read('product/source/src/ink.js');
