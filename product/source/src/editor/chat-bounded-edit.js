@@ -1646,6 +1646,7 @@ function executeStrokeEraseCircleTask(app, task) {
 
   const resultRefs = [];
   const removedRefs = [];
+  let fragmentCount = 0;
   app.history.pushScoped('CHAT erase Stroke', structuralHistoryPaths(app, foundItems), () => {
     for (let index = 0; index < prepared.length; index += 1) {
       const { found, result } = prepared[index];
@@ -1662,6 +1663,7 @@ function executeStrokeEraseCircleTask(app, task) {
       }
       found.parentArray.splice(objectIndex, 1, ...result.fragments);
       removedRefs.push(clone(originalRef));
+      fragmentCount += result.fragments.length;
       for (const fragment of result.fragments) {
         resultRefs.push({ pageId: page.id, layerId: found.layer.id, objectId: fragment.id });
       }
@@ -1677,7 +1679,7 @@ function executeStrokeEraseCircleTask(app, task) {
     removedRefs,
     resultRefs,
     erasedTargetCount: removedRefs.length,
-    fragmentCount: resultRefs.length,
+    fragmentCount,
     circle: { x: args.x, y: args.y, radius: args.radius }
   };
 }
@@ -2474,8 +2476,8 @@ ChatBoundedEditController.prototype.execute = function execute(proposalId, appro
   const resultRefs = Array.isArray(controllerResult?.resultRefs) ? controllerResult.resultRefs : null;
   const afterTargets = resultRefs ? snapshotRefs(this.app, resultRefs) : snapshotTaskTargets(this.app, proposal.task);
   const afterUndoCount = this.app.history?.undoStack?.length ?? null;
-  const changed = typeof controllerResult?.changed === 'boolean'
-    ? controllerResult.changed
+  const changed = proposal.task.operation === 'stroke.erase.circle.v1'
+    ? controllerResult?.changed === true
     : (resultRefs ? resultRefs.length > 0 : targetSnapshotsChanged(beforeTargets, afterTargets));
   const latestHistory = this.app.history?.undoStack?.at?.(-1) || null;
 
