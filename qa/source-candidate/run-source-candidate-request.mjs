@@ -126,7 +126,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -647,6 +647,85 @@ const RASTER_NAMED_TOOL_CASE = String.raw`(async()=>{
   const restored=flatObjects().find(item=>item.id===object.id);
   if(redone?.status==='FAILED'||!restored?.rasterState?.colorRaster) throw new Error('RASTER_REDO_FAILED');
   return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
+})()`;
+
+const ALIGN_DISTRIBUTE_C2_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke)throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','undo_ink','redo_ink'])if(!toolNames.includes(name))throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+  const edit=async task=>{
+    const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));if(p?.status==='FAILED')throw new Error('PROPOSE:'+JSON.stringify(p.diagnostics||[]));
+    const proposalId=p.result?.proposalId;if(!proposalId)throw new Error('PROPOSAL_ID_MISSING');
+    const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));if(a?.status==='FAILED')throw new Error('APPROVE:'+JSON.stringify(a.diagnostics||[]));
+    const token=a.result?.approvalToken;if(!token)throw new Error('TOKEN_MISSING');
+    const e=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken:token}));if(e?.status==='FAILED')throw new Error('EXECUTE:'+JSON.stringify(e.diagnostics||[]));
+    return e;
+  };
+  const create=async(id,x,y,w,h)=>{
+    const e=await edit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-c2-create-'+id,operation:'path.create.v1',targets:[],arguments:{objectId:id,name:id,shape:'rectangle',x,y,width:w,height:h,fill:'#d4878b',stroke:'#49383b',strokeWidth:2,opacity:1}});
+    return e.result.controllerResult.resultRefs[0];
+  };
+  const refs=[
+    await create('qa-c2-a',10,20,40,30),
+    await create('qa-c2-b',90,70,50,30),
+    await create('qa-c2-c',260,125,60,30)
+  ];
+  const bounds=()=>refs.map(ref=>{const f=app.findObject({layerId:ref.layerId,objectId:ref.objectId});if(!f)throw new Error('TARGET_MISSING:'+ref.objectId);return app.renderer.objectWorldBounds(f.object,f.parentWorldMatrix);});
+  const close=(a,b,eps=.001)=>Math.abs(a-b)<=eps;
+  const sameBounds=(a,b)=>a.length===b.length&&a.every((x,i)=>['x','y','w','h'].every(k=>close(x[k],b[i][k])));
+  const align=async(mode,targets=refs)=>{
+    return edit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-c2-'+mode+'-'+targets.length,operation:'object.align.v1',targets,arguments:{mode}});
+  };
+
+  const descriptor=await Promise.resolve(api.tools.invoke('describe_ink_capability',{idOrToolName:'object.align.v1'}));
+  if(descriptor?.status==='FAILED'||!JSON.stringify(descriptor).includes('distributeX'))throw new Error('ALIGN_DESCRIPTOR_INVALID');
+
+  app.history.clear();
+  app.selection=[{layerId:refs[2].layerId,objectId:refs[2].objectId}];
+  app.refreshSelectionUI?.();
+  const selectionBefore=JSON.stringify(app.selection);
+  const baseline=bounds();
+
+  const leftResult=await align('left');
+  const left=bounds();
+  if(!left.every(b=>close(b.x,left[0].x)))throw new Error('LEFT_ALIGN_FAILED:'+JSON.stringify(left));
+  if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_LEFT');
+  if(leftResult.result.controllerResult.mode!=='left'||leftResult.result.controllerResult.changedTargetCount<1)throw new Error('LEFT_RECEIPT_INVALID');
+  if(app.history.undoStack.at(-1)?.label!=='對齊物件')throw new Error('LEFT_HISTORY_LABEL_INVALID');
+  await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('LEFT_UNDO_MISMATCH');
+  await Promise.resolve(api.tools.invoke('redo_ink',{}));if(!sameBounds(bounds(),left))throw new Error('LEFT_REDO_MISMATCH');
+  await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('LEFT_RESET_MISMATCH');
+
+  const centerResult=await align('centerX');
+  const center=bounds(),centers=center.map(b=>b.x+b.w/2);
+  if(!centers.every(v=>close(v,centers[0])))throw new Error('CENTERX_ALIGN_FAILED:'+JSON.stringify(center));
+  if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_CENTER');
+  if(centerResult.result.controllerResult.mode!=='centerX')throw new Error('CENTER_RECEIPT_INVALID');
+  await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('CENTER_UNDO_MISMATCH');
+
+  const distributeResult=await align('distributeX');
+  const distributed=bounds().sort((a,b)=>a.x-b.x);
+  const gap1=distributed[1].x-(distributed[0].x+distributed[0].w);
+  const gap2=distributed[2].x-(distributed[1].x+distributed[1].w);
+  if(!close(gap1,gap2,.01))throw new Error('DISTRIBUTEX_GAP_MISMATCH:'+gap1+':'+gap2);
+  if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_DISTRIBUTE');
+  if(distributeResult.result.controllerResult.mode!=='distributeX')throw new Error('DISTRIBUTE_RECEIPT_INVALID');
+  const distributedExact=bounds();
+  await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('DISTRIBUTE_UNDO_MISMATCH');
+  await Promise.resolve(api.tools.invoke('redo_ink',{}));if(!sameBounds(bounds(),distributedExact))throw new Error('DISTRIBUTE_REDO_MISMATCH');
+
+  const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:{schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-c2-distribute-two',operation:'object.align.v1',targets:refs.slice(0,2),arguments:{mode:'distributeX'}}}));
+  if(p?.status==='FAILED')throw new Error('TWO_TARGET_PROPOSE_UNEXPECTED_FAIL');
+  const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:p.result.proposalId}));
+  if(a?.status==='FAILED')throw new Error('TWO_TARGET_APPROVE_UNEXPECTED_FAIL');
+  const rejected=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:p.result.proposalId,approvalToken:a.result.approvalToken}));
+  const rejectCode=rejected?.diagnostics?.[0]?.code||null;
+  if(rejected?.status!=='FAILED'||rejectCode!=='CHAT_EDIT_TARGET_COUNT_INVALID')throw new Error('DISTRIBUTE_TWO_NOT_REJECTED:'+JSON.stringify(rejected));
+
+  return {passed:true,operation:'object.align.v1',modes:['left','centerX','distributeX'],baseline,left,center,distributed:distributedExact,gaps:[gap1,gap2],selectionRestored:true,distributionGuard:rejectCode,historyLabel:'對齊物件'};
 })()`;
 
 const PAGE_OPS_C1_CASE = String.raw`(async()=>{
@@ -1722,7 +1801,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='page-ops-c1'?PAGE_OPS_C1_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='page-ops-c1'?PAGE_OPS_C1_CASE:(request.case==='align-distribute-c2'?ALIGN_DISTRIBUTE_C2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))))))))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     if(request.naturalMediaCacheReview===true) caseResult.naturalMediaCacheReview=await evaluate(cdp,sessionId,NATURAL_MEDIA_CACHE_REVIEW_CASE,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
@@ -1739,10 +1818,10 @@ async function run(){
 await run();
 // Fresh installed-browser process/profile for each required cross-capability regression.
 const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
-if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
+if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
   const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
   primary.regressions=[];
-  for(const caseName of (batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-advanced-ingest'?['raster-import-named-tool','raster-direct-paint-bucket-b3','raster-source-retouch-b3','raster-stack-adjustment-b2']:batchRequest.case==='page-ops-c1'?['stroke-create-a2','page-paper-a3','raster-import-named-tool','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
+  for(const caseName of (batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-advanced-ingest'?['raster-import-named-tool','raster-direct-paint-bucket-b3','raster-source-retouch-b3','raster-stack-adjustment-b2']:batchRequest.case==='page-ops-c1'?['stroke-create-a2','page-paper-a3','raster-import-named-tool','raster-stack-adjustment-b2']:batchRequest.case==='align-distribute-c2'?['page-ops-c1','path-deformation-b4','stroke-create-a2','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
     const prefix=path.resolve(process.argv[4])+'.'+caseName;
     await writeFile(prefix+'.request.json',JSON.stringify({...batchRequest,requestId:batchRequest.requestId+'-'+caseName,case:caseName,regressions:false,naturalMediaCacheReview:false}));
     const regression=spawn(process.execPath,[path.resolve(process.argv[1]),prefix+'.request.json',path.resolve(process.argv[3]),prefix+'.json',prefix+'.png'],{shell:false,stdio:'inherit'});
