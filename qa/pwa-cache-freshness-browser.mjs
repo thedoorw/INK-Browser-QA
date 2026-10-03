@@ -167,6 +167,27 @@ async function waitControlled(cdp, sessionId) {
     'service worker controller');
 }
 
+async function pressF5(cdp, sessionId) {
+  const event = { key:'F5', code:'F5', windowsVirtualKeyCode:116, nativeVirtualKeyCode:116 };
+  await cdp.send('Input.dispatchKeyEvent',{type:'keyDown',...event},sessionId);
+  await cdp.send('Input.dispatchKeyEvent',{type:'keyUp',...event},sessionId);
+}
+
+async function registrationDiagnostics(cdp, sessionId) {
+  return evaluate(cdp,sessionId,`
+    (async () => {
+      const registration = await navigator.serviceWorker.getRegistration();
+      const describe = worker => worker ? {scriptURL:worker.scriptURL,state:worker.state} : null;
+      return {
+        controller: describe(navigator.serviceWorker.controller),
+        active: describe(registration?.active),
+        waiting: describe(registration?.waiting),
+        installing: describe(registration?.installing)
+      };
+    })()
+  `).catch(error => ({error:error?.message || String(error)}));
+}
+
 async function workerIdentity(cdp, sessionId) {
   return evaluate(cdp,sessionId,`
     (() => new Promise((resolve, reject) => {
@@ -257,7 +278,7 @@ try {
 
   hosted.switchToCandidate();
   const switchAt = Date.now();
-  await cdp.send('Page.reload',{},sessionId);
+  await pressF5(cdp,sessionId);
 
   await waitFor(cdp,sessionId,`
     (() => new Promise(resolve => {
@@ -341,6 +362,11 @@ try {
 } catch (error) {
   report.status = 'FAIL';
   report.error = error?.stack || error?.message || String(error);
+  report.failureDiagnostics = {
+    registration: cdp && sessionId ? await registrationDiagnostics(cdp,sessionId) : null,
+    caches: cdp && sessionId ? await cacheKeys(cdp,sessionId).catch(() => []) : [],
+    requestTail: hosted.requests.slice(-80)
+  };
   throw error;
 } finally {
   try { await mkdir(path.dirname(outputPath),{recursive:true}); await writeFile(outputPath,JSON.stringify(report,null,2) + '\n'); } catch {}
