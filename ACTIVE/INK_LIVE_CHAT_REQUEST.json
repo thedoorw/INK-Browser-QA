@@ -1,15 +1,15 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-raster-mask-live-001",
+  "requestId": "clusterB-B3-spot-heal-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "2d1c67f398c19cbbec1e935095b5dc991c886213",
+  "expectedSourceSha": "c6ae51d96d95e2567b9b7ef6d1e55280cfb2cee0",
   "steps": [
     {
-      "id": "describeMask",
+      "id": "describe",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "image.mask.raster.set.v1"
+        "idOrToolName": "image.raster.spotHeal.v1"
       }
     },
     {
@@ -17,9 +17,9 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B3 Mask Editable Raster",
+          "name": "B3 Spot Heal Raster",
           "type": "image/png",
-          "intent": "B3 native raster mask formal Live qualification"
+          "intent": "B3 Spot Healing formal Live qualification"
         }
       },
       "file": {
@@ -38,28 +38,26 @@
       }
     },
     {
-      "id": "staleMaskPropose",
+      "id": "staleHealPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-mask-stale-pixels",
-          "operation": "image.mask.raster.set.v1",
+          "taskId": "clusterB-B3-live-spot-stale",
+          "operation": "image.raster.spotHeal.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "shape": "rectangle",
-            "x": 100,
-            "y": 100,
-            "width": 500,
-            "height": 700,
-            "invert": false,
-            "feather": 0,
-            "expand": 0
+            "x": 543,
+            "y": 724,
+            "radius": 24,
+            "opacity": 1,
+            "hardness": 0.85,
+            "neighborRadius": 3
           }
         }
       }
@@ -71,7 +69,7 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-mask-intervening-pixels",
+          "taskId": "clusterB-B3-live-spot-intervening",
           "operation": "image.raster.paintBucket.v1",
           "targets": [
             {
@@ -111,12 +109,12 @@
       }
     },
     {
-      "id": "staleMaskApprove",
+      "id": "staleHealApprove",
       "tool": "approve_ink_edit",
       "allowFailure": true,
       "input": {
         "proposalId": {
-          "$ref": "staleMaskPropose.result.result.proposalId"
+          "$ref": "staleHealPropose.result.result.proposalId"
         }
       }
     },
@@ -135,58 +133,49 @@
       }
     },
     {
-      "id": "maskPropose",
+      "id": "healPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-mask-main",
-          "operation": "image.mask.raster.set.v1",
+          "taskId": "clusterB-B3-live-spot-main",
+          "operation": "image.raster.spotHeal.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "shape": "rectangle",
-            "x": 100,
-            "y": 100,
-            "width": 500,
-            "height": 700,
-            "invert": false,
-            "feather": 0,
-            "expand": 0
+            "x": 543,
+            "y": 724,
+            "radius": 24,
+            "opacity": 1,
+            "hardness": 0.85,
+            "neighborRadius": 3
           }
         }
       }
     },
     {
-      "id": "maskApprove",
+      "id": "healApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "maskPropose.result.result.proposalId"
+          "$ref": "healPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "maskExecute",
+      "id": "healExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "maskPropose.result.result.proposalId"
+          "$ref": "healPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "maskApprove.result.result.approvalToken"
+          "$ref": "healApprove.result.result.approvalToken"
         }
-      }
-    },
-    {
-      "id": "contextAfter",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
       }
     },
     {
@@ -210,22 +199,20 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-mask-noop",
-          "operation": "image.mask.raster.set.v1",
+          "taskId": "clusterB-B3-live-spot-noop",
+          "operation": "image.raster.spotHeal.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "shape": "rectangle",
-            "x": 100,
-            "y": 100,
-            "width": 500,
-            "height": 700,
-            "invert": false,
-            "feather": 0,
-            "expand": 0
+            "x": 543,
+            "y": 724,
+            "radius": 24,
+            "opacity": 0,
+            "hardness": 0.85,
+            "neighborRadius": 3
           }
         }
       }
@@ -253,7 +240,7 @@
       }
     },
     {
-      "id": "undoMask",
+      "id": "undoHeal",
       "tool": "undo_ink",
       "input": {}
     },
@@ -267,7 +254,7 @@
       }
     },
     {
-      "id": "redoMask",
+      "id": "redoHeal",
       "tool": "redo_ink",
       "input": {}
     },
