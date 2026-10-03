@@ -2057,7 +2057,7 @@ function executeStudioRecipeTask(app, task) {
       resultRefs
     };
   } catch (error) {
-    if (app.history?.pending) app.history.cancel({ restore: true });
+    if (app.history?.pending) app.history.cancel({ restore: false });
     throw error;
   }
 }
