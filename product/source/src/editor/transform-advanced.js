@@ -144,8 +144,7 @@ export function createPathProjectiveDeformationPlan(bounds, { xOffset = 0, yOffs
     // Independent corner offsets form a free asymmetric quadrilateral.
     destinationQuad[0].x += xOffset;
     destinationQuad[1].y += yOffset;
-    destinationQuad[2].x -= xOffset;
-    destinationQuad[3].y -= yOffset;
+    // The lower edge stays fixed; the upper corners move independently.
   } else {
     // Opposing edge pairs converge about the center; no free corner movement.
     destinationQuad[0].x += xOffset; destinationQuad[1].x -= xOffset;

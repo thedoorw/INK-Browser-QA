@@ -1,7 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "local-paper-single-a1-regression-001",
-  "candidateSha": "29e23abf609bf57603ecfe5e366355b788ddc2fd",
-  "case": "paint-session-create"
+  "requestId": "clusterB-B4-candidate-regressions-002",
+  "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+  "case": "path-deformation-b4",
+  "regressions": true
 }
