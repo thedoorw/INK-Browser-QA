@@ -1,0 +1,10 @@
+{
+  "candidate": "938016b79e10c6ac1c06ad930be35a67654c381b",
+  "productSourceTree": "8d35c9a8a3f69d2f51cf02703fd78b9d8b090e4b",
+  "acceptedPr": 131,
+  "acceptedMergedSource": "468873503155f66585564a6ca7b11f7a82586d7a",
+  "candidateMergeProductTreeEquivalent": true,
+  "liveDeploymentCommit": "a588bdb8a016a45dbd676f54e66a4b0f28d78e6d",
+  "formalLiveRequestCommit": "e59bf09375295b0ae10a05db9494711b6aaf88a9",
+  "formalLiveQualification": "PENDING"
+}

@@ -1,0 +1,80 @@
+✔ CHAT state summary is deterministic, bounded and omits arbitrary raster/binary payloads (16.549011ms)
+✔ proposal and approval are mutation-neutral; unapproved execution is rejected (3.390733ms)
+✔ approved repaint executes through existing repaint controller and History with undo/redo (3.594636ms)
+✔ approved translation executes a second operation family through existing transform/History route (3.438083ms)
+✔ bounded Path simplify executes through existing PathEditController and remains undoable (5.851763ms)
+✔ invalid, locked, hidden, singular and stale targets reject without task mutation (4.574133ms)
+✔ failed controller mutation is rolled back atomically by existing History (1.560671ms)
+✔ deterministic no-op creates no History entry and FORMAT_VERSION stays 4 (4.918024ms)
+✔ CHAT bounded edit loop is wired into shared browser-local source without second engines or FORMAT_VERSION change (3.439886ms)
+✔ Deterministic Math/Random IR is whitelisted, serializable and replayable (4.334627ms)
+✔ Illustrator ellipse/rectangle operations compile to executable Recipe geometry (27.215231ms)
+✔ Perspective/Fold deformation is non-destructive, reversible and preserves Stable ID (1.967126ms)
+✔ Composition constraints measure safe margins, clipping and preserve unaffected layout (2.000346ms)
+✔ Vector Brush Material saves, loads, instances, overrides and survives migration (5.576934ms)
+✔ Path Watercolor Stroke produces deterministic editable SVG and different seed changes brush texture (3.159339ms)
+✔ Watercolor composites keep independent layers and explicitly mark hybrid paper dependency (2.884851ms)
+✔ Recipe executes vector brush, deformation, expression and composition without changing schema (9.485327ms)
+✔ B4 Path deformation operations are bounded discoverable capabilities without format change (3.762565ms)
+✔ path.warp.v1 reuses reversible native deformation and scoped History (20.693686ms)
+✔ path.distort.v1 reuses native projective mapping, preserves stable Path identity, and is undoable (5.00245ms)
+✔ path.perspective.v1 reuses native projective mapping, preserves stable Path identity, and is undoable (3.950745ms)
+✔ distort and perspective differ, repeated application starts from base, state roundtrips JSON (9.775449ms)
+✔ skew X/Y uses current affine Matrix authority and preserves pivot (2.44035ms)
+✔ distort/projective transform maps all four exact corners (0.965395ms)
+✔ perspective inverse round-trips and degenerate quad is rejected (0.754282ms)
+✔ warp is identity at zero, deterministic and bounded when non-zero (0.715854ms)
+✔ paragraph type wraps deterministically inside bounded box (1.804924ms)
+✔ paragraph alignment supports center and right (1.148508ms)
+✔ vertical type preserves explicit Text authority state and advance order (0.383951ms)
+✔ text on editable Path honors start offset/tangent and never mutates source Path (0.727271ms)
+✔ text on Path reports bounded overflow when text exceeds path (0.343211ms)
+✔ gradient fill normalizes linear/radial stops including opacity/order (0.472313ms)
+✔ pattern fill normalizes transform/repeat and unavailable reference falls back (0.381167ms)
+✔ ordinary solid fill remains governed by current paint appearance authority (0.158605ms)
+✔ persistent ruler guides normalize and add/move/remove as pure state (0.274639ms)
+✔ equal-distance smart snapping finds X opportunity with evidence (0.496718ms)
+✔ equal-distance smart snapping finds Y opportunity and tolerance miss (0.330081ms)
+✔ equal-distance tie-breaking and identical inputs are deterministic (0.350552ms)
+✔ ruler measurement reports distance/delta/angle and bounds size (0.35619ms)
+✔ invalid P1-C inputs fail predictably and modules parse/import in Node (0.395348ms)
+INK color render unsupported {
+  objectId: 'unsupported-raster',
+  status: 'unsupported-render',
+  reason: 'color-mode:Multichannel',
+  sourceBitDepth: 8,
+  colorMode: 'Multichannel'
+}
+✔ FORMAT_VERSION remains authorized baseline (0.872047ms)
+✔ Document owns persistent guide, snap and color defaults (1.880958ms)
+✔ migration preserves persistent guide/snap/color state without version bump (1.500431ms)
+✔ guide mutations converge through one guide authority (0.527365ms)
+✔ History undo/redo restores guide state through Document patches (1.432921ms)
+✔ unified snap authority composes guide, peer edge/center, grid and bypass (6.682128ms)
+✔ snap hysteresis retains prior candidate inside hold window (0.283451ms)
+✔ angle snap and temporary bypass use Transform authority (0.242731ms)
+✔ P1-C advanced transform and text layout are exposed by editor facade (0.72616ms)
+✔ P1-C measurement and vector fill appearance are exposed by editor facade (0.548095ms)
+✔ persistent Document guides are wired into renderer overlay (0.9751ms)
+✔ P1 A/B/E raster providers are exposed through the existing image authority (1.073165ms)
+✔ P1-D effects and P1-E advanced selection remain on the existing image authority (1.19061ms)
+✔ P1-F advanced adjustment/filter and Liquify register in the existing stack (1.334835ms)
+✔ P1-G 16/32-bit raster serialization preserves source data and bounded preview is explicit (0.777446ms)
+✔ P1-H payload bridge preserves bit depth, spot/additional metadata and one INK image truth (1.161637ms)
+✔ P1-H TIFF encode/decode consumes frozen P1-G normalized contract (1.427464ms)
+✔ JSON save/load + sanitize preserves P1 document state and raster payload (1.428775ms)
+✔ rasterState-only images dispatch through integrated renderer while ordinary src images retain legacy path (1.421744ms)
+✔ renderer module imports with the existing renderer authority (0.088321ms)
+✔ paint-session bounds derive from compiled replay dabs instead of generic 1x1 fallback (13.210742ms)
+✔ paint-session world bounds preserve object and parent transforms (2.89743ms)
+✔ paint-session bounds remain conservative for affine rotation (3.023877ms)
+✔ empty paint-session replay stays on existing renderer fallback path (0.195251ms)
+✔ Studio renderer keeps native paint replay and routes paint-session bounds through the integration helper (0.635765ms)
+ℹ tests 65
+ℹ suites 0
+ℹ pass 65
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 299.258417
