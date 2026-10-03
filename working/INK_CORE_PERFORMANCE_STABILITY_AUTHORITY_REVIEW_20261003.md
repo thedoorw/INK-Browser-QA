@@ -39,3 +39,8 @@ FORMAL_LIVE = PENDING
 FINAL_ACCEPTANCE = NOT CLAIMED
 
 Combined Capability Qualification TEST remains a pure evidence owner. Its next scoped handoff is Draw + Reference combined regression on the accepted optimization composition, using exact candidate/deployed identity; no product mutation or self-acceptance. Review/integration/deployment remain with authority.
+
+
+## Final disposition
+
+Revised candidate and integrated exact-source browser QA and Formal Live/combined regressions PASS. ACCEPTED / CLOSED at source `e095ee54a51f8562d03af248dca658cf321e6479`; see `working/INK_CORE_PERFORMANCE_STABILITY_AUTHORITY_CLOSURE_20261003.md`. The original DEV candidate remains superseded.

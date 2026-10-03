@@ -2,7 +2,7 @@
 
 AUTHORITY: ACTIVE/INK_CHAT_CORE_LIVE_AUTHORITY_v1.0.md
 OWNER_ROLE: INK Main-Program Optimization DEV
-STATUS: READY FOR EXECUTION / NO EXECUTOR START CLAIMED
+STATUS: CLOSED / AUTHORITY ACCEPTED / PR #142 / FORMAL LIVE QUALIFIED
 BRANCH: work/ink-core-performance-stability-001
 SOURCE: thedoorw/INK-Browser-QA
 LIVE: thedoorw/INK
@@ -34,3 +34,8 @@ Preserve native stable refs, canonical/reversible state, exact Undo/Redo geometr
 Deliver immutable candidate identity, bounded diff, before/after measurement evidence and risks to authority for review. DEV does not self-accept or self-merge. Authority continues accepted work through PR integration, exact deployed source identity, Formal Live focused/regression verification and findings/progress closure. Unit PASS, candidate readiness and first Live timeout are not terminal closure.
 
 Record reproducible workloads, observed outcomes, source cause, exact candidate and evidence in working/INK_CORE_PERFORMANCE_STABILITY_RETURN_20261003.md and an appropriate qa/evidence directory.
+
+
+## Closure
+
+Superseded by `working/INK_CORE_PERFORMANCE_STABILITY_AUTHORITY_CLOSURE_20261003.md`. Do not restart this completed dispatch. Original submitted candidate was revised for PERF-01 before acceptance; accepted source is `e095ee54a51f8562d03af248dca658cf321e6479`.

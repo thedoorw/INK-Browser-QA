@@ -1,8 +1,10 @@
 # INK Current Work Order
 
-## Active Core warm-cache Formal Live qualification — 2026-10-03
+## Core warm-cache optimization closure — 2026-10-03
 
-Authority currently owns the serialized Live request queue and deployment checkpoint for PR #142 / exact source `e095ee54a51f8562d03af248dca658cf321e6479`. Revised candidate and integrated browser QA passed. Formal cache/A5/B4, combined Draw/Reference and A1 qualification are being completed. Preserve this deployed identity until closure; do not promote another source over this active checkpoint. Concurrent B3 DEV/source QA remains separate and its evidence is preserved. Submit hosted requests sequentially: GitHub concurrency can replace older pending requests even with cancel-in-progress=false. This reservation ends when the authority closure below is recorded; it does not reassign B3 implementation or UI ownership.
+PR #142 is accepted, merged and formally Live-qualified at exact source `e095ee54a51f8562d03af248dca658cf321e6479`. Revised candidate `0ac6e236a2baff587224398bc6f3e3aff35f5318` supersedes the submitted DEV candidate after a precision invalidation repair. Local24/24, candidate/integrated browser regressions, Formal Live cache/A5/B4 and combined Draw/Reference/A1 PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_AUTHORITY_CLOSURE_20261003.md).
+
+LIVE_DEPLOYMENT_RESERVATION = RELEASED. Existing B3 and UI owners continue their current work. This closes one bounded optimization; no blanket Core or CHAT completeness claim.
 
 ## CHAT / Core / Live next dispatch — 2026-10-03
 

@@ -1094,3 +1094,20 @@ SECOND_AUTHORITY = NONE
 POINTER_SIMULATION = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## Core performance / stability optimization — authority closure 2026-10-03
+
+PR #142 / exact revised candidate `0ac6e236a2baff587224398bc6f3e3aff35f5318` / merged-deployed source `e095ee54a51f8562d03af248dca658cf321e6479` / product-source tree `93cafdeb5e448ce322904ceeadc3cf27cc12d90a`.
+
+Original DEV candidate was superseded after a reproduced fractional-transform cache invalidation regression. Revised same-authority request key preserves exact geometry/options while identical cacheable draws skip run preparation. Preview/export transient semantics and cache limit remain unchanged.
+
+Authority checkout24/24; exact candidate browser37098594186; exact integrated browser37098763701 PASS. Integrated A5/A1/A2/A3/B2/B4/Paper singleton/roughness and B3 bucket/mask/localRetouch regressions PASS.
+
+Formal exact-source Live: cache/A5/B4 run37099162758; combined Draw37099239809; combined Reference37099319014; Paint Session37099492808. Native state, Preview, exact Undo/Redo and output checks PASS. Reference full artifact digest and detailed lock/History/Revision state verified. Initial wrapper CSP omission and cancelled pending requests are preserved as non-PASS attempts; successful requests ran sequentially.
+
+`CORE_CACHE_OPTIMIZATION = ACCEPTED / CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED`.
+
+Authority closure: `working/INK_CORE_PERFORMANCE_STABILITY_AUTHORITY_CLOSURE_20261003.md`; evidence manifest: `qa/evidence/ink-core-performance-stability-001/authority-evidence-manifest.json`.
+
+Exact-deployment reservation released; existing B3 ownership continues. No UI/FORMAT_VERSION/new authority change. No full-Core performance, Preview speedup or browser-baseline speedup claim.

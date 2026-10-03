@@ -1,0 +1,183 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_AUTHORITY_EVIDENCE",
+  "version": 1,
+  "originalDevCandidate": "17bfdeccec76cba24970578f048296485e3af4bb",
+  "originalDisposition": "SUPERSEDED_AFTER_PERF_01",
+  "revisedCandidate": "0ac6e236a2baff587224398bc6f3e3aff35f5318",
+  "mergedSource": "e095ee54a51f8562d03af248dca658cf321e6479",
+  "productSourceTree": "93cafdeb5e448ce322904ceeadc3cf27cc12d90a",
+  "sourceEntryBlob": "413f5eb4c5f1de8baa04b4eabd699e22f23a5fae",
+  "pr": 142,
+  "localChecks": {
+    "passed": 24,
+    "total": 24
+  },
+  "candidateBrowser": {
+    "run": 37098594186,
+    "requestCommit": "93ca812814496e35845584604b3c86f8cbf231fa",
+    "artifact": {
+      "id": 11264723960,
+      "node_id": "MDg6QXJ0aWZhY3QxMTI2NDcyMzk2MA==",
+      "name": "ink-source-candidate-37098594186",
+      "size_in_bytes": 66455,
+      "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11264723960",
+      "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11264723960/zip",
+      "expired": false,
+      "digest": "sha256:c121e6c79e6ed1227b7ef46f625def448dc80fc61ab82be7909586204d39070c",
+      "created_at": "2026-10-03T05:04:58Z",
+      "updated_at": "2026-10-03T05:04:58Z",
+      "expires_at": "2026-11-02T05:04:58Z",
+      "workflow_run": {
+        "id": 37098594186,
+        "repository_id": 1366312755,
+        "head_repository_id": 1366312755,
+        "head_branch": "main",
+        "head_sha": "93ca812814496e35845584604b3c86f8cbf231fa"
+      }
+    }
+  },
+  "integratedBrowser": {
+    "run": 37098763701,
+    "requestCommit": "2c49103d6c28b660daa131d920a21d858ce1df57",
+    "artifact": {
+      "id": 11265541621,
+      "node_id": "MDg6QXJ0aWZhY3QxMTI2NTU0MTYyMQ==",
+      "name": "ink-source-candidate-37098763701",
+      "size_in_bytes": 67314,
+      "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11265541621",
+      "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11265541621/zip",
+      "expired": false,
+      "digest": "sha256:4ed0d3f3430b4ff3da1e59792fe1eafa6c86ac04b6a4bc6f44596fe6ccaf9edd",
+      "created_at": "2026-10-03T05:07:20Z",
+      "updated_at": "2026-10-03T05:07:20Z",
+      "expires_at": "2026-11-02T05:07:19Z",
+      "workflow_run": {
+        "id": 37098763701,
+        "repository_id": 1366312755,
+        "head_repository_id": 1366312755,
+        "head_branch": "main",
+        "head_sha": "2c49103d6c28b660daa131d920a21d858ce1df57"
+      }
+    }
+  },
+  "deployment": {
+    "initial": "58454f0a3091a7ff1f90689dd38a908e140679a2",
+    "wrapperCorrection": "1fa828a4c79050e6a3c311133cca9066d6dc5806"
+  },
+  "formalLive": [
+    {
+      "request": "core-perf-cache-formal-live-002",
+      "requestCommit": "e03a6ebc4b291940167766dcc63877648f957e20",
+      "resultCommit": "0c11a7993a20a1c7bf27a024b453b33df0db48dd",
+      "run": 37099162758,
+      "artifact": {
+        "id": 11265647049,
+        "node_id": "MDg6QXJ0aWZhY3QxMTI2NTY0NzA0OQ==",
+        "name": "ink-live-chat-37099162758",
+        "size_in_bytes": 58564,
+        "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11265647049",
+        "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11265647049/zip",
+        "expired": false,
+        "digest": "sha256:1cd23aa1a883852511547e228f872445c71492ead964ab6d7e4137d6fd13d6c5",
+        "created_at": "2026-10-03T05:14:24Z",
+        "updated_at": "2026-10-03T05:14:24Z",
+        "expires_at": "2026-11-02T05:14:23Z",
+        "workflow_run": {
+          "id": 37099162758,
+          "repository_id": 1366312755,
+          "head_repository_id": 1366312755,
+          "head_branch": "main",
+          "head_sha": "e03a6ebc4b291940167766dcc63877648f957e20"
+        }
+      }
+    },
+    {
+      "request": "core-perf-combined-draw-live-002",
+      "requestCommit": "2744a1185993338ad2aa8e4f3f46756da71bd52d",
+      "resultCommit": "caf64296f17e35191534ba84cc002e3acf6d0033",
+      "run": 37099239809,
+      "artifact": {
+        "id": 11265048752,
+        "node_id": "MDg6QXJ0aWZhY3QxMTI2NTA0ODc1Mg==",
+        "name": "ink-live-chat-37099239809",
+        "size_in_bytes": 34609,
+        "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11265048752",
+        "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11265048752/zip",
+        "expired": false,
+        "digest": "sha256:8088f985b50d3747be2e83911ca7d5e33fda7e796cf8c145db50008dca129e2f",
+        "created_at": "2026-10-03T05:15:51Z",
+        "updated_at": "2026-10-03T05:15:51Z",
+        "expires_at": "2026-11-02T05:15:50Z",
+        "workflow_run": {
+          "id": 37099239809,
+          "repository_id": 1366312755,
+          "head_repository_id": 1366312755,
+          "head_branch": "main",
+          "head_sha": "2744a1185993338ad2aa8e4f3f46756da71bd52d"
+        }
+      }
+    },
+    {
+      "request": "core-perf-combined-reference-live-002",
+      "requestCommit": "760184e1b95f4fc393c894917a95373feeb704ae",
+      "resultCommit": "153d3eadedbc6a542dfd457c91fa524ebbd3c320",
+      "run": 37099319014,
+      "artifact": {
+        "id": 11264884329,
+        "node_id": "MDg6QXJ0aWZhY3QxMTI2NDg4NDMyOQ==",
+        "name": "ink-live-chat-37099319014",
+        "size_in_bytes": 21199283,
+        "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11264884329",
+        "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11264884329/zip",
+        "expired": false,
+        "digest": "sha256:0ea07ce12f1da73f3d5e98dad81791769664b947abd90dee65b2d52796cf9d56",
+        "created_at": "2026-10-03T05:17:36Z",
+        "updated_at": "2026-10-03T05:17:36Z",
+        "expires_at": "2026-11-02T05:17:33Z",
+        "workflow_run": {
+          "id": 37099319014,
+          "repository_id": 1366312755,
+          "head_repository_id": 1366312755,
+          "head_branch": "main",
+          "head_sha": "760184e1b95f4fc393c894917a95373feeb704ae"
+        }
+      }
+    },
+    {
+      "request": "core-perf-paint-session-live-002",
+      "requestCommit": "1793cd4c94de69c868d0afdd32e17196bbfb3764",
+      "resultCommit": "d844e6b4a6f93deabcf483cbc93711515d1818ab",
+      "run": 37099492808,
+      "artifact": {
+        "id": 11264869568,
+        "node_id": "MDg6QXJ0aWZhY3QxMTI2NDg2OTU2OA==",
+        "name": "ink-live-chat-37099492808",
+        "size_in_bytes": 29479,
+        "url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11264869568",
+        "archive_download_url": "https://api.github.com/repos/thedoorw/INK-Browser-QA/actions/artifacts/11264869568/zip",
+        "expired": false,
+        "digest": "sha256:d2e7548a2a408493cd78eb020ad09cc845c90c511e604cad256bedc1886b9f03",
+        "created_at": "2026-10-03T05:20:33Z",
+        "updated_at": "2026-10-03T05:20:33Z",
+        "expires_at": "2026-11-02T05:20:32Z",
+        "workflow_run": {
+          "id": 37099492808,
+          "repository_id": 1366312755,
+          "head_repository_id": 1366312755,
+          "head_branch": "main",
+          "head_sha": "1793cd4c94de69c868d0afdd32e17196bbfb3764"
+        }
+      }
+    }
+  ],
+  "finalAcceptance": "PASS / CLOSED",
+  "limits": [
+    "DEV original speedup numbers are isolated-harness observations; no before/after browser speedup claim for the revision.",
+    "No heap profiling/memory leak claim.",
+    "This closes the bounded cache optimization, not all Core performance or all CHAT capability work."
+  ],
+  "executionNotes": [
+    "Initial formal run37098926463 stopped before any product operation due to authority wrapper CSP adaptation omission; restored prior approved wrapper, same product source passed.",
+    "Pending combined/A1 requests were replaced by GitHub concurrency; cancelled requests are not counted as executed tests. Completed requests were submitted sequentially."
+  ]
+}
