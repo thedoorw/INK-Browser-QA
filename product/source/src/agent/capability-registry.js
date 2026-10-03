@@ -295,8 +295,7 @@ const editSchemas = {
       height: num('Rectangle height.', { minimum: Number.EPSILON, maximum: 1000000 }),
       invert: bool('Invert mask.', { default: false }),
       feather: num('Existing mask feather radius.', { minimum: 0, maximum: 256, default: 0 }),
-      expand: { type: 'integer', minimum: -256, maximum: 256, default: 0, description: 'Existing mask expand/contract amount.' },
-      enabled: bool('Mask enabled state.', { default: true })
+      expand: { type: 'integer', minimum: -256, maximum: 256, default: 0, description: 'Existing mask expand/contract amount.' }
     }, ['x','y','width','height'], 'Bounded raster-mask geometry. Raw alpha pixel arrays are not accepted from CHAT.'),
     1
   ),
