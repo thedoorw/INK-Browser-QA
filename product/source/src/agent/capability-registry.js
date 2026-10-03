@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -313,6 +313,33 @@ const editSchemas = {
       referenceColor: str('Optional Color Replacement reference color; defaults to center pixel.'),
       tolerance: num('Color Replacement tolerance.', { minimum: 0, maximum: 255, default: 32 })
     }, ['type','x','y'], 'One-shot raster-local retouch. Tool-specific parameters are validated by the bounded edit normalizer; raw masks, pointer strokes and source-point inference are not accepted.'),
+    1
+  ),
+  'image.raster.sourceRetouch.v1': editTaskSchema(
+    { type: 'string', const: 'image.raster.sourceRetouch.v1', description: 'Apply one bounded source-dependent destructive retouch edit to one editable native 8-bit RGB raster through existing Clone Stamp / Healing Brush / Patch pixel authorities.' },
+    obj({
+      type: { type: 'string', enum: [...CHAT_IMAGE_SOURCE_RETOUCH_TYPES], description: 'Qualified source-dependent retouch family. Pattern Stamp remains excluded until a separate pattern-asset contract is defined.' },
+      sourceX: num('Raster-local source X for Clone Stamp / Healing Brush.', { minimum: 0, maximum: 1000000 }),
+      sourceY: num('Raster-local source Y for Clone Stamp / Healing Brush.', { minimum: 0, maximum: 1000000 }),
+      targetX: num('Raster-local target X for Clone Stamp / Healing Brush.', { minimum: 0, maximum: 1000000 }),
+      targetY: num('Raster-local target Y for Clone Stamp / Healing Brush.', { minimum: 0, maximum: 1000000 }),
+      radius: num('Clone / Healing brush radius.', { minimum: Number.EPSILON, maximum: 512, default: 18 }),
+      opacity: num('Retouch opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      hardness: num('Clone / Healing brush hardness.', { minimum: 0, maximum: 1, default: .85 }),
+      sourceRegion: obj({
+        x: num('Raster-local source-region X.', { minimum: 0, maximum: 1000000 }),
+        y: num('Raster-local source-region Y.', { minimum: 0, maximum: 1000000 }),
+        width: num('Source-region width.', { minimum: Number.EPSILON, maximum: 1000000 }),
+        height: num('Source-region height.', { minimum: Number.EPSILON, maximum: 1000000 })
+      }, ['x','y','width','height'], 'Patch source region.'),
+      targetRegion: obj({
+        x: num('Raster-local target-region X.', { minimum: 0, maximum: 1000000 }),
+        y: num('Raster-local target-region Y.', { minimum: 0, maximum: 1000000 }),
+        width: num('Target-region width.', { minimum: Number.EPSILON, maximum: 1000000 }),
+        height: num('Target-region height.', { minimum: Number.EPSILON, maximum: 1000000 })
+      }, ['x','y','width','height'], 'Patch target region; dimensions must exactly match sourceRegion.'),
+      feather: num('Patch edge feather.', { minimum: 0, maximum: 512, default: 0 })
+    }, ['type'], 'Explicit raster-local source contract only. Clone/Healing require sourceX/sourceY/targetX/targetY; Patch requires equal-sized sourceRegion/targetRegion. No pointer gestures, source inference, cross-image source, raw mask or pattern payload is accepted.'),
     1
   ),
   'image.mask.raster.set.v1': editTaskSchema(
@@ -1064,6 +1091,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.mask.raster.set.v1') operationConstraints.push('Initial geometry is rectangle only. Reuses existing rasterizePathMask/createRasterMask/renderImageStack; raw alpha arrays are not accepted. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'image.raster.spotHeal.v1') operationConstraints.push('One-shot structured local retouch using existing spotHealing(). Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation, source-point inference, or raw mask payload. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'image.raster.localRetouch.v1') operationConstraints.push('Non-source one-shot local retouch only: Dodge/Burn/Sponge/Local Blur/Local Sharpen/Color Replacement. Uses existing raster-retouch algorithms, native rasterState and pixel/mask stale fingerprints. Clone/Healing/Patch/Pattern Stamp remain separate source-contract work.');
+  if (operation === 'image.raster.sourceRetouch.v1') operationConstraints.push('Source-dependent one-shot retouch only: Clone Stamp / Healing Brush / Patch. Source and target are explicit raster-local coordinates/regions inside the same target raster; no pointer emulation, source inference, cross-image sampling or raw mask. Pattern Stamp remains separate asset-contract work.');
   if (operation === 'path.warp.v1') operationConstraints.push('Uses existing createWarpDeformationPlan() + applyNonDestructiveDeformation(); stable Path identity and editable anchor structure are preserved.');
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') operationConstraints.push('Uses existing projective planner and applyNonDestructiveDeformation(); recomputes anchors and handles from retained baseSubpaths with serializable reversible state. Distort offsets independent corners; Perspective constrains opposing edges toward a shared center. Invalid folded quads are rejected.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
