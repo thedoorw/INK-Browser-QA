@@ -62,6 +62,12 @@ function makeApp() {
       const index = this.doc.pages.indexOf(p);
       return index < 0 ? null : ['pages', index];
     },
+    layerObjectsPath(layer) {
+      const page = this.page();
+      const pageIndex = this.doc.pages.indexOf(page);
+      const layerIndex = page.layers.indexOf(layer);
+      return pageIndex < 0 || layerIndex < 0 ? null : ['pages', pageIndex, 'layers', layerIndex, 'objects'];
+    },
     objectPath(found) {
       const base = this.pagePath();
       return !found || !base ? null : [...base, ...found.path];
