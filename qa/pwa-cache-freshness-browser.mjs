@@ -46,6 +46,7 @@ async function startSwitchableServer() {
         at: now,
         label,
         path: requestPath,
+        search: url.search,
         mode: req.headers['sec-fetch-mode'] || null,
         dest: req.headers['sec-fetch-dest'] || null
       });
@@ -324,20 +325,26 @@ try {
   const coherent = await coherentCacheProbe(cdp,sessionId,candidateIdentity);
   assert.deepEqual(coherent,{buildIdentityMatches:true,managerIsCandidate:true,htmlPresent:true});
 
-  const navCount1 = hosted.requests.filter(r => r.at >= switchAt && (r.mode === 'navigate' || r.dest === 'document')).length;
+  const migrationRequestCount = () => hosted.requests.filter(r =>
+    r.at >= switchAt
+    && r.label === 'candidate'
+    && new URLSearchParams(r.search || '').get('ink-pwa-migrate') === 'ink-pwa-cache-migration-v3'
+  ).length;
+  const migrationCount1 = migrationRequestCount();
   await new Promise(resolve => setTimeout(resolve,1800));
-  const navCount2 = hosted.requests.filter(r => r.at >= switchAt && (r.mode === 'navigate' || r.dest === 'document')).length;
+  const migrationCount2 = migrationRequestCount();
   await new Promise(resolve => setTimeout(resolve,1200));
-  const navCount3 = hosted.requests.filter(r => r.at >= switchAt && (r.mode === 'navigate' || r.dest === 'document')).length;
-  assert.equal(navCount2,navCount3,'navigation did not settle; possible reload loop');
-  assert.ok(navCount3 >= 1 && navCount3 <= 3,'unexpected reload count: ' + navCount3);
+  const migrationCount3 = migrationRequestCount();
+  assert.equal(migrationCount2,migrationCount3,'migration navigation did not settle; possible reload loop');
+  assert.equal(migrationCount3,1,'expected exactly one bounded migration navigation, got: ' + migrationCount3);
 
   report.afterOrdinaryReload = {
     identity: candidateIdentity,
     appBuildId: candidateAppBuildId,
     caches: candidateCaches,
     coherent,
-    navigationRequestsAfterSwitch: navCount3
+    migrationRequestCount: migrationCount3,
+    pageUrl: await evaluate(cdp,sessionId,'location.href')
   };
   report.checks.ordinaryReloadReachedCandidate = true;
   report.checks.oldInkCachesCleaned = true;
@@ -375,7 +382,7 @@ try {
     total: hosted.requests.length,
     baseline: hosted.requests.filter(r => r.label === 'baseline').length,
     candidate: hosted.requests.filter(r => r.label === 'candidate').length,
-    navigations: hosted.requests.filter(r => r.mode === 'navigate' || r.dest === 'document').length
+    migrationIdentityRequests: hosted.requests.filter(r => new URLSearchParams(r.search || '').has('ink-pwa-migrate')).length
   };
   report.status = 'PASS';
 } catch (error) {
