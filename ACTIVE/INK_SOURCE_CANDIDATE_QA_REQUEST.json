@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A4-targeted-eraser-candidate-003",
+  "requestId": "clusterA-A4-targeted-eraser-candidate-004",
   "candidateSha": "586833703a73ba3454200843de975b8e1013d65c",
   "case": "stroke-erase-a4"
 }
