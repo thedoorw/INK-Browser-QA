@@ -1457,6 +1457,30 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
   if (preconditions?.pageId && preconditions.pageId !== page.id) {
     editFail('STALE_PAGE', { expected: preconditions.pageId, actual: page.id || null });
   }
+  if (CHAT_PAGE_OPERATION_SET.has(task.operation)) {
+    const pages = Array.isArray(document.pages) ? document.pages : [];
+    const pageId = task.arguments.pageId || null;
+    const targetPage = pageId ? pages.find(item => item.id === pageId) || null : null;
+    if (pageId && !targetPage) editFail('PAGE_MISSING', { pageId });
+    if (task.operation === 'page.create.v1' && typeof app.addPage !== 'function') {
+      editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+    }
+    if (task.operation === 'page.duplicate.v1' && typeof app.duplicatePage !== 'function') {
+      editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+    }
+    if (task.operation === 'page.delete.v1') {
+      if (typeof app.deletePage !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+      if (pages.length <= 1) editFail('MINIMUM_PAGE_REQUIRED', { pageId });
+    }
+    if (task.operation === 'page.rename.v1') {
+      if (!app.history?.pushScoped || typeof app.pagePath !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+      if (targetPage?.name === task.arguments.name) editFail('NO_OP', { pageId });
+    }
+    if (task.operation === 'page.activate.v1') {
+      if (typeof app.switchPage !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
+      if (document.activePageId === pageId) editFail('NO_OP', { pageId });
+    }
+  }
   if (task.operation === 'page.paper.set.v1') {
     if (app.paperPreview) editFail('PAPER_PREVIEW_BUSY');
     if (typeof app.changePaper !== 'function' || !page.paper) editFail('CONTROLLER_UNAVAILABLE');
@@ -1605,6 +1629,13 @@ function snapshotRefs(app, refs, operation = null) {
 }
 
 function snapshotTaskTargets(app, task) {
+  if (CHAT_PAGE_OPERATION_SET.has(task.operation)) return [{
+    ref: { pageId: app.doc?.activePageId || null },
+    stateFingerprint: chatStateFingerprint({
+      activePageId: app.doc?.activePageId || null,
+      pages: (app.doc?.pages || []).map(page => ({ id: page.id || null, name: page.name || null }))
+    })
+  }];
   if (task.operation === 'page.paper.set.v1') return [{ ref: { pageId: app.page().id }, stateFingerprint: chatStateFingerprint(app.page().paper) }];
   return snapshotRefs(app, task.targets, task.operation);
 }
@@ -3053,7 +3084,69 @@ function executePathDeformationTask(app, task) {
   };
 }
 
+function executePageTask(app, task) {
+  const pages = app.doc?.pages || [];
+  const pageById = pageId => pages.find(page => page.id === pageId) || null;
+  if (task.operation === 'page.create.v1') {
+    const beforeIds = new Set(pages.map(page => page.id));
+    app.addPage();
+    const created = (app.doc?.pages || []).find(page => !beforeIds.has(page.id)) || app.page?.();
+    if (!created?.id) editFail('PAGE_CREATE_FAILED');
+    return {
+      changed: true,
+      pageId: created.id,
+      createdPageIds: [created.id],
+      activePageId: app.doc.activePageId,
+      page: { id: created.id, name: created.name || null }
+    };
+  }
+
+  const pageId = task.arguments.pageId;
+  const target = pageById(pageId);
+  if (!target) editFail('PAGE_MISSING', { pageId });
+
+  if (task.operation === 'page.duplicate.v1') {
+    const beforeIds = new Set(pages.map(page => page.id));
+    app.duplicatePage(pageId);
+    const created = (app.doc?.pages || []).find(page => !beforeIds.has(page.id));
+    if (!created?.id) editFail('PAGE_DUPLICATE_FAILED', { pageId });
+    return {
+      changed: true,
+      sourcePageId: pageId,
+      pageId: created.id,
+      createdPageIds: [created.id],
+      activePageId: app.doc.activePageId,
+      page: { id: created.id, name: created.name || null }
+    };
+  }
+
+  if (task.operation === 'page.delete.v1') {
+    const deletedPage = { id: target.id, name: target.name || null };
+    app.deletePage(pageId);
+    if ((app.doc?.pages || []).some(page => page.id === pageId)) editFail('PAGE_DELETE_FAILED', { pageId });
+    return { changed: true, deletedPageId: pageId, deletedPage, activePageId: app.doc.activePageId };
+  }
+
+  if (task.operation === 'page.rename.v1') {
+    const oldName = target.name || null;
+    const historyPath = app.pagePath(target);
+    if (!Array.isArray(historyPath)) editFail('PAGE_MISSING', { pageId });
+    app.history.pushScoped('重新命名頁面', [historyPath], () => { target.name = task.arguments.name; });
+    app.refreshAll?.();
+    return { changed: true, pageId, oldName, name: target.name, activePageId: app.doc.activePageId };
+  }
+
+  if (task.operation === 'page.activate.v1') {
+    app.switchPage(pageId);
+    if (app.doc?.activePageId !== pageId) editFail('PAGE_ACTIVATE_FAILED', { pageId });
+    return { changed: true, pageId, activePageId: pageId, historyEntryCreated: false };
+  }
+
+  editFail('OPERATION_NOT_ALLOWED', { operation: task.operation });
+}
+
 function executeApprovedTask(app, task) {
+  if (CHAT_PAGE_OPERATION_SET.has(task.operation)) return executePageTask(app, task);
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
     || task.operation === 'path.material.remove.v1') {
