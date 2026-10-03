@@ -1,281 +1,324 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "ink-qa-b-reference-combined-001",
+  "requestId": "local-paper-single-stroke-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "ab84aafc3006f0f14a74d231ca862200bd0b5d94",
+  "expectedSourceSha": "701c3777dba854df893f61f1d75b97ea694ede62",
   "steps": [
     {
-      "id": "capabilities",
-      "tool": "get_ink_capabilities",
-      "input": {}
-    },
-    {
-      "id": "describeTranslate",
-      "tool": "describe_ink_capability",
-      "input": {
-        "idOrToolName": "object.translate.v1"
-      }
-    },
-    {
-      "id": "describeAdjustment",
-      "tool": "describe_ink_capability",
-      "input": {
-        "idOrToolName": "image.adjustment.add.v1"
-      }
-    },
-    {
-      "id": "importReference",
-      "tool": "import_ink_reference",
-      "input": {
-        "options": {
-          "name": "rose-window-primary.png",
-          "type": "image/png",
-          "intent": "INK-QA-B reference intake combined qualification"
-        }
-      },
-      "file": {
-        "path": "qa/fixtures/rose-window/rose-window-primary.png",
-        "name": "rose-window-primary.png",
-        "type": "image/png"
-      }
-    },
-    {
-      "id": "importRaster",
-      "tool": "import_ink_raster",
-      "input": {
-        "options": {
-          "name": "INK-QA-B Editable Raster",
-          "type": "image/png",
-          "intent": "INK-QA-B editable raster state from reference fixture"
-        }
-      },
-      "file": {
-        "path": "qa/fixtures/rose-window/rose-window-primary.png",
-        "name": "rose-window-primary.png",
-        "type": "image/png"
-      }
-    },
-    {
-      "id": "inspectRaster",
-      "tool": "inspect_ink_objects",
-      "input": {
-        "refs": [
-          {
-            "$ref": "importRaster.createdRefs.0"
-          }
-        ],
-        "options": {}
-      }
-    },
-    {
-      "id": "contextImported",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 12
-      }
-    },
-    {
-      "id": "historyImported",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "translatePropose",
+      "id": "brushPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "ink-qa-b-translate-raster-001",
-          "operation": "object.translate.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
+          "taskId": "live-single-brush-001",
+          "operation": "stroke.create.v1",
+          "targets": [],
           "arguments": {
-            "dx": 72,
-            "dy": 36
+            "kind": "brush",
+            "color": "#8f3f58",
+            "size": 72,
+            "opacity": 0.85,
+            "flow": 0.75,
+            "wetness": 0.8,
+            "grain": 0.4,
+            "bristle": 0.4,
+            "samples": [
+              {
+                "x": -120,
+                "y": -20,
+                "pressure": 0.3,
+                "timestamp": 0
+              },
+              {
+                "x": 0,
+                "y": 70,
+                "pressure": 0.9,
+                "timestamp": 24
+              },
+              {
+                "x": 120,
+                "y": -40,
+                "pressure": 0.6,
+                "timestamp": 48
+              }
+            ]
           }
         }
       }
     },
     {
-      "id": "translateApprove",
+      "id": "brushApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "translatePropose.result.result.proposalId"
+          "$ref": "brushPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "translateExecute",
+      "id": "brushExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "translatePropose.result.result.proposalId"
+          "$ref": "brushPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "translateApprove.result.result.approvalToken"
+          "$ref": "brushApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewBeforeCorrection",
+      "id": "brushBaseline",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 850,
-        "background": true
+        "maxDimension": 800,
+        "background": false
       }
     },
     {
-      "id": "baselineRevision",
-      "tool": "capture_ink_revision",
-      "input": {
-        "reason": "INK-QA-B",
-        "label": "Reference editable baseline after transform"
-      }
-    },
-    {
-      "id": "adjustPropose",
+      "id": "brushPaperPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "ink-qa-b-correction-brightness-001",
-          "operation": "image.adjustment.add.v1",
-          "targets": [
-            {
-              "$ref": "importRaster.createdRefs.0"
-            }
-          ],
+          "taskId": "live-single-brush-paper-001",
+          "operation": "page.paper.set.v1",
+          "targets": [],
           "arguments": {
-            "type": "brightnessContrast",
-            "params": {
-              "brightness": 14,
-              "contrast": 24
-            },
-            "opacity": 1
+            "key": "absorbency",
+            "value": 0.05
           }
         }
       }
     },
     {
-      "id": "adjustApprove",
+      "id": "brushPaperApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "adjustPropose.result.result.proposalId"
+          "$ref": "brushPaperPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "adjustExecute",
+      "id": "brushPaperExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "adjustPropose.result.result.proposalId"
+          "$ref": "brushPaperPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "adjustApprove.result.result.approvalToken"
+          "$ref": "brushPaperApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewCorrected",
+      "id": "brushChanged",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 850,
-        "background": true
+        "maxDimension": 800,
+        "background": false
       }
     },
     {
-      "id": "correctedRevision",
-      "tool": "capture_ink_revision",
-      "input": {
-        "reason": "INK-QA-B",
-        "label": "Reference corrected brightness contrast"
-      }
-    },
-    {
-      "id": "revisionsAfter",
-      "tool": "get_ink_revisions",
-      "input": {}
-    },
-    {
-      "id": "historyCorrected",
+      "id": "brushHistory",
       "tool": "get_ink_history",
       "input": {}
     },
     {
-      "id": "undoCorrection",
+      "id": "brushUndoPaper",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewUndo",
+      "id": "brushUndoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 850,
-        "background": true
+        "maxDimension": 800,
+        "background": false
       }
     },
     {
-      "id": "contextUndo",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 12
-      }
-    },
-    {
-      "id": "redoCorrection",
+      "id": "brushRedoPaper",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "previewRedo",
+      "id": "brushRedoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
-        "maxDimension": 850,
-        "background": true
+        "maxDimension": 800,
+        "background": false
       }
     },
     {
-      "id": "contextFinal",
-      "tool": "get_ink_context",
+      "id": "brushUndoPaperCleanup",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "brushUndoStrokeCleanup",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "dryPropose",
+      "tool": "propose_ink_edit",
       "input": {
-        "maxObjects": 12
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-single-drybrush-001",
+          "operation": "stroke.create.v1",
+          "targets": [],
+          "arguments": {
+            "kind": "drybrush",
+            "color": "#42689a",
+            "size": 72,
+            "opacity": 0.85,
+            "flow": 0.75,
+            "wetness": 0.2,
+            "grain": 0.82,
+            "bristle": 0.78,
+            "samples": [
+              {
+                "x": -120,
+                "y": -20,
+                "pressure": 0.3,
+                "timestamp": 0
+              },
+              {
+                "x": 0,
+                "y": 70,
+                "pressure": 0.9,
+                "timestamp": 24
+              },
+              {
+                "x": 120,
+                "y": -40,
+                "pressure": 0.6,
+                "timestamp": 48
+              }
+            ]
+          }
+        }
       }
     },
     {
-      "id": "historyFinal",
+      "id": "dryApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "dryPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "dryExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "dryPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "dryApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "dryBaseline",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
+    },
+    {
+      "id": "dryPaperPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-single-drybrush-paper-001",
+          "operation": "page.paper.set.v1",
+          "targets": [],
+          "arguments": {
+            "key": "absorbency",
+            "value": 0.05
+          }
+        }
+      }
+    },
+    {
+      "id": "dryPaperApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "dryPaperPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "dryPaperExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "dryPaperPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "dryPaperApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "dryChanged",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
+      }
+    },
+    {
+      "id": "dryHistory",
       "tool": "get_ink_history",
       "input": {}
     },
     {
-      "id": "exportPng",
-      "tool": "export_ink_asset",
+      "id": "dryUndoPaper",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "dryUndoPreview",
+      "tool": "get_ink_preview",
       "input": {
-        "format": "png",
-        "scope": "artboard",
-        "ppi": 144,
-        "background": true
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
       }
     },
     {
-      "id": "inspectExport",
-      "tool": "inspect_ink_output",
+      "id": "dryRedoPaper",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "dryRedoPreview",
+      "tool": "get_ink_preview",
       "input": {
-        "handleId": {
-          "$ref": "exportPng.result.handleId"
-        }
+        "scope": "content",
+        "maxDimension": 800,
+        "background": false
       }
     }
   ]
