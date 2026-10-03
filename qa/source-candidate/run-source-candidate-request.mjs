@@ -284,6 +284,14 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
       targetFill:applied?.fill||null,targetStroke:applied?.stroke||null,
       targetMatrix:applied?.matrix||null,
       instanceMatrix:instanceObject?.matrix||null,
+      layerTree:app.page().layers.map(layer=>({
+        id:layer.id,visible:layer.visible,opacity:layer.opacity,
+        objects:(layer.objects||[]).map(object=>({
+          id:object.id,type:object.type,matrix:object.matrix||null,fill:object.fill||null,opacity:object.opacity,visible:object.visible,
+          materialAppearance:object.materialAppearance||null,
+          children:(object.children||[]).map(child=>({id:child.id,type:child.type,matrix:child.matrix||null,fill:child.fill||null,opacity:child.opacity,visible:child.visible,materialAppearance:child.materialAppearance||null}))
+        }))
+      })),
       scratchMaterialHash:scratchHash(applied),
       scratchOrdinaryHash:scratchHash(ordinaryClone)
     }));
