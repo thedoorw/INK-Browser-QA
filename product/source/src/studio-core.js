@@ -54,7 +54,7 @@ export function installRenderer(app){const renderer=app.renderer,originalDraw=re
     const hasStack=(o.adjustments||[]).length||(o.filterStack||[]).length||(o.effects||[]).length||o.rasterMask;
     const hasRasterState=Boolean(o.rasterState?.colorRaster);
     if(!hasStack&&!hasRasterState)return originalDrawImage(ctx,o);
-    const key=JSON.stringify([o.id||o.src,app.doc.modifiedAt,hasRasterState?'raster-state':o.src,o.adjustments,o.filterStack,o.effects,o.rasterMask]);
+    const key=JSON.stringify([o.id||o.src,hasRasterState?app.doc.modifiedAt:null,hasRasterState?'raster-state':o.src,o.adjustments,o.filterStack,o.effects,o.rasterMask]);
     let canvas=renderer.studioImageCache.get(key);
     if(!canvas){
       let sourceImageData=null;
