@@ -1,0 +1,51 @@
+name: INK Cluster D Candidate QA
+
+on:
+  push:
+    branches:
+      - work/ink-cluster-d-material-recipe-001
+    paths:
+      - product/source/src/editor/chat-bounded-edit.js
+      - product/source/src/agent/capability-registry.js
+      - product/source/src/agent/public-creative-api.js
+      - qa/source-candidate/run-source-candidate-request.mjs
+      - .github/workflows/ink-cluster-d-candidate.yml
+
+permissions:
+  contents: read
+
+jobs:
+  exact-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - name: Syntax gates
+        run: |
+          node --check product/source/src/editor/chat-bounded-edit.js
+          node --check product/source/src/agent/capability-registry.js
+          node --check product/source/src/agent/public-creative-api.js
+          node --check qa/source-candidate/run-source-candidate-request.mjs
+      - name: Cluster D browser qualification
+        run: |
+          mkdir -p qa-out
+          cat > qa-out/cluster-d.request.json <<JSON
+          {"schema":"INK-SOURCE-CANDIDATE-QA-REQUEST","version":1,"requestId":"cluster-d-material-recipe-${GITHUB_SHA}","candidateSha":"${GITHUB_SHA}","case":"cluster-d-material-recipe","regressions":false}
+          JSON
+          node qa/source-candidate/run-source-candidate-request.mjs qa-out/cluster-d.request.json product/source qa-out/cluster-d.result.json qa-out/cluster-d.png
+      - name: Cross-capability browser regressions
+        run: |
+          cat > qa-out/regressions.request.json <<JSON
+          {"schema":"INK-SOURCE-CANDIDATE-QA-REQUEST","version":1,"requestId":"cluster-d-regressions-${GITHUB_SHA}","candidateSha":"${GITHUB_SHA}","case":"align-distribute-c2","regressions":true}
+          JSON
+          node qa/source-candidate/run-source-candidate-request.mjs qa-out/regressions.request.json product/source qa-out/regressions.result.json qa-out/regressions.png
+      - name: Upload QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-cluster-d-candidate-${{ github.sha }}
+          path: qa-out/
+          if-no-files-found: error
+          retention-days: 14
