@@ -1789,7 +1789,7 @@ const RASTER_STACK_B2_CASE = String.raw`(async()=>{
 })()`;
 
 
-const ARTBOARD_C4_CASE = String.raw\`(async()=>{
+const ARTBOARD_C4_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke)throw new Error('INK_PUBLIC_API_UNAVAILABLE');
   const required=['describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','undo_ink','redo_ink','get_ink_preview','get_ink_history'];
@@ -1877,7 +1877,7 @@ const ARTBOARD_C4_CASE = String.raw\`(async()=>{
     redoStatus:redo.status,
     finalArtboard:clone(app.page().artboard)
   };
-})()\`;
+})()`;
 
 const SNAP_GUIDES_C3_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
