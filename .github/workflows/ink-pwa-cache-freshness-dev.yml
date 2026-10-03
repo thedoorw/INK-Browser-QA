@@ -1,0 +1,53 @@
+name: INK PWA Cache Freshness DEV Evidence
+
+on:
+  push:
+    branches:
+      - work/pwa-cache-freshness-001
+    paths:
+      - product/source/**
+      - qa/pwa-cache-freshness.test.mjs
+      - qa/pwa-cache-freshness-browser.mjs
+      - .github/workflows/ink-pwa-cache-freshness-dev.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-pwa-cache-freshness-dev
+  cancel-in-progress: true
+
+jobs:
+  pwa-cache-freshness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify generated build identity
+        run: node product/source/generate-build-identity.mjs --check
+
+      - name: Run source guards
+        run: node --test qa/pwa-cache-freshness.test.mjs
+
+      - name: Materialize previous deployed-source baseline
+        run: |
+          git worktree add "$RUNNER_TEMP/ink-pwa-baseline" d426147bd1b450bc0924f8bbbde959111f9d3314
+
+      - name: Run real Chromium reload / reopen / offline lifecycle
+        run: |
+          mkdir -p qa/evidence/pwa-cache-freshness-001
+          node qa/pwa-cache-freshness-browser.mjs \
+            "$RUNNER_TEMP/ink-pwa-baseline/product/source" \
+            "$GITHUB_WORKSPACE/product/source" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-cache-freshness-001/browser-report.json"
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-pwa-cache-freshness-${{ github.sha }}
+          path: qa/evidence/pwa-cache-freshness-001/browser-report.json
+          if-no-files-found: error
