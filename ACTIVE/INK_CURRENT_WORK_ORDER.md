@@ -1315,3 +1315,17 @@ C019 DEV → exact candidate + QA/evidence → STOP
 ```
 
 Keep the current B3 local raster/masks work independent. Do not let C/D/C019 branches merge themselves, deploy to `thedoorw/INK`, or disturb active UI/PWA/C06 owners. FORMAT_VERSION remains 4.
+
+## Cluster C authority closure — 2026-10-03
+
+Cluster C C1–C4 is now CLOSED / merged / deployed / Formal Live qualified. C4 PR #151 exact candidate `6dca38862352a5ffcd2193b943c017f70eecd4e2` was accepted, integrated at source `701c22beabd873376c71dc2dd15abc8bfe073732`, deployed, and passed Formal Live run `37113424982`. C3 PR #149 candidate plus snap/guide Formal Live evidence is also closed. Full record: `working/INK_CLUSTER_C_LAYOUT_PAGE_ARTBOARD_AUTHORITY_CLOSURE_20261003.md`.
+
+Current authority queue:
+```text
+Cluster C = CLOSED / DO NOT RESTART
+Cluster D = independent DEV → exact candidate + evidence → STOP → authority review
+C019 = independent DEV → exact candidate + evidence → STOP → authority review
+B3 / advanced mutable raster ingest = CLOSED / DO NOT REOPEN
+UI PR #109 / PWA / C06 / New Document = separate owners / untouched
+FORMAT_VERSION = 4 / PRESERVE
+```

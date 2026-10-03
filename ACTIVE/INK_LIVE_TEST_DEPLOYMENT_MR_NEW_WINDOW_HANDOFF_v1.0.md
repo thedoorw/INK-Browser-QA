@@ -235,3 +235,9 @@ Cluster D 與 C019 已各有獨立 DEV branch；等它們交 exact candidate + e
 
 不碰 UI PR #109、PWA、C06、New Document。FORMAT_VERSION 維持 4。
 ```
+
+## Post-handoff authority update — Cluster C closed 2026-10-03
+
+Cluster C C1–C4 is CLOSED / merged / deployed / Formal Live qualified. PR #151 C4 was accepted and integrated/deployed at exact source `701c22beabd873376c71dc2dd15abc8bfe073732`; Formal Live run `37113424982` PASS. C3 PR #149 is also closed with candidate and Formal Live snap/guide evidence. See `working/INK_CLUSTER_C_LAYOUT_PAGE_ARTBOARD_AUTHORITY_CLOSURE_20261003.md`.
+
+Do not reopen Cluster C. Continue to wait for Cluster D and C019 independent DEV exact candidate + evidence returns, then review → integrate → exact-SHA deploy → Formal Live. B3 and advanced mutable raster ingest remain closed. UI PR #109, PWA, C06 and New Document remain out of scope. `FORMAT_VERSION=4`.
