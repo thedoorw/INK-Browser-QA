@@ -1650,8 +1650,9 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
       try { createMaterialTemplate(clone(document), task.arguments.template, { replace: false }); }
       catch (error) { editFail('MATERIAL_TEMPLATE_INVALID', { actual: error?.code || error?.message || 'UNKNOWN' }); }
     } else {
-      const template = getMaterialTemplate(document, task.arguments.templateId);
-      if (!template) editFail('MATERIAL_TEMPLATE_MISSING', { actual: task.arguments.templateId });
+      let template;
+      try { template = getMaterialTemplate(document, task.arguments.templateId); }
+      catch { editFail('MATERIAL_TEMPLATE_MISSING', { actual: task.arguments.templateId }); }
       if (String(template.templateVersion) !== String(task.arguments.templateVersion)) {
         editFail('MATERIAL_TEMPLATE_VERSION_MISMATCH', { expected: task.arguments.templateVersion, actual: template.templateVersion ?? null });
       }
