@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C3-snap-guides-live-001",
+  "requestId": "clusterC-C3-snap-guides-live-002",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "3aa4c8268851d778aeea9fadcc99b53c4aed8ad0",
   "steps": [
@@ -18,83 +18,6 @@
       "input": {
         "idOrToolName": "page.snap.set.v1"
       }
-    },
-    {
-      "id": "describeGuideAdd",
-      "tool": "describe_ink_capability",
-      "input": {
-        "idOrToolName": "guide.add.v1"
-      }
-    },
-    {
-      "id": "staleSnapPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-stale-snap",
-          "operation": "page.snap.set.v1",
-          "targets": [],
-          "arguments": {
-            "key": "grid",
-            "value": true
-          }
-        }
-      }
-    },
-    {
-      "id": "tempGuidePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-tempGuide",
-          "operation": "guide.add.v1",
-          "targets": [],
-          "arguments": {
-            "id": "live-c3-temp-guide",
-            "orientation": "vertical",
-            "position": 44
-          }
-        }
-      }
-    },
-    {
-      "id": "tempGuideApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "tempGuidePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "tempGuideExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "tempGuidePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "tempGuideApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "staleSnapApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "staleSnapPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "undoTempGuide",
-      "tool": "undo_ink",
-      "input": {}
     },
     {
       "id": "snapGridPropose",
@@ -260,23 +183,6 @@
       }
     },
     {
-      "id": "lockedMoveProbe",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-locked-move",
-          "operation": "guide.move.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "position": 220
-          }
-        }
-      }
-    },
-    {
       "id": "guideUnlockPropose",
       "tool": "propose_ink_edit",
       "input": {
@@ -433,43 +339,9 @@
       "input": {}
     },
     {
-      "id": "restoredGuideProbe",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-restored-guide-probe",
-          "operation": "guide.move.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "position": 190
-          }
-        }
-      }
-    },
-    {
       "id": "redoRemove",
       "tool": "redo_ink",
       "input": {}
-    },
-    {
-      "id": "missingGuideProbe",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-missing-guide-probe",
-          "operation": "guide.move.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "position": 190
-          }
-        }
-      }
     },
     {
       "id": "historyFinal",
