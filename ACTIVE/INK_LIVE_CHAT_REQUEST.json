@@ -1,15 +1,15 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-spot-heal-live-001",
+  "requestId": "clusterB-B3-local-retouch-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "c6ae51d96d95e2567b9b7ef6d1e55280cfb2cee0",
+  "expectedSourceSha": "ca4bf6913efe1564eb572988a306120b3c008539",
   "steps": [
     {
       "id": "describe",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "image.raster.spotHeal.v1"
+        "idOrToolName": "image.raster.localRetouch.v1"
       }
     },
     {
@@ -17,19 +17,19 @@
       "tool": "import_ink_raster",
       "input": {
         "options": {
-          "name": "B3 Spot Heal Raster",
+          "name": "B3 Local Retouch Raster",
           "type": "image/png",
-          "intent": "B3 Spot Healing formal Live qualification"
+          "intent": "B3 non-source local retouch formal Live qualification"
         }
       },
       "file": {
-        "path": "qa/fixtures/rose-window/rose-window-primary.png",
-        "name": "rose-window-primary.png",
+        "path": "working/evidence/ink-ui-sup08-11-20261002/before-options-smudge-crop.png",
+        "name": "before-options-smudge-crop.png",
         "type": "image/png"
       }
     },
     {
-      "id": "previewBefore",
+      "id": "previewBaseline",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -38,38 +38,38 @@
       }
     },
     {
-      "id": "staleHealPropose",
+      "id": "stalePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-spot-stale",
-          "operation": "image.raster.spotHeal.v1",
+          "taskId": "live-b3-local-stale",
+          "operation": "image.raster.localRetouch.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "x": 543,
-            "y": 724,
-            "radius": 24,
-            "opacity": 1,
-            "hardness": 0.85,
-            "neighborRadius": 3
+            "type": "burn",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "strength": 0.7
           }
         }
       }
     },
     {
-      "id": "pixelPropose",
+      "id": "bucketPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-spot-intervening",
+          "taskId": "live-b3-local-intervening",
           "operation": "image.raster.paintBucket.v1",
           "targets": [
             {
@@ -88,38 +88,38 @@
       }
     },
     {
-      "id": "pixelApprove",
+      "id": "bucketApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "pixelPropose.result.result.proposalId"
+          "$ref": "bucketPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "pixelExecute",
+      "id": "bucketExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "pixelPropose.result.result.proposalId"
+          "$ref": "bucketPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "pixelApprove.result.result.approvalToken"
+          "$ref": "bucketApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "staleHealApprove",
+      "id": "staleApprove",
       "tool": "approve_ink_edit",
       "allowFailure": true,
       "input": {
         "proposalId": {
-          "$ref": "staleHealPropose.result.result.proposalId"
+          "$ref": "stalePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "undoPixel",
+      "id": "undoBucket",
       "tool": "undo_ink",
       "input": {}
     },
@@ -133,58 +133,526 @@
       }
     },
     {
-      "id": "healPropose",
+      "id": "dodgePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-spot-main",
-          "operation": "image.raster.spotHeal.v1",
+          "taskId": "live-b3-local-dodge",
+          "operation": "image.raster.localRetouch.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "x": 543,
-            "y": 724,
-            "radius": 24,
-            "opacity": 1,
-            "hardness": 0.85,
-            "neighborRadius": 3
+            "type": "dodge",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "strength": 0.7
           }
         }
       }
     },
     {
-      "id": "healApprove",
+      "id": "dodgeApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "healPropose.result.result.proposalId"
+          "$ref": "dodgePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "healExecute",
+      "id": "dodgeExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "healPropose.result.result.proposalId"
+          "$ref": "dodgePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "healApprove.result.result.approvalToken"
+          "$ref": "dodgeApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "historyAfter",
-      "tool": "get_ink_history",
+      "id": "dodgePreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "dodgeUndo",
+      "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewAfter",
+      "id": "dodgeUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "dodgeRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "dodgeRedoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "dodgeRestore",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "burnPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-local-burn",
+          "operation": "image.raster.localRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "burn",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "strength": 0.7
+          }
+        }
+      }
+    },
+    {
+      "id": "burnApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "burnPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "burnExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "burnPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "burnApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "burnPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "burnUndo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "burnUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "burnRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "burnRedoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "burnRestore",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "spongePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-local-sponge",
+          "operation": "image.raster.localRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "sponge",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "strength": 0.8,
+            "mode": "saturate"
+          }
+        }
+      }
+    },
+    {
+      "id": "spongeApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "spongePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "spongeExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "spongePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "spongeApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "spongePreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "spongeUndo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "spongeUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "spongeRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "spongeRedoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "spongeRestore",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "localBlurPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-local-localBlur",
+          "operation": "image.raster.localRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "localBlur",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "strength": 1,
+            "kernelRadius": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "localBlurApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "localBlurPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "localBlurExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "localBlurPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "localBlurApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "localBlurPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "localBlurUndo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "localBlurUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "localBlurRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "localBlurRedoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "localBlurRestore",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "localSharpenPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-local-localSharpen",
+          "operation": "image.raster.localRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "localSharpen",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "amount": 2,
+            "kernelRadius": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "localSharpenApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "localSharpenPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "localSharpenExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "localSharpenPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "localSharpenApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "localSharpenPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "localSharpenUndo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "localSharpenUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "localSharpenRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "localSharpenRedoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "localSharpenRestore",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "colorReplacementPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-b3-local-colorReplacement",
+          "operation": "image.raster.localRetouch.v1",
+          "targets": [
+            {
+              "$ref": "importRaster.createdRefs.0"
+            }
+          ],
+          "arguments": {
+            "type": "colorReplacement",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "replacementColor": "#2d74cf",
+            "tolerance": 48,
+            "strength": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "colorReplacementApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "colorReplacementPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "colorReplacementExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "colorReplacementPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "colorReplacementApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "colorReplacementPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "colorReplacementUndo",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "colorReplacementUndoPreview",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "colorReplacementRedo",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "colorReplacementRedoPreview",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
@@ -199,20 +667,20 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "clusterB-B3-live-spot-noop",
-          "operation": "image.raster.spotHeal.v1",
+          "taskId": "live-b3-local-noop",
+          "operation": "image.raster.localRetouch.v1",
           "targets": [
             {
               "$ref": "importRaster.createdRefs.0"
             }
           ],
           "arguments": {
-            "x": 543,
-            "y": 724,
-            "radius": 24,
-            "opacity": 0,
-            "hardness": 0.85,
-            "neighborRadius": 3
+            "type": "dodge",
+            "x": 640,
+            "y": 18,
+            "radius": 400,
+            "hardness": 0.9,
+            "strength": 0
           }
         }
       }
@@ -240,37 +708,18 @@
       }
     },
     {
-      "id": "undoHeal",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "previewUndo",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "redoHeal",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "previewRedo",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
       "id": "historyFinal",
       "tool": "get_ink_history",
       "input": {}
+    },
+    {
+      "id": "previewFinal",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
     }
   ]
 }
