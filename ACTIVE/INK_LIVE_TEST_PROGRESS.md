@@ -962,3 +962,55 @@ B3_OVERALL = PARTIAL
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## B3.3 Spot Healing — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+B3_SPOT_HEAL = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+B3_OVERALL = PARTIAL
+```
+
+Authority:
+- bounded operation: `image.raster.spotHeal.v1`;
+- exactly one stable editable native 8-bit RGB image target;
+- existing `spotHealing()` remains the only retouch algorithm authority;
+- mutation stays on existing `rasterState.colorRaster`;
+- existing raster pixel + rasterMask target fingerprints provide stale protection;
+- existing scoped History and Renderer cache invalidation are reused;
+- no pointer emulation, inferred source point, raw mask/pixel output, second raster/retouch/Renderer/History authority, UI change, or FORMAT_VERSION change.
+
+Source/candidate:
+- PR #140 merged.
+- exact candidate: `0551f4516ea197d60a8cae711abf2db7ab92c2c4`.
+- merged/deployed source: `c6ae51d96d95e2567b9b7ef6d1e55280cfb2cee0`.
+- candidate request: `clusterB-B3-spot-heal-candidate-001-regressions`.
+- candidate result commit: `4a8c7d4fb62a71379e5026b651c31da97d2fb79f`.
+- candidate run `37097045536`; artifact `11264846714`; digest `sha256:b40ebfba84fe1b5ae4752580d4d867f2056704401d9083b9a84508ba70daf1b3`.
+- raster `56c8e8cb → 73c4534b`; Preview `97b6669b → afea5d15`; exact Undo/Redo.
+- 64 changed pixels / 192 changed channels.
+- stale and opacity=0 no-op rejection PASS.
+- B3.2 Mask / B3.1 Paint Bucket / B2 brightnessContrast regressions PASS.
+
+Formal Live:
+- request `clusterB-B3-spot-heal-live-001`.
+- request commit `b3c1b8f77a0d4369508ce811506b423a9ed000ad`.
+- result commit `83e1b71384278c78e286d45e05f53c0aef7a2c50`.
+- run `37097210478`; artifact `11264389043`; digest `sha256:243d43a47ccf4493f18aa00d1b910e55984703050d8b08f2c9557862b001f253`.
+- exact source verified; `apiReady=true`; 23 named tools.
+- 1086×1448 raster: 1789 pixels / 5359 channels changed.
+- Preview `fnv1a32:34d01658 → fnv1a32:7fd66f8f`; Undo `34d01658`; Redo `7fd66f8f`.
+- intervening Paint Bucket → stale approval rejected `CHAT_EDIT_TARGET_STALE`.
+- opacity=0 repeat rejected `CHAT_EDIT_NO_OP`.
+- History: editable raster import + scoped `CHAT raster Spot Healing`.
+
+```text
+B3_PAINT_BUCKET = CLOSED / FORMAL LIVE QUALIFIED
+B3_RASTER_MASK = CLOSED / FORMAL LIVE QUALIFIED
+B3_SPOT_HEAL = CLOSED / FORMAL LIVE QUALIFIED
+NEXT_B3 = OTHER_LOCAL_RETOUCH / SOURCE_DEPENDENT_RETOUCH
+B3_OVERALL = PARTIAL
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
