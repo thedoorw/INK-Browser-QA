@@ -1320,3 +1320,10 @@ NEXT_CLUSTER_C = C3_SNAP_SETTINGS_AND_RULER_GUIDES
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## Core spatial-batch optimization 003 — CLOSED 2026-10-03
+
+PR #150 accepted, merged, deployed and Formal Live qualified at e139682a8c374e275061872ba9f27bc06ca0d492.46 local checks; exact candidate browser native16-object batch/Preview/Undo/Redo plus A1/A2/A3/A4/A5/B2/B4/C1/C2/C3 PASS. Formal Live run 37109933114 verifies exact source, native batch/query/Undo/Redo,3000-object20-cycle checks,previous caches,B4 and C3 steps PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_003_AUTHORITY_CLOSURE_20261003.md).
+
+Bounded batch repair only; no heap/leak or hour-long endurance claim. Existing UI/C06/capability owners remain independent; no next optimization package is automatically opened.

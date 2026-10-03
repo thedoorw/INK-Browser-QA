@@ -1,0 +1,80 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_STABILITY_003_MEASUREMENT",
+  "version": 1,
+  "date": "2026-10-03",
+  "branch": "work/ink-core-performance-stability-003",
+  "baselineSha": "e6486e1efb351597dd3062df7b5f3f1baf012167",
+  "focus": "large-document multi-object spatial-index synchronization",
+  "reproducedBottleneck": {
+    "status": "REPRODUCED",
+    "sourceCause": [
+      "PageSpatialIndex.syncObjects() called syncObject() once per changed id.",
+      "syncObject() called findPageObject(), which materializes walkPageObjects(page) for each id.",
+      "upsertObject() also performs quadtree-wide remove and items.filter for each id.",
+      "Large multi-object transform/align operations therefore repeat page/index work approximately K times."
+    ],
+    "productionEntry": "InkApp.queueSpatialSelection() -> ensureSpatialIndex() -> PageSpatialIndex.syncObjects()"
+  },
+  "isolatedMeasurements": {
+    "runtime": "Node v22.16.0 / performance.now()",
+    "trialsPerCell": 11,
+    "workload": "flat page objects with existing hierarchy/quadtree algorithms; mutate K object translations then synchronize the spatial index",
+    "rows": [
+      {
+        "objects": 1000,
+        "batch": 1,
+        "currentMedianMs": 0.126851,
+        "candidateMedianMs": 0.104127,
+        "ratio": 1.2182
+      },
+      {
+        "objects": 1000,
+        "batch": 12,
+        "currentMedianMs": 1.145054,
+        "candidateMedianMs": 1.078874,
+        "ratio": 1.0613
+      },
+      {
+        "objects": 1000,
+        "batch": 13,
+        "currentMedianMs": 0.863149,
+        "candidateMedianMs": 0.231188,
+        "ratio": 3.7335
+      },
+      {
+        "objects": 3000,
+        "batch": 100,
+        "currentMedianMs": 23.020202,
+        "candidateMedianMs": 0.787415,
+        "ratio": 29.2352
+      },
+      {
+        "objects": 5000,
+        "batch": 250,
+        "currentMedianMs": 93.140355,
+        "candidateMedianMs": 1.485135,
+        "ratio": 62.7151
+      }
+    ],
+    "note": "Timing is isolated source-algorithm evidence, not browser frame/GPU timing and not a Formal Live performance claim."
+  },
+  "repair": {
+    "strategy": "Keep per-object incremental synchronization for unique batch size <= existing quadtree capacity; for larger batches call the existing PageSpatialIndex.rebuild() once.",
+    "threshold": "this.capacity (default 12)",
+    "newAuthority": false,
+    "newCache": false,
+    "formatVersionChanged": false,
+    "uiChanged": false
+  },
+  "memory": {
+    "heapProfilerAvailable": false,
+    "leakClaim": false,
+    "statement": "No heap evidence was collected; no memory-leak claim is made."
+  },
+  "excluded": [
+    "dropShadow",
+    "UI",
+    "FORMAT_VERSION",
+    "new Core/Renderer/History authority"
+  ]
+}
