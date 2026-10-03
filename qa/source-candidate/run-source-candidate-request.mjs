@@ -126,7 +126,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -647,6 +647,87 @@ const RASTER_NAMED_TOOL_CASE = String.raw`(async()=>{
   const restored=flatObjects().find(item=>item.id===object.id);
   if(redone?.status==='FAILED'||!restored?.rasterState?.colorRaster) throw new Error('RASTER_REDO_FAILED');
   return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
+})()`;
+
+const RASTER_ADVANCED_INGEST_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['import_ink_raster','describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']) if(!toolNames.includes(name)) throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  const flatObjects=()=>app.page().layers.flatMap(layer=>layer.objects||[]);
+  const waitFrames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const findField=(value,key,depth=0)=>{if(value==null||depth>12||typeof value!=='object')return undefined;if(Object.prototype.hasOwnProperty.call(value,key))return value[key];for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}return undefined;};
+  const fnv=value=>{const text=typeof value==='string'?value:JSON.stringify(value);let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');};
+  const preview=async()=>{await waitFrames();const r=await Promise.resolve(api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:800,background:true}));if(r?.status==='FAILED')throw new Error('PREVIEW_FAILED:'+JSON.stringify(r.diagnostics||[]));return {status:r.status,fingerprint:findField(r,'renderFingerprint')||null};};
+
+  const descriptor=await Promise.resolve(api.tools.invoke('describe_ink_capability',{idOrToolName:'raster.import'}));
+  if(descriptor?.status==='FAILED')throw new Error('RASTER_DESCRIPTOR_FAILED');
+  const descriptorText=JSON.stringify(descriptor);
+  for(const format of ['PSD','TIFF','EXR'])if(!descriptorText.includes(format))throw new Error('ADVANCED_FORMAT_NOT_DISCOVERABLE:'+format);
+  if(!descriptorText.includes('RAW')||!descriptorText.includes('decoder'))throw new Error('RAW_BOUNDARY_NOT_DISCOVERABLE');
+
+  const formatCore=await import('./src/image/format-interoperability.js');
+  const normalized=await import('./src/image/formats/normalized-payload.js');
+  const width=16,height=12,pixels=width*height;
+  const rgb8=new Uint8Array(pixels*3),alpha8=new Uint8Array(pixels);
+  for(let i=0;i<pixels;i++){const x=i%width,y=Math.floor(i/width),o=i*3;rgb8[o]=(30+x*11+y*3)%256;rgb8[o+1]=(80+x*5+y*13)%256;rgb8[o+2]=(140+x*7+y*9)%256;alpha8[i]=255;}
+  const payload8=normalized.createNormalizedPayload({format:'QA',width,height,bitDepth:8,colorMode:'RGB',data:rgb8,alpha:alpha8,metadata:{qa:'advanced-ingest'}});
+  const rgb32=new Float32Array(pixels*3),alpha32=new Float32Array(pixels);
+  for(let i=0;i<pixels;i++){const x=i%width,y=Math.floor(i/width),o=i*3;rgb32[o]=.2+x/12;rgb32[o+1]=.15+y/10;rgb32[o+2]=.3+(x+y)/20;alpha32[i]=1;}
+  const payload32=normalized.createNormalizedPayload({format:'QA',width,height,bitDepth:32,colorMode:'RGB',data:rgb32,alpha:alpha32,metadata:{qa:'advanced-ingest-exr'}});
+  const specs=[
+    {format:'PSD',name:'candidate-advanced.psd',type:'image/vnd.adobe.photoshop',bytes:formatCore.encodeFormat('PSD',payload8),bitDepth:8},
+    {format:'TIFF',name:'candidate-advanced.tiff',type:'image/tiff',bytes:formatCore.encodeFormat('TIFF',payload8),bitDepth:8},
+    {format:'EXR',name:'candidate-advanced.exr',type:'image/x-exr',bytes:formatCore.encodeFormat('EXR',payload32),bitDepth:32}
+  ];
+  app.history.clear();
+  const imports=[];
+  for(const spec of specs){
+    const file=new File([spec.bytes],spec.name,{type:spec.type});
+    const imported=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file},options:{name:'QA '+spec.format,type:spec.type,intent:'advanced mutable raster ingest candidate QA'}}));
+    if(imported?.status==='FAILED')throw new Error('ADVANCED_IMPORT_FAILED:'+spec.format+':'+JSON.stringify(imported.diagnostics||[]));
+    const ref=imported?.createdRefs?.[0];if(!ref?.objectId)throw new Error('ADVANCED_REF_MISSING:'+spec.format);
+    await waitFrames();
+    const object=flatObjects().find(item=>item.id===ref.objectId);
+    if(!object||object.type!=='image'||!object.rasterState?.colorRaster)throw new Error('ADVANCED_NATIVE_RASTER_MISSING:'+spec.format);
+    if(object.rasterState?.source?.format!==spec.format)throw new Error('ADVANCED_SOURCE_FORMAT:'+spec.format+':'+object.rasterState?.source?.format);
+    if(object.rasterState.colorRaster.bitDepth!==spec.bitDepth)throw new Error('ADVANCED_BIT_DEPTH:'+spec.format);
+    if(findField(imported,'format')!==spec.format)throw new Error('ADVANCED_RESULT_FORMAT:'+spec.format+':'+findField(imported,'format'));
+    if(findField(imported,'importRoute')!=='advanced-format')throw new Error('ADVANCED_ROUTE:'+spec.format);
+    const latest=app.history.undoStack.at(-1);
+    if(latest?.label!=='匯入格式影像')throw new Error('ADVANCED_HISTORY_LABEL:'+spec.format+':'+latest?.label);
+    const p=await preview();
+    imports.push({format:spec.format,ref,objectId:object.id,bitDepth:object.rasterState.colorRaster.bitDepth,colorMode:object.rasterState.colorRaster.colorMode,preview:p});
+  }
+
+  const psd=imports.find(item=>item.format==='PSD'),psdObject=flatObjects().find(item=>item.id===psd.objectId);
+  const beforeHash=fnv(psdObject.rasterState.colorRaster);
+  const task={schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-advanced-psd-edit',operation:'image.raster.paintBucket.v1',targets:[psd.ref],arguments:{x:0,y:0,color:'#20b86a',tolerance:0,contiguous:true,opacity:1}};
+  const proposed=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));if(proposed?.status==='FAILED')throw new Error('PSD_EDIT_PROPOSE_FAILED');
+  const proposalId=findField(proposed,'proposalId');
+  const approved=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));if(approved?.status==='FAILED')throw new Error('PSD_EDIT_APPROVE_FAILED');
+  const approvalToken=findField(approved,'approvalToken');
+  const executed=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken}));if(executed?.status==='FAILED'||findField(executed,'changed')!==true)throw new Error('PSD_EDIT_EXECUTE_FAILED:'+JSON.stringify(executed?.diagnostics||[]));
+  await waitFrames();
+  const afterHash=fnv(flatObjects().find(item=>item.id===psd.objectId).rasterState.colorRaster);
+  if(afterHash===beforeHash)throw new Error('PSD_EDIT_PIXELS_UNCHANGED');
+  const afterEditPreview=await preview();
+  const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undone?.status==='FAILED')throw new Error('PSD_EDIT_UNDO_FAILED');
+  await waitFrames();
+  const undoHash=fnv(flatObjects().find(item=>item.id===psd.objectId).rasterState.colorRaster);
+  if(undoHash!==beforeHash)throw new Error('PSD_EDIT_UNDO_HASH');
+  const redone=await Promise.resolve(api.tools.invoke('redo_ink',{}));if(redone?.status==='FAILED')throw new Error('PSD_EDIT_REDO_FAILED');
+  await waitFrames();
+  const redoHash=fnv(flatObjects().find(item=>item.id===psd.objectId).rasterState.colorRaster);
+  if(redoHash!==afterHash)throw new Error('PSD_EDIT_REDO_HASH');
+
+  const rawFile=new File([Uint8Array.from([82,65,87,84,1,2,3,4])],'candidate-camera.dng',{type:'image/x-adobe-dng'});
+  const raw=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file:rawFile},options:{name:'candidate-camera.dng',type:'image/x-adobe-dng'}}));
+  const rawCode=findField(raw,'code')||JSON.stringify(raw.diagnostics||[]);
+  if(raw?.status!=='FAILED'||!String(rawCode).includes('RAW_DECODER_UNAVAILABLE'))throw new Error('RAW_DECODER_BOUNDARY_NOT_ENFORCED:'+String(rawCode));
+
+  return {passed:true,operation:'raster.import',imports,psdMutation:{beforeHash,afterHash,undoHash,redoHash,afterEditPreview},rawRejected:true,rawCode:String(rawCode)};
 })()`;
 
 const RASTER_SOURCE_RETOUCH_B3_CASE = String.raw`(async()=>{
@@ -1495,7 +1576,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))))))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     if(request.naturalMediaCacheReview===true) caseResult.naturalMediaCacheReview=await evaluate(cdp,sessionId,NATURAL_MEDIA_CACHE_REVIEW_CASE,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
@@ -1512,10 +1593,10 @@ async function run(){
 await run();
 // Fresh installed-browser process/profile for each required cross-capability regression.
 const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
-if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
+if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
   const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
   primary.regressions=[];
-  for(const caseName of (batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
+  for(const caseName of (batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-advanced-ingest'?['raster-import-named-tool','raster-direct-paint-bucket-b3','raster-source-retouch-b3','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
     const prefix=path.resolve(process.argv[4])+'.'+caseName;
     await writeFile(prefix+'.request.json',JSON.stringify({...batchRequest,requestId:batchRequest.requestId+'-'+caseName,case:caseName,regressions:false,naturalMediaCacheReview:false}));
     const regression=spawn(process.execPath,[path.resolve(process.argv[1]),prefix+'.request.json',path.resolve(process.argv[3]),prefix+'.json',prefix+'.png'],{shell:false,stdio:'inherit'});
