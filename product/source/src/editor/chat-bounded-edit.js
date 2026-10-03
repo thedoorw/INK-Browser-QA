@@ -15,7 +15,7 @@ import { documentFingerprint } from '../document/integrity.js';
 import { paperProfileFingerprint } from '../render/paper-profile.js';
 import { eraseStrokeWithCircle } from '../stroke/edit.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
-import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, createAdjustment, createFilter, createLayerEffect, createLiquifyFilter } from '../image/image-core.js';
+import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, colorRasterToRgba8, createAdjustment, createColorRaster, createFilter, createLayerEffect, createLiquifyFilter, deserializeColorRaster, paintBucketFill, serializeColorRaster } from '../image/image-core.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -252,6 +252,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'image.blend.set.v1',
   'image.effect.add.v1',
   'image.liquify.add.v1',
+  'image.raster.paintBucket.v1',
   'path.warp.v1',
   'path.distort.v1',
   'path.perspective.v1',
@@ -445,6 +446,20 @@ function normalizeImageLiquifyArguments(raw = {}) {
     operations,
     opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
     maxWork: raw.maxWork == null ? null : boundedNumber(raw.maxWork, 'arguments.maxWork', { min: 1, max: 50000000, integer: true })
+  };
+}
+
+function normalizeImageRasterPaintBucketArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const color = boundedPaintToken(raw.color, 'arguments.color');
+  if (!/^#[0-9a-f]{6}([0-9a-f]{2})?$/i.test(color)) editFail('ARGUMENT_INVALID', { field: 'arguments.color' });
+  return {
+    x: boundedNumber(raw.x, 'arguments.x', { min: 0, max: 1e6 }),
+    y: boundedNumber(raw.y, 'arguments.y', { min: 0, max: 1e6 }),
+    color: color.toLowerCase(),
+    tolerance: boundedNumber(raw.tolerance ?? 0, 'arguments.tolerance', { min: 0, max: 255 }),
+    contiguous: boundedBoolean(raw.contiguous ?? true, 'arguments.contiguous'),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
   };
 }
 
@@ -1057,6 +1072,7 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'image.blend.set.v1') return normalizeImageBlendArguments(raw);
   if (operation === 'image.effect.add.v1') return normalizeImageEffectArguments(raw);
   if (operation === 'image.liquify.add.v1') return normalizeImageLiquifyArguments(raw);
+  if (operation === 'image.raster.paintBucket.v1') return normalizeImageRasterPaintBucketArguments(raw);
   if (operation === 'path.warp.v1') return normalizePathWarpArguments(raw);
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') return normalizePathProjectiveArguments(raw, operation);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
@@ -1097,6 +1113,7 @@ function operationTargetRules(operation) {
     || operation === 'image.blend.set.v1'
     || operation === 'image.effect.add.v1'
     || operation === 'image.liquify.add.v1'
+    || operation === 'image.raster.paintBucket.v1'
     || operation === 'path.warp.v1'
     || operation === 'path.distort.v1'
     || operation === 'path.perspective.v1'
@@ -2251,6 +2268,91 @@ function executeComponentReferenceRepairTask(app, task) {
   };
 }
 
+function rgbaImageDataToSerializedColorRaster(imageData) {
+  const pixels = imageData.width * imageData.height;
+  const rgb = new Uint8Array(pixels * 3);
+  const alpha = new Uint8Array(pixels);
+  for (let index = 0; index < pixels; index += 1) {
+    const source = index * 4, target = index * 3;
+    rgb[target] = imageData.data[source];
+    rgb[target + 1] = imageData.data[source + 1];
+    rgb[target + 2] = imageData.data[source + 2];
+    alpha[index] = imageData.data[source + 3];
+  }
+  return serializeColorRaster(createColorRaster({
+    width: imageData.width,
+    height: imageData.height,
+    bitDepth: 8,
+    colorMode: 'RGB',
+    data: rgb,
+    alpha
+  }));
+}
+
+function executeImageRasterPaintBucketTask(app, task) {
+  const ref = task.targets[0];
+  const found = findPageObject(app.page(), ref);
+  if (!found || found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster) {
+    editFail('RASTER_IMAGE_REQUIRED', { objectId: found?.object?.id || null });
+  }
+  const object = found.object;
+  const raster = deserializeColorRaster(object.rasterState.colorRaster);
+  if (raster.bitDepth !== 8 || raster.colorMode !== 'RGB') {
+    editFail('RASTER_FORMAT_UNSUPPORTED', { bitDepth: raster.bitDepth, colorMode: raster.colorMode });
+  }
+  const preview = colorRasterToRgba8(object.rasterState.colorRaster, { icc: object.rasterState.icc || null });
+  if (preview.status !== 'ok') editFail('RASTER_RENDER_UNSUPPORTED', { reason: preview.reason || preview.status });
+  const { width, height } = preview.imageData;
+  if (task.arguments.x >= width || task.arguments.y >= height) {
+    editFail('ARGUMENT_OUT_OF_RANGE', { field: 'arguments.x/y', width, height });
+  }
+
+  const result = paintBucketFill(preview.imageData, task.arguments);
+  let changedChannels = 0, changedPixels = 0;
+  for (let index = 0; index < result.data.length; index += 4) {
+    let pixelChanged = false;
+    for (let channel = 0; channel < 4; channel += 1) {
+      if (result.data[index + channel] !== preview.imageData.data[index + channel]) {
+        changedChannels += 1;
+        pixelChanged = true;
+      }
+    }
+    if (pixelChanged) changedPixels += 1;
+  }
+  if (!changedPixels) editFail('NO_OP', { operation: task.operation });
+
+  const nextColorRaster = rgbaImageDataToSerializedColorRaster(result);
+  app.history.pushScoped('CHAT raster Paint Bucket', [app.objectPath(found)], () => {
+    object.rasterState.colorRaster = nextColorRaster;
+    object.rasterState.source = {
+      ...(object.rasterState.source || {}),
+      format: 'INK',
+      chatEdited: true
+    };
+  });
+  app.spatialDirty = true;
+  app.renderer?.studioImageCache?.clear?.();
+  app.renderer?.studioLayerCache?.clear?.();
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    changed: true,
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: object.id }],
+    rasterEdit: {
+      type: 'paintBucket',
+      x: task.arguments.x,
+      y: task.arguments.y,
+      color: task.arguments.color,
+      tolerance: task.arguments.tolerance,
+      contiguous: task.arguments.contiguous,
+      opacity: task.arguments.opacity,
+      changedPixels,
+      changedChannels,
+      selectionBounds: clone(result.selection?.bounds || null)
+    }
+  };
+}
+
 function executeImageAdjustmentTask(app, task) {
   const ref = task.targets[0];
   const found = findPageObject(app.page(), ref);
@@ -2444,6 +2546,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'image.blend.set.v1') return executeImageBlendTask(app, task);
   if (task.operation === 'image.effect.add.v1') return executeImageEffectTask(app, task);
   if (task.operation === 'image.liquify.add.v1') return executeImageLiquifyTask(app, task);
+  if (task.operation === 'image.raster.paintBucket.v1') return executeImageRasterPaintBucketTask(app, task);
   if (task.operation === 'path.warp.v1' || task.operation === 'path.distort.v1' || task.operation === 'path.perspective.v1') return executePathDeformationTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
