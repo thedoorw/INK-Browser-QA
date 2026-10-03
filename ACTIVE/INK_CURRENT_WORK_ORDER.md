@@ -1,5 +1,9 @@
 # INK Current Work Order
 
+## CHAT / Core / Live next dispatch — 2026-10-03
+
+A5 is formally Live-qualified (source `20b06020bbb6b6142dc1f6952ebf26e14ed268dd`, run `37094249144`). Next bounded optimization package: [Main-program performance / stability DEV dispatch](INK_CORE_PERFORMANCE_STABILITY_DEV_DISPATCH_v1.0.md). Status: READY FOR EXECUTION; no executor start claimed. Existing UI/capability ownership remains unchanged.
+
 ## CHAT / Core / Live authority appointment — 2026-10-03
 
 USER appointed the current Codex authority for CHAT capability / Core / Live supervision. See [scoped authority](INK_CHAT_CORE_LIVE_AUTHORITY_v1.0.md). Existing execution owners continue; UI authority and the work orders below remain independent. Acceptance requires exact candidate review, integration, deployment identity and Formal Live closure.
