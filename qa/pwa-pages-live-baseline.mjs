@@ -74,14 +74,35 @@ try {
   await cdp.send('Page.enable',{},sessionId);
   await waitFor(cdp,sessionId,"document.readyState==='complete' && !!window.INK_APP",'app ready');
   await waitFor(cdp,sessionId,"!!navigator.serviceWorker.controller",'worker controller');
+  const appBuildId = await evaluate(cdp,sessionId,'window.INK_ARCHITECTURE?.buildId || null');
+  const caches = await evaluate(cdp,sessionId,'caches.keys()');
+  const controllerScriptURL = await evaluate(cdp,sessionId,'navigator.serviceWorker.controller?.scriptURL || null');
+  let identity = null;
+  let identitySource = 'worker-message';
+  try {
+    identity = await workerIdentity(cdp,sessionId);
+  } catch {
+    const cacheBuildId = (caches || []).map(key => {
+      const match = key.match(/^ink-build-(.+)-(?:shell|runtime)$/);
+      return match?.[1] || null;
+    }).find(Boolean);
+    identity = {
+      type:'INK_VERSION_FALLBACK',
+      buildId:appBuildId || cacheBuildId || null,
+      controllerScriptURL
+    };
+    identitySource = appBuildId ? 'app-build-id-fallback' : 'cache-key-fallback';
+  }
   const report = {
     schema:'INK_PWA_PAGES_BASELINE',
     version:1,
     status:'PASS',
     url,
-    identity:await workerIdentity(cdp,sessionId),
-    appBuildId:await evaluate(cdp,sessionId,'window.INK_ARCHITECTURE?.buildId || null'),
-    caches:await evaluate(cdp,sessionId,'caches.keys()'),
+    identity,
+    identitySource,
+    appBuildId,
+    caches,
+    controllerScriptURL,
     href:await evaluate(cdp,sessionId,'location.href'),
     capturedAt:new Date().toISOString(),
     ctrlF5Used:false,
