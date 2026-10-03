@@ -275,7 +275,7 @@ const STROKE_A2_CASE = String.raw`(async()=>{
   };
 })()`;
 
-const STROKE_ERASE_A4_CASE = String.raw\`(async()=>{
+const STROKE_ERASE_A4_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
   const toolNames=api.tools.registry().map(item=>item.name);
@@ -404,7 +404,7 @@ const STROKE_ERASE_A4_CASE = String.raw\`(async()=>{
     noOpCode:findField(noOpExecuted,'code'),
     controllerResult
   };
-})()\`;
+})()`;
 
 
 const PAPER_A3_CASE = String.raw`(async()=>{
