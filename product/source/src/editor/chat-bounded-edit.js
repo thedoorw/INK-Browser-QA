@@ -1610,6 +1610,29 @@ function recipeRegistryFingerprint(app) {
   return chatStateFingerprint(engine.list());
 }
 
+function validateStudioRecipeParameters(recipe, parameters) {
+  const specs = recipe?.parameters && typeof recipe.parameters === 'object' ? recipe.parameters : {};
+  for (const [name, value] of Object.entries(parameters || {})) {
+    const field = `arguments.parameters.${name}`;
+    const spec = specs[name];
+    if (!spec || typeof spec !== 'object') editFail('RECIPE_PARAMETER_UNKNOWN', { field, actual: name });
+    const type = String(spec.type || '').toLowerCase();
+    if (type === 'number' || type === 'integer') {
+      if (typeof value !== 'number' || !Number.isFinite(value) || (type === 'integer' && !Number.isInteger(value))) {
+        editFail('RECIPE_PARAMETER_TYPE', { field, expected: type, actual: typeof value });
+      }
+      if (Number.isFinite(Number(spec.min)) && value < Number(spec.min)) editFail('RECIPE_PARAMETER_RANGE', { field, expected: { min: Number(spec.min) }, actual: value });
+      if (Number.isFinite(Number(spec.max)) && value > Number(spec.max)) editFail('RECIPE_PARAMETER_RANGE', { field, expected: { max: Number(spec.max) }, actual: value });
+    } else if (type === 'boolean') {
+      if (typeof value !== 'boolean') editFail('RECIPE_PARAMETER_TYPE', { field, expected: type, actual: typeof value });
+    } else if (type === 'string' || type === 'color') {
+      if (typeof value !== 'string' || !value.trim() || value.length > 512) editFail('RECIPE_PARAMETER_TYPE', { field, expected: type, actual: typeof value });
+    }
+    const allowed = Array.isArray(spec.enum) ? spec.enum : Array.isArray(spec.values) ? spec.values : Array.isArray(spec.options) ? spec.options : null;
+    if (allowed && !allowed.some(item => Object.is(item, value))) editFail('RECIPE_PARAMETER_ENUM', { field, expected: allowed, actual: value });
+  }
+}
+
 function captureExpectedState(app, task, resolved) {
   const page = app.page();
   return {
@@ -1687,6 +1710,7 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
       editFail('RECIPE_VERSION_MISMATCH', { expected: task.arguments.recipeVersion, actual: recipe.version ?? null });
     }
     if (!recipe.capabilities?.supported) editFail('RECIPE_CAPABILITY_UNSUPPORTED', { actual: recipe.capabilities?.unsupported || [] });
+    validateStudioRecipeParameters(recipe, task.arguments.parameters);
     if (task.arguments.roles.length !== task.targets.length) editFail('RECIPE_ROLE_BINDING_COUNT_MISMATCH', { expected: task.targets.length, actual: task.arguments.roles.length });
   }
   if (CHAT_PAGE_OPERATION_SET.has(task.operation)) {
