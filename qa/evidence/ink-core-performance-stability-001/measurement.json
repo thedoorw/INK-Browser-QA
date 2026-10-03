@@ -1,0 +1,262 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_STABILITY_MEASUREMENT",
+  "version": 1,
+  "measuredAt": "2026-10-03",
+  "sourceRepository": "thedoorw/INK-Browser-QA",
+  "branch": "work/ink-core-performance-stability-001",
+  "baselineSha": "b3c1b8f77a0d4369508ce811506b423a9ed000ad",
+  "repairCommit": "f93aae7bf4efb02f910b29e04d60054a6f47fec7",
+  "path": "product/source/src/render/canvas2d/multi-channel-ink-canvas2d.js",
+  "environment": {
+    "harness": "source-exact isolated JavaScript execution with repository module bodies; Canvas2D pixel sink mocked only at final putImageData boundary",
+    "clock": "Date.now() millisecond resolution",
+    "browserFrameTiming": false,
+    "gpuTiming": false,
+    "heapProfiler": false,
+    "resourceRetentionEvidence": "renderer diagnostics/cacheEntries only"
+  },
+  "reproducedBottleneck": {
+    "cause": "Canvas2DMultiChannelInkRenderer.render() called prepareNaturalMediaRun(entries) before checking its existing render cache, so cache hits still repeated resample/stamp/transform/bounds work.",
+    "scope": "cacheable Canvas2D multichannel natural-media runs used by native Brush/DryBrush and accepted Blender/Smudge",
+    "previewNote": "preview.capture -> renderExportCanvas uses transient:true; that path intentionally does not use the render cache and is not changed by this repair."
+  },
+  "drawingRepresentative": {
+    "objects": [
+      {
+        "kind": "brush",
+        "points": 280
+      },
+      {
+        "kind": "drybrush",
+        "points": 280
+      }
+    ],
+    "backend": "canvas2d-multichannel",
+    "maxPixels": 220000,
+    "before": {
+      "coldMs": 2046,
+      "warmMs": [
+        45,
+        47,
+        53,
+        45,
+        41,
+        40
+      ],
+      "warmMedianMs": 45,
+      "outputHash": 3400334722
+    },
+    "after": {
+      "coldMs": 1806,
+      "warmMs": [
+        2,
+        2,
+        1,
+        2,
+        1,
+        2
+      ],
+      "warmMedianMs": 2,
+      "outputHash": 3400334722
+    },
+    "warmMedianReductionPercent": 95.56,
+    "warmSpeedup": 22.5
+  },
+  "mixerRepresentative": {
+    "objects": [
+      {
+        "kind": "brush",
+        "points": 280
+      },
+      {
+        "kind": "drybrush",
+        "points": 280
+      },
+      {
+        "kind": "blender",
+        "points": 220
+      },
+      {
+        "kind": "smudge",
+        "points": 220
+      }
+    ],
+    "backend": "canvas2d-multichannel",
+    "maxPixels": 220000,
+    "before": {
+      "coldMs": 1983,
+      "warmMs": [
+        67,
+        68,
+        59,
+        70,
+        71,
+        62
+      ],
+      "warmMedianMs": 67.5,
+      "outputHash": 2019481362
+    },
+    "after": {
+      "coldMs": 2030,
+      "warmMs": [
+        4,
+        4,
+        5,
+        4,
+        3,
+        4
+      ],
+      "warmMedianMs": 4,
+      "outputHash": 2019481362
+    },
+    "warmMedianReductionPercent": 94.07,
+    "warmSpeedup": 16.875
+  },
+  "drawingLarger": {
+    "objects": [
+      {
+        "kind": "brush",
+        "points": 800
+      },
+      {
+        "kind": "drybrush",
+        "points": 800
+      }
+    ],
+    "backend": "canvas2d-multichannel",
+    "maxPixels": 260000,
+    "before": {
+      "coldMs": 3652,
+      "warmMs": [
+        100,
+        70,
+        79,
+        75
+      ],
+      "warmMedianMs": 77,
+      "outputHash": 1436354055
+    },
+    "after": {
+      "coldMs": 4058,
+      "warmMs": [
+        6,
+        7,
+        6,
+        4
+      ],
+      "warmMedianMs": 6,
+      "outputHash": 1436354055
+    },
+    "warmMedianReductionPercent": 92.21,
+    "warmSpeedup": 12.833
+  },
+  "coldControl": {
+    "workload": "2 strokes x 400 points, three fresh renderer instances",
+    "beforeMs": [
+      1894,
+      1786,
+      1787
+    ],
+    "afterMs": [
+      1797,
+      1756,
+      1909
+    ],
+    "beforeMedianMs": 1787,
+    "afterMedianMs": 1797,
+    "note": "0.56% median difference at millisecond-resolution isolated harness; treated as noise / no demonstrated cold regression."
+  },
+  "previewTransient": {
+    "workload": "2 strokes x 160 points, four transient renders corresponding to renderExportCanvas natural-media semantics",
+    "beforeMs": [
+      711,
+      698,
+      689,
+      656
+    ],
+    "afterMs": [
+      792,
+      700,
+      659,
+      678
+    ],
+    "beforeMedianMs": 693.5,
+    "afterMedianMs": 689,
+    "beforeHash": 3714391014,
+    "afterHash": 3714391014,
+    "afterDiagnostics": {
+      "cacheHits": 0,
+      "cacheEntries": 0,
+      "preparations": 4,
+      "preparationSkips": 0
+    },
+    "disposition": "UNCHANGED_SEMANTICS"
+  },
+  "imageStackBaseline": {
+    "route": "renderImageStack, 2 adjustments + gaussianBlur + noiseGrain",
+    "small": {
+      "width": 256,
+      "height": 256,
+      "pixels": 65536,
+      "timingsMs": [
+        1964,
+        1660,
+        1758,
+        1711,
+        1730
+      ],
+      "medianMs": 1730
+    },
+    "larger": {
+      "width": 512,
+      "height": 384,
+      "pixels": 196608,
+      "timingsMs": [
+        4989,
+        5050,
+        5165,
+        5188,
+        5130
+      ],
+      "medianMs": 5130
+    },
+    "disposition": "MEASURED_NOT_SELECTED_FOR_REPAIR"
+  },
+  "historyBaseline": {
+    "route": "HistoryManager pushScoped + Undo/Redo",
+    "stroke": {
+      "points": 1200,
+      "commitMs": 6,
+      "capturedBytes": 65567,
+      "storedBytes": 148,
+      "patchCount": 1,
+      "undoRedoObservation": "24 in-place applies each measured <1ms at Date.now resolution"
+    },
+    "raster": {
+      "width": 256,
+      "height": 256,
+      "capturedBytes": 963804,
+      "storedBytes": 154,
+      "patchCount": 1,
+      "commitMs": 58,
+      "undoRedoObservation": "24 in-place applies each measured <1ms at Date.now resolution"
+    },
+    "disposition": "MEASURED_NOT_SELECTED_FOR_REPAIR"
+  },
+  "resourceRetention": {
+    "newCacheIntroduced": false,
+    "existingCacheLimitChanged": false,
+    "representativeAfter": {
+      "cacheEntries": 1,
+      "cacheMisses": 1,
+      "cacheHits": 6,
+      "preparations": 1,
+      "preparationSkips": 6
+    },
+    "transientAfter": {
+      "cacheEntries": 0,
+      "cacheHits": 0
+    },
+    "heapLeakClaim": "NOT_MADE"
+  }
+}
