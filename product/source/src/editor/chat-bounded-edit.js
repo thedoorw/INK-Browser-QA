@@ -102,6 +102,10 @@ function precisionLayoutFingerprint(page) {
   });
 }
 
+function artboardFingerprint(page) {
+  return chatStateFingerprint(clone(page?.artboard || null));
+}
+
 export function chatObjectRef(pageId, found) {
   return {
     pageId: pageId || null,
@@ -274,7 +278,8 @@ export function buildChatStateSummary(app) {
       id: page.id || null,
       name: page.name || null,
       activeLayerId: page.activeLayerId || null,
-      layerCount: page.layers?.length || 0
+      layerCount: page.layers?.length || 0,
+      artboard: clone(page.artboard || null)
     },
     selection: selectedRefs(app, page),
     layers,
@@ -299,6 +304,7 @@ export const CHAT_PAGE_OPERATIONS = Object.freeze(['page.create.v1', 'page.dupli
 const CHAT_PAGE_OPERATION_SET = new Set(CHAT_PAGE_OPERATIONS);
 export const CHAT_OBJECT_ALIGN_MODES = Object.freeze(['left', 'centerX', 'right', 'top', 'centerY', 'bottom', 'distributeX', 'distributeY']);
 export const CHAT_SNAP_KEYS = Object.freeze(['enabled', 'guides', 'edges', 'centers', 'grid', 'angle', 'equalDistance']);
+export const CHAT_ARTBOARD_KEYS = Object.freeze(['orientation', 'ppi', 'bleedMm', 'safeMarginMm', 'unit', 'showBleed', 'showSafeArea', 'showCenter', 'clipContent']);
 export const CHAT_PRECISION_LAYOUT_OPERATIONS = Object.freeze(['page.snap.set.v1', 'guide.add.v1', 'guide.move.v1', 'guide.remove.v1', 'guide.lock.set.v1', 'guide.visibility.set.v1']);
 const CHAT_PRECISION_LAYOUT_OPERATION_SET = new Set(CHAT_PRECISION_LAYOUT_OPERATIONS);
 
@@ -319,6 +325,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'page.rename.v1',
   'page.activate.v1',
   'page.paper.set.v1',
+  'page.artboard.set.v1',
   'page.snap.set.v1',
   'guide.add.v1',
   'guide.move.v1',
@@ -1227,6 +1234,21 @@ function normalizePaperSetArguments(raw) {
   return { key, value };
 }
 
+function normalizeArtboardSetArguments(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => !['key', 'value'].includes(key))) editFail('ARGUMENTS_INVALID');
+  const key = boundedEnum(raw.key, 'arguments.key', CHAT_ARTBOARD_KEYS);
+  let value = raw.value;
+  if (key === 'orientation') value = boundedEnum(value, 'arguments.value', ['portrait', 'landscape']);
+  else if (key === 'ppi') {
+    value = boundedNumber(value, 'arguments.value', { min: 72, max: 600, integer: true });
+    if (![72, 96, 150, 300, 600].includes(value)) editFail('ARGUMENT_INVALID', { field: 'arguments.value' });
+  } else if (key === 'bleedMm') value = boundedNumber(value, 'arguments.value', { min: 0, max: 25 });
+  else if (key === 'safeMarginMm') value = boundedNumber(value, 'arguments.value', { min: 0, max: 2500 });
+  else if (key === 'unit') value = boundedEnum(value, 'arguments.value', ['mm', 'px']);
+  else value = boundedBoolean(value, 'arguments.value');
+  return { key, value };
+}
+
 function normalizeSnapSetArguments(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => !['key', 'value'].includes(key))) editFail('ARGUMENTS_INVALID');
   return {
@@ -1258,6 +1280,7 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'page.duplicate.v1' || operation === 'page.delete.v1' || operation === 'page.activate.v1') return normalizePageIdArguments(raw);
   if (operation === 'page.rename.v1') return normalizePageRenameArguments(raw);
   if (operation === 'page.paper.set.v1') return normalizePaperSetArguments(raw);
+  if (operation === 'page.artboard.set.v1') return normalizeArtboardSetArguments(raw);
   if (operation === 'page.snap.set.v1') return normalizeSnapSetArguments(raw);
   if (operation === 'guide.add.v1') return normalizeGuideAddArguments(raw);
   if (operation === 'guide.move.v1') {
@@ -1356,7 +1379,7 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
-  if (CHAT_PAGE_OPERATION_SET.has(operation) || operation === 'page.paper.set.v1' || CHAT_PRECISION_LAYOUT_OPERATION_SET.has(operation)) return { exact: 0, min: 0, max: 0 };
+  if (CHAT_PAGE_OPERATION_SET.has(operation) || operation === 'page.paper.set.v1' || operation === 'page.artboard.set.v1' || CHAT_PRECISION_LAYOUT_OPERATION_SET.has(operation)) return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.create.v1' || operation === 'stroke.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'image.adjustment.add.v1'
     || operation === 'image.filter.add.v1'
@@ -1400,6 +1423,7 @@ function normalizeExpected(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('EXPECTED_INVALID');
   const expected = {};
   if (raw.paperFingerprint != null) expected.paperFingerprint = boundedText(raw.paperFingerprint, 'expected.paperFingerprint', { max: 160 });
+  if (raw.artboardFingerprint != null) expected.artboardFingerprint = boundedText(raw.artboardFingerprint, 'expected.artboardFingerprint', { max: 160 });
   if (raw.precisionFingerprint != null) expected.precisionFingerprint = boundedText(raw.precisionFingerprint, 'expected.precisionFingerprint', { max: 160 });
   if (raw.documentId != null) expected.documentId = boundedText(raw.documentId, 'expected.documentId', { max: 160 });
   if (raw.pageId != null) expected.pageId = boundedText(raw.pageId, 'expected.pageId', { max: 160 });
@@ -1502,6 +1526,7 @@ function captureExpectedState(app, task, resolved) {
     pageId: page?.id || null,
     revisionId: app?.revisions?.revisionIdFor?.(app.doc?.id) ?? null,
     ...(task.operation === 'page.paper.set.v1' ? { paperFingerprint: chatStateFingerprint(page.paper) } : {}),
+    ...(task.operation === 'page.artboard.set.v1' ? { artboardFingerprint: artboardFingerprint(page) } : {}),
     ...(CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation) ? { precisionFingerprint: precisionLayoutFingerprint(page) } : {}),
     targetFingerprints: Object.fromEntries(resolved
       .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found, task.operation)])
@@ -1546,6 +1571,18 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
       if (typeof app.switchPage !== 'function') editFail('CONTROLLER_UNAVAILABLE', { operation: task.operation });
       if (document.activePageId === pageId) editFail('NO_OP', { pageId });
     }
+  }
+  if (task.operation === 'page.artboard.set.v1') {
+    if (typeof app.changeArtboard !== 'function' || !page.artboard) editFail('CONTROLLER_UNAVAILABLE');
+    if (preconditions?.artboardFingerprint && preconditions.artboardFingerprint !== artboardFingerprint(page)) editFail('STALE_ARTBOARD');
+    const { key, value } = task.arguments;
+    if (key === 'safeMarginMm') {
+      const width = Number(page.artboard.widthMm);
+      const height = Number(page.artboard.heightMm);
+      const maxSafe = Math.min(width, height) / 2;
+      if (!Number.isFinite(maxSafe) || value > maxSafe) editFail('ARGUMENT_INVALID', { field: 'arguments.value' });
+    }
+    if (page.artboard[key] === value) editFail('NO_OP');
   }
   if (task.operation === 'page.paper.set.v1') {
     if (app.paperPreview) editFail('PAPER_PREVIEW_BUSY');
@@ -1739,6 +1776,7 @@ function snapshotTaskTargets(app, task) {
     })
   }];
   if (task.operation === 'page.paper.set.v1') return [{ ref: { pageId: app.page().id }, stateFingerprint: chatStateFingerprint(app.page().paper) }];
+  if (task.operation === 'page.artboard.set.v1') return [{ ref: { pageId: app.page().id }, stateFingerprint: artboardFingerprint(app.page()) }];
   if (CHAT_PRECISION_LAYOUT_OPERATION_SET.has(task.operation)) return [{ ref: { pageId: app.page().id }, stateFingerprint: precisionLayoutFingerprint(app.page()) }];
   return snapshotRefs(app, task.targets, task.operation);
 }
@@ -3357,6 +3395,20 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'page.paper.set.v1') {
     app.changePaper(task.arguments.key, task.arguments.value);
     return { pageId: app.page().id, paper: clone(app.page().paper), paperProfileFingerprint: paperProfileFingerprint(app.page().paper) };
+  }
+  if (task.operation === 'page.artboard.set.v1') {
+    const page = app.page();
+    const before = clone(page.artboard);
+    app.changeArtboard(task.arguments.key, task.arguments.value);
+    return {
+      changed: true,
+      pageId: page.id,
+      key: task.arguments.key,
+      value: clone(page.artboard?.[task.arguments.key]),
+      before,
+      artboard: clone(page.artboard),
+      artboardFingerprint: artboardFingerprint(page)
+    };
   }
   if (task.operation === 'paint.session.create.v1') return executePaintSessionCreateTask(app, task);
   if (task.operation === 'image.adjustment.add.v1') return executeImageAdjustmentTask(app, task);
