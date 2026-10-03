@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PRECISION_LAYOUT_OPERATIONS, CHAT_SNAP_KEYS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PRECISION_LAYOUT_OPERATIONS, CHAT_SNAP_KEYS, CHAT_ARTBOARD_KEYS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -58,6 +58,7 @@ const expectedStateSchema = obj({
   documentId: str('Expected document id.'),
   pageId: str('Expected page id.'),
   paperFingerprint: str('Expected active-page paper fingerprint; captured automatically for page.paper.set.v1.'),
+  artboardFingerprint: str('Expected active-page artboard fingerprint; captured automatically for page.artboard.set.v1.'),
   precisionFingerprint: str('Expected active-page snap/guides fingerprint; captured automatically for Cluster C3 precision-layout operations.'),
   revisionId: str('Expected revision id; omit when not constraining revision.'),
   targetFingerprints: { type: 'object', properties: {}, additionalProperties: true, description: 'Optional target fingerprint map.' }
@@ -141,6 +142,14 @@ const editSchemas = {
       key: { type: 'string', enum: ['type', 'color', 'gridSize', 'absorbency', 'roughness', 'fiberStrength', 'fiberAngle', 'sizing', 'granulation', 'seed', 'textureVisible'], description: 'Existing page.paper field.' },
       value: { description: 'Field-specific scalar: type=blank/dots/grid/ruled; color=#RRGGBB; gridSize=8..100; fiberAngle=-90..90; seed=uint32; textureVisible=boolean; other profile values=0..1. Validated by the existing bounded edit authority.' }
     }, ['key', 'value'], 'One field per atomic History entry; no-op, unknown fields, active paper preview and stale paper proposals are rejected.'),
+    0, 0
+  ),
+  'page.artboard.set.v1': editTaskSchema(
+    { type: 'string', const: 'page.artboard.set.v1', description: 'Set one existing active-page Artboard field through InkApp.changeArtboard() and scoped History.' },
+    obj({
+      key: { type: 'string', enum: [...CHAT_ARTBOARD_KEYS], description: 'Existing bounded Artboard field.' },
+      value: { description: 'Field-specific scalar: orientation=portrait/landscape; ppi=72/96/150/300/600; bleedMm=0..25; safeMarginMm=0..half the shorter Artboard dimension; unit=mm/px; visibility/clip fields=boolean.' }
+    }, ['key', 'value'], 'One atomic Artboard mutation; width/height/custom-paper/New Document architecture is intentionally outside this operation.'),
     0, 0
   ),
   'page.snap.set.v1': editTaskSchema(

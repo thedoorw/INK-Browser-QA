@@ -1,0 +1,143 @@
+{
+  "schema": "INK-CLUSTER-C-LAYOUT-PAGE-ARTBOARD-DEV-EVIDENCE",
+  "version": 1,
+  "status": "PASS",
+  "baseSha": "b6f837643064100b04cad12e338db782709ce255",
+  "exactProductCandidateSha": "6dca38862352a5ffcd2193b943c017f70eecd4e2",
+  "branch": "work/ink-cluster-c-layout-page-artboard-001",
+  "draftPr": 151,
+  "inheritedBaseline": {
+    "C1": {
+      "status": "ALREADY_FORMAL_LIVE",
+      "pr": 145
+    },
+    "C2": {
+      "status": "ALREADY_FORMAL_LIVE",
+      "pr": 147
+    },
+    "C3": {
+      "status": "ALREADY_MERGED_AND_CANDIDATE_QUALIFIED",
+      "pr": 149,
+      "mergeCommit": "3aa4c8268851d778aeea9fadcc99b53c4aed8ad0"
+    }
+  },
+  "newProductScope": {
+    "cluster": "C4",
+    "operation": "page.artboard.set.v1",
+    "nativeAuthority": [
+      "product/source/src/document/artboard.js",
+      "InkApp.changeArtboard(key, value)",
+      "existing scoped History / renderer refresh / view-fit authority"
+    ],
+    "changedProductFiles": [
+      "product/source/src/editor/chat-bounded-edit.js",
+      "product/source/src/agent/capability-registry.js"
+    ],
+    "acceptedKeys": [
+      "orientation",
+      "ppi",
+      "bleedMm",
+      "safeMarginMm",
+      "unit",
+      "showBleed",
+      "showSafeArea",
+      "showCenter",
+      "clipContent"
+    ],
+    "excluded": [
+      "UI C04",
+      "UI C06",
+      "New Document",
+      "B3",
+      "D",
+      "C019",
+      "FORMAT_VERSION",
+      "new Document authority",
+      "new History authority",
+      "new Layout authority",
+      "new Renderer authority"
+    ]
+  },
+  "browserQa": {
+    "workflowRunId": 37112623108,
+    "jobId": 111173346342,
+    "artifactId": 11270164226,
+    "artifactName": "ink-cluster-c4-candidate-6dca38862352a5ffcd2193b943c017f70eecd4e2-37112623108",
+    "artifactDigest": "sha256:f641600e0f6bafe03044fd8ee318e48a5af2d082be393174c5b665e2029f1e0b",
+    "exactCandidateVerified": true,
+    "runtimeIdentity": {
+      "sourceCandidate": "6dca38862352a5ffcd2193b943c017f70eecd4e2",
+      "apiReady": true,
+      "toolCount": 23,
+      "appVersion": "0.1"
+    },
+    "c4": {
+      "status": "PASS",
+      "contextArtboardExposed": true,
+      "descriptorDiscoverable": true,
+      "zeroTargetSchema": true,
+      "proposalApprovalExecute": true,
+      "historyLabel": "調整畫板",
+      "staleGuard": "CHAT_EDIT_STALE_ARTBOARD",
+      "noOpGuard": "CHAT_EDIT_NO_OP",
+      "invalidGuards": {
+        "orientation": "CHAT_EDIT_ARGUMENT_INVALID",
+        "ppi": "CHAT_EDIT_ARGUMENT_INVALID",
+        "bleedMm": "CHAT_EDIT_ARGUMENT_INVALID",
+        "safeMarginMm": "CHAT_EDIT_ARGUMENT_INVALID"
+      },
+      "undoRedoExact": true,
+      "baselinePreview": {
+        "status": "COMPLETED",
+        "fingerprint": "fnv1a32:4281700a",
+        "width": 793.700787,
+        "height": 1122.519685
+      },
+      "landscapePreview": {
+        "status": "COMPLETED",
+        "fingerprint": "fnv1a32:c18c13a4",
+        "width": 1122.519685,
+        "height": 793.700787
+      },
+      "visiblePreviewDelta": true,
+      "finalArtboardRestoredToBaseline": true
+    },
+    "regressions": [
+      {
+        "case": "snap-guides-c3",
+        "status": "PASS"
+      },
+      {
+        "case": "align-distribute-c2",
+        "status": "PASS"
+      },
+      {
+        "case": "page-ops-c1",
+        "status": "PASS"
+      },
+      {
+        "case": "stroke-create-a2",
+        "status": "PASS"
+      },
+      {
+        "case": "raster-stack-adjustment-b2",
+        "status": "PASS"
+      },
+      {
+        "case": "path-deformation-b4",
+        "status": "PASS"
+      }
+    ],
+    "screenshotPresent": true,
+    "screenshotInspected": true
+  },
+  "qaHarnessHistory": {
+    "firstRunId": 37112581299,
+    "result": "QA_HARNESS_SYNTAX_FAILURE_BEFORE_BROWSER_EXECUTION",
+    "productFailure": false,
+    "correctedRunId": 37112623108
+  },
+  "authorityHandoff": "STOP_TO_CHAT_CORE_LIVE_AUTHORITY",
+  "merged": false,
+  "deployed": false
+}
