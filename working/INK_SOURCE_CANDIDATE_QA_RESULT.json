@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions",
-  "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
-  "case": "blender-smudge-a5",
+  "requestId": "clusterB-B3-paint-bucket-candidate-001-regressions",
+  "candidateSha": "fedb8f62fa8cf21e3499c8307cfae77cc8714709",
+  "case": "raster-direct-paint-bucket-b3",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:45549/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
+    "href": "http://127.0.0.1:43563/?sourceCandidate=fedb8f62fa8cf21e3499c8307cfae77cc8714709",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,83 +13,71 @@
   },
   "result": {
     "passed": true,
-    "operation": "stroke.create.v1",
-    "kinds": [
-      "blender",
-      "smudge"
-    ],
-    "baseline": {
+    "operation": "image.raster.paintBucket.v1",
+    "objectId": "0bb98cd1-bfbb-4723-a0c1-98b95420b743",
+    "beforeHash": "376ec6fb",
+    "afterHash": "b09ebd5b",
+    "undoHash": "376ec6fb",
+    "redoHash": "b09ebd5b",
+    "beforePreview": {
       "status": "COMPLETED",
-      "fingerprint": "fnv1a32:1c7b7b41",
-      "bounds": {
-        "h": 192.4,
-        "w": 452.4,
-        "x": -226.2,
-        "y": -94.2
-      }
+      "fingerprint": "fnv1a32:4d9848b1"
     },
-    "afterBlender": {
+    "afterPreview": {
       "status": "COMPLETED",
-      "fingerprint": "fnv1a32:3e594331",
-      "bounds": {
-        "h": 197.8,
-        "w": 452.4,
-        "x": -226.2,
-        "y": -97.4
-      }
+      "fingerprint": "fnv1a32:f1a6f9ad"
     },
-    "afterSmudge": {
+    "undoPreview": {
       "status": "COMPLETED",
-      "fingerprint": "fnv1a32:06e7d736",
-      "bounds": {
-        "h": 224.6,
-        "w": 452.4,
-        "x": -226.2,
-        "y": -97.4
-      }
+      "fingerprint": "fnv1a32:4d9848b1"
     },
-    "historyLabels": [
-      "CHAT create Stroke",
-      "CHAT create Stroke"
-    ],
-    "diagnostics": {
-      "activeBackend": "canvas2d-multichannel",
-      "mixingRuns": 10,
-      "multiChannelCanvas2d": {
-        "backend": "canvas2d-multichannel",
-        "runs": 11,
-        "strokes": 29,
-        "mixingStrokes": 9,
-        "stamps": 1256,
-        "mixerStamps": 288,
-        "transportedPigment": 192521.06028555412,
-        "pixels": 451273,
-        "cacheHits": 9,
-        "cacheMisses": 11,
-        "evictions": 0,
-        "skipped": 0,
-        "cacheEntries": 8
-      }
+    "redoPreview": {
+      "status": "COMPLETED",
+      "fingerprint": "fnv1a32:f1a6f9ad"
     },
-    "undoStatus": [
-      "COMPLETED",
-      "COMPLETED"
-    ],
-    "redoStatus": [
-      "COMPLETED",
-      "COMPLETED"
-    ]
+    "historyLabel": "CHAT raster Paint Bucket",
+    "changedPixels": 1296,
+    "changedChannels": 3888,
+    "noOpRejected": true,
+    "referenceRejected": true,
+    "controllerResult": {
+      "changed": true,
+      "rasterEdit": {
+        "changedChannels": 3888,
+        "changedPixels": 1296,
+        "color": "#20b86a",
+        "contiguous": true,
+        "opacity": 1,
+        "selectionBounds": {
+          "h": 48,
+          "w": 32,
+          "x": 0,
+          "y": 0
+        },
+        "tolerance": 0,
+        "type": "paintBucket",
+        "x": 4,
+        "y": 4
+      },
+      "resultRefs": [
+        {
+          "layerId": "e6d52abb-9da5-4571-bb60-132150bbf709",
+          "objectId": "0bb98cd1-bfbb-4723-a0c1-98b95420b743",
+          "pageId": "ef85be6c-8068-4866-af1e-6f33b448dee0"
+        }
+      ]
+    }
   },
   "status": "PASS",
   "regressions": [
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-paint-session-create",
-      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
-      "case": "paint-session-create",
+      "requestId": "clusterB-B3-paint-bucket-candidate-001-regressions-raster-import-named-tool",
+      "candidateSha": "fedb8f62fa8cf21e3499c8307cfae77cc8714709",
+      "case": "raster-import-named-tool",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42549/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
+        "href": "http://127.0.0.1:37163/?sourceCandidate=fedb8f62fa8cf21e3499c8307cfae77cc8714709",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -100,425 +88,33 @@
         "before": {
           "count": 0,
           "undo": 0,
-          "canvas": "308b5875"
+          "canvas": "8d257ff8"
         },
         "after": {
           "count": 1,
           "undo": 1,
-          "canvas": "c81fe871",
-          "id": "chat-paint-fnv1a32-c7900103",
-          "strokes": 2,
-          "replayHash": "66ff5f9c"
+          "canvas": "b2d95166",
+          "id": "40a3adf2-8790-4327-a85e-ac72c28c8a92",
+          "width": 32,
+          "height": 24,
+          "sourceSha256": "02180abde1c6932923a0a99a9a346ce284ff63b7af38d8f082830d50268589b4"
         },
+        "importStatus": "COMPLETED",
         "previewStatus": "COMPLETED",
-        "previewBounds": {
-          "h": 231.12032,
-          "w": 274.0064,
-          "x": -135.13,
-          "y": -120.46648
-        },
         "undoStatus": "COMPLETED",
         "redoStatus": "COMPLETED",
-        "restoredStrokeCount": 2
+        "restoredFormat": "ink-image-state"
       },
       "status": "PASS"
     },
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-stroke-create-a2",
-      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
-      "case": "stroke-create-a2",
-      "runtimeIdentity": {
-        "href": "http://127.0.0.1:38789/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
-        "readyState": "complete",
-        "apiReady": true,
-        "toolCount": 23,
-        "appVersion": "0.1"
-      },
-      "result": {
-        "passed": true,
-        "operation": "stroke.create.v1",
-        "created": [
-          {
-            "id": "chat-stroke-fnv1a32-bb21046a",
-            "kind": "pencil",
-            "mediaModel": null,
-            "pointCount": 3
-          },
-          {
-            "id": "chat-stroke-fnv1a32-ba3b2301",
-            "kind": "brush",
-            "mediaModel": "natural-v2",
-            "pointCount": 3
-          },
-          {
-            "id": "chat-stroke-fnv1a32-9d7b788f",
-            "kind": "airbrush",
-            "mediaModel": "natural-v2",
-            "pointCount": 3
-          },
-          {
-            "id": "chat-stroke-fnv1a32-4b41deb2",
-            "kind": "drybrush",
-            "mediaModel": "natural-v2",
-            "pointCount": 3
-          }
-        ],
-        "before": {
-          "count": 0,
-          "undo": 0,
-          "canvas": "308b5875"
-        },
-        "after": {
-          "count": 4,
-          "undo": 4,
-          "canvas": "e70b7919"
-        },
-        "historyLabels": [
-          "CHAT create Stroke",
-          "CHAT create Stroke",
-          "CHAT create Stroke",
-          "CHAT create Stroke"
-        ],
-        "previewStatus": "COMPLETED",
-        "previewBounds": {
-          "h": 350.6,
-          "w": 451,
-          "x": -233.6,
-          "y": -182
-        },
-        "undoStatus": "COMPLETED",
-        "redoStatus": "COMPLETED",
-        "redoCanvas": "e70b7919",
-        "naturalMedia": {
-          "preference": "auto",
-          "floraReferenceBackend": "canvas2d",
-          "activeBackend": "webgl2-multichannel",
-          "gpuAvailable": true,
-          "gpuState": "ready",
-          "forcedReason": null,
-          "fallbacks": 0,
-          "batchFallbacks": 0,
-          "mixingRuns": 0,
-          "webgl": {
-            "backend": "webgl2",
-            "drawCalls": 3,
-            "cacheHits": 25,
-            "cacheMisses": 3,
-            "evictions": 0,
-            "contextLosses": 0,
-            "restores": 0,
-            "vertices": 1740,
-            "state": "ready",
-            "available": true,
-            "cacheEntries": 3,
-            "lastError": null,
-            "capabilities": {
-              "maxTextureSize": 8192,
-              "maxRenderbufferSize": 8192,
-              "maxViewportDims": [
-                8192,
-                8192
-              ],
-              "maxTextureUnits": 32,
-              "vendor": "Google Inc. (Google)",
-              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
-              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
-              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
-            },
-            "resources": {
-              "allocations": 3,
-              "releases": 0,
-              "evictions": 0,
-              "rejected": 0,
-              "peakBytes": 742548,
-              "budgetBytes": 100663296,
-              "usedBytes": 742548,
-              "availableBytes": 99920748,
-              "utilization": 0.007376551628112793,
-              "resources": 3,
-              "byType": {
-                "raster-cache": 742548
-              }
-            },
-            "selfTest": null
-          },
-          "multiChannelWebgl": {
-            "backend": "webgl2-multichannel",
-            "runs": 6,
-            "strokes": 6,
-            "drawCalls": 6,
-            "simulationPasses": 24,
-            "cacheHits": 23,
-            "cacheMisses": 6,
-            "evictions": 0,
-            "contextLosses": 0,
-            "restores": 0,
-            "state": "ready",
-            "available": true,
-            "cacheEntries": 4,
-            "lastError": null,
-            "targets": "164x79",
-            "capabilities": {
-              "maxTextureSize": 8192,
-              "maxRenderbufferSize": 8192,
-              "maxDrawBuffers": 8,
-              "maxColorAttachments": 8,
-              "maxViewportDims": [
-                8192,
-                8192
-              ],
-              "vendor": "Google Inc. (Google)",
-              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
-              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
-            },
-            "resources": {
-              "allocations": 16,
-              "releases": 10,
-              "evictions": 0,
-              "rejected": 0,
-              "peakBytes": 766152,
-              "budgetBytes": 167772160,
-              "usedBytes": 473576,
-              "availableBytes": 167298584,
-              "utilization": 0.002822732925415039,
-              "resources": 6,
-              "byType": {
-                "raster-cache": 266280,
-                "mrt-target": 207296
-              }
-            },
-            "selfTest": null
-          },
-          "multiChannelCanvas2d": {
-            "backend": "canvas2d-multichannel",
-            "runs": 0,
-            "strokes": 0,
-            "mixingStrokes": 0,
-            "stamps": 0,
-            "mixerStamps": 0,
-            "transportedPigment": 0,
-            "pixels": 0,
-            "cacheHits": 0,
-            "cacheMisses": 0,
-            "evictions": 0,
-            "skipped": 0,
-            "cacheEntries": 0
-          },
-          "canvas2d": {
-            "backend": "canvas2d",
-            "surfaceRevision": "WP8B-1",
-            "drawCalls": 0,
-            "frequencyVisibility": {
-              "low": true,
-              "mid": true,
-              "high": true
-            }
-          }
-        }
-      },
-      "status": "PASS"
-    },
-    {
-      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
-      "version": 1,
-      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-page-paper-a3",
-      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
-      "case": "page-paper-a3",
-      "runtimeIdentity": {
-        "href": "http://127.0.0.1:37301/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
-        "readyState": "complete",
-        "apiReady": true,
-        "toolCount": 23,
-        "appVersion": "0.1"
-      },
-      "result": {
-        "passed": true,
-        "operation": "page.paper.set.v1",
-        "paperCoupledRunStrokeCount": 2,
-        "paperBefore": {
-          "type": "blank",
-          "color": "#fffef9",
-          "gridSize": 32,
-          "absorbency": 0.58,
-          "roughness": 0.42,
-          "fiberStrength": 0.36,
-          "fiberAngle": 0,
-          "sizing": 0.28,
-          "granulation": 0.32,
-          "seed": 1337,
-          "textureVisible": true
-        },
-        "paperAfter": {
-          "type": "blank",
-          "color": "#fffef9",
-          "gridSize": 32,
-          "absorbency": 0.05,
-          "roughness": 0.95,
-          "fiberStrength": 0.36,
-          "fiberAngle": 0,
-          "sizing": 0.28,
-          "granulation": 0.32,
-          "seed": 1337,
-          "textureVisible": true
-        },
-        "baseline": "fnv1a32:05b5d299",
-        "roughPreview": "fnv1a32:8a0d1881",
-        "changedPreview": "fnv1a32:400ea8b1",
-        "undoRedoRenderExact": true,
-        "scopedPaperEntries": [
-          {
-            "label": "調整畫布",
-            "captureMode": "scoped"
-          },
-          {
-            "label": "調整畫布",
-            "captureMode": "scoped"
-          }
-        ],
-        "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
-        "invalidCasesRejected": 5,
-        "noOpRejected": true,
-        "staleRejected": true,
-        "pendingPreviewRejected": true,
-        "naturalMedia": {
-          "preference": "auto",
-          "floraReferenceBackend": "canvas2d",
-          "activeBackend": "webgl2-multichannel",
-          "gpuAvailable": true,
-          "gpuState": "ready",
-          "forcedReason": null,
-          "fallbacks": 0,
-          "batchFallbacks": 0,
-          "mixingRuns": 0,
-          "webgl": {
-            "backend": "webgl2",
-            "drawCalls": 4,
-            "cacheHits": 9,
-            "cacheMisses": 4,
-            "evictions": 0,
-            "contextLosses": 0,
-            "restores": 0,
-            "vertices": 1272,
-            "state": "ready",
-            "available": true,
-            "cacheEntries": 2,
-            "lastError": null,
-            "capabilities": {
-              "maxTextureSize": 8192,
-              "maxRenderbufferSize": 8192,
-              "maxViewportDims": [
-                8192,
-                8192
-              ],
-              "maxTextureUnits": 32,
-              "vendor": "Google Inc. (Google)",
-              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
-              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
-              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
-            },
-            "resources": {
-              "allocations": 4,
-              "releases": 2,
-              "evictions": 0,
-              "rejected": 0,
-              "peakBytes": 1637668,
-              "budgetBytes": 100663296,
-              "usedBytes": 1637668,
-              "availableBytes": 99025628,
-              "utilization": 0.01626876990000407,
-              "resources": 2,
-              "byType": {
-                "raster-cache": 1637668
-              }
-            },
-            "selfTest": null
-          },
-          "multiChannelWebgl": {
-            "backend": "webgl2-multichannel",
-            "runs": 17,
-            "strokes": 32,
-            "drawCalls": 32,
-            "simulationPasses": 68,
-            "cacheHits": 16,
-            "cacheMisses": 17,
-            "evictions": 0,
-            "contextLosses": 0,
-            "restores": 0,
-            "state": "ready",
-            "available": true,
-            "cacheEntries": 6,
-            "lastError": null,
-            "targets": "312x212",
-            "capabilities": {
-              "maxTextureSize": 8192,
-              "maxRenderbufferSize": 8192,
-              "maxDrawBuffers": 8,
-              "maxColorAttachments": 8,
-              "maxViewportDims": [
-                8192,
-                8192
-              ],
-              "vendor": "Google Inc. (Google)",
-              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
-              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
-            },
-            "resources": {
-              "allocations": 44,
-              "releases": 36,
-              "evictions": 0,
-              "rejected": 0,
-              "peakBytes": 4468380,
-              "budgetBytes": 167772160,
-              "usedBytes": 2991900,
-              "availableBytes": 164780260,
-              "utilization": 0.01783311367034912,
-              "resources": 8,
-              "byType": {
-                "raster-cache": 1933596,
-                "mrt-target": 1058304
-              }
-            },
-            "selfTest": null
-          },
-          "multiChannelCanvas2d": {
-            "backend": "canvas2d-multichannel",
-            "runs": 0,
-            "strokes": 0,
-            "mixingStrokes": 0,
-            "stamps": 0,
-            "mixerStamps": 0,
-            "transportedPigment": 0,
-            "pixels": 0,
-            "cacheHits": 0,
-            "cacheMisses": 0,
-            "evictions": 0,
-            "skipped": 0,
-            "cacheEntries": 0
-          },
-          "canvas2d": {
-            "backend": "canvas2d",
-            "surfaceRevision": "WP8B-1",
-            "drawCalls": 0,
-            "frequencyVisibility": {
-              "low": true,
-              "mid": true,
-              "high": true
-            }
-          }
-        }
-      },
-      "status": "PASS"
-    },
-    {
-      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
-      "version": 1,
-      "requestId": "clusterA-A5-blender-smudge-candidate-001-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "f351c788e57b7d5ad034f156711d47d431179669",
+      "requestId": "clusterB-B3-paint-bucket-candidate-001-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "fedb8f62fa8cf21e3499c8307cfae77cc8714709",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:43779/?sourceCandidate=f351c788e57b7d5ad034f156711d47d431179669",
+        "href": "http://127.0.0.1:46657/?sourceCandidate=fedb8f62fa8cf21e3499c8307cfae77cc8714709",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -528,9 +124,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "95d4e84d-81e4-429a-96e1-ece07d1ce34e",
-        "beforeFingerprint": "fnv1a32:cee771cb",
-        "afterFingerprint": "fnv1a32:3bd18b9e",
+        "objectId": "03cc3fcf-3126-4a42-816e-8c7899f335be",
+        "beforeFingerprint": "fnv1a32:1765ecf9",
+        "afterFingerprint": "fnv1a32:598d49c6",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -543,14 +139,98 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "f0ce8ce2-f51c-4c91-b2a6-02ef06ccfce9",
-              "objectId": "95d4e84d-81e4-429a-96e1-ece07d1ce34e",
-              "pageId": "25ccebbe-3efc-4aaf-a3d4-626e1c55fa59"
+              "layerId": "0decb390-9765-49e5-9d26-6fa4638be2b4",
+              "objectId": "03cc3fcf-3126-4a42-816e-8c7899f335be",
+              "pageId": "b2ee4de4-f923-4017-a641-c049eaea1376"
             }
           ],
-          "stackItemId": "adj_eifxyp",
+          "stackItemId": "adj_1fxh4oh",
           "stackItemType": "brightnessContrast"
         }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterB-B3-paint-bucket-candidate-001-regressions-blender-smudge-a5",
+      "candidateSha": "fedb8f62fa8cf21e3499c8307cfae77cc8714709",
+      "case": "blender-smudge-a5",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:33445/?sourceCandidate=fedb8f62fa8cf21e3499c8307cfae77cc8714709",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "stroke.create.v1",
+        "kinds": [
+          "blender",
+          "smudge"
+        ],
+        "baseline": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:1c7b7b41",
+          "bounds": {
+            "h": 192.4,
+            "w": 452.4,
+            "x": -226.2,
+            "y": -94.2
+          }
+        },
+        "afterBlender": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:3e594331",
+          "bounds": {
+            "h": 197.8,
+            "w": 452.4,
+            "x": -226.2,
+            "y": -97.4
+          }
+        },
+        "afterSmudge": {
+          "status": "COMPLETED",
+          "fingerprint": "fnv1a32:06e7d736",
+          "bounds": {
+            "h": 224.6,
+            "w": 452.4,
+            "x": -226.2,
+            "y": -97.4
+          }
+        },
+        "historyLabels": [
+          "CHAT create Stroke",
+          "CHAT create Stroke"
+        ],
+        "diagnostics": {
+          "activeBackend": "canvas2d-multichannel",
+          "mixingRuns": 10,
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 11,
+            "strokes": 29,
+            "mixingStrokes": 9,
+            "stamps": 1256,
+            "mixerStamps": 288,
+            "transportedPigment": 192521.06028555412,
+            "pixels": 451273,
+            "cacheHits": 9,
+            "cacheMisses": 11,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 8
+          }
+        },
+        "undoStatus": [
+          "COMPLETED",
+          "COMPLETED"
+        ],
+        "redoStatus": [
+          "COMPLETED",
+          "COMPLETED"
+        ]
       },
       "status": "PASS"
     }
