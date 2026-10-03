@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_RASTER_RETOUCH_TOOLS } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -283,6 +283,26 @@ const editSchemas = {
       params: { type: 'object', properties: {}, additionalProperties: true, description: 'Structurally bounded existing effect parameters; maximum 8 KiB / depth 4 / 64 keys.' },
       opacity: num('Effect opacity.', { minimum: 0, maximum: 1, default: 1 })
     }, ['type'], 'Existing image-core createLayerEffect() arguments.'),
+    1
+  ),
+  'image.raster.retouch.v1': editTaskSchema(
+    { type: 'string', const: 'image.raster.retouch.v1', description: 'Apply one bounded local destructive retouch operation to an editable native 8-bit RGB raster through the existing raster-retouch authority.' },
+    obj({
+      tool: { type: 'string', enum: [...CHAT_IMAGE_RASTER_RETOUCH_TOOLS], description: 'Existing local retouch algorithm. Source-dependent Clone/Healing/Patch/Pattern Stamp are intentionally excluded from this contract.' },
+      x: num('Raster-local center X.', { minimum: 0, maximum: 1000000 }),
+      y: num('Raster-local center Y.', { minimum: 0, maximum: 1000000 }),
+      radius: num('Local brush radius in raster pixels.', { minimum: Number.EPSILON, maximum: 4096, default: 18 }),
+      hardness: num('Local mask hardness.', { minimum: 0, maximum: 1, default: .85 }),
+      opacity: num('Spot Healing opacity; ignored by other tools.', { minimum: 0, maximum: 1, default: 1 }),
+      strength: num('Dodge/Burn/Sponge/Blur/Color Replacement strength.', { minimum: 0, maximum: 1, default: .55 }),
+      neighborRadius: { type: 'integer', minimum: 1, maximum: 128, default: 2, description: 'Spot Healing neighbor search radius.' },
+      mode: { type: 'string', enum: ['saturate','desaturate'], default: 'saturate', description: 'Sponge mode.' },
+      kernelRadius: { type: 'integer', minimum: 1, maximum: 16, default: 2, description: 'Local Blur/Sharpen kernel radius.' },
+      amount: num('Local Sharpen amount.', { minimum: 0, maximum: 4, default: 1 }),
+      referenceColor: str('Optional Color Replacement reference color as #RRGGBB or #RRGGBBAA. Defaults to the center pixel.'),
+      replacementColor: str('Required Color Replacement target hue/saturation as #RRGGBB or #RRGGBBAA.'),
+      tolerance: num('Color Replacement tolerance.', { minimum: 0, maximum: 255, default: 32 })
+    }, ['tool','x','y'], 'Tool-specific bounded raster-local parameters. The executor rejects out-of-bounds centers and pixel no-ops.'),
     1
   ),
   'image.mask.raster.set.v1': editTaskSchema(
@@ -1024,6 +1044,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
   if (operation === 'stroke.create.v1') operationConstraints.push('Blender/Smudge are native run-only mixer strokes. They require a contiguous multi-channel run containing at least one Brush/DryBrush depositor; mixing runs use the existing Canvas2D multi-channel surface until GPU transport parity is separately implemented.');
   if (operation === 'stroke.erase.circle.v1') operationConstraints.push('Explicit stable Stroke targets only; existing proposal target fingerprints and revision checks reject stale edits. Uses eraseStrokeWithCircle() directly and never calls interactive hit-test, pointer, or area-wide eraseAt().');
+  if (operation === 'image.raster.retouch.v1') operationConstraints.push('Explicit stable editable 8-bit RGB image target only. Reuses existing raster-retouch algorithms and native pixel/mask target fingerprints; no pointer emulation or automatic source-point inference. Clone/Healing/Patch/Pattern Stamp remain separate.');
   if (imageOnly && operation !== 'image.raster.paintBucket.v1') operationConstraints.push('Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.');
   if (operation === 'image.adjustment.add.v1') operationConstraints.push('Initial qualified adjustment allowlist: brightnessContrast, levels, curves, hueSaturation.');
   if (operation === 'image.filter.add.v1') operationConstraints.push('Initial qualified filter allowlist: gaussianBlur, sharpen, noiseGrain, textureOverlay.');
