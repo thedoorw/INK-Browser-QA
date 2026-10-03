@@ -163,18 +163,18 @@ No B3, Cluster C, Cluster D, UI, New Document or deployment product work was add
 
 ## Main advanced during DEV
 
-After this branch was created, main advanced to at least:
+After this branch was created, main advanced further. Final handoff review observed current main at:
 
-`b1a4331de524c193f77a40b1ad530cfcf75ba37f`
+`cbb847888848b1a2a9daf00aae3a63ca2f5d38a1`
 
-and incorporated Cluster C4 plus its Formal Live evidence.
+Main incorporated Cluster C4 plus subsequent authority/evidence updates while this DEV remained isolated.
 
 C4 also changes:
 
 - `product/source/src/editor/chat-bounded-edit.js`
 - `product/source/src/agent/capability-registry.js`
 
-Because Cluster C is an explicit hard boundary for this DEV, this branch did **not** rebase or import C4 merely to resolve integration. Draft PR #152 is therefore currently non-mergeable and requires CHAT / Core / Live authority to reconcile the overlapping CHAT integration surface while preserving both accepted authorities.
+Because Cluster C is an explicit hard boundary for this DEV, this branch did **not** import or modify C4. GitHub currently reports Draft PR #152 as mergeable, but the PR still overlaps C4 in the shared CHAT integration files; CHAT / Core / Live authority must review the combined semantics before any merge.
 
 ## Boundary / STOP
 
