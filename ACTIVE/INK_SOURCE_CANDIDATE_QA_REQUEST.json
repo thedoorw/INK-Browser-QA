@@ -1,8 +1,9 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-local-retouch-candidate-001-regressions",
-  "candidateSha": "865a1b7ec3f023e25d13814a234e6efe6d793074",
-  "case": "raster-local-retouch-b3",
-  "regressions": true
+  "requestId": "core-perf-cache-authority-candidate-002",
+  "candidateSha": "0ac6e236a2baff587224398bc6f3e3aff35f5318",
+  "case": "blender-smudge-a5",
+  "regressions": true,
+  "naturalMediaCacheReview": true
 }
