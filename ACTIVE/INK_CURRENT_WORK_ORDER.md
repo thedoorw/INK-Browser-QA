@@ -1375,3 +1375,18 @@ B3 / advanced mutable raster ingest = CLOSED / DO NOT REOPEN
 UI PR #109 / PWA / C06 / New Document = separate owners / untouched
 FORMAT_VERSION = 4 / PRESERVE
 ```
+
+## Cluster D Material / Recipe authority closure — 2026-10-03
+
+PR #154 is accepted, merged, deployed and Formal Live qualified. DEV exact candidate `da40f868ebdb17c6cacb46d74867f75235ba77e5` passed candidate run `37116951905`; integrated exact source `4188e9cc7673313726abd7986310d758912f63cf` passed final Formal Live run `37117972309` / artifact `11271817574` / digest `sha256:305ebde6eea7e900557aaf5f05e1089988e2b576e632a7e74a020c6a19777620`. D1 native Material creation/reuse, D2 read-only Recipe inventory and D3 existing Studio RecipeEngine governed execution are CLOSED. Full record: `working/INK_CLUSTER_D_MATERIAL_RECIPE_AUTHORITY_CLOSURE_20261003.md`.
+
+The first Formal Live attempt exposed and corrected a Live-wrapper CSP composition defect without changing product source; the second exposed a request-fixture reference typo only. Final runtime identity was exact source `4188e9cc...`, `apiReady=true`, 24 tools, `FORMAT_VERSION=4`.
+
+```text
+CLUSTER_D = CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+CLUSTER_C = CLOSED / DO NOT RESTART
+C019 = CLOSED / DO NOT RESTART
+B3 / advanced mutable raster ingest = CLOSED / DO NOT REOPEN
+UI PR #109 / PWA / C06 / New Document = separate owners / untouched
+FORMAT_VERSION = 4 / PRESERVE
+```

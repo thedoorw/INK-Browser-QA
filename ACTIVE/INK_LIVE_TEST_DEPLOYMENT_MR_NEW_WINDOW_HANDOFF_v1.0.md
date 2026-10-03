@@ -247,3 +247,11 @@ Do not reopen Cluster C. Continue to wait for Cluster D and C019 independent DEV
 C019 PR #152 is CLOSED / merged / deployed / Formal Live qualified at exact integrated source `ff6e329e372a0b3c8b756cd74cc881b28fa404f9`; Formal Live run `37114248495` PASS. See `working/INK_C019_TEXT_WARP_RENDER_INTEGRATION_AUTHORITY_CLOSURE_20261003.md`.
 
 Do not reopen C019 curved/path Text. Broad Text envelope/general warp is not implied. Cluster D remains the independent DEV return still eligible for authority review once its final exact candidate + evidence is submitted. Cluster C, B3 and advanced mutable raster ingest stay closed; UI PR #109, PWA, C06 and New Document remain out of scope. `FORMAT_VERSION=4`.
+
+## Post-handoff authority update — Cluster D closed 2026-10-03
+
+Cluster D PR #154 is CLOSED / accepted / merged / deployed / Formal Live qualified. DEV exact candidate `da40f868ebdb17c6cacb46d74867f75235ba77e5` was integrated at exact source `4188e9cc7673313726abd7986310d758912f63cf`; final Formal Live run `37117972309` PASS. See `working/INK_CLUSTER_D_MATERIAL_RECIPE_AUTHORITY_CLOSURE_20261003.md`.
+
+D1 native Material creation/reuse, D2 read-only Recipe inventory and D3 governed execution of the existing Studio RecipeEngine are closed. Do not create a second Material or Recipe engine; do not treat Workflow IR or External Workflow Translation as part of this closure. Rich arbitrary Material effects and inline Recipe definitions are not implied.
+
+Cluster C, Cluster D, C019, B3 and advanced mutable raster ingest are now closed under this authority lane. UI PR #109, PWA, C06 and New Document remain separate owners / untouched. `FORMAT_VERSION=4`.

@@ -1360,3 +1360,22 @@ Live verified native editable Text, `text.path.set.v1`, visible straight→curve
 C019_CURVED_PATH_TEXT = CLOSED / FORMAL LIVE QUALIFIED
 NEXT_AUTHORITY_QUEUE = CLUSTER_D_RETURN_WHEN_READY
 ```
+
+## Cluster D Material / Recipe — CLOSED 2026-10-03
+
+PR #154 accepted. Exact DEV candidate `da40f868ebdb17c6cacb46d74867f75235ba77e5`; candidate run `37116951905`, artifact `11271832120`, digest `sha256:909218129dad5d4645eec625c19ab5f8c84ed68d0c79a303e36a3e11e59da027` PASS. Integrated exact source `4188e9cc7673313726abd7986310d758912f63cf`.
+
+Corrected Live wrapper commit `270ee9fa0c1d978d2b6e01e4d14341e5b8b24b10` passed Pages run `37117864191`. Final Formal Live request `cluster-d-material-recipe-formal-live-003`, run `37117972309`, artifact `11271817574`, digest `sha256:305ebde6eea7e900557aaf5f05e1089988e2b576e632a7e74a020c6a19777620` PASS. Live closure commit `0ee755456882d9c013c7366c9d0f924ea93f1993` passed Pages run `37118110824`.
+
+D1 native Material template/instance creation + Creative Library rediscovery + Undo/Redo PASS. D2 read-only inventory exposed existing `ink.flower.common.v1`. D3 existing Studio RecipeEngine execution produced render `fnv1a32:fee4827f → fnv1a32:5d902de5`; Undo restored exact pre-recipe render and Redo restored exact post-recipe render. C4 regression PASS. No second Material/Recipe authority; no Workflow IR; `FORMAT_VERSION=4`.
+
+[Authority closure](../working/INK_CLUSTER_D_MATERIAL_RECIPE_AUTHORITY_CLOSURE_20261003.md).
+
+```text
+CLUSTER_D = CLOSED / FORMAL LIVE QUALIFIED
+CLUSTER_C = CLOSED
+C019_CURVED_PATH_TEXT = CLOSED
+B3_AND_ADVANCED_MUTABLE_RASTER = CLOSED / DO_NOT_REOPEN
+UI_PR109_PWA_C06_NEW_DOCUMENT = UNTOUCHED
+FORMAT_VERSION = 4 / UNCHANGED
+```
