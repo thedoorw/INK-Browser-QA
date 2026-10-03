@@ -733,3 +733,57 @@ COMBINED_CAPABILITY_QUALIFICATION = PASS
 ROUND_2_COMBINED_DRAW_REFERENCE = CLOSED
 NEW_PRODUCT_CAPABILITY = NONE
 ```
+
+
+## A4 targeted Eraser — merged / deployed / formal Live qualified 2026-10-03
+
+This closure supersedes earlier `A4_TARGETED_ERASER = OPEN / SEPARATE` markers.
+
+Classification:
+```text
+A4_TARGETED_ERASER = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+A5_BLENDER_SMUDGE = OPEN / SEPARATE PRODUCT_RENDER_INTEGRATION_GAP
+```
+
+Authority and source:
+- Existing geometry authority retained: `eraseStrokeWithCircle()` in `src/stroke/edit.js`.
+- New bounded operation: `stroke.erase.circle.v1`.
+- Explicit stable native Stroke targets only; no CHAT hit-test, pointer/mouse simulation, or area-wide `eraseAt()`.
+- Existing proposal/approval target fingerprints and revision checks provide stale protection.
+- Existing scoped History, document replacement, spatial invalidation and Renderer refresh are reused.
+- PR #136 merged.
+- Exact final candidate: `daff9553dfc8c433eadc6ee2119703c9770b49a6`.
+- Merged/deployed source: `3ab58f771f927f50d4548c40ca153834df08600d`.
+- Product diff limited to `product/source/src/editor/chat-bounded-edit.js` and `product/source/src/agent/capability-registry.js`.
+- UI unchanged; FORMAT_VERSION unchanged.
+
+Candidate qualification:
+- Request `clusterA-A4-targeted-eraser-candidate-006-regressions`: PASS.
+- one explicit native Pencil Stroke → two native Stroke fragments.
+- Candidate Canvas `52e1086e → f8fd8c45`.
+- Candidate Preview `fnv1a32:482bfe2b → fnv1a32:786ce305`.
+- exact Undo/Redo restoration.
+- stale target: `CHAT_EDIT_TARGET_STALE`; no-op: `CHAT_EDIT_NO_OP`.
+- exact-SHA A1 Paint Session, A2 native Stroke/NaturalMedia, A3 Paper, B2 brightnessContrast regressions: PASS.
+
+Formal Live:
+- Request: `clusterA-A4-targeted-eraser-live-001`.
+- Request commit: `9d1b2fc843ca884fe8de7a54178ada135ab0b391`.
+- Result commit: `5009f13bcbc95a29910886d399f383229150e1b3`.
+- Hosted run: `37091594541`.
+- Artifact: `11262089933`; digest `sha256:cf8c1f4f0108aee825138531a8f0f03b6630f35b9e49367c2bec6002d3d70da1`.
+- runtime exact source verified; `apiReady=true`; 23 named tools.
+- source Stroke: `live-a4-source-stroke`.
+- erased fragments: `chat-erase-fnv1a32-06181049`, `chat-erase-fnv1a32-24a2dcee`.
+- History: scoped `CHAT erase Stroke`.
+- Live Preview `fnv1a32:482bfe2b → fnv1a32:786ce305`; Undo restored `482bfe2b`; Redo restored `786ce305` and identical fragment refs.
+- stale proposal rejected during approval with `CHAT_EDIT_TARGET_STALE`.
+- non-intersecting eraser execute rejected with `CHAT_EDIT_NO_OP`.
+
+```text
+A4_TARGETED_ERASER = PASS / CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+NEXT_DRAWING_GAP = A5_BLENDER_SMUDGE
+SECOND_AUTHORITY = NONE
+POINTER_SIMULATION = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
