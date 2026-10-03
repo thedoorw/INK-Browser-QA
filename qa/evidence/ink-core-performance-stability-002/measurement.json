@@ -1,0 +1,257 @@
+{
+  "schema": "INK_CORE_PERFORMANCE_STABILITY_MEASUREMENT",
+  "version": 1,
+  "package": "ink-core-performance-stability-002",
+  "measuredAt": "2026-10-03",
+  "sourceRepository": "thedoorw/INK-Browser-QA",
+  "branch": "work/ink-core-performance-stability-002",
+  "baselineSha": "cdfef7b3085782747cc98e286fcd12624f70891a",
+  "repairCommit": "a69aaf3723d6acc270d7c83fe0c1870365c4ca58",
+  "exactCandidate": "f2dd755e54d53cd1d5f2f67b77f6d17917ade31a",
+  "environment": {
+    "harness": "exact fetched repository module bodies executed in isolated JavaScript; browser Canvas2D source/output surfaces mocked at the DOM boundary",
+    "clock": "Date.now() millisecond resolution",
+    "browserFrameTiming": false,
+    "gpuTiming": false,
+    "heapProfiler": false
+  },
+  "reproducedBottleneck": {
+    "path": "product/source/src/studio-core.js",
+    "route": "renderer.drawImage external-source image object with non-destructive adjustments/filter stack",
+    "cause": "studioImageCache key included global app.doc.modifiedAt, so any unrelated document mutation invalidated an otherwise identical external image stack and repeated source read plus full pixel processing.",
+    "distinction": "separate from package 001 Canvas2D natural-media warm-cache preparation optimization"
+  },
+  "imageStackBaseline": {
+    "moduleBlobs": {
+      "imageCore": "65f6c8c4ea19e2c3058d984c42e5989633e16bc4",
+      "advancedProcessing": "1ede3198687ee0a92a54f7c77a2020d55e34ad2c"
+    },
+    "workload": {
+      "width": 192,
+      "height": 192,
+      "pixels": 36864,
+      "stack": [
+        "brightnessContrast",
+        "hueSaturation",
+        "gaussianBlur(radius=3)",
+        "noiseGrain"
+      ]
+    },
+    "rawStackMs": [
+      1620,
+      1648,
+      1690
+    ],
+    "unrelatedDocumentChangesBefore": {
+      "processRuns": 5,
+      "timingsMs": [
+        1598,
+        1462,
+        1635,
+        1560,
+        1595
+      ],
+      "medianMs": 1595,
+      "cacheEntries": 5
+    },
+    "unrelatedDocumentChangesAfter": {
+      "processRuns": 1,
+      "timingsMs": [
+        1521,
+        0,
+        0,
+        0,
+        0
+      ],
+      "cacheEntries": 1,
+      "note": "four repeated unchanged image-stack calls completed below Date.now() millisecond resolution"
+    },
+    "processExecutionsEliminated": 4,
+    "executionReductionPercent": 80,
+    "outputHash": 1850951412
+  },
+  "exactStudioHarness": {
+    "workload": "96x96 external source, brightnessContrast + gaussianBlur(radius=2), three document identities",
+    "before": {
+      "sourceReads": 3,
+      "processedWrites": 3,
+      "cacheEntries": 3,
+      "timingsMs": [
+        181,
+        193,
+        208
+      ],
+      "outputHash": 3260145365
+    },
+    "after": {
+      "sourceReads": 1,
+      "processedWrites": 1,
+      "cacheEntries": 1,
+      "timingsMs": [
+        185,
+        0,
+        0
+      ],
+      "outputHash": 3260145365
+    },
+    "stackMutationAfter": {
+      "sourceReads": 2,
+      "processedWrites": 2,
+      "cacheEntries": 2,
+      "timingsMs": [
+        193,
+        191,
+        0
+      ],
+      "outputHash": 1444042967
+    },
+    "sourceMutationAfter": {
+      "sourceReads": 2,
+      "processedWrites": 2,
+      "cacheEntries": 2,
+      "timingsMs": [
+        181,
+        189,
+        0
+      ]
+    },
+    "rasterStateHistoryBoundary": {
+      "rasterConversions": 2,
+      "cacheEntries": 2,
+      "condition": "doc.modifiedAt changed between two raster-state renders",
+      "result": "timestamp invalidation preserved"
+    }
+  },
+  "drawingControl": {
+    "workload": "Brush + DryBrush, 120 points each, Canvas2D multichannel, maxPixels=80000",
+    "coldMs": 577,
+    "warmMs": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "diagnostics": {
+      "runs": 1,
+      "strokes": 2,
+      "stamps": 422,
+      "pixels": 24742,
+      "cacheHits": 5,
+      "cacheMisses": 1,
+      "preparations": 1,
+      "preparationSkips": 5,
+      "cacheEntries": 1
+    },
+    "disposition": "package 001 warm-cache behavior remains effective; not selected for repair"
+  },
+  "previewControl": {
+    "route": "transient Canvas2D multichannel Preview-style render",
+    "timingsMs": [
+      511,
+      485,
+      510
+    ],
+    "diagnostics": {
+      "runs": 3,
+      "cacheHits": 0,
+      "cacheMisses": 3,
+      "preparations": 3,
+      "preparationSkips": 0,
+      "cacheEntries": 0
+    },
+    "disposition": "intentional transient semantics unchanged; no Preview speedup claimed"
+  },
+  "historyControl": {
+    "stroke": {
+      "points": 1200,
+      "commitMs": 9,
+      "capturedBytes": 49420,
+      "storedBytes": 155,
+      "patchCount": 1,
+      "undoMs": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "redoMs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "raster": {
+      "width": 192,
+      "height": 192,
+      "commitMs": 76,
+      "capturedBytes": 541600,
+      "storedBytes": 155,
+      "patchCount": 1,
+      "undoMs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "redoMs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "disposition": "Undo/Redo patch apply is not the selected bottleneck; History source unchanged"
+  },
+  "repair": {
+    "change": "external-source image stack cache key uses null instead of global document modifiedAt; raster-state image key continues using app.doc.modifiedAt",
+    "productionFilesChanged": [
+      "product/source/src/studio-core.js"
+    ],
+    "uiChanged": false,
+    "formatVersionChanged": false,
+    "newCache": false,
+    "cacheLimitChanged": false,
+    "newCoreAuthority": false,
+    "newRendererAuthority": false,
+    "newRasterAuthority": false,
+    "newHistoryAuthority": false
+  },
+  "concurrency": {
+    "mainAtBranchCreation": "cdfef7b3085782747cc98e286fcd12624f70891a",
+    "mainAtRecheck": "491af48322d1d103be377530f4575b8511a4b5c7",
+    "relevantMainBlobsAtRecheck": {
+      "studioCore": "70bada16c182975c4500a5434ef81af933ca6c52",
+      "imageCore": "65f6c8c4ea19e2c3058d984c42e5989633e16bc4",
+      "history": "a1c3cefe60b9923d030bcead1d8565b134aebd21"
+    },
+    "overlap": "NONE_REPRODUCED; relevant main blobs remain identical to branch baseline"
+  },
+  "limits": [
+    "This DEV environment could not clone/run the repository checkout directly; measurements execute exact fetched repository module bodies in an isolated JavaScript harness.",
+    "Canvas/DOM boundaries are mocked; this is source-harness timing, not browser frame or GPU timing.",
+    "No heap profiler was available; no memory-leak claim is made.",
+    "Formal candidate browser/runtime and Live qualification remain CHAT/Core/Live authority work."
+  ]
+}
