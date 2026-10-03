@@ -1,8 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions",
-  "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
-  "case": "raster-advanced-ingest",
+  "requestId": "clusterC-C1-page-ops-candidate-001-regressions",
+  "candidateSha": "8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
+  "case": "page-ops-c1",
   "regressions": true
 }
