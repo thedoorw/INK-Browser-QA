@@ -290,12 +290,14 @@ export const CHAT_IMAGE_LOCAL_RETOUCH_TYPES = Object.freeze(['dodge', 'burn', 's
 export const CHAT_IMAGE_SOURCE_RETOUCH_TYPES = Object.freeze(['cloneStamp', 'healingBrush', 'patch']);
 export const CHAT_PAGE_OPERATIONS = Object.freeze(['page.create.v1', 'page.duplicate.v1', 'page.delete.v1', 'page.rename.v1', 'page.activate.v1']);
 const CHAT_PAGE_OPERATION_SET = new Set(CHAT_PAGE_OPERATIONS);
+export const CHAT_OBJECT_ALIGN_MODES = Object.freeze(['left', 'centerX', 'right', 'top', 'centerY', 'bottom', 'distributeX', 'distributeY']);
 
 export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.repaint.v1',
   'path.material.apply.v1',
   'path.material.remove.v1',
   'object.translate.v1',
+  'object.align.v1',
   'path.simplify.v1',
   'path.refine.v1',
   'path.create.v1',
@@ -1226,6 +1228,10 @@ function normalizeOperationArguments(operation, raw) {
     if (dx === 0 && dy === 0) editFail('NO_OP');
     return { dx, dy };
   }
+  if (operation === 'object.align.v1') {
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => key !== 'mode')) editFail('ARGUMENTS_INVALID');
+    return { mode: boundedEnum(raw.mode, 'arguments.mode', CHAT_OBJECT_ALIGN_MODES) };
+  }
   if (operation === 'path.simplify.v1') {
     return {
       tolerance: boundedNumber(raw?.tolerance ?? 0.75, 'arguments.tolerance', { min: 0, max: 1e6 }),
@@ -1328,6 +1334,7 @@ function operationTargetRules(operation) {
     || operation === 'component.instance.detach.v1'
     || operation === 'component.reference.repair.v1') return { exact: 1, max: 1 };
   if (operation === 'boolean.apply.v1') return { min: 2, max: 64 };
+  if (operation === 'object.align.v1') return { min: 2, max: 64 };
   return { min: 1, max: 64 };
 }
 
@@ -3084,6 +3091,66 @@ function executePathDeformationTask(app, task) {
   };
 }
 
+function executeObjectAlignTask(app, task) {
+  const mode = task.arguments.mode;
+  const distribution = mode === 'distributeX' || mode === 'distributeY';
+  if (distribution && task.targets.length < 3) {
+    editFail('TARGET_COUNT_INVALID', { expectedMinimum: 3, actual: task.targets.length, mode });
+  }
+  const page = app.page();
+  if (!page?.id) editFail('PAGE_MISSING');
+  if (task.targets.some(ref => ref.pageId !== page.id)) {
+    editFail('TARGET_PAGE_MISMATCH', { activePageId: page.id });
+  }
+
+  const previousSelection = clone(Array.isArray(app.selection) ? app.selection : []);
+  const temporarySelection = task.targets.map(ref => ({ layerId: ref.layerId, objectId: ref.objectId }));
+  const describe = ref => {
+    const found = findPageObject(app.page(), ref);
+    if (!found) editFail('TARGET_MISSING', { objectId: ref.objectId });
+    const bounds = app.renderer?.objectWorldBounds?.(found.object, found.parentWorldMatrix);
+    return {
+      ref: clone(ref),
+      matrix: clone(found.object?.matrix || null),
+      bounds: bounds ? clone(bounds) : null
+    };
+  };
+
+  const before = task.targets.map(describe);
+  let after = null;
+  try {
+    app.selection = temporarySelection;
+    const eligible = app.compositionTransformObjects?.() || [];
+    if (eligible.length !== task.targets.length) {
+      editFail('ALIGN_TARGET_UNSUPPORTED', { expected: task.targets.length, actual: eligible.length });
+    }
+    app.alignSelection(mode);
+    after = task.targets.map(describe);
+  } finally {
+    app.selection = previousSelection;
+    app.refreshSelectionUI?.();
+    app.renderer?.render?.();
+  }
+
+  const changedRefs = [];
+  for (let index = 0; index < before.length; index++) {
+    if (JSON.stringify(before[index].matrix) !== JSON.stringify(after[index].matrix)) {
+      changedRefs.push(clone(task.targets[index]));
+    }
+  }
+
+  return {
+    changed: changedRefs.length > 0,
+    mode,
+    targetCount: task.targets.length,
+    changedTargetCount: changedRefs.length,
+    changedRefs,
+    resultRefs: task.targets.map(clone),
+    beforeBounds: before.map(item => ({ ref: item.ref, bounds: item.bounds })),
+    afterBounds: after.map(item => ({ ref: item.ref, bounds: item.bounds }))
+  };
+}
+
 function executePageTask(app, task) {
   const pages = app.doc?.pages || [];
   const pageById = pageId => pages.find(page => page.id === pageId) || null;
@@ -3153,6 +3220,7 @@ function executeApprovedTask(app, task) {
     return executeAppearanceTask(app, task);
   }
   if (task.operation === 'object.translate.v1') return executeTranslateTask(app, task);
+  if (task.operation === 'object.align.v1') return executeObjectAlignTask(app, task);
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
   if (task.operation === 'stroke.create.v1') return executeStrokeCreateTask(app, task);
