@@ -1,0 +1,43 @@
+{
+  "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+  "version": 1,
+  "requestId": "clusterA-A3-regression-B2-adjustment-001",
+  "candidateSha": "1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
+  "case": "raster-stack-adjustment-b2",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:46205/?sourceCandidate=1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "operation": "image.adjustment.add.v1",
+    "adjustmentType": "brightnessContrast",
+    "objectId": "682b016d-ab6d-4ebd-ab12-a56aab0a5f51",
+    "beforeFingerprint": "fnv1a32:9c705814",
+    "afterFingerprint": "fnv1a32:53f33d4d",
+    "beforeHash": "7883b22",
+    "afterHash": "9cd23fe",
+    "undoHash": "7883b22",
+    "redoHash": "9cd23fe",
+    "historyLabel": "CHAT add image adjustment: brightnessContrast",
+    "previewStatus": "COMPLETED",
+    "undoStatus": "COMPLETED",
+    "redoStatus": "COMPLETED",
+    "controllerResult": {
+      "adjustmentCount": 1,
+      "resultRefs": [
+        {
+          "layerId": "68dc5d3b-2036-457a-bafa-e339a1730c77",
+          "objectId": "682b016d-ab6d-4ebd-ab12-a56aab0a5f51",
+          "pageId": "330e8d1c-b6fe-4bf1-85ea-daf75f041bbd"
+        }
+      ],
+      "stackItemId": "adj_1uhma7o",
+      "stackItemType": "brightnessContrast"
+    }
+  },
+  "status": "PASS"
+}
