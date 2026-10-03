@@ -1,0 +1,103 @@
+name: INK PWA Supervisor Gate CI v3
+
+on:
+  push:
+    branches:
+      - work/pwa-cache-freshness-supervisor-gates-003
+    paths:
+      - product/source/**
+      - pwa-pages-build-identity.txt
+      - qa/pwa-cache-freshness.test.mjs
+      - qa/pwa-cache-freshness-browser.mjs
+      - qa/pwa-pages-live-baseline.mjs
+      - qa/pwa-pages-live-verify.mjs
+      - .github/workflows/ink-pwa-supervisor-gates-v3.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-pwa-supervisor-gates-v3
+  cancel-in-progress: true
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify local deterministic fallback identity
+        run: node product/source/generate-build-identity.mjs --check
+
+      - name: Source and syntax guards
+        run: |
+          node --test qa/pwa-cache-freshness.test.mjs
+          node product/source/generate-shell.mjs --check
+          node --check product/source/service-worker.js
+          node --check product/source/service-worker-runtime.js
+          node --check product/source/src/pwa/update-manager.js
+          node --check qa/pwa-cache-freshness-browser.mjs
+          node --check qa/pwa-pages-live-baseline.mjs
+          node --check qa/pwa-pages-live-verify.mjs
+
+      - name: Build with the same Jekyll Pages path
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: Verify publication-bound Jekyll revision
+        run: |
+          test -f _site/product/source/pages-build-identity.txt
+          ACTUAL="$(tr -d '\r\n ' < _site/product/source/pages-build-identity.txt)"
+          test "$ACTUAL" = "$GITHUB_SHA"
+          printf '{"expected_revision":"%s","rendered_revision":"%s","status":"PASS"}\n' "$GITHUB_SHA" "$ACTUAL" > jekyll-pages-identity.json
+
+      - name: Materialize latest-main product baseline
+        run: git worktree add "$RUNNER_TEMP/ink-pwa-baseline" a6842e95a00ef440d47cc393394b9272d75f6082
+
+      - name: Real Chromium lifecycle A
+        run: |
+          mkdir -p qa/evidence/pwa-supervisor-gates-v3
+          node qa/pwa-cache-freshness-browser.mjs \
+            "$RUNNER_TEMP/ink-pwa-baseline/product/source" \
+            "$GITHUB_WORKSPACE/product/source" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-supervisor-gates-v3/local-a.json"
+
+      - name: Real Chromium lifecycle B
+        run: |
+          node qa/pwa-cache-freshness-browser.mjs \
+            "$RUNNER_TEMP/ink-pwa-baseline/product/source" \
+            "$GITHUB_WORKSPACE/product/source" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-supervisor-gates-v3/local-b.json"
+
+      - name: Capture actual deployed pre-integration browser profile
+        run: |
+          mkdir -p qa/evidence/pwa-supervisor-gates-v3
+          node qa/pwa-pages-live-baseline.mjs \
+            "https://thedoorw.github.io/INK-Browser-QA/product/source/" \
+            "$RUNNER_TEMP/ink-pages-profile" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-supervisor-gates-v3/premerge-baseline.json"
+          tar -C "$RUNNER_TEMP" -czf "$GITHUB_WORKSPACE/qa/evidence/pwa-supervisor-gates-v3/premerge-profile.tgz" ink-pages-profile
+
+      - name: Prove preserved profile is reusable
+        run: |
+          mkdir -p "$RUNNER_TEMP/restored"
+          tar -C "$RUNNER_TEMP/restored" -xzf qa/evidence/pwa-supervisor-gates-v3/premerge-profile.tgz
+          node qa/pwa-pages-live-baseline.mjs \
+            "https://thedoorw.github.io/INK-Browser-QA/product/source/" \
+            "$RUNNER_TEMP/restored/ink-pages-profile" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-supervisor-gates-v3/premerge-restored.json"
+
+      - name: Collect Jekyll proof
+        run: cp jekyll-pages-identity.json qa/evidence/pwa-supervisor-gates-v3/jekyll-pages-identity.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ink-pwa-supervisor-gates-v3-${{ github.sha }}
+          path: qa/evidence/pwa-supervisor-gates-v3/*
+          if-no-files-found: error
