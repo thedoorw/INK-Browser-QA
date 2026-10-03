@@ -1,7 +1,7 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "core-perf-image-cache-formal-live-001",
+  "requestId": "clusterC-C2-align-distribute-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "f56e492af4954ae6da3be39cf10d2dbe2859d87e",
   "steps": [
@@ -13,65 +13,30 @@
       }
     },
     {
-      "id": "describeCreate",
+      "id": "describeAlign",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "page.create.v1"
+        "idOrToolName": "object.align.v1"
       }
     },
     {
-      "id": "createPropose",
+      "id": "createAPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c1-create",
-          "operation": "page.create.v1",
-          "targets": [],
-          "arguments": {}
-        }
-      }
-    },
-    {
-      "id": "createApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "createPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "createExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "createPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "createApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "sourcePathPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c1-source-path",
+          "taskId": "live-c2-create-a",
           "operation": "path.create.v1",
           "targets": [],
           "arguments": {
-            "objectId": "live-c1-source-path",
-            "name": "Live C1 Source Path",
+            "objectId": "live-c2-a",
+            "name": "Live C2 A",
             "shape": "rectangle",
-            "x": 0,
-            "y": 0,
-            "width": 90,
-            "height": 64,
+            "x": 10,
+            "y": 20,
+            "width": 40,
+            "height": 30,
             "fill": "#d4878b",
             "stroke": "#49383b",
             "strokeWidth": 2,
@@ -81,276 +46,306 @@
       }
     },
     {
-      "id": "sourcePathApprove",
+      "id": "createAApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "sourcePathPropose.result.result.proposalId"
+          "$ref": "createAPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "sourcePathExecute",
+      "id": "createAExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "sourcePathPropose.result.result.proposalId"
+          "$ref": "createAPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "sourcePathApprove.result.result.approvalToken"
+          "$ref": "createAApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "renamePropose",
+      "id": "createBPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c1-rename",
-          "operation": "page.rename.v1",
+          "taskId": "live-c2-create-b",
+          "operation": "path.create.v1",
           "targets": [],
           "arguments": {
-            "pageId": {
-              "$ref": "createExecute.result.result.controllerResult.pageId"
+            "objectId": "live-c2-b",
+            "name": "Live C2 B",
+            "shape": "rectangle",
+            "x": 90,
+            "y": 70,
+            "width": 50,
+            "height": 30,
+            "fill": "#8aa6c1",
+            "stroke": "#35495b",
+            "strokeWidth": 2,
+            "opacity": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "createBApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "createBPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "createBExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "createBPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "createBApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "createCPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c2-create-c",
+          "operation": "path.create.v1",
+          "targets": [],
+          "arguments": {
+            "objectId": "live-c2-c",
+            "name": "Live C2 C",
+            "shape": "rectangle",
+            "x": 260,
+            "y": 125,
+            "width": 60,
+            "height": 30,
+            "fill": "#9caf88",
+            "stroke": "#40543b",
+            "strokeWidth": 2,
+            "opacity": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "createCApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "createCPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "createCExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "createCPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "createCApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "previewBaseline",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "leftPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c2-left",
+          "operation": "object.align.v1",
+          "targets": [
+            {
+              "$ref": "createAExecute.result.result.controllerResult.resultRefs.0"
             },
-            "name": "Live Page 2"
-          }
-        }
-      }
-    },
-    {
-      "id": "renameApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "renamePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "renameExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "renamePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "renameApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "duplicatePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c1-duplicate",
-          "operation": "page.duplicate.v1",
-          "targets": [],
-          "arguments": {
-            "pageId": {
-              "$ref": "createExecute.result.result.controllerResult.pageId"
+            {
+              "$ref": "createBExecute.result.result.controllerResult.resultRefs.0"
+            },
+            {
+              "$ref": "createCExecute.result.result.controllerResult.resultRefs.0"
             }
-          }
-        }
-      }
-    },
-    {
-      "id": "duplicateApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "duplicatePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "duplicateExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "duplicatePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "duplicateApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "contextAfterDuplicate",
-      "tool": "get_ink_context",
-      "input": {
-        "maxObjects": 20
-      }
-    },
-    {
-      "id": "activatePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c1-activate",
-          "operation": "page.activate.v1",
-          "targets": [],
+          ],
           "arguments": {
-            "pageId": {
-              "$ref": "contextBefore.result.active.page.id"
-            }
+            "mode": "left"
           }
         }
       }
     },
     {
-      "id": "activateApprove",
+      "id": "leftApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "activatePropose.result.result.proposalId"
+          "$ref": "leftPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "activateExecute",
+      "id": "leftExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "activatePropose.result.result.proposalId"
+          "$ref": "leftPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "activateApprove.result.result.approvalToken"
+          "$ref": "leftApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "historyAfterActivate",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "deleteCopyPropose",
-      "tool": "propose_ink_edit",
+      "id": "previewLeft",
+      "tool": "get_ink_preview",
       "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c1-delete-copy",
-          "operation": "page.delete.v1",
-          "targets": [],
-          "arguments": {
-            "pageId": {
-              "$ref": "duplicateExecute.result.result.controllerResult.pageId"
-            }
-          }
-        }
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     },
     {
-      "id": "deleteCopyApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "deleteCopyPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "deleteCopyExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "deleteCopyPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "deleteCopyApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "undoDeleteCopy",
+      "id": "undoLeft",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "contextUndoDeleteCopy",
-      "tool": "get_ink_context",
+      "id": "previewUndoLeft",
+      "tool": "get_ink_preview",
       "input": {
-        "maxObjects": 20
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     },
     {
-      "id": "redoDeleteCopy",
+      "id": "redoLeft",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "contextRedoDeleteCopy",
-      "tool": "get_ink_context",
+      "id": "previewRedoLeft",
+      "tool": "get_ink_preview",
       "input": {
-        "maxObjects": 20
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
     },
     {
-      "id": "deletePage2Propose",
+      "id": "undoLeftReset",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "distributePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c1-delete-page2",
-          "operation": "page.delete.v1",
-          "targets": [],
-          "arguments": {
-            "pageId": {
-              "$ref": "createExecute.result.result.controllerResult.pageId"
+          "taskId": "live-c2-distribute-x",
+          "operation": "object.align.v1",
+          "targets": [
+            {
+              "$ref": "createAExecute.result.result.controllerResult.resultRefs.0"
+            },
+            {
+              "$ref": "createBExecute.result.result.controllerResult.resultRefs.0"
+            },
+            {
+              "$ref": "createCExecute.result.result.controllerResult.resultRefs.0"
             }
+          ],
+          "arguments": {
+            "mode": "distributeX"
           }
         }
       }
     },
     {
-      "id": "deletePage2Approve",
+      "id": "distributeApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "deletePage2Propose.result.result.proposalId"
+          "$ref": "distributePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "deletePage2Execute",
+      "id": "distributeExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "deletePage2Propose.result.result.proposalId"
+          "$ref": "distributePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "deletePage2Approve.result.result.approvalToken"
+          "$ref": "distributeApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "deleteLastPropose",
-      "tool": "propose_ink_edit",
-      "allowFailure": true,
+      "id": "previewDistribute",
+      "tool": "get_ink_preview",
       "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c1-delete-last",
-          "operation": "page.delete.v1",
-          "targets": [],
-          "arguments": {
-            "pageId": {
-              "$ref": "contextBefore.result.active.page.id"
-            }
-          }
-        }
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
       }
+    },
+    {
+      "id": "undoDistribute",
+      "tool": "undo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewUndoDistribute",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "redoDistribute",
+      "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "previewRedoDistribute",
+      "tool": "get_ink_preview",
+      "input": {
+        "scope": "content",
+        "maxDimension": 800,
+        "background": true
+      }
+    },
+    {
+      "id": "historyFinal",
+      "tool": "get_ink_history",
+      "input": {}
     },
     {
       "id": "contextFinal",
@@ -358,15 +353,6 @@
       "input": {
         "maxObjects": 20
       }
-    },
-    {
-      "id": "historyFinal",
-      "tool": "get_ink_history",
-      "input": {}
     }
-  ],
-  "imageStackFormalB2": true,
-  "imageStackCacheReview": true,
-  "naturalMediaCacheReview": true,
-  "qualification": "path-deformation-b4"
+  ]
 }
