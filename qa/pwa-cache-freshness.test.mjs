@@ -12,14 +12,23 @@ test('generated PWA build identity matches complete product/source fingerprint',
   assert.match(buildId, /^src-[a-f0-9]{24}$/);
 });
 
-test('service worker is online-first and keeps build-scoped offline caches', async () => {
+test('legacy worker URL is a no-fetch migration bridge', async () => {
   const source = await read('product/source/service-worker.js');
+  assert.match(source, /MIGRATION_ID = 'ink-pwa-cache-migration-v1'/);
+  assert.match(source, /self\.skipWaiting\(\)/);
+  assert.match(source, /key\.startsWith\(CACHE_PREFIX\)/);
+  assert.match(source, /client\.navigate\?\.\(client\.url\)/);
+  assert.doesNotMatch(source, /addEventListener\('fetch'/);
+});
+
+test('runtime worker is online-first with build-scoped offline fallback', async () => {
+  const source = await read('product/source/service-worker-runtime.js');
   assert.match(source, /importScripts\('\.\/build-identity\.js'\)/);
   assert.match(source, /new Request\(request, \{ cache: 'no-store' \}\)/);
   assert.match(source, /event\.request\.mode === 'navigate'/);
   assert.match(source, /buildConsistentNavigation/);
   assert.match(source, /networkFirstAsset/);
-  assert.match(source, /const takeover = self\.skipWaiting\(\)/);
+  assert.match(source, /self\.skipWaiting\(\)/);
   assert.match(source, /key\.startsWith\(CACHE_PREFIX\)/);
   assert.match(source, /replacingPreviousBuild/);
   assert.match(source, /client\.navigate\?\.\(client\.url\)/);
@@ -27,13 +36,14 @@ test('service worker is online-first and keeps build-scoped offline caches', asy
   assert.doesNotMatch(source, /if \(cached\) return cached;/);
 });
 
-test('update manager automatically checks, activates and bounds controller reload', async () => {
+test('update manager targets runtime worker and auto-activates updates', async () => {
   const source = await read('product/source/src/pwa/update-manager.js');
+  const appSource = await read('product/source/src/ink.js');
+  assert.match(source, /scriptURL = '\.\/service-worker-runtime\.js'/);
+  assert.match(appSource, /scriptURL:'\.\/service-worker-runtime\.js'/);
   assert.match(source, /updateViaCache: 'none'/);
   assert.match(source, /await this\.registration\.update\(\)/);
   assert.match(source, /this\.autoActivate/);
   assert.match(source, /controllerchange/);
-  assert.match(source, /this\.controllerAtRegister && !this\.reloadIssued/);
-  assert.match(source, /globalThis\.location\?\.reload\?\.\(\)/);
   assert.match(source, /INK_GET_VERSION/);
 });
