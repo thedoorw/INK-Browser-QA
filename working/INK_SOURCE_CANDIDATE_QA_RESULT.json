@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions",
-  "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
-  "case": "raster-advanced-ingest",
+  "requestId": "clusterC-C1-page-ops-candidate-001-regressions",
+  "candidateSha": "8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
+  "case": "page-ops-c1",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:34959/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
+    "href": "http://127.0.0.1:39291/?sourceCandidate=8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,91 +13,451 @@
   },
   "result": {
     "passed": true,
-    "operation": "raster.import",
-    "imports": [
-      {
-        "format": "PSD",
-        "ref": {
-          "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
-          "objectId": "2db82f98-1492-4bce-972b-be704ae3113d",
-          "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
-        },
-        "objectId": "2db82f98-1492-4bce-972b-be704ae3113d",
-        "bitDepth": 8,
-        "colorMode": "RGB",
-        "preview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:71adb35d"
-        }
-      },
-      {
-        "format": "TIFF",
-        "ref": {
-          "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
-          "objectId": "870fdacd-b6fc-4cdc-8e29-731fb2814387",
-          "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
-        },
-        "objectId": "870fdacd-b6fc-4cdc-8e29-731fb2814387",
-        "bitDepth": 8,
-        "colorMode": "RGB",
-        "preview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:71adb35d"
-        }
-      },
-      {
-        "format": "EXR",
-        "ref": {
-          "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
-          "objectId": "4e942766-1e00-42c3-b436-56fba09ad472",
-          "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
-        },
-        "objectId": "4e942766-1e00-42c3-b436-56fba09ad472",
-        "bitDepth": 32,
-        "colorMode": "RGB",
-        "preview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:3815a805"
-        }
-      }
+    "operations": [
+      "page.create.v1",
+      "page.duplicate.v1",
+      "page.delete.v1",
+      "page.rename.v1",
+      "page.activate.v1"
     ],
-    "psdMutation": {
-      "beforeHash": "9c21f25f",
-      "afterHash": "1d273b3e",
-      "undoHash": "9c21f25f",
-      "redoHash": "1d273b3e",
-      "afterEditPreview": {
-        "status": "COMPLETED",
-        "fingerprint": "fnv1a32:3815a805"
-      }
+    "initialPageId": "e208cfa7-c524-42c5-8c8b-5d93dce31bc7",
+    "createdPageId": "39a41150-4d92-4110-a247-25f0e27a2eb1",
+    "duplicatedPageId": "38a8b59b-1157-45af-8836-9275caada470",
+    "duplicateIdentity": {
+      "sourceLayerIds": [
+        "52fd734e-5c82-4754-b5b7-2694f9628242"
+      ],
+      "sourceObjectIds": [
+        "qa-c1-page2-path"
+      ],
+      "duplicateLayerIds": [
+        "4ae79315-4df9-4d66-bf82-fedbee123f86"
+      ],
+      "duplicateObjectIds": [
+        "f873e376-b78f-4d50-adcd-a494af5edd9e"
+      ]
     },
-    "rawDefaultRejected": true,
-    "rawDefaultCode": "INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE",
-    "rawApproved": {
-      "ref": {
-        "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
-        "objectId": "3e96a6d2-8ebd-4346-9ce7-b49d7bb37a0b",
-        "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
-      },
-      "bitDepth": 16,
-      "colorMode": "RGB",
-      "preview": {
-        "status": "COMPLETED",
-        "fingerprint": "fnv1a32:c2ddfd3c"
-      },
-      "route": "advanced-format-raw"
-    }
+    "noOpCodes": {
+      "rename": "CHAT_EDIT_NO_OP",
+      "activate": "CHAT_EDIT_NO_OP"
+    },
+    "staleCode": "CHAT_EDIT_STALE_PAGE",
+    "minimumPageCode": "CHAT_EDIT_MINIMUM_PAGE_REQUIRED",
+    "finalPageCount": 1,
+    "finalActivePageId": "e208cfa7-c524-42c5-8c8b-5d93dce31bc7",
+    "historyLabels": [
+      "新增頁面",
+      "CHAT create Path",
+      "重新命名頁面",
+      "複製頁面",
+      "刪除頁面",
+      "新增頁面",
+      "刪除頁面",
+      "刪除頁面"
+    ]
   },
   "status": "PASS",
   "regressions": [
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-import-named-tool",
-      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
+      "requestId": "clusterC-C1-page-ops-candidate-001-regressions-stroke-create-a2",
+      "candidateSha": "8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
+      "case": "stroke-create-a2",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:35585/?sourceCandidate=8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "stroke.create.v1",
+        "created": [
+          {
+            "id": "chat-stroke-fnv1a32-bb21046a",
+            "kind": "pencil",
+            "mediaModel": null,
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-ba3b2301",
+            "kind": "brush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-9d7b788f",
+            "kind": "airbrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-4b41deb2",
+            "kind": "drybrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          }
+        ],
+        "before": {
+          "count": 0,
+          "undo": 0,
+          "canvas": "308b5875"
+        },
+        "after": {
+          "count": 4,
+          "undo": 4,
+          "canvas": "e70b7919"
+        },
+        "historyLabels": [
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke"
+        ],
+        "previewStatus": "COMPLETED",
+        "previewBounds": {
+          "h": 350.6,
+          "w": 451,
+          "x": -233.6,
+          "y": -182
+        },
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "redoCanvas": "e70b7919",
+        "naturalMedia": {
+          "preference": "auto",
+          "floraReferenceBackend": "canvas2d",
+          "activeBackend": "webgl2-multichannel",
+          "gpuAvailable": true,
+          "gpuState": "ready",
+          "forcedReason": null,
+          "fallbacks": 0,
+          "batchFallbacks": 0,
+          "mixingRuns": 0,
+          "webgl": {
+            "backend": "webgl2",
+            "drawCalls": 3,
+            "cacheHits": 24,
+            "cacheMisses": 3,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "vertices": 1740,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 3,
+            "lastError": null,
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "maxTextureUnits": 32,
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 3,
+              "releases": 0,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 742548,
+              "budgetBytes": 100663296,
+              "usedBytes": 742548,
+              "availableBytes": 99920748,
+              "utilization": 0.007376551628112793,
+              "resources": 3,
+              "byType": {
+                "raster-cache": 742548
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelWebgl": {
+            "backend": "webgl2-multichannel",
+            "runs": 6,
+            "strokes": 6,
+            "drawCalls": 6,
+            "simulationPasses": 24,
+            "cacheHits": 23,
+            "cacheMisses": 6,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 4,
+            "lastError": null,
+            "targets": "164x79",
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxDrawBuffers": 8,
+              "maxColorAttachments": 8,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 16,
+              "releases": 10,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 766152,
+              "budgetBytes": 167772160,
+              "usedBytes": 473576,
+              "availableBytes": 167298584,
+              "utilization": 0.002822732925415039,
+              "resources": 6,
+              "byType": {
+                "raster-cache": 266280,
+                "mrt-target": 207296
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 0,
+            "strokes": 0,
+            "mixingStrokes": 0,
+            "stamps": 0,
+            "mixerStamps": 0,
+            "transportedPigment": 0,
+            "pixels": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0,
+            "preparations": 0,
+            "preparationSkips": 0,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 0
+          },
+          "canvas2d": {
+            "backend": "canvas2d",
+            "surfaceRevision": "WP8B-1",
+            "drawCalls": 0,
+            "frequencyVisibility": {
+              "low": true,
+              "mid": true,
+              "high": true
+            }
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C1-page-ops-candidate-001-regressions-page-paper-a3",
+      "candidateSha": "8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
+      "case": "page-paper-a3",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:40819/?sourceCandidate=8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "page.paper.set.v1",
+        "paperCoupledRunStrokeCount": 2,
+        "paperBefore": {
+          "type": "blank",
+          "color": "#fffef9",
+          "gridSize": 32,
+          "absorbency": 0.58,
+          "roughness": 0.42,
+          "fiberStrength": 0.36,
+          "fiberAngle": 0,
+          "sizing": 0.28,
+          "granulation": 0.32,
+          "seed": 1337,
+          "textureVisible": true
+        },
+        "paperAfter": {
+          "type": "blank",
+          "color": "#fffef9",
+          "gridSize": 32,
+          "absorbency": 0.05,
+          "roughness": 0.95,
+          "fiberStrength": 0.36,
+          "fiberAngle": 0,
+          "sizing": 0.28,
+          "granulation": 0.32,
+          "seed": 1337,
+          "textureVisible": true
+        },
+        "baseline": "fnv1a32:05b5d299",
+        "roughPreview": "fnv1a32:8a0d1881",
+        "changedPreview": "fnv1a32:400ea8b1",
+        "undoRedoRenderExact": true,
+        "scopedPaperEntries": [
+          {
+            "label": "調整畫布",
+            "captureMode": "scoped"
+          },
+          {
+            "label": "調整畫布",
+            "captureMode": "scoped"
+          }
+        ],
+        "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
+        "invalidCasesRejected": 5,
+        "noOpRejected": true,
+        "staleRejected": true,
+        "pendingPreviewRejected": true,
+        "naturalMedia": {
+          "preference": "auto",
+          "floraReferenceBackend": "canvas2d",
+          "activeBackend": "webgl2-multichannel",
+          "gpuAvailable": true,
+          "gpuState": "ready",
+          "forcedReason": null,
+          "fallbacks": 0,
+          "batchFallbacks": 0,
+          "mixingRuns": 0,
+          "webgl": {
+            "backend": "webgl2",
+            "drawCalls": 4,
+            "cacheHits": 9,
+            "cacheMisses": 4,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "vertices": 1272,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 2,
+            "lastError": null,
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "maxTextureUnits": 32,
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 4,
+              "releases": 2,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 1637668,
+              "budgetBytes": 100663296,
+              "usedBytes": 1637668,
+              "availableBytes": 99025628,
+              "utilization": 0.01626876990000407,
+              "resources": 2,
+              "byType": {
+                "raster-cache": 1637668
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelWebgl": {
+            "backend": "webgl2-multichannel",
+            "runs": 17,
+            "strokes": 32,
+            "drawCalls": 32,
+            "simulationPasses": 68,
+            "cacheHits": 16,
+            "cacheMisses": 17,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 6,
+            "lastError": null,
+            "targets": "312x212",
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxDrawBuffers": 8,
+              "maxColorAttachments": 8,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 44,
+              "releases": 36,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 4468380,
+              "budgetBytes": 167772160,
+              "usedBytes": 2991900,
+              "availableBytes": 164780260,
+              "utilization": 0.01783311367034912,
+              "resources": 8,
+              "byType": {
+                "raster-cache": 1933596,
+                "mrt-target": 1058304
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 0,
+            "strokes": 0,
+            "mixingStrokes": 0,
+            "stamps": 0,
+            "mixerStamps": 0,
+            "transportedPigment": 0,
+            "pixels": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0,
+            "preparations": 0,
+            "preparationSkips": 0,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 0
+          },
+          "canvas2d": {
+            "backend": "canvas2d",
+            "surfaceRevision": "WP8B-1",
+            "drawCalls": 0,
+            "frequencyVisibility": {
+              "low": true,
+              "mid": true,
+              "high": true
+            }
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterC-C1-page-ops-candidate-001-regressions-raster-import-named-tool",
+      "candidateSha": "8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
       "case": "raster-import-named-tool",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:36915/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
+        "href": "http://127.0.0.1:36665/?sourceCandidate=8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -108,13 +468,13 @@
         "before": {
           "count": 0,
           "undo": 0,
-          "canvas": "308b5875"
+          "canvas": "8d257ff8"
         },
         "after": {
           "count": 1,
           "undo": 1,
           "canvas": "b2d95166",
-          "id": "626915af-1a21-4059-9586-7f985736fdac",
+          "id": "e80e3367-34a2-4aad-80eb-e74c1e22532c",
           "width": 32,
           "height": 24,
           "sourceSha256": "02180abde1c6932923a0a99a9a346ce284ff63b7af38d8f082830d50268589b4"
@@ -130,143 +490,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-direct-paint-bucket-b3",
-      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
-      "case": "raster-direct-paint-bucket-b3",
-      "runtimeIdentity": {
-        "href": "http://127.0.0.1:46721/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
-        "readyState": "complete",
-        "apiReady": true,
-        "toolCount": 23,
-        "appVersion": "0.1"
-      },
-      "result": {
-        "passed": true,
-        "operation": "image.raster.paintBucket.v1",
-        "objectId": "379845cd-7705-4c56-bb4e-465429c22d35",
-        "beforeHash": "376ec6fb",
-        "afterHash": "b09ebd5b",
-        "undoHash": "376ec6fb",
-        "redoHash": "b09ebd5b",
-        "beforePreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:4d9848b1"
-        },
-        "afterPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:f1a6f9ad"
-        },
-        "undoPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:4d9848b1"
-        },
-        "redoPreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:f1a6f9ad"
-        },
-        "historyLabel": "CHAT raster Paint Bucket",
-        "changedPixels": 1296,
-        "changedChannels": 3888,
-        "noOpRejected": true,
-        "referenceRejected": true,
-        "controllerResult": {
-          "changed": true,
-          "rasterEdit": {
-            "changedChannels": 3888,
-            "changedPixels": 1296,
-            "color": "#20b86a",
-            "contiguous": true,
-            "opacity": 1,
-            "selectionBounds": {
-              "h": 48,
-              "w": 32,
-              "x": 0,
-              "y": 0
-            },
-            "tolerance": 0,
-            "type": "paintBucket",
-            "x": 4,
-            "y": 4
-          },
-          "resultRefs": [
-            {
-              "layerId": "3035e564-c8d4-4d3d-8409-c95b8332bb06",
-              "objectId": "379845cd-7705-4c56-bb4e-465429c22d35",
-              "pageId": "15d2f218-61e2-4c99-b971-6f152e0d0de6"
-            }
-          ]
-        }
-      },
-      "status": "PASS"
-    },
-    {
-      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
-      "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-source-retouch-b3",
-      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
-      "case": "raster-source-retouch-b3",
-      "runtimeIdentity": {
-        "href": "http://127.0.0.1:39613/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
-        "readyState": "complete",
-        "apiReady": true,
-        "toolCount": 23,
-        "appVersion": "0.1"
-      },
-      "result": {
-        "passed": true,
-        "operation": "image.raster.sourceRetouch.v1",
-        "objectId": "f4370cdf-bdbd-42c5-b6c6-a986fec4324f",
-        "baselineHash": "7b77e00d",
-        "baselinePreview": {
-          "status": "COMPLETED",
-          "fingerprint": "fnv1a32:7f12eccb"
-        },
-        "types": [
-          {
-            "type": "cloneStamp",
-            "afterHash": "b677e6f9",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:9effb581"
-            },
-            "changedPixels": 149,
-            "changedChannels": 447
-          },
-          {
-            "type": "healingBrush",
-            "afterHash": "ae324391",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:6650e7b0"
-            },
-            "changedPixels": 145,
-            "changedChannels": 435
-          },
-          {
-            "type": "patch",
-            "afterHash": "dfc18a42",
-            "afterPreview": {
-              "status": "COMPLETED",
-              "fingerprint": "fnv1a32:faa33887"
-            },
-            "changedPixels": 120,
-            "changedChannels": 359
-          }
-        ],
-        "staleRejected": true,
-        "noOpRejected": true,
-        "outOfRangeRejected": true
-      },
-      "status": "PASS"
-    },
-    {
-      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
-      "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
+      "requestId": "clusterC-C1-page-ops-candidate-001-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:39843/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
+        "href": "http://127.0.0.1:38541/?sourceCandidate=8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -276,9 +504,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "77830472-198c-4a2d-8b1a-1fc9dd00a6e6",
-        "beforeFingerprint": "fnv1a32:b17d7b36",
-        "afterFingerprint": "fnv1a32:116b2900",
+        "objectId": "ac9a720c-2dd0-4ac2-864a-f2f4df95723b",
+        "beforeFingerprint": "fnv1a32:9afd9b7a",
+        "afterFingerprint": "fnv1a32:264a936b",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -291,12 +519,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "832557cd-1ab6-4dc1-b9aa-6cdd2922d855",
-              "objectId": "77830472-198c-4a2d-8b1a-1fc9dd00a6e6",
-              "pageId": "dd997f32-0100-4ca2-af96-8cd43e8de984"
+              "layerId": "2fda57b0-e4ba-45e4-8350-48ea5599a91e",
+              "objectId": "ac9a720c-2dd0-4ac2-864a-f2f4df95723b",
+              "pageId": "fd616212-df9f-4d24-b5cb-990083e7bb16"
             }
           ],
-          "stackItemId": "adj_kl6r4e",
+          "stackItemId": "adj_b2sts",
           "stackItemType": "brightnessContrast"
         }
       },
