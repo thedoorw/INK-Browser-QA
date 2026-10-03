@@ -1,3 +1,4 @@
+import { SPATIAL_BATCH_REVIEW_CASE } from '../shared/spatial-batch-review-case.mjs';
 import * as B2_FORMAL_CASES from '../shared/image-stack-formal-cases.mjs';
 import { IMAGE_STACK_CACHE_REVIEW_CASE } from '../shared/image-stack-cache-review-case.mjs';
 import { NATURAL_MEDIA_CACHE_REVIEW_CASE } from '../shared/natural-media-cache-review-case.mjs';
@@ -436,6 +437,13 @@ async function run() {
       if (probe.exceptionDetails) throw new Error(probe.exceptionDetails.exception?.description || probe.exceptionDetails.text);
       assert.equal(probe.result?.value?.passed, true, 'B4 formal Live qualification failed');
       executionResult = { discovery: executionResult, qualification: probe.result.value };
+    }
+
+    if (request.spatialBatchReview === true) {
+      const probe=await cdp.send('Runtime.evaluate',{expression:SPATIAL_BATCH_REVIEW_CASE,returnByValue:true,awaitPromise:true},sessionId,90000);
+      if(probe.exceptionDetails)throw new Error(probe.exceptionDetails.exception?.description||probe.exceptionDetails.text);
+      assert.equal(probe.result?.value?.passed,true,'Spatial batch Formal Live failed');
+      executionResult={...executionResult,spatialBatchReview:probe.result.value};
     }
 
     if (request.imageStackFormalB2 === true) {
