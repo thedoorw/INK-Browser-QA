@@ -6,9 +6,9 @@ PR #142 is accepted, merged and formally Live-qualified at exact source `e095ee5
 
 LIVE_DEPLOYMENT_RESERVATION = RELEASED. Existing B3 and UI owners continue their current work. This closes one bounded optimization; no blanket Core or CHAT completeness claim.
 
-## CHAT / Core / Live next dispatch — 2026-10-03
+## CHAT / Core / Live optimization dispatch record — CLOSED 2026-10-03
 
-A5 is formally Live-qualified (source `20b06020bbb6b6142dc1f6952ebf26e14ed268dd`, run `37094249144`). Next bounded optimization package: [Main-program performance / stability DEV dispatch](INK_CORE_PERFORMANCE_STABILITY_DEV_DISPATCH_v1.0.md). Status: READY FOR EXECUTION; no executor start claimed. Existing UI/capability ownership remains unchanged.
+A5 is formally Live-qualified (source `20b06020bbb6b6142dc1f6952ebf26e14ed268dd`, run `37094249144`). Completed bounded optimization package: [Main-program performance / stability DEV dispatch](INK_CORE_PERFORMANCE_STABILITY_DEV_DISPATCH_v1.0.md). Status: CLOSED / authority accepted through Formal Live; do not restart this dispatch. Existing UI/capability ownership remains unchanged.
 
 ## CHAT / Core / Live authority appointment — 2026-10-03
 
