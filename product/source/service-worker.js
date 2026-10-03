@@ -1,7 +1,8 @@
+importScripts('./build-identity.js');
+
 const PRODUCT_VERSION = '0.1';
-// Deployment identity belongs to the worker script, never to the controlled app.
-// Change this token for every published source change, independent of product v0.1.
-const BUILD_ID = '20261002-c04-two-state-repair';
+const BUILD_ID = self.INK_BUILD_ID;
+if (!BUILD_ID) throw new Error('INK generated build identity unavailable');
 const CACHE_PREFIX = 'ink-build-';
 const SHELL_CACHE = `${CACHE_PREFIX}${BUILD_ID}-shell`;
 const RUNTIME_CACHE = `${CACHE_PREFIX}${BUILD_ID}-runtime`;
@@ -207,6 +208,7 @@ const APP_SHELL = Object.freeze([
   './index-standalone.html',
   './styles.css',
   './web-shell.js',
+  './build-identity.js',
   './qa/runtime-test-bridge.js',
   './assets/INK_MARK_SOURCE_W-300.jpg',
   './assets/ink-mark.svg',
@@ -222,9 +224,11 @@ const APP_SHELL = Object.freeze([
 ]);
 
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.addAll(
-    APP_SHELL.map(path => new Request(path, { cache: 'reload' }))
-  )));
+  event.waitUntil((async () => {
+    const cache = await caches.open(SHELL_CACHE);
+    await cache.addAll(APP_SHELL.map(path => new Request(path, { cache: 'reload' })));
+    await self.skipWaiting();
+  })());
 });
 
 function isOwnedInkCache(key) {
@@ -242,43 +246,59 @@ self.addEventListener('activate', event => {
 self.addEventListener('message', event => {
   const message = event.data || {};
   if (message.type === 'INK_SKIP_WAITING') self.skipWaiting();
-  if (message.type === 'INK_GET_VERSION') event.source?.postMessage?.({ type: 'INK_VERSION', version: PRODUCT_VERSION, buildId: BUILD_ID, shellCache: SHELL_CACHE, runtimeCache: RUNTIME_CACHE });
+  if (message.type === 'INK_GET_VERSION') {
+    const target = event.ports?.[0] || event.source;
+    target?.postMessage?.({
+      type: 'INK_VERSION',
+      version: PRODUCT_VERSION,
+      buildId: BUILD_ID,
+      shellCache: SHELL_CACHE,
+      runtimeCache: RUNTIME_CACHE,
+      navigationStrategy: 'network-first',
+      assetStrategy: 'network-first'
+    });
+  }
   if (message.type === 'INK_CLEAR_RUNTIME_CACHE') event.waitUntil(caches.delete(RUNTIME_CACHE));
 });
 
+function freshRequest(request) {
+  return new Request(request, { cache: 'no-store' });
+}
+
 async function buildConsistentNavigation(request) {
-  // A waiting build must not mix new HTML with this worker's older modules.
+  // Online QA navigation is authoritative. The precached shell is used only
+  // when the network is unavailable, so normal open / F5 cannot be pinned to
+  // an older document by the Service Worker.
+  try {
+    const response = await fetch(freshRequest(request));
+    if (response?.ok && response.type !== 'opaque') return response;
+  } catch (_) {}
   const shell = await caches.open(SHELL_CACHE);
   const pathname = new URL(request.url).pathname;
   const entry = pathname.endsWith('/index-standalone.html') ? './index-standalone.html' : './index.html';
-  const cached = await shell.match(request) || await shell.match(entry);
-  if (cached) return cached;
-  try {
-    const response = await fetch(request);
-    if (response?.ok) {
-      const cache = await caches.open(RUNTIME_CACHE);
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch (_) {
-    return await caches.match(request) || await caches.match('./index.html') || Response.error();
-  }
+  return await shell.match(request, { ignoreSearch: true })
+    || await shell.match(entry)
+    || Response.error();
 }
 
-async function staleWhileRevalidate(request) {
-  const shell = await caches.open(SHELL_CACHE);
-  const runtime = await caches.open(RUNTIME_CACHE);
-  const cached = await shell.match(request) || await shell.match(request, { ignoreSearch: true })
-    || await runtime.match(request);
-  if (cached) return cached;
-  const fetchPromise = fetch(request).then(async response => {
+async function networkFirstAsset(request) {
+  // Fetch current deployed bytes whenever online. Runtime cache is only a
+  // fallback; the immutable build shell remains the coherent offline baseline.
+  try {
+    const response = await fetch(freshRequest(request));
     if (response?.ok && response.type !== 'opaque') {
-      const cache = await caches.open(RUNTIME_CACHE);
-      await cache.put(request, response.clone());
+      const runtime = await caches.open(RUNTIME_CACHE);
+      await runtime.put(request, response.clone());
+      return response;
     }
-    return response;
-  }).catch(() => null);
-  return cached || await fetchPromise || Response.error();
+  } catch (_) {}
+  const runtime = await caches.open(RUNTIME_CACHE);
+  const shell = await caches.open(SHELL_CACHE);
+  return await runtime.match(request)
+    || await runtime.match(request, { ignoreSearch: true })
+    || await shell.match(request)
+    || await shell.match(request, { ignoreSearch: true })
+    || Response.error();
 }
 
 self.addEventListener('fetch', event => {
@@ -289,6 +309,6 @@ self.addEventListener('fetch', event => {
     event.respondWith(buildConsistentNavigation(event.request));
     return;
   }
-  event.respondWith(staleWhileRevalidate(event.request));
+  event.respondWith(networkFirstAsset(event.request));
 });
 
