@@ -1,3 +1,4 @@
+import { createProjectiveTransform, mapProjectivePoint } from '../editor/transform-advanced.js';
 import { pathBounds } from './vector-core.js';
 const clone = value => JSON.parse(JSON.stringify(value));
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
@@ -25,16 +26,25 @@ function transformPoint(point, bounds, params) {
 
 export function applyNonDestructiveDeformation(path, parameters = {}) {
   if (!path || path.type !== 'path') throw new Error('INK_DEFORMATION_PATH_REQUIRED');
-  if (!path.deformation?.baseSubpaths) path.deformation = { baseSubpaths: clone(path.subpaths), revision: 0 };
-  const basePath = { ...path, subpaths: clone(path.deformation.baseSubpaths) }, bounds = pathBounds(basePath);
+  const baseSubpaths = clone(path.deformation?.baseSubpaths || path.subpaths);
+  const basePath = { ...path, subpaths: baseSubpaths }, bounds = pathBounds(basePath);
+  const canonical = clone(parameters);
+  let mapper = point => transformPoint(point, bounds, canonical);
+  if (canonical.projective) {
+    const mapping = canonical.projective;
+    if (!['distort', 'perspective'].includes(mapping.mode)) throw new Error('INK_DEFORMATION_PROJECTIVE_MODE_INVALID');
+    // Rebuild from inspectable semantic quads; never persist an opaque callback.
+    mapping.matrix = createProjectiveTransform(mapping.sourceQuad, mapping.destinationQuad);
+    mapper = point => mapProjectivePoint(mapping.matrix, point);
+  }
   const transformed = basePath.subpaths.map(subpath => ({ ...subpath, anchors: subpath.anchors.map(anchor => {
-    const center = transformPoint(anchor, bounds, parameters);
-    const incomingEnd = transformPoint({ x: anchor.x + (anchor.in?.x || 0), y: anchor.y + (anchor.in?.y || 0) }, bounds, parameters);
-    const outgoingEnd = transformPoint({ x: anchor.x + (anchor.out?.x || 0), y: anchor.y + (anchor.out?.y || 0) }, bounds, parameters);
+    const center = mapper(anchor);
+    const incomingEnd = mapper({ x: anchor.x + (anchor.in?.x || 0), y: anchor.y + (anchor.in?.y || 0) });
+    const outgoingEnd = mapper({ x: anchor.x + (anchor.out?.x || 0), y: anchor.y + (anchor.out?.y || 0) });
     return { ...anchor, x: center.x, y: center.y, in: { x: incomingEnd.x - center.x, y: incomingEnd.y - center.y }, out: { x: outgoingEnd.x - center.x, y: outgoingEnd.y - center.y } };
   }) }));
   path.subpaths = transformed;
-  path.deformation = { ...path.deformation, type: 'INK-NON-DESTRUCTIVE-DEFORMATION', version: '1.0', parameters: clone(parameters), frontBack: parameters.frontBack || 'front', reversible: true, revision: (path.deformation.revision || 0) + 1 };
+  path.deformation = { ...path.deformation, baseSubpaths: clone(baseSubpaths), type: 'INK-NON-DESTRUCTIVE-DEFORMATION', version: '1.0', parameters: canonical, frontBack: parameters.frontBack || 'front', reversible: true, revision: (path.deformation?.revision || 0) + 1 };
   return path;
 }
 
