@@ -934,13 +934,13 @@ primary.push(descriptor({
 primary.push(descriptor({
   id: 'raster.import',
   title: 'Import Editable Raster',
-  description: 'Import a browser-local PNG, JPEG, WebP, PSD, TIFF or EXR attachment into the existing native editable image + rasterState authority.',
+  description: 'Import a browser-local PNG, JPEG, WebP, PSD, TIFF or EXR attachment, or a RAW attachment when an approved deterministic browser-compatible RAW adapter is registered, into the existing native editable image + rasterState authority.',
   availability: true,
   routingClass: 'NAMED_TOOL',
   namedTool: 'import_ink_raster',
   publicMethod: 'raster.import',
   role: 'WRITE',
-  authoritativeRoute: 'normalizeChatAttachment → existing format probe → app.importWebRaster (PNG/JPEG/WebP) or app.importImageFormat (PSD/TIFF/EXR) → existing History / image+rasterState / Renderer',
+  authoritativeRoute: 'normalizeChatAttachment → existing format probe → app.importWebRaster (PNG/JPEG/WebP) or app.importImageFormat (PSD/TIFF/EXR/policy-approved RAW) → existing History / image+rasterState / Renderer',
   inputSchema: obj({
     input: { description: 'Browser-local File or Blob, or the existing normalizeChatAttachment {file} / {blob, name, type} handoff. Binary bytes are never encoded in JSON.' },
     options: obj({
@@ -955,7 +955,7 @@ primary.push(descriptor({
   targetTypes: ['Image'],
   constraints: [
     'Qualified mutable ingest covers browser-local PNG / JPEG / WebP through the existing web-raster decoder and PSD / TIFF / EXR through the existing native format interoperability authority.',
-    'RAW remains unavailable unless an approved deterministic browser-compatible RAW adapter is registered; the default runtime has no RAW decoder and fails explicitly instead of fabricating support.',
+    'RAW is conditionally routed through the existing policy-gated RAW adapter registry when its probe matches. The default runtime has no RAW decoder and fails explicitly; registered adapters must already satisfy browserCompatible=true, deterministic=true and a non-empty license.',
     'PSB is not included in this CHAT qualification even though the native parser can identify it.',
     'Creates the existing native editable image + rasterState shape; ReferenceImage remains separate and locked.',
     'Raw File/Blob, pixel arrays, data URLs and remote URLs are never returned in the public JSON result.',
