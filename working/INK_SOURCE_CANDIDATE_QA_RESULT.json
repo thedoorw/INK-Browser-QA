@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-B3-raster-mask-candidate-001-regressions",
-  "candidateSha": "db50259eac5aee9b45fd39feba74456903f67123",
+  "requestId": "clusterB-B3-raster-mask-candidate-002-regressions",
+  "candidateSha": "e018a08c5c8e352908eee5e066f2e33eee883946",
   "case": "raster-mask-b3",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:33485/?sourceCandidate=db50259eac5aee9b45fd39feba74456903f67123",
+    "href": "http://127.0.0.1:34047/?sourceCandidate=e018a08c5c8e352908eee5e066f2e33eee883946",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -14,7 +14,7 @@
   "result": {
     "passed": true,
     "operation": "image.mask.raster.set.v1",
-    "objectId": "2634cf60-2082-4439-b436-2d50541d3476",
+    "objectId": "22be609a-4874-4bd9-9632-0adab59659b8",
     "baselineHash": "376ec6fb",
     "afterMaskHash": "376ec6fb",
     "baselinePreview": {
@@ -46,7 +46,7 @@
       "feather": 0,
       "fingerprint": "fnv1a32:888bf7ca",
       "height": 48,
-      "id": "chat-rmask-fnv1a32-07d08b2b",
+      "id": "chat-rmask-fnv1a32-472d10e4",
       "invert": false,
       "type": "raster-mask",
       "width": 64
@@ -60,11 +60,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-raster-mask-candidate-001-regressions-raster-direct-paint-bucket-b3",
-      "candidateSha": "db50259eac5aee9b45fd39feba74456903f67123",
+      "requestId": "clusterB-B3-raster-mask-candidate-002-regressions-raster-direct-paint-bucket-b3",
+      "candidateSha": "e018a08c5c8e352908eee5e066f2e33eee883946",
       "case": "raster-direct-paint-bucket-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:41521/?sourceCandidate=db50259eac5aee9b45fd39feba74456903f67123",
+        "href": "http://127.0.0.1:46619/?sourceCandidate=e018a08c5c8e352908eee5e066f2e33eee883946",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -73,7 +73,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.paintBucket.v1",
-        "objectId": "73a6294d-bf8f-4cb2-80ae-ff4a578f2f58",
+        "objectId": "46e8d681-acd3-4b7d-ab04-5781c4fab517",
         "beforeHash": "376ec6fb",
         "afterHash": "b09ebd5b",
         "undoHash": "376ec6fb",
@@ -120,9 +120,9 @@
           },
           "resultRefs": [
             {
-              "layerId": "04aa058e-0610-43e1-9173-120a315bc5f4",
-              "objectId": "73a6294d-bf8f-4cb2-80ae-ff4a578f2f58",
-              "pageId": "3991b4ca-c7cb-4205-8287-ac20e2a7671c"
+              "layerId": "80d354fb-ca53-442f-8fbf-72dba437f83b",
+              "objectId": "46e8d681-acd3-4b7d-ab04-5781c4fab517",
+              "pageId": "2cc4b845-371c-4ac1-8755-82648a45ce3a"
             }
           ]
         }
@@ -132,11 +132,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-raster-mask-candidate-001-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "db50259eac5aee9b45fd39feba74456903f67123",
+      "requestId": "clusterB-B3-raster-mask-candidate-002-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "e018a08c5c8e352908eee5e066f2e33eee883946",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42043/?sourceCandidate=db50259eac5aee9b45fd39feba74456903f67123",
+        "href": "http://127.0.0.1:36229/?sourceCandidate=e018a08c5c8e352908eee5e066f2e33eee883946",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -146,9 +146,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "9566d272-d810-492a-9be7-39d66ac64d05",
-        "beforeFingerprint": "fnv1a32:8a9185da",
-        "afterFingerprint": "fnv1a32:3955a6e1",
+        "objectId": "d8d0c937-9eae-4612-8a31-c1f17d4d3df5",
+        "beforeFingerprint": "fnv1a32:774caf50",
+        "afterFingerprint": "fnv1a32:23066cd8",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -161,12 +161,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "05e6a4d4-75d5-40a7-9e8b-cfe3c75376cc",
-              "objectId": "9566d272-d810-492a-9be7-39d66ac64d05",
-              "pageId": "3ebf8ade-4166-4ba1-aa76-92dfdeaa706b"
+              "layerId": "f65e7c06-e6b5-47ee-92cd-cee7f5fa92a7",
+              "objectId": "d8d0c937-9eae-4612-8a31-c1f17d4d3df5",
+              "pageId": "6d60414d-edff-4bfe-8367-0ff4219b3ce1"
             }
           ],
-          "stackItemId": "adj_19w81i3",
+          "stackItemId": "adj_1w7m79g",
           "stackItemType": "brightnessContrast"
         }
       },
@@ -175,11 +175,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-raster-mask-candidate-001-regressions-blender-smudge-a5",
-      "candidateSha": "db50259eac5aee9b45fd39feba74456903f67123",
+      "requestId": "clusterB-B3-raster-mask-candidate-002-regressions-blender-smudge-a5",
+      "candidateSha": "e018a08c5c8e352908eee5e066f2e33eee883946",
       "case": "blender-smudge-a5",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:41769/?sourceCandidate=db50259eac5aee9b45fd39feba74456903f67123",
+        "href": "http://127.0.0.1:43705/?sourceCandidate=e018a08c5c8e352908eee5e066f2e33eee883946",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
