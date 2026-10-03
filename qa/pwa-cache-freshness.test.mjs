@@ -12,16 +12,17 @@ test('generated PWA build identity matches complete product/source fingerprint',
   assert.match(buildId, /^src-[a-f0-9]{24}$/);
 });
 
-test('legacy worker URL forces network freshness while retaining offline fallback', async () => {
+test('legacy worker URL forces one bounded identity navigation with network freshness', async () => {
   const source = await read('product/source/service-worker.js');
-  assert.match(source, /MIGRATION_ID = 'ink-pwa-cache-migration-v2'/);
+  assert.match(source, /MIGRATION_ID = 'ink-pwa-cache-migration-v3'/);
+  assert.match(source, /MIGRATION_PARAM = 'ink-pwa-migrate'/);
   assert.match(source, /self\.skipWaiting\(\)/);
-  assert.match(source, /event\.waitUntil\(self\.clients\.claim\(\)\)/);
-  assert.match(source, /setTimeout\(\(\) => \{/);
-  assert.match(source, /client\.navigate\?\.\(client\.url\)/);
+  assert.match(source, /await self\.clients\.claim\(\)/);
+  assert.match(source, /url\.searchParams\.get\(MIGRATION_PARAM\) === MIGRATION_ID/);
+  assert.match(source, /url\.searchParams\.set\(MIGRATION_PARAM, MIGRATION_ID\)/);
+  assert.match(source, /client\.navigate\?\.\(url\.href\)/);
   assert.match(source, /new Request\(request, \{ cache: 'reload' \}\)/);
   assert.match(source, /caches\.match\(request, \{ ignoreSearch: true \}\)/);
-  assert.match(source, /addEventListener\('fetch'/);
   assert.doesNotMatch(source, /caches\.delete/);
 });
 
@@ -34,8 +35,7 @@ test('runtime worker is online-first with build-scoped offline fallback', async 
   assert.match(source, /networkFirstAsset/);
   assert.match(source, /self\.skipWaiting\(\)/);
   assert.match(source, /key\.startsWith\(CACHE_PREFIX\)/);
-  assert.match(source, /replacingPreviousBuild/);
-  assert.match(source, /client\.navigate\?\.\(client\.url\)/);
+  assert.doesNotMatch(source, /client\.navigate/);
   assert.doesNotMatch(source, /const BUILD_ID = '2026/);
   assert.doesNotMatch(source, /if \(cached\) return cached;/);
 });
