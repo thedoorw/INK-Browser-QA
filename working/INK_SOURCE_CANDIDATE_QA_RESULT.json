@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-B4-three-operations-candidate-001",
+  "requestId": "clusterB-B4-candidate-regressions-002",
   "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
   "case": "path-deformation-b4",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:45337/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+    "href": "http://127.0.0.1:33231/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -79,7 +79,7 @@
               "role": "outer",
               "anchors": [
                 {
-                  "id": "v_murqtv6s_vrveavo",
+                  "id": "v_murqvzpp_46cflyg",
                   "x": 140,
                   "y": 0,
                   "in": {
@@ -93,7 +93,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_3ipa27c",
+                  "id": "v_murqvzpp_0u0039j",
                   "x": 0,
                   "y": 95,
                   "in": {
@@ -107,7 +107,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_1jqhvq8",
+                  "id": "v_murqvzpp_nuohi2u",
                   "x": -140,
                   "y": 0,
                   "in": {
@@ -121,7 +121,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_qas6fg7",
+                  "id": "v_murqvzpp_pgwlk9b",
                   "x": 0,
                   "y": -95,
                   "in": {
@@ -153,7 +153,7 @@
             "role": "outer",
             "anchors": [
               {
-                "id": "v_murqtv6s_vrveavo",
+                "id": "v_murqvzpp_46cflyg",
                 "x": 207.2,
                 "y": 0,
                 "in": {
@@ -167,7 +167,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_3ipa27c",
+                "id": "v_murqvzpp_0u0039j",
                 "x": 8.229626490270214e-15,
                 "y": 95,
                 "in": {
@@ -181,7 +181,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_1jqhvq8",
+                "id": "v_murqvzpp_nuohi2u",
                 "x": -72.8,
                 "y": 0,
                 "in": {
@@ -195,7 +195,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_qas6fg7",
+                "id": "v_murqvzpp_pgwlk9b",
                 "x": 0,
                 "y": -95,
                 "in": {
@@ -286,7 +286,7 @@
               "role": "outer",
               "anchors": [
                 {
-                  "id": "v_murqtv6s_vrveavo",
+                  "id": "v_murqvzpp_46cflyg",
                   "x": 140,
                   "y": 0,
                   "in": {
@@ -300,7 +300,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_3ipa27c",
+                  "id": "v_murqvzpp_0u0039j",
                   "x": 0,
                   "y": 95,
                   "in": {
@@ -314,7 +314,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_1jqhvq8",
+                  "id": "v_murqvzpp_nuohi2u",
                   "x": -140,
                   "y": 0,
                   "in": {
@@ -328,7 +328,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_qas6fg7",
+                  "id": "v_murqvzpp_pgwlk9b",
                   "x": 0,
                   "y": -95,
                   "in": {
@@ -411,7 +411,7 @@
             "role": "outer",
             "anchors": [
               {
-                "id": "v_murqtv6s_vrveavo",
+                "id": "v_murqvzpp_46cflyg",
                 "x": 124.00000000000001,
                 "y": 8.000000000000004,
                 "in": {
@@ -425,7 +425,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_3ipa27c",
+                "id": "v_murqvzpp_0u0039j",
                 "x": -16,
                 "y": 87,
                 "in": {
@@ -439,7 +439,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_1jqhvq8",
+                "id": "v_murqvzpp_nuohi2u",
                 "x": -124.00000000000001,
                 "y": -8.000000000000004,
                 "in": {
@@ -453,7 +453,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_qas6fg7",
+                "id": "v_murqvzpp_pgwlk9b",
                 "x": 16,
                 "y": -87,
                 "in": {
@@ -544,7 +544,7 @@
               "role": "outer",
               "anchors": [
                 {
-                  "id": "v_murqtv6s_vrveavo",
+                  "id": "v_murqvzpp_46cflyg",
                   "x": 140,
                   "y": 0,
                   "in": {
@@ -558,7 +558,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_3ipa27c",
+                  "id": "v_murqvzpp_0u0039j",
                   "x": 0,
                   "y": 95,
                   "in": {
@@ -572,7 +572,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_1jqhvq8",
+                  "id": "v_murqvzpp_nuohi2u",
                   "x": -140,
                   "y": 0,
                   "in": {
@@ -586,7 +586,7 @@
                   "mode": "smooth"
                 },
                 {
-                  "id": "v_murqtv6s_qas6fg7",
+                  "id": "v_murqvzpp_pgwlk9b",
                   "x": 0,
                   "y": -95,
                   "in": {
@@ -669,7 +669,7 @@
             "role": "outer",
             "anchors": [
               {
-                "id": "v_murqtv6s_vrveavo",
+                "id": "v_murqvzpp_46cflyg",
                 "x": 131.20433996383363,
                 "y": -30.50994575045206,
                 "in": {
@@ -683,7 +683,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_3ipa27c",
+                "id": "v_murqvzpp_0u0039j",
                 "x": -37.55165692007797,
                 "y": 91.5068226120858,
                 "in": {
@@ -697,7 +697,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_1jqhvq8",
+                "id": "v_murqvzpp_nuohi2u",
                 "x": -133.74002574002571,
                 "y": -15.454311454311462,
                 "in": {
@@ -711,7 +711,7 @@
                 "mode": "smooth"
               },
               {
-                "id": "v_murqtv6s_qas6fg7",
+                "id": "v_murqvzpp_pgwlk9b",
                 "x": -14.805385556915544,
                 "y": -92.80660954712363,
                 "in": {
@@ -747,7 +747,7 @@
         "role": "outer",
         "anchors": [
           {
-            "id": "v_murqtv6s_vrveavo",
+            "id": "v_murqvzpp_46cflyg",
             "x": 140,
             "y": 0,
             "in": {
@@ -761,7 +761,7 @@
             "mode": "smooth"
           },
           {
-            "id": "v_murqtv6s_3ipa27c",
+            "id": "v_murqvzpp_0u0039j",
             "x": 0,
             "y": 95,
             "in": {
@@ -775,7 +775,7 @@
             "mode": "smooth"
           },
           {
-            "id": "v_murqtv6s_1jqhvq8",
+            "id": "v_murqvzpp_nuohi2u",
             "x": -140,
             "y": 0,
             "in": {
@@ -789,7 +789,7 @@
             "mode": "smooth"
           },
           {
-            "id": "v_murqtv6s_qas6fg7",
+            "id": "v_murqvzpp_pgwlk9b",
             "x": 0,
             "y": -95,
             "in": {
@@ -806,5 +806,471 @@
       }
     ]
   },
-  "status": "PASS"
+  "status": "PASS",
+  "regressions": [
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterB-B4-candidate-regressions-002-paint-session-create",
+      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "case": "paint-session-create",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:36243/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "before": {
+          "count": 0,
+          "undo": 0,
+          "canvas": "eb82f616"
+        },
+        "after": {
+          "count": 1,
+          "undo": 1,
+          "canvas": "6c0c72b1",
+          "id": "chat-paint-fnv1a32-c7900103",
+          "strokes": 2,
+          "replayHash": "e7d3c1d1"
+        },
+        "previewStatus": "COMPLETED",
+        "previewBounds": {
+          "h": 231.12032,
+          "w": 274.0064,
+          "x": -135.13,
+          "y": -120.46648
+        },
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "restoredStrokeCount": 2
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterB-B4-candidate-regressions-002-stroke-create-a2",
+      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "case": "stroke-create-a2",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:45559/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "stroke.create.v1",
+        "created": [
+          {
+            "id": "chat-stroke-fnv1a32-305b66ac",
+            "kind": "pencil",
+            "mediaModel": null,
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-4aee2959",
+            "kind": "brush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-201f5261",
+            "kind": "airbrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          },
+          {
+            "id": "chat-stroke-fnv1a32-391cb2bc",
+            "kind": "drybrush",
+            "mediaModel": "natural-v2",
+            "pointCount": 3
+          }
+        ],
+        "before": {
+          "count": 0,
+          "undo": 0,
+          "canvas": "1e347074"
+        },
+        "after": {
+          "count": 4,
+          "undo": 4,
+          "canvas": "b957f08d"
+        },
+        "historyLabels": [
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke",
+          "CHAT create Stroke"
+        ],
+        "previewStatus": "COMPLETED",
+        "previewBounds": {
+          "h": 350.6,
+          "w": 451,
+          "x": -233.6,
+          "y": -182
+        },
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "redoCanvas": "b957f08d",
+        "naturalMedia": {
+          "preference": "auto",
+          "floraReferenceBackend": "canvas2d",
+          "activeBackend": "webgl2-multichannel",
+          "gpuAvailable": true,
+          "gpuState": "ready",
+          "forcedReason": null,
+          "fallbacks": 0,
+          "batchFallbacks": 0,
+          "webgl": {
+            "backend": "webgl2",
+            "drawCalls": 3,
+            "cacheHits": 24,
+            "cacheMisses": 3,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "vertices": 1722,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 3,
+            "lastError": null,
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "maxTextureUnits": 32,
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 3,
+              "releases": 0,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 736892,
+              "budgetBytes": 100663296,
+              "usedBytes": 736892,
+              "availableBytes": 99926404,
+              "utilization": 0.0073203643163045245,
+              "resources": 3,
+              "byType": {
+                "raster-cache": 736892
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelWebgl": {
+            "backend": "webgl2-multichannel",
+            "runs": 6,
+            "strokes": 6,
+            "drawCalls": 6,
+            "simulationPasses": 24,
+            "cacheHits": 24,
+            "cacheMisses": 6,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 4,
+            "lastError": null,
+            "targets": "164x79",
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxDrawBuffers": 8,
+              "maxColorAttachments": 8,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 16,
+              "releases": 10,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 758708,
+              "budgetBytes": 167772160,
+              "usedBytes": 470196,
+              "availableBytes": 167301964,
+              "utilization": 0.002802586555480957,
+              "resources": 6,
+              "byType": {
+                "raster-cache": 262900,
+                "mrt-target": 207296
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 0,
+            "strokes": 0,
+            "stamps": 0,
+            "pixels": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 0
+          },
+          "canvas2d": {
+            "backend": "canvas2d",
+            "surfaceRevision": "WP8B-1",
+            "drawCalls": 0,
+            "frequencyVisibility": {
+              "low": true,
+              "mid": true,
+              "high": true
+            }
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterB-B4-candidate-regressions-002-page-paper-a3",
+      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "case": "page-paper-a3",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:39209/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "page.paper.set.v1",
+        "paperCoupledRunStrokeCount": 2,
+        "paperBefore": {
+          "type": "blank",
+          "color": "#fffef9",
+          "gridSize": 32,
+          "absorbency": 0.58,
+          "roughness": 0.42,
+          "fiberStrength": 0.36,
+          "fiberAngle": 0,
+          "sizing": 0.28,
+          "granulation": 0.32,
+          "seed": 1337,
+          "textureVisible": true
+        },
+        "paperAfter": {
+          "type": "blank",
+          "color": "#fffef9",
+          "gridSize": 32,
+          "absorbency": 0.05,
+          "roughness": 0.95,
+          "fiberStrength": 0.36,
+          "fiberAngle": 0,
+          "sizing": 0.28,
+          "granulation": 0.32,
+          "seed": 1337,
+          "textureVisible": true
+        },
+        "baseline": "fnv1a32:a108acca",
+        "roughPreview": "fnv1a32:a108acca",
+        "changedPreview": "fnv1a32:cb5efcee",
+        "undoRedoRenderExact": true,
+        "scopedPaperEntries": [
+          {
+            "label": "調整畫布",
+            "captureMode": "scoped"
+          },
+          {
+            "label": "調整畫布",
+            "captureMode": "scoped"
+          }
+        ],
+        "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
+        "invalidCasesRejected": 5,
+        "noOpRejected": true,
+        "staleRejected": true,
+        "pendingPreviewRejected": true,
+        "naturalMedia": {
+          "preference": "auto",
+          "floraReferenceBackend": "canvas2d",
+          "activeBackend": "webgl2-multichannel",
+          "gpuAvailable": true,
+          "gpuState": "ready",
+          "forcedReason": null,
+          "fallbacks": 0,
+          "batchFallbacks": 0,
+          "webgl": {
+            "backend": "webgl2",
+            "drawCalls": 4,
+            "cacheHits": 7,
+            "cacheMisses": 4,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "vertices": 1284,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 2,
+            "lastError": null,
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "maxTextureUnits": 32,
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+              "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 4,
+              "releases": 2,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 1592244,
+              "budgetBytes": 100663296,
+              "usedBytes": 1592244,
+              "availableBytes": 99071052,
+              "utilization": 0.01581752300262451,
+              "resources": 2,
+              "byType": {
+                "raster-cache": 1592244
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelWebgl": {
+            "backend": "webgl2-multichannel",
+            "runs": 17,
+            "strokes": 32,
+            "drawCalls": 32,
+            "simulationPasses": 68,
+            "cacheHits": 18,
+            "cacheMisses": 17,
+            "evictions": 0,
+            "contextLosses": 0,
+            "restores": 0,
+            "state": "ready",
+            "available": true,
+            "cacheEntries": 6,
+            "lastError": null,
+            "targets": "306x207",
+            "capabilities": {
+              "maxTextureSize": 8192,
+              "maxRenderbufferSize": 8192,
+              "maxDrawBuffers": 8,
+              "maxColorAttachments": 8,
+              "maxViewportDims": [
+                8192,
+                8192
+              ],
+              "vendor": "Google Inc. (Google)",
+              "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+              "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+            },
+            "resources": {
+              "allocations": 44,
+              "releases": 36,
+              "evictions": 0,
+              "rejected": 0,
+              "peakBytes": 4278288,
+              "budgetBytes": 167772160,
+              "usedBytes": 2864880,
+              "availableBytes": 164907280,
+              "utilization": 0.01707601547241211,
+              "resources": 8,
+              "byType": {
+                "raster-cache": 1851408,
+                "mrt-target": 1013472
+              }
+            },
+            "selfTest": null
+          },
+          "multiChannelCanvas2d": {
+            "backend": "canvas2d-multichannel",
+            "runs": 0,
+            "strokes": 0,
+            "stamps": 0,
+            "pixels": 0,
+            "cacheHits": 0,
+            "cacheMisses": 0,
+            "evictions": 0,
+            "skipped": 0,
+            "cacheEntries": 0
+          },
+          "canvas2d": {
+            "backend": "canvas2d",
+            "surfaceRevision": "WP8B-1",
+            "drawCalls": 0,
+            "frequencyVisibility": {
+              "low": true,
+              "mid": true,
+              "high": true
+            }
+          }
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+      "version": 1,
+      "requestId": "clusterB-B4-candidate-regressions-002-raster-stack-adjustment-b2",
+      "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+      "case": "raster-stack-adjustment-b2",
+      "runtimeIdentity": {
+        "href": "http://127.0.0.1:40451/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
+        "readyState": "complete",
+        "apiReady": true,
+        "toolCount": 23,
+        "appVersion": "0.1"
+      },
+      "result": {
+        "passed": true,
+        "operation": "image.adjustment.add.v1",
+        "adjustmentType": "brightnessContrast",
+        "objectId": "2cc67b01-8678-49ae-bb93-770890c4ecb0",
+        "beforeFingerprint": "fnv1a32:6e5514dc",
+        "afterFingerprint": "fnv1a32:c82d5962",
+        "beforeHash": "7883b22",
+        "afterHash": "9cd23fe",
+        "undoHash": "7883b22",
+        "redoHash": "9cd23fe",
+        "historyLabel": "CHAT add image adjustment: brightnessContrast",
+        "previewStatus": "COMPLETED",
+        "undoStatus": "COMPLETED",
+        "redoStatus": "COMPLETED",
+        "controllerResult": {
+          "adjustmentCount": 1,
+          "resultRefs": [
+            {
+              "layerId": "a06e2e31-2b09-4d37-a4f2-922b4e04dc9d",
+              "objectId": "2cc67b01-8678-49ae-bb93-770890c4ecb0",
+              "pageId": "ce3fff1a-1262-4ed7-82b7-b8fa3fe3e361"
+            }
+          ],
+          "stackItemId": "adj_syoj9h",
+          "stackItemType": "brightnessContrast"
+        }
+      },
+      "status": "PASS"
+    }
+  ]
 }
