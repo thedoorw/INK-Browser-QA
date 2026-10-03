@@ -913,6 +913,80 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
+  const recipe = Object.freeze({
+    inventory(input = {}) {
+      const action = 'recipe.inventory';
+      try {
+        const request = isRecord(input) ? input : {};
+        const engine = app?.studio?.engine;
+        if (!engine || typeof engine.list !== 'function' || typeof engine.describe !== 'function') {
+          throw Object.assign(new Error('INK Studio RecipeEngine authority unavailable'), { code: 'INK_AGENT_RECIPE_AUTHORITY_UNAVAILABLE' });
+        }
+        const requestedId = typeof request.recipeId === 'string' && request.recipeId.trim() ? request.recipeId.trim() : null;
+        const studio = engine.list()
+          .filter(item => !requestedId || item.id === requestedId)
+          .map(item => {
+            const detail = engine.describe(item.id);
+            return {
+              source: 'studio.recipe-engine',
+              id: item.id,
+              name: item.name || null,
+              version: String(item.version),
+              roleSchema: item.roleSchema || null,
+              parameterNames: Array.isArray(item.parameters) ? [...item.parameters] : [],
+              steps: Array.isArray(detail.steps) ? detail.steps : [],
+              capabilities: detail.capabilities || null,
+              execution: {
+                governed: true,
+                operation: 'recipe.studio.execute.v1',
+                route: 'propose_ink_edit → approve_ink_edit → execute_ink_edit'
+              }
+            };
+          });
+        if (requestedId && !studio.length) {
+          throw Object.assign(new Error('INK registered Recipe not found'), {
+            code: 'INK_AGENT_RECIPE_NOT_FOUND',
+            field: 'recipeId',
+            actual: requestedId
+          });
+        }
+        const floraStored = [];
+        for (const page of app?.doc?.pages || []) {
+          for (const [recipeId, record] of Object.entries(page?.floraRecipeState?.recipes || {})) {
+            floraStored.push({
+              source: 'page.floraRecipeState.recipes',
+              pageId: page.id || null,
+              id: recipeId,
+              version: String(record?.recipe?.schemaVersion ?? record?.recipe?.version ?? '0.1'),
+              operation: record?.operation || record?.recipe?.operation || null,
+              targetRegionId: record?.targetRegionId || record?.recipe?.targetRegionId || null,
+              revision: Number(record?.revision || 0),
+              compileHash: record?.compileHash || null,
+              execution: {
+                governed: false,
+                reason: 'NOT_EXPOSED_BY_CLUSTER_D3_STUDIO_ROUTE'
+              }
+            });
+          }
+        }
+        floraStored.sort((a, b) => String(a.pageId).localeCompare(String(b.pageId)) || String(a.id).localeCompare(String(b.id)));
+        return createInkAgentResult(app, action, {
+          result: {
+            schema: 'INK_RECIPE_INVENTORY',
+            version: 1,
+            readOnly: true,
+            requestedId,
+            studio,
+            floraStored,
+            counts: { studio: studio.length, floraStored: floraStored.length }
+          }
+        });
+      } catch (error) {
+        return failedResult(app, action, error);
+      }
+    }
+  });
+
   const capability = Object.freeze({
     describe(idOrToolName) {
       const action = 'capability.describe';
@@ -933,7 +1007,7 @@ export function createInkPublicCreativeApi(app) {
     }
   });
 
-  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, raster, edit, composition, history, revision, preview, asset, library, capability });
+  const publicMethods = Object.freeze({ capabilities, context, selection, inspect, reference, raster, edit, composition, history, revision, preview, asset, library, recipe, capability });
   const toolHandlers = Object.freeze({
     get_ink_capabilities: () => capabilities(),
     get_ink_context: input => context(input?.options ?? input ?? {}),
@@ -957,6 +1031,7 @@ export function createInkPublicCreativeApi(app) {
     import_ink_raster: request => raster.import(request?.input ?? request, request?.options ?? {}),
     export_ink_asset: input => asset.export(input ?? {}),
     search_ink_library: input => library.query(input ?? {}),
+    get_ink_recipe_inventory: input => recipe.inventory(input ?? {}),
     use_ink: input => {
       const request = isRecord(input) ? input : {};
       const action = String(request.action || '').trim();
