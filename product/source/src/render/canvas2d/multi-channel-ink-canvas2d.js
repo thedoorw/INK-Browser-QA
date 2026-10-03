@@ -25,7 +25,7 @@ export class Canvas2DMultiChannelInkRenderer {
     const cacheable = options.transient !== true;
     const normalizedEntries = cacheable ? entries.map(normalizeNaturalMediaRunEntry) : null;
     const key = cacheable
-      ? `${paperProfileFingerprint(paper)}|request:${Math.round(preferredScale * 1000)}:${maxDimension}:${maxPixels}|${normalizedEntries.map(entry => `${naturalMediaFingerprint(entry.stroke, 1)}:${entry.matrix.map(v => Math.round(v * 1000)).join(',')}:${Math.round(entry.opacity * 1000)}`).join('|')}`
+      ? `${paperProfileFingerprint(paper)}|request:${preferredScale}:${maxDimension}:${maxPixels}|${normalizedEntries.map(entry => `${naturalMediaFingerprint(entry.stroke, 1)}:${JSON.stringify([entry.stroke.points || [], entry.matrix, entry.opacity])}`).join('|')}`
       : null;
     if (cacheable && this.cache.has(key)) {
       const result = this.cache.get(key);this.cache.delete(key);this.cache.set(key, result);this.stats.cacheHits++;this.stats.preparationSkips++;return result;

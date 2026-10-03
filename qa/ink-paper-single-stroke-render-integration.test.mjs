@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { Canvas2DMultiChannelInkRenderer } from '../product/source/src/render/canvas2d/multi-channel-ink-canvas2d.js';
 
 import {
   NaturalMediaController,
@@ -89,6 +90,10 @@ test('multichannel backend default remains 2+ unless the caller explicitly reque
   const webglSource=readFileSync('product/source/src/render/webgl/multi-channel-ink-webgl.js','utf8');
   assert.match(canvasSource,/options\.minimumStrokes \?\? 2/);
   assert.match(webglSource,/options\.minimumStrokes\?\?2/);
-  assert.match(canvasSource,/supportsNaturalMediaRun\(entries, \{ minimum \}\)/);
+  const canvasBackend=new Canvas2DMultiChannelInkRenderer({canvasFactory:captureCanvasFactory()});
+  const single=[{stroke:stroke('brush')}];
+  assert.equal(canvasBackend.supports(single),false);
+  assert.equal(canvasBackend.supports(single,{minimum:1}),true);
+  assert.equal(canvasBackend.supports([...single,{stroke:stroke('smudge','mix')}]),true,'accepted A5 mixers preserve the 2+ default');
   assert.match(webglSource,/supportsNaturalMediaRun\(entries,\{minimum\}\)/);
 });

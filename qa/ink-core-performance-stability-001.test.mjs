@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { Canvas2DMultiChannelInkRenderer } from '../product/source/src/render/canvas2d/multi-channel-ink-canvas2d.js';
+import { prepareNaturalMediaRun } from '../product/source/src/render/natural-media-run-utils.js';
 
 function captureCanvasFactory(){
   return ()=>{
@@ -39,6 +40,44 @@ function renderer(){
     maxPixels:90000
   });
 }
+
+test('fractional transform edits invalidate cached bounds and scale even when pixel bytes match',()=>{
+  const entries=[{stroke:{...stroke('brush','fractional'),points:[{x:0,y:0,p:.8},{x:300,y:25,p:.8}]},matrix:[1,0,0,1,0,0],opacity:1}];
+  const bounds=prepareNaturalMediaRun(entries).bounds;
+  const opts={...options,maxDimension:Math.max(bounds.w,bounds.h)*.60055};
+  const instance=renderer();
+  const original=instance.render(entries,paper,opts);
+  entries[0].matrix=[1.0004,0,0,1.0004,0,0];
+  const changed=instance.render(entries,paper,opts);
+  const fresh=renderer().render(entries,paper,opts);
+  assert.notStrictEqual(changed,original);
+  for(const key of ['x','y','w','h','scale']) assert.equal(changed[key],fresh[key],key);
+  assert.deepEqual(changed.canvas.bytes,fresh.canvas.bytes);
+  assert.equal(instance.diagnostics().cacheHits,0);
+});
+
+test('request key preserves fractional point and rendering-option changes',()=>{
+  const entries=[{stroke:stroke('brush','request-precision'),matrix:[1,0,0,1,0,0],opacity:1}];
+  const instance=renderer(),opts={...options,preferredScale:1.0001};
+  let previous=instance.render(entries,paper,opts);
+  const verify=()=>{
+    const changed=instance.render(entries,paper,opts),fresh=renderer().render(entries,paper,opts);
+    assert.notStrictEqual(changed,previous);
+    for(const key of ['x','y','w','h','scale'])assert.equal(changed[key],fresh[key],key);
+    assert.deepEqual(changed.canvas.bytes,fresh.canvas.bytes);
+    previous=changed;
+  };
+  entries[0].stroke.points[24].x+=.001;verify();
+  entries[0].opacity=.9999;verify();
+  opts.preferredScale=1.0002;verify();
+  opts.maxPixels=110000;verify();
+  opts.maxDimension=420;verify();
+  const changedPaper={...paper,roughness:.93};
+  const changed=instance.render(entries,changedPaper,opts),fresh=renderer().render(entries,changedPaper,opts);
+  assert.notStrictEqual(changed,previous);
+  assert.deepEqual(changed.canvas.bytes,fresh.canvas.bytes);
+  assert.equal(instance.diagnostics().cacheHits,0);
+});
 
 test('warm multichannel cache hit bypasses repeated run preparation',()=>{
   const instance=renderer();
