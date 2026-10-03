@@ -685,34 +685,36 @@ const ALIGN_DISTRIBUTE_C2_CASE = String.raw`(async()=>{
   if(descriptor?.status==='FAILED'||!JSON.stringify(descriptor).includes('distributeX'))throw new Error('ALIGN_DESCRIPTOR_INVALID');
 
   app.history.clear();
-  app.selection=[{layerId:refs[2].layerId,objectId:refs[2].objectId}];
-  app.refreshSelectionUI?.();
-  const selectionBefore=JSON.stringify(app.selection);
+  const sentinelSelection=[{layerId:refs[2].layerId,objectId:refs[2].objectId}];
+  const setSentinel=()=>{app.selection=sentinelSelection.map(item=>({...item}));app.refreshSelectionUI?.();return JSON.stringify(app.selection);};
+  const selectionBeforeLeft=setSentinel();
   const baseline=bounds();
 
   const leftResult=await align('left');
   const left=bounds();
   if(!left.every(b=>close(b.x,left[0].x)))throw new Error('LEFT_ALIGN_FAILED:'+JSON.stringify(left));
-  if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_LEFT');
+  if(JSON.stringify(app.selection)!==selectionBeforeLeft)throw new Error('SELECTION_NOT_RESTORED_LEFT');
   if(findField(leftResult,'mode')!=='left'||findField(leftResult,'changedTargetCount')<1)throw new Error('LEFT_RECEIPT_INVALID');
   if(app.history.undoStack.at(-1)?.label!=='對齊物件')throw new Error('LEFT_HISTORY_LABEL_INVALID');
   await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('LEFT_UNDO_MISMATCH');
   await Promise.resolve(api.tools.invoke('redo_ink',{}));if(!sameBounds(bounds(),left))throw new Error('LEFT_REDO_MISMATCH');
   await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('LEFT_RESET_MISMATCH');
 
+  const selectionBeforeCenter=setSentinel();
   const centerResult=await align('centerX');
   const center=bounds(),centers=center.map(b=>b.x+b.w/2);
   if(!centers.every(v=>close(v,centers[0])))throw new Error('CENTERX_ALIGN_FAILED:'+JSON.stringify(center));
-  if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_CENTER');
+  if(JSON.stringify(app.selection)!==selectionBeforeCenter)throw new Error('SELECTION_NOT_RESTORED_CENTER');
   if(findField(centerResult,'mode')!=='centerX')throw new Error('CENTER_RECEIPT_INVALID');
   await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('CENTER_UNDO_MISMATCH');
 
+  const selectionBeforeDistribute=setSentinel();
   const distributeResult=await align('distributeX');
   const distributed=bounds().sort((a,b)=>a.x-b.x);
   const gap1=distributed[1].x-(distributed[0].x+distributed[0].w);
   const gap2=distributed[2].x-(distributed[1].x+distributed[1].w);
   if(!close(gap1,gap2,.01))throw new Error('DISTRIBUTEX_GAP_MISMATCH:'+gap1+':'+gap2);
-  if(JSON.stringify(app.selection)!==selectionBefore)throw new Error('SELECTION_NOT_RESTORED_DISTRIBUTE');
+  if(JSON.stringify(app.selection)!==selectionBeforeDistribute)throw new Error('SELECTION_NOT_RESTORED_DISTRIBUTE');
   if(findField(distributeResult,'mode')!=='distributeX')throw new Error('DISTRIBUTE_RECEIPT_INVALID');
   const distributedExact=bounds();
   await Promise.resolve(api.tools.invoke('undo_ink',{}));if(!sameBounds(bounds(),baseline))throw new Error('DISTRIBUTE_UNDO_MISMATCH');
