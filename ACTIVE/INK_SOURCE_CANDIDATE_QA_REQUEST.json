@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "local-paper-webgl-merged-a1-001",
+  "requestId": "local-paper-webgl-merged-a2-001",
   "candidateSha": "698ce0ef781eeb5899ab5b84183d9a0d0eb8e6f5",
-  "case": "paint-session-create"
+  "case": "stroke-create-a2"
 }
