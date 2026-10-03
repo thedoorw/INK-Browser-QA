@@ -20,7 +20,7 @@ export class NaturalMediaController {
     if (this.preference !== 'canvas2d') { this.webgl.initialize();this.multiChannelWebgl.initialize(); }
   }
   supports(stroke) { return isNaturalMediaStroke(stroke); }
-  supportsRun(entries) { return supportsNaturalMediaRun(entries); }
+  supportsRun(entries, options = {}) { return supportsNaturalMediaRun(entries, options); }
   setFrequencyVisibility(value = {}) {
     const result = this.canvas2d.setFrequencyVisibility(value);
     this.emitStatus();
@@ -50,7 +50,8 @@ export class NaturalMediaController {
     this.lastBackend = 'canvas2d';this.canvas2d.render(ctx, stroke);return true;
   }
   renderStrokeRun(ctx, entries, paper = {}, options = {}) {
-    if (!this.supportsRun(entries)) return false;
+    const minimumStrokes = Math.max(1, Math.trunc(options.minimumStrokes ?? 2));
+    if (!this.supportsRun(entries, { minimum: minimumStrokes })) return false;
     const mayUseGPU = this.preference !== 'canvas2d' && !this.forcedReason;
     if (mayUseGPU) {
       try {
