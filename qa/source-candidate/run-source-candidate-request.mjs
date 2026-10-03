@@ -1788,7 +1788,7 @@ const RASTER_STACK_B2_CASE = String.raw`(async()=>{
 })()`;
 
 
-const SNAP_GUIDES_C3_CASE = String.raw\`(async()=>{
+const SNAP_GUIDES_C3_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke)throw new Error('INK_PUBLIC_API_UNAVAILABLE');
   const required=['describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','undo_ink','redo_ink','get_ink_history'];
@@ -1893,7 +1893,7 @@ const SNAP_GUIDES_C3_CASE = String.raw\`(async()=>{
     initialGuides,
     historyLabels:app.history.undoStack.map(entry=>entry.label)
   };
-})()\`;
+})()`;
 
 async function run(){
   const requestPath=path.resolve(process.argv[2]);
