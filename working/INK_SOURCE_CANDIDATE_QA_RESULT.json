@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "local-paper-single-a1-regression-001",
-  "candidateSha": "29e23abf609bf57603ecfe5e366355b788ddc2fd",
-  "case": "paint-session-create",
+  "requestId": "clusterB-B4-three-operations-candidate-001",
+  "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
+  "case": "path-deformation-b4",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:37933/?sourceCandidate=29e23abf609bf57603ecfe5e366355b788ddc2fd",
+    "href": "http://127.0.0.1:45337/?sourceCandidate=91d46fb0c070a84e65186115e7525c87d63e3cd0",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,29 +13,798 @@
   },
   "result": {
     "passed": true,
-    "before": {
-      "count": 0,
-      "undo": 0,
-      "canvas": "8d257ff8"
+    "inventory": [
+      "get_ink_capabilities",
+      "get_ink_context",
+      "get_ink_selection",
+      "inspect_ink_objects",
+      "decompose_ink_reference",
+      "propose_ink_edit",
+      "approve_ink_edit",
+      "execute_ink_edit",
+      "get_ink_history",
+      "undo_ink",
+      "redo_ink",
+      "get_ink_revisions",
+      "capture_ink_revision",
+      "restore_ink_revision",
+      "get_ink_preview",
+      "inspect_ink_output",
+      "release_ink_output",
+      "describe_ink_capability",
+      "use_ink",
+      "import_ink_reference",
+      "import_ink_raster",
+      "export_ink_asset",
+      "search_ink_library"
+    ],
+    "receipts": [
+      {
+        "operation": "path.create.v1",
+        "proposed": "PROPOSED",
+        "approved": "APPROVED",
+        "executed": "EXECUTED"
+      },
+      {
+        "operation": "path.warp.v1",
+        "proposed": "PROPOSED",
+        "approved": "APPROVED",
+        "executed": "EXECUTED"
+      },
+      {
+        "operation": "path.distort.v1",
+        "proposed": "PROPOSED",
+        "approved": "APPROVED",
+        "executed": "EXECUTED"
+      },
+      {
+        "operation": "path.perspective.v1",
+        "proposed": "PROPOSED",
+        "approved": "APPROVED",
+        "executed": "EXECUTED"
+      }
+    ],
+    "outcomes": {
+      "warp": {
+        "stableId": "b4-native-path",
+        "baseSubpathsRetained": true,
+        "parameters": {
+          "bend": 67.2
+        },
+        "deformation": {
+          "baseSubpaths": [
+            {
+              "id": "b4-native-path_s0",
+              "closed": true,
+              "role": "outer",
+              "anchors": [
+                {
+                  "id": "v_murqtv6s_vrveavo",
+                  "x": 140,
+                  "y": 0,
+                  "in": {
+                    "x": 0,
+                    "y": -52.46705123392539
+                  },
+                  "out": {
+                    "x": 0,
+                    "y": 52.46705123392539
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_3ipa27c",
+                  "x": 0,
+                  "y": 95,
+                  "in": {
+                    "x": 77.3198649763111,
+                    "y": 0
+                  },
+                  "out": {
+                    "x": -77.3198649763111,
+                    "y": 0
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_1jqhvq8",
+                  "x": -140,
+                  "y": 0,
+                  "in": {
+                    "x": 0,
+                    "y": 52.46705123392539
+                  },
+                  "out": {
+                    "x": 0,
+                    "y": -52.46705123392539
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_qas6fg7",
+                  "x": 0,
+                  "y": -95,
+                  "in": {
+                    "x": -77.3198649763111,
+                    "y": 0
+                  },
+                  "out": {
+                    "x": 77.3198649763111,
+                    "y": 0
+                  },
+                  "mode": "smooth"
+                }
+              ]
+            }
+          ],
+          "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+          "version": "1.0",
+          "parameters": {
+            "bend": 67.2
+          },
+          "frontBack": "front",
+          "reversible": true,
+          "revision": 1
+        },
+        "subpaths": [
+          {
+            "id": "b4-native-path_s0",
+            "closed": true,
+            "role": "outer",
+            "anchors": [
+              {
+                "id": "v_murqtv6s_vrveavo",
+                "x": 207.2,
+                "y": 0,
+                "in": {
+                  "x": -23.740760834938527,
+                  "y": -52.46705123392539
+                },
+                "out": {
+                  "x": -23.740760834938527,
+                  "y": 52.46705123392539
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_3ipa27c",
+                "x": 8.229626490270214e-15,
+                "y": 95,
+                "in": {
+                  "x": 77.3198649763111,
+                  "y": 0
+                },
+                "out": {
+                  "x": -77.3198649763111,
+                  "y": 0
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_1jqhvq8",
+                "x": -72.8,
+                "y": 0,
+                "in": {
+                  "x": -23.74076083493854,
+                  "y": 52.46705123392539
+                },
+                "out": {
+                  "x": -23.74076083493854,
+                  "y": -52.46705123392539
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_qas6fg7",
+                "x": 0,
+                "y": -95,
+                "in": {
+                  "x": -77.3198649763111,
+                  "y": 0
+                },
+                "out": {
+                  "x": 77.3198649763111,
+                  "y": 0
+                },
+                "mode": "smooth"
+              }
+            ]
+          }
+        ],
+        "canvasBefore": "ca5e221b",
+        "canvasAfter": "ac22a30d",
+        "previewBefore": "fnv1a32:a94d0df7",
+        "previewAfter": "fnv1a32:08317eb1",
+        "historyLabel": "CHAT warp Path",
+        "historyStatus": "COMPLETED",
+        "undoRedoExact": true,
+        "resetExact": true,
+        "reapplicationFromBaseExact": true
+      },
+      "distort": {
+        "stableId": "b4-native-path",
+        "baseSubpathsRetained": true,
+        "parameters": {
+          "projective": {
+            "mode": "distort",
+            "xOffset": 32,
+            "yOffset": 16,
+            "sourceQuad": [
+              {
+                "x": -140,
+                "y": -95
+              },
+              {
+                "x": 140,
+                "y": -95
+              },
+              {
+                "x": 140,
+                "y": 95
+              },
+              {
+                "x": -140,
+                "y": 95
+              }
+            ],
+            "destinationQuad": [
+              {
+                "x": -108,
+                "y": -95
+              },
+              {
+                "x": 140,
+                "y": -79
+              },
+              {
+                "x": 108,
+                "y": 95
+              },
+              {
+                "x": -140,
+                "y": 79
+              }
+            ],
+            "matrix": [
+              0.8857142857142858,
+              -0.16842105263157894,
+              0,
+              0.05714285714285716,
+              0.9157894736842105,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        },
+        "deformation": {
+          "baseSubpaths": [
+            {
+              "id": "b4-native-path_s0",
+              "closed": true,
+              "role": "outer",
+              "anchors": [
+                {
+                  "id": "v_murqtv6s_vrveavo",
+                  "x": 140,
+                  "y": 0,
+                  "in": {
+                    "x": 0,
+                    "y": -52.46705123392539
+                  },
+                  "out": {
+                    "x": 0,
+                    "y": 52.46705123392539
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_3ipa27c",
+                  "x": 0,
+                  "y": 95,
+                  "in": {
+                    "x": 77.3198649763111,
+                    "y": 0
+                  },
+                  "out": {
+                    "x": -77.3198649763111,
+                    "y": 0
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_1jqhvq8",
+                  "x": -140,
+                  "y": 0,
+                  "in": {
+                    "x": 0,
+                    "y": 52.46705123392539
+                  },
+                  "out": {
+                    "x": 0,
+                    "y": -52.46705123392539
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_qas6fg7",
+                  "x": 0,
+                  "y": -95,
+                  "in": {
+                    "x": -77.3198649763111,
+                    "y": 0
+                  },
+                  "out": {
+                    "x": 77.3198649763111,
+                    "y": 0
+                  },
+                  "mode": "smooth"
+                }
+              ]
+            }
+          ],
+          "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+          "version": "1.0",
+          "parameters": {
+            "projective": {
+              "mode": "distort",
+              "xOffset": 32,
+              "yOffset": 16,
+              "sourceQuad": [
+                {
+                  "x": -140,
+                  "y": -95
+                },
+                {
+                  "x": 140,
+                  "y": -95
+                },
+                {
+                  "x": 140,
+                  "y": 95
+                },
+                {
+                  "x": -140,
+                  "y": 95
+                }
+              ],
+              "destinationQuad": [
+                {
+                  "x": -108,
+                  "y": -95
+                },
+                {
+                  "x": 140,
+                  "y": -79
+                },
+                {
+                  "x": 108,
+                  "y": 95
+                },
+                {
+                  "x": -140,
+                  "y": 79
+                }
+              ],
+              "matrix": [
+                0.8857142857142858,
+                -0.16842105263157894,
+                0,
+                0.05714285714285716,
+                0.9157894736842105,
+                0,
+                0,
+                0,
+                1
+              ]
+            }
+          },
+          "frontBack": "front",
+          "reversible": true,
+          "revision": 1
+        },
+        "subpaths": [
+          {
+            "id": "b4-native-path_s0",
+            "closed": true,
+            "role": "outer",
+            "anchors": [
+              {
+                "id": "v_murqtv6s_vrveavo",
+                "x": 124.00000000000001,
+                "y": 8.000000000000004,
+                "in": {
+                  "x": 8.836555997292706,
+                  "y": -48.04877323527903
+                },
+                "out": {
+                  "x": -8.836555997292692,
+                  "y": 48.04877323527904
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_3ipa27c",
+                "x": -16,
+                "y": 87,
+                "in": {
+                  "x": 68.4833089790184,
+                  "y": 4.418277998646346
+                },
+                "out": {
+                  "x": -68.4833089790184,
+                  "y": -4.418277998646346
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_1jqhvq8",
+                "x": -124.00000000000001,
+                "y": -8.000000000000004,
+                "in": {
+                  "x": -8.836555997292706,
+                  "y": 48.04877323527903
+                },
+                "out": {
+                  "x": 8.836555997292692,
+                  "y": -48.04877323527904
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_qas6fg7",
+                "x": 16,
+                "y": -87,
+                "in": {
+                  "x": -68.4833089790184,
+                  "y": -4.418277998646346
+                },
+                "out": {
+                  "x": 68.4833089790184,
+                  "y": 4.418277998646346
+                },
+                "mode": "smooth"
+              }
+            ]
+          }
+        ],
+        "canvasBefore": "ca5e221b",
+        "canvasAfter": "bd451d39",
+        "previewBefore": "fnv1a32:a94d0df7",
+        "previewAfter": "fnv1a32:9d35956d",
+        "historyLabel": "CHAT distort Path",
+        "historyStatus": "COMPLETED",
+        "undoRedoExact": true,
+        "resetExact": true,
+        "reapplicationFromBaseExact": true
+      },
+      "perspective": {
+        "stableId": "b4-native-path",
+        "baseSubpathsRetained": true,
+        "parameters": {
+          "projective": {
+            "mode": "perspective",
+            "xOffset": 32,
+            "yOffset": 16,
+            "sourceQuad": [
+              {
+                "x": -140,
+                "y": -95
+              },
+              {
+                "x": 140,
+                "y": -95
+              },
+              {
+                "x": 140,
+                "y": 95
+              },
+              {
+                "x": -140,
+                "y": 95
+              }
+            ],
+            "destinationQuad": [
+              {
+                "x": -108,
+                "y": -79
+              },
+              {
+                "x": 108,
+                "y": -111
+              },
+              {
+                "x": 172,
+                "y": 111
+              },
+              {
+                "x": -172,
+                "y": 79
+              }
+            ],
+            "matrix": [
+              0.9477551020408164,
+              -0.056731301939058176,
+              -23.57894736842105,
+              -0.02612244897959174,
+              0.9716343490304711,
+              -21.71428571428571,
+              -0.0012030075187969924,
+              -0.002406015037593985,
+              1
+            ]
+          }
+        },
+        "deformation": {
+          "baseSubpaths": [
+            {
+              "id": "b4-native-path_s0",
+              "closed": true,
+              "role": "outer",
+              "anchors": [
+                {
+                  "id": "v_murqtv6s_vrveavo",
+                  "x": 140,
+                  "y": 0,
+                  "in": {
+                    "x": 0,
+                    "y": -52.46705123392539
+                  },
+                  "out": {
+                    "x": 0,
+                    "y": 52.46705123392539
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_3ipa27c",
+                  "x": 0,
+                  "y": 95,
+                  "in": {
+                    "x": 77.3198649763111,
+                    "y": 0
+                  },
+                  "out": {
+                    "x": -77.3198649763111,
+                    "y": 0
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_1jqhvq8",
+                  "x": -140,
+                  "y": 0,
+                  "in": {
+                    "x": 0,
+                    "y": 52.46705123392539
+                  },
+                  "out": {
+                    "x": 0,
+                    "y": -52.46705123392539
+                  },
+                  "mode": "smooth"
+                },
+                {
+                  "id": "v_murqtv6s_qas6fg7",
+                  "x": 0,
+                  "y": -95,
+                  "in": {
+                    "x": -77.3198649763111,
+                    "y": 0
+                  },
+                  "out": {
+                    "x": 77.3198649763111,
+                    "y": 0
+                  },
+                  "mode": "smooth"
+                }
+              ]
+            }
+          ],
+          "type": "INK-NON-DESTRUCTIVE-DEFORMATION",
+          "version": "1.0",
+          "parameters": {
+            "projective": {
+              "mode": "perspective",
+              "xOffset": 32,
+              "yOffset": 16,
+              "sourceQuad": [
+                {
+                  "x": -140,
+                  "y": -95
+                },
+                {
+                  "x": 140,
+                  "y": -95
+                },
+                {
+                  "x": 140,
+                  "y": 95
+                },
+                {
+                  "x": -140,
+                  "y": 95
+                }
+              ],
+              "destinationQuad": [
+                {
+                  "x": -108,
+                  "y": -79
+                },
+                {
+                  "x": 108,
+                  "y": -111
+                },
+                {
+                  "x": 172,
+                  "y": 111
+                },
+                {
+                  "x": -172,
+                  "y": 79
+                }
+              ],
+              "matrix": [
+                0.9477551020408164,
+                -0.056731301939058176,
+                -23.57894736842105,
+                -0.02612244897959174,
+                0.9716343490304711,
+                -21.71428571428571,
+                -0.0012030075187969924,
+                -0.002406015037593985,
+                1
+              ]
+            }
+          },
+          "frontBack": "front",
+          "reversible": true,
+          "revision": 1
+        },
+        "subpaths": [
+          {
+            "id": "b4-native-path_s0",
+            "closed": true,
+            "role": "outer",
+            "anchors": [
+              {
+                "id": "v_murqtv6s_vrveavo",
+                "x": 131.20433996383363,
+                "y": -30.50994575045206,
+                "in": {
+                  "x": -14.184626319144215,
+                  "y": -49.2029225445315
+                },
+                "out": {
+                  "x": 19.261926927591816,
+                  "y": 66.81480903008426
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_3ipa27c",
+                "x": -37.55165692007797,
+                "y": 91.5068226120858,
+                "in": {
+                  "x": 102.86869567176674,
+                  "y": 9.569180992722494
+                },
+                "out": {
+                  "x": -80.73085202620155,
+                  "y": -7.50984670011178
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_1jqhvq8",
+                "x": -133.74002574002571,
+                "y": -15.454311454311462,
+                "in": {
+                  "x": -19.055549241708576,
+                  "y": 47.04338719046801
+                },
+                "out": {
+                  "x": 15.339499260807884,
+                  "y": -37.86938880011952
+                },
+                "mode": "smooth"
+              },
+              {
+                "id": "v_murqtv6s_qas6fg7",
+                "x": -14.805385556915544,
+                "y": -92.80660954712363,
+                "in": {
+                  "x": -54.40664082997878,
+                  "y": 8.060243085922778
+                },
+                "out": {
+                  "x": 63.31983041192393,
+                  "y": -9.380715616581327
+                },
+                "mode": "smooth"
+              }
+            ]
+          }
+        ],
+        "canvasBefore": "ca5e221b",
+        "canvasAfter": "b1149dd5",
+        "previewBefore": "fnv1a32:a94d0df7",
+        "previewAfter": "fnv1a32:5105c73e",
+        "historyLabel": "CHAT perspective Path",
+        "historyStatus": "COMPLETED",
+        "undoRedoExact": true,
+        "resetExact": true,
+        "reapplicationFromBaseExact": true
+      }
     },
-    "after": {
-      "count": 1,
-      "undo": 1,
-      "canvas": "c81fe871",
-      "id": "chat-paint-fnv1a32-c7900103",
-      "strokes": 2,
-      "replayHash": "28d7b88a"
-    },
-    "previewStatus": "COMPLETED",
-    "previewBounds": {
-      "h": 231.12032,
-      "w": 274.0064,
-      "x": -135.13,
-      "y": -120.46648
-    },
-    "undoStatus": "COMPLETED",
-    "redoStatus": "COMPLETED",
-    "restoredStrokeCount": 2
+    "distortDiffersFromPerspective": true,
+    "noPointerEmulation": true,
+    "original": [
+      {
+        "id": "b4-native-path_s0",
+        "closed": true,
+        "role": "outer",
+        "anchors": [
+          {
+            "id": "v_murqtv6s_vrveavo",
+            "x": 140,
+            "y": 0,
+            "in": {
+              "x": 0,
+              "y": -52.46705123392539
+            },
+            "out": {
+              "x": 0,
+              "y": 52.46705123392539
+            },
+            "mode": "smooth"
+          },
+          {
+            "id": "v_murqtv6s_3ipa27c",
+            "x": 0,
+            "y": 95,
+            "in": {
+              "x": 77.3198649763111,
+              "y": 0
+            },
+            "out": {
+              "x": -77.3198649763111,
+              "y": 0
+            },
+            "mode": "smooth"
+          },
+          {
+            "id": "v_murqtv6s_1jqhvq8",
+            "x": -140,
+            "y": 0,
+            "in": {
+              "x": 0,
+              "y": 52.46705123392539
+            },
+            "out": {
+              "x": 0,
+              "y": -52.46705123392539
+            },
+            "mode": "smooth"
+          },
+          {
+            "id": "v_murqtv6s_qas6fg7",
+            "x": 0,
+            "y": -95,
+            "in": {
+              "x": -77.3198649763111,
+              "y": 0
+            },
+            "out": {
+              "x": 77.3198649763111,
+              "y": 0
+            },
+            "mode": "smooth"
+          }
+        ]
+      }
+    ]
   },
   "status": "PASS"
 }
