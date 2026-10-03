@@ -1,0 +1,69 @@
+name: INK C019 Branch QA
+
+on:
+  push:
+    branches:
+      - work/ink-c019-text-warp-render-001
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ink-c019-branch-qa
+  cancel-in-progress: true
+
+jobs:
+  c019-exact-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout exact branch candidate
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Focused native and regression tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test \
+            qa/ink-c019-text-path-render-integration.test.mjs \
+            qa/ink-p1-c-vector-text-precision-layout.test.mjs \
+            qa/ink-chat-path-deformation-b4.test.mjs \
+            qa/ink-chat-connector-003-capability-schema-discovery.test.mjs \
+            | tee "${RUNNER_TEMP}/c019-node-tests.log"
+
+      - name: Exact-SHA browser QA and representative regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > "${RUNNER_TEMP}/c019-request.json" <<JSON
+          {
+            "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
+            "version": 1,
+            "requestId": "c019-text-path-${GITHUB_SHA}",
+            "candidateSha": "${GITHUB_SHA}",
+            "case": "c019-text-path-render",
+            "regressions": true
+          }
+          JSON
+          node qa/source-candidate/run-source-candidate-request.mjs \
+            "${RUNNER_TEMP}/c019-request.json" \
+            product/source \
+            "${RUNNER_TEMP}/c019-browser-result.json" \
+            "${RUNNER_TEMP}/c019-browser.png"
+
+      - name: Preserve C019 branch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ink-c019-${{ github.sha }}
+          path: |
+            ${{ runner.temp }}/c019-node-tests.log
+            ${{ runner.temp }}/c019-request.json
+            ${{ runner.temp }}/c019-browser-result.json
+            ${{ runner.temp }}/c019-browser.png
+            ${{ runner.temp }}/c019-browser-result.json.*
+          if-no-files-found: warn
+          retention-days: 30
