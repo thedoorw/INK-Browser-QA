@@ -246,7 +246,7 @@ let child, cdp, targetId, sessionId;
 const report = {
   schema: 'INK_PWA_CACHE_FRESHNESS_BROWSER_EVIDENCE',
   version: 1,
-  baselineSource: '4188e9cc7673313726abd7986310d758912f63cf',
+  baselineSource: 'a6842e95a00ef440d47cc393394b9272d75f6082',
   candidateBuildId: expectedCandidateBuildId,
   baseUrl: hosted.baseUrl,
   ordinaryReloadMechanism: 'Chromium Page.reload; ignoreCache=false (normal reload, not hard reload)',
