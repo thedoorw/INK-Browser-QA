@@ -1,5 +1,23 @@
 # INK Current Work Order
 
+## C06 Canvas Navigation 12800% zoom — ACTIVE 2026-10-03
+
+USER authorized independent dispatch.
+
+Dispatch:
+- `ACTIVE/INK_C06_CANVAS_NAVIGATION_12800_ZOOM_DEV_DISPATCH_v1.0.md`
+
+Scope:
+```text
+2400% → 12800%
+single shared zoom-limit authority
+wheel / gesture / +/- / Navigator slider / numeric input
+focused high-zoom browser verification
+STOP → Supervisor
+```
+
+Keep separate from C04, New Document/A4, History, unrelated UI fidelity and unrelated Core work.
+
 ## Core image-stack cache optimization 002 — CLOSED 2026-10-03
 
 PR #146 accepted, merged and formally Live-qualified at exact source f56e492af4954ae6da3be39cf10d2dbe2859d87e. Browser candidate 87158d5c372cfd40deff5ee6c887ddecbc7a4e69; final integrated product tree exact. Local 23/23, candidate five-family B2 and affected regressions, Formal Live B2/cache/Natural Media/B4/C1 PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_002_AUTHORITY_CLOSURE_20261003.md).
