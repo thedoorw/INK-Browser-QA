@@ -1329,3 +1329,16 @@ B3 / advanced mutable raster ingest = CLOSED / DO NOT REOPEN
 UI PR #109 / PWA / C06 / New Document = separate owners / untouched
 FORMAT_VERSION = 4 / PRESERVE
 ```
+
+## C019 native curved / path Text authority closure — 2026-10-03
+
+PR #152 is accepted, merged, deployed and Formal Live qualified. DEV exact candidate `35872e4f498950c58d47aac64f8e515967b081e9` passed run `37113470082`; integrated/deployed source `ff6e329e372a0b3c8b756cd74cc881b28fa404f9` passed Formal Live run `37114248495` / artifact `11270837984` / digest `sha256:1560ade23bd38e5bcf06d14609488c1d2be4fa0647bb0f13b5a4c6f0577f7392`. Native editable Text follows native Path through existing `pathText + layoutTextOnPath()`; exact straight/curved Undo/Redo, post-curve text edit, Path-warp follow-through and C4 Artboard regression PASS. [Authority closure](../working/INK_C019_TEXT_WARP_RENDER_INTEGRATION_AUTHORITY_CLOSURE_20261003.md).
+
+```text
+C019 = CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+Cluster D = independent DEV → exact candidate + evidence → STOP → authority review
+Cluster C = CLOSED / DO NOT RESTART
+B3 / advanced mutable raster ingest = CLOSED / DO NOT REOPEN
+UI PR #109 / PWA / C06 / New Document = separate owners / untouched
+FORMAT_VERSION = 4 / PRESERVE
+```

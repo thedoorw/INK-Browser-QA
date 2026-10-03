@@ -1349,3 +1349,14 @@ D_AND_C019 = INDEPENDENT_DEV / AWAIT_EXACT_RETURN
 UI_PR109_PWA_C06_NEW_DOCUMENT = UNTOUCHED
 FORMAT_VERSION = 4 / UNCHANGED
 ```
+
+## C019 native curved / path Text — CLOSED 2026-10-03
+
+PR #152 accepted. Exact DEV candidate `35872e4f498950c58d47aac64f8e515967b081e9`; candidate run `37113470082`, artifact `11270487286`, digest `sha256:26953eb734742959d361cd849e210290f399a77d2f987e5e554cb865054bb245` PASS. Integrated/deployed exact source `ff6e329e372a0b3c8b756cd74cc881b28fa404f9`; Live deploy `b94d5fb3bb6202ca1e833b28511fbe0fd7628fe2`; Pages run `37114135019` PASS. Formal Live request `c019-text-path-formal-live-001`, run `37114248495`, artifact `11270837984`, digest `sha256:1560ade23bd38e5bcf06d14609488c1d2be4fa0647bb0f13b5a4c6f0577f7392` PASS.
+
+Live verified native editable Text, `text.path.set.v1`, visible straight→curved Preview delta, exact relation Undo/Redo, post-curve Text editing, stable native Path warp follow-through and C4 Artboard regression. Broad Text envelope warp is not claimed. `FORMAT_VERSION=4` unchanged. Full record: [C019 authority closure](../working/INK_C019_TEXT_WARP_RENDER_INTEGRATION_AUTHORITY_CLOSURE_20261003.md).
+
+```text
+C019_CURVED_PATH_TEXT = CLOSED / FORMAL LIVE QUALIFIED
+NEXT_AUTHORITY_QUEUE = CLUSTER_D_RETURN_WHEN_READY
+```
