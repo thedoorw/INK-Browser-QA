@@ -1,5 +1,38 @@
 # INK Current Work Order
 
+## PWA / Cache Freshness — Supervisor review REVISION_REQUIRED 2026-10-03
+
+Supervisor reviewed exact DEV candidate `1da854e6ce1805101f5ff3a4f7b7e16929a2d88e`.
+
+Accepted:
+- real Chromium lifecycle evidence;
+- normal reload with `ignoreCache=false`;
+- previous-worker migration;
+- worker/app identity agreement;
+- close/reopen;
+- coherent offline fallback;
+- no reload loop.
+
+Promotion is blocked by two remaining gates:
+
+1. generated build identity is not yet bound to the authoritative future `main` / GitHub Pages publication path; the added evidence workflow is task-branch-only and cannot prevent a later stale checked-in identity;
+2. the browser harness used a local switchable server; the actual deployed QA URL still requires ordinary open/F5 verification without Ctrl+F5 before closure.
+
+Review:
+- `working/INK_PWA_CACHE_FRESHNESS_SUPERVISOR_REVIEW_20261003.md`
+
+Required next:
+```text
+DEV revision
+→ publication-bound deterministic build identity
+→ reconcile onto latest main composition
+→ fresh browser evidence
+→ actual deployed QA ordinary reload/reopen gate
+→ Supervisor review
+```
+
+Do not merge the divergent work branch wholesale.
+
 ## Core spatial-batch optimization 003 — CLOSED 2026-10-03
 
 PR #150 accepted, merged, deployed and Formal Live qualified at e139682a8c374e275061872ba9f27bc06ca0d492.46 local checks; exact candidate browser native16-object batch/Preview/Undo/Redo plus A1/A2/A3/A4/A5/B2/B4/C1/C2/C3 PASS. Formal Live run 37109933114 verifies exact source, native batch/query/Undo/Redo,3000-object20-cycle checks,previous caches,B4 and C3 steps PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_003_AUTHORITY_CLOSURE_20261003.md).
@@ -1315,3 +1348,30 @@ C019 DEV → exact candidate + QA/evidence → STOP
 ```
 
 Keep the current B3 local raster/masks work independent. Do not let C/D/C019 branches merge themselves, deploy to `thedoorw/INK`, or disturb active UI/PWA/C06 owners. FORMAT_VERSION remains 4.
+
+## Cluster C authority closure — 2026-10-03
+
+Cluster C C1–C4 is now CLOSED / merged / deployed / Formal Live qualified. C4 PR #151 exact candidate `6dca38862352a5ffcd2193b943c017f70eecd4e2` was accepted, integrated at source `701c22beabd873376c71dc2dd15abc8bfe073732`, deployed, and passed Formal Live run `37113424982`. C3 PR #149 candidate plus snap/guide Formal Live evidence is also closed. Full record: `working/INK_CLUSTER_C_LAYOUT_PAGE_ARTBOARD_AUTHORITY_CLOSURE_20261003.md`.
+
+Current authority queue:
+```text
+Cluster C = CLOSED / DO NOT RESTART
+Cluster D = independent DEV → exact candidate + evidence → STOP → authority review
+C019 = independent DEV → exact candidate + evidence → STOP → authority review
+B3 / advanced mutable raster ingest = CLOSED / DO NOT REOPEN
+UI PR #109 / PWA / C06 / New Document = separate owners / untouched
+FORMAT_VERSION = 4 / PRESERVE
+```
+
+## C019 native curved / path Text authority closure — 2026-10-03
+
+PR #152 is accepted, merged, deployed and Formal Live qualified. DEV exact candidate `35872e4f498950c58d47aac64f8e515967b081e9` passed run `37113470082`; integrated/deployed source `ff6e329e372a0b3c8b756cd74cc881b28fa404f9` passed Formal Live run `37114248495` / artifact `11270837984` / digest `sha256:1560ade23bd38e5bcf06d14609488c1d2be4fa0647bb0f13b5a4c6f0577f7392`. Native editable Text follows native Path through existing `pathText + layoutTextOnPath()`; exact straight/curved Undo/Redo, post-curve text edit, Path-warp follow-through and C4 Artboard regression PASS. [Authority closure](../working/INK_C019_TEXT_WARP_RENDER_INTEGRATION_AUTHORITY_CLOSURE_20261003.md).
+
+```text
+C019 = CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+Cluster D = independent DEV → exact candidate + evidence → STOP → authority review
+Cluster C = CLOSED / DO NOT RESTART
+B3 / advanced mutable raster ingest = CLOSED / DO NOT REOPEN
+UI PR #109 / PWA / C06 / New Document = separate owners / untouched
+FORMAT_VERSION = 4 / PRESERVE
+```

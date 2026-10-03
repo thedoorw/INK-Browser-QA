@@ -1327,3 +1327,36 @@ FORMAT_VERSION_CHANGE = NONE
 PR #150 accepted, merged, deployed and Formal Live qualified at e139682a8c374e275061872ba9f27bc06ca0d492.46 local checks; exact candidate browser native16-object batch/Preview/Undo/Redo plus A1/A2/A3/A4/A5/B2/B4/C1/C2/C3 PASS. Formal Live run 37109933114 verifies exact source, native batch/query/Undo/Redo,3000-object20-cycle checks,previous caches,B4 and C3 steps PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_003_AUTHORITY_CLOSURE_20261003.md).
 
 Bounded batch repair only; no heap/leak or hour-long endurance claim. Existing UI/C06/capability owners remain independent; no next optimization package is automatically opened.
+
+## Cluster C authority closure — 2026-10-03
+
+PR #151 C4 accepted/merged. Exact C4 candidate `6dca38862352a5ffcd2193b943c017f70eecd4e2`; candidate run `37112623108`, artifact `11270164226`, digest `sha256:f641600e0f6bafe03044fd8ee318e48a5af2d082be393174c5b665e2029f1e0b` PASS.
+
+Integrated/deployed exact source `701c22beabd873376c71dc2dd15abc8bfe073732`; Live deploy `4ed90eaeb5b28768f0ef2e31402da6bb83233623`; Pages run `37113340966` PASS. Formal Live `clusterC-C4-artboard-formal-live-001`, run `37113424982`, artifact `11270326548`, digest `sha256:1f23c6d3c0333b69adb11e307ea12fd87bf182eadf263d73665b14e53d8f361b` COMPLETED. Exact runtime source verified; `apiReady=true`; 23 tools; `FORMAT_VERSION=4`.
+
+C4 verified native Artboard discovery and proposal/approval/execute, `調整畫板` scoped History, portrait↔landscape visible Preview delta, Undo/Redo and final baseline restore. C3 PR #149 exact candidate `1cc82a17b50063a4ed6acfd45b31662c8a97faa6` candidate-qualified in run `37108921873`; Formal Live carrier run `37109933114` exercised snap/guide public steps, and C4 Live rechecked guide add/History/Undo.
+
+[Authority closure](../working/INK_CLUSTER_C_LAYOUT_PAGE_ARTBOARD_AUTHORITY_CLOSURE_20261003.md).
+
+```text
+C1 = CLOSED / FORMAL LIVE QUALIFIED
+C2 = CLOSED / FORMAL LIVE QUALIFIED
+C3 = CLOSED / FORMAL LIVE QUALIFIED
+C4 = CLOSED / FORMAL LIVE QUALIFIED
+CLUSTER_C = CLOSED
+B3_AND_ADVANCED_MUTABLE_RASTER = CLOSED / DO_NOT_REOPEN
+D_AND_C019 = INDEPENDENT_DEV / AWAIT_EXACT_RETURN
+UI_PR109_PWA_C06_NEW_DOCUMENT = UNTOUCHED
+FORMAT_VERSION = 4 / UNCHANGED
+```
+
+## C019 native curved / path Text — CLOSED 2026-10-03
+
+PR #152 accepted. Exact DEV candidate `35872e4f498950c58d47aac64f8e515967b081e9`; candidate run `37113470082`, artifact `11270487286`, digest `sha256:26953eb734742959d361cd849e210290f399a77d2f987e5e554cb865054bb245` PASS. Integrated/deployed exact source `ff6e329e372a0b3c8b756cd74cc881b28fa404f9`; Live deploy `b94d5fb3bb6202ca1e833b28511fbe0fd7628fe2`; Pages run `37114135019` PASS. Formal Live request `c019-text-path-formal-live-001`, run `37114248495`, artifact `11270837984`, digest `sha256:1560ade23bd38e5bcf06d14609488c1d2be4fa0647bb0f13b5a4c6f0577f7392` PASS.
+
+Live verified native editable Text, `text.path.set.v1`, visible straight→curved Preview delta, exact relation Undo/Redo, post-curve Text editing, stable native Path warp follow-through and C4 Artboard regression. Broad Text envelope warp is not claimed. `FORMAT_VERSION=4` unchanged. Full record: [C019 authority closure](../working/INK_C019_TEXT_WARP_RENDER_INTEGRATION_AUTHORITY_CLOSURE_20261003.md).
+
+```text
+C019_CURVED_PATH_TEXT = CLOSED / FORMAL LIVE QUALIFIED
+NEXT_AUTHORITY_QUEUE = CLUSTER_D_RETURN_WHEN_READY
+```

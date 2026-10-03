@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PRECISION_LAYOUT_OPERATIONS, CHAT_MATERIAL_OPERATIONS, CHAT_RECIPE_OPERATIONS, CHAT_SNAP_KEYS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PRECISION_LAYOUT_OPERATIONS, CHAT_MATERIAL_OPERATIONS, CHAT_RECIPE_OPERATIONS, CHAT_SNAP_KEYS, CHAT_ARTBOARD_KEYS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -58,6 +58,7 @@ const expectedStateSchema = obj({
   documentId: str('Expected document id.'),
   pageId: str('Expected page id.'),
   paperFingerprint: str('Expected active-page paper fingerprint; captured automatically for page.paper.set.v1.'),
+  artboardFingerprint: str('Expected active-page artboard fingerprint; captured automatically for page.artboard.set.v1.'),
   precisionFingerprint: str('Expected active-page snap/guides fingerprint; captured automatically for Cluster C3 precision-layout operations.'),
   materialLibraryFingerprint: str('Expected native Document material-library fingerprint for Cluster D material creation.'),
   recipeRegistryFingerprint: str('Expected existing Studio RecipeEngine registry fingerprint for Cluster D recipe execution.'),
@@ -187,6 +188,14 @@ const editSchemas = {
       key: { type: 'string', enum: ['type', 'color', 'gridSize', 'absorbency', 'roughness', 'fiberStrength', 'fiberAngle', 'sizing', 'granulation', 'seed', 'textureVisible'], description: 'Existing page.paper field.' },
       value: { description: 'Field-specific scalar: type=blank/dots/grid/ruled; color=#RRGGBB; gridSize=8..100; fiberAngle=-90..90; seed=uint32; textureVisible=boolean; other profile values=0..1. Validated by the existing bounded edit authority.' }
     }, ['key', 'value'], 'One field per atomic History entry; no-op, unknown fields, active paper preview and stale paper proposals are rejected.'),
+    0, 0
+  ),
+  'page.artboard.set.v1': editTaskSchema(
+    { type: 'string', const: 'page.artboard.set.v1', description: 'Set one existing active-page Artboard field through InkApp.changeArtboard() and scoped History.' },
+    obj({
+      key: { type: 'string', enum: [...CHAT_ARTBOARD_KEYS], description: 'Existing bounded Artboard field.' },
+      value: { description: 'Field-specific scalar: orientation=portrait/landscape; ppi=72/96/150/300/600; bleedMm=0..25; safeMarginMm=0..half the shorter Artboard dimension; unit=mm/px; visibility/clip fields=boolean.' }
+    }, ['key', 'value'], 'One atomic Artboard mutation; width/height/custom-paper/New Document architecture is intentionally outside this operation.'),
     0, 0
   ),
   'page.snap.set.v1': editTaskSchema(
@@ -634,6 +643,15 @@ const editSchemas = {
       lineHeight: num('Line-height multiplier.', { minimum: Number.EPSILON, maximum: 20 }),
       fontWeight: num('Existing numeric font weight.', { minimum: 1, maximum: 1000 })
     }, [], 'At least one accepted Text field is required.'),
+    1
+  ),
+  'text.path.set.v1': editTaskSchema(
+    { type: 'string', const: 'text.path.set.v1', description: 'Attach one native editable Text object to one explicit native Path for curved/path-text rendering.' },
+    obj({
+      pathRef: objectRefSchema,
+      startOffset: num('Non-negative distance from the Path start to the first glyph advance.', { minimum: 0, maximum: 1000000, default: 0 }),
+      overflow: { type: 'string', enum: ['clip'], default: 'clip', description: 'Initial bounded path overflow mode; clip is the only CHAT-qualified mode.' }
+    }, ['pathRef'], 'The Text remains type:text. Text and Path must resolve in the same native layer/container; the Path is referenced, not mutated or converted.'),
     1
   ),
   'svg.import.v1': editTaskSchema(
@@ -1222,7 +1240,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     ? ['Targets must resolve to explicit editable visible unlocked Path objects. Recipe id/version and role bindings are explicit; execution reuses the existing Studio RecipeEngine inside existing History.']
     : zeroTargetCreate
     ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
-    : operation === 'text.edit.v1'
+    : operation === 'text.edit.v1' || operation === 'text.path.set.v1'
       ? ['Target must resolve to one editable visible unlocked Text object.']
       : imageOnly
         ? ['Target must resolve to exactly one editable visible unlocked native Image with rasterState.colorRaster. ReferenceImage and src-only images are rejected.']
@@ -1250,6 +1268,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.raster.spotHeal.v1') operationConstraints.push('One-shot structured local retouch using existing spotHealing(). Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation, source-point inference, or raw mask payload. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'image.raster.localRetouch.v1') operationConstraints.push('Non-source one-shot local retouch only: Dodge/Burn/Sponge/Local Blur/Local Sharpen/Color Replacement. Uses existing raster-retouch algorithms, native rasterState and pixel/mask stale fingerprints. Clone/Healing/Patch/Pattern Stamp remain separate source-contract work.');
   if (operation === 'image.raster.sourceRetouch.v1') operationConstraints.push('Source-dependent one-shot retouch only: Clone Stamp / Healing Brush / Patch. Source and target are explicit raster-local coordinates/regions inside the same target raster; no pointer emulation, source inference, cross-image sampling or raw mask. Pattern Stamp remains separate asset-contract work.');
+  if (operation === 'text.path.set.v1') operationConstraints.push('Requires one explicit stable native Path ref in arguments. Text and Path must share the same native container. Renderer reuses existing layoutTextOnPath(); Text remains editable type:text; Path is not mutated; Text local matrix and referenced Path transform must remain invertible; current proposal revision and both Text/Path state fingerprints protect execution from stale state.');
   if (operation === 'path.warp.v1') operationConstraints.push('Uses existing createWarpDeformationPlan() + applyNonDestructiveDeformation(); stable Path identity and editable anchor structure are preserved.');
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') operationConstraints.push('Uses existing projective planner and applyNonDestructiveDeformation(); recomputes anchors and handles from retained baseSubpaths with serializable reversible state. Distort offsets independent corners; Perspective constrains opposing edges toward a shared center. Invalid folded quads are rejected.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
@@ -1287,7 +1306,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
       ? (operation === 'material.template.create.v1' ? ['Document'] : ['Page'])
       : recipeOperation ? ['Path', 'Recipe'] : zeroTargetCreate
       ? (operation === 'component.definition.duplicate.v1' ? ['Document'] : ['Page'])
-      : operation === 'text.edit.v1'
+      : operation === 'text.edit.v1' || operation === 'text.path.set.v1'
         ? ['Object']
         : imageOnly
           ? ['Image']
@@ -1335,7 +1354,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
         ? [{ taskId: 'image-effect-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'colorOverlay', params: { color: '#00cc66' }, opacity: .55 } }]
       : operation === 'image.liquify.add.v1'
         ? [{ taskId: 'image-liquify-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { operations: [{ type: 'twirl', x: 32, y: 24, radius: 18, strength: .65 }], opacity: 1, maxWork: 500000 } }]
-      : operation === 'path.warp.v1'
+      : operation === 'text.path.set.v1'
+        ? [{ taskId: 'text-path-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'text-1' }], arguments: { pathRef: { pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }, startOffset: 12, overflow: 'clip' } }]
+            : operation === 'path.warp.v1'
         ? [{ taskId: 'path-warp-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { strength: .45, maxDisplacement: .35 } }]
       : operation === 'path.distort.v1'
         ? [{ taskId: 'path-distort-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'path-1' }], arguments: { xOffset: 12, yOffset: 6 } }]

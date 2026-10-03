@@ -24,6 +24,7 @@ import { canvasToPdfBlob } from './export/index.js';
 import { ExternalValidationRecorder, RuntimeHealthMonitor, buildExternalDiagnosticBundle } from './release/index.js';
 import { installInkPublicCreativeApi } from './agent/index.js';
 import { createTextObject, updateTextObject } from './editor/text-object.js';
+import { layoutTextOnPath } from './editor/text-layout.js';
 import { ServiceWorkerUpdateManager } from './pwa/index.js';
 import { installStudioCore } from './studio-core.js';
 import { installExtraction } from './extraction/install.js';
@@ -241,7 +242,31 @@ class Renderer{
     if(o.fill&&o.shape!=='line'&&o.shape!=='arrow')ctx.fill();ctx.stroke();
   }
   drawImage(ctx,o){const img=this.getImage(o.src);if(img?.complete&&img.naturalWidth)ctx.drawImage(img,0,0,o.w,o.h);else{ctx.fillStyle='#ddd';ctx.fillRect(0,0,o.w,o.h);ctx.strokeStyle='#aaa';ctx.strokeRect(0,0,o.w,o.h);}}
-  drawText(ctx,o){ctx.fillStyle=o.color;ctx.font=`${o.fontWeight||400} ${o.fontSize||32}px ${o.fontFamily||'system-ui'}`;ctx.textBaseline='alphabetic';const lh=(o.fontSize||32)*(o.lineHeight||1.25);String(o.text||'').split('\n').forEach((line,i)=>ctx.fillText(line,0,i*lh));}
+  drawText(ctx,o){
+    ctx.fillStyle=o.color;ctx.font=`${o.fontWeight||400} ${o.fontSize||32}px ${o.fontFamily||'system-ui'}`;ctx.textBaseline='alphabetic';
+    if(o.pathText?.pathId){
+      const textFound=this.app.findObject({objectId:o.id}),pathFound=this.app.findObject({objectId:o.pathText.pathId});
+      const textParentId=textFound?.parentObject?.id||null,pathParentId=pathFound?.parentObject?.id||null;
+      const sameContainer=Boolean(textFound&&pathFound&&textFound.layer?.id===pathFound.layer?.id&&textParentId===pathParentId);
+      const inverse=M.tryInvert(o.matrix||M.identity());
+      if(sameContainer&&pathFound.object?.type==='path'&&inverse){
+        try{
+          const layout=layoutTextOnPath(o,pathFound.object,{measureText:text=>ctx.measureText(text).width});
+          ctx.save();
+          try{
+            ctx.transform(...inverse);
+            for(const placement of layout.placements){
+              ctx.save();
+              try{ctx.translate(placement.x,placement.y);ctx.rotate(placement.angle);ctx.fillText(placement.character,-placement.advance/2,0);}
+              finally{ctx.restore();}
+            }
+          }finally{ctx.restore();}
+          return;
+        }catch(error){console.warn('INK path text render fallback',error);}
+      }
+    }
+    const lh=(o.fontSize||32)*(o.lineHeight||1.25);String(o.text||'').split('\n').forEach((line,i)=>ctx.fillText(line,0,i*lh));
+  }
   objectWorldBounds(o,parent=M.identity()){if(isComponentInstance(o)){const resolved=resolveComponentInstance(this.app.doc,o);return resolved.geometry?this.objectWorldBounds(resolved.geometry,parent):groupWorldGeometryBounds({...o,children:[]},parent);}if(o.type==='group')return groupWorldGeometryBounds(o,parent,(child,groupWorld)=>this.objectWorldBounds(child,groupWorld));if(o.type==='frame')return frameWorldGeometryBounds(o,parent);if(o.type==='repeat'){const repeatWorld=M.toWorld(parent,o.matrix||M.identity());let bounds=null;for(const transform of repeatTransforms(o))bounds=unionBounds(bounds,this.objectWorldBounds(o.source,M.multiply(repeatWorld,transform)));return bounds||transformBounds({x:0,y:0,w:1,h:1},repeatWorld);}return transformBounds(localBounds(o,this.measureCtx),M.toWorld(parent,o.matrix||M.identity()));}
   objectScreenBounds(o,parent=M.identity()){const b=this.objectWorldBounds(o,parent),pts=[{x:b.x,y:b.y},{x:b.x+b.w,y:b.y},{x:b.x+b.w,y:b.y+b.h},{x:b.x,y:b.y+b.h}].map(p=>this.worldToScreen(p));const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);return{x:Math.min(...xs),y:Math.min(...ys),w:Math.max(...xs)-Math.min(...xs),h:Math.max(...ys)-Math.min(...ys)};}
   selectionWorldBounds(){return selectionWorldGeometryBounds(this.app.selectedObjects(),found=>this.objectWorldBounds(found.object,found.parentWorldMatrix));}

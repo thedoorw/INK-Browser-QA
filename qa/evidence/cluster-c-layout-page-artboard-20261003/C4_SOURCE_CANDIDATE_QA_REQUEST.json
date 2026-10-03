@@ -1,0 +1,8 @@
+{
+  "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
+  "version": 1,
+  "requestId": "clusterC-C4-artboard-candidate-001",
+  "candidateSha": "6dca38862352a5ffcd2193b943c017f70eecd4e2",
+  "case": "artboard-c4",
+  "regressions": true
+}
