@@ -1,252 +1,355 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterB-advanced-raster-ingest-live-001",
+  "requestId": "clusterC-C1-page-ops-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "8d5a8ee9fdd0b4e2c63d910e75f29d48514ccf3f",
+  "expectedSourceSha": "dfb197ca31dc1e2e5ca46c6452e998dce44c57c6",
   "steps": [
     {
-      "id": "describeImport",
+      "id": "contextBefore",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "describeCreate",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "raster.import"
+        "idOrToolName": "page.create.v1"
       }
     },
     {
-      "id": "historyBefore",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "psd",
-      "tool": "import_ink_raster",
-      "input": {
-        "options": {
-          "name": "Live Advanced PSD",
-          "type": "image/vnd.adobe.photoshop",
-          "matrix": [
-            1,
-            0,
-            0,
-            1,
-            0,
-            0
-          ],
-          "intent": "advanced mutable raster formal Live"
-        }
-      },
-      "file": {
-        "generatedFormat": "PSD",
-        "name": "live-advanced.psd",
-        "type": "image/vnd.adobe.photoshop"
-      }
-    },
-    {
-      "id": "previewPSD",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "tiff",
-      "tool": "import_ink_raster",
-      "input": {
-        "options": {
-          "name": "Live Advanced TIFF",
-          "type": "image/tiff",
-          "matrix": [
-            1,
-            0,
-            0,
-            1,
-            24,
-            0
-          ],
-          "intent": "advanced mutable raster formal Live"
-        }
-      },
-      "file": {
-        "generatedFormat": "TIFF",
-        "name": "live-advanced.tiff",
-        "type": "image/tiff"
-      }
-    },
-    {
-      "id": "previewTIFF",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "exr",
-      "tool": "import_ink_raster",
-      "input": {
-        "options": {
-          "name": "Live Advanced EXR",
-          "type": "image/x-exr",
-          "matrix": [
-            1,
-            0,
-            0,
-            1,
-            48,
-            0
-          ],
-          "intent": "advanced mutable raster formal Live"
-        }
-      },
-      "file": {
-        "generatedFormat": "EXR",
-        "name": "live-advanced.exr",
-        "type": "image/x-exr"
-      }
-    },
-    {
-      "id": "previewEXR",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "historyAfterImports",
-      "tool": "get_ink_history",
-      "input": {}
-    },
-    {
-      "id": "undoEXR",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "previewUndoEXR",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "redoEXR",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "previewRedoEXR",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
-      }
-    },
-    {
-      "id": "bucketPropose",
+      "id": "createPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-advanced-psd-bucket",
-          "operation": "image.raster.paintBucket.v1",
-          "targets": [
-            {
-              "$ref": "psd.createdRefs.0"
-            }
-          ],
+          "taskId": "live-c1-create",
+          "operation": "page.create.v1",
+          "targets": [],
+          "arguments": {}
+        }
+      }
+    },
+    {
+      "id": "createApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "createPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "createExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "createPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "createApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "sourcePathPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c1-source-path",
+          "operation": "path.create.v1",
+          "targets": [],
           "arguments": {
+            "objectId": "live-c1-source-path",
+            "name": "Live C1 Source Path",
+            "shape": "rectangle",
             "x": 0,
             "y": 0,
-            "color": "#20b86a",
-            "tolerance": 0,
-            "contiguous": true,
+            "width": 90,
+            "height": 64,
+            "fill": "#d4878b",
+            "stroke": "#49383b",
+            "strokeWidth": 2,
             "opacity": 1
           }
         }
       }
     },
     {
-      "id": "bucketApprove",
+      "id": "sourcePathApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "bucketPropose.result.result.proposalId"
+          "$ref": "sourcePathPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "bucketExecute",
+      "id": "sourcePathExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "bucketPropose.result.result.proposalId"
+          "$ref": "sourcePathPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "bucketApprove.result.result.approvalToken"
+          "$ref": "sourcePathApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewPsdEdit",
-      "tool": "get_ink_preview",
+      "id": "renamePropose",
+      "tool": "propose_ink_edit",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c1-rename",
+          "operation": "page.rename.v1",
+          "targets": [],
+          "arguments": {
+            "pageId": {
+              "$ref": "createExecute.result.result.controllerResult.pageId"
+            },
+            "name": "Live Page 2"
+          }
+        }
       }
     },
     {
-      "id": "undoPsdEdit",
+      "id": "renameApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "renamePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "renameExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "renamePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "renameApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "duplicatePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c1-duplicate",
+          "operation": "page.duplicate.v1",
+          "targets": [],
+          "arguments": {
+            "pageId": {
+              "$ref": "createExecute.result.result.controllerResult.pageId"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "duplicateApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "duplicatePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "duplicateExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "duplicatePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "duplicateApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "contextAfterDuplicate",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "activatePropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c1-activate",
+          "operation": "page.activate.v1",
+          "targets": [],
+          "arguments": {
+            "pageId": {
+              "$ref": "contextBefore.result.result.active.page.id"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "activateApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "activatePropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "activateExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "activatePropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "activateApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "historyAfterActivate",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "deleteCopyPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c1-delete-copy",
+          "operation": "page.delete.v1",
+          "targets": [],
+          "arguments": {
+            "pageId": {
+              "$ref": "duplicateExecute.result.result.controllerResult.pageId"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "deleteCopyApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "deleteCopyPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "deleteCopyExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "deleteCopyPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "deleteCopyApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "undoDeleteCopy",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewUndoPsdEdit",
-      "tool": "get_ink_preview",
+      "id": "contextUndoDeleteCopy",
+      "tool": "get_ink_context",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "maxObjects": 20
       }
     },
     {
-      "id": "redoPsdEdit",
+      "id": "redoDeleteCopy",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "previewRedoPsdEdit",
-      "tool": "get_ink_preview",
+      "id": "contextRedoDeleteCopy",
+      "tool": "get_ink_context",
       "input": {
-        "scope": "content",
-        "maxDimension": 800,
-        "background": true
+        "maxObjects": 20
       }
     },
     {
-      "id": "rawUnavailable",
-      "tool": "import_ink_raster",
+      "id": "deletePage2Propose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c1-delete-page2",
+          "operation": "page.delete.v1",
+          "targets": [],
+          "arguments": {
+            "pageId": {
+              "$ref": "createExecute.result.result.controllerResult.pageId"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "deletePage2Approve",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "deletePage2Propose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "deletePage2Execute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "deletePage2Propose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "deletePage2Approve.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "deleteLastPropose",
+      "tool": "propose_ink_edit",
       "allowFailure": true,
       "input": {
-        "options": {
-          "name": "Live RAW unavailable",
-          "type": "image/x-adobe-dng",
-          "intent": "verify default RAW decoder boundary"
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "live-c1-delete-last",
+          "operation": "page.delete.v1",
+          "targets": [],
+          "arguments": {
+            "pageId": {
+              "$ref": "contextBefore.result.result.active.page.id"
+            }
+          }
         }
-      },
-      "file": {
-        "generatedFormat": "RAW_UNAVAILABLE",
-        "name": "live-camera.dng",
-        "type": "image/x-adobe-dng"
       }
     },
     {
