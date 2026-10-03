@@ -1,10 +1,15 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "core-perf-cache-formal-live-001",
+  "requestId": "core-perf-combined-draw-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
   "expectedSourceSha": "e095ee54a51f8562d03af248dca658cf321e6479",
   "steps": [
+    {
+      "id": "capabilities",
+      "tool": "get_ink_capabilities",
+      "input": {}
+    },
     {
       "id": "describeStroke",
       "tool": "describe_ink_capability",
@@ -13,10 +18,10 @@
       }
     },
     {
-      "id": "contextBefore",
-      "tool": "get_ink_context",
+      "id": "describePaper",
+      "tool": "describe_ink_capability",
       "input": {
-        "maxObjects": 40
+        "idOrToolName": "page.paper.set.v1"
       }
     },
     {
@@ -25,46 +30,86 @@
       "input": {}
     },
     {
-      "id": "redPropose",
+      "id": "paperPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a5-red-001",
+          "taskId": "ink-qa-c-paper-001",
+          "operation": "page.paper.set.v1",
+          "targets": [],
+          "arguments": {
+            "key": "absorbency",
+            "value": 0.05
+          }
+        }
+      }
+    },
+    {
+      "id": "paperApprove",
+      "tool": "approve_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "paperPropose.result.result.proposalId"
+        }
+      }
+    },
+    {
+      "id": "paperExecute",
+      "tool": "execute_ink_edit",
+      "input": {
+        "proposalId": {
+          "$ref": "paperPropose.result.result.proposalId"
+        },
+        "approvalToken": {
+          "$ref": "paperApprove.result.result.approvalToken"
+        }
+      }
+    },
+    {
+      "id": "brushPropose",
+      "tool": "propose_ink_edit",
+      "input": {
+        "task": {
+          "schema": "INK-CHAT-EDIT-TASK",
+          "version": 1,
+          "taskId": "ink-qa-c-brush-001",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
-            "objectId": "live-a5-red",
-            "name": "Live A5 Red",
             "kind": "brush",
-            "color": "#c14e56",
-            "size": 58,
-            "opacity": 0.9,
-            "smoothing": 0.35,
-            "pressure": 0.85,
-            "flow": 0.82,
-            "wetness": 0.7,
-            "grain": 0.2,
-            "bristle": 0.22,
+            "color": "#6b3f4f",
+            "size": 68,
+            "opacity": 0.86,
+            "flow": 0.74,
+            "wetness": 0.78,
+            "grain": 0.42,
+            "bristle": 0.45,
             "samples": [
               {
                 "x": -150,
-                "y": -18,
-                "pressure": 0.7,
+                "y": -35,
+                "pressure": 0.32,
                 "timestamp": 0
               },
               {
-                "x": 0,
-                "y": -8,
-                "pressure": 0.9,
-                "timestamp": 25
+                "x": -60,
+                "y": 55,
+                "pressure": 0.82,
+                "timestamp": 24
               },
               {
-                "x": 150,
-                "y": -18,
-                "pressure": 0.75,
-                "timestamp": 50
+                "x": 40,
+                "y": 18,
+                "pressure": 0.72,
+                "timestamp": 48
+              },
+              {
+                "x": 135,
+                "y": -60,
+                "pressure": 0.48,
+                "timestamp": 72
               }
             ]
           }
@@ -72,67 +117,69 @@
       }
     },
     {
-      "id": "redApprove",
+      "id": "brushApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "redPropose.result.result.proposalId"
+          "$ref": "brushPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "redExecute",
+      "id": "brushExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "redPropose.result.result.proposalId"
+          "$ref": "brushPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "redApprove.result.result.approvalToken"
+          "$ref": "brushApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "bluePropose",
+      "id": "drybrushPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a5-blue-001",
+          "taskId": "ink-qa-c-drybrush-001",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
-            "objectId": "live-a5-blue",
-            "name": "Live A5 Blue",
             "kind": "drybrush",
-            "color": "#385f9c",
-            "size": 58,
-            "opacity": 0.9,
-            "smoothing": 0.35,
-            "pressure": 0.85,
-            "flow": 0.82,
-            "wetness": 0.18,
-            "grain": 0.65,
-            "bristle": 0.68,
+            "color": "#3f6178",
+            "size": 54,
+            "opacity": 0.74,
+            "flow": 0.58,
+            "wetness": 0.08,
+            "grain": 0.84,
+            "bristle": 0.78,
             "samples": [
               {
-                "x": -145,
-                "y": 22,
-                "pressure": 0.7,
+                "x": -135,
+                "y": 72,
+                "pressure": 0.36,
                 "timestamp": 0
               },
               {
-                "x": 0,
-                "y": 12,
-                "pressure": 0.9,
-                "timestamp": 25
+                "x": -40,
+                "y": -28,
+                "pressure": 0.88,
+                "timestamp": 26
+              },
+              {
+                "x": 60,
+                "y": 70,
+                "pressure": 0.64,
+                "timestamp": 52
               },
               {
                 "x": 145,
                 "y": 22,
-                "pressure": 0.75,
-                "timestamp": 50
+                "pressure": 0.44,
+                "timestamp": 78
               }
             ]
           }
@@ -140,78 +187,83 @@
       }
     },
     {
-      "id": "blueApprove",
+      "id": "drybrushApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "bluePropose.result.result.proposalId"
+          "$ref": "drybrushPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "blueExecute",
+      "id": "drybrushExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "bluePropose.result.result.proposalId"
+          "$ref": "drybrushPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "blueApprove.result.result.approvalToken"
+          "$ref": "drybrushApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewBaseline",
+      "id": "previewInitial",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
         "maxDimension": 900,
-        "background": false
+        "background": true
       }
     },
     {
-      "id": "blenderPropose",
+      "id": "contextInitial",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "historyInitial",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "airbrushCorrectionPropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-a5-blender-001",
+          "taskId": "ink-qa-c-airbrush-correction-001",
           "operation": "stroke.create.v1",
           "targets": [],
           "arguments": {
-            "objectId": "live-a5-blender",
-            "name": "Live A5 Blender",
-            "kind": "blender",
-            "color": "#00ff00",
-            "size": 76,
-            "opacity": 0.9,
-            "smoothing": 0.35,
-            "pressure": 0.85,
-            "flow": 0,
-            "wetness": 0,
-            "grain": 0.2,
-            "bristle": 0.22,
-            "blend": 0.96,
-            "smudge": 0.58,
-            "drag": 0.28,
+            "kind": "airbrush",
+            "color": "#c58d76",
+            "size": 88,
+            "opacity": 0.24,
+            "softness": 0.88,
+            "flow": 0.5,
+            "smoothing": 0.68,
+            "pressure": 0.62,
             "samples": [
               {
-                "x": -95,
-                "y": -5,
-                "pressure": 0.65,
+                "x": -40,
+                "y": 95,
+                "pressure": 0.24,
                 "timestamp": 0
               },
               {
-                "x": 0,
-                "y": 4,
-                "pressure": 0.95,
+                "x": 20,
+                "y": 110,
+                "pressure": 0.58,
                 "timestamp": 28
               },
               {
-                "x": 95,
-                "y": 8,
-                "pressure": 0.75,
+                "x": 80,
+                "y": 88,
+                "pressure": 0.38,
                 "timestamp": 56
               }
             ]
@@ -220,179 +272,87 @@
       }
     },
     {
-      "id": "blenderApprove",
+      "id": "airbrushCorrectionApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "blenderPropose.result.result.proposalId"
+          "$ref": "airbrushCorrectionPropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "blenderExecute",
+      "id": "airbrushCorrectionExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "blenderPropose.result.result.proposalId"
+          "$ref": "airbrushCorrectionPropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "blenderApprove.result.result.approvalToken"
+          "$ref": "airbrushCorrectionApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "previewAfterBlender",
+      "id": "previewCorrected",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
         "maxDimension": 900,
-        "background": false
+        "background": true
       }
     },
     {
-      "id": "smudgePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-a5-smudge-001",
-          "operation": "stroke.create.v1",
-          "targets": [],
-          "arguments": {
-            "objectId": "live-a5-smudge",
-            "name": "Live A5 Smudge",
-            "kind": "smudge",
-            "color": "#00ff00",
-            "size": 68,
-            "opacity": 0.9,
-            "smoothing": 0.35,
-            "pressure": 0.85,
-            "flow": 0,
-            "wetness": 0,
-            "grain": 0.2,
-            "bristle": 0.22,
-            "blend": 0.48,
-            "smudge": 0.98,
-            "drag": 0.88,
-            "samples": [
-              {
-                "x": -80,
-                "y": 4,
-                "pressure": 0.6,
-                "timestamp": 0
-              },
-              {
-                "x": 5,
-                "y": 28,
-                "pressure": 0.95,
-                "timestamp": 30
-              },
-              {
-                "x": 105,
-                "y": 42,
-                "pressure": 0.78,
-                "timestamp": 60
-              }
-            ]
-          }
-        }
-      }
-    },
-    {
-      "id": "smudgeApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "smudgePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "smudgeExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "smudgePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "smudgeApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "contextAfterMixers",
+      "id": "contextCorrected",
       "tool": "get_ink_context",
       "input": {
-        "maxObjects": 40
+        "maxObjects": 20
       }
     },
     {
-      "id": "historyAfterMixers",
+      "id": "historyCorrected",
       "tool": "get_ink_history",
       "input": {}
     },
     {
-      "id": "previewAfterSmudge",
-      "tool": "get_ink_preview",
-      "input": {
-        "scope": "content",
-        "maxDimension": 900,
-        "background": false
-      }
-    },
-    {
-      "id": "undoSmudge",
+      "id": "undoCorrection",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "previewUndoSmudge",
+      "id": "previewUndo",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
         "maxDimension": 900,
-        "background": false
+        "background": true
       }
     },
     {
-      "id": "undoBlender",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "previewUndoBlender",
-      "tool": "get_ink_preview",
+      "id": "contextUndo",
+      "tool": "get_ink_context",
       "input": {
-        "scope": "content",
-        "maxDimension": 900,
-        "background": false
+        "maxObjects": 20
       }
     },
     {
-      "id": "redoBlender",
+      "id": "redoCorrection",
       "tool": "redo_ink",
       "input": {}
     },
     {
-      "id": "previewRedoBlender",
+      "id": "previewRedo",
       "tool": "get_ink_preview",
       "input": {
         "scope": "content",
         "maxDimension": 900,
-        "background": false
+        "background": true
       }
-    },
-    {
-      "id": "redoSmudge",
-      "tool": "redo_ink",
-      "input": {}
     },
     {
       "id": "contextFinal",
       "tool": "get_ink_context",
       "input": {
-        "maxObjects": 40
+        "maxObjects": 20
       }
     },
     {
@@ -401,15 +361,14 @@
       "input": {}
     },
     {
-      "id": "previewRedoSmudge",
-      "tool": "get_ink_preview",
+      "id": "exportPng",
+      "tool": "export_ink_asset",
       "input": {
-        "scope": "content",
-        "maxDimension": 900,
-        "background": false
+        "format": "png",
+        "scope": "artboard",
+        "ppi": 144,
+        "background": true
       }
     }
-  ],
-  "naturalMediaCacheReview": true,
-  "qualification": "path-deformation-b4"
+  ]
 }
