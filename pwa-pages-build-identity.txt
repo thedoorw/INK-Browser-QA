@@ -1,0 +1,5 @@
+---
+layout: null
+permalink: /product/source/pages-build-identity.txt
+---
+{{ site.github.build_revision }}

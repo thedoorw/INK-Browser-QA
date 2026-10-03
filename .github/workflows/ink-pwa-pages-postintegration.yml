@@ -1,0 +1,111 @@
+name: INK PWA Pages Post-Integration Gate
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - product/source/**
+      - pwa-pages-build-identity.txt
+      - qa/pwa-pages-live-verify.mjs
+      - .github/workflows/ink-pwa-pages-postintegration.yml
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ink-pwa-pages-postintegration
+  cancel-in-progress: false
+
+jobs:
+  actual-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download preserved pre-integration browser profile
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          repo=os.environ['GITHUB_REPOSITORY']
+          token=os.environ['GH_TOKEN']
+          api=f"https://api.github.com/repos/{repo}/actions/artifacts?per_page=100"
+          req=urllib.request.Request(api,headers={
+            "Authorization":f"Bearer {token}",
+            "Accept":"application/vnd.github+json",
+            "X-GitHub-Api-Version":"2022-11-28",
+          })
+          with urllib.request.urlopen(req) as response:
+            artifacts=json.load(response).get("artifacts",[])
+          matches=[
+            a for a in artifacts
+            if not a.get("expired")
+            and a.get("name","").startswith("ink-pwa-supervisor-gates-v3-")
+            and (a.get("workflow_run") or {}).get("head_branch")=="work/pwa-cache-freshness-supervisor-gates-003"
+          ]
+          if not matches:
+            raise SystemExit("No preserved PWA pre-integration profile artifact found")
+          artifact=max(matches,key=lambda a:a.get("created_at",""))
+          print(json.dumps({"artifact_id":artifact["id"],"name":artifact["name"],"created_at":artifact["created_at"]}))
+          req=urllib.request.Request(artifact["archive_download_url"],headers={
+            "Authorization":f"Bearer {token}",
+            "Accept":"application/vnd.github+json",
+            "X-GitHub-Api-Version":"2022-11-28",
+          })
+          with urllib.request.urlopen(req) as response, open("/tmp/ink-pwa-baseline.zip","wb") as output:
+            output.write(response.read())
+          PY
+          mkdir -p "$RUNNER_TEMP/baseline-artifact"
+          unzip -q /tmp/ink-pwa-baseline.zip -d "$RUNNER_TEMP/baseline-artifact"
+          PROFILE_TGZ="$(find "$RUNNER_TEMP/baseline-artifact" -name premerge-profile.tgz -print -quit)"
+          BASELINE_JSON="$(find "$RUNNER_TEMP/baseline-artifact" -name premerge-baseline.json -print -quit)"
+          test -n "$PROFILE_TGZ"
+          test -n "$BASELINE_JSON"
+          mkdir -p "$RUNNER_TEMP/restored"
+          tar -C "$RUNNER_TEMP/restored" -xzf "$PROFILE_TGZ"
+          cp "$BASELINE_JSON" "$RUNNER_TEMP/premerge-baseline.json"
+
+      - name: Wait for exact main revision on GitHub Pages
+        run: |
+          node - <<'NODE'
+          const expected=process.env.GITHUB_SHA.toLowerCase();
+          const url='https://thedoorw.github.io/INK-Browser-QA/product/source/pages-build-identity.txt';
+          const end=Date.now()+180000;
+          while(Date.now()<end){
+            try{
+              const response=await fetch(url+'?ink_identity_probe='+Date.now(),{cache:'no-store'});
+              const actual=(await response.text()).trim().toLowerCase();
+              if(actual===expected){
+                console.log(JSON.stringify({status:'PASS',expected,actual,url}));
+                process.exit(0);
+              }
+              console.log(JSON.stringify({status:'WAIT',expected,actual}));
+            }catch(error){
+              console.log(JSON.stringify({status:'WAIT',error:String(error)}));
+            }
+            await new Promise(resolve=>setTimeout(resolve,3000));
+          }
+          throw new Error('GitHub Pages did not converge to exact main revision');
+          NODE
+
+      - name: Actual Pages normal-open F5 reopen offline evidence
+        run: |
+          mkdir -p qa/evidence/pwa-pages-postintegration
+          node qa/pwa-pages-live-verify.mjs \
+            "https://thedoorw.github.io/INK-Browser-QA/product/source/" \
+            "$RUNNER_TEMP/restored/ink-pages-profile" \
+            "pages-$GITHUB_SHA" \
+            "$GITHUB_SHA" \
+            "$RUNNER_TEMP/premerge-baseline.json" \
+            "$GITHUB_WORKSPACE/qa/evidence/pwa-pages-postintegration/final.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ink-pwa-pages-postintegration-${{ github.sha }}
+          path: qa/evidence/pwa-pages-postintegration/final.json
+          if-no-files-found: error
