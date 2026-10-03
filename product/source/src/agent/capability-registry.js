@@ -57,6 +57,7 @@ const bridgeOptionsSchema = obj({
 const expectedStateSchema = obj({
   documentId: str('Expected document id.'),
   pageId: str('Expected page id.'),
+  paperFingerprint: str('Expected active-page paper fingerprint; captured automatically for page.paper.set.v1.'),
   revisionId: str('Expected revision id; omit when not constraining revision.'),
   targetFingerprints: { type: 'object', properties: {}, additionalProperties: true, description: 'Optional target fingerprint map.' }
 }, [], 'Optional optimistic-concurrency preconditions.');
@@ -108,6 +109,14 @@ const useInkSchema = obj({
 }, ['action'], 'Declarative use_ink request. Action-specific fields are validated by the existing Chat Creative Plan authority.');
 
 const editSchemas = {
+  'page.paper.set.v1': editTaskSchema(
+    { type: 'string', const: 'page.paper.set.v1', description: 'Set one existing active-page paper field through InkApp.changePaper and scoped History.' },
+    obj({
+      key: { type: 'string', enum: ['type', 'color', 'gridSize', 'absorbency', 'roughness', 'fiberStrength', 'fiberAngle', 'sizing', 'granulation', 'seed', 'textureVisible'], description: 'Existing page.paper field.' },
+      value: { description: 'Field-specific scalar: type=blank/dots/grid/ruled; color=#RRGGBB; gridSize=8..100; fiberAngle=-90..90; seed=uint32; textureVisible=boolean; other profile values=0..1. Validated by the existing bounded edit authority.' }
+    }, ['key', 'value'], 'One field per atomic History entry; no-op, unknown fields, active paper preview and stale paper proposals are rejected.'),
+    0, 0
+  ),
   'path.repaint.v1': editTaskSchema(
     { type: 'string', const: 'path.repaint.v1', description: 'Repaint Path appearance.' },
     obj({
@@ -928,10 +937,13 @@ primary.push(descriptor({
 }));
 
 const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
+  const paperOnly = operation === 'page.paper.set.v1';
   const pathOnly = operation.startsWith('path.') && operation !== 'path.create.v1';
   const imageOnly = operation.startsWith('image.');
   const zeroTargetCreate = ['path.create.v1', 'paint.session.create.v1', 'frame.create.v1', 'text.create.v1', 'svg.import.v1', 'component.instance.create.v1', 'component.definition.duplicate.v1'].includes(operation);
-  const operationConstraints = zeroTargetCreate
+  const operationConstraints = paperOnly
+    ? ['Zero object targets; changes only the active page paper through InkApp.changePaper. Requires idle History and no pending interactive paper preview; captured paper fingerprint rejects stale proposals.']
+    : zeroTargetCreate
     ? ['Creation/import uses zero targets and cannot mutate before explicit approval and execute.']
     : operation === 'text.edit.v1'
       ? ['Target must resolve to one editable visible unlocked Text object.']
@@ -979,7 +991,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     role: 'PROPOSAL',
     authoritativeRoute: 'app.chatBoundedEditAdapter.propose → explicit approval → app.chatBoundedEditAdapter.execute',
     inputSchema: editSchemas[operation],
-    targetTypes: zeroTargetCreate
+    targetTypes: paperOnly ? ['Page'] : zeroTargetCreate
       ? (operation === 'component.definition.duplicate.v1' ? ['Document'] : ['Page'])
       : operation === 'text.edit.v1'
         ? ['Object']
@@ -989,7 +1001,9 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
     constraints: operationConstraints,
     ...policy(true, 'PROPOSE_THEN_EXPLICIT_APPROVAL_BEFORE_EXECUTE', 'AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY', 'NO_AUTO_CAPTURE', true, false, 'Preview is recommended after execution.'),
     resultContract: resultContract({ statuses: ['PROPOSED', 'FAILED'] }),
-    examples: operation === 'paint.session.create.v1'
+    examples: paperOnly
+      ? [{ taskId: 'paper-roughness-1', operation, targets: [], arguments: { key: 'roughness', value: .85 } }]
+      : operation === 'paint.session.create.v1'
       ? [{ taskId: 'paint-session-1', operation, targets: [], arguments: { name: 'CHAT Paint Session', seed: 17, strokes: [{ brushId: 'pencil', color: '#202020', samples: [{ x: 20, y: 20, pressure: .3, timestamp: 0 }, { x: 120, y: 80, pressure: .8, timestamp: 24 }] }] } }]
       : operation === 'image.adjustment.add.v1'
         ? [{ taskId: 'image-adjust-1', operation, targets: [{ pageId: 'page-1', layerId: 'layer-1', objectId: 'image-1' }], arguments: { type: 'brightnessContrast', params: { brightness: 12, contrast: 8 }, opacity: 1 } }]

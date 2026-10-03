@@ -10,6 +10,7 @@ import { createTextObject, updateTextObject } from './text-object.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
+import { paperProfileFingerprint } from '../render/paper-profile.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
 import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, createAdjustment, createFilter, createLayerEffect, createLiquifyFilter } from '../image/image-core.js';
 
@@ -240,6 +241,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.refine.v1',
   'path.create.v1',
   'stroke.create.v1',
+  'page.paper.set.v1',
   'paint.session.create.v1',
   'image.adjustment.add.v1',
   'image.filter.add.v1',
@@ -960,7 +962,33 @@ function normalizeMaterialArguments(raw = {}) {
   return { templateId, templateVersion, parameterOverrides, fallback };
 }
 
+export const CHAT_PAPER_KEYS = Object.freeze(['type', 'color', 'gridSize', 'absorbency', 'roughness', 'fiberStrength', 'fiberAngle', 'sizing', 'granulation', 'seed', 'textureVisible']);
+
+function normalizePaperSetArguments(raw) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => !['key', 'value'].includes(key))) editFail('ARGUMENTS_INVALID');
+  const key = raw.key;
+  if (!CHAT_PAPER_KEYS.includes(key)) editFail('FIELD_INVALID', { field: 'arguments.key' });
+  let value = raw.value;
+  if (key === 'type') {
+    if (!['blank', 'dots', 'grid', 'ruled'].includes(value)) editFail('FIELD_INVALID', { field: 'arguments.value' });
+  } else if (key === 'color') {
+    if (typeof value !== 'string' || !/^#[0-9a-f]{6}$/i.test(value)) editFail('FIELD_INVALID', { field: 'arguments.value' });
+    value = value.toLowerCase();
+  } else if (key === 'textureVisible') {
+    if (typeof value !== 'boolean') editFail('FIELD_INVALID', { field: 'arguments.value' });
+  } else {
+    if (typeof value !== 'number' || !Number.isFinite(value)) editFail('FIELD_INVALID', { field: 'arguments.value' });
+    const bounds = key === 'gridSize' ? { min: 8, max: 100 }
+      : key === 'fiberAngle' ? { min: -90, max: 90 }
+      : key === 'seed' ? { min: 0, max: 4294967295, integer: true }
+      : { min: 0, max: 1 };
+    value = boundedNumber(value, 'arguments.value', bounds);
+  }
+  return { key, value };
+}
+
 function normalizeOperationArguments(operation, raw) {
+  if (operation === 'page.paper.set.v1') return normalizePaperSetArguments(raw);
   if (operation === 'path.repaint.v1') return normalizeRepaintArguments(raw);
   if (operation === 'path.material.apply.v1') return normalizeMaterialArguments(raw);
   if (operation === 'path.material.remove.v1') {
@@ -1025,6 +1053,7 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
+  if (operation === 'page.paper.set.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.create.v1' || operation === 'stroke.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'image.adjustment.add.v1'
     || operation === 'image.filter.add.v1'
@@ -1058,6 +1087,7 @@ function normalizeExpected(raw) {
   if (raw == null) return null;
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('EXPECTED_INVALID');
   const expected = {};
+  if (raw.paperFingerprint != null) expected.paperFingerprint = boundedText(raw.paperFingerprint, 'expected.paperFingerprint', { max: 160 });
   if (raw.documentId != null) expected.documentId = boundedText(raw.documentId, 'expected.documentId', { max: 160 });
   if (raw.pageId != null) expected.pageId = boundedText(raw.pageId, 'expected.pageId', { max: 160 });
   if (hasOwn(raw, 'revisionId')) {
@@ -1139,6 +1169,7 @@ function captureExpectedState(app, task, resolved) {
     documentId: app.doc?.id || null,
     pageId: page?.id || null,
     revisionId: app?.revisions?.revisionIdFor?.(app.doc?.id) ?? null,
+    ...(task.operation === 'page.paper.set.v1' ? { paperFingerprint: chatStateFingerprint(page.paper) } : {}),
     targetFingerprints: Object.fromEntries(resolved
       .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found)])
       .sort((a, b) => a[0].localeCompare(b[0])))
@@ -1158,6 +1189,12 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
   }
   if (preconditions?.pageId && preconditions.pageId !== page.id) {
     editFail('STALE_PAGE', { expected: preconditions.pageId, actual: page.id || null });
+  }
+  if (task.operation === 'page.paper.set.v1') {
+    if (app.paperPreview) editFail('PAPER_PREVIEW_BUSY');
+    if (typeof app.changePaper !== 'function' || !page.paper) editFail('CONTROLLER_UNAVAILABLE');
+    if (preconditions?.paperFingerprint && preconditions.paperFingerprint !== chatStateFingerprint(page.paper)) editFail('STALE_PAPER');
+    if (page.paper[task.arguments.key] === task.arguments.value) editFail('NO_OP');
   }
   if (preconditions && hasOwn(preconditions, 'revisionId')) {
     const actualRevisionId = app?.revisions?.revisionIdFor?.(document.id) ?? null;
@@ -1302,6 +1339,7 @@ function snapshotRefs(app, refs) {
 }
 
 function snapshotTaskTargets(app, task) {
+  if (task.operation === 'page.paper.set.v1') return [{ ref: { pageId: app.page().id }, stateFingerprint: chatStateFingerprint(app.page().paper) }];
   return snapshotRefs(app, task.targets);
 }
 
@@ -2223,6 +2261,10 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'path.simplify.v1' || task.operation === 'path.refine.v1' || task.operation === 'path.edit.v1') return executePathEditTask(app, task);
   if (task.operation === 'path.create.v1') return executePathCreateTask(app, task);
   if (task.operation === 'stroke.create.v1') return executeStrokeCreateTask(app, task);
+  if (task.operation === 'page.paper.set.v1') {
+    app.changePaper(task.arguments.key, task.arguments.value);
+    return { pageId: app.page().id, paper: clone(app.page().paper), paperProfileFingerprint: paperProfileFingerprint(app.page().paper) };
+  }
   if (task.operation === 'paint.session.create.v1') return executePaintSessionCreateTask(app, task);
   if (task.operation === 'image.adjustment.add.v1') return executeImageAdjustmentTask(app, task);
   if (task.operation === 'image.filter.add.v1') return executeImageFilterTask(app, task);
