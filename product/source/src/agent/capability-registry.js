@@ -285,6 +285,18 @@ const editSchemas = {
     }, ['type'], 'Existing image-core createLayerEffect() arguments.'),
     1
   ),
+  'image.raster.spotHeal.v1': editTaskSchema(
+    { type: 'string', const: 'image.raster.spotHeal.v1', description: 'Apply one bounded Spot Healing edit to an editable native 8-bit RGB raster through the existing spotHealing() pixel authority.' },
+    obj({
+      x: num('Raster-local target X.', { minimum: 0, maximum: 1000000 }),
+      y: num('Raster-local target Y.', { minimum: 0, maximum: 1000000 }),
+      radius: num('Healing brush radius.', { minimum: Number.EPSILON, maximum: 512, default: 12 }),
+      opacity: num('Healing opacity.', { minimum: 0, maximum: 1, default: 1 }),
+      hardness: num('Healing brush hardness.', { minimum: 0, maximum: 1, default: .85 }),
+      neighborRadius: { type: 'integer', minimum: 1, maximum: 64, default: 2, description: 'Neighbor search radius used by existing Spot Healing authority.' }
+    }, ['x','y'], 'One-shot structured local retouch. No pointer stroke or raw mask is accepted.'),
+    1
+  ),
   'image.mask.raster.set.v1': editTaskSchema(
     { type: 'string', const: 'image.mask.raster.set.v1', description: 'Set one native raster mask on an editable image from bounded raster-local geometry through the existing rasterizePathMask()/renderImageStack() authority.' },
     obj({
@@ -1032,6 +1044,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.liquify.add.v1') operationConstraints.push('Maximum 32 operations; uses existing LIQUIFY_OPERATIONS/createLiquifyFilter/liquifyRaster. Arbitrary freeze-mask pixel arrays are excluded from CHAT exposure.');
   if (operation === 'image.raster.paintBucket.v1') operationConstraints.push('Destructive local raster edit. Reuses existing paintBucketFill()/magicWandSelection and existing rasterState.colorRaster. Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation or automatic target discovery. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'image.mask.raster.set.v1') operationConstraints.push('Initial geometry is rectangle only. Reuses existing rasterizePathMask/createRasterMask/renderImageStack; raw alpha arrays are not accepted. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
+  if (operation === 'image.raster.spotHeal.v1') operationConstraints.push('One-shot structured local retouch using existing spotHealing(). Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation, source-point inference, or raw mask payload. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'path.warp.v1') operationConstraints.push('Uses existing createWarpDeformationPlan() + applyNonDestructiveDeformation(); stable Path identity and editable anchor structure are preserved.');
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') operationConstraints.push('Uses existing projective planner and applyNonDestructiveDeformation(); recomputes anchors and handles from retained baseSubpaths with serializable reversible state. Distort offsets independent corners; Perspective constrains opposing edges toward a shared center. Invalid folded quads are rejected.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
