@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C3-snap-guides-live-002",
+  "requestId": "core-perf-spatial-batch-formal-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "3aa4c8268851d778aeea9fadcc99b53c4aed8ad0",
+  "expectedSourceSha": "e139682a8c374e275061872ba9f27bc06ca0d492",
   "steps": [
     {
       "id": "contextBefore",
@@ -355,5 +355,9 @@
         "maxObjects": 20
       }
     }
-  ]
+  ],
+  "spatialBatchReview": true,
+  "imageStackCacheReview": true,
+  "naturalMediaCacheReview": true,
+  "qualification": "path-deformation-b4"
 }
