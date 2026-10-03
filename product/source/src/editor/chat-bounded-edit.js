@@ -15,7 +15,7 @@ import { documentFingerprint } from '../document/integrity.js';
 import { paperProfileFingerprint } from '../render/paper-profile.js';
 import { eraseStrokeWithCircle } from '../stroke/edit.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
-import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, colorRasterToRgba8, createAdjustment, createColorRaster, createFilter, createLayerEffect, createLiquifyFilter, deserializeColorRaster, paintBucketFill, serializeColorRaster } from '../image/image-core.js';
+import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, colorRasterToRgba8, createAdjustment, createColorRaster, createFilter, createLayerEffect, createLiquifyFilter, deserializeColorRaster, maskBounds, paintBucketFill, rasterizePathMask, serializeColorRaster } from '../image/image-core.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -40,6 +40,58 @@ export function chatStateFingerprint(value) {
     hash ^= text.charCodeAt(index);
     hash = Math.imul(hash, 0x01000193);
   }
+  return `fnv1a32:${(hash >>> 0).toString(16).padStart(8, '0')}`;
+}
+
+function fnvByte(hash, value) {
+  hash ^= value & 0xff;
+  return Math.imul(hash, 0x01000193);
+}
+
+function fnvText(hash, value) {
+  const text = String(value ?? '');
+  for (let index = 0; index < text.length; index += 1) hash = fnvByte(hash, text.charCodeAt(index) & 0xff);
+  return hash;
+}
+
+function fnvRasterSamples(hash, values, bitDepth) {
+  if (!values) return fnvText(hash, 'null');
+  hash = fnvText(hash, values.length);
+  if (bitDepth === 8) {
+    for (let index = 0; index < values.length; index += 1) hash = fnvByte(hash, Number(values[index]) || 0);
+    return hash;
+  }
+  if (bitDepth === 16) {
+    for (let index = 0; index < values.length; index += 1) {
+      const value = Number(values[index]) || 0;
+      hash = fnvByte(hash, value);
+      hash = fnvByte(hash, value >>> 8);
+    }
+    return hash;
+  }
+  const buffer = new ArrayBuffer(4), view = new DataView(buffer);
+  for (let index = 0; index < values.length; index += 1) {
+    view.setFloat32(0, Number(values[index]) || 0, true);
+    for (let byte = 0; byte < 4; byte += 1) hash = fnvByte(hash, view.getUint8(byte));
+  }
+  return hash;
+}
+
+function serializedColorRasterFingerprint(raster) {
+  if (!raster) return null;
+  let hash = 0x811c9dc5;
+  for (const value of [raster.type, raster.width, raster.height, raster.bitDepth, raster.colorMode, raster.channelCount]) hash = fnvText(hash, value);
+  for (const name of raster.channelNames || []) hash = fnvText(hash, name);
+  hash = fnvRasterSamples(hash, raster.data, raster.bitDepth);
+  hash = fnvRasterSamples(hash, raster.alpha, raster.bitDepth);
+  return `fnv1a32:${(hash >>> 0).toString(16).padStart(8, '0')}`;
+}
+
+function rasterMaskFingerprint(mask) {
+  if (!mask) return null;
+  let hash = 0x811c9dc5;
+  for (const value of [mask.type, mask.width, mask.height, mask.invert, mask.feather, mask.expand, mask.enabled]) hash = fnvText(hash, value);
+  hash = fnvRasterSamples(hash, mask.alpha, 8);
   return `fnv1a32:${(hash >>> 0).toString(16).padStart(8, '0')}`;
 }
 
@@ -253,6 +305,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'image.effect.add.v1',
   'image.liquify.add.v1',
   'image.raster.paintBucket.v1',
+  'image.mask.raster.set.v1',
   'path.warp.v1',
   'path.distort.v1',
   'path.perspective.v1',
@@ -460,6 +513,21 @@ function normalizeImageRasterPaintBucketArguments(raw = {}) {
     tolerance: boundedNumber(raw.tolerance ?? 0, 'arguments.tolerance', { min: 0, max: 255 }),
     contiguous: boundedBoolean(raw.contiguous ?? true, 'arguments.contiguous'),
     opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
+}
+
+function normalizeImageRasterMaskArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    shape: boundedEnum(raw.shape ?? 'rectangle', 'arguments.shape', ['rectangle']),
+    x: boundedNumber(raw.x, 'arguments.x', { min: 0, max: 1e6 }),
+    y: boundedNumber(raw.y, 'arguments.y', { min: 0, max: 1e6 }),
+    width: boundedNumber(raw.width, 'arguments.width', { min: Number.EPSILON, max: 1e6 }),
+    height: boundedNumber(raw.height, 'arguments.height', { min: Number.EPSILON, max: 1e6 }),
+    invert: boundedBoolean(raw.invert ?? false, 'arguments.invert'),
+    feather: boundedNumber(raw.feather ?? 0, 'arguments.feather', { min: 0, max: 256 }),
+    expand: boundedNumber(raw.expand ?? 0, 'arguments.expand', { min: -256, max: 256, integer: true }),
+    enabled: boundedBoolean(raw.enabled ?? true, 'arguments.enabled')
   };
 }
 
@@ -1073,6 +1141,7 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'image.effect.add.v1') return normalizeImageEffectArguments(raw);
   if (operation === 'image.liquify.add.v1') return normalizeImageLiquifyArguments(raw);
   if (operation === 'image.raster.paintBucket.v1') return normalizeImageRasterPaintBucketArguments(raw);
+  if (operation === 'image.mask.raster.set.v1') return normalizeImageRasterMaskArguments(raw);
   if (operation === 'path.warp.v1') return normalizePathWarpArguments(raw);
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') return normalizePathProjectiveArguments(raw, operation);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
@@ -1114,6 +1183,7 @@ function operationTargetRules(operation) {
     || operation === 'image.effect.add.v1'
     || operation === 'image.liquify.add.v1'
     || operation === 'image.raster.paintBucket.v1'
+    || operation === 'image.mask.raster.set.v1'
     || operation === 'path.warp.v1'
     || operation === 'path.distort.v1'
     || operation === 'path.perspective.v1'
@@ -1216,8 +1286,24 @@ function operationRequiresPath(operation) {
   return operation.startsWith('path.') && operation !== 'path.create.v1';
 }
 
-function currentTargetFingerprint(page, found) {
-  return summarizeChatObject(page.id, found).stateFingerprint;
+const CHAT_RASTER_IMAGE_OPERATION_SET = new Set([
+  'image.adjustment.add.v1',
+  'image.filter.add.v1',
+  'image.blend.set.v1',
+  'image.effect.add.v1',
+  'image.liquify.add.v1',
+  'image.raster.paintBucket.v1',
+  'image.mask.raster.set.v1'
+]);
+
+function currentTargetFingerprint(page, found, operation = null) {
+  const summary = summarizeChatObject(page.id, found);
+  if (!CHAT_RASTER_IMAGE_OPERATION_SET.has(operation) || found.object?.type !== 'image') return summary.stateFingerprint;
+  return chatStateFingerprint({
+    stateFingerprint: summary.stateFingerprint,
+    rasterContentFingerprint: serializedColorRasterFingerprint(found.object?.rasterState?.colorRaster),
+    rasterMaskFingerprint: rasterMaskFingerprint(found.object?.rasterMask)
+  });
 }
 
 function captureExpectedState(app, task, resolved) {
@@ -1228,7 +1314,7 @@ function captureExpectedState(app, task, resolved) {
     revisionId: app?.revisions?.revisionIdFor?.(app.doc?.id) ?? null,
     ...(task.operation === 'page.paper.set.v1' ? { paperFingerprint: chatStateFingerprint(page.paper) } : {}),
     targetFingerprints: Object.fromEntries(resolved
-      .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found)])
+      .map(({ ref, found }) => [targetRefKey(ref), currentTargetFingerprint(page, found, task.operation)])
       .sort((a, b) => a[0].localeCompare(b[0])))
   };
 }
@@ -1273,11 +1359,7 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     if (task.operation === 'text.edit.v1' && found.object?.type !== 'text') {
       editFail('TEXT_REQUIRED', { objectId: found.object?.id || null });
     }
-    if ((task.operation === 'image.adjustment.add.v1'
-      || task.operation === 'image.filter.add.v1'
-      || task.operation === 'image.blend.set.v1'
-      || task.operation === 'image.effect.add.v1'
-      || task.operation === 'image.liquify.add.v1')
+    if (CHAT_RASTER_IMAGE_OPERATION_SET.has(task.operation)
       && (found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster)) {
       editFail('RASTER_IMAGE_REQUIRED', { objectId: found.object?.id || null });
     }
@@ -1295,7 +1377,7 @@ export function validateChatEditTaskAgainstState(app, rawTask, { expected = null
     }
     const expectedFingerprint = preconditions?.targetFingerprints?.[targetRefKey(ref)];
     if (expectedFingerprint) {
-      const actualFingerprint = currentTargetFingerprint(page, found);
+      const actualFingerprint = currentTargetFingerprint(page, found, task.operation);
       if (actualFingerprint !== expectedFingerprint) {
         editFail('TARGET_STALE', { objectId: found.object.id, expected: expectedFingerprint, actual: actualFingerprint });
       }
@@ -1385,14 +1467,14 @@ export function installChatBoundedEdit(app) {
 export const CHAT_EDIT_RESULT_SCHEMA = 'INK-CHAT-EDIT-RESULT';
 export const CHAT_EDIT_RESULT_VERSION = 1;
 
-function snapshotRefs(app, refs) {
+function snapshotRefs(app, refs, operation = null) {
   const page = app.page();
   return refs.map(ref => {
     const found = findPageObject(page, ref);
     if (!found) editFail('TARGET_MISSING', { layerId: ref.layerId, objectId: ref.objectId });
     return {
       ref: clone(ref),
-      stateFingerprint: currentTargetFingerprint(page, found),
+      stateFingerprint: currentTargetFingerprint(page, found, operation),
       worldMatrix: clone(found.worldMatrix || found.object?.matrix || null)
     };
   });
@@ -1400,7 +1482,7 @@ function snapshotRefs(app, refs) {
 
 function snapshotTaskTargets(app, task) {
   if (task.operation === 'page.paper.set.v1') return [{ ref: { pageId: app.page().id }, stateFingerprint: chatStateFingerprint(app.page().paper) }];
-  return snapshotRefs(app, task.targets);
+  return snapshotRefs(app, task.targets, task.operation);
 }
 
 function targetSnapshotsChanged(before, after) {
@@ -2353,6 +2435,72 @@ function executeImageRasterPaintBucketTask(app, task) {
   };
 }
 
+function executeImageRasterMaskTask(app, task) {
+  const ref = task.targets[0];
+  const found = findPageObject(app.page(), ref);
+  if (!found || found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster) {
+    editFail('RASTER_IMAGE_REQUIRED', { objectId: found?.object?.id || null });
+  }
+  const object = found.object;
+  const raster = deserializeColorRaster(object.rasterState.colorRaster);
+  const args = task.arguments;
+  if (args.x + args.width > raster.width || args.y + args.height > raster.height) {
+    editFail('ARGUMENT_OUT_OF_RANGE', { field: 'arguments.rectangle', width: raster.width, height: raster.height });
+  }
+  const path = createPath({
+    id: `chat-mask-path-${task.taskId}`,
+    name: 'CHAT Raster Mask Rectangle',
+    fill: '#000000',
+    stroke: 'none',
+    subpaths: [{
+      role: 'outer',
+      closed: true,
+      anchors: [
+        createAnchor(args.x, args.y),
+        createAnchor(args.x + args.width, args.y),
+        createAnchor(args.x + args.width, args.y + args.height),
+        createAnchor(args.x, args.y + args.height)
+      ]
+    }]
+  });
+  const baseMask = rasterizePathMask(path, raster.width, raster.height, { supersample: 1 });
+  const nextMask = {
+    ...baseMask,
+    id: `chat-rmask-${chatStateFingerprint({ taskId: task.taskId, rectangle: args }).replace(':', '-')}`,
+    invert: args.invert,
+    feather: args.feather,
+    expand: args.expand,
+    enabled: args.enabled
+  };
+  if (rasterMaskFingerprint(object.rasterMask) === rasterMaskFingerprint(nextMask)) {
+    editFail('NO_OP', { operation: task.operation });
+  }
+  app.history.pushScoped('CHAT set raster mask', [app.objectPath(found)], () => {
+    object.rasterMask = nextMask;
+  });
+  app.spatialDirty = true;
+  app.renderer?.studioImageCache?.clear?.();
+  app.renderer?.studioLayerCache?.clear?.();
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    changed: true,
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: object.id }],
+    rasterMask: {
+      id: nextMask.id,
+      type: nextMask.type,
+      width: nextMask.width,
+      height: nextMask.height,
+      invert: nextMask.invert,
+      feather: nextMask.feather,
+      expand: nextMask.expand,
+      enabled: nextMask.enabled,
+      bounds: maskBounds(nextMask.alpha, nextMask.width, nextMask.height),
+      fingerprint: rasterMaskFingerprint(nextMask)
+    }
+  };
+}
+
 function executeImageAdjustmentTask(app, task) {
   const ref = task.targets[0];
   const found = findPageObject(app.page(), ref);
@@ -2547,6 +2695,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'image.effect.add.v1') return executeImageEffectTask(app, task);
   if (task.operation === 'image.liquify.add.v1') return executeImageLiquifyTask(app, task);
   if (task.operation === 'image.raster.paintBucket.v1') return executeImageRasterPaintBucketTask(app, task);
+  if (task.operation === 'image.mask.raster.set.v1') return executeImageRasterMaskTask(app, task);
   if (task.operation === 'path.warp.v1' || task.operation === 'path.distort.v1' || task.operation === 'path.perspective.v1') return executePathDeformationTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
@@ -2585,7 +2734,7 @@ ChatBoundedEditController.prototype.execute = function execute(proposalId, appro
   const controllerResult = executeApprovedTask(this.app, proposal.task);
 
   const resultRefs = Array.isArray(controllerResult?.resultRefs) ? controllerResult.resultRefs : null;
-  const afterTargets = resultRefs ? snapshotRefs(this.app, resultRefs) : snapshotTaskTargets(this.app, proposal.task);
+  const afterTargets = resultRefs ? snapshotRefs(this.app, resultRefs, proposal.task.operation) : snapshotTaskTargets(this.app, proposal.task);
   const afterUndoCount = this.app.history?.undoStack?.length ?? null;
   const changed = proposal.task.operation === 'stroke.erase.circle.v1'
     ? controllerResult?.changed === true
