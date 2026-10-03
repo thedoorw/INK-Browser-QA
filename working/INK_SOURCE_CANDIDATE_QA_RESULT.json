@@ -1,6 +1,10 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
+  "requestId": "clusterA-A4-targeted-eraser-candidate-002",
+  "candidateSha": "586833703a73ba3454200843de975b8e1013d65c",
+  "case": "stroke-erase-a4",
   "status": "FAIL",
-  "error": "Runner result unavailable: ENOENT: no such file or directory, open '/home/runner/work/_temp/ink-source-candidate-result.json'"
+  "error": "CDP timeout: Browser.getVersion",
+  "stderr": "[2601:2640:1003/024757.700027:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2601:2640:1003/024757.714306:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2601:2640:1003/024759.502682:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n[2601:2640:1003/024804.036899:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are \"tcp\" and on UNIX \"unix\")\n"
 }
