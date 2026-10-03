@@ -2,14 +2,14 @@ import { clamp } from '../../core/index.js';
 import { buildNaturalMediaStamps, mediaHexToRGBA, naturalMediaFingerprint, naturalMediaRasterScale } from '../natural-media-utils.js';
 import { MultiChannelInkSurface } from '../multi-channel-ink.js';
 import { paperProfileFingerprint } from '../paper-profile.js';
-import { prepareNaturalMediaRun, supportsNaturalMediaRun } from '../natural-media-run-utils.js';
+import { normalizeNaturalMediaRunEntry, prepareNaturalMediaRun, supportsNaturalMediaRun } from '../natural-media-run-utils.js';
 
 const multiChannelCanvasFactory = () => document.createElement('canvas');
 
 export class Canvas2DMultiChannelInkRenderer {
   constructor({ canvasFactory = multiChannelCanvasFactory, cacheLimit = 20, maxDimension = 1536, maxPixels = 1250000 } = {}) {
     this.canvasFactory = canvasFactory;this.cacheLimit = cacheLimit;this.maxDimension = maxDimension;this.maxPixels = maxPixels;
-    this.cache = new Map();this.stats = { backend: 'canvas2d-multichannel', runs: 0, strokes: 0, mixingStrokes: 0, stamps: 0, mixerStamps: 0, transportedPigment: 0, pixels: 0, cacheHits: 0, cacheMisses: 0, evictions: 0, skipped: 0 };
+    this.cache = new Map();this.stats = { backend: 'canvas2d-multichannel', runs: 0, strokes: 0, mixingStrokes: 0, stamps: 0, mixerStamps: 0, transportedPigment: 0, pixels: 0, cacheHits: 0, cacheMisses: 0, preparations: 0, preparationSkips: 0, evictions: 0, skipped: 0 };
   }
 
   supports(entries, { minimum = 2 } = {}) {
@@ -19,20 +19,23 @@ export class Canvas2DMultiChannelInkRenderer {
   render(entries, paper = {}, options = {}) {
     const minimumStrokes = Math.max(1, Math.trunc(options.minimumStrokes ?? 2));
     if (!this.supports(entries, { minimum: minimumStrokes })) { this.stats.skipped++;return null; }
-    const run = prepareNaturalMediaRun(entries);if (!run.bounds) return null;
     const preferredScale = clamp(options.preferredScale ?? 1.35, .18, 6);
     const maxDimension = Math.max(128, options.maxDimension ?? this.maxDimension);
     const maxPixels = Math.max(65536, options.maxPixels ?? this.maxPixels);
+    const cacheable = options.transient !== true;
+    const normalizedEntries = cacheable ? entries.map(normalizeNaturalMediaRunEntry) : null;
+    const key = cacheable
+      ? `${paperProfileFingerprint(paper)}|request:${preferredScale}:${maxDimension}:${maxPixels}|${normalizedEntries.map(entry => `${naturalMediaFingerprint(entry.stroke, 1)}:${JSON.stringify([entry.stroke.points || [], entry.matrix, entry.opacity])}`).join('|')}`
+      : null;
+    if (cacheable && this.cache.has(key)) {
+      const result = this.cache.get(key);this.cache.delete(key);this.cache.set(key, result);this.stats.cacheHits++;this.stats.preparationSkips++;return result;
+    }
+    this.stats.cacheMisses++;this.stats.preparations++;
+    const run = prepareNaturalMediaRun(entries);if (!run.bounds) return null;
     let scale = naturalMediaRasterScale(run.bounds, preferredScale, maxDimension);
     const projectedPixels = run.bounds.w * scale * run.bounds.h * scale;
     if (projectedPixels > maxPixels) scale *= Math.sqrt(maxPixels / projectedPixels);
     scale = clamp(scale, .18, preferredScale);
-    const key = `${paperProfileFingerprint(paper)}|${Math.round(scale * 1000)}|${run.strokes.map(entry => `${naturalMediaFingerprint(entry.stroke, scale)}:${entry.matrix.map(v => Math.round(v * 1000)).join(',')}:${Math.round(entry.opacity * 1000)}`).join('|')}`;
-    const cacheable = options.transient !== true;
-    if (cacheable && this.cache.has(key)) {
-      const result = this.cache.get(key);this.cache.delete(key);this.cache.set(key, result);this.stats.cacheHits++;return result;
-    }
-    this.stats.cacheMisses++;
     const width = Math.max(1, Math.ceil(run.bounds.w * scale)), height = Math.max(1, Math.ceil(run.bounds.h * scale));
     const surface = new MultiChannelInkSurface(width, height, { paper, originX: run.bounds.x, originY: run.bounds.y, scale });
     for (const entry of run.strokes) {
