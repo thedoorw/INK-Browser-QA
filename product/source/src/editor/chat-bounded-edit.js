@@ -288,6 +288,8 @@ export const CHAT_IMAGE_EFFECT_TYPES = Object.freeze(['dropShadow', 'innerShadow
 export const CHAT_IMAGE_LIQUIFY_OPERATION_TYPES = Object.freeze([...LIQUIFY_OPERATIONS]);
 export const CHAT_IMAGE_LOCAL_RETOUCH_TYPES = Object.freeze(['dodge', 'burn', 'sponge', 'localBlur', 'localSharpen', 'colorReplacement']);
 export const CHAT_IMAGE_SOURCE_RETOUCH_TYPES = Object.freeze(['cloneStamp', 'healingBrush', 'patch']);
+export const CHAT_PAGE_OPERATIONS = Object.freeze(['page.create.v1', 'page.duplicate.v1', 'page.delete.v1', 'page.rename.v1', 'page.activate.v1']);
+const CHAT_PAGE_OPERATION_SET = new Set(CHAT_PAGE_OPERATIONS);
 
 export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.repaint.v1',
@@ -299,6 +301,11 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'path.create.v1',
   'stroke.create.v1',
   'stroke.erase.circle.v1',
+  'page.create.v1',
+  'page.duplicate.v1',
+  'page.delete.v1',
+  'page.rename.v1',
+  'page.activate.v1',
   'page.paper.set.v1',
   'paint.session.create.v1',
   'image.adjustment.add.v1',
@@ -1084,6 +1091,19 @@ function normalizeNoArguments(raw = {}) {
   return {};
 }
 
+function normalizePageIdArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => key !== 'pageId')) editFail('ARGUMENTS_INVALID');
+  return { pageId: boundedText(raw.pageId, 'arguments.pageId', { max: 160 }) };
+}
+
+function normalizePageRenameArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw) || Object.keys(raw).some(key => !['pageId', 'name'].includes(key))) editFail('ARGUMENTS_INVALID');
+  return {
+    pageId: boundedText(raw.pageId, 'arguments.pageId', { max: 160 }),
+    name: boundedText(raw.name, 'arguments.name', { max: 160 })
+  };
+}
+
 function normalizeComponentRegisterArguments(raw = {}) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
   return { name: boundedText(raw.name, 'arguments.name', { max: 160 }) };
@@ -1190,6 +1210,9 @@ function normalizePaperSetArguments(raw) {
 }
 
 function normalizeOperationArguments(operation, raw) {
+  if (operation === 'page.create.v1') return normalizeNoArguments(raw);
+  if (operation === 'page.duplicate.v1' || operation === 'page.delete.v1' || operation === 'page.activate.v1') return normalizePageIdArguments(raw);
+  if (operation === 'page.rename.v1') return normalizePageRenameArguments(raw);
   if (operation === 'page.paper.set.v1') return normalizePaperSetArguments(raw);
   if (operation === 'path.repaint.v1') return normalizeRepaintArguments(raw);
   if (operation === 'path.material.apply.v1') return normalizeMaterialArguments(raw);
@@ -1270,7 +1293,7 @@ function normalizeOperationArguments(operation, raw) {
 }
 
 function operationTargetRules(operation) {
-  if (operation === 'page.paper.set.v1') return { exact: 0, min: 0, max: 0 };
+  if (CHAT_PAGE_OPERATION_SET.has(operation) || operation === 'page.paper.set.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'path.create.v1' || operation === 'stroke.create.v1' || operation === 'paint.session.create.v1' || operation === 'frame.create.v1' || operation === 'text.create.v1' || operation === 'svg.import.v1' || operation === 'component.instance.create.v1' || operation === 'component.definition.duplicate.v1') return { exact: 0, min: 0, max: 0 };
   if (operation === 'image.adjustment.add.v1'
     || operation === 'image.filter.add.v1'
