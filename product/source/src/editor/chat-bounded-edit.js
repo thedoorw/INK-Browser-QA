@@ -15,7 +15,7 @@ import { documentFingerprint } from '../document/integrity.js';
 import { paperProfileFingerprint } from '../render/paper-profile.js';
 import { eraseStrokeWithCircle } from '../stroke/edit.js';
 import { BrushPresetRegistry, BUILTIN_BRUSH_PRESETS, StrokeSessionRecorder, replayStrokeSession } from '../paint/paint-core.js';
-import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, colorRasterToRgba8, createAdjustment, createColorRaster, createFilter, createLayerEffect, createLiquifyFilter, deserializeColorRaster, maskBounds, paintBucketFill, rasterizePathMask, serializeColorRaster } from '../image/image-core.js';
+import { IMAGE_CAPABILITIES, LIQUIFY_OPERATIONS, colorRasterToRgba8, createAdjustment, createColorRaster, createFilter, createLayerEffect, createLiquifyFilter, deserializeColorRaster, maskBounds, paintBucketFill, rasterizePathMask, serializeColorRaster, spotHealing } from '../image/image-core.js';
 
 export const CHAT_STATE_SUMMARY_SCHEMA = 'INK-CHAT-STATE-SUMMARY';
 export const CHAT_STATE_SUMMARY_VERSION = 1;
@@ -306,6 +306,7 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'image.liquify.add.v1',
   'image.raster.paintBucket.v1',
   'image.mask.raster.set.v1',
+  'image.raster.spotHeal.v1',
   'path.warp.v1',
   'path.distort.v1',
   'path.perspective.v1',
@@ -513,6 +514,18 @@ function normalizeImageRasterPaintBucketArguments(raw = {}) {
     tolerance: boundedNumber(raw.tolerance ?? 0, 'arguments.tolerance', { min: 0, max: 255 }),
     contiguous: boundedBoolean(raw.contiguous ?? true, 'arguments.contiguous'),
     opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 })
+  };
+}
+
+function normalizeImageRasterSpotHealArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  return {
+    x: boundedNumber(raw.x, 'arguments.x', { min: 0, max: 1e6 }),
+    y: boundedNumber(raw.y, 'arguments.y', { min: 0, max: 1e6 }),
+    radius: boundedNumber(raw.radius ?? 12, 'arguments.radius', { min: Number.EPSILON, max: 512 }),
+    opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
+    hardness: boundedNumber(raw.hardness ?? .85, 'arguments.hardness', { min: 0, max: 1 }),
+    neighborRadius: boundedNumber(raw.neighborRadius ?? 2, 'arguments.neighborRadius', { min: 1, max: 64, integer: true })
   };
 }
 
@@ -1141,6 +1154,7 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'image.liquify.add.v1') return normalizeImageLiquifyArguments(raw);
   if (operation === 'image.raster.paintBucket.v1') return normalizeImageRasterPaintBucketArguments(raw);
   if (operation === 'image.mask.raster.set.v1') return normalizeImageRasterMaskArguments(raw);
+  if (operation === 'image.raster.spotHeal.v1') return normalizeImageRasterSpotHealArguments(raw);
   if (operation === 'path.warp.v1') return normalizePathWarpArguments(raw);
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') return normalizePathProjectiveArguments(raw, operation);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
@@ -1183,6 +1197,7 @@ function operationTargetRules(operation) {
     || operation === 'image.liquify.add.v1'
     || operation === 'image.raster.paintBucket.v1'
     || operation === 'image.mask.raster.set.v1'
+    || operation === 'image.raster.spotHeal.v1'
     || operation === 'path.warp.v1'
     || operation === 'path.distort.v1'
     || operation === 'path.perspective.v1'
@@ -1292,7 +1307,8 @@ const CHAT_RASTER_IMAGE_OPERATION_SET = new Set([
   'image.effect.add.v1',
   'image.liquify.add.v1',
   'image.raster.paintBucket.v1',
-  'image.mask.raster.set.v1'
+  'image.mask.raster.set.v1',
+  'image.raster.spotHeal.v1'
 ]);
 
 function currentTargetFingerprint(page, found, operation = null) {
@@ -2434,6 +2450,77 @@ function executeImageRasterPaintBucketTask(app, task) {
   };
 }
 
+function executeImageRasterSpotHealTask(app, task) {
+  const ref = task.targets[0];
+  const found = findPageObject(app.page(), ref);
+  if (!found || found.object?.type !== 'image' || !found.object?.rasterState?.colorRaster) {
+    editFail('RASTER_IMAGE_REQUIRED', { objectId: found?.object?.id || null });
+  }
+  const object = found.object;
+  const raster = deserializeColorRaster(object.rasterState.colorRaster);
+  if (raster.bitDepth !== 8 || raster.colorMode !== 'RGB') {
+    editFail('RASTER_FORMAT_UNSUPPORTED', { bitDepth: raster.bitDepth, colorMode: raster.colorMode });
+  }
+  const preview = colorRasterToRgba8(object.rasterState.colorRaster, { icc: object.rasterState.icc || null });
+  if (preview.status !== 'ok') editFail('RASTER_RENDER_UNSUPPORTED', { reason: preview.reason || preview.status });
+  const { width, height } = preview.imageData;
+  const args = task.arguments;
+  if (args.x >= width || args.y >= height) {
+    editFail('ARGUMENT_OUT_OF_RANGE', { field: 'arguments.x/y', width, height });
+  }
+
+  const result = spotHealing(preview.imageData, {
+    targetPoint: { x: args.x, y: args.y },
+    radius: args.radius,
+    opacity: args.opacity,
+    hardness: args.hardness,
+    neighborRadius: args.neighborRadius
+  });
+  let changedChannels = 0, changedPixels = 0;
+  for (let index = 0; index < result.data.length; index += 4) {
+    let pixelChanged = false;
+    for (let channel = 0; channel < 4; channel += 1) {
+      if (result.data[index + channel] !== preview.imageData.data[index + channel]) {
+        changedChannels += 1;
+        pixelChanged = true;
+      }
+    }
+    if (pixelChanged) changedPixels += 1;
+  }
+  if (!changedPixels) editFail('NO_OP', { operation: task.operation });
+
+  object.rasterState = object.rasterState || {};
+  const nextColorRaster = rgbaImageDataToSerializedColorRaster(result);
+  app.history.pushScoped('CHAT raster Spot Healing', [app.objectPath(found)], () => {
+    object.rasterState.colorRaster = nextColorRaster;
+    object.rasterState.source = {
+      ...(object.rasterState.source || {}),
+      format: 'INK',
+      chatEdited: true
+    };
+  });
+  app.spatialDirty = true;
+  app.renderer?.studioImageCache?.clear?.();
+  app.renderer?.studioLayerCache?.clear?.();
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    changed: true,
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: object.id }],
+    rasterEdit: {
+      type: 'spotHealing',
+      x: args.x,
+      y: args.y,
+      radius: args.radius,
+      opacity: args.opacity,
+      hardness: args.hardness,
+      neighborRadius: args.neighborRadius,
+      changedPixels,
+      changedChannels
+    }
+  };
+}
+
 function executeImageRasterMaskTask(app, task) {
   const ref = task.targets[0];
   const found = findPageObject(app.page(), ref);
@@ -2695,6 +2782,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'image.liquify.add.v1') return executeImageLiquifyTask(app, task);
   if (task.operation === 'image.raster.paintBucket.v1') return executeImageRasterPaintBucketTask(app, task);
   if (task.operation === 'image.mask.raster.set.v1') return executeImageRasterMaskTask(app, task);
+  if (task.operation === 'image.raster.spotHeal.v1') return executeImageRasterSpotHealTask(app, task);
   if (task.operation === 'path.warp.v1' || task.operation === 'path.distort.v1' || task.operation === 'path.perspective.v1') return executePathDeformationTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
