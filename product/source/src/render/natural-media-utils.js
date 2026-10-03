@@ -2,12 +2,24 @@ import { clamp } from '../core/index.js';
 import { sampleStrokePath } from '../stroke/index.js';
 
 export const NATURAL_MEDIA_KINDS = Object.freeze(['brush', 'drybrush', 'airbrush']);
-export const NATURAL_MEDIA_SURFACE_REVISION = 'WP8A-1';
+export const NATURAL_MEDIA_MIXER_KINDS = Object.freeze(['blender', 'smudge']);
+export const NATURAL_MEDIA_RUN_KINDS = Object.freeze([...NATURAL_MEDIA_KINDS, ...NATURAL_MEDIA_MIXER_KINDS]);
+export const NATURAL_MEDIA_SURFACE_REVISION = 'WP8A-2';
 const NATURAL_MEDIA_KIND_SET = new Set(NATURAL_MEDIA_KINDS);
+const NATURAL_MEDIA_MIXER_KIND_SET = new Set(NATURAL_MEDIA_MIXER_KINDS);
+const NATURAL_MEDIA_RUN_KIND_SET = new Set(NATURAL_MEDIA_RUN_KINDS);
 const TAU = Math.PI * 2;
 
 export function isNaturalMediaStroke(stroke) {
   return Boolean(stroke && stroke.type === 'stroke' && NATURAL_MEDIA_KIND_SET.has(stroke.kind));
+}
+
+export function isNaturalMediaMixerStroke(stroke) {
+  return Boolean(stroke && stroke.type === 'stroke' && NATURAL_MEDIA_MIXER_KIND_SET.has(stroke.kind));
+}
+
+export function isNaturalMediaRunStroke(stroke) {
+  return Boolean(stroke && stroke.type === 'stroke' && NATURAL_MEDIA_RUN_KIND_SET.has(stroke.kind));
 }
 
 export function strokeWidthForMedia(stroke, point, index, count) {
@@ -129,7 +141,7 @@ export function resampleNaturalMediaPath(stroke, {
   minimumSpacing = .42,
   maximumSpacing = null
 } = {}) {
-  if (!isNaturalMediaStroke(stroke) || !stroke.points?.length) return [];
+  if (!isNaturalMediaRunStroke(stroke) || !stroke.points?.length) return [];
   const size = Math.max(.25, stroke.size || 2);
   const denseStep = Math.max(.32, Math.min(2.2, size * .055));
   const dense = removeDuplicateNaturalMediaPoints(stroke.points.length > 1 ? sampleStrokePath(stroke, denseStep) : stroke.points);
@@ -283,6 +295,7 @@ export function naturalMediaFingerprint(stroke, scale = 1) {
     id: stroke.id || '', kind: stroke.kind, color: normalizeMediaHex(stroke.color), size: stroke.size,
     opacity: stroke.opacity, pressure: stroke.pressure, taper: stroke.taper, grain: stroke.grain,
     softness: stroke.softness, flow: stroke.flow, wetness: stroke.wetness, bristle: stroke.bristle,
+    blend: stroke.blend, smudge: stroke.smudge, drag: stroke.drag,
     seed: stroke.seed ?? null, segmentStyles: stroke.segmentStyles || null, scale: Math.round(scale * 100), points
   }));
 }
