@@ -127,7 +127,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2','snap-guides-c3','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -1787,6 +1787,114 @@ const RASTER_STACK_B2_CASE = String.raw`(async()=>{
   return {passed:true,objectId:ref.objectId,historyCount:app.history.undoStack.length,adjustmentCount:object.adjustments?.length||0,filterCount:object.filterStack?.length||0,effectCount:object.effects?.length||0,blendMode:object.blendMode||null,baselineHash,finalHash,receipts,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status};
 })()`;
 
+
+const SNAP_GUIDES_C3_CASE = String.raw\`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke)throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const required=['describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','undo_ink','redo_ink','get_ink_history'];
+  const names=api.tools.registry().map(item=>item.name);
+  for(const name of required)if(!names.includes(name))throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  app.history.clear();
+
+  const findField=(value,key,depth=0)=>{if(value==null||depth>12||typeof value!=='object')return undefined;if(Object.prototype.hasOwnProperty.call(value,key))return value[key];for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}return undefined;};
+  const task=(taskId,operation,args)=>({schema:'INK-CHAT-EDIT-TASK',version:1,taskId,operation,targets:[],arguments:args});
+  const propose=async t=>{const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:t}));if(p?.status==='FAILED')return {failed:p};const proposalId=findField(p,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING:'+t.operation);return {result:p,proposalId};};
+  const edit=async t=>{const p=await propose(t);if(p.failed)throw new Error('PROPOSE_FAILED:'+t.operation+':'+JSON.stringify(p.failed.diagnostics||[]));const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:p.proposalId}));if(a?.status==='FAILED')throw new Error('APPROVE_FAILED:'+t.operation+':'+JSON.stringify(a.diagnostics||[]));const token=findField(a,'approvalToken');if(!token)throw new Error('TOKEN_MISSING:'+t.operation);const e=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:p.proposalId,approvalToken:token}));if(e?.status==='FAILED')throw new Error('EXECUTE_FAILED:'+t.operation+':'+JSON.stringify(e.diagnostics||[]));if(findField(e,'changed')!==true)throw new Error('EXECUTE_NOT_CHANGED:'+t.operation);return e;};
+  const expectProposeFailure=async(t,code)=>{const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:t}));const found=findField(p,'code')||JSON.stringify(p?.diagnostics||[]);if(p?.status!=='FAILED'||!String(found).includes(code))throw new Error('EXPECTED_PROPOSE_FAILURE:'+code+':'+String(found));return String(found);};
+  const guide=id=>(app.page().guides||[]).find(item=>item.id===id)||null;
+  const snap=()=>JSON.parse(JSON.stringify(app.page().snap||{}));
+  const guideState=()=>JSON.parse(JSON.stringify(app.page().guides||[]));
+
+  const ops=['page.snap.set.v1','guide.add.v1','guide.move.v1','guide.remove.v1','guide.lock.set.v1','guide.visibility.set.v1'];
+  for(const operation of ops){
+    const d=await Promise.resolve(api.tools.invoke('describe_ink_capability',{idOrToolName:operation}));
+    if(d?.status==='FAILED')throw new Error('DESCRIBE_FAILED:'+operation);
+    const text=JSON.stringify(d);
+    if(!text.includes(operation)||!text.includes('precisionFingerprint'))throw new Error('DESCRIPTOR_INVALID:'+operation);
+    const max=findField(d,'maxItems');if(max!==0)throw new Error('C3_TARGET_SCHEMA_NOT_ZERO:'+operation+':'+max);
+  }
+
+  const initialSnap=snap(),initialGuides=guideState();
+  const baselineGrid=initialSnap?.categories?.grid===true;
+  const gridValue=!baselineGrid;
+
+  // Stale precision-layout proposal: any intervening snap/guide mutation must invalidate it.
+  const stale=await propose(task('qa-c3-stale','page.snap.set.v1',{key:'grid',value:gridValue}));
+  if(stale.failed)throw new Error('STALE_PROPOSE_FAILED');
+  const staleGuide=await edit(task('qa-c3-stale-intervening','guide.add.v1',{id:'qa-c3-stale-guide',orientation:'vertical',position:44}));
+  if(!guide('qa-c3-stale-guide'))throw new Error('STALE_INTERVENING_GUIDE_MISSING');
+  const staleApproval=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId:stale.proposalId}));
+  const staleCode=findField(staleApproval,'code')||JSON.stringify(staleApproval?.diagnostics||[]);
+  if(staleApproval?.status!=='FAILED'||!String(staleCode).includes('STALE_PRECISION_LAYOUT'))throw new Error('C3_STALE_NOT_REJECTED:'+String(staleCode));
+  const undoStale=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undoStale?.status==='FAILED')throw new Error('UNDO_STALE_INTERVENING_FAILED');
+  if(guide('qa-c3-stale-guide'))throw new Error('STALE_GUIDE_UNDO_FAILED');
+
+  // Snap category mutation + exact Undo/Redo.
+  app.history.clear();
+  const snapExec=await edit(task('qa-c3-snap-grid','page.snap.set.v1',{key:'grid',value:gridValue}));
+  if((app.page().snap?.categories?.grid===true)!==gridValue)throw new Error('SNAP_GRID_STATE');
+  if(app.history.undoStack.at(-1)?.label!=='吸附設定')throw new Error('SNAP_HISTORY_LABEL');
+  const snapReceipt=findField(snapExec,'controllerResult');
+  if(snapReceipt?.snap?.categories?.grid!==gridValue)throw new Error('SNAP_RECEIPT_INVALID');
+  const snapNoOp=await expectProposeFailure(task('qa-c3-snap-grid-noop','page.snap.set.v1',{key:'grid',value:gridValue}),'NO_OP');
+  const undoSnap=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undoSnap?.status==='FAILED'||(app.page().snap?.categories?.grid===true)!==baselineGrid)throw new Error('SNAP_UNDO_FAILED');
+  const redoSnap=await Promise.resolve(api.tools.invoke('redo_ink',{}));if(redoSnap?.status==='FAILED'||(app.page().snap?.categories?.grid===true)!==gridValue)throw new Error('SNAP_REDO_FAILED');
+  const resetSnap=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(resetSnap?.status==='FAILED'||(app.page().snap?.categories?.grid===true)!==baselineGrid)throw new Error('SNAP_RESET_FAILED');
+
+  // Guide lifecycle through native InkApp wrappers.
+  app.history.clear();
+  const add=await edit(task('qa-c3-guide-add','guide.add.v1',{id:'qa-c3-guide-v',orientation:'vertical',position:120}));
+  let g=guide('qa-c3-guide-v');
+  if(!g||g.orientation!=='vertical'||g.position!==120||g.locked||g.visible===false)throw new Error('GUIDE_ADD_STATE:'+JSON.stringify(g));
+  if(app.history.undoStack.at(-1)?.label!=='新增參考線')throw new Error('GUIDE_ADD_HISTORY');
+
+  const moved=await edit(task('qa-c3-guide-move','guide.move.v1',{guideId:'qa-c3-guide-v',position:180}));
+  g=guide('qa-c3-guide-v');if(!g||g.position!==180)throw new Error('GUIDE_MOVE_STATE');
+  if(app.history.undoStack.at(-1)?.label!=='移動參考線')throw new Error('GUIDE_MOVE_HISTORY');
+
+  // Prove the stored guide participates in the existing precision-layout snap engine without pointer simulation.
+  const precision=await import(new URL('src/editor/precision-layout.js',document.baseURI).href);
+  const snapEvidence=precision.resolveManipulationSnap({x:176,y:30,w:20,h:20},[],{delta:{x:0,y:0},guides:app.page().guides||[],settings:app.page().snap||{},gridSize:null,tolerance:7});
+  if(!snapEvidence?.snapped?.x||snapEvidence?.evidence?.x?.type!=='guide'||snapEvidence?.evidence?.x?.targetId!=='qa-c3-guide-v')throw new Error('GUIDE_SNAP_EVIDENCE_INVALID:'+JSON.stringify(snapEvidence));
+
+  await edit(task('qa-c3-guide-lock','guide.lock.set.v1',{guideId:'qa-c3-guide-v',locked:true}));
+  g=guide('qa-c3-guide-v');if(!g?.locked)throw new Error('GUIDE_LOCK_STATE');
+  if(app.history.undoStack.at(-1)?.label!=='鎖定參考線')throw new Error('GUIDE_LOCK_HISTORY');
+  const lockedMove=await expectProposeFailure(task('qa-c3-guide-locked-move','guide.move.v1',{guideId:'qa-c3-guide-v',position:220}),'GUIDE_LOCKED');
+  await edit(task('qa-c3-guide-unlock','guide.lock.set.v1',{guideId:'qa-c3-guide-v',locked:false}));
+
+  await edit(task('qa-c3-guide-hide','guide.visibility.set.v1',{guideId:'qa-c3-guide-v',visible:false}));
+  g=guide('qa-c3-guide-v');if(!g||g.visible!==false)throw new Error('GUIDE_HIDE_STATE');
+  if(app.history.undoStack.at(-1)?.label!=='顯示參考線')throw new Error('GUIDE_VISIBILITY_HISTORY');
+  const hiddenNoOp=await expectProposeFailure(task('qa-c3-guide-hide-noop','guide.visibility.set.v1',{guideId:'qa-c3-guide-v',visible:false}),'NO_OP');
+  await edit(task('qa-c3-guide-show','guide.visibility.set.v1',{guideId:'qa-c3-guide-v',visible:true}));
+
+  const beforeRemove=JSON.stringify(guide('qa-c3-guide-v'));
+  await edit(task('qa-c3-guide-remove','guide.remove.v1',{guideId:'qa-c3-guide-v'}));
+  if(guide('qa-c3-guide-v'))throw new Error('GUIDE_REMOVE_STATE');
+  if(app.history.undoStack.at(-1)?.label!=='刪除參考線')throw new Error('GUIDE_REMOVE_HISTORY');
+  const undoRemove=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undoRemove?.status==='FAILED'||JSON.stringify(guide('qa-c3-guide-v'))!==beforeRemove)throw new Error('GUIDE_REMOVE_UNDO');
+  const redoRemove=await Promise.resolve(api.tools.invoke('redo_ink',{}));if(redoRemove?.status==='FAILED'||guide('qa-c3-guide-v'))throw new Error('GUIDE_REMOVE_REDO');
+
+  const history=await Promise.resolve(api.tools.invoke('get_ink_history',{}));
+  if(history?.status==='FAILED')throw new Error('HISTORY_FAILED');
+  return {
+    passed:true,
+    operations:ops,
+    baselineGrid,
+    gridValue,
+    staleCode:String(staleCode),
+    snapNoOp,
+    lockedMove,
+    hiddenNoOp,
+    snapEvidence,
+    finalGuides:guideState(),
+    initialGuides,
+    historyLabels:app.history.undoStack.map(entry=>entry.label)
+  };
+})()\`;
+
 async function run(){
   const requestPath=path.resolve(process.argv[2]);
   const candidateRoot=path.resolve(process.argv[3]);
@@ -1807,7 +1915,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='page-ops-c1'?PAGE_OPS_C1_CASE:(request.case==='align-distribute-c2'?ALIGN_DISTRIBUTE_C2_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))))))))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='raster-mask-b3'?RASTER_MASK_B3_CASE:(request.case==='raster-spot-heal-b3'?RASTER_SPOT_HEAL_B3_CASE:(request.case==='raster-local-retouch-b3'?RASTER_LOCAL_RETOUCH_B3_CASE:(request.case==='raster-source-retouch-b3'?RASTER_SOURCE_RETOUCH_B3_CASE:(request.case==='raster-advanced-ingest'?RASTER_ADVANCED_INGEST_CASE:(request.case==='page-ops-c1'?PAGE_OPS_C1_CASE:(request.case==='align-distribute-c2'?ALIGN_DISTRIBUTE_C2_CASE:(request.case==='snap-guides-c3'?SNAP_GUIDES_C3_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))))))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     if(request.imageStackCacheReview===true) caseResult.imageStackCacheReview=await evaluate(cdp,sessionId,IMAGE_STACK_CACHE_REVIEW_CASE,90000);
     if(request.naturalMediaCacheReview===true) caseResult.naturalMediaCacheReview=await evaluate(cdp,sessionId,NATURAL_MEDIA_CACHE_REVIEW_CASE,90000);
@@ -1825,10 +1933,10 @@ async function run(){
 await run();
 // Fresh installed-browser process/profile for each required cross-capability regression.
 const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
-if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2','raster-stack-b2','raster-stack-adjustment-b2'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
+if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','raster-mask-b3','raster-spot-heal-b3','raster-local-retouch-b3','raster-source-retouch-b3','raster-advanced-ingest','page-ops-c1','align-distribute-c2','snap-guides-c3','raster-stack-b2','raster-stack-adjustment-b2'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
   const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
   primary.regressions=[];
-  for(const caseName of (batchRequest.imageStackCacheReview===true?['raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2','paint-session-create','stroke-create-a2','page-paper-a3','blender-smudge-a5','path-deformation-b4','raster-mask-b3','raster-source-retouch-b3','raster-advanced-ingest']:batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-advanced-ingest'?['raster-import-named-tool','raster-direct-paint-bucket-b3','raster-source-retouch-b3','raster-stack-adjustment-b2']:batchRequest.case==='page-ops-c1'?['stroke-create-a2','page-paper-a3','raster-import-named-tool','raster-stack-adjustment-b2']:batchRequest.case==='align-distribute-c2'?['page-ops-c1','path-deformation-b4','stroke-create-a2','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
+  for(const caseName of (batchRequest.imageStackCacheReview===true?['raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2','paint-session-create','stroke-create-a2','page-paper-a3','blender-smudge-a5','path-deformation-b4','raster-mask-b3','raster-source-retouch-b3','raster-advanced-ingest']:batchRequest.naturalMediaCacheReview===true?['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2','path-deformation-b4','page-paper-single-stroke','page-paper-webgl-roughness',...(batchRequest.postIntegration===true?['raster-direct-paint-bucket-b3','raster-mask-b3','raster-local-retouch-b3']:[])]:batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-mask-b3'?['raster-direct-paint-bucket-b3','raster-stack-adjustment-b2','blender-smudge-a5']:batchRequest.case==='raster-spot-heal-b3'?['raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-local-retouch-b3'?['raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-source-retouch-b3'?['raster-local-retouch-b3','raster-spot-heal-b3','raster-mask-b3','raster-direct-paint-bucket-b3','raster-stack-adjustment-b2']:batchRequest.case==='raster-advanced-ingest'?['raster-import-named-tool','raster-direct-paint-bucket-b3','raster-source-retouch-b3','raster-stack-adjustment-b2']:batchRequest.case==='page-ops-c1'?['stroke-create-a2','page-paper-a3','raster-import-named-tool','raster-stack-adjustment-b2']:batchRequest.case==='align-distribute-c2'?['page-ops-c1','path-deformation-b4','stroke-create-a2','raster-stack-adjustment-b2']:batchRequest.case==='snap-guides-c3'?['align-distribute-c2','page-ops-c1','page-paper-a3','raster-stack-adjustment-b2']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
     const prefix=path.resolve(process.argv[4])+'.'+caseName;
     await writeFile(prefix+'.request.json',JSON.stringify({...batchRequest,requestId:batchRequest.requestId+'-'+caseName,case:caseName,regressions:false,naturalMediaCacheReview:false,imageStackCacheReview:false}));
     const regression=spawn(process.execPath,[path.resolve(process.argv[1]),prefix+'.request.json',path.resolve(process.argv[3]),prefix+'.json',prefix+'.png'],{shell:false,stdio:'inherit'});
