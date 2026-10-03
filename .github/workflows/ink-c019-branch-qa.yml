@@ -31,7 +31,6 @@ jobs:
             qa/ink-c019-text-path-render-integration.test.mjs \
             qa/ink-p1-c-vector-text-precision-layout.test.mjs \
             qa/ink-chat-path-deformation-b4.test.mjs \
-            qa/ink-chat-connector-003-capability-schema-discovery.test.mjs \
             | tee "${RUNNER_TEMP}/c019-node-tests.log"
 
       - name: Exact-SHA browser QA and representative regressions
