@@ -84,6 +84,5 @@
     "formal-live-pass.json",
     "formal-live.png",
     "deployment-identity.json"
-  ],
-  "formalLiveQualification": "PASS"
+  ]
 }
