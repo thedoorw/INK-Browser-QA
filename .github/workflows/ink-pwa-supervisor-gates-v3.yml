@@ -12,6 +12,7 @@ on:
       - qa/pwa-pages-live-baseline.mjs
       - qa/pwa-pages-live-verify.mjs
       - .github/workflows/ink-pwa-supervisor-gates-v3.yml
+      - .github/workflows/ink-pwa-pages-postintegration.yml
 
 permissions:
   contents: read
@@ -55,6 +56,13 @@ jobs:
           ACTUAL="$(tr -d '\r\n ' < _site/product/source/pages-build-identity.txt)"
           test "$ACTUAL" = "$GITHUB_SHA"
           printf '{"expected_revision":"%s","rendered_revision":"%s","status":"PASS"}\n' "$GITHUB_SHA" "$ACTUAL" > jekyll-pages-identity.json
+
+      - name: Verify post-integration gate wiring
+        run: |
+          grep -F "branches:" .github/workflows/ink-pwa-pages-postintegration.yml
+          grep -F "pages-build-identity.txt" .github/workflows/ink-pwa-pages-postintegration.yml
+          grep -F "pages-$GITHUB_SHA" .github/workflows/ink-pwa-pages-postintegration.yml
+          grep -F "premerge-profile.tgz" .github/workflows/ink-pwa-pages-postintegration.yml
 
       - name: Materialize latest-main product baseline
         run: git worktree add "$RUNNER_TEMP/ink-pwa-baseline" a6842e95a00ef440d47cc393394b9272d75f6082
