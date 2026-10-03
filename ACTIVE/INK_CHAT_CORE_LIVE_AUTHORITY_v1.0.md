@@ -33,15 +33,13 @@ Closed / formally Live-qualified CHAT routes:
 - B3.1 Paint Bucket;
 - B3.2 raster Mask plus raster-pixel/mask stale fingerprints;
 - B3.3 Spot Healing;
+- B3.4 non-source local retouch: dodge / burn / sponge / local blur / local sharpen / color replacement;
 - B4 native Path warp / distort / perspective.
 
 Latest accepted Live product source at this checkpoint:
-`c6ae51d96d95e2567b9b7ef6d1e55280cfb2cee0` (B3.3 Spot Healing).
+`ca4bf6913efe1564eb572988a306120b3c008539` (B3.4 non-source local retouch).
 
-B3 remains partial. Next bounded B3 work must select from existing local-raster authorities without pointer emulation:
-- other one-shot local retouch families (dodge / burn / sponge / local blur / local sharpen / color replacement);
-- source-dependent retouch (clone / healing brush / patch / pattern stamp) only after an explicit bounded source-point/source-region contract is defined.
-Do not silently broaden Spot Healing PASS to these operations.
+B3 remains partial only for source-dependent retouch. Next bounded B3 work is clone / healing brush / patch, using an explicit raster-local source-point/source-region contract with no pointer emulation or source inference. Pattern Stamp remains separate because its pattern-payload/asset contract is not yet defined. Do not silently broaden B3.4 PASS to source-dependent operations.
 
 After B3, remaining authority queue is:
 - advanced mutable raster ingest exposure for existing PSD / TIFF / EXR / RAW paths;
