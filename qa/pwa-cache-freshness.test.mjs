@@ -21,6 +21,8 @@ test('service worker is online-first and keeps build-scoped offline caches', asy
   assert.match(source, /networkFirstAsset/);
   assert.match(source, /await self\.skipWaiting\(\)/);
   assert.match(source, /key\.startsWith\(CACHE_PREFIX\)/);
+  assert.match(source, /replacingPreviousBuild/);
+  assert.match(source, /client\.navigate\?\.\(client\.url\)/);
   assert.doesNotMatch(source, /const BUILD_ID = '2026/);
   assert.doesNotMatch(source, /if \(cached\) return cached;/);
 });
