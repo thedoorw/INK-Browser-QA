@@ -1228,3 +1228,46 @@ NEXT_AUTHORITY_QUEUE = CLUSTER_C_NATIVE_LAYOUT_DOCUMENT_OPERATIONS
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## Cluster C1 native page lifecycle — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+C1_PAGE_CREATE_DELETE_DUPLICATE_RENAME_ACTIVATE = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+```
+
+Source/candidate:
+- PR #145 merged.
+- exact candidate: `8eb49051618ed0c12f4da5fc6e2c8a5cf0c6715b`.
+- merged/deployed source: `dfb197ca31dc1e2e5ca46c6452e998dce44c57c6`.
+- candidate request: `clusterC-C1-page-ops-candidate-001-regressions`.
+- candidate result commit: `96869e98169defc14f4be281bc63c9f7dcb7f272`.
+- candidate run: `37104014277`; artifact `11267505782`; digest `sha256:a3ea9a6eddca135454472e61f0389adbc91134d4eb20cc4c0c1bd326da6ebf9b`.
+- operations: create / duplicate / delete / rename / activate PASS.
+- duplicated page/layer/object identities were unique.
+- activate generated no History entry.
+- delete Undo/Redo, rename/activate NO_OP, stale page, and minimum-one-page invariant PASS.
+- exact-SHA A2 / A3 / B1 / B2 regressions PASS.
+
+Formal Live:
+- successful request: `clusterC-C1-page-ops-live-002`.
+- request commit: `390d523f8c22dfbaf38d5a997c0ba1886e740003`.
+- result commit: `96d2471385e60f22a3fe86754f6ea11f8123f6c8`.
+- run: `37104322420`.
+- artifact: `11267145873`; digest `sha256:f89ecda6dd32025b7c08301da0cae9409a02b842201724be139e1cf225c7cd03`.
+- exact source verified; `apiReady=true`; 23 named tools.
+- create / rename / duplicate / activate / delete executed through existing InkApp authority.
+- activate retained History count unchanged.
+- delete duplicate → Undo restored → Redo removed again.
+- final state returned to one page.
+- deleting the final page rejected `CHAT_EDIT_MINIMUM_PAGE_REQUIRED`.
+- initial `-001` failure was a QA reference-path error and did not execute a product failure.
+
+```text
+C1_PAGE_OPERATIONS = CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+NEXT_CLUSTER_C = C2_ALIGN_DISTRIBUTE
+NEW_DOCUMENT_A4_REDESIGN = OUTSIDE_SCOPE
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
