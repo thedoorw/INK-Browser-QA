@@ -132,3 +132,32 @@ export function createWarpDeformationPlan(bounds, { strength = 0, maxDisplacemen
     parameters: { bend: boundedStrength * bounds.w * displacementRatio }
   };
 }
+
+// Bounded offset semantics, planned here so all projective consumers share math.
+export function createPathProjectiveDeformationPlan(bounds, { xOffset = 0, yOffset = 0 } = {}, mode = 'distort') {
+  if (!bounds || ![bounds.x, bounds.y, bounds.w, bounds.h, xOffset, yOffset].every(Number.isFinite) || bounds.w <= 0 || bounds.h <= 0) fail('PROJECTIVE_BOUNDS_INVALID');
+  if (!['distort', 'perspective'].includes(mode)) fail('PROJECTIVE_MODE_INVALID');
+  const { x, y, w, h } = bounds;
+  const sourceQuad = [{ x, y }, { x: x+w, y }, { x: x+w, y: y+h }, { x, y: y+h }];
+  const destinationQuad = sourceQuad.map(point => ({ ...point }));
+  if (mode === 'distort') {
+    // Independent corner offsets form a free asymmetric quadrilateral.
+    destinationQuad[0].x += xOffset;
+    destinationQuad[1].y += yOffset;
+    destinationQuad[2].x -= xOffset;
+    destinationQuad[3].y -= yOffset;
+  } else {
+    // Opposing edge pairs converge about the center; no free corner movement.
+    destinationQuad[0].x += xOffset; destinationQuad[1].x -= xOffset;
+    destinationQuad[2].x += xOffset; destinationQuad[3].x -= xOffset;
+    destinationQuad[0].y += yOffset; destinationQuad[3].y -= yOffset;
+    destinationQuad[1].y -= yOffset; destinationQuad[2].y += yOffset;
+  }
+  // Reject inverted, concave or collapsed mappings before any native mutation.
+  for (let i = 0; i < 4; i++) {
+    const a = destinationQuad[i], b = destinationQuad[(i+1)%4], c = destinationQuad[(i+2)%4];
+    if ((b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x) <= EPSILON) fail('PROJECTIVE_QUAD_FOLDED');
+  }
+  return { mode, xOffset, yOffset, sourceQuad, destinationQuad,
+    matrix: createProjectiveTransform(sourceQuad, destinationQuad) };
+}

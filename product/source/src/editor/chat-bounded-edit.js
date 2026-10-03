@@ -5,9 +5,11 @@ import { registerComponentDefinition, createComponentInstance, setComponentOverr
 import { PathEditController } from './path-edit.js';
 import { cloneCompositionObject } from './composition.js';
 import { applyWorldTransformBatch } from './transform.js';
+import { createPathProjectiveDeformationPlan, createWarpDeformationPlan } from './transform-advanced.js';
 import { resizeFrameGeometry } from './bounds.js';
 import { createTextObject, updateTextObject } from './text-object.js';
 import { pathGeometryFingerprint } from '../vector/stroke-appearance.js';
+import { applyNonDestructiveDeformation, deformationReport } from '../vector/deformation.js';
 import { booleanPaths, createAnchor, createPath, createRepeat, createVectorGroup, dividePaths, importSVGDocument } from '../vector/vector-core.js';
 import { documentFingerprint } from '../document/integrity.js';
 import { paperProfileFingerprint } from '../render/paper-profile.js';
@@ -248,6 +250,9 @@ export const CHAT_EDIT_OPERATIONS = Object.freeze([
   'image.blend.set.v1',
   'image.effect.add.v1',
   'image.liquify.add.v1',
+  'path.warp.v1',
+  'path.distort.v1',
+  'path.perspective.v1',
   'path.edit.v1',
   'object.rotate.v1',
   'object.clone.v1',
@@ -439,6 +444,22 @@ function normalizeImageLiquifyArguments(raw = {}) {
     opacity: boundedNumber(raw.opacity ?? 1, 'arguments.opacity', { min: 0, max: 1 }),
     maxWork: raw.maxWork == null ? null : boundedNumber(raw.maxWork, 'arguments.maxWork', { min: 1, max: 50000000, integer: true })
   };
+}
+
+function normalizePathWarpArguments(raw = {}) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const strength = boundedNumber(raw.strength ?? 0, 'arguments.strength', { min: -1, max: 1 });
+  const maxDisplacement = boundedNumber(raw.maxDisplacement ?? .5, 'arguments.maxDisplacement', { min: 0, max: .5 });
+  if (strength === 0 || maxDisplacement === 0) editFail('NO_OP', { operation: 'path.warp.v1' });
+  return { strength, maxDisplacement };
+}
+
+function normalizePathProjectiveArguments(raw = {}, operation) {
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) editFail('ARGUMENTS_INVALID');
+  const xOffset = boundedNumber(raw.xOffset ?? 0, 'arguments.xOffset', { min: -1e6, max: 1e6 });
+  const yOffset = boundedNumber(raw.yOffset ?? 0, 'arguments.yOffset', { min: -1e6, max: 1e6 });
+  if (xOffset === 0 && yOffset === 0) editFail('NO_OP', { operation });
+  return { xOffset, yOffset };
 }
 
 function normalizePoint(value, field, { optional = false } = {}) {
@@ -1022,6 +1043,8 @@ function normalizeOperationArguments(operation, raw) {
   if (operation === 'image.blend.set.v1') return normalizeImageBlendArguments(raw);
   if (operation === 'image.effect.add.v1') return normalizeImageEffectArguments(raw);
   if (operation === 'image.liquify.add.v1') return normalizeImageLiquifyArguments(raw);
+  if (operation === 'path.warp.v1') return normalizePathWarpArguments(raw);
+  if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') return normalizePathProjectiveArguments(raw, operation);
   if (operation === 'path.edit.v1') return normalizePathEditArguments(raw);
   if (operation === 'object.rotate.v1') return normalizeRotateArguments(raw);
   if (operation === 'object.clone.v1') return normalizeCloneArguments(raw);
@@ -1060,6 +1083,9 @@ function operationTargetRules(operation) {
     || operation === 'image.blend.set.v1'
     || operation === 'image.effect.add.v1'
     || operation === 'image.liquify.add.v1'
+    || operation === 'path.warp.v1'
+    || operation === 'path.distort.v1'
+    || operation === 'path.perspective.v1'
     || operation === 'path.edit.v1'
     || operation.startsWith('path.simplify.')
     || operation.startsWith('path.refine.')
@@ -2251,6 +2277,55 @@ function executeImageLiquifyTask(app, task) {
   };
 }
 
+function pathLocalAnchorBounds(path) {
+  const points = (path?.subpaths || []).flatMap(subpath => (subpath.anchors || []).map(anchor => ({ x: anchor.x, y: anchor.y })));
+  if (!points.length) editFail('PATH_GEOMETRY_EMPTY', { objectId: path?.id || null });
+  const xs = points.map(point => point.x), ys = points.map(point => point.y);
+  return {
+    x: Math.min(...xs),
+    y: Math.min(...ys),
+    w: Math.max(...xs) - Math.min(...xs),
+    h: Math.max(...ys) - Math.min(...ys)
+  };
+}
+
+function executePathDeformationTask(app, task) {
+  const ref = task.targets[0];
+  const found = findPageObject(app.page(), ref);
+  if (!found || found.object?.type !== 'path') editFail('PATH_REQUIRED', { objectId: found?.object?.id || null });
+  const object = found.object;
+  const bounds = pathLocalAnchorBounds({ ...object, subpaths: object.deformation?.baseSubpaths || object.subpaths });
+  let mode = null;
+  let parameters = null;
+
+  if (task.operation === 'path.warp.v1') {
+    const plan = createWarpDeformationPlan(bounds, task.arguments);
+    if (!plan.parameters.bend) editFail('NO_OP', { operation: task.operation });
+    mode = plan.mode;
+    parameters = { ...plan.normalized, bend: plan.parameters.bend };
+    app.history.pushScoped('CHAT warp Path', [app.objectPath(found)], () => {
+      applyNonDestructiveDeformation(object, { bend: plan.parameters.bend });
+    });
+  } else {
+    mode = task.operation === 'path.distort.v1' ? 'distort' : 'perspective';
+    const plan = createPathProjectiveDeformationPlan(bounds, task.arguments, mode);
+    parameters = { projective: plan };
+    app.history.pushScoped(`CHAT ${mode} Path`, [app.objectPath(found)], () => {
+      applyNonDestructiveDeformation(object, parameters);
+    });
+  }
+
+  app.spatialDirty = true;
+  app.refreshAll?.();
+  app.renderer?.render?.();
+  return {
+    resultRefs: [{ pageId: app.page().id, layerId: found.layer.id, objectId: object.id }],
+    mode,
+    parameters,
+    deformation: deformationReport(object)
+  };
+}
+
 function executeApprovedTask(app, task) {
   if (task.operation === 'path.repaint.v1'
     || task.operation === 'path.material.apply.v1'
@@ -2271,6 +2346,7 @@ function executeApprovedTask(app, task) {
   if (task.operation === 'image.blend.set.v1') return executeImageBlendTask(app, task);
   if (task.operation === 'image.effect.add.v1') return executeImageEffectTask(app, task);
   if (task.operation === 'image.liquify.add.v1') return executeImageLiquifyTask(app, task);
+  if (task.operation === 'path.warp.v1' || task.operation === 'path.distort.v1' || task.operation === 'path.perspective.v1') return executePathDeformationTask(app, task);
   if (task.operation === 'object.rotate.v1') return executeRotateTask(app, task);
   if (task.operation === 'object.clone.v1') return executeCloneTask(app, task);
   if (task.operation === 'repeat.radial.v1') return executeRepeatRadialTask(app, task);
