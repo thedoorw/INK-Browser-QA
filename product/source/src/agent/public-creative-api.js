@@ -482,20 +482,26 @@ export function createInkPublicCreativeApi(app) {
         let importRoute = 'web-raster';
         let detectedFormat = null;
 
-        if (rawLike) {
-          throw Object.assign(new Error('No approved RAW decoder is registered in the current INK runtime'), {
-            code: 'INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE',
-            field: 'input',
-            actual: file?.name || null
-          });
-        }
-
         const bytes = new Uint8Array(await file.arrayBuffer());
         const probe = app.imageFormatProbe(bytes);
         detectedFormat = probe?.matched ? String(probe.format || '').toUpperCase() : null;
-        if (['PSD', 'TIFF', 'EXR'].includes(detectedFormat)) {
-          importRoute = 'advanced-format';
+        if (['PSD', 'TIFF', 'EXR', 'RAW'].includes(detectedFormat)) {
+          importRoute = detectedFormat === 'RAW' ? 'advanced-format-raw' : 'advanced-format';
           object = await app.importImageFormat(bytes, { name: name || 'Imported image', matrix, format: detectedFormat });
+        } else if (rawLike) {
+          const rawStatus = String(probe?.status || 'decoder-unavailable');
+          throw Object.assign(new Error(
+            rawStatus === 'unsupported-family'
+              ? 'No registered RAW adapter supports this camera family'
+              : 'No approved RAW decoder is registered in the current INK runtime'
+          ), {
+            code: rawStatus === 'unsupported-family'
+              ? 'INK_AGENT_RASTER_RAW_FAMILY_UNSUPPORTED'
+              : 'INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE',
+            field: 'input',
+            actual: file?.name || null,
+            rawStatus
+          });
         } else if (detectedFormat) {
           throw Object.assign(new Error('Detected raster format is not qualified for CHAT mutable import'), {
             code: 'INK_AGENT_RASTER_FORMAT_NOT_QUALIFIED',
@@ -544,7 +550,7 @@ export function createInkPublicCreativeApi(app) {
             latest: latestHistory
           },
           revisionReceipt: { before: revisionBefore, after: revisionAfter },
-          provenanceReceipt: importRoute === 'advanced-format'
+          provenanceReceipt: importRoute.startsWith('advanced-format')
             ? {
                 sourceChannel: 'CHAT_RASTER_ATTACHMENT_HANDOFF',
                 format: formatSource?.format || detectedFormat,
