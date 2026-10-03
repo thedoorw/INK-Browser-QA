@@ -29,7 +29,7 @@ test('Cluster D exposes only bounded native Material and one Studio Recipe execu
   assert.ok(inventory.constraints.some(text => /Read-only/.test(text)));
 
   const execute = resolveInkCapabilityDescriptor('recipe.studio.execute.v1');
-  assert.equal(execute.role, 'WRITE');
+  assert.equal(execute.role, 'PROPOSAL');
   assert.match(execute.constraints.join('\n'), /existing Studio RecipeEngine/);
   assert.match(execute.constraints.join('\n'), /Inline recipe definitions are prohibited/);
 
