@@ -722,12 +722,37 @@ const RASTER_ADVANCED_INGEST_CASE = String.raw`(async()=>{
   const redoHash=fnv(flatObjects().find(item=>item.id===psd.objectId).rasterState.colorRaster);
   if(redoHash!==afterHash)throw new Error('PSD_EDIT_REDO_HASH');
 
-  const rawFile=new File([Uint8Array.from([82,65,87,84,1,2,3,4])],'candidate-camera.dng',{type:'image/x-adobe-dng'});
+  const rawBytes=Uint8Array.from([82,65,87,84,1,2,3,4]);
+  const rawFile=new File([rawBytes],'candidate-camera.dng',{type:'image/x-adobe-dng'});
   const raw=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file:rawFile},options:{name:'candidate-camera.dng',type:'image/x-adobe-dng'}}));
   const rawCode=findField(raw,'code')||JSON.stringify(raw.diagnostics||[]);
   if(raw?.status!=='FAILED'||!String(rawCode).includes('RAW_DECODER_UNAVAILABLE'))throw new Error('RAW_DECODER_BOUNDARY_NOT_ENFORCED:'+String(rawCode));
 
-  return {passed:true,operation:'raster.import',imports,psdMutation:{beforeHash,afterHash,undoHash,redoHash,afterEditPreview},rawRejected:true,rawCode:String(rawCode)};
+  formatCore.rawAdapters.register({
+    id:'qa-raw-adapter',
+    browserCompatible:true,
+    deterministic:true,
+    license:'CC0-1.0',
+    probe:bytes=>bytes?.length>=4&&bytes[0]===82&&bytes[1]===65&&bytes[2]===87&&bytes[3]===84?{family:'QA-RAW'}:false,
+    decode:async bytes=>{
+      const width=6,height=4,pixels=width*height,data=new Uint16Array(pixels*3),alpha=new Uint16Array(pixels);
+      for(let i=0;i<pixels;i++){const o=i*3;data[o]=1000+i*97;data[o+1]=2000+i*83;data[o+2]=3000+i*71;alpha[i]=65535;}
+      return {family:'QA-RAW',width,height,bitDepth:16,colorMode:'RGB',data,alpha,decodeMetadata:{qa:true,inputLength:bytes.length}};
+    }
+  });
+  const rawApprovedFile=new File([rawBytes],'candidate-camera.dng',{type:'image/x-adobe-dng'});
+  const rawImported=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file:rawApprovedFile},options:{name:'QA RAW',type:'image/x-adobe-dng',intent:'policy-gated RAW candidate QA'}}));
+  if(rawImported?.status==='FAILED')throw new Error('RAW_APPROVED_ADAPTER_IMPORT_FAILED:'+JSON.stringify(rawImported.diagnostics||[]));
+  const rawRef=rawImported?.createdRefs?.[0];if(!rawRef?.objectId)throw new Error('RAW_APPROVED_REF_MISSING');
+  await waitFrames();
+  const rawObject=flatObjects().find(item=>item.id===rawRef.objectId);
+  if(!rawObject?.rasterState?.colorRaster)throw new Error('RAW_APPROVED_RASTER_STATE_MISSING');
+  if(rawObject.rasterState?.source?.format!=='RAW')throw new Error('RAW_APPROVED_SOURCE_FORMAT:'+rawObject.rasterState?.source?.format);
+  if(rawObject.rasterState.colorRaster.bitDepth!==16)throw new Error('RAW_APPROVED_BIT_DEPTH:'+rawObject.rasterState.colorRaster.bitDepth);
+  if(findField(rawImported,'importRoute')!=='advanced-format-raw')throw new Error('RAW_APPROVED_ROUTE:'+findField(rawImported,'importRoute'));
+  const rawPreview=await preview();
+
+  return {passed:true,operation:'raster.import',imports,psdMutation:{beforeHash,afterHash,undoHash,redoHash,afterEditPreview},rawDefaultRejected:true,rawDefaultCode:String(rawCode),rawApproved:{ref:rawRef,bitDepth:rawObject.rasterState.colorRaster.bitDepth,colorMode:rawObject.rasterState.colorRaster.colorMode,preview:rawPreview,route:findField(rawImported,'importRoute')}};
 })()`;
 
 const RASTER_SOURCE_RETOUCH_B3_CASE = String.raw`(async()=>{
