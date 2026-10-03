@@ -1,0 +1,122 @@
+{
+  "schema": "INK_PWA_CACHE_FRESHNESS_SUPERVISOR_GATES_EVIDENCE",
+  "version": 3,
+  "date": "2026-10-03",
+  "branch": "work/pwa-cache-freshness-supervisor-gates-003",
+  "status": "DEV_RETURN_READY_POSTINTEGRATION_LIVE_GATE_REQUIRED",
+  "latest_main": "a6842e95a00ef440d47cc393394b9272d75f6082",
+  "merge_base": "a6842e95a00ef440d47cc393394b9272d75f6082",
+  "exact_candidate": "0ccfd4a729f16ff755921f5881fa0090e2745581",
+  "product_source_tree": "316a46fb48141d2e3b0db90ca8cab93f58283cdf",
+  "local_fallback_build_identity": "src-9a29bbb8ab5444f8122e5e9d",
+  "gate_1": {
+    "requirement": "Bind build identity to authoritative main/GitHub Pages publication path without manual regeneration.",
+    "result": "PASS_ON_EXACT_CANDIDATE",
+    "mechanism": {
+      "authoritative_pages_mode": "GitHub built-in dynamic pages build and deployment from main",
+      "publication_source": "pwa-pages-build-identity.txt",
+      "jekyll_expression": "site.github.build_revision",
+      "deployed_endpoint": "/product/source/pages-build-identity.txt",
+      "runtime_identity": "pages-<site.github.build_revision>",
+      "worker_url": "service-worker-runtime.js?build=<runtime_identity>",
+      "cache_identity": "ink-build-pages-<site.github.build_revision>-{shell,runtime}",
+      "source_fallback": "deterministic src-* fingerprint for local/non-Pages use"
+    },
+    "proof": {
+      "workflow_run_id": 37119509698,
+      "workflow_run_number": 7,
+      "jekyll_build_action": "actions/jekyll-build-pages@v1",
+      "expected_revision": "0ccfd4a729f16ff755921f5881fa0090e2745581",
+      "rendered_revision": "0ccfd4a729f16ff755921f5881fa0090e2745581",
+      "status": "PASS"
+    },
+    "manual_identity_update_required": false,
+    "repository_pages_admin_permission_required": false
+  },
+  "migration_recovery": {
+    "version": "ink-pwa-cache-migration-v4",
+    "reason": "Earlier real Chromium runs reproduced an installed/waiting migration-worker race with the old cache-first worker still controlling the page.",
+    "correction": [
+      "stable legacy service-worker.js URL retained",
+      "install clears INK-owned legacy caches",
+      "skipWaiting requested immediately and during install",
+      "controlled/uncontrolled windows receive at most one bounded migration navigation",
+      "old cache-first worker can no longer satisfy recovery navigation from stale cache",
+      "dedicated publication-bound runtime worker becomes steady-state controller"
+    ],
+    "local_browser_qualification": {
+      "run_id": 37119509698,
+      "conclusion": "success",
+      "artifact_id": 11272193852,
+      "artifact_digest": "sha256:b8542ea421cab1b60ca2385c9bb9cbeb61064946f4c38163cf5ea8fe0377ce81",
+      "profiles": 2,
+      "profile_a": "PASS",
+      "profile_b": "PASS",
+      "ordinary_reload": "Chromium Page.reload ignoreCache=false",
+      "checks": {
+        "previous_worker_controlled": true,
+        "ordinary_reload_reached_candidate": true,
+        "old_ink_caches_cleaned": true,
+        "no_mixed_build_cache": true,
+        "no_reload_loop": true,
+        "close_reopen_reached_candidate": true,
+        "offline_fallback_loads": true
+      }
+    }
+  },
+  "gate_2": {
+    "requirement": "Actual deployed QA URL ordinary open/F5, close-reopen, offline, without Ctrl+F5, DevTools cache clear, or unregister.",
+    "actual_url": "https://thedoorw.github.io/INK-Browser-QA/product/source/",
+    "preintegration_baseline": {
+      "status": "PASS",
+      "build_id": "20261002-c04-two-state-repair",
+      "controller_script_url": "https://thedoorw.github.io/INK-Browser-QA/product/source/service-worker.js",
+      "caches": [
+        "ink-build-20261002-c04-two-state-repair-shell"
+      ],
+      "ctrl_f5_used": false,
+      "devtools_clear_cache_used": false,
+      "unregister_used": false,
+      "browser_profile_preserved": true,
+      "preserved_profile_reuse_verified": true
+    },
+    "candidate_actual_url_transition": {
+      "status": "MANDATORY_POST_INTEGRATION_NOT_YET_RUN",
+      "reason": "Repository Pages publishes only main. User instruction forbids merge; pre-main same-origin candidate deployment was previously proven unavailable without repository admin policy changes.",
+      "armed_workflow": ".github/workflows/ink-pwa-pages-postintegration.yml",
+      "trigger": "push to main when bounded PWA paths are integrated",
+      "procedure": [
+        "download preserved pre-integration old browser profile from branch evidence artifact",
+        "wait until actual Pages pages-build-identity.txt equals exact integrated main SHA",
+        "reuse same old browser profile",
+        "ordinary open",
+        "ordinary F5-equivalent Page.reload with ignoreCache=false",
+        "close tab and reopen",
+        "offline reload/fallback",
+        "assert worker/app/cache publication identity",
+        "do not Ctrl+F5, clear cache, Disable cache, or unregister"
+      ]
+    },
+    "closed": false
+  },
+  "regression": {
+    "source_guards": "PASS",
+    "syntax_guards": "PASS",
+    "shell_generation": "PASS",
+    "jekyll_publication_build": "PASS",
+    "postintegration_gate_wiring": "PASS",
+    "local_chromium_A": "PASS",
+    "local_chromium_B": "PASS",
+    "actual_pages_old_profile_capture": "PASS",
+    "actual_pages_old_profile_archive_restore": "PASS"
+  },
+  "boundaries": {
+    "old_branch_wholesale_merge": false,
+    "main_modified": false,
+    "live_repo_modified": false,
+    "format_version_changed": false,
+    "unrelated_ui_changed": false,
+    "drawing_render_changed": false
+  },
+  "disposition": "STOP_TO_SUPERVISOR_FOR_BOUNDED_INTEGRATION_THEN_AUTOMATIC_ACTUAL_PAGES_GATE"
+}
