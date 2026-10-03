@@ -1,5 +1,38 @@
 # INK Current Work Order
 
+## PWA / Cache Freshness — Supervisor review REVISION_REQUIRED 2026-10-03
+
+Supervisor reviewed exact DEV candidate `1da854e6ce1805101f5ff3a4f7b7e16929a2d88e`.
+
+Accepted:
+- real Chromium lifecycle evidence;
+- normal reload with `ignoreCache=false`;
+- previous-worker migration;
+- worker/app identity agreement;
+- close/reopen;
+- coherent offline fallback;
+- no reload loop.
+
+Promotion is blocked by two remaining gates:
+
+1. generated build identity is not yet bound to the authoritative future `main` / GitHub Pages publication path; the added evidence workflow is task-branch-only and cannot prevent a later stale checked-in identity;
+2. the browser harness used a local switchable server; the actual deployed QA URL still requires ordinary open/F5 verification without Ctrl+F5 before closure.
+
+Review:
+- `working/INK_PWA_CACHE_FRESHNESS_SUPERVISOR_REVIEW_20261003.md`
+
+Required next:
+```text
+DEV revision
+→ publication-bound deterministic build identity
+→ reconcile onto latest main composition
+→ fresh browser evidence
+→ actual deployed QA ordinary reload/reopen gate
+→ Supervisor review
+```
+
+Do not merge the divergent work branch wholesale.
+
 ## Core spatial-batch optimization 003 — CLOSED 2026-10-03
 
 PR #150 accepted, merged, deployed and Formal Live qualified at e139682a8c374e275061872ba9f27bc06ca0d492.46 local checks; exact candidate browser native16-object batch/Preview/Undo/Redo plus A1/A2/A3/A4/A5/B2/B4/C1/C2/C3 PASS. Formal Live run 37109933114 verifies exact source, native batch/query/Undo/Redo,3000-object20-cycle checks,previous caches,B4 and C3 steps PASS. [Authority closure](../working/INK_CORE_PERFORMANCE_STABILITY_003_AUTHORITY_CLOSURE_20261003.md).
