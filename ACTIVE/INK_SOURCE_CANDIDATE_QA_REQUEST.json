@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A3-regression-A1-001",
+  "requestId": "clusterA-A3-regression-B2-adjustment-001",
   "candidateSha": "1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
-  "case": "paint-session-create"
+  "case": "raster-stack-adjustment-b2"
 }

@@ -1,0 +1,41 @@
+{
+  "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+  "version": 1,
+  "requestId": "clusterA-A3-regression-A1-001",
+  "candidateSha": "1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
+  "case": "paint-session-create",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:34399/?sourceCandidate=1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "before": {
+      "count": 0,
+      "undo": 0,
+      "canvas": "8d257ff8"
+    },
+    "after": {
+      "count": 1,
+      "undo": 1,
+      "canvas": "c81fe871",
+      "id": "chat-paint-fnv1a32-c7900103",
+      "strokes": 2,
+      "replayHash": "f18b2df3"
+    },
+    "previewStatus": "COMPLETED",
+    "previewBounds": {
+      "h": 231.12032,
+      "w": 274.0064,
+      "x": -135.13,
+      "y": -120.46648
+    },
+    "undoStatus": "COMPLETED",
+    "redoStatus": "COMPLETED",
+    "restoredStrokeCount": 2
+  },
+  "status": "PASS"
+}
