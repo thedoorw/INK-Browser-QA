@@ -679,7 +679,7 @@ const RASTER_MASK_B3_CASE = String.raw`(async()=>{
 
   app.selection=[];app.refreshSelectionUI?.();app.renderer?.render?.();await waitFrames();app.history.clear();
   const baselineHash=rasterHash(object),baselinePreview=await preview();
-  const maskTask=(taskId,patch={})=>({schema:'INK-CHAT-EDIT-TASK',version:1,taskId,operation:'image.mask.raster.set.v1',targets:[ref],arguments:{shape:'rectangle',x:8,y:6,width:32,height:24,invert:false,feather:0,expand:0,enabled:true,...patch}});
+  const maskTask=(taskId,patch={})=>({schema:'INK-CHAT-EDIT-TASK',version:1,taskId,operation:'image.mask.raster.set.v1',targets:[ref],arguments:{shape:'rectangle',x:8,y:6,width:32,height:24,invert:false,feather:0,expand:0,...patch}});
   const bucketTask=(taskId,color)=>({schema:'INK-CHAT-EDIT-TASK',version:1,taskId,operation:'image.raster.paintBucket.v1',targets:[ref],arguments:{x:4,y:4,color,tolerance:0,contiguous:true,opacity:1}});
 
   const staleMaskProposal=await propose(maskTask('qa-b3-mask-stale-pixels'));
