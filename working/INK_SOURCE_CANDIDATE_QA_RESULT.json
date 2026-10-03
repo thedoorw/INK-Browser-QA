@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "local-paper-single-stroke-candidate-001",
+  "requestId": "local-paper-single-a3-regression-001",
   "candidateSha": "29e23abf609bf57603ecfe5e366355b788ddc2fd",
-  "case": "page-paper-single-stroke",
+  "case": "page-paper-a3",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:43967/?sourceCandidate=29e23abf609bf57603ecfe5e366355b788ddc2fd",
+    "href": "http://127.0.0.1:33651/?sourceCandidate=29e23abf609bf57603ecfe5e366355b788ddc2fd",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -13,6 +13,8 @@
   },
   "result": {
     "passed": true,
+    "operation": "page.paper.set.v1",
+    "paperCoupledRunStrokeCount": 2,
     "paperBefore": {
       "type": "blank",
       "color": "#fffef9",
@@ -26,30 +28,38 @@
       "seed": 1337,
       "textureVisible": true
     },
-    "cases": [
+    "paperAfter": {
+      "type": "blank",
+      "color": "#fffef9",
+      "gridSize": 32,
+      "absorbency": 0.05,
+      "roughness": 0.95,
+      "fiberStrength": 0.36,
+      "fiberAngle": 0,
+      "sizing": 0.28,
+      "granulation": 0.32,
+      "seed": 1337,
+      "textureVisible": true
+    },
+    "baseline": "fnv1a32:a108acca",
+    "roughPreview": "fnv1a32:a108acca",
+    "changedPreview": "fnv1a32:cb5efcee",
+    "undoRedoRenderExact": true,
+    "scopedPaperEntries": [
       {
-        "kind": "brush",
-        "objectId": "chat-stroke-fnv1a32-672d71f3",
-        "baseline": "fnv1a32:f12338cd",
-        "changed": "fnv1a32:fa55e651",
-        "historyBefore": 1,
-        "paperHistoryAfter": 2,
-        "activeBackend": "webgl2-multichannel",
-        "identityStable": true,
-        "undoRedoExact": true
+        "label": "調整畫布",
+        "captureMode": "scoped"
       },
       {
-        "kind": "drybrush",
-        "objectId": "chat-stroke-fnv1a32-70ca7e5a",
-        "baseline": "fnv1a32:3438417b",
-        "changed": "fnv1a32:af6f8723",
-        "historyBefore": 1,
-        "paperHistoryAfter": 2,
-        "activeBackend": "webgl2-multichannel",
-        "identityStable": true,
-        "undoRedoExact": true
+        "label": "調整畫布",
+        "captureMode": "scoped"
       }
     ],
+    "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
+    "invalidCasesRejected": 5,
+    "noOpRejected": true,
+    "staleRejected": true,
+    "pendingPreviewRejected": true,
     "naturalMedia": {
       "preference": "auto",
       "floraReferenceBackend": "canvas2d",
@@ -62,15 +72,15 @@
       "webgl": {
         "backend": "webgl2",
         "drawCalls": 4,
-        "cacheHits": 5,
+        "cacheHits": 7,
         "cacheMisses": 4,
         "evictions": 0,
         "contextLosses": 0,
         "restores": 0,
-        "vertices": 1392,
+        "vertices": 1284,
         "state": "ready",
         "available": true,
-        "cacheEntries": 1,
+        "cacheEntries": 2,
         "lastError": null,
         "capabilities": {
           "maxTextureSize": 8192,
@@ -87,37 +97,37 @@
         },
         "resources": {
           "allocations": 4,
-          "releases": 3,
+          "releases": 2,
           "evictions": 0,
           "rejected": 0,
-          "peakBytes": 1888836,
+          "peakBytes": 1592244,
           "budgetBytes": 100663296,
-          "usedBytes": 968772,
-          "availableBytes": 99694524,
-          "utilization": 0.009623885154724121,
-          "resources": 1,
+          "usedBytes": 1592244,
+          "availableBytes": 99071052,
+          "utilization": 0.01581752300262451,
+          "resources": 2,
           "byType": {
-            "raster-cache": 968772
+            "raster-cache": 1592244
           }
         },
         "selfTest": null
       },
       "multiChannelWebgl": {
         "backend": "webgl2-multichannel",
-        "runs": 20,
-        "strokes": 20,
-        "drawCalls": 20,
-        "simulationPasses": 80,
-        "cacheHits": 24,
-        "cacheMisses": 20,
+        "runs": 17,
+        "strokes": 32,
+        "drawCalls": 32,
+        "simulationPasses": 68,
+        "cacheHits": 16,
+        "cacheMisses": 17,
         "evictions": 0,
         "contextLosses": 0,
         "restores": 0,
         "state": "ready",
         "available": true,
-        "cacheEntries": 4,
+        "cacheEntries": 6,
         "lastError": null,
-        "targets": "307x203",
+        "targets": "306x207",
         "capabilities": {
           "maxTextureSize": 8192,
           "maxRenderbufferSize": 8192,
@@ -132,19 +142,19 @@
           "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
         },
         "resources": {
-          "allocations": 48,
-          "releases": 42,
+          "allocations": 44,
+          "releases": 36,
           "evictions": 0,
           "rejected": 0,
-          "peakBytes": 4184736,
+          "peakBytes": 4278288,
           "budgetBytes": 167772160,
-          "usedBytes": 2210672,
-          "availableBytes": 165561488,
-          "utilization": 0.013176631927490235,
-          "resources": 6,
+          "usedBytes": 2864880,
+          "availableBytes": 164907280,
+          "utilization": 0.01707601547241211,
+          "resources": 8,
           "byType": {
-            "raster-cache": 1213536,
-            "mrt-target": 997136
+            "raster-cache": 1851408,
+            "mrt-target": 1013472
           }
         },
         "selfTest": null
