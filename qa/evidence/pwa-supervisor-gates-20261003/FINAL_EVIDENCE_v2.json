@@ -1,0 +1,91 @@
+{
+  "schema": "INK_PWA_CACHE_FRESHNESS_SUPERVISOR_GATES_EVIDENCE",
+  "version": 2,
+  "date": "2026-10-03",
+  "status": "BLOCKED_ON_REPOSITORY_PAGES_ADMIN_GATE",
+  "branch": "work/pwa-cache-freshness-supervisor-gates-002",
+  "latest_main_at_final_check": "bf547dfc4eda2b24e5062a8078176adf3b635524",
+  "latest_main_product_reconcile_base": "4188e9cc7673313726abd7986310d758912f63cf",
+  "later_main_changes_after_product_reconcile": {
+    "product_source_changed": false,
+    "files": [
+      "ACTIVE/INK_LIVE_CHAT_REQUEST.json",
+      "working/INK_LIVE_CHAT_RESULT.json"
+    ]
+  },
+  "exact_product_candidate": "a2ef25b41cdc67064558ee6b5a74bcf923ca1a50",
+  "build_identity": "src-02bd9fe264b246ec6a9a13f0",
+  "local_qualification": {
+    "run_id": 37117779944,
+    "conclusion": "success",
+    "artifact_id": 11271464271,
+    "artifact_digest": "sha256:f7a4d9add336c1640b8cb34922defed781da59b2bba590a573de13ab9bfadf5b",
+    "deterministic_identity": "PASS",
+    "source_syntax_shell": "PASS",
+    "latest_main_baseline": "PASS",
+    "chromium_lifecycle_A": "PASS",
+    "chromium_lifecycle_B": "PASS"
+  },
+  "actual_pages_baseline": {
+    "url": "https://thedoorw.github.io/INK-Browser-QA/product/source/",
+    "capture_run_id": 37117127162,
+    "artifact_id": 11272585365,
+    "artifact_digest": "sha256:45c4f671f13a941adf924e582ab7bfbbdc740dffabcc61e9ad359719e2905011",
+    "build_id": "20261002-c04-two-state-repair",
+    "controller_script_url": "https://thedoorw.github.io/INK-Browser-QA/product/source/service-worker.js",
+    "caches": [
+      "ink-build-20261002-c04-two-state-repair-shell"
+    ],
+    "ctrl_f5_used": false,
+    "devtools_clear_cache_used": false,
+    "unregister_used": false
+  },
+  "gate_1": {
+    "requirement": "deterministic build identity must be part of authoritative main/GitHub Pages publication boundary",
+    "staged_implementation": {
+      "generator": "product/source/generate-build-identity.mjs",
+      "workflow": ".github/workflows/ink-pages-publication.yml",
+      "behavior": "generate build identity inside publication job, verify, stage exact generated file, write PAGES_BUILD_INFO.json"
+    },
+    "authoritative_current_publication": {
+      "workflow_name": "pages build and deployment",
+      "workflow_path": "dynamic/pages/pages-build-deployment",
+      "source_branch": "main",
+      "observed_active": true
+    },
+    "admin_blocker": {
+      "pages_build_type_mutation_with_github_token": "HTTP 403 Forbidden",
+      "deployment_policy_error": "Invalid deployment branch and no branch protection rules set in the environment. Deployments are only allowed from main",
+      "required_permission": "repository Administration (write) for environment/deployment branch policy mutation"
+    },
+    "closed": false
+  },
+  "gate_2": {
+    "requirement": "actual Pages candidate ordinary open/F5, close-reopen, offline",
+    "baseline_capture": "PASS",
+    "candidate_artifact_generation": "PASS",
+    "prior_candidate_pages_artifact": {
+      "source_sha": "4ab56be3b9205fedafaeccf093d39875135f0401",
+      "generated_build_id": "src-27c5b9ef87d1227f3afde10b",
+      "artifact_id": 11271927264,
+      "artifact_digest": "sha256:faa88e6e6b911cef259a272de5befbed5a8a998d09fdf138890b692ab182aab9"
+    },
+    "deployment_result": "BLOCKED_BEFORE_LIVE_BYTES_CHANGED",
+    "live_candidate_open_f5_reopen_offline": "NOT_RUN_AND_NOT_CLAIMED",
+    "closed": false
+  },
+  "bounded_reconcile": {
+    "whole_old_branch_merged": false,
+    "current_main_product_changes_preserved": [
+      "product/source/src/agent/capability-registry.js",
+      "product/source/src/agent/public-creative-api.js",
+      "product/source/src/editor/chat-bounded-edit.js",
+      "product/source/src/recipe/recipe-engine.js",
+      "product/source/src/studio-core.js"
+    ],
+    "main_modified": false,
+    "live_repo_modified": false,
+    "format_version_changed": false
+  },
+  "disposition": "STOP_TO_SUPERVISOR_FOR_REPOSITORY_PAGES_ADMIN_GATE"
+}
