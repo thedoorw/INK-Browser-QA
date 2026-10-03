@@ -1,29 +1,29 @@
 {
   "schema": "INK-LIVE-CHAT-RESULT",
   "version": 1,
-  "requestId": "clusterB-B3-paint-bucket-live-001",
+  "requestId": "clusterB-B3-raster-mask-live-001",
   "tool": null,
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "d64aa172ef6d4f3c100642aec8bcc4195c33b2dd",
+  "expectedSourceSha": "2d1c67f398c19cbbec1e935095b5dc991c886213",
   "runtimeIdentity": {
     "href": "https://thedoorw.github.io/INK/",
     "readyState": "complete",
     "apiReady": true,
-    "sourceSha": "d64aa172ef6d4f3c100642aec8bcc4195c33b2dd",
+    "sourceSha": "2d1c67f398c19cbbec1e935095b5dc991c886213",
     "toolCount": 23
   },
   "result": {
     "steps": [
       {
-        "id": "describe",
+        "id": "describeMask",
         "tool": "describe_ink_capability",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "capability.describe",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -43,13 +43,14 @@
             "availabilityReason": null,
             "constraints": [
               "Target must resolve to exactly one editable visible unlocked native Image with rasterState.colorRaster. ReferenceImage and src-only images are rejected.",
-              "Destructive local raster edit. Reuses existing paintBucketFill()/magicWandSelection and existing rasterState.colorRaster. Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation or automatic target discovery."
+              "Image stack params are structurally bounded to 8 KiB, depth 4, 64 object keys, array length 128, finite numbers and 512-character strings.",
+              "Initial geometry is rectangle only. Reuses existing rasterizePathMask/createRasterMask/renderImageStack; raw alpha arrays are not accepted. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints."
             ],
-            "description": "Operation-specific bounded edit descriptor for image.raster.paintBucket.v1.",
+            "description": "Operation-specific bounded edit descriptor for image.mask.raster.set.v1.",
             "examples": [
               {
                 "arguments": {},
-                "operation": "image.raster.paintBucket.v1",
+                "operation": "image.mask.raster.set.v1",
                 "targets": [
                   {
                     "layerId": "layer-1",
@@ -57,52 +58,68 @@
                     "pageId": "page-1"
                   }
                 ],
-                "taskId": "image.raster.paintBucket.v1-1"
+                "taskId": "image.mask.raster.set.v1-1"
               }
             ],
             "historyPolicy": {
               "mode": "AUTHORITATIVE_COMMIT_ON_EXECUTE_ONLY"
             },
-            "id": "image.raster.paintBucket.v1",
+            "id": "image.mask.raster.set.v1",
             "inputSchema": {
               "additionalProperties": false,
               "description": "Input accepted by propose_ink_edit / edit.propose.",
               "properties": {
                 "arguments": {
                   "additionalProperties": false,
-                  "description": "Raster-local Paint Bucket arguments. The seed must fall within the raster dimensions at execution time.",
+                  "description": "Bounded raster-mask geometry. Raw alpha pixel arrays are not accepted from CHAT.",
                   "properties": {
-                    "color": {
-                      "description": "Fill color as #RRGGBB or #RRGGBBAA.",
-                      "type": "string"
+                    "expand": {
+                      "default": 0,
+                      "description": "Existing mask expand/contract amount.",
+                      "maximum": 256,
+                      "minimum": -256,
+                      "type": "integer"
                     },
-                    "contiguous": {
-                      "default": true,
-                      "description": "Limit fill to the connected seed region.",
-                      "type": "boolean"
-                    },
-                    "opacity": {
-                      "default": 1,
-                      "description": "Fill opacity.",
-                      "maximum": 1,
+                    "feather": {
+                      "default": 0,
+                      "description": "Existing mask feather radius.",
+                      "maximum": 256,
                       "minimum": 0,
                       "type": "number"
                     },
-                    "tolerance": {
-                      "default": 0,
-                      "description": "Existing magic-wand color tolerance.",
-                      "maximum": 255,
-                      "minimum": 0,
+                    "height": {
+                      "description": "Rectangle height.",
+                      "maximum": 1000000,
+                      "minimum": 2.220446049250313e-16,
+                      "type": "number"
+                    },
+                    "invert": {
+                      "default": false,
+                      "description": "Invert mask.",
+                      "type": "boolean"
+                    },
+                    "shape": {
+                      "default": "rectangle",
+                      "description": "Initial bounded geometry family.",
+                      "enum": [
+                        "rectangle"
+                      ],
+                      "type": "string"
+                    },
+                    "width": {
+                      "description": "Rectangle width.",
+                      "maximum": 1000000,
+                      "minimum": 2.220446049250313e-16,
                       "type": "number"
                     },
                     "x": {
-                      "description": "Raster-local seed X.",
+                      "description": "Raster-local rectangle X.",
                       "maximum": 1000000,
                       "minimum": 0,
                       "type": "number"
                     },
                     "y": {
-                      "description": "Raster-local seed Y.",
+                      "description": "Raster-local rectangle Y.",
                       "maximum": 1000000,
                       "minimum": 0,
                       "type": "number"
@@ -111,7 +128,8 @@
                   "required": [
                     "x",
                     "y",
-                    "color"
+                    "width",
+                    "height"
                   ],
                   "type": "object"
                 },
@@ -146,8 +164,8 @@
                   "type": "object"
                 },
                 "operation": {
-                  "const": "image.raster.paintBucket.v1",
-                  "description": "Destructively fill one bounded region of an editable native 8-bit RGB raster image through the existing paintBucketFill() pixel authority.",
+                  "const": "image.mask.raster.set.v1",
+                  "description": "Set one native raster mask on an editable image from bounded raster-local geometry through the existing rasterizePathMask()/renderImageStack() authority.",
                   "type": "string"
                 },
                 "schema": {
@@ -233,7 +251,7 @@
             "targetTypes": [
               "Image"
             ],
-            "title": "image.raster.paintBucket.v1",
+            "title": "image.mask.raster.set.v1",
             "toolPrimary": false,
             "version": 1
           }
@@ -247,22 +265,22 @@
           "version": 1,
           "action": "raster.import",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "changedRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "historyReceipt": {
@@ -286,10 +304,10 @@
               "captureMode": "scoped",
               "label": "匯入可編輯影像",
               "objectIds": [
-                "354bc37e-e818-4584-84f6-5b0848a1888c"
+                "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
               ],
               "patchCount": 1,
-              "storedBytes": 24005811,
+              "storedBytes": 24005816,
               "targetCount": 1
             }
           },
@@ -304,7 +322,7 @@
           "outputHandles": [],
           "diagnostics": [],
           "result": {
-            "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
+            "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
             "rasterState": {
               "format": null,
               "height": 1448,
@@ -323,135 +341,6 @@
         }
       },
       {
-        "id": "contextImported",
-        "tool": "get_ink_context",
-        "result": {
-          "schema": "INK_AGENT_RESULT",
-          "version": 1,
-          "action": "context",
-          "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
-          "revisionId": null,
-          "targetRefs": [
-            {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
-            }
-          ],
-          "createdRefs": [],
-          "changedRefs": [],
-          "historyReceipt": null,
-          "revisionReceipt": null,
-          "provenanceReceipt": null,
-          "outputHandles": [],
-          "diagnostics": [],
-          "result": {
-            "active": {
-              "layer": {
-                "id": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                "name": "圖層 1"
-              },
-              "page": {
-                "id": "39a9d116-1f52-4e25-be6c-752c5b09d533",
-                "name": "頁面 1"
-              }
-            },
-            "bounds": {
-              "limits": {
-                "maxBytes": 98304,
-                "maxObjects": 96,
-                "maxRelationships": 192
-              },
-              "objects": {
-                "returned": 1,
-                "totalAvailable": 1,
-                "truncated": false
-              },
-              "outputBytes": 1616,
-              "relationships": {
-                "returned": 0,
-                "totalAvailable": 0,
-                "truncated": false
-              }
-            },
-            "contextFingerprint": "fnv1a32:b524bfee",
-            "document": {
-              "appVersion": "0.1",
-              "format": "INK",
-              "formatVersion": 4,
-              "id": "a056584d-ce99-4218-986d-902679f3bb00",
-              "pageCount": 1,
-              "title": "未命名作品"
-            },
-            "fingerprintAlgorithm": "fnv1a32-canonical-json",
-            "focus": {
-              "objectIds": []
-            },
-            "objects": [
-              {
-                "depth": 0,
-                "editability": {
-                  "editable": true,
-                  "objectProtected": false,
-                  "protectedProperties": []
-                },
-                "geometry": {
-                  "height": 1448,
-                  "kind": "image",
-                  "reference": {
-                    "kind": "image",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c"
-                  },
-                  "width": 1086
-                },
-                "name": "B3 Editable Raster",
-                "parentId": null,
-                "ref": {
-                  "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                  "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                  "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
-                },
-                "renderOrder": 0,
-                "semantic": {
-                  "constraintIds": [],
-                  "dependencyIds": [],
-                  "editableParameterKeys": [],
-                  "protectedProperties": [],
-                  "role": null
-                },
-                "structure": {
-                  "ancestorIds": [],
-                  "effectiveLocked": false,
-                  "effectiveOpacity": 1,
-                  "effectiveVisible": true,
-                  "interactionExposed": true
-                },
-                "type": "image"
-              }
-            ],
-            "relationships": {
-              "edges": [],
-              "source": "object.semantic",
-              "totalAvailable": 0,
-              "truncated": false
-            },
-            "revision": {
-              "revisionId": null
-            },
-            "schema": "INK-AI-DOCUMENT-BRIDGE",
-            "selection": {
-              "objectIds": [
-                "354bc37e-e818-4584-84f6-5b0848a1888c"
-              ],
-              "unresolvedObjectIds": []
-            },
-            "version": 1
-          }
-        }
-      },
-      {
         "id": "previewBefore",
         "tool": "get_ink_preview",
         "result": {
@@ -459,8 +348,8 @@
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -481,15 +370,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:51c3aae5",
-              "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
+              "documentFingerprint": "fnv1a32:2cdff1d6",
+              "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:a08a9660",
+              "handleId": "ink-output-v1:ec7e7d6d",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -512,7 +401,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:a08a9660",
+            "handleId": "ink-output-v1:ec7e7d6d",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -524,21 +413,21 @@
         }
       },
       {
-        "id": "fillPropose",
+        "id": "staleMaskPropose",
         "tool": "propose_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.propose",
           "status": "PROPOSED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "createdRefs": [],
@@ -555,18 +444,91 @@
               "approvalToken": null,
               "approved": false,
               "expected": {
-                "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-                "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+                "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+                "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "37d28181-a7e3-4c34-b170-9d5ad6523629/354bc37e-e818-4584-84f6-5b0848a1888c": "fnv1a32:d18a666d"
+                  "13024176-7f9a-4241-8093-6f39c3b40036/7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca": "fnv1a32:a1205b12"
                 }
               },
-              "proposalId": "proposal:clusterB-B3-live-paint-bucket:26d2ad11",
+              "proposalId": "proposal:clusterB-B3-live-mask-stale-pixels:b2a1dbd5",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:bff79492",
+              "stateFingerprint": "fnv1a32:13df208a",
+              "task": {
+                "arguments": {
+                  "expand": 0,
+                  "feather": 0,
+                  "height": 700,
+                  "invert": false,
+                  "shape": "rectangle",
+                  "width": 500,
+                  "x": 100,
+                  "y": 100
+                },
+                "expected": null,
+                "operation": "image.mask.raster.set.v1",
+                "schema": "INK-CHAT-EDIT-TASK",
+                "targets": [
+                  {
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+                  }
+                ],
+                "taskId": "clusterB-B3-live-mask-stale-pixels",
+                "version": 1
+              },
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "pixelPropose",
+        "tool": "propose_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.propose",
+          "status": "PROPOSED",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "propose",
+            "ok": true,
+            "result": {
+              "approvalToken": null,
+              "approved": false,
+              "expected": {
+                "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+                "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+                "revisionId": null,
+                "targetFingerprints": {
+                  "13024176-7f9a-4241-8093-6f39c3b40036/7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca": "fnv1a32:a1205b12"
+                }
+              },
+              "proposalId": "proposal:clusterB-B3-live-mask-intervening-pixels:3aa57122",
+              "revisionId": null,
+              "schema": "INK-CHAT-EDIT-PROPOSAL",
+              "state": "PROPOSED",
+              "stateFingerprint": "fnv1a32:13df208a",
               "task": {
                 "arguments": {
                   "color": "#20b86a",
@@ -581,12 +543,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                    "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
                   }
                 ],
-                "taskId": "clusterB-B3-live-paint-bucket",
+                "taskId": "clusterB-B3-live-mask-intervening-pixels",
                 "version": 1
               },
               "version": 1
@@ -595,21 +557,21 @@
         }
       },
       {
-        "id": "fillApprove",
+        "id": "pixelApprove",
         "tool": "approve_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.approve",
           "status": "APPROVED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "createdRefs": [],
@@ -623,21 +585,21 @@
             "action": "approve",
             "ok": true,
             "result": {
-              "approvalToken": "INK-LOCAL-APPROVAL:proposal:clusterB-B3-live-paint-bucket:26d2ad11:1",
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:clusterB-B3-live-mask-intervening-pixels:3aa57122:1",
               "approved": true,
               "expected": {
-                "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-                "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+                "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+                "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "37d28181-a7e3-4c34-b170-9d5ad6523629/354bc37e-e818-4584-84f6-5b0848a1888c": "fnv1a32:d18a666d"
+                  "13024176-7f9a-4241-8093-6f39c3b40036/7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca": "fnv1a32:a1205b12"
                 }
               },
-              "proposalId": "proposal:clusterB-B3-live-paint-bucket:26d2ad11",
+              "proposalId": "proposal:clusterB-B3-live-mask-intervening-pixels:3aa57122",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "APPROVED",
-              "stateFingerprint": "fnv1a32:bff79492",
+              "stateFingerprint": "fnv1a32:13df208a",
               "task": {
                 "arguments": {
                   "color": "#20b86a",
@@ -652,12 +614,12 @@
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                    "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
                   }
                 ],
-                "taskId": "clusterB-B3-live-paint-bucket",
+                "taskId": "clusterB-B3-live-mask-intervening-pixels",
                 "version": 1
               },
               "version": 1
@@ -666,29 +628,29 @@
         }
       },
       {
-        "id": "fillExecute",
+        "id": "pixelExecute",
         "tool": "execute_ink_edit",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "edit.execute",
           "status": "EXECUTED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "createdRefs": [],
           "changedRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "historyReceipt": {
@@ -698,7 +660,7 @@
           },
           "revisionReceipt": {
             "currentRevisionId": null,
-            "documentFingerprint": "fnv1a32:52826f02",
+            "documentFingerprint": "fnv1a32:554794b0",
             "inspectedRevisionId": null
           },
           "provenanceReceipt": null,
@@ -730,9 +692,9 @@
                 },
                 "resultRefs": [
                   {
-                    "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                    "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
                   }
                 ]
               },
@@ -743,10 +705,10 @@
               },
               "ok": true,
               "operation": "image.raster.paintBucket.v1",
-              "proposalId": "proposal:clusterB-B3-live-paint-bucket:26d2ad11",
+              "proposalId": "proposal:clusterB-B3-live-mask-intervening-pixels:3aa57122",
               "revision": {
                 "currentRevisionId": null,
-                "documentFingerprint": "fnv1a32:52826f02",
+                "documentFingerprint": "fnv1a32:554794b0",
                 "inspectedRevisionId": null
               },
               "schema": "INK-CHAT-EDIT-RESULT",
@@ -754,11 +716,11 @@
               "targets": [
                 {
                   "ref": {
-                    "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                    "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
                   },
-                  "stateFingerprint": "fnv1a32:d18a666d",
+                  "stateFingerprint": "fnv1a32:0ce4d719",
                   "worldMatrix": [
                     1,
                     0,
@@ -769,7 +731,541 @@
                   ]
                 }
               ],
-              "taskId": "clusterB-B3-live-paint-bucket",
+              "taskId": "clusterB-B3-live-mask-intervening-pixels",
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "staleMaskApprove",
+        "tool": "approve_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.approve",
+          "status": "FAILED",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [
+            {
+              "code": "CHAT_EDIT_TARGET_STALE",
+              "details": {
+                "actual": "fnv1a32:0ce4d719",
+                "expected": "fnv1a32:a1205b12",
+                "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
+              },
+              "phase": "approve"
+            }
+          ],
+          "result": {
+            "actual": "fnv1a32:0ce4d719",
+            "code": "CHAT_EDIT_TARGET_STALE",
+            "expected": "fnv1a32:a1205b12",
+            "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+            "ok": false,
+            "phase": "approve"
+          }
+        }
+      },
+      {
+        "id": "undoPixel",
+        "tool": "undo_ink",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "history.undo",
+          "status": "COMPLETED",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": {
+            "after": {
+              "applied": 1,
+              "canRedo": true,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005816,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT raster Paint Bucket",
+                  "objectIds": [],
+                  "patchCount": 41,
+                  "storedBytes": 8765,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005753,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 1,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005753
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 42,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24014581,
+                "undo": 1
+              }
+            },
+            "applied": true,
+            "before": {
+              "applied": 2,
+              "canRedo": false,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005816,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT raster Paint Bucket",
+                  "objectIds": [],
+                  "patchCount": 41,
+                  "storedBytes": 8765,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005753,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 0,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005753
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 42,
+                "redo": 0,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24014581,
+                "undo": 2
+              }
+            }
+          },
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "applied": true,
+            "history": {
+              "applied": 1,
+              "canRedo": true,
+              "canUndo": true,
+              "entries": [
+                {
+                  "captureMode": "scoped",
+                  "label": "匯入可編輯影像",
+                  "objectIds": [
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 24005816,
+                  "targetCount": 1
+                },
+                {
+                  "captureMode": "scoped",
+                  "label": "CHAT raster Paint Bucket",
+                  "objectIds": [],
+                  "patchCount": 41,
+                  "storedBytes": 8765,
+                  "targetCount": 1
+                }
+              ],
+              "limit": 30,
+              "pending": false,
+              "retainedCount": 2,
+              "stats": {
+                "capturedBytes": 24005753,
+                "fullEntries": 0,
+                "limit": 30,
+                "metrics": {
+                  "fullBegins": 0,
+                  "fullCapturedBytes": 0,
+                  "inPlaceApplies": 1,
+                  "scopedBegins": 2,
+                  "scopedCapturedBytes": 24005753
+                },
+                "mode": "hybrid-target-scoped-id-aware-patches",
+                "patchCount": 42,
+                "redo": 1,
+                "scopedEntries": 2,
+                "scopedRatio": 1,
+                "storedBytes": 24014581,
+                "undo": 1
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "previewRestored",
+        "tool": "get_ink_preview",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "preview.capture",
+          "status": "COMPLETED",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+          "revisionId": null,
+          "targetRefs": [],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [
+            {
+              "background": {
+                "color": "#fffef9",
+                "included": true
+              },
+              "bounds": {
+                "h": 1496,
+                "w": 1134,
+                "x": -24,
+                "y": -24
+              },
+              "byteLength": 1138475,
+              "documentFingerprint": "fnv1a32:7e4af701",
+              "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+              "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
+              "format": "png",
+              "handleId": "ink-output-v1:fa7b710e",
+              "kind": "preview",
+              "mimeType": "image/png",
+              "objectRefs": [],
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+              "persistence": "NONE",
+              "pixelSize": {
+                "height": 800,
+                "width": 607
+              },
+              "renderFingerprint": "fnv1a32:34d01658",
+              "revisionId": null,
+              "schema": "INK_OUTPUT_HANDLE",
+              "scope": "content",
+              "transport": "INTERNAL_EPHEMERAL",
+              "version": 1
+            }
+          ],
+          "diagnostics": [],
+          "result": {
+            "bounds": {
+              "h": 1496,
+              "w": 1134,
+              "x": -24,
+              "y": -24
+            },
+            "byteLength": 1138475,
+            "handleId": "ink-output-v1:fa7b710e",
+            "persistence": "NONE",
+            "pixelSize": {
+              "height": 800,
+              "width": 607
+            },
+            "scope": "content",
+            "transport": "INTERNAL_EPHEMERAL"
+          }
+        }
+      },
+      {
+        "id": "maskPropose",
+        "tool": "propose_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.propose",
+          "status": "PROPOSED",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "propose",
+            "ok": true,
+            "result": {
+              "approvalToken": null,
+              "approved": false,
+              "expected": {
+                "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+                "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+                "revisionId": null,
+                "targetFingerprints": {
+                  "13024176-7f9a-4241-8093-6f39c3b40036/7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca": "fnv1a32:a1205b12"
+                }
+              },
+              "proposalId": "proposal:clusterB-B3-live-mask-main:d92b120d",
+              "revisionId": null,
+              "schema": "INK-CHAT-EDIT-PROPOSAL",
+              "state": "PROPOSED",
+              "stateFingerprint": "fnv1a32:fa109314",
+              "task": {
+                "arguments": {
+                  "expand": 0,
+                  "feather": 0,
+                  "height": 700,
+                  "invert": false,
+                  "shape": "rectangle",
+                  "width": 500,
+                  "x": 100,
+                  "y": 100
+                },
+                "expected": null,
+                "operation": "image.mask.raster.set.v1",
+                "schema": "INK-CHAT-EDIT-TASK",
+                "targets": [
+                  {
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+                  }
+                ],
+                "taskId": "clusterB-B3-live-mask-main",
+                "version": 1
+              },
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "maskApprove",
+        "tool": "approve_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.approve",
+          "status": "APPROVED",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [],
+          "historyReceipt": null,
+          "revisionReceipt": null,
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "approve",
+            "ok": true,
+            "result": {
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:clusterB-B3-live-mask-main:d92b120d:2",
+              "approved": true,
+              "expected": {
+                "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+                "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+                "revisionId": null,
+                "targetFingerprints": {
+                  "13024176-7f9a-4241-8093-6f39c3b40036/7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca": "fnv1a32:a1205b12"
+                }
+              },
+              "proposalId": "proposal:clusterB-B3-live-mask-main:d92b120d",
+              "revisionId": null,
+              "schema": "INK-CHAT-EDIT-PROPOSAL",
+              "state": "APPROVED",
+              "stateFingerprint": "fnv1a32:fa109314",
+              "task": {
+                "arguments": {
+                  "expand": 0,
+                  "feather": 0,
+                  "height": 700,
+                  "invert": false,
+                  "shape": "rectangle",
+                  "width": 500,
+                  "x": 100,
+                  "y": 100
+                },
+                "expected": null,
+                "operation": "image.mask.raster.set.v1",
+                "schema": "INK-CHAT-EDIT-TASK",
+                "targets": [
+                  {
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+                  }
+                ],
+                "taskId": "clusterB-B3-live-mask-main",
+                "version": 1
+              },
+              "version": 1
+            }
+          }
+        }
+      },
+      {
+        "id": "maskExecute",
+        "tool": "execute_ink_edit",
+        "result": {
+          "schema": "INK_AGENT_RESULT",
+          "version": 1,
+          "action": "edit.execute",
+          "status": "EXECUTED",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
+          "revisionId": null,
+          "targetRefs": [
+            {
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+            }
+          ],
+          "createdRefs": [],
+          "changedRefs": [
+            {
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+            }
+          ],
+          "historyReceipt": {
+            "afterUndoCount": 2,
+            "beforeUndoCount": 1,
+            "latestLabel": "CHAT set raster mask"
+          },
+          "revisionReceipt": {
+            "currentRevisionId": null,
+            "documentFingerprint": "fnv1a32:f753b907",
+            "inspectedRevisionId": null
+          },
+          "provenanceReceipt": null,
+          "outputHandles": [],
+          "diagnostics": [],
+          "result": {
+            "action": "execute",
+            "ok": true,
+            "result": {
+              "changed": true,
+              "controllerResult": {
+                "changed": true,
+                "rasterMask": {
+                  "bounds": {
+                    "h": 700,
+                    "w": 500,
+                    "x": 100,
+                    "y": 100
+                  },
+                  "enabled": true,
+                  "expand": 0,
+                  "feather": 0,
+                  "fingerprint": "fnv1a32:5ecf69a0",
+                  "height": 1448,
+                  "id": "chat-rmask-fnv1a32-bf2bc1c8",
+                  "invert": false,
+                  "type": "raster-mask",
+                  "width": 1086
+                },
+                "resultRefs": [
+                  {
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+                  }
+                ]
+              },
+              "history": {
+                "afterUndoCount": 2,
+                "beforeUndoCount": 1,
+                "latestLabel": "CHAT set raster mask"
+              },
+              "ok": true,
+              "operation": "image.mask.raster.set.v1",
+              "proposalId": "proposal:clusterB-B3-live-mask-main:d92b120d",
+              "revision": {
+                "currentRevisionId": null,
+                "documentFingerprint": "fnv1a32:f753b907",
+                "inspectedRevisionId": null
+              },
+              "schema": "INK-CHAT-EDIT-RESULT",
+              "state": "EXECUTED",
+              "targets": [
+                {
+                  "ref": {
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
+                  },
+                  "stateFingerprint": "fnv1a32:5fecc1d3",
+                  "worldMatrix": [
+                    1,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0
+                  ]
+                }
+              ],
+              "taskId": "clusterB-B3-live-mask-main",
               "version": 1
             }
           }
@@ -783,14 +1279,14 @@
           "version": 1,
           "action": "context",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "createdRefs": [],
@@ -803,11 +1299,11 @@
           "result": {
             "active": {
               "layer": {
-                "id": "37d28181-a7e3-4c34-b170-9d5ad6523629",
+                "id": "13024176-7f9a-4241-8093-6f39c3b40036",
                 "name": "圖層 1"
               },
               "page": {
-                "id": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+                "id": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
                 "name": "頁面 1"
               }
             },
@@ -822,19 +1318,19 @@
                 "totalAvailable": 1,
                 "truncated": false
               },
-              "outputBytes": 1616,
+              "outputBytes": 1583,
               "relationships": {
                 "returned": 0,
                 "totalAvailable": 0,
                 "truncated": false
               }
             },
-            "contextFingerprint": "fnv1a32:b524bfee",
+            "contextFingerprint": "fnv1a32:4fbbd1e3",
             "document": {
               "appVersion": "0.1",
               "format": "INK",
               "formatVersion": 4,
-              "id": "a056584d-ce99-4218-986d-902679f3bb00",
+              "id": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
               "pageCount": 1,
               "title": "未命名作品"
             },
@@ -855,16 +1351,16 @@
                   "kind": "image",
                   "reference": {
                     "kind": "image",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c"
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                   },
                   "width": 1086
                 },
-                "name": "B3 Editable Raster",
+                "name": "B3 Mask Editable Raster",
                 "parentId": null,
                 "ref": {
-                  "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                  "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                  "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+                  "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                  "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                  "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
                 },
                 "renderOrder": 0,
                 "semantic": {
@@ -895,9 +1391,7 @@
             },
             "schema": "INK-AI-DOCUMENT-BRIDGE",
             "selection": {
-              "objectIds": [
-                "354bc37e-e818-4584-84f6-5b0848a1888c"
-              ],
+              "objectIds": [],
               "unresolvedObjectIds": []
             },
             "version": 1
@@ -912,8 +1406,8 @@
           "version": 1,
           "action": "history.inspect",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -932,18 +1426,20 @@
                 "captureMode": "scoped",
                 "label": "匯入可編輯影像",
                 "objectIds": [
-                  "354bc37e-e818-4584-84f6-5b0848a1888c"
+                  "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                 ],
                 "patchCount": 1,
-                "storedBytes": 24005811,
+                "storedBytes": 24005816,
                 "targetCount": 1
               },
               {
                 "captureMode": "scoped",
-                "label": "CHAT raster Paint Bucket",
-                "objectIds": [],
-                "patchCount": 41,
-                "storedBytes": 8765,
+                "label": "CHAT set raster mask",
+                "objectIds": [
+                  "chat-rmask-fnv1a32-bf2bc1c8"
+                ],
+                "patchCount": 1,
+                "storedBytes": 3845353,
                 "targetCount": 1
               }
             ],
@@ -951,22 +1447,22 @@
             "pending": false,
             "retainedCount": 2,
             "stats": {
-              "capturedBytes": 24005748,
+              "capturedBytes": 24005753,
               "fullEntries": 0,
               "limit": 30,
               "metrics": {
                 "fullBegins": 0,
                 "fullCapturedBytes": 0,
-                "inPlaceApplies": 0,
-                "scopedBegins": 2,
-                "scopedCapturedBytes": 24005748
+                "inPlaceApplies": 1,
+                "scopedBegins": 3,
+                "scopedCapturedBytes": 48011438
               },
               "mode": "hybrid-target-scoped-id-aware-patches",
-              "patchCount": 42,
+              "patchCount": 2,
               "redo": 0,
               "scopedEntries": 2,
               "scopedRatio": 1,
-              "storedBytes": 24014576,
+              "storedBytes": 27851169,
               "undo": 2
             }
           }
@@ -980,8 +1476,8 @@
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1001,22 +1497,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1138441,
-              "documentFingerprint": "fnv1a32:52826f02",
-              "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
+              "byteLength": 308903,
+              "documentFingerprint": "fnv1a32:f753b907",
+              "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:7fb26e0d",
+              "handleId": "ink-output-v1:8728c1f2",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:bfcf7afe",
+              "renderFingerprint": "fnv1a32:6b03e9c5",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -1032,8 +1528,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1138441,
-            "handleId": "ink-output-v1:7fb26e0d",
+            "byteLength": 308903,
+            "handleId": "ink-output-v1:8728c1f2",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1052,14 +1548,14 @@
           "version": 1,
           "action": "edit.propose",
           "status": "PROPOSED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "createdRefs": [],
@@ -1076,38 +1572,40 @@
               "approvalToken": null,
               "approved": false,
               "expected": {
-                "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-                "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+                "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+                "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "37d28181-a7e3-4c34-b170-9d5ad6523629/354bc37e-e818-4584-84f6-5b0848a1888c": "fnv1a32:d18a666d"
+                  "13024176-7f9a-4241-8093-6f39c3b40036/7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca": "fnv1a32:5fecc1d3"
                 }
               },
-              "proposalId": "proposal:clusterB-B3-live-paint-bucket-noop:e1d8c124",
+              "proposalId": "proposal:clusterB-B3-live-mask-noop:e3e57af8",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "PROPOSED",
-              "stateFingerprint": "fnv1a32:31b0d9ad",
+              "stateFingerprint": "fnv1a32:5c3bfc40",
               "task": {
                 "arguments": {
-                  "color": "#20b86a",
-                  "contiguous": true,
-                  "opacity": 1,
-                  "tolerance": 0,
-                  "x": 5,
-                  "y": 5
+                  "expand": 0,
+                  "feather": 0,
+                  "height": 700,
+                  "invert": false,
+                  "shape": "rectangle",
+                  "width": 500,
+                  "x": 100,
+                  "y": 100
                 },
                 "expected": null,
-                "operation": "image.raster.paintBucket.v1",
+                "operation": "image.mask.raster.set.v1",
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                    "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
                   }
                 ],
-                "taskId": "clusterB-B3-live-paint-bucket-noop",
+                "taskId": "clusterB-B3-live-mask-noop",
                 "version": 1
               },
               "version": 1
@@ -1123,14 +1621,14 @@
           "version": 1,
           "action": "edit.approve",
           "status": "APPROVED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [
             {
-              "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-              "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+              "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+              "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
             }
           ],
           "createdRefs": [],
@@ -1144,41 +1642,43 @@
             "action": "approve",
             "ok": true,
             "result": {
-              "approvalToken": "INK-LOCAL-APPROVAL:proposal:clusterB-B3-live-paint-bucket-noop:e1d8c124:2",
+              "approvalToken": "INK-LOCAL-APPROVAL:proposal:clusterB-B3-live-mask-noop:e3e57af8:3",
               "approved": true,
               "expected": {
-                "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-                "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+                "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+                "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
                 "revisionId": null,
                 "targetFingerprints": {
-                  "37d28181-a7e3-4c34-b170-9d5ad6523629/354bc37e-e818-4584-84f6-5b0848a1888c": "fnv1a32:d18a666d"
+                  "13024176-7f9a-4241-8093-6f39c3b40036/7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca": "fnv1a32:5fecc1d3"
                 }
               },
-              "proposalId": "proposal:clusterB-B3-live-paint-bucket-noop:e1d8c124",
+              "proposalId": "proposal:clusterB-B3-live-mask-noop:e3e57af8",
               "revisionId": null,
               "schema": "INK-CHAT-EDIT-PROPOSAL",
               "state": "APPROVED",
-              "stateFingerprint": "fnv1a32:31b0d9ad",
+              "stateFingerprint": "fnv1a32:5c3bfc40",
               "task": {
                 "arguments": {
-                  "color": "#20b86a",
-                  "contiguous": true,
-                  "opacity": 1,
-                  "tolerance": 0,
-                  "x": 5,
-                  "y": 5
+                  "expand": 0,
+                  "feather": 0,
+                  "height": 700,
+                  "invert": false,
+                  "shape": "rectangle",
+                  "width": 500,
+                  "x": 100,
+                  "y": 100
                 },
                 "expected": null,
-                "operation": "image.raster.paintBucket.v1",
+                "operation": "image.mask.raster.set.v1",
                 "schema": "INK-CHAT-EDIT-TASK",
                 "targets": [
                   {
-                    "layerId": "37d28181-a7e3-4c34-b170-9d5ad6523629",
-                    "objectId": "354bc37e-e818-4584-84f6-5b0848a1888c",
-                    "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533"
+                    "layerId": "13024176-7f9a-4241-8093-6f39c3b40036",
+                    "objectId": "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca",
+                    "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83"
                   }
                 ],
-                "taskId": "clusterB-B3-live-paint-bucket-noop",
+                "taskId": "clusterB-B3-live-mask-noop",
                 "version": 1
               },
               "version": 1
@@ -1194,8 +1694,8 @@
           "version": 1,
           "action": "edit.execute",
           "status": "FAILED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1208,7 +1708,7 @@
             {
               "code": "CHAT_EDIT_NO_OP",
               "details": {
-                "operation": "image.raster.paintBucket.v1"
+                "operation": "image.mask.raster.set.v1"
               },
               "phase": "execute"
             }
@@ -1216,21 +1716,21 @@
           "result": {
             "code": "CHAT_EDIT_NO_OP",
             "ok": false,
-            "operation": "image.raster.paintBucket.v1",
+            "operation": "image.mask.raster.set.v1",
             "phase": "execute"
           }
         }
       },
       {
-        "id": "undo",
+        "id": "undoMask",
         "tool": "undo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.undo",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1245,18 +1745,20 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "354bc37e-e818-4584-84f6-5b0848a1888c"
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                   ],
                   "patchCount": 1,
-                  "storedBytes": 24005811,
+                  "storedBytes": 24005816,
                   "targetCount": 1
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
-                  "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "label": "CHAT set raster mask",
+                  "objectIds": [
+                    "chat-rmask-fnv1a32-bf2bc1c8"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 3845353,
                   "targetCount": 1
                 }
               ],
@@ -1264,22 +1766,22 @@
               "pending": false,
               "retainedCount": 2,
               "stats": {
-                "capturedBytes": 24005748,
+                "capturedBytes": 24005753,
                 "fullEntries": 0,
                 "limit": 30,
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 1,
-                  "scopedBegins": 2,
-                  "scopedCapturedBytes": 24005748
+                  "inPlaceApplies": 2,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011438
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 2,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014576,
+                "storedBytes": 27851169,
                 "undo": 1
               }
             },
@@ -1293,18 +1795,20 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "354bc37e-e818-4584-84f6-5b0848a1888c"
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                   ],
                   "patchCount": 1,
-                  "storedBytes": 24005811,
+                  "storedBytes": 24005816,
                   "targetCount": 1
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
-                  "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "label": "CHAT set raster mask",
+                  "objectIds": [
+                    "chat-rmask-fnv1a32-bf2bc1c8"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 3845353,
                   "targetCount": 1
                 }
               ],
@@ -1312,22 +1816,22 @@
               "pending": false,
               "retainedCount": 2,
               "stats": {
-                "capturedBytes": 24005748,
+                "capturedBytes": 24005753,
                 "fullEntries": 0,
                 "limit": 30,
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 0,
-                  "scopedBegins": 2,
-                  "scopedCapturedBytes": 24005748
+                  "inPlaceApplies": 1,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011438
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 2,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014576,
+                "storedBytes": 27851169,
                 "undo": 2
               }
             }
@@ -1347,18 +1851,20 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "354bc37e-e818-4584-84f6-5b0848a1888c"
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                   ],
                   "patchCount": 1,
-                  "storedBytes": 24005811,
+                  "storedBytes": 24005816,
                   "targetCount": 1
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
-                  "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "label": "CHAT set raster mask",
+                  "objectIds": [
+                    "chat-rmask-fnv1a32-bf2bc1c8"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 3845353,
                   "targetCount": 1
                 }
               ],
@@ -1366,22 +1872,22 @@
               "pending": false,
               "retainedCount": 2,
               "stats": {
-                "capturedBytes": 24005748,
+                "capturedBytes": 24005753,
                 "fullEntries": 0,
                 "limit": 30,
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 1,
-                  "scopedBegins": 2,
-                  "scopedCapturedBytes": 24005748
+                  "inPlaceApplies": 2,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011438
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 2,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014576,
+                "storedBytes": 27851169,
                 "undo": 1
               }
             }
@@ -1396,8 +1902,8 @@
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1418,15 +1924,15 @@
                 "y": -24
               },
               "byteLength": 1138475,
-              "documentFingerprint": "fnv1a32:2599a09f",
-              "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
+              "documentFingerprint": "fnv1a32:8115d078",
+              "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:1d3143df",
+              "handleId": "ink-output-v1:bbd4127d",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
@@ -1449,7 +1955,7 @@
               "y": -24
             },
             "byteLength": 1138475,
-            "handleId": "ink-output-v1:1d3143df",
+            "handleId": "ink-output-v1:bbd4127d",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1461,15 +1967,15 @@
         }
       },
       {
-        "id": "redo",
+        "id": "redoMask",
         "tool": "redo_ink",
         "result": {
           "schema": "INK_AGENT_RESULT",
           "version": 1,
           "action": "history.redo",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1484,18 +1990,20 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "354bc37e-e818-4584-84f6-5b0848a1888c"
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                   ],
                   "patchCount": 1,
-                  "storedBytes": 24005811,
+                  "storedBytes": 24005816,
                   "targetCount": 1
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
-                  "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "label": "CHAT set raster mask",
+                  "objectIds": [
+                    "chat-rmask-fnv1a32-bf2bc1c8"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 3845353,
                   "targetCount": 1
                 }
               ],
@@ -1503,22 +2011,22 @@
               "pending": false,
               "retainedCount": 2,
               "stats": {
-                "capturedBytes": 24005748,
+                "capturedBytes": 24005753,
                 "fullEntries": 0,
                 "limit": 30,
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 2,
-                  "scopedBegins": 2,
-                  "scopedCapturedBytes": 24005748
+                  "inPlaceApplies": 3,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011438
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 2,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014576,
+                "storedBytes": 27851169,
                 "undo": 2
               }
             },
@@ -1532,18 +2040,20 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "354bc37e-e818-4584-84f6-5b0848a1888c"
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                   ],
                   "patchCount": 1,
-                  "storedBytes": 24005811,
+                  "storedBytes": 24005816,
                   "targetCount": 1
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
-                  "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "label": "CHAT set raster mask",
+                  "objectIds": [
+                    "chat-rmask-fnv1a32-bf2bc1c8"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 3845353,
                   "targetCount": 1
                 }
               ],
@@ -1551,22 +2061,22 @@
               "pending": false,
               "retainedCount": 2,
               "stats": {
-                "capturedBytes": 24005748,
+                "capturedBytes": 24005753,
                 "fullEntries": 0,
                 "limit": 30,
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 1,
-                  "scopedBegins": 2,
-                  "scopedCapturedBytes": 24005748
+                  "inPlaceApplies": 2,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011438
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 2,
                 "redo": 1,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014576,
+                "storedBytes": 27851169,
                 "undo": 1
               }
             }
@@ -1586,18 +2096,20 @@
                   "captureMode": "scoped",
                   "label": "匯入可編輯影像",
                   "objectIds": [
-                    "354bc37e-e818-4584-84f6-5b0848a1888c"
+                    "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                   ],
                   "patchCount": 1,
-                  "storedBytes": 24005811,
+                  "storedBytes": 24005816,
                   "targetCount": 1
                 },
                 {
                   "captureMode": "scoped",
-                  "label": "CHAT raster Paint Bucket",
-                  "objectIds": [],
-                  "patchCount": 41,
-                  "storedBytes": 8765,
+                  "label": "CHAT set raster mask",
+                  "objectIds": [
+                    "chat-rmask-fnv1a32-bf2bc1c8"
+                  ],
+                  "patchCount": 1,
+                  "storedBytes": 3845353,
                   "targetCount": 1
                 }
               ],
@@ -1605,22 +2117,22 @@
               "pending": false,
               "retainedCount": 2,
               "stats": {
-                "capturedBytes": 24005748,
+                "capturedBytes": 24005753,
                 "fullEntries": 0,
                 "limit": 30,
                 "metrics": {
                   "fullBegins": 0,
                   "fullCapturedBytes": 0,
-                  "inPlaceApplies": 2,
-                  "scopedBegins": 2,
-                  "scopedCapturedBytes": 24005748
+                  "inPlaceApplies": 3,
+                  "scopedBegins": 3,
+                  "scopedCapturedBytes": 48011438
                 },
                 "mode": "hybrid-target-scoped-id-aware-patches",
-                "patchCount": 42,
+                "patchCount": 2,
                 "redo": 0,
                 "scopedEntries": 2,
                 "scopedRatio": 1,
-                "storedBytes": 24014576,
+                "storedBytes": 27851169,
                 "undo": 2
               }
             }
@@ -1635,8 +2147,8 @@
           "version": 1,
           "action": "preview.capture",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1656,22 +2168,22 @@
                 "x": -24,
                 "y": -24
               },
-              "byteLength": 1138441,
-              "documentFingerprint": "fnv1a32:52826f02",
-              "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
+              "byteLength": 308903,
+              "documentFingerprint": "fnv1a32:f753b907",
+              "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
               "fingerprintAlgorithm": "fnv1a32-canonical-json+fnv1a32-bytes-v1",
               "format": "png",
-              "handleId": "ink-output-v1:7fb26e0d",
+              "handleId": "ink-output-v1:8728c1f2",
               "kind": "preview",
               "mimeType": "image/png",
               "objectRefs": [],
-              "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+              "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
               "persistence": "NONE",
               "pixelSize": {
                 "height": 800,
                 "width": 607
               },
-              "renderFingerprint": "fnv1a32:bfcf7afe",
+              "renderFingerprint": "fnv1a32:6b03e9c5",
               "revisionId": null,
               "schema": "INK_OUTPUT_HANDLE",
               "scope": "content",
@@ -1687,8 +2199,8 @@
               "x": -24,
               "y": -24
             },
-            "byteLength": 1138441,
-            "handleId": "ink-output-v1:7fb26e0d",
+            "byteLength": 308903,
+            "handleId": "ink-output-v1:8728c1f2",
             "persistence": "NONE",
             "pixelSize": {
               "height": 800,
@@ -1707,8 +2219,8 @@
           "version": 1,
           "action": "history.inspect",
           "status": "COMPLETED",
-          "documentId": "a056584d-ce99-4218-986d-902679f3bb00",
-          "pageId": "39a9d116-1f52-4e25-be6c-752c5b09d533",
+          "documentId": "343cea29-c86e-4ff3-8c68-b5d837a189e8",
+          "pageId": "13d2cbfa-2ae0-41cc-8f42-be4f156e8c83",
           "revisionId": null,
           "targetRefs": [],
           "createdRefs": [],
@@ -1727,18 +2239,20 @@
                 "captureMode": "scoped",
                 "label": "匯入可編輯影像",
                 "objectIds": [
-                  "354bc37e-e818-4584-84f6-5b0848a1888c"
+                  "7219cdc4-1f19-4a8f-ac0f-f6e0d1a917ca"
                 ],
                 "patchCount": 1,
-                "storedBytes": 24005811,
+                "storedBytes": 24005816,
                 "targetCount": 1
               },
               {
                 "captureMode": "scoped",
-                "label": "CHAT raster Paint Bucket",
-                "objectIds": [],
-                "patchCount": 41,
-                "storedBytes": 8765,
+                "label": "CHAT set raster mask",
+                "objectIds": [
+                  "chat-rmask-fnv1a32-bf2bc1c8"
+                ],
+                "patchCount": 1,
+                "storedBytes": 3845353,
                 "targetCount": 1
               }
             ],
@@ -1746,22 +2260,22 @@
             "pending": false,
             "retainedCount": 2,
             "stats": {
-              "capturedBytes": 24005748,
+              "capturedBytes": 24005753,
               "fullEntries": 0,
               "limit": 30,
               "metrics": {
                 "fullBegins": 0,
                 "fullCapturedBytes": 0,
-                "inPlaceApplies": 2,
-                "scopedBegins": 2,
-                "scopedCapturedBytes": 24005748
+                "inPlaceApplies": 3,
+                "scopedBegins": 3,
+                "scopedCapturedBytes": 48011438
               },
               "mode": "hybrid-target-scoped-id-aware-patches",
-              "patchCount": 42,
+              "patchCount": 2,
               "redo": 0,
               "scopedEntries": 2,
               "scopedRatio": 1,
-              "storedBytes": 24014576,
+              "storedBytes": 27851169,
               "undo": 2
             }
           }
