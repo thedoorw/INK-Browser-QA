@@ -1175,3 +1175,56 @@ NEXT_AUTHORITY_QUEUE = ADVANCED_MUTABLE_RASTER_INGEST_PSD_TIFF_EXR_RAW
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## Advanced mutable raster ingest — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+PSD / TIFF / EXR MUTABLE INGEST = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+RAW = CONDITIONAL EXISTING ADAPTER AUTHORITY / DEFAULT RUNTIME HAS NO APPROVED ADAPTER
+PSB = NOT QUALIFIED
+```
+
+Authority:
+- existing `imageFormatProbe()`, `importImageFormat()`, format interoperability decoders and RAW adapter registry remain sole ingest authorities;
+- `import_ink_raster` now routes PNG/JPEG/WebP to `importWebRaster()`, PSD/TIFF/EXR to `importImageFormat()`, and RAW to `importImageFormat(...RAW)` only when the existing policy-gated registry probe matches;
+- RAW adapter policy is unchanged: browser-compatible, deterministic, licensed;
+- ReferenceImage remains locked/separate;
+- no second decoder/raster model/Renderer/History/Document authority, UI change or FORMAT_VERSION change.
+
+Source/candidate:
+- PR #144 merged.
+- exact accepted candidate: `87ee8acc08e83ead4bc581382575f244143651a5`.
+- merged/deployed source: `8d5a8ee9fdd0b4e2c63d910e75f29d48514ccf3f`.
+- candidate request: `clusterB-advanced-raster-ingest-candidate-002-regressions`.
+- result commit: `d87886e719124230bb0c3e84cd5a6e719f6d5b2b`.
+- run `37103105857`; artifact `11265924364`; digest `sha256:eb0e895928ed00488e436151038641195145b77f8a5de2a4b1fdf5ec0a372e85`.
+- PSD / TIFF / EXR native editable import PASS.
+- PSD downstream Paint Bucket mutation + exact Undo/Redo PASS.
+- default RAW without adapter rejects `INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE`.
+- policy-approved deterministic browser adapter → 16-bit RGB RAW import PASS through `advanced-format-raw`.
+- B1 / B3 Paint Bucket / B3 source-retouch / B2 adjustment regressions PASS.
+
+Formal Live:
+- request `clusterB-advanced-raster-ingest-live-001`.
+- request commit `2b7599acd9a44581a7e38c1b7e3df57d01bcae6f`.
+- result commit `b0b551f3209529de00e7bc51ae8542c2d078db6f`.
+- run `37103384547`; artifact `11266704573`; digest `sha256:11eb862ab880032ad21ce583a82897e5fa564e7885bb278e293082946b093354`.
+- exact runtime source verified; `apiReady=true`; 23 named tools.
+- PSD: 16×12 / 8-bit RGB / Preview `fnv1a32:71adb35d`.
+- TIFF: 16×12 / 8-bit RGB / Preview `fnv1a32:507bbe66`.
+- EXR: 16×12 / 32-bit RGB / Preview `fnv1a32:7b46ec2b`.
+- Undo EXR → `507bbe66`; Redo EXR → `7b46ec2b`.
+- PSD Paint Bucket → `60483704`; Undo → `7b46ec2b`; Redo → `60483704`.
+- final Context contains 3 editable native images; final History contains 3 format-import entries + 1 Paint Bucket entry.
+- default Live RAW rejection: `INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE`.
+
+```text
+ADVANCED_MUTABLE_RASTER_INGEST = CLOSED FOR PSD/TIFF/EXR + RAW ADAPTER CONTRACT
+RAW_SUCCESS_DEFAULT_LIVE = NOT APPLICABLE / NO APPROVED ADAPTER INSTALLED
+B3_DIRECT_LOCAL_RASTER = CLOSED FOR QUALIFIED ROUTES
+NEXT_AUTHORITY_QUEUE = CLUSTER_C_NATIVE_LAYOUT_DOCUMENT_OPERATIONS
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
