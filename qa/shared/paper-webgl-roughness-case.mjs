@@ -92,8 +92,8 @@ export const PAPER_WEBGL_ROUGHNESS_CASE = String.raw`(async()=>{
   if(!(sampleHigh.resistance>sampleLow.resistance))throw new Error('CANVAS2D_RESISTANCE_DIRECTION');
   if(sampleLow.absorbency!==sampleHigh.absorbency)throw new Error('ROUGHNESS_CHANGED_ABSORBENCY_MODEL');
   const shaderSource=await fetch(location.origin+'/src/render/webgl/multi-channel-ink-webgl.js?roughness-source=1').then(r=>r.text());
-  if(!/uniform float u_roughness;/.test(shaderSource)||!/\\(1\\.0-paper\\)\\*u_roughness\\*\\.35/.test(shaderSource))throw new Error('WEBGL_ROUGHNESS_BINDING_MISSING');
-  if(/resistance=clamp\\(u_sizing\\*\\.72\\+\\(1\\.0-paper\\)\\*u_granulation/.test(shaderSource))throw new Error('WEBGL_GRANULATION_STILL_DRIVES_RESISTANCE');
+  if(!shaderSource.includes('uniform float u_roughness;')||!shaderSource.includes('(1.0-paper)*u_roughness*.35'))throw new Error('WEBGL_ROUGHNESS_BINDING_MISSING');
+  if(shaderSource.includes('resistance=clamp(u_sizing*.72+(1.0-paper)*u_granulation'))throw new Error('WEBGL_GRANULATION_STILL_DRIVES_RESISTANCE');
   webgl.dispose();
 
   return {
