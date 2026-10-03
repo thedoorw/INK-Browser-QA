@@ -125,7 +125,7 @@ function validateRequest(request){
   assert.equal(request?.version,1);
   assert.match(String(request?.requestId||''),/^[A-Za-z0-9_.:-]{1,120}$/);
   assert.match(String(request?.candidateSha||''),/^[a-f0-9]{40}$/);
-  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
+  assert.ok(['path-deformation-b4','page-paper-webgl-roughness','page-paper-a3','page-paper-single-stroke','paint-session-create','stroke-create-a2','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3','web-raster-bridge','raster-import-named-tool','raster-stack-b2','raster-stack-adjustment-b2','raster-stack-filter-b2','raster-stack-blend-b2','raster-stack-effect-b2','raster-stack-liquify-b2'].includes(request?.case),'Unsupported candidate QA case');
   return request;
 }
 
@@ -648,6 +648,91 @@ const RASTER_NAMED_TOOL_CASE = String.raw`(async()=>{
   return {passed:true,before,after,importStatus:imported.status,previewStatus:preview.status,undoStatus:undone.status,redoStatus:redone.status,restoredFormat:restored.rasterState.type||null};
 })()`;
 
+const RASTER_DIRECT_PAINT_BUCKET_B3_CASE = String.raw`(async()=>{
+  const app=window.INK_APP,api=app?.inkPublicApi;
+  if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
+  const toolNames=api.tools.registry().map(item=>item.name);
+  for(const name of ['import_ink_raster','import_ink_reference','describe_ink_capability','propose_ink_edit','approve_ink_edit','execute_ink_edit','get_ink_preview','undo_ink','redo_ink']) if(!toolNames.includes(name)) throw new Error('MISSING_TOOL:'+name);
+  if(!app.documentOpen){app.documentOpen=true;app.refreshWorkspaceUI?.();}
+  const flatObjects=()=>app.page().layers.flatMap(layer=>layer.objects||[]);
+  const waitFrames=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const findField=(value,key,depth=0)=>{if(value==null||depth>10||typeof value!=='object')return undefined;if(Object.prototype.hasOwnProperty.call(value,key))return value[key];for(const item of Object.values(value)){const found=findField(item,key,depth+1);if(found!==undefined)return found;}return undefined;};
+  const fnv=value=>{const text=typeof value==='string'?value:JSON.stringify(value);let h=2166136261;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(16).padStart(8,'0');};
+  const rasterHash=object=>fnv(object?.rasterState?.colorRaster||null);
+  const preview=async()=>{await waitFrames();const r=await Promise.resolve(api.tools.invoke('get_ink_preview',{scope:'content',maxDimension:800,background:true}));if(r?.status==='FAILED')throw new Error('PREVIEW_FAILED');return {status:r.status,fingerprint:findField(r,'renderFingerprint')||null};};
+  const proposeApprove=async(task)=>{
+    const p=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task}));if(p?.status==='FAILED')throw new Error('PROPOSE_FAILED:'+JSON.stringify(p.diagnostics||[]));
+    const proposalId=findField(p,'proposalId');if(!proposalId)throw new Error('PROPOSAL_ID_MISSING');
+    const a=await Promise.resolve(api.tools.invoke('approve_ink_edit',{proposalId}));if(a?.status==='FAILED')throw new Error('APPROVE_FAILED:'+JSON.stringify(a.diagnostics||[]));
+    const token=findField(a,'approvalToken');if(!token)throw new Error('TOKEN_MISSING');
+    return {proposalId,token};
+  };
+  const edit=async(task)=>{
+    const {proposalId,token}=await proposeApprove(task);
+    const e=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId,approvalToken:token}));
+    if(e?.status==='FAILED')throw new Error('EXECUTE_FAILED:'+JSON.stringify(e.diagnostics||[]));
+    if(findField(e,'changed')!==true)throw new Error('EXECUTE_NOT_CHANGED');
+    await waitFrames();return e;
+  };
+  const source=document.createElement('canvas');source.width=64;source.height=48;
+  const ctx=source.getContext('2d');
+  ctx.fillStyle='#d64d6b';ctx.fillRect(0,0,32,48);
+  ctx.fillStyle='#375b9b';ctx.fillRect(32,0,32,48);
+  ctx.fillStyle='#ffffff';ctx.fillRect(8,8,48,10);
+  const blob=await new Promise(resolve=>source.toBlob(resolve,'image/png'));if(!blob)throw new Error('PNG_BLOB_FAILED');
+  const file=new File([blob],'candidate-raster-paint-bucket-b3.png',{type:'image/png'});
+
+  const imported=await Promise.resolve(api.tools.invoke('import_ink_raster',{input:{file},options:{name:'QA B3 Paint Bucket Raster',type:'image/png',intent:'B3 destructive raster candidate QA'}}));
+  if(imported?.status==='FAILED')throw new Error('RASTER_IMPORT_FAILED:'+JSON.stringify(imported.diagnostics||[]));
+  const ref=imported?.createdRefs?.[0];if(!ref?.objectId)throw new Error('RASTER_REF_MISSING');
+  await waitFrames();
+  let object=flatObjects().find(item=>item.id===ref.objectId);
+  if(!object?.rasterState?.colorRaster||object.rasterState.colorRaster.bitDepth!==8||object.rasterState.colorRaster.colorMode!=='RGB')throw new Error('RASTER_STATE_INVALID');
+
+  const descriptor=await Promise.resolve(api.tools.invoke('describe_ink_capability',{idOrToolName:'image.raster.paintBucket.v1'}));
+  if(descriptor?.status==='FAILED'||!JSON.stringify(descriptor).includes('paintBucket'))throw new Error('PAINT_BUCKET_DESCRIPTOR_MISSING');
+
+  app.selection=[];app.refreshSelectionUI?.();app.renderer?.render?.();await waitFrames();
+  app.history.clear();
+  const beforeHash=rasterHash(object), beforePreview=await preview(), beforeUndo=app.history.undoStack.length;
+
+  const executed=await edit({schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-b3-paint-bucket-1',operation:'image.raster.paintBucket.v1',targets:[ref],arguments:{x:4,y:4,color:'#20b86a',tolerance:0,contiguous:true,opacity:1}});
+  object=flatObjects().find(item=>item.id===ref.objectId);
+  const afterHash=rasterHash(object), afterPreview=await preview(), afterUndo=app.history.undoStack.length;
+  if(afterHash===beforeHash)throw new Error('RASTER_PIXELS_UNCHANGED');
+  if(beforePreview.fingerprint&&afterPreview.fingerprint===beforePreview.fingerprint)throw new Error('PREVIEW_UNCHANGED');
+  if(afterUndo!==beforeUndo+1)throw new Error('HISTORY_COUNT');
+  if(app.history.undoStack.at(-1)?.label!=='CHAT raster Paint Bucket')throw new Error('HISTORY_LABEL');
+  const controller=findField(executed,'controllerResult');
+  if(!(controller?.rasterEdit?.changedPixels>0))throw new Error('CHANGED_PIXELS_NOT_REPORTED');
+
+  const noOpTask={schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-b3-paint-bucket-noop',operation:'image.raster.paintBucket.v1',targets:[ref],arguments:{x:4,y:4,color:'#20b86a',tolerance:0,contiguous:true,opacity:1}};
+  const noOpAuth=await proposeApprove(noOpTask);
+  const noOp=await Promise.resolve(api.tools.invoke('execute_ink_edit',{proposalId:noOpAuth.proposalId,approvalToken:noOpAuth.token}));
+  const noOpCode=findField(noOp,'code')||findField(noOp,'errorCode')||JSON.stringify(noOp.diagnostics||[]);
+  if(noOp?.status!=='FAILED'||!String(noOpCode).includes('NO_OP'))throw new Error('NO_OP_NOT_REJECTED:'+String(noOpCode));
+
+  const undone=await Promise.resolve(api.tools.invoke('undo_ink',{}));if(undone?.status==='FAILED')throw new Error('UNDO_FAILED');
+  await waitFrames();object=flatObjects().find(item=>item.id===ref.objectId);
+  const undoHash=rasterHash(object), undoPreview=await preview();
+  if(undoHash!==beforeHash)throw new Error('UNDO_RASTER_NOT_EXACT');
+  if(beforePreview.fingerprint&&undoPreview.fingerprint!==beforePreview.fingerprint)throw new Error('UNDO_PREVIEW_NOT_EXACT');
+
+  const redone=await Promise.resolve(api.tools.invoke('redo_ink',{}));if(redone?.status==='FAILED')throw new Error('REDO_FAILED');
+  await waitFrames();object=flatObjects().find(item=>item.id===ref.objectId);
+  const redoHash=rasterHash(object), redoPreview=await preview();
+  if(redoHash!==afterHash)throw new Error('REDO_RASTER_NOT_EXACT');
+  if(afterPreview.fingerprint&&redoPreview.fingerprint!==afterPreview.fingerprint)throw new Error('REDO_PREVIEW_NOT_EXACT');
+
+  const refImport=await Promise.resolve(api.tools.invoke('import_ink_reference',{input:{file},options:{name:'QA B3 Locked Reference'}}));
+  if(refImport?.status==='FAILED')throw new Error('REFERENCE_IMPORT_FAILED');
+  const lockedRef=refImport?.createdRefs?.[0];if(!lockedRef?.objectId)throw new Error('REFERENCE_REF_MISSING');
+  const lockedProposal=await Promise.resolve(api.tools.invoke('propose_ink_edit',{task:{schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-b3-reference-reject',operation:'image.raster.paintBucket.v1',targets:[lockedRef],arguments:{x:2,y:2,color:'#ffffff'}}}));
+  if(lockedProposal?.status!=='FAILED')throw new Error('REFERENCE_TARGET_NOT_REJECTED');
+
+  return {passed:true,operation:'image.raster.paintBucket.v1',objectId:ref.objectId,beforeHash,afterHash,undoHash,redoHash,beforePreview,afterPreview,undoPreview,redoPreview,historyLabel:'CHAT raster Paint Bucket',changedPixels:controller?.rasterEdit?.changedPixels||0,changedChannels:controller?.rasterEdit?.changedChannels||0,noOpRejected:true,referenceRejected:true,controllerResult:controller};
+})()`;
+
 const RASTER_STACK_ADJUSTMENT_B2_CASE = String.raw`(async()=>{
   const app=window.INK_APP,api=app?.inkPublicApi;
   if(!api?.tools?.invoke) throw new Error('INK_PUBLIC_API_UNAVAILABLE');
@@ -1065,7 +1150,7 @@ async function run(){
     const url=hosted.baseUrl+'?sourceCandidate='+encodeURIComponent(request.candidateSha);
     const nav=await cdp.send('Page.navigate',{url},sessionId,30000);assert.ok(!nav.errorText,nav.errorText||'Navigation failed');
     const identity=await waitForInk(cdp,sessionId,hosted.baseUrl);
-    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE))))))))));
+    const caseExpression=request.case==='path-deformation-b4'?B4_BROWSER_CASE:request.case==='page-paper-webgl-roughness'?PAPER_WEBGL_ROUGHNESS_CASE:request.case==='page-paper-a3'?PAPER_A3_CASE:request.case==='page-paper-single-stroke'?PAPER_SINGLE_STROKE_CASE:request.case==='paint-session-create'?PAINT_CASE:(request.case==='stroke-create-a2'?STROKE_A2_CASE:(request.case==='stroke-erase-a4'?STROKE_ERASE_A4_CASE:(request.case==='blender-smudge-a5'?BLENDER_SMUDGE_A5_CASE:(request.case==='raster-direct-paint-bucket-b3'?RASTER_DIRECT_PAINT_BUCKET_B3_CASE:(request.case==='web-raster-bridge'?RASTER_CASE:(request.case==='raster-import-named-tool'?RASTER_NAMED_TOOL_CASE:(request.case==='raster-stack-adjustment-b2'?RASTER_STACK_ADJUSTMENT_B2_CASE:(request.case==='raster-stack-filter-b2'?RASTER_STACK_FILTER_B2_CASE:(request.case==='raster-stack-blend-b2'?RASTER_STACK_BLEND_B2_CASE:(request.case==='raster-stack-effect-b2'?RASTER_STACK_EFFECT_B2_CASE:(request.case==='raster-stack-liquify-b2'?RASTER_STACK_LIQUIFY_B2_CASE:RASTER_STACK_B2_CASE)))))))))));
     const caseResult=await evaluate(cdp,sessionId,caseExpression,90000);
     assert.equal(caseResult?.passed,true,'Candidate case did not pass');
     const shot=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false},sessionId,30000);
@@ -1081,10 +1166,10 @@ async function run(){
 await run();
 // Fresh installed-browser process/profile for each required cross-capability regression.
 const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
-if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
+if(['path-deformation-b4','stroke-erase-a4','blender-smudge-a5','raster-direct-paint-bucket-b3'].includes(batchRequest.case) && batchRequest.regressions===true && !process.exitCode){
   const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
   primary.regressions=[];
-  for(const caseName of ['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2']){
+  for(const caseName of (batchRequest.case==='raster-direct-paint-bucket-b3'?['raster-import-named-tool','raster-stack-adjustment-b2','blender-smudge-a5']:['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2'])){
     const prefix=path.resolve(process.argv[4])+'.'+caseName;
     await writeFile(prefix+'.request.json',JSON.stringify({...batchRequest,requestId:batchRequest.requestId+'-'+caseName,case:caseName,regressions:false}));
     const regression=spawn(process.execPath,[path.resolve(process.argv[1]),prefix+'.request.json',path.resolve(process.argv[3]),prefix+'.json',prefix+'.png'],{shell:false,stdio:'inherit'});
