@@ -35,15 +35,15 @@ Closed / formally Live-qualified CHAT routes:
 - B3.3 Spot Healing;
 - B3.4 non-source local retouch: dodge / burn / sponge / local blur / local sharpen / color replacement;
 - B3.5 source-dependent retouch: Clone Stamp / Healing Brush / Patch with explicit raster-local source contracts;
-- B4 native Path warp / distort / perspective.
+- B4 native Path warp / distort / perspective;
+- advanced mutable raster ingest: PSD / TIFF / EXR Formal Live qualified; RAW adapter contract candidate-qualified with explicit default-runtime unavailability.
 
 Latest accepted Live product source at this checkpoint:
-`0794cd5aa0567314ec6c240acdef57de7ef314d6` (B3.5 source-dependent retouch, including accepted Core cache optimization).
+`8d5a8ee9fdd0b4e2c63d910e75f29d48514ccf3f` (advanced mutable raster ingest, including B3.5 and accepted Core cache optimization).
 
 B3 direct/local raster scope is closed for the qualified CHAT routes above. Pattern Stamp remains separate because its pattern-payload/asset contract is not yet defined; do not silently broaden B3.5 PASS to Pattern Stamp.
 
 Remaining authority queue is:
-- advanced mutable raster ingest exposure for existing PSD / TIFF / EXR / RAW paths;
 - Cluster C native pages, align/distribute, snapping/guides and artboard operations;
 - Cluster D existing Material / Recipe authorities and one governed execution route;
 - Text warp / curved-text product rendering integration.
