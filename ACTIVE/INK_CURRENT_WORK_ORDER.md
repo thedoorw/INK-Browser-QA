@@ -1294,3 +1294,24 @@ USER-visible priorities: automatic tooltip/hint clutter off; matching left/right
 ## PvsI comparison retirement — 2026-10-01
 
 The former `reference/ui/photoshop/PvsI-1.png`, `PvsI-2.png`, and `PvsI-3.png` assets were deleted by USER because the INK interface had changed. They are no longer current comparison authority. Do not recreate or reuse them as evidence. Current visual authority is the original Photoshop reference set plus fresh current-INK captures generated for the specific comparison state.
+
+
+## Cluster C / D / C019 parallel DEV dispatch — 2026-10-03
+
+USER authorized three independent DEV windows. They may run in parallel, but they do not own source merge or Live deployment.
+
+Dispatches:
+- `ACTIVE/INK_CLUSTER_C_LAYOUT_PAGE_ARTBOARD_DEV_DISPATCH_v1.0.md`
+- `ACTIVE/INK_CLUSTER_D_MATERIAL_RECIPE_DEV_DISPATCH_v1.0.md`
+- `ACTIVE/INK_C019_TEXT_WARP_RENDER_INTEGRATION_DEV_DISPATCH_v1.0.md`
+
+Execution boundary:
+
+```text
+C DEV → exact candidate + QA/evidence → STOP
+D DEV → exact candidate + QA/evidence → STOP
+C019 DEV → exact candidate + QA/evidence → STOP
+→ CHAT / Core / Live authority reviews, integrates, exact-SHA deploys and performs Formal Live closure
+```
+
+Keep the current B3 local raster/masks work independent. Do not let C/D/C019 branches merge themselves, deploy to `thedoorw/INK`, or disturb active UI/PWA/C06 owners. FORMAT_VERSION remains 4.
