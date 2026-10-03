@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAGE_OPERATIONS, CHAT_OBJECT_ALIGN_MODES, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES, CHAT_IMAGE_SOURCE_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -171,6 +171,13 @@ const editSchemas = {
     { type: 'string', const: 'object.translate.v1', description: 'Translate editable objects.' },
     obj({ dx: num('World-space X delta.', { minimum: -1000000, maximum: 1000000 }), dy: num('World-space Y delta.', { minimum: -1000000, maximum: 1000000 }) }, ['dx', 'dy'], 'Translation arguments.'),
     64
+  ),
+  'object.align.v1': editTaskSchema(
+    { type: 'string', const: 'object.align.v1', description: 'Align or distribute explicit editable objects through the existing InkApp.alignSelection() and applyWorldTransformBatch() authority.' },
+    obj({
+      mode: { type: 'string', enum: [...CHAT_OBJECT_ALIGN_MODES], description: 'Existing align/distribute mode.' }
+    }, ['mode'], 'Explicit-target alignment/distribution. Alignment requires at least two targets; distribution requires at least three.'),
+    64, 2
   ),
   'path.simplify.v1': editTaskSchema(
     { type: 'string', const: 'path.simplify.v1', description: 'Simplify one Path.' },
@@ -1106,6 +1113,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
           : ['Targets must resolve to editable visible unlocked objects.'];
   if (operation === 'boolean.apply.v1') operationConstraints.push('All 2+ Path targets must share the same layer and structural parent.');
   if (operation === 'group.create.v1') operationConstraints.push('All targets must share the same layer and structural parent.');
+  if (operation === 'object.align.v1') operationConstraints.push('Explicit stable refs are temporarily routed through the existing selection-based InkApp.alignSelection() authority and the prior user selection is restored afterward. No duplicate alignment/distribution math is introduced. Alignment needs 2+ targets; distributeX/distributeY need 3+.');
   if (operation === 'object.reparent.v1') operationConstraints.push('Native hierarchy authority currently accepts Frame parents or layer root and rejects cycles/cross-layer invalid moves.');
   if (operation === 'svg.import.v1') operationConstraints.push('Raw local SVG only; script/foreign-code/network execution forms are rejected and parser unsupported evidence is returned.');
   if (operation === 'paint.session.create.v1') operationConstraints.push('Uses only the qualified built-in Brush Engine preset subset and the existing StrokeSessionRecorder/replay authority; Blender, Smudge, Eraser, and pointer emulation are intentionally not exposed here.');
