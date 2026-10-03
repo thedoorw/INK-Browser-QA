@@ -11,12 +11,18 @@ self.addEventListener('install', () => {
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key.startsWith(CACHE_PREFIX)).map(key => caches.delete(key)));
-    const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    await Promise.all(windows.map(client => client.navigate?.(client.url).catch(() => null)));
-  })());
+  // Keep activation lifetime tied only to cache cleanup. Do not await
+  // WindowClient.navigate() here: navigation may itself wait for activation.
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(key => key.startsWith(CACHE_PREFIX)).map(key => caches.delete(key)))
+    )
+  );
+  self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+    .then(windows => windows.forEach(client => {
+      client.navigate?.(client.url).catch(() => null);
+    }))
+    .catch(() => null);
 });
 
 self.addEventListener('message', event => {
