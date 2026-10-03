@@ -1,4 +1,4 @@
-import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES } from '../editor/chat-bounded-edit.js';
+import { CHAT_EDIT_OPERATIONS, CHAT_PAINT_SESSION_BRUSH_IDS, CHAT_STROKE_KINDS, CHAT_IMAGE_ADJUSTMENT_TYPES, CHAT_IMAGE_FILTER_TYPES, CHAT_IMAGE_BLEND_MODES, CHAT_IMAGE_EFFECT_TYPES, CHAT_IMAGE_LIQUIFY_OPERATION_TYPES, CHAT_IMAGE_LOCAL_RETOUCH_TYPES } from '../editor/chat-bounded-edit.js';
 
 export const INK_CAPABILITY_DESCRIPTOR_SCHEMA = 'INK_CAPABILITY_DESCRIPTOR';
 export const INK_CAPABILITY_DESCRIPTOR_VERSION = 1;
@@ -295,6 +295,24 @@ const editSchemas = {
       hardness: num('Healing brush hardness.', { minimum: 0, maximum: 1, default: .85 }),
       neighborRadius: { type: 'integer', minimum: 1, maximum: 64, default: 2, description: 'Neighbor search radius used by existing Spot Healing authority.' }
     }, ['x','y'], 'One-shot structured local retouch. No pointer stroke or raw mask is accepted.'),
+    1
+  ),
+  'image.raster.localRetouch.v1': editTaskSchema(
+    { type: 'string', const: 'image.raster.localRetouch.v1', description: 'Apply one bounded non-source local destructive retouch edit to an editable native 8-bit RGB raster through existing raster-retouch algorithms.' },
+    obj({
+      type: { type: 'string', enum: [...CHAT_IMAGE_LOCAL_RETOUCH_TYPES], description: 'Qualified non-source local retouch family. Spot Healing is a separate operation; Clone/Healing/Patch/Pattern Stamp are excluded.' },
+      x: num('Raster-local center X.', { minimum: 0, maximum: 1000000 }),
+      y: num('Raster-local center Y.', { minimum: 0, maximum: 1000000 }),
+      radius: num('Local brush radius.', { minimum: Number.EPSILON, maximum: 512, default: 18 }),
+      hardness: num('Local brush hardness.', { minimum: 0, maximum: 1, default: .85 }),
+      strength: num('Dodge/Burn/Sponge/Local Blur/Color Replacement strength.', { minimum: 0, maximum: 1, default: .55 }),
+      mode: { type: 'string', enum: ['saturate','desaturate'], default: 'saturate', description: 'Sponge mode.' },
+      kernelRadius: { type: 'integer', minimum: 1, maximum: 16, default: 2, description: 'Local Blur/Sharpen sampling radius.' },
+      amount: num('Local Sharpen amount.', { minimum: 0, maximum: 4, default: 1 }),
+      replacementColor: str('Color Replacement target hue/saturation as #RRGGBB or #RRGGBBAA. Required when type=colorReplacement.'),
+      referenceColor: str('Optional Color Replacement reference color; defaults to center pixel.'),
+      tolerance: num('Color Replacement tolerance.', { minimum: 0, maximum: 255, default: 32 })
+    }, ['type','x','y'], 'One-shot raster-local retouch. Tool-specific parameters are validated by the bounded edit normalizer; raw masks, pointer strokes and source-point inference are not accepted.'),
     1
   ),
   'image.mask.raster.set.v1': editTaskSchema(
@@ -1045,6 +1063,7 @@ const operationDescriptors = CHAT_EDIT_OPERATIONS.map(operation => {
   if (operation === 'image.raster.paintBucket.v1') operationConstraints.push('Destructive local raster edit. Reuses existing paintBucketFill()/magicWandSelection and existing rasterState.colorRaster. Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation or automatic target discovery. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'image.mask.raster.set.v1') operationConstraints.push('Initial geometry is rectangle only. Reuses existing rasterizePathMask/createRasterMask/renderImageStack; raw alpha arrays are not accepted. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
   if (operation === 'image.raster.spotHeal.v1') operationConstraints.push('One-shot structured local retouch using existing spotHealing(). Current direct-raster qualification is limited to 8-bit RGB; no pointer emulation, source-point inference, or raw mask payload. Raster pixels and rasterMask participate in operation-specific optimistic-concurrency fingerprints.');
+  if (operation === 'image.raster.localRetouch.v1') operationConstraints.push('Non-source one-shot local retouch only: Dodge/Burn/Sponge/Local Blur/Local Sharpen/Color Replacement. Uses existing raster-retouch algorithms, native rasterState and pixel/mask stale fingerprints. Clone/Healing/Patch/Pattern Stamp remain separate source-contract work.');
   if (operation === 'path.warp.v1') operationConstraints.push('Uses existing createWarpDeformationPlan() + applyNonDestructiveDeformation(); stable Path identity and editable anchor structure are preserved.');
   if (operation === 'path.distort.v1' || operation === 'path.perspective.v1') operationConstraints.push('Uses existing projective planner and applyNonDestructiveDeformation(); recomputes anchors and handles from retained baseSubpaths with serializable reversible state. Distort offsets independent corners; Perspective constrains opposing edges toward a shared center. Invalid folded quads are rejected.');
   if (operation === 'object.resize.v1' || operation === 'object.scale.v1') operationConstraints.push('Finite non-singular transform safety is required.');
