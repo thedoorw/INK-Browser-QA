@@ -877,3 +877,19 @@ async function run(){
   }
 }
 await run();
+// Fresh installed-browser process/profile for each required B4 regression.
+const batchRequest=JSON.parse(await readFile(path.resolve(process.argv[2]),'utf8'));
+if(batchRequest.case==='path-deformation-b4' && batchRequest.regressions===true && !process.exitCode){
+  const primary=JSON.parse(await readFile(path.resolve(process.argv[4]),'utf8'));
+  primary.regressions=[];
+  for(const caseName of ['paint-session-create','stroke-create-a2','page-paper-a3','raster-stack-adjustment-b2']){
+    const prefix=path.resolve(process.argv[4])+'.'+caseName;
+    await writeFile(prefix+'.request.json',JSON.stringify({...batchRequest,requestId:batchRequest.requestId+'-'+caseName,case:caseName,regressions:false}));
+    const regression=spawn(process.execPath,[path.resolve(process.argv[1]),prefix+'.request.json',path.resolve(process.argv[3]),prefix+'.json',prefix+'.png'],{shell:false,stdio:'inherit'});
+    const [code]=await once(regression,'exit');
+    const result=JSON.parse(await readFile(prefix+'.json','utf8'));
+    primary.regressions.push(result);
+    if(code!==0||result.status!=='PASS'){primary.status='FAIL';process.exitCode=1;}
+  }
+  await writeFile(path.resolve(process.argv[4]),JSON.stringify(primary,null,2));
+}

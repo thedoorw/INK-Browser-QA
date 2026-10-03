@@ -1,7 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B4-three-operations-candidate-001",
+  "requestId": "clusterB-B4-candidate-regressions-002",
   "candidateSha": "91d46fb0c070a84e65186115e7525c87d63e3cd0",
-  "case": "path-deformation-b4"
+  "case": "path-deformation-b4",
+  "regressions": true
 }
