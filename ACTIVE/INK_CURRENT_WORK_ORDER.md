@@ -1,5 +1,34 @@
 # INK Current Work Order
 
+## Runtime Bridge + GitHub Connector — NEW R&D LANE 2026-10-03
+
+USER authorized planning and new-window handoff for replacing the current daily hosted-browser transport with a direct user's-INK-Web Runtime Bridge while retaining GitHub as transport/SSOT.
+
+Authority:
+- `research/INK_RUNTIME_BRIDGE_GITHUB_CONNECTOR_PLAN_v0.1.md`
+- `ACTIVE/INK_RUNTIME_BRIDGE_CONNECTOR_NEW_WINDOW_HANDOFF_v0.1.md`
+
+Current authorization:
+
+```text
+PHASE_0_ARCHITECTURE_AND_SECURITY_R&D = AUTHORIZED
+PRODUCT_MUTATION = NOT YET AUTHORIZED
+HOSTED_BROWSER_RUNNER = RETAIN AS QA
+INK_PUBLIC_API = REUSE / DO NOT REPLACE
+GITHUB = SSOT / PROPOSED TRANSPORT
+FORMAT_VERSION = 4 / UNCHANGED
+```
+
+First deliverables:
+- current → target transport map;
+- safe browser authentication decision;
+- GitHub mailbox protocol;
+- Runtime/session/idempotency/expiry/source-SHA guards;
+- exact Phase 1 read-only implementation workpack;
+- STOP → USER / MR review.
+
+Do not touch UI PR #109, PWA, C06, New Document or closed capability lines.
+
 ## INK Architecture Recomposition R&D — R&D COMPLETE / STOP → USER DECISION 2026-10-03
 
 USER opened a new architecture question: determine whether continuing bounded repair or structurally recomposing INK around its already mature capabilities is faster and safer.
