@@ -1,5 +1,36 @@
 # INK Current Work Order
 
+## PWA / Cache Freshness — Supervisor v2 accepted for bounded integration — 2026-10-03
+
+Reviewed branch:
+- `work/pwa-cache-freshness-supervisor-gates-003`
+
+Exact candidate:
+- `0ccfd4a729f16ff755921f5881fa0090e2745581`
+
+Supervisor disposition:
+```text
+GATE_1_PUBLICATION_IDENTITY = ACCEPTED / CLOSED
+LOCAL_REAL_BROWSER_MIGRATION = ACCEPTED
+ACTUAL_PAGES_BASELINE_CAPTURE = ACCEPTED
+CANDIDATE = ACCEPTED_FOR_BOUNDED_INTEGRATION
+GATE_2_ACTUAL_PAGES_TRANSITION = PENDING / MANDATORY POST-INTEGRATION
+FINAL_PWA_CLOSURE = NOT YET
+```
+
+Review:
+- `working/INK_PWA_CACHE_FRESHNESS_SUPERVISOR_REVIEW_20261003_v2.md`
+
+Required next:
+```text
+authorized bounded integration to current main
+→ GitHub Pages publishes exact integrated revision
+→ automatic actual Pages normal open/F5 + close/reopen + offline gate
+→ Supervisor closure only if live gate passes
+```
+
+Do not merge the historical divergent `work/pwa-cache-freshness-001` branch.
+
 ## PWA / Cache Freshness — Supervisor review REVISION_REQUIRED 2026-10-03
 
 Supervisor reviewed exact DEV candidate `1da854e6ce1805101f5ff3a4f7b7e16929a2d88e`.
