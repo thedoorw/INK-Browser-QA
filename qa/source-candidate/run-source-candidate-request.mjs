@@ -149,21 +149,6 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
     await frames();
     return {status:r.status,fingerprint:find(r,'renderFingerprint')||find(r,'fingerprint')||null,bounds:find(r,'bounds')||null};
   };
-  const renderProbe=async()=>{
-    const content=app.renderer.contentBounds()||{x:-200,y:-150,w:400,h:300},pad=24,scale=1;
-    const bounds={x:content.x-pad,y:content.y-pad,w:content.w+pad*2,h:content.h+pad*2};
-    const canvas=await app.renderExportCanvas({scope:'content',scale,background:true});
-    const ctx=canvas.getContext('2d'),image=ctx.getImageData(0,0,canvas.width,canvas.height),data=image.data;
-    let h=2166136261;
-    for(let i=0;i<data.length;i++){h^=data[i];h=Math.imul(h,16777619);}
-    const px=Math.max(0,Math.min(canvas.width-1,Math.round((0-bounds.x)*scale)));
-    const py=Math.max(0,Math.min(canvas.height-1,Math.round((0-bounds.y)*scale)));
-    const offset=(py*canvas.width+px)*4;
-    const centerPixel=[data[offset],data[offset+1],data[offset+2],data[offset+3]];
-    const result={hash:(h>>>0).toString(16),width:canvas.width,height:canvas.height,bounds,centerPixel};
-    canvas.width=1;canvas.height=1;
-    return result;
-  };
   const edit=async(task,{checkBlocked=false}={})=>{
     const p=await invoke('propose_ink_edit',{task});
     if(p?.status==='FAILED')throw new Error('PROPOSE_FAILED:'+task.operation+':'+JSON.stringify(p.diagnostics||[]));
@@ -253,7 +238,6 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   const redoInstance=await invoke('redo_ink',{});if(redoInstance?.status==='FAILED'||!instancePresent())throw new Error('MATERIAL_INSTANCE_REDO_FAILED');
 
   const beforeApply=await preview();
-  const beforeApplyProbe=await renderProbe();
   const applyExecution=await edit({
     schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-apply',
     operation:'path.material.apply.v1',targets:[targetRef],
@@ -262,46 +246,7 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   const applied=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
   if(applied?.materialAppearance?.templateId!==template.templateId)throw new Error('PATH_MATERIAL_NOT_APPLIED');
   const afterApply=await preview();
-  const afterApplyProbe=await renderProbe();
-  if(beforeApplyProbe.hash===afterApplyProbe.hash){
-    const storedTemplate=app.doc.materialLibrary?.templates?.find(item=>item.templateId===template.templateId)||null;
-    const appearanceModule=await import('./src/vector/paint-appearance.js');
-    const resolvedAppearance=appearanceModule.resolvePathPaintAppearance(applied,app.doc);
-    const instanceObject=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===instanceId)||null;
-    const scratchHash=(path,mode='path')=>{
-      const canvas=document.createElement('canvas');canvas.width=240;canvas.height=160;
-      const ctx=canvas.getContext('2d');ctx.translate(120,80);
-      if(mode==='object')app.renderer.drawObject(ctx,path,{page:app.page()});else app.renderer.drawVectorPath(ctx,path);
-      const image=ctx.getImageData(0,0,canvas.width,canvas.height),data=image.data;let h=2166136261;
-      for(let i=0;i<data.length;i++){h^=data[i];h=Math.imul(h,16777619);}
-      const off=(80*canvas.width+120)*4;
-      return {hash:(h>>>0).toString(16),centerPixel:[data[off],data[off+1],data[off+2],data[off+3]]};
-    };
-    const ordinaryClone=JSON.parse(JSON.stringify(applied));ordinaryClone.materialAppearance=null;
-    throw new Error('MATERIAL_RENDER_NO_DELTA:'+JSON.stringify({
-      beforeApply,afterApply,beforeApplyProbe,afterApplyProbe,
-      storedPathAppearance:storedTemplate?.metadata?.pathAppearance||storedTemplate?.pathAppearance||null,
-      resolvedAppearance,
-      targetMaterialAppearance:applied?.materialAppearance||null,
-      targetFill:applied?.fill||null,targetStroke:applied?.stroke||null,
-      targetMatrix:applied?.matrix||null,
-      instanceMatrix:instanceObject?.matrix||null,
-      layerTree:app.page().layers.map(layer=>({
-        id:layer.id,visible:layer.visible,opacity:layer.opacity,
-        objects:(layer.objects||[]).map(object=>({
-          id:object.id,type:object.type,matrix:object.matrix||null,fill:object.fill||null,opacity:object.opacity,visible:object.visible,
-          materialAppearance:object.materialAppearance||null,
-          children:(object.children||[]).map(child=>({id:child.id,type:child.type,matrix:child.matrix||null,fill:child.fill||null,opacity:child.opacity,visible:child.visible,materialAppearance:child.materialAppearance||null}))
-        }))
-      })),
-      scratchMaterial:scratchHash(applied),
-      scratchOrdinary:scratchHash(ordinaryClone),
-      scratchMaterialObject:scratchHash(applied,'object'),
-      scratchOrdinaryObject:scratchHash(ordinaryClone,'object'),
-      runtimeDrawObjectSource:String(app.renderer.drawObject).slice(0,1800),
-      runtimeDrawVectorPathSource:String(app.renderer.drawVectorPath).slice(0,1200)
-    }));
-  }
+  if(!beforeApply.fingerprint||!afterApply.fingerprint||beforeApply.fingerprint===afterApply.fingerprint)throw new Error('MATERIAL_PREVIEW_NO_DELTA');
   const undoApply=await invoke('undo_ink',{});if(undoApply?.status==='FAILED')throw new Error('MATERIAL_APPLY_UNDO_FAILED');
   const undoApplied=app.page().layers.flatMap(layer=>layer.objects||[]).find(object=>object.id===targetId);
   if(undoApplied?.materialAppearance)throw new Error('MATERIAL_APPLY_UNDO_NOT_EXACT');
@@ -330,16 +275,55 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   if(!Array.isArray(executionReceipt.checkpoints)||!executionReceipt.checkpoints.length)throw new Error('RECIPE_CHECKPOINT_RECEIPT_MISSING');
   if(app.history.undoStack.length!==recipeHistoryBefore+1||!String(app.history.undoStack.at(-1)?.label||'').startsWith('CHAT Recipe'))throw new Error('RECIPE_HISTORY_MISSING');
   const recipeAfter=await preview();
-  if(recipeBefore.fingerprint&&recipeAfter.fingerprint&&recipeBefore.fingerprint===recipeAfter.fingerprint)throw new Error('RECIPE_PREVIEW_NO_DELTA');
+  if(!recipeBefore.fingerprint||!recipeAfter.fingerprint||recipeBefore.fingerprint===recipeAfter.fingerprint)throw new Error('RECIPE_PREVIEW_NO_DELTA');
   const undoRecipe=await invoke('undo_ink',{});if(undoRecipe?.status==='FAILED')throw new Error('RECIPE_UNDO_FAILED');
   const recipeUndoPreview=await preview();
-  if(recipeBefore.fingerprint&&recipeUndoPreview.fingerprint&&recipeBefore.fingerprint!==recipeUndoPreview.fingerprint)throw new Error('RECIPE_UNDO_RENDER_NOT_EXACT');
+  if(!recipeUndoPreview.fingerprint||recipeBefore.fingerprint!==recipeUndoPreview.fingerprint)throw new Error('RECIPE_UNDO_RENDER_NOT_EXACT');
   const redoRecipe=await invoke('redo_ink',{});if(redoRecipe?.status==='FAILED')throw new Error('RECIPE_REDO_FAILED');
   const recipeRedoPreview=await preview();
-  if(recipeAfter.fingerprint&&recipeRedoPreview.fingerprint&&recipeAfter.fingerprint!==recipeRedoPreview.fingerprint)throw new Error('RECIPE_REDO_RENDER_NOT_EXACT');
+  if(!recipeRedoPreview.fingerprint||recipeAfter.fingerprint!==recipeRedoPreview.fingerprint)throw new Error('RECIPE_REDO_RENDER_NOT_EXACT');
 
   const storedRecipeLibrary=await invoke('search_ink_library',{types:['recipe'],limit:50});
   if((storedRecipeLibrary.result?.results||[]).length!==0)throw new Error('STUDIO_RECIPE_FALSELY_STORED_AS_FLORA_RECIPE');
+
+  const currentTargetEntry=app.page().layers.flatMap(layer=>(layer.objects||[]).map(object=>({layer,object}))).find(item=>item.object.id===targetId);
+  if(!currentTargetEntry)throw new Error('RECIPE_TARGET_MISSING_AFTER_REDO');
+  const invalidParameterProposal=await invoke('propose_ink_edit',{task:{
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-recipe-invalid-param',
+    operation:'recipe.studio.execute.v1',
+    targets:[{pageId:app.page().id,layerId:currentTargetEntry.layer.id,objectId:targetId}],
+    arguments:{recipeId:'ink.flower.common.v1',recipeVersion:'1',parameters:{strokeScale:2},roles:['petal']}
+  }});
+  if(invalidParameterProposal?.status!=='FAILED'||invalidParameterProposal?.diagnostics?.[0]?.code!=='CHAT_EDIT_RECIPE_PARAMETER_RANGE'){
+    throw new Error('RECIPE_PARAMETER_SCHEMA_NOT_ENFORCED:'+JSON.stringify(invalidParameterProposal));
+  }
+
+  const rollbackCreated=await edit({
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-rollback-target',
+    operation:'path.create.v1',targets:[],
+    arguments:{objectId:'qa-d-rollback-petal',name:'QA D Rollback Petal',shape:'ellipse',cx:-240,cy:0,rx:1,ry:1,fill:'#375f88',stroke:'#21394e',strokeWidth:1,opacity:1}
+  });
+  const rollbackId=find(rollbackCreated,'objectId')||'qa-d-rollback-petal';
+  const rollbackEntry=app.page().layers.flatMap(layer=>(layer.objects||[]).map(object=>({layer,object}))).find(item=>item.object.id===rollbackId);
+  if(!rollbackEntry)throw new Error('ROLLBACK_TARGET_MISSING');
+  app.history.clear();
+  const rollbackDocumentBefore=JSON.stringify(app.doc);
+  const rollbackProposal=await invoke('propose_ink_edit',{task:{
+    schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-recipe-rollback',
+    operation:'recipe.studio.execute.v1',
+    targets:[{pageId:app.page().id,layerId:rollbackEntry.layer.id,objectId:rollbackId}],
+    arguments:{recipeId:'ink.flower.common.v1',recipeVersion:'1',parameters:{fillHue:'#cf6e82',stroke:'#58363e',strokeScale:.018,texture:14,contrast:8},roles:['petal']}
+  }});
+  if(rollbackProposal?.status==='FAILED')throw new Error('ROLLBACK_PROPOSE_FAILED:'+JSON.stringify(rollbackProposal.diagnostics||[]));
+  const rollbackProposalId=find(rollbackProposal,'proposalId');
+  const rollbackApproval=await invoke('approve_ink_edit',{proposalId:rollbackProposalId});
+  if(rollbackApproval?.status==='FAILED')throw new Error('ROLLBACK_APPROVE_FAILED');
+  const rollbackExecution=await invoke('execute_ink_edit',{proposalId:rollbackProposalId,approvalToken:find(rollbackApproval,'approvalToken')});
+  if(rollbackExecution?.status!=='FAILED')throw new Error('ROLLBACK_FAILURE_NOT_TRIGGERED');
+  const rollbackReport=app.studio.engine.replayReport();
+  if(rollbackReport?.status!=='failed'||rollbackReport?.rolledBack!==true)throw new Error('RECIPE_ROLLBACK_RECEIPT_MISSING:'+JSON.stringify(rollbackReport));
+  if(JSON.stringify(app.doc)!==rollbackDocumentBefore)throw new Error('RECIPE_ROLLBACK_DOCUMENT_MISMATCH');
+  if(app.history.pending||app.history.undoStack.length||app.history.redoStack.length)throw new Error('RECIPE_ROLLBACK_HISTORY_RESIDUE');
 
   const rejected=await invoke('propose_ink_edit',{task:{
     schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-reject-token',
@@ -352,8 +336,8 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
     passed:true,
     cases:['C001','C002','C007','C008','C013'],
     families:['C39','C55'],
-    material:{freshZero:true,proposalNeutral:true,templateId:template.templateId,rediscovered:true,instanceId,instanceUndoRedo:true,pathApply:true,pathApplyUndoRedo:true,previewDelta:Boolean(!beforeApply.fingerprint||!afterApply.fingerprint||beforeApply.fingerprint!==afterApply.fingerprint),arbitraryTokenRejected:true},
-    recipe:{inventoryReadOnly:true,inventoryCount:inventory.result?.counts||null,recipeId:executionReceipt.recipeId,recipeVersion:String(executionReceipt.recipeVersion),historyAtomic:true,replayId:replayReceipt.id,checkpointCount:executionReceipt.checkpoints.length,undoRedo:true,storedRediscovery:'NOT_APPLICABLE_STUDIO_REGISTRY_NOT_FLORA_PERSISTENCE'},
+    material:{freshZero:true,proposalNeutral:true,templateId:template.templateId,rediscovered:true,instanceId,instanceUndoRedo:true,pathApply:true,pathApplyUndoRedo:true,previewDelta:true,arbitraryTokenRejected:true},
+    recipe:{inventoryReadOnly:true,inventoryCount:inventory.result?.counts||null,recipeId:executionReceipt.recipeId,recipeVersion:String(executionReceipt.recipeVersion),parameterSchemaRejected:true,historyAtomic:true,replayId:replayReceipt.id,checkpointCount:executionReceipt.checkpoints.length,undoRedo:true,rollback:true,rollbackExecutionId:rollbackReport.id||null,storedRediscovery:'NOT_APPLICABLE_STUDIO_REGISTRY_NOT_FLORA_PERSISTENCE'},
     governance:{proposalApprovalRequired:true,noSecondMaterialEngine:true,noSecondRecipeEngine:true,workflowIrUsed:false}
   };
 })()`;
