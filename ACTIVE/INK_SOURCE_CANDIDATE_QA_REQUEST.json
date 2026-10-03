@@ -1,8 +1,8 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterB-B3-source-retouch-candidate-001-regressions",
-  "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+  "requestId": "clusterB-B3-source-retouch-integration-001-regressions",
+  "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
   "case": "raster-source-retouch-b3",
   "regressions": true
 }
