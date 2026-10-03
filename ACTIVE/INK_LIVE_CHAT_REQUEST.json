@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "clusterC-C1-page-ops-live-002",
+  "requestId": "core-perf-image-cache-formal-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "dfb197ca31dc1e2e5ca46c6452e998dce44c57c6",
+  "expectedSourceSha": "f56e492af4954ae6da3be39cf10d2dbe2859d87e",
   "steps": [
     {
       "id": "contextBefore",
@@ -364,5 +364,9 @@
       "tool": "get_ink_history",
       "input": {}
     }
-  ]
+  ],
+  "imageStackFormalB2": true,
+  "imageStackCacheReview": true,
+  "naturalMediaCacheReview": true,
+  "qualification": "path-deformation-b4"
 }
