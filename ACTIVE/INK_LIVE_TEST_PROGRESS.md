@@ -859,3 +859,51 @@ PAINT_SESSION_MIXERS = FOLLOW-UP ONLY
 SECOND_AUTHORITY = NONE
 FORMAT_VERSION_CHANGE = NONE
 ```
+
+
+## B3.1 Paint Bucket — merged / deployed / formal Live qualified 2026-10-03
+
+Classification:
+```text
+B3_PAINT_BUCKET = PRODUCT EXISTS / CHAT EXPOSURE GAP → REPAIRED
+B3_OVERALL = PARTIAL
+```
+
+Authority:
+- existing `paintBucketFill()/magicWandSelection()` remains the direct pixel algorithm authority;
+- explicit one-image stable target only;
+- mutation stays on the same native `image + rasterState.colorRaster`;
+- current qualified direct-raster format is 8-bit RGB, matching the existing UI raster-tool controller boundary;
+- existing proposal/approval target fingerprint checks and scoped History are reused;
+- ReferenceImage remains locked/separate;
+- no pointer emulation, automatic target discovery, second raster model, Renderer, History authority, UI change, or FORMAT_VERSION change.
+
+Source/candidate:
+- PR #138 merged.
+- exact candidate: `fedb8f62fa8cf21e3499c8307cfae77cc8714709`.
+- merged/deployed source: `d64aa172ef6d4f3c100642aec8bcc4195c33b2dd`.
+- candidate request: `clusterB-B3-paint-bucket-candidate-001-regressions`.
+- candidate run `37095914689`; artifact `11264745413`; digest `sha256:3d53c83795091f6bd30b86288e0f0060e5541036016893f822c5878d945fe4a5`.
+- raster pixels `376ec6fb → b09ebd5b`; candidate Preview `4d9848b1 → f1a6f9ad`; exact Undo/Redo.
+- 1296 changed pixels / 3888 changed channels.
+- no-op rejected; locked Reference rejected.
+- B1 / B2 brightnessContrast / A5 exact-SHA regressions PASS.
+
+Formal Live:
+- request `clusterB-B3-paint-bucket-live-001`.
+- request commit `3136512412e18b75a1fdfa4b4f5b97e33b3b7930`.
+- result commit `1be581b462722c2f2f45c46eb9375ed4c60d9409`.
+- run `37096080332`; artifact `11264177272`; digest `sha256:59cbf99f55fc5dfdc698f4c135592e1dcd0d31923199569b8948352a9bd44c2c`.
+- exact source verified; `apiReady=true`; 23 named tools.
+- Live Preview `fnv1a32:34d01658 → fnv1a32:bfcf7afe`; Undo `34d01658`; Redo `bfcf7afe`.
+- 13 pixels / 39 channels changed; selection bounds x=2 y=2 w=5 h=5.
+- History contains native editable-raster import + scoped `CHAT raster Paint Bucket`.
+- same-color repeat rejected `CHAT_EDIT_NO_OP`.
+
+```text
+B3_PAINT_BUCKET = PASS / CLOSED / MERGED / DEPLOYED / FORMAL LIVE QUALIFIED
+NEXT_B3 = RASTER_MASK
+B3_LOCAL_RETOUCH_FAMILIES = OPEN / SEPARATE
+SECOND_AUTHORITY = NONE
+FORMAT_VERSION_CHANGE = NONE
+```
