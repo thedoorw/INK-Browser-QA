@@ -1,0 +1,61 @@
+{
+  "schema": "INK-LOCAL-MAIN-PROGRAM-OPTIMIZATION-EVIDENCE",
+  "version": 1,
+  "date": "2026-10-03",
+  "finalStatus": "CLOSED",
+  "acceptedSourceSha": "698ce0ef781eeb5899ab5b84183d9a0d0eb8e6f5",
+  "acceptedProductSourceTree": "6f616cdbf54f172c569d69d14b197c3b6eae746f",
+  "issues": {
+    "PAPER_SINGLE_STROKE_RENDER_INTEGRATION": {
+      "status": "CLOSED",
+      "pr": 130,
+      "acceptedSourceSha": "701c3777dba854df893f61f1d75b97ea694ede62",
+      "productSourceTree": "5749d904364217df2438550e759b64d2df3d579e",
+      "candidateRuns": [
+        37087584729,
+        37087624476,
+        37087659009,
+        37087724137
+      ],
+      "liveRun": 37087999061,
+      "liveDeploymentCommit": "07642e8ae95da557b7cc04f410a11707a8fb9e82"
+    },
+    "PAPER_WEBGL_ROUGHNESS_PARITY": {
+      "status": "CLOSED",
+      "pr": 134,
+      "acceptedSourceSha": "698ce0ef781eeb5899ab5b84183d9a0d0eb8e6f5",
+      "productSourceTree": "6f616cdbf54f172c569d69d14b197c3b6eae746f",
+      "premergeRuns": [
+        37088814441,
+        37088881571,
+        37088937716,
+        37088987352
+      ],
+      "mergedRuns": [
+        37089063471,
+        37089114868,
+        37089167456,
+        37089199118
+      ],
+      "liveDeploymentRun": 37089314792,
+      "liveRun": 37089417471,
+      "liveDeploymentCommit": "27e3acfb7af31c1faf7262a6400de1d33908981c",
+      "livePreview": {
+        "before": "fnv1a32:f4fdfe1a",
+        "after": "fnv1a32:633c4d8e",
+        "undo": "fnv1a32:f4fdfe1a",
+        "redo": "fnv1a32:633c4d8e"
+      },
+      "livePaper": {
+        "roughness": 0.95,
+        "absorbency": 0.58
+      }
+    }
+  },
+  "isolation": {
+    "b4Conflict": false,
+    "secondAuthority": false,
+    "uiChanged": false,
+    "formatVersionChanged": false
+  }
+}
