@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-B3-source-retouch-candidate-001-regressions",
-  "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+  "requestId": "clusterB-B3-source-retouch-integration-001-regressions",
+  "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
   "case": "raster-source-retouch-b3",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:35249/?sourceCandidate=22593c2a59bd16c2c166a67a260a0390a6efd218",
+    "href": "http://127.0.0.1:44683/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -14,7 +14,7 @@
   "result": {
     "passed": true,
     "operation": "image.raster.sourceRetouch.v1",
-    "objectId": "61466beb-a351-437b-81a6-cb56f02944b8",
+    "objectId": "f9d6b12a-52a0-4458-b656-b35ad04b4802",
     "baselineHash": "7b77e00d",
     "baselinePreview": {
       "status": "COMPLETED",
@@ -61,11 +61,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-candidate-001-regressions-raster-local-retouch-b3",
-      "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-local-retouch-b3",
+      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
       "case": "raster-local-retouch-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:38703/?sourceCandidate=22593c2a59bd16c2c166a67a260a0390a6efd218",
+        "href": "http://127.0.0.1:37417/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -74,7 +74,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.localRetouch.v1",
-        "objectId": "e47d288c-b193-45cf-bb81-737f96365ebc",
+        "objectId": "dde26315-720d-46d3-b8fe-68d68659f0aa",
         "baselineHash": "5e882188",
         "baselinePreview": {
           "status": "COMPLETED",
@@ -150,11 +150,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-candidate-001-regressions-raster-spot-heal-b3",
-      "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-spot-heal-b3",
+      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
       "case": "raster-spot-heal-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:44303/?sourceCandidate=22593c2a59bd16c2c166a67a260a0390a6efd218",
+        "href": "http://127.0.0.1:37619/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -163,7 +163,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.spotHeal.v1",
-        "objectId": "f2692849-256c-4407-ad7f-4fe97b46dbca",
+        "objectId": "d649fefb-488e-4eee-8a94-4001aab8f711",
         "beforeHash": "56c8e8cb",
         "afterHash": "73c4534b",
         "undoHash": "56c8e8cb",
@@ -204,9 +204,9 @@
           },
           "resultRefs": [
             {
-              "layerId": "fa16a702-be04-4b0a-9d42-226aebc43c51",
-              "objectId": "f2692849-256c-4407-ad7f-4fe97b46dbca",
-              "pageId": "7bce7a70-47da-4a5c-923e-1c774835f826"
+              "layerId": "e8ccb36e-f75c-4234-b03a-9ad1c7eb03b0",
+              "objectId": "d649fefb-488e-4eee-8a94-4001aab8f711",
+              "pageId": "0ce47fb7-3ff1-4b61-ae13-9b9945a4ccd7"
             }
           ]
         }
@@ -216,11 +216,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-candidate-001-regressions-raster-mask-b3",
-      "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-mask-b3",
+      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
       "case": "raster-mask-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:40057/?sourceCandidate=22593c2a59bd16c2c166a67a260a0390a6efd218",
+        "href": "http://127.0.0.1:42095/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -229,7 +229,7 @@
       "result": {
         "passed": true,
         "operation": "image.mask.raster.set.v1",
-        "objectId": "758d28ae-af6d-4837-91cc-63030186222c",
+        "objectId": "c31ec80d-9f76-4dea-bf60-d92116d4c18e",
         "baselineHash": "376ec6fb",
         "afterMaskHash": "376ec6fb",
         "baselinePreview": {
@@ -275,11 +275,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-candidate-001-regressions-raster-direct-paint-bucket-b3",
-      "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-direct-paint-bucket-b3",
+      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
       "case": "raster-direct-paint-bucket-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:45469/?sourceCandidate=22593c2a59bd16c2c166a67a260a0390a6efd218",
+        "href": "http://127.0.0.1:37085/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -288,7 +288,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.paintBucket.v1",
-        "objectId": "01965bb1-7990-422c-9981-24e3da02a6b4",
+        "objectId": "0426b049-9ac9-4432-9297-c8664b630e1d",
         "beforeHash": "376ec6fb",
         "afterHash": "b09ebd5b",
         "undoHash": "376ec6fb",
@@ -335,9 +335,9 @@
           },
           "resultRefs": [
             {
-              "layerId": "3a0a5a1f-ef72-4230-9988-e818d3e517f7",
-              "objectId": "01965bb1-7990-422c-9981-24e3da02a6b4",
-              "pageId": "ed27f256-ab76-4ca1-b894-32d54eb4fad7"
+              "layerId": "135762a7-52dd-48d5-aad0-8aa6f087f49d",
+              "objectId": "0426b049-9ac9-4432-9297-c8664b630e1d",
+              "pageId": "64a1b371-9d13-4018-861d-cc64acd02ec4"
             }
           ]
         }
@@ -347,11 +347,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-B3-source-retouch-candidate-001-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "22593c2a59bd16c2c166a67a260a0390a6efd218",
+      "requestId": "clusterB-B3-source-retouch-integration-001-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42769/?sourceCandidate=22593c2a59bd16c2c166a67a260a0390a6efd218",
+        "href": "http://127.0.0.1:39959/?sourceCandidate=628fbcc811bbd8a072dc20be0cc53d057faf3dc8",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -361,9 +361,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "923eb098-f5bd-4c0e-a628-8740f32579e6",
-        "beforeFingerprint": "fnv1a32:35d2cc4e",
-        "afterFingerprint": "fnv1a32:70f1e424",
+        "objectId": "171828f5-55d6-4fef-a514-2aff1d7c595d",
+        "beforeFingerprint": "fnv1a32:9c7d9a66",
+        "afterFingerprint": "fnv1a32:da7f2605",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -376,12 +376,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "595d43c2-ca45-425b-8447-b8383de58390",
-              "objectId": "923eb098-f5bd-4c0e-a628-8740f32579e6",
-              "pageId": "6fa888f8-ca63-4a1e-ba72-87bbdcef3d8d"
+              "layerId": "6418cdae-71a1-4618-8a2e-1a39779c7ae0",
+              "objectId": "171828f5-55d6-4fef-a514-2aff1d7c595d",
+              "pageId": "8348a144-4b5f-4ecf-a2ef-bb7b93b7ddf6"
             }
           ],
-          "stackItemId": "adj_1vbpd0a",
+          "stackItemId": "adj_1z05gkt",
           "stackItemType": "brightnessContrast"
         }
       },
