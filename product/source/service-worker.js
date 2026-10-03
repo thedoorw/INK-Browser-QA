@@ -2,21 +2,26 @@
 // Keep this URL stable for browsers still registered against ./service-worker.js.
 // It exists only to migrate stale cache-first clients onto the generated-identity
 // runtime worker without requiring Ctrl+F5 or manual cache clearing.
-const MIGRATION_ID = 'ink-pwa-cache-migration-v2';
+const MIGRATION_ID = 'ink-pwa-cache-migration-v3';
+const MIGRATION_PARAM = 'ink-pwa-migrate';
 
 self.addEventListener('install', event => {
   event.waitUntil(self.skipWaiting());
 });
 
 self.addEventListener('activate', event => {
-  // Finish activation first. WindowClient.navigate() can wait on the active
-  // worker, so awaiting navigation inside activate risks an activation cycle.
-  event.waitUntil(self.clients.claim());
-  setTimeout(() => {
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true })
-      .then(windows => Promise.all(windows.map(client => client.navigate?.(client.url).catch(() => null))))
-      .catch(() => null);
-  }, 0);
+  event.waitUntil((async () => {
+    await self.clients.claim();
+    const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+    for (const client of windows) {
+      const url = new URL(client.url);
+      if (url.searchParams.get(MIGRATION_PARAM) === MIGRATION_ID) continue;
+      url.searchParams.set(MIGRATION_PARAM, MIGRATION_ID);
+      // Schedule the browser navigation but do not await its completion from
+      // inside activate; completion can depend on this worker becoming active.
+      client.navigate?.(url.href).catch(() => null);
+    }
+  })());
 });
 
 async function migrationNetworkFirst(request) {
