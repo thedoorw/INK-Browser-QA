@@ -252,11 +252,16 @@ class Renderer{
       if(sameContainer&&pathFound.object?.type==='path'&&inverse){
         try{
           const layout=layoutTextOnPath(o,pathFound.object,{measureText:text=>ctx.measureText(text).width});
-          ctx.save();ctx.transform(...inverse);
-          for(const placement of layout.placements){
-            ctx.save();ctx.translate(placement.x,placement.y);ctx.rotate(placement.angle);ctx.fillText(placement.character,-placement.advance/2,0);ctx.restore();
-          }
-          ctx.restore();return;
+          ctx.save();
+          try{
+            ctx.transform(...inverse);
+            for(const placement of layout.placements){
+              ctx.save();
+              try{ctx.translate(placement.x,placement.y);ctx.rotate(placement.angle);ctx.fillText(placement.character,-placement.advance/2,0);}
+              finally{ctx.restore();}
+            }
+          }finally{ctx.restore();}
+          return;
         }catch(error){console.warn('INK path text render fallback',error);}
       }
     }
