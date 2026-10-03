@@ -1,9 +1,9 @@
 {
   "schema": "INK-LIVE-CHAT-REQUEST",
   "version": 1,
-  "requestId": "core-perf-spatial-batch-formal-live-001",
+  "requestId": "clusterC-C4-artboard-formal-live-001",
   "liveUrl": "https://thedoorw.github.io/INK/",
-  "expectedSourceSha": "e139682a8c374e275061872ba9f27bc06ca0d492",
+  "expectedSourceSha": "701c22beabd873376c71dc2dd15abc8bfe073732",
   "steps": [
     {
       "id": "contextBefore",
@@ -13,58 +13,85 @@
       }
     },
     {
-      "id": "describeSnap",
+      "id": "describeArtboard",
       "tool": "describe_ink_capability",
       "input": {
-        "idOrToolName": "page.snap.set.v1"
+        "idOrToolName": "page.artboard.set.v1"
       }
     },
     {
-      "id": "snapGridPropose",
+      "id": "artboardLandscapePropose",
       "tool": "propose_ink_edit",
       "input": {
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c3-snapGrid",
-          "operation": "page.snap.set.v1",
+          "taskId": "live-c4-artboard-landscape",
+          "operation": "page.artboard.set.v1",
           "targets": [],
           "arguments": {
-            "key": "grid",
-            "value": true
+            "key": "orientation",
+            "value": "landscape"
           }
         }
       }
     },
     {
-      "id": "snapGridApprove",
+      "id": "artboardLandscapeApprove",
       "tool": "approve_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "snapGridPropose.result.result.proposalId"
+          "$ref": "artboardLandscapePropose.result.result.proposalId"
         }
       }
     },
     {
-      "id": "snapGridExecute",
+      "id": "artboardLandscapeExecute",
       "tool": "execute_ink_edit",
       "input": {
         "proposalId": {
-          "$ref": "snapGridPropose.result.result.proposalId"
+          "$ref": "artboardLandscapePropose.result.result.proposalId"
         },
         "approvalToken": {
-          "$ref": "snapGridApprove.result.result.approvalToken"
+          "$ref": "artboardLandscapeApprove.result.result.approvalToken"
         }
       }
     },
     {
-      "id": "undoSnap",
+      "id": "previewLandscape",
+      "tool": "get_ink_preview",
+      "input": {}
+    },
+    {
+      "id": "historyAfterArtboard",
+      "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "undoArtboard",
       "tool": "undo_ink",
       "input": {}
     },
     {
-      "id": "redoSnap",
+      "id": "previewPortrait",
+      "tool": "get_ink_preview",
+      "input": {}
+    },
+    {
+      "id": "redoArtboard",
       "tool": "redo_ink",
+      "input": {}
+    },
+    {
+      "id": "contextLandscape",
+      "tool": "get_ink_context",
+      "input": {
+        "maxObjects": 20
+      }
+    },
+    {
+      "id": "undoArtboardFinal",
+      "tool": "undo_ink",
       "input": {}
     },
     {
@@ -74,13 +101,13 @@
         "task": {
           "schema": "INK-CHAT-EDIT-TASK",
           "version": 1,
-          "taskId": "live-c3-guideAdd",
+          "taskId": "live-c3-regression-guide",
           "operation": "guide.add.v1",
           "targets": [],
           "arguments": {
-            "id": "live-c3-guide-v",
+            "id": "live-c4-regression-guide-v",
             "orientation": "vertical",
-            "position": 120
+            "position": 123
           }
         }
       }
@@ -107,245 +134,13 @@
       }
     },
     {
-      "id": "guideMovePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-guideMove",
-          "operation": "guide.move.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "position": 180
-          }
-        }
-      }
-    },
-    {
-      "id": "guideMoveApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideMovePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "guideMoveExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideMovePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "guideMoveApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "guideLockPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-guideLock",
-          "operation": "guide.lock.set.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "locked": true
-          }
-        }
-      }
-    },
-    {
-      "id": "guideLockApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideLockPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "guideLockExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideLockPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "guideLockApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "guideUnlockPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-guideUnlock",
-          "operation": "guide.lock.set.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "locked": false
-          }
-        }
-      }
-    },
-    {
-      "id": "guideUnlockApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideUnlockPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "guideUnlockExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideUnlockPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "guideUnlockApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "guideHidePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-guideHide",
-          "operation": "guide.visibility.set.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "visible": false
-          }
-        }
-      }
-    },
-    {
-      "id": "guideHideApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideHidePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "guideHideExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideHidePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "guideHideApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "guideShowPropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-guideShow",
-          "operation": "guide.visibility.set.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v",
-            "visible": true
-          }
-        }
-      }
-    },
-    {
-      "id": "guideShowApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideShowPropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "guideShowExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideShowPropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "guideShowApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "guideRemovePropose",
-      "tool": "propose_ink_edit",
-      "input": {
-        "task": {
-          "schema": "INK-CHAT-EDIT-TASK",
-          "version": 1,
-          "taskId": "live-c3-guideRemove",
-          "operation": "guide.remove.v1",
-          "targets": [],
-          "arguments": {
-            "guideId": "live-c3-guide-v"
-          }
-        }
-      }
-    },
-    {
-      "id": "guideRemoveApprove",
-      "tool": "approve_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideRemovePropose.result.result.proposalId"
-        }
-      }
-    },
-    {
-      "id": "guideRemoveExecute",
-      "tool": "execute_ink_edit",
-      "input": {
-        "proposalId": {
-          "$ref": "guideRemovePropose.result.result.proposalId"
-        },
-        "approvalToken": {
-          "$ref": "guideRemoveApprove.result.result.approvalToken"
-        }
-      }
-    },
-    {
-      "id": "undoRemove",
-      "tool": "undo_ink",
-      "input": {}
-    },
-    {
-      "id": "redoRemove",
-      "tool": "redo_ink",
-      "input": {}
-    },
-    {
-      "id": "historyFinal",
+      "id": "historyAfterGuide",
       "tool": "get_ink_history",
+      "input": {}
+    },
+    {
+      "id": "undoGuide",
+      "tool": "undo_ink",
       "input": {}
     },
     {
@@ -355,9 +150,5 @@
         "maxObjects": 20
       }
     }
-  ],
-  "spatialBatchReview": true,
-  "imageStackCacheReview": true,
-  "naturalMediaCacheReview": true,
-  "qualification": "path-deformation-b4"
+  ]
 }
