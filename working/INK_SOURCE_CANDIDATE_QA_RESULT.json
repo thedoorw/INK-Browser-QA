@@ -1,11 +1,11 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
   "version": 1,
-  "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions",
-  "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+  "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions",
+  "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
   "case": "raster-advanced-ingest",
   "runtimeIdentity": {
-    "href": "http://127.0.0.1:44957/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+    "href": "http://127.0.0.1:34959/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
     "readyState": "complete",
     "apiReady": true,
     "toolCount": 23,
@@ -18,11 +18,11 @@
       {
         "format": "PSD",
         "ref": {
-          "layerId": "c1d20160-1431-45ee-94c4-a95f94d75be7",
-          "objectId": "a23a2209-c86c-4fd0-961f-529bf5f5b8f9",
-          "pageId": "3bb085d5-c63d-41e2-a12e-787e22993d45"
+          "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
+          "objectId": "2db82f98-1492-4bce-972b-be704ae3113d",
+          "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
         },
-        "objectId": "a23a2209-c86c-4fd0-961f-529bf5f5b8f9",
+        "objectId": "2db82f98-1492-4bce-972b-be704ae3113d",
         "bitDepth": 8,
         "colorMode": "RGB",
         "preview": {
@@ -33,11 +33,11 @@
       {
         "format": "TIFF",
         "ref": {
-          "layerId": "c1d20160-1431-45ee-94c4-a95f94d75be7",
-          "objectId": "78d309bb-3685-43b6-912c-f04ab59849d7",
-          "pageId": "3bb085d5-c63d-41e2-a12e-787e22993d45"
+          "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
+          "objectId": "870fdacd-b6fc-4cdc-8e29-731fb2814387",
+          "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
         },
-        "objectId": "78d309bb-3685-43b6-912c-f04ab59849d7",
+        "objectId": "870fdacd-b6fc-4cdc-8e29-731fb2814387",
         "bitDepth": 8,
         "colorMode": "RGB",
         "preview": {
@@ -48,11 +48,11 @@
       {
         "format": "EXR",
         "ref": {
-          "layerId": "c1d20160-1431-45ee-94c4-a95f94d75be7",
-          "objectId": "bb399a0a-0f84-47a8-89b3-20e042639364",
-          "pageId": "3bb085d5-c63d-41e2-a12e-787e22993d45"
+          "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
+          "objectId": "4e942766-1e00-42c3-b436-56fba09ad472",
+          "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
         },
-        "objectId": "bb399a0a-0f84-47a8-89b3-20e042639364",
+        "objectId": "4e942766-1e00-42c3-b436-56fba09ad472",
         "bitDepth": 32,
         "colorMode": "RGB",
         "preview": {
@@ -71,19 +71,33 @@
         "fingerprint": "fnv1a32:3815a805"
       }
     },
-    "rawRejected": true,
-    "rawCode": "INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE"
+    "rawDefaultRejected": true,
+    "rawDefaultCode": "INK_AGENT_RASTER_RAW_DECODER_UNAVAILABLE",
+    "rawApproved": {
+      "ref": {
+        "layerId": "beb52ea1-324a-4c3b-b2f5-3e5fa64497ff",
+        "objectId": "3e96a6d2-8ebd-4346-9ce7-b49d7bb37a0b",
+        "pageId": "674c6a89-1bca-4bc5-9cf3-3eac33364dc7"
+      },
+      "bitDepth": 16,
+      "colorMode": "RGB",
+      "preview": {
+        "status": "COMPLETED",
+        "fingerprint": "fnv1a32:c2ddfd3c"
+      },
+      "route": "advanced-format-raw"
+    }
   },
   "status": "PASS",
   "regressions": [
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-import-named-tool",
-      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-import-named-tool",
+      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
       "case": "raster-import-named-tool",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:42573/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+        "href": "http://127.0.0.1:36915/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -94,13 +108,13 @@
         "before": {
           "count": 0,
           "undo": 0,
-          "canvas": "1e347074"
+          "canvas": "308b5875"
         },
         "after": {
           "count": 1,
           "undo": 1,
           "canvas": "b2d95166",
-          "id": "20c7ef30-323c-49a1-ba0d-b91ae47914cf",
+          "id": "626915af-1a21-4059-9586-7f985736fdac",
           "width": 32,
           "height": 24,
           "sourceSha256": "02180abde1c6932923a0a99a9a346ce284ff63b7af38d8f082830d50268589b4"
@@ -116,11 +130,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-direct-paint-bucket-b3",
-      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-direct-paint-bucket-b3",
+      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
       "case": "raster-direct-paint-bucket-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:33209/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+        "href": "http://127.0.0.1:46721/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -129,7 +143,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.paintBucket.v1",
-        "objectId": "9c976d16-2f90-4864-97ac-c571d01637bf",
+        "objectId": "379845cd-7705-4c56-bb4e-465429c22d35",
         "beforeHash": "376ec6fb",
         "afterHash": "b09ebd5b",
         "undoHash": "376ec6fb",
@@ -176,9 +190,9 @@
           },
           "resultRefs": [
             {
-              "layerId": "82f375e1-8594-4ce0-9f13-83b5a619de87",
-              "objectId": "9c976d16-2f90-4864-97ac-c571d01637bf",
-              "pageId": "82cc43af-ea31-4ecb-9a0c-06da0a77ab7c"
+              "layerId": "3035e564-c8d4-4d3d-8409-c95b8332bb06",
+              "objectId": "379845cd-7705-4c56-bb4e-465429c22d35",
+              "pageId": "15d2f218-61e2-4c99-b971-6f152e0d0de6"
             }
           ]
         }
@@ -188,11 +202,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-source-retouch-b3",
-      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-source-retouch-b3",
+      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
       "case": "raster-source-retouch-b3",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:39001/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+        "href": "http://127.0.0.1:39613/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -201,7 +215,7 @@
       "result": {
         "passed": true,
         "operation": "image.raster.sourceRetouch.v1",
-        "objectId": "ba474a97-d102-45e5-aa12-e6d263787a83",
+        "objectId": "f4370cdf-bdbd-42c5-b6c6-a986fec4324f",
         "baselineHash": "7b77e00d",
         "baselinePreview": {
           "status": "COMPLETED",
@@ -248,11 +262,11 @@
     {
       "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
       "version": 1,
-      "requestId": "clusterB-advanced-raster-ingest-candidate-001-regressions-raster-stack-adjustment-b2",
-      "candidateSha": "41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+      "requestId": "clusterB-advanced-raster-ingest-candidate-002-regressions-raster-stack-adjustment-b2",
+      "candidateSha": "87ee8acc08e83ead4bc581382575f244143651a5",
       "case": "raster-stack-adjustment-b2",
       "runtimeIdentity": {
-        "href": "http://127.0.0.1:37009/?sourceCandidate=41e9cb2b9c5c80b0d7b94e45b6bbabe48d1c70e5",
+        "href": "http://127.0.0.1:39843/?sourceCandidate=87ee8acc08e83ead4bc581382575f244143651a5",
         "readyState": "complete",
         "apiReady": true,
         "toolCount": 23,
@@ -262,9 +276,9 @@
         "passed": true,
         "operation": "image.adjustment.add.v1",
         "adjustmentType": "brightnessContrast",
-        "objectId": "af4e9420-a3ce-4f2c-af22-5a8189067109",
-        "beforeFingerprint": "fnv1a32:a9a16e0a",
-        "afterFingerprint": "fnv1a32:413db316",
+        "objectId": "77830472-198c-4a2d-8b1a-1fc9dd00a6e6",
+        "beforeFingerprint": "fnv1a32:b17d7b36",
+        "afterFingerprint": "fnv1a32:116b2900",
         "beforeHash": "7883b22",
         "afterHash": "9cd23fe",
         "undoHash": "7883b22",
@@ -277,12 +291,12 @@
           "adjustmentCount": 1,
           "resultRefs": [
             {
-              "layerId": "5c05139e-c380-45a4-a3dc-619ecf2b71c5",
-              "objectId": "af4e9420-a3ce-4f2c-af22-5a8189067109",
-              "pageId": "9b375780-36d8-43b1-8a5a-9bfb5cf4bd1d"
+              "layerId": "832557cd-1ab6-4dc1-b9aa-6cdd2922d855",
+              "objectId": "77830472-198c-4a2d-8b1a-1fc9dd00a6e6",
+              "pageId": "dd997f32-0100-4ca2-af96-8cd43e8de984"
             }
           ],
-          "stackItemId": "adj_eo0a0x",
+          "stackItemId": "adj_kl6r4e",
           "stackItemType": "brightnessContrast"
         }
       },
