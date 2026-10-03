@@ -1,7 +1,7 @@
 {
   "schema": "INK-SOURCE-CANDIDATE-QA-REQUEST",
   "version": 1,
-  "requestId": "clusterA-A3-paper-candidate-002",
+  "requestId": "clusterA-A3-regression-A2-001",
   "candidateSha": "1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
-  "case": "page-paper-a3"
+  "case": "stroke-create-a2"
 }

@@ -1,0 +1,187 @@
+{
+  "schema": "INK-SOURCE-CANDIDATE-QA-RESULT",
+  "version": 1,
+  "requestId": "clusterA-A3-paper-candidate-002",
+  "candidateSha": "1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
+  "case": "page-paper-a3",
+  "runtimeIdentity": {
+    "href": "http://127.0.0.1:43401/?sourceCandidate=1afb52a9c6fc77f5f121f5b7e8d9be2c626006be",
+    "readyState": "complete",
+    "apiReady": true,
+    "toolCount": 23,
+    "appVersion": "0.1"
+  },
+  "result": {
+    "passed": true,
+    "operation": "page.paper.set.v1",
+    "paperCoupledRunStrokeCount": 2,
+    "paperBefore": {
+      "type": "blank",
+      "color": "#fffef9",
+      "gridSize": 32,
+      "absorbency": 0.58,
+      "roughness": 0.42,
+      "fiberStrength": 0.36,
+      "fiberAngle": 0,
+      "sizing": 0.28,
+      "granulation": 0.32,
+      "seed": 1337,
+      "textureVisible": true
+    },
+    "paperAfter": {
+      "type": "blank",
+      "color": "#fffef9",
+      "gridSize": 32,
+      "absorbency": 0.05,
+      "roughness": 0.95,
+      "fiberStrength": 0.36,
+      "fiberAngle": 0,
+      "sizing": 0.28,
+      "granulation": 0.32,
+      "seed": 1337,
+      "textureVisible": true
+    },
+    "baseline": "fnv1a32:a108acca",
+    "roughPreview": "fnv1a32:a108acca",
+    "changedPreview": "fnv1a32:cb5efcee",
+    "undoRedoRenderExact": true,
+    "scopedPaperEntries": [
+      {
+        "label": "調整畫布",
+        "captureMode": "scoped"
+      },
+      {
+        "label": "調整畫布",
+        "captureMode": "scoped"
+      }
+    ],
+    "paperProfileFingerprint": "580:950:360:0:280:320:1337000:1000",
+    "invalidCasesRejected": 5,
+    "noOpRejected": true,
+    "staleRejected": true,
+    "pendingPreviewRejected": true,
+    "naturalMedia": {
+      "preference": "auto",
+      "floraReferenceBackend": "canvas2d",
+      "activeBackend": "webgl2-multichannel",
+      "gpuAvailable": true,
+      "gpuState": "ready",
+      "forcedReason": null,
+      "fallbacks": 0,
+      "batchFallbacks": 0,
+      "webgl": {
+        "backend": "webgl2",
+        "drawCalls": 4,
+        "cacheHits": 12,
+        "cacheMisses": 4,
+        "evictions": 0,
+        "contextLosses": 0,
+        "restores": 0,
+        "vertices": 1284,
+        "state": "ready",
+        "available": true,
+        "cacheEntries": 2,
+        "lastError": null,
+        "capabilities": {
+          "maxTextureSize": 8192,
+          "maxRenderbufferSize": 8192,
+          "maxViewportDims": [
+            8192,
+            8192
+          ],
+          "maxTextureUnits": 32,
+          "vendor": "Google Inc. (Google)",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+          "shadingLanguage": "WebGL GLSL ES 3.00 (OpenGL ES GLSL ES 3.0 Chromium)"
+        },
+        "resources": {
+          "allocations": 4,
+          "releases": 2,
+          "evictions": 0,
+          "rejected": 0,
+          "peakBytes": 1592244,
+          "budgetBytes": 100663296,
+          "usedBytes": 1592244,
+          "availableBytes": 99071052,
+          "utilization": 0.01581752300262451,
+          "resources": 2,
+          "byType": {
+            "raster-cache": 1592244
+          }
+        },
+        "selfTest": null
+      },
+      "multiChannelWebgl": {
+        "backend": "webgl2-multichannel",
+        "runs": 15,
+        "strokes": 30,
+        "drawCalls": 30,
+        "simulationPasses": 60,
+        "cacheHits": 15,
+        "cacheMisses": 15,
+        "evictions": 0,
+        "contextLosses": 0,
+        "restores": 0,
+        "state": "ready",
+        "available": true,
+        "cacheEntries": 6,
+        "lastError": null,
+        "targets": "306x207",
+        "capabilities": {
+          "maxTextureSize": 8192,
+          "maxRenderbufferSize": 8192,
+          "maxDrawBuffers": 8,
+          "maxColorAttachments": 8,
+          "maxViewportDims": [
+            8192,
+            8192
+          ],
+          "vendor": "Google Inc. (Google)",
+          "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+          "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+        },
+        "resources": {
+          "allocations": 38,
+          "releases": 30,
+          "evictions": 0,
+          "rejected": 0,
+          "peakBytes": 4278288,
+          "budgetBytes": 167772160,
+          "usedBytes": 2864880,
+          "availableBytes": 164907280,
+          "utilization": 0.01707601547241211,
+          "resources": 8,
+          "byType": {
+            "raster-cache": 1851408,
+            "mrt-target": 1013472
+          }
+        },
+        "selfTest": null
+      },
+      "multiChannelCanvas2d": {
+        "backend": "canvas2d-multichannel",
+        "runs": 0,
+        "strokes": 0,
+        "stamps": 0,
+        "pixels": 0,
+        "cacheHits": 0,
+        "cacheMisses": 0,
+        "evictions": 0,
+        "skipped": 0,
+        "cacheEntries": 0
+      },
+      "canvas2d": {
+        "backend": "canvas2d",
+        "surfaceRevision": "WP8B-1",
+        "drawCalls": 0,
+        "frequencyVisibility": {
+          "low": true,
+          "mid": true,
+          "high": true
+        }
+      }
+    }
+  },
+  "status": "PASS"
+}
