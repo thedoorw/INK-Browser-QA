@@ -229,7 +229,7 @@ const CLUSTER_D_MATERIAL_RECIPE_CASE = String.raw`(async()=>{
   const instanceExecution=await edit({
     schema:'INK-CHAT-EDIT-TASK',version:1,taskId:'qa-d-instance',
     operation:'material.instance.create.v1',targets:[],
-    arguments:{templateId:template.templateId,templateVersion:'1',instanceId:'qa-d-material-instance',layerId,semanticRole:'qa-material-instance'}
+    arguments:{templateId:template.templateId,templateVersion:'1',instanceId:'qa-d-material-instance',layerId,semanticRole:'qa-material-instance',transform:[1,0,0,1,260,0]}
   },{checkBlocked:true});
   const instanceId=find(instanceExecution,'instanceId')||'qa-d-material-instance';
   const instancePresent=()=>app.page().layers.flatMap(layer=>layer.objects||[]).some(object=>object.id===instanceId);
